@@ -9,7 +9,7 @@
   
   [1X11.1-1 GraphInverseSemigroup[101X
   
-  [29X[2XGraphInverseSemigroup[102X( [3XE[103X ) [32X operation
+  [33X[1;0Y[29X[2XGraphInverseSemigroup[102X( [3XE[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA graph inverse semigroup.[133X
   
   [33X[0;0YIf  [3XE[103X is a digraph (i.e. it satisfies [2XIsDigraph[102X ([14XDigraphs: IsDigraph[114X)), then
@@ -66,8 +66,8 @@
   
   [1X11.1-2 Range[101X
   
-  [29X[2XRange[102X( [3Xx[103X ) [32X attribute
-  [29X[2XSource[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRange[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSource[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA graph inverse semigroup element.[133X
   
   [33X[0;0YIf  [3Xx[103X  is  an  element  of  a  graph  inverse  semigroup  (i.e. it satisfies
@@ -90,7 +90,7 @@
   
   [1X11.1-3 IsVertex[101X
   
-  [29X[2XIsVertex[102X( [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsVertex[102X( [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  [3Xx[103X  is  an  element  of  a  graph  inverse  semigroup  (i.e. it satisfies
@@ -119,8 +119,8 @@
   
   [1X11.1-4 IsGraphInverseSemigroup[101X
   
-  [29X[2XIsGraphInverseSemigroup[102X( [3Xx[103X ) [32X filter
-  [29X[2XIsGraphInverseSemigroupElement[102X( [3Xx[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsGraphInverseSemigroup[102X( [3Xx[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsGraphInverseSemigroupElement[102X( [3Xx[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  category  [10XIsGraphInverseSemigroup[110X contains any semigroup defined over a
@@ -142,7 +142,7 @@
   
   [1X11.1-5 GraphOfGraphInverseSemigroup[101X
   
-  [29X[2XGraphOfGraphInverseSemigroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGraphOfGraphInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA digraph.[133X
   
   [33X[0;0YIf [3XS[103X is a graph inverse semigroup (i.e. it satisfies [2XIsGraphInverseSemigroup[102X
@@ -160,7 +160,7 @@
   
   [1X11.1-6 IsGraphInverseSemigroupElementCollection[101X
   
-  [29X[2XIsGraphInverseSemigroupElementCollection[102X[32X Category
+  [33X[1;0Y[29X[2XIsGraphInverseSemigroupElementCollection[102X[32X Category[133X
   
   [33X[0;0YEvery  collection  of  elements  of a graph inverse semigroup belongs to the
   category  [10XIsGraphInverseSemigroupElementCollection[110X. For example, every graph
@@ -168,7 +168,7 @@
   
   [1X11.1-7 IsGraphInverseSubsemigroup[101X
   
-  [29X[2XIsGraphInverseSubsemigroup[102X[32X filter
+  [33X[1;0Y[29X[2XIsGraphInverseSubsemigroup[102X[32X filter[133X
   
   [33X[0;0Y[10XIsGraphInverseSubsemigroup[110X    is    a    synonym    for    [10XIsSemigroup[110X   and
   [10XIsInverseSemigroup[110X and [10XIsGraphInverseSemigroupElementCollection[110X.[133X

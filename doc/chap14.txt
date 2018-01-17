@@ -12,7 +12,7 @@
   
   [1X14.1-1 IsBand[101X
   
-  [29X[2XIsBand[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBand[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsBand[110X returns [9Xtrue[109X if every element of the semigroup [3XS[103X is an idempotent and
@@ -46,7 +46,7 @@
   
   [1X14.1-2 IsBlockGroup[101X
   
-  [29X[2XIsBlockGroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBlockGroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsBlockGroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is a block group and [9Xfalse[109X if
@@ -88,7 +88,7 @@
   
   [1X14.1-3 IsCommutativeSemigroup[101X
   
-  [29X[2XIsCommutativeSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCommutativeSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsCommutativeSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is commutative and
@@ -120,7 +120,7 @@
   
   [1X14.1-4 IsCompletelyRegularSemigroup[101X
   
-  [29X[2XIsCompletelyRegularSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCompletelyRegularSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsCompletelyRegularSemigroup[110X  returns [9Xtrue[109X if every element of the semigroup
@@ -151,7 +151,7 @@
   
   [1X14.1-5 IsCongruenceFreeSemigroup[101X
   
-  [29X[2XIsCongruenceFreeSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCongruenceFreeSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsCongruenceFreeSemigroup[110X   returns   [9Xtrue[109X   if   the   semigroup   [3XS[103X  is  a
@@ -180,7 +180,7 @@
   
   [1X14.1-6 IsGroupAsSemigroup[101X
   
-  [29X[2XIsGroupAsSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsGroupAsSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsGroupAsSemigroup[110X   returns  [9Xtrue[109X  if  and  only  if  the  semigroup  [3XS[103X  is
@@ -209,8 +209,8 @@
   
   [1X14.1-7 [33X[0;0YIsIdempotentGenerated[133X[101X
   
-  [29X[2XIsIdempotentGenerated[102X( [3XS[103X ) [32X property
-  [29X[2XIsSemiband[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsIdempotentGenerated[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSemiband[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsIdempotentGenerated[110X  and  [10XIsSemiband[110X  return  [9Xtrue[109X  if  the semigroup [3XS[103X is
@@ -235,8 +235,8 @@
   
   [1X14.1-8 IsLeftSimple[101X
   
-  [29X[2XIsLeftSimple[102X( [3XS[103X ) [32X property
-  [29X[2XIsRightSimple[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLeftSimple[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRightSimple[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsLeftSimple[110X  and [10XIsRightSimple[110X returns [9Xtrue[109X if the semigroup [3XS[103X has only one
@@ -281,7 +281,7 @@
   
   [1X14.1-9 IsLeftZeroSemigroup[101X
   
-  [29X[2XIsLeftZeroSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLeftZeroSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsLeftZeroSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X is a left zero semigroup
@@ -303,7 +303,7 @@
   
   [1X14.1-10 IsMonogenicSemigroup[101X
   
-  [29X[2XIsMonogenicSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonogenicSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMonogenicSemigroup[110X  returns  [9Xtrue[109X  if  the semigroup [3XS[103X is monogenic and it
@@ -339,7 +339,7 @@
   
   [1X14.1-11 IsMonogenicMonoid[101X
   
-  [29X[2XIsMonogenicMonoid[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonogenicMonoid[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMonogenicMonoid[110X  returns [9Xtrue[109X if the monoid [3XS[103X is a monogenic monoid and it
@@ -363,7 +363,7 @@
   
   [1X14.1-12 IsMonoidAsSemigroup[101X
   
-  [29X[2XIsMonoidAsSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonoidAsSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMonoidAsSemigroup[110X  returns  [9Xtrue[109X  if  and  only  if  the  semigroup  [3XS[103X  is
@@ -405,7 +405,7 @@
   
   [1X14.1-13 IsOrthodoxSemigroup[101X
   
-  [29X[2XIsOrthodoxSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsOrthodoxSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsOrthodoxSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X is orthodox and [9Xfalse[109X if
@@ -432,7 +432,7 @@
   
   [1X14.1-14 IsRectangularBand[101X
   
-  [29X[2XIsRectangularBand[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRectangularBand[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsRectangularBand[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a rectangular band and
@@ -462,7 +462,7 @@
   
   [1X14.1-15 IsRectangularGroup[101X
   
-  [29X[2XIsRectangularGroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRectangularGroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  semigroup is [13Xrectangular group[113X if it is the direct product of a group and
@@ -487,7 +487,7 @@
   
   [1X14.1-16 IsRegularSemigroup[101X
   
-  [29X[2XIsRegularSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRegularSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsRegularSemigroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is regular and [9Xfalse[109X if
@@ -510,7 +510,7 @@
   
   [1X14.1-17 IsRightZeroSemigroup[101X
   
-  [29X[2XIsRightZeroSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRightZeroSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsRightZeroSemigroup[110X  returns  [9Xtrue[109X  if  the [3XS[103X is a right zero semigroup and
@@ -533,12 +533,12 @@
   
   [1X14.1-18 [33X[0;0YIsXTrivial[133X[101X
   
-  [29X[2XIsRTrivial[102X( [3XS[103X ) [32X property
-  [29X[2XIsLTrivial[102X( [3XS[103X ) [32X property
-  [29X[2XIsHTrivial[102X( [3XS[103X ) [32X property
-  [29X[2XIsDTrivial[102X( [3XS[103X ) [32X property
-  [29X[2XIsAperiodicSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsCombinatorialSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRTrivial[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLTrivial[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsHTrivial[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsDTrivial[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAperiodicSemigroup[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsCombinatorialSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsXTrivial[110X  returns  [9Xtrue[109X  if  Green's  [13XR[113X-relation,  [13XL[113X-relation, [13XH[113X-relation,
@@ -571,7 +571,7 @@
   
   [1X14.1-19 IsSemigroupWithAdjoinedZero[101X
   
-  [29X[2XIsSemigroupWithAdjoinedZero[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemigroupWithAdjoinedZero[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsSemigroupWithAdjoinedZero[110X returns [9Xtrue[109X if the semigroup [3XS[103X can be expressed
@@ -598,7 +598,7 @@
   
   [1X14.1-20 IsSemilattice[101X
   
-  [29X[2XIsSemilattice[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemilattice[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsSemilattice[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a semilattice and [9Xfalse[109X if
@@ -627,8 +627,8 @@
   
   [1X14.1-21 [33X[0;0YIsSimpleSemigroup[133X[101X
   
-  [29X[2XIsSimpleSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsCompletelySimpleSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSimpleSemigroup[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsCompletelySimpleSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsSimpleSemigroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is simple and [9Xfalse[109X if it
@@ -658,8 +658,8 @@
   
   [1X14.1-22 IsSynchronizingSemigroup[101X
   
-  [29X[2XIsSynchronizingSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsSynchronizingSemigroup[102X( [3XS[103X, [3Xn[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSynchronizingSemigroup[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSynchronizingSemigroup[102X( [3XS[103X, [3Xn[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YFor  a  positive  integer  [3Xn[103X,  [10XIsSynchronizingSemigroup[110X  returns [9Xtrue[109X if the
@@ -692,7 +692,7 @@
   
   [1X14.1-23 IsUnitRegularMonoid[101X
   
-  [29X[2XIsUnitRegularMonoid[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUnitRegularMonoid[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if the semigroup [3XS[103X is unit regular and [9Xfalse[109X if it is not.[133X
   
   [33X[0;0YA  monoid  is  [13Xunit regular[113X if and only if for every [10X>x[110X in [3XS[103X there exists an
@@ -705,7 +705,7 @@
   
   [1X14.1-24 IsZeroGroup[101X
   
-  [29X[2XIsZeroGroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsZeroGroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsZeroGroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a zero group and [9Xfalse[109X if it
@@ -730,7 +730,7 @@
   
   [1X14.1-25 IsZeroRectangularBand[101X
   
-  [29X[2XIsZeroRectangularBand[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsZeroRectangularBand[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsZeroRectangularBand[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a zero rectangular
@@ -762,7 +762,7 @@
   
   [1X14.1-26 IsZeroSemigroup[101X
   
-  [29X[2XIsZeroSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsZeroSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsZeroSemigroup[110X  returns  [9Xtrue[109X  if  the  semigroup [3XS[103X is a zero semigroup and
@@ -792,7 +792,7 @@
   
   [1X14.1-27 IsZeroSimpleSemigroup[101X
   
-  [29X[2XIsZeroSimpleSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsZeroSimpleSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsZeroSimpleSemigroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is 0-simple and [9Xfalse[109X

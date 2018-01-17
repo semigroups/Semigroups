@@ -15,7 +15,7 @@
   [33X[0;0YThe  following  is  a  summary of the steps that should lead to a successful
   installation of [5XSemigroups[105X:[133X
   
-  [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.5.0 or higher is available. [5XIO[105X
+  [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.5.1 or higher is available. [5XIO[105X
         must be compiled before [5XSemigroups[105X can be loaded.[133X
   
   [30X    [33X[0;6Yensure  that the [5XOrb[105X package version 4.8.0 or higher is available. [5XOrb[105X
@@ -26,22 +26,22 @@
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.11.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.12.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.0.11[111X.[133X
+        [11Xsemigroups-3.0.12[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.11[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.12[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://james-d-mitchell.github.io/libsemigroups/[107X) C++ library, which
         requires  a  compiler  implementing  the  C++11  standard.  Inside the
-        [11Xpkg/semigroups-3.0.11[111X directory, type[133X
+        [11Xpkg/semigroups-3.0.12[111X directory, type[133X
   
   [4X      [32X[104X
           [4X./configure[104X
@@ -81,7 +81,7 @@
   relating  to  the  enumeration of certain types of semigroups, and it is not
   possible to use the [5XSemigroups[105X package without compiling it.[133X
   
-  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.11[111X directory,
+  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.12[111X directory,
   type[133X
   
   [4X[32X[104X
@@ -116,7 +116,7 @@
   
   [1X2.4-1 SemigroupsMakeDoc[101X
   
-  [29X[2XSemigroupsMakeDoc[102X(  ) [32X function
+  [33X[1;0Y[29X[2XSemigroupsMakeDoc[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YNothing.[133X
   
   [33X[0;0YThis  function  should  be called with no argument to compile the [5XSemigroups[105X
@@ -140,7 +140,7 @@
   
   [1X2.5-1 SemigroupsTestInstall[101X
   
-  [29X[2XSemigroupsTestInstall[102X(  ) [32X function
+  [33X[1;0Y[29X[2XSemigroupsTestInstall[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis function should be called with no argument to test your installation of
@@ -150,7 +150,7 @@
   
   [1X2.5-2 SemigroupsTestStandard[101X
   
-  [29X[2XSemigroupsTestStandard[102X(  ) [32X function
+  [33X[1;0Y[29X[2XSemigroupsTestStandard[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA  list indicating which tests passed and failed and the time take
             to run each file.[133X
   
@@ -164,7 +164,7 @@
   
   [1X2.5-3 SemigroupsTestExtreme[101X
   
-  [29X[2XSemigroupsTestExtreme[102X(  ) [32X function
+  [33X[1;0Y[29X[2XSemigroupsTestExtreme[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA  list indicating which tests passed and failed and the time take
             to run each file.[133X
   
@@ -183,7 +183,7 @@
   
   [1X2.6-1 InfoSemigroups[101X
   
-  [29X[2XInfoSemigroups[102X[32X info class
+  [33X[1;0Y[29X[2XInfoSemigroups[102X[32X info class[133X
   
   [33X[0;0Y[10XInfoSemigroups[110X  is  the info class of the [5XSemigroups[105X package. The info level
   is  initially  set  to 0 and no info messages are displayed. To increase the

@@ -71,7 +71,7 @@
 
 <h5>17.1-1 IsIsomorphicSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then this operation attempts to determine whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic semigroups by using the operation <code class="func">IsomorphismSemigroups</code> (<a href="chap17_mj.html#X8248C522825E2684"><span class="RefLink">17.1-3</span></a>). If <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns an isomorphism, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">true</code>, while if <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">fail</code>, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">false</code>. Note that in some cases, at present, there is no method for determining whether <var class="Arg">S</var> is isomorphic to <var class="Arg">T</var>, even if it is obvious to the user whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic. There are plans to improve this in the future.</p>
@@ -93,7 +93,7 @@ false</pre></div>
 
 <h5>17.1-2 SmallestMultiplicationTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The lex-least multiplication table of a semigroup.</p>
 
 <p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> is an isomorphism invariant of semigroups, and so it can, for example, be used to check if two semigroups are isomorphic.</p>
@@ -121,7 +121,7 @@ false</pre></div>
 
 <h5>17.1-3 IsomorphismSemigroups</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism, or <code class="keyw">fail</code>.</p>
 
 <p>This operation attempts to find an isomorphism from the semigroup <var class="Arg">S</var> to the semigroup <var class="Arg">T</var>. If it finds one, then it is returned, and if not, then <code class="keyw">fail</code> is returned.</p>
@@ -179,8 +179,8 @@ true</pre></div>
 
 <h5>17.2-1 IsRMSIsoByTriple</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSIsoByTriple</code></td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSIsoByTriple</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSIsoByTriple</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSIsoByTriple</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The isomorphisms between finite Rees matrix or 0-matrix semigroups <code class="code">S</code> and <code class="code">T</code> over groups <code class="code">G</code> and <code class="code">H</code>, respectively, specified by a triple consisting of:</p>
 
 <ol>
@@ -200,8 +200,8 @@ true</pre></div>
 
 <h5>17.2-2 RMSIsoByTriple</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
 <p>If <var class="Arg">R1</var> and <var class="Arg">R2</var> are isomorphic regular Rees 0-matrix semigroups whose underlying semigroups are groups then <code class="code">RZMSIsoByTriple</code> returns the isomorphism between <var class="Arg">R1</var> and <var class="Arg">R2</var> defined by <var class="Arg">triple</var>, which should be a list consisting of the following:</p>
@@ -238,7 +238,7 @@ true</pre></div>
 
 <h5>17.2-3 ELM_LIST</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ELM_LIST</code>( <var class="Arg">map</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ELM_LIST</code>( <var class="Arg">map</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A component of an isomorphism of Rees (0-)matrix semigroups by triple.</p>
 
 <p><code class="code">ELM_LIST(<var class="Arg">map</var>, <var class="Arg">i</var>)</code> returns the <code class="code">i</code>th component of the Rees (0-)matrix semigroup isomorphism by triple <var class="Arg">map</var> when <code class="code">i = 1, 2, 3</code>.</p>
@@ -260,8 +260,8 @@ true</pre></div>
 
 <h5>17.2-4 CompositionMapping2</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A Rees (0-)matrix semigroup by triple.</p>
 
 <p>If <var class="Arg">map1</var> and <var class="Arg">map2</var> are isomorphisms of Rees matrix or 0-matrix semigroups specified by triples and the range of <var class="Arg">map2</var> is contained in the source of <var class="Arg">map1</var>, then <code class="code">CompositionMapping2(<var class="Arg">map1</var>, <var class="Arg">map2</var>)</code> returns the isomorphism from <code class="code">Source(<var class="Arg">map2</var>)</code> to <code class="code">Range(<var class="Arg">map1</var>)</code> specified by the triple with components:</p>
@@ -308,8 +308,8 @@ true</pre></div>
 
 <h5>17.2-5 ImagesElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An element of a Rees (0-)matrix semigroup or a list containing such an element.</p>
 
 <p>If <var class="Arg">map</var> is an isomorphism of Rees matrix or 0-matrix semigroups specified by a triple and <var class="Arg">pt</var> is an element of the source of <var class="Arg">map</var>, then <code class="code">ImagesRepresentative(<var class="Arg">map</var>, <var class="Arg">pt</var>) = <var class="Arg">pt</var> ^ <var class="Arg">map</var></code> returns the image of <var class="Arg">pt</var> under <var class="Arg">map</var>.</p>

@@ -19,7 +19,7 @@
   
   [1X4.1-1 IsPBR[101X
   
-  [29X[2XIsPBR[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPBR[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  PBR  in  [5XGAP[105X belongs to the category [10XIsPBR[110X. Basic operations for PBRs
@@ -29,8 +29,8 @@
   
   [1X4.1-2 IsPBRCollection[101X
   
-  [29X[2XIsPBRCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsPBRCollColl[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPBRCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsPBRCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  collection  of  PBRs  belongs  to  the  category [10XIsPBRCollection[110X. For
@@ -47,7 +47,7 @@
   
   [1X4.2-1 PBR[101X
   
-  [29X[2XPBR[102X( [3Xleft[103X, [3Xright[103X ) [32X operation
+  [33X[1;0Y[29X[2XPBR[102X( [3Xleft[103X, [3Xright[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0YThe  arguments  [3Xleft[103X  and  [3Xright[103X  of  this function should each be a list of
@@ -73,7 +73,7 @@
   
   [1X4.2-2 RandomPBR[101X
   
-  [29X[2XRandomPBR[102X( [3Xn[103X[, [3Xp[103X] ) [32X operation
+  [33X[1;0Y[29X[2XRandomPBR[102X( [3Xn[103X[, [3Xp[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0YIf [3Xn[103X is a positive integer and [3Xp[103X is an float between [10X0[110X and [10X1[110X, then [10XRandomPBR[110X
@@ -96,7 +96,7 @@
   
   [1X4.2-3 EmptyPBR[101X
   
-  [29X[2XEmptyPBR[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XEmptyPBR[102X( [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0YIf  [3Xn[103X  is a positive integer, then [10XEmptyPBR[110X returns the PBR of degree [3Xn[103X with
@@ -111,7 +111,7 @@
   
   [1X4.2-4 IdentityPBR[101X
   
-  [29X[2XIdentityPBR[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XIdentityPBR[102X( [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0YIf  [3Xn[103X  is  a  positive integer, then [10XIdentityPBR[110X returns the identity PBR of
@@ -127,7 +127,7 @@
   
   [1X4.2-5 UniversalPBR[101X
   
-  [29X[2XUniversalPBR[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XUniversalPBR[102X( [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0YIf  [3Xn[103X  is  a positive integer, then [10XUniversalPBR[110X returns the PBR of degree [3Xn[103X
@@ -157,7 +157,7 @@
   
   [1X4.3-1 AsPBR[101X
   
-  [29X[2XAsPBR[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAsPBR[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0Y[10XAsPBR[110X  returns  the  boolean  matrix,  bipartition,  transformation, partial
@@ -236,7 +236,7 @@
   
   [1X4.3-2 AsTransformation[101X
   
-  [29X[2XAsTransformation[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsTransformation[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA transformation.[133X
   
   [33X[0;0YWhen  the  argument  [3Xx[103X is a PBR which satisfies [2XIsTransformationPBR[102X ([14X4.5-9[114X),
@@ -256,7 +256,7 @@
   
   [1X4.3-3 AsPartialPerm[101X
   
-  [29X[2XAsPartialPerm[102X( [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsPartialPerm[102X( [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA partial perm.[133X
   
   [33X[0;0YWhen the argument [3Xx[103X is a PBR which satisfies [2XIsPartialPermPBR[102X ([14X4.5-11[114X), then
@@ -273,7 +273,7 @@
   
   [1X4.3-4 AsPermutation[101X
   
-  [29X[2XAsPermutation[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsPermutation[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA permutation.[133X
   
   [33X[0;0YWhen  the  argument [3Xx[103X is a PBR which satisfies [2XIsPermPBR[102X ([14X4.5-12[114X), then this
@@ -311,8 +311,8 @@
   
   [1X4.5-1 StarOp[101X
   
-  [29X[2XStarOp[102X( [3Xx[103X ) [32X operation
-  [29X[2XStar[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStarOp[102X( [3Xx[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStar[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA PBR.[133X
   
   [33X[0;0Y[10XStarOp[110X  returns  the  unique  PBR  [10Xy[110X obtained by exchanging the positive and
@@ -327,8 +327,8 @@
   
   [1X4.5-2 DegreeOfPBR[101X
   
-  [29X[2XDegreeOfPBR[102X( [3Xx[103X ) [32X attribute
-  [29X[2XDegreeOfPBRCollection[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfPBR[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDegreeOfPBRCollection[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YThe  degree  of a PBR is, roughly speaking, the number of points where it is
@@ -354,7 +354,7 @@
   
   [1X4.5-3 ExtRepOfObj[101X
   
-  [29X[2XExtRepOfObj[102X( [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtRepOfObj[102X( [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA pair of lists of lists of integers.[133X
   
   [33X[0;0YIf  [10Xn[110X  is  the  degree  of  the PBR [3Xx[103X, then [10XExtRepOfObj[110X returns the argument
@@ -371,8 +371,8 @@
   
   [1X4.5-4 PBRNumber[101X
   
-  [29X[2XPBRNumber[102X( [3Xm[103X, [3Xn[103X ) [32X operation
-  [29X[2XNumberPBR[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XPBRNumber[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberPBR[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA PBR, or a positive integer.[133X
   
   [33X[0;0YThese  functions  implement a bijection from the set of all PBRs of degree [3Xn[103X
@@ -393,7 +393,7 @@
   
   [1X4.5-5 IsEmptyPBR[101X
   
-  [29X[2XIsEmptyPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEmptyPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  PBR  is [12Xempty[112X if it has no edges. [10XIsEmptyPBR[110X returns [9Xtrue[109X if the PBR [3Xx[103X is
@@ -411,7 +411,7 @@
   
   [1X4.5-6 IsIdentityPBR[101X
   
-  [29X[2XIsIdentityPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsIdentityPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  PBR  of degree [10Xn[110X is the [12Xidentity[112X PBR of degree [10Xn[110X if it is the identity of
@@ -435,7 +435,7 @@
   
   [1X4.5-7 IsUniversalPBR[101X
   
-  [29X[2XIsUniversalPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUniversalPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  PBR  of  degree  [10Xn[110X  is  [12Xuniversal[112X  if  it has [10X4 * n ^ 2[110X edges, i.e. every
@@ -458,8 +458,8 @@
   
   [1X4.5-8 IsBipartitionPBR[101X
   
-  [29X[2XIsBipartitionPBR[102X( [3Xx[103X ) [32X property
-  [29X[2XIsBlockBijectionPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBipartitionPBR[102X( [3Xx[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBlockBijectionPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the PBR [3Xx[103X defines a bipartition, then [10XIsBipartitionPBR[110X returns [9Xtrue[109X, and
@@ -491,7 +491,7 @@
   
   [1X4.5-9 IsTransformationPBR[101X
   
-  [29X[2XIsTransformationPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTransformationPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  PBR  [3Xx[103X  defines  a transformation, then [10XIsTransformationPBR[110X returns
@@ -525,7 +525,7 @@
   
   [1X4.5-10 IsDualTransformationPBR[101X
   
-  [29X[2XIsDualTransformationPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsDualTransformationPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  PBR  [3Xx[103X  defines a dual transformation, then [10XIsDualTransformationPBR[110X
@@ -549,7 +549,7 @@
   
   [1X4.5-11 IsPartialPermPBR[101X
   
-  [29X[2XIsPartialPermPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPartialPermPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  PBR  [3Xx[103X defines a partial permutation, then [10XIsPartialPermPBR[110X returns
@@ -579,7 +579,7 @@
   
   [1X4.5-12 IsPermPBR[101X
   
-  [29X[2XIsPermPBR[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPermPBR[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf the PBR [3Xx[103X defines a permutation, then [10XIsPermPBR[110X returns [9Xtrue[109X, and if not,
@@ -627,8 +627,8 @@
   
   [1X4.6-1 IsPBRSemigroup[101X
   
-  [29X[2XIsPBRSemigroup[102X( [3XS[103X ) [32X filter
-  [29X[2XIsPBRMonoid[102X( [3XS[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsPBRSemigroup[102X( [3XS[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsPBRMonoid[102X( [3XS[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA [13XPBR semigroup[113X is simply a semigroup consisting of PBRs. An object [3Xobj[103X is a
@@ -677,7 +677,7 @@
   
   [1X4.6-2 DegreeOfPBRSemigroup[101X
   
-  [29X[2XDegreeOfPBRSemigroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfPBRSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YThe  [13Xdegree[113X  of  a  PBR  semigroup  [3XS[103X  is just the degree of any (and every)

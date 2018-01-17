@@ -95,7 +95,7 @@
   
   [1X3.1-1 IsBipartition[101X
   
-  [29X[2XIsBipartition[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBipartition[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  bipartition  in  [5XGAP[105X  belongs  to  the  category [10XIsBipartition[110X. Basic
@@ -106,8 +106,8 @@
   
   [1X3.1-2 IsBipartitionCollection[101X
   
-  [29X[2XIsBipartitionCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsBipartitionCollColl[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBipartitionCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBipartitionCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery    collection    of    bipartitions    belongs    to    the   category
@@ -126,7 +126,7 @@
   
   [1X3.2-1 Bipartition[101X
   
-  [29X[2XBipartition[102X( [3Xblocks[103X ) [32X function
+  [33X[1;0Y[29X[2XBipartition[102X( [3Xblocks[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0Y[10XBipartition[110X returns the bipartition [10Xx[110X with equivalence classes [3Xblocks[103X, which
@@ -142,7 +142,7 @@
   
   [1X3.2-2 BipartitionByIntRep[101X
   
-  [29X[2XBipartitionByIntRep[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XBipartitionByIntRep[102X( [3Xlist[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0YIt  is  possible  to create a bipartition using its internal representation.
@@ -180,7 +180,7 @@
   
   [1X3.2-3 IdentityBipartition[101X
   
-  [29X[2XIdentityBipartition[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XIdentityBipartition[102X( [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe identity bipartition.[133X
   
   [33X[0;0YReturns the identity bipartition with degree [3Xn[103X.[133X
@@ -193,8 +193,8 @@
   
   [1X3.2-4 LeftOne[101X
   
-  [29X[2XLeftOne[102X( [3Xx[103X ) [32X attribute
-  [29X[2XLeftProjection[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLeftOne[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftProjection[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0YThe  [10XLeftProjection[110X of a bipartition [3Xx[103X is the bipartition [10X[3Xx[103X[10X * Star([3Xx[103X[10X)[110X. It is
@@ -222,8 +222,8 @@
   
   [1X3.2-5 RightOne[101X
   
-  [29X[2XRightOne[102X( [3Xx[103X ) [32X attribute
-  [29X[2XRightProjection[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRightOne[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightProjection[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0YThe [10XRightProjection[110X of a bipartition [3Xx[103X is the bipartition [10XStar([3Xx[103X[10X) * [3Xx[103X[10X[110X. It is
@@ -249,8 +249,8 @@
   
   [1X3.2-6 StarOp[101X
   
-  [29X[2XStarOp[102X( [3Xx[103X ) [32X operation
-  [29X[2XStar[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStarOp[102X( [3Xx[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStar[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0Y[10XStarOp[110X  returns the unique bipartition [10Xg[110X with the property that: [10X[3Xx[103X[10X * g * [3Xx[103X[10X =
@@ -275,8 +275,8 @@
   
   [1X3.2-7 RandomBipartition[101X
   
-  [29X[2XRandomBipartition[102X( [[3Xrs[103X, ][3Xn[103X ) [32X operation
-  [29X[2XRandomBlockBijection[102X( [[3Xrs[103X, ][3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XRandomBipartition[102X( [[3Xrs[103X, ][3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomBlockBijection[102X( [[3Xrs[103X, ][3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  [10XRandomBipartition[110X  returns  a random
@@ -311,7 +311,7 @@
   
   [1X3.3-1 AsBipartition[101X
   
-  [29X[2XAsBipartition[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAsBipartition[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0Y[10XAsBipartition[110X  returns  the  bipartition,  permutation,  transformation,  or
@@ -415,7 +415,7 @@
   
   [1X3.3-2 AsBlockBijection[101X
   
-  [29X[2XAsBlockBijection[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAsBlockBijection[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA block bijection.[133X
   
   [33X[0;0YWhen  the  argument [3Xx[103X is a partial perm and [3Xn[103X is a positive integer which is
@@ -460,7 +460,7 @@
   
   [1X3.3-3 AsTransformation[101X
   
-  [29X[2XAsTransformation[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsTransformation[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA transformation.[133X
   
   [33X[0;0YWhen  the  argument  [3Xx[103X  is  a  bipartition,  that  mathematically  defines a
@@ -488,7 +488,7 @@
   
   [1X3.3-4 AsPartialPerm[101X
   
-  [29X[2XAsPartialPerm[102X( [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsPartialPerm[102X( [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA partial perm.[133X
   
   [33X[0;0YWhen  the  argument [3Xx[103X is a bipartition that mathematically defines a partial
@@ -517,7 +517,7 @@
   
   [1X3.3-5 AsPermutation[101X
   
-  [29X[2XAsPermutation[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsPermutation[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA permutation.[133X
   
   [33X[0;0YWhen  the  argument  [3Xx[103X  is  a  bipartition  that  mathematically  defines  a
@@ -555,7 +555,7 @@
   
   [1X3.4-1 PartialPermLeqBipartition[101X
   
-  [29X[2XPartialPermLeqBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [33X[1;0Y[29X[2XPartialPermLeqBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf   [3Xx[103X   and   [3Xy[103X   are   partial   perm   bipartitions,  i.e.  they  satisfy
@@ -564,7 +564,7 @@
   
   [1X3.4-2 NaturalLeqPartialPermBipartition[101X
   
-  [29X[2XNaturalLeqPartialPermBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalLeqPartialPermBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe [13Xnatural partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X [22X≤[122X [10Xt[110X if
@@ -579,7 +579,7 @@
   
   [1X3.4-3 NaturalLeqBlockBijection[101X
   
-  [29X[2XNaturalLeqBlockBijection[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalLeqBlockBijection[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe [13Xnatural partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X [22X≤[122X [10Xt[110X if
@@ -611,7 +611,7 @@
   
   [1X3.4-4 PermLeftQuoBipartition[101X
   
-  [29X[2XPermLeftQuoBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [33X[1;0Y[29X[2XPermLeftQuoBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA permutation.[133X
   
   [33X[0;0YIf  [3Xx[103X  and  [3Xy[103X  are  bipartitions  with  equal  left  and  right blocks, then
@@ -641,8 +641,8 @@
   
   [1X3.5-1 DegreeOfBipartition[101X
   
-  [29X[2XDegreeOfBipartition[102X( [3Xx[103X ) [32X attribute
-  [29X[2XDegreeOfBipartitionCollection[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfBipartition[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDegreeOfBipartitionCollection[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YThe degree of a bipartition is, roughly speaking, the number of points where
@@ -669,8 +669,8 @@
   
   [1X3.5-2 RankOfBipartition[101X
   
-  [29X[2XRankOfBipartition[102X( [3Xx[103X ) [32X attribute
-  [29X[2XNrTransverseBlocks[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRankOfBipartition[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrTransverseBlocks[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe rank of a bipartition.[133X
   
   [33X[0;0YWhen  the  argument is a bipartition [3Xx[103X, [10XRankOfBipartition[110X returns the number
@@ -690,7 +690,7 @@
   
   [1X3.5-3 ExtRepOfObj[101X
   
-  [29X[2XExtRepOfObj[102X( [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtRepOfObj[102X( [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA partition of [10X[1 .. 2 * n][110X.[133X
   
   [33X[0;0YIf  [10Xn[110X  is  the  degree  of  the  bipartition [3Xx[103X, then [10XExtRepOfObj[110X returns the
@@ -706,7 +706,7 @@
   
   [1X3.5-4 IntRepOfBipartition[101X
   
-  [29X[2XIntRepOfBipartition[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIntRepOfBipartition[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of positive integers.[133X
   
   [33X[0;0YIf  [3Xx[103X  is  a bipartition with degree [10Xn[110X, then [10XIntRepOfBipartition[110X returns the
@@ -729,7 +729,7 @@
   
   [1X3.5-5 RightBlocks[101X
   
-  [29X[2XRightBlocks[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRightBlocks[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe right blocks of a bipartition.[133X
   
   [33X[0;0Y[10XRightBlocks[110X returns the right blocks of the bipartition [3Xx[103X.[133X
@@ -756,7 +756,7 @@
   
   [1X3.5-6 LeftBlocks[101X
   
-  [29X[2XLeftBlocks[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLeftBlocks[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe left blocks of a bipartition.[133X
   
   [33X[0;0Y[10XLeftBlocks[110X returns the left blocks of the bipartition [3Xx[103X.[133X
@@ -783,7 +783,7 @@
   
   [1X3.5-7 NrLeftBlocks[101X
   
-  [29X[2XNrLeftBlocks[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrLeftBlocks[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YWhen  the  argument  is  a bipartition [3Xx[103X, [10XNrLeftBlocks[110X returns the number of
@@ -801,7 +801,7 @@
   
   [1X3.5-8 NrRightBlocks[101X
   
-  [29X[2XNrRightBlocks[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrRightBlocks[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YWhen  the  argument  is a bipartition [3Xx[103X, [10XNrRightBlocks[110X returns the number of
@@ -819,8 +819,8 @@
   
   [1X3.5-9 NrBlocks[101X
   
-  [29X[2XNrBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [29X[2XNrBlocks[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrBlocks[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YIf  [3Xblocks[103X  is  some blocks or [3Xf[103X is a bipartition, then [10XNrBlocks[110X returns the
@@ -841,7 +841,7 @@
   
   [1X3.5-10 DomainOfBipartition[101X
   
-  [29X[2XDomainOfBipartition[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDomainOfBipartition[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of positive integers.[133X
   
   [33X[0;0YIf [3Xx[103X is a bipartition, then [10XDomainOfBipartition[110X returns the domain of [3Xx[103X. The
@@ -860,7 +860,7 @@
   
   [1X3.5-11 CodomainOfBipartition[101X
   
-  [29X[2XCodomainOfBipartition[102X( [3Xx[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCodomainOfBipartition[102X( [3Xx[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of positive integers.[133X
   
   [33X[0;0YIf [3Xx[103X is a bipartition, then [10XCodomainOfBipartition[110X returns the codomain of [3Xx[103X.
@@ -879,7 +879,7 @@
   
   [1X3.5-12 IsTransBipartition[101X
   
-  [29X[2XIsTransBipartition[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTransBipartition[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  bipartition  [3Xx[103X  defines  a  transformation, then [10XIsTransBipartition[110X
@@ -905,7 +905,7 @@
   
   [1X3.5-13 IsDualTransBipartition[101X
   
-  [29X[2XIsDualTransBipartition[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsDualTransBipartition[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf   the   star   of  the  bipartition  [3Xx[103X  defines  a  transformation,  then
@@ -931,7 +931,7 @@
   
   [1X3.5-14 IsPermBipartition[101X
   
-  [29X[2XIsPermBipartition[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPermBipartition[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  bipartition [3Xx[103X defines a permutation, then [10XIsPermBipartition[110X returns
@@ -953,7 +953,7 @@
   
   [1X3.5-15 IsPartialPermBipartition[101X
   
-  [29X[2XIsPartialPermBipartition[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPartialPermBipartition[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf    the    bipartition    [3Xx[103X    defines   a   partial   permutation,   then
@@ -977,7 +977,7 @@
   
   [1X3.5-16 IsBlockBijection[101X
   
-  [29X[2XIsBlockBijection[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBlockBijection[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  bipartition  [3Xx[103X induces a bijection from the quotient of [10X[1 .. n][110X by
@@ -999,7 +999,7 @@
   
   [1X3.5-17 IsUniformBlockBijection[101X
   
-  [29X[2XIsUniformBlockBijection[102X( [3Xx[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUniformBlockBijection[102X( [3Xx[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  the  bipartition  [3Xx[103X  is  a block bijection where every block contains an
@@ -1019,7 +1019,7 @@
   
   [1X3.5-18 CanonicalBlocks[101X
   
-  [29X[2XCanonicalBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YBlocks of a bipartition.[133X
   
   [33X[0;0YIf  [3Xblocks[103X is the blocks of a bipartition, then the function [10XCanonicalBlocks[110X
@@ -1052,7 +1052,7 @@
   
   [1X3.6-1 IsBlocks[101X
   
-  [29X[2XIsBlocks[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBlocks[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  blocks  object  in  [5XGAP[105X  belongs  to  the  category  [10XIsBlocks[110X.  Basic
@@ -1061,7 +1061,7 @@
   
   [1X3.6-2 BlocksNC[101X
   
-  [29X[2XBlocksNC[102X( [3Xclasses[103X ) [32X function
+  [33X[1;0Y[29X[2XBlocksNC[102X( [3Xclasses[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA blocks.[133X
   
   [33X[0;0YThis  function makes it possible to create a [5XGAP[105X object corresponding to the
@@ -1083,7 +1083,7 @@
   
   [1X3.6-3 ExtRepOfObj[101X
   
-  [29X[2XExtRepOfObj[102X( [3Xblocks[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtRepOfObj[102X( [3Xblocks[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of integers.[133X
   
   [33X[0;0YIf  [10Xn[110X  is the degree of a bipartition with left or right blocks [3Xblocks[103X, then
@@ -1098,8 +1098,8 @@
   
   [1X3.6-4 RankOfBlocks[101X
   
-  [29X[2XRankOfBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [29X[2XNrTransverseBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRankOfBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrTransverseBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YWhen  the  argument  [3Xblocks[103X  is  the  left or right blocks of a bipartition,
@@ -1117,7 +1117,7 @@
   
   [1X3.6-5 DegreeOfBlocks[101X
   
-  [29X[2XDegreeOfBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YThe degree of [3Xblocks[103X is the number of points [10Xn[110X where it is defined, i.e. the
@@ -1133,7 +1133,7 @@
   
   [1X3.6-6 ProjectionFromBlocks[101X
   
-  [29X[2XProjectionFromBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [33X[1;0Y[29X[2XProjectionFromBlocks[102X( [3Xblocks[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
   [33X[0;0YWhen  the argument [3Xblocks[103X is the left or right blocks of a bipartition, this
@@ -1165,7 +1165,7 @@
   
   [1X3.7-1 OnRightBlocks[101X
   
-  [29X[2XOnRightBlocks[102X( [3Xblocks[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XOnRightBlocks[102X( [3Xblocks[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
   
   [33X[0;0Y[10XOnRightBlocks[110X  returns  the right blocks of the product [10Xg * [3Xx[103X[10X[110X where [10Xg[110X is any
@@ -1184,7 +1184,7 @@
   
   [1X3.7-2 OnLeftBlocks[101X
   
-  [29X[2XOnLeftBlocks[102X( [3Xblocks[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XOnLeftBlocks[102X( [3Xblocks[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
   
   [33X[0;0Y[10XOnLeftBlocks[110X  returns  the  left  blocks of the product [10X[3Xx[103X[10X * y[110X where [10Xy[110X is any
@@ -1217,8 +1217,8 @@
   
   [1X3.8-1 IsBipartitionSemigroup[101X
   
-  [29X[2XIsBipartitionSemigroup[102X( [3XS[103X ) [32X filter
-  [29X[2XIsBipartitionMonoid[102X( [3XS[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsBipartitionSemigroup[102X( [3XS[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBipartitionMonoid[102X( [3XS[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA [13Xbipartition semigroup[113X is simply a semigroup consisting of bipartitions. An
@@ -1267,8 +1267,8 @@
   
   [1X3.8-2 IsBlockBijectionSemigroup[101X
   
-  [29X[2XIsBlockBijectionSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsBlockBijectionMonoid[102X( [3XS[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsBlockBijectionSemigroup[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBlockBijectionMonoid[102X( [3XS[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  [13Xblock  bijection  semigroup[113X  is  simply  a  semigroup consisting of block
@@ -1282,8 +1282,8 @@
   
   [1X3.8-3 IsPartialPermBipartitionSemigroup[101X
   
-  [29X[2XIsPartialPermBipartitionSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsPartialPermBipartitionMonoid[102X( [3XS[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsPartialPermBipartitionSemigroup[102X( [3XS[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPartialPermBipartitionMonoid[102X( [3XS[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  [13Xpartial  perm  bipartition  semigroup[113X is simply a semigroup consisting of
@@ -1297,7 +1297,7 @@
   
   [1X3.8-4 IsPermBipartitionGroup[101X
   
-  [29X[2XIsPermBipartitionGroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPermBipartitionGroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA   [13Xperm  bipartition  group[113X  is  simply  a  semigroup  consisting  of  perm
@@ -1307,7 +1307,7 @@
   
   [1X3.8-5 DegreeOfBipartitionSemigroup[101X
   
-  [29X[2XDegreeOfBipartitionSemigroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfBipartitionSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YThe  [13Xdegree[113X  of  a  bipartition  semigroup  [3XS[103X is just the degree of any (and

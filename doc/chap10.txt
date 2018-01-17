@@ -56,9 +56,9 @@
   
   [1X10.1-1 FreeInverseSemigroup[101X
   
-  [29X[2XFreeInverseSemigroup[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
-  [29X[2XFreeInverseSemigroup[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
-  [29X[2XFreeInverseSemigroup[102X( [3Xnames[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeInverseSemigroup[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeInverseSemigroup[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeInverseSemigroup[102X( [3Xnames[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA free inverse semigroup.[133X
   
   [33X[0;0YReturns  a  free  inverse  semigroup  on  [3Xrank[103X  generators,  where [3Xrank[103X is a
@@ -85,7 +85,7 @@
   
   [1X10.1-2 IsFreeInverseSemigroupCategory[101X
   
-  [29X[2XIsFreeInverseSemigroupCategory[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFreeInverseSemigroupCategory[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery free inverse semigroup in [5XGAP[105X created by [2XFreeInverseSemigroup[102X ([14X10.1-1[114X)
   belongs  to the category [10XIsFreeInverseSemigroup[110X. Basic operations for a free
@@ -96,7 +96,7 @@
   
   [1X10.1-3 IsFreeInverseSemigroup[101X
   
-  [29X[2XIsFreeInverseSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFreeInverseSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YAttempts  to  determine  whether  the  given  semigroup  [3XS[103X is a free inverse
@@ -104,14 +104,14 @@
   
   [1X10.1-4 IsFreeInverseSemigroupElement[101X
   
-  [29X[2XIsFreeInverseSemigroupElement[102X[32X Category
+  [33X[1;0Y[29X[2XIsFreeInverseSemigroupElement[102X[32X Category[133X
   
   [33X[0;0YEvery   element  of  a  free  inverse  semigroup  belongs  to  the  category
   [10XIsFreeInverseSemigroupElement[110X.[133X
   
   [1X10.1-5 IsFreeInverseSemigroupElementCollection[101X
   
-  [29X[2XIsFreeInverseSemigroupElementCollection[102X[32X Category
+  [33X[1;0Y[29X[2XIsFreeInverseSemigroupElementCollection[102X[32X Category[133X
   
   [33X[0;0YEvery  collection  of  elements  of  a free inverse semigroup belongs to the
   category  [10XIsFreeInverseSemigroupElementCollection[110X.  For  example, every free
@@ -166,7 +166,7 @@
   
   [1X10.3-1 CanonicalForm[101X
   
-  [29X[2XCanonicalForm[102X( [3Xw[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalForm[102X( [3Xw[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YEvery  element of a free inverse semigroup has a unique canonical form. If [3Xw[103X
@@ -185,7 +185,7 @@
   
   [1X10.3-2 MinimalWord[101X
   
-  [29X[2XMinimalWord[102X( [3Xw[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimalWord[102X( [3Xw[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YFor  an  element [3Xw[103X of a free inverse semigroup [10XS[110X, [10XMinimalWord[110X returns a word
@@ -228,9 +228,9 @@
   
   [1X10.4-1 FreeBand[101X
   
-  [29X[2XFreeBand[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
-  [29X[2XFreeBand[102X( [3Xname1[103X, [3Xname2[103X, [3X..[103X, [3X.[103X ) [32X function
-  [29X[2XFreeBand[102X( [3Xnames[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeBand[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeBand[102X( [3Xname1[103X, [3Xname2[103X, [3X..[103X, [3X.[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeBand[102X( [3Xnames[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA free band.[133X
   
   [33X[0;0YReturns a free band on [3Xrank[103X generators, for a positive integer [3Xrank[103X. If [3Xrank[103X
@@ -258,7 +258,7 @@
   
   [1X10.4-2 IsFreeBandCategory[101X
   
-  [29X[2XIsFreeBandCategory[102X[32X Category
+  [33X[1;0Y[29X[2XIsFreeBandCategory[102X[32X Category[133X
   
   [33X[0;0Y[10XIsFreeBandCategory[110X  is  the  category  of  semigroups created using [2XFreeBand[102X
   ([14X10.4-1[114X).[133X
@@ -272,7 +272,7 @@
   
   [1X10.4-3 IsFreeBand[101X
   
-  [29X[2XIsFreeBand[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFreeBand[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsFreeBand[110X returns [9Xtrue[109X if the given semigroup [3XS[103X is a free band.[133X
@@ -288,7 +288,7 @@
   
   [1X10.4-4 IsFreeBandElement[101X
   
-  [29X[2XIsFreeBandElement[102X[32X Category
+  [33X[1;0Y[29X[2XIsFreeBandElement[102X[32X Category[133X
   
   [33X[0;0Y[10XIsFreeBandElement[110X is a [10XCategory[110X containing the elements of a free band.[133X
   
@@ -303,7 +303,7 @@
   
   [1X10.4-5 IsFreeBandElementCollection[101X
   
-  [29X[2XIsFreeBandElementCollection[102X[32X Category
+  [33X[1;0Y[29X[2XIsFreeBandElementCollection[102X[32X Category[133X
   
   [33X[0;0YEvery  collection  of  elements  of  a  free  band  belongs  to the category
   [10XIsFreeBandElementCollection[110X.   For  example,  every  free  band  belongs  to
@@ -311,7 +311,7 @@
   
   [1X10.4-6 IsFreeBandSubsemigroup[101X
   
-  [29X[2XIsFreeBandSubsemigroup[102X[32X filter
+  [33X[1;0Y[29X[2XIsFreeBandSubsemigroup[102X[32X filter[133X
   
   [33X[0;0Y[10XIsFreeBandSubsemigroup[110X     is     a     synonym    for    [10XIsSemigroup[110X    and
   [10XIsFreeBandElementCollection[110X.[133X
@@ -333,8 +333,8 @@
   
   [1X10.4-7 ContentOfFreeBandElement[101X
   
-  [29X[2XContentOfFreeBandElement[102X( [3Xx[103X ) [32X attribute
-  [29X[2XContentOfFreeBandElementCollection[102X( [3Xcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XContentOfFreeBandElement[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XContentOfFreeBandElementCollection[102X( [3Xcoll[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of integers[133X
   
   [33X[0;0YThe  content  of a free band element [3Xx[103X is the set of generators appearing in
@@ -380,7 +380,7 @@
   
   [1X10.5-1 GreensDClassOfElement[101X
   
-  [29X[2XGreensDClassOfElement[102X( [3XS[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XGreensDClassOfElement[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Green's [13XD[113X-class[133X
   
   [33X[0;0YLet  [3XS[103X be a free band. Two elements of [3X S [103X are [13XD[113X-related if and only if they

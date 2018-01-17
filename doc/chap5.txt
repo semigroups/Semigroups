@@ -58,7 +58,7 @@
   
   [1X5.1-1 IsMatrixOverSemiring[101X
   
-  [29X[2XIsMatrixOverSemiring[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrixOverSemiring[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of the category
@@ -75,8 +75,8 @@
   
   [1X5.1-2 IsMatrixOverSemiringCollection[101X
   
-  [29X[2XIsMatrixOverSemiringCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverSemiringCollColl[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrixOverSemiringCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverSemiringCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  collection of matrices over the same semiring belongs to the category
@@ -90,7 +90,7 @@
   
   [1X5.1-3 DimensionOfMatrixOverSemiring[101X
   
-  [29X[2XDimensionOfMatrixOverSemiring[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDimensionOfMatrixOverSemiring[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  a  matrix  over  a  semiring  (i.e.  belongs  to  the  category
@@ -110,7 +110,7 @@
   
   [1X5.1-4 DimensionOfMatrixOverSemiringCollection[101X
   
-  [29X[2XDimensionOfMatrixOverSemiringCollection[102X( [3Xcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDimensionOfMatrixOverSemiringCollection[102X( [3Xcoll[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YIf  [3Xcoll[103X  is  a  collection of matrices over a semiring (i.e. belongs to the
@@ -131,8 +131,8 @@
   
   [1X5.1-5 Matrix[101X
   
-  [29X[2XMatrix[102X( [3Xfilt[103X, [3Xmat[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X operation
-  [29X[2XMatrix[102X( [3Xsemiring[103X, [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XMatrix[102X( [3Xfilt[103X, [3Xmat[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X operation[133X
+  [33X[1;0Y[29X[2XMatrix[102X( [3Xsemiring[103X, [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA matrix over semiring.[133X
   
   [33X[0;0YThis  operation  can  be  used  to  construct  a  matrix  over a semiring in
@@ -218,9 +218,9 @@
   
   [1X5.1-6 AsMatrix[101X
   
-  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X ) [32X operation
-  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X ) [32X operation
-  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X, [3Xperiod[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X, [3Xperiod[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA matrix.[133X
   
   [33X[0;0YThis  operation can be used to change the representation of certain matrices
@@ -308,8 +308,8 @@
   
   [1X5.1-7 RandomMatrix[101X
   
-  [29X[2XRandomMatrix[102X( [3Xfilt[103X, [3Xdim[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X function
-  [29X[2XRandomMatrix[102X( [3Xsemiring[103X, [3Xdim[103X ) [32X function
+  [33X[1;0Y[29X[2XRandomMatrix[102X( [3Xfilt[103X, [3Xdim[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomMatrix[102X( [3Xsemiring[103X, [3Xdim[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA matrix over semiring.[133X
   
   [33X[0;0YThis  operation  can be used to construct a random matrix over a semiring in
@@ -366,15 +366,15 @@
   
   [1X5.1-8 [33X[0;0YMatrix filters[133X[101X
   
-  [29X[2XIsBooleanMat[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverFiniteField[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMinPlusMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMinPlusMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNTPMatrix[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsIntegerMatrix[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBooleanMat[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteField[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMinPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMinPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNTPMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsIntegerMatrix[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of one of these
@@ -397,23 +397,23 @@
   
   [1X5.1-9 [33X[0;0YMatrix collection filters[133X[101X
   
-  [29X[2XIsBooleanMatCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsBooleanMatCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverFiniteFieldCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverFiniteFieldCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNTPMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNTPMatrixCollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsIntegerMatrixCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsIntegerMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBooleanMatCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBooleanMatCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNTPMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNTPMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsIntegerMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsIntegerMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery collection of matrices over the same semiring in [5XSemigroups[105X belongs to
@@ -425,8 +425,8 @@
   
   [1X5.1-10 AsList[101X
   
-  [29X[2XAsList[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XAsMutableList[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsList[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsMutableList[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of lists.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  a  matrix over a semiring (in the category [2XIsMatrixOverSemiring[102X
@@ -464,7 +464,7 @@
   
   [1X5.1-11 ThresholdTropicalMatrix[101X
   
-  [29X[2XThresholdTropicalMatrix[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XThresholdTropicalMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is a tropical matrix (i.e. belongs to the category [2XIsTropicalMatrix[102X
@@ -494,8 +494,8 @@
   
   [1X5.1-12 ThresholdNTPMatrix[101X
   
-  [29X[2XThresholdNTPMatrix[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XPeriodNTPMatrix[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XThresholdNTPMatrix[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPeriodNTPMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YAn  [12Xntp matrix[112X is a matrix with entries in a semiring [22XN_t,p = {0, 1, ..., t,
@@ -579,7 +579,7 @@
   
   [1X5.3-1 BooleanMat[101X
   
-  [29X[2XBooleanMat[102X( [3Xarg[103X ) [32X function
+  [33X[1;0Y[29X[2XBooleanMat[102X( [3Xarg[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
   
   [33X[0;0Y[10XBooleanMat[110X  returns  the  boolean  matrix  [10Xmat[110X  defined by its argument. The
@@ -619,7 +619,7 @@
   
   [1X5.3-2 AsBooleanMat[101X
   
-  [29X[2XAsBooleanMat[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAsBooleanMat[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
   
   [33X[0;0Y[10XAsBooleanMat[110X  returns  the pbr, bipartition, permutation, transformation, or
@@ -764,7 +764,7 @@
   
   [1X5.3-3 \in[101X
   
-  [29X[2X\in[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation
+  [33X[1;0Y[29X[2X\in[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf [3Xmat1[103X and [3Xmat2[103X are boolean matrices, then [10X[3Xmat1[103X[10X in [3Xmat2[103X[10X[110X returns [9Xtrue[109X if the
@@ -783,7 +783,7 @@
   
   [1X5.3-4 OnBlist[101X
   
-  [29X[2XOnBlist[102X( [3Xblist[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XOnBlist[102X( [3Xblist[103X, [3Xmat[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA boolean list.[133X
   
   [33X[0;0YIf  [3Xblist[103X  is  a  boolean  list  of  length [10Xn[110X and [3Xmat[103X is boolean matrices of
@@ -803,7 +803,7 @@
   
   [1X5.3-5 Successors[101X
   
-  [29X[2XSuccessors[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSuccessors[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of lists of positive integers.[133X
   
   [33X[0;0YA  row  of  a  boolean  matrix  of  dimension  [10Xn[110X can be thought of of as the
@@ -825,8 +825,8 @@
   
   [1X5.3-6 BooleanMatNumber[101X
   
-  [29X[2XBooleanMatNumber[102X( [3Xm[103X, [3Xn[103X ) [32X operation
-  [29X[2XNumberBooleanMat[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XBooleanMatNumber[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberBooleanMat[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA boolean matrix, or a positive integer.[133X
   
   [33X[0;0YThese  functions  implement a bijection from the set of all boolean matrices
@@ -854,8 +854,8 @@
   
   [1X5.3-7 BlistNumber[101X
   
-  [29X[2XBlistNumber[102X( [3Xm[103X, [3Xn[103X ) [32X function
-  [29X[2XNumberBlist[102X( [3Xblist[103X ) [32X function
+  [33X[1;0Y[29X[2XBlistNumber[102X( [3Xm[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNumberBlist[102X( [3Xblist[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA boolean list, or a positive integer.[133X
   
   [33X[0;0YThese  functions  implement a bijection from the set of all boolean lists of
@@ -888,9 +888,9 @@
   
   [1X5.3-8 CanonicalBooleanMat[101X
   
-  [29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3XH[103X, [3Xmat[103X ) [32X operation
-  [29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3Xmat[103X ) [32X operation
-  [29X[2XCanonicalBooleanMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3XH[103X, [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCanonicalBooleanMat[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
   
   [33X[0;0YThis  operation  returns  a fixed representative of the orbit of the boolean
@@ -949,9 +949,9 @@
   
   [1X5.3-9 IsRowTrimBooleanMat[101X
   
-  [29X[2XIsRowTrimBooleanMat[102X( [3Xmat[103X ) [32X property
-  [29X[2XIsColTrimBooleanMat[102X( [3Xmat[103X ) [32X property
-  [29X[2XIsTrimBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRowTrimBooleanMat[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsColTrimBooleanMat[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsTrimBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  row  or column of a boolean matrix of dimension [10Xn[110X can be thought of of as
@@ -982,7 +982,7 @@
   
   [1X5.3-10 IsSymmetricBooleanMat[101X
   
-  [29X[2XIsSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix  is [12Xsymmetric[112X if it is symmetric about the main diagonal,
@@ -1010,7 +1010,7 @@
   
   [1X5.3-11 IsReflexiveBooleanMat[101X
   
-  [29X[2XIsReflexiveBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsReflexiveBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix is [12Xreflexive[112X if every entry in the main diagonal is [9Xtrue[109X,
@@ -1038,7 +1038,7 @@
   
   [1X5.3-12 IsTransitiveBooleanMat[101X
   
-  [29X[2XIsTransitiveBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTransitiveBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean matrix is [12Xtransitive[112X if whenever [10X[3Xmat[103X[10X[i][j] = true[110X and [10X[3Xmat[103X[10X[j][k] =
@@ -1065,7 +1065,7 @@
   
   [1X5.3-13 IsAntiSymmetricBooleanMat[101X
   
-  [29X[2XIsAntiSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsAntiSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix  is  [12Xanti-symmetric[112X  if  whenever  [10X[3Xmat[103X[10X[i][j]  =  true[110X and
@@ -1092,8 +1092,8 @@
   
   [1X5.3-14 IsTotalBooleanMat[101X
   
-  [29X[2XIsTotalBooleanMat[102X( [3Xmat[103X ) [32X property
-  [29X[2XIsOntoBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTotalBooleanMat[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsOntoBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix  is  [12Xtotal[112X if there is at least one entry in every row is
@@ -1125,7 +1125,7 @@
   
   [1X5.3-15 IsPartialOrderBooleanMat[101X
   
-  [29X[2XIsPartialOrderBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPartialOrderBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix  is  a  [12Xpartial order[112X if it is reflexive, transitive, and
@@ -1138,7 +1138,7 @@
   
   [1X5.3-16 IsEquivalenceBooleanMat[101X
   
-  [29X[2XIsEquivalenceBooleanMat[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEquivalenceBooleanMat[102X( [3Xmat[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  boolean  matrix  is  an  [12Xequivalence[112X  if it is reflexive, transitive, and
@@ -1161,7 +1161,7 @@
   
   [1X5.4-1 NewMatrixOverFiniteField[101X
   
-  [29X[2XNewMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xrows[103X ) [32X operation
+  [33X[1;0Y[29X[2XNewMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xrows[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya new matrix object.[133X
   
   [33X[0;0YCreates a new [3Xn[103X-by-[3Xn[103X matrix over the finite field [3XF[103X with constructing filter
@@ -1181,8 +1181,8 @@
   
   [1X5.4-2 IdentityMatrixOverFiniteField[101X
   
-  [29X[2XIdentityMatrixOverFiniteField[102X( [3XF[103X, [3Xn[103X ) [32X operation
-  [29X[2XIdentityMatrixOverFiniteField[102X( [3Xmat[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XIdentityMatrixOverFiniteField[102X( [3XF[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIdentityMatrixOverFiniteField[102X( [3Xmat[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YGiven  a  finite field [3XF[103X and a positive integer [3Xn[103X, this operation returns an
   [3Xn[103X-by-[3Xn[103X  identity  matrix  with entries in the finite field [3XF[103X. If instead the
@@ -1201,8 +1201,8 @@
   
   [1X5.4-3 NewIdentityMatrixOverFiniteField[101X
   
-  [29X[2XNewIdentityMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
-  [29X[2XNewZeroMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XNewIdentityMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNewZeroMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YCreates  a  new  [3Xn[103X-by-[3Xn[103X  zero  or identity matrix with entries in the finite
   field [3XF[103X.[133X
@@ -1218,9 +1218,9 @@
   
   [1X5.4-4 RowSpaceBasis[101X
   
-  [29X[2XRowSpaceBasis[102X( [3Xm[103X ) [32X attribute
-  [29X[2XRowSpaceTransformation[102X( [3Xm[103X ) [32X attribute
-  [29X[2XRowSpaceTransformationInv[102X( [3Xm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRowSpaceBasis[102X( [3Xm[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRowSpaceTransformation[102X( [3Xm[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRowSpaceTransformationInv[102X( [3Xm[103X ) [32X attribute[133X
   
   [33X[0;0YTo  compute  the value of any of the above attributes, a canonical basis for
   the   row   space   of  [3Xm[103X  is  computed  along  with  an  invertible  matrix
@@ -1241,7 +1241,7 @@
   
   [1X5.4-5 RowRank[101X
   
-  [29X[2XRowRank[102X( [3Xm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRowRank[102X( [3Xm[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YLength of a basis of the row space of [3Xm[103X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1254,8 +1254,8 @@
   
   [1X5.4-6 RightInverse[101X
   
-  [29X[2XRightInverse[102X( [3Xm[103X ) [32X attribute
-  [29X[2XLeftInverse[102X( [3Xm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRightInverse[102X( [3Xm[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftInverse[102X( [3Xm[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA matrix over a finite field.[133X
   
   [33X[0;0YThese   attributes   contain  a  semigroup  left-inverse,  and  a  semigroup
@@ -1276,7 +1276,7 @@
   
   [1X5.4-7 BaseDomain[101X
   
-  [29X[2XBaseDomain[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBaseDomain[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YIf  [3Xmat[103X  is  a  matrix  over  a  finite  field  (in  the  category
             [2XIsMatrixOverSemiring[102X  ([14X5.1-1[114X)), then [10XBaseDomain[110X returns the finite
             field  specified at the point that [3Xmat[103X was created. Every entry in
@@ -1292,7 +1292,7 @@
   
   [1X5.4-8 TransposedMatImmutable[101X
   
-  [29X[2XTransposedMatImmutable[102X( [3Xm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTransposedMatImmutable[102X( [3Xm[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn immutable matrix.[133X
   
   [33X[0;0YThis  attribute  contains  an  immutable  copy  of [3Xm[103X. Note that matrices are
@@ -1322,7 +1322,7 @@
   
   [1X5.5-1 InverseOp[101X
   
-  [29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn integer matrix.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
@@ -1344,7 +1344,7 @@
   
   [1X5.5-2 IsTorsion[101X
   
-  [29X[2XIsTorsion[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsTorsion[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
@@ -1369,7 +1369,7 @@
   
   [1X5.5-3 Order[101X
   
-  [29X[2XOrder[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrder[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn integer or [10Xinfinity[110X.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
@@ -1409,7 +1409,7 @@
   
   [1X5.6-1 InverseOp[101X
   
-  [29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA max-plus matrix.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  an  invertible  max-plus  matrix  (i.e. belongs to the category
@@ -1427,7 +1427,7 @@
   
   [1X5.6-2 RadialEigenvector[101X
   
-  [29X[2XRadialEigenvector[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XRadialEigenvector[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA vector.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  a  [10Xn[110X  by  [10Xn[110X  max-plus  matrix  (i.e.  belongs  to  the category
@@ -1442,7 +1442,7 @@
   
   [1X5.6-3 SpectralRadius[101X
   
-  [29X[2XSpectralRadius[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpectralRadius[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA rational number.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  a max-plus matrix (i.e. belongs to the category [2XIsMaxPlusMatrix[102X
@@ -1458,7 +1458,7 @@
   
   [1X5.6-4 UnweightedPrecedenceDigraph[101X
   
-  [29X[2XUnweightedPrecedenceDigraph[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnweightedPrecedenceDigraph[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA digraph.[133X
   
   [33X[0;0YIf  [3Xmat[103X  is  a max-plus matrix (i.e. belongs to the category [2XIsMaxPlusMatrix[102X
@@ -1504,16 +1504,16 @@
   
   [1X5.7-1 [33X[0;0YMatrix semigroup filters[133X[101X
   
-  [29X[2XIsMatrixOverSemiringSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsBooleanMatSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverFiniteFieldSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNTPMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsIntegerMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrixOverSemiringSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBooleanMatSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNTPMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsIntegerMatrixSemigroup[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  above  are  the  currently  supported  types  of matrix semigroups. For
@@ -1522,16 +1522,16 @@
   
   [1X5.7-2 [33X[0;0YMatrix monoid filters[133X[101X
   
-  [29X[2XIsMatrixOverSemiringMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsBooleanMatMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMatrixOverFiniteFieldMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsTropicalMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNTPMatrixMonoid[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsIntegerMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrixOverSemiringMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBooleanMatMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsTropicalMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNTPMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsIntegerMatrixMonoid[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  above  are  the  currently  supported  types  of  matrix  monoids. They
@@ -1541,7 +1541,7 @@
   
   [1X5.7-3 IsFinite[101X
   
-  [29X[2XIsFinite[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFinite[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  [3XS[103X  is  a  max-plus  or  min-plus  matrix  semigroup (i.e. belongs to the
@@ -1574,7 +1574,7 @@
   
   [1X5.7-4 IsTorsion[101X
   
-  [29X[2XIsTorsion[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsTorsion[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf  [3XS[103X  is  a  max-plus  matrix  semigroup  (i.e.  belongs  to  the  category
@@ -1596,7 +1596,7 @@
   
   [1X5.7-5 NormalizeSemigroup[101X
   
-  [29X[2XNormalizeSemigroup[102X( [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XNormalizeSemigroup[102X( [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0YThis  method  applies to max-plus matrix semigroups (i.e. those belonging to
@@ -1634,7 +1634,7 @@
   
   [1X5.7-7 IsMatrixOverFiniteFieldGroup[101X
   
-  [29X[2XIsMatrixOverFiniteFieldGroup[102X( [3XG[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldGroup[102X( [3XG[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA [13Xmatrix group[113X is simply a group of invertible matrices over a finite field.
@@ -1657,7 +1657,7 @@
   
   [1X5.7-8 \^[101X
   
-  [29X[2X\^[102X( [3XG[103X, [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2X\^[102X( [3XG[103X, [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA matrix group over a finite field.[133X
   
   [33X[0;0YThe   arguments   of   this   operation,  [3XG[103X  and  [3Xmat[103X,  must  be  categories
@@ -1676,7 +1676,7 @@
   
   [1X5.7-9 IsomorphismMatrixGroup[101X
   
-  [29X[2XIsomorphismMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismMatrixGroup[102X( [3XG[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  [3XG[103X  belongs  to  the  category [2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X), then
@@ -1697,7 +1697,7 @@
   
   [1X5.7-10 AsMatrixGroup[101X
   
-  [29X[2XAsMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsMatrixGroup[102X( [3XG[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA group of [5XGAP[105X library matrices over a finite field.[133X
   
   [33X[0;0YReturns the image of the isomorphism returned by [14X5.7-9[114X.[133X

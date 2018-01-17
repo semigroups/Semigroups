@@ -32,7 +32,7 @@
   
   [1X15.1-1 NaturalLeqInverseSemigroup[101X
   
-  [29X[2XNaturalLeqInverseSemigroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNaturalLeqInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn function.[133X
   
   [33X[0;0Y[10XNaturalLeqInverseSemigroup[110X  returns a function that, when given two elements
@@ -53,7 +53,7 @@
   
   [1X15.1-2 JoinIrreducibleDClasses[101X
   
-  [29X[2XJoinIrreducibleDClasses[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XJoinIrreducibleDClasses[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of [13XD[113X-classes.[133X
   
   [33X[0;0Y[10XJoinIrreducibleDClasses[110X  returns a list of the join irreducible [13XD[113X-classes of
@@ -87,7 +87,7 @@
   
   [1X15.1-3 MajorantClosure[101X
   
-  [29X[2XMajorantClosure[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [33X[1;0Y[29X[2XMajorantClosure[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA majorantly closed list of elements.[133X
   
   [33X[0;0Y[10XMajorantClosure[110X  returns  a majorantly closed subset of an inverse semigroup
@@ -134,7 +134,7 @@
   
   [1X15.1-4 Minorants[101X
   
-  [29X[2XMinorants[102X( [3XS[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XMinorants[102X( [3XS[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
   
   [33X[0;0Y[10XMinorants[110X   takes  an  element  [3Xf[103X  from  an  inverse  semigroup  of  partial
@@ -162,7 +162,7 @@
   
   [1X15.1-5 PrimitiveIdempotents[101X
   
-  [29X[2XPrimitiveIdempotents[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimitiveIdempotents[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
   
   [33X[0;0YAn  idempotent  in an inverse semigroup [3XS[103X is [13Xprimitive[113X if it is non-zero and
@@ -194,7 +194,7 @@
   
   [1X15.1-6 RightCosetsOfInverseSemigroup[101X
   
-  [29X[2XRightCosetsOfInverseSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [33X[1;0Y[29X[2XRightCosetsOfInverseSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of lists of elements.[133X
   
   [33X[0;0Y[10XRightCosetsOfInverseSemigroup[110X takes a majorantly closed inverse subsemigroup
@@ -225,7 +225,7 @@
   
   [1X15.1-7 SameMinorantsSubgroup[101X
   
-  [29X[2XSameMinorantsSubgroup[102X( [3XH[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSameMinorantsSubgroup[102X( [3XH[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of elements of the group [13XH[113X-class [3XH[103X.[133X
   
   [33X[0;0YGiven  a  group  [13XH[113X-class  [3XH[103X in an inverse semigroup of partial permutations,
@@ -265,7 +265,7 @@
   
   [1X15.1-8 SmallerDegreePartialPermRepresentation[101X
   
-  [29X[2XSmallerDegreePartialPermRepresentation[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSmallerDegreePartialPermRepresentation[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0Y[10XSmallerDegreePartialPermRepresentation[110X  attempts to find an isomorphism from
@@ -303,7 +303,7 @@
   
   [1X15.1-9 VagnerPrestonRepresentation[101X
   
-  [29X[2XVagnerPrestonRepresentation[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XVagnerPrestonRepresentation[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism to an inverse semigroup of partial permutations.[133X
   
   [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
@@ -352,7 +352,7 @@
   
   [1X15.1-10 CharacterTableOfInverseSemigroup[101X
   
-  [29X[2XCharacterTableOfInverseSemigroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCharacterTableOfInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe  character  table  of  the  inverse  semigroup [3XS[103X and a list of
             conjugacy class representatives of [3XS[103X.[133X
   
@@ -410,7 +410,7 @@
   
   [1X15.2-1 IsCliffordSemigroup[101X
   
-  [29X[2XIsCliffordSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCliffordSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsCliffordSemigroup[110X  returns  [9Xtrue[109X  if  the  semigroup  [3XS[103X is regular and its
@@ -433,7 +433,7 @@
   
   [1X15.2-2 IsBrandtSemigroup[101X
   
-  [29X[2XIsBrandtSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBrandtSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsBrandtSemigroup[110X  return  [9Xtrue[109X  if  the  semigroup  [3XS[103X  is a finite 0-simple
@@ -467,7 +467,7 @@
   
   [1X15.2-3 IsEUnitaryInverseSemigroup[101X
   
-  [29X[2XIsEUnitaryInverseSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEUnitaryInverseSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YAs  described  in  Section  5.9  of  [How95],  an  inverse  semigroup [3XS[103X with
@@ -514,7 +514,7 @@
   
   [1X15.2-4 IsFactorisableInverseMonoid[101X
   
-  [29X[2XIsFactorisableInverseMonoid[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFactorisableInverseMonoid[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YAn  inverse  monoid  is  [13Xfactorisable[113X  if every element is the product of an
@@ -540,7 +540,7 @@
   
   [1X15.2-5 IsJoinIrreducible[101X
   
-  [29X[2XIsJoinIrreducible[102X( [3XS[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsJoinIrreducible[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsJoinIrreducible[110X  determines whether an element [3Xx[103X of an inverse semigroup [3XS[103X
@@ -589,7 +589,7 @@
   
   [1X15.2-6 IsMajorantlyClosed[101X
   
-  [29X[2XIsMajorantlyClosed[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsMajorantlyClosed[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMajorantlyClosed[110X  determines whether the subset [3XT[103X of the inverse semigroup
@@ -627,7 +627,7 @@
   
   [1X15.2-7 IsMonogenicInverseSemigroup[101X
   
-  [29X[2XIsMonogenicInverseSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonogenicInverseSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMonogenicInverseSemigroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is a monogenic
@@ -655,7 +655,7 @@
   
   [1X15.2-8 IsMonogenicInverseMonoid[101X
   
-  [29X[2XIsMonogenicInverseMonoid[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonogenicInverseMonoid[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsMonogenicInverseMonoid[110X returns [9Xtrue[109X if the monoid [3XS[103X is a monogenic inverse

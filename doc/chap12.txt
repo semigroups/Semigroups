@@ -13,11 +13,11 @@
   
   [1X12.1-1 [33X[0;0YXClassOfYClass[133X[101X
   
-  [29X[2XDClassOfHClass[102X( [3Xclass[103X ) [32X method
-  [29X[2XDClassOfLClass[102X( [3Xclass[103X ) [32X method
-  [29X[2XDClassOfRClass[102X( [3Xclass[103X ) [32X method
-  [29X[2XLClassOfHClass[102X( [3Xclass[103X ) [32X method
-  [29X[2XRClassOfHClass[102X( [3Xclass[103X ) [32X method
+  [33X[1;0Y[29X[2XDClassOfHClass[102X( [3Xclass[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XDClassOfLClass[102X( [3Xclass[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XDClassOfRClass[102X( [3Xclass[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XLClassOfHClass[102X( [3Xclass[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRClassOfHClass[102X( [3Xclass[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YA Green's class.[133X
   
   [33X[0;0Y[10XXClassOfYClass[110X  returns the [10XX[110X-class containing the [10XY[110X-class [3Xclass[103X where [10XX[110X and
@@ -78,16 +78,16 @@
   
   [1X12.1-2 [33X[0;0YGreensXClassOfElement[133X[101X
   
-  [29X[2XGreensDClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XDClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensHClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensHClassOfElement[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation
-  [29X[2XHClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XHClass[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation
-  [29X[2XGreensLClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XLClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensRClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XRClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGreensDClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDClass[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensHClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensHClassOfElement[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHClass[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHClass[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensLClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLClass[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensRClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRClass[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Green's class.[133X
   
   [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
@@ -117,14 +117,14 @@
   
   [1X12.1-3 [33X[0;0YGreensXClassOfElementNC[133X[101X
   
-  [29X[2XGreensDClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XDClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensHClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XHClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensLClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XLClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XGreensRClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
-  [29X[2XRClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGreensDClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensHClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensLClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGreensRClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Green's class.[133X
   
   [33X[0;0YThese  functions  are essentially the same as [2XGreensDClassOfElement[102X ([14X12.1-2[114X)
@@ -185,16 +185,16 @@
   
   [1X12.1-4 [33X[0;0YGreensXClasses[133X[101X
   
-  [29X[2XGreensDClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XDClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XGreensHClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XHClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XGreensJClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XJClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XGreensLClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XLClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XGreensRClasses[102X( [3Xobj[103X ) [32X method
-  [29X[2XRClasses[102X( [3Xobj[103X ) [32X method
+  [33X[1;0Y[29X[2XGreensDClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XDClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XGreensHClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XHClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XGreensJClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XJClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XGreensLClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XLClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XGreensRClasses[102X( [3Xobj[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XRClasses[102X( [3Xobj[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YA list of Green's classes.[133X
   
   [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
@@ -285,10 +285,10 @@
   
   [1X12.1-5 [33X[0;0YXClassReps[133X[101X
   
-  [29X[2XDClassReps[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XHClassReps[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XLClassReps[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XRClassReps[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDClassReps[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XHClassReps[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLClassReps[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRClassReps[102X( [3Xobj[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of representatives.[133X
   
   [33X[0;0Y[10XXClassReps[110X  returns  a list of the representatives of the Green's classes of
@@ -339,7 +339,7 @@
   
   [1X12.1-6 MinimalDClass[101X
   
-  [29X[2XMinimalDClass[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimalDClass[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe minimal [13XD[113X-class of a semigroup.[133X
   
   [33X[0;0YThe  minimal  ideal  of  a  semigroup  is  the  least  ideal with respect to
@@ -367,7 +367,7 @@
   
   [1X12.1-7 MaximalDClasses[101X
   
-  [29X[2XMaximalDClasses[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMaximalDClasses[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe maximal [13XD[113X-classes of a semigroup.[133X
   
   [33X[0;0Y[10XMaximalDClasses[110X  returns  the  maximal [13XD[113X-classes with respect to the partial
@@ -395,8 +395,8 @@
   
   [1X12.1-8 NrRegularDClasses[101X
   
-  [29X[2XNrRegularDClasses[102X( [3XS[103X ) [32X attribute
-  [29X[2XRegularDClasses[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrRegularDClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRegularDClasses[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer, or a list.[133X
   
   [33X[0;0Y[10XNrRegularDClasses[110X  returns  the number of regular [13XD[113X-classes of the semigroup
@@ -423,10 +423,10 @@
   
   [1X12.1-9 [33X[0;0YNrXClasses[133X[101X
   
-  [29X[2XNrDClasses[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XNrHClasses[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XNrLClasses[102X( [3Xobj[103X ) [32X attribute
-  [29X[2XNrRClasses[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrDClasses[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrHClasses[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrLClasses[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrRClasses[102X( [3Xobj[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0Y[10XNrXClasses[110X  returns  the number of Green's classes in [3Xobj[103X where [3Xobj[103X can be a
@@ -504,7 +504,7 @@
   
   [1X12.1-10 PartialOrderOfDClasses[101X
   
-  [29X[2XPartialOrderOfDClasses[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPartialOrderOfDClasses[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe partial order of the [13XD[113X-classes of [3XS[103X.[133X
   
   [33X[0;0YReturns   a   list   [10Xlist[110X   where   [10Xlist[i][110X   contains  every  [10Xj[110X  such  that
@@ -557,7 +557,7 @@
   
   [1X12.1-11 LengthOfLongestDClassChain[101X
   
-  [29X[2XLengthOfLongestDClassChain[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLengthOfLongestDClassChain[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
   [33X[0;0YIf  [3XS[103X  is a semigroup, then [10XLengthOfLongestDClassChain[110X returns the length of
@@ -587,7 +587,7 @@
   
   [1X12.1-12 IsGreensDGreaterThanFunc[101X
   
-  [29X[2XIsGreensDGreaterThanFunc[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsGreensDGreaterThanFunc[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA function.[133X
   
   [33X[0;0Y[10XIsGreensDGreaterThanFunc([3XS[103X[10X)[110X  returns  a  function [10Xfunc[110X such that for any two
@@ -636,10 +636,10 @@
   
   [1X12.2-1 [33X[0;0YIteratorOfXClassReps[133X[101X
   
-  [29X[2XIteratorOfDClassReps[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfHClassReps[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfLClassReps[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfRClassReps[102X( [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XIteratorOfDClassReps[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfHClassReps[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfLClassReps[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfRClassReps[102X( [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn iterator.[133X
   
   [33X[0;0YReturns  an iterator of the representatives of the Green's classes contained
@@ -678,10 +678,10 @@
   
   [1X12.2-2 [33X[0;0YIteratorOfXClasses[133X[101X
   
-  [29X[2XIteratorOfDClasses[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfHClasses[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfLClasses[102X( [3XS[103X ) [32X operation
-  [29X[2XIteratorOfRClasses[102X( [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XIteratorOfDClasses[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfHClasses[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfLClasses[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfRClasses[102X( [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn iterator.[133X
   
   [33X[0;0YReturns  an  iterator  of  the  Green's  classes  in  the  semigroup  [3XS[103X. See
@@ -764,7 +764,7 @@
   
   [1X12.3-1 [33X[0;0YLess than for Green's classes[133X[101X
   
-  [29X[2X\<[102X( [3Xleft-expr[103X, [3Xright-expr[103X ) [32X method
+  [33X[1;0Y[29X[2X\<[102X( [3Xleft-expr[103X, [3Xright-expr[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  Green's  class  [3Xleft-expr[103X  is  less than or equal to [3Xright-expr[103X if they
@@ -805,7 +805,7 @@
   
   [1X12.3-2 IsRegularGreensClass[101X
   
-  [29X[2XIsRegularGreensClass[102X( [3Xclass[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRegularGreensClass[102X( [3Xclass[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  function returns [9Xtrue[109X if [3Xclass[103X is a regular Green's class and [9Xfalse[109X if
@@ -859,7 +859,7 @@
   
   [1X12.3-3 IsGreensClassNC[101X
   
-  [29X[2XIsGreensClassNC[102X( [3Xclass[103X ) [32X property
+  [33X[1;0Y[29X[2XIsGreensClassNC[102X( [3Xclass[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  Green's  class [3Xclass[103X of a semigroup [10XS[110X satisfies [10XIsGreensClassNC[110X if it was
@@ -874,7 +874,7 @@
   
   [1X12.4-1 GroupHClass[101X
   
-  [29X[2XGroupHClass[102X( [3Xclass[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGroupHClass[102X( [3Xclass[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA  group [13XH[113X-class of the [13XD[113X-class [3Xclass[103X if it is regular and [9Xfail[109X if
             it is not.[133X
   
@@ -924,7 +924,7 @@
   
   [1X12.4-2 SchutzenbergerGroup[101X
   
-  [29X[2XSchutzenbergerGroup[102X( [3Xclass[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSchutzenbergerGroup[102X( [3Xclass[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA group.[133X
   
   [33X[0;0Y[10XSchutzenbergerGroup[110X  returns  the  generalized Schutzenberger group (defined
@@ -986,7 +986,7 @@
   
   [1X12.4-3 StructureDescriptionSchutzenbergerGroups[101X
   
-  [29X[2XStructureDescriptionSchutzenbergerGroups[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStructureDescriptionSchutzenbergerGroups[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YDistinct  structure descriptions of the Schutzenberger groups of a
             semigroup.[133X
   
@@ -1018,7 +1018,7 @@
   
   [1X12.4-4 StructureDescriptionMaximalSubgroups[101X
   
-  [29X[2XStructureDescriptionMaximalSubgroups[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStructureDescriptionMaximalSubgroups[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YDistinct  structure  descriptions  of  the  maximal subgroups of a
             semigroup.[133X
   
@@ -1046,7 +1046,7 @@
   
   [1X12.4-5 MultiplicativeNeutralElement[101X
   
-  [29X[2XMultiplicativeNeutralElement[102X( [3XH[103X ) [32X method
+  [33X[1;0Y[29X[2XMultiplicativeNeutralElement[102X( [3XH[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YA semigroup element or [9Xfail[109X.[133X
   
   [33X[0;0YIf   the   [13XH[113X-class   [3XH[103X   of   a  semigroup  [10XS[110X  is  a  subgroup  of  [10XS[110X,  then
@@ -1068,7 +1068,7 @@
   
   [1X12.4-6 StructureDescription[101X
   
-  [29X[2XStructureDescription[102X( [3Xclass[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStructureDescription[102X( [3Xclass[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string or [9Xfail[109X.[133X
   
   [33X[0;0Y[10XStructureDescription[110X  returns  the value of [2XStructureDescription[102X ([14XReference:
@@ -1089,9 +1089,9 @@
   
   [1X12.4-7 InjectionPrincipalFactor[101X
   
-  [29X[2XInjectionPrincipalFactor[102X( [3XD[103X ) [32X attribute
-  [29X[2XInjectionNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute
-  [29X[2XIsomorphismReesMatrixSemigroup[102X( [3XD[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInjectionPrincipalFactor[102X( [3XD[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInjectionNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismReesMatrixSemigroup[102X( [3XD[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA injective mapping.[133X
   
   [33X[0;0YIf  the  [13XD[113X-class  [3XD[103X  is  a subsemigroup of a semigroup [10XS[110X, then the [13Xprincipal
@@ -1158,8 +1158,8 @@
   
   [1X12.4-8 PrincipalFactor[101X
   
-  [29X[2XPrincipalFactor[102X( [3XD[103X ) [32X attribute
-  [29X[2XNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrincipalFactor[102X( [3XD[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA Rees (0-)matrix semigroup.[133X
   
   [33X[0;0YIf  [3XD[103X  is  a [13XD[113X-class of semigroup, then [10XPrincipalFactor([3XD[103X[10X)[110X is just shorthand

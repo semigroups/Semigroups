@@ -24,7 +24,7 @@
   
   [1X7.1-1 SemigroupIdeal[101X
   
-  [29X[2XSemigroupIdeal[102X( [3XS[103X, [3Xobj1[103X, [3Xobj2[103X, [3X..[103X, [3X.[103X ) [32X function
+  [33X[1;0Y[29X[2XSemigroupIdeal[102X( [3XS[103X, [3Xobj1[103X, [3Xobj2[103X, [3X..[103X, [3X.[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YAn ideal of a semigroup.[133X
   
   [33X[0;0YIf  [3Xobj1[103X, [3Xobj2[103X, .. . are (any combination) of elements of the semigroup [3XS[103X or
@@ -50,7 +50,7 @@
   
   [1X7.2-1 GeneratorsOfSemigroupIdeal[101X
   
-  [29X[2XGeneratorsOfSemigroupIdeal[102X( [3XI[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGeneratorsOfSemigroupIdeal[102X( [3XI[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe generators of an ideal of a semigroup.[133X
   
   [33X[0;0YThis  function  returns  the generators of the two-sided ideal [3XI[103X, which were
@@ -83,7 +83,7 @@
   
   [1X7.2-2 MinimalIdealGeneratingSet[101X
   
-  [29X[2XMinimalIdealGeneratingSet[102X( [3XI[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimalIdealGeneratingSet[102X( [3XI[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA minimal set ideal generators of an ideal.[133X
   
   [33X[0;0YThis  function  returns  a  minimal  set  of  elements  of the parent of the
@@ -107,7 +107,7 @@
   
   [1X7.2-3 SupersemigroupOfIdeal[101X
   
-  [29X[2XSupersemigroupOfIdeal[102X( [3XI[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSupersemigroupOfIdeal[102X( [3XI[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn ideal of a semigroup.[133X
   
   [33X[0;0YThe  [2XParent[102X  ([14XReference:  Parent[114X)  of an ideal is the semigroup in which the

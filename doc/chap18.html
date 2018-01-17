@@ -75,7 +75,7 @@
 
 <h5>18.1-1 Splash</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Splash</code>( <var class="Arg">str</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Splash</code>( <var class="Arg">str</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: Nothing.</p>
 
 <p>This function attempts to convert the string <var class="Arg">str</var> into a pdf document and open this document, i.e. to splash it all over your monitor.</p>
@@ -129,18 +129,18 @@
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
 
-<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
 
 <p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
 
 <h5>18.2-1 DotString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each \(\mathscr{D}\)-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
 
-<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
 
 <p>The \(\mathscr{D}\)-classes are shown as eggbox diagrams with \(\mathscr{L}\)-classes as rows and \(\mathscr{R}\)-classes as columns; group \(\mathscr{H}\)-classes are shaded gray and contain an asterisk. The \(\mathscr{L}\)-classes and \(\mathscr{R}\)-classes within a \(\mathscr{D}\)-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). The \(\mathscr{D}\)-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one \(\mathscr{D}\)-class to another indicates that the higher \(\mathscr{D}\)-class is greater than the lower one in the \(\mathscr{D}\)-order on <var class="Arg">S</var>.</p>
 
@@ -190,7 +190,7 @@ TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\
 
 <h5>18.2-2 DotSemilatticeOfIdempotents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="../../../doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>). The idempotents are grouped by the \(\mathscr{D}\)-class they belong to.</p>
@@ -222,7 +222,7 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
 
 <h5>18.3-1 TexString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional paramater <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="../../../doc/ref/chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
@@ -244,13 +244,13 @@ d{pmatrix}"</pre></div>
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
 
-<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
 
 <p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
 
 <h5>18.4-1 TikzString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>This function produces a graphical representation of the object <var class="Arg">obj</var> using the <code class="code">tikz</code> package for LaTeX. More precisely, this operation outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">obj</var>.</p>

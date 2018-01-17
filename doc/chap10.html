@@ -101,9 +101,9 @@
 
 <h5>10.1-1 FreeInverseSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A free inverse semigroup.</p>
 
 <p>Returns a free inverse semigroup on <var class="Arg">rank</var> generators, where <var class="Arg">rank</var> is a positive integer. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. If <code class="code">S</code> is a free inverse semigroup, then the generators can be accessed by <code class="code">S.1</code>, <code class="code">S.2</code> and so on.</p>
@@ -129,14 +129,14 @@ b</pre></div>
 
 <h5>10.1-2 IsFreeInverseSemigroupCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupCategory</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupCategory</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every free inverse semigroup in <strong class="pkg">GAP</strong> created by <code class="func">FreeInverseSemigroup</code> (<a href="chap10.html#X7F3F9DED8003CBD0"><span class="RefLink">10.1-1</span></a>) belongs to the category <code class="code">IsFreeInverseSemigroup</code>. Basic operations for a free inverse semigroup are: <code class="func">GeneratorsOfInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X87C373597F787250"><span class="RefLink">Reference: GeneratorsOfInverseSemigroup</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>). Elements of a free inverse semigroup belong to the category <code class="func">IsFreeInverseSemigroupElement</code> (<a href="chap10.html#X7999FE0286283CC2"><span class="RefLink">10.1-4</span></a>).</p>
 
 <p><a id="X7B91643B827DA6DB" name="X7B91643B827DA6DB"></a></p>
 
 <h5>10.1-3 IsFreeInverseSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>Attempts to determine whether the given semigroup <var class="Arg">S</var> is a free inverse semigroup.</p>
@@ -145,14 +145,14 @@ b</pre></div>
 
 <h5>10.1-4 IsFreeInverseSemigroupElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElement</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every element of a free inverse semigroup belongs to the category <code class="code">IsFreeInverseSemigroupElement</code>.</p>
 
 <p><a id="X813A291779726739" name="X813A291779726739"></a></p>
 
 <h5>10.1-5 IsFreeInverseSemigroupElementCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElementCollection</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every collection of elements of a free inverse semigroup belongs to the category <code class="code">IsFreeInverseSemigroupElementCollection</code>. For example, every free inverse semigroup belongs to <code class="code">IsFreeInverseSemigroupElementCollection</code>.</p>
 
 <p><a id="X8073A2387A42B52D" name="X8073A2387A42B52D"></a></p>
@@ -213,7 +213,7 @@ x1x2x2^-1x1^-1x1x2</pre></div>
 
 <h5>10.3-1 CanonicalForm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalForm</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalForm</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>Every element of a free inverse semigroup has a unique canonical form. If <var class="Arg">w</var> is such an element, then <code class="code">CanonicalForm</code> returns the canonical form of <var class="Arg">w</var> as a string.</p>
@@ -232,7 +232,7 @@ x2
 
 <h5>10.3-2 MinimalWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalWord</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalWord</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
 <p>For an element <var class="Arg">w</var> of a free inverse semigroup <code class="code">S</code>, <code class="code">MinimalWord</code> returns a word of minimal length equal to <var class="Arg">w</var> in <code class="code">S</code> as a string.</p>
@@ -268,9 +268,9 @@ x2
 
 <h5>10.4-1 FreeBand</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">..</var>, <var class="Arg">.</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">..</var>, <var class="Arg">.</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A free band.</p>
 
 <p>Returns a free band on <var class="Arg">rank</var> generators, for a positive integer <var class="Arg">rank</var>. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. The resulting semigroup is always finite.</p>
@@ -298,7 +298,7 @@ ab</pre></div>
 
 <h5>10.4-2 IsFreeBandCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandCategory</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandCategory</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="code">IsFreeBandCategory</code> is the category of semigroups created using <code class="func">FreeBand</code> (<a href="chap10.html#X7B2A65F382DB36EC"><span class="RefLink">10.4-1</span></a>).</p>
 
 
@@ -312,7 +312,7 @@ false</pre></div>
 
 <h5>10.4-3 IsFreeBand</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBand</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p><code class="code">IsFreeBand</code> returns <code class="keyw">true</code> if the given semigroup <var class="Arg">S</var> is a free band.</p>
@@ -331,7 +331,7 @@ false
 
 <h5>10.4-4 IsFreeBandElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElement</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="code">IsFreeBandElement</code> is a <code class="code">Category</code> containing the elements of a free band.</p>
 
 
@@ -348,14 +348,14 @@ false
 
 <h5>10.4-5 IsFreeBandElementCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElementCollection</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every collection of elements of a free band belongs to the category <code class="code">IsFreeBandElementCollection</code>. For example, every free band belongs to <code class="code">IsFreeBandElementCollection</code>.</p>
 
 <p><a id="X7AEF4CD1857E7DCC" name="X7AEF4CD1857E7DCC"></a></p>
 
 <h5>10.4-6 IsFreeBandSubsemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandSubsemigroup</code></td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandSubsemigroup</code></td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="code">IsFreeBandSubsemigroup</code> is a synonym for <code class="code">IsSemigroup</code> and <code class="code">IsFreeBandElementCollection</code>.</p>
 
 
@@ -377,8 +377,8 @@ true</pre></div>
 
 <h5>10.4-7 ContentOfFreeBandElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElementCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElement</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElementCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of integers</p>
 
 <p>The content of a free band element <var class="Arg">x</var> is the set of generators appearing in the word representing the element <var class="Arg">x</var> of the free band.</p>
@@ -428,7 +428,7 @@ x2
 
 <h5>10.5-1 GreensDClassOfElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElement</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElement</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A Green's \(\mathscr{D}\)-class</p>
 
 <p>Let <var class="Arg">S</var> be a free band. Two elements of <var class="Arg"> S </var> are \(\mathscr{D}\)-related if and only if they have the same content i.e. the set of generators appearing in any factorization of the elements. Therefore, a \(\mathscr{D}\)-class of a free band element <var class="Arg"> x </var> is the set of elements of <var class="Arg"> S </var> which have the same content as <var class="Arg"> x </var>.</p>

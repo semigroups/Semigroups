@@ -15,7 +15,7 @@
   
   [1X9.1-1 TrivialSemigroup[101X
   
-  [29X[2XTrivialSemigroup[102X( [[3Xfilt[103X, ][[3Xdeg[103X] ) [32X function
+  [33X[1;0Y[29X[2XTrivialSemigroup[102X( [[3Xfilt[103X, ][[3Xdeg[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA trivial semigroup.[133X
   
   [33X[0;0YA [12Xtrivial[112X semigroup is a semigroup with precisely one element. This function
@@ -55,7 +55,7 @@
   
   [1X9.1-2 MonogenicSemigroup[101X
   
-  [29X[2XMonogenicSemigroup[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xr[103X ) [32X function
+  [33X[1;0Y[29X[2XMonogenicSemigroup[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xr[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA monogenic semigroup with index [3Xm[103X and period [3Xr[103X.[133X
   
   [33X[0;0YIf  [3Xm[103X  and  [3Xr[103X  are positive integers, then this function returns a monogenic
@@ -102,7 +102,7 @@
   
   [1X9.1-3 RectangularBand[101X
   
-  [29X[2XRectangularBand[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XRectangularBand[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xn[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YAn [3Xm[103X by [3Xn[103X rectangular band.[133X
   
   [33X[0;0YIf  [3Xm[103X  and  [3Xn[103X  are positive integers, then this function returns a semigroup
@@ -140,7 +140,7 @@
   
   [1X9.1-4 ZeroSemigroup[101X
   
-  [29X[2XZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA zero semigroup of order [3Xn[103X.[133X
   
   [33X[0;0YIf  [3Xn[103X  is a positive integer, then this function returns a zero semigroup of
@@ -185,8 +185,8 @@
   
   [1X9.1-5 LeftZeroSemigroup[101X
   
-  [29X[2XLeftZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
-  [29X[2XRightZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XLeftZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRightZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA left zero (or right zero) semigroup of order [3Xn[103X.[133X
   
   [33X[0;0YIf [3Xn[103X is a positive integer, then this function returns a left zero (or right

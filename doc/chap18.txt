@@ -17,7 +17,7 @@
   
   [1X18.1-1 Splash[101X
   
-  [29X[2XSplash[102X( [3Xstr[103X[, [3Xopts[103X] ) [32X function
+  [33X[1;0Y[29X[2XSplash[102X( [3Xstr[103X[, [3Xopts[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YNothing.[133X
   
   [33X[0;0YThis  function  attempts  to  convert the string [3Xstr[103X into a pdf document and
@@ -87,7 +87,7 @@
   
   [1X18.2-1 DotString[101X
   
-  [29X[2XDotString[102X( [3XS[103X[, [3Xoptions[103X] ) [32X operation
+  [33X[1;0Y[29X[2XDotString[102X( [3XS[103X[, [3Xoptions[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YIf  the  argument [3XS[103X is a semigroup, and the optional second argument [3Xoptions[103X
@@ -161,7 +161,7 @@
   
   [1X18.2-2 DotSemilatticeOfIdempotents[101X
   
-  [29X[2XDotSemilatticeOfIdempotents[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDotSemilatticeOfIdempotents[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YThis  function produces a graphical representation of the semilattice of the
@@ -195,7 +195,7 @@
   
   [1X18.3-1 TexString[101X
   
-  [29X[2XTexString[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XTexString[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YThis function produces a string containing LaTeX code for the transformation
@@ -225,7 +225,7 @@
   
   [1X18.4-1 TikzString[101X
   
-  [29X[2XTikzString[102X( [3Xobj[103X[, [3Xoptions[103X] ) [32X operation
+  [33X[1;0Y[29X[2XTikzString[102X( [3Xobj[103X[, [3Xoptions[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YThis  function  produces  a graphical representation of the object [3Xobj[103X using

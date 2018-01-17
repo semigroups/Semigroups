@@ -138,7 +138,7 @@
   
   [1X6.1-3 IsActingSemigroup[101X
   
-  [29X[2XIsActingSemigroup[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsActingSemigroup[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  acting  semigroup,  as  defined  in  Section  [14X6.1-1[114X,  belongs to this
@@ -157,7 +157,7 @@
   
   [1X6.1-4 IsEnumerableSemigroupRep[101X
   
-  [29X[2XIsEnumerableSemigroupRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsEnumerableSemigroupRep[102X( [3Xobj[103X ) [32X Representation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery semigroup with this representation can have the Froidure-Pin algorithm
@@ -181,8 +181,8 @@
   
   [1X6.2-1 InverseMonoidByGenerators[101X
   
-  [29X[2XInverseMonoidByGenerators[102X( [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
-  [29X[2XInverseSemigroupByGenerators[102X( [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
+  [33X[1;0Y[29X[2XInverseMonoidByGenerators[102X( [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XInverseSemigroupByGenerators[102X( [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn inverse monoid or semigroup.[133X
   
   [33X[0;0YIf  [3Xcoll[103X  is  a  collection  satisfying [10XIsGeneratorsOfInverseSemigroup[110X, then
@@ -349,7 +349,7 @@
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
-  [29X[2XSEMIGROUPS.DefaultOptionsRec[102X[32X global variable
+  [33X[1;0Y[29X[2XSEMIGROUPS.DefaultOptionsRec[102X[32X global variable[133X
   
   [33X[0;0YThis global variable is a record whose components contain the default values
   of  certain  options for semigroups. A description of these options is given
@@ -363,10 +363,10 @@
   
   [1X6.4-1 ClosureSemigroup[101X
   
-  [29X[2XClosureSemigroup[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
-  [29X[2XClosureMonoid[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
-  [29X[2XClosureInverseSemigroup[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
-  [29X[2XClosureInverseMonoid[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation
+  [33X[1;0Y[29X[2XClosureSemigroup[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XClosureMonoid[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XClosureInverseSemigroup[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XClosureInverseMonoid[102X( [3XS[103X, [3Xcoll[103X[, [3Xopts[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup, monoid, inverse semigroup, or inverse monoid.[133X
   
   [33X[0;0YThese  operations return the semigroup, monoid, inverse semigroup or inverse
@@ -448,8 +448,8 @@
   
   [1X6.4-2 SubsemigroupByProperty[101X
   
-  [29X[2XSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X ) [32X operation
-  [29X[2XSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X, [3Xlimit[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X, [3Xlimit[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0Y[10XSubsemigroupByProperty[110X returns the subsemigroup of the semigroup [3XS[103X generated
@@ -478,7 +478,7 @@
   
   [1X6.4-3 InverseSubsemigroupByProperty[101X
   
-  [29X[2XInverseSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XInverseSubsemigroupByProperty[102X( [3XS[103X, [3Xfunc[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn inverse semigroup.[133X
   
   [33X[0;0Y[10XInverseSubsemigroupByProperty[110X   returns  the  inverse  subsemigroup  of  the
@@ -513,8 +513,8 @@
   
   [1X6.4-4 DirectProduct[101X
   
-  [29X[2XDirectProduct[102X( [3XS[103X[, [3XT[103X, [3X...[103X] ) [32X function
-  [29X[2XDirectProductOp[102X( [3Xlist[103X, [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XS[103X[, [3XT[103X, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDirectProductOp[102X( [3Xlist[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
   
   [33X[0;0YThe   function   [10XDirectProduct[110X   takes   an  arbitrary  positive  number  of
@@ -617,7 +617,7 @@
   
   [1X6.5-1 IsomorphismSemigroup[101X
   
-  [29X[2XIsomorphismSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism of semigroups.[133X
   
   [33X[0;0Y[10XIsomorphismSemigroup[110X  can  be  used  to  find  an  isomorphism  from a given
@@ -699,7 +699,7 @@
   
   [1X6.5-2 IsomorphismMonoid[101X
   
-  [29X[2XIsomorphismMonoid[102X( [3Xfilt[103X, [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismMonoid[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism of monoids.[133X
   
   [33X[0;0Y[10XIsomorphismMonoid[110X  can be used to find an isomorphism from a given semigroup
@@ -755,7 +755,7 @@
   
   [1X6.5-3 AsSemigroup[101X
   
-  [29X[2XAsSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0Y[10XAsSemigroup([3Xfilt[103X[10X,  [3XS[103X[10X)[110X is just shorthand for [10XRange(IsomorphismSemigroup([3Xfilt[103X[10X,
@@ -799,7 +799,7 @@
   
   [1X6.5-4 AsMonoid[101X
   
-  [29X[2XAsMonoid[102X( [[3Xfilt[103X, ][3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsMonoid[102X( [[3Xfilt[103X, ][3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA monoid or [9Xfail[109X.[133X
   
   [33X[0;0Y[10XAsMonoid([3Xfilt[103X[10X,  [3XS[103X[10X)[110X  is just shorthand for [10XRange(IsomorphismMonoid([3Xfilt[103X[10X, [3XS[103X[10X))[110X,
@@ -836,7 +836,7 @@
   
   [1X6.5-5 IsomorphismPermGroup[101X
   
-  [29X[2XIsomorphismPermGroup[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismPermGroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  the  semigroup  [3XS[103X  is  mathematically  a  group,  so  that  it satisfies
@@ -878,7 +878,7 @@
   
   [1X6.5-6 RZMSNormalization[101X
   
-  [29X[2XRZMSNormalization[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRZMSNormalization[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  [3XR[103X  is  a  Rees 0-matrix semigroup [22XM^0[I, T, Λ; P][122X then [10XRZMSNormalization[110X
@@ -954,7 +954,7 @@
   
   [1X6.5-7 RMSNormalization[101X
   
-  [29X[2XRMSNormalization[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRMSNormalization[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  [3XR[103X  is a Rees matrix semigroup over a group [10XG[110X (i.e. a semigroup for which
@@ -986,10 +986,10 @@
   
   [1X6.6-1 RandomSemigroup[101X
   
-  [29X[2XRandomSemigroup[102X( [3Xarg...[103X ) [32X function
-  [29X[2XRandomMonoid[102X( [3Xarg...[103X ) [32X function
-  [29X[2XRandomInverseSemigroup[102X( [3Xarg...[103X ) [32X function
-  [29X[2XRandomInverseMonoid[102X( [3Xarg...[103X ) [32X function
+  [33X[1;0Y[29X[2XRandomSemigroup[102X( [3Xarg...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomMonoid[102X( [3Xarg...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomInverseSemigroup[102X( [3Xarg...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomInverseMonoid[102X( [3Xarg...[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0YThe operations described in this section can be used to generate semigroups,
@@ -1100,8 +1100,8 @@
   
   [1X6.7-1 EndomorphismMonoid[101X
   
-  [29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X ) [32X attribute
-  [29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X, [3Xcolors[103X ) [32X operation
+  [33X[1;0Y[29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X, [3Xcolors[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA monoid.[133X
   
   [33X[0;0YAn  endomorphism of [3Xdigraph[103X is a homomorphism [2XDigraphHomomorphism[102X ([14XDigraphs:

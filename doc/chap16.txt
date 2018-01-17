@@ -39,7 +39,7 @@
   
   [1X16.1-1 IsSemigroupCongruence[101X
   
-  [29X[2XIsSemigroupCongruence[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YA  semigroup  congruence  [10Xcong[110X  is  an equivalence relation on a semigroup [10XS[110X
   which respects left and right multiplication.[133X
@@ -69,7 +69,7 @@
   
   [1X16.1-2 IsLeftSemigroupCongruence[101X
   
-  [29X[2XIsLeftSemigroupCongruence[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLeftSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YA left semigroup congruence [10Xcong[110X is an equivalence relation on a semigroup [10XS[110X
   which respects left multiplication.[133X
@@ -99,7 +99,7 @@
   
   [1X16.1-3 IsRightSemigroupCongruence[101X
   
-  [29X[2XIsRightSemigroupCongruence[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRightSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YA  right semigroup congruence [10Xcong[110X is an equivalence relation on a semigroup
   [10XS[110X which respects right multiplication.[133X
@@ -132,7 +132,7 @@
   
   [1X16.2-1 SemigroupCongruence[101X
   
-  [29X[2XSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function
+  [33X[1;0Y[29X[2XSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
   
   [33X[0;0YThis function returns a semigroup congruence over the semigroup [3XS[103X.[133X
@@ -161,7 +161,7 @@
   
   [1X16.2-2 LeftSemigroupCongruence[101X
   
-  [29X[2XLeftSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function
+  [33X[1;0Y[29X[2XLeftSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA left semigroup congruence.[133X
   
   [33X[0;0YThis function returns a left semigroup congruence over the semigroup [3XS[103X.[133X
@@ -191,7 +191,7 @@
   
   [1X16.2-3 RightSemigroupCongruence[101X
   
-  [29X[2XRightSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function
+  [33X[1;0Y[29X[2XRightSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA right semigroup congruence.[133X
   
   [33X[0;0YThis function returns a right semigroup congruence over the semigroup [3XS[103X.[133X
@@ -221,9 +221,9 @@
   
   [1X16.2-4 GeneratingPairsOfSemigroupCongruence[101X
   
-  [29X[2XGeneratingPairsOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute
-  [29X[2XGeneratingPairsOfLeftSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute
-  [29X[2XGeneratingPairsOfRightSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGeneratingPairsOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGeneratingPairsOfLeftSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGeneratingPairsOfRightSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of lists.[133X
   
   [33X[0;0YIf [3Xcong[103X is a semigroup congruence, then [10XGeneratingPairsOfSemigroupCongruence[110X
@@ -261,7 +261,7 @@
   
   [1X16.3-1 IsCongruenceClass[101X
   
-  [29X[2XIsCongruenceClass[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
   
   [33X[0;0YThis  category  contains  any  object  which  is  an  equivalence class of a
   semigroup  congruence  (see  [2XIsSemigroupCongruence[102X ([14X16.1-1[114X)). An object will
@@ -282,7 +282,7 @@
   
   [1X16.3-2 IsLeftCongruenceClass[101X
   
-  [29X[2XIsLeftCongruenceClass[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsLeftCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
   
   [33X[0;0YThis  category  contains  any object which is an equivalence class of a left
   semigroup  congruence  (see  [2XIsLeftSemigroupCongruence[102X  ([14X16.1-2[114X)). An object
@@ -304,7 +304,7 @@
   
   [1X16.3-3 IsRightCongruenceClass[101X
   
-  [29X[2XIsRightCongruenceClass[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsRightCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
   
   [33X[0;0YThis  category  contains any object which is an equivalence class of a right
   semigroup  congruence  (see  [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X)). An object
@@ -326,9 +326,9 @@
   
   [1X16.3-4 CongruenceClassOfElement[101X
   
-  [29X[2XCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation
-  [29X[2XLeftCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation
-  [29X[2XRightCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn equivalence class.[133X
   
   [33X[0;0YThese  operations  act as a synonym of [10XEquivalenceClassOfElement[110X in the case
@@ -349,9 +349,9 @@
   
   [1X16.3-5 CongruenceClasses[101X
   
-  [29X[2XCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation
+  [33X[1;0Y[29X[2XCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
   
   [33X[0;0YThese operations act as a synonym of [10XEquivalenceClasses[110X in the case that the
@@ -378,7 +378,7 @@
   
   [1X16.3-6 NonTrivialEquivalenceClasses[101X
   
-  [29X[2XNonTrivialEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNonTrivialEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
   
   [33X[0;0YIf  [3Xeq[103X is an equivalence relation, then this attribute returns a list of all
@@ -400,9 +400,9 @@
   
   [1X16.3-7 NonTrivialCongruenceClasses[101X
   
-  [29X[2XNonTrivialCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XNonTrivialLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XNonTrivialRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation
+  [33X[1;0Y[29X[2XNonTrivialCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNonTrivialLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNonTrivialRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
   
   [33X[0;0YThese  operations  act  as  a synonym of [10XNonTrivialEquivalenceClasses[110X in the
@@ -425,7 +425,7 @@
   
   [1X16.3-8 NrEquivalenceClasses[101X
   
-  [29X[2XNrEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
   [33X[0;0YIf  [3Xeq[103X  is an equivalence relation, then this attribute describes the number
@@ -441,9 +441,9 @@
   
   [1X16.3-9 NrCongruenceClasses[101X
   
-  [29X[2XNrCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XNrLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation
-  [29X[2XNrRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation
+  [33X[1;0Y[29X[2XNrCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNrLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNrRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
   
   [33X[0;0YThese  operations  act as a synonym of [10XNrEquivalenceClasses[110X in the case that
@@ -467,7 +467,7 @@
   
   [1X16.3-10 EquivalenceRelationLookup[101X
   
-  [29X[2XEquivalenceRelationLookup[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEquivalenceRelationLookup[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
   
   [33X[0;0YThis attribute describes the (left, right or two-sided) semigroup congruence
@@ -505,7 +505,7 @@
   
   [1X16.3-11 EquivalenceRelationCanonicalLookup[101X
   
-  [29X[2XEquivalenceRelationCanonicalLookup[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEquivalenceRelationCanonicalLookup[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
   
   [33X[0;0YThis attribute describes the semigroup congruence [3Xcong[103X as a list of positive
@@ -539,7 +539,7 @@
   
   [1X16.3-12 EquivalenceRelationCanonicalPartition[101X
   
-  [29X[2XEquivalenceRelationCanonicalPartition[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEquivalenceRelationCanonicalPartition[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of lists.[133X
   
   [33X[0;0YThis  attribute returns a list of lists of elements of the underlying set of
@@ -568,7 +568,7 @@
   
   [1X16.3-13 OnLeftCongruenceClasses[101X
   
-  [29X[2XOnLeftCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XOnLeftCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA left congruence class.[133X
   
   [33X[0;0YIf  [3Xclass[103X  is  an equivalence class of the left semigroup congruence [10Xcong[110X on
@@ -602,7 +602,7 @@
   
   [1X16.3-14 OnRightCongruenceClasses[101X
   
-  [29X[2XOnRightCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XOnRightCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA right congruence class.[133X
   
   [33X[0;0YIf  [3Xclass[103X  is an equivalence class of the right semigroup congruence [10Xcong[110X on
@@ -639,12 +639,12 @@
   
   [1X16.4-1 CongruencesOfSemigroup[101X
   
-  [29X[2XCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
+  [33X[1;0Y[29X[2XCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe congruences of a semigroup.[133X
   
   [33X[0;0YThis  attribute  gives  a list of the left, right, or 2-sided congruences of
@@ -672,12 +672,12 @@
   
   [1X16.4-2 MinimalCongruencesOfSemigroup[101X
   
-  [29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
+  [33X[1;0Y[29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe congruences of a semigroup.[133X
   
   [33X[0;0YIf  [3XS[103X is a semigroup, then the attribute [10XMinimalCongruencesOfSemigroup[110X gives
@@ -715,12 +715,12 @@
   
   [1X16.4-3 PrincipalCongruencesOfSemigroup[101X
   
-  [29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute
-  [29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
+  [33X[1;0Y[29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
   
   [33X[0;0YIf  [3XS[103X  is  a  semigroup,  then the attribute [10XPrincipalCongruencesOfSemigroup[110X
@@ -759,7 +759,7 @@
   
   [1X16.4-4 IsCongruencePoset[101X
   
-  [29X[2XIsCongruencePoset[102X( [3Xposet[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCongruencePoset[102X( [3Xposet[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  contains  all  congruence  posets.  A  [13Xcongruence poset[113X is a
@@ -799,12 +799,12 @@
   
   [1X16.4-5 LatticeOfCongruences[101X
   
-  [29X[2XLatticeOfCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XLatticeOfLeftCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XLatticeOfRightCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XLatticeOfCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XLatticeOfLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XLatticeOfRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
+  [33X[1;0Y[29X[2XLatticeOfCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLatticeOfLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLatticeOfRightCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLatticeOfCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLatticeOfLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLatticeOfRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of lists.[133X
   
   [33X[0;0YIf [3XS[103X is a semigroup, then [10XLatticeOfCongruences[110X gives a list of lists showing
@@ -840,12 +840,12 @@
   
   [1X16.4-6 PosetOfPrincipalCongruences[101X
   
-  [29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X ) [32X attribute
-  [29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
-  [29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation
+  [33X[1;0Y[29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
   
   [33X[0;0YIf  [3XS[103X  is a semigroup, then [10XPosetOfPrincipalCongruences[110X returns a congruence
@@ -881,7 +881,7 @@
   
   [1X16.4-7 CongruencesOfPoset[101X
   
-  [29X[2XCongruencesOfPoset[102X( [3Xposet[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCongruencesOfPoset[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
   
   [33X[0;0YIf [3Xposet[103X is a congruence poset object, then this attribute returns a list of
@@ -910,7 +910,7 @@
   
   [1X16.4-8 UnderlyingSemigroupOfCongruencePoset[101X
   
-  [29X[2XUnderlyingSemigroupOfCongruencePoset[102X( [3Xposet[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingSemigroupOfCongruencePoset[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0YIf  [3Xposet[103X  is  a  congruence  poset  object, then this attribute returns the
@@ -927,7 +927,7 @@
   
   [1X16.4-9 PosetOfCongruences[101X
   
-  [29X[2XPosetOfCongruences[102X( [3Xcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XPosetOfCongruences[102X( [3Xcoll[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
   
   [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
@@ -951,8 +951,8 @@
   
   [1X16.4-10 JoinSemilatticeOfCongruences[101X
   
-  [29X[2XJoinSemilatticeOfCongruences[102X( [3Xcoll[103X, [3Xjoin_func[103X ) [32X operation
-  [29X[2XJoinSemilatticeOfCongruences[102X( [3Xposet[103X, [3Xjoin_func[103X ) [32X operation
+  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xcoll[103X, [3Xjoin_func[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xposet[103X, [3Xjoin_func[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
   
   [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
@@ -982,8 +982,8 @@
   
   [1X16.4-11 MinimalCongruences[101X
   
-  [29X[2XMinimalCongruences[102X( [3Xcoll[103X ) [32X attribute
-  [29X[2XMinimalCongruences[102X( [3Xposet[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
   
   [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
@@ -1025,7 +1025,7 @@
   
   [1X16.5-1 IsSubrelation[101X
   
-  [29X[2XIsSubrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsSubrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YTrue or false.[133X
   
   [33X[0;0YIf  [3Xcong1[103X  and  [3Xcong2[103X  are  congruences  over  the same semigroup, then this
@@ -1046,7 +1046,7 @@
   
   [1X16.5-2 IsSuperrelation[101X
   
-  [29X[2XIsSuperrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsSuperrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YTrue or false.[133X
   
   [33X[0;0YIf  [3Xcong1[103X  and  [3Xcong2[103X  are  congruences  over  the same semigroup, then this
@@ -1069,7 +1069,7 @@
   
   [1X16.5-3 MeetSemigroupCongruences[101X
   
-  [29X[2XMeetSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation
+  [33X[1;0Y[29X[2XMeetSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
   
   [33X[0;0YThis  operation  returns the [13Xmeet[113X of the two semigroup congruences [3Xc1[103X and [3Xc2[103X
@@ -1088,9 +1088,9 @@
   
   [1X16.5-4 JoinSemigroupCongruences[101X
   
-  [29X[2XJoinSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation
-  [29X[2XJoinLeftSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation
-  [29X[2XJoinRightSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation
+  [33X[1;0Y[29X[2XJoinSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XJoinLeftSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XJoinRightSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
   
   [33X[0;0YThis  operation  returns the [13Xjoin[113X of the two semigroup congruences [3Xc1[103X and [3Xc2[103X
@@ -1169,8 +1169,8 @@
   
   [1X16.6-1 IsRMSCongruenceByLinkedTriple[101X
   
-  [29X[2XIsRMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category
-  [29X[2XIsRZMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsRMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
+  [33X[1;0Y[29X[2XIsRZMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThese  categories describe a type of semigroup congruence over a Rees matrix
@@ -1200,8 +1200,8 @@
   
   [1X16.6-2 RMSCongruenceByLinkedTriple[101X
   
-  [29X[2XRMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function
-  [29X[2XRZMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function
+  [33X[1;0Y[29X[2XRMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRZMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix semigroup congruence by linked triple.[133X
   
   [33X[0;0YThis  function  returns  a  semigroup  congruence  over  the  Rees matrix or
@@ -1235,8 +1235,8 @@
   
   [1X16.6-3 IsRMSCongruenceClassByLinkedTriple[101X
   
-  [29X[2XIsRMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category
-  [29X[2XIsRZMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsRMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
+  [33X[1;0Y[29X[2XIsRZMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThese categories contain the congruence classes of a semigroup congruence of
@@ -1266,8 +1266,8 @@
   
   [1X16.6-4 RMSCongruenceClassByLinkedTriple[101X
   
-  [29X[2XRMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation
-  [29X[2XRZMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation
+  [33X[1;0Y[29X[2XRMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRZMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA  Rees  matrix  or  0-matrix semigroup congruence class by linked
             triple.[133X
   
@@ -1302,7 +1302,7 @@
   
   [1X16.6-5 IsLinkedTriple[101X
   
-  [29X[2XIsLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  operation  returns  true  if  and only if the arguments ([3XN[103X, [3XcolBlocks[103X,
@@ -1324,7 +1324,7 @@
   
   [1X16.6-6 CanonicalRepresentative[101X
   
-  [29X[2XCanonicalRepresentative[102X( [3Xclass[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalRepresentative[102X( [3Xclass[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA congruence class.[133X
   
   [33X[0;0YThis attribute gives a canonical representative for the semigroup congruence
@@ -1343,7 +1343,7 @@
   
   [1X16.6-7 AsSemigroupCongruenceByGeneratingPairs[101X
   
-  [29X[2XAsSemigroupCongruenceByGeneratingPairs[102X( [3Xcong[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsSemigroupCongruenceByGeneratingPairs[102X( [3Xcong[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
   
   [33X[0;0YThis  operation  takes  [3Xcong[103X,  a  semigroup congruence, and returns the same
@@ -1361,8 +1361,8 @@
   
   [1X16.6-8 AsRMSCongruenceByLinkedTriple[101X
   
-  [29X[2XAsRMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation
-  [29X[2XAsRZMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsRMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAsRZMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix semigroup congruence by linked triple.[133X
   
   [33X[0;0YThis  operation  takes  a  semigroup congruence [3Xcong[103X over a finite simple or
@@ -1425,7 +1425,7 @@
   
   [1X16.7-1 IsInverseSemigroupCongruenceByKernelTrace[101X
   
-  [29X[2XIsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  contains  any  inverse  semigroup  congruence  [3Xcong[103X which is
@@ -1452,7 +1452,7 @@
   
   [1X16.7-2 InverseSemigroupCongruenceByKernelTrace[101X
   
-  [29X[2XInverseSemigroupCongruenceByKernelTrace[102X( [3XS[103X, [3Xkernel[103X, [3XtraceBlocks[103X ) [32X function
+  [33X[1;0Y[29X[2XInverseSemigroupCongruenceByKernelTrace[102X( [3XS[103X, [3Xkernel[103X, [3XtraceBlocks[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
   
   [33X[0;0YIf  [3XS[103X is an inverse semigroup, [3Xkernel[103X is a subsemigroup of [3XS[103X, [3XtraceBlocks[103X is
@@ -1484,7 +1484,7 @@
   
   [1X16.7-3 AsInverseSemigroupCongruenceByKernelTrace[101X
   
-  [29X[2XAsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
   
   [33X[0;0YIf  [3Xcong[103X  is  a  semigroup  congruence  over an inverse semigroup, then this
@@ -1508,7 +1508,7 @@
   
   [1X16.7-4 KernelOfSemigroupCongruence[101X
   
-  [29X[2XKernelOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XKernelOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn inverse semigroup.[133X
   
   [33X[0;0YIf  [3Xcong[103X  is  a  congruence  over  a  semigroup  with  inverse op, then this
@@ -1530,7 +1530,7 @@
   
   [1X16.7-5 TraceOfSemigroupCongruence[101X
   
-  [29X[2XTraceOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTraceOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list of lists.[133X
   
   [33X[0;0YIf  [3Xcong[103X  is  an inverse semigroup congruence by kernel and trace, then this
@@ -1558,7 +1558,7 @@
   
   [1X16.7-6 IsInverseSemigroupCongruenceClassByKernelTrace[101X
   
-  [29X[2XIsInverseSemigroupCongruenceClassByKernelTrace[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInverseSemigroupCongruenceClassByKernelTrace[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  contains  any congruence class which belongs to a congruence
@@ -1582,7 +1582,7 @@
   
   [1X16.7-7 MinimumGroupCongruence[101X
   
-  [29X[2XMinimumGroupCongruence[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimumGroupCongruence[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
   
   [33X[0;0YIf  [3XS[103X  is  an  inverse  semigroup,  then  this  function  returns  the least
@@ -1608,7 +1608,7 @@
   
   [1X16.8-1 SemigroupIdealOfReesCongruence[101X
   
-  [29X[2XSemigroupIdealOfReesCongruence[102X( [3Xcong[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSemigroupIdealOfReesCongruence[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup ideal.[133X
   
   [33X[0;0YIf   [3Xcong[103X   is   a   rees   congruence   (see  [2XIsReesCongruence[102X  ([14XReference:
@@ -1631,7 +1631,7 @@
   
   [1X16.8-2 IsReesCongruenceClass[101X
   
-  [29X[2XIsReesCongruenceClass[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsReesCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  describes  a  congruence  class  of  a  Rees  congruence.  A
@@ -1672,7 +1672,7 @@
   
   [1X16.9-1 IsUniversalSemigroupCongruence[101X
   
-  [29X[2XIsUniversalSemigroupCongruence[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUniversalSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  property describes a type of semigroup congruence, which must refer to
@@ -1694,7 +1694,7 @@
   
   [1X16.9-2 IsUniversalSemigroupCongruenceClass[101X
   
-  [29X[2XIsUniversalSemigroupCongruenceClass[102X( [3Xobj[103X ) [32X category
+  [33X[1;0Y[29X[2XIsUniversalSemigroupCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  describes a class of the universal semigroup congruence (see
@@ -1712,7 +1712,7 @@
   
   [1X16.9-3 UniversalSemigroupCongruence[101X
   
-  [29X[2XUniversalSemigroupCongruence[102X( [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XUniversalSemigroupCongruence[102X( [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA universal semigroup congruence.[133X
   
   [33X[0;0YThis  operation returns the universal semigroup congruence for the semigroup

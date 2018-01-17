@@ -183,7 +183,7 @@
 
 <h5>5.1-1 IsMatrixOverSemiring</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiring</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiring</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of the category <code class="code">IsMatrixOverSemiring</code>, which is a subcategory of <code class="func">IsMultiplicativeElementWithOne</code> (<a href="../../../doc/ref/chap31_mj.html#X82BC294F7D388AE8"><span class="RefLink">Reference: IsMultiplicativeElementWithOne</span></a>), <code class="func">IsAssociativeElement</code> (<a href="../../../doc/ref/chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>), and <code class="code">IsPositionalObjectRep</code>; see <a href="../../../doc/ref/chap13_mj.html#X8698205F8648EB33"><span class="RefLink">Reference: Representation</span></a>.</p>
@@ -196,8 +196,8 @@
 
 <h5>5.1-2 IsMatrixOverSemiringCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every collection of matrices over the same semiring belongs to the category <code class="code">IsMatrixOverSemiringCollection</code>. For example, semigroups of matrices over a semiring belong to <code class="code">IsMatrixOverSemiringCollection</code>.</p>
@@ -208,7 +208,7 @@
 
 <h5>5.1-3 DimensionOfMatrixOverSemiring</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfMatrixOverSemiring</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfMatrixOverSemiring</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>If <var class="Arg">mat</var> is a matrix over a semiring (i.e. belongs to the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>)), then <var class="Arg">mat</var> is a square <code class="code">n</code> by <code class="code">n</code> matrix. <code class="code">DimensionOfMatrixOverSemiring</code> returns the dimension <code class="code">n</code> of <var class="Arg">mat</var>.</p>
@@ -228,7 +228,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 
 <h5>5.1-4 DimensionOfMatrixOverSemiringCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfMatrixOverSemiringCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfMatrixOverSemiringCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>If <var class="Arg">coll</var> is a collection of matrices over a semiring (i.e. belongs to the category <code class="func">IsMatrixOverSemiringCollection</code> (<a href="chap5_mj.html#X86F696B883677D6B"><span class="RefLink">5.1-2</span></a>)), then the elements of <var class="Arg">coll</var> are square <code class="code">n</code> by <code class="code">n</code> matrices. <code class="code">DimensionOfMatrixOverSemiringCollection</code> returns the dimension <code class="code">n</code> of these matrices.</p>
@@ -248,8 +248,8 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 
 <h5>5.1-5 Matrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>[, <var class="Arg">threshold</var>[, <var class="Arg">period</var>]] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">semiring</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>[, <var class="Arg">threshold</var>[, <var class="Arg">period</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">semiring</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over semiring.</p>
 
 <p>This operation can be used to construct a matrix over a semiring in <strong class="pkg">Semigroups</strong>.</p>
@@ -328,9 +328,9 @@ Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 
 <h5>5.1-6 AsMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>, <var class="Arg">threshold</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>, <var class="Arg">threshold</var>, <var class="Arg">period</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>, <var class="Arg">threshold</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">mat</var>, <var class="Arg">threshold</var>, <var class="Arg">period</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix.</p>
 
 <p>This operation can be used to change the representation of certain matrices over semirings. If <var class="Arg">mat</var> is a matrix over a semiring (in the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>)), then <code class="code">AsMatrix</code> returns a new matrix corresponding to <var class="Arg">mat</var> of the type specified by the filter <var class="Arg">filt</var>, and if applicable the arguments <var class="Arg">threshold</var> and <var class="Arg">period</var>. The dimension of the matrix <var class="Arg">mat</var> is not changed by this operation.</p>
@@ -419,8 +419,8 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)</pre></div>
 
 <h5>5.1-7 RandomMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">dim</var>[, <var class="Arg">threshold</var>[, <var class="Arg">period</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrix</code>( <var class="Arg">semiring</var>, <var class="Arg">dim</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrix</code>( <var class="Arg">filt</var>, <var class="Arg">dim</var>[, <var class="Arg">threshold</var>[, <var class="Arg">period</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrix</code>( <var class="Arg">semiring</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over semiring.</p>
 
 <p>This operation can be used to construct a random matrix over a semiring in <strong class="pkg">Semigroups</strong>. The usage of <code class="code">RandomMatrix</code> is similar to that of <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>).</p>
@@ -475,15 +475,15 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
 <h5>5.1-8 <span class="Heading">Matrix filters</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMat</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteField</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMat</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteField</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of one of these categories, which are subcategory of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
@@ -498,23 +498,23 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
 <h5>5.1-9 <span class="Heading">Matrix collection filters</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every collection of matrices over the same semiring in <strong class="pkg">Semigroups</strong> belongs to one of the categories above. For example, semigroups of boolean matrices belong to <code class="code">IsBooleanMatCollection</code>.</p>
@@ -525,8 +525,8 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
 <h5>5.1-10 AsList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMutableList</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMutableList</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists.</p>
 
 <p>If <var class="Arg">mat</var> is a matrix over a semiring (in the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>)), then <code class="code">AsList</code> returns the underlying list of lists of semiring elements corresponding to <var class="Arg">mat</var>. In this case, the returned list and all of its entries are immutable.</p>
@@ -562,7 +562,7 @@ true</pre></div>
 
 <h5>5.1-11 ThresholdTropicalMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThresholdTropicalMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThresholdTropicalMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>If <var class="Arg">mat</var> is a tropical matrix (i.e. belongs to the category <code class="func">IsTropicalMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">ThresholdTropicalMatrix</code> returns the threshold (i.e. the largest integer) of the underlying semiring.</p>
@@ -592,8 +592,8 @@ Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
 
 <h5>5.1-12 ThresholdNTPMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThresholdNTPMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PeriodNTPMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ThresholdNTPMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PeriodNTPMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>An <strong class="button">ntp matrix</strong> is a matrix with entries in a semiring <span class="SimpleMath">\(\mathbb{N}_{t,p} = \{0, 1, \ldots, t, t + 1, \ldots, t + p - 1\}\)</span> for some threshold <span class="SimpleMath">\(t\)</span> and period <span class="SimpleMath">\(p\)</span> under addition and multiplication modulo the congruence <span class="SimpleMath">\(t = t + p\)</span>.</p>
@@ -691,7 +691,7 @@ Matrix(IsNTPMatrix, [[2, 1, 3], [0, 5, 1], [4, 1, 0]], 3, 4)
 
 <h5>5.3-1 BooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BooleanMat</code>( <var class="Arg">arg</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BooleanMat</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean matrix.</p>
 
 <p><code class="code">BooleanMat</code> returns the boolean matrix <code class="code">mat</code> defined by its argument. The argument can be any of the following:</p>
@@ -733,7 +733,7 @@ true
 
 <h5>5.3-2 AsBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBooleanMat</code>( <var class="Arg">x</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBooleanMat</code>( <var class="Arg">x</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean matrix.</p>
 
 <p><code class="code">AsBooleanMat</code> returns the pbr, bipartition, permutation, transformation, or partial permutation <var class="Arg">x</var>, as a boolean matrix of dimension <var class="Arg">n</var>.</p>
@@ -869,7 +869,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0],
 
 <h5><code>5.3-3 \in</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">mat1</var>, <var class="Arg">mat2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">mat1</var>, <var class="Arg">mat2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">mat1</var> and <var class="Arg">mat2</var> are boolean matrices, then <code class="code"><var class="Arg">mat1</var> in <var class="Arg">mat2</var></code> returns <code class="keyw">true</code> if the binary relation defined by <var class="Arg">mat1</var> is a subset of that defined by <var class="Arg">mat2</var>.</p>
@@ -889,7 +889,7 @@ true</pre></div>
 
 <h5>5.3-4 OnBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBlist</code>( <var class="Arg">blist</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBlist</code>( <var class="Arg">blist</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean list.</p>
 
 <p>If <var class="Arg">blist</var> is a boolean list of length <code class="code">n</code> and <var class="Arg">mat</var> is boolean matrices of dimension <code class="code">n</code>, then <code class="code">OnBlist</code> returns the product of <var class="Arg">blist</var> (thought of as a row vector over the boolean semiring) and <var class="Arg">mat</var>.</p>
@@ -909,7 +909,7 @@ true</pre></div>
 
 <h5>5.3-5 Successors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Successors</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Successors</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists of positive integers.</p>
 
 <p>A row of a boolean matrix of dimension <code class="code">n</code> can be thought of of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row equals <span class="SimpleMath">\(1\)</span>. We refer to the subset <code class="code">S</code> as the <strong class="button">successors</strong> of the row.</p>
@@ -929,8 +929,8 @@ true</pre></div>
 
 <h5>5.3-6 BooleanMatNumber</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BooleanMatNumber</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BooleanMatNumber</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean matrix, or a positive integer.</p>
 
 <p>These functions implement a bijection from the set of all boolean matrices of dimension <var class="Arg">n</var> and the numbers <code class="code">[1 .. 2 ^ (<var class="Arg">n</var> ^ 2)]</code>.</p>
@@ -957,8 +957,8 @@ true</pre></div>
 
 <h5>5.3-7 BlistNumber</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlistNumber</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlistNumber</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean list, or a positive integer.</p>
 
 <p>These functions implement a bijection from the set of all boolean lists of length <var class="Arg">n</var> and the numbers <code class="code">[1 .. 2 ^ <var class="Arg">n</var>]</code>.</p>
@@ -990,9 +990,9 @@ true</pre></div>
 
 <h5>5.3-8 CanonicalBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean matrix.</p>
 
 <p>This operation returns a fixed representative of the orbit of the boolean matrix <var class="Arg">mat</var> under the action of the permutation group <var class="Arg">G</var> on its rows and the permutation group <var class="Arg">H</var> on its columns.</p>
@@ -1042,9 +1042,9 @@ Matrix(IsBooleanMat, [[0, 0, 1, 1, 1, 0], [1, 1, 0, 0, 1, 0],
 
 <h5>5.3-9 IsRowTrimBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsColTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsColTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrimBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A row or column of a boolean matrix of dimension <code class="code">n</code> can be thought of of as the characteristic function of a subset <code class="code">S</code> of <code class="code">[1 .. n]</code>, i.e. <code class="code">i in S</code> if and only if the <code class="code">i</code>th component of the row or column equals <code class="code">1</code>.</p>
@@ -1072,7 +1072,7 @@ false</pre></div>
 
 <h5>5.3-10 IsSymmetricBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSymmetricBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSymmetricBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is <strong class="button">symmetric</strong> if it is symmetric about the main diagonal, i.e. <code class="code"><var class="Arg">mat</var>[i][j] = <var class="Arg">mat</var>[j][i]</code> for all <code class="code">i, j</code> in the range <code class="code">[1 .. n]</code> where <code class="code">n</code> is the dimension of <var class="Arg">mat</var>.</p>
@@ -1100,7 +1100,7 @@ true</pre></div>
 
 <h5>5.3-11 IsReflexiveBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReflexiveBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReflexiveBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is <strong class="button">reflexive</strong> if every entry in the main diagonal is <code class="keyw">true</code>, i.e. <code class="code"><var class="Arg">mat</var>[i][i] = true</code> for all <code class="code">i</code> in the range <code class="code">[1 .. n]</code> where <code class="code">n</code> is the dimension of <var class="Arg">mat</var>.</p>
@@ -1128,7 +1128,7 @@ true</pre></div>
 
 <h5>5.3-12 IsTransitiveBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitiveBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitiveBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is <strong class="button">transitive</strong> if whenever <code class="code"><var class="Arg">mat</var>[i][j] = true</code> and <code class="code"><var class="Arg">mat</var>[j][k] = true</code> then <code class="code"><var class="Arg">mat</var>[i][k] = true</code>.</p>
@@ -1156,7 +1156,7 @@ true</pre></div>
 
 <h5>5.3-13 IsAntiSymmetricBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAntiSymmetricBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAntiSymmetricBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is <strong class="button">anti-symmetric</strong> if whenever <code class="code"><var class="Arg">mat</var>[i][j] = true</code> and <code class="code"><var class="Arg">mat</var>[j][i] = true</code> then <code class="code">i = j</code>.</p>
@@ -1184,8 +1184,8 @@ true</pre></div>
 
 <h5>5.3-14 IsTotalBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotalBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOntoBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotalBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOntoBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is <strong class="button">total</strong> if there is at least one entry in every row is <code class="keyw">true</code>. Similarly, a boolean matrix is <strong class="button">onto</strong> if at least one entry in every column is <code class="keyw">true</code>.</p>
@@ -1217,7 +1217,7 @@ true</pre></div>
 
 <h5>5.3-15 IsPartialOrderBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialOrderBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialOrderBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is a <strong class="button">partial order</strong> if it is reflexive, transitive, and anti-symmetric.</p>
@@ -1231,7 +1231,7 @@ true</pre></div>
 
 <h5>5.3-16 IsEquivalenceBooleanMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A boolean matrix is an <strong class="button">equivalence</strong> if it is reflexive, transitive, and symmetric.</p>
@@ -1255,7 +1255,7 @@ true</pre></div>
 
 <h5>5.4-1 NewMatrixOverFiniteField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">rows</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">rows</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a new matrix object.</p>
 
 <p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> matrix over the finite field <var class="Arg">F</var> with constructing filter <var class="Arg">filt</var>. The matrix itself is given by a list <var class="Arg">rows</var> of rows. Currently the only possible value for <var class="Arg">filt</var> is <code class="code">IsPlistMatrixOverFiniteFieldRep</code>.</p>
@@ -1275,8 +1275,8 @@ Matrix(GF(2^2), [])</pre></div>
 
 <h5>5.4-2 IdentityMatrixOverFiniteField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">mat</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">mat</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Given a finite field <var class="Arg">F</var> and a positive integer <var class="Arg">n</var>, this operation returns an <var class="Arg">n</var>-by-<var class="Arg">n</var> identity matrix with entries in the finite field <var class="Arg">F</var>. If instead the first argument is an <var class="Arg">n</var>-by-<var class="Arg">n</var> matrix <var class="Arg">mat</var> whose <code class="func">BaseDomain</code> (<a href="chap5_mj.html#X83CDD42880D663F4"><span class="RefLink">5.4-7</span></a>) is a finite field <var class="Arg">F</var>, then <code class="code">IdentityMatrixOverFiniteField(<var class="Arg">mat</var>, <var class="Arg">n</var>)</code> returns the same as <code class="code">IdentityMatrixOverFiniteField(<var class="Arg">F</var>, <var class="Arg">n</var>)</code>.</p>
 
 
@@ -1292,8 +1292,8 @@ Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])</pre></div>
 
 <h5>5.4-3 NewIdentityMatrixOverFiniteField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewIdentityMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewZeroMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewIdentityMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewZeroMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> zero or identity matrix with entries in the finite field <var class="Arg">F</var>.</p>
 
 
@@ -1309,9 +1309,9 @@ Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])</pre></div>
 
 <h5>5.4-4 RowSpaceBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceBasis</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformation</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformationInv</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceBasis</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformation</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformationInv</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>To compute the value of any of the above attributes, a canonical basis for the row space of <var class="Arg">m</var> is computed along with an invertible matrix <code class="code">RowSpaceTransformation</code> such that <code class="code">m * RowSpaceTransformation(m) = RowSpaceBasis(m)</code>. <code class="code">RowSpaceTransformationInv(m)</code> is the inverse of <code class="code">RowSpaceTransformation(m)</code>.</p>
 
 
@@ -1329,7 +1329,7 @@ Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0, Z(2)^0],
 
 <h5>5.4-5 RowRank</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowRank</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowRank</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: Length of a basis of the row space of <var class="Arg">m</var>.</p>
 
 
@@ -1344,8 +1344,8 @@ Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)],
 
 <h5>5.4-6 RightInverse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over a finite field.</p>
 
 <p>These attributes contain a semigroup left-inverse, and a semigroup right-inverse of the matrix <var class="Arg">m</var> respectively.</p>
@@ -1367,7 +1367,7 @@ Z(2)^0 Z(2)^0 0*Z(2)
 
 <h5>5.4-7 BaseDomain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseDomain</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseDomain</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: If <var class="Arg">mat</var> is a matrix over a finite field (in the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>)), then <code class="code">BaseDomain</code> returns the finite field specified at the point that <var class="Arg">mat</var> was created. Every entry in the matrix <var class="Arg">mat</var> belongs to <code class="code">BaseDomain(<var class="Arg">mat</var>)</code>.</p>
 
 
@@ -1382,7 +1382,7 @@ GF(5)</pre></div>
 
 <h5>5.4-8 TransposedMatImmutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An immutable matrix.</p>
 
 <p>This attribute contains an immutable copy of <var class="Arg">m</var>. Note that matrices are immutable by default.</p>
@@ -1420,7 +1420,7 @@ Matrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0],
 
 <h5>5.5-1 InverseOp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An integer matrix.</p>
 
 <p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)) whose inverse (if it exists) is also an integer matrix, then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>.</p>
@@ -1442,7 +1442,7 @@ true
 
 <h5>5.5-2 IsTorsion</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">mat</var> is torsion and <code class="keyw">false</code> otherwise.</p>
@@ -1468,7 +1468,7 @@ false
 
 <h5>5.5-3 Order</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Order</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Order</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An integer or <code class="code">infinity</code>.</p>
 
 <p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">InverseOp</code> returns the order of <var class="Arg">mat</var>. The order of <var class="Arg">mat</var> is the smallest integer power of <var class="Arg">mat</var> equal to the identity. If no such integer exists, the order is equal to <code class="code">infinity</code>.</p>
@@ -1515,7 +1515,7 @@ infinity
 
 <h5>5.6-1 InverseOp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A max-plus matrix.</p>
 
 <p>If <var class="Arg">mat</var> is an invertible max-plus matrix (i.e. belongs to the category <code class="func">IsMaxPlusMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>) and is a row permutation applied to the identity), then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>. This method is described in <a href="chapBib_mj.html#biBKacie2009aa">[Far09]</a>.</p>
@@ -1533,7 +1533,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.6-2 RadialEigenvector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RadialEigenvector</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RadialEigenvector</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A vector.</p>
 
 <p>If <var class="Arg">mat</var> is a <code class="code">n</code> by <code class="code">n</code> max-plus matrix (i.e. belongs to the category <code class="func">IsMaxPlusMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">RadialEigenvector</code> returns an eigenvector corresponding to the eigenvalue equal to the spectral radius of <var class="Arg">mat</var>. This method is described in <a href="chapBib_mj.html#biBKacie2009aa">[Far09]</a>.</p>
@@ -1548,7 +1548,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.6-3 SpectralRadius</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpectralRadius</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpectralRadius</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A rational number.</p>
 
 <p>If <var class="Arg">mat</var> is a max-plus matrix (i.e. belongs to the category <code class="func">IsMaxPlusMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">SpectralRadius</code> returns the supremum of the set of eigenvalues of <var class="Arg">mat</var>. This method is described in <a href="chapBib_mj.html#biBBacelli1992aa">[BFCGOGJ92]</a>.</p>
@@ -1564,7 +1564,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.6-4 UnweightedPrecedenceDigraph</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnweightedPrecedenceDigraph</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnweightedPrecedenceDigraph</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph.</p>
 
 <p>If <var class="Arg">mat</var> is a max-plus matrix (i.e. belongs to the category <code class="func">IsMaxPlusMatrix</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">UnweightedPrecedenceDigraph</code> returns the unweighted precedence digraph corresponding to <var class="Arg">mat</var>.</p>
@@ -1609,16 +1609,16 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.7-1 <span class="Heading">Matrix semigroup filters</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>The above are the currently supported types of matrix semigroups. For monoids see Section <a href="chap5_mj.html#X8616225581BC7414"><span class="RefLink">5.7-2</span></a>.</p>
@@ -1627,16 +1627,16 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.7-2 <span class="Heading">Matrix monoid filters</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiringMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBooleanMatMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaxPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>The above are the currently supported types of matrix monoids. They correspond to the matrix semigroup types in Section <a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>. For matrix semigroups over finite fields there is also <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5_mj.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>).</p>
@@ -1645,7 +1645,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 <h5>5.7-3 IsFinite</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFinite</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFinite</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">S</var> is a max-plus or min-plus matrix semigroup (i.e. belongs to the category <code class="func">IsMaxPlusMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)), then <code class="code">IsFinite</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> is finite and <code class="keyw">false</code> otherwise. This method is based on <a href="chapBib_mj.html#biBGaubert1996aa">[Gau96]</a> (max-plus) and <a href="chapBib_mj.html#biBSimon1978aa">[Sim78]</a> (min-plus). For min-plus matrix semigroups, this method is only valid if each min-plus matrix in the semigroup contains only non-negative integers. Note, this method is terminating and does not involve enumerating semigroups.</p>
@@ -1675,7 +1675,7 @@ true
 
 <h5>5.7-4 IsTorsion</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">S</var> is a max-plus matrix semigroup (i.e. belongs to the category <code class="func">IsMaxPlusMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> is torsion and <code class="keyw">false</code> otherwise. This method is based on <a href="chapBib_mj.html#biBGaubert1996aa">[Gau96]</a> and draws on <a href="chapBib_mj.html#biBBurrell2016aa">[Bur16]</a>, <a href="chapBib_mj.html#biBBacelli1992aa">[BFCGOGJ92]</a> and <a href="chapBib_mj.html#biBKacie2009aa">[Far09]</a>.</p>
@@ -1697,7 +1697,7 @@ false
 
 <h5>5.7-5 NormalizeSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup.</p>
 
 <p>This method applies to max-plus matrix semigroups (i.e. those belonging to the category <code class="func">IsMaxPlusMatrixSemigroup</code> (<a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)) that are finitely generated, such that the spectral radius of the matrix equal to the sum of the generators (with respect to the max-plus semiring) is zero. <code class="code">NormalizeSemigroup</code> returns a semigroup of matrices all with strictly non-positive entries. Note that the output is isomorphic to a min-plus matrix semigroup. This method is based on <a href="chapBib_mj.html#biBGaubert1996aa">[Gau96]</a> and <a href="chapBib_mj.html#biBBurrell2016aa">[Bur16]</a>.</p>
@@ -1737,7 +1737,7 @@ false
 
 <h5>5.7-7 IsMatrixOverFiniteFieldGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="../../../doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5_mj.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
@@ -1760,7 +1760,7 @@ false</pre></div>
 
 <h5><code>5.7-8 \^</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix group over a finite field.</p>
 
 <p>The arguments of this operation, <var class="Arg">G</var> and <var class="Arg">mat</var>, must be categories <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5_mj.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>) and <code class="func">IsMatrixOverFiniteField</code> (<a href="chap5_mj.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>). If <var class="Arg">G</var> consists of <code class="code">d</code> by <code class="code">d</code> matrices over <code class="code">GF(q)</code> and <var class="Arg">mat</var> is a <code class="code">d</code> by <code class="code">d</code> matrix over <code class="code">GF(q)</code>, then <code class="code"><var class="Arg">G</var> ^ <var class="Arg">mat</var></code> returns the conjugate of <var class="Arg">G</var> by <var class="Arg">mat</var> inside <code class="code">GL(d, q)</code>.</p>
@@ -1778,7 +1778,7 @@ false</pre></div>
 
 <h5>5.7-9 IsomorphismMatrixGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
 <p>If <var class="Arg">G</var> belongs to the category <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5_mj.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>), then <code class="code">IsomorphismMatrixGroup</code> returns an isomorphism from <var class="Arg">G</var> into a group consisting of <strong class="pkg">GAP</strong> library matrices.</p>
@@ -1799,7 +1799,7 @@ Group(
 
 <h5>5.7-10 AsMatrixGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A group of <strong class="pkg">GAP</strong> library matrices over a finite field.</p>
 
 <p>Returns the image of the isomorphism returned by <a href="chap5_mj.html#X7AC6EABF7FF04D7B"><span class="RefLink">5.7-9</span></a>.</p>

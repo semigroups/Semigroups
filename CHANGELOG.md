@@ -1,6 +1,23 @@
 ### CHANGELOG - [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+#### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+
+### Version 3.0.12 (released 17/01/2018)
+
+This version contains some minor updates for compatibility GAP 4.9, to fix some
+bugs, to update the build system, and to update the kernel module for
+libsemigroups version 0.6.2.
+
+The following improvements have been made:
+
+* [PR 426](https://github.com/gap-packages/Semigroups/pull/426): a new faster method for `IsomorphismFpSemigroup` for factorisable inverse monoids is added. [Chris Russell]
+* [PR 430](https://github.com/gap-packages/Semigroups/pull/430): the performance of the maximal subsemigroups functionality has been improved.  [[Wilf A. Wilson](http://wilf.me)]
+
+The following issues are resolved:
+
+* [Issue 424](https://github.com/gap-packages/Semigroups/issues/424): the operation `MinimalFactorization` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 435](https://github.com/gap-packages/Semigroups/issues/424): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
 
 ### Version 3.0.11 (released 18/12/2017)
 
@@ -130,6 +147,14 @@ the [libsemigroups](https://github.com/james-d-mitchell/libsemigroups) C++
 library to allow high-speed computations for congruences and certain categories
 of semigroup.  There are also several new types of semigroup and a variety of
 new methods which can be used with them.
+
+### Version 2.8.2 (released 15/01/2018)
+This is a minor release to correct the required version of GAP in
+PackageInfo.g (from GAP 4.9.0 to GAP 4.8.9). 
+
+### Version 2.8.1 (released 22/12/2017)
+This is a minor release to update the output in some test file and manual
+examples due to some changes in the GAP library code.
 
 ### Version 2.8.0 (released 26/05/2016)
 In this release there are some new features and some bug fixes. In this

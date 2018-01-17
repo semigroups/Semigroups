@@ -60,7 +60,7 @@
 
 <h5>11.1-1 GraphInverseSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphInverseSemigroup</code>( <var class="Arg">E</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphInverseSemigroup</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A graph inverse semigroup.</p>
 
 <p>If <var class="Arg">E</var> is a digraph (i.e. it satisfies <code class="func">IsDigraph</code> (<a href="../../../pkg/digraphs/doc/chap3_mj.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)), then <code class="code">GraphInverseSemigroup</code> returns the graph inverse semigroup <span class="SimpleMath">\(G(\textit{E})\)</span> where, roughly speaking, elements correspond to paths in the graph <var class="Arg">E</var>.</p>
@@ -116,8 +116,8 @@ v_2</pre></div>
 
 <h5>11.1-2 Range</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Range</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Source</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Range</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Source</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A graph inverse semigroup element.</p>
 
 <p>If <var class="Arg">x</var> is an element of a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroupElement</code> (<a href="chap11_mj.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then <code class="code">Range</code> and <code class="code">Source</code> give, respectively, the start and end vertices of <var class="Arg">x</var> when viewed as a path in the digraph over which the semigroup is defined.</p>
@@ -140,7 +140,7 @@ v_1
 
 <h5>11.1-3 IsVertex</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsVertex</code>( <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsVertex</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">x</var> is an element of a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroupElement</code> (<a href="chap11_mj.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then this attribute returns <code class="keyw">true</code> if <var class="Arg">x</var> corresponds to a vertex in the digraph over which the semigroup is defined, and <code class="keyw">false</code> otherwise.</p>
@@ -169,8 +169,8 @@ false
 
 <h5>11.1-4 IsGraphInverseSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroup</code>( <var class="Arg">x</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroup</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>The category <code class="code">IsGraphInverseSemigroup</code> contains any semigroup defined over a digraph using the <code class="func">GraphInverseSemigroup</code> (<a href="chap11_mj.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>) operation. The category <code class="code">IsGraphInverseSemigroupElement</code> contains any element contained in such a semigroup.</p>
@@ -192,7 +192,7 @@ true
 
 <h5>11.1-5 GraphOfGraphInverseSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphOfGraphInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphOfGraphInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph.</p>
 
 <p>If <var class="Arg">S</var> is a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroup</code> (<a href="chap11_mj.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then this attribute returns the original digraph over which <var class="Arg">S</var> was defined (most likely the argument given to <code class="func">GraphInverseSemigroup</code> (<a href="chap11_mj.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>) to create <var class="Arg">S</var>).</p>
@@ -210,14 +210,14 @@ true
 
 <h5>11.1-6 IsGraphInverseSemigroupElementCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElementCollection</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every collection of elements of a graph inverse semigroup belongs to the category <code class="code">IsGraphInverseSemigroupElementCollection</code>. For example, every graph inverse semigroup belongs to <code class="code">IsGraphInverseSemigroupElementCollection</code>.</p>
 
 <p><a id="X7BC6D5107ED09DBA" name="X7BC6D5107ED09DBA"></a></p>
 
 <h5>11.1-7 IsGraphInverseSubsemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSubsemigroup</code></td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSubsemigroup</code></td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="code">IsGraphInverseSubsemigroup</code> is a synonym for <code class="code">IsSemigroup</code> and <code class="code">IsInverseSemigroup</code> and <code class="code">IsGraphInverseSemigroupElementCollection</code>.</p>
 
 <p>See <code class="func">IsGraphInverseSemigroupElementCollection</code> (<a href="chap11_mj.html#X870128E4845D6ABD"><span class="RefLink">11.1-6</span></a>) and <code class="func">IsInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseSemigroup</span></a>).</p>

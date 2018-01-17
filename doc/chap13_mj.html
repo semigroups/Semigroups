@@ -182,9 +182,9 @@
 
 <h5>13.1-1 AsListCanonical</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsListCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsListCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorCanonical</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list, enumerator, or iterator.</p>
 
 <p>When the argument <var class="Arg">S</var> is a semigroup in the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6_mj.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), <code class="code">AsListCanonical</code> returns a list of the elements of <var class="Arg">S</var> in the order they are enumerated by the Froidure-Pin Algorithm. This is the same as the order used to index the elements of <var class="Arg">S</var> in <code class="func">RightCayleyGraphSemigroup</code> (<a href="chap13_mj.html#X7B1FA311879A25A7"><span class="RefLink">13.2-1</span></a>) and <code class="func">LeftCayleyGraphSemigroup</code> (<a href="chap13_mj.html#X7B1FA311879A25A7"><span class="RefLink">13.2-1</span></a>).</p>
@@ -226,7 +226,7 @@ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
 <h5>13.1-2 PositionCanonical</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionCanonical</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionCanonical</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>When the argument <var class="Arg">S</var> is a semigroup in the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6_mj.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>) and <var class="Arg">x</var> is an element of <var class="Arg">S</var>, <code class="code">PositionCanonical</code> returns the position of <var class="Arg">x</var> in <code class="code">AsListCanonical(<var class="Arg">S</var>)</code> or equivalently the position of <var class="Arg">x</var> in <code class="code">EnumeratorCanonical(<var class="Arg">S</var>)</code>.</p>
@@ -248,7 +248,7 @@ true</pre></div>
 
 <h5>13.1-3 Enumerate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerate</code>( <var class="Arg">S</var>[, <var class="Arg">limit</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerate</code>( <var class="Arg">S</var>[, <var class="Arg">limit</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup (the argument).</p>
 
 <p>If <var class="Arg">S</var> is a semigroup with representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6_mj.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>) and <var class="Arg">limit</var> is a positive integer, then this operation can be used to enumerate at least <var class="Arg">limit</var> elements of <var class="Arg">S</var>, or <code class="code">Size(<var class="Arg">S</var>)</code> elements if this is less than <var class="Arg">limit</var>, using the Froidure-Pin Algorithm.</p>
@@ -271,7 +271,7 @@ true</pre></div>
 
 <h5>13.1-4 IsFullyEnumerated</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullyEnumerated</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullyEnumerated</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">S</var> is a semigroup with representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6_mj.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), then this operation returns <code class="keyw">true</code> if the Froidure-Pin Algorithm has been run to completion (i.e. all of the elements of <var class="Arg">S</var> have been found) and <code class="keyw">false</code> if <var class="Arg">S</var> has not been fully enumerated.</p>
@@ -299,8 +299,8 @@ true</pre></div>
 
 <h5>13.2-1 RightCayleyGraphSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCayleyGraphSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCayleyGraphSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCayleyGraphSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCayleyGraphSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists of positive integers.</p>
 
 <p>When the argument <var class="Arg">S</var> is a semigroup in the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6_mj.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyGraphSemigroup</code> returns the right Cayley graphs of <var class="Arg">S</var>, as a list <code class="code">graph</code> where <code class="code">graph[i][j]</code> is equal to <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The list returned by <code class="code">LeftCayleyGraphSemigroup</code> is defined analogously.</p>
@@ -324,7 +324,7 @@ true</pre></div>
 
 <h5>13.3-1 Random</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">S</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Returns: A random element.</p>
 
 <p>This function returns a random element of the semigroup <var class="Arg">S</var>. If the elements of <var class="Arg">S</var> have been calculated, then one of these is chosen randomly. Otherwise, if the data structure for <var class="Arg">S</var> is known, then a random element of a randomly chosen \(\mathscr{R}\)-class is returned. If the data structure for <var class="Arg">S</var> has not been calculated, then a short product (at most <code class="code">2 * Length(GeneratorsOfSemigroup(<var class="Arg">S</var>))</code>) of generators is returned.</p>
@@ -339,7 +339,7 @@ true</pre></div>
 
 <h5>13.4-1 IndexPeriodOfSemigroupElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexPeriodOfSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexPeriodOfSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list of two positive integers.</p>
 
 <p>If <var class="Arg">x</var> is a semigroup element, then <code class="code">IndexPeriodOfSemigroupElement(<var class="Arg">x</var>)</code> returns the pair <code class="code">[m, r]</code>, where <code class="code">m</code> and <code class="code">r</code> are the least positive integers such that <code class="code"><var class="Arg">x</var>^(m + r) = <var class="Arg">x</var> ^ m</code>. The number <code class="code">m</code> is known as the <em>index</em> of <var class="Arg">x</var>, and the number<code class="code">r</code> is known as the <em>period</em> of <var class="Arg">x</var>.</p>
@@ -365,7 +365,7 @@ true
 
 <h5>13.4-2 SmallestIdempotentPower</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestIdempotentPower</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestIdempotentPower</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>If <var class="Arg">x</var> is a semigroup element, then <code class="code">SmallestIdempotentPower(<var class="Arg">x</var>)</code> returns the least positive integer <code class="code">n</code> such that <code class="code"><var class="Arg">x</var>^n</code> is an idempotent. The smallest idempotent power of <var class="Arg">x</var> is the least multiple of the period of <var class="Arg">x</var> that is greater than or equal to the index of <var class="Arg">x</var>; see <code class="func">IndexPeriodOfSemigroupElement</code> (<a href="chap13_mj.html#X869AC4247E2BA4A2"><span class="RefLink">13.4-1</span></a>).</p>
@@ -405,7 +405,7 @@ true</pre></div>
 
 <h5>13.5-1 EvaluateWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateWord</code>( <var class="Arg">gens</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateWord</code>( <var class="Arg">gens</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup element.</p>
 
 <p>The argument <var class="Arg">gens</var> should be a collection of generators of a semigroup and the argument <var class="Arg">w</var> should be a list of positive integers less than or equal to the length of <var class="Arg">gens</var>. This operation evaluates the word <var class="Arg">w</var> in the generators <var class="Arg">gens</var>. More precisely, <code class="code">EvaluateWord(<var class="Arg">gens</var>, <var class="Arg">w</var>)</code> returns the equivalent of:</p>
@@ -455,7 +455,7 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 
 <h5>13.5-2 Factorization</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factorization</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factorization</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A word in the generators.</p>
 
 
@@ -515,7 +515,7 @@ Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 
 <h5>13.5-3 MinimalFactorization</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalFactorization</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalFactorization</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A minimal word in the generators.</p>
 
 <p>This operation returns a minimal length word in the generators of the semigroup <var class="Arg">S</var> that equals the element <var class="Arg">x</var>. In this case, a word is a list of positive integers where an entry <code class="code">i</code> corresponds to <code class="code">GeneratorsOfSemigroups(<var class="Arg">S</var>)[i]</code>. More specifically,</p>
@@ -549,7 +549,7 @@ Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 
 <h5>13.6-1 Generators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Generators</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Generators</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of generators.</p>
 
 <p><code class="code">Generators</code> returns a generating set that can be used to define the semigroup <var class="Arg">S</var>. The generators of a monoid or inverse semigroup <var class="Arg">S</var>, say, can be defined in several ways, for example, including or excluding the identity element, including or not the inverses of the generators. <code class="code">Generators</code> uses the definition that returns the least number of generators. If no generating set for <var class="Arg">S</var> is known, then <code class="code">GeneratorsOfSemigroup</code> is used by default.</p>
@@ -608,11 +608,11 @@ Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 
 <h5>13.6-2 SmallGeneratingSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallSemigroupGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallMonoidGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallInverseSemigroupGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallInverseMonoidGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallSemigroupGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallMonoidGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallInverseSemigroupGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallInverseMonoidGeneratingSet</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A small generating set for a semigroup.</p>
 
 <p>The attributes <code class="code">SmallXGeneratingSet</code> return a relatively small generating subset of the collection of elements <var class="Arg">coll</var>, which can also be a semigroup. The returned value of <code class="code">SmallXGeneratingSet</code>, where applicable, has the property that</p>
@@ -669,7 +669,7 @@ Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 
 <h5>13.6-3 IrredundantGeneratingSubset</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IrredundantGeneratingSubset</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IrredundantGeneratingSubset</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list of irredundant generators.</p>
 
 <p>If <var class="Arg">coll</var> is a collection of elements of a semigroup, then this function returns a subset <code class="code">U</code> of <var class="Arg">coll</var> such that no element of <code class="code">U</code> is generated by the other elements of <code class="code">U</code>.</p>
@@ -736,10 +736,10 @@ Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 
 <h5>13.6-4 MinimalSemigroupGeneratingSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalSemigroupGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalMonoidGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalInverseSemigroupGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalInverseMonoidGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalSemigroupGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalMonoidGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalInverseSemigroupGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalInverseMonoidGeneratingSet</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A minimal generating set for a semigroup.</p>
 
 <p><strong class="button">Warning:</strong> currently, no methods are installed to compute these attributes.</p>
@@ -776,7 +776,7 @@ true
 
 <h5>13.6-5 GeneratorsSmallest</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsSmallest</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsSmallest</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A set of elements.</p>
 
 <p>For a semigroup <var class="Arg">S</var>, <code class="code">GeneratorsSmallest</code> returns the lexicographically least set of elements <code class="code">X</code> such that <code class="code">X</code> generates <var class="Arg">S</var> as a semigroup, and such that <code class="code">X</code> is lexicographically ordered and has the property that each <code class="code">X[i]</code> is not generated by <code class="code">X[1], X[2], ..., X[i-1]</code>.</p>
@@ -837,7 +837,7 @@ true
 
 <h5>13.7-1 MinimalIdeal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalIdeal</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalIdeal</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The minimal ideal of a semigroup.</p>
 
 <p>The minimal ideal of a semigroup is the least ideal with respect to containment.</p>
@@ -872,8 +872,8 @@ true
 
 <h5>13.7-2 RepresentativeOfMinimalIdeal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeOfMinimalIdeal</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeOfMinimalDClass</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeOfMinimalIdeal</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeOfMinimalDClass</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An element of the minimal ideal of a semigroup.</p>
 
 <p>The minimal ideal of a semigroup is the least ideal with respect to containment.</p>
@@ -907,7 +907,7 @@ Transformation( [ 1, 2, 2, 5, 5, 1 ] )
 
 <h5>13.7-3 MultiplicativeZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeZero</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeZero</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The zero element of a semigroup.</p>
 
 <p><code class="code">MultiplicativeZero</code> returns the zero element of the semigroup <var class="Arg">S</var> if it exists and <code class="keyw">fail</code> if it does not. See also <code class="func">MultiplicativeZero</code> (<a href="../../../doc/ref/chap35_mj.html#X7B39F93C8136D642"><span class="RefLink">Reference: MultiplicativeZero</span></a>).</p>
@@ -945,7 +945,7 @@ fail
 
 <h5>13.7-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroupOfSemigroupWithAdjoinedZero</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroupOfSemigroupWithAdjoinedZero</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup, or <code class="keyw">fail</code>.</p>
 
 <p>If <var class="Arg">S</var> is a semigroup for which the property <code class="func">IsSemigroupWithAdjoinedZero</code> (<a href="chap14_mj.html#X7826DDF8808EC4D9"><span class="RefLink">14.1-19</span></a>) is true, (i.e. <var class="Arg">S</var> has a <code class="func">MultiplicativeZero</code> (<a href="chap13_mj.html#X7B39F93C8136D642"><span class="RefLink">13.7-3</span></a>) and the set <span class="SimpleMath">\(\textit{S} \setminus \{ 0 \}\)</span> is a subsemigroup of <var class="Arg">S</var>), then this method returns the semigroup <span class="SimpleMath">\(\textit{S} \setminus \{ 0 \}\)</span>.</p>
@@ -984,7 +984,7 @@ fail
 
 <h5>13.8-1 GroupOfUnits</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupOfUnits</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupOfUnits</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The group of units of a semigroup or <code class="keyw">fail</code>.</p>
 
 <p><code class="code">GroupOfUnits</code> returns the group of units of the semigroup <var class="Arg">S</var> as a subsemigroup of <var class="Arg">S</var> if it exists and returns <code class="keyw">fail</code> if it does not. Use <code class="func">IsomorphismPermGroup</code> (<a href="chap6_mj.html#X80B7B1C783AA1567"><span class="RefLink">6.5-5</span></a>) if you require a permutation representation of the group of units.</p>
@@ -1035,7 +1035,7 @@ fail
 
 <h5>13.9-1 Idempotents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Idempotents</code>( <var class="Arg">obj</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Idempotents</code>( <var class="Arg">obj</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of idempotents.</p>
 
 <p>The argument <var class="Arg">obj</var> should be a semigroup, \(\mathscr{D}\)-class, \(\mathscr{H}\)-class, \(\mathscr{L}\)-class, or \(\mathscr{R}\)-class.</p>
@@ -1090,7 +1090,7 @@ fail
 
 <h5>13.9-2 NrIdempotents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrIdempotents</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrIdempotents</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>This function returns the number of idempotents in <var class="Arg">obj</var> where <var class="Arg">obj</var> can be a semigroup, \(\mathscr{D}\)-, \(\mathscr{L}\)-, \(\mathscr{H}\)-, or \(\mathscr{R}\)-class. If the actual idempotents are not required, then it is more efficient to use <code class="code">NrIdempotents(obj)</code> than <code class="code">Length(Idempotents(obj))</code> since the idempotents themselves are not created when <code class="code">NrIdempotents</code> is called.</p>
@@ -1137,7 +1137,7 @@ fail
 
 <h5>13.9-3 IdempotentGeneratedSubsemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdempotentGeneratedSubsemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdempotentGeneratedSubsemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup.</p>
 
 <p><code class="code">IdempotentGeneratedSubsemigroup</code> returns the subsemigroup of the semigroup <var class="Arg">S</var> generated by the idempotents of <var class="Arg">S</var>.</p>
@@ -1225,8 +1225,8 @@ true</pre></div>
 
 <h5>13.10-1 MaximalSubsemigroups</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubsemigroups</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubsemigroups</code>( <var class="Arg">S</var>, <var class="Arg">opts</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubsemigroups</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubsemigroups</code>( <var class="Arg">S</var>, <var class="Arg">opts</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The maximal subsemigroups of <var class="Arg">S</var>.</p>
 
 <p>If <var class="Arg">S</var> is a finite semigroup, then the attribute <code class="code">MaximalSubsemigroups</code> returns a list of the non-empty maximal subsemigroups of <var class="Arg">S</var>. The methods used by <code class="code">MaximalSubsemigroups</code> are based on <a href="chapBib_mj.html#biBGraham1968aa">[GGR68]</a>, and are described in <a href="chapBib_mj.html#biBDonoven2016aa">[DMW16]</a>.</p>
@@ -1298,7 +1298,7 @@ true</pre></div>
 
 <h5>13.10-2 NrMaximalSubsemigroups</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMaximalSubsemigroups</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMaximalSubsemigroups</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The number of maximal subsemigroups of <var class="Arg">S</var>.</p>
 
 <p>If <var class="Arg">S</var> is a finite semigroup, then <code class="code">NrMaximalSubsemigroups</code> returns the number of non-empty maximal subsemigroups of <var class="Arg">S</var>. The methods used by <code class="code">MaximalSubsemigroups</code> are based on <a href="chapBib_mj.html#biBGraham1968aa">[GGR68]</a>, and are described in <a href="chapBib_mj.html#biBDonoven2016aa">[DMW16]</a>.</p>
@@ -1328,7 +1328,7 @@ true</pre></div>
 
 <h5>13.10-3 IsMaximalSubsemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaximalSubsemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMaximalSubsemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then <code class="code">IsMaximalSubsemigroup</code> returns <code class="keyw">true</code> if and only if <var class="Arg">T</var> is a maximal subsemigroup of <var class="Arg">S</var>.</p>
@@ -1365,8 +1365,8 @@ false</pre></div>
 
 <h5>13.11-1 Normalizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Normalizer</code>( <var class="Arg">G</var>, <var class="Arg">S</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Normalizer</code>( <var class="Arg">S</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Normalizer</code>( <var class="Arg">G</var>, <var class="Arg">S</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Normalizer</code>( <var class="Arg">S</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A permutation group.</p>
 
 <p>In its first form, this function returns the normalizer of the transformation, partial perm, or bipartition semigroup <var class="Arg">S</var> in the permutation group <var class="Arg">G</var>. In its second form, the normalizer of <var class="Arg">S</var> in the symmetric group on <code class="code">[1 .. n]</code> where <code class="code">n</code> is the degree of <var class="Arg">S</var> is returned.</p>
@@ -1427,7 +1427,7 @@ Group(())</pre></div>
 
 <h5>13.12-1 ComponentRepsOfTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentRepsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentRepsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The representatives of components of a transformation semigroup.</p>
 
 <p>This function returns the representatives of the components of the action of the transformation semigroup <var class="Arg">S</var> on the set of positive integers not greater than the degree of <var class="Arg">S</var>.</p>
@@ -1446,7 +1446,7 @@ Group(())</pre></div>
 
 <h5>13.12-2 ComponentsOfTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The components of a transformation semigroup.</p>
 
 <p>This function returns the components of the action of the transformation semigroup <var class="Arg">S</var> on the set of positive integers not greater than the degree of <var class="Arg">S</var>; the components of <var class="Arg">S</var> partition this set.</p>
@@ -1463,7 +1463,7 @@ Group(())</pre></div>
 
 <h5>13.12-3 CyclesOfTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The cycles of a transformation semigroup.</p>
 
 <p>This function returns the cycles, or strongly connected components, of the action of the transformation semigroup <var class="Arg">S</var> on the set of positive integers not greater than the degree of <var class="Arg">S</var>.</p>
@@ -1483,8 +1483,8 @@ Group(())</pre></div>
 
 <h5>13.12-4 DigraphOfActionOnPairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPairs</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPairs</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPairs</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPairs</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph, or <code class="keyw">fail</code>.</p>
 
 <p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPairs(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnSets</code> (<a href="../../../doc/ref/chap41_mj.html#X85AA04347CD117F9"><span class="RefLink">Reference: OnSets</span></a>) action of <var class="Arg">S</var> on the pairs of points in <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
@@ -1525,8 +1525,8 @@ fail</pre></div>
 
 <h5>13.12-5 DigraphOfActionOnPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPoints</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPoints</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPoints</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPoints</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph, or <code class="keyw">fail</code>.</p>
 
 <p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPoints(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnPoints</code> (<a href="../../../doc/ref/chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">Reference: OnPoints</span></a>) action of <var class="Arg">S</var> on the set <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
@@ -1558,7 +1558,7 @@ fail</pre></div>
 
 <h5>13.12-6 FixedPointsOfTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>
 
 <p>If <var class="Arg">S</var> is a transformation semigroup, then <code class="code">FixedPointsOfTransformationSemigroup(<var class="Arg">S</var>)</code> returns the set of points <code class="code">i</code> in <code class="code">[1 .. DegreeOfTransformationSemigroup(<var class="Arg">S</var>)]</code> such that <code class="code">i ^ f = i</code> for all <code class="code">f</code> in <var class="Arg">S</var>.</p>
@@ -1576,8 +1576,8 @@ Transformation( [ 1, 4, 2, 4, 3, 7, 7 ] )
 
 <h5>13.12-7 IsTransitive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">S</var>[, <var class="Arg">X</var>] )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">S</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">S</var>[, <var class="Arg">X</var>] )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">S</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A transformation semigroup <var class="Arg">S</var> is <em>transitive</em> or <em>strongly connected</em> on the set <var class="Arg">X</var> if for every <code class="code">i, j</code> in <var class="Arg">X</var> there is an element <code class="code">s</code> in <var class="Arg">S</var> such that <code class="code">i ^ s = j</code>.</p>
@@ -1605,8 +1605,8 @@ true</pre></div>
 
 <h5>13.12-8 SmallestElementSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestElementSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestElementSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestElementSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestElementSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A transformation.</p>
 
 <p>These attributes return the smallest and largest element of the transformation semigroup <var class="Arg">S</var>, respectively. Smallest means the first element in the sorted set of elements of <var class="Arg">S</var> and largest means the last element in the set of elements.</p>
@@ -1628,7 +1628,7 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )</pre></div>
 
 <h5>13.12-9 CanonicalTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalTransformation</code>( <var class="Arg">trans</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalTransformation</code>( <var class="Arg">trans</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A transformation.</p>
 
 <p>If <var class="Arg">trans</var> is a transformation, and <var class="Arg">n</var> is a non-negative integer such that the restriction of <var class="Arg">trans</var> to <code class="keyw">[1 .. n]</code> defines a transformation of <code class="code">[1 .. n]</code>, then <code class="code">CanonicalTransformation</code> returns a canonical representative of the transformation <var class="Arg">trans</var> restricted to <code class="code">[1 .. n]</code>.</p>
@@ -1650,7 +1650,7 @@ Transformation( [ 5, 5, 1, 5, 4 ] )</pre></div>
 
 <h5>13.12-10 IsConnectedTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConnectedTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConnectedTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A transformation semigroup <var class="Arg">S</var> is connected if the digraph returned by the function <code class="code">DigraphOfActionOnPoints</code> is connected. See <code class="func">IsConnectedDigraph</code> (<a href="../../../pkg/digraphs/doc/chap6_mj.html#X83C08C0B7EC1A91F"><span class="RefLink">Digraphs: IsConnectedDigraph</span></a>) and <code class="func">DigraphOfActionOnPoints</code> (<a href="chap13_mj.html#X7B5ACD5C7E7612A2"><span class="RefLink">13.12-5</span></a>). The function <code class="code">IsConnectedTransformationSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is connected and <code class="keyw">false</code> otherwise.</p>
@@ -1674,7 +1674,7 @@ true</pre></div>
 
 <h5>13.13-1 ComponentRepsOfPartialPermSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentRepsOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentRepsOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The representatives of components of a partial perm semigroup.</p>
 
 <p>This function returns the representatives of the components of the action of the partial perm semigroup <var class="Arg">S</var> on the set of positive integers where it is defined.</p>
@@ -1695,7 +1695,7 @@ true</pre></div>
 
 <h5>13.13-2 ComponentsOfPartialPermSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentsOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentsOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The components of a partial perm semigroup.</p>
 
 <p>This function returns the components of the action of the partial perm semigroup <var class="Arg">S</var> on the set of positive integers where it is defined; the components of <var class="Arg">S</var> partition this set.</p>
@@ -1715,7 +1715,7 @@ true</pre></div>
 
 <h5>13.13-3 CyclesOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfPartialPerm</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfPartialPerm</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The cycles of a partial perm.</p>
 
 <p>This function returns the cycles, or strongly connected components, of the action of the partial perm <var class="Arg">x</var> on the set of positive integers where it is defined.</p>
@@ -1731,7 +1731,7 @@ true</pre></div>
 
 <h5>13.13-4 CyclesOfPartialPermSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesOfPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The cycles of a partial perm semigroup.</p>
 
 <p>This function returns the cycles, or strongly connected components, of the action of the partial perm semigroup <var class="Arg">S</var> on the set of positive integers where it is defined.</p>
@@ -1758,7 +1758,7 @@ true</pre></div>
 
 <h5>13.14-1 RZMSDigraph</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSDigraph</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSDigraph</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph.</p>
 
 <p>If <var class="Arg">R</var> is an <span class="SimpleMath">\(n\)</span> by <span class="SimpleMath">\(m\)</span> Rees 0-matrix semigroup <span class="SimpleMath">\(M^{0}[I, T, \Lambda; P]\)</span> (so that <span class="SimpleMath">\(I = \{1,2,\ldots,n\}\)</span> and <span class="SimpleMath">\(\Lambda = \{1,2,\ldots,m\}\)</span>) then <code class="code">RZMSDigraph</code> returns a symmetric bipartite digraph with <span class="SimpleMath">\(n+m\)</span> vertices. An index <span class="SimpleMath">\(i \in I\)</span> corresponds to the vertex <span class="SimpleMath">\(i\)</span> and an index <span class="SimpleMath">\(j \in \Lambda\)</span> corresponds to the vertex <span class="SimpleMath">\(j + n\)</span>.</p>
@@ -1784,7 +1784,7 @@ true</pre></div>
 
 <h5>13.14-2 RZMSConnectedComponents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSConnectedComponents</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSConnectedComponents</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The connected components of a Rees 0-matrix semigroup.</p>
 
 <p>If <var class="Arg">R</var> is an <span class="SimpleMath">\(n\)</span> by <span class="SimpleMath">\(m\)</span> Rees 0-matrix semigroup <span class="SimpleMath">\(M^{0}[I, T, \Lambda; P]\)</span> (so that <span class="SimpleMath">\(I = \{1,2,\ldots,n\}\)</span> and <span class="SimpleMath">\(\Lambda = \{1,2,\ldots,m\}\)</span>) then <code class="code">RZMSConnectedComponents</code> returns the connected components of <var class="Arg">R</var>.</p>
@@ -1816,10 +1816,10 @@ true</pre></div>
 
 <h5>13.15-1 IsomorphismReesMatrixSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
 <p>If the semigroup <var class="Arg">S</var> is finite and simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over some group (usually a permutation group), and <code class="code">IsomorphismReesMatrixSemigroupOverPermGroup</code> returns an isomorphism to a Rees matrix semigroup over a permutation group.</p>

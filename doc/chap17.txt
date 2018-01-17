@@ -9,7 +9,7 @@
   
   [1X17.1-1 IsIsomorphicSemigroup[101X
   
-  [29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YIf [3XS[103X and [3XT[103X are semigroups, then this operation attempts to determine whether
@@ -41,7 +41,7 @@
   
   [1X17.1-2 SmallestMultiplicationTable[101X
   
-  [29X[2XSmallestMultiplicationTable[102X( [3XS[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSmallestMultiplicationTable[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe lex-least multiplication table of a semigroup.[133X
   
   [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
@@ -73,7 +73,7 @@
   
   [1X17.1-3 IsomorphismSemigroups[101X
   
-  [29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism, or [9Xfail[109X.[133X
   
   [33X[0;0YThis  operation  attempts to find an isomorphism from the semigroup [3XS[103X to the
@@ -142,8 +142,8 @@
   
   [1X17.2-1 IsRMSIsoByTriple[101X
   
-  [29X[2XIsRMSIsoByTriple[102X[32X Category
-  [29X[2XIsRZMSIsoByTriple[102X[32X Category
+  [33X[1;0Y[29X[2XIsRMSIsoByTriple[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsRZMSIsoByTriple[102X[32X Category[133X
   
   [33X[0;0YThe  isomorphisms  between finite Rees matrix or 0-matrix semigroups [10XS[110X and [10XT[110X
   over groups [10XG[110X and [10XH[110X, respectively, specified by a triple consisting of:[133X
@@ -165,8 +165,8 @@
   
   [1X17.2-2 RMSIsoByTriple[101X
   
-  [29X[2XRMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation
-  [29X[2XRZMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation
+  [33X[1;0Y[29X[2XRMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRZMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  [3XR1[103X  and  [3XR2[103X  are  isomorphic  regular  Rees  0-matrix  semigroups  whose
@@ -213,7 +213,7 @@
   
   [1X17.2-3 ELM_LIST[101X
   
-  [29X[2XELM_LIST[102X( [3Xmap[103X, [3Xpos[103X ) [32X operation
+  [33X[1;0Y[29X[2XELM_LIST[102X( [3Xmap[103X, [3Xpos[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA  component  of  an  isomorphism of Rees (0-)matrix semigroups by
             triple.[133X
   
@@ -234,8 +234,8 @@
   
   [1X17.2-4 CompositionMapping2[101X
   
-  [29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation
-  [29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation
+  [33X[1;0Y[29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Rees (0-)matrix semigroup by triple.[133X
   
   [33X[0;0YIf  [3Xmap1[103X  and  [3Xmap2[103X  are  isomorphisms of Rees matrix or 0-matrix semigroups
@@ -278,8 +278,8 @@
   
   [1X17.2-5 ImagesElm[101X
   
-  [29X[2XImagesElm[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation
-  [29X[2XImagesRepresentative[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation
+  [33X[1;0Y[29X[2XImagesElm[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XImagesRepresentative[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn  element  of  a  Rees (0-)matrix semigroup or a list containing
             such an element.[133X
   

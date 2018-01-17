@@ -49,8 +49,8 @@
 
 <h5>19.1-1 ReadGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadGenerators</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadOldGenerators</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadGenerators</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadOldGenerators</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists of semigroup elements.</p>
 
 <p>If <var class="Arg">filename</var> is the name of a file created using <code class="func">WriteGenerators</code> (<a href="chap19.html#X78041E8F87EFDE62"><span class="RefLink">19.1-2</span></a>), then <code class="code">ReadGenerators</code> returns the contents of this file as a list of lists of elements of a semigroup.</p>
@@ -71,7 +71,7 @@
 
 <h5>19.1-2 WriteGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteGenerators</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">append</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteGenerators</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">append</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="code">IO_OK</code> or <code class="code">IO_ERROR</code>.</p>
 
 <p>This function provides a method for writing collections of elements of a semigroup to a file. The resulting file can be further compressed using <code class="code">gzip</code> or <code class="code">xz</code>.</p>
@@ -94,8 +94,8 @@
 
 <h5>19.1-3 IteratorFromPickledFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromPickledFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromOldGeneratorsFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromPickledFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromOldGeneratorsFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: An iterator.</p>
 
 <p>If <var class="Arg">filename</var> is a string containing the name of a file created using <code class="func">WriteGenerators</code> (<a href="chap19.html#X78041E8F87EFDE62"><span class="RefLink">19.1-2</span></a>), then <code class="code">IteratorFromPickledFile</code> returns an iterator <code class="code">iter</code> such that <code class="code">NextIterator(iter)</code> returns the next collection of generators stored in the file <var class="Arg">filename</var>.</p>
