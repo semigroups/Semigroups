@@ -16,7 +16,7 @@ threshold = int(sys.argv[2])
 
 _DIR = tempfile.mkdtemp()
 _COMMANDS = 'echo "LoadPackage(\\"semigroups\\", false);;\n'
-_COMMANDS += 'SEMIGROUPS.Test(\\"' + f + '\\");;\n'
+_COMMANDS += 'SEMIGROUPS.RunTest({} -> Test(\\"' + f + '\\"));;\n'
 _COMMANDS += '''UncoverageLineByLine();;
 LoadPackage(\\"profiling\\", false);;
 filesdir := \\"''' + os.getcwd() + '''/gap/\\";;\n'''

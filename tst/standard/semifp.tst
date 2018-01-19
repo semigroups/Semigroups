@@ -2060,6 +2060,84 @@ gap> SEMIGROUPS.ExtRepObjToString([100, 1]);
 Error, SEMIGROUPS.ExtRepObjToString: the maximum value in an odd position of t\
 he argument must be at most 52,
 
+# Test IsomorphismFpSemigroup (for factorizable inverse monoids)
+gap> S := SymmetricInverseMonoid(4);;
+gap> iso := IsomorphismFpSemigroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := InverseSemigroup(
+> [PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [2, 4, 8, 6, 3, 1, 5, 7]),
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [3, 5, 4, 7, 6, 8, 1, 2]),
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [4, 6, 7, 1, 8, 2, 3, 5]),
+> PartialPerm([], [])]);;
+gap> iso := IsomorphismFpSemigroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := InverseSemigroup(
+> [PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [9, 10, 8, 2, 1, 7, 5, 4, 6, 3]),
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 9, 3, 6, 5, 2, 8, 1, 4, 7]),
+> PartialPerm([], [])]);;
+gap> iso := IsomorphismFpSemigroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> tst := [InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [4, 5, 2, 3, 1]),
+> PartialPerm([1, 3], [1, 3])]), 
+> InverseMonoid([PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]), 
+> PartialPerm([1, 2, 3, 4, 5], [3, 1, 5, 4, 2])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [5, 4, 2, 3, 1]),
+> PartialPerm([1, 2, 4], [1, 2, 4])]),
+> InverseMonoid([PartialPerm([1, 2, 5], [2, 1, 5]),
+> PartialPerm([1, 2], [1, 2])]),
+> InverseMonoid([PartialPerm([1, 2, 3], [1, 4, 5]),
+> PartialPerm([1, 2, 3, 4, 5], [1, 5, 4, 2, 3])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [3, 1, 5, 4, 2]),
+> PartialPerm([1, 2, 3, 4, 5], [5, 1, 3, 4, 2])]),
+> InverseMonoid([PartialPerm([1, 2, 5], [2, 3, 5]),
+> PartialPerm([1, 2, 3, 5], [2, 3, 1, 5])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [4, 2, 3, 1, 5]),
+> PartialPerm([1, 2, 3, 4, 5], [5, 3, 2, 1, 4])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 5], [2, 1, 3, 5]),
+> PartialPerm([1, 2, 3, 5], [5, 2, 1, 3])]),
+> InverseMonoid([PartialPerm([1, 2, 3], [5, 4, 1]),
+> PartialPerm([1, 2, 3, 4, 5], [2, 3, 5, 1, 4])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [4, 3, 5, 2, 1]),
+> PartialPerm([1, 2, 4, 5], [5, 4, 2, 1]),
+> PartialPerm([1, 4], [3, 2]), PartialPerm([1, 2, 3, 4, 5], [2, 3, 5, 1, 4]),
+> PartialPerm([1, 2, 5], [2, 3, 4])]),
+> InverseMonoid([PartialPerm([1, 2, 3, 4, 5], [2, 4, 1, 5, 3]),
+> PartialPerm([1, 3, 4], [2, 1, 3]),
+> PartialPerm([1, 2, 3, 4, 5], [4, 1, 2, 5, 3]), PartialPerm([1, 3], [5, 4]),
+> PartialPerm([1, 3, 5], [2, 4, 1])])];;
+gap> ForAll(tst, IsFactorisableInverseMonoid);
+true
+gap> ForAll(tst, S -> BruteForceIsoCheck(IsomorphismFpSemigroup(S)));
+true
+gap> ForAll(tst{[1 .. 10]}, S -> BruteForceInverseCheck(IsomorphismFpSemigroup(S)));
+true
+
+# Test EvaluateExtRepObjWord
+gap> F := FreeSemigroup(4);;
+gap> x := EvaluateExtRepObjWord(Generators(F), [1, 4, 2, 5, 3, 1, 2, 1]);
+s1^4*s2^5*s3*s2
+gap> ExtRepOfObj(x) = [1, 4, 2, 5, 3, 1, 2, 1];
+true
+gap> EvaluateExtRepObjWord(Generators(F), []);
+Error, Semigroups: EvaluateExtRepObjWord, the second argument must be a non-em\
+pty list
+gap> F := FreeMonoid(4);;
+gap> x := EvaluateExtRepObjWord(Generators(F), [1, 4, 2, 5, 3, 1, 2, 1]);
+m1^4*m2^5*m3*m2
+gap> ExtRepOfObj(x) = [1, 4, 2, 5, 3, 1, 2, 1];
+true
+gap> EvaluateExtRepObjWord(Generators(F), []);
+<identity ...>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

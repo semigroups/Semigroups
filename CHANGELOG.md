@@ -2,6 +2,23 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.12 (released 17/01/2018)
+
+This version contains some minor updates for compatibility GAP 4.9, to fix some
+bugs, to update the build system, and to update the kernel module for
+libsemigroups version 0.6.2.
+
+The following improvements have been made:
+
+* [PR 426](https://github.com/gap-packages/Semigroups/pull/426): a new faster method for `IsomorphismFpSemigroup` for factorisable inverse monoids is added. [Chris Russell]
+* [PR 430](https://github.com/gap-packages/Semigroups/pull/430): the performance of the maximal subsemigroups functionality has been improved.  [[Wilf A. Wilson](http://wilf.me)]
+
+The following issues are resolved:
+
+* [Issue 424](https://github.com/gap-packages/Semigroups/issues/424): the operation `MinimalFactorization` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 435](https://github.com/gap-packages/Semigroups/issues/424): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
 ### Version 3.0.11 (released 18/12/2017)
 
 This version contains some minor updates for compatibility GAP 4.9, 
