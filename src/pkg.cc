@@ -130,7 +130,7 @@ void TSemiObjFreeFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
-      delete CLASS_OBJ<Congruence*>(o);
+      delete CLASS_OBJ<Congruence<>*>(o);
       break;
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
@@ -138,7 +138,7 @@ void TSemiObjFreeFunc(Obj o) {
         // don't use functions to access these since they have too many
         // side effects
         delete CLASS_OBJ<Converter*>(o, 4);
-        delete CLASS_OBJ<Semigroup*>(o, 5);
+        delete CLASS_OBJ<Semigroup<>*>(o, 5);
       }
       break;
     }
