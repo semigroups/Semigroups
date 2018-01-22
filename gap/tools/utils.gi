@@ -162,11 +162,9 @@ SEMIGROUPS.TestDir := function(dir, arg)
     od;
   elif Length(arg) <> 0 then
     ErrorNoReturn("there must be no arguments, or the argument ",
-                  "must be a opts");
+                  "must be a record");
   fi;
-  return SEMIGROUPS.RunTest(function()
-                              return TestDirectory(dir, opts);
-                            end);
+  return SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
 end;
 
 #############################################################################
@@ -204,12 +202,26 @@ InstallGlobalFunction(SemigroupsTestExtreme,
 function(arg)
   if Length(arg) = 0 then
     arg := [rec(showProgress := "some")];
-  elif IsRecord(arg[1].showProgress) and not IsBound(arg[1].showProgress) then
+  elif IsRecord(arg[1]) and not IsBound(arg[1].showProgress) then
     arg[1].showProgress := "some";
   fi;
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
                                                       "tst/extreme/"),
                             arg);
+end);
+
+InstallGlobalFunction(SemigroupsTestAll,
+function(arg)
+  SemigroupsMakeDoc();
+  if not CallFuncList(SemigroupsTestInstall, arg) then
+    Print("Abort: SemigroupsTestInstall failed . . . \n");
+    return false;
+  elif not CallFuncList(SemigroupsTestStandard, arg) then
+    Print("Abort: SemigroupsTestStandard failed . . . \n");
+    return false;
+  fi;
+
+  return SEMIGROUPS.TestManualExamples();
 end);
 
 ################################################################################
