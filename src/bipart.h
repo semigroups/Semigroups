@@ -19,9 +19,9 @@
 #ifndef SEMIGROUPS_SRC_BIPART_H_
 #define SEMIGROUPS_SRC_BIPART_H_
 
-#include "semigroups-debug.h"
 #include "libsemigroups/src/elements.h"
 #include "pkg.h"
+#include "semigroups-debug.h"
 #include "src/compiled.h"
 
 using libsemigroups::Bipartition;
