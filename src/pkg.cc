@@ -27,8 +27,8 @@
 #include "bipart.h"
 #include "congpairs.h"
 #include "converter.h"
-#include "semigroups-debug.h"
 #include "fropin.h"
+#include "semigroups-debug.h"
 #include "semigrp.h"
 #include "uf.h"
 

@@ -19,6 +19,18 @@
 #ifndef SEMIGROUPS_SRC_CONGPAIRS_H_
 #define SEMIGROUPS_SRC_CONGPAIRS_H_
 
+// Inclusion of <cstdef> appears to be required to prevent travis from issuing
+// the warning:
+//
+//     /usr/include/c++/5/cstddef:51:11: error: ‘::max_align_t’ has not been
+//     declared
+//
+// according to:
+//
+// https://stackoverflow.com/questions/35110786/how-to-fix-the-error-max-align-t
+
+#include <cstddef>
+
 #include "src/compiled.h"
 
 // GAP level functions

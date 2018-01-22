@@ -88,6 +88,7 @@ before_script:
     fi;
   - if [ "$ABI" == "64" ]; then sudo apt-get install libgmp-dev; fi;
   - if [ "$ABI" == "32" ]; then
+      sudo apt-get install libtool 
       sudo apt-get install libgmp-dev:i386;
       sudo ln -s /usr/include/asm-generic /usr/include/asm;
     fi;

@@ -22,7 +22,6 @@
 #define SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_H_
 
 #include <assert.h>
-#include <src/compiled.h>
 
 #include "semigroups-config.h"
 

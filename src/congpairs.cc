@@ -19,9 +19,9 @@
 #include "src/congpairs.h"
 
 #include <string>
-#include <vector>
-#include <utility>
 #include <unordered_map>
+#include <utility>
+#include <vector>
 
 #include "fropin.h"
 #include "rnams.h"
