@@ -578,26 +578,36 @@ end);
 ###############################################################################
 # Find E-unitary inverse covers
 ###############################################################################
-# TODO: Replace SEMIGROUPS.DirectProductForCover with a proper implementation
-#       of direct products for partial perm semigroups.
 InstallMethod(EUnitaryInverseCover,
 "for an inverse partial perm semigroup",
 [IsInverseSemigroup and IsPartialPermCollection],
 function(S)
-  local s, cover_gens, deg, gens, iso, units, G, P;
+  local gens, deg, units, G, P, embed, id, cover_gens, s, g, cover, i;
   gens := GeneratorsOfSemigroup(S);
   deg := DegreeOfPartialPermSemigroup(S);
   units := [];
-  cover_gens := [];
   for s in gens do
-    Append(units, [SEMIGROUPS.PartialPermExtendToPerm(s, deg)]);
-    Append(cover_gens, [[s, SEMIGROUPS.PartialPermExtendToPerm(s, deg)]]);
+    Add(units, SEMIGROUPS.PartialPermExtendToPerm(s, deg));
   od;
-  G := Semigroup(units);
-  iso := SEMIGROUPS.DirectProductForCover(S, G);
-  Apply(cover_gens, s -> s ^ iso);
-  P := InverseSemigroup(cover_gens);
-  return MappingByFunction(P, S, x -> (x ^ InverseGeneralMapping(iso))[1]);
+  G := InverseSemigroup(units);
+
+  P := DirectProduct(S, G);
+  embed := SemigroupDirectProductInfo(P).embedding;
+  if not IsMonoid(S) then
+    id := PartialPerm([1 .. deg]);
+  fi;
+  cover_gens := [];
+  for i in [1 .. Size(gens)] do
+    s := embed(gens[i], 1);
+    g := embed(units[i], 2);
+    if not IsMonoid(S) then
+      g := JoinOfPartialPerms(g, id);
+    fi;
+    Add(cover_gens, s * g);
+  od;
+
+  cover := SemigroupDirectProductInfo(P).projection;
+  return MappingByFunction(InverseSemigroup(cover_gens), S, x -> cover(x, 1));
 end);
 
 InstallMethod(EUnitaryInverseCover,
@@ -640,53 +650,6 @@ SEMIGROUPS.PartialPermExtendToPerm := function(x, deg)
 end;
 
 ###############################################################################
-# Function used by E-unitary cover. Will become obsolete when Semigroups has
-# methods for direct products of partial perms semigroups.
-###############################################################################
-SEMIGROUPS.DirectProductForCover := function(S, T)
-  local dom, image, gens_DP, gens_S, gens_T, P, m, n, s, t, x;
-  gens_S := EmptyPlist(Size(GeneratorsOfSemigroup(S)));
-  gens_T := EmptyPlist(Size(GeneratorsOfSemigroup(T)));
-  m := DegreeOfPartialPermSemigroup(S);
-  n := DegreeOfPartialPermSemigroup(T);
-
-  # Extend the domain of the generators of S and T so they commute.
-  for s in GeneratorsOfSemigroup(S) do
-    dom := Concatenation(DomainOfPartialPerm(s), [m + 1 .. m + n]);
-    image := Concatenation(ImageListOfPartialPerm(s), [m + 1 .. m + n]);
-    Add(gens_S, PartialPerm(dom, image));
-  od;
-  for t in GeneratorsOfSemigroup(T) do
-    dom := Concatenation([1 .. m], m + DomainOfPartialPerm(t));
-    image := Concatenation([1 .. m], m + ImageListOfPartialPerm(t));
-    Add(gens_T, PartialPerm(dom, image));
-  od;
-
-  # Create a generating set for S x T.
-  gens_DP := EmptyPlist(2 * m * n);
-  for s in gens_S do
-    for t in gens_T do
-      Add(gens_DP, s * t * InverseOp(t));
-    od;
-  od;
-  for s in gens_S do
-    for t in gens_T do
-      Add(gens_DP, InverseOp(s) * s * t);
-    od;
-  od;
-
-  # Create the direct product
-  P := InverseSemigroup(gens_DP);
-
-  # Return an isomorphism from Cartesian([S, T]) to the direct product.
-  return MappingByFunction(Domain(Set(Cartesian([S, T]))), P, x ->
-     PartialPerm(Concatenation(DomainOfPartialPerm(x[1]), [m + 1 .. m + n]),
-                 Concatenation(ImageListOfPartialPerm(x[1]), [m + 1 .. m + n]))
-     * PartialPerm(Concatenation([1 .. m], m + DomainOfPartialPerm(x[2])),
-                   Concatenation([1 .. m], m + ImageListOfPartialPerm(x[2]))));
-end;
-
-###############################################################################
 # TODO:
 # 1) Write hash function that works when group is not a perm group.
 # 2) Consider hash function for improvements.
@@ -694,8 +657,11 @@ end;
 #    (order irreducible elements are the ones which generate the semilattice
 #    and order ideals relate to checking condition M2 from Howie).
 # 4) Improve GeneratorsOfSemigroup method.
-# 5) Replace SEMIGROUPS.DirectProductForCover with a proper implementation
-#    of direct products for partial perm semigroups.
-# 6) Line break hints for printing MTSEs and McAlisterTripleSemigroups.
+# 5) Line break hints for printing MTSEs and McAlisterTripleSemigroups.
+# 6) Implement EUnitaryInverseCover which covers with a McAlisterTriple
+# 7) Improve EUnitaryInverseCover by finding smaller covers
+# 8) Improve IsomorphismSemigroup method.
+# 9) Improve 'if not IsSubgroup(AutomorphismGroup(X), Image(hom)) then' line of
+# McAlisterTripleSemigroup
 ###############################################################################
 
