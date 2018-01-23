@@ -149,8 +149,7 @@ InstallMethod(OneImmutable, "for a McAlister triple semigroup",
 function(S)
   local Y;
   if not IsMonoid(S) then
-    ErrorNoReturn("Semigroups: OneImutable (for McAlister triple semigroup):",
-                  " usage,\n", "the argument must be a monoid,");
+    return fail;
   fi;
   Y := McAlisterTripleSemigroupSemilattice(S);
   return MTSE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());

@@ -146,8 +146,7 @@ gap> String(elms[1]);
 "MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ],\
  [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, ())"
 gap> OneImmutable(M);
-Error, Semigroups: OneImutable (for McAlister triple semigroup): usage,
-the argument must be a monoid,
+fail
 gap> M1 := McAlisterTripleSemigroup(G, x, [1, 2]);;
 gap> OneImmutable(M1);
 (2, ())
