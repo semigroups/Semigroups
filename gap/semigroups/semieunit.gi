@@ -28,7 +28,8 @@ function(G, X, Y, act)
 
   hom := ActionHomomorphism(G, DigraphVertices(X), anti_act);
 
-  if not IsSubgroup(AutomorphismGroup(X), Image(hom)) then
+  if ForAny(GeneratorsOfGroup(Image(hom)),
+            g -> not IsDigraphAutomorphism(X, g)) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
                   "the first argument (a group) must act by order ",
                   "automorphisms on the second argument (a partial order ",

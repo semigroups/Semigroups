@@ -28,11 +28,12 @@ DeclareRepresentation("IsMcAlisterTripleSemigroupElementRep",
                       and IsPositionalObjectRep, 3);
 
 DeclareCategoryCollections("IsMcAlisterTripleSemigroupElement");
-DeclareSynonym("IsMTSE", IsMcAlisterTripleSemigroupElement);
+DeclareSynonymAttr("IsMTSE", IsMcAlisterTripleSemigroupElement);
 DeclareSynonymAttr("IsMcAlisterTripleSemigroup",
                    IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
                    and IsMcAlisterTripleSemigroupElementCollection
                    and IsWholeFamily and IsEnumerableSemigroupRep);
+DeclareSynonymAttr("IsMTS", IsMcAlisterTripleSemigroup);
 
 # This is a representation for McAlister triple semigroup, which are
 # created via the function McAlisterTripleSemigroup.
@@ -67,12 +68,16 @@ DeclareOperation("McAlisterTripleSemigroup",
 # Attributes for McAlister triple semigroups
 DeclareAttribute("McAlisterTripleSemigroupGroup",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
+DeclareSynonymAttr("MTSGroup", McAlisterTripleSemigroupGroup);
 DeclareAttribute("McAlisterTripleSemigroupAction",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
+DeclareSynonymAttr("MTSAction", McAlisterTripleSemigroupAction);
 DeclareAttribute("McAlisterTripleSemigroupPartialOrder",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
+DeclareSynonymAttr("MTSPartialOrder", McAlisterTripleSemigroupPartialOrder);
 DeclareAttribute("McAlisterTripleSemigroupSemilattice",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
+DeclareSynonymAttr("MTSSemilattice", McAlisterTripleSemigroupSemilattice);
 DeclareAttribute("McAlisterTripleSemigroupElmList",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
 DeclareAttribute("OneImmutable",
@@ -91,7 +96,7 @@ DeclareSynonym("MTSE", McAlisterTripleSemigroupElement);
 # Operations for McAlister triple semigroup elements
 DeclareAttribute("McAlisterTripleSemigroupElementParent",
                  IsMcAlisterTripleSemigroupElementRep);
-DeclareSynonym("MTSEParent", McAlisterTripleSemigroupElementParent);
+DeclareSynonymAttr("MTSEParent", McAlisterTripleSemigroupElementParent);
 DeclareOperation("ELM_LIST", [IsMcAlisterTripleSemigroupElementRep, IsPosInt]);
 
 # Inverse semigroup methods
