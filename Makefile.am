@@ -32,7 +32,7 @@ endif
 
 all-local: semigroups.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR) $(top_srcdir)/bin/lib
-	cp -R src/libsemigroups/.libs/* $(top_srcdir)/bin/lib/
+	cp -RL src/libsemigroups/.libs/* $(top_srcdir)/bin/lib/
 if SYS_IS_CYGWIN
 	cp .libs/semigroups.dll $(GAPINSTALLLIB)
 else
