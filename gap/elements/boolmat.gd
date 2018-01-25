@@ -67,7 +67,7 @@ DeclareProperty("IsReflexiveBooleanMat", IsBooleanMat);
 DeclareProperty("IsTotalBooleanMat", IsBooleanMat);
 DeclareProperty("IsOntoBooleanMat", IsBooleanMat);
 
-DeclareSynonymAttr("IsPartialOrderBooleanMat", IsAntiSymmetricBooleanMat and
-                   IsTransitiveBooleanMat and IsReflexiveBooleanMat);
-DeclareSynonymAttr("IsEquivalenceBooleanMat", IsSymmetricBooleanMat and
-                   IsTransitiveBooleanMat and IsReflexiveBooleanMat);
+DeclareSynonymAttr("IsPartialOrderBooleanMat", IsReflexiveBooleanMat and
+                   IsAntiSymmetricBooleanMat and IsTransitiveBooleanMat);
+DeclareSynonymAttr("IsEquivalenceBooleanMat", IsReflexiveBooleanMat and
+                   IsSymmetricBooleanMat and IsTransitiveBooleanMat);
