@@ -410,6 +410,8 @@ function(S)
   D := Digraph(IsMutableDigraph, List([1 .. Length(L)],
                                       i -> Concatenation(L[i], R[i])));
   D := QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps);
+  # WW: I do not see how the ordering of the vertices of <gr> is guaranteed
+  #     to match the ordering of GreensDClasses(S).
   Apply(OutNeighbours(D), Set);
   DigraphRemoveLoops(D);
   MakeImmutable(D);

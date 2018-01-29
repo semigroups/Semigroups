@@ -1699,6 +1699,32 @@ Error, the argument does not belong to the domain of the function
 gap> () ^ InverseGeneralMapping(map);
 Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
 
+# PartialOrderOfL/RClasses: 1
+gap> S := Semigroup([
+>  PBR([[-1], []], [[], [-2, -1, 1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 2]], [[-2, -1], [-2, 1, 2]]),
+>  PBR([[-1], [1]], [[-1], [-2]])]);
+<pbr semigroup of degree 2 with 3 generators>
+gap> PartialOrderOfLClasses(S);
+[ [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 3, 4 ], [ 5 ], [ 5, 6 ], [ 5, 6 ], [ 8 ] ]
+gap> PartialOrderOfRClasses(S);
+[ [ 1 ], [ 1, 2 ], [ 3 ], [ 2, 3, 4 ], [ 5 ], [ 5, 6 ], [ 7 ], [ 6, 7, 8 ], 
+  [ 6, 7, 8 ], [ 10 ] ]
+
+# PartialOrderOfL/RClasses: 1
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> gr := PartialOrderOfLClasses(S);;
+gap> gr := DigraphReflexiveTransitiveReduction(Digraph(gr));
+<digraph with 7 vertices, 9 edges>
+gap> IsIsomorphicDigraph(gr, DigraphFromDigraph6String("+F?OGC@OoK?"));
+true
+gap> gr := PartialOrderOfRClasses(S);;
+gap> gr := DigraphReflexiveTransitiveReduction(Digraph(gr));
+<digraph with 5 vertices, 6 edges>
+gap> IsIsomorphicDigraph(gr, DigraphFromDigraph6String("+D[CGO?"));
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);

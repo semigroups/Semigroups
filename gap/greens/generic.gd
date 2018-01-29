@@ -32,6 +32,8 @@ DeclareOperation("GreensJClassOfElementNC",
 DeclareAttribute("RegularDClasses", IsSemigroup);
 DeclareAttribute("NrRegularDClasses", IsSemigroup);
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
+DeclareAttribute("PartialOrderOfLClasses", IsSemigroup);
+DeclareAttribute("PartialOrderOfRClasses", IsSemigroup);
 
 DeclareOperation("GreensLClassOfElement",
                  [IsGreensClass, IsMultiplicativeElement]);
