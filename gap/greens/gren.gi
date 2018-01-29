@@ -282,8 +282,10 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
-  data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
-                                             GreensLRelation(S)!.data);
+  data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(
+            DigraphStronglyConnectedComponents(RightCayleyDigraph(S)),
+            DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)));
+
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
@@ -308,8 +310,9 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
-  data := FIND_HCLASSES(GreensRRelation(S)!.data,
-                        GreensLRelation(S)!.data);
+  data := FIND_HCLASSES(
+            DigraphStronglyConnectedComponents(RightCayleyDigraph(S)),
+            DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)));
 
   rel := Objectify(NewType(fam, IsEquivalenceRelation
                                 and IsEquivalenceRelationDefaultRep
@@ -524,10 +527,14 @@ InstallMethod(PartialOrderOfDClasses, "for a finite enumerable semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local l, r, gr;
+
+  if not IsBound(GreensDRelation(S)!.data) then
+    # Acting semigroups are enumerable, but may not have this data.
+    TryNextMethod();
+  fi;
   l  := LeftCayleyDigraph(S);
   r  := RightCayleyDigraph(S);
-  gr := DigraphEdgeUnion(l, r);
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
+  gr := QuotientDigraph(DigraphEdgeUnion(l, r), GreensDRelation(S)!.data.comps);
   return List(OutNeighbours(gr), Set);
 end);
 

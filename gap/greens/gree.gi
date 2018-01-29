@@ -426,6 +426,8 @@ function(S)
   r  := RightCayleyGraphSemigroup(S);
   gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
   gr := QuotientDigraph(gr, DigraphStronglyConnectedComponents(gr).comps);
+  # WW: I do not see how the ordering of the vertices of <gr> is guaranteed
+  #     to match the ordering of GreensDClasses(S).
   return List(OutNeighbours(gr), Set);
 end);
 
