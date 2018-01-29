@@ -1966,6 +1966,30 @@ gap> NambooripadLeqRegularSemigroup(S);
 Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
 the argument is not a regular semigroup,
 
+#T# MaximalL/RClasses
+gap> S := LeftZeroSemigroup(3);
+<transformation semigroup of degree 4 with 3 generators>
+gap> MaximalLClasses(S);
+[ <Green's L-class: Transformation( [ 1, 2, 1, 1 ] )> ]
+gap> MaximalRClasses(S);
+[ <Green's R-class: Transformation( [ 1, 2, 1, 1 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 2, 1 ] )> ]
+gap> S := RightZeroSemigroup(3);
+<transformation semigroup of degree 3 with 3 generators>
+gap> MaximalLClasses(S);
+[ <Green's L-class: Transformation( [ 1, 1, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 3, 3 ] )> ]
+gap> MaximalRClasses(S);
+[ <Green's R-class: Transformation( [ 1, 1, 1 ] )> ]
+gap> S := FullPBRMonoid(1);
+<pbr monoid of degree 1 with 4 generators>
+gap> MaximalLClasses(S);
+[ <Green's L-class: PBR([ [ -1 ] ], [ [ 1 ] ])> ]
+gap> MaximalRClasses(S);
+[ <Green's R-class: PBR([ [ -1 ] ], [ [ 1 ] ])> ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

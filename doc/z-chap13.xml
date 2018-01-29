@@ -25,10 +25,10 @@
     <#Include Label = "GreensXClasses">
     <#Include Label = "XClassReps">
     <#Include Label = "MinimalDClass">
-    <#Include Label = "MaximalDClasses">
+    <#Include Label = "MaximalXClasses">
     <#Include Label = "NrRegularDClasses">
     <#Include Label = "NrXClasses">
-    <#Include Label = "PartialOrderOfDClasses">
+    <#Include Label = "PartialOrderOfXClasses">
     <#Include Label = "LengthOfLongestDClassChain">
     <#Include Label = "IsGreensDGreaterThanFunc">
 

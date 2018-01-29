@@ -58,6 +58,8 @@ DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups",
                  IsSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
+DeclareAttribute("MaximalLClasses", IsSemigroup);
+DeclareAttribute("MaximalRClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDGreaterThanFunc", IsSemigroup);
 

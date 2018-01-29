@@ -538,6 +538,48 @@ function(S)
   return List(OutNeighbours(gr), Set);
 end);
 
+InstallMethod(PartialOrderOfLClasses, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
+function(S)
+  local gr, comps, enum, canon, actual, perm;
+
+  gr := LeftCayleyDigraph(S);
+  comps := DigraphStronglyConnectedComponents(gr).comps;
+  gr := QuotientDigraph(gr, comps);
+  if not IsBound(GreensLRelation(S)!.data) then
+    # Rectify the ordering of the Green's classes, if necessary
+    enum := EnumeratorCanonical(S);
+    canon := SortingPerm(List(comps, x -> LClass(S, enum[x[1]])));
+    actual := SortingPerm(GreensLClasses(S));
+    perm := canon / actual;
+    if not IsOne(perm) then
+      gr := OnDigraphs(gr, perm);
+    fi;
+  fi;
+  return List(OutNeighbours(gr), Set);
+end);
+
+InstallMethod(PartialOrderOfRClasses, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
+function(S)
+  local gr, comps, enum, canon, actual, perm;
+
+  gr := RightCayleyDigraph(S);
+  comps := DigraphStronglyConnectedComponents(gr).comps;
+  gr := QuotientDigraph(gr, comps);
+  if not IsBound(GreensRRelation(S)!.data) then
+    # Rectify the ordering of the Green's classes, if necessary
+    enum := EnumeratorCanonical(S);
+    canon := SortingPerm(List(comps, x -> RClass(S, enum[x[1]])));
+    actual := SortingPerm(GreensRClasses(S));
+    perm := canon / actual;
+    if not IsOne(perm) then
+      gr := OnDigraphs(gr, perm);
+    fi;
+  fi;
+  return List(OutNeighbours(gr), Set);
+end);
+
 #############################################################################
 ## 6. Idempotents . . .
 #############################################################################
