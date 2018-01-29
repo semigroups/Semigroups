@@ -546,6 +546,32 @@ InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
 [IsFinite and IsMonoidAsSemigroup],
 S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
+InstallMethod(MaximalLClasses, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
+function(S)
+  local gr;
+
+  if NrLClasses(S) = 1 then
+    return LClasses(S);
+  fi;
+
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfLClasses(S)));
+  return LClasses(S){DigraphSources(gr)};
+end);
+
+InstallMethod(MaximalRClasses, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
+function(S)
+  local gr;
+
+  if NrRClasses(S) = 1 then
+    return RClasses(S);
+  fi;
+
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfRClasses(S)));
+  return RClasses(S){DigraphSources(gr)};
+end);
+
 # same method for ideals
 
 InstallMethod(StructureDescriptionMaximalSubgroups,

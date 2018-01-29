@@ -283,8 +283,11 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
-  data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
-                                             GreensLRelation(S)!.data);
+  # FIXME Does this change still make sense?
+  data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(
+            DigraphStronglyConnectedComponents(RightCayleyDigraph(S)),
+            DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)));
+
   filt := IsGreensRelationOfSemigroupThatCanUseFroidurePinRep;
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
@@ -310,8 +313,9 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
-  data := FIND_HCLASSES(GreensRRelation(S)!.data,
-                        GreensLRelation(S)!.data);
+  data := FIND_HCLASSES(
+            DigraphStronglyConnectedComponents(RightCayleyDigraph(S)),
+            DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)));
 
   filt := IsGreensRelationOfSemigroupThatCanUseFroidurePinRep;
   rel := Objectify(NewType(fam, IsEquivalenceRelation
@@ -546,6 +550,10 @@ InstallMethod(PartialOrderOfDClasses,
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local D;
+  if not IsBound(GreensDRelation(S)!.data) then
+    # Acting semigroups are enumerable, but may not have this data.
+    TryNextMethod();
+  fi;
   D := DigraphMutableCopy(LeftCayleyDigraph(S));
   DigraphEdgeUnion(D, RightCayleyDigraph(S));
   QuotientDigraph(D, GreensDRelation(S)!.data.comps);
@@ -553,6 +561,48 @@ function(S)
   Apply(OutNeighbours(D), Set);
   MakeImmutable(D);
   return D;
+end);
+
+InstallMethod(PartialOrderOfLClasses, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
+function(S)
+  local gr, comps, enum, canon, actual, perm;
+
+  gr := LeftCayleyDigraph(S);
+  comps := DigraphStronglyConnectedComponents(gr).comps;
+  gr := QuotientDigraph(gr, comps);
+  if not IsBound(GreensLRelation(S)!.data) then
+    # Rectify the ordering of the Green's classes, if necessary
+    enum := EnumeratorCanonical(S);
+    canon := SortingPerm(List(comps, x -> LClass(S, enum[x[1]])));
+    actual := SortingPerm(GreensLClasses(S));
+    perm := canon / actual;
+    if not IsOne(perm) then
+      gr := OnDigraphs(gr, perm);
+    fi;
+  fi;
+  return List(OutNeighbours(gr), Set);
+end);
+
+InstallMethod(PartialOrderOfRClasses, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
+function(S)
+  local gr, comps, enum, canon, actual, perm;
+
+  gr := RightCayleyDigraph(S);
+  comps := DigraphStronglyConnectedComponents(gr).comps;
+  gr := QuotientDigraph(gr, comps);
+  if not IsBound(GreensRRelation(S)!.data) then
+    # Rectify the ordering of the Green's classes, if necessary
+    enum := EnumeratorCanonical(S);
+    canon := SortingPerm(List(comps, x -> RClass(S, enum[x[1]])));
+    actual := SortingPerm(GreensRClasses(S));
+    perm := canon / actual;
+    if not IsOne(perm) then
+      gr := OnDigraphs(gr, perm);
+    fi;
+  fi;
+  return List(OutNeighbours(gr), Set);
 end);
 
 #############################################################################

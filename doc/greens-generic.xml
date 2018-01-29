@@ -892,22 +892,43 @@ gap> AsSet(RegularDClasses(S));
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="PartialOrderOfDClasses">
+<#GAPDoc Label="PartialOrderOfXClasses">
   <ManSection>
+  <Heading>PartialOrderOfXClasses</Heading>
   <Attr Name = "PartialOrderOfDClasses" Arg = "S"/>
-  <Returns>The partial order of the &D;-classes of <A>S</A>.
+  <Attr Name = "PartialOrderOfLClasses" Arg = "S"/>
+  <Attr Name = "PartialOrderOfRClasses" Arg = "S"/>
+  <Returns>The partial order of the &D;, &L;, or &R;-classes of <A>S</A>.
   </Returns>
   <Description>
-    Returns a digraph <C>D</C> where the vertex <C>i</C> is adjacent to  vertex
-    <C>j</C> if <C>GreensDClasses(S)[j]</C> is immediately strictly less than
-    <C>GreensDClasses(S)[i]</C> in the partial order of &D;-classes of
-    <A>S</A>; it might be that <C>i</C> is adjacent to further nodes in
-    addition to those just mentioned. The returned digraph has no loops.  The
-    reflexive transitive closure of the digraph <C>D</C> is the partial order
-    of &D;-classes of <A>S</A>. <P/>
+    <!-- TODO Should return a digraph, as it now does for D classes -->
+    Let <C>X</C> be one of Green's &D;-, &L;-, or &R;-relations. Then
+    <C>PartialOrderOfXClasses</C> returns a list <C>list</C> where
+    <C>list[i]</C> contains every <C>j</C> such that <C>GreensXClasses(S)[j]</C>
+    is immediately less than <C>GreensXClasses(S)[i]</C> in the partial order of
+    <C>X</C>-classes of <A>S</A>. There might be other indices in <C>list</C>,
+    and it may or may not include <C>i</C>.  The reflexive transitive closure of
+    the relation defined by <C>list</C> is the partial order of <C>X</C>-classes
+    of <A>S</A>. <P/>
 
-    The partial order on the &D;-classes is defined by <M>x\leq y</M> if and
-    only if <M>S ^ 1xS ^ 1</M> is a subset of  <M>S ^ 1yS ^ 1</M>. <P/>
+    The partial order on the <C>X</C>-classes is defined as follows.
+    <List>
+      <Mark>Green's &D;-relation:</Mark>
+      <Item>
+        <M>x\leq y</M> if and only if <M>S ^ 1xS ^ 1</M> is a subset of
+        <M>S ^ 1yS ^ 1</M>.
+      </Item>
+      <Mark>Green's &L;-relation:</Mark>
+      <Item>
+        <M>x\leq y</M> if and only if <M>S ^ 1x</M> is a subset of
+        <M>S ^ 1y</M>.
+      </Item>
+      <Mark>Green's &R;-relation:</Mark>
+      <Item>
+        <M>x\leq y</M> if and only if <M>xS ^ 1</M> is a subset of
+        <M>yS ^ 1</M>.
+      </Item>
+    </List>
 
     See also <Ref Meth = "GreensDClasses"/>,
     <Ref Meth = "GreensDClasses" BookName = "ref"/>,
