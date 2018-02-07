@@ -236,7 +236,7 @@ Dependencies := rec(
   GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.8.0"],
                           ["io", ">=4.5.1"],
-                          ["digraphs", ">=0.11.0"],
+                          ["digraphs", ">=0.12.0"],
                           ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 
