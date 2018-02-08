@@ -497,8 +497,8 @@ InstallMethod(DotString,
 "for a congruence poset",
 [IsCongruencePoset],
 function(poset)
-  # Call the below function, with info turned off
-  return DotString(poset, rec(info := false));
+  # Call the below function, with default options
+  return DotString(poset, rec());
 end);
 
 InstallMethod(DotString,
@@ -507,6 +507,13 @@ InstallMethod(DotString,
 function(poset, opts)
   local nrcongs, congs, S, symbols, i, nr, in_nbs, rel, str, j, k;
   nrcongs := Size(poset);
+  # Setup unbound options
+  if not IsBound(opts.info) then
+    opts.info := false;
+  fi;
+  if not IsBound(opts.numbers) then
+    opts.numbers := (nrcongs < 40);
+  fi;
   # If the user wants info, then change the node labels
   if opts.info = true then
     # The congruences are stored inside the poset object
@@ -533,7 +540,7 @@ function(poset, opts)
   rel := List([1 .. nrcongs], x -> Filtered(in_nbs[x], y -> x <> y));
   str := "";
 
-  if nrcongs < 40 then
+  if opts.numbers then
     Append(str, "//dot\ngraph graphname {\n     node [shape=circle]\n");
   else
     Append(str, "//dot\ngraph graphname {\n     node [shape=point]\n");
