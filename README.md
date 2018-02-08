@@ -1,6 +1,6 @@
 ### README - Semigroups package for GAP
 
-#### Copyright (C) 2011-17 James D. Mitchell et al. <br/>Licensing information is available in the LICENSE file.
+#### Copyright (C) 2011-18 James D. Mitchell et al. <br/>Licensing information is available in the LICENSE file.
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)[![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.0)](https://travis-ci.org/gap-packages/Semigroups)
 
 ## Getting Semigroups
@@ -27,7 +27,7 @@ The  following  is  a  summary of the steps that should lead to a successful ins
 * get the [Orb](http://gap-packages.github.io/orb/) package version 4.8.0 or higher. 
   Both [Orb](http://gap-packages.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-packages.github.io/orb/) is compiled, so compile [Orb](http://gap-packages.github.io/orb/)!
 
-* ensure that the [Digraphs](http://gap-packages.github.io/Digraphs/) package version 0.11.0 or higher is available.  [Digraphs](http://gap-packages.github.io/Digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
+* ensure that the [Digraphs](http://gap-packages.github.io/Digraphs/) package version 0.12.0 or higher is available.  [Digraphs](http://gap-packages.github.io/Digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
 loaded.
 
 * get the [genss](http://gap-packages.github.io/genss/) package version 1.5 or higher 

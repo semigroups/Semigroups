@@ -223,19 +223,19 @@ gap> Size(S);
         Key="Grood2006aa"/>, and <Cite Key="East2016aa"/>.
 
       <Example><![CDATA[
-gap> S := PartitionMonoid(5);
-<regular bipartition *-monoid of size 115975, degree 5 with 4 
+gap> S := PartitionMonoid(4);
+<regular bipartition *-monoid of size 4140, degree 4 with 4 
  generators>
 gap> Size(S);
-115975
-gap> T := SingularPartitionMonoid(5);
-<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
-gap> Size(S) - Size(T) = Factorial(5);
+4140
+gap> T := SingularPartitionMonoid(4);
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
+gap> Size(S) - Size(T) = Factorial(4);
 true
-gap> S := RookPartitionMonoid(5);
-<regular bipartition *-monoid of degree 6 with 5 generators>
+gap> S := RookPartitionMonoid(4);
+<regular bipartition *-monoid of degree 5 with 5 generators>
 gap> Size(S);
-678570]]></Example>
+21147]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -256,17 +256,16 @@ gap> Size(S);
       (i.e. those not in the group of units). <P/>
 
       <Example><![CDATA[
-gap> S := PlanarPartitionMonoid(5);
-<regular bipartition *-monoid of degree 5 with 9 generators>
+gap> S := PlanarPartitionMonoid(3);
+<regular bipartition *-monoid of degree 3 with 5 generators>
 gap> Size(S);
-16796
-gap> T := SingularPlanarPartitionMonoid(5);
-<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+132
+gap> T := SingularPlanarPartitionMonoid(3);
+<regular bipartition *-semigroup ideal of degree 3 with 1 generator>
 gap> Size(T);
-16795
+131
 gap> Difference(S, T);
-[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
-     [ 5, -5 ]> ]
+[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]> ]
 ]]></Example>
     </Description>
   </ManSection>
@@ -419,8 +418,8 @@ gap> T := SingularApsisMonoid(3, 7);
 <regular bipartition *-semigroup ideal of degree 7 with 1 generator>
 gap> Difference(S, T) = [One(S)];
 true
-gap> Size(CrossedApsisMonoid(4, 9));
-24291981
+gap> Size(CrossedApsisMonoid(2, 5));
+945
 gap> SingularCrossedApsisMonoid(4, 6);
 <regular bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
     </Description>
@@ -438,10 +437,10 @@ gap> SingularCrossedApsisMonoid(4, 6);
       <A>n</A> points. This monoid has <C>(<A>n</A> + 1) ^ <A>n</A></C> elements.
       <!--TODO add generators-->
       <Example><![CDATA[
-gap> PartialTransformationMonoid(8);
-<regular transformation monoid of degree 9 with 4 generators>
-gap> Size(last);
-43046721]]></Example>
+gap> S := PartialTransformationMonoid(5);
+<regular transformation monoid of degree 6 with 4 generators>
+gap> Size(S);
+7776]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -477,10 +476,10 @@ gap> Size(last);
       <!-- TODO reference -->
 
       <Example><![CDATA[
-gap> S := ModularPartitionMonoid(3, 7);
-<regular bipartition *-monoid of degree 7 with 4 generators>
+gap> S := ModularPartitionMonoid(3, 6);
+<regular bipartition *-monoid of degree 6 with 4 generators>
 gap> Size(S);
-826897
+36243
 gap> S := SingularModularPartitionMonoid(1, 1);
 <commutative inverse bipartition semigroup ideal of degree 1 with
   1 generator>
@@ -513,11 +512,11 @@ gap> Size(SingularPlanarModularPartitionMonoid(1, 2));
       monoid has <C><A>q</A> ^ (<A>d</A> ^ 2)</C> elements.
 
       <Example><![CDATA[
-gap> S := FullMatrixMonoid(3, 4);
-<general linear monoid 3x3 over GF(2^2)>
+gap> S := FullMatrixMonoid(2, 4);
+<general linear monoid 2x2 over GF(2^2)>
 gap> Size(S);
-262144
-gap> S = GeneralLinearMonoid(3, 4);
+256
+gap> S = GeneralLinearMonoid(2, 4);
 true
 gap> GLM(2, 2);
 <general linear monoid 2x2 over GF(2)>]]></Example>
@@ -540,12 +539,12 @@ gap> GLM(2, 2);
       group of units (the general linear group) by the special linear group.
 
       <Example><![CDATA[
-gap> S := SpecialLinearMonoid(3, 4);
-<regular monoid of 3x3 matrices over GF(2^2) with 3 generators>
-gap> S = SLM(3, 4);
+gap> S := SpecialLinearMonoid(2, 4);
+<regular monoid of 2x2 matrices over GF(2^2) with 3 generators>
+gap> S = SLM(2, 4);
 true
 gap> Size(S);
-141184]]></Example>
+136]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -833,10 +832,10 @@ true]]></Example>
         Catalan number.
       </Alt>
       <Example><![CDATA[
-gap> S := CatalanMonoid(9);
-<transformation monoid of degree 9 with 8 generators>
+gap> S := CatalanMonoid(6);
+<transformation monoid of degree 6 with 5 generators>
 gap> Size(S);
-4862]]></Example>
+132]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -853,10 +852,10 @@ gap> Size(S);
         <A>n</A> and rank <C><A>n</A> - 1</C> and has <M>n ^ n - n!</M> elements. 
 
         <Example><![CDATA[
-gap> S := SingularTransformationSemigroup(5);
-<regular transformation semigroup ideal of degree 5 with 1 generator>
+gap> S := SingularTransformationSemigroup(4);
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
-3005]]></Example>
+232]]></Example>
       </Description>
     </ManSection>
 <#/GAPDoc>
@@ -900,12 +899,12 @@ gap> (5 + 2) ^ (2 ^ 2);
       This monoid contains <C>(<A>t</A> + 2) ^ (<A>d</A> ^ 2)</C> elements.
 
       <Example><![CDATA[
-gap> S := FullTropicalMinPlusMonoid(3, 2);
-<monoid of 3x3 tropical min-plus matrices with 21 generators>
+gap> S := FullTropicalMinPlusMonoid(2, 3);
+<monoid of 2x2 tropical min-plus matrices with 7 generators>
 gap> Size(S);
-262144
-gap> (2 + 2) ^ (3 ^ 2);
-262144]]></Example>
+625
+gap> (3 + 2) ^ (2 ^ 2);
+625]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

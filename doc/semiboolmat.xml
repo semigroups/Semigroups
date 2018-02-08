@@ -82,10 +82,10 @@ gap> Size(S);
       Small generating sets are not known for <M><A>d</A> \geq 6</M>.
 
       <Example><![CDATA[
-gap> S := ReflexiveBooleanMatMonoid(4);
-<monoid of 4x4 boolean matrices with 38 generators>
+gap> S := ReflexiveBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 8 generators>
 gap> Size(S);
-4096]]></Example>
+64]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
