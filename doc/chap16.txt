@@ -1439,13 +1439,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([3, 6, 7, 8, 0, 1, 2, 5]),[127X[104X
-    [4X[25X>[125X [27X PartialPerm([5, 6, 7, 0, 9, 4, 0, 8]),[127X[104X
-    [4X[25X>[125X [27X PartialPerm([5, 1, 8, 6, 9, 4, 0, 7])]);;[127X[104X
+    [4X[25X>[125X [27X PartialPerm([4, 3, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 4, 2, 0, 3])],[127X[104X
+    [4X[25X>[125X [27X rec(cong_by_ker_trace_threshold := 0));;[127X[104X
     [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, []);[127X[104X
     [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
-    [4X[28X of size 117859, rank 9 with 3 generators> with congruence pair (228,[128X[104X
-    [4X[28X228)>[128X[104X
+    [4X[28X of size 351, rank 5 with 2 generators> with congruence pair (24,24)>[128X[104X
     [4X[25Xgap>[125X [27XIsInverseSemigroupCongruenceByKernelTrace(cong);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X

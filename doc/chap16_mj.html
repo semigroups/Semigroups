@@ -1454,13 +1454,12 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([3, 6, 7, 8, 0, 1, 2, 5]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([5, 6, 7, 0, 9, 4, 0, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([5, 1, 8, 6, 9, 4, 0, 7])]);;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([4, 3, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 4, 2, 0, 3])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> rec(cong_by_ker_trace_threshold := 0));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, []);</span>
 &lt;semigroup congruence over &lt;inverse partial perm semigroup 
- of size 117859, rank 9 with 3 generators&gt; with congruence pair (228,
-228)&gt;
+ of size 351, rank 5 with 2 generators&gt; with congruence pair (24,24)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroupCongruenceByKernelTrace(cong);</span>
 true</pre></div>
 

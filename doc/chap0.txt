@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.12
+                                 Version 3.0.13
   
   
                                  J. D. Mitchell
@@ -63,7 +63,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2011-17 by J. D. Mitchell et al.[133X
+  [33X[0;0Y© 2011-18 by J. D. Mitchell et al.[133X
   
   [33X[0;0Y[5XSemigroups[105X  is free software; you can redistribute it and/or modify it under
   the      terms      of      the      GNU      General     Public     License

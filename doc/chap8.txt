@@ -22,10 +22,10 @@
   order-decreasing transformations of [10X[1 .. n][110X with the usual ordering.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := CatalanMonoid(9);[127X[104X
-    [4X[28X<transformation monoid of degree 9 with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := CatalanMonoid(6);[127X[104X
+    [4X[28X<transformation monoid of degree 6 with 5 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X4862[128X[104X
+    [4X[28X132[128X[104X
   [4X[32X[104X
   
   [1X8.1-2 EndomorphismsPartition[101X
@@ -63,10 +63,10 @@
   1) ^ [3Xn[103X[10X[110X elements.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XPartialTransformationMonoid(8);[127X[104X
-    [4X[28X<regular transformation monoid of degree 9 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(last);[127X[104X
-    [4X[28X43046721[128X[104X
+    [4X[25Xgap>[125X [27XS := PartialTransformationMonoid(5);[127X[104X
+    [4X[28X<regular transformation monoid of degree 6 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X7776[128X[104X
   [4X[32X[104X
   
   [1X8.1-4 SingularTransformationSemigroup[101X
@@ -80,10 +80,10 @@
   idempotents of degree [3Xn[103X and rank [10X[3Xn[103X[10X - 1[110X and has [22Xn ^ n - n![122X elements.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SingularTransformationSemigroup(5);[127X[104X
-    [4X[28X<regular transformation semigroup ideal of degree 5 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XS := SingularTransformationSemigroup(4);[127X[104X
+    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X3005[128X[104X
+    [4X[28X232[128X[104X
   [4X[32X[104X
   
   
@@ -279,19 +279,19 @@
   and [10X-[3Xn[103X[10X - 1[110X in the same block; see [HR05], [Gro06], and [Eas16].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PartitionMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-monoid of size 115975, degree 5 with 4 [128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(4);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4 [128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X115975[128X[104X
-    [4X[25Xgap>[125X [27XT := SingularPartitionMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 5 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S) - Size(T) = Factorial(5);[127X[104X
+    [4X[28X4140[128X[104X
+    [4X[25Xgap>[125X [27XT := SingularPartitionMonoid(4);[127X[104X
+    [4X[28X<regular bipartition *-semigroup ideal of degree 4 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S) - Size(T) = Factorial(4);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := RookPartitionMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 6 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := RookPartitionMonoid(4);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 5 with 5 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X678570[128X[104X
+    [4X[28X21147[128X[104X
   [4X[32X[104X
   
   [1X8.3-2 BrauerMonoid[101X
@@ -552,17 +552,16 @@
   group of units).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PlanarPartitionMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 5 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := PlanarPartitionMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 3 with 5 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X16796[128X[104X
-    [4X[25Xgap>[125X [27XT := SingularPlanarPartitionMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 5 with 1 generator>[128X[104X
+    [4X[28X132[128X[104X
+    [4X[25Xgap>[125X [27XT := SingularPlanarPartitionMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-semigroup ideal of degree 3 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XSize(T);[127X[104X
-    [4X[28X16795[128X[104X
+    [4X[28X131[128X[104X
     [4X[25Xgap>[125X [27XDifference(S, T);[127X[104X
-    [4X[28X[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [128X[104X
-    [4X[28X     [ 5, -5 ]> ][128X[104X
+    [4X[28X[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]> ][128X[104X
   [4X[32X[104X
   
   [1X8.3-10 ModularPartitionMonoid[101X
@@ -591,10 +590,10 @@
   in the group of units), when either [3Xm = n = 1[103X or [3Xm, n > 1[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ModularPartitionMonoid(3, 7);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 7 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := ModularPartitionMonoid(3, 6);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 6 with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X826897[128X[104X
+    [4X[28X36243[128X[104X
     [4X[25Xgap>[125X [27XS := SingularModularPartitionMonoid(1, 1);[127X[104X
     [4X[28X<commutative inverse bipartition semigroup ideal of degree 1 with[128X[104X
     [4X[28X  1 generator>[128X[104X
@@ -643,8 +642,8 @@
     [4X[28X<regular bipartition *-semigroup ideal of degree 7 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XDifference(S, T) = [One(S)];[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(CrossedApsisMonoid(4, 9));[127X[104X
-    [4X[28X24291981[128X[104X
+    [4X[25Xgap>[125X [27XSize(CrossedApsisMonoid(2, 5));[127X[104X
+    [4X[28X945[128X[104X
     [4X[25Xgap>[125X [27XSingularCrossedApsisMonoid(4, 6);[127X[104X
     [4X[28X<regular bipartition *-semigroup ideal of degree 6 with 1 generator>[128X[104X
   [4X[32X[104X
@@ -698,11 +697,11 @@
   elements.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullMatrixMonoid(3, 4);[127X[104X
-    [4X[28X<general linear monoid 3x3 over GF(2^2)>[128X[104X
+    [4X[25Xgap>[125X [27XS := FullMatrixMonoid(2, 4);[127X[104X
+    [4X[28X<general linear monoid 2x2 over GF(2^2)>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X262144[128X[104X
-    [4X[25Xgap>[125X [27XS = GeneralLinearMonoid(3, 4);[127X[104X
+    [4X[28X256[128X[104X
+    [4X[25Xgap>[125X [27XS = GeneralLinearMonoid(2, 4);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XGLM(2, 2);[127X[104X
     [4X[28X<general linear monoid 2x2 over GF(2)>[128X[104X
@@ -722,12 +721,12 @@
   of units (the general linear group) by the special linear group.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SpecialLinearMonoid(3, 4);[127X[104X
-    [4X[28X<regular monoid of 3x3 matrices over GF(2^2) with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS = SLM(3, 4);[127X[104X
+    [4X[25Xgap>[125X [27XS := SpecialLinearMonoid(2, 4);[127X[104X
+    [4X[28X<regular monoid of 2x2 matrices over GF(2^2) with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS = SLM(2, 4);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X141184[128X[104X
+    [4X[28X136[128X[104X
   [4X[32X[104X
   
   [1X8.5-3 IsFullMatrixMonoid[101X
@@ -812,10 +811,10 @@
   for [22X[3Xd[103X ≥ 6[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReflexiveBooleanMatMonoid(4);[127X[104X
-    [4X[28X<monoid of 4x4 boolean matrices with 38 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := ReflexiveBooleanMatMonoid(3);[127X[104X
+    [4X[28X<monoid of 3x3 boolean matrices with 8 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X4096[128X[104X
+    [4X[28X64[128X[104X
   [4X[32X[104X
   
   [1X8.6-4 HallMonoid[101X
@@ -941,11 +940,11 @@
   [33X[0;0YThis monoid contains [10X([3Xt[103X[10X + 2) ^ ([3Xd[103X[10X ^ 2)[110X elements.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullTropicalMinPlusMonoid(3, 2);[127X[104X
-    [4X[28X<monoid of 3x3 tropical min-plus matrices with 21 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := FullTropicalMinPlusMonoid(2, 3);[127X[104X
+    [4X[28X<monoid of 2x2 tropical min-plus matrices with 7 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X262144[128X[104X
-    [4X[25Xgap>[125X [27X(2 + 2) ^ (3 ^ 2);[127X[104X
-    [4X[28X262144[128X[104X
+    [4X[28X625[128X[104X
+    [4X[25Xgap>[125X [27X(3 + 2) ^ (2 ^ 2);[127X[104X
+    [4X[28X625[128X[104X
   [4X[32X[104X
   

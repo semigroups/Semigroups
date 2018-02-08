@@ -143,10 +143,10 @@
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := CatalanMonoid(9);</span>
-&lt;transformation monoid of degree 9 with 8 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := CatalanMonoid(6);</span>
+&lt;transformation monoid of degree 6 with 5 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-4862</pre></div>
+132</pre></div>
 
 <p><a id="X85C1D4307D0F5FF7" name="X85C1D4307D0F5FF7"></a></p>
 
@@ -179,10 +179,10 @@
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PartialTransformationMonoid(8);</span>
-&lt;regular transformation monoid of degree 9 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(last);</span>
-43046721</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartialTransformationMonoid(5);</span>
+&lt;regular transformation monoid of degree 6 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+7776</pre></div>
 
 <p><a id="X7894EE357D103806" name="X7894EE357D103806"></a></p>
 
@@ -196,10 +196,10 @@
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularTransformationSemigroup(5);</span>
-&lt;regular transformation semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularTransformationSemigroup(4);</span>
+&lt;regular transformation semigroup ideal of degree 4 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-3005</pre></div>
+232</pre></div>
 
 <p><a id="X80E80A0A83B57483" name="X80E80A0A83B57483"></a></p>
 
@@ -429,19 +429,19 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(5);</span>
-&lt;regular bipartition *-monoid of size 115975, degree 5 with 4 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(4);</span>
+&lt;regular bipartition *-monoid of size 4140, degree 4 with 4 
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-115975
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPartitionMonoid(5);</span>
-&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) - Size(T) = Factorial(5);</span>
+4140
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPartitionMonoid(4);</span>
+&lt;regular bipartition *-semigroup ideal of degree 4 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) - Size(T) = Factorial(4);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RookPartitionMonoid(5);</span>
-&lt;regular bipartition *-monoid of degree 6 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RookPartitionMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 5 with 5 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-678570</pre></div>
+21147</pre></div>
 
 <p><a id="X79D33B2E7BA3073A" name="X79D33B2E7BA3073A"></a></p>
 
@@ -663,17 +663,16 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PlanarPartitionMonoid(5);</span>
-&lt;regular bipartition *-monoid of degree 5 with 9 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PlanarPartitionMonoid(3);</span>
+&lt;regular bipartition *-monoid of degree 3 with 5 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-16796
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPlanarPartitionMonoid(5);</span>
-&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
+132
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPlanarPartitionMonoid(3);</span>
+&lt;regular bipartition *-semigroup ideal of degree 3 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
-16795
+131
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Difference(S, T);</span>
-[ &lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
-     [ 5, -5 ]&gt; ]
+[ &lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]&gt; ]
 </pre></div>
 
 <p><a id="X7F208DC584C0B9D1" name="X7F208DC584C0B9D1"></a></p>
@@ -696,10 +695,10 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ModularPartitionMonoid(3, 7);</span>
-&lt;regular bipartition *-monoid of degree 7 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ModularPartitionMonoid(3, 6);</span>
+&lt;regular bipartition *-monoid of degree 6 with 4 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-826897
+36243
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularModularPartitionMonoid(1, 1);</span>
 &lt;commutative inverse bipartition semigroup ideal of degree 1 with
   1 generator&gt;
@@ -742,8 +741,8 @@ true</pre></div>
 &lt;regular bipartition *-semigroup ideal of degree 7 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Difference(S, T) = [One(S)];</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(CrossedApsisMonoid(4, 9));</span>
-24291981
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(CrossedApsisMonoid(2, 5));</span>
+945
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularCrossedApsisMonoid(4, 6);</span>
 &lt;regular bipartition *-semigroup ideal of degree 6 with 1 generator&gt;</pre></div>
 
@@ -794,11 +793,11 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullMatrixMonoid(3, 4);</span>
-&lt;general linear monoid 3x3 over GF(2^2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullMatrixMonoid(2, 4);</span>
+&lt;general linear monoid 2x2 over GF(2^2)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-262144
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = GeneralLinearMonoid(3, 4);</span>
+256
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = GeneralLinearMonoid(2, 4);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GLM(2, 2);</span>
 &lt;general linear monoid 2x2 over GF(2)&gt;</pre></div>
@@ -815,12 +814,12 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SpecialLinearMonoid(3, 4);</span>
-&lt;regular monoid of 3x3 matrices over GF(2^2) with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = SLM(3, 4);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SpecialLinearMonoid(2, 4);</span>
+&lt;regular monoid of 2x2 matrices over GF(2^2) with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = SLM(2, 4);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-141184</pre></div>
+136</pre></div>
 
 <p><a id="X860B2A4382CA8F87" name="X860B2A4382CA8F87"></a></p>
 
@@ -905,10 +904,10 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReflexiveBooleanMatMonoid(4);</span>
-&lt;monoid of 4x4 boolean matrices with 38 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReflexiveBooleanMatMonoid(3);</span>
+&lt;monoid of 3x3 boolean matrices with 8 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-4096</pre></div>
+64</pre></div>
 
 <p><a id="X79EF0EA68782CFCA" name="X79EF0EA68782CFCA"></a></p>
 
@@ -1014,12 +1013,12 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTropicalMinPlusMonoid(3, 2);</span>
-&lt;monoid of 3x3 tropical min-plus matrices with 21 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTropicalMinPlusMonoid(2, 3);</span>
+&lt;monoid of 2x2 tropical min-plus matrices with 7 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-262144
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(2 + 2) ^ (3 ^ 2);</span>
-262144</pre></div>
+625
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(3 + 2) ^ (2 ^ 2);</span>
+625</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9_mj.html">[Next Chapter]</a>&nbsp;  </div>
