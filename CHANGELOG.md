@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.13 (released 08/02/2018)
+
+This version contains some minor updates for compatibility GAP 4.9, and some
+fixes for some minor issues. 
+
 ### Version 3.0.12 (released 17/01/2018)
 
 This version contains some minor updates for compatibility GAP 4.9, to fix some
