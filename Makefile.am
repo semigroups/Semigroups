@@ -21,6 +21,12 @@ semigroups_la_SOURCES += src/semigrp.cc
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -march=native
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
+if KERNEL_DEBUG
+semigroups_la_CPPFLAGS += -DDEBUG
+else
+semigroups_la_CPPFLAGS += -DNDEBUG
+endif
+
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version
 
