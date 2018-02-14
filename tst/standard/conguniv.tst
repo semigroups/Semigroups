@@ -238,10 +238,10 @@ gap> S := Semigroup([Transformation([2, 1, 2]),
 gap> uni := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <transformation semigroup of degree 3 
  with 2 generators>>
-gap> GeneratingPairsOfSemigroupCongruence(uni);
-[ [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ], 
-  [ Transformation( [ 2, 1, 2 ] ), Transformation( [ 1, 2, 1 ] ) ], 
-  [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ) ] ]
+gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, pairs);;
+gap> NrCongruenceClasses(cong);
+1
 
 #T# IsUniversalSemigroupCongruence for a cong by generating pairs
 gap> S := Semigroup([PartialPerm([1], [2]),
