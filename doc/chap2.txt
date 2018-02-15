@@ -26,22 +26,22 @@
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.13.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.14.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.0.13[111X.[133X
+        [11Xsemigroups-3.0.14[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.13[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.14[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://james-d-mitchell.github.io/libsemigroups/[107X) C++ library, which
         requires  a  compiler  implementing  the  C++11  standard.  Inside the
-        [11Xpkg/semigroups-3.0.13[111X directory, type[133X
+        [11Xpkg/semigroups-3.0.14[111X directory, type[133X
   
   [4X      [32X[104X
           [4X./configure[104X
@@ -63,25 +63,25 @@
   
   [1X2.2 [33X[0;0YPackage dependencies[133X[101X
   
-  [33X[0;0YThe  [5XSemigroups[105X package is written in [5XGAP[105X and C++ code and requires the [5XOrb[105X,
-  [5XIO[105X,  [5XDigraphs[105X  and  [5Xgenss[105X  packages.  The [5XOrb[105X package is used to efficiently
-  compute  components  of  actions,  which  underpin  many  of the features of
-  [5XSemigroups[105X. The [5XIO[105X package is used to read and write elements of a semigroup
-  to  a  file. The [5Xgenss[105X package is used in a non-deterministic version of the
-  operation  [2XNormalizer[102X  ([14X13.11-1[114X) and in calculating the stabiliser of a Rees
-  0-matrix  semigroup's matrix. The [5XDigraphs[105X package is used for in variety of
-  ways  in  the  [5XSemigroups[105X  package,  in  particular, to apply standard graph
-  theoretic algorithms to certain data structures.[133X
+  [33X[0;0YThe  [5XSemigroups[105X  package is written in [5XGAP[105X and C++ and requires the [5XOrb[105X, [5XIO[105X,
+  [5XDigraphs[105X  and [5Xgenss[105X packages. The [5XOrb[105X package is used to efficiently compute
+  components  of  actions,  which underpin many of the features of [5XSemigroups[105X.
+  The  [5XIO[105X package is used to read and write elements of a semigroup to a file.
+  The  [5Xgenss[105X  package  is used in a non-deterministic version of the operation
+  [2XNormalizer[102X  ([14X13.11-1[114X)  and  in calculating the stabiliser of a Rees 0-matrix
+  semigroup's matrix. The [5XDigraphs[105X package is used in a variety of ways in the
+  [5XSemigroups[105X  package,  in  particular,  to  apply  standard  graph  theoretic
+  algorithms to certain data structures.[133X
   
   
   [1X2.3 [33X[0;0YCompiling the kernel module[133X[101X
   
-  [33X[0;0YAs  of  version  3.0.0, the [5XSemigroups[105X package has a [5XGAP[105X kernel component in
-  C/C++  which  must  be compiled. This component contains low-level functions
-  relating  to  the  enumeration of certain types of semigroups, and it is not
-  possible to use the [5XSemigroups[105X package without compiling it.[133X
+  [33X[0;0YAs  of version 3.0.0, the [5XSemigroups[105X package has a [5XGAP[105X kernel module written
+  in  C/C++  and  this  must be compiled. The kernel module contains low-level
+  functions relating to the enumeration of certain types of semigroups, and it
+  is not possible to use the [5XSemigroups[105X package without compiling it.[133X
   
-  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.13[111X directory,
+  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.14[111X directory,
   type[133X
   
   [4X[32X[104X
@@ -89,6 +89,11 @@
     [4X./configure[104X
     [4Xmake[104X
   [4X[32X[104X
+  
+  [33X[0;0YIf  you  are  using GCC to compile [5XSemigroups[105X, then version 5.0 or higher is
+  required.  Trying  to compile [5XSemigroups[105X with an earlier version of GCC will
+  result  in  an error at compile time. [5XSemigroups[105X supports GCC version 5.0 or
+  higher, and clang version 5.0 or higher.[133X
   
   [33X[0;0YIf  you  installed  the  package  in  another  [11Xpkg[111X  directory other than the
   standard  [11Xpkg[111X  directory  in  your [5XGAP[105X installation, then you have to do two

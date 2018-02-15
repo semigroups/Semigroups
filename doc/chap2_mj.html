@@ -79,16 +79,16 @@
 <li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package version 1.5 or higher is available.</p>
 
 </li>
-<li><p>download the package archive <code class="file">semigroups-3.0.13.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
+<li><p>download the package archive <code class="file">semigroups-3.0.14.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.0.13</code>.</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.0.14</code>.</p>
 
 </li>
-<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.0.13</code> into the <code class="file">pkg</code> directory.</p>
+<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.0.14</code> into the <code class="file">pkg</code> directory.</p>
 
 </li>
-<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href="https://james-d-mitchell.github.io/libsemigroups/">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++11 standard. Inside the <code class="file">pkg/semigroups-3.0.13</code> directory, type</p>
+<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href="https://james-d-mitchell.github.io/libsemigroups/">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++11 standard. Inside the <code class="file">pkg/semigroups-3.0.14</code> directory, type</p>
 
 
 <div class="example"><pre>
@@ -113,21 +113,23 @@ make</pre></div>
 
 <h4>2.2 <span class="Heading">Package dependencies</span></h4>
 
-<p>The <strong class="pkg">Semigroups</strong> package is written in <strong class="pkg">GAP</strong> and C++ code and requires the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span>, <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span>, <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> and <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> packages. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package is used to efficiently compute components of actions, which underpin many of the features of <strong class="pkg">Semigroups</strong>. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> package is used to read and write elements of a semigroup to a file. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package is used in a non-deterministic version of the operation <code class="func">Normalizer</code> (<a href="chap13_mj.html#X87C024AE814BC9D8"><span class="RefLink">13.11-1</span></a>) and in calculating the stabiliser of a Rees 0-matrix semigroup's matrix. The <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package is used for in variety of ways in the <strong class="pkg">Semigroups</strong> package, in particular, to apply standard graph theoretic algorithms to certain data structures.</p>
+<p>The <strong class="pkg">Semigroups</strong> package is written in <strong class="pkg">GAP</strong> and C++ and requires the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span>, <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span>, <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> and <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> packages. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package is used to efficiently compute components of actions, which underpin many of the features of <strong class="pkg">Semigroups</strong>. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> package is used to read and write elements of a semigroup to a file. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package is used in a non-deterministic version of the operation <code class="func">Normalizer</code> (<a href="chap13_mj.html#X87C024AE814BC9D8"><span class="RefLink">13.11-1</span></a>) and in calculating the stabiliser of a Rees 0-matrix semigroup's matrix. The <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package is used in a variety of ways in the <strong class="pkg">Semigroups</strong> package, in particular, to apply standard graph theoretic algorithms to certain data structures.</p>
 
 <p><a id="X849F6196875A6DF5" name="X849F6196875A6DF5"></a></p>
 
 <h4>2.3 <span class="Heading">Compiling the kernel module</span></h4>
 
-<p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a <strong class="pkg">GAP</strong> kernel component in C/C++ which must be compiled. This component contains low-level functions relating to the enumeration of certain types of semigroups, and it is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
+<p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a <strong class="pkg">GAP</strong> kernel module written in C/C++ and this must be compiled. The kernel module contains low-level functions relating to the enumeration of certain types of semigroups, and it is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
 
-<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.0.13</code> directory, type</p>
+<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.0.14</code> directory, type</p>
 
 
 <div class="example"><pre>
 
 ./configure
 make</pre></div>
+
+<p>If you are using GCC to compile <strong class="pkg">Semigroups</strong>, then version 5.0 or higher is required. Trying to compile <strong class="pkg">Semigroups</strong> with an earlier version of GCC will result in an error at compile time. <strong class="pkg">Semigroups</strong> supports GCC version 5.0 or higher, and clang version 5.0 or higher.</p>
 
 <p>If you installed the package in another <code class="file">pkg</code> directory other than the standard <code class="file">pkg</code> directory in your <strong class="pkg">GAP</strong> installation, then you have to do two things. Firstly during compilation you have to use the option <code class="code">--with-gaproot=PATH</code> of the <code class="code">configure</code> script where <code class="code">PATH</code> is a path to the main <strong class="pkg">GAP</strong> root directory (if not given the default <code class="code">../..</code> is assumed).</p>
 
