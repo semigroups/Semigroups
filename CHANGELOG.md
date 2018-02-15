@@ -2,6 +2,13 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.14 (released 15/02/2018)
+
+This version contains a fix for the following issue, this was resolved by
+updating the version of libsemigroups to 0.6.3:
+
+* [Issue 450](https://github.com/gap-packages/Semigroups/issues/450): There was an intermittent error in some methods for congruences and finitely presented semigroups arising from a bug in libsemigroups. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
 ### Version 3.0.13 (released 08/02/2018)
 
 This version contains some minor updates for compatibility with GAP 4.9, and
