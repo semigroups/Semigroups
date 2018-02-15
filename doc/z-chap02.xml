@@ -93,7 +93,7 @@ make]]></Listing>
 
     <!--********************************************************************-->
 
-    The &Semigroups; package is written in &GAP; and C++ code and requires the
+    The &Semigroups; package is written in &GAP; and C++ and requires the
     &Orb;, &IO;, &Digraphs; and &genss; packages. The &Orb; package is used to
     efficiently compute components of actions, which underpin many of the
     features of &Semigroups;.  The &IO; package is used to read and write
@@ -101,7 +101,7 @@ make]]></Listing>
     &genss; package is used in a non-deterministic version of the operation <Ref
       Oper = "Normalizer" Label = "for a perm group, semigroup, record"/> and in
     calculating the stabiliser of a Rees 0-matrix semigroup's matrix. 
-    The &Digraphs; package is used for in variety of ways in the &Semigroups;
+    The &Digraphs; package is used in a variety of ways in the &Semigroups;
     package, in particular, to apply standard graph theoretic algorithms to
     certain data structures. 
     <P/>
@@ -114,11 +114,11 @@ make]]></Listing>
 
   <Section Label = "Compiling the kernel module">
     <Heading>Compiling the kernel module</Heading>
-    As of version 3.0.0, the &Semigroups; package has a &GAP; kernel component
-    in C/C++ which must be compiled.  This component contains low-level
-    functions relating to the enumeration of certain types of semigroups,
-    and it is not possible to use the &Semigroups; package without compiling
-    it.
+    As of version 3.0.0, the &Semigroups; package has a &GAP; kernel module
+    written in C/C++ and this must be compiled.  The kernel module contains
+    low-level functions relating to the enumeration of certain types of
+    semigroups, and it is not possible to use the &Semigroups; package without
+    compiling it.
     <P/>
 
     To compile the kernel component inside the <F>pkg/&ARCHIVENAME;</F>
@@ -129,12 +129,17 @@ make]]></Listing>
 make]]></Listing>
     <P/>
 
+    If you are using GCC to compile &Semigroups;, then version 5.0 or higher is
+    required. Trying to compile &Semigroups; with an earlier version of GCC
+    will result in an error at compile time. &Semigroups; supports GCC version
+    5.0 or higher, and clang version 5.0 or higher.<P/>
+
     If you installed the package in another <F>pkg</F> directory other than the
-    standard <F>pkg</F>
-    directory in your &GAP; installation, then you have to do two things. Firstly
-    during compilation you have to use the option <C>--with-gaproot=PATH</C> of
-    the <C>configure</C> script where <C>PATH</C> is a path to the main &GAP;
-    root directory (if not given the default <C>../..</C> is assumed).<P/>
+    standard <F>pkg</F> directory in your &GAP; installation, then you have to
+    do two things. Firstly during compilation you have to use the option
+    <C>--with-gaproot=PATH</C> of the <C>configure</C> script where <C>PATH</C>
+    is a path to the main &GAP; root directory (if not given the default
+    <C>../..</C> is assumed).<P/>
 
     If you installed &GAP; on several architectures, you must execute the
     configure/make step for each of the architectures. You can either do this
