@@ -23,6 +23,11 @@
 #ifndef SEMIGROUPS_SRC_PKG_H_
 #define SEMIGROUPS_SRC_PKG_H_
 
+#if (defined(__GNUC__) && __GNUC__ < 5 \
+     && !(defined(__clang__) || defined(__INTEL_COMPILER)))
+#error "GCC version 5.0 or higher is required"
+#endif
+
 // Inclusion of <cstdef> appears to be required to prevent travis from issuing
 // the warning:
 //

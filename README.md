@@ -48,6 +48,8 @@ loaded.
     * `./configure`
     * `make`
 
+    If you are using GCC to compile [Semigroups](https://gap-packages.github.io/Semigroups), then version 5.0 or higher is required. Trying to compile [Semigroups](https://gap-packages.github.io/Semigroups) with an earlier version of GCC will result in an error at compile time.  [Semigroups](https://gap-packages.github.io/Semigroups) supports GCC version 5.0 or higher, and clang version 5.0 or higher.
+
     Further information about this step can be found in manual section entitled "Compiling the kernel module"
 
 * start GAP in the usual way.
