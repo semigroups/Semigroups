@@ -1536,7 +1536,8 @@ function(S)
     return false;
   fi;
   gens := GeneratorsOfSemigroup(S);
-  return IsIdempotent(gens[1]) and ForAll(gens, x -> gens[1] = x);
+  return Length(gens) > 0 and IsIdempotent(gens[1])
+         and ForAll(gens, x -> gens[1] = x);
 end);
 
 # same method for ideals
