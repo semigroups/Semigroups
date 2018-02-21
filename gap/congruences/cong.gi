@@ -26,7 +26,11 @@
 InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  return Length(EquivalenceClasses(cong));
+  local classes;
+  classes := EquivalenceClasses(cong);
+  # Note: EquivalenceClasses may exclude all singletons due to a bug in GAP.
+  # This is a workaround which adds any missing singletons.
+  return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
 end);
 
 InstallMethod(\in,
