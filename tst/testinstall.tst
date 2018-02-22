@@ -1746,6 +1746,19 @@ false
 gap> Size(M0);
 0
 
+# Issue 461: NrCongruenceClasses gives incorrect answer
+gap> tab := [[1, 2, 3, 3], [2, 3, 1, 1], [3, 1, 2, 2], [3, 1, 2, 2]];;
+gap> S := SemigroupByMultiplicationTable(tab);;
+gap> cong := SemigroupCongruence(S, [[S.3, S.4]]);;
+gap> S.1 in EquivalenceClassOfElement(cong, S.3);
+false
+gap> NrCongruenceClasses(cong);
+3
+gap> S.1 in EquivalenceClassOfElement(cong, S.3);
+false
+gap> IsUniversalSemigroupCongruence(cong);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
@@ -1790,6 +1803,7 @@ gap> Unbind(rel);
 gap> Unbind(s);
 gap> Unbind(sgns);
 gap> Unbind(t);
+gap> Unbind(tab);
 gap> Unbind(tuples);
 gap> Unbind(u);
 gap> Unbind(x);
