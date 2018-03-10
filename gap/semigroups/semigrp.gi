@@ -949,68 +949,68 @@ InstallMethod(StabilizerInverseSemigroup,
 [IsActingSemigroup and IsInverseSemigroup and IsPartialPermSemigroup,
  IsPosInt],
 function(S, pnt)
-  local orb, scclookup, setswithpoint, sccreps, tmp, fromsccrep, tosccrep,
-  stabgens, todo, i, img_of_pnt, schutz, stab, newstabgens, dom, to, from,
-  from_inv, a, b, pi, pair, j;
+  local orb, scc_lookup, sets_with_point, scc_reps, tmp, from_scc_rep,
+  to_scc_rep, stab_gens, todo, i, img_of_pnt, schutz, stab, newstab_gens,
+  dom, to, from, from_inv, a, b, pi, pair, j;
   if ForAll(GeneratorsOfInverseSemigroup(S),
             x -> pnt ^ x = 0 and pnt ^ (x ^ -1) = 0) then
     ErrorNoReturn("Semigroups: StabilizerInverseSemigroup: usage,\n",
               "<S> is not defined on <pnt>,");
   fi;
   orb := LambdaOrb(S);
-  scclookup := OrbSCCLookup(orb);
-  setswithpoint := Filtered([1 .. Size(orb)], i -> pnt in orb[i]);
-  scclookup := scclookup{setswithpoint};
-  sccreps := List(scclookup, i -> orb[OrbSCC(orb)[i][1]]);
-  tmp := List([1 .. Size(setswithpoint)],
-              i -> LambdaOrbMult(orb, scclookup[i], setswithpoint[i]));
-  fromsccrep := List(tmp, x -> x[1]);
-  tosccrep := List(tmp, x -> x[2]);
-  stabgens := [];
+  scc_lookup := OrbSCCLookup(orb);
+  sets_with_point := Filtered([1 .. Size(orb)], i -> pnt in orb[i]);
+  scc_lookup := scc_lookup{sets_with_point};
+  scc_reps := List(scc_lookup, i -> orb[OrbSCC(orb)[i][1]]);
+  tmp := List([1 .. Size(sets_with_point)],
+              i -> LambdaOrbMult(orb, scc_lookup[i], sets_with_point[i]));
+  from_scc_rep := List(tmp, x -> x[1]);
+  to_scc_rep := List(tmp, x -> x[2]);
+  stab_gens := [];
   # Let x be a set containing pnt. We compute generators of the stabiliser
   # of pnt in the Schutzenberger group of x. To this end, we use the set
   # representing the SCC of x.
   # First we collect for which combinations of Schutzenberger groups and
   # points we want to compute something.
   todo := [];
-  for i in [1 .. Length(setswithpoint)] do
-    AddSet(todo, [i, pnt ^ tosccrep[i]]);
+  for i in [1 .. Length(sets_with_point)] do
+    AddSet(todo, [i, pnt ^ to_scc_rep[i]]);
   od;
   for pair in todo do
     i := pair[1];
     img_of_pnt := pair[2];
-    schutz := LambdaOrbSchutzGp(orb, scclookup[i]);
+    schutz := LambdaOrbSchutzGp(orb, scc_lookup[i]);
     stab := Stabilizer(schutz, img_of_pnt);
     # Convert the permutations in stab to PartialPerms
-    newstabgens := GeneratorsOfGroup(stab);
-    dom := sccreps[i];
-    newstabgens := List(newstabgens, x -> AsPartialPerm(x, dom));
+    newstab_gens := GeneratorsOfGroup(stab);
+    dom := scc_reps[i];
+    newstab_gens := List(newstab_gens, x -> AsPartialPerm(x, dom));
     # Conjugate them back into the Schutzenberger group of x
-    # fromsccrep[i] is the inverse of tosccrep[i]
-    newstabgens := List(newstabgens, x -> x ^ fromsccrep[i]);
-    Append(stabgens, newstabgens);
+    # from_scc_rep[i] is the inverse of to_scc_rep[i]
+    newstab_gens := List(newstab_gens, x -> x ^ from_scc_rep[i]);
+    Append(stab_gens, newstab_gens);
   od;
   # For two different sets in the same SCC take semigroup elements
   # mapping one to the other via the SCC's representative.
   # Then check whether pnt^to and PreImage(from, pnt) can be
   # mapped to each other in the representatives Schutzenberger
   # group.
-  for i in [1 .. Length(setswithpoint)] do
-    for j in [1 .. Length(setswithpoint)] do
-      if i < j and scclookup[i] = scclookup[j] then
-        to := tosccrep[i];
-        from := fromsccrep[j];
-        from_inv := tosccrep[j];
+  for i in [1 .. Length(sets_with_point)] do
+    for j in [1 .. Length(sets_with_point)] do
+      if i < j and scc_lookup[i] = scc_lookup[j] then
+        to := to_scc_rep[i];
+        from := from_scc_rep[j];
+        from_inv := to_scc_rep[j];
         a := pnt ^ to;
         b := pnt ^ from_inv;
-        schutz := LambdaOrbSchutzGp(orb, scclookup[i]);
+        schutz := LambdaOrbSchutzGp(orb, scc_lookup[i]);
         # At this point we choose a pi from schutz mapping a to b
-        # and will later add `to * pi * from` to stabgens.
+        # and will later add `to * pi * from` to stab_gens.
         # It suffices to take only one such pi:
         # Let t = to, f = from, g in Stabilizer(schutz, pnt ^ t),
         # and pi' = g * pi.
-        # If we add (t pi f) to stabgens, we also get (t pi' f) in <stabgens>
-        # since (t pi' f) * (t pi f) ^ -1 = t * g * t ^ -1 is in
+        # If we add (t pi f) to stab_gens, we also get (t pi' f) in
+        # <stab_gens> since (t pi' f) * (t pi f) ^ -1 = t * g * t ^ -1 is in
         # Stabilizer(schutz, pnt ^ t).
         if a = b then
           pi := ();
@@ -1021,14 +1021,14 @@ function(S, pnt)
           fi;
         fi;
         # Make pi a partial perm
-        dom := sccreps[i];
+        dom := scc_reps[i];
         pi := AsPartialPerm(pi, dom);
-        Add(stabgens, to * pi * from);
+        Add(stab_gens, to * pi * from);
       fi;
     od;
   od;
   # Try to keep the generating set small by using the option small
-  return InverseSemigroup(stabgens, rec(small := true));
+  return InverseSemigroup(stab_gens, rec(small := true));
 end);
 
 #############################################################################
