@@ -79,7 +79,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   possibleidempotentfvals, gen, idempos, extend, next, propagate, reject, bt,
   whenbound, translist, e, i, s, x, f, k, multtable, t, tinv, M, pos,
   posinfgenvals, genpos, restrictionatstage, S;
-  
+
   S := UnderlyingSemigroup(L);
   n := Size(S);
   slist := AsListCanonical(S);
@@ -111,7 +111,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
       if gen * s in Idempotents(S) then
         idempos := Position(I, gen * s);
         possiblefgenvals[i] := Intersection(possiblefgenvals[i],
-                                            PositionsProperty(slist, 
+                                            PositionsProperty(slist,
                                               x -> Position(slist, x * s) in
                                               possibleidempotentfvals[idempos]));
         possiblefgenvals[i] := Intersection(possiblefgenvals[i],
@@ -162,7 +162,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
                                                    [multtable[f[x]][i]]);
         fi;
       fi;
-      if IsBound(f[pos]) then 
+      if IsBound(f[pos]) then
         if not f[pos] = multtable[f[x]][i] then
           return fail;
         fi;
@@ -197,7 +197,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
     if propagate(k) = fail then
       return bt(reject(k));
     fi;
-    if k = m then 
+    if k = m then
       return m + 1;
     fi;
     return bt(extend(k));
@@ -1329,6 +1329,25 @@ end);
 #############################################################################
 # 5. Technical methods
 #############################################################################
+
+# copied from reesmat.gi in GAP library
+# so that we can find Green's relations etc
+
+InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationsSemigroup],
+function(T)
+  local M;
+  M:=Monoid(List(GeneratorsOfSemigroup(T), MonoidByAdjoiningIdentityElt));
+  SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, T);
+  return M;
+end);
+
+InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationalHull],
+function(H)
+  local M;
+  M:=Monoid(List(GeneratorsOfSemigroup(H), MonoidByAdjoiningIdentityElt));
+  SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, H);
+  return M;
+end);
 
 InstallMethod(AsList, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
