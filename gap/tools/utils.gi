@@ -135,7 +135,7 @@ SEMIGROUPS.RunTest := function(func)
                   " or 'false',");
   elif not passed then
     SEMIGROUPS.DefaultOptionsRec.acting := acting;
-    return;
+    return passed;
   fi;
 
   # Run tests with acting := false
