@@ -521,9 +521,10 @@ function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForMcAlisterTripleSemigroupElements,
              data := data);
 end);
+
 SEMIGROUPS.HashFunctionForMcAlisterTripleSemigroupElements := function(x, data)
   return  (17 * data[1].func(x[1], data[1].data)
-           + data[2].func(x[2], data[2].data)) mod data[3];
+           + data[2].func(x[2], data[2].data)) mod data[3] + 1;
 end;
 
 ###############################################################################
