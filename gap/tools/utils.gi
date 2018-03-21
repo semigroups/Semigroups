@@ -496,12 +496,12 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
     name := elt.attributes.Name;
     if not name in ["IsBound", "Unbind", "Info", "Assert", "TryNextMethod",
                     "QUIT", "-infinity"] then
-      if EvalString(Concatenation("IsBound(", name, ")")) <> true then
+      if not IsBoundGlobal(name) then
         pos := OriginalPositionDocument(doc[2], elt.start);
         Print(pos[1], ":", pos[2], " : ", name, " is unbound \n");
         errcount := errcount + 1;
       else
-        obj := EvalString(name);
+        obj := ValueGlobal(name);
         man := SEMIGROUPS.ManSectionType(obj);
         # we allow to use "Meth" for "Oper" but probably should issue a warning
         # if there is no at least one "Oper" for any "Meth"

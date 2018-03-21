@@ -103,7 +103,7 @@ for _IsXSemigroup in ["IsFpSemigroup",
                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(TrivialSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and an integer"),
-  [EvalString(_IsXSemigroup), IsInt],
+  [ValueGlobal(_IsXSemigroup), IsInt],
   function(filter, deg)
     local n;
     n := Maximum(deg, 1);
@@ -249,7 +249,7 @@ for IsXSemigroup in ["IsPBRSemigroup",
                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(MonogenicSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and two positive integers"),
-  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  [ValueGlobal(IsXSemigroup), IsPosInt, IsPosInt],
   function(filter, m, r)
     return AsSemigroup(filter,
                        MonogenicSemigroupCons(IsTransformationSemigroup, m, r));
@@ -409,7 +409,7 @@ for IsXSemigroup in ["IsBooleanMatSemigroup",
                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(RectangularBandCons,
   Concatenation("for ", IsXSemigroup, ", pos int, and pos int"),
-  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  [ValueGlobal(IsXSemigroup), IsPosInt, IsPosInt],
   function(filter, m, n)
     return AsSemigroup(filter,
                        RectangularBandCons(IsTransformationSemigroup, m, n));
@@ -582,7 +582,7 @@ for _IsXSemigroup in ["IsPBRSemigroup",
                       "IsIntegerMatrixSemigroup"] do
   InstallMethod(ZeroSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and a positive integer"),
-  [EvalString(_IsXSemigroup), IsPosInt],
+  [ValueGlobal(_IsXSemigroup), IsPosInt],
   function(filter, n)
     return AsSemigroup(filter,
                        ZeroSemigroupCons(IsTransformationSemigroup, n));
