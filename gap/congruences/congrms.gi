@@ -1260,48 +1260,59 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
 function(cong)
-  local S, g, m, pairs, x, bl, j, rowNo, i, colNo;
+  local S, G, m, pairs, n_gens, col_pairs, bl, j, row_pairs, max, n, cp, rp,
+        pair_no, r, c;
   S := Range(cong);
-  g := UnderlyingSemigroup(S);
+  G := UnderlyingSemigroup(S);
   m := Matrix(S);
-
-  # Create a list of generating pairs
   pairs := [];
 
-  # PAIRS FROM THE NORMAL SUBGROUP
-  # for each x in the subgroup,
-  # (1,x,1) is related to (1,id,1)
-  for x in cong!.n do
-    Add(pairs, [RMSElement(S, 1, x, 1),
-                RMSElement(S, 1, One(g), 1)]);
-  od;
+  # Normal subgroup elements to identify with id
+  n_gens := GeneratorsOfSemigroup(cong!.n);
 
-  # PAIRS FROM THE COLUMNS RELATION
-  # For each class in the relation...
+  # Pairs that generate the columns relation
+  col_pairs := [];
   for bl in cong!.colBlocks do
-    # For each column in the class...
     for j in [2 .. Size(bl)] do
-      # For each row in the matrix...
-      for rowNo in [1 .. Size(m)] do
-        Add(pairs,
-            [RMSElement(S, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
-             RMSElement(S, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
-      od;
+      Add(col_pairs, [bl[1], bl[j]]);
     od;
   od;
 
-  # PAIRS FROM THE ROWS RELATION
-  # For each class in the relation...
+  # Pairs that generate the rows relation
+  row_pairs := [];
   for bl in cong!.rowBlocks do
-    # For each row in the class...
-    for i in [2 .. Size(bl)] do
-      # For each column in the matrix...
-      for colNo in [1 .. Size(m[1])] do
-        Add(pairs,
-            [RMSElement(S, colNo, m[bl[1]][colNo] ^ -1, bl[1]),
-             RMSElement(S, colNo, m[bl[i]][colNo] ^ -1, bl[i])]);
-      od;
+    for j in [2 .. Size(bl)] do
+      Add(row_pairs, [bl[1], bl[j]]);
     od;
+  od;
+
+  # Collate into RMS element pairs
+  max := Maximum(Length(n_gens), Length(col_pairs), Length(row_pairs));
+  pairs := EmptyPlist(max);
+  # Set default values in case a list has length 0
+  n := One(G);
+  cp := [1, 1];
+  rp := [1, 1];
+  # Iterate through all 3 lists together
+  for pair_no in [1 .. max] do
+    # If any list has run out, just keep using the last entry or default value
+    if pair_no <= Length(n_gens) then
+      n := n_gens[pair_no];
+    fi;
+    if pair_no <= Length(col_pairs) then
+      cp := col_pairs[pair_no];
+    fi;
+    if pair_no <= Length(row_pairs) then
+      rp := row_pairs[pair_no];
+    fi;
+    # Choose r and c s.t. m[r][cp[1]] and m[rp[1]][c] are both non-zero
+    # (since there are no zeroes, we can just use 1 for both)
+    r := 1;
+    c := 1;
+    # Make the pair and add it
+    pairs[pair_no] :=
+      [RMSElement(S, cp[1], m[r][cp[1]] ^ -1 * n * m[rp[1]][c] ^ -1, rp[1]),
+       RMSElement(S, cp[2], m[r][cp[2]] ^ -1 * m[rp[2]][c] ^ -1, rp[2])];
   od;
   return pairs;
 end);
@@ -1310,55 +1321,58 @@ InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
 function(cong)
-  local S, g, m, pairs, i1, x, bl, j, rowNo, i, colNo;
+  local S, G, m, pairs, n_gens, col_pairs, bl, j, row_pairs, max, n, cp, rp,
+        pair_no, r, c;
   S := Range(cong);
-  g := UnderlyingSemigroup(S);
+  G := UnderlyingSemigroup(S);
   m := Matrix(S);
-
-  # Create a list of generating pairs
   pairs := [];
 
-  # PAIRS FROM THE NORMAL SUBGROUP
-  # First, find a matrix entry not equal to zero
-  i1 := PositionProperty(m[1], x -> x <> 0);
+  # Normal subgroup elements to identify with id
+  n_gens := GeneratorsOfSemigroup(cong!.n);
 
-  # for each x in the subgroup,
-  # (i1,x,1) is related to (i1,id,1)
-  for x in cong!.n do
-    Add(pairs, [RMSElement(S, i1, x, 1),
-                RMSElement(S, i1, One(g), 1)]);
-  od;
-
-  # PAIRS FROM THE COLUMNS RELATION
-  # For each class in the relation...
+  # Pairs that generate the columns relation
+  col_pairs := [];
   for bl in cong!.colBlocks do
-    # For each column in the class...
     for j in [2 .. Size(bl)] do
-      # For each row in the matrix...
-      for rowNo in [1 .. Size(m)] do
-        if m[rowNo][bl[1]] <> 0 then
-          Add(pairs,
-              [RMSElement(S, bl[1], m[rowNo][bl[1]] ^ -1, rowNo),
-               RMSElement(S, bl[j], m[rowNo][bl[j]] ^ -1, rowNo)]);
-        fi;
-      od;
+      Add(col_pairs, [bl[1], bl[j]]);
     od;
   od;
 
-  # PAIRS FROM THE ROWS RELATION
-  # For each class in the relation...
+  # Pairs that generate the rows relation
+  row_pairs := [];
   for bl in cong!.rowBlocks do
-    # For each row in the class...
-    for i in [2 .. Size(bl)] do
-      # For each column in the matrix...
-      for colNo in [1 .. Size(m[1])] do
-        if m[bl[1]][colNo] <> 0 then
-          Add(pairs,
-              [RMSElement(S, colNo, m[bl[1]][colNo] ^ -1, bl[1]),
-               RMSElement(S, colNo, m[bl[i]][colNo] ^ -1, bl[i])]);
-        fi;
-      od;
+    for j in [2 .. Size(bl)] do
+      Add(row_pairs, [bl[1], bl[j]]);
     od;
+  od;
+
+  # Collate into RMS element pairs
+  max := Maximum(Length(n_gens), Length(col_pairs), Length(row_pairs));
+  pairs := EmptyPlist(max);
+  # Set default values in case a list has length 0
+  n := One(G);
+  cp := [1, 1];
+  rp := [1, 1];
+  # Iterate through all 3 lists together
+  for pair_no in [1 .. max] do
+    # If any list has run out, just keep using the last entry or default value
+    if pair_no <= Length(n_gens) then
+      n := n_gens[pair_no];
+    fi;
+    if pair_no <= Length(col_pairs) then
+      cp := col_pairs[pair_no];
+    fi;
+    if pair_no <= Length(row_pairs) then
+      rp := row_pairs[pair_no];
+    fi;
+    # Choose r and c s.t. m[r][cp[1]] and m[rp[1]][c] are both non-zero
+    r := First([1 .. Length(m)], r -> m[r][cp[1]] <> 0);
+    c := First([1 .. Length(m[1])], c -> m[rp[1]][c] <> 0);
+    # Make the pair and add it
+    pairs[pair_no] :=
+      [RMSElement(S, cp[1], m[r][cp[1]] ^ -1 * n * m[rp[1]][c] ^ -1, rp[1]),
+       RMSElement(S, cp[2], m[r][cp[2]] ^ -1 * m[rp[2]][c] ^ -1, rp[2])];
   od;
   return pairs;
 end);
