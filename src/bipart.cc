@@ -613,9 +613,11 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
 Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[1] == NULL) {
-    ADDR_OBJ(x)[1] = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
+    Obj o = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
+    ADDR_OBJ(x)[1] = o;
     CHANGED_BAG(x);
   }
+  SEMIGROUPS_ASSERT(ADDR_OBJ(x)[1] != NULL);
   SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(x)[1]) == T_BLOCKS);
   return ADDR_OBJ(x)[1];
 }
@@ -626,9 +628,11 @@ Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
 Obj BIPART_RIGHT_BLOCKS(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[2] == NULL) {
-    ADDR_OBJ(x)[2] = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
+    Obj o = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
+    ADDR_OBJ(x)[2] = o;
     CHANGED_BAG(x);
   }
+  SEMIGROUPS_ASSERT(ADDR_OBJ(x)[2] != NULL);
   SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(x)[2]) == T_BLOCKS);
   return ADDR_OBJ(x)[2];
 }
