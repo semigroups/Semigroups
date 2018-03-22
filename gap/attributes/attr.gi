@@ -1080,3 +1080,59 @@ function(S)
   # it shouldn't be needed. For example, see symmetric inverse monoid on 1 pt.
   return gens;
 end);
+
+InstallMethod(NambooripadPartialOrder, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local elts, p, func, out, i, j;
+
+  if not IsFinite(S) then
+    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
+                  "the argument is not a finite semigroup,");
+  elif not IsRegularSemigroup(S) then
+    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
+                  "the argument is not a regular semigroup,");
+  elif IsInverseSemigroup(S) then
+    return NaturalPartialOrder(S);
+  fi;
+
+  Info(InfoWarning, 2, "NambooripadPartialOrder: this method ",
+                       "fully enumerates its argument!");
+
+  elts := ShallowCopy(Elements(S));
+  p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
+  func := NambooripadLeqRegularSemigroup(S);
+  out  := List([1 .. Size(S)], x -> []);
+
+  for i in [1 .. Size(S)] do
+    for j in [i + 1 .. Size(S)] do
+      if func(elts[i], elts[j]) then
+        AddSet(out[j ^ p], i ^ p);
+      fi;
+    od;
+  od;
+  return out;
+end);
+
+InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+
+  if not IsFinite(S) then
+    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
+                  "the argument is not a finite semigroup,");
+  elif not IsRegularSemigroup(S) then
+    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
+                  "the argument is not a regular semigroup,");
+  elif IsInverseSemigroup(S) then
+    return NaturalLeqInverseSemigroup(S);
+  fi;
+
+  return
+    function(x, y)
+      local R;
+      R := RClass(S, x);
+      return IsGreensLessThanOrEqual(R, RClass(S, y))
+        and ForAny(Idempotents(R), e -> e * y = x);
+    end;
+end);

@@ -64,3 +64,5 @@ DeclareOperation("InversesOfSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 
 DeclareAttribute("IndecomposableElements", IsSemigroup);
+DeclareAttribute("NambooripadLeqRegularSemigroup", IsSemigroup);
+DeclareAttribute("NambooripadPartialOrder", IsSemigroup);

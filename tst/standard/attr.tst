@@ -1904,6 +1904,64 @@ gap> S := Monoid(x, x ^ 2);
 gap> MinimalMonoidGeneratingSet(S) = [x];
 true
 
+#T# NambooripadPartialOrder
+gap> S := Semigroup([Transformation([3, 4, 4, 1]),
+> Transformation([4, 1, 2, 1]), Transformation([3, 3, 3, 1]),
+> Transformation([2, 1, 4, 1])]);;
+gap> s := NambooripadPartialOrder(S);
+[ [  ], [ 1, 32 ], [ 1, 47 ], [ 1, 78 ], [ 1, 32 ], [ 1, 47 ], [ 1, 78 ], 
+  [ 1, 32 ], [ 1, 32 ], [ 1, 32 ], [ 1, 4, 9, 10, 24, 32, 33, 65, 78 ], 
+  [ 1, 7, 8, 10, 24, 32, 34, 66, 78 ], [ 1, 47 ], [ 1, 47 ], [ 1, 47 ], 
+  [ 1, 4, 14, 15, 24, 47, 48, 70, 78 ], [ 1, 7, 13, 15, 24, 47, 49, 71, 78 ], 
+  [ 1, 78 ], [ 1, 5, 10, 18, 24, 32, 36, 73, 78 ], 
+  [ 1, 6, 15, 18, 24, 47, 51, 74, 78 ], [ 1, 78 ], 
+  [ 1, 2, 10, 21, 24, 32, 38, 76, 78 ], [ 1, 3, 15, 21, 24, 47, 53, 77, 78 ], 
+  [ 1, 78 ], [ 1, 32 ], [ 1, 32 ], [ 1, 4, 25, 26, 32, 33, 39, 58, 78 ], 
+  [ 1, 32 ], [ 1, 7, 25, 28, 32, 34, 39, 61, 78 ], [ 1, 32 ], [ 1, 32 ], 
+  [  ], [ 32, 78 ], [ 32, 78 ], [ 1, 18, 25, 30, 32, 36, 39, 72, 78 ], 
+  [ 32, 78 ], [ 1, 21, 25, 31, 32, 38, 39, 75, 78 ], [ 32, 78 ], [ 32, 78 ], 
+  [ 1, 47 ], [ 1, 47 ], [ 1, 4, 40, 41, 47, 48, 54, 58, 78 ], [ 1, 47 ], 
+  [ 1, 7, 40, 43, 47, 49, 54, 61, 78 ], [ 1, 47 ], [ 1, 47 ], [  ], 
+  [ 47, 78 ], [ 47, 78 ], [ 1, 18, 40, 45, 47, 51, 54, 72, 78 ], [ 47, 78 ], 
+  [ 1, 21, 40, 46, 47, 53, 54, 75, 78 ], [ 47, 78 ], [ 47, 78 ], [ 1, 78 ], 
+  [ 1, 2, 26, 32, 55, 58, 64, 76, 78 ], [ 1, 3, 41, 47, 55, 58, 69, 77, 78 ], 
+  [ 1, 78 ], [ 1, 5, 28, 32, 55, 61, 64, 73, 78 ], 
+  [ 1, 6, 43, 47, 55, 61, 69, 74, 78 ], [ 1, 78 ], 
+  [ 1, 8, 30, 32, 55, 64, 66, 72, 78 ], [ 1, 9, 31, 32, 55, 64, 65, 75, 78 ], 
+  [ 32, 78 ], [ 32, 78 ], [ 32, 78 ], [ 1, 13, 45, 47, 55, 69, 71, 72, 78 ], 
+  [ 1, 14, 46, 47, 55, 69, 70, 75, 78 ], [ 47, 78 ], [ 47, 78 ], [ 47, 78 ], 
+  [ 1, 78 ], [ 32, 78 ], [ 47, 78 ], [ 1, 78 ], [ 32, 78 ], [ 47, 78 ], [  ] ]
+gap> GR := Digraph(s);
+<digraph with 78 vertices, 316 edges>
+gap> IsPartialOrderDigraph(DigraphReflexiveTransitiveClosure(GR));
+true
+gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
+> Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
+<inverse block bijection semigroup of degree 4 with 2 generators>
+gap> s := NambooripadPartialOrder(S);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], 
+  [ 1, 2, 8 ], [ 1, 3, 8 ], [ 1, 4, 9 ], [ 1, 4, 10 ], [ 1, 6, 8 ], 
+  [ 1, 5, 8 ], [ 1, 7, 9 ], [ 1, 7, 10 ], [ 1, 2, 6, 8, 11, 15 ], 
+  [ 1, 3, 5, 8, 12, 16 ] ]
+gap> s = NaturalPartialOrder(S);
+true
+gap> NambooripadLeqRegularSemigroup(S) = NaturalLeqInverseSemigroup(S);
+true
+gap> S := FreeSemigroup(3);;
+gap> NambooripadPartialOrder(S);
+Error, Semigroups: NambooripadPartialOrder: usage,
+the argument is not a finite semigroup,
+gap> NambooripadLeqRegularSemigroup(S);
+Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
+the argument is not a finite semigroup,
+gap> S := ZeroSemigroup(5);;
+gap> NambooripadPartialOrder(S);
+Error, Semigroups: NambooripadPartialOrder: usage,
+the argument is not a regular semigroup,
+gap> NambooripadLeqRegularSemigroup(S);
+Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
+the argument is not a regular semigroup,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
