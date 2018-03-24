@@ -1,6 +1,21 @@
-### CHANGELOG - [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
+### CHANGELOG - [Semigroups](https://gap-packages.github.io/Semigroups/) package for [GAP](http://www.gap-system.org)
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+
+### Version 3.0.15 (released 24/03/2018)
+
+This version contains some bugfixes, and some improved functionality:
+
+* [Issue 444](https://github.com/gap-packages/Semigroups/issues/444): there was a garbage collection error in the kernel module that sometimes resulted in a GAP error "<func> must return a value". [F. Smith] 
+
+* [Issue 459](https://github.com/gap-packages/Semigroups/issues/459): the method for `IsTrivial` did not check if the number of generators was non-zero. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [PR 457](https://github.com/gap-packages/Semigroups/pull/457): an improved method for finding a set of generating pairs of a congruence over a Rees 0-matrix semigroup represented as a linked triple [[Michael
+  Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)] 
+
+* [Issue 461](https://github.com/gap-packages/Semigroups/issues/461): `NrCongruenceClasses` sometimes returned the wrong result for classes of semigroups not defined in the [Semigroups](https://gap-packages.github.io/Semigroups/) package. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+
+* [Issue 463](https://github.com/gap-packages/Semigroups/pull/463): replaced use of `EvalString` by `ValueGlobal`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
 
 ### Version 3.0.14 (released 15/02/2018)
 
@@ -29,7 +44,7 @@ The following issues are resolved:
 
 * [Issue 424](https://github.com/gap-packages/Semigroups/issues/424): the operation `MinimalFactorization` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
 
-* [Issue 435](https://github.com/gap-packages/Semigroups/issues/424): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 435](https://github.com/gap-packages/Semigroups/issues/435): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
 
 ### Version 3.0.11 (released 18/12/2017)
 
@@ -389,10 +404,7 @@ partitions, or subsemigroups of a Rees 0-matrix semigroup).
 This is a minor release including some internal refactoring, and
 subsequent bugfixes, and stability improvements.
 
-* [Issue 116](https://bitbucket.org/james-d-mitchell/semigroups/issue/116/) was resolved. In some cases when the default length of
-hash tables in [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) was set to be very small, a segmentation
-fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb/) package (see [Issue
-10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
+* [Issue 116](https://bitbucket.org/james-d-mitchell/semigroups/issue/116/) was resolved. In some cases when the default length of hash tables in [Semigroups](https://gap-packages.github.io/Semigroups/) was set to be very small, a segmentation fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb/) package (see [Issue 10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
 
 ### Version 2.2 (released 20/01/2015)
 This is a minor release including some bug fixes, performance
@@ -444,8 +456,7 @@ transformation semigroup.
 existed in other corner cases, and these have been resolved too.
 
 ### Version 2.1.1 (released 09/09/2014)
-This is a very minor release to fix an issue caused by only loading
-the packages needed (but not required) by [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php).
+This is a very minor release to fix an issue caused by only loading the packages needed (but not required) by [Semigroups](https://gap-packages.github.io/Semigroups/).
 
 ### Version 2.1 (released 04/09/2014)
 This is a minor release including some bug fixes and performance
@@ -596,17 +607,11 @@ operation for `NaturalLeqPartialPerm`, and other such functions.
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
-* the main algorithm underlying many of the methods in
- [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php)
-has been revised to avoid computing the same information more than
-once. Some further internal rearranging and cleaning up was done. 
+* the main algorithm underlying many of the methods in [Semigroups](https://gap-packages.github.io/Semigroups/) has been revised to avoid computing the same information more than once. Some further internal rearranging and cleaning up was done. 
 
-* `MinimalIdeal` and `SingularTransformationSemigroup` now returns an
-ideal rather than a semigroup defined by a generating set;
+* `MinimalIdeal` and `SingularTransformationSemigroup` now returns an ideal rather than a semigroup defined by a generating set;
 
-* to reduce the size of the package archive, the examples directory
-has been removed. The content of the examples directory is available
-on [this webpage](http://tinyurl.com/jdmitchell/data.php).
+* to reduce the size of the package archive, the examples directory has been removed. The content of the examples directory is available on [this webpage](http://tinyurl.com/jdmitchell/data.php).
 
 * several bugs in the setup for subsemigroups of Rees 0-matrix
 semigroups were resolved. These issues would have caused [GAP](http://www.gap-system.org) to give
@@ -647,16 +652,9 @@ transformations with different length and degree properly, caused
 * [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63/): there was an error in the [GAP](http://www.gap-system.org) library functions `Monoid`
 and `InverseMonoid`, when they were passed a monoid as an argument. 
 
-* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63/) (and [Issue 4](https://github.com/gap-system/orb/issues/) in the [Orb](http://gap-system.github.io/orb/) package): a bug in the [Orb](http://gap-system.github.io/orb/)
-package meant that the log of an `Orb` was not properly updated if the
-enumeration stopped early because we found something we were looking
-for. This caused [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) to return incorrect results in some rare
-cases. 
+* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63/) (and [Issue 4](https://github.com/gap-system/orb/issues/) in the [Orb](http://gap-system.github.io/orb/) package): a bug in the [Orb](http://gap-system.github.io/orb/) package meant that the log of an `Orb` was not properly updated if the enumeration stopped early because we found something we were looking for. This caused [Semigroups](https://gap-packages.github.io/Semigroups/) to return incorrect results in some rare cases. 
 
-* [Issue 72](https://bitbucket.org/james-d-mitchell/semigroups/issue/72/): the method for `IsomorphismTransformationSemigroup`
-applied to a binary relation monoid returned an isomorphism to a
-transformation semigroup which was missing the image of the
-identity. 
+* [Issue 72](https://bitbucket.org/james-d-mitchell/semigroups/issue/72/): the method for `IsomorphismTransformationSemigroup` applied to a binary relation monoid returned an isomorphism to a transformation semigroup which was missing the image of the identity. 
 
 * [Issue 89](https://bitbucket.org/james-d-mitchell/semigroups/issue/89/): there was a bug in `TRANS_IMG_CONJ` which failed to handle
 transformations of unequal degrees correctly. This causes incorrect
@@ -682,14 +680,14 @@ to the library methods for AsPermutation. The declarations of
 IsomorphismPermGroup and ClosureSemigroup were moved/changed to
 avoid warnings that their methods matched more than one
 declaration. These warnings were exposed by doing LoadAllPackages,
-but were not present when loading [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) by itself.
+but were not present when loading [Semigroups](https://gap-packages.github.io/Semigroups/) by itself.
 
 ### Version 1.3 (released 11/10/13)
 Version 1.3 contains many bug fixes, extensions and improvements in
 the documentation, and several new methods and functions. Most
 notably are (in no particular order): 
 
-* the methods in [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) have been extended to apply to
+* the methods in [Semigroups](https://gap-packages.github.io/Semigroups/) have been extended to apply to
 arbitrary subsemigroups of regular Rees 0-matrix semigroups over
 groups; 
 
@@ -738,7 +736,7 @@ one test in everyfunction.tst which was consequence of the
 declarations of `IsGreens.Class`.
 
 ### Version 1.0 (released 07/06/13)
-The package has been renamed from Citrus to [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php). The package
+The package has been renamed from Citrus to [Semigroups](https://gap-packages.github.io/Semigroups/). The package
 has been completely overhauled, the performance has been improved,
 and the code has been generalized so that in the future the same
 code can be used to compute with other types of semigroups.  
