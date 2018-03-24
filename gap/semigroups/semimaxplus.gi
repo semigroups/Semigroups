@@ -28,12 +28,12 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
 
   InstallMethod(RandomInverseSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and a list"),
-  [EvalString(_IsXSemigroup), IsList],
+  [ValueGlobal(_IsXSemigroup), IsList],
   SEMIGROUPS.DefaultRandomInverseSemigroup);
 
   InstallMethod(RandomInverseMonoidCons,
   Concatenation("for ", _IsXMonoid, " and a list"),
-  [EvalString(_IsXMonoid), IsList],
+  [ValueGlobal(_IsXMonoid), IsList],
   SEMIGROUPS.DefaultRandomInverseMonoid);
 
 od;
@@ -53,32 +53,32 @@ _InstallRandom0 := function(IsXMatrix)
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
   InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
-  [EvalString(IsXSemigroup), IsList],
+  [ValueGlobal(IsXSemigroup), IsList],
   function(filt, params)
     return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
   end);
 
   InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
-  [EvalString(IsXMonoid), IsList],
+  [ValueGlobal(IsXMonoid), IsList],
   function(filt, params)
     return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
   end);
 
   InstallMethod(RandomSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and a list"),
-  [EvalString(IsXSemigroup), IsList],
+  [ValueGlobal(IsXSemigroup), IsList],
   function(filt, params)
     return Semigroup(List([1 .. params[1]],
-                          i -> RandomMatrix(EvalString(IsXMatrix),
+                          i -> RandomMatrix(ValueGlobal(IsXMatrix),
                                             params[2])));
   end);
 
   InstallMethod(RandomMonoidCons,
   Concatenation("for ", IsXMonoid, " and a list"),
-  [EvalString(IsXMonoid), IsList],
+  [ValueGlobal(IsXMonoid), IsList],
   function(filt, params)
     return Monoid(List([1 .. params[1]],
-                       i -> RandomMatrix(EvalString(IsXMatrix), params[2])));
+                       i -> RandomMatrix(ValueGlobal(IsXMatrix), params[2])));
   end);
 end;
 
@@ -125,27 +125,27 @@ _InstallRandom1 := function(IsXMatrix)
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
   InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
-  [EvalString(IsXSemigroup), IsList], _ProcessArgs1);
+  [ValueGlobal(IsXSemigroup), IsList], _ProcessArgs1);
 
   InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
-  [EvalString(IsXMonoid), IsList], _ProcessArgs1);
+  [ValueGlobal(IsXMonoid), IsList], _ProcessArgs1);
 
   InstallMethod(RandomSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and a list"),
-  [EvalString(IsXSemigroup), IsList],
+  [ValueGlobal(IsXSemigroup), IsList],
   function(filt, params)
     return Semigroup(List([1 .. params[1]],
-                          i -> RandomMatrix(EvalString(IsXMatrix),
+                          i -> RandomMatrix(ValueGlobal(IsXMatrix),
                                             params[2],
                                             params[3])));
   end);
 
   InstallMethod(RandomMonoidCons,
   Concatenation("for ", IsXMonoid, " and a list"),
-  [EvalString(IsXMonoid), IsList],
+  [ValueGlobal(IsXMonoid), IsList],
   function(filt, params)
     return Monoid(List([1 .. params[1]],
-                        i -> RandomMatrix(EvalString(IsXMatrix),
+                        i -> RandomMatrix(ValueGlobal(IsXMatrix),
                                           params[2],
                                           params[3])));
   end);
@@ -242,12 +242,12 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a semigroup"),
-  [EvalString(_IsXSemigroup), IsSemigroup],
+  [ValueGlobal(_IsXSemigroup), IsSemigroup],
   SEMIGROUPS.DefaultIsomorphismSemigroup);
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
-  [EvalString(_IsXSemigroup), EvalString(_IsXSemigroup)],
+  [ValueGlobal(_IsXSemigroup), ValueGlobal(_IsXSemigroup)],
   function(filter, S)
     return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
   end);
@@ -266,7 +266,7 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, ", pos int, and a semigroup"),
-  [EvalString(_IsXSemigroup), IsPosInt, IsSemigroup],
+  [ValueGlobal(_IsXSemigroup), IsPosInt, IsSemigroup],
   function(filter, threshold, S)
     local iso1, inv1, iso2, inv2;
 
@@ -290,7 +290,7 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
-  [EvalString(_IsXSemigroup), IsPosInt, EvalString(_IsXSemigroup)],
+  [ValueGlobal(_IsXSemigroup), IsPosInt, ValueGlobal(_IsXSemigroup)],
   function(filter, threshold, S)
     if threshold = ThresholdTropicalMatrix(Representative(S)) then
       return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
@@ -356,36 +356,36 @@ _InstallIsomorphism0 := function(filter)
 
   InstallMethod(AsMonoid,
   Concatenation("for a semigroup in ", IsXSemigroup),
-  [EvalString(IsXSemigroup)],
+  [ValueGlobal(IsXSemigroup)],
   function(S)
     if MultiplicativeNeutralElement(S) = fail then
       return fail; # so that we do the same as the GAP/ref manual says
     fi;
-    return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
+    return Range(IsomorphismMonoid(ValueGlobal(IsXMonoid), S));
   end);
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, " and a semigroup"),
-  [EvalString(IsXMonoid), IsSemigroup],
+  [ValueGlobal(IsXMonoid), IsSemigroup],
   SEMIGROUPS.DefaultIsomorphismMonoid);
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, " and a monoid"),
-  [EvalString(IsXMonoid), IsMonoid],
+  [ValueGlobal(IsXMonoid), IsMonoid],
   function(filter, S)
-    return IsomorphismSemigroup(EvalString(IsXSemigroup), S);
+    return IsomorphismSemigroup(ValueGlobal(IsXSemigroup), S);
   end);
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", IsXSemigroup,
                 " and a transformation semigroup with generators"),
-  [EvalString(IsXSemigroup),
+  [ValueGlobal(IsXSemigroup),
    IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(filt, S)
     local n, map, T;
 
     n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
-    map  := x -> AsMatrix(EvalString(IsXMatrix), x, n);
+    map  := x -> AsMatrix(ValueGlobal(IsXMatrix), x, n);
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
     UseIsomorphismRelation(S, T);
 
@@ -423,17 +423,17 @@ _InstallIsomorphism1 := function(filter)
 
   InstallMethod(AsMonoid,
   Concatenation("for a semigroup in ", IsXSemigroup),
-  [EvalString(IsXSemigroup)],
+  [ValueGlobal(IsXSemigroup)],
   function(S)
     if MultiplicativeNeutralElement(S) = fail then
       return fail; # so that we do the same as the GAP/ref manual says
     fi;
-    return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
+    return Range(IsomorphismMonoid(ValueGlobal(IsXMonoid), S));
   end);
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", and a semigroup in", IsXSemigroup),
-  [EvalString(IsXMonoid), EvalString(IsXSemigroup)],
+  [ValueGlobal(IsXMonoid), ValueGlobal(IsXSemigroup)],
   function(filter, S)
     return IsomorphismMonoid(filter,
                              ThresholdTropicalMatrix(Representative(S)),
@@ -442,7 +442,7 @@ _InstallIsomorphism1 := function(filter)
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", pos int, and a semigroup"),
-  [EvalString(IsXMonoid), IsPosInt, IsSemigroup],
+  [ValueGlobal(IsXMonoid), IsPosInt, IsSemigroup],
   function(filter, threshold, S)
     local iso1, inv1, iso2, inv2;
 
@@ -466,21 +466,21 @@ _InstallIsomorphism1 := function(filter)
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", pos int, and a monoid"),
-  [EvalString(IsXMonoid), IsPosInt, IsMonoid],
+  [ValueGlobal(IsXMonoid), IsPosInt, IsMonoid],
   function(filter, threshold, S)
-    return IsomorphismSemigroup(EvalString(IsXSemigroup), threshold, S);
+    return IsomorphismSemigroup(ValueGlobal(IsXSemigroup), threshold, S);
   end);
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", IsXSemigroup,
                 ", pos int, and a transformation semigroup with generators"),
-  [EvalString(IsXSemigroup), IsPosInt,
+  [ValueGlobal(IsXSemigroup), IsPosInt,
    IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(filt, threshold, S)
     local n, map, T;
 
     n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
-    map  := x -> AsMatrix(EvalString(IsXMatrix), x, n, threshold);
+    map  := x -> AsMatrix(ValueGlobal(IsXMatrix), x, n, threshold);
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
     UseIsomorphismRelation(S, T);
 
