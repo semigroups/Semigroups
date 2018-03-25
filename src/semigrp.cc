@@ -29,16 +29,16 @@
 #include "pkg.h"
 #include "src/compiled.h"
 
-using libsemigroups::word_t;
 using libsemigroups::cayley_graph_t;
+using libsemigroups::Integers;
+using libsemigroups::MatrixOverSemiring;
 using libsemigroups::MaxPlusSemiring;
 using libsemigroups::MinPlusSemiring;
+using libsemigroups::NaturalSemiring;
+using libsemigroups::really_delete_cont;
 using libsemigroups::TropicalMaxPlusSemiring;
 using libsemigroups::TropicalMinPlusSemiring;
-using libsemigroups::NaturalSemiring;
-using libsemigroups::Integers;
-using libsemigroups::really_delete_cont;
-using libsemigroups::MatrixOverSemiring;
+using libsemigroups::word_t;
 
 #ifdef SEMIGROUPS_KERNEL_DEBUG
 #define ERROR(obj, message)                               \
@@ -93,8 +93,8 @@ plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
 template <typename T>
 static inline gap_list_t
 iterator_to_plist(Converter* converter, T first, T last) {
-  gap_list_t out =
-      NEW_PLIST((first == last ? T_PLIST_EMPTY : T_PLIST_HOM), last - first);
+  gap_list_t out
+      = NEW_PLIST((first == last ? T_PLIST_EMPTY : T_PLIST_HOM), last - first);
   SET_LEN_PLIST(out, last - first);
   size_t i = 1;
   for (auto it = first; it < last; ++it) {
@@ -598,8 +598,8 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     }
 
     for (size_t i = 0; i < n; i++) {
-      gap_list_t next =
-          ELM_PLIST(out, semi_cpp->position_to_sorted_position(i) + 1);
+      gap_list_t next
+          = ELM_PLIST(out, semi_cpp->position_to_sorted_position(i) + 1);
       for (size_t j = 0; j < n; j++) {
         size_t jj = semi_cpp->position_to_sorted_position(j);
         SET_ELM_PLIST(next,
@@ -905,8 +905,8 @@ gap_semigroup_t
 EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit) {
   CHECK_SEMI_OBJ(so);
   CHECK_INTOBJ(limit);
-  size_t c_limit =
-      (INT_INTOBJ(limit) < 0 ? Semigroup::LIMIT_MAX : INT_INTOBJ(limit));
+  size_t c_limit
+      = (INT_INTOBJ(limit) < 0 ? Semigroup::LIMIT_MAX : INT_INTOBJ(limit));
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
@@ -962,8 +962,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words)
             && ELM_PLIST(words, prefix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, prefix);
-          gap_list_t new_word =
-              NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+          gap_list_t new_word
+              = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
           memcpy(reinterpret_cast<void*>(
                      reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),
@@ -980,8 +980,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words)
                    && ELM_PLIST(words, suffix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, suffix);
-          gap_list_t new_word =
-              NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+          gap_list_t new_word
+              = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
           memcpy(reinterpret_cast<void*>(
                      reinterpret_cast<char*>(ADDR_OBJ(new_word))
@@ -1281,8 +1281,8 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
     if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {
       Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
       semi_cpp->set_report(semi_obj_get_report(so));
-      gap_list_t rules =
-          NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, semi_cpp->nrrules());
+      gap_list_t rules
+          = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, semi_cpp->nrrules());
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(rules, semi_cpp->nrrules());
       size_t nr = 0;
@@ -1310,10 +1310,10 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
       }
 
       while (!relation.empty()) {
-        gap_list_t old_word =
-            EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[0] + 1));
-        gap_list_t new_word =
-            NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+        gap_list_t old_word
+            = EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[0] + 1));
+        gap_list_t new_word
+            = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
         // IMMUTABLE since it should not be altered on the GAP level
         memcpy(reinterpret_cast<void*>(
                    reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),

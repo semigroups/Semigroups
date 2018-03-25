@@ -26,8 +26,8 @@
 #include "semigroups-debug.h"
 #include "semigrp.h"
 
-using libsemigroups::Timer;
 using libsemigroups::glob_reporter;
+using libsemigroups::Timer;
 
 // Macros for the GAP version of the algorithm
 
@@ -312,13 +312,11 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     }
     if (i <= nr) {
       REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
-                                << " rules, max word length "
-                                << len + 1
+                                << " rules, max word length " << len + 1
                                 << ", so far");
     } else {
       REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
-                                << " rules, max word length "
-                                << len + 1
+                                << " rules, max word length " << len + 1
                                 << ", finished!");
       REPORT_FROM_FUNC("elapsed time = " << timer);  // NOLINT()
     }

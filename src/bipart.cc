@@ -31,9 +31,9 @@
 #include "libsemigroups/src/semigroups.h"
 #include "src/compiled.h"
 
-using libsemigroups::Timer;
-using libsemigroups::glob_reporter;
 using libsemigroups::Element;
+using libsemigroups::glob_reporter;
+using libsemigroups::Timer;
 
 // Global variables
 
@@ -196,8 +196,8 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
   Bipartition* xx = bipart_get_cpp(x);  // get C++ bipartition pointer
   size_t       n  = xx->degree();
 
-  Obj int_rep =
-      NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC) + IMMUTABLE, 2 * n);
+  Obj int_rep
+      = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC) + IMMUTABLE, 2 * n);
   SET_LEN_PLIST(int_rep, (Int) 2 * n);
 
   for (size_t i = 0; i < 2 * n; i++) {
@@ -613,7 +613,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
 Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[1] == NULL) {
-    Obj o = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
+    Obj o          = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
     ADDR_OBJ(x)[1] = o;
     CHANGED_BAG(x);
   }
@@ -628,7 +628,7 @@ Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
 Obj BIPART_RIGHT_BLOCKS(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[2] == NULL) {
-    Obj o = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
+    Obj o          = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
     ADDR_OBJ(x)[2] = o;
     CHANGED_BAG(x);
   }
@@ -905,8 +905,8 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
       -1);
 
   auto tab1 = _BUFFER_size_t.begin() + left->nr_blocks() + right->nr_blocks();
-  auto tab2 =
-      _BUFFER_size_t.begin() + 2 * (left->nr_blocks() + right->nr_blocks());
+  auto tab2
+      = _BUFFER_size_t.begin() + 2 * (left->nr_blocks() + right->nr_blocks());
 
   // find new names for the signed blocks of right
   for (size_t i = 0; i < right->nr_blocks(); i++) {
@@ -1164,8 +1164,8 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
 
   _BUFFER_size_t.resize(3 * blocks->nr_blocks() + 2 * x->nr_blocks(), -1);
   auto tab1 = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
-  auto tab2 =
-      _BUFFER_size_t.begin() + 2 * (blocks->nr_blocks() + x->nr_blocks());
+  auto tab2
+      = _BUFFER_size_t.begin() + 2 * (blocks->nr_blocks() + x->nr_blocks());
 
   // find the left blocks of the output
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
@@ -1304,7 +1304,7 @@ static void fuse(u_int32_t                                       deg,
 class IdempotentCounter {
   typedef std::vector<std::vector<size_t>> thrds_size_t;
   typedef std::vector<std::vector<bool>>   thrds_bool_t;
-  typedef std::pair<size_t, size_t> unpr_t;
+  typedef std::pair<size_t, size_t>        unpr_t;
   typedef std::vector<std::vector<unpr_t>> thrds_unpr_t;
 
  public:
@@ -1377,8 +1377,7 @@ class IdempotentCounter {
     glob_reporter.reset_thread_ids();
     glob_reporter.set_report(_report);
     REPORT("using " << _nr_threads << " / "
-                    << std::thread::hardware_concurrency()
-                    << " threads");
+                    << std::thread::hardware_concurrency() << " threads");
     Timer timer;
 
     for (size_t i = 0; i < _nr_threads; i++) {
