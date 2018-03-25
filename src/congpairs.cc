@@ -30,10 +30,10 @@
 #include "libsemigroups/src/cong.h"
 
 using libsemigroups::Congruence;
-using libsemigroups::word_t;
-using libsemigroups::relation_t;
-using libsemigroups::RecVec;
 using libsemigroups::Partition;
+using libsemigroups::RecVec;
+using libsemigroups::relation_t;
+using libsemigroups::word_t;
 
 static inline word_t plist_to_word_t(gap_list_t plist) {
   word_t word;
@@ -312,7 +312,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   // Map a class index to a new index in the range [1..nrclasses]
   std::unordered_map<size_t, size_t> class_dictionary;
-  size_t next_unused_class_index = 1;
+  size_t                             next_unused_class_index = 1;
 
   for (size_t i = 0; i < cong->nr_classes(); i++) {
     Obj next = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
@@ -352,16 +352,16 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
       word.clear();
     }
   } else {
-    gap_rec_t data =
-        fropin(cong_obj_get_range_obj(o), INTOBJ_INT(-1), 0, False);
+    gap_rec_t data
+        = fropin(cong_obj_get_range_obj(o), INTOBJ_INT(-1), 0, False);
     Obj words = ElmPRec(data, RNam_words);
 
     lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(words));
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
-      size_t class_index =
-          cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
+      size_t class_index
+          = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
 
       auto it = class_dictionary.find(class_index);
       if (it == class_dictionary.end()) {
@@ -431,8 +431,8 @@ gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
 
   // Convert the words to plists
   for (size_t c = 0; c < nt_classes->size(); c++) {
-    gap_list_t next_class =
-        NEW_PLIST(T_PLIST_TAB + IMMUTABLE, (*nt_classes)[c]->size());
+    gap_list_t next_class
+        = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, (*nt_classes)[c]->size());
     SET_LEN_PLIST(next_class, (*nt_classes)[c]->size());
     for (size_t e = 0; e < (*nt_classes)[c]->size(); e++) {
       SET_ELM_PLIST(next_class, e + 1, word_t_to_plist((*(*nt_classes)[c])[e]));

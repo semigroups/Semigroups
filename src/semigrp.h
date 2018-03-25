@@ -57,11 +57,11 @@ enum en_semi_t {
 
 // C++ functions
 
-size_t semi_obj_get_batch_size(gap_semigroup_t so);
-bool semi_obj_get_report(gap_semigroup_t so);
+size_t     semi_obj_get_batch_size(gap_semigroup_t so);
+bool       semi_obj_get_report(gap_semigroup_t so);
 gap_list_t semi_obj_get_gens(gap_semigroup_t so);
-gap_rec_t semi_obj_get_fropin(gap_semigroup_t so);
-en_semi_t semi_obj_get_type(gap_semigroup_t so);
+gap_rec_t  semi_obj_get_fropin(gap_semigroup_t so);
+en_semi_t  semi_obj_get_type(gap_semigroup_t so);
 Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
 
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
@@ -91,12 +91,12 @@ Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es);
 
 gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so);
+gap_int_t  EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so);
+gap_int_t  EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so);
 gap_int_t
-EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
-gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so);
-gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so);
+                EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
+gap_int_t       EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so);
+gap_list_t      EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so);
 gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
                                 gap_semigroup_t new_so,
                                 gap_semigroup_t old_so,
@@ -106,27 +106,27 @@ EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t coll);
 gap_element_t
 EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_element_t
-EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos);
+           EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist);
 gap_semigroup_t
-EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit);
+           EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit);
 gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos);
+gap_int_t  EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list);
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
+gap_int_t  EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so);
+gap_int_t  EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_int_t
-EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x);
+           EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
-gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so);
+gap_int_t  EN_SEMI_SIZE(Obj self, gap_semigroup_t so);
 
 // Iterators
 
-gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter);
+gap_bool_t    EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter);
 gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_rec_t iter);
 gap_element_t EN_SEMI_NEXT_ITERATOR_SORTED(Obj self, gap_rec_t iter);
 

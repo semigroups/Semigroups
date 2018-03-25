@@ -376,8 +376,8 @@ Obj IsSemigroupIdeal;
 Obj IsActingSemigroup;
 
 /*****************************************************************************
-*V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
-*/
+ *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
+ */
 
 typedef Obj (*GVarFilt)(/*arguments*/);
 
@@ -501,8 +501,8 @@ static StructGVarFunc GVarFuncs[] = {
 };
 
 /******************************************************************************
-*F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
-*/
+ *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
+ */
 static Int InitKernel(StructInitInfo* module) {
   /* init filters and functions                                          */
   InitHdlrFiltsFromTable(GVarFilts);
@@ -624,8 +624,8 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 /******************************************************************************
-*F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
-*/
+ *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
+ */
 static Int InitLibrary(StructInitInfo* module) {
   /* init filters and functions */
   InitGVarFiltsFromTable(GVarFilts);
@@ -636,8 +636,8 @@ static Int InitLibrary(StructInitInfo* module) {
 }
 
 /******************************************************************************
-*F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
-*/
+ *F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
+ */
 static StructInitInfo module = {
     /* type        = */ MODULE_DYNAMIC,
     /* name        = */ "semigroups",
