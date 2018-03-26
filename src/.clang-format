@@ -4,7 +4,7 @@ AccessModifierOffset: -1
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
-AlignEscapedNewlinesLeft: true 
+AlignEscapedNewlines: Left
 AlignOperands:   true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -79,7 +79,7 @@ PenaltyBreakComment: 300
 PenaltyBreakFirstLessLess: 200
 PenaltyBreakString: 1000
 PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
+PenaltyReturnTypeOnItsOwnLine: 600
 PointerAlignment: Left
 RawStringFormats: 
   - Delimiter:       pb
