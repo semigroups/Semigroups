@@ -360,6 +360,19 @@ true]]></Log>
     <#Include Label = "InverseSubsemigroupByProperty">
     <#Include Label = "DirectProduct">
     <#Include Label = "WreathProduct">
+
+  </Section>
+
+  <Section>
+    <Heading> Dual semigroups </Heading>
+    The <E>dual semigroup</E> of a semigroup <C>S</C> is the semigroup with the
+    same underlying set of elements but with reversed multiplication; this is
+    anti-isomorphic to <C>S</C>. In &Semigroups; a semigroup and its dual
+    are represented with disjoint sets of elements.
+    <#Include Label = "DualSemigroup">
+    <#Include Label = "IsDualSemigroupRep">
+    <#Include Label = "IsDualSemigroupElement">
+    <#Include Label = "AntiIsomorphismDualSemigroup">
   </Section>
  
    <Section Label = "Changing the representation of a semigroup">
