@@ -75,8 +75,8 @@ size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
 Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
-      empty, oldword, x, data, parent;
-  UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
+      empty, oldword, x, data, parent, stopper;
+  UInt i, nr, len, stopper_int, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
   bool   report;
   size_t batch_size;
@@ -156,18 +156,24 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   // hash table
   ht = ElmPRec(data, RNamName("ht"));
 
-  len = INT_INTOBJ(ElmPRec(data, RNamName("len")));
   // current word length
-  //
+  len = INT_INTOBJ(ElmPRec(data, RNamName("len")));
+
+  // <elts[one]> is the mult. neutral element
   if (IS_INTOBJ(ElmPRec(data, RNamName("one")))) {
     one = INT_INTOBJ(ElmPRec(data, RNamName("one")));
   } else {
     one = 0;
   }
 
-  // <elts[one]> is the mult. neutral element
-  stopper = INT_INTOBJ(ElmPRec(data, RNamName("stopper")));
-  // stop when we have applied generators to elts[stopper]
+  // stop when we have applied generators to elts[stopper_int]
+  stopper = ElmPRec(data, RNamName("stopper"));
+  if (!IS_INTOBJ(stopper)) {
+    stopper_int = -1;
+  } else {
+    stopper_int = INT_INTOBJ(stopper);
+  }
+
   nrrules = INT_INTOBJ(ElmPRec(data, RNamName("nrrules")));
 
   nrgens = LEN_PLIST(gens);
@@ -283,7 +289,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           }
         }
       }  // finished applying gens to <elts[i]>
-      stop = (stop || i == stopper);
+      stop = (stop || i == stopper_int);
       i++;
     }  // finished words of length <len> or <stop>
     if (i > nr || (UInt) LEN_PLIST(ELM_PLIST(words, i)) != len) {
