@@ -29,7 +29,6 @@
 // configure option --enable-debug
 
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-#define LIBSEMIGROUPS_DEBUG
 #define SEMIGROUPS_ASSERT(x) assert(x)
 #else
 #define SEMIGROUPS_ASSERT(x)
