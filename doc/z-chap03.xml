@@ -197,7 +197,9 @@
   <Section Label = "creating-bipartitions">
     <Heading>Creating bipartitions</Heading>
   There are several ways of creating bipartitions in &GAP;, which are
-  described in this section.
+  described in this section. The maximum degree of a bipartition is set as 
+  2 ^ 31 - 1. In reality, it is unlikely to be possible to create bipartitions
+  of degrees as small as 2 ^ 24 because they require too much memory.
     <#Include Label = "Bipartition">
     <#Include Label = "BipartitionByIntRep">
     <#Include Label = "IdentityBipartition">
