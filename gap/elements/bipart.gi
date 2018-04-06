@@ -785,22 +785,24 @@ end);
 InstallMethod(AsBipartition, "for a partial perm and pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
-  local r, out, j, i;
+  local r, out, y, j, i;
 
   if n >= 2 ^ 29 then
     ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
                   "the argument <n> must not exceed 2 ^ 29 - 1,");
   fi;
-  r := n;
+
+  r   := n;
   out := EmptyPlist(2 * n);
+  y   := x ^ -1;
 
   for i in [1 .. n] do
     out[i] := i;
-    j := PreImagePartialPerm(x, i);
-    if j <> fail then
+    j      := i ^ y;
+    if j <> 0 then
       out[n + i] := j;
     else
-      r := r + 1;
+      r          := r + 1;
       out[n + i] := r;
     fi;
   od;
