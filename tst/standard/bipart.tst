@@ -815,6 +815,9 @@ gap> Bipartition([[1, 2], [-1, 1]]);
 Error, Semigroups: Bipartition: usage,
 the union of the argument <classes> must be [-2 .. -1, 1 .. 2],
 
+# AsBipartition, for a partial perm
+gap> AsBipartition(PartialPermNC([1 .. 100000]));;
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);
