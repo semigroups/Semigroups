@@ -93,7 +93,6 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   multtable := List([1 .. n], i -> List([1 .. n],
                                         j -> M[i ^ tinv][j ^ tinv] ^ t));
 
-
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
 
   genspos := List(gens, g -> Position(slist, g));
@@ -156,8 +155,9 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
         # and there's no point restricting f[gens[i]] for i < k
         genpos := Position(gens, slist[pos]);
         if genpos > k and multtable[f[x]][i] in possiblefgenvals[genpos] then
-          restrictionatstage[k][genpos] := Difference(possiblefgenvals[genpos],
-                                                      [multtable[f[x]][i]]);
+          restrictionatstage[k][genpos] := UnionSet(restrictionatstage[k][genpos],
+                                                     Difference(possiblefgenvals[genpos],
+                                                                [multtable[f[x]][i]]));
           possiblefgenvals[genpos] := Intersection(possiblefgenvals[genpos],
                                                    [multtable[f[x]][i]]);
         fi;
