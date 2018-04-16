@@ -95,7 +95,7 @@ InstallMethod(CharacterTableOfInverseSemigroup,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup],
 function(S)
-  local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens,
+  local reps, p, H, C, r, tbl, id, l, A, o, lookup, conjclass, conjlens,
   j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;
 
   reps := ShallowCopy(DClassReps(S));
@@ -132,7 +132,6 @@ function(S)
   A := List([1 .. r], x -> [1 .. r] * 0);
   o := LambdaOrb(S);
   lookup := OrbSCCLookup(o);
-  scc := OrbSCC(o);
 
   conjclass := [ConjugacyClasses(H[1])];
   conjlens := [0];

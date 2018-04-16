@@ -293,11 +293,10 @@ InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for a Rees congruence",
 [IsReesCongruence],
 function(cong)
-  local S, gens, min, nrclasses, pairs, y, x;
+  local S, gens, min, pairs, y, x;
   S := Range(cong);
   gens := MinimalIdealGeneratingSet(SemigroupIdealOfReesCongruence(cong));
   min := MinimalIdeal(S);
-  nrclasses := NrEquivalenceClasses(cong);
   pairs := [];
   cong := SemigroupCongruence(S, pairs);
   for y in min do

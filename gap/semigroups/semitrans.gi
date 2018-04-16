@@ -518,9 +518,8 @@ InstallMethod(IsTransitive,
 "for a transformation collection and a positive int",
 [IsTransformationCollection, IsPosInt],
 function(coll, n)
-  local nrgens, graph, i, x;
+  local graph, i, x;
 
-  nrgens := Length(coll);
   graph := EmptyPlist(n);
 
   for i in [1 .. n] do

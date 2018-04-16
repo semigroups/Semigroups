@@ -1138,8 +1138,8 @@ InstallMethod(MaximalSubsemigroupsNC,
 function(S, opts)
   local tot, out, try, gen, D, class_gen, reps, po, below, above, vertex_class,
   x, create_ideal, contain, ideal, inj, inv, R, M, num, num_start, gen_class,
-  above_gen, above_semigroup, outside_gens, to_test, L, LL, RR, m, n, gamma_L,
-  gamma_R, y, comp_L, comp_R, red_L, red_R, k, gamma, red, comp, delta,
+  above_gen, above_semigroup, outside_gens, L, LL, RR, m, n, gamma_L,
+  gamma_R, y, comp_L, comp_R, red_L, red_R, k, gamma, comp, delta,
   label, nredges, delta_prime, l, r, forbidden_L, forbidden_R, rectangles, min,
   bicomp_L, bicomp_R, b, source_L, source_R, L_in, L_out, R_in, R_out,
   L_out_source, R_out_source, L_in_source, R_in_source, found, v, u, H, remove,
@@ -1499,9 +1499,6 @@ function(S, opts)
     SetIsSymmetricDigraph(delta_prime, true);
     SetDigraphNrEdges(delta_prime, nredges * 2);
     SetDigraphBicomponents(delta_prime, [[1 .. m], [m + 1 .. m + n]]);
-
-    # Colour the vertices of gamma_L and gamma_R
-    red := Concatenation(red_L, red_R);
 
     ############################################################################
     # Find maximal subsemigroups from maximal rectangles

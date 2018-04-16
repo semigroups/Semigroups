@@ -144,7 +144,7 @@ end);
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
-  local n, next, seen, nrleft, i;
+  local n, next, seen, i;
 
   n := Length(blocks);
 
@@ -177,8 +177,6 @@ function(blocks)
       seen[blocks[i]] := true;
     fi;
   od;
-
-  nrleft := next;
 
   for i in [n + 1 .. 2 * n] do
     if not seen[blocks[i]] then

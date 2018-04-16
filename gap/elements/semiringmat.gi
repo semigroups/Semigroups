@@ -713,9 +713,8 @@ end);
 InstallMethod(String, "for a matrix over semiring",
 [IsMatrixOverSemiring],
 function(x)
-  local n, str;
+  local str;
 
-  n := DimensionOfMatrixOverSemiring(x);
   str := "Matrix(";
   if IsMatrixOverFiniteField(x) then
     Append(str, String(BaseDomain(x)));

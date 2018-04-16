@@ -85,8 +85,8 @@ gap> I := SemigroupIdeal(S, Transformation([5, 2, 1, 5, 2]),
 >                            Transformation([5, 2, 1, 5, 2]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <transformation semigroup of size 61, degree 5 
- with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of degree 5 with 3 
+ generators> with 1 generating pairs>
 gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
@@ -197,8 +197,8 @@ gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
 gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
 gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
 gap> c := SemigroupCongruence(S, GeneratingPairsOfSemigroupCongruence(ci));
-<semigroup congruence over <transformation semigroup of size 20, degree 5 
- with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of degree 5 with 3 
+ generators> with 1 generating pairs>
 gap> HasIsReesCongruence(c);
 false
 gap> IsReesCongruence(c);

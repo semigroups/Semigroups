@@ -977,20 +977,18 @@ function(s)
     graded := IteratorOfGradedLambdaOrbs(s);
     record := rec(m := 0, graded := graded, o := NextIterator(graded));
     record.NextIterator := function(iter)
-      local l, o, m;
+      local m, o;
       m := iter!.m;
       if iter!.o = fail then
         return fail;
       elif m = fail or m = Length(OrbSCC(iter!.o)) then
         m := 1;
-        l := 1;
         iter!.o := NextIterator(iter!.graded);
         if iter!.o = fail then
           return fail;
         fi;
       else
         m := m + 1;
-        l := OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m := m;
       o := iter!.o;

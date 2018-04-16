@@ -102,14 +102,13 @@ InstallMethod(RandomMatrixOp,
 "for a finite field, dimension, and list of ranks",
 [IsField and IsFinite, IsPosInt, IsList],
 function(R, n, ranks)
-  local gens, z, rk, mat, zv, conj, j;
+  local z, rk, mat, zv, conj, j;
 
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
     ErrorNoReturn("Semigroups: RandomMatrixOp: usage,\n",
                   "the list of ranks has to consist of numbers > 0 and < n,");
   fi;
 
-  gens := [];
   z := Zero(R);
   # Choose a matrix of given rank
   rk := Random(ranks);

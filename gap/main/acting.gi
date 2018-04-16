@@ -376,7 +376,7 @@ InstallMethod(Enumerate,
 function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
   repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
-  schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact,
+  schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda,
   lambdaperm, o, oht, scc, lookup, membership, rho, rho_o, rho_orb, rho_nr,
   rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos,
   rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m,
@@ -440,7 +440,6 @@ function(data, limit, lookfunc)
   # lambda
   s := data!.parent;
   lambda := LambdaFunc(s);
-  lambdaact := LambdaAct(s);
   lambdaperm := LambdaPerm(s);
 
   o := LambdaOrb(s);
