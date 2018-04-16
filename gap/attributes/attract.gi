@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attract.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  attract.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -59,7 +59,7 @@ function(s)
   pos := [];
   for x in gens do
     i := OrbSCCLookup(data)[Position(data, x)] - 1;
-    #index of the D-class containing x
+    # index of the D-class containing x
     AddSet(pos, i);
   od;
 
@@ -88,7 +88,7 @@ function(S)
   scc := OrbSCCLookup(o);
 
   for x in gens do
-    #index of the D-class containing x
+    # index of the D-class containing x
     AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
   od;
 
@@ -184,7 +184,7 @@ function(S, x)
   out := [];
   k := 0;
 
-  #if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
+  # if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(S);
   Enumerate(o); # just in case
@@ -199,32 +199,32 @@ function(S, x)
       od;
     fi;
   od;
-  #else
-  #   opts := rec(treehashsize := s!.opts.hashlen,
-  #               gradingfunc := function(o, x) return lambdarank(x); end,
-  #               onlygrades := function(x, y) return x >= rank; end,
-  #               onlygradesdata := fail);
+  #  else
+  #     opts := rec(treehashsize := s!.opts.hashlen,
+  #                 gradingfunc := function(o, x) return lambdarank(x); end,
+  #                 onlygrades := function(x, y) return x >= rank; end,
+  #                 onlygradesdata := fail);
 
-  #  for name in RecNames(LambdaOrbOpts(s)) do
-  #    opts.(name) := LambdaOrbOpts(s).(name);
-  #  od;
+  #    for name in RecNames(LambdaOrbOpts(s)) do
+  #      opts.(name) := LambdaOrbOpts(s).(name);
+  #    od;
 
-  #  o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
-  #  Enumerate(o);
-  #  grades := Grades(o);
+  #   o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
+  #   Enumerate(o);
+  #   grades := Grades(o);
 
-  #  for i in [2 .. Length(o)] do
-  #    if grades[i] = rank and tester(o[i], rho_x) then
-  #      for rho in rhos do
-  #        g := creator(lambda, rho) * inv(o[i], f);
-  #        if regular or g in s then
-  #          k := k + 1;
-  #          out[k] := g;
-  #        fi;
-  #      od;
-  #    fi;
-  #  od;
-  #fi;
+  #   for i in [2 .. Length(o)] do
+  #     if grades[i] = rank and tester(o[i], rho_x) then
+  #       for rho in rhos do
+  #         g := creator(lambda, rho) * inv(o[i], f);
+  #         if regular or g in s then
+  #           k := k + 1;
+  #           out[k] := g;
+  #         fi;
+  #       od;
+  #     fi;
+  #   od;
+  # fi;
 
   return out;
 end);

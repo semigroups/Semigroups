@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  conglatt.gd
-#Y  Copyright (C) 2016                                   Michael C. Torpey
+##  conglatt.gd
+##  Copyright (C) 2016                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

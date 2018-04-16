@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  maximal.gi
-#Y  Copyright (C) 2013-16                                James D. Mitchell
+##  maximal.gi
+##  Copyright (C) 2013-16                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -859,6 +859,7 @@ function(R, opts)
                               "connected component(s).");
       I := EmptyPlist(n); # I[k] = list of rows in the k^th connected component
       L := EmptyPlist(n); # L[k] = list of cols in the k^th connected component
+
       comp_row := EmptyPlist(Length(Rows(R_n)));    # row -> connected component
       comp_col := EmptyPlist(Length(Columns(R_n))); # col -> connected component
       for k in [1 .. n] do
@@ -897,7 +898,6 @@ function(R, opts)
         nbs[a][b] := true;
         nbs[b][a] := true;
       od;
-
       # There is roughly 1 'degree of freedom' per connected component of <dig>
       dig := DigraphByAdjacencyMatrixNC(nbs); # <dig> is graph defined by <nbs>
       sup := DigraphConnectedComponents(dig).comps;

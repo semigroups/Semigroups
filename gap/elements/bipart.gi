@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  bipart.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  bipart.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -817,7 +817,7 @@ function(f, n)
                   "the argument <n> must not exceed 2 ^ 29 - 1,");
   fi;
   if n < DegreeOfTransformation(f) then
-    #verify <f> is a transformation on [1..n]
+    # Verify f is a transformation on [1 .. n].
     for i in [1 .. n] do
       if i ^ f > n then
         ErrorNoReturn("Semigroups: AsBipartition (for a transformation and ",
@@ -834,7 +834,7 @@ function(f, n)
   out := EmptyPlist(2 * n);
   g := List([1 .. n], x -> 0);
 
-  #inverse of f
+  # The inverse of f.
   for i in [1 .. n] do
     g[i ^ f] := i;
   od;
@@ -888,7 +888,7 @@ function(f, n)
       fi;
       out[i] := j;
     od;
-  else # n>deg
+  else  # n > deg
     for i in [1 .. deg] do
       out[i] := blocks[i];
     od;
@@ -897,9 +897,9 @@ function(f, n)
       nrblocks := nrblocks + 1;
       out[i] := nrblocks;
     od;
-    nrleft := nrblocks; # = n - deg + NrLeftBlocks(f)
+    nrleft := nrblocks;  # = n - deg + NrLeftBlocks(f)
     for i in [n + 1 .. n + deg] do
-      if blocks[i - n + deg] <= nrleft - n + deg then #it's a left block
+      if blocks[i - n + deg] <= nrleft - n + deg then  # it's a left block
         out[i] := blocks[i - n + deg];
       else
         out[i] := blocks[i - n + deg] + n - deg;

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semitrans.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semitrans.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -809,7 +809,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
@@ -845,7 +845,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 

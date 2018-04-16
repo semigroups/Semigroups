@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  bipart.gd
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  bipart.gd
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -77,6 +77,6 @@ DeclareProperty("IsPartialPermBipartition", IsBipartition);
 
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
 
-#collections
+# Collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 DeclareOperation("OneMutable", [IsBipartitionCollection]);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  orbits.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  orbits.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -23,7 +23,7 @@ function(o, x)
   fi;
 end);
 
-#FIXME this should work for the RhoOrb too!
+# FIXME this should work for the RhoOrb too!
 
 InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
@@ -370,12 +370,12 @@ function(o, i)
     for k in genstoapply do
       if IsBound(graph[j][k]) then
         Add(rev[graph[j][k]][k], j);
-        #starting at position j and applying gens[k] we obtain graph[j][k];
+        # starting at position j and applying gens[k] we obtain graph[j][k];
       fi;
     od;
   od;
 
-  #rev[i][j][k]:=l implies that o[l]^gens[j]=o[i]
+  # rev[i][j][k]:=l implies that o[l]^gens[j]=o[i]
 
   scc := o!.scc[i];
   gen := EmptyPlist(Length(o));

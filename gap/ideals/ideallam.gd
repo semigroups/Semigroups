@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  ideallam.gd
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  ideallam.gd
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,6 +14,6 @@ DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
 
 DeclareOperation("Enumerate", [IsIdealOrb, IsCyclotomic, IsFunction]);
-#DeclareOperation("ComponentOfIndex", [IsIdealOrb, IsPosInt]);
+# DeclareOperation("ComponentOfIndex", [IsIdealOrb, IsPosInt]);
 
 DeclareGlobalFunction("SuffixOrb");

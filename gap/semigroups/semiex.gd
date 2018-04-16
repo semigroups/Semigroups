@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  examples.gd
-#Y  Copyright (C) 2013-17                                 James D. Mitchell
+##  examples.gd
+##  Copyright (C) 2013-17                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -81,7 +81,3 @@ DeclareSynonym("FullMatrixMonoid", GeneralLinearMonoid);
 
 DeclareOperation("SpecialLinearMonoid", [IsPosInt, IsPosInt]);
 DeclareSynonym("SLM", SpecialLinearMonoid);
-
-#not implemented or documented
-DeclareOperation("PowerSemigroup", [IsGroup]);
-DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);

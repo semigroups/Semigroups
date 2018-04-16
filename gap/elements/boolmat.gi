@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  boolean.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  boolean.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -79,7 +79,7 @@ function(mat)
     ErrorNoReturn("Semigroups: BooleanMat: usage,\n",
                   "the argmuent must be a non-empty list ",
                   "of homogeneous lists,");
-  elif IsRectangularTable(mat) then #0s and 1s or blists
+  elif IsRectangularTable(mat) then # 0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
       n := Length(mat[1]);
@@ -487,7 +487,7 @@ InstallMethod(AsBooleanMat, "for a partial perm",
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
                              CodegreeOfPartialPerm(x))));
 
-#TODO this could be more elaborate, i.e. it could take a set, then just take
+# TODO this could be more elaborate, i.e. it could take a set, then just take
 # the restriction of <x> to that set as a Boolean matrix
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsPartialPerm, IsPosInt],
@@ -507,7 +507,7 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
-  #TODO: OK? Is out in BlistRep?
+  # TODO: OK? Is out in BlistRep?
   return MatrixNC(BooleanMatType, out);
 end);
 
@@ -521,7 +521,7 @@ function(mat, m)
     return MatrixNC(BooleanMatType,
                     List([1 .. m], i -> mat![i]{[1 .. m]}));
   fi;
-  #TODO use AsList
+  # TODO use AsList
   out := List([1 .. n], i -> ShallowCopy(mat![i]));
   for i in [1 .. n] do
     Append(out[i], BlistList([n + 1 .. m], []));
@@ -529,7 +529,7 @@ function(mat, m)
   for i in [n + 1 .. m] do
     Add(out, BlistList([1 .. m], []));
   od;
-  #TODO: OK? Is out in BlistRep?
+  # TODO: OK? Is out in BlistRep?
   return MatrixNC(BooleanMatType, out);
 end);
 
@@ -621,7 +621,7 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-#FIXME The following could be done without SmallestImageSet using vertex
+# FIXME The following could be done without SmallestImageSet using vertex
 # colors. Not sure how.
 
 InstallMethod(CanonicalBooleanMatNC,

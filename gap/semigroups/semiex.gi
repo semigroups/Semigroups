@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  semiex.gi
-#Y  Copyright (C) 2013-15                                 James D. Mitchell
+##  semiex.gi
+##  Copyright (C) 2013-15                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-#for testing purposes
+# for testing purposes
 
 # BlocksOfPartition := function(partition)
 #   local blocks, lookup, n, i, j;
@@ -156,7 +156,7 @@ function(partition)
   if s = r or s - r >= 2 then
     # 2 generators for the r wreath products of symmetric groups
     for i in [1 .. r] do
-      m := Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n
+      m := Length(equal[i]);       # WreathProduct(S_n, S_m) m blocks of size n
       n := partition[equal[i][1]];
       x := blocks{equal[i]};
 
@@ -182,10 +182,10 @@ function(partition)
       Add(gens, AsTransformation(y));
     od;
   elif s - r = 1 and r >= 1 then
-    #JDM this case should be changed as in the previous case
+    # JDM this case should be changed as in the previous case
     # 2 generators for the r-1 wreath products of symmetric groups
     for i in [1 .. r - 1] do
-      m := Length(equal[i]);       #WreathProduct(S_n, S_m) m blocks of size n
+      m := Length(equal[i]);       # WreathProduct(S_n, S_m) m blocks of size n
       n := partition[equal[i][1]];
       x := blocks{equal[i]};
 
@@ -707,9 +707,6 @@ function(n)
   SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
-  #return RegularSemigroup(JonesMonoid(n),
-  #                        AsSemigroup(IsBipartitionSemigroup,
-  #                                    Semigroup(Idempotents(POI(n)))));
 end);
 
 InstallMethod(MotzkinMonoid, "for an integer",
@@ -792,7 +789,7 @@ function(n)
 
   gens := [];
 
-  #(2,2)-transapsis generators
+  # (2,2)-transapsis generators
   for i in [1 .. n - 1] do
     next := [];
     for j in [1 .. i - 1] do
@@ -871,7 +868,7 @@ function(m, n)
   if n < m then
     next := [];
 
-    #degree k identity bipartition
+    # degree k identity bipartition
     for i in [1 .. n] do
       next[i] := i;
       next[n + i] := i;
@@ -883,7 +880,7 @@ function(m, n)
     return S;
   fi;
 
-  #m-apsis generators
+  # m-apsis generators
   for i in [1 .. n - m + 1] do
     next := [];
     b := 1;
@@ -959,7 +956,7 @@ function(m, n)
 
   gens := [];
 
-  #(2,2)-transapsis generators
+  # (2,2)-transapsis generators
   for i in [1 .. n - 1] do
     next := [];
     for j in [1 .. i - 1] do
@@ -977,7 +974,7 @@ function(m, n)
     gens[i] := BipartitionByIntRep(next);
   od;
 
-  #m-apsis generators
+  # m-apsis generators
   for i in [1 .. n - m + 1] do
     next := [];
     b := 1;

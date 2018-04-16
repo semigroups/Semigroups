@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-#W  properties.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  properties.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -104,7 +104,7 @@ function(S)
   return IsZeroSimpleSemigroup(S) and IsInverseSemigroup(S);
 end);
 
-#same method for ideals
+# same method for ideals
 
 InstallMethod(IsCongruenceFreeSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -311,7 +311,7 @@ InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 # Notes: this test required to avoid conflict with Smallsemi,
 # DeclareSynonymAttr causes problems.
 
-#same method for ideals
+# same method for ideals
 
 InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -345,7 +345,7 @@ function(S)
   return IsEUnitaryInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
-#different method for ideals TODO or same?
+# different method for ideals TODO or same?
 
 InstallMethod(IsFactorisableInverseMonoid,
 "for an inverse semigroup with generators",
@@ -458,7 +458,7 @@ function(S)
   return ForAll(OrbSCC(LambdaOrb(S)), x -> Length(x) = 1);
 end);
 
-#same method for ideals
+# same method for ideals
 
 InstallMethod(IsLTrivial, "for a semigroup",
 [IsSemigroup],
@@ -472,7 +472,7 @@ function(S)
   return NrLClasses(S) = Size(S);
 end);
 
-#same method for ideals
+# same method for ideals
 
 InstallMethod(IsRTrivial, "for an inverse semigroup",
 [IsInverseSemigroup], IsLTrivial);
@@ -566,7 +566,7 @@ function(S)
     return true;
   fi;
 
-  gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
+  gens := GeneratorsOfSemigroup(S);  # not GeneratorsOfMonoid!
 
   if IsActingSemigroupWithFixedDegreeMultiplication(S)
       and ForAll(gens, x -> ActionRank(S)(x) = ActionDegree(x)) then
@@ -1054,7 +1054,7 @@ function(S)
   return false;
 end);
 
-#same method for ideals
+# same method for ideals
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -1187,56 +1187,56 @@ function(S)
   return data!.found = false;
 end);
 
-#InstallMethod(IsRegularSemigroup,
-#"for an acting star semigroup with generators",
-#[IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
-#function(S)
-#  local lookfunc, data, i;
+# InstallMethod(IsRegularSemigroup,
+# "for an acting star semigroup with generators",
+# [IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
+# function(S)
+#   local lookfunc, data, i;
 #
-#  if IsSimpleSemigroup(S) then
-#    Info(InfoSemigroups, 2, "the semigroup is simple");
-#    return true;
-#  elif HasIsCompletelyRegularSemigroup(S)
-#      and IsCompletelyRegularSemigroup(S) then
-#    Info(InfoSemigroups, 2, "the semigroup is completely regular");
-#    return true;
-#  elif HasGreensDClasses(S) then
-#    return ForAll(GreensDClasses(S), IsRegularDClass);
-#  fi;
+#   if IsSimpleSemigroup(S) then
+#     Info(InfoSemigroups, 2, "the semigroup is simple");
+#     return true;
+#   elif HasIsCompletelyRegularSemigroup(S)
+#       and IsCompletelyRegularSemigroup(S) then
+#     Info(InfoSemigroups, 2, "the semigroup is completely regular");
+#     return true;
+#   elif HasGreensDClasses(S) then
+#     return ForAll(GreensDClasses(S), IsRegularDClass);
+#   fi;
 #
-#  # look for <S> not being regular
-#  lookfunc := function(data, x)
-#    local l;
-#    if data!.repslens[x[2]][data!.orblookup1[x[6]]] > 1 then
-#      return true;
-#    fi;
+#   # look for <S> not being regular
+#   lookfunc := function(data, x)
+#     local l;
+#     if data!.repslens[x[2]][data!.orblookup1[x[6]]] > 1 then
+#       return true;
+#     fi;
 #
-#    # data corresponds to the group of units...
-#    if IsActingSemigroupWithFixedDegreeMultiplication(S)
-#        and ActionRank(S)(x[4]) = ActionDegree(x[4]) then
-#      return false;
-#    fi;
-#    #check that the rho value of <x> is in the same scc as the lambda value of
-#    #<x>
-#    l := Position(x[3], RhoFunc(S)(x[4]));
-#    return l = fail or OrbSCCLookup(x[3])[l] <> x[2];
-#  end;
+#     # data corresponds to the group of units...
+#     if IsActingSemigroupWithFixedDegreeMultiplication(S)
+#         and ActionRank(S)(x[4]) = ActionDegree(x[4]) then
+#       return false;
+#     fi;
+#     #check that the rho value of <x> is in the same scc as the lambda value of
+#     #<x>
+#     l := Position(x[3], RhoFunc(S)(x[4]));
+#     return l = fail or OrbSCCLookup(x[3])[l] <> x[2];
+#   end;
 #
-#  data := SemigroupData(S);
+#   data := SemigroupData(S);
 #
-#  for i in [2 .. Length(data)] do
-#    if lookfunc(data, data[i]) then
-#      return false;
-#    fi;
-#  od;
+#   for i in [2 .. Length(data)] do
+#     if lookfunc(data, data[i]) then
+#       return false;
+#     fi;
+#   od;
 #
-#  if IsClosedData(data) then
-#    return true;
-#  fi;
+#   if IsClosedData(data) then
+#     return true;
+#   fi;
 #
-#  data := Enumerate(data, infinity, lookfunc);
-#  return data!.found = false;
-#end);
+#   data := Enumerate(data, infinity, lookfunc);
+#   return data!.found = false;
+# end);
 
 # same method for ideals
 
@@ -1269,28 +1269,28 @@ function(S, x)
   return false;
 end);
 
-#InstallMethod(IsRegularSemigroupElement,
-#"for an acting star semigroup and associative element with star",
-#[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
-#function(S, x)
-#  local o, k, l;
+# InstallMethod(IsRegularSemigroupElement,
+# "for an acting star semigroup and associative element with star",
+# [IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
+# function(S, x)
+#   local o, k, l;
 #
-#  if not x in S then
-#    Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
-#    return false;
-#  fi;
+#   if not x in S then
+#     Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
+#     return false;
+#   fi;
 #
-#  if HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
-#    Info(InfoSemigroups, 2, "the semigroup is regular,");
-#    return true;
-#  fi;
+#   if HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
+#     Info(InfoSemigroups, 2, "the semigroup is regular,");
+#     return true;
+#   fi;
 #
-#  o := LambdaOrb(S);
-#  k := Position(o, LambdaFunc(S)(x));
-#  l := Position(o, RhoFunc(S)(x));
+#   o := LambdaOrb(S);
+#   k := Position(o, LambdaFunc(S)(x));
+#   l := Position(o, RhoFunc(S)(x));
 #
-#  return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
-#end);
+#   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
+# end);
 
 # same method for ideals
 
@@ -1324,26 +1324,26 @@ function(S, x)
   return false;
 end);
 
-#InstallMethod(IsRegularSemigroupElementNC,
-#"for an acting semigroup with star and associative element with star",
-#[IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
-#function(S, x)
-#  local o, k, l;
+# InstallMethod(IsRegularSemigroupElementNC,
+# "for an acting semigroup with star and associative element with star",
+# [IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
+# function(S, x)
+#   local o, k, l;
 #
-#   if IsClosedOrbit(LambdaOrb(S)) then
-#    o := LambdaOrb(S);
-#    k := Position(o, LambdaFunc(S)(x));
-#    if k = fail then
-#      return false;
-#    fi;
-#  else
-#    # this has to be false, since we're not sure if <x> in <S>
-#    o := GradedLambdaOrb(S, x, false);
-#    k := 1;
-#  fi;
-#  l := EnumeratePosition(o, RhoFunc(S)(x));
-#  return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
-#end);
+#    if IsClosedOrbit(LambdaOrb(S)) then
+#     o := LambdaOrb(S);
+#     k := Position(o, LambdaFunc(S)(x));
+#     if k = fail then
+#       return false;
+#     fi;
+#   else
+#     # this has to be false, since we're not sure if <x> in <S>
+#     o := GradedLambdaOrb(S, x, false);
+#     k := 1;
+#   fi;
+#   l := EnumeratePosition(o, RhoFunc(S)(x));
+#   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
+# end);
 
 InstallMethod(IsRegularSemigroupElementNC,
 [IsSemigroup, IsMultiplicativeElement], IsRegularSemigroupElement);
@@ -1483,7 +1483,7 @@ function(S)
   elif HasNrDClasses(S) then
     return NrDClasses(S) = 1;
   elif HasGeneratorsOfSemigroup(S) then
-    gens := GeneratorsOfSemigroup(S); #not GeneratorsOfMonoid!
+    gens := GeneratorsOfSemigroup(S);  # not GeneratorsOfMonoid!
     lambdafunc := LambdaFunc(S);
     lambdarank := LambdaRank(S);
     rank := lambdarank(lambdafunc(gens[1]));
@@ -1504,7 +1504,6 @@ function(S)
       pos := LookForInOrb(o, function(o, x)
                                return LambdaRank(S)(x) < rank;
                              end, 1);
-        #or LambdaRank(S)(LambdaAct(S)(x, f))<>LambdaRank(S)(x); end, 1);
       if pos <> false then
         return false;
       fi;
@@ -1513,7 +1512,7 @@ function(S)
     return true;
   fi;
 
-  #regular ideal case
+  # regular ideal case
   iter := IteratorOfDClasses(S);
   NextIterator(iter);
   return IsDoneIterator(iter);
@@ -1761,13 +1760,11 @@ InstallMethod(IsFinite, "for a finitely presented semigroup",
 function(S)
   if IsEmpty(RelationsOfFpSemigroup(S)) or
       ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
-    #TODO add nr gens is higher than nr relations
+    # TODO add nr gens is higher than nr relations
     return false;
   fi;
   TryNextMethod();
 end);
 
-InstallMethod(IsSemigroupWithAdjoinedZero,
-"for a semigroup",
-[IsSemigroup],
+InstallMethod(IsSemigroupWithAdjoinedZero, "for a semigroup", [IsSemigroup],
 x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);

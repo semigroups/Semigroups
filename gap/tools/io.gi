@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  io.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  io.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -200,7 +200,7 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
     Apply(out, TransformationNC);
   elif line[1] = 'p' then # partial perms
     Apply(out, DensePartialPermNC);
-  elif line[1] = 'b' then #bipartitions
+  elif line[1] = 'b' then # bipartitions
     Apply(out, BIPART_NC);
   fi;
 

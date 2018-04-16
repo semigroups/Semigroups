@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-#W  freeband.gi
-#Y  Copyright (C) 2013-15                                  Julius Jonusas
+##  freeband.gi
+##  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -10,7 +10,7 @@
 # TODO: this is not really finished.
 
 # TODO
-#InstallMethod(FreeBandOfFreeBandElement,
+# InstallMethod(FreeBandOfFreeBandElement,
 
 InstallMethod(ContentOfFreeBandElement, "for a free band element",
 [IsFreeBandElement],
@@ -379,7 +379,7 @@ InstallMethod(GreensDClassOfElement, "for a free band and element",
 [IsFreeBandCategory, IsFreeBandElement],
 function(S, x)
   local type, D;
-  #FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
+  # FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
   # remove the next two lines
   if IsEnumerableSemigroupRep(S) then
     TryNextMethod();

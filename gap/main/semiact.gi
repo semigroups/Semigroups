@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semiact.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semiact.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -18,7 +18,7 @@ SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
     # rehash the orbit values
     extra := [old_deg + 1 .. deg];
     ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
+    # JDM: could make the treehashsize bigger if needed here!
     HTAdd(ht, o[1], 1);
     for i in [2 .. Length(o)] do
       orb[i] := ShallowCopy(o[i]);
@@ -32,12 +32,12 @@ SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
     o!.op := LambdaAct(t);
   elif IsRhoOrb(o) then
     ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
+    # JDM: could make the treehashsize bigger if needed here!
     HTAdd(ht, o[1], 1);
     for i in [2 .. Length(o)] do
       orb[i] := ShallowCopy(o[i]);
       if not IsEmpty(o[i]) then
-        max := MaximumList(o[i]); #nr kernel classes
+        max := MaximumList(o[i]); # nr kernel classes
       else
         max := 0;
       fi;
@@ -73,7 +73,7 @@ function(Constructor, S, coll, opts)
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
 
-  #TODO split this into two methods, one for collections and the other for
+  # TODO split this into two methods, one for collections and the other for
   # single elements
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
@@ -266,7 +266,7 @@ function(Constructor, S, coll, opts)
 
     x := old_orb[i][4];
 
-    pos := old_schreiermult[i]; #lambda-index for x
+    pos := old_schreiermult[i]; # lambda-index for x
     m := lookup[pos];
     rank := ActionRank(t)(x);
 
@@ -282,7 +282,7 @@ function(Constructor, S, coll, opts)
 
     rhox := rho(x);
     l := htvalue(rho_ht, rhox);
-    #l<>fail since we have copied the old rho values
+    # l <> fail since we have copied the old rho values
 
     if not IsBound(lambdarhoht[l]) then
       # old rho-value, but new lambda-rho-combination
@@ -324,7 +324,7 @@ function(Constructor, S, coll, opts)
       if not rank > max_rank then
         # this is maybe a new R-reps and so tests are required...
 
-        #check membership in Schutzenberger group via stabiliser chain
+        # check membership in Schutzenberger group via stabiliser chain
         schutz := LambdaOrbStabChain(o, m);
 
         if schutz = true then
@@ -414,7 +414,7 @@ function(Constructor, S, coll, opts)
     TryNextMethod();
   fi;
 
-  #TODO split this into two methods
+  # TODO split this into two methods
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
@@ -447,7 +447,7 @@ function(Constructor, S, coll, opts)
   o := StructuralCopy(LambdaOrb(S));
   AddGeneratorsToOrbit(o, coll);
 
-  #remove everything related to strongly connected components
+  # Remove everything related to strongly connected components
   Unbind(o!.scc);
   Unbind(o!.trees);
   Unbind(o!.scc_lookup);

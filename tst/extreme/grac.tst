@@ -1533,8 +1533,8 @@ Transformation( [ 1, 4, 1, 2 ] )
 Transformation( [ 1, 4, 1, 2 ] )
 gap> s := FullTransformationSemigroup(10);;
 gap> f := Transformation([8, 10, 8, 5, 6, 10, 7, 2, 9, 9]);;
-gap> d := GreensDClassOfElementNC(s, f);; #1s with NC check efficiency here!
-gap> Idempotents(d);; #1.3s
+gap> d := GreensDClassOfElementNC(s, f);;  # 1s with NC check efficiency here!
+gap> Idempotents(d);;  # 1.3s
 gap> NrIdempotents(d);
 41160
 gap> ForAll(Idempotents(d), IsIdempotent);

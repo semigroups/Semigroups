@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  conglatt.gi
-#Y  Copyright (C) 2016                                   Michael C. Torpey
+##  conglatt.gi
+##  Copyright (C) 2016                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -180,7 +180,8 @@ function(poset, join_func)
     start := length + 1;     # New congs start here
     found := false;          # Have we found any more congs on this sweep?
     length := Length(congs); # Remember starting position for next sweep
-    for i in [start .. Length(congs)] do # for each new cong
+
+    for i in [start .. Length(congs)] do      # for each new cong
       for j in [1 .. Length(princ_congs)] do  # for each 1-generated cong
         newcong := join_func(congs[i], princ_congs[j]);
         badcong := false;  # Is newcong the same as another cong?

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  semimaxplus.gd
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semimaxplus.gd
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

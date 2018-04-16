@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congrees.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  congruences/congrees.gi
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -163,13 +163,6 @@ function(c1, c2)
   I := SemigroupIdeal(Range(c1), MinimalIdealGeneratingSet(I));
   return ReesCongruenceOfSemigroupIdeal(I);
 end);
-
-#InstallMethod(MeetSemigroupCongruences,
-#"for two Rees congruences",
-#[IsReesCongruence, IsReesCongruence],
-#function(c1, c2)
-#
-#end);
 
 InstallMethod(EquivalenceClasses,
 "for a Rees congruence",

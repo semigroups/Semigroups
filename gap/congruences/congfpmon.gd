@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congfpmon.gd
-#Y  Copyright (C) 2017                                   Michael C. Torpey
+##  congruences/congfpmon.gd
+##  Copyright (C) 2017                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

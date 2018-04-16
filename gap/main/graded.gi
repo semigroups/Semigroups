@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  graded.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  graded.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -110,8 +110,7 @@ function(arg)
 
     onlygradesdata := GradedLambdaHT(S);
 
-  else #local
-
+  else # local
     gradingfunc := function(o, x)
                      return LambdaRank(S)(x);
                    end;
@@ -216,7 +215,7 @@ function(arg)
                   end;
 
     onlygradesdata := GradedRhoHT(S);
-  else #local
+  else # local
     gradingfunc := function(o, x)
                      return RhoRank(S)(x);
                    end;
@@ -359,7 +358,7 @@ function(s)
       return fail;
     fi;
 
-    #where to start looking in lambda_o next time
+    # where to start looking in lambda_o next time
     iter!.l := pos + 1;
 
     val := Position(GradedLambdaOrbs(s), lambda_o[pos]);

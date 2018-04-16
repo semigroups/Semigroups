@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semigrp.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semigrp.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -130,7 +130,7 @@ function(S)
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
 
-#TODO(later) the next method should really be in the library
+# TODO(later) the next method should really be in the library
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a list",
 [IsList], ReturnFalse);
 

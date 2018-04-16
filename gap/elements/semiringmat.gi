@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  semiringmat.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semiringmat.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -373,31 +373,31 @@ function(semiring, dim, ranks)
   return RandomMatrixOp(semiring, dim, ranks);
 end);
 
-#InstallGlobalFunction(RandomMatrix,
-#function(arg)
-#  if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])
-#      and IsPosInt(arg[2]) then
-#    if Length(arg) = 2 then
-#    elif Length(arg) >= 3 and IsInt(arg[3]) then
-#      if Length(arg) = 3 then
-#        return RandomMatrixCons(arg[1], arg[2], arg[3]);
-#      elif Length(arg) = 4 and IsInt(arg[4]) then
-#        return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
-#      fi;
-#    fi;
-#  elif Length(arg) = 2 and IsSemiring(arg[1])
-#      and (IsInt(arg[2]) and arg[2] >= 0) then
-#    return RandomMatrixOp(arg[1], arg[2]);
-#  elif Length(arg) = 3 and IsSemiring(arg[1])
-#      and (IsInt(arg[2]) and arg[2] >= 0)
-#      and (IsList(arg[3]) or IsPosInt(arg[3])) then
-#    return RandomMatrixOp(arg[1], arg[2], arg[3]);
-#  fi;
+# InstallGlobalFunction(RandomMatrix,
+# function(arg)
+#   if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])
+#       and IsPosInt(arg[2]) then
+#     if Length(arg) = 2 then
+#     elif Length(arg) >= 3 and IsInt(arg[3]) then
+#       if Length(arg) = 3 then
+#         return RandomMatrixCons(arg[1], arg[2], arg[3]);
+#       elif Length(arg) = 4 and IsInt(arg[4]) then
+#         return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
+#       fi;
+#     fi;
+#   elif Length(arg) = 2 and IsSemiring(arg[1])
+#       and (IsInt(arg[2]) and arg[2] >= 0) then
+#     return RandomMatrixOp(arg[1], arg[2]);
+#   elif Length(arg) = 3 and IsSemiring(arg[1])
+#       and (IsInt(arg[2]) and arg[2] >= 0)
+#       and (IsList(arg[3]) or IsPosInt(arg[3])) then
+#     return RandomMatrixOp(arg[1], arg[2], arg[3]);
+#   fi;
 #
-#  ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
-#                "the arguments must be: filter, pos int[, pos int[,",
-#                " pos int]],");
-#end);
+#   ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
+#                 "the arguments must be: filter, pos int[, pos int[,",
+#                 " pos int]],");
+# end);
 
 InstallMethod(AsTransformation, "for a matrix over semiring",
 [IsMatrixOverSemiring],
@@ -692,7 +692,7 @@ function(x)
   od;
   Append(str, "\<\<]");
 
-  #TODO remove this from here make it a SEMIGROUPS_ function
+  # TODO remove this from here make it a SEMIGROUPS_ function
   if IsNTPMatrix(x) then
     Append(str, ", \>");
     Append(str, PrintString(ThresholdNTPMatrix(x)));

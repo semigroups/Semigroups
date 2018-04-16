@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-#W  freeinverse.gi
-#Y  Copyright (C) 2013-15                                  Julius Jonusas
+##  freeinverse.gi
+##  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -158,10 +158,10 @@ function(arg)
     ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
                   "the number of generators of a free inverse semigroup must ",
                   "be non-zero,");
-    #elif not IsFinite(names) then
-    #  ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-    #                "the number of generators of a free inverse semigroup ",
-    #                "must be finite,");
+    # elif not IsFinite(names) then
+    #   ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
+    #                 "the number of generators of a free inverse semigroup ",
+    #                 "must be finite,");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",
@@ -255,7 +255,7 @@ function(x)
   is_a_child_of := x![4];
   gen := x![5];
   stop_start := []; # stop_start[i]=j if vertex i is the jth vertex in the path
-                  # from the stop to the start vertex.
+                    # from the stop to the start vertex.
   i := x![3];
   j := 1;
   path := [];
@@ -264,12 +264,12 @@ function(x)
     stop_start[i] := j;
     path[j] := i;
     j := j + 1;
-    i := is_a_child_of[i]; #parent of i
+    i := is_a_child_of[i]; # parent of i
   od;
 
   words := EmptyPlist(j - 1);
-  pos := [];  #keeps track of the vertices already visited
-  part := []; #keeps track of the part of the tree, that vertex i is in
+  pos := [];   # keeps track of the vertices already visited
+  part := [];  # keeps track of the part of the tree, that vertex i is in
 
   i := x![2]; # nr of vertices
   while i > 0 do
@@ -282,11 +282,11 @@ function(x)
     temp_word := Concatenation(List(Reversed(temp_word), InvertGenerator),
                                temp_word);
     if IsBound(stop_start[j]) and not IsBound(words[stop_start[j]]) then
-      #first time in this part of the tree
+      # first time in this part of the tree
       words[stop_start[j]] := temp_word;
       part[j] := stop_start[j];
       pos[j] := 0;
-    else # been in this part before
+    else  # been in this part before
       words[part[j]] := Concatenation(words[part[j]]{[1 .. pos[j]]},
                                       temp_word,
                                       words[part[j]]{[pos[j] + 1 ..
@@ -441,7 +441,7 @@ function(tree1, tree2)
   new_names    := [];
   new_names[1] := tree1![3];
 
-  #product := StructuralCopy(tree1);
+  # product := StructuralCopy(tree1);
   product := [];
   for i in [1 .. tree1![2] + 5] do
     product[i] := ShallowCopy(tree1![i]);
