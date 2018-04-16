@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-#W  setup.gi
-#Y  Copyright (C) 2013-17                                James D. Mitchell
+##  setup.gi
+##  Copyright (C) 2013-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -51,23 +51,23 @@ end);
 ## The HasRows and HasColumns could be removed if it was possible to apply
 ## immediate methods to Rees 0-matrix semigroups
 #
-#InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
-#IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
-#function(R)
-#  return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
-#end);
+# InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
+# IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
+# function(R)
+#   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
+# end);
 #
-#InstallTrueMethod(IsActingSemigroup,
-#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
+# InstallTrueMethod(IsActingSemigroup,
+# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
 #
-#InstallImmediateMethod(GeneratorsOfMagma,
-#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
-#function(R)
-#  return GeneratorsOfReesMatrixSemigroupNC(R,
-#                                           Rows(R),
-#                                           UnderlyingSemigroup(R),
-#                                           Columns(R));
-#end);
+# InstallImmediateMethod(GeneratorsOfMagma,
+# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
+# function(R)
+#   return GeneratorsOfReesMatrixSemigroupNC(R,
+#                                            Rows(R),
+#                                            UnderlyingSemigroup(R),
+#                                            Columns(R));
+# end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a matrix over finite field collection",
@@ -487,7 +487,7 @@ function(x)
   fi;
 end);
 
-#T Why are there row spaces and matrices passed in here?
+# Why are there row spaces and matrices passed in here?
 InstallMethod(LambdaRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], x -> Rank);
 
@@ -559,7 +559,7 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
     return f ^ -1;
   end);
 
-#JDM better method for this!!
+# JDM better method for this!!
 
 InstallMethod(RhoInverse, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
@@ -881,7 +881,7 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for an acting partial perm semigroup",
 [IsPartialPermSemigroup and IsActingSemigroup], ReturnFalse);
 
-#this is not really relevant here.
+# this is not really relevant here.
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for an acting Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
@@ -951,7 +951,7 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   if x![1] = 0 then
     return 1;
   fi;
-  #Use some big primes that are near the default hash table size
+  # Use some big primes that are near the default hash table size
   if IsNBitsPcWordRep(x![2]) then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
       mod data[2] + 1;

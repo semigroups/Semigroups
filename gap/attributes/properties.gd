@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  properties.gd
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  properties.gd
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,8 +12,8 @@
 # semigroups. There are not very many specialised methods for acting semigroups
 # and so we only have a single file.
 
-#DeclareProperty("IsAbundantSemigroup", IsSemigroup);
-#DeclareProperty("IsAdequateSemigroup", IsSemigroup);
+# DeclareProperty("IsAbundantSemigroup", IsSemigroup);
+# DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 
 DeclareProperty("IsBlockGroup", IsSemigroup);
 DeclareProperty("IsRTrivial", IsSemigroup);

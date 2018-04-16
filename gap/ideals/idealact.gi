@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  idealact.gi
-#Y  Copyright (C) 2013-15                                 James D. Mitchell
+##  idealact.gi
+##  Copyright (C) 2013-15                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -27,7 +27,7 @@ function(S)
   scc := OrbSCCLookup(o);
 
   for x in gens do
-    #index of the D-class containing x
+    # index of the D-class containing x
     AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
   od;
 
@@ -468,7 +468,7 @@ function(data, limit, record)
                                   # reps[m][orblookup1[i]]
                                   # containing orb[i][4] (the R-rep)
 
-  rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
+  rholookup := data!.rholookup;   # rholookup[i]=rho-value-index of orb[i][4]
 
   stopper := data!.stopper;       # stop at this place in the orbit
 
@@ -557,7 +557,7 @@ function(data, limit, record)
         if pos <> fail then # we are multiplying the <i>th D-rep by a generator
           AddSet(poset[i], datalookup[val]);
         fi;
-        return; #x is one of the old R-reps
+        return; # x is one of the old R-reps
       fi;
     fi;
 
@@ -619,7 +619,7 @@ function(data, limit, record)
     mults := RhoOrbMults(rhoo, mm);
     cosets := RhoCosets(d[nr_d]);
 
-    for l in rhoscc[mm] do #install the R-class reps
+    for l in rhoscc[mm] do # install the R-class reps
       if not IsBound(lambdarhoht[l]) then
         lambdarhoht[l] := [];
       fi;
@@ -960,7 +960,7 @@ function(data, limit, record)
                                   # reps[m][orblookup1[i]]
                                   # containing orb[i][4] (the R-rep)
 
-  rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
+  rholookup := data!.rholookup;   # rholookup[i]=rho-value-index of orb[i][4]
 
   stopper := data!.stopper;       # stop at this place in the orbit
 
@@ -1043,7 +1043,7 @@ function(data, limit, record)
         if pos <> fail then # we are multiplying the <i>th D-rep by a generator
           AddSet(poset[i], datalookup[val]);
         fi;
-        return; #x is one of the old R-reps
+        return; # x is one of the old R-reps
       fi;
     fi;
 
@@ -1091,7 +1091,7 @@ function(data, limit, record)
     # install the R-class reps of the new D-rep
     mults := RhoOrbMults(rhoo, mm);
 
-    for l in rhoscc[mm] do #install the R-class reps
+    for l in rhoscc[mm] do # install the R-class reps
       nr_r := nr_r + 1;
       y := mults[l][1] * x;
       orb[nr_r] := [I, m, lambdao, y, false, nr_r];
@@ -1099,7 +1099,7 @@ function(data, limit, record)
 
       lenreps[m] := lenreps[m] + 1;
       ind := lenreps[m];
-      lambdarhoht[l][m] := ind; #this can't have been seen before
+      lambdarhoht[l][m] := ind; # this can't have been seen before
       reps[m][ind] := [y];
       repslookup[m][ind] := [nr_r];
       repslens[m][ind] := 1;

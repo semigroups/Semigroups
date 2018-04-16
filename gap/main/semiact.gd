@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semiact.gd
-#Y  Copyright (C) 2016                                   James D. Mitchell
+##  semiact.gd
+##  Copyright (C) 2016                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

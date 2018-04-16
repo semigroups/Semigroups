@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  ffmat.gd
-#Y  Copyright (C) 2016                                   James D. Mitchell
+##  ffmat.gd
+##  Copyright (C) 2016                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -58,7 +58,7 @@ DeclareConstructor("NewMatrixOverFiniteField",
 DeclareConstructor("NewMatrixOverFiniteField",
                    [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
 
-#TODO make these cons/opers/attributes for MatrixOverSemiring
+# TODO make these cons/opers/attributes for MatrixOverSemiring
 DeclareConstructor("NewIdentityMatrixOverFiniteField",
                    [IsMatrixOverFiniteField, IsRing, IsInt]);
 DeclareConstructor("NewZeroMatrixOverFiniteField",
@@ -77,16 +77,16 @@ DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
 
-#T FIXME: Implement
-#DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
-#DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
-#DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
+# FIXME: Implement
+# DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
+# DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
+# DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
 
 DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
 DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-#T FIXME: Implement
-#DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
-#DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
+# FIXME: Implement
+# DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
+# DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
@@ -98,7 +98,7 @@ DeclareProperty("IsZero", IsMatrixOverFiniteField);
 ## Declarations specifically for finite field matrices collections
 #############################################################################
 
-#TODO make these cons/opers/attributes for MatrixOverSemiring
+# TODO make these cons/opers/attributes for MatrixOverSemiring
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 #############################################################################
@@ -117,7 +117,7 @@ DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 # showcased in the library code. Of course we implement our own variant of it
 # just to be sure that we duplicate enough code
 #
-#T Do the rows of our SPlistMatrixRep need to be SPlistRowVectorRep? Or is #T
+# Do the rows of our SPlistMatrixRep need to be SPlistRowVectorRep? Or is
 # it good enough to allow IsPlistRowVectorRep?
 #
 # What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis

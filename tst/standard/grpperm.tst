@@ -19,7 +19,7 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   #homomorphism
+>   # homomorphism
 >   for x in Generators(Source(iso)) do
 >     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semipperm.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semipperm.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -143,7 +143,7 @@ InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
 Maximum(RankFilter(IsActingSemigroup),
         RankFilter(IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal)) + 1,
-#to beat the method for an acting semigroup with generators
+# to beat the method for an acting semigroup with generators
 function(S)
   local n, record;
 
@@ -628,7 +628,7 @@ function(S)
   fi;
 
   repeat
-    #JDM the next line doesn't work if OnPoints is used...
+    # JDM the next line doesn't work if OnPoints is used...
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
     if PositionOfFound(o) <> false then

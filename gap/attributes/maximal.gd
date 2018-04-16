@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  maximal.gd
-#Y  Copyright (C) 2013-16                                James D. Mitchell
+##  maximal.gd
+##  Copyright (C) 2013-16                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.

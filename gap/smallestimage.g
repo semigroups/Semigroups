@@ -202,7 +202,6 @@ BindGlobal("SmallestImageSet",function(arg)
                 cases := List(Orbits(path.substab,path.relevant), o->o[1]);
             fi;
             
-            
             for case in cases do
                 newpath := StructuralCopy(path);
                 Add(newpath.mappedpts,case);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  gree.gi
-#Y  Copyright (C) 2016                                   James D. Mitchell
+##  gree.gi
+##  Copyright (C) 2016                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -45,7 +45,7 @@
 # are not the same.  But unfortunately this disagrees with the definition of
 # equality of congruences...
 
-#TODO move this to the library
+# TODO move this to the library
 
 InstallMethod(\=, "for Green's relations",
 [IsGreensRelation, IsGreensRelation], 5, # to beat the method for congruences

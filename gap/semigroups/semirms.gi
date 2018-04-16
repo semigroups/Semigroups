@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  reesmat.gi
-#Y  Copyright (C) 2014-16                                James D. Mitchell
+##  reesmat.gi
+##  Copyright (C) 2014-16                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -177,7 +177,7 @@ function(S)
   elif not IsSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                   "the argument must be a simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
 
@@ -202,7 +202,7 @@ function(S)
   elif not IsZeroSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                   "the argument must be a 0-simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
 
@@ -480,7 +480,7 @@ function(R)
   SetDigraphHasLoops(gr, false);
   SetDigraphBicomponents(gr, [[1 .. m], [m + 1 .. m + n]]);
   SetDigraphNrEdges(gr, nredges);
-  #SetDigraphVertexLabels(gr, Concatenation(rows, cols));
+  # SetDigraphVertexLabels(gr, Concatenation(rows, cols));
   return gr;
 end);
 
@@ -935,9 +935,9 @@ InstallMethod(Size, "for a Rees matrix semigroup",
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
-  #if Size(UnderlyingSemigroup(R)) = infinity then
-  #  return infinity;
-  #fi;
+  # if Size(UnderlyingSemigroup(R)) = infinity then
+  #   return infinity;
+  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
@@ -946,9 +946,9 @@ InstallMethod(Size, "for a Rees 0-matrix semigroup",
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
-  #if Size(UnderlyingSemigroup(R)) = infinity then
-  #  return infinity;
-  #fi;
+  # if Size(UnderlyingSemigroup(R)) = infinity then
+  #   return infinity;
+  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
          + 1;
 end);

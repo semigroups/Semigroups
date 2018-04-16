@@ -1,5 +1,3 @@
 disable:
   - align-assignments
-  - trailing-whitespace
-  - no-space-after-comment
   - not-enough-space-before-comment

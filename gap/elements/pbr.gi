@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  pbr.gi
-#Y  Copyright (C) 2015                                   Attila Egri-Nagy
+##  pbr.gi
+##  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -111,7 +111,7 @@ end);
 
 InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
 function(x)
-  #TODO change IsBlockBijection(AsBipartition(x)) to
+  # TODO change IsBlockBijection(AsBipartition(x)) to
   # IsBlockBijectionPBR.
   if IsPartialPermPBR(x) or
       (IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x))) then

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  gracreg.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  gracreg.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -382,7 +382,7 @@ function(S)
   TryNextMethod();
 end);
 
-#TODO other methods for this!
+# TODO other methods for this!
 
 InstallMethod(NrIdempotentsByRank,
 "for a regular star bipartition acting semigroup",

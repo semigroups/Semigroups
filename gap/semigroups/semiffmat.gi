@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semiffmat.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semiffmat.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -396,7 +396,7 @@ function(S, V, mat)
   k := Rank(V);
 
   if n = 0 or k = 0 then
-    #FIXME improve this
+    # FIXME improve this
     ErrorNoReturn("Semigroups: MatrixOverFiniteFieldLocalRightInverse: ",
                   "usage,\n nullspace");
   fi;
@@ -438,10 +438,9 @@ function(S, V, mat)
   return AsMatrix(IsMatrixOverFiniteField, mat, W{[1 .. n]}{[n + 1 .. 2 * n]});
 end);
 
-#T returns an invertible matrix
-#T make pretty and efficient (in that order)
-#T In particular the setup for the matrix should be much more
-#T efficient.
+# Returns an invertible matrix.
+# TODO: make pretty and efficient (in that order).  In particular the setup for
+# the matrix should be much more efficient.
 InstallGlobalFunction(MatrixOverFiniteFieldSchutzGrpElement,
 function(S, x, y)
   local deg, n, eqs, idx, col, row, res;
@@ -542,9 +541,8 @@ function(S, x, y)
   return res;
 end);
 
-#T is there a complete direct way of testing whether
-#T this idempotent exists (without constructing it)?
-#T the method below is already pretty efficient
+# Is there a complete direct way of testing whether this idempotent exists
+# (without constructing it)?  The method below is already pretty efficient.
 
 InstallGlobalFunction(MatrixOverFiniteFieldIdempotentTester,
 function(S, x, y)

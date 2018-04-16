@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attrinv.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  attrinv.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##                                                        Rhiannon Dougall
 ##                                                          Robert Hancock
@@ -106,10 +106,10 @@ function(S)
                     end);
 
   H := List(reps, e -> SchutzenbergerGroup(HClass(S, e)));
-  C := []; # the group character matrices
+  C := [];  # The group character matrices
   r := 0;
 
-  #the block diagonal matrix of group character matrices
+  # The block diagonal matrix of group character matrices
   for h in H do
     tbl := CharacterTable(h);
     id := IdentificationOfConjugacyClasses(tbl);
@@ -528,7 +528,8 @@ function(S, f)
     return elts{NaturalPartialOrder(S)[i]};
   fi;
 
-  if IsIdempotent(f) then #always true if S is a D-class rep of an inverse sgp
+  # Always true if S is a D-class rep of an inverse sgp
+  if IsIdempotent(f) then
     out := EmptyPlist(NrIdempotents(S));
     elts := ShallowCopy(Idempotents(S));
   else
@@ -676,7 +677,7 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
-    #TODO(later) shouldn't there be a check here like above?
+    # TODO(later) shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])),
                          DegreeOfBipartition(x));

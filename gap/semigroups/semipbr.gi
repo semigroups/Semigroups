@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  semipbr.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semipbr.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 
-#TODO IsomorphismSemigroup for IsBooleanMatSemigroup
+# TODO IsomorphismSemigroup for IsBooleanMatSemigroup
 #
 # This file contains methods for semigroups of PBRs.
 

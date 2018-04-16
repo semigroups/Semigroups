@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  ffmat.gi
-#Y  Copyright (C) 2016                                   James D. Mitchell
+##  ffmat.gi
+##  Copyright (C) 2016                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -126,7 +126,7 @@ function(R, n, ranks)
     Add(mat, zv);
   od;
   # Swirl around
-  #T Is Permuting rows/columns enough?
+  # Is Permuting rows/columns enough?
   conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
   return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                   R,
@@ -221,7 +221,7 @@ end);
 # big enough, and that all entries are given inside the field. This will
 # prevent us and users from creating stupid matrix objects.
 
-#T Check correct format and correctness of entries
+# Check correct format and correctness of entries
 
 InstallMethod(NewMatrixOverFiniteField,
 "for IsPlistMatrixOverFiniteFieldRep, a finite field, and a list",
@@ -249,12 +249,12 @@ function(filter, field, list)
   return mat;
 end);
 
-#InstallMethod(NewMatrixOverFiniteField,
-#"for IsPlistMatrixOverFiniteFieldRep, a ring, an int, and IsPlistMatrixRep",
-#[IsPlistMatrixOverFiniteFieldRep, IsRing, IsInt, IsPlistMatrixRep],
-#function(filter, basedomain, rl, mat)
-#  return NewMatrixOverFiniteField(filter, basedomain, rl, AsMatrix(mat));
-#end);
+# InstallMethod(NewMatrixOverFiniteField,
+# "for IsPlistMatrixOverFiniteFieldRep, a ring, an int, and IsPlistMatrixRep",
+# [IsPlistMatrixOverFiniteFieldRep, IsRing, IsInt, IsPlistMatrixRep],
+# function(filter, basedomain, rl, mat)
+#   return NewMatrixOverFiniteField(filter, basedomain, rl, AsMatrix(mat));
+# end);
 
 InstallMethod(NewIdentityMatrixOverFiniteField,
 "for IsPlistMatrixOverFiniteFieldRep, a ring, and an int",
@@ -301,7 +301,7 @@ function(filter, basedomain, deg)
                                   NullMat(deg, deg, basedomain));
 end);
 
-#TODO known information can be copied!
+# TODO known information can be copied!
 
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
@@ -332,8 +332,8 @@ function(m)
   return RowRank(m);
 end);
 
-#T Should this go in a helper function, it also works
-#T similarly to the thing done below.
+# Should this go in a helper function, it also works
+# similarly to the thing done below.
 InstallMethod(RightInverse, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
 function(m)
@@ -372,8 +372,8 @@ function(m)
   return TransposedMat(RightInverse(TransposedMat(m)));
 end);
 
-#T Trying to use "Inverse" in the semigroup sense here leads to problems
-#T with other operations, so we have to be very careful.
+# Trying to use "Inverse" in the semigroup sense here leads to problems
+# with other operations, so we have to be very careful.
 
 InstallMethod(InverseMutable, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
@@ -455,8 +455,8 @@ function(m)
         fi;
       fi;
     od;
-    #T This is obviously totally ridiculous to do the same computation
-    #T twice
+    # This is obviously totally ridiculous to do the same computation
+    # twice
     if sinv = true then
        sinv := RightInverse(m);
     fi;
@@ -481,9 +481,9 @@ function(m)
   SetInverse(m, inv);
 end);
 
-#T This will break transparency wrt representations, so we should
-#T really not be doing this and instead use a sample object
-#T or we should be using NewIdentityMatrixOverFiniteField
+# This will break transparency wrt representations, so we should
+# really not be doing this and instead use a sample object
+# or we should be using NewIdentityMatrixOverFiniteField
 InstallMethod(IdentityMatrixOverFiniteField, "for a finite field and zero",
 [IsField and IsFinite, IsZeroCyc],
 function(R, n)
@@ -592,8 +592,8 @@ function(x, y)
   return AsMatrix(IsMatrixOverFiniteField, x, x!.mat * y!.mat);
 end);
 
-#T This might call for a separate VectorOverFiniteField implementaion actually
-#T At least check lengths
+# This might call for a separate VectorOverFiniteField implementaion actually
+# At least check lengths
 InstallOtherMethod(\*, "for an empty list and a matrix over finite field",
 [IsList and IsEmpty, IsMatrixOverFiniteField],
 function(l, m)

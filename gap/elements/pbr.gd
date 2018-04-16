@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  pbr.gd
-#Y  Copyright (C) 2015                                   Attila Egri-Nagy
+##  pbr.gd
+##  Copyright (C) 2015                                   Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

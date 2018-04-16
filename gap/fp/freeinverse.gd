@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-#W  freeinverse.gd
-#Y  Copyright (C) 2013-15                                  Julius Jonusas
+##  freeinverse.gd
+##  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##

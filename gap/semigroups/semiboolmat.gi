@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  semiboolmat.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semiboolmat.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-#W  idealenum.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+##  idealenum.gi
+##  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -80,7 +80,7 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
         end;
         Enumerate(data, infinity, lookfunc2);
         if Length(data!.words[data!.nr]) = len + 1 then
-          data!.lenindex[len + 1] := data!.nr; #JDM maybe a bad idea
+          data!.lenindex[len + 1] := data!.nr; # JDM maybe a bad idea
         fi;
         # at the end of this either there is a word in <data> of length <len+1>
         # or <data> is closed.

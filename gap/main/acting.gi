@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  acting.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  acting.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -83,16 +83,16 @@ function(x, S)
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
-      #Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-      #     "semigroup.");
+      # Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+      #      "semigroup.");
       return false;
     fi;
   fi;
 
   if HasMinimalIdeal(S) then
     if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
-      #Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-      #     "semigroup.");
+      # Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+      #      "semigroup.");
       return false;
     fi;
   fi;
@@ -307,7 +307,7 @@ end);
 # different for regular/inverse/ideals
 
 InstallMethod(Size, "for an acting semigroup",
-[IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
+[IsActingSemigroup], 2, # to beat the method for a Rees 0-matrix semigroup
 function(S)
   local data, lenreps, repslens, o, scc, size, n, m, i;
 
@@ -367,8 +367,8 @@ end);
 
 # different method for ideals...
 
-#JDM: this has the same problem as orb in Issue #4, the log is not properly
-#formed if the enumeration stops early.
+# JDM: this has the same problem as orb in Issue #4, the log is not properly
+# formed if the enumeration stops early.
 
 InstallMethod(Enumerate,
 "for an semigroup data, limit, and func",
@@ -423,7 +423,7 @@ function(data, limit, lookfunc)
                                   # reps[m][orblookup1[i]]
                                   # containing orb[i][4] (the R-rep)
 
-  rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
+  rholookup := data!.rholookup;   # rholookup[i]=rho-value-index of orb[i][4]
 
   stopper := data!.stopper;       # stop at this place in the orbit
 
@@ -449,7 +449,7 @@ function(data, limit, lookfunc)
 
   membership := SchutzGpMembership(s);
 
-  #rho
+  # rho
   rho := RhoFunc(s);
   rho_o := RhoOrb(s);
   rho_orb := rho_o!.orbit;
@@ -499,12 +499,12 @@ function(data, limit, lookfunc)
     suc := false;
     #                                               #
 
-    for j in genstoapply do #JDM
+    for j in genstoapply do # JDM
       x := gens[j] * orb[i][4];
       pos := htvalue(oht, lambda(x));
-      m := lookup[pos];   #lambda-value-scc-index
+      m := lookup[pos];   # lambda-value-scc-index
 
-      #put lambda(x) in the first position in its scc
+      # put lambda(x) in the first position in its scc
       if pos <> scc[m][1] then
         x := x * LambdaOrbMult(o, m, pos)[2];
       fi;
@@ -512,7 +512,7 @@ function(data, limit, lookfunc)
       rhox := rho(x);
       l := htvalue(rho_ht, rhox);
 
-      if l = fail then #new rho-value, new R-rep
+      if l = fail then # new rho-value, new R-rep
 
         #                update rho-orbit             #
         rho_nr := rho_nr + 1;
@@ -592,7 +592,7 @@ function(data, limit, lookfunc)
         ind := lambdarhoht[l][m];
         pt := [s, m, o, x, false, nr + 1];
 
-        #check membership in Schutzenberger group via stabiliser chain
+        # check membership in Schutzenberger group via stabiliser chain
         schutz := LambdaOrbStabChain(o, m);
 
         if schutz = true then
@@ -637,10 +637,10 @@ function(data, limit, lookfunc)
       rholookup[nr] := l; # orb[nr] has rho-value in position l of the rho-orb
 
       orb[nr] := pt;
-      schreierpos[nr] := i; # orb[nr] is obtained from orb[i]
-      schreiergen[nr] := j; # by multiplying by gens[j]
+      schreierpos[nr] := i;    # orb[nr] is obtained from orb[i]
+      schreiergen[nr] := j;    # by multiplying by gens[j]
       schreiermult[nr] := pos; # and ends up in position <pos> of
-                             # its lambda orb
+                               # its lambda orb
       htadd(ht, x, nr);
       graph[nr] := EmptyPlist(nrgens);
       graph[i][j] := nr;
@@ -678,7 +678,7 @@ function(data, limit, lookfunc)
     rho_o!.orbind := [1 .. rho_nr];
   fi;
 
-  #for the rho-orbit
+  # for the rho-orbit
   if i <> 0 then
     rho_o!.pos := rholookup[i];
     rho_o!.depth := rho_depth;

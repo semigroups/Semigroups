@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-#W  freeband.gd
-#Y  Copyright (C) 2013-15                                  Julius Jonusas
+##  freeband.gd
+##  Copyright (C) 2013-15                                  Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

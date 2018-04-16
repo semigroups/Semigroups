@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  lambda-rho.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  lambda-rho.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -105,8 +105,8 @@ function(o, m, i)
   mults := o!.mults;
 
   if not IsInverseActingSemigroupRep(o!.parent) then
-    #FIXME it would be better to use the SchreierTree here not the
-    #ReverseSchreierTree
+    # FIXME it would be better to use the SchreierTree here not the
+    # ReverseSchreierTree
     genpos := ReverseSchreierTreeOfSCC(o, m);
     inv := function(lambda, x)
              return LambdaInverse(o!.parent)(lambda, x);
