@@ -349,7 +349,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local ex, doc, tree, tester, omit, width, acting, passed, str;
+  local ex, doc, tree, tester, omit, acting, passed, str;
   ex := SEMIGROUPS.ManualExamples();
   if Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
@@ -394,7 +394,6 @@ SEMIGROUPS.TestManualExamples := function(arg)
     Print(" . . .\n");
   fi;
 
-  width := SizeScreen()[1] - 3;
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
 
   SEMIGROUPS.DefaultOptionsRec.acting := true;

@@ -62,14 +62,13 @@ InstallMethod(ClosureSemigroupOrMonoidNC,
  IsMultiplicativeElementCollection and IsList and IsFinite,
  IsRecord],
 function(Constructor, S, coll, opts)
-  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
-  rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
-  graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1,
-  orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos,
-  new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens,
-  nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new,
-  htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
-  n, j;
+  local t, old_o, o, rho_o, old_deg, scc, old_scc, lookup, old_lookup, rho_ht,
+  new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph,
+  old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1, orblookup2,
+  repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen,
+  old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens,
+  nr_old_gens, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank,
+  rhox, l, ind, pt, schutz, data_val, old, n, j;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
@@ -142,7 +141,6 @@ function(Constructor, S, coll, opts)
     return t;
   fi;
 
-  oht := o!.ht;
   scc := OrbSCC(o);
   old_scc := OrbSCC(old_o);
   lookup := o!.scc_lookup;
@@ -233,8 +231,6 @@ function(Constructor, S, coll, opts)
   nr_old_gens := Length(old_data!.gens);
 
   # lambda/rho
-  lambda := LambdaFunc(t);
-  lambdaact := LambdaAct(t);
   lambdaperm := LambdaPerm(t);
   rho := RhoFunc(t);
 

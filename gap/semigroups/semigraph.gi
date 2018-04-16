@@ -221,11 +221,10 @@ end);
 InstallMethod(\*, "for elements of a graph inverse semigroup",
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
 function(x, y)
-  local type, graph, nredges, range, source, xobj, yobj, i, j;
+  local type, graph, range, source, xobj, yobj, i, j;
 
   type := FamilyObj(x)!.type;
   graph := x![2];
-  nredges := Length(DigraphSource(graph));
   range := DigraphRange(graph);
   source := DigraphSource(graph);
 

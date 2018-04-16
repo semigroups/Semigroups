@@ -398,7 +398,7 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
-  local H, map, inv, G, deg, U, iso;
+  local H, map, inv, G, U, iso;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -408,9 +408,6 @@ function(S)
   map := IsomorphismPermGroup(H);
   inv := InverseGeneralMapping(map);
   G := Range(map);
-
-  deg := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
   SetIsGroupAsSemigroup(U, true);
@@ -785,7 +782,7 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
 function(S)
   local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
-  domain, range, lenrange, deg, codeg, in_nbs, labels, positions, collapsed,
+  domain, range, lenrange, codeg, in_nbs, labels, positions, collapsed,
   nr_collapsed, i, act, pos, collapsible, squashed, elts, j, t, im,
   reduced_rank, m, k;
 
@@ -820,7 +817,6 @@ function(S)
   rank := Length(domain);
   range := Union(ims);
   lenrange := Length(range);
-  deg := Maximum(domain);
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then

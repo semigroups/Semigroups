@@ -402,11 +402,11 @@ InstallMethod(Enumerate,
 function(data, limit, record)
   local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc,
   rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht,
-  repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens,
-  genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc,
-  lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, act, htadd,
-  htvalue, drel, dtype, poset, datalookup, log, tester, regular,
-  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
+  repslookup, orblookup1, orblookup2, rholookup, stopper, gens, genstoapply, I,
+  lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, lambdaperm, rho,
+  rhoo, rhooht, rhoolookup, rhoscc, act, htadd, htvalue, drel, dtype, poset,
+  datalookup, log, tester, regular, UpdateSemigroupIdealData, idealgens, i, x,
+  rreps, pos, j, k, z;
 
   if IsBound(record.lookfunc) and not record.lookfunc <> ReturnFalse then
     lookfunc := record.lookfunc;
@@ -474,7 +474,6 @@ function(data, limit, record)
 
   # generators
   gens := data!.gens; # generators of the parent semigroup
-  nrgens := Length(gens);
   genstoapply := data!.genstoapply;
 
   I := data!.parent;
@@ -487,7 +486,6 @@ function(data, limit, record)
   lambdascc := OrbSCC(lambdao);
   lenscc := Length(lambdascc);
 
-  lambdaact := LambdaAct(I);
   lambdaperm := LambdaPerm(I);
 
   # rho
@@ -692,7 +690,6 @@ function(data, limit, record)
 
     # left multiply the R-class reps by the generators of the semigroup
     rreps := [];
-    scc := RhoOrbSCC(d[i]);
     pos := Position(lambdao, lambda(x));
     for j in [log[i] + 1 .. log[i + 1]] do  # the R-class reps of d[i]
       rreps[j - log[i]] := orb[j][4];
@@ -746,7 +743,7 @@ InstallMethod(\in,
 [IsMultiplicativeElement,
  IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(x, I)
-  local data, ht, xx, o, scc, scclookup, l, lookfunc, m, lambdarhoht,
+  local data, ht, xx, o, l, lookfunc, m, lambdarhoht,
         schutz, ind, reps;
 
   if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
@@ -777,8 +774,6 @@ function(x, I)
   # look for lambda!
   xx := LambdaFunc(I)(x);
   o := LambdaOrb(I);
-  scc := OrbSCC(o);
-  scclookup := OrbSCCLookup(o);
 
   l := Position(o, xx);
 
@@ -899,11 +894,11 @@ InstallMethod(Enumerate,
 function(data, limit, record)
   local lookfunc, looking, lambdalookfunc, lambdalooking, rholookfunc,
   rholooking, ht, orb, nr_r, d, nr_d, reps, repslens, lenreps, lambdarhoht,
-  repslookup, orblookup1, orblookup2, rholookup, stopper, gens, nrgens,
-  genstoapply, I, lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc,
-  lambdaact, lambdaperm, rho, rhoo, rhooht, rhoolookup, rhoscc, rholen, act,
-  htadd, htvalue, drel, dtype, poset, datalookup, log,
-  UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
+  repslookup, orblookup1, orblookup2, rholookup, stopper, gens, genstoapply, I,
+  lambda, lambdao, lambdaoht, lambdalookup, lambdascc, lenscc, rho, rhoo,
+  rhooht, rhoolookup, rhoscc, rholen, htadd, htvalue, drel, dtype, poset,
+  datalookup, log, UpdateSemigroupIdealData, idealgens, i, x, rreps, pos, j, k,
+  z;
 
   if IsBound(record.lookfunc) and record.lookfunc <> ReturnFalse then
     lookfunc := record.lookfunc;
@@ -971,7 +966,6 @@ function(data, limit, record)
 
   # generators
   gens := data!.gens; # generators of the parent semigroup
-  nrgens := Length(gens);
   genstoapply := data!.genstoapply;
 
   I := data!.parent;
@@ -984,9 +978,6 @@ function(data, limit, record)
   lambdascc := OrbSCC(lambdao);
   lenscc := Length(lambdascc);
 
-  lambdaact := LambdaAct(I);
-  lambdaperm := LambdaPerm(I);
-
   # rho
   rho := RhoFunc(I);
   rhoo := RhoOrb(I);
@@ -994,8 +985,6 @@ function(data, limit, record)
   rhoolookup := rhoo!.scc_lookup;
   rhoscc := OrbSCC(rhoo);
   rholen := Length(rhoo);
-
-  act := StabilizerAction(I);
 
   if IsBoundGlobal("ORBC") then
     htadd := HTAdd_TreeHash_C;
@@ -1152,7 +1141,6 @@ function(data, limit, record)
 
     # left multiply the R-class reps by the generators of the semigroup
     rreps := [];
-    scc := RhoOrbSCC(d[i]);
     pos := Position(lambdao, lambda(x));
     for j in [log[i] + 1 .. log[i + 1]] do  # the R-class reps of d[i]
       rreps[j - log[i]] := orb[j][4];

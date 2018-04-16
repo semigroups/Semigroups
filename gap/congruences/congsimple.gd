@@ -60,9 +60,7 @@ end;
 #
 
 SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
-  local r, fam, cong;
-  r := Range(rmscong);
-
+  local fam, cong;
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));

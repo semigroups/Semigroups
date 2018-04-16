@@ -465,8 +465,7 @@ SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
 end;
 
 SEMIGROUPS.WordToExtRepObj := function(word)
-  local n, ext_rep_obj, i, j;
-  n           := Length(word);
+  local ext_rep_obj, i, j;
   ext_rep_obj := [];
   i           := 1;
   j           := 1;

@@ -210,13 +210,12 @@ end;
 #TODO the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
-  local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
+  local mat1, mat2, m, rmsgraph, components, reps, imagelist, edges,
   bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
 
   mat1 := Matrix(rms1);
   mat2 := Matrix(rms2);
   m := Length(mat1[1]);
-  n := Length(mat1);
   rmsgraph := RZMSDigraph(rms1);
   components := DigraphConnectedComponents(rmsgraph).comps;
 
@@ -688,8 +687,8 @@ InstallMethod(IsomorphismSemigroups,
 (RankFilter(IsSimpleSemigroup and IsFinite) - RankFilter(IsReesMatrixSemigroup
 and IsWholeFamily and IsFinite)) + 10, # to beat IsSimpleSemigroup and IsFinite
 function(S, T)
-  local G, H, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n, f,
-  isograph, isogroup, RMSInducedFunction, map, l, g, tup;
+  local G, H, mat, m, n, f, isograph, isogroup, RMSInducedFunction, map, l, g,
+        tup;
 
   G := UnderlyingSemigroup(S);
   H := UnderlyingSemigroup(T);
@@ -748,9 +747,8 @@ InstallMethod(IsomorphismSemigroups,
 [IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite,
  IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite],
 function(S, T)
-  local G, H, func, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n,
-  f, groupiso, grS, grT, g, graphiso, tuples, RZMStoRZMSInducedFunction, map, l,
-  tup;
+  local G, H, mat, m, n, f, groupiso, grS, grT, g, graphiso, tuples,
+        RZMStoRZMSInducedFunction, map, l, tup;
 
   G := UnderlyingSemigroup(S);
   H := UnderlyingSemigroup(T);

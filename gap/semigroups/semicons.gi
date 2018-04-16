@@ -105,8 +105,6 @@ for _IsXSemigroup in ["IsFpSemigroup",
   Concatenation("for ", _IsXSemigroup, " and an integer"),
   [ValueGlobal(_IsXSemigroup), IsInt],
   function(filter, deg)
-    local n;
-    n := Maximum(deg, 1);
     return AsSemigroup(filter,
                        TrivialSemigroupCons(IsTransformationSemigroup, deg));
   end);
@@ -302,7 +300,7 @@ InstallMethod(RectangularBandCons,
 "for a filter and a positive integer and positive integer",
 [IsTransformationSemigroup, IsPosInt, IsPosInt],
 function(filter, m, n)
-  local L, R, div, deg, gen, gens, min, out, i;
+  local L, R, div, gen, gens, min, out, i;
 
   if m = 1 then
     return RightZeroSemigroup(filter, n);
@@ -317,7 +315,6 @@ function(filter, m, n)
   L := LeftZeroSemigroup(filter, m);
   R := RightZeroSemigroup(filter, n);
   div := DegreeOfTransformationSemigroup(L);
-  deg := div + DegreeOfTransformationSemigroup(R);
 
   gen := function(l, r)
     return Transformation(Concatenation(ListTransformation(L.(l), div),
