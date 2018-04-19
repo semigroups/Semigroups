@@ -271,7 +271,7 @@ function(m, n)
   m := m - 1;
   i := 1;
   base := [1 .. n];
-  coeff := n ^ 2; # Binomial( n, 1 ) * NrArrangements([1..n], 1)
+  coeff := n ^ 2;  # Binomial(n, 1) * NrArrangements([1 .. n], 1)
 
   while m > coeff do
     m := m - coeff;

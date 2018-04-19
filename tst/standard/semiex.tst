@@ -87,7 +87,7 @@ gap> List(Partitions(11), EndomorphismsPartition);
   <transformation semigroup of degree 11 with 5 generators>, 
   <full transformation monoid of degree 11> ]
 
-#T# ExamplesTest37: ham-examples
+# ExamplesTest37: ham-examples
 # planar uniform block bijection monoid
 gap> S := PlanarUniformBlockBijectionMonoid(1);
 <trivial block bijection group of degree 1 with 1 generator>
@@ -1256,7 +1256,7 @@ Error, Semigroups: SingularModularPartitionMonoid: usage,
 the second argument must be greater than 1 when the first argument is also gre\
 ater than 1,
 
-#T# Catalan monoid
+# Catalan monoid
 gap> S := CatalanMonoid(1);
 <trivial transformation group of degree 0 with 1 generator>
 gap> S := CatalanMonoid(2);
@@ -1272,7 +1272,7 @@ gap> S := CatalanMonoid(4);
 gap> Size(S);
 14
 
-#T# Example from Semigroupe manual, Section 5.18: Knast's counterexample
+# Example from Semigroupe manual, Section 5.18: Knast's counterexample
 gap> S := Semigroup(Transformation([4, 4, 8, 8, 8, 8, 4, 8]), 
 >                   Transformation([8, 2, 8, 2, 5, 5, 8, 8]),
 >                   Transformation([8, 8, 3, 7, 8, 3, 7, 8]),
@@ -1304,7 +1304,7 @@ false
 gap> IsSemigroupWithCommutingIdempotents(S);
 false
 
-#T# Example from Semigroupe manual, Section 5.19
+# Example from Semigroupe manual, Section 5.19
 gap> S := Semigroup(Transformation([3, 5, 3, 3, 5]), 
 >                   Transformation([6, 2, 4, 2, 2, 6]));;
 gap> Size(S);
@@ -1944,6 +1944,6 @@ gap> SingularDualSymmetricInverseMonoid(2);
 gap> SingularDualSymmetricInverseMonoid(5);
 <inverse bipartition semigroup ideal of degree 5 with 1 generator>
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

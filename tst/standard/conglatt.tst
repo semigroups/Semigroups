@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# Robustness against infinite semigroups
+# Robustness against infinite semigroups
 gap> S := FreeSemigroup(2);;
 gap> congs := CongruencesOfSemigroup(S);
 Error, Semigroups: PosetOfPrincipalCongruences: usage,
@@ -26,7 +26,7 @@ gap> poset := PosetOfPrincipalRightCongruences(S);
 Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
 first argument <S> must be an enumerable finite semigroup,
 
-#T# LatticeOfCongruences
+# LatticeOfCongruences
 gap> S := PartitionMonoid(2);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ], [ 1, 3, 9 ], [ 1, 2, 3, 4, 5, 9, 10 ], 
@@ -81,14 +81,14 @@ gap> DotString(l) = Concatenation(
 > "\n40 -- 30\n40 -- 31\n40 -- 39\n40 -- 41\n41 -- 32\n41 -- 33\n41 -- 35\n }");
 true
 
-#T# Left/RightCongruences (as a list)
+# Left/RightCongruences (as a list)
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> Size(LeftCongruencesOfSemigroup(S));
 21
 gap> Size(RightCongruencesOfSemigroup(S));
 31
 
-#T# LatticeOfLeft/RightCongruences
+# LatticeOfLeft/RightCongruences
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> LatticeOfLeftCongruences(S);
 [ [  ], [ 1, 9, 12 ], [ 1 ], [ 1, 2, 3, 9, 12, 13, 15, 17 ], 
@@ -117,7 +117,7 @@ gap> LatticeOfCongruences(S);
 gap> Size(CongruencesOfSemigroup(S));
 4
 
-#T# LatticeOfLeft/RightCongruences with restriction
+# LatticeOfLeft/RightCongruences with restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 >                                    Transformation([2, 2, 2]),
@@ -141,7 +141,7 @@ gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 [ [  ] ]
 
-#T# LatticeOf(Left/Right)Congruences with invalid restriction
+# LatticeOf(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> LatticeOfCongruences(S, restriction);
@@ -154,14 +154,14 @@ gap> LatticeOfRightCongruences(S, restriction);
 Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
 <restriction> must be a subset of <S>,
 
-#T# Left/RightCongruences (as a list)
+# Left/RightCongruences (as a list)
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> Size(LeftCongruencesOfSemigroup(S));
 21
 gap> Size(RightCongruencesOfSemigroup(S));
 31
 
-#T# PosetOfPrincipalLeft/RightCongruences
+# PosetOfPrincipalLeft/RightCongruences
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> PosetOfPrincipalLeftCongruences(S);
 [ [ 8, 11 ], [  ], [ 1, 2, 8, 11, 12 ], [ 2, 7, 10, 11, 12 ], [ 2 ], 
@@ -176,7 +176,7 @@ gap> PosetOfPrincipalCongruences(S);
 gap> Size(PrincipalCongruencesOfSemigroup(S));
 3
 
-#T# PosetOfPrincipalLeft/RightCongruences with restriction
+# PosetOfPrincipalLeft/RightCongruences with restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 >                                    Transformation([2, 2, 2]),
@@ -201,7 +201,7 @@ gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := PosetOfPrincipalCongruences(S, restriction);
 [  ]
 
-#T# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
+# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> PosetOfPrincipalCongruences(S, restriction);
@@ -214,7 +214,7 @@ gap> PosetOfPrincipalRightCongruences(S, restriction);
 Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
 <restriction> must be a subset of <S>,
 
-#T# PrincipalCongruencesOfSemigroup
+# PrincipalCongruencesOfSemigroup
 gap> S := Semigroup(Transformation([1, 3, 2]),
 >                   Transformation([3, 1, 3]));;
 gap> congs := PrincipalCongruencesOfSemigroup(S);
@@ -229,7 +229,7 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs> ]
 
-#T# PrincipalLeft/RightCongruencesOfSemigroup
+# PrincipalLeft/RightCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1, 1]), Transformation([2, 1])]);;
 gap> Length(PrincipalLeftCongruencesOfSemigroup(S));
 3
@@ -242,7 +242,7 @@ gap> PrincipalLeftCongruencesOfSemigroup(S)[2];
 <left semigroup congruence over <transformation semigroup of size 4, degree 2 
  with 2 generators> with 1 generating pairs>
 
-#T# MinimalCongruencesOfSemigroup
+# MinimalCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1, 3, 2]), Transformation([3, 1, 3])]);;
 gap> min := MinimalCongruencesOfSemigroup(S);
 [ <semigroup congruence over <transformation semigroup of size 13, degree 3 
@@ -275,7 +275,7 @@ gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
 gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
 [ 9 ]
 
-#T# Biggish example which forces garbage collection
+# Biggish example which forces garbage collection
 gap> S := Semigroup([Transformation([4, 2, 4, 4, 1]),
 >                    Transformation([4, 4, 1, 2, 2]),
 >                    Transformation([3, 3, 1, 2, 5])]);;
@@ -287,7 +287,7 @@ gap> MinimalCongruencesOfSemigroup(S);
   <semigroup congruence over <transformation semigroup of size 68, degree 5 
      with 3 generators> with 1 generating pairs> ]
 
-#T# JoinSemilatticeOfCongruences
+# JoinSemilatticeOfCongruences
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
 gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
@@ -302,7 +302,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `JoinLeftSemigroupCongruences' on 2 argu\
 ments
 
-#T# MinimalCongruences
+# MinimalCongruences
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
 gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
@@ -322,7 +322,7 @@ gap> MinimalCongruences(poset);
 gap> MinimalCongruences([]);
 [  ]
 
-#T# PosetOfCongruences
+# PosetOfCongruences
 gap> S := OrderEndomorphisms(2);;
 gap> pair1 := [Transformation([1, 1]), IdentityTransformation];;
 gap> pair2 := [IdentityTransformation, Transformation([2, 2])];;
@@ -332,7 +332,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 gap> PosetOfCongruences(coll);
 [ [ 3 ], [ 3 ], [  ] ]
 
-#T# Trivial poset
+# Trivial poset
 gap> poset := PosetOfCongruences([]);
 [  ]
 gap> CongruencesOfPoset(poset);
@@ -351,7 +351,7 @@ gap> S := Semigroup(Transformation([2, 1, 4, 3, 5, 2]),
 gap> LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4 ] ]
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(coll);
 gap> Unbind(congs);
@@ -366,6 +366,6 @@ gap> Unbind(pair3);
 gap> Unbind(poset);
 gap> Unbind(restriction);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/conglatt.tst");

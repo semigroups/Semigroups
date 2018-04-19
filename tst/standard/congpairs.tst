@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# PairsCongTest2: Checking robustness against infinite semigroups
+# PairsCongTest2: Checking robustness against infinite semigroups
 gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> x := GeneratorsOfSemigroup(S)[1];
@@ -49,7 +49,7 @@ false
 gap> ImagesElm(cong2, x ^ 5);
 [ s1^5 ]
 
-#T# PairsCongTest3: \= for two semigroup congruences
+# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> S := Semigroup(Transformation([1]));;
 gap> T := Monoid(gens);;
@@ -79,16 +79,16 @@ true
 gap> NrCongruenceClasses(u);
 1
 
-#T# PairsCongTest4: \* for two semigroup congruence classes
+# PairsCongTest4: \* for two semigroup congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> S := Semigroup(gens);;
 gap> gens := List(S, x -> [gens[1], x]);;
-gap> u := SemigroupCongruence(S, gens); # universal congruence
+gap> u := SemigroupCongruence(S, gens);  # universal congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
  of degree 10 with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(S);
 true
-gap> v := SemigroupCongruence(S, [gens[1], gens[1]]); # trivial congruence
+gap> v := SemigroupCongruence(S, [gens[1], gens[1]]);  # trivial congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
  of degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
@@ -123,7 +123,7 @@ gap> AsList(classes[4]);
 gap> Size(classes[4]);
 1
 
-#T# A semigroup congruence example
+# A semigroup congruence example
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 3]),
 >                    Transformation([4, 3, 3, 4, 4]),
@@ -187,7 +187,7 @@ gap> IsSubrelation(cong2, cong);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
-#T# A left semigroup congruence example that is also right
+# A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 >                   Transformation([3, 4, 3, 4, 4]),
 >                   Transformation([3, 4, 3, 4, 3]),
@@ -222,7 +222,7 @@ gap> LeftCongruenceClasses(cong);
 gap> IsRightSemigroupCongruence(cong);
 true
 
-#T# A left semigroup congruence example that is not right
+# A left semigroup congruence example that is not right
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 7, 5]),
 >                    Transformation([5, 7, 1, 6, 1, 7, 6])]);;
 gap> pair := [Transformation([1, 1, 1, 1, 1, 4, 1]),
@@ -243,7 +243,7 @@ false
 gap> IsRightSemigroupCongruence(cong);
 false
 
-#T# A right semigroup congruence example that is left
+# A right semigroup congruence example that is left
 gap> S := Semigroup([Transformation([2, 3, 5, 1, 4, 6, 1]),
 >                    Transformation([2, 6, 4, 2, 6, 1, 2])]);;
 gap> pairs := [[Transformation([6, 1, 2, 6, 1, 2, 6]),
@@ -261,7 +261,7 @@ true
 gap> IsLeftSemigroupCongruence(cong);
 true
 
-#T# A right semigroup congruence example that is not left
+# A right semigroup congruence example that is not left
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 >                   Transformation([3, 4, 3, 4, 4]),
 >                   Transformation([3, 4, 3, 4, 3]),
@@ -304,7 +304,7 @@ gap> IsSubrelation(lcong, cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `IsSubrelation' on 2 arguments
 
-#T# \in: Bad input
+# \in: Bad input
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 >                   Transformation([2, 4, 2, 3, 5]),
 >                   Transformation([3, 4, 3, 4, 3]),
@@ -320,7 +320,7 @@ Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 
-#T# Classes
+# Classes
 gap> S := Semigroup([
 > Transformation([1, 5, 4, 2, 1]), Transformation([2, 1, 1, 1, 3])]);;
 gap> pair := [Transformation([2, 2, 2, 3, 2]), Transformation([2, 2, 1, 1, 2])];
@@ -364,7 +364,7 @@ in the range of the second arg <cong>,
 gap> Size(class);
 89
 
-#T# Test multithreading in TC
+# Test multithreading in TC
 gap> S := DirectProduct(
 > FullTransformationMonoid(6), Semigroup(Transformation([2, 1])));
 <transformation monoid of degree 8 with 4 generators>
@@ -381,7 +381,7 @@ gap> cong2 := RightSemigroupCongruence(S, pairs);;
 gap> NrEquivalenceClasses(cong2);
 1
 
-#T# Test multithreading in TC
+# Test multithreading in TC
 gap> S := DirectProduct(FullTransformationMonoid(6),
 >                       Semigroup(Transformation([2, 1])));;
 gap> pair1 := [Transformation([1, 2, 3, 4, 5, 6, 8, 7]),
@@ -390,7 +390,7 @@ gap> cong1 := RightSemigroupCongruence(S, pair1);;
 gap> NrEquivalenceClasses(cong1);
 46656
 
-#T# Test duplicate generators of semigroup
+# Test duplicate generators of semigroup
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -417,7 +417,7 @@ gap> cong := SemigroupCongruence(S, [S.1, S.2]);;
 gap> NrEquivalenceClasses(cong);
 1
 
-#T# Test duplicate generators of semigroup as generating pairs
+# Test duplicate generators of semigroup as generating pairs
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -432,7 +432,7 @@ gap> cong := SemigroupCongruence(S, [S.3, S.4]);;
 gap> NrEquivalenceClasses(cong);
 16
 
-#T# JoinSemigroupCongruences
+# JoinSemigroupCongruences
 gap> S := PartitionMonoid(3);;
 gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
 >                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
@@ -456,7 +456,7 @@ true
 gap> IsSubrelation(cong2, cong1);
 false
 
-#T# JoinLeftSemigroupCongruences
+# JoinLeftSemigroupCongruences
 gap> S := PartitionMonoid(3);;
 gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
 >                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
@@ -480,7 +480,7 @@ true
 gap> IsSubrelation(cong2, cong1);
 false
 
-#T# JoinRightSemigroupCongruences
+# JoinRightSemigroupCongruences
 gap> S := PartitionMonoid(3);;
 gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
 >                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
@@ -513,7 +513,7 @@ gap> cong := SemigroupCongruence(S, [S.1, S.1 * S.2]);
 gap> [S.1, S.1] in cong;
 true
 
-#T# EquivalenceRelationPartition
+# EquivalenceRelationPartition
 gap> S := PartialBrauerMonoid(2);;
 gap> pair := [[Bipartition([[1, 2], [-1], [-2]]),
 >              Bipartition([[1, -1], [2], [-2]])]];;
@@ -534,7 +534,7 @@ gap> cong := UniversalSemigroupCongruence(S);;
 gap> Length(EquivalenceRelationPartition(cong)) = 1;
 true
 
-#T# SemigroupCongruenceByGeneratingPairs bad input
+# SemigroupCongruenceByGeneratingPairs bad input
 gap> S := FullTransformationMonoid(3);;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
 Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
@@ -555,7 +555,7 @@ gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
 Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
 <pairs> must all be lists of elements of <S>,
 
-#T# SemigroupCongruenceByGeneratingPairs for infinite semigroups
+# SemigroupCongruenceByGeneratingPairs for infinite semigroups
 gap> S := Semigroup(
 >    [Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 >     Matrix(IsMaxPlusMatrix, [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
@@ -570,7 +570,7 @@ gap> RightSemigroupCongruenceByGeneratingPairs(S, pairs);
 <right semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
  generators> with 1 generating pairs>
 
-#T# a left congruence over an fp semigroup
+# a left congruence over an fp semigroup
 gap> F := FreeSemigroup(2);;
 gap> S := F / [[F.2 ^ 2, F.2],
 >              [F.1 ^ 3, F.1 ^ 2],
@@ -596,7 +596,7 @@ true
 gap> Set(Flat(part)) = [1 .. Size(S)];
 true
 
-#T# a right congruence over an fp semigroup
+# a right congruence over an fp semigroup
 gap> F := FreeSemigroup(2);;
 gap> S := F / [[F.2 ^ 2, F.2],
 >              [F.1 ^ 3, F.1 ^ 2],
@@ -614,7 +614,7 @@ gap> class2 := EquivalenceClassOfElement(cong2, S.1);;
 gap> class < class2;
 false
 
-#T# \in: Bad input for an fp semigroup
+# \in: Bad input for an fp semigroup
 gap> F := FreeSemigroup(2);;
 gap> S := F / [[F.2 ^ 2, F.2],
 >              [F.1 ^ 3, F.1 ^ 2],
@@ -632,7 +632,7 @@ Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 
-#T# comparing congruence classes over fp semigroups
+# comparing congruence classes over fp semigroups
 gap> F := FreeSemigroup(3);;
 gap> gens := GeneratorsOfSemigroup(F);;
 gap> rels := [];;
@@ -661,7 +661,7 @@ false
 gap> class1 <> class2;
 true
 
-#T# creating a congruence over an fp monoid
+# creating a congruence over an fp monoid
 gap> F := FreeMonoid(2);;
 gap> S := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
@@ -680,7 +680,7 @@ gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
 <right semigroup congruence over <fp monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(S);
 gap> Unbind(T);
@@ -707,6 +707,6 @@ gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congpairs.tst");

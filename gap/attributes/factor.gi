@@ -132,10 +132,10 @@ InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
 function(data, pos)
   local word1, word2, schreiergen, schreierpos, schreiermult, orb;
 
-  word1 := []; # the word obtained by tracing schreierpos and schreiergen
-               # (left multiplication)
-  word2 := []; # the word corresponding to multipliers applied (if any)
-               # (right multiplication)
+  word1 := [];  # the word obtained by tracing schreierpos and schreiergen
+                # (left multiplication)
+  word2 := [];  # the word corresponding to multipliers applied (if any)
+                # (right multiplication)
 
   schreiergen := data!.schreiergen;
   schreierpos := data!.schreierpos;
@@ -167,7 +167,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       # avoid re-hashing x
       return EN_SEMI_FACTORIZATION(S, pos);
@@ -183,7 +183,7 @@ function(S, x)
   pos := Position(data, x);                     # Not <fail> since <f> in <s>
   rep := data[pos][4];                          # rep of R-class of <f>
 
-  word1 := TraceSchreierTreeForward(data, pos); # A word equal to <rep>
+  word1 := TraceSchreierTreeForward(data, pos);  # A word equal to <rep>
 
   # Compensate for the action of the multipliers, if necessary
   if l <> scc[1] then
@@ -221,7 +221,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
@@ -280,7 +280,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
@@ -305,8 +305,8 @@ function(S, x)
 
   k := Position(o, LambdaFunc(S)(rep));
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
-  rep := rep * EvaluateWord(gens, word2); # the R-class rep of the R-class of f
-  Append(word1, word2);                   # and this word equals rep
+  rep := rep * EvaluateWord(gens, word2);  # the R-class rep of the R-class of f
+  Append(word1, word2);                    # and this word equals rep
 
   # compensate for the action of the multipliers
   if l <> scc[1] then

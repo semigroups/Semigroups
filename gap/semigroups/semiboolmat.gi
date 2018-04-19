@@ -96,7 +96,7 @@ InstallMethod(AsMonoid, "for a boolean mat semigroup",
 [IsBooleanMatSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP / ref manual says
   fi;
   return Range(IsomorphismMonoid(IsBooleanMatMonoid, S));
 end);

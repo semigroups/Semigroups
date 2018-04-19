@@ -20,7 +20,7 @@ BindGlobal("TYPE_BIPART",
 function(n)
   local fam, type;
 
-  n := n + 1; # since the degree can be 0
+  n := n + 1;  # since the degree can be 0
 
   if IsBound(TYPES_BIPART[n]) then
     return TYPES_BIPART[n];

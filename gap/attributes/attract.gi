@@ -187,7 +187,7 @@ function(S, x)
   # if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(S);
-  Enumerate(o); # just in case
+  Enumerate(o);  # just in case
   for i in [2 .. Length(o)] do
     if lambdarank(o[i]) = rank and tester(o[i], rho_x) then
       for rho in rhos do

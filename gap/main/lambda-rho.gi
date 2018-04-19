@@ -251,7 +251,7 @@ function(o, m)
     o!.schutzstab[m] := false;
   elif IsPermGroup(g) then
     o!.schutzstab[m] := StabChainImmutable(g);
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     o!.schutzstab[m] := g;
   fi;
 
@@ -455,7 +455,7 @@ function(o, m)
     o!.schutzstab[m] := false;
   elif IsPermGroup(G) then
     o!.schutzstab[m] := StabChainImmutable(G);
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     o!.schutzstab[m] := G;
   fi;
   return G;

@@ -97,17 +97,17 @@ Unbind(_InstallRandom0);
 #############################################################################
 
 _ProcessArgs1 := function(filt, params)
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
-  if Length(params) < 2 then # degree / dimension
+  if Length(params) < 2 then  # degree / dimension
     params[2] := Random([1 .. 20]);
   elif not IsPosInt(params[2]) then
     return "the third argument (matrix dimension) must be a pos int,";
   fi;
-  if Length(params) < 3 then # threshold
+  if Length(params) < 3 then  # threshold
     params[3] := Random([1 .. 20]);
   elif not IsPosInt(params[3]) then
     return "the fourth argument (semiring threshold) must be a pos int,";
@@ -167,22 +167,22 @@ Unbind(_ProcessArgs1);
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsNTPMatrixSemigroup, IsList],
 function(filt, params)
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
-  if Length(params) < 2 then # dimension
+  if Length(params) < 2 then  # dimension
     params[2] := Random([1 .. 20]);
   elif not IsPosInt(params[2]) then
     return "the third argument (matrix dimension) must be a pos int,";
   fi;
-  if Length(params) < 3 then # threshold
+  if Length(params) < 3 then  # threshold
     params[3] := Random([1 .. 20]);
   elif not IsPosInt(params[3]) then
     return "the fourth argument (semiring threshold) must be a pos int,";
   fi;
-  if Length(params) < 4 then # period
+  if Length(params) < 4 then  # period
     params[4] := Random([1 .. 20]);
   elif not IsPosInt(params[4]) then
     return "the fifth argument (semiring period) must be a pos int,";
@@ -345,7 +345,7 @@ _InstallIsomorphism0 := function(filter)
   [ValueGlobal(IsXSemigroup)],
   function(S)
     if MultiplicativeNeutralElement(S) = fail then
-      return fail; # so that we do the same as the GAP/ref manual says
+      return fail;  # so that we do the same as the GAP/ref manual says
     fi;
     return Range(IsomorphismMonoid(ValueGlobal(IsXMonoid), S));
   end);
@@ -412,7 +412,7 @@ _InstallIsomorphism1 := function(filter)
   [ValueGlobal(IsXSemigroup)],
   function(S)
     if MultiplicativeNeutralElement(S) = fail then
-      return fail; # so that we do the same as the GAP/ref manual says
+      return fail;  # so that we do the same as the GAP/ref manual says
     fi;
     return Range(IsomorphismMonoid(ValueGlobal(IsXMonoid), S));
   end);
@@ -487,7 +487,7 @@ InstallMethod(AsMonoid, "for an ntp matrix semigroup",
 [IsNTPMatrixSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsNTPMatrixMonoid, S));
 end);

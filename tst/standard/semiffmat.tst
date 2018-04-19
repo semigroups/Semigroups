@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# BruteForceIsoCheck helper functions
+# BruteForceIsoCheck helper functions
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;
 >   if not IsInjective(iso) or not IsSurjective(iso) then
@@ -91,7 +91,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > PBR([[-1], [-4], [-3], [-4], [-1]], [[1, 5], [], [3], [2, 4], []]),
@@ -115,7 +115,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMatrixOverFiniteFieldSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(GF(2),
@@ -149,7 +149,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s2 ^ 2, s2],
@@ -175,7 +175,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Bipartition([[1, 5, -1], [2, 4, -4], [3, -3], [-2], [-5]]),
@@ -199,7 +199,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Transformation([1, 4, 3, 4, 1]), Transformation([3, 2, 3, 3, 2])]);
@@ -222,7 +222,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -256,7 +256,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -290,7 +290,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -324,7 +324,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -358,7 +358,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -392,7 +392,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -426,7 +426,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -460,7 +460,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -750,6 +750,6 @@ gap> MatrixOverFiniteFieldIdempotentCreator(GLM(3, 3), RowSpaceBasis(y), fail);
 Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
   [0*Z(3), 0*Z(3), 0*Z(3)]])
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiffmat.tst");

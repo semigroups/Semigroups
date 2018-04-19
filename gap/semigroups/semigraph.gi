@@ -287,7 +287,7 @@ function(x, y)
     return Objectify(type, [y{[i + 1 .. Length(y)]}, graph]);
   elif j > 1 then
     return Objectify(type, [x{[1 .. j - 1]}, graph]);
-  else # x = y ^ -1
+  else  # x = y ^ -1
     return Range(yobj);
   fi;
 end);

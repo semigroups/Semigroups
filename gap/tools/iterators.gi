@@ -353,7 +353,7 @@ function(arg)
     iter := IteratorByNextIterator(iter);
   fi;
 
-  for filt in arg[3] do # filters
+  for filt in arg[3] do  # filters
     SetFilterObj(iter, filt);
   od;
 
@@ -394,7 +394,7 @@ end);
 # FIXME move this!
 
 InstallMethod(Iterator, "for an acting semigroup",
-[IsActingSemigroup], 5, # to beat the method for semigroup ideals
+[IsActingSemigroup], 5,  # to beat the method for semigroup ideals
 function(S)
   local iter;
 
@@ -660,7 +660,7 @@ end);
 InstallMethod(Iterator, "for a full transformation semigroup",
 [IsTransformationSemigroup and IsFullTransformationSemigroup and
  HasGeneratorsOfSemigroup],
-7, # to beat the method for acting semigroups TODO check this is necessary!!
+7,  # to beat the method for acting semigroups TODO check this is necessary!!
 function(S)
   local iter;
 

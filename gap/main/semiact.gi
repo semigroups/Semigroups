@@ -37,7 +37,7 @@ SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
     for i in [2 .. Length(o)] do
       orb[i] := ShallowCopy(o[i]);
       if not IsEmpty(o[i]) then
-        max := MaximumList(o[i]); # nr kernel classes
+        max := MaximumList(o[i]);  # nr kernel classes
       else
         max := 0;
       fi;
@@ -266,7 +266,7 @@ function(Constructor, S, coll, opts)
 
     x := old_orb[i][4];
 
-    pos := old_schreiermult[i]; # lambda-index for x
+    pos := old_schreiermult[i];  # lambda - index for x
     m := lookup[pos];
     rank := ActionRank(t)(x);
 
@@ -604,7 +604,7 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  elif Position(S, x) <> fail then # check if x is already known to be in S
+  elif Position(S, x) <> fail then  # check if x is already known to be in S
     return true;
   elif IsFullyEnumerated(S) then
     return false;
@@ -696,7 +696,7 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  elif Position(S, x) <> fail then # check if x is already known to be in S
+  elif Position(S, x) <> fail then  # check if x is already known to be in S
     return true;
   elif IsFullyEnumerated(S) then
     return false;

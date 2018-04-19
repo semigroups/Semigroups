@@ -16,7 +16,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# IdealsTest1
+# IdealsTest1
 gap> gens := [Transformation([2, 6, 1, 7, 5, 3, 4]),
 >   Transformation([5, 3, 7, 2, 1, 6, 4]),
 >   Transformation([2, 5, 5, 3, 4, 2, 3]),
@@ -206,7 +206,7 @@ gap> I := SemigroupIdeal(S, x);
 gap> IsZeroSimpleSemigroup(I);
 true
 
-#T# IdealsTest2
+# IdealsTest2
 gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 1, 5, 5]),
 >   Transformation([4, 2, 2, 2, 4])];;
@@ -225,7 +225,7 @@ gap> GreensDClasses(I);
   <Green's D-class: Transformation( [ 4, 5, 2, 4, 4 ] )>, 
   <Green's D-class: Transformation( [ 2, 2, 2, 2, 2 ] )> ]
 
-#T# IdealsTest3
+# IdealsTest3
 gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([2, 4, 1, 2]),
 > Transformation([3, 1, 1, 3]),
@@ -236,7 +236,7 @@ gap> I := SemigroupIdeal(s, gens{[1, 2]});
 gap> o := LambdaOrb(I);
 <closed ideal lambda orbit with 11 points in 2 components>
 
-#T# IdealsTest4 
+# IdealsTest4 
 gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([1, 4, 1, 2]),
 >  Transformation([2, 4, 1, 1]),
@@ -247,7 +247,7 @@ gap> I := SemigroupIdeal(s, [gens[2] * gens[1], gens[3] ^ 3]);
 gap> o := RhoOrb(I);
 <closed ideal rho orbit with 10 points in 2 components>
 
-#T# IdealsTest5
+# IdealsTest5
 gap> gens := [
 > PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], [4, 6, 7, 3, 8, 2, 9, 5]),
 > PartialPerm([1, 2, 7, 9], [5, 6, 4, 3]),
@@ -265,7 +265,7 @@ gap> L := GreensLClassOfElement(I, gens[1] ^ 2);
 gap> DClassOfLClass(L);
 <Green's D-class: [1,3,9][4,7][10,8](2)(6)>
 
-#T# IdealsTest6: \in for an inverse op semigroup ideal
+# IdealsTest6: \in for an inverse op semigroup ideal
 gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 9, 10, 6, 3, 8, 4]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 8], [6, 2, 8, 4, 7, 5, 3]),
@@ -283,7 +283,7 @@ gap> I := SemigroupIdeal(S,
 gap> Size(I);
 4626941
 
-#T# IdealsTest7: attributes.gi
+# IdealsTest7: attributes.gi
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 5]),
 >  Transformation([1, 5, 3, 5, 5, 5]),
 >  Transformation([2, 4, 6, 1, 6, 5]),
@@ -352,7 +352,7 @@ gap> MinimalDClass(I);
 gap> MinimalDClass(J);
 <Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>
 
-#T# IdealsTest8: attributes
+# IdealsTest8: attributes
 gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 9, 10, 6, 3, 8, 4]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 8], [6, 2, 8, 4, 7, 5, 3]),
@@ -398,7 +398,7 @@ gap> IsomorphismPermGroup(I);
 MappingByFunction( <trivial partial perm group of rank 10 with 1 generator>
 , Group(()), <Attribute "AsPermutation">, function( x ) ... end )
 
-#T# IdealsTest9: attributes.gi
+# IdealsTest9: attributes.gi
 gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >   Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
 >   Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
@@ -440,7 +440,7 @@ gap> MinimalDClass(L);
 gap> MinimalDClass(S);
 <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )>
 
-#T# IdealsTest10
+# IdealsTest10
 gap> R := Semigroup([
 > Bipartition([[1, 2, 3, 5, -3], [4, 6, 7, -5], [-1], [-2, -4, -7],
 >   [-6]]),
@@ -504,7 +504,7 @@ gap> MinimalDClass(R);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], 
   [ -1, -2, -3, -4, -5, -7 ], [ -6 ]>>
 
-#T# IdealsTest11: greens.gi for ideals
+# IdealsTest11: greens.gi for ideals
 gap> S := Semigroup([Transformation([1, 2, 6, 6, 5, 5]),
 >   Transformation([2, 3, 1, 3, 6, 5]),
 >   Transformation([3, 4, 6, 3, 2, 1]),
@@ -588,7 +588,7 @@ gap> C := SemigroupIdeal(U, Transformation([3, 3, 1, 5, 1, 1]));
 <regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> ideals := [A, B, C, I, J, K, L];;
 
-#T# IdealsTest12: GreensXClasses
+# IdealsTest12: GreensXClasses
 gap> GreensDClasses(I);
 [ <Green's D-class: Transformation( [ 4, 5, 2, 1, 6, 5 ] )>, 
   <Green's D-class: Transformation( [ 5, 2, 6, 2, 1, 4 ] )>, 
@@ -679,7 +679,7 @@ gap> Size(GreensLClasses(K));
 gap> Size(GreensRClasses(K));
 791
 
-#T# IdealsTest13: XClassReps
+# IdealsTest13: XClassReps
 gap> DClassReps(J);
 [ Transformation( [ 1, 2, 6, 6, 5, 5 ] ), 
   Transformation( [ 1, 2, 5, 5, 5, 5 ] ), 
@@ -700,7 +700,7 @@ gap> LClassReps(L){[10 .. 20]};
   <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -5 ], [ -1, -3, -4, -6, -7 ], [ -2 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -4, -6 ], [ -3, -5, -7 ]> ]
 
-#T# IdealsTest14: GreensXClassOfElement
+# IdealsTest14: GreensXClassOfElement
 gap> GreensDClassOfElement(I, Transformation([2, 2, 6, 2, 5, 5]));
 <Green's D-class: Transformation( [ 2, 2, 5, 2, 2, 1 ] )>
 gap> GreensDClassOfElement(J, Transformation([6, 6, 4, 2, 4, 2]));
@@ -718,7 +718,7 @@ gap> GreensRClassOfElement(B, Transformation([3, 4, 6, 6, 4, 2]));
 gap> GreensHClassOfElement(C, Transformation([2, 2, 5, 2, 2, 1]));
 <Green's H-class: Transformation( [ 2, 2, 5, 2, 2, 1 ] )>
 
-#T# IdealsTest15: NrXClasses (Recreate objects)
+# IdealsTest15: NrXClasses (Recreate objects)
 gap> I := SemigroupIdeal(S, gensI);;
 gap> J := SemigroupIdeal(S, gensJ);;
 gap> K := SemigroupIdeal(T, gensK);;
@@ -736,11 +736,11 @@ gap> List(ideals, NrLClasses);
 gap> List(ideals, NrHClasses);
 [ 2225, 1722, 1456, 2347, 2326, 1555, 1568 ]
 
-#T# IdealsTest16: NrRegularDClasses
+# IdealsTest16: NrRegularDClasses
 gap> List(ideals, NrRegularDClasses);
 [ 4, 3, 3, 4, 4, 5, 4 ]
 
-#T# IdealsTest17: Idempotents, (and with integer)
+# IdealsTest17: Idempotents, (and with integer)
 gap> L := SemigroupIdeal(R, gensL);;
 gap> Idempotents(A){[444 .. 450]};
 [ Transformation( [ 1, 3, 3, 4, 5, 3 ] ), 
@@ -782,13 +782,13 @@ gap> Idempotents(L, 2);
      [ -2 ]>, <bipartition: [ 1, 5, -1, -5 ], [ 2, 3, 4, 6, -2, -3, -4, -7 ], 
      [ 7 ], [ -6 ]> ]
 
-#T# IdealsTest18: NrIdempotents
+# IdealsTest18: NrIdempotents
 gap> List(ideals, NrIdempotents);
 [ 547, 528, 528, 774, 774, 43, 1406 ]
 gap> List(ideals, i -> Size(Idempotents(i)));
 [ 547, 528, 528, 774, 774, 43, 1406 ]
 
-#T# IdealsTest19: PartialOrderOfDClasses
+# IdealsTest19: PartialOrderOfDClasses
 gap> PartialOrderOfDClasses(K){[100 .. 111]};
 [ [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], 
   [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], [ 1, 5, 6, 7 ], 
@@ -824,11 +824,11 @@ gap> PartialOrderOfDClasses(B){[10 .. 15]};
 gap> PartialOrderOfDClasses(C);
 [ [ 1, 2, 3 ], [ 2, 3 ], [ 3 ] ]
 
-#T# IdealsTest20: Check that sizes were correct
+# IdealsTest20: Check that sizes were correct
 gap> List(ideals, Size);
 [ 9285, 7172, 6906, 19167, 19146, 3782, 1568 ]
 
-#T# IdealsTest21 
+# IdealsTest21 
 # this example caused a seg fault before changeset 34d25659aa72
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
@@ -841,7 +841,7 @@ gap> I := SemigroupIdeal(S, PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));
 <inverse partial perm semigroup ideal of rank 7 with 1 generator>
 gap> GeneratorsOfSemigroup(I);;
 
-#T# IdealsTest22
+# IdealsTest22
 # test for \in method from idealact.gi (only applies to ideals that know
 # apriori that they are regular) which partially enumerates the semigroup ideal
 # data
@@ -859,7 +859,7 @@ gap> Size(I);
 gap> Size(SemigroupIdeal(S, I));
 35136
 
-#T# IdealsTest23: IsomorphismPermGroup
+# IdealsTest23: IsomorphismPermGroup
 # for an ideal which happens to be a group...
 gap> S := FullTransformationSemigroup(6);;
 gap> S := Semigroup(GroupOfUnits(S));;
@@ -869,7 +869,7 @@ MappingByFunction( <transformation group of size 720, degree 6 with
   2 generators>, Group([ (1,2,3,4,5,6), (1,
 2) ]), function( f ) ... end, function( x ) ... end )
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(B);
 gap> Unbind(C);
@@ -895,6 +895,6 @@ gap> Unbind(o);
 gap> Unbind(s);
 gap> Unbind(x);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/ideals.tst");

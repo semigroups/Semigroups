@@ -127,7 +127,7 @@ function(R, n, ranks)
   od;
   # Swirl around
   # Is Permuting rows/columns enough?
-  conj := Random(GL(n, R)); # PermutationMat(Random(Sym(n)), n, R);
+  conj := Random(GL(n, R));  # PermutationMat(Random(Sym(n)), n, R);
   return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                   R,
                                   mat ^ conj);

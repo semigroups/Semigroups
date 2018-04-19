@@ -1,3 +1,2 @@
 disable:
   - align-assignments
-  - not-enough-space-before-comment

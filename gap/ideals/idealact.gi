@@ -441,39 +441,39 @@ function(data, limit, record)
 
   data!.looking := looking;
 
-  ht   := data!.ht;     # so far found R-reps
-  orb  := data!.orbit;  # the so far found R-reps data
+  ht   := data!.ht;      # so far found R-reps
+  orb  := data!.orbit;   # the so far found R-reps data
   nr_r := Length(orb);
-  d    := data!.dorbit; # the so far found D-classes
+  d    := data!.dorbit;  # the so far found D-classes
   nr_d := Length(d);
-  reps := data!.reps;   # reps grouped by equal lambda-scc-index and
-                        # rho-value-index
+  reps := data!.reps;    # reps grouped by equal lambda-scc-index and
+                         # rho-value-index
 
-  repslens := data!.repslens;       # Length(reps[m][i])=repslens[m][i]
-  lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
+  repslens := data!.repslens;  # Length(reps[m][i])=repslens[m][i]
+  lenreps := data!.lenreps;    # lenreps[m]=Length(reps[m])
 
   lambdarhoht := data!.lambdarhoht;
   # HTValue(lambdarhoht, [m,l])=position in reps[m]
   # of R-reps with lambda-scc-index=m and
   # rho-value-index=l
 
-  repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
-                                  # = repslookup[m][i][j]
-                                  # = HTValue(ht, reps[m][i][j])
+  repslookup := data!.repslookup;  # Position(orb, reps[m][i][j])
+                                   # = repslookup[m][i][j]
+                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
-                                  # containing orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1;  # orblookup1[i] position in reps[m]
+                                   # containing orb[i][4] (the R-rep)
 
-  orblookup2 := data!.orblookup2; # orblookup2[i] position in
-                                  # reps[m][orblookup1[i]]
-                                  # containing orb[i][4] (the R-rep)
+  orblookup2 := data!.orblookup2;  # orblookup2[i] position in
+                                   # reps[m][orblookup1[i]]
+                                   # containing orb[i][4] (the R-rep)
 
-  rholookup := data!.rholookup;   # rholookup[i]=rho-value-index of orb[i][4]
+  rholookup := data!.rholookup;    # rholookup[i]=rho-value-index of orb[i][4]
 
-  stopper := data!.stopper;       # stop at this place in the orbit
+  stopper := data!.stopper;        # stop at this place in the orbit
 
   # generators
-  gens := data!.gens; # generators of the parent semigroup
+  gens := data!.gens;  # generators of the parent semigroup
   genstoapply := data!.genstoapply;
 
   I := data!.parent;
@@ -543,7 +543,7 @@ function(data, limit, record)
         lenreps[n] := 0;
         lenscc := Length(lambdascc);
       od;
-      new := true; # x is a new R-rep
+      new := true;  # x is a new R-rep
     fi;
     m := lambdalookup[l];
     if l <> lambdascc[m][1] then
@@ -554,10 +554,10 @@ function(data, limit, record)
     if not new then
       val := htvalue(ht, x);
       if val <> fail then
-        if pos <> fail then # we are multiplying the <i>th D-rep by a generator
+        if pos <> fail then  # we are multiplying the <i>th D-rep by a generator
           AddSet(poset[i], datalookup[val]);
         fi;
-        return; # x is one of the old R-reps
+        return;  # x is one of the old R-reps
       fi;
     fi;
 
@@ -566,7 +566,7 @@ function(data, limit, record)
     l := htvalue(rhooht, xx);
     if l = fail then
       l := UpdateIdealRhoOrb(rhoo, xx, x, pos, gen, idealpos, rholookfunc);
-      new := true; # x is a new R-rep
+      new := true;  # x is a new R-rep
     fi;
     schutz := LambdaOrbStabChain(lambdao, m);
 
@@ -588,7 +588,7 @@ function(data, limit, record)
           if pos <> fail then
             AddSet(poset[i], datalookup[repslookup[m][ind][n]]);
           fi;
-          return; # x is on of the old R-reps
+          return;  # x is on of the old R-reps
         fi;
       od;
     fi;
@@ -619,7 +619,7 @@ function(data, limit, record)
     mults := RhoOrbMults(rhoo, mm);
     cosets := RhoCosets(d[nr_d]);
 
-    for l in rhoscc[mm] do # install the R-class reps
+    for l in rhoscc[mm] do  # install the R-class reps
       if not IsBound(lambdarhoht[l]) then
         lambdarhoht[l] := [];
       fi;
@@ -684,7 +684,7 @@ function(data, limit, record)
   i := data!.pos;  # points in orb in position at most i have descendants
 
   while nr_d <= limit and i < nr_d and i <> stopper do
-    i := i + 1; # advance in the dorb
+    i := i + 1;  # advance in the dorb
     poset[i] := [];
     x := Representative(d[i]);
 
@@ -949,14 +949,14 @@ function(data, limit, record)
                                   # reps[m] of R-reps with lambda-scc-index=m
                                   # and rho-value-index=l
 
-  repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
+  repslookup := data!.repslookup;  # Position(orb, reps[m][i][j])
                                   # = repslookup[m][i][j]
                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
+  orblookup1 := data!.orblookup1;  # orblookup1[i] position in reps[m]
                                   # containing orb[i][4] (the R-rep)
 
-  orblookup2 := data!.orblookup2; # orblookup2[i] position in
+  orblookup2 := data!.orblookup2;  # orblookup2[i] position in
                                   # reps[m][orblookup1[i]]
                                   # containing orb[i][4] (the R-rep)
 
@@ -965,7 +965,7 @@ function(data, limit, record)
   stopper := data!.stopper;       # stop at this place in the orbit
 
   # generators
-  gens := data!.gens; # generators of the parent semigroup
+  gens := data!.gens;  # generators of the parent semigroup
   genstoapply := data!.genstoapply;
 
   I := data!.parent;
@@ -1029,7 +1029,7 @@ function(data, limit, record)
         lenreps[n] := 0;
         lenscc := Length(lambdascc);
       od;
-      new := true; # x is a new R-rep
+      new := true;  # x is a new R-rep
     fi;
     m := lambdalookup[l];
     if l <> lambdascc[m][1] then
@@ -1040,10 +1040,10 @@ function(data, limit, record)
     if not new then
       val := htvalue(ht, x);
       if val <> fail then
-        if pos <> fail then # we are multiplying the <i>th D-rep by a generator
+        if pos <> fail then  # we are multiplying the <i>th D-rep by a generator
           AddSet(poset[i], datalookup[val]);
         fi;
-        return; # x is one of the old R-reps
+        return;  # x is one of the old R-reps
       fi;
     fi;
 
@@ -1056,7 +1056,7 @@ function(data, limit, record)
         lambdarhoht[n] := [];
       od;
       rholen := Length(rhoo);
-      new := true; # x is a new R-rep
+      new := true;  # x is a new R-rep
     fi;
     schutz := LambdaOrbStabChain(lambdao, m);
 
@@ -1091,7 +1091,7 @@ function(data, limit, record)
     # install the R-class reps of the new D-rep
     mults := RhoOrbMults(rhoo, mm);
 
-    for l in rhoscc[mm] do # install the R-class reps
+    for l in rhoscc[mm] do  # install the R-class reps
       nr_r := nr_r + 1;
       y := mults[l][1] * x;
       orb[nr_r] := [I, m, lambdao, y, false, nr_r];
@@ -1099,7 +1099,7 @@ function(data, limit, record)
 
       lenreps[m] := lenreps[m] + 1;
       ind := lenreps[m];
-      lambdarhoht[l][m] := ind; # this can't have been seen before
+      lambdarhoht[l][m] := ind;  # this can't have been seen before
       reps[m][ind] := [y];
       repslookup[m][ind] := [nr_r];
       repslens[m][ind] := 1;
@@ -1135,7 +1135,7 @@ function(data, limit, record)
   i := data!.pos;       # points in orb in position at most i have descendants
 
   while nr_d <= limit and i < nr_d and i <> stopper do
-    i := i + 1; # advance in the dorb
+    i := i + 1;  # advance in the dorb
     poset[i] := [];
     x := Representative(d[i]);
 

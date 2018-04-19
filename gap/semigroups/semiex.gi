@@ -27,7 +27,7 @@
 # IsEndomorphismOfPartition := function(bl, f)
 #   local imblock, x;
 #
-#   for x in bl[1] do #blocks
+#   for x in bl[1] do  #blocks
 #     imblock := bl[1][bl[2][x[1] ^ f]];
 #     if not ForAll(x, y -> y ^ f in imblock) then
 #       return false;
@@ -69,16 +69,16 @@ function(partition)
 
   # preprocessing...
 
-  s := 0;         # nr of distinct block sizes
-  r := 0;         # nr of block sizes with at least one other block of equal
-                  # size
-  distinct := []; # indices of blocks with distinct block sizes
-  equal := [];    # indices of blocks with at least one other block of equal
-                  # size, partitioned according to the sizes of the blocks
-  prev := 0;      # size of the previous block
-  n := 0;         # the degree of the transformations
-  blocks := [];   # the actual blocks of the partition
-  unique := [];   # blocks of a unique size
+  s := 0;          # nr of distinct block sizes
+  r := 0;          # nr of block sizes with at least one other block of equal
+                   # size
+  distinct := [];  # indices of blocks with distinct block sizes
+  equal := [];     # indices of blocks with at least one other block of equal
+                   # size, partitioned according to the sizes of the blocks
+  prev := 0;       # size of the previous block
+  n := 0;          # the degree of the transformations
+  blocks := [];    # the actual blocks of the partition
+  unique := [];    # blocks of a unique size
 
   for i in [1 .. Length(partition)] do
     blocks[i] := [n + 1 .. partition[i] + n];
@@ -226,7 +226,7 @@ function(partition)
     fi;
     x := MappingPermListList(Concatenation(blocks{equal[r]}),
                              Concatenation(x));
-    Add(gens, AsTransformation(x)); # (x, id)=u in the paper
+    Add(gens, AsTransformation(x));  # (x, id)=u in the paper
 
     y := Permuted(blocks{equal[r]}, (1, 2));
     y[1] := Permuted(y[1], PermList(Concatenation([2 .. n], [1])));
@@ -242,10 +242,10 @@ function(partition)
     if Length(blocks[unique[1]]) > 1 then
       w := MappingPermListList(blocks[unique[1]],
                                Permuted(blocks[unique[1]], (1, 2)));
-      Add(gens, AsTransformation(w)); # (id, (1,2))=w in the paper
+      Add(gens, AsTransformation(w));  # (id, (1,2))=w in the paper
     fi;
   fi;
-  if s - r >= 2 then # the (s-r) generators of W_2 in the proof
+  if s - r >= 2 then  # the (s-r) generators of W_2 in the proof
     for i in [1 .. s - r - 1] do
       if Length(blocks[unique[i]]) <> 1 then
         x := Permuted(blocks[unique[i]], (1, 2));
@@ -348,9 +348,9 @@ function(S)
   fi;
 
   po := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
-  au := []; # automorphism groups partitions by size
-  id := []; # ideals (as sets of indices) partitioned by size
-  su := []; # induced subdigraphs corresponding to ideals
+  au := [];  # automorphism groups partitions by size
+  id := [];  # ideals (as sets of indices) partitioned by size
+  su := [];  # induced subdigraphs corresponding to ideals
 
   for x in OutNeighbors(po) do
     gr := InducedSubdigraph(po, x);
@@ -388,7 +388,7 @@ function(S)
     od;
   od;
 
-  min := id[1][1][1]; # the index of the element in the minimal ideal
+  min := id[1][1][1];  # the index of the element in the minimal ideal
   Add(out, PartialPermNC([min], [min]));
 
   # All ideals of size 2 are isomorphic and have trivial automorphism group

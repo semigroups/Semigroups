@@ -95,7 +95,7 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   #
   enum := EnumeratorByFunctions(obj, record);
 
-  for filt in filts do # filters
+  for filt in filts do  # filters
     SetFilterObj(enum, filt);
   od;
   return enum;
@@ -131,7 +131,7 @@ function(obj, record, baseenum, convert, filts)
   record.baseenum := baseenum;
   record.enumofenums := EmptyPlist(Length(baseenum));
 
-  if not IsBound(record.Length) then # maybe a better way is in record.Length...
+  if not IsBound(record.Length) then  # maybe a better way is in record.Length...
     record.Length := function(enum)
       local tot, enumofenums, baseenum, i;
       tot := 0;
@@ -214,7 +214,7 @@ end);
 # TODO write an improved version for enumerator sorted
 
 InstallMethod(Enumerator, "for an acting semigroup",
-[IsActingSemigroup], 5, # to beat the method for semigroup ideals
+[IsActingSemigroup], 5,  # to beat the method for semigroup ideals
 function(s)
   local record, convert;
 
@@ -247,7 +247,7 @@ end);
 # graded lambda orbs of the R-class reps.
 
 InstallMethod(EnumeratorSorted, "for an acting semigroup",
-[IsActingSemigroup], 5, # to beat the method for semigroup ideals
+[IsActingSemigroup], 5,  # to beat the method for semigroup ideals
 S -> Immutable(SSortedList(ListIterator(Iterator(S), Size(S)))));
 
 # different method for regular/inverse
@@ -439,7 +439,7 @@ function(h)
         end,
 
         Membership := function(elm, enum)
-          return elm in h; # the H-class itself!
+          return elm in h;  # the H-class itself!
         end,
 
         Length := enum -> Size(h),

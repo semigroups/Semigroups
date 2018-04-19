@@ -82,19 +82,19 @@ end);
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-1, # to beat the library method
+1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsPartialPermSemigroup and IsInverseSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal], 1, # to beat the library method
+ HasGeneratorsOfSemigroupIdeal], 1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsPartialPermMonoid and IsInverseMonoid and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal], 1, # to beat the library method
+ HasGeneratorsOfSemigroupIdeal], 1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
@@ -332,7 +332,8 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if not IsActingSemigroup(I) then # to keep the craziness in the library happy!
+  if not IsActingSemigroup(I) then
+    # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I)
       and not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then

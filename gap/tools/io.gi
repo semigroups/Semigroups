@@ -57,7 +57,7 @@ function(arg)
 
   if Length(arg) = 1 then
     name := arg[1];
-    line_nr := 0; # read all lines
+    line_nr := 0;  # read all lines
   elif Length(arg) = 2 then
     name := arg[1];
     line_nr := arg[2];
@@ -185,8 +185,8 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
   out := [];
 
   while i < Length(line) do
-    m := Int([line[i]]);                                      # blocksize
-    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
+    m := Int([line[i]]);                                       # blocksize
+    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]}));  # max domain
     f := line{[m + i + 1 .. i + m * (deg + 1)]};
     k := k + 1;
     out[k] := EmptyPlist(deg);
@@ -196,11 +196,11 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
     i := i + m * (deg + 1) + 1;
   od;
 
-  if line[1] = 't' then   # transformations
+  if line[1] = 't' then    # transformations
     Apply(out, TransformationNC);
-  elif line[1] = 'p' then # partial perms
+  elif line[1] = 'p' then  # partial perms
     Apply(out, DensePartialPermNC);
-  elif line[1] = 'b' then # bipartitions
+  elif line[1] = 'b' then  # bipartitions
     Apply(out, BIPART_NC);
   fi;
 

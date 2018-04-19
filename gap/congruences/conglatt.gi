@@ -84,8 +84,8 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
   nr := 0;
   for pair in pairs do
     badcong := false;
-    newchildren := []; # Children of newcong
-    newparents := [];  # Parents of newcong
+    newchildren := [];  # Children of newcong
+    newparents := [];   # Parents of newcong
     newcong := SemigroupXCongruence(S, pair);
     for i in [1 .. Length(congs)] do
       pair1 := GeneratingPairsOfXSemigroupCongruence(congs[i])[1];
@@ -177,16 +177,16 @@ function(poset, join_func)
   ignore := BlistList([1 .. nrcongs], []);
   while found do
     # There are new congs to try joining
-    start := length + 1;     # New congs start here
-    found := false;          # Have we found any more congs on this sweep?
-    length := Length(congs); # Remember starting position for next sweep
+    start := length + 1;      # New congs start here
+    found := false;           # Have we found any more congs on this sweep?
+    length := Length(congs);  # Remember starting position for next sweep
 
     for i in [start .. Length(congs)] do      # for each new cong
       for j in [1 .. Length(princ_congs)] do  # for each 1-generated cong
         newcong := join_func(congs[i], princ_congs[j]);
-        badcong := false;  # Is newcong the same as another cong?
-        newchildren := []; # Children of newcong
-        newparents := [];  # Parents of newcong
+        badcong := false;   # Is newcong the same as another cong?
+        newchildren := [];  # Children of newcong
+        newparents := [];   # Parents of newcong
         for k in [1 .. Length(congs)] do
           if IsSubrelation(congs[k], newcong) then
             if IsSubrelation(newcong, congs[k]) then

@@ -48,11 +48,11 @@ SEMIGROUPS.FreeBandElmToWord := function(elem)
 
   if elem!.word <> fail then
     return elem!.word;
-  elif tuple![2] = 0 then # tuple corresponds to one the generators
+  elif tuple![2] = 0 then  # tuple corresponds to one the generators
     out := [tuple![1]];
   else
     first := tuple![1];
-    pre_tuple := tuple![2]; # tuple correspoding to the prefix
+    pre_tuple := tuple![2];  # tuple correspoding to the prefix
     last := tuple![3];
     su_tuple := tuple![4];  # tuple corresponding to the sufix
 
@@ -479,7 +479,7 @@ function(x, y)
     new_prefix := y!.tuple[2];
     while true do
       if diff[new_first] and new_prefix = 0 then
-        copy := ShallowCopy(x); # are shallow copies necessary?
+        copy := ShallowCopy(x);  # are shallow copies necessary?
         out := [new_first, copy];
         break;
       elif diff[new_first] then
