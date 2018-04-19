@@ -16,7 +16,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# GreensTest1
+# GreensTest1
 gap> gens :=
 > [[Transformation([3, 4, 4, 3, 1, 1, 5])],
 >  [Transformation([1, 1, 4, 3]), Transformation([2, 2, 2, 2]),
@@ -1614,7 +1614,7 @@ gap> HClassReps(r);
   Transformation( [ 6, 4, 5, 7, 2, 3, 8, 8 ] ), 
   Transformation( [ 2, 6, 1, 3, 7, 4, 8, 8 ] ) ]
 
-#T# GreensTest2
+# GreensTest2
 gap> t := FullTransformationSemigroup(5);;
 gap> iter := Iterator(t);
 <iterator of semigroup>
@@ -1641,7 +1641,7 @@ gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
 
-#T# GreensTest3: GreensLClassOfElement(D-class, transformation);
+# GreensTest3: GreensLClassOfElement(D-class, transformation);
 gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 >   Transformation([3, 5, 7, 2, 5, 6, 3, 8]),
 >   Transformation([4, 1, 8, 3, 5, 7, 3, 5]),
@@ -1694,7 +1694,7 @@ gap> Size(s);
 gap> Set(HClasses(l)) = Set(HClasses(ll));
 true
 
-#T# GreensTest4: GreensHClassOfElement(D-class, transformation);
+# GreensTest4: GreensHClassOfElement(D-class, transformation);
 gap> gens := [Transformation([2, 1, 4, 5, 3, 7, 8, 9, 10, 6]),
 > Transformation([1, 2, 4, 3, 5, 6, 7, 8, 9, 10]),
 > Transformation([1, 2, 3, 4, 5, 6, 10, 9, 8, 7]),
@@ -1731,7 +1731,7 @@ true
 gap> Elements(h) = Elements(hh);
 true
 
-#T# GreensTest5
+# GreensTest5
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 > Transformation([4, 3, 1, 2]));;
 gap> GreensDClasses(S);
@@ -1799,7 +1799,7 @@ gap> GreensHClasses(L);
   <Green's H-class: Transformation( [ 4, 3, 4, 4 ] )>, 
   <Green's H-class: Transformation( [ 4, 4, 4, 3 ] )> ]
 
-#T# GreensTest6
+# GreensTest6
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 > Transformation([4, 3, 1, 2]));;
 gap> DClassReps(S);
@@ -1842,7 +1842,7 @@ gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(C);
 gap> Unbind(D);
 gap> Unbind(H);
@@ -1883,6 +1883,6 @@ gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(x);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/grac.tst");

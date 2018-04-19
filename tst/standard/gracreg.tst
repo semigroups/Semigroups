@@ -295,7 +295,7 @@ true
 gap> Set([D1 < D2, D2 < D1]);
 [ true, false ]
 
-#T# Test NrIdempotents for a regular star bipartition semigroup
+# Test NrIdempotents for a regular star bipartition semigroup
 # This test takes too long!
 # gap> S := JonesMonoid(15);
 # <regular bipartition *-monoid of degree 15 with 14 generators>
@@ -335,7 +335,7 @@ true
 gap> NrLClasses(D);
 1
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(H);
 gap> Unbind(L);
@@ -343,6 +343,6 @@ gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(e);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gracreg.tst");

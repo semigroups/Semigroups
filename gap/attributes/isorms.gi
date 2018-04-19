@@ -294,7 +294,7 @@ function(R)
 
   if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
           and IsZeroSimpleSemigroup(R)) then
-    TryNextMethod(); # TODO write such a method
+    TryNextMethod();  # TODO write such a method
   fi;
 
   m := Length(Rows(R));
@@ -311,7 +311,7 @@ function(R)
   fi;
 
   SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph); # for genss
+  Size(aut_graph);  # for genss
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -410,7 +410,7 @@ function(R)
 
   ##########################################################################
 
-  if U <> V then # some search required
+  if U <> V then  # some search required
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
          Size(V), " . . . ");
     BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
@@ -473,7 +473,7 @@ function(R)
   G := UnderlyingSemigroup(R);
   if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
           and IsSimpleSemigroup(R)) then
-    TryNextMethod(); # TODO write such a method
+    TryNextMethod();  # TODO write such a method
   fi;
 
   m := Length(Rows(R));
@@ -506,7 +506,7 @@ function(R)
   fi;
 
   SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph); # for genss
+  Size(aut_graph);  # for genss
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -589,7 +589,7 @@ function(R)
                                            ReturnTrue);
                                            # FIXME the pruner prunes too much!
                                            # SEMIGROUPS.RMSIsoPruner(U, V));
-  else # U = V
+  else  # U = V
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -634,7 +634,7 @@ InstallMethod(IsomorphismPermGroup,
 function(G)
   local R, H, iso, x;
 
-  R := Source(Representative(G)); # the Rees (0-)matrix semigroup
+  R := Source(Representative(G));  # the Rees (0-)matrix semigroup
   H := [];
   for x in GeneratorsOfGroup(G) do
     Add(H, Permutation(x, R, POW));
@@ -686,7 +686,7 @@ InstallMethod(IsomorphismSemigroups,
 [IsReesMatrixSemigroup and IsWholeFamily and IsFinite,
  IsReesMatrixSemigroup and IsWholeFamily and IsFinite],
 (RankFilter(IsSimpleSemigroup and IsFinite) - RankFilter(IsReesMatrixSemigroup
-and IsWholeFamily and IsFinite)) + 10, # to beat IsSimpleSemigroup and IsFinite
+and IsWholeFamily and IsFinite)) + 10,  # to beat IsSimpleSemigroup and IsFinite
 function(S, T)
   local G, H, mat, m, n, f, isograph, isogroup, RMSInducedFunction, map, l, g,
         tup;

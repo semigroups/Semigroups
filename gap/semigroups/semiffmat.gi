@@ -61,7 +61,7 @@ function(filt, R, S)
     T   := Semigroup(List(GeneratorsOfSemigroup(S), map));
     return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
   fi;
-  TryNextMethod(); # take an isomorphism to a transformation semigroup
+  TryNextMethod();  # take an isomorphism to a transformation semigroup
 end);
 
 # This is for converting semigroups of GAP library matrices over finite fields
@@ -132,7 +132,7 @@ InstallMethod(AsMonoid, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S));
 end);
@@ -207,7 +207,7 @@ end);
 
 InstallMethod(PrintString, "for general linear monoid",
 [IsGeneralLinearMonoid],
-5, # to beat the method for monoids with generators
+5,  # to beat the method for monoids with generators
 function(M)
   local rep, str;
 
@@ -227,7 +227,7 @@ end);
 
 InstallMethod(PrintObj, "for general linear monoid",
 [IsGeneralLinearMonoid],
-7, # to beat the method for monoids with generators
+7,  # to beat the method for monoids with generators
 function(M)
   Print(PrintString(M));
 end);
@@ -240,22 +240,22 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMatrixOverFiniteFieldSemigroup, IsList],
 function(filt, params)
 
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
-  if Length(params) < 2 then # dimension
+  if Length(params) < 2 then  # dimension
     params[2] := Random([1 .. 20]);
   elif not IsPosInt(params[2]) then
     return "the third argument (matrix dimension) must be a pos int,";
   fi;
-  if Length(params) < 3 then # field
+  if Length(params) < 3 then  # field
     params[3] := GF(Random(Primes), Random([1 .. 9]));
   elif not IsField(params[3]) or not IsFinite(params[3]) then
     return "the fourth argument must be a finite field,";
   fi;
-  if Length(params) < 4 then # ranks
+  if Length(params) < 4 then  # ranks
     params[4] := [1 .. params[2]];
   elif not IsList(params[4])
       or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then
@@ -279,7 +279,7 @@ end);
 InstallMethod(RandomSemigroupCons,
 "for IsMatrixOverFiniteFieldSemigroup and list",
 [IsMatrixOverFiniteFieldSemigroup, IsList],
-function(filt, params) # params = [nrgens, dim, field, ranks]
+function(filt, params)  # params = [nrgens, dim, field, ranks]
   return Semigroup(List([1 .. params[1]], i -> RandomMatrix(params[3],
                                                             params[2],
                                                             params[4])));
@@ -288,7 +288,7 @@ end);
 InstallMethod(RandomMonoidCons,
 "for IsMatrixOverFiniteFieldMonoid and list",
 [IsMatrixOverFiniteFieldMonoid, IsList],
-function(filt, params) # params = [nrgens, dim, field, ranks]
+function(filt, params)  # params = [nrgens, dim, field, ranks]
   return Monoid(List([1 .. params[1]], i -> RandomMatrix(params[3],
                                                          params[2],
                                                          params[4])));

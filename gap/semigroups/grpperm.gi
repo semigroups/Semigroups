@@ -228,7 +228,7 @@ end);
 InstallMethod(IsomorphismPermGroup,
 "for a perm bipartition group",
 [IsPermBipartitionGroup],
-1, # to beat the method for IsBlockBijectionSemigroup
+1,  # to beat the method for IsBlockBijectionSemigroup
 function(S)
   local G, deg;
 

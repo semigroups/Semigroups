@@ -55,7 +55,7 @@ gap> NrIdempotents(S);
 gap> MultiplicativeZero(S);
 fail
 
-#T# helper functions
+# helper functions
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;
 >   if not IsInjective(iso) or not IsSurjective(iso) then
@@ -123,7 +123,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsPBRSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
 > PBR([[-2], [-3], [-4], [-5], [-6], [-7], [-8], [-8], [-1]],
@@ -147,7 +147,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsFpSemigroup to IsMaxPlusMatrixSemigroup
 gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 9, s1 ^ 8]];;
@@ -171,7 +171,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsBipartitionSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
 >  Bipartition([[1, -2], [2, -3], [3, -4], [4, -5], [5, -6], [6, -7],
@@ -195,7 +195,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsTransformationSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([Transformation([2, 3, 4, 5, 6, 7, 8, 8, 1])]);
 <commutative transformation semigroup of degree 9 with 1 generator>
@@ -217,7 +217,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsBooleanMatSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -249,7 +249,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> mat := ListWithIdenticalEntries(9, -infinity);;
 gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
@@ -276,7 +276,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsMinPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> mat := ListWithIdenticalEntries(9, infinity);;
 gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
@@ -303,7 +303,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> mat := ListWithIdenticalEntries(9, -infinity);;
 gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
@@ -330,7 +330,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsIntegerMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -362,7 +362,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> mat := ListWithIdenticalEntries(9, -infinity);;
 gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
@@ -389,7 +389,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> mat := ListWithIdenticalEntries(9, infinity);;
 gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
@@ -416,7 +416,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup:
+# AsSemigroup:
 #   convert from IsNTPMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -528,7 +528,7 @@ gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, 2, 2);;
 Error, Semigroups: RandomMonoid: usage,
 there must be at most five arguments,
 
-#T# IsFinite, IsTorsion, NormalizeSemigroup
+# IsFinite, IsTorsion, NormalizeSemigroup
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]])));
 true
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],
@@ -649,9 +649,9 @@ gap> S := FullTropicalMinPlusMonoid(4, 3);
 Error, Semigroups: FullTropicalMinPlusMonoid: usage,
 the dimension must be 2 or 3,
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semimaxplus.tst");

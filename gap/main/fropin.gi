@@ -178,7 +178,7 @@ function(S)
   # add the generators
   for i in data.genstoapply do
     val := HTValue(data.ht, data.gens[i]);
-    if val = fail then # new generator
+    if val = fail then  # new generator
       nr := nr + 1;
       HTAdd(data.ht, data.gens[i], nr);
       data.elts[nr] := data.gens[i];
@@ -197,7 +197,7 @@ function(S)
                                         and y * data.gens[i] = y) then
         data.one := nr;
       fi;
-    else # duplicate generator
+    else  # duplicate generator
       data.genslookup[i] := val;
       data.nrrules := data.nrrules + 1;
       data.rules[data.nrrules] := [[i], [val]];
@@ -397,7 +397,7 @@ end);
 
 InstallMethod(Iterator, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-2, # to beat the method for a Rees matrix semigroup, FIXME!!
+2,  # to beat the method for a Rees matrix semigroup, FIXME!!
 IteratorCanonical);
 
 InstallMethod(IteratorCanonical,

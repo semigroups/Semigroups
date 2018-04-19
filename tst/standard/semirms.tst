@@ -15,7 +15,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();;
 
-#T# helper functions
+# helper functions
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;
 >   if not IsInjective(iso) or not IsSurjective(iso) then
@@ -37,7 +37,7 @@ gap> BruteForceInverseCheck := function(map)
 >     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
 > end;;
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > PBR([[-1], [-5], [-1], [-1], [-5], [-5], [-1]],
@@ -65,7 +65,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpSemigroup to IsReesMatrixSemigroup
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1],
@@ -97,7 +97,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Bipartition([[1, 3, 4, 7, -1], [2, 5, 6, -5], [-2], [-3], [-4], [-6], [-7]]),
@@ -122,7 +122,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Transformation([1, 5, 1, 1, 5, 5, 1]),
@@ -147,7 +147,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -193,7 +193,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -239,7 +239,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -285,7 +285,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -331,7 +331,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -377,7 +377,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -426,7 +426,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -473,7 +473,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -519,7 +519,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > PBR([[-4], [-5], [-3], [-1], [-2], [-1]],
@@ -547,7 +547,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpSemigroup to IsReesZeroMatrixSemigroup
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 * s2, s1],
@@ -579,7 +579,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Bipartition([[1, -4], [2, -5], [3, -3], [4, 6, -1], [5, -2], [-6]]),
@@ -608,7 +608,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Transformation([4, 5, 3, 1, 2, 1]),
@@ -637,7 +637,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -680,7 +680,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -723,7 +723,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -766,7 +766,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -809,7 +809,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -852,7 +852,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -895,7 +895,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -938,7 +938,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -981,7 +981,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > PBR([[-3], [-2], [-1]], [[3], [2], [1]]),
@@ -1005,7 +1005,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesZeroMatrixSemigroup
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, One(F)],
@@ -1032,7 +1032,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Bipartition([[1, -3], [2, -2], [3, -1]]),
@@ -1060,7 +1060,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Transformation([3, 2, 1]), Transformation([2, 2, 2])]);
@@ -1087,7 +1087,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -1116,7 +1116,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -1146,7 +1146,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -1176,7 +1176,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1206,7 +1206,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsIntegerMatrix,
@@ -1236,7 +1236,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1266,7 +1266,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1296,7 +1296,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -1326,7 +1326,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesZeroMatrixSemigroup
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1]];;
@@ -1350,7 +1350,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > PBR([[-2], [-1]], [[2], [1]])]);
@@ -1373,7 +1373,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesMatrixSemigroup
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, One(F)]];;
@@ -1397,7 +1397,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesMatrixSemigroup
 gap> S := InverseMonoid([
 > Bipartition([[1, -1], [2, -2]]),
@@ -1421,7 +1421,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesMatrixSemigroup
 gap> S := InverseSemigroup([
 > Bipartition([[1, -1], [2, -2]]),
@@ -1445,7 +1445,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesZeroMatrixSemigroup
 gap> S := InverseMonoid(Bipartition([[1, -1], [2, -2]]),
 > Bipartition([[1, -2], [2, -1]]),
@@ -1469,7 +1469,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesZeroMatrixSemigroup
 gap> S := InverseSemigroup(Bipartition([[1, -1], [2, -2]]),
 > Bipartition([[1, -2], [2, -1]]),
@@ -1493,7 +1493,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPartialPermSemigroup to IsReesMatrixSemigroup
 gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]));;
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
@@ -1514,7 +1514,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPartialPermMonoid to IsReesMatrixSemigroup
 gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]));;
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
@@ -1535,7 +1535,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPartialPermSemigroup to IsReesZeroMatrixSemigroup
 gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]),
 >                          PartialPerm([]));;
@@ -1557,7 +1557,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPartialPermMonoid to IsReesZeroMatrixSemigroup
 gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([]));;
@@ -1579,7 +1579,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Transformation([2, 1])]);
@@ -1602,7 +1602,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -1626,7 +1626,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -1650,7 +1650,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -1674,7 +1674,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1698,7 +1698,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsIntegerMatrix,
@@ -1722,7 +1722,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1746,7 +1746,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1770,7 +1770,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -1794,7 +1794,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesMatrixSemigroup
 gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
 gap> rels := [];;
@@ -1818,7 +1818,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPermGroup to IsReesMatrixSemigroup
 gap> S := DihedralGroup(IsPermGroup, 4);
 Group([ (1,2), (3,4) ])
@@ -1840,7 +1840,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsGroup to IsReesMatrixSemigroup
 gap> S := DihedralGroup(4);
 <pc group of size 4 with 2 generators>
@@ -1862,7 +1862,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsReesMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2), (1, 2)], [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
@@ -1884,7 +1884,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]),
 >                                 [[(1, 2), (1, 2)], [0, ()]]);
@@ -1907,7 +1907,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsGraphInverseSemigroup to IsReesMatrixSemigroup
 gap> S := GraphInverseSemigroup(Digraph([[]]));
 <finite graph inverse semigroup with 1 vertex, 0 edges>
@@ -1929,7 +1929,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from a free band to IsReesMatrixSemigroup
 gap> S := FreeBand(1);
 <free band on the generators [ x1 ]>
@@ -1951,7 +1951,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# RMSNormalization 1:
+# RMSNormalization 1:
 # for a Rees matrix semigroup over a group without an inverse op
 gap> G := Semigroup([
 > Transformation([4, 4, 2, 3, 4]),
@@ -1972,7 +1972,7 @@ gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(R, x -> (x ^ iso) ^ inv = x);
 true
 
-#T# RMSNormalization 2:
+# RMSNormalization 2:
 # for a Rees matrix semigroup over IsGroup
 gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
@@ -1985,14 +1985,14 @@ gap> Matrix(Range(iso));
 [ [ (), (), () ], [ (), (1,2,4), (1,4) ], [ (), (1,2)(3,4), (1,4)(2,3) ], 
   [ (), (1,3)(2,4), (1,4,3,2) ] ]
 
-#T# RMSNormalization 3:
+# RMSNormalization 3:
 # error checking
 gap> G := FullTransformationMonoid(4);;
 gap> RMSNormalization(ReesMatrixSemigroup(G, [[IdentityTransformation]]));
 Error, Semigroups: RMSNormalization: usage,
 the underlying semigroup <G> of the Rees matrix semigroup <R> must be a group,
 
-#T# RZMSNormalization 1:
+# RZMSNormalization 1:
 # for a Rees 0-matrix semigroup over a group without an inverse op
 gap> G := Semigroup([
 > Transformation([1, 3, 2, 1]),
@@ -2014,7 +2014,7 @@ gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(R, x -> (x ^ iso) ^ inv = x);
 true
 
-#T# RZMSNormalization 2:
+# RZMSNormalization 2:
 # for a Rees 0-matrix semigroup over the symmetric group S4
 gap> G := SymmetricGroup(4);;
 gap> R := ReesZeroMatrixSemigroup(G,
@@ -2080,7 +2080,7 @@ true
 gap> Concatenation(List(comps, x -> x[2])) = Columns(R);
 true
 
-#T# RZMSNormalization 3:
+# RZMSNormalization 3:
 # for a Rees 0-matrix semigroup over a non-IsGroup group,
 # and a non-group semigroup
 gap> T := FullTransformationMonoid(4);;
@@ -2096,7 +2096,7 @@ gap> RZMSNormalization(R);;
 gap> Matrix(Range(last));
 [ [ IdentityTransformation ] ]
 
-#T# RZMSNormalization 4:
+# RZMSNormalization 4:
 # for a Rees 0-matrix semigroup with some all-zero rows/columns
 gap> G := Group(());;
 gap> R := ReesZeroMatrixSemigroup(G, [[0, 0], [0, ()]]);;
@@ -2109,7 +2109,7 @@ gap> R := ReesZeroMatrixSemigroup(G, [[0, ()], [0, ()]]);;
 gap> Matrix(Range(RZMSNormalization(R)));
 [ [ (), 0 ], [ (), 0 ] ]
 
-#T# IsInverseSemigroup for a Rees 0-matrix semigroup 1:
+# IsInverseSemigroup for a Rees 0-matrix semigroup 1:
 # easy true examples
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
@@ -2131,7 +2131,7 @@ true
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 true
 
-#T# IsInverseSemigroup for a Rees 0-matrix semigroup 2:
+# IsInverseSemigroup for a Rees 0-matrix semigroup 2:
 # false because of underlying semigroup
 gap> x := Transformation([1, 1, 2]);;
 gap> T := Semigroup(x);;
@@ -2183,7 +2183,7 @@ false
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
-#T# IsInverseSemigroup for a Rees 0-matrix semigroup 3:
+# IsInverseSemigroup for a Rees 0-matrix semigroup 3:
 # false because of matrix
 gap> S := Semigroup(SymmetricInverseMonoid(3));
 <partial perm monoid of rank 3 with 4 generators>
@@ -2211,10 +2211,10 @@ false
 gap> R := ReesZeroMatrixSemigroup(S, [[zero, id]]);
 <Rees 0-matrix semigroup 2x1 over <partial perm monoid of rank 3 with 4 
   generators>>
-gap> IsInverseSemigroup(R); # Non-square matrix
+gap> IsInverseSemigroup(R);  # Non-square matrix
 false
 gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, 0, id], [0, zero, 0]]);;
-gap> IsInverseSemigroup(R); # Matrix entries not in the group of units
+gap> IsInverseSemigroup(R);  # Matrix entries not in the group of units
 false
 gap> y := PartialPerm([1, 2, 0]);
 <identity partial perm on [ 1, 2 ]>
@@ -2223,14 +2223,14 @@ gap> IsInverseSemigroup(R);
 false
 gap> T := FullTransformationMonoid(3);;
 gap> R := ReesZeroMatrixSemigroup(T, [[Identity(T)]]);;
-gap> IsInverseSemigroup(R); # Semigroup is not an inverse monoid
+gap> IsInverseSemigroup(R);  # Semigroup is not an inverse monoid
 false
 gap> y := PartialPerm([3, 2, 1]);;
 gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, id, 0], [0, 0, y]]);;
 gap> IsInverseSemigroup(R);
 true
 
-#T# NrIdempotents and Idempotents 1:
+# NrIdempotents and Idempotents 1:
 # for an inverse Rees 0-matrix semigroup
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
@@ -2252,7 +2252,7 @@ true
 gap> ForAll(idems, IsIdempotent);
 true
 
-#T# NrIdempotents and Idempotents 2:
+# NrIdempotents and Idempotents 2:
 # for an inverse Rees 0-matrix semigroup over a group
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
@@ -2293,7 +2293,7 @@ gap> i;
 gap> ForAll(Idempotents(R), IsIdempotent);
 true
 
-#T# NrIdempotents and Idempotents 3:
+# NrIdempotents and Idempotents 3:
 # for an sub-RZMS of an Rees 0-matrix semigroup
 gap> S := SymmetricInverseMonoid(4);;
 gap> x := PartialPerm([2, 1, 4, 3]);;
@@ -2366,7 +2366,7 @@ gap> idems := Idempotents(T);;
 gap> ForAll(idems, IsIdempotent);
 true
 
-#T# MatrixEntries: Test for Issue #164
+# MatrixEntries: Test for Issue #164
 gap> mat := [
 >  [Bipartition([[1, 2, 3, -2, -3], [-1]]), 0, 0, 0],
 >  [0, Bipartition([[1, 3, -1], [2, -2, -3]]), 0,
@@ -2404,20 +2404,20 @@ gap> MatrixEntries(R);
   <block bijection: [ 1, -1, -2 ], [ 2, 3, -3 ]>, 
   <bipartition: [ 1, -2 ], [ 2, 3, -3 ], [ -1 ]> ]
 
-#T# IsomorphismReesMatrixSemigroup, infinite
+# IsomorphismReesMatrixSemigroup, infinite
 gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
 Error, the argument must be a finite simple semigroup
 
-#T# IsomorphismReesZeroMatrixSemigroup, infinite
+# IsomorphismReesZeroMatrixSemigroup, infinite
 gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
 Error, the argument must be a finite 0-simple semigroup
 
-#T# IsomorphismReesZeroMatrixSemigroup, error, 1/1
+# IsomorphismReesZeroMatrixSemigroup, error, 1/1
 gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
 Error, Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,
 the argument must be a 0-simple semigroup,
 
-#T# IsomorphismReesMatrixSemigroup: for a simple semigroup
+# IsomorphismReesMatrixSemigroup: for a simple semigroup
 gap> S := SemigroupIdeal(
 > Semigroup([
 >   Bipartition([[1, 2, 3, 6, 7, 8, -2, -4, -5, -6], [4, 5, -1, -8], [-3],
@@ -2428,14 +2428,14 @@ gap> S := SemigroupIdeal(
 >               [-7]])]);;
 gap> IsomorphismReesMatrixSemigroup(S);;
 
-#T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
+# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
 gap> S := Semigroup([
 > Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
 >   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
 >   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
 gap> IsomorphismReesZeroMatrixSemigroup(S);;
 
-#T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
+# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
 gap> S := Semigroup([
 > Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
 >   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
@@ -2443,13 +2443,13 @@ gap> S := Semigroup([
 gap> S := Semigroup(MultiplicativeZero(S), S);;
 gap> IsomorphismReesZeroMatrixSemigroup(S);;
 
-#T# IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
+# IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
 gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 2]));;
 gap> IsomorphismReesMatrixSemigroup(S);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the argument must be a simple semigroup,
 
-#T# IsomorphismReesZeroMatrixSemigroup, bug 1/1
+# IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
@@ -2459,7 +2459,7 @@ gap> IsomorphismReesZeroMatrixSemigroup(S);;
 gap> Size(Range(last));
 2
 
-#T# ChooseHashFunction: Test for RZMS elements over pc group
+# ChooseHashFunction: Test for RZMS elements over pc group
 gap> G := SmallGroup(4, 2);;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
 gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
@@ -2473,7 +2473,7 @@ gap> func(x, data);;
 gap> x := MultiplicativeZero(S);;
 gap> func(x, data);;
 
-#T# ChooseHashFunction: Test for RZMS elements over transformation semigroups
+# ChooseHashFunction: Test for RZMS elements over transformation semigroups
 gap> G := FullTransformationMonoid(3);;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
 gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
@@ -2489,7 +2489,7 @@ gap> func := ChooseHashFunction(x, 25531).func;;
 gap> data := ChooseHashFunction(x, 25531).data;;
 gap> func(x, data);;
 
-#T# ChooseHashFunction: Test for RZMS elements over bipartition semigroups
+# ChooseHashFunction: Test for RZMS elements over bipartition semigroups
 gap> G := BrauerMonoid(3);;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
 gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
@@ -2503,7 +2503,7 @@ gap> func := ChooseHashFunction(x, 25531).func;;
 gap> data := ChooseHashFunction(x, 25531).data;;
 gap> func(x, data);;
 
-#T# HashTables: Over a pc group
+# HashTables: Over a pc group
 gap> G := SmallGroup(32, 2);;
 gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; e := G.5;;
 gap> mat := [[a, 0, c, b, 0, a, e],
@@ -2520,7 +2520,7 @@ gap> for x in S do
 > HTAdd(ht, x, true);
 > od;
 
-#T# ChooseHashFunction: Test for RZMS elements over a group we can't hash yet
+# ChooseHashFunction: Test for RZMS elements over a group we can't hash yet
 gap> F := FreeGroup("a", "b");;
 gap> G := F / [F.1 ^ 2, F.2 ^ 3, (F.1 * F.2) ^ 5];;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
@@ -2596,7 +2596,7 @@ gap> x := RMSElementNC(R, 1, (1, 2), 1);
 gap> x in R;
 true
 
-#T# semirms: MultiplicativeZero, for a Rees 0-matrix semigroup, 1
+# semirms: MultiplicativeZero, for a Rees 0-matrix semigroup, 1
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
 >  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
@@ -2607,7 +2607,7 @@ gap> R := Semigroup(R);;
 gap> MultiplicativeZero(R);
 0
 
-#T# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 1
+# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 1
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
 gap> U := Semigroup(RMSElement(R, 1, (), 1));;
 gap> MultiplicativeZero(U);
@@ -2622,7 +2622,7 @@ gap> U := Semigroup(RMSElement(R, 1, Transformation([1, 1]), 1));
 gap> MultiplicativeZero(U);
 (1,Transformation( [ 1, 1 ] ),1)
 
-#T# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 2
+# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 2
 gap> G := SymmetricGroup(3);;
 gap> R := ReesZeroMatrixSemigroup(G,
 > [[(), 0, (1, 2)],
@@ -2829,7 +2829,7 @@ gap> Idempotents(R);
 [ (1,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1, 1 ] ),1), 0 
  ]
 
-#T# IsIdempotentGenerated, for an RZMS
+# IsIdempotentGenerated, for an RZMS
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
 >  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
@@ -2892,7 +2892,7 @@ gap> R := ReesZeroMatrixSemigroup(S, [[IdentityTransformation]]);
 gap> IsIdempotentGenerated(R);
 true
 
-#T# IsIdempotentGenerated, for an RMS
+# IsIdempotentGenerated, for an RMS
 gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
 >  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
@@ -2960,7 +2960,7 @@ gap> R := ReesMatrixSemigroup(S, [[S.1]]);
 gap> Size(R);
 infinity
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
@@ -2986,6 +2986,6 @@ gap> Unbind(y);
 gap> Unbind(z);
 gap> Unbind(zero);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semirms.tst");

@@ -82,7 +82,7 @@ end);
 
 InstallMethod(DirectProductOp,
 "for a list and a transformation monoid as semigroup",
-[IsList, IsTransformationSemigroup], 1, # to beat the next method
+[IsList, IsTransformationSemigroup], 1,  # to beat the next method
 function(list, S)
   local gens, deg, one, m, next, i, x;
 
@@ -453,7 +453,7 @@ function(S, T)
   if IsDoneIterator(SS) and IsDoneIterator(TT) then
     # This line is executed by the tests but does not show as such in the code
     # coverage.
-    return false; # S = T
+    return false;  # S = T
   fi;
   return IsDoneIterator(SS);
 end);
@@ -560,7 +560,7 @@ function(coll, set)
     graph[i] := EmptyPlist(nrgens);
     for x in coll do
       j := set[i] ^ x;
-      if IsBound(lookup[j]) then # <j> is in <set>!
+      if IsBound(lookup[j]) then  # <j> is in <set>!
         Add(graph[i], lookup[set[i] ^ x]);
       fi;
     od;
@@ -626,7 +626,7 @@ function(S, n)
     fi;
   od;
   if all_perms then
-    return false; # S = <gens> is a group of transformations
+    return false;  # S = <gens> is a group of transformations
   fi;
 
   gr := DigraphOfActionOnPairs(S);
@@ -676,8 +676,8 @@ function(S)
   local n, gens, nrgens, min_rank, rank, min_rank_index, gr, inn, elts, marked,
   squashed, j, t, im, NumberPair, reduced, y, i, k, x;
 
-  n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
-                                           # We must have n >= 2.
+  n := DegreeOfTransformationSemigroup(S);  # Smallest n such that S <= T_n
+                                            # We must have n >= 2.
   gens := GeneratorsOfSemigroup(S);
   nrgens := Length(gens);
   # Find the minimum rank of a generator

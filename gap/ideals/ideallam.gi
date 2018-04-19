@@ -551,7 +551,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 end);
 
 InstallMethod(EvaluateWord, "for an ideal orb and an ideal word (Semigroups)",
-[IsIdealOrb, IsList], 2, # to beat the methods for lambda/rho orbs below
+[IsIdealOrb, IsList], 2,  # to beat the methods for lambda/rho orbs below
 function(o, w)
   local res, gens, i;
   # it is safe to use <GeneratorsOfSemigroup> here since an ideal can't be

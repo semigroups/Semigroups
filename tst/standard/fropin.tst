@@ -225,7 +225,7 @@ gap> IsDoneIterator(it);
 true
 gap> NextIterator(it);
 fail
-gap> ListIterator(it) = AsSet(S); # it's done
+gap> ListIterator(it) = AsSet(S);  # it's done
 false
 gap> it := ShallowCopy(it);;
 gap> ListIterator(it) = AsSet(S);
@@ -338,7 +338,7 @@ gap> IsDoneIterator(it);
 true
 gap> NextIterator(it);
 fail
-gap> ListIterator(it) = AsListCanonical(S); # it's done
+gap> ListIterator(it) = AsListCanonical(S);  # it's done
 false
 gap> it := ShallowCopy(it);;
 gap> ListIterator(it) = AsListCanonical(S);
@@ -473,6 +473,6 @@ gap> MinimalFactorization(S, Transformation([1, 1, 1, 1]));
 Error, Semigroups: MinimalFactorization:
 the second argument <x> is not an element of the first argument <S>,
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fropin.tst");

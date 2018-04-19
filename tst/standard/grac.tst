@@ -1650,7 +1650,7 @@ false
 gap> DClass(S, S.2) < DClass(T, T.1);
 false
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);
 gap> Unbind(DDD);
@@ -1667,6 +1667,6 @@ gap> Unbind(iter);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/grac.tst");

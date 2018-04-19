@@ -37,7 +37,7 @@ SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
 
 #############################################################################
 
-if not IsBound(Splash) then # This function is written by A. Egri-Nagy
+if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
   if ARCH_IS_MAC_OS_X() then
     SEMIGROUPS.Viewers := ["xpdf", "open", "evince", "okular", "gv"];
   elif ARCH_IS_UNIX() then
@@ -495,7 +495,7 @@ function(S, opts)
     opts.normal := true;
   fi;
   if not IsBound(opts.highlight) then
-    opts.highlight := false; # JDM means highlight H-classes
+    opts.highlight := false;  # JDM means highlight H-classes
   else
     for x in opts.highlight do
       if not IsBound(x.HighlightGroupHClassColor) then
@@ -512,7 +512,7 @@ function(S, opts)
     opts.idempotentsemilattice := false;
   elif opts.idempotentsemilattice then
     es := IdempotentGeneratedSubsemigroup(S);
-    elts := Elements(es); # JDM could be enumerator sorted
+    elts := Elements(es);  # JDM could be enumerator sorted
   fi;
 
   str := "//dot\n";
@@ -574,9 +574,9 @@ function(S, opts)
     mat := Matrix(RMS);
     G := UnderlyingSemigroup(RMS);
 
-    for col in Columns(RMS) do # Columns of RMS = RClasses
+    for col in Columns(RMS) do  # Columns of RMS = RClasses
       Append(str, "<TR>");
-      for row in Rows(RMS) do # Rows of RMS = LClasses
+      for row in Rows(RMS) do  # Rows of RMS = LClasses
         Append(str, "<TD BGCOLOR=\"");
         if opts.highlight <> false then
           x := HClass(d, RMSElement(RMS, row, Identity(G), col) ^ inv);

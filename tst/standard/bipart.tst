@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();
 # the number of iterations, change here to get faster test
 gap> N := 333;;
 
-#T# BipartitionTest2: BASICS
+# BipartitionTest2: BASICS
 gap> classes := [[1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1],
 > [-6]];;
 gap> f := Bipartition(classes);
@@ -27,7 +27,7 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], 
  [ 7 ], [ -7 ]>
 
-#T# BipartitionTest3: different order of classes
+# BipartitionTest3: different order of classes
 gap> classes2 := [[-6], [1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [-1],
 > [7]];;
 gap> f = Bipartition(classes2);
@@ -40,31 +40,31 @@ gap> LeftProjection(f);
 <bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
  [ 8, 9, -8, -9 ], [ -4, -7 ], [ -6 ]>
 
-#T# BipartitionTest4: ASSOCIATIVITY
+# BipartitionTest4: ASSOCIATIVITY
 gap> l := List([1 .. 3 * N], i -> RandomBipartition(17));;
 gap> triples := List([1 .. N], i -> [l[i], l[i + 1], l[i + 2]]);;
 gap> ForAll(triples, x -> ((x[1] * x[2]) * x[3]) = (x[1] * (x[2] * x[3])));
 true
 
-#T# BipartitionTest5: EMBEDDING into T_n
+# BipartitionTest5: EMBEDDING into T_n
 gap> l := List([1, 2, 3, 4, 5, 15, 35, 1999], i -> RandomTransformation(i));;
 gap> ForAll(l, t -> t = AsTransformation(AsBipartition(t)));
 true
 
-#T# BipartitionTest6: checking IsTransBipartitition
+# BipartitionTest6: checking IsTransBipartitition
 gap> l := List([1, 2, 3, 4, 5, 15, 35, 1999, 30101, 54321], i ->
 > RandomTransformation(i));;
 gap> ForAll(l, t -> IsTransBipartition(AsBipartition(t)));
 true
 
-#T# BipartitionTest7: check big size, identity, multiplication
+# BipartitionTest7: check big size, identity, multiplication
 gap> bp := RandomBipartition(7000);;
 gap> bp * One(bp) = bp;
 true
 gap> One(bp) * bp = bp;
 true
 
-#T# BipartitionTest8: check BlocksIdempotentTester, first a few little examples
+# BipartitionTest8: check BlocksIdempotentTester, first a few little examples
 gap> l := BlocksNC([[-1], [-2], [-3, -4]]);;
 gap> r := BlocksNC([[-1], [-2, -3, -4]]);;
 gap> BLOCKS_E_TESTER(l, r);
@@ -74,13 +74,13 @@ gap> e := BLOCKS_E_CREATOR(l, r);
 gap> IsIdempotent(e);
 true
 
-#T# BipartitionTest9: JDM is this the right behaviour?
+# BipartitionTest9: JDM is this the right behaviour?
 gap> RightBlocks(e) = l;
 true
 gap> LeftBlocks(e) = r;
 true
 
-#T# BipartitionTest10: AsBipartition for a bipartition
+# BipartitionTest10: AsBipartition for a bipartition
 gap> f := Bipartition([[1, 2, 3], [4, -1, -3], [5, 6, -4, -5],
 > [-2], [-6]]);;
 gap> AsBipartition(f, 8);
@@ -91,7 +91,7 @@ gap> AsBipartition(f, 6);
 gap> AsBipartition(f, 4);
 <bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ -2 ], [ -4 ]>
 
-#T# BipartitionTest11: AsPartialPerm for bipartitions
+# BipartitionTest11: AsPartialPerm for bipartitions
 gap> S := DualSymmetricInverseMonoid(3);;
 gap> Number(S, IsPartialPermBipartition);
 6
@@ -107,7 +107,7 @@ gap> elts := Filtered(PartitionMonoid(3), IsPartialPermBipartition);;
 gap> ForAll(elts, x -> AsBipartition(AsPartialPerm(x), 3) = x);
 true
 
-#T# BipartitionTest12: AsPermutation for bipartitions
+# BipartitionTest12: AsPermutation for bipartitions
 gap> G := SymmetricGroup(5);;
 gap> ForAll(G, x -> AsPermutation(AsBipartition(x)) = x);
 true
@@ -116,7 +116,7 @@ gap> G := GroupOfUnits(PartitionMonoid(3));
 gap> ForAll(G, x -> AsBipartition(AsPermutation(x), 3) = x);
 true
 
-#T# BipartitionTest22: AsBlockBijection and
+# BipartitionTest22: AsBlockBijection and
 # IsomorphismSemigroup(IsBlockBijectionSemigroup for an inverse semigroup of
 # partial perms
 gap> S := InverseSemigroup(
@@ -126,7 +126,7 @@ gap> AsBlockBijection(S.1);
 <block bijection: [ 1, -2 ], [ 2, -6 ], [ 3, -7 ], 
  [ 4, 5, 7, 9, 11, -3, -4, -8, -10, -11 ], [ 6, -9 ], [ 8, -1 ], [ 10, -5 ]>
 
-#T# BipartitionTest24: NaturalLeqBlockBijection
+# BipartitionTest24: NaturalLeqBlockBijection
 gap> S := DualSymmetricInverseMonoid(4);;
 gap> f := Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]);;
 gap> g := Bipartition([[1, 4, -3], [2, -1, -2], [3, -4]]);;
@@ -163,7 +163,7 @@ gap> Set(Filtered(S, f -> ForAny(Idempotents(S), e -> e * g = f)));
   <block bijection: [ 1, 4, -3 ], [ 2, 3, -1, -2, -4 ]>, 
   <block bijection: [ 1, 4, -3 ], [ 2, -1, -2 ], [ 3, -4 ]> ]
 
-#T# BipartitionTest25: Factorization/EvaluateWord
+# BipartitionTest25: Factorization/EvaluateWord
 gap> S := DualSymmetricInverseMonoid(6);;
 gap> f := S.1 * S.2 * S.3 * S.2 * S.1;
 <block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
@@ -653,7 +653,7 @@ gap> LeftBlocks(x * x);
 gap> RankOfBipartition(x * x);
 0
 
-#T# bipartition: IndexPeriodOfSemigroupElement, for a bipartition
+# bipartition: IndexPeriodOfSemigroupElement, for a bipartition
 gap> x := Bipartition(
 > [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
 > [-2], [-6], [-10]]);;
@@ -703,7 +703,7 @@ true
 gap> PrintString(IdentityBipartition(0));
 "\>\>Bipartition(\< \>[]\<)\<"
 
-#T# bipartition: AsBlockBijection, for a partial perm bipartition
+# bipartition: AsBlockBijection, for a partial perm bipartition
 gap> x := Bipartition([[1, 3], [2, 4, -2], [5, -1, -3, -4], [-5]]);;
 gap> AsBlockBijection(x);
 Error, Semigroups: AsBlockBijection (for a bipartition):
@@ -744,7 +744,7 @@ gap> AsBlockBijection(x);
 gap> AsBlockBijection(x, 6);
 <block bijection: [ 1, -4 ], [ 2, -1 ], [ 3, 4, 5, 6, -2, -3, -5, -6 ]>
 
-#T# DomainOfBipartition and CodomainOfBipartition
+# DomainOfBipartition and CodomainOfBipartition
 gap> x := Bipartition([]);
 <empty bipartition>
 gap> DomainOfBipartition(x);
@@ -772,7 +772,7 @@ gap> DomainOfBipartition(x);
 gap> CodomainOfBipartition(x);
 [ -1, -4, -2, -3, -5 ]
 
-#T# Test error messages for when creating a bipartition with degree too large.
+# Test error messages for when creating a bipartition with degree too large.
 # We create enum, as opposed to a range [1 .. 2 ^ 33] to allow this test to
 # work in the 32-bit version.
 gap> enum := EnumeratorByFunctions(Integers, 
@@ -835,6 +835,6 @@ gap> Unbind(triples);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/bipart.tst");

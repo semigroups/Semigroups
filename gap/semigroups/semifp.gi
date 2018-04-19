@@ -159,10 +159,10 @@ InstallMethod(ViewString, "for an f.p. monoid element",
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsFpSemigroup, IsList],
 function(filt, params)
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
     params[2] := Random([1 .. 8]);
-  elif Length(params) < 2 then # degree
+  elif Length(params) < 2 then  # degree
     params[2] := Random([1 .. 8]);
   fi;
   if not ForAll(params, IsPosInt) then
@@ -232,7 +232,7 @@ InstallMethod(AsMonoid, "for an fp semigroup",
 [IsFpSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsFpMonoid, S));
 end);
@@ -625,9 +625,9 @@ function(M)
              EvaluateWord(GeneratorsOfSemigroup(F),
                           Factorization(S, One(S)))]);
 
-  MF := F / rels; # FpSemigroup which is isomorphic to M, with different gens.
+  MF := F / rels;  # FpSemigroup which is isomorphic to M, with different gens.
   fam := ElementsFamily(FamilyObj(MF));
-  T := Semigroup(Concatenation(SS, GG)); # M with isomorphic generators to MF
+  T := Semigroup(Concatenation(SS, GG));  # M with isomorphic generators to MF
 
   map := x -> ElementOfFpSemigroup(fam, EvaluateWord(GeneratorsOfSemigroup(F),
                                                      Factorization(T, x)));

@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# FreeInverseTest1: Creating free inverse semigroups and basic methods
+# FreeInverseTest1: Creating free inverse semigroups and basic methods
 # (with default generators)
 gap> FreeInverseSemigroup(\<);
 Error, Semigroups: FreeInverseSemigroup: usage,
@@ -51,7 +51,7 @@ true
 gap> x * x ^ -1 = y * y ^ -1;
 false
 
-#T# FreeInverseTest2: Creating free inverse semigroups and basic methods
+# FreeInverseTest2: Creating free inverse semigroups and basic methods
 # (with named generators)
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
@@ -72,7 +72,7 @@ true
 gap> x * x ^ -1 = y * y ^ -1;
 false
 
-#T# FreeInverseTest3: IsFreeInverseSemigroup
+# FreeInverseTest3: IsFreeInverseSemigroup
 gap> gens := Generators(FreeInverseSemigroup(2));
 [ x1, x2 ]
 gap> IsFreeInverseSemigroup(InverseSemigroup(gens));
@@ -85,7 +85,7 @@ cannot determine the answer
 gap> IsFreeInverseSemigroup(MonogenicSemigroup(3, 2));
 false
 
-#T# FreeInverseTest4: Iterator, for a free inverse semigroup
+# FreeInverseTest4: Iterator, for a free inverse semigroup
 gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));
 <iterator>
 gap> for i in [1 .. 10] do
@@ -114,7 +114,7 @@ gap> for i in [1 .. 100] do
 gap> list1 = list2;
 true
 
-#T# FreeInverseTest5: CanonicalForm
+# FreeInverseTest5: CanonicalForm
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
 gap> CanonicalForm(S.1);
@@ -152,7 +152,7 @@ gap> for i in [1 .. 10] do
 > MinimalWord(x * y);
 > od; 
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(gens);
 gap> Unbind(i);
@@ -162,6 +162,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/freeinverse.tst");

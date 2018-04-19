@@ -163,7 +163,7 @@ function(filter, m, r)
   t := [1 .. r] + 1;
   t[r] := 1;
 
-  if not m = 1 then # m = 1 specifies a cyclic group
+  if not m = 1 then  # m = 1 specifies a cyclic group
     Append(t, [1 .. m] + r - 1);
   fi;
 
@@ -324,15 +324,15 @@ function(filter, m, n)
   gens := [];
   min := Minimum(m, n);
 
-  for i in [1 .. min] do # 'diagonal' generators
+  for i in [1 .. min] do  # 'diagonal' generators
     Add(gens, gen(i, i));
   od;
 
-  for i in [min + 1 .. n] do # additional generators when n > m
+  for i in [min + 1 .. n] do  # additional generators when n > m
     Add(gens, gen(1, i));
   od;
 
-  for i in [min + 1 .. m] do # additional generators when n < m
+  for i in [min + 1 .. m] do  # additional generators when n < m
     Add(gens, gen(i, 1));
   od;
 
@@ -476,7 +476,7 @@ function(filter, n)
   gens := [];
   im   := [1 .. R] * 0 + 1;
   iter := IteratorOfTuples([1 .. R], deg - R);
-  NextIterator(iter); # skip the zero
+  NextIterator(iter);  # skip the zero
 
   for i in [1 .. n - 1] do
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));

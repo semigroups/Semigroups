@@ -39,7 +39,7 @@ function(n)
                   "the argument must be a non-negative integer,");
   fi;
 
-  n := n + 1; # since the degree can be 0
+  n := n + 1;  # since the degree can be 0
 
   if not IsBound(TYPES_PBR[n]) then
     TYPES_PBR[n] := NewType(NewFamily(Concatenation("PBRFamily",
@@ -569,7 +569,7 @@ function(x, y)
   y_seen := BlistList([1 .. 2 * n], []);
   empty  := BlistList([1 .. 2 * n], []);
 
-  x_dfs := function(i, adj) # starting in x
+  x_dfs := function(i, adj)  # starting in x
     local j;
     if x_seen[i] then
       return;
@@ -578,14 +578,14 @@ function(x, y)
     for j in x![i + 1] do
       if j <= n then
         adj[j] := true;
-      else # j > n
+      else  # j > n
         y_dfs(j - n, adj);
       fi;
     od;
     return;
   end;
 
-  y_dfs := function(i, adj) # starting in y
+  y_dfs := function(i, adj)  # starting in y
     local j;
     if y_seen[i] then
       return;
@@ -594,7 +594,7 @@ function(x, y)
     for j in y![i + 1] do
       if j > n then
         adj[j] := true;
-      else # j <= n
+      else  # j <= n
         x_dfs(j + n, adj);
       fi;
     od;
@@ -603,7 +603,7 @@ function(x, y)
 
   tmp := [];
 
-  for i in [1 .. n] do # find everything connected to vertex i
+  for i in [1 .. n] do  # find everything connected to vertex i
     for j in x![i + 1] do
       if j <= n then
         out[i + 1][j] := true;
@@ -623,7 +623,7 @@ function(x, y)
     od;
   od;
 
-  for i in [n + 1 .. 2 * n] do # find everything connected to vertex i
+  for i in [n + 1 .. 2 * n] do  # find everything connected to vertex i
     for j in y![i + 1] do
       if j > n then
         out[i + 1][j] := true;

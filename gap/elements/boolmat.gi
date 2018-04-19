@@ -79,7 +79,7 @@ function(mat)
     ErrorNoReturn("Semigroups: BooleanMat: usage,\n",
                   "the argmuent must be a non-empty list ",
                   "of homogeneous lists,");
-  elif IsRectangularTable(mat) then # 0s and 1s or blists
+  elif IsRectangularTable(mat) then  # 0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
       n := Length(mat[1]);
@@ -636,11 +636,12 @@ function(G, H, x)
   act := function(pt, p)
     local q, r, nr;
     pt := pt - 1;
-    q := QuoInt(pt, 2 ^ n); # row
-    r := pt - q * 2 ^ n;    # number blist of the row
-                            # permute columns
+    q := QuoInt(pt, 2 ^ n);  # row
+    r := pt - q * 2 ^ n;     # number blist of the row
+                             # permute columns
     nr := NumberBlist(Permuted(BlistNumber(r + 1, n), p));
-    return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n; # and then the row
+    # and then the row
+    return nr + ((q + 1) ^ (p ^ phi) - 1) * 2 ^ n;
   end;
 
    map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);

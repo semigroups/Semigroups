@@ -213,7 +213,7 @@ function(S)
   i := Position(Elements(T), MultiplicativeZero(S));
   gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
-  return Elements(T){prims}; # TODO use EnumeratorSorted here
+  return Elements(T){prims};  # TODO use EnumeratorSorted here
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting inverse semigroup rep",
@@ -375,8 +375,8 @@ function(S)
     leq := NaturalLeqInverseSemigroup(S);
     k := First([i - 1, i - 2 .. 1], j -> leq(elts[j], rep));
 
-    if k = fail then # d is the minimal non-trivial D-class
-                     # WW what do I mean by 'non-trivial' here?
+    if k = fail then  # d is the minimal non-trivial D-class
+                      # WW what do I mean by 'non-trivial' here?
       Add(out, d);
       continue;
     fi;

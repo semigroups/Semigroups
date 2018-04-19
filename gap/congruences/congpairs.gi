@@ -467,9 +467,9 @@ function(cong, elm)
   part := EquivalenceRelationPartition(cong);
   pos := PositionProperty(part, l -> [elm, l[1]] in cong);
   if pos = fail then
-    return [elm]; # singleton
+    return [elm];  # singleton
   fi;
-  return part[pos]; # non-singleton
+  return part[pos];  # non-singleton
 end);
 
 InstallMethod(JoinSemigroupCongruences,

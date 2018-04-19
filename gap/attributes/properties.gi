@@ -481,7 +481,7 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-2, # to beat the method for acting semigroups
+2,  # to beat the method for acting semigroups
 function(S)
   return IsAcyclicDigraph(DigraphRemoveLoops(DigraphOfActionOnPoints(S)));
 end);
@@ -646,7 +646,7 @@ InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 InstallMethod(IsInverseSemigroup, "for a semigroup",
 [IsSemigroup],
-1, # to beat sgpviz
+1,  # to beat sgpviz
 function(S)
   local lambda, rho, iter, x;
 
@@ -1066,7 +1066,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
-[IsSemigroup], 1, # to beat the Smallsemi method
+[IsSemigroup], 1,  # to beat the Smallsemi method
 function(S)
   local e, m, i, j;
 
@@ -1721,7 +1721,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsZeroSimpleSemigroup, "for a semigroup",
-[IsSemigroup], 1, # to beat the library method
+[IsSemigroup], 1,  # to beat the library method
 function(S)
   if not IsFinite(S) then
     TryNextMethod();

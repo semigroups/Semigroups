@@ -16,7 +16,7 @@ gap> SEMIGROUPS.StartTest();
 # Always use kernel-trace methods if possible in these tests
 gap> SEMIGROUPS.DefaultOptionsRec.cong_by_ker_trace_threshold := 0;;
 
-#T# AsInverseSemigroupCongruenceByKernelTrace: should take about 20 seconds
+# AsInverseSemigroupCongruenceByKernelTrace: should take about 20 seconds
 gap> S := InverseSemigroup([PartialPerm([1, 3, 4, 5], [6, 7, 4, 1]),
 >   PartialPerm([1, 2, 4, 5, 6], [2, 8, 5, 1, 7]),
 >   PartialPerm([1, 2, 3, 4, 7], [2, 3, 5, 7, 6]),
@@ -36,10 +36,10 @@ gap> SemigroupIdealOfReesCongruence(cong);
 <inverse partial perm semigroup ideal of size 57500, rank 8 with
   57500 generators>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(cong);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/conginv.tst");

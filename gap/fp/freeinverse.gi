@@ -254,8 +254,8 @@ function(x)
 
   is_a_child_of := x![4];
   gen := x![5];
-  stop_start := []; # stop_start[i]=j if vertex i is the jth vertex in the path
-                    # from the stop to the start vertex.
+  stop_start := [];  # stop_start[i]=j if vertex i is the jth vertex in the path
+                     # from the stop to the start vertex.
   i := x![3];
   j := 1;
   path := [];
@@ -264,14 +264,14 @@ function(x)
     stop_start[i] := j;
     path[j] := i;
     j := j + 1;
-    i := is_a_child_of[i]; # parent of i
+    i := is_a_child_of[i];  # parent of i
   od;
 
   words := EmptyPlist(j - 1);
   pos := [];   # keeps track of the vertices already visited
   part := [];  # keeps track of the part of the tree, that vertex i is in
 
-  i := x![2]; # nr of vertices
+  i := x![2];  # nr of vertices
   while i > 0 do
     temp_word := [];
     j := i;

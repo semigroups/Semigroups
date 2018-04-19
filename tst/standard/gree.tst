@@ -1371,6 +1371,6 @@ false
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ], [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2 ] ]
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gree.tst");

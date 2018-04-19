@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# semigraph: test 1
+# semigraph: test 1
 gap> gr := Digraph(rec(nrvertices := 5,
 > source := [1, 2, 2, 4, 4], range := [2, 3, 5, 3, 5]));
 <digraph with 5 vertices, 5 edges>
@@ -108,11 +108,11 @@ e_2^-1e_1^-1
 gap> x * y;
 e_3
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(gr);
 gap> Unbind(x);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigraph.tst");

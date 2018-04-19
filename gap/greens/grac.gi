@@ -82,7 +82,7 @@
 SEMIGROUPS.CreateXClass := function(args, type, rel)
   local S, nc, rep, C;
 
-  if Length(args) = 1 then # arg is a Green's class
+  if Length(args) = 1 then  # arg is a Green's class
     # for creating bigger classes containing smaller ones
     S := Parent(args[1]);
     nc := IsGreensClassNC(args[1]);
@@ -470,7 +470,7 @@ function(L)
 
   if IsPermGroup(G) then
     return StabChainImmutable(G);
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     return G;
   fi;
 end);
@@ -519,7 +519,7 @@ function(D)
   # FIXME should make the following case distinction unnecessary
   if IsPermGroup(rho_schutz) then
     SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     SetRhoOrbStabChain(D, rho_schutz);
   fi;
 
@@ -2097,8 +2097,8 @@ function(S)
     return iter;
   fi;
   return IteratorByIterator(
-    IteratorOfRClassData(S), # baseiter
-    function(iter, x)        # convert
+    IteratorOfRClassData(S),  # baseiter
+    function(iter, x)         # convert
       local D, convert;
       convert := function(x)
         local R;

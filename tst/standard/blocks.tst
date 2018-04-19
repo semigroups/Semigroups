@@ -165,7 +165,7 @@ ntObj method"
 gap> BlocksNC([]);
 <empty blocks>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(a);
 gap> Unbind(b);
@@ -173,6 +173,6 @@ gap> Unbind(blocks);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/blocks.tst");

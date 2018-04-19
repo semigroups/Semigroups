@@ -31,7 +31,7 @@ SEMIGROUPS.FpMonCongFromFpSemiCong := function(M, iso, semicong)
   elif semicong!.type = "left" then
     filt := IsLeftSemigroupCongruence;
     set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
-  else # semicong!.type = "right"
+  else  # semicong!.type = "right"
     filt := IsRightSemigroupCongruence;
     set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
   fi;
