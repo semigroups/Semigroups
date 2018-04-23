@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # 
 gap> SEMIGROUPS.StartTest();
 
-#T# AttributesInverseTest1: JoinIrreducibleDClasses
+# AttributesInverseTest1: JoinIrreducibleDClasses
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 >  PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -77,7 +77,7 @@ gap> Set(JoinIrreducibleDClasses(J)) =
 >                          [6, -6]]))]);
 true
 
-#T# AttributesInverseTest2: IsJoinIrreducible
+# AttributesInverseTest2: IsJoinIrreducible
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 >  PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -135,7 +135,7 @@ true
 gap> IsJoinIrreducible(J, R);
 true
 
-#T# AttributesInverseTest3: Minorants 1
+# AttributesInverseTest3: Minorants 1
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 >  PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -234,7 +234,7 @@ gap> m1 := Minorants(J, Bipartition(
 gap> Size(m1);
 7
 
-#T# AttributesInverseTest4: Minorants 2
+# AttributesInverseTest4: Minorants 2
 gap> U := InverseSemigroup(
 > PartialPerm([1, 3, 4, 5, 7], [1, 5, 3, 8, 4]),
 > PartialPerm([1, 2, 3, 4, 5, 6], [6, 7, 1, 4, 3, 2]),
@@ -249,7 +249,7 @@ gap> Minorants(U, t);
   [5,4][8,6], [4,5][7,1], [4,5][8,6], (4,5), [8,6](4,5), [5,4][7,1][8,6], 
   [4,5][7,1][8,6], [7,1](4,5) ]
 
-#T# AttributesInverseTest5: MajorantClosure and IsMajorantlyClosed
+# AttributesInverseTest5: MajorantClosure and IsMajorantlyClosed
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 >  PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -337,7 +337,7 @@ true
 gap> Size(m);
 25
 
-#T# AttributesInverseTest6: RightCosetsOfInverseSemigroup
+# AttributesInverseTest6: RightCosetsOfInverseSemigroup
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 >  PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -486,7 +486,7 @@ gap> RightCosetsOfInverseSemigroup(J2, V);
       <block bijection: [ 1, -6 ], [ 2, -4 ], [ 3, -3 ], 
          [ 4, 5, 6, 7, -1, -2, -5, -7 ]> ] ]
 
-#T# AttributesInverseTest7: SameMinorantsSubgroup
+# AttributesInverseTest7: SameMinorantsSubgroup
 # (trivial examples)
 gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
@@ -530,7 +530,7 @@ gap> SameMinorantsSubgroup(h);
 [ <block bijection: [ 1, -1 ], [ 2, 3, 5, 6, 7, -2, -3, -5, -6, -7 ], 
      [ 4, -4 ]> ]
 
-#T# AttributesInverseTest8: SameMinorantsSubgroup 
+# AttributesInverseTest8: SameMinorantsSubgroup 
 # (non-trivial examples)
 gap> f := PartialPermNC([2, 1, 4, 5, 3, 7, 6, 9, 10, 8]);;
 gap> g := PartialPermNC([2, 1, 0, 0, 0, 7, 6]);;
@@ -565,7 +565,7 @@ gap> Sort(tmp);
 gap> tmp = m2;
 true
 
-#T# AttributesInverseTest9: NaturalLeqInverseSemigroup
+# AttributesInverseTest9: NaturalLeqInverseSemigroup
 # for partial perms
 gap> a := PartialPerm([1], [6]);;
 gap> b := PartialPerm([1, 2, 5], [6, 3, 1]);;
@@ -577,7 +577,7 @@ false
 gap> NaturalLeqInverseSemigroup(S)(a, a);
 true
 
-#T# AttributesInverseTest10: NaturalLeqInverseSemigroup
+# AttributesInverseTest10: NaturalLeqInverseSemigroup
 # for block bijections
 gap> A := Bipartition([[1, 2, 3, 4, 6, 7, 8, -1, -2, -4, -5, -6, -7, -8],
 > [5, -3]]);;
@@ -591,7 +591,7 @@ false
 gap> NaturalLeqInverseSemigroup(S)(B, B);
 true
 
-#T# AttributesInverseTest11: NaturalLeqInverseSemigroup
+# AttributesInverseTest11: NaturalLeqInverseSemigroup
 # for partial perm bipartitions
 gap> f := Bipartition([[1, -2], [2], [-1]]);;
 gap> f2 := Bipartition([[1, -2], [2], [3], [4], [5], [6], [-1],
@@ -637,7 +637,7 @@ false
 gap> NaturalLeqInverseSemigroup(S)(f2, g);
 true
 
-#T# SmallerDegreeTest1: VagnerPresetonRepresentation: a basic example
+# SmallerDegreeTest1: VagnerPresetonRepresentation: a basic example
 gap> f1 := PartialPerm([1, 2, 4, 3]);;
 gap> f2 := PartialPerm([1]);;
 gap> f3 := PartialPerm([0, 2]);;
@@ -658,7 +658,7 @@ MappingByFunction( <inverse partial perm semigroup of rank 5 with 3
 gap> ForAll(f, x -> (x ^ VPR) ^ inv = x);
 true
 
-#T# SmallerDegreeTest2: VagnerPrestonRepresentation
+# SmallerDegreeTest2: VagnerPrestonRepresentation
 # for SymmetricInverseSemigroup(5)
 gap> I5 := SymmetricInverseSemigroup(5);;
 gap> NrMovedPoints(I5);
@@ -676,7 +676,7 @@ gap> NrMovedPoints(Image(I5));
 gap> Size(Image(I5));
 1546
 
-#T# SmallerDegreeTest3: VagnerPrestonRepresentation
+# SmallerDegreeTest3: VagnerPrestonRepresentation
 # for a bipartition semigroup
 gap> B := Semigroup([
 >  Bipartition([[1, -4], [2, -2], [3], [4], [5, -5], [6],
@@ -696,7 +696,7 @@ true
 gap> V := Range(VagnerPrestonRepresentation(B));
 <inverse partial perm semigroup of rank 664 with 6 generators>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(B);
 gap> Unbind(C);
@@ -742,6 +742,6 @@ gap> Unbind(y);
 gap> Unbind(z);
 gap> Unbind(zz);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/attrinv.tst");

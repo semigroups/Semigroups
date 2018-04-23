@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attrfp.gi
-#Y  Copyright (C) 2017                                      Wilf A. Wilson
+##  attrfp.gi
+##  Copyright (C) 2017                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

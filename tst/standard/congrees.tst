@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# ReesCongTest1
+# ReesCongTest1
 # Test whether a congruence is Rees and find its ideal
 gap> S := Semigroup([Transformation([2, 3, 4, 3, 1, 1]),
 >                    Transformation([6, 4, 4, 4, 6, 1])]);;
@@ -42,7 +42,7 @@ gap> cong := SemigroupCongruence(S, [PartialPerm([1, 2, 3], [2, 4, 3]),
 gap> IsReesCongruence(cong);
 false
 
-#T# ReesCongTest2
+# ReesCongTest2
 # Create a congruence, calculate its congruence classes and try some operations
 gap> S := Semigroup([Transformation([2, 4, 3, 5, 5]),
 >                    Transformation([3, 1, 1, 4, 4]),
@@ -76,7 +76,7 @@ ansformation( [ 4, 1, 5, 1, 2 ] ) ] ),
  [ Transformation( [ 3, 1, 1, 4, 4 ] ), Transformation( [ 1, 4, 1, 4, 1 ] ) ]
    ) )
 
-#T# ReesCongTest3
+# ReesCongTest3
 # Convert a congruence to generating pairs
 gap> S := Semigroup([Transformation([1, 3, 2, 4, 3]),
 >                      Transformation([1, 3, 5, 5, 3]),
@@ -85,8 +85,8 @@ gap> I := SemigroupIdeal(S, Transformation([5, 2, 1, 5, 2]),
 >                            Transformation([5, 2, 1, 5, 2]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <transformation semigroup of size 61, degree 5 
- with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of degree 5 with 3 
+ generators> with 1 generating pairs>
 gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
@@ -96,7 +96,7 @@ true
 gap> EquivalenceRelationPartition(cong) = [AsList(I)];
 true
 
-#T# ReesCongTest4
+# ReesCongTest4
 # Test the \in function
 gap> S := Semigroup([Transformation([2, 4, 3, 5, 5]),
 >                    Transformation([3, 1, 1, 4, 4]),
@@ -157,7 +157,7 @@ gap> xxclass := CongruenceClassOfElement(cong, x * x);;
 gap> xclass * xclass = xxclass;
 true
 
-#T# ReesCongTest5
+# ReesCongTest5
 # Join some congruences together
 gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
 >                      Transformation([2, 1, 2, 2, 2]),
@@ -189,7 +189,7 @@ gap> JoinSemigroupCongruences(ci, ck);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 the args <c1> and <c2> must be congruences of the same semigroup,
 
-#T# Generating pairs
+# Generating pairs
 gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
 >                      Transformation([2, 1, 2, 2, 2]),
 >                      Transformation([3, 1, 3, 2, 4])]);;
@@ -197,8 +197,8 @@ gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
 gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
 gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
 gap> c := SemigroupCongruence(S, GeneratingPairsOfSemigroupCongruence(ci));
-<semigroup congruence over <transformation semigroup of size 20, degree 5 
- with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of degree 5 with 3 
+ generators> with 1 generating pairs>
 gap> HasIsReesCongruence(c);
 false
 gap> IsReesCongruence(c);
@@ -213,7 +213,7 @@ true
 gap> EquivalenceRelationPartition(cj) = [AsList(J)];
 true
 
-#T# IsReesCongruence: False
+# IsReesCongruence: False
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),
 >                    Transformation([4, 4, 4, 2])]);;
 gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
@@ -221,7 +221,7 @@ gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
 gap> IsReesCongruence(cong);
 false
 
-#T# IsReesCongruence: One class, but not an ideal
+# IsReesCongruence: One class, but not an ideal
 gap> S := Semigroup([Transformation([2, 4, 3, 2]),
 >                    Transformation([3, 3, 1, 3]),
 >                    Transformation([4, 1, 2, 4]),
@@ -231,7 +231,7 @@ gap> cong := SemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(cong);
 false
 
-#T# IsSubrelation
+# IsSubrelation
 gap> S := Semigroup([Transformation([2, 4, 1, 2]),
 >                    Transformation([3, 3, 4, 1])]);;
 gap> i1 := SemigroupIdeal(S, [Transformation([2, 4, 1, 2])]);;
@@ -259,7 +259,7 @@ gap> IsSubrelation(c4, c1);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
-#T# EquivalenceRelation(Canonical)Lookup
+# EquivalenceRelation(Canonical)Lookup
 gap> S := FullTransformationMonoid(3);;
 gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
@@ -272,7 +272,7 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
   4, 4 ]
 
-#T# Trivial congruence as Rees
+# Trivial congruence as Rees
 gap> S := SymmetricInverseMonoid(3);;
 gap> cong := ReesCongruenceOfSemigroupIdeal(MinimalIdeal(S));;
 gap> EquivalenceRelationLookup(cong) = [1 .. 34];
@@ -280,7 +280,7 @@ true
 gap> EquivalenceRelationCanonicalLookup(cong) = [1 .. 34];
 true
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(I);
 gap> Unbind(J);
 gap> Unbind(K);
@@ -314,6 +314,6 @@ gap> Unbind(y);
 gap> Unbind(yclass);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congrees.tst");

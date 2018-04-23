@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semieunit.gd
-#Y  Copyright (C) 2016                                    Christopher Russell
+##  semieunit.gd
+##  Copyright (C) 2016                                    Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

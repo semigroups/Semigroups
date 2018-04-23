@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attr.gi
-#Y  Copyright (C) 2013-16                                James D. Mitchell
+##  attr.gi
+##  Copyright (C) 2013-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -783,7 +783,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElement,
 "for a semigroup and a multiplicative element",
-[IsSemigroup, IsMultiplicativeElement], 1, # to beat the library method
+[IsSemigroup, IsMultiplicativeElement], 1,  # to beat the library method
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -842,21 +842,21 @@ InstallMethod(Size,
 "for a monogenic transformation semigroup with minimal generating set",
 [IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
  IsTransformationSemigroup],
-10, # to beat IsActingSemigroup
+10,  # to beat IsActingSemigroup
 _SemigroupSizeByIndexPeriod);
 
 InstallMethod(Size,
 "for a monogenic partial perm semigroup with minimal generating set",
 [IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
  IsPartialPermSemigroup],
-10, # to beat IsActingSemigroup
+10,  # to beat IsActingSemigroup
 _SemigroupSizeByIndexPeriod);
 
 InstallMethod(Size,
 "for a monogenic bipartition semigroup with minimal generating set",
 [IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
  IsBipartitionSemigroup],
-10, # to beat IsActingSemigroup
+10,  # to beat IsActingSemigroup
 _SemigroupSizeByIndexPeriod);
 
 InstallMethod(Size,
@@ -886,28 +886,28 @@ InstallMethod(Size,
 "for a monogenic transformation monoid with minimal generating set",
 [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
  IsTransformationSemigroup],
-5, # to beat IsActingSemigroup
+5,  # to beat IsActingSemigroup
 _MonoidSizeByIndexPeriod);
 
 InstallMethod(Size,
 "for a monogenic partial perm monoid with minimal generating set",
 [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
  IsPartialPermSemigroup],
-5, # to beat IsActingSemigroup
+5,  # to beat IsActingSemigroup
 _MonoidSizeByIndexPeriod);
 
 InstallMethod(Size,
 "for a monogenic bipartition monoid with minimal generating set",
 [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
  IsBipartitionSemigroup],
-5, # to beat IsActingSemigroup
+5,  # to beat IsActingSemigroup
 _MonoidSizeByIndexPeriod);
 
 InstallMethod(Size,
 "for a monogenic monoid of matrices over finite field with minimal gen set",
 [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
  IsMatrixOverFiniteFieldCollection],
-5, # to beat IsActingSemigroup
+5,  # to beat IsActingSemigroup
 _MonoidSizeByIndexPeriod);
 
 MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");

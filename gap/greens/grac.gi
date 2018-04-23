@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  grac.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  grac.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -82,7 +82,7 @@
 SEMIGROUPS.CreateXClass := function(args, type, rel)
   local S, nc, rep, C;
 
-  if Length(args) = 1 then # arg is a Green's class
+  if Length(args) = 1 then  # arg is a Green's class
     # for creating bigger classes containing smaller ones
     S := Parent(args[1]);
     nc := IsGreensClassNC(args[1]);
@@ -430,7 +430,7 @@ function(L)
   m := LambdaOrbSCCIndex(D);
 
   if IsRegularGreensClass(L) or Length(RhoCosets(D)) = 1 then
-    #maybe <L> is regular and doesn't know it!
+    # Maybe <L> is regular and doesn't know it!
     return [LambdaIdentity(S)(LambdaRank(S)(o[OrbSCC(o)[m][1]]))];
   fi;
 
@@ -470,7 +470,7 @@ function(L)
 
   if IsPermGroup(G) then
     return StabChainImmutable(G);
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     return G;
   fi;
 end);
@@ -503,7 +503,7 @@ function(D)
     schutz := lambda_schutz;
     if lambda_stab = true then
       SetRhoOrbStabChain(D, true);
-      #right transversal required so can use PositionCanonical
+      # Right transversal required so can use PositionCanonical
       SetRhoCosets(D, RightTransversal(schutz, schutz));
       return lambda_schutz;
     fi;
@@ -519,7 +519,7 @@ function(D)
   # FIXME should make the following case distinction unnecessary
   if IsPermGroup(rho_schutz) then
     SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
-  else # if IsMatrixGroup(g)
+  else  # if IsMatrixGroup(g)
     SetRhoOrbStabChain(D, rho_schutz);
   fi;
 
@@ -599,9 +599,9 @@ function(H)
   # rep (the rho value mapped through the rep so that it is on the right)
   rho_p := LambdaConjugator(S)(RhoOrbRep(rho_o, rho_m), rho_mult * rep);
 
-  #if lambda_stab = true then
-  #  return rho_schutz ^ rho_p;
-  #fi;
+  # if lambda_stab = true then
+  #   return rho_schutz ^ rho_p;
+  # fi;
 
   return Intersection(lambda_schutz ^ lambda_p, rho_schutz ^ rho_p);
 end);
@@ -636,7 +636,7 @@ function(x, y)
   return SemigroupDataIndex(x) < SemigroupDataIndex(y);
 end);
 
-#TODO a method for L-classes?
+# TODO a method for L-classes?
 
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass], IsRegularGreensClass);
@@ -1510,9 +1510,9 @@ function(L)
   scc := RhoOrbSCC(L);
   mults := RhoOrbMults(RhoOrb(L), RhoOrbSCCIndex(L));
   cosets := RhoCosets(L);
-  #these are the rho cosets of the D-class containing L rectified so that they
-  #correspond to the lambda value of the rep of L and not the lambda value of
-  #the rep of the D-class
+  # These are the rho cosets of the D-class containing L rectified so that they
+  # correspond to the lambda value of the rep of L and not the lambda value of
+  # the rep of the D-class.
   rep := Representative(L);
   act := StabilizerAction(Parent(L));
   out := EmptyPlist(Length(scc) * Length(cosets));
@@ -2083,7 +2083,7 @@ function(S)
                                 end));
 end);
 
-#TODO this should be improved at some point
+# TODO this should be improved at some point
 
 # different method for regular/inverse
 
@@ -2097,13 +2097,13 @@ function(S)
     return iter;
   fi;
   return IteratorByIterator(
-    IteratorOfRClassData(S), # baseiter
-    function(iter, x)        # convert
+    IteratorOfRClassData(S),  # baseiter
+    function(iter, x)         # convert
       local D, convert;
       convert := function(x)
         local R;
-        # don't use GreensRClassOfElementNC since we don't need to rectify
-        # lambda
+        # Don't use GreensRClassOfElementNC since we don't need to rectify
+        # lambda.
         R := SEMIGROUPS.CreateRClass(S, x[4], false);
         SetLambdaOrb(R, x[3]);
         SetLambdaOrbSCCIndex(R, x[2]);
@@ -2114,7 +2114,7 @@ function(S)
       return D;
     end,
     [],
-    function(iter, x)         #isnew FIXME ugh!!
+    function(iter, x)         # isnew FIXME ugh!!
       return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
      rec(classes := [],

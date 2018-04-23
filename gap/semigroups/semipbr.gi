@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  semipbr.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semipbr.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 
-#TODO IsomorphismSemigroup for IsBooleanMatSemigroup
+# TODO IsomorphismSemigroup for IsBooleanMatSemigroup
 #
 # This file contains methods for semigroups of PBRs.
 
@@ -139,7 +139,7 @@ InstallMethod(AsMonoid, "for a PBR semigroup",
 [IsPBRSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP / ref manual says
   fi;
   return Range(IsomorphismMonoid(IsPBRMonoid, S));
 end);

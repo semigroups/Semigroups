@@ -17,7 +17,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# TransformTest1
+# TransformTest1
 gap> gens := [Transformation([2, 3, 2, 4, 3]),
 > Transformation([4, 5, 2, 2, 4]),
 > Transformation([4, 3, 2, 1, 4]), Transformation([5, 5, 1, 3, 1])];;
@@ -300,7 +300,7 @@ gap> Size(last);
 gap> IsRightZeroSemigroup(last2);
 true
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(d);
 gap> Unbind(dc);
@@ -324,6 +324,6 @@ gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(x);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/transform.tst");

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attrinv.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  attrinv.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##                                                        Rhiannon Dougall
 ##                                                          Robert Hancock
@@ -95,7 +95,7 @@ InstallMethod(CharacterTableOfInverseSemigroup,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup and IsActingSemigroup],
 function(S)
-  local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens,
+  local reps, p, H, C, r, tbl, id, l, A, o, lookup, conjclass, conjlens,
   j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;
 
   reps := ShallowCopy(DClassReps(S));
@@ -106,10 +106,10 @@ function(S)
                     end);
 
   H := List(reps, e -> SchutzenbergerGroup(HClass(S, e)));
-  C := []; # the group character matrices
+  C := [];  # The group character matrices
   r := 0;
 
-  #the block diagonal matrix of group character matrices
+  # The block diagonal matrix of group character matrices
   for h in H do
     tbl := CharacterTable(h);
     id := IdentificationOfConjugacyClasses(tbl);
@@ -132,7 +132,6 @@ function(S)
   A := List([1 .. r], x -> [1 .. r] * 0);
   o := LambdaOrb(S);
   lookup := OrbSCCLookup(o);
-  scc := OrbSCC(o);
 
   conjclass := [ConjugacyClasses(H[1])];
   conjlens := [0];
@@ -214,7 +213,7 @@ function(S)
   i := Position(Elements(T), MultiplicativeZero(S));
   gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
-  return Elements(T){prims}; # TODO use EnumeratorSorted here
+  return Elements(T){prims};  # TODO use EnumeratorSorted here
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting inverse semigroup rep",
@@ -376,8 +375,8 @@ function(S)
     leq := NaturalLeqInverseSemigroup(S);
     k := First([i - 1, i - 2 .. 1], j -> leq(elts[j], rep));
 
-    if k = fail then # d is the minimal non-trivial D-class
-                     # WW what do I mean by 'non-trivial' here?
+    if k = fail then  # d is the minimal non-trivial D-class
+                      # WW what do I mean by 'non-trivial' here?
       Add(out, d);
       continue;
     fi;
@@ -529,7 +528,8 @@ function(S, f)
     return elts{NaturalPartialOrder(S)[i]};
   fi;
 
-  if IsIdempotent(f) then #always true if S is a D-class rep of an inverse sgp
+  # Always true if S is a D-class rep of an inverse sgp
+  if IsIdempotent(f) then
     out := EmptyPlist(NrIdempotents(S));
     elts := ShallowCopy(Idempotents(S));
   else
@@ -677,7 +677,7 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
-    #TODO(later) shouldn't there be a check here like above?
+    # TODO(later) shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])),
                          DegreeOfBipartition(x));

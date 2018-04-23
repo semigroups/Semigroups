@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# maxplusmat: test max-plus matrix code, 1/1
+# maxplusmat: test max-plus matrix code, 1/1
 gap> mat := Matrix(IsMaxPlusMatrix, [[4, 0, -2],
 >                                    [1, -3, 0],
 >                                    [5, -1, -4]]);
@@ -38,7 +38,7 @@ gap> mat2 := Matrix(IsMaxPlusMatrix,
 gap> mat * mat2;
 Matrix(IsMaxPlusMatrix, [[4, 5, 5], [1, 2, 2], [5, 6, 6]])
 
-#T# maxplusmat: test min-plus matrix code, 1/1
+# maxplusmat: test min-plus matrix code, 1/1
 gap> mat := Matrix(IsMinPlusMatrix, [[-1, infinity],
 >                                    [1, -1]]);
 Matrix(IsMinPlusMatrix, [[-1, infinity], [1, -1]])
@@ -61,7 +61,7 @@ gap> mat2 := Matrix(IsMinPlusMatrix,
 gap> mat * mat2;
 Matrix(IsMinPlusMatrix, [[-1, 0], [-1, -4]])
 
-#T# maxplusmat: test tropical max-plus matrix code, 1/1
+# maxplusmat: test tropical max-plus matrix code, 1/1
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],
 >                                            [3, 1, 1],
 >                                            [-infinity, 1, 1]],
@@ -94,7 +94,7 @@ gap> mat2 * mat3;
 Error, Semigroups: \* (for tropical max-plus matrices): usage,
 the arguments do not have the same threshold,
 
-#T# maxplusmat: test tropical min-plus matrix code, 1/1
+# maxplusmat: test tropical min-plus matrix code, 1/1
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],
 >                                     [0, 3, 0],
 >                                     [1, 1, 3]],
@@ -128,7 +128,7 @@ gap> mat2 * mat3;
 Error, Semigroups: \* (for tropical min-plus matrices): usage,
 the arguments do not have the same threshold,
 
-#T# maxplusmat: test projective max-plus matrix code, 1/1
+# maxplusmat: test projective max-plus matrix code, 1/1
 gap> mat := Matrix(IsProjectiveMaxPlusMatrix,
 > [[0, -infinity, -1, 0],
 >  [0, -1, -infinity, -infinity],
@@ -144,7 +144,7 @@ Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -infinity, -infinity],
   [-infinity, 0, -infinity, -infinity], [-infinity, -infinity, 0, -infinity], 
   [-infinity, -infinity, -infinity, 0]])
 
-#T# maxplusmat: FIXME this doesn't work, I'm not sure that this is
+# maxplusmat: FIXME this doesn't work, I'm not sure that this is
 #well-defined.
 #gap> One(mat) * mat = mat;
 #true
@@ -162,7 +162,7 @@ gap> mat * mat2;
 Matrix(IsProjectiveMaxPlusMatrix, [[-7, -5, -4, -6], [-6, -6, -5, -10], 
   [-1, -2, 0, -4], [-4, -3, -1, -3]])
 
-#T# maxplusmat: test ntp matrix code, 1/1
+# maxplusmat: test ntp matrix code, 1/1
 gap> mat := Matrix(IsNTPMatrix, [[0, 0, 0],
 >                         [2, 0, 1],
 >                         [2, 2, 2]],
@@ -199,7 +199,7 @@ gap> A := Matrix(IsNTPMatrix, [[1, 0], [1, 1]], 59, 0);
 Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
  the threshold must be >=0 and the period > 0,
 
-#T# maxplusmat: test integer matrix code, 1/1
+# maxplusmat: test integer matrix code, 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[-1, -2, 0],
 >                             [0, 3, -1],
 >                             [1, 0, -3]]);
@@ -225,7 +225,7 @@ Matrix(IsIntegerMatrix, [[-6, -8, 0], [8, 11, 2], [8, 8, 6]])
 gap> RandomMatrix(Integers, 20);
 <20x20 integer matrix>
 
-#T# maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/3
+# maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 >  [infinity, 4, 0]], 10);;
 gap> AsMatrix(IsMinPlusMatrix, mat);
@@ -237,14 +237,14 @@ Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 gap> last = mat;
 true
 
-#T# maxplusmat: AsMatrix, trop. min-plus <-> trop. min-plus, 2/3
+# maxplusmat: AsMatrix, trop. min-plus <-> trop. min-plus, 2/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
 >  [infinity, 4, 0]], 10);;
 gap> AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2], 
   [infinity, 2, 0]], 2)
 
-#T# maxplusmat: AsMatrix, everything, 3/3
+# maxplusmat: AsMatrix, everything, 3/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3],
 >                                            [1, 1, 6],
 >                                            [0, 4, 2]], 10);;
@@ -446,7 +446,7 @@ gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0], [0, -1, 0, 0],
 gap> IsTorsion(mat);
 false
 
-#T# maxplusmat: RadialEigenvector for a max-plus matrix with SpectralRadius = 0
+# maxplusmat: RadialEigenvector for a max-plus matrix with SpectralRadius = 0
 gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 [ 0, -2 ]
 gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[3, -3], [-2, -10]]));
@@ -455,12 +455,12 @@ Error, no 2nd choice method found for `RadialEigenvector' on 1 arguments
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 0
 
-#T# maxplusmat: UnweightedPrecedenceDigraph for a max-plus matrix
+# maxplusmat: UnweightedPrecedenceDigraph for a max-plus matrix
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
 > [-infinity, 10, -2], [-infinity, 2, 1]]));
 <digraph with 3 vertices, 7 edges>
 
-#T# maxplusmat: InverseOp for a max-plus matrix
+# maxplusmat: InverseOp for a max-plus matrix
 gap> mat := Matrix(IsMaxPlusMatrix, [[-1, -infinity, -infinity],
 >  [-infinity, -infinity, 1], [-infinity, 2, -infinity]]);;
 gap> InverseOp(mat) * mat;
@@ -513,7 +513,7 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -3, 3, -1, -1],
 > [1, 1, 1, -2, 0], [-infinity, 0, 0, 1, -1], [2, 2, 1, 0, -infinity],
 > [1, -1, 5, -infinity, -infinity]]);;
 
-#T# maxplusmat: SpectralRadius for a max-plus matrix
+# maxplusmat: SpectralRadius for a max-plus matrix
 gap> mat := Matrix(IsMaxPlusMatrix, [[0, -3, 0, -2, -1], [1, -1, 0, -infinity, 1],
 >  [-infinity, 1, 0, -infinity, 2], [-infinity, 4, 0, -2, 1],
 >  [-3, 0, 5, -1, -4]]);;
@@ -604,12 +604,12 @@ gap> x := Matrix(IsNTPMatrix, [[1, 1], [0, 0]], 5, -10);
 Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
  the threshold must be >=0 and the period > 0,
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(mat);
 gap> Unbind(mat2);
 gap> Unbind(mat3);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/maxplusmat.tst");

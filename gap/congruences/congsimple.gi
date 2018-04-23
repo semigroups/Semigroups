@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congsimple.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  congruences/congsimple.gi
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -28,7 +28,7 @@ end);
 InstallMethod(CongruencesOfSemigroup,
 "for a (0-)simple or simple semigroup",
 [IsSemigroup],
-1, # Try this before the method in congpairs.gi
+1,  # Try this before the method in congpairs.gi
 function(S)
   local iso, R, congs, i;
   if not (IsFinite(S) and (IsSimpleSemigroup(S)

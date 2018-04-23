@@ -19,7 +19,7 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   #homomorphism
+>   # homomorphism
 >   for x in Generators(Source(iso)) do
 >     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
@@ -36,7 +36,7 @@ gap> BruteForceInverseCheck := function(map)
 >     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
 > end;;
 
-#T# IsomorphismPermGroup: for a transformation semigroup
+# IsomorphismPermGroup: for a transformation semigroup
 gap> S := Semigroup([Transformation([3, 2, 4, 1]), Transformation([2, 1])]);
 <transformation semigroup of degree 4 with 2 generators>
 gap> iso := IsomorphismPermGroup(S);;
@@ -51,7 +51,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must satisfy IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Rees Matrix Semigroup
+# IsomorphismPermGroup: for a Rees Matrix Semigroup
 gap> R := ReesMatrixSemigroup(Group((1, 3, 5), (2, 4)), [[()]]);;
 gap> iso := IsomorphismPermGroup(R);;
 gap> G := Range(iso);;
@@ -64,7 +64,7 @@ gap> iso := IsomorphismPermGroup(R);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a FP Semigroup
+# IsomorphismPermGroup: for a FP Semigroup
 gap> F := FreeSemigroup(2);
 <free semigroup on the generators [ s1, s2 ]>
 gap> S := F /
@@ -99,7 +99,7 @@ Group([ (1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)
 (22,23,24), (1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)
 (20,23)(21,24) ])
 
-#T# IsomorphismPermGroup: for a PBR Semigroup
+# IsomorphismPermGroup: for a PBR Semigroup
 gap> S := Semigroup([PBR([[-1], [-4], [-2], [-3]], [[1], [3], [4], [2]]),
 >                    PBR([[-2], [-1], [-3], [-4]], [[2], [1], [3], [4]])]);;
 gap> iso := IsomorphismPermGroup(S);;
@@ -116,7 +116,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Bipartition Semigroup
+# IsomorphismPermGroup: for a Bipartition Semigroup
 gap> S := Semigroup([Bipartition([[1, 2, -2, -3], [3], [-1]]),
 >                    Bipartition([[1, 2, -2], [3, -3], [-1]])]);;
 gap> iso := IsomorphismPermGroup(S);
@@ -131,7 +131,7 @@ true
 gap> G := Range(iso);
 Group([ (1,2,3) ])
 
-#T# IsomorphismPermGroup: for a Transformation Semigroup
+# IsomorphismPermGroup: for a Transformation Semigroup
 gap> S := Semigroup([Transformation([3, 4, 1, 2, 6, 5]),
 >                    Transformation([4, 5, 2, 6, 3, 1])]);;
 gap> iso := IsomorphismPermGroup(S);;
@@ -145,7 +145,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must satisfy IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Partial Perm Semigroup
+# IsomorphismPermGroup: for a Partial Perm Semigroup
 gap> S := Semigroup([PartialPerm([1, 2, 3, 5], [2, 1, 3, 5]),
 >                    PartialPerm([1, 2, 3, 5], [1, 2, 5, 3])]);;
 gap> iso := IsomorphismPermGroup(S);;
@@ -169,7 +169,7 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must be a partial perm semigroup satisfying IsGroupAsSemigrou\
 p,
 
-#T# IsomorphismPermGroup: for a Boolean Mat Semigroup
+# IsomorphismPermGroup: for a Boolean Mat Semigroup
 gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
@@ -183,7 +183,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Max Plus Matrix Semigroup
+# IsomorphismPermGroup: for a Max Plus Matrix Semigroup
 gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 >                                             [-infinity, -infinity, 0],
 >                                             [0, -infinity, -infinity]])]);;
@@ -203,7 +203,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Min Plus Matrix Semigroup
+# IsomorphismPermGroup: for a Min Plus Matrix Semigroup
 gap> S := Semigroup([Matrix(IsMinPlusMatrix,
 >                             [[infinity, 0, infinity, infinity],
 >                              [infinity, infinity, 0, infinity],
@@ -230,7 +230,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Tropical Max Plus Matrix Semigroup
+# IsomorphismPermGroup: for a Tropical Max Plus Matrix Semigroup
 gap> S := Semigroup(
 > [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 0, -infinity],
 >     [-infinity, -infinity, -infinity, 0],
@@ -253,7 +253,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Tropical Min Plus Matrix Semigroup
+# IsomorphismPermGroup: for a Tropical Min Plus Matrix Semigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
 >    [[infinity, 0, infinity, infinity, infinity],
@@ -273,7 +273,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Projective Max Plus Matrix Semigroup
+# IsomorphismPermGroup: for a Projective Max Plus Matrix Semigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
 >    [[-infinity, -infinity, 0, -infinity, -infinity, -infinity],
@@ -304,7 +304,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a NTP Matrix Semigroup
+# IsomorphismPermGroup: for a NTP Matrix Semigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
 >     [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1],
@@ -325,7 +325,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Block Bijection Semigroup
+# IsomorphismPermGroup: for a Block Bijection Semigroup
 gap> S := InverseSemigroup(
 > [Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5],
 >    [6, -6]]), Bipartition([[1, -1], [2, -2], [3, -4],
@@ -343,7 +343,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a block bijection monoid
+# IsomorphismPermGroup: for a block bijection monoid
 gap> S := InverseMonoid(
 > [Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5],
 >    [6, -6]]), Bipartition([[1, -1], [2, -2], [3, -4],
@@ -355,7 +355,7 @@ true
 gap> G := Range(iso);
 Group([ (), (1,2), (3,4,5) ])
 
-#T# IsomorphismPermGroup: for a Integer Matrix Semigroup
+# IsomorphismPermGroup: for a Integer Matrix Semigroup
 gap> S := Semigroup(
 > [Matrix(IsIntegerMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
 >     [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1],
@@ -377,7 +377,7 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Integer Matrix Semigroup
+# IsomorphismPermGroup: for a Integer Matrix Semigroup
 gap> S := GraphInverseSemigroup(Digraph([[]]));
 <finite graph inverse semigroup with 1 vertex, 0 edges>
 gap> iso := IsomorphismPermGroup(S);;
@@ -385,7 +385,7 @@ gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
 
-#T# IsomorphismPermGroup
+# IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> IsomorphismPermGroup(S);
@@ -398,12 +398,12 @@ MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>,
 <group of size 6, with 2 generators>
 , function( x ) ... end, function( x ) ... end )
 
-#T# IsomorphismPermGroup, infinite 1 / 1
+# IsomorphismPermGroup, infinite 1 / 1
 gap> IsomorphismPermGroup(FreeMonoid(3));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
-#T# IsomorphismPermGroup, for a block bijection semigroup
+# IsomorphismPermGroup, for a block bijection semigroup
 gap> S := Semigroup(Bipartition([[1, 2, -3, -4], [3, 4, -1, -2]]));;
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <block bijection group of degree 4 with 1 generator>
@@ -413,7 +413,7 @@ true
 gap> BruteForceInverseCheck(last2);
 true
 
-#T# IteratorSortedConjugateStabChain
+# IteratorSortedConjugateStabChain
 gap> G := AlternatingGroup(5);;
 gap> S := StabChainImmutable(G);;
 gap> iter := SEMIGROUPS.IteratorSortedConjugateStabChain(S, (5, 10));
@@ -421,7 +421,7 @@ gap> iter := SEMIGROUPS.IteratorSortedConjugateStabChain(S, (5, 10));
 gap> ListIterator(iter) = AsSet(G ^ (5, 10));
 true
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 1
+# SEMIGROUPS.LargestElementConjugateStabChain, 1
 gap> conj := (3, 9);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
@@ -450,7 +450,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 1, 2, 4 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 2
+# SEMIGROUPS.LargestElementConjugateStabChain, 2
 gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
@@ -479,7 +479,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 1, 3, 6 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 3
+# SEMIGROUPS.LargestElementConjugateStabChain, 3
 gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(10);;
 gap> base1 := [1, 2, 3, 4, 5, 6, 7, 8];;
@@ -511,7 +511,7 @@ gap> OnTuples(base2, q1);
 #gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 #[ 1, 2, 3, 4, 5, 6, 7, 8 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 4
+# SEMIGROUPS.LargestElementConjugateStabChain, 4
 gap> conj := (1, 13, 6, 8, 4, 12, 7, 5, 2, 3, 11)(9, 10);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -541,7 +541,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 4, 5 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 5
+# SEMIGROUPS.LargestElementConjugateStabChain, 5
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -571,7 +571,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 1, 3 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 6
+# SEMIGROUPS.LargestElementConjugateStabChain, 6
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -601,7 +601,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 6, 1, 3 ]
 
-#T# SEMIGROUPS.LargestElementConjugateStabChain, 7
+# SEMIGROUPS.LargestElementConjugateStabChain, 7
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -631,7 +631,7 @@ gap> OnTuples(base2, q1);
 gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 6, 1, 3 ]
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
@@ -642,6 +642,6 @@ gap> Unbind(iso);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/grpperm.tst");

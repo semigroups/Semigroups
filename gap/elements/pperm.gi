@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  pperm.gi
-#Y  Copyright (C) 2016                                      Wilf A. Wilson
+##  pperm.gi
+##  Copyright (C) 2016                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -18,7 +18,7 @@ function(f)
   seen := BlistList([1 .. n], ImageSetOfPartialPerm(f));
   out := [];
 
-  #find chains
+  # find chains
   for i in DomainOfPartialPerm(f) do
     if not seen[i] then
       i := i ^ f;
@@ -29,7 +29,7 @@ function(f)
     fi;
   od;
 
-  #find cycles
+  # find cycles
   for i in DomainOfPartialPerm(f) do
     if seen[i] then
       j := i ^ f;

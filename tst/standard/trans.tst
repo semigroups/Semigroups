@@ -54,9 +54,9 @@ guments
 gap> TransformationByImageAndKernel([1 .. 4], [[1 .. 4]]);
 fail
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/trans.tst");

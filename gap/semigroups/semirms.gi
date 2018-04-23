@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  reesmat.gi
-#Y  Copyright (C) 2014-16                                James D. Mitchell
+##  reesmat.gi
+##  Copyright (C) 2014-16                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -20,17 +20,17 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsReesMatrixSemigroup, IsList],
 function(filt, params)
   local order, i;
-  if Length(params) < 1 then # rows I
+  if Length(params) < 1 then  # rows I
     params[1] := Random([1 .. 100]);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of rows) must be a pos int,";
   fi;
-  if Length(params) < 2 then # cols J
+  if Length(params) < 2 then  # cols J
     params[2] := Random([1 .. 100]);
   elif not IsPosInt(params[2]) then
     return "the third argument (number of columns) must be a pos int,";
   fi;
-  if Length(params) < 3 then # group
+  if Length(params) < 3 then  # group
     order := Random([1 .. 2047]);
     i := Random([1 .. NumberSmallGroups(order)]);
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
@@ -177,7 +177,7 @@ function(S)
   elif not IsSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                   "the argument must be a simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
 
@@ -202,7 +202,7 @@ function(S)
   elif not IsZeroSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                   "the argument must be a 0-simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
 
@@ -278,7 +278,7 @@ function(S)
   fi;
 
   r := Representative(S);
-  if r![1] = 0 then # special case for the group consisting of 0
+  if r![1] = 0 then  # special case for the group consisting of 0
     return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> r);
   fi;
 
@@ -348,7 +348,7 @@ end);
 
 InstallMethod(Random, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
-3, # to beat the method for regular acting semigroups
+3,  # to beat the method for regular acting semigroups
 function(R)
   return Objectify(TypeReesMatrixSemigroupElements(R),
                    [Random(Rows(R)), Random(UnderlyingSemigroup(R)),
@@ -480,7 +480,7 @@ function(R)
   SetDigraphHasLoops(gr, false);
   SetDigraphBicomponents(gr, [[1 .. m], [m + 1 .. m + n]]);
   SetDigraphNrEdges(gr, nredges);
-  #SetDigraphVertexLabels(gr, Concatenation(rows, cols));
+  # SetDigraphVertexLabels(gr, Concatenation(rows, cols));
   return gr;
 end);
 
@@ -532,10 +532,10 @@ function(R)
   # Check each row and column of mat contains *exactly* one non-zero entry
   elts := [];
   mat := Matrix(R);
-  row := BlistList([1 .. Maximum(Rows(R))], []); # <row[i]> is <true> iff found
+  row := BlistList([1 .. Maximum(Rows(R))], []);  # <row[i]> is <true> iff found
                                                  # a non-zero entry in row <i>
   for j in Columns(R) do
-    seen := false; # <seen>: <true> iff found a non-zero entry in the col <j>
+    seen := false;  # <seen>: <true> iff found a non-zero entry in the col <j>
     for i in Rows(R) do
       if mat[j][i] <> 0 then
         if seen or row[i] then
@@ -573,7 +573,7 @@ function(R)
   for i in I do
     for j in Columns(R) do
       if mat[j][i] <> 0 then
-        star[i] := j; # <star[i]> is index such that mat[star[i]][i] <> 0
+        star[i] := j;  # <star[i]> is index such that mat[star[i]][i] <> 0
         break;
       fi;
     od;
@@ -722,7 +722,7 @@ function(R)
   # This also sends any zero-columns or zero-rows to the end of the new matrix.
   comp := ShallowCopy(RZMSConnectedComponents(R));
   size := List(comp, x -> Length(x[1]) * Length(x[2]));
-  SortParallel(size, comp, GT); # comp[1] defines largest connected component.
+  SortParallel(size, comp, GT);  # comp[1] defines largest connected component.
   p := rec(row := EmptyPlist(I), col := EmptyPlist(I));
 
   for k in [1 .. Length(comp)] do
@@ -935,9 +935,9 @@ InstallMethod(Size, "for a Rees matrix semigroup",
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
-  #if Size(UnderlyingSemigroup(R)) = infinity then
-  #  return infinity;
-  #fi;
+  # if Size(UnderlyingSemigroup(R)) = infinity then
+  #   return infinity;
+  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
@@ -946,9 +946,9 @@ InstallMethod(Size, "for a Rees 0-matrix semigroup",
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
-  #if Size(UnderlyingSemigroup(R)) = infinity then
-  #  return infinity;
-  #fi;
+  # if Size(UnderlyingSemigroup(R)) = infinity then
+  #   return infinity;
+  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
          + 1;
 end);

@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# FreeBandTest1: Creating free bands and basic methods
+# FreeBandTest1: Creating free bands and basic methods
 # (with default generators)
 gap> FreeBand(["a", "b", "c"]);
 <free band on the generators [ a, b, c ]>
@@ -42,7 +42,7 @@ gap> FreeBand(1, 2, 3);
 Error, Semigroups: FreeBand: usage,
 FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
 
-#T# FreeBandTest2: Free band D-class iterator
+# FreeBandTest2: Free band D-class iterator
 gap> S := FreeBand(5);
 <free band on the generators [ x1, x2, x3, x4, x5 ]>
 gap> x := S.3 * S.2 * S.1;
@@ -62,7 +62,7 @@ x2x3x1x3x2x3
 gap> NextIterator(iter);
 x3x2x1x3x2x3
 
-#T# FreeBandTest3: Free band iterator
+# FreeBandTest3: Free band iterator
 gap> S := FreeBand(10);
 <free band on the generators [ x1, x2, x3, x4, x5, x6, x7, x8, x9, x10 ]>
 gap> iter := Iterator(S);
@@ -80,7 +80,7 @@ x2x1
 gap> NextIterator(iter);
 x1x2x1
 
-#T# FreeBandTest4: Size
+# FreeBandTest4: Size
 gap> Size(FreeBand(1));
 1
 gap> Size(FreeBand(2));
@@ -92,7 +92,7 @@ gap> Size(FreeBand(4));
 gap> Size(FreeBand(7));
 3641839910835401567626683593436003894250931310990279691
 
-#T# FreeBandTest5: \< for a free band
+# FreeBandTest5: \< for a free band
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> x := Generators(S)[1];
@@ -112,7 +112,7 @@ false
 gap> z < x * y * x * y * x;
 false
 
-#T# FreeBandTest6: Free band full iterator
+# FreeBandTest6: Free band full iterator
 gap> S := FreeBand(3);;
 gap> list := [];;
 gap> iter := Iterator(S);;
@@ -126,7 +126,7 @@ gap> Size(list);
 gap> IsDuplicateFree(list);
 true
 
-#T# FreeBandTest7: Equality of free bands
+# FreeBandTest7: Equality of free bands
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> x := Generators(S)[1];
@@ -144,7 +144,7 @@ true
 gap> x * y * x * y * z * x * y * z = x * y * z;
 true
 
-#T# FreeBandTest8: IsFreeBandCategory
+# FreeBandTest8: IsFreeBandCategory
 gap> IsFreeBandCategory(FreeBand(4));
 true
 gap> IsFreeBandCategory(FreeBand(4, "b"));
@@ -154,7 +154,7 @@ false
 gap> IsFreeBandCategory(FullTransformationMonoid(7));
 false
 
-#T# FreeBandTest9: \* for a free band
+# FreeBandTest9: \* for a free band
 gap> S := FreeBand(7);;
 gap> gens := Generators(S);;
 gap> Product(List([1, 7], x -> gens[x]));
@@ -168,7 +168,7 @@ x1x2
 gap> Product(List([5, 2, 4, 5, 1, 7, 7, 6, 2, 1], x -> gens[x]));
 x5x2x4x2x4x5x1x2x4x5x1x7x2x4x5x1x7x6x4x5x1x7x6x2x5x1x7x6x2x7x6x2x1
 
-#T# FreeBandTest10: Issue #112
+# FreeBandTest10: Issue #112
 gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
 gap> for i in [1 .. 1000] do NextIterator(iter); od;
@@ -180,7 +180,7 @@ true
 gap> Size(T);
 5
 
-#T# FreeBandTest11: Hash tables
+# FreeBandTest11: Hash tables
 gap> s := FreeBand(3);;
 gap> x := Generators(s)[1];;
 gap> y := Generators(s)[2];;
@@ -203,12 +203,12 @@ gap> ht!.len;
 100003
 gap> ht!.nr;
 159
-gap> ht!.collisions in [0, 1]; # for 32-bit and 64-bit mode
+gap> ht!.collisions in [0, 1];  # for 32-bit and 64-bit mode
 true
 gap> ht!.accesses;
 160
 
-#T# FreeBandTest12: IsFreeBand
+# FreeBandTest12: IsFreeBand
 gap> gens := Generators(FreeBand(3));
 [ x1, x2, x3 ]
 gap> IsFreeBand(Semigroup(gens));
@@ -238,7 +238,7 @@ gap> ContentOfFreeBandElement(S.2 * S.1);
 gap> FreeBand(100);
 <free band with 100 generators>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(S);
 gap> Unbind(T);
@@ -254,6 +254,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/freeband.tst");

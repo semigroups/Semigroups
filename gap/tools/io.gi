@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  io.gi
-#Y  Copyright (C) 2013-17                                James D. Mitchell
+##  io.gi
+##  Copyright (C) 2013-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -45,8 +45,8 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
   out := [];
 
   while i < Length(line) do
-    m := Int([line[i]]);                                      # blocksize
-    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
+    m := Int([line[i]]);                                       # blocksize
+    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]}));  # max domain
     f := line{[m + i + 1 .. i + m * (deg + 1)]};
     k := k + 1;
     out[k] := EmptyPlist(deg);
@@ -58,11 +58,11 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
 
   if Length(line) = 0 then
     return IO_Nothing;
-  elif line[1] = 't' then # transformations
+  elif line[1] = 't' then  # transformations
     Apply(out, TransformationNC);
-  elif line[1] = 'p' then # partial perms
+  elif line[1] = 'p' then  # partial perms
     Apply(out, DensePartialPermNC);
-  elif line[1] = 'b' then # bipartitions
+  elif line[1] = 'b' then  # bipartitions
     Apply(out, BIPART_NC);
   fi;
 
@@ -73,7 +73,7 @@ end;
 # <coll> in a line of an old style "generators" file and writes that line to
 # the file <file>, using IO_WriteLine.
 SEMIGROUPS.WriteGeneratorsLine := function(file, coll)
-  local append, line, deg, nrdigits, blocks, x, i;
+  local append, line, deg, nrdigits, x, i;
 
   append := function(str, pt, m)
     local i, j;
@@ -116,7 +116,6 @@ SEMIGROUPS.WriteGeneratorsLine := function(file, coll)
       nrdigits := Length(deg);
       Append(line, String(nrdigits));
       Append(line, deg);
-      blocks := IntRepOfBipartition(x);
       for i in IntRepOfBipartition(x) do
         append(line, i, nrdigits);
       od;
@@ -463,7 +462,7 @@ function(arg)
   fi;
 
   for i in [1 .. Length(coll)] do
-    n := Size(coll[i]); # Don't assume all multiplcation tables are same size.
+    n := Size(coll[i]);  # Don't assume all multiplcation tables are same size.
     if not (IsRectangularTable(coll[i]) and IsInt(coll[i][1][1])) then
       ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
                     "the second argument must be a collection of rectangular ",
@@ -474,7 +473,7 @@ function(arg)
                     "tables with at most 255 rows,");
     fi;
 
-    str := EmptyString(n ^ 2 + 1); # + 1 for newline character
+    str := EmptyString(n ^ 2 + 1);  # + 1 for newline character
     for j in [1 .. n] do
       for k in [1 .. n] do
         if not (0 < coll[i][j][k] and coll[i][j][k] <= n) then
@@ -484,7 +483,7 @@ function(arg)
                         "..., n] (where n equals the number of rows of the ",
                         "table),");
         elif coll[i][j][k] = 10 then
-          Add(str, '\000'); # We use CharInt(0) since CharInt(10) is newline.
+          Add(str, '\000');  # We use CharInt(0) since CharInt(10) is newline.
         else
           Add(str, CharInt(coll[i][j][k]));
         fi;

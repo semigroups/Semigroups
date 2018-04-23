@@ -13,19 +13,19 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# AttributesTest1: MultiplicativeZero
+# AttributesTest1: MultiplicativeZero
 # for a transformation semigroup/ideal
 gap> t := Transformation([1]);;
 
 # Trivial full transformation monoid T_1
 # Previously this crashed: see issue #121 on Bitbucket
-gap> s := Semigroup(t); # with displaying the semigroup
+gap> s := Semigroup(t);  # with displaying the semigroup
 <trivial transformation group of degree 0 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
 true
-gap> s := Semigroup(t);; # not displaying the semigroup
+gap> s := Semigroup(t);;  # not displaying the semigroup
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -38,13 +38,13 @@ true
 
 # Trivial transformation monoid with different rep.
 gap> t := Transformation([2, 2, 3, 3]);;
-gap> s := Semigroup(t); # with displaying the semigroup
+gap> s := Semigroup(t);  # with displaying the semigroup
 <commutative transformation semigroup of degree 4 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
 true
-gap> s := Semigroup(t);; # not displaying the semigroup
+gap> s := Semigroup(t);;  # not displaying the semigroup
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -78,7 +78,7 @@ gap> t := Transformation([1, 1, 1, 1]);;
 gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
 false
-gap> MultiplicativeZero(I); # does not know whether parent has a zero
+gap> MultiplicativeZero(I);  # does not know whether parent has a zero
 fail
 gap> Size(MinimalIdeal(I)) = 1;
 false
@@ -89,12 +89,12 @@ fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> I := SemigroupIdeal(s, t);;
-gap> MultiplicativeZero(I); # does know whether parent has a zero
+gap> MultiplicativeZero(I);  # does know whether parent has a zero
 fail
 gap> Size(MinimalIdeal(I)) = 1;
 false
 
-#T# AttributesTest2:
+# AttributesTest2:
 # MultiplicativeZero for a partial perm semigroup/ideal
 gap> t := PartialPerm([], []);;
 
@@ -120,7 +120,7 @@ gap> Size(MinimalIdeal(s)) = 1;
 true
 
 # For a non-trivial partial perm semigroup
-gap> s := Semigroup([PartialPerm([2], [1])]); # contains <empty pperm>
+gap> s := Semigroup([PartialPerm([2], [1])]);  # contains < empty pperm >
 <commutative partial perm semigroup of rank 1 with 1 generator>
 gap> MultiplicativeZero(s);
 <empty partial perm>
@@ -128,7 +128,7 @@ gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := Semigroup([
 > PartialPerm([1, 2, 3], [1, 4, 2]),
-> PartialPerm([1, 4], [1, 3])]); # does not contain <empty pperm>
+> PartialPerm([1, 4], [1, 3])]);  # does not contain <empty pperm>
 <partial perm semigroup of rank 4 with 2 generators>
 gap> MultiplicativeZero(s);
 <identity partial perm on [ 1 ]>
@@ -153,7 +153,7 @@ gap> t := PartialPerm([], []);;
 gap> I := SemigroupIdeal(s, t);;
 gap> HasMultiplicativeZero(s);
 false
-gap> MultiplicativeZero(I) = t; # does not know whether parent has a zero
+gap> MultiplicativeZero(I) = t;  # does not know whether parent has a zero
 true
 gap> Size(MinimalIdeal(I)) = 1;
 true
@@ -164,12 +164,12 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> I := SemigroupIdeal(s, t);;
-gap> MultiplicativeZero(I) = t; # does know whether parent has a zero
+gap> MultiplicativeZero(I) = t;  # does know whether parent has a zero
 true
 gap> Size(MinimalIdeal(I)) = 1;
 true
 
-#T# AttributesTest3:
+# AttributesTest3:
 # MultiplicativeZero for a bipartition semigroup/ideal
 gap> s := PartitionMonoid(1);
 <commutative bipartition monoid of degree 1 with 1 generator>
@@ -241,7 +241,7 @@ gap> MultiplicativeZero(I);
 gap> Size(MinimalIdeal(I)) = 1;
 true
 
-#T# AttributesTest4:
+# AttributesTest4:
 # MultiplicativeZero for a block bijection inverse semigroup/ideal
 gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(1));
 <commutative inverse block bijection monoid of degree 2 with 1 generator>
@@ -300,7 +300,7 @@ fail
 gap> Size(MinimalIdeal(I)) = 1;
 false
 
-#T# AttributesTest5:
+# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
 gap> s := Semigroup(FullTransformationMonoid(10), rec(acting := true));
 <transformation monoid of degree 10 with 3 generators>
@@ -342,7 +342,7 @@ gap> Size(MinimalDClass(s));
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 
-#T# attr: RightCayleyDigraph
+# attr: RightCayleyDigraph
 gap> S := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]),
 >                   PartialPerm([1, 2, 3], [2, 5, 3]),
 >                   PartialPerm([1, 2, 3], [4, 1, 2]),
@@ -353,12 +353,12 @@ gap> Length(DigraphStronglyConnectedComponents(digraph).comps)
 > = NrRClasses(S);
 true
 
-#T# attr: RightCayleyDigraph, infinite
+# attr: RightCayleyDigraph, infinite
 gap> RightCayleyDigraph(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RightCayleyDigraph' on 1 arguments
 
-#T# attr: LeftCayleyDigraph
+# attr: LeftCayleyDigraph
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
 >                              [1, 1, 0, 1, 0], [1, 1, 1, 1, 1],
 >                              [1, 1, 0, 0, 0]]),
@@ -379,12 +379,12 @@ gap> Length(DigraphStronglyConnectedComponents(digraph).comps)
 > = NrLClasses(S);
 true
 
-#T# attr: RightCayleyDigraph, infinite
+# attr: RightCayleyDigraph, infinite
 gap> LeftCayleyDigraph(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `LeftCayleyDigraph' on 1 arguments
 
-#T# attr: IsomorphismReesMatrixSemigroup
+# attr: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(
 > Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
 > Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]),
@@ -395,7 +395,7 @@ gap> D := GreensDClassOfElement(Semigroup(
 gap> PrincipalFactor(D);
 <Rees 0-matrix semigroup 12x15 over Group(())>
 
-#T# attr: IsomorphismReesMatrixSemigroup, error, 1/1
+# attr: IsomorphismReesMatrixSemigroup, error, 1/1
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClass(S, Transformation([1, 2, 1]));;
 gap> IsomorphismReesMatrixSemigroup(D);
@@ -407,7 +407,7 @@ MappingByFunction( <Green's D-class: Transformation( [ 1, 1, 1 ] )>,
 <Rees matrix semigroup 1x3 over Group(())>
  , function( x ) ... end, function( x ) ... end )
 
-#T# attr: IrredundantGeneratingSubset, for a collection of elements
+# attr: IrredundantGeneratingSubset, for a collection of elements
 gap> G := CyclicGroup(3);;
 gap> R := GF(2);;
 gap> GR := GroupRing(R, G);;
@@ -415,30 +415,30 @@ gap> iso := IsomorphismTransformationSemigroup(GR);;
 gap> S := Range(iso);;
 gap> S := Semigroup(IrredundantGeneratingSubset(SmallGeneratingSet(S)));;
 
-#T# attr: IrredundantGeneratingSubset: for a semigroup
+# attr: IrredundantGeneratingSubset: for a semigroup
 gap> S := RandomMonoid(IsBooleanMatMonoid, 10, 3);;
 gap> T := Semigroup(IrredundantGeneratingSubset(S));;
 gap> S = T;
 true
 
-#T# attr: IrredundantGeneratingSubset: for a set with one element, 1
+# attr: IrredundantGeneratingSubset: for a set with one element, 1
 gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 
-#T# attr: IrredundantGeneratingSubset: for a set with one element, 2
+# attr: IrredundantGeneratingSubset: for a set with one element, 2
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 1]),
 >  Transformation([2, 2])], rec(acting := true));
 <transformation monoid of degree 2 with 3 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 2
 
-#T# attr: IrredundantGeneratingSubset: for a set with a single repeated
+# attr: IrredundantGeneratingSubset: for a set with a single repeated
 # element
 gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 <transformation semigroup of degree 2 with 2 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 1
 
-#T# attr: IrredundantGeneratingSubset: test info statements
+# attr: IrredundantGeneratingSubset: test info statements
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 4, 1);;
 gap> S := Semigroup(Elements(S));
 <transformation semigroup of degree 5 with 4 generators>
@@ -453,7 +453,7 @@ at 	4 of 	4 with 	2 redundant, 	1 non-redundant
 [ Transformation( [ 1, 1, 2, 3, 4 ] ) ]
 gap> SetInfoLevel(InfoSemigroups, x);
 
-#T# attr: PrincipalFactor: for a D-class
+# attr: PrincipalFactor: for a D-class
 gap> D := GreensDClassOfElement(
 >  Semigroup(
 >    BooleanMat([[0, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0], [1, 1, 1, 0, 0, 0],
@@ -465,7 +465,7 @@ gap> D := GreensDClassOfElement(
 gap> PrincipalFactor(D);
 <Rees matrix semigroup 1x1 over Group(())>
 
-#T# attr: SmallSemigroupGeneratingSet: for a collection with > 1 elements
+# attr: SmallSemigroupGeneratingSet: for a collection with > 1 elements
 gap> SmallSemigroupGeneratingSet([
 > Transformation([1, 1, 1, 1, 4]), Transformation([1, 2, 2, 1, 1]),
 > Transformation([1, 2, 5, 4, 4]), Transformation([1, 3, 3, 5, 1]),
@@ -473,13 +473,13 @@ gap> SmallSemigroupGeneratingSet([
 > Transformation([3, 5, 2, 4, 4]), Transformation([3, 5, 4, 5, 4]),
 > Transformation([4, 4, 2, 5, 5]), Transformation([5, 2, 3, 5, 2])]);;
 
-#T# attr: SmallSemigroupGeneratingSet: for a collection with 1 elements
+# attr: SmallSemigroupGeneratingSet: for a collection with 1 elements
 gap> SmallSemigroupGeneratingSet([BooleanMat([[0, 1, 0, 0], [0, 1, 1, 0], [0,
 > 1, 0, 0], [1, 0, 1, 1]])]);
 [ Matrix(IsBooleanMat, [[0, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 0], 
       [1, 0, 1, 1]]) ]
 
-#T# attr: SmallSemigroupGeneratingSet: for a semigroup
+# attr: SmallSemigroupGeneratingSet: for a semigroup
 gap> S := Semigroup([PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 2, 3], [2, 3, 4]),
 > PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -492,25 +492,25 @@ gap> S := Semigroup([PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 3, 5], [4, 3, 1])]);;
 gap> SmallSemigroupGeneratingSet(S);;
 
-#T# attr: SmallMonoidGeneratingSet: for a singleton set 1/2
+# attr: SmallMonoidGeneratingSet: for a singleton set 1/2
 gap> SmallMonoidGeneratingSet([IdentityTransformation]);
 [ IdentityTransformation ]
 
-#T# attr: SmallMonoidGeneratingSet: for a singleton set 2/2
+# attr: SmallMonoidGeneratingSet: for a singleton set 2/2
 gap> SmallMonoidGeneratingSet([Transformation([2, 1, 2])]);
 [ Transformation( [ 2, 1, 2 ] ) ]
 
-#T# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 1
+# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 1
 gap> S := Monoid(Bipartition([[1, -1]]));;
 gap> SmallMonoidGeneratingSet(S);
 [ <block bijection: [ 1, -1 ]> ]
 
-#T# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 2
+# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 2
 gap> S := FreeMonoid(0);;
 gap> SmallMonoidGeneratingSet(S);
 [  ]
 
-#T# attr: SmallInverseSemigroupGeneratingSet: for collection > 1 element 
+# attr: SmallInverseSemigroupGeneratingSet: for collection > 1 element 
 gap> SmallInverseSemigroupGeneratingSet(
 > [PartialPerm([1, 2], [4, 1]),
 >  PartialPerm([1, 2], [5, 2]), PartialPerm([1, 2, 3], [3, 2, 1]),
@@ -520,12 +520,12 @@ gap> SmallInverseSemigroupGeneratingSet(
 >  PartialPerm([1, 2, 3, 4, 5], [3, 1, 5, 4, 2]),
 >  PartialPerm([1, 2, 3, 5], [5, 4, 2, 3])]);;
 
-#T# attr: SmallInverseSemigroupGeneratingSet: for collection 1 element 
+# attr: SmallInverseSemigroupGeneratingSet: for collection 1 element 
 gap> SmallInverseSemigroupGeneratingSet([PartialPerm([1, 2, 3, 7, 9, 10,
 > 11, 12], [4, 6, 8, 12, 5, 9, 1, 3])]);
 [ [2,6][7,12,3,8][10,9,5][11,1,4] ]
 
-#T# attr: SmallInverseSemigroupGeneratingSet: for an inverse semigroup
+# attr: SmallInverseSemigroupGeneratingSet: for an inverse semigroup
 gap> S :=
 > InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >   PartialPerm([1, 2, 4], [2, 3, 1]), PartialPerm([1, 3, 4], [3, 2, 4]),
@@ -538,13 +538,13 @@ gap> S :=
 >   PartialPerm([1, 2, 3, 5], [4, 1, 2, 3])]);;
 gap> SmallInverseSemigroupGeneratingSet(S);;
 
-#T# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 1
+# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 1
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
 <trivial partial perm group of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
 
-#T# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 2
+# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 2
 gap> S := Group(IdentityTransformation);
 <transformation group of degree 0 with 1 generator>
 gap> S := Subgroup(S, []);
@@ -554,20 +554,20 @@ true
 gap> SmallInverseMonoidGeneratingSet(S);
 [  ]
 
-#T# attr: SmallInverseMonoidGeneratingSet: for > 0 generators 1/2
+# attr: SmallInverseMonoidGeneratingSet: for > 0 generators 1/2
 gap> S := InverseMonoid([PartialPerm([1, 3], [2, 3]),
 > PartialPerm([1, 3], [3, 1]),
 > PartialPerm([1, 2, 3], [3, 2, 4]),
 > PartialPerm([1, 4], [1, 3])]);;
 gap> SmallInverseMonoidGeneratingSet(S);;
 
-#T# attr: SmallInverseMonoidGeneratingSet: for > 0 generators 2/2
+# attr: SmallInverseMonoidGeneratingSet: for > 0 generators 2/2
 gap> Set(SmallInverseMonoidGeneratingSet(DualSymmetricInverseMonoid(3)));
 [ <block bijection: [ 1, 2, -3 ], [ 3, -1, -2 ]>, 
   <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
   <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]> ]
 
-#T# attr: SmallInverseSemigroupGeneratingSet: for a collection
+# attr: SmallInverseSemigroupGeneratingSet: for a collection
 gap> coll := [Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -5]]),
 > Bipartition([[1, -1], [2, -4], [3, -3], [4], [5], [-2], [-5]]),
 > Bipartition([[1, -2], [2, -4], [3, -3], [4], [5], [-1], [-5]]),
@@ -589,7 +589,7 @@ gap> coll := [Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -5]]),
 > Bipartition([[1, -5], [2], [3, -2], [4, -4], [5, -1], [-3]])];;
 gap> SmallInverseSemigroupGeneratingSet(coll);;
 
-#T# attr: SmallInverseMonoidGeneratingSet: for a collection
+# attr: SmallInverseMonoidGeneratingSet: for a collection
 gap> coll := [PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
 > PartialPerm([1, 2], [1, 4]), PartialPerm([1, 2, 3], [1, 4, 2]),
 > PartialPerm([1, 2, 3], [3, 5, 2]),
@@ -608,25 +608,25 @@ gap> coll := [PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
 > PartialPerm([1, 2, 3, 5], [5, 4, 2, 1])];;
 gap> SmallInverseMonoidGeneratingSet(coll);;
 
-#T# attr: SmallInverseMonoidGeneratingSet: for a collection of 1 element
+# attr: SmallInverseMonoidGeneratingSet: for a collection of 1 element
 gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 4])]);
 [ [3,4](1)(2) ]
 
-#T# attr: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
+# attr: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
 gap> SmallInverseSemigroupGeneratingSet([RandomTransformation(10)]);
 Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
-#T# attr: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
+# attr: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
 gap> SmallInverseMonoidGeneratingSet([RandomMatrix(IsBooleanMat, 10)]);
 Error, Semigroups: SmallInverseMonoidGeneratingSet: usage,
 the argument must satisfy IsGeneratorsOfInverseSemigroup
 
-#T# attr: SmallInverseMonoidGeneratingSet: for One
+# attr: SmallInverseMonoidGeneratingSet: for One
 gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 3])]);
 [  ]
 
-#T# attr: SmallGeneratingSet: for an ideal
+# attr: SmallGeneratingSet: for an ideal
 gap> S := SemigroupIdeal(Semigroup(
 >     BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 >     BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
@@ -636,30 +636,30 @@ gap> S := SemigroupIdeal(Semigroup(
 gap> SmallGeneratingSet(S);
 [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 0, 0], [1, 1, 0]]) ]
 
-#T# attr: SmallGeneratingSet: for a group
+# attr: SmallGeneratingSet: for a group
 gap> S := Group(IdentityTransformation);
 <transformation group of degree 0 with 1 generator>
 gap> SmallGeneratingSet(S);
 [ IdentityTransformation ]
 
-#T# attr: SmallGeneratingSet: for an inverse monoid
+# attr: SmallGeneratingSet: for an inverse monoid
 gap> S := InverseMonoid([PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 2, 4], [2, 3, 1]), PartialPerm([1, 2, 4], [3, 4, 2]),
 > PartialPerm([1, 4], [4, 2])]);;
 gap> SmallGeneratingSet(S);;
 
-#T# attr: SmallGeneratingSet: for an inverse semigroup
+# attr: SmallGeneratingSet: for an inverse semigroup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 3]),
 >                             PartialPerm([1, 3], [3, 1]),
 >                             PartialPerm([1, 2, 3], [4, 3, 2])]);;
 gap> SmallGeneratingSet(S);;
 
-#T# attr: SmallGeneratingSet: for a semigroup 
+# attr: SmallGeneratingSet: for a semigroup 
 gap> S := Semigroup([Transformation([3, 1, 4, 1, 3]),
 >                    Transformation([3, 5, 3, 2, 4])]);;
 gap> SmallGeneratingSet(S);;
 
-#T# attr: StructureDescription for a Brandt semigroup
+# attr: StructureDescription for a Brandt semigroup
 gap> S := SemigroupIdeal(
 > InverseSemigroup([
 >   PartialPermNC([1, 2, 3, 4], [4, 1, 2, 6]),
@@ -673,14 +673,14 @@ true
 gap> StructureDescription(S);
 "B(1, 6)"
 
-#T# attr: StructureDescription for a group as semigroup 1/3
+# attr: StructureDescription for a group as semigroup 1/3
 gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(5));;
 gap> IsGroupAsSemigroup(S);
 true
 gap> StructureDescription(S);
 "A5"
 
-#T# attr: StructureDescription for a group as semigroup 2/3
+# attr: StructureDescription for a group as semigroup 2/3
 gap> S := Semigroup(Transformation([2, 1, 1]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(S);
@@ -688,17 +688,17 @@ true
 gap> StructureDescription(S);
 "C2"
 
-#T# attr: StructureDescription for a group as semigroup 3/3
+# attr: StructureDescription for a group as semigroup 3/3
 gap> S := SymmetricGroup(3);;
 gap> StructureDescription(S);
 "S3"
 
-#T# Test StructureDescription for a group as semigroup
+# Test StructureDescription for a group as semigroup
 gap> S := Monoid(IdentityTransformation);;
 gap> StructureDescription(S);
 "1"
 
-#T# attr: IsGreensDGreaterThanFunc
+# attr: IsGreensDGreaterThanFunc
 gap> S := RegularBooleanMatMonoid(3);;
 gap> foo := IsGreensDGreaterThanFunc(S);
 function( x, y ) ... end
@@ -731,13 +731,13 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsGreensDGreaterThanFunc' on 1 argument\
 s
 
-#T# attr: IsGreensDGreaterThanFunc, error
+# attr: IsGreensDGreaterThanFunc, error
 gap> IsGreensDGreaterThanFunc(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `IsGreensDGreaterThanFunc' on 1 argument\
 s
 
-#T# attr: MaximalDClasses
+# attr: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> MaximalDClasses(S);
@@ -754,12 +754,12 @@ gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
 gap> MaximalDClasses(S);
 [ <Green's D-class: (1,(),1)> ]
 
-#T# attr: StructureDescriptionMaximalSubgroups
+# attr: StructureDescriptionMaximalSubgroups
 gap> S := RegularBooleanMatMonoid(3);;
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3" ]
 
-#T# attr: IdempotentGeneratedSubsemigroup, 1
+# attr: IdempotentGeneratedSubsemigroup, 1
 gap> S := RegularBooleanMatMonoid(3);;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
@@ -767,7 +767,7 @@ true
 gap> Size(T);
 381
 
-#T# attr: IdempotentGeneratedSubsemigroup, 2
+# attr: IdempotentGeneratedSubsemigroup, 2
 gap> S := SymmetricInverseMonoid(3);;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> HasIsSemilattice(T) and IsSemilattice(T);
@@ -788,7 +788,7 @@ false
 gap> HasIsSemilattice(T) and IsSemilattice(T);
 true
 
-#T# attr: InjectionPrincipalFactor
+# attr: InjectionPrincipalFactor
 gap> S := Monoid([BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
 >   BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
 >   BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
@@ -820,7 +820,7 @@ gap> InjectionPrincipalFactor(D);
 Error, Semigroups: InjectionPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
-#T# attr: MultiplicativeNeutralElement
+# attr: MultiplicativeNeutralElement
 gap> S := Semigroup([BooleanMat([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
 >  BooleanMat([[1, 0, 0], [1, 1, 0], [0, 1, 1]])]);;
 gap> MultiplicativeNeutralElement(S);
@@ -854,7 +854,7 @@ gap> S := Semigroup(Transformation([4, 5, 1, 3, 8, 5, 8, 2]),
 gap> MultiplicativeNeutralElement(S);
 fail
 
-#T# attr: GroupOfUnits, for a finite semigroup 1/2
+# attr: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> GroupOfUnits(S);
@@ -862,56 +862,56 @@ gap> GroupOfUnits(S);
 gap> StructureDescription(last);
 "S3"
 
-#T# attr: GroupOfUnits, fail 2/2
+# attr: GroupOfUnits, fail 2/2
 gap> S := Semigroup(
 > BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 1, 0, 1], [1, 1, 0, 1]]),
 > BooleanMat([[1, 1, 0, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 0]]));;
 gap> GroupOfUnits(S);
 fail
 
-#T# attr: GroupOfUnits, infinite 1/1
+# attr: GroupOfUnits, infinite 1/1
 gap> GroupOfUnits(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `GroupOfUnits' on 1 arguments
 
-#T# attr: NrIdempotents, C++ 1/1
+# attr: NrIdempotents, C++ 1/1
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> NrIdempotents(S);
 123
 
-#T# attr: NrIdempotents, non-C++ 1/1
+# attr: NrIdempotents, non-C++ 1/1
 gap> S := FreeBand(2);;
 gap> NrIdempotents(S);
 6
 
-#T# attr: NrIdempotents, infinite 1/1
+# attr: NrIdempotents, infinite 1/1
 gap> NrIdempotents(FreeSemigroup(2));
 Error, resulting list would be too large (length infinity)
 
-#T# attr: RepresentativeOfMinimalIdeal, simple, 1/1
+# attr: RepresentativeOfMinimalIdeal, simple, 1/1
 gap> S := MinimalIdeal(FreeBand(2));
 <simple semigroup ideal with 1 generator>
 gap> RepresentativeOfMinimalIdeal(S);
 x1x2
 
-#T# attr: MinimalIdeal, infinite, 1/1
+# attr: MinimalIdeal, infinite, 1/1
 gap> MinimalIdeal(FreeMonoid(3));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `MinimalIdeal' on 1 arguments
 
-#T# attr: IdempotentGeneratedSubsemigroup, inverse op 1/1
+# attr: IdempotentGeneratedSubsemigroup, inverse op 1/1
 gap> S := DualSymmetricInverseMonoid(2);;
 gap> T := IdempotentGeneratedSubsemigroup(S);
 <commutative inverse block bijection monoid of degree 2 with 1 generator>
 gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
 true
 
-#T# attr: MultiplicativeZero, infinite, 1
+# attr: MultiplicativeZero, infinite, 1
 #gap> MultiplicativeZero(FreeMonoid(2)); 
 #FIXME this causes an infinite loop in the GAP library code
 
-#T# attr: MultiplicativeZero, infinite, 2
+# attr: MultiplicativeZero, infinite, 2
 gap> F := FreeSemigroup(2);;
 gap> x := [[F.1 * F.1, F.1], [F.1 * F.2, F.1], [F.2 * F.1, F.1]];;
 gap> T := F / x;
@@ -920,36 +920,36 @@ gap> SetIsFinite(T, false);
 gap> MultiplicativeZero(T);
 s1
 
-#T# attr: MaximalDClasses, infinite 1/1
+# attr: MaximalDClasses, infinite 1/1
 gap> MaximalDClasses(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `MaximalDClasses' on 1 arguments
 
-#T# attr: StructureDescriptionMaximalSubgroups, infinite 1/1
+# attr: StructureDescriptionMaximalSubgroups, infinite 1/1
 gap> StructureDescriptionMaximalSubgroups(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `StructureDescriptionMaximalSubgroups' o\
 n 1 arguments
 
-#T# attr: IdempotentGeneratedSubsemigroup, infinite 1/1
+# attr: IdempotentGeneratedSubsemigroup, infinite 1/1
 gap> IdempotentGeneratedSubsemigroup(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
 rguments
 
-#T# attr: IdempotentGeneratedSubsemigroup, infinite, inverse-op 1/1
+# attr: IdempotentGeneratedSubsemigroup, infinite, inverse-op 1/1
 gap> IdempotentGeneratedSubsemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
 rguments
 
-#T# attr: MultiplicativeNeutralElement, infinite, 1
+# attr: MultiplicativeNeutralElement, infinite, 1
 gap> MultiplicativeNeutralElement(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
-#T# attr: MultiplicativeNeutralElement, infinite, 2
+# attr: MultiplicativeNeutralElement, infinite, 2
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]),
 > Matrix(IsMaxPlusMatrix, [[0, 0], [1, -3]])]);
@@ -959,19 +959,19 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
-#T# attr: MultiplicativeNeutralElement, One, 1
+# attr: MultiplicativeNeutralElement, One, 1
 gap> S := Semigroup(Transformation([1, 3, 2]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
-#T# attr: MultiplicativeNeutralElement, One, 2
+# attr: MultiplicativeNeutralElement, One, 2
 gap> S := Semigroup(Transformation([3, 1, 3]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 fail
 
-#T# attr: MultiplicativeNeutralElement, One, 3
+# attr: MultiplicativeNeutralElement, One, 3
 gap> S := Semigroup(
 > [BooleanMat([[true, false, false], [true, false, true], [true, true, true]]),
 >  BooleanMat([[true, false, false], [true, true, true], [true, true, false]]),
@@ -989,19 +989,19 @@ gap> S := Semigroup(
 gap> MultiplicativeNeutralElement(S);
 fail
 
-#T# attr: MultiplicativeNeutralElement, One, 4
+# attr: MultiplicativeNeutralElement, One, 4
 gap> S := Semigroup([PBR([[-2], [-1]], [[1], [2]])]);
 <commutative pbr semigroup of degree 2 with 1 generator>
 gap>  MultiplicativeNeutralElement(S);
 PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ 2 ] ])
 
-#T# attr: RepresentativeOfMinimalIdeal, infinite 1/1
+# attr: RepresentativeOfMinimalIdeal, infinite 1/1
 gap> RepresentativeOfMinimalIdeal(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `RepresentativeOfMinimalIdeal' on 1 argu\
 ments
 
-#T# attr: RepresentativeOfMinimalIdeal, simple 1/1
+# attr: RepresentativeOfMinimalIdeal, simple 1/1
 gap> S := Semigroup(AsBooleanMat((1, 2)));
 <commutative semigroup of 2x2 boolean matrices with 1 generator>
 gap> IsSimpleSemigroup(S);
@@ -1009,7 +1009,7 @@ true
 gap> RepresentativeOfMinimalIdeal(S);
 Matrix(IsBooleanMat, [[0, 1], [1, 0]])
 
-#T# attribute: NilpotencyDegree, 1/4
+# attribute: NilpotencyDegree, 1/4
 gap> S := Semigroup([
 >  PartialPerm([2], [1]), PartialPerm([1, 2], [3, 1]),
 >  PartialPerm([1, 2], [4, 1]), PartialPerm([1, 2], [5, 1]),
@@ -1023,19 +1023,19 @@ gap> S := Semigroup([
 gap> NilpotencyDegree(S);
 5
 
-#T# attribute: NilpotencyDegree, 2/4
+# attribute: NilpotencyDegree, 2/4
 gap> S := SymmetricGroup(2);
 Sym( [ 1 .. 2 ] )
 gap> NilpotencyDegree(S);
 fail
 
-#T# attribute: NilpotencyDegree, 3/4
+# attribute: NilpotencyDegree, 3/4
 gap> S := FullTransformationMonoid(1);
 <full transformation monoid of degree 0>
 gap> NilpotencyDegree(S);
 1
 
-#T# attribute: NilpotencyDegree, 4/4 
+# attribute: NilpotencyDegree, 4/4 
 gap> S := Semigroup([
 > Transformation([5, 2, 5, 3, 6, 6, 4, 6]),
 > Transformation([6, 2, 5, 7, 5, 3, 7, 7]),
@@ -1044,7 +1044,7 @@ gap> S := Semigroup([
 gap> NilpotencyDegree(S);
 fail
 
-#T# attribute: LengthOfLongestDClassChain, 1/4
+# attribute: LengthOfLongestDClassChain, 1/4
 gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> LengthOfLongestDClassChain(S);
@@ -1052,14 +1052,14 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `LengthOfLongestDClassChain' on 1 argume\
 nts
 
-#T# attribute: LengthOfLongestDClassChain, 2/4
+# attribute: LengthOfLongestDClassChain, 2/4
 gap> S := MonogenicSemigroup(8, 5);
 <commutative non-regular transformation semigroup of size 12, degree 13 with 
  1 generator>
 gap> LengthOfLongestDClassChain(S);
 7
 
-#T# attribute: LengthOfLongestDClassChain, 3/4
+# attribute: LengthOfLongestDClassChain, 3/4
 gap> S := Semigroup([
 >  PartialPerm([2], [1]), PartialPerm([1, 2], [3, 1]),
 >  PartialPerm([1, 2], [4, 1]), PartialPerm([1, 2], [5, 1]),
@@ -1073,13 +1073,13 @@ gap> S := Semigroup([
 gap> NilpotencyDegree(S);
 5
 
-#T# attribute: LengthOfLongestDClassChain, 4/4
+# attribute: LengthOfLongestDClassChain, 4/4
 gap> S := SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap> LengthOfLongestDClassChain(S);
 0
 
-#T# attribute: NormalizedPrincipalFactor, 1
+# attribute: NormalizedPrincipalFactor, 1
 gap> S := FullTransformationMonoid(4);
 <full transformation monoid of degree 4>
 gap> S := NormalizedPrincipalFactor(DClass(S,
@@ -1091,7 +1091,7 @@ gap> Columns(S);
 gap> StructureDescription(UnderlyingSemigroup(S));
 "S3"
 
-#T# attribute: InjectionNormalizedPrincipalFactor, 1
+# attribute: InjectionNormalizedPrincipalFactor, 1
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> InjectionNormalizedPrincipalFactor(DClass(S, RMSElement(S, 1, (), 1)));
@@ -1099,7 +1099,7 @@ MappingByFunction( <Green's D-class: (1,(),1)>,
 <Rees 0-matrix semigroup 2x2 over Group(())>
  , function( x ) ... end, function( x ) ... end )
 
-#T# attribute: InjectionNormalizedPrincipalFactor, 2
+# attribute: InjectionNormalizedPrincipalFactor, 2
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> InjectionNormalizedPrincipalFactor(DClass(S,
@@ -1108,7 +1108,7 @@ MappingByFunction( <Green's D-class: <empty partial perm>>,
 <Rees matrix semigroup 1x1 over Group(())>
  , function( x ) ... end, function( x ) ... end )
 
-#T# attribute: InjectionNormalizedPrincipalFactor, 2
+# attribute: InjectionNormalizedPrincipalFactor, 2
 gap> S := MonogenicSemigroup(4, 2);
 <commutative non-regular transformation semigroup of size 5, degree 6 with 1 
  generator>
@@ -1116,7 +1116,7 @@ gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
 Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
-#T# attrTest6:
+# attrTest6:
 # UnderlyingSemigroupOfSemigroupWithAdjoinedZero
 gap> S := FullTransformationMonoid(10);;
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
@@ -1142,14 +1142,14 @@ gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 <trivial partial perm group of rank 1 with 1 generator>
 
-#T# attr: IrredundantGeneratingSubset: for a set with a single repeated
+# attr: IrredundantGeneratingSubset: for a set with a single repeated
 # element
 gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 <transformation semigroup of degree 2 with 2 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 1
 
-#T# attr: Size: for a monogenic semigroup of special type with minimal
+# attr: Size: for a monogenic semigroup of special type with minimal
 # generating set
 gap> S := Semigroup(Transformation([10, 8, 4, 6, 4, 5, 3, 8, 8, 2]));
 <commutative transformation semigroup of degree 10 with 1 generator>
@@ -1185,7 +1185,7 @@ gap> S := Semigroup(PartialPerm(
 gap> Size(S);
 8
 
-#T# attr: Size: for a monogenic monoid with minimal generating set
+# attr: Size: for a monogenic monoid with minimal generating set
 gap> S := Monoid(Transformation([7, 8, 1, 3, 5, 2, 4, 6]));
 <commutative transformation monoid of degree 8 with 1 generator>
 gap> Size(S);
@@ -1219,7 +1219,7 @@ gap> S := Monoid(PartialPerm(
 gap> Size(S);
 9
 
-#T# attr: Size: for a monogenic semigroup/monoid of a type which does not
+# attr: Size: for a monogenic semigroup/monoid of a type which does not
 # have a special IndexPeriodOfSemigroup method
 gap> x := PBR(
 >  [[-75, -62, -55, -24, 15, 50, 61, 66],
@@ -1388,7 +1388,7 @@ gap> LargestElementSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `LargestElementSemigroup' on 1 arguments
 
-#T# attr: InversesOfSemigroupElement, for a group as semigroup
+# attr: InversesOfSemigroupElement, for a group as semigroup
 gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
 gap> IsGroupAsSemigroup(S);
 true
@@ -1406,7 +1406,7 @@ Sym( [ 1 .. 3 ] )
 gap> InversesOfSemigroupElement(S, (1, 3, 2));
 [ (1,2,3) ]
 
-#T# attr: InversesOfSemigroupElement, for a semigroup
+# attr: InversesOfSemigroupElement, for a semigroup
 #gap> S := Semigroup([
 #>  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 #>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
@@ -1423,7 +1423,7 @@ gap> InversesOfSemigroupElement(S, S.1);
 gap> InversesOfSemigroupElement(S, S.1 * S.2 * S.1);
 [ Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]]) ]
 
-#T# InversesOfSemigroupElement, for an infinite semigroup, 1
+# InversesOfSemigroupElement, for an infinite semigroup, 1
 gap> S := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> InversesOfSemigroupElement(S, IdentityTransformation);
@@ -1433,7 +1433,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `InversesOfSemigroupElementNC' on 2 argu\
 ments
 
-#T# attr: IdempotentGeneratedSubsemigroup, 2
+# attr: IdempotentGeneratedSubsemigroup, 2
 gap> S := FullTransformationMonoid(3);;
 gap> I := IdempotentGeneratedSubsemigroup(S);;
 gap> HasIsIdempotentGenerated(I);
@@ -1441,7 +1441,7 @@ true
 gap> IsIdempotentGenerated(I);
 true
 
-#T# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 1
+# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 1
 # TryNextMethod()
 
 # Error: infinite
@@ -1493,7 +1493,7 @@ true
 gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
 true
 
-#T# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 2
+# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 2
 
 # Rectangular bands
 gap> R := RectangularBand(IsReesMatrixSemigroup, 1, 1);
@@ -1587,7 +1587,7 @@ gap> GeneratorsOfSemigroup(I);
 gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
 true
 
-#T# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 1
+# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 1
 # TryNextMethod()
 
 # Error: infinite
@@ -1639,7 +1639,7 @@ true
 gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
 true
 
-#T# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 2
+# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 2
 
 # Subsemigroup, giving non-standard matrix, 1
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);
@@ -1695,7 +1695,7 @@ true
 gap> I = Semigroup(Idempotents(S));
 true
 
-#T# IdempotentGeneratedSubsemigroup, for R(Z)MS where new method is much better
+# IdempotentGeneratedSubsemigroup, for R(Z)MS where new method is much better
 
 # RZMS: 2241 generators -> 384 generators
 gap> R := PrincipalFactor(
@@ -1962,7 +1962,7 @@ gap> NambooripadLeqRegularSemigroup(S);
 Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
 the argument is not a regular semigroup,
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
 gap> Unbind(GR);
@@ -1982,6 +1982,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attr.tst");

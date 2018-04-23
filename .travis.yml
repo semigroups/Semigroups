@@ -37,7 +37,7 @@ matrix:
       addons:
         apt_packages:
       sudo:
-        false
+        true
 
     - env:
       - SUITE=test

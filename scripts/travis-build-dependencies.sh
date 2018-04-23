@@ -10,18 +10,14 @@ mv Semigroups $HOME/semigroups
 
 if [ "$SUITE" == "lint" ]; then
 
-  # Check-out most recent release of cpplint from GitHub
+  # Install cpplint
   cd $HOME
-  git clone -b master https://github.com/cpplint/cpplint.git lint/cpplint
-  cd lint/cpplint
-  git checkout `git tag | tail -1`
+  sudo pip install cpplint
 
-  # Check out most recent commit of gaplint from GitHub
-  cd $HOME
-  git clone -b master --depth=1 https://github.com/james-d-mitchell/gaplint lint/gaplint
+  # Install gaplint
+  sudo pip install gaplint
 
   # Move Semigroups package into a GAP folder structure, so that cpplint is happy
-  cd $HOME
   mkdir gap gap/.git gap/pkg
   mv semigroups $HOME/gap/pkg/semigroups
 

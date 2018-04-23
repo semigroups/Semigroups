@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semibipart.gi
-#Y  Copyright (C) 2013-15                                 James D. Mitchell
+##  semibipart.gi
+##  Copyright (C) 2013-15                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -220,8 +220,8 @@ function(S)
   elif IsPartialPermBipartitionSemigroup(S) then
     return NaturalLeqPartialPermBipartition;
   fi;
-  TryNextMethod(); # This should be the default method for an
-                   # inverse semigroup
+  TryNextMethod();  # This should be the default method for an
+                    # inverse semigroup
 end);
 
 InstallMethod(NaturalPartialOrder,
@@ -276,7 +276,7 @@ InstallMethod(AsMonoid, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsBipartitionMonoid, S));
 end);

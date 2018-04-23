@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();;
 
-#T# MaximalTest1: IsMaximalSubsemigroup
+# MaximalTest1: IsMaximalSubsemigroup
 gap> S := Semigroup([
 >   Transformation([1, 2, 4, 4, 1]),
 >   Transformation([4, 4, 1, 4]),
@@ -46,11 +46,11 @@ false
 gap> IsMaximalSubsemigroup(S, S);
 false
 
-#T# MaximalTest2: MaximalSubsemigroups for a Rees matrix semigroup
+# MaximalTest2: MaximalSubsemigroups for a Rees matrix semigroup
 gap> G := Group([(1, 2), (3, 4)]);
 Group([ (1,2), (3,4) ])
 gap> mat := [[(), (1, 2), (1, 2)(3, 4)], [(), (1, 2), ()]];;
-gap> R := ReesMatrixSemigroup(G, mat); # 3x2 RMS over C2 x C2
+gap> R := ReesMatrixSemigroup(G, mat);  # 3x2 RMS over C2 x C2
 <Rees matrix semigroup 3x2 over Group([ (1,2), (3,4) ])>
 gap> max := MaximalSubsemigroups(R);
 [ <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
@@ -64,7 +64,7 @@ gap> NrMaximalSubsemigroups(R);
 gap> G := Group([(1, 2, 3)]);
 Group([ (1,2,3) ])
 gap> mat := [[(), (1, 2, 3)], [(), (1, 2, 3)]];;
-gap> R := ReesMatrixSemigroup(G, mat); # 2x2 RMS over C3
+gap> R := ReesMatrixSemigroup(G, mat);  # 2x2 RMS over C3
 <Rees matrix semigroup 2x2 over Group([ (1,2,3) ])>
 gap> max := MaximalSubsemigroups(R);
 [ <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
@@ -74,7 +74,7 @@ gap> max := MaximalSubsemigroups(R);
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators> ]
 gap> G := Group([(1, 2, 3), (1, 2)]);;
 gap> mat := [[(), (1, 3, 2)], [(1, 3), (2, 3)], [(1, 2, 3), ()]];;
-gap> R := ReesMatrixSemigroup(G, mat); # 2x3 RMS over Sym(3)
+gap> R := ReesMatrixSemigroup(G, mat);  # 2x3 RMS over Sym(3)
 <Rees matrix semigroup 2x3 over Group([ (1,2,3), (1,2) ])>
 gap> max := MaximalSubsemigroups(R);
 [ <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
@@ -83,7 +83,7 @@ gap> max := MaximalSubsemigroups(R);
   <Rees matrix semigroup 1x3 over Group([ (1,2,3), (1,2) ])>, 
   <Rees matrix semigroup 1x3 over Group([ (1,2,3), (1,2) ])>, 
   <subsemigroup of 2x3 Rees matrix semigroup with 3 generators> ]
-gap> S := max[6]; # a non-RMS subsemigroup of an RMS
+gap> S := max[6];  # a non-RMS subsemigroup of an RMS
 <subsemigroup of 2x3 Rees matrix semigroup with 3 generators>
 gap> IsReesMatrixSubsemigroup(S);
 true
@@ -98,7 +98,7 @@ gap> IsDuplicateFreeList(max);
 true
 gap> T := FullTransformationMonoid(3);;
 gap> mat := [[Transformation([3, 2, 3])]];;
-gap> R := ReesMatrixSemigroup(T, mat); # 1x1 RMS over a non-group semigroup
+gap> R := ReesMatrixSemigroup(T, mat);  # 1x1 RMS over a non-group semigroup
 <Rees matrix semigroup 1x1 over <full transformation monoid of degree 3>>
 gap> IsReesMatrixSubsemigroup(R);
 true
@@ -115,7 +115,7 @@ gap> S := Semigroup([
 > Transformation([1, 2, 2])]);
 <transformation semigroup of degree 3 with 2 generators>
 gap> mat := [[Transformation([1, 2, 1])]];;
-gap> R := ReesMatrixSemigroup(S, mat); # simple 1x1 RMS over non-group semigroup
+gap> R := ReesMatrixSemigroup(S, mat);  # simple 1x1 RMS over non-group semigroup
 <Rees matrix semigroup 1x1 over <transformation semigroup of degree 3 with 2 
   generators>>
 gap> IsReesMatrixSubsemigroup(R);
@@ -130,17 +130,17 @@ gap> MaximalSubsemigroups(R);
 [ <subsemigroup of 1x1 Rees matrix semigroup with 1 generator>, 
   <subsemigroup of 1x1 Rees matrix semigroup with 1 generator> ]
 
-#T# MaximalTest4: MaximalSubsemigroups for a Rees 0-matrix semigroup
-gap> R := ReesZeroMatrixSemigroup(Group(()), [[0]]); # a non-regular RZMS
+# MaximalTest4: MaximalSubsemigroups for a Rees 0-matrix semigroup
+gap> R := ReesZeroMatrixSemigroup(Group(()), [[0]]);  # a non-regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R);
 [ <commutative Rees 0-matrix semigroup ideal with 1 generator> ]
-gap> R1 := ReesZeroMatrixSemigroup(Group(()), [[()]]); # 2-elt regular RZMS
+gap> R1 := ReesZeroMatrixSemigroup(Group(()), [[()]]);  # 2-elt regular RZMS
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> MaximalSubsemigroups(R1);
 [ <subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator>, 
   <subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator> ]
-gap> R2 := last[2]; # RZMS subsemigroup, but not itself a RZMS
+gap> R2 := last[2];  # RZMS subsemigroup, but not itself a RZMS
 <subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator>
 gap> IsReesZeroMatrixSubsemigroup(R2);
 true
@@ -152,7 +152,7 @@ gap> s1 := Transformation([1, 2, 1]);;
 gap> s2 := Transformation([1, 2, 2]);;
 gap> S := Semigroup([s1, s2]);
 <transformation semigroup of degree 3 with 2 generators>
-gap> R := ReesZeroMatrixSemigroup(S, [[s1]]); # 0-simple RZMS over non-gp
+gap> R := ReesZeroMatrixSemigroup(S, [[s1]]);  # 0-simple RZMS over non-gp
 <Rees 0-matrix semigroup 1x1 over <transformation semigroup of degree 3 with 
   2 generators>>
 gap> IsReesZeroMatrixSemigroup(R);
@@ -178,7 +178,7 @@ true
 gap> IsGroup(T);
 false
 gap> mat := [[t2, t1], [t1, t2]];;
-gap> R3 := ReesZeroMatrixSemigroup(T, mat); # a RZMS over a non-group semigroup
+gap> R3 := ReesZeroMatrixSemigroup(T, mat);  # a RZMS over a non-group semigroup
 <Rees 0-matrix semigroup 2x2 over <regular transformation semigroup of 
   degree 4 with 2 generators>>
 gap> IsReesZeroMatrixSubsemigroup(R3);
@@ -194,7 +194,7 @@ gap> IsDuplicateFreeList(max);
 true
 gap> G := Group([(1, 2), (1, 2, 3)]);;
 gap> mat := [[(1, 2), 0], [0, (2, 3)]];;
-gap> R := ReesZeroMatrixSemigroup(G, mat); # un-connected 2x2 inverse RZMS / S3
+gap> R := ReesZeroMatrixSemigroup(G, mat);  # un-connected 2x2 inverse RZMS / S3
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (1,2,3) ])>
 gap> max := MaximalSubsemigroups(R);
 [ <subsemigroup of 2x2 Rees 0-matrix semigroup with 5 generators>, 
@@ -224,7 +224,7 @@ gap> mat := [
 > [0, 0, 0, (), 0],
 > [0, 0, 0, (), ()],
 > [0, 0, 0, (), 0]];;
-gap> R := ReesZeroMatrixSemigroup(G, mat); # (3-component) 5x6 RZMS over Sym(4)
+gap> R := ReesZeroMatrixSemigroup(G, mat);  # (3-component) 5x6 RZMS over Sym(4)
 <Rees 0-matrix semigroup 5x6 over Group([ (1,2,3,4), (1,3,2,4) ])>
 gap> NrMaximalSubsemigroups(R);
 116
@@ -243,7 +243,7 @@ gap> mat := [
 >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0],
 >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ()]];;
 gap> G := Group(());;
-gap> R := ReesZeroMatrixSemigroup(G, mat);; # 13x13 inverse RZMS over triv group
+gap> R := ReesZeroMatrixSemigroup(G, mat);;  # 13x13 inverse RZMS over triv group
 gap> NrMaximalSubsemigroups(R);
 8190
 gap> G := Group([(1, 4, 2), (1, 4, 5)]);;
@@ -253,7 +253,7 @@ gap> mat := [
 > [(), (1, 2, 5), 0, 0, 0],
 > [(), 0, 0, 0, (1, 5, 2)],
 > [0, 0, 0, (1, 4, 2), (1, 4, 5)]];;
-gap> R1 := ReesZeroMatrixSemigroup(G, mat); # a connected 5x5 RZMS over Sym(3)
+gap> R1 := ReesZeroMatrixSemigroup(G, mat);  # a connected 5x5 RZMS over Sym(3)
 <Rees 0-matrix semigroup 5x5 over Group([ (1,4,2), (1,4,5) ])>
 gap> max := MaximalSubsemigroups(R1);
 [ <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
@@ -285,18 +285,18 @@ gap> max := MaximalSubsemigroups(R1);
 gap> NrMaximalSubsemigroups(R1);
 26
 
-#T# MaximalTest5: MaximalSubsemigroups for a transformation semigroup
-gap> S := Semigroup(Transformation([])); # trivial semigroup
+# MaximalTest5: MaximalSubsemigroups for a transformation semigroup
+gap> S := Semigroup(Transformation([]));  # trivial semigroup
 <trivial transformation group of degree 0 with 1 generator>
 gap> MaximalSubsemigroups(S);
 [  ]
-gap> S := Semigroup(Transformation([2, 3, 1])); # group C3 as semigroup
+gap> S := Semigroup(Transformation([2, 3, 1]));  # group C3 as semigroup
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MaximalSubsemigroups(S);
 [ <trivial transformation group of degree 0 with 1 generator> ]
 gap> S := Semigroup([
 > Transformation([1, 2, 1]),
-> Transformation([1, 2, 2])]); # simple semigroup
+> Transformation([1, 2, 2])]);  # simple semigroup
 <transformation semigroup of degree 3 with 2 generators>
 gap> max := MaximalSubsemigroups(S);
 [ <commutative transformation semigroup of degree 3 with 1 generator>, 
@@ -307,22 +307,22 @@ gap> max;
 [ <trivial transformation group of degree 3 with 1 generator>, 
  <trivial transformation group of degree 3 with 1 generator> ]
 gap> S := Monoid([
-> Transformation([1, 1])]); # simple semigroup with adjoined zero
+> Transformation([1, 1])]);  # simple semigroup with adjoined zero
 <commutative transformation monoid of degree 2 with 1 generator>
 gap> max := MaximalSubsemigroups(S);;
 gap> ForAll(max, IsTrivial);
 true
 gap> S := Monoid([
-> Transformation([1, 1, 2])]); # semigroup with gen in non-regular D-class
+> Transformation([1, 1, 2])]);  # semigroup with gen in non-regular D-class
 <commutative transformation monoid of degree 3 with 1 generator>
 gap> max := MaximalSubsemigroups(S);;
 gap> List(max, Elements);
 [ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ) ], 
   [ Transformation( [ 1, 1, 1 ] ), IdentityTransformation ] ]
 gap> S := Monoid([
-> Transformation([1, 1, 1, 1, 1]), # semigroup with a result arising
-> Transformation([2, 1, 4, 3, 2]), # from non-maximal regular D-class
-> Transformation([2, 1, 4, 3, 4])]); # which intersects every H-class
+> Transformation([1, 1, 1, 1, 1]),  # semigroup with a result arising
+> Transformation([2, 1, 4, 3, 2]),  # from non-maximal regular D-class
+> Transformation([2, 1, 4, 3, 4])]);  # which intersects every H-class
 <transformation monoid of degree 5 with 3 generators>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -354,7 +354,7 @@ gap> S := Monoid([
 >  Transformation([12, 12, 10, 10, 8, 8, 6, 6, 4, 4, 2, 2, 24, 24, 22, 22,
 >      20, 20, 18, 18, 16, 16, 14, 14, 12]),
 >  Transformation([5, 5, 7, 7, 1, 1, 3, 3, 11, 11, 9, 9, 17, 17, 19, 19, 13,
->      13, 15, 15, 23, 23, 21, 21, 5])]); # highlights a special case
+>      13, 15, 15, 23, 23, 21, 21, 5])]);  # highlights a special case
 <transformation monoid of degree 25 with 3 generators>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -411,7 +411,7 @@ gap> correct := [
 >        14, 22, 22, 24, 24, 18, 18, 20, 20, 16])])];;
 gap> ForAll(max, x -> IsMaximalSubsemigroup(S, x));
 true
-gap> T3 := FullTransformationMonoid(3); # Trans(3)
+gap> T3 := FullTransformationMonoid(3);  # Trans(3)
 <full transformation monoid of degree 3>
 gap> max := MaximalSubsemigroups(T3);;
 gap> IsDuplicateFreeList(max);
@@ -445,7 +445,7 @@ gap> S := Semigroup([
 >   Transformation([2, 3, 4, 3, 1]),
 >   Transformation([3, 4, 1, 4, 3]),
 >   Transformation([3, 4, 2, 2, 2]),
->   Transformation([5, 1, 1, 2, 3])]); # A random example
+>   Transformation([5, 1, 1, 2, 3])]);  # A random example
 <transformation semigroup of degree 5 with 5 generators>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -510,13 +510,13 @@ gap> correct := [
 gap> max = correct or max = correct{[2, 1, 4, 3, 5, 6, 8, 7]};
 true
 
-#T# MaximalTest7: MaximalSubsemigroups for an inverse semigroup of partial 
+# MaximalTest7: MaximalSubsemigroups for an inverse semigroup of partial 
 # permutations
 gap> gens := [
 >   PartialPerm([1, 3, 4, 5], [6, 5, 2, 4]),
 >   PartialPerm([1, 2, 3, 4, 6], [5, 4, 3, 1, 6]),
 >   PartialPerm([1, 2, 5, 7], [3, 1, 4, 6])];;
-gap> S := InverseSemigroup(gens); # a random inverse semigroup of partial perms
+gap> S := InverseSemigroup(gens);  # a random inverse semigroup of partial perms
 <inverse partial perm semigroup of rank 7 with 3 generators>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -532,7 +532,7 @@ gap> gens := [PartialPerm([1, 2, 3, 4], [3, 2, 5, 4]),
 >  PartialPerm([1, 2, 3, 4], [5, 2, 3, 1]),
 >  PartialPerm([1, 3, 4, 5], [5, 3, 4, 1]),
 >  PartialPerm([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])];;
-gap> S := InverseSemigroup(gens); # a random inverse semigroup of partial perms
+gap> S := InverseSemigroup(gens);  # a random inverse semigroup of partial perms
 <inverse partial perm semigroup of rank 5 with 5 generators>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -600,15 +600,15 @@ gap> correct := [
 gap> max = correct or max = correct{[1, 2, 4, 3, 5, 6, 8, 7, 9]};
 true
 
-#T# MaximalTest8: MaximalSubsemigroups for a semigroup of partitions
-gap> B := PartitionMonoid(3); # partition monoid of degree 3
+# MaximalTest8: MaximalSubsemigroups for a semigroup of partitions
+gap> B := PartitionMonoid(3);  # partition monoid of degree 3
 <regular bipartition *-monoid of size 203, degree 3 with 4 generators>
 gap> max := MaximalSubsemigroups(B);;
 gap> NrMaximalSubsemigroups(B);
 8
 gap> List(max, Size);
 [ 200, 199, 199, 199, 167, 167, 167, 167 ]
-gap> S := max[1];; # the first maximal subsemigroup of partition monoid 3
+gap> S := max[1];;  # the first maximal subsemigroup of partition monoid 3
 gap> NrMaximalSubsemigroups(S);
 5
 
@@ -705,7 +705,7 @@ gap> correct := [
 gap> max = correct;
 true
 
-#T# MaximalTest9: MaximalSubsemigroups for a semigroup of block bijections
+# MaximalTest9: MaximalSubsemigroups for a semigroup of block bijections
 
 # a random inverse semigroup of block bijections
 gap> C := InverseSemigroup([
@@ -798,8 +798,8 @@ gap> correct := [
 gap> max = correct;
 true
 
-#T# MaximalTest10: MaximalSubsemigroups for a transformation semigroup ideal
-gap> S := SingularTransformationSemigroup(5); # Trans(5) \ Sym(5)
+# MaximalTest10: MaximalSubsemigroups for a transformation semigroup ideal
+gap> S := SingularTransformationSemigroup(5);  # Trans(5) \ Sym(5)
 <regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> max := MaximalSubsemigroups(S);;
 gap> NrMaximalSubsemigroups(S);
@@ -807,7 +807,7 @@ gap> NrMaximalSubsemigroups(S);
 gap> S = max[1];
 false
 
-#T# MaximalTest11: Issue 107
+# MaximalTest11: Issue 107
 # (problems with Green's classes of ideals, and inverse semigroups)
 gap> gens := [PartialPerm([1, 2, 3, 4], [3, 2, 5, 4]),
 >  PartialPerm([1, 2, 4], [3, 5, 4]),
@@ -819,7 +819,7 @@ gap> S := Semigroup(S);;
 gap> NrMaximalSubsemigroups(S);
 9
 
-#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 1
+# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 1
 gap> S := Semigroup([Transformation([1, 4, 2, 5, 8, 6, 2, 7]),
 >  Transformation([2, 6, 6, 4, 2, 2, 1, 2]),
 >  Transformation([3, 6, 6, 7, 8, 2, 1, 5]),
@@ -828,7 +828,7 @@ gap> S := Semigroup([Transformation([1, 4, 2, 5, 8, 6, 2, 7]),
 gap> NrMaximalSubsemigroups(S);
 5
 
-#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 2
+# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 2
 gap> S := Semigroup([Transformation([8, 4, 6, 4, 5, 3, 8, 8]),
 >  Transformation([1, 3, 5, 5, 8, 4, 1, 8]),
 >  Transformation([1, 7, 5, 3, 3, 7, 7, 5]),
@@ -839,7 +839,7 @@ gap> S := Semigroup([Transformation([8, 4, 6, 4, 5, 3, 8, 8]),
 gap> NrMaximalSubsemigroups(S);
 39
 
-#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 3
+# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 3
 gap> S := Semigroup([Transformation([6, 3, 2, 5, 2, 8, 4, 2]),
 >  Transformation([1, 6, 6, 3, 3, 5, 4, 5]),
 >  Transformation([4, 2, 7, 3, 8, 5, 3, 3]),
@@ -850,7 +850,7 @@ gap> S := Semigroup([Transformation([6, 3, 2, 5, 2, 8, 4, 2]),
 gap> NrMaximalSubsemigroups(S);
 18
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(C);
 gap> Unbind(G);
@@ -874,6 +874,6 @@ gap> Unbind(t1);
 gap> Unbind(t2);
 gap> Unbind(t3);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/maximal.tst");

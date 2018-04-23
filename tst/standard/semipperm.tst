@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# SemiPPermTest1: NumberSubset
+# SemiPPermTest1: NumberSubset
 gap> sets := Combinations([1 .. 10]);;
 gap> Sort(sets,
 > function(x, y)
@@ -25,7 +25,7 @@ gap> Sort(sets,
 gap> List(sets, x -> NumberSubset(x, 10)) = [1 .. 2 ^ 10];
 true
 
-#T# SemiPPermTest2: Enumerator for a symmetric inverse monoid
+# SemiPPermTest2: Enumerator for a symmetric inverse monoid
 gap> S := SymmetricInverseMonoid(3);;
 gap> enum := Enumerator(S);
 <enumerator of <symmetric inverse monoid of degree 3>>
@@ -40,12 +40,12 @@ true
 gap> ForAll(S, x -> x in enum);
 true
 
-#T# SemiPPermTest3: NumberSubsetOfEqualSize
+# SemiPPermTest3: NumberSubsetOfEqualSize
 gap> ForAll([1 .. 10], m -> List(Combinations([1 .. 10], m), x ->
 > NumberSubsetOfEqualSize(x, 10)) = [1 .. Binomial(10, m)]);
 true
 
-#T# SmallerDegreeTest5: SmallerDegreePartialPermRepresentation Issue 2:
+# SmallerDegreeTest5: SmallerDegreePartialPermRepresentation Issue 2:
 # Example where the degree being returned was greater than the original degree
 gap> f1 := PartialPerm([2, 1, 0, 0, 4]);;
 gap> f2 := PartialPerm([1, 2, 3, 5]);;
@@ -60,7 +60,7 @@ gap> Size(f);
 gap> Size(Image(F));
 15
 
-#T# SmallerDegreeTest6: SmallerDegreePartialPermRepresentation:
+# SmallerDegreeTest6: SmallerDegreePartialPermRepresentation:
 # Example where using SupermumIdempotents helps to give a better result 
 gap> f1 := PartialPermNC([2, 1, 4, 5, 3, 7, 6, 9, 10, 8]);;
 gap> f2 := PartialPermNC([2, 1, 0, 0, 0, 7, 6]);;
@@ -75,7 +75,7 @@ gap> Size(f);
 gap> Size(Image(F));
 8
 
-#T# SmallerDegreeTest7: SmallerDegreePartialPermRepresentation:
+# SmallerDegreeTest7: SmallerDegreePartialPermRepresentation:
 # Example where the degree is reduced but not the number of moved points
 gap> f1 := PartialPermNC([1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 17, 18],
 > [7, 5, 11, 8, 4, 2, 20, 14, 12, 17, 9, 3]);;
@@ -96,7 +96,7 @@ gap> Size(f);
 gap> Size(Image(F));
 2982
 
-#T# SmallerDegreeTest8: SmallerDegreePartialPermRepresentation:
+# SmallerDegreeTest8: SmallerDegreePartialPermRepresentation:
 # Example made complicated by right regular representation of Sym(5).
 gap> S := SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
@@ -126,10 +126,10 @@ gap> h := PartialPerm(J);
 gap> V := InverseSemigroup(H1, H2, h);
 <inverse partial perm monoid of rank 122 with 240 generators>
 gap> iso := SmallerDegreePartialPermRepresentation(V);;
-gap> ActionDegree(Range(iso)) <= 12; # Genuine minimum degree of V is 7.
+gap> ActionDegree(Range(iso)) <= 12;  # Genuine minimum degree of V is 7.
 true
 
-#T# SemiPPermTest4: RepresentativeOfMinimalIdeal
+# SemiPPermTest4: RepresentativeOfMinimalIdeal
 gap> empty_map := PartialPerm([], []);;
 
 ### Semigroups containing the empty partial perm
@@ -290,7 +290,7 @@ true
 gap> empty_map in s;
 false
 
-#T# helper functions
+# helper functions
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;
 >   if not IsInjective(iso) or not IsSurjective(iso) then
@@ -312,7 +312,7 @@ gap> BruteForceInverseCheck := function(map)
 >     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
 > end;;
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > PBR([[-2], [-2]], [[], [1, 2]])]);
@@ -335,7 +335,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpSemigroup to IsPartialPermSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1],
@@ -362,7 +362,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsPartialPermSemigroup
 gap> S := InverseSemigroup([
 > Bipartition([[1, -1]]),
@@ -386,7 +386,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Transformation([2, 2])]);
@@ -409,7 +409,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -433,7 +433,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -458,7 +458,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -483,7 +483,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -508,7 +508,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -533,7 +533,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -558,7 +558,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -583,7 +583,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -608,7 +608,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsPBRMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > PBR([[-2], [-3], [-3]], [[], [1], [2, 3]]),
@@ -632,7 +632,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsFpMonoid to IsPartialPermSemigroup
 gap> F := FreeMonoid(3);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1],
@@ -666,7 +666,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsPartialPermSemigroup
 gap> S := InverseMonoid([
 > Bipartition([[1, -2], [2], [-1]]),
@@ -691,7 +691,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Transformation([2, 3, 3]), Transformation([3, 1, 3])]);
@@ -713,7 +713,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -743,7 +743,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -773,7 +773,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -803,7 +803,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -833,7 +833,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsIntegerMatrix,
@@ -863,7 +863,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -893,7 +893,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -923,7 +923,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -953,7 +953,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsPBRSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > PBR([[-2], [-1]], [[2], [1]])]);
@@ -976,7 +976,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsFpSemigroup to IsPartialPermMonoid
 gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 3, s1]];;
@@ -1000,7 +1000,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsBipartitionSemigroup to IsPartialPermMonoid
 gap> S := InverseSemigroup([
 > Bipartition([[1, -2], [2, -1]])]);
@@ -1022,7 +1022,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsBipartitionSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Bipartition([[1, -2], [2, -1]])]);
@@ -1044,7 +1044,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTransformationSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Transformation([2, 1])]);
@@ -1066,7 +1066,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsBooleanMatSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -1089,7 +1089,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsMaxPlusMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -1113,7 +1113,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsMinPlusMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -1137,7 +1137,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1161,7 +1161,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsIntegerMatrix,
@@ -1185,7 +1185,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1209,7 +1209,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1233,7 +1233,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsNTPMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -1257,7 +1257,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsPBRMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > PBR([[-1], [-4], [-3], [-4]], [[1], [], [3], [2, 4]]),
@@ -1282,7 +1282,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsFpMonoid to IsPartialPermMonoid
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m2 ^ 2, m1 ^ 2],
@@ -1311,7 +1311,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsBipartitionMonoid to IsPartialPermMonoid
 gap> S := InverseMonoid([
 > Bipartition([[1, -3], [2], [3], [-1], [-2]]),
@@ -1336,7 +1336,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTransformationMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Transformation([1, 4, 3, 4]),
@@ -1360,7 +1360,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsBooleanMatMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -1398,7 +1398,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsMaxPlusMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -1435,7 +1435,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsMinPlusMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -1472,7 +1472,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1509,7 +1509,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsIntegerMatrix,
@@ -1546,7 +1546,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1583,7 +1583,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1620,7 +1620,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid: 
+# AsMonoid: 
 #   convert from IsNTPMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -1657,7 +1657,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsReesMatrixSemigroup to IsPartialPermSemigroup
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1679,7 +1679,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid
+# AsMonoid
 #   convert from IsReesMatrixSemigroup to IsPartialPermMonoid
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1701,7 +1701,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsPartialPermSemigroup
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]),
 >                                 [[(1, 2)]]);
@@ -1724,7 +1724,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsMonoid
+# AsMonoid
 #   convert from IsReesZeroMatrixSemigroup to IsPartialPermMonoid
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1746,7 +1746,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from graph inverse to IsPartialPermSemigroup
 gap> S := GraphInverseSemigroup(Digraph([[2], []]));
 <finite graph inverse semigroup with 2 vertices, 1 edge>
@@ -1768,7 +1768,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from perm group to IsPartialPermSemigroup
 gap> S := DihedralGroup(IsPermGroup, 6);
 Group([ (1,2,3), (2,3) ])
@@ -1790,7 +1790,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from perm group to IsPartialPermMonoid
 gap> S := DihedralGroup(IsPermGroup, 6);
 Group([ (1,2,3), (2,3) ])
@@ -1812,7 +1812,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from non-perm group to IsPartialPermSemigroup
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
@@ -1834,7 +1834,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from non-perm group to IsPartialPermMonoid
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
@@ -1856,7 +1856,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBlockBijectionSemigroup to IsPartialPermSemigroup
 gap> S := InverseSemigroup(Bipartition([[1, -1, -3], [2, 3, -2]]));;
 gap> T := AsSemigroup(IsPartialPermSemigroup, S);
@@ -1879,7 +1879,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsPartialPermMonoid
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
@@ -1903,7 +1903,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# AsSemigroup: 
+# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsPartialPermSemigroup
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
@@ -2135,7 +2135,7 @@ MappingByFunction( <inverse partial perm monoid of rank 25 with 3 generators>
  , <inverse partial perm semigroup of rank 6 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 
-#T# Iterator, for a symmetric inverse monoid
+# Iterator, for a symmetric inverse monoid
 gap> S := SymmetricInverseMonoid(4);;
 gap> y := Iterator(S);
 <iterator of semigroup>
@@ -2145,7 +2145,7 @@ gap> y := Iterator(S);
 <iterator>
 gap> for x in y do od;
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);
 gap> Unbind(J);
@@ -2165,6 +2165,6 @@ gap> Unbind(sets);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semipperm.tst");

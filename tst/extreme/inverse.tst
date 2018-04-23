@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# InverseTest1
+# InverseTest1
 gap> gens := [PartialPermNC([1, 2, 4], [1, 5, 2]),
 > PartialPermNC([1, 2, 3], [2, 3, 5]),
 > PartialPermNC([1, 3, 4], [2, 5, 4]),
@@ -50,7 +50,7 @@ gap> List(last, DomainOfPartialPerm);
 gap> IsDuplicateFreeList(last);
 true
 
-#T# InverseTest2
+# InverseTest2
 gap> s := InverseSemigroup(PartialPermNC([1, 2], [1, 2]),
 > PartialPermNC([1, 2], [1, 3]));;
 gap> GreensHClasses(s);
@@ -68,7 +68,7 @@ gap> GreensHClasses(s);
   <Green's H-class: <identity partial perm on [ 1, 3 ]>>, 
   <Green's H-class: <identity partial perm on [ 1 ]>> ]
 
-#T# InverseTest3
+# InverseTest3
 gap> gens := [PartialPermNC([1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19],
 > [9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1]),
 > PartialPermNC([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20],
@@ -232,7 +232,7 @@ gap> iter := IteratorOfHClassReps(s);
 gap> i := 0;
 0
 
-#T# InverseTest4 
+# InverseTest4 
 #JDM this breaks when i = 38360 fairly reliably, it seems to be a problem in
 # IsDoneIterator of iter. 
 
@@ -270,7 +270,7 @@ gap> d;
 gap> Size(DClass(h)) = Size(RClass(h)) ^ 2 / 2;
 true
 
-#T# InverseTest5 
+# InverseTest5 
 gap> s := Semigroup([Transformation([3, 2, 1, 6, 5, 4]),
 > Transformation([4, 7, 3, 1, 6, 5, 7])]);
 <transformation semigroup of degree 7 with 2 generators>
@@ -284,7 +284,7 @@ Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] )
 gap> ForAll(s, f -> (f ^ iso) ^ inv = f);
 true
 
-#T# InverseTest6 
+# InverseTest6 
 gap> s := Semigroup(Transformation([2, 5, 1, 7, 3, 7, 7]),
 > Transformation([3, 6, 5, 7, 2, 1, 7]));;
 gap> iso := IsomorphismPartialPermSemigroup(s);;
@@ -313,7 +313,7 @@ gap> f := Random(s);;
 gap> (f ^ iso) ^ inv = f;
 true
 
-#T# InverseTest7  
+# InverseTest7  
 # this is too slow, it used to work better! but the method was incorrect in
 # general FIXME
 
@@ -326,7 +326,7 @@ true
 gap> Size(s);
 631
 
-#T# InverseTest8 
+# InverseTest8 
 gap> s := InverseSemigroup(PartialPermNC([1, 2, 3], [2, 4, 1]),
 > PartialPermNC([1, 3, 4], [3, 4, 1]));;
 gap> GreensDClasses(s);
@@ -454,7 +454,7 @@ gap> Position(HClasses(R), h);
 gap> DClassOfRClass(R) = D;
 true
 
-#T# InverseTest9 
+# InverseTest9 
 gap> s := InverseSemigroup(
 > PartialPermNC([1, 2, 3, 5], [1, 4, 6, 3]),
 > PartialPermNC([1, 2, 3, 4, 6], [3, 6, 4, 5, 1]));;
@@ -478,7 +478,7 @@ true
 gap> HClass(s, f) = HClass(L, f);
 true
 
-#T# InverseTest10
+# InverseTest10
 gap> s := POI(10);
 <inverse partial perm monoid of rank 10 with 10 generators>
 gap> f := PartialPermNC([2, 4, 5, 7], [2, 3, 5, 7]);;
@@ -603,7 +603,7 @@ true
 gap> HClass(D, f) = HClassNC(s, f);
 true
 
-#T# InverseTest11
+# InverseTest11
 gap> m := InverseSemigroup(
 > PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 >  18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
@@ -783,7 +783,7 @@ gap> Size(d);
 gap> Size(DClasses(m)[6]);
 36
 
-#T# InverseTest12
+# InverseTest12
 gap> s := InverseSemigroup([PartialPermNC([1, 2, 3, 5], [2, 1, 6, 3]),
 > PartialPermNC([1, 2, 3, 6], [3, 5, 2, 6])]);;
 gap> f := PartialPermNC([1 .. 3], [6, 3, 1]);;
@@ -800,7 +800,7 @@ gap> First(DClasses(s), x -> not IsTrivial(GroupHClass(x)));
 gap> StructureDescription(GroupHClass(last));
 "C2"
 
-#T# InverseTest13
+# InverseTest13
 gap> s := InverseSemigroup(
 > [PartialPermNC([1, 2, 3, 4, 5, 7], [10, 6, 3, 4, 9, 1]),
 > PartialPermNC([1, 2, 3, 4, 5, 6, 7, 8], [6, 10, 7, 4, 8, 2, 9, 1])]);;
@@ -824,7 +824,7 @@ gap> r := RClassNC(s, f);
 gap> Idempotents(r);
 [ <identity partial perm on [ 2, 4, 9, 10 ]> ]
 
-#T# InverseTest14
+# InverseTest14
 gap> s := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4, 5, 6, 9], [1, 5, 9, 2, 6, 10, 7]),
 > PartialPerm([1, 3, 4, 7, 8, 9], [9, 4, 1, 6, 2, 8])]);
@@ -832,7 +832,7 @@ gap> s := InverseSemigroup([
 gap> ForAll(RClasses(s), IsRegularGreensClass);
 true
 
-#T# InverseTest15
+# InverseTest15
 gap> s := InverseSemigroup(
 > PartialPermNC([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15],
 > [6, 4, 18, 3, 11, 8, 5, 14, 19, 13, 12, 20, 1]),
@@ -950,7 +950,7 @@ gap> iter := IteratorOfRClassReps(s);
 <iterator of R-class reps>
 gap> for i in iter do od;
 
-#T# InverseTest16
+# InverseTest16
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 100, 100);;
 gap> iter := IteratorOfRClasses(s);
 <iterator of R-classes>
@@ -976,7 +976,7 @@ gap> iter := IteratorOfRClassReps(s);
 <iterator of R-class reps>
 gap> for i in iter do od;
 
-#T# InverseTest16
+# InverseTest16
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 100, 100);
 <inverse partial perm semigroup of rank 100 with 100 generators>
 gap> iter := IteratorOfRClasses(s);       
@@ -986,7 +986,7 @@ gap> iter := IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> for i in [1 .. 100] do NextIterator(iter); od;
 
-#T# InverseTest17
+# InverseTest17
 gap> s := InverseSemigroup(
 > [PartialPermNC([1, 2, 3, 5, 7, 9, 10], [6, 7, 2, 9, 1, 5, 3]),
 > PartialPermNC([1, 2, 3, 5, 6, 7, 9, 10], [8, 1, 9, 4, 10, 5, 6, 7])]);;
@@ -1007,7 +1007,7 @@ true
 gap> NrIdempotents(last2);
 13
 
-#T# InverseTest18
+# InverseTest18
 gap> S := InverseSemigroup(
 > PartialPermNC([1, 2, 3], [1, 3, 5]),
 > PartialPermNC([1, 2, 4], [1, 2, 3]),
@@ -1024,7 +1024,7 @@ Group(())
 gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
-#T# InverseTest19
+# InverseTest19
 gap> s := InverseSemigroup(
 > [PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
 >  PartialPerm([1, 2, 3, 4, 5, 7, 8, 9], [1, 2, 3, 4, 5, 7, 8, 9]),
@@ -1037,7 +1037,7 @@ gap> Size(s);
 gap> IsDTrivial(s);
 false
 
-#T# InverseTest20 
+# InverseTest20 
 gap> IsIsometryPP := function(f)
 > local n, i, j, k, l;
 >  n := RankOfPartialPerm(f);
@@ -1065,7 +1065,7 @@ gap> s := InverseSubsemigroupByProperty(SymmetricInverseSemigroup(7),
 gap> Size(s);
 686
 
-#T# InverseCongTest1: Create an inverse semigroup
+# InverseCongTest1: Create an inverse semigroup
 gap> s := InverseSemigroup([PartialPerm([1, 2, 3, 5], [2, 7, 3, 4]),
 >  PartialPerm([1, 3, 4, 5], [7, 2, 4, 6]),
 >  PartialPerm([1, 2, 3, 4, 6], [2, 3, 4, 6, 1]),
@@ -1078,7 +1078,7 @@ gap> cong := SemigroupCongruence(s,
 <semigroup congruence over <inverse partial perm semigroup of size 4165, 
  rank 7 with 7 generators> with 1 generating pairs>
 
-#T# InverseCongTest3: Try some methods
+# InverseCongTest3: Try some methods
 gap> x := PartialPerm([4], [5]);;
 gap> y := PartialPerm([1, 2, 5], [5, 1, 6]);;
 gap> z := PartialPerm([6], [1]);;
@@ -1089,7 +1089,7 @@ true
 gap> [y, z] in cong;
 false
 
-#T# InverseCongTest4: Congruence classes
+# InverseCongTest4: Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
 <congruence class of [4,5]>
 gap> classy := CongruenceClassOfElement(cong, y);;
@@ -1111,10 +1111,10 @@ true
 gap> Size(classx);
 50
 
-#T# InverseCongTest5: Quotients
+# InverseCongTest5: Quotients
 gap> q := s / cong;;
 
-#T# InverseCongTest6:
+# InverseCongTest6:
 # Convert to and from semigroup congruence by generating pairs
 gap> pairs := GeneratingPairsOfSemigroupCongruence(cong);;
 gap> ccong := SemigroupCongruence(s, pairs);;
@@ -1130,7 +1130,7 @@ true
 gap> [y, z] in ccong;
 false
 
-#T# InverseCongTest7: Universal congruence
+# InverseCongTest7: Universal congruence
 gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(s);
@@ -1139,7 +1139,7 @@ gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(IsIsometryPP);
 gap> Unbind(L);
@@ -1160,6 +1160,6 @@ gap> Unbind(m);
 gap> Unbind(r);
 gap> Unbind(s);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/inverse.tst");

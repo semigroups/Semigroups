@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  gree.gi
-#Y  Copyright (C) 2016                                   James D. Mitchell
+##  gree.gi
+##  Copyright (C) 2016                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -45,13 +45,13 @@
 # are not the same.  But unfortunately this disagrees with the definition of
 # equality of congruences...
 
-#TODO move this to the library
+# TODO move this to the library
 
 InstallMethod(\=, "for Green's relations",
-[IsGreensRelation, IsGreensRelation], 5, # to beat the method for congruences
+[IsGreensRelation, IsGreensRelation], 5,  # to beat the method for congruences
 function(rel1, rel2)
   if Source(rel1) <> Source(rel2) then
-    return false; # This is different than in the libary
+    return false;  # This is different than in the libary
   elif IsGreensRRelation(rel1) then
     return IsGreensRRelation(rel2);
   elif IsGreensLRelation(rel1) then
@@ -473,7 +473,7 @@ function(C)
 end);
 
 InstallMethod(ViewString, "for a Green's relation",
-[IsGreensRelation], 2, # to beat the method for congruences
+[IsGreensRelation], 2,  # to beat the method for congruences
 function(rel)
   local str;
 
@@ -500,7 +500,7 @@ end);
 # obsolete.
 
 InstallMethod(ViewObj, "for a Green's relation",
-[IsGreensRelation], 2, # to beat the method for congruences
+[IsGreensRelation], 2,  # to beat the method for congruences
 function(rel)
   Print(ViewString(rel));
   return;

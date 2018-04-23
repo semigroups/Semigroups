@@ -9,15 +9,10 @@ TESTLOG="`pwd`/testlog.txt"
 
 if [ "$SUITE" == "lint" ]; then
 
-  cd ../lint/gaplint
-  GAPLINT="`pwd`/gaplint.py"
-  cd ../cpplint
-  CPPLINT="`pwd`/cpplint.py"
+  cd $HOME/gap/pkg/semigroups
 
-  cd ../../gap/pkg/semigroups
-
-  $GAPLINT `grep "^\s\+gaplint" Makefile.am | cut -d " " -f2-`
-  $CPPLINT --extensions=c,cc,h `grep "^\s\+cpplint" Makefile.am | cut -d " " -f2-`
+  gaplint `grep "^\s\+gaplint" Makefile.am | cut -d " " -f2-`
+  cpplint --extensions=c,cc,h `grep "^\s\+cpplint" Makefile.am | cut -d " " -f2-`
 
 else
 

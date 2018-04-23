@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  display.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  display.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -37,7 +37,7 @@ SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
 
 #############################################################################
 
-if not IsBound(Splash) then #This function is written by A. Egri-Nagy
+if not IsBound(Splash) then  # This function is written by A. Egri-Nagy
   if ARCH_IS_MAC_OS_X() then
     SEMIGROUPS.Viewers := ["xpdf", "open", "evince", "okular", "gv"];
   elif ARCH_IS_UNIX() then
@@ -66,14 +66,14 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       opt := rec();
     fi;
 
-    #path
+    # path
     if IsBound(opt.path) then
       path := opt.path;
     else
       path := "~/";
     fi;
 
-    #directory
+    # directory
     if IsBound(opt.directory) then
       if not opt.directory in DirectoryContents(path) then
         Exec(Concatenation("mkdir ", path, opt.directory));
@@ -89,14 +89,14 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
       dir := Filename(tdir, "");
     fi;
 
-    #file
+    # file
     if IsBound(opt.filename) then
       file := opt.filename;
     else
       file := "vizpicture";
     fi;
 
-    #viewer
+    # viewer
     if IsBound(opt.viewer) then
       viewer := opt.viewer;
     else
@@ -495,7 +495,7 @@ function(S, opts)
     opts.normal := true;
   fi;
   if not IsBound(opts.highlight) then
-    opts.highlight := false; #JDM means highlight H-classes
+    opts.highlight := false;  # JDM means highlight H-classes
   else
     for x in opts.highlight do
       if not IsBound(x.HighlightGroupHClassColor) then
@@ -512,7 +512,7 @@ function(S, opts)
     opts.idempotentsemilattice := false;
   elif opts.idempotentsemilattice then
     es := IdempotentGeneratedSubsemigroup(S);
-    elts := Elements(es); #JDM could be enumerator sorted
+    elts := Elements(es);  # JDM could be enumerator sorted
   fi;
 
   str := "//dot\n";
@@ -574,9 +574,9 @@ function(S, opts)
     mat := Matrix(RMS);
     G := UnderlyingSemigroup(RMS);
 
-    for col in Columns(RMS) do # Columns of RMS = RClasses
+    for col in Columns(RMS) do  # Columns of RMS = RClasses
       Append(str, "<TR>");
-      for row in Rows(RMS) do # Rows of RMS = LClasses
+      for row in Rows(RMS) do  # Rows of RMS = LClasses
         Append(str, "<TD BGCOLOR=\"");
         if opts.highlight <> false then
           x := HClass(d, RMSElement(RMS, row, Identity(G), col) ^ inv);

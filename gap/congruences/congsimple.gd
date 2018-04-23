@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congsimple.gd
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  congruences/congsimple.gd
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -43,7 +43,7 @@ function(S, pairs)
     pcong := SemigroupCongruenceByGeneratingPairs(r, rmspairs);
     if IsReesMatrixSemigroup(r) then
       rmscong := AsRMSCongruenceByLinkedTriple(pcong);
-    else  #elif IsReesZeroMatrixSemigroup(r) then
+    else  # elif IsReesZeroMatrixSemigroup(r) then
       rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
     fi;
     # Special case for the universal congruence
@@ -60,9 +60,7 @@ end;
 #
 
 SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
-  local r, fam, cong;
-  r := Range(rmscong);
-
+  local fam, cong;
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));

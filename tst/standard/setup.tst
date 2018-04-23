@@ -15,7 +15,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# IsGeneratorsOfActingSemigroup
+# IsGeneratorsOfActingSemigroup
 gap> IsGeneratorsOfActingSemigroup([Transformation([2, 2])]);
 true
 gap> IsGeneratorsOfActingSemigroup([PartialPerm([1])]);
@@ -30,7 +30,7 @@ true
 gap> IsGeneratorsOfActingSemigroup(SLM(2, 2));
 true
 
-#T# ActionDegree
+# ActionDegree
 
 # ActionDegree, for a partial perm
 gap> ActionDegree(PartialPerm([]));
@@ -122,7 +122,7 @@ gap> ActionDegree(GLM(2, 2));
 gap> ActionDegree(SLM(2, 2));
 2
 
-#T# ActionRank
+# ActionRank
 
 # ActionRank, for a transformation and integer
 gap> ActionRank(Transformation([2, 3, 4, 5, 5, 6]), 5);
@@ -183,7 +183,7 @@ gap> rank(Matrix(GF(2), [[0 * Z(2), 0 * Z(2)], [0 * Z(2), 0 * Z(2)]]));
 gap> rank(Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [0 * Z(2), 0 * Z(2)]]));
 1
 
-#T# MinActionRank
+# MinActionRank
 
 # MinActionRank, for a transformation semigroup
 gap> MinActionRank(FullTransformationMonoid(2));
@@ -207,7 +207,7 @@ gap> MinActionRank(R);
 gap> MinActionRank(GLM(2, 2));
 0
 
-#T# Rho/LambdaOrbOpts
+# Rho/LambdaOrbOpts
 
 # Rho/LambdaOrbOpts, for a transformation semigroup
 gap> LambdaOrbOpts(FullTransformationMonoid(2));
@@ -241,7 +241,7 @@ rec(  )
 gap> RhoOrbOpts(GLM(2, 2));
 rec(  )
 
-#T# Rho/LambdaAct
+# Rho/LambdaAct
 
 # Rho/LambdaAct, for a transformation semigroup
 gap> x := LambdaAct(FullTransformationMonoid(10));;
@@ -320,7 +320,7 @@ gap> x := RhoAct(GLM(2, 2));;
 gap> x(b, s);
 <rowbasis of rank 1 over GF(2)>
 
-#T# Rho/LambdaOrbSeed
+# Rho/LambdaOrbSeed
 
 # Rho/LambdaOrbSeed, for a transformation semigroup
 gap> LambdaOrbSeed(FullTransformationMonoid(4));
@@ -353,7 +353,7 @@ gap> LambdaOrbSeed(GLM(2, 2));
 gap> RhoOrbSeed(SLM(2, 2));
 <rowbasis of rank 3 over GF(2)>
 
-#T# Rho/LambdaFunc
+# Rho/LambdaFunc
 
 # Rho/LambdaFunc, for a transformation semigroup
 gap> S := FullTransformationMonoid(3);;
@@ -408,7 +408,7 @@ gap> x := RhoFunc(S);;
 gap> x(Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3)]]));
 <rowbasis of rank 2 over GF(3)>
 
-#T# Rho/LambdaRank
+# Rho/LambdaRank
 
 # Rho/LambdaRank, for a transformation semigroup
 gap> S := FullTransformationMonoid(6);;
@@ -467,7 +467,7 @@ gap> x := RhoRank(S);;
 gap> x(b);
 1
 
-#T# Rho/LambdaInverse
+# Rho/LambdaInverse
 
 # Rho/LambdaInverse, for a transformation semigroup
 gap> S := FullTransformationMonoid(4);;
@@ -526,7 +526,7 @@ gap> x := RhoInverse(S);;
 gap> x(RowSpaceBasis(S.2), S.2);
 Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]])
 
-#T# Rho/LambdaBound
+# Rho/LambdaBound
 
 # Rho/LambdaBound, for a transformation semigroup
 gap> S := FullTransformationMonoid(4);;
@@ -588,7 +588,7 @@ gap> RhoBound(S)(2);
 gap> RhoBound(S)(0);
 1
 
-#T# Rho/LambdaIdentity
+# Rho/LambdaIdentity
 
 # Rho/LambdaIdentity, for a transformation semigroup
 gap> S := FullTransformationMonoid(2);;
@@ -625,7 +625,7 @@ Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 gap> RhoIdentity(S)(2);
 Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 
-#T# LambdaPerm
+# LambdaPerm
 
 # LambdaPerm, for a transformation semigroup
 gap> x := LambdaPerm(FullTransformationMonoid(3));;
@@ -657,7 +657,7 @@ gap> x(Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]),
 >      Matrix(GF(3), [[Z(3), Z(3)], [0 * Z(3), 0 * Z(3)]]));
 Matrix(GF(3), [[Z(3)]])
 
-#T# LambdaConjugator
+# LambdaConjugator
 
 # LambdaConjugator, for a transformation semigroup
 gap> x := LambdaConjugator(FullTransformationMonoid(3));;
@@ -687,7 +687,7 @@ gap> x(Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3) ^ 0]]),
 >      Matrix(GF(3), [[Z(3), 0 * Z(3)], [Z(3), Z(3)]]));
 Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
 
-#T# IdempotentTester and IdempotentCreator
+# IdempotentTester and IdempotentCreator
 
 # IdempotentTester and IdempotentCreator, for a transformation semigroup
 gap> S := FullTransformationMonoid(3);;
@@ -779,7 +779,7 @@ gap> y(NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
 >                                 [[0 * Z(3), Z(3) ^ 0]]));
 Matrix(GF(3), [[0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0]])
 
-#T# StabilizerAction
+# StabilizerAction
 
 # StabilizerAction, for a transformation semigroup
 gap> x := StabilizerAction(FullTransformationMonoid(2));;
@@ -810,7 +810,7 @@ gap> x := StabilizerAction(S);;
 gap> x(One(S), Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3) ^ 0]]));
 Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
 
-#T# IsActingSemigroupWithFixedDegreeMultiplication
+# IsActingSemigroupWithFixedDegreeMultiplication
 
 # IsActingSemigroupWithFixedDegreeMultiplication, for a transformation semigroup
 gap> IsActingSemigroupWithFixedDegreeMultiplication(
@@ -837,7 +837,7 @@ gap> IsActingSemigroupWithFixedDegreeMultiplication(
 > GLM(2, 2));
 true
 
-#T# SchutzGpMembership
+# SchutzGpMembership
 
 # SchutzGpMembership, for a transformation semigroup
 gap> S := Semigroup([Transformation([1, 2, 1]), Transformation([2, 3, 1])]);;
@@ -885,7 +885,7 @@ gap> schutz := LambdaOrbStabChain(o, 2);;
 gap> SchutzGpMembership(S)(schutz, LambdaIdentity(S)(2));
 true
 
-#T# FakeOne
+# FakeOne
 
 # FakeOne, for a transformation semigroup
 gap> FakeOne(FullTransformationMonoid(1));
@@ -907,7 +907,7 @@ gap> FakeOne(ReesZeroMatrixSemigroup(Group(()), [[()]]));
 gap> FakeOne(GLM(2, 2));
 Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 
-#T# ChooseHashFunction
+# ChooseHashFunction
 
 # SEMIGROUPS.HashFunctionRZMSE
 gap> SEMIGROUPS.HashFunctionRZMSE([1, (), 2], "bananas", ReturnFail, false);
@@ -934,7 +934,7 @@ rec( data := fail, func := function( v, data ) ... end )
 gap> x.func(fail, fail);
 1
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(b);
 gap> Unbind(o);
 gap> Unbind(r);
@@ -945,6 +945,6 @@ gap> Unbind(S);
 gap> Unbind(R);
 gap> Unbind(schutz);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/setup.tst");

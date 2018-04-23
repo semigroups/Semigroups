@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semieunit.gi
-#Y  Copyright (C) 2017                                    Christopher Russell
+##  semieunit.gi
+##  Copyright (C) 2017                                    Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -192,7 +192,7 @@ function(S)
   return;
 end);
 
-#TODO Linebreak hints
+# TODO Linebreak hints
 
 InstallMethod(ViewString, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup],
@@ -302,7 +302,7 @@ function(x)
                        String(x![2]), ")");
 end);
 
-#TODO Linebreak hints
+# TODO Linebreak hints
 
 InstallMethod(ViewString, "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
@@ -323,14 +323,13 @@ end);
 InstallMethod(\*, "for two McAlister triple semigroup element reps",
 [IsMcAlisterTripleSemigroupElementRep, IsMcAlisterTripleSemigroupElementRep],
 function(x, y)
-  local S, labels;
+  local S;
   S := McAlisterTripleSemigroupElementParent(x);
   if not S = McAlisterTripleSemigroupElementParent(y) then
     ErrorNoReturn("Semigroups: \* (for an McAlisterTripleSemigroupElement): ",
                   "usage,\n", "the elements must be from the same McAlister ",
                   "triple semigroup,");
   fi;
-  labels := DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S));
   return MTSE(S, DigraphVertexLabel(McAlisterTripleSemigroupPartialOrder(S),
                PartialOrderDigraphJoinOfVertices(
                  McAlisterTripleSemigroupPartialOrder(S), x[1],
@@ -385,7 +384,7 @@ SEMIGROUPS.McAlisterTripleSemigroupConstructPartialOrder := function(S, Y, G)
   local g, A, sc, out;
 
   out := ShallowCopy(Y);
-  for g in G do #TODO: if Ag = A then should not check powers of g
+  for g in G do  # TODO: if Ag = A then should not check powers of g
     for A in Y do
       sc := ShallowCopy(A);
       sc := Set(sc, x -> [x[1], g * x[2]]);

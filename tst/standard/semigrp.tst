@@ -1068,6 +1068,6 @@ gap> AsSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(3), S);
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(3), S);
 <monoid of 3x3 matrices over GF(3) with 3 generators>
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigrp.tst");

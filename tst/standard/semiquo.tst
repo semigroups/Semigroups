@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# quotients, OneImmutable
+# quotients, OneImmutable
 gap> S := PartitionMonoid(4);
 <regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.4]);
@@ -26,7 +26,7 @@ gap> One(T);
 <congruence class of <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], 
  [ 4, -4 ]>>
 
-#T# quotients, GeneratorsOfSemigroup
+# quotients, GeneratorsOfSemigroup
 gap> S := JonesMonoid(5);
 <regular bipartition *-monoid of degree 5 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
@@ -41,7 +41,7 @@ gap> GeneratorsOfSemigroup(T);
 [ <congruence class of <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, 4 ], 
      [ 5, -5 ], [ -1, -2 ]>> ]
 
-#T# quotients, Rees quotient
+# quotients, Rees quotient
 gap> S := PartitionMonoid(4);
 <regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
@@ -50,7 +50,7 @@ gap> T := S / I;;
 gap> Size(T);
 25
 
-#T# quotients, PROD_SCL_LIST_DEFAULT, PROD_LIST_SCL_DEFAULT
+# quotients, PROD_SCL_LIST_DEFAULT, PROD_LIST_SCL_DEFAULT
 gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [0, -infinity]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
@@ -74,7 +74,7 @@ gap> T.1 * GreensRClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `*' on 2 arguments
 
-#T# quotients, ViewObj
+# quotients, ViewObj
 gap> S := Semigroup([Transformation([2, 3, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([3, 2, 3]), Transformation([1, 1, 1])];;
 gap> cong := SemigroupCongruence(S, [pair]);
@@ -90,7 +90,7 @@ gap> R := S / I;
  degree 3 with 1 generator> over <transformation semigroup of degree 3 with 2 
 generators>>>
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(I);
 gap> Unbind(J);
 gap> Unbind(Q);
@@ -100,6 +100,6 @@ gap> Unbind(T);
 gap> Unbind(cong);
 gap> Unbind(pair);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiquo.tst");

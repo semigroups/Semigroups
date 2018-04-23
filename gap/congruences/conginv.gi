@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/conginv.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  congruences/conginv.gi
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -70,7 +70,7 @@ function(S, kernel, traceBlocks)
       od;
     od;
   od;
-  #TODO: check trace is *normal*
+  # TODO: check trace is *normal*
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 

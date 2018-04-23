@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# PairsCongTest1
+# PairsCongTest1
 gap> s := Semigroup([Transformation([1, 3, 4, 1, 3, 5]),
 >    Transformation([2, 4, 6, 1, 6, 5]),
 >    Transformation([4, 1, 2, 6, 2, 1]),
@@ -89,7 +89,7 @@ gap> c := EquivalenceClasses(cong);;
 gap> Size(c) = 85;
 true
 
-#T# PairsCongTest3: \= for two semigroup congruences
+# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> s := Semigroup(Transformation([1]));;
 gap> t := Monoid(gens);;
@@ -119,16 +119,16 @@ true
 gap> NrCongruenceClasses(u);
 1
 
-#T# PairsCongTest4: \* for two semigroups congruence classes
+# PairsCongTest4: \* for two semigroups congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> s := Semigroup(gens);;
 gap> gens := List(s, x -> [gens[1], x]);;
-gap> u := SemigroupCongruence(s, gens); # universal congruence
+gap> u := SemigroupCongruence(s, gens);  # universal congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
  of degree 10 with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(s);
 true
-gap> v := SemigroupCongruence(s, [gens[1], gens[1]]); # trivial congruence
+gap> v := SemigroupCongruence(s, [gens[1], gens[1]]);  # trivial congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
  of degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
@@ -153,7 +153,7 @@ gap> Representative(classes[5] * classes[2]) =
 > Representative(classes[5]) * Representative(classes[2]);
 true
 
-#T# LatticeOfCongruences
+# LatticeOfCongruences
 gap> S := Semigroup([
 > Transformation([1, 3, 4, 1]), Transformation([3, 1, 1, 3])]);;
 gap> l := LatticeOfCongruences(S);
@@ -406,10 +406,10 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
 [ [ 3, 4, 9 ], [ 6, 11 ], [ 2, 5, 8 ], [ 2, 10 ], [ 6, 12 ], [ 13 ], [  ], 
   [ 11, 12 ], [ 5, 10 ], [ 6 ], [ 13 ], [ 13 ], [ 7 ] ]
 
-#T# Check robustness against non-free infinite semigroups
+# Check robustness against non-free infinite semigroups
 #TODO!
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(P);
 gap> Unbind(R);
 gap> Unbind(S);
@@ -430,6 +430,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/cong.tst");

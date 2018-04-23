@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  ideals.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  ideals.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -82,19 +82,19 @@ end);
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-1, #to beat the library method
+1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsPartialPermSemigroup and IsInverseSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+ HasGeneratorsOfSemigroupIdeal], 1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsPartialPermMonoid and IsInverseMonoid and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+ HasGeneratorsOfSemigroupIdeal], 1,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
@@ -224,7 +224,7 @@ function(arg)
     # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
-      #so that we can pass the options record in the Semigroups package
+      # so that we can pass the options record
       if i = Length(arg) and IsRecord(arg[i]) then
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       elif IsMultiplicativeElement(arg[i]) and
@@ -332,7 +332,8 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if not IsActingSemigroup(I) then # to keep the craziness in the library happy!
+  if not IsActingSemigroup(I) then
+    # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I)
       and not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then
