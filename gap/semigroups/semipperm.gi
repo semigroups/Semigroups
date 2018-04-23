@@ -357,8 +357,9 @@ function(G)
   perm_iso := IsomorphismPermGroup(G);
   perm_inv := InverseGeneralMapping(perm_iso);
   perm_grp := Range(perm_iso);
-  GeneratorsOfGroup(perm_grp); # to make sure that the following line calls the
-                               # library method for IsPermGroup and HasGensOfGp
+  GeneratorsOfGroup(perm_grp);  # to make sure that the following line calls
+                                # the library method for IsPermGroup and
+                                # HasGensOfGp
   pperm_iso := IsomorphismPartialPermSemigroup(perm_grp);
   pperm_inv := InverseGeneralMapping(pperm_iso);
   return MagmaIsomorphismByFunctionsNC(G, Range(pperm_iso),
@@ -380,7 +381,7 @@ function(S)
   if IsTrivial(grp) then
     # Special case: if <grp> is trivial, then `IsomorphismPartialPermSemigroup`
     # will map to <{EmptyPartialPerm}>, to which we can't easily adjoin a zero.
-    one := MultiplicativeNeutralElement(S); # S = {zero, one}
+    one := MultiplicativeNeutralElement(S);  # S = {zero, one}
     iso := function(x)
       if x = zero then
         return EmptyPartialPerm();

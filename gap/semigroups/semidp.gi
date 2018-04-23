@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semidp.gi
-#Y  Copyright (C) 2017                                      Wilf A. Wilson
+##  semidp.gi
+##  Copyright (C) 2017                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -61,7 +61,7 @@ InstallMethod(NonTrivialFactorization,
 "for an acting semigroup with generators and multiplicative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
-  local factorization, gens, nrgens, o, l, m, id, scc, word, tree, k, p, data,
+  local factorization, gens, o, l, m, id, scc, word, tree, k, p, data,
   pos, graph, j, i;
 
   if not x in S then
@@ -77,7 +77,6 @@ function(S, x)
     return factorization;
   fi;
   gens   := GeneratorsOfSemigroup(S);
-  nrgens := Length(gens);
 
   # Attempt to use LambdaOrb to find a right identity for <x>.
   o := LambdaOrb(S);
