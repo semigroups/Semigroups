@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  grpperm.gi
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+##  grpperm.gi
+##  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -177,7 +177,7 @@ function(S)
                         MinimalFactorization(G, x));
   end;
 
-  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, G, iso, inv);
 end);
 
@@ -228,7 +228,7 @@ end);
 InstallMethod(IsomorphismPermGroup,
 "for a perm bipartition group",
 [IsPermBipartitionGroup],
-1, # to beat the method for IsBlockBijectionSemigroup
+1,  # to beat the method for IsBlockBijectionSemigroup
 function(S)
   local G, deg;
 

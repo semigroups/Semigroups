@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semipperm.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semipperm.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -104,7 +104,7 @@ InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
 Maximum(RankFilter(IsActingSemigroup),
         RankFilter(IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal)) + 1,
-#to beat the method for an acting semigroup with generators
+# to beat the method for an acting semigroup with generators
 function(S)
   local n, record;
 
@@ -232,7 +232,7 @@ function(m, n)
   m := m - 1;
   i := 1;
   base := [1 .. n];
-  coeff := n ^ 2; # Binomial( n, 1 ) * NrArrangements([1..n], 1)
+  coeff := n ^ 2;  # Binomial(n, 1) * NrArrangements([1 .. n], 1)
 
   while m > coeff do
     m := m - coeff;
@@ -433,7 +433,7 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
-  local H, map, inv, G, deg, U, iso;
+  local H, map, inv, G, U, iso;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -443,9 +443,6 @@ function(S)
   map := IsomorphismPermGroup(H);
   inv := InverseGeneralMapping(map);
   G := Range(map);
-
-  deg := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
   SetIsGroupAsSemigroup(U, true);
@@ -666,7 +663,7 @@ function(S)
   fi;
 
   repeat
-    #JDM the next line doesn't work if OnPoints is used...
+    # JDM the next line doesn't work if OnPoints is used...
     o := Orb(gens, [next], OnSets, opts);
     Enumerate(o);
     if PositionOfFound(o) <> false then
@@ -820,7 +817,7 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
 function(S)
   local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
-  domain, range, lenrange, deg, codeg, in_nbs, labels, positions, collapsed,
+  domain, range, lenrange, codeg, in_nbs, labels, positions, collapsed,
   nr_collapsed, i, act, pos, collapsible, squashed, elts, j, t, im,
   reduced_rank, m, k;
 
@@ -855,7 +852,6 @@ function(S)
   rank := Length(domain);
   range := Union(ims);
   lenrange := Length(range);
-  deg := Maximum(domain);
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then

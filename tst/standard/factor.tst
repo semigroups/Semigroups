@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# FactorTest1: Factorization for a transformation semigroup 1
+# FactorTest1: Factorization for a transformation semigroup 1
 gap> S := Semigroup(Transformation([3, 4, 1, 2, 1]),
 >                   Transformation([4, 2, 1, 5, 5]),
 >                   Transformation([4, 2, 2, 2, 4]));;
@@ -21,7 +21,7 @@ gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
 >                                Factorization(S, x)) = x);
 true
 
-#T# FactorTest2: Factorization for a transformation semigroup 2
+# FactorTest2: Factorization for a transformation semigroup 2
 gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 > Transformation([2, 4, 1, 1]),
@@ -30,7 +30,7 @@ gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 
-#T# FactorTest3: Factorization for a transformation semigroup 3
+# FactorTest3: Factorization for a transformation semigroup 3
 gap> gens := [
 > Transformation([4, 6, 5, 2, 1, 3]),
 > Transformation([6, 3, 2, 5, 4, 1]),
@@ -44,7 +44,7 @@ gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 
-#T# FactorTest4: Factorization for a transformation semigroup 4
+# FactorTest4: Factorization for a transformation semigroup 4
 gap> gens := [
 > Transformation([3, 4, 1, 2, 1]),
 > Transformation([4, 2, 1, 5, 5]),
@@ -53,7 +53,7 @@ gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 
-#T# FactorTest5: Factorization for a transformation semigroup 5
+# FactorTest5: Factorization for a transformation semigroup 5
 gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 > Transformation([2, 4, 1, 1]),
@@ -62,7 +62,7 @@ gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 
-#T# FactorTest6: Factorization for a transformation monoid 1
+# FactorTest6: Factorization for a transformation monoid 1
 gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([2, 4, 1, 2]),
 > Transformation([3, 1, 1, 3]),
@@ -72,7 +72,7 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest7: Factorization for a transformation monoid 2
+# FactorTest7: Factorization for a transformation monoid 2
 gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 > Transformation([3, 4, 2, 2]),
@@ -82,7 +82,7 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest8: Factorization for a transformation monoid 3
+# FactorTest8: Factorization for a transformation monoid 3
 gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([2, 4, 1, 2]),
 > Transformation([3, 1, 1, 3]),
@@ -92,7 +92,7 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest9: Factorization for a transformation monoid 4
+# FactorTest9: Factorization for a transformation monoid 4
 gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 > Transformation([3, 4, 2, 2]),
@@ -102,7 +102,7 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest10: Factorization for a partial perm semigroup
+# FactorTest10: Factorization for a partial perm semigroup
 gap> gens := [PartialPerm([1, 2], [3, 1]),
 > PartialPerm([1, 2, 3], [1, 3, 4]),
 > PartialPerm([1, 2, 3], [2, 4, 1]),
@@ -112,7 +112,7 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest11: Factorization for a partial perm inverse semigroup
+# FactorTest11: Factorization for a partial perm inverse semigroup
 gap> gens := [PartialPerm([1, 2, 4, 5], [2, 6, 1, 4]),
 >  PartialPerm([1, 2, 5], [4, 3, 6]),
 >  PartialPerm([1, 3, 4, 5], [5, 1, 6, 4]),
@@ -122,13 +122,13 @@ gap> ForAll(s, f -> EvaluateWord(GeneratorsOfSemigroup(s),
 > Factorization(s, f)) = f);
 true
 
-#T# FactorTest12: Factorization for a known regular semigroup
+# FactorTest12: Factorization for a known regular semigroup
 gap> S := OrderEndomorphisms(7);;
 gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
 >                                Factorization(S, x)) = x);
 true
 
-#T# FactorTest13: Factorization regularity is learned after creation
+# FactorTest13: Factorization regularity is learned after creation
 gap> S := SingularTransformationSemigroup(5);
 <regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> S := Semigroup(GeneratorsOfSemigroup(S));;
@@ -138,7 +138,7 @@ gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
 >                                Factorization(S, x)) = x);
 true
 
-#T# factor: Factorization, error, 1/5
+# factor: Factorization, error, 1/5
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])], rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
@@ -146,7 +146,7 @@ gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
 the second argument <x> is not an element of the first argument <S>,
 
-#T# factor: Factorization, error, 2/5
+# factor: Factorization, error, 2/5
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])]);;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
@@ -154,7 +154,7 @@ gap> MinimalFactorization(S, x);
 Error, Semigroups: MinimalFactorization:
 the second argument <x> is not an element of the first argument <S>,
 
-#T# factor: Factorization, error, 3/5
+# factor: Factorization, error, 3/5
 gap> S := DualSymmetricInverseMonoid(3);;
 gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
@@ -162,7 +162,7 @@ gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
 the second argument <x> is not an element of the first argument <S>,
 
-#T# factor: Factorization, error, 4/5
+# factor: Factorization, error, 4/5
 gap> S := Semigroup(OrderEndomorphisms(3),
 >                   rec(acting := true, regular := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
@@ -170,33 +170,33 @@ gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
 the second argument <x> is not an element of the first argument <S>,
 
-#T# factor: Factorization, error, 5/5
+# factor: Factorization, error, 5/5
 gap> S := Semigroup(OrderEndomorphisms(3), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
 the third argument <p> does not belong to the Schutzenberger group,
 
-#T# factor: Factorization, () in SchutzenbergerGroup, fail, 1
+# factor: Factorization, () in SchutzenbergerGroup, fail, 1
 gap> S := Semigroup(Transformation([1, 1, 2, 3]), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, ());
 fail
 
-#T# factor: Factorization, () in SchutzenbergerGroup, 1
+# factor: Factorization, () in SchutzenbergerGroup, 1
 gap> S := InverseSemigroup(PartialPerm([1]), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, ());
 [ 1, -1 ]
 
-#T# factor: Factorization, () in SchutzenbergerGroup, 2
+# factor: Factorization, () in SchutzenbergerGroup, 2
 gap> S := InverseSemigroup(PartialPerm([2, 3, 1]), PartialPerm([2, 1, 3]),
 >                          rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, ());
 [ 2, -2 ]
 
-#T# factor: test for epimorphism from free group returning a word with negative
+# factor: test for epimorphism from free group returning a word with negative
 # powers.
 gap> S := Semigroup(FullTransformationMonoid(8), rec(acting := true));;
 gap> x := AsTransformation((1, 2, 3, 5));
@@ -205,7 +205,7 @@ gap> Factorization(S, x);
 [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 
   3, 2, 3, 2, 3 ]
 
-#T# factor: test for use of minimal factorization it is known, non-regular.
+# factor: test for use of minimal factorization it is known, non-regular.
 gap> S := Semigroup(FullTransformationMonoid(5));;
 gap> x := Transformation([4, 3, 2, 4, 1]);;
 gap> MinimalFactorization(S, x);
@@ -213,7 +213,7 @@ gap> MinimalFactorization(S, x);
 gap> Factorization(S, x);
 [ 2, 3, 4, 2, 3, 2, 2, 3, 2 ]
 
-#T# factor: test for use of minimal factorization it is known, regular.
+# factor: test for use of minimal factorization it is known, regular.
 gap> S := PartitionMonoid(4);;
 gap> x := Bipartition([[1, 3, -1, -4], [2, 4, -2], [-3]]);;
 gap> MinimalFactorization(S, x);
@@ -221,7 +221,7 @@ gap> MinimalFactorization(S, x);
 gap> Factorization(S, x);
 [ 2, 3, 2, 5, 2, 2, 5, 4, 3, 2 ]
 
-#T# factor: test for use of minimal factorization it is known, regular.
+# factor: test for use of minimal factorization it is known, regular.
 gap> S := SymmetricInverseMonoid(6);;
 gap> x := PartialPerm([1, 2, 5], [6, 2, 4]);;
 gap> GeneratorsOfSemigroup(S);
@@ -234,19 +234,19 @@ gap> Factorization(S, x);
 gap> EvaluateWord(GeneratorsOfSemigroup(S), last) = x;
 true
 
-#T# factor: NonTrivialFactorization, for an fp semigroup, 1
+# factor: NonTrivialFactorization, for an fp semigroup, 1
 gap> S := FreeSemigroup(1);;
 gap> NonTrivialFactorization(S, S.1 ^ 2);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `NonTrivialFactorization' on 2 arguments
 
-#T# factor: NonTrivialFactorization, for an enumerable semigroup, error, 1
+# factor: NonTrivialFactorization, for an enumerable semigroup, error, 1
 gap> S := FullPBRMonoid(1);;
 gap> NonTrivialFactorization(S, EmptyPartialPerm());
 Error, Semigroups: NonTrivialFactorization: usage,
 the element <x> must belong to the semigroup <S>,
 
-#T# factor: NonTrivialFactorization, for an enumerable semigroup, 1
+# factor: NonTrivialFactorization, for an enumerable semigroup, 1
 
 # Monogenic semigroup as a non-acting partial perm semigroup
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 3, 2);;
@@ -273,14 +273,14 @@ fail
 gap> NonTrivialFactorization(S, S.1 ^ 2);
 [ 1, 1 ]
 
-#T# factor: NonTrivialFactorization, for an enumerable semigroup, 2
+# factor: NonTrivialFactorization, for an enumerable semigroup, 2
 gap> S := FullPBRMonoid(1);;
 gap> Factorization(S, EmptyPBR(1));
 [ 1, 3 ]
 gap> NonTrivialFactorization(S, EmptyPBR(1));
 [ 1, 3 ]
 
-#T# factor: NonTrivialFactorization, for an enumerable semigroup, 3
+# factor: NonTrivialFactorization, for an enumerable semigroup, 3
 gap> gens := [
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]),
 >  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 1, 0]]),
@@ -292,14 +292,14 @@ gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 gap> EvaluateWord(gens, x[1]) = gens[1] and EvaluateWord(gens, x[3]) = gens[3];
 true
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, error, 1
+# factor: NonTrivialFactorization, for an acting semigroup, error, 1
 gap> S := Semigroup(IdentityTransformation, rec(acting := true));
 <trivial transformation group of degree 0 with 1 generator>
 gap> NonTrivialFactorization(S, EmptyPBR(1));
 Error, Semigroups: NonTrivialFactorization: usage,
 the element <x> must belong to the semigroup <S>,
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 1
+# factor: NonTrivialFactorization, for an acting semigroup, 1
 gap> gens := [
 >  Transformation([2, 4, 3, 2, 6, 2]),
 >  Transformation([2, 1, 5, 1, 1, 1]),
@@ -326,7 +326,7 @@ gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 gap> ForAll([1 .. 5], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 2
+# factor: NonTrivialFactorization, for an acting semigroup, 2
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 4, 1);;
 
 # With known indecomposable elements
@@ -372,7 +372,7 @@ fail
 gap> NonTrivialFactorization(S, x * x);
 [ 2, 2 ]
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 3
+# factor: NonTrivialFactorization, for an acting semigroup, 3
 gap> gens := [
 >  Transformation([4, 4, 7, 4, 4, 4, 8, 8, 8, 1]),
 >  Transformation([4, 4, 8, 4, 4, 4, 8, 8, 8, 2]),
@@ -387,7 +387,7 @@ gap> ForAll([1 .. Length(gens)],
 >           i -> x[i] = fail or EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 4
+# factor: NonTrivialFactorization, for an acting semigroup, 4
 gap> gens := [
 >  Transformation([1, 6, 6, 5, 5, 1]),
 >  Transformation([3, 5, 2, 5, 4, 3, 6]),
@@ -410,7 +410,7 @@ gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 [ [ 1, 3, 3, 1, 3, 3, 1 ], [ 6, 4, 3, 6, 4, 3, 2 ], fail, fail, 
   [ 5, 3, 5, 3, 5 ], fail ]
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 5
+# factor: NonTrivialFactorization, for an acting semigroup, 5
 gap> gens := [
 >  Bipartition([[1, 3, 7, -2], [2, -5], [4], [5, -1, -3], [6], [-4, -6], [-7]]),
 >  Bipartition([[1, 3, 5, -6], [2, 4, 6, 7, -2], [-1, -5], [-3], [-4], [-7]]),
@@ -427,7 +427,7 @@ gap> ForAll([1 .. Length(gens)],
 >           i -> x[i] = fail or EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 6
+# factor: NonTrivialFactorization, for an acting semigroup, 6
 gap> S := Monoid([
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 1]),
 >  Transformation([2, 1]),
@@ -440,7 +440,7 @@ gap> x := List(GeneratorsOfSemigroup(S), g -> NonTrivialFactorization(S, g));
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an acting semigroup, 7
+# factor: NonTrivialFactorization, for an acting semigroup, 7
 gap> gens := [
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 1, 8, 8, 8]),
 >  Transformation([2, 1, 3, 4, 5, 6, 7, 8, 8, 8, 8]),
@@ -454,7 +454,7 @@ gap> ForAll([1 .. Length(gens)],
 >           i -> x[i] = fail or EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for a semigroup, 8
+# factor: NonTrivialFactorization, for a semigroup, 8
 gap> gens := [
 >  Transformation([1, 6, 6, 5, 5, 1]),
 >  Transformation([3, 5, 2, 5, 4, 3, 6]),
@@ -470,7 +470,7 @@ gap> y := Filtered([1 .. 6], i -> x[i] <> fail);
 gap> ForAll(y, i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for a semigroup, 9
+# factor: NonTrivialFactorization, for a semigroup, 9
 gap> gens := [
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 1]),
 >  Transformation([2, 1]),
@@ -488,7 +488,7 @@ gap> x := List(gens, x -> NonTrivialFactorization(S, x));;
 gap> ForAll([1 .. 4], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for a semigroup, 10
+# factor: NonTrivialFactorization, for a semigroup, 10
 gap> gens := [
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 1, 8, 8, 8]),
 >  Transformation([2, 1, 3, 4, 5, 6, 7, 8, 8, 8, 8]),
@@ -502,7 +502,7 @@ gap> y := Filtered([1 .. 4], i -> x[i] <> fail);
 gap> ForAll(y, i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for enumerable and acting semigroups, 1
+# factor: NonTrivialFactorization, for enumerable and acting semigroups, 1
 gap> gens := [
 >  PBR([[1, 2], [-2, 1, 2]], [[-1, 1, 2], [-2, 1, 2]]),
 >  PBR([[1], []], [[-2, -1, 2], [-1]]),
@@ -530,13 +530,13 @@ gap> x := List(gens, x -> NonTrivialFactorization(S, x));
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an inverse acting semigroup, error, 1
+# factor: NonTrivialFactorization, for an inverse acting semigroup, error, 1
 gap> S := SymmetricInverseMonoid(1);;
 gap> NonTrivialFactorization(S, IdentityTransformation);
 Error, Semigroups: NonTrivialFactorization: usage,
 the element <x> must belong to the semigroup <S>,
 
-#T# factor: NonTrivialFactorization, for an inverse acting semigroup, 1
+# factor: NonTrivialFactorization, for an inverse acting semigroup, 1
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> gens := GeneratorsOfSemigroup(S);;
@@ -549,7 +549,7 @@ gap> x := List(gens, x -> NonTrivialFactorization(S, x));
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-# As inverse semirgoup
+# As inverse semigroup
 gap> S := InverseSemigroup(gens, rec(acting := true));
 <inverse partial perm monoid of rank 4 with 4 generators>
 gap> x := List(gens, x -> NonTrivialFactorization(S, x));
@@ -557,7 +557,7 @@ gap> x := List(gens, x -> NonTrivialFactorization(S, x));
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-#T# factor: NonTrivialFactorization, for an inverse acting semigroup, 2
+# factor: NonTrivialFactorization, for an inverse acting semigroup, 2
 gap> gens := [
 >  Bipartition([[1, 2, -1, -2], [3, -4], [4, -3]]),
 >  Bipartition([[1, 2, -1, -4], [3, -2], [4, -3]]),
@@ -588,7 +588,7 @@ true
 gap> NonTrivialFactorization(S, gens[1] ^ 2) = Factorization(S, gens[1] ^ 2);
 true
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(gens);
@@ -597,6 +597,6 @@ gap> Unbind(s);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/factor.tst");

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semifp.gi
-#Y  Copyright (C) 2015                                  James D. Mitchell
+##  semifp.gi
+##  Copyright (C) 2015                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -92,7 +92,7 @@ function(x1, x2)
   return x1 ^ map < x2 ^ map;
 end);
 
-#TODO AsSSortedList, RightCayleyDigraph, any more?
+# TODO AsSSortedList, RightCayleyDigraph, any more?
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
@@ -100,69 +100,69 @@ InstallMethod(ViewString, "for an f.p. semigroup element",
 InstallMethod(ViewString, "for an f.p. monoid element",
 [IsElementOfFpMonoid], String);
 
-#InstallMethod(ViewObj, "for an f.p. monoid",
-#[IsFpMonoid and HasGeneratorsOfMonoid],
-#function(M)
-#  Print(ViewString(M));
-#end);
+# InstallMethod(ViewObj, "for an f.p. monoid",
+# [IsFpMonoid and HasGeneratorsOfMonoid],
+# function(M)
+#   Print(ViewString(M));
+# end);
 #
-#InstallMethod(ViewString, "for an f.p. monoid",
-#[IsFpMonoid and HasGeneratorsOfMonoid],
-#function(M)
-#  local str;
+# InstallMethod(ViewString, "for an f.p. monoid",
+# [IsFpMonoid and HasGeneratorsOfMonoid],
+# function(M)
+#   local str;
 #
-#  str := "<fp monoid with ";
-#  Append(str, String(Length(GeneratorsOfMonoid(M))));
-#  Append(str, " generator");
-#  if Length(GeneratorsOfMonoid(M)) > 1 then
-#    Append(str, "s");
-#  fi;
-#  Append(str, " and ");
-#  Append(str, String(Length(RelationsOfFpMonoid(M))));
-#  Append(str, " relation");
-#  if Length(RelationsOfFpMonoid(M)) > 1 then
-#    Append(str, "s");
-#  fi;
-#  Append(str, ">");
+#   str := "<fp monoid with ";
+#   Append(str, String(Length(GeneratorsOfMonoid(M))));
+#   Append(str, " generator");
+#   if Length(GeneratorsOfMonoid(M)) > 1 then
+#     Append(str, "s");
+#   fi;
+#   Append(str, " and ");
+#   Append(str, String(Length(RelationsOfFpMonoid(M))));
+#   Append(str, " relation");
+#   if Length(RelationsOfFpMonoid(M)) > 1 then
+#     Append(str, "s");
+#   fi;
+#   Append(str, ">");
 #
-#  return PRINT_STRINGIFY(str);
-#end);
+#   return PRINT_STRINGIFY(str);
+# end);
 #
-#InstallMethod(ViewObj, "for an f.p. semigroup",
-#[IsFpSemigroup and HasGeneratorsOfSemigroup],
-#function(M)
-#  Print(ViewString(M));
-#end);
+# InstallMethod(ViewObj, "for an f.p. semigroup",
+# [IsFpSemigroup and HasGeneratorsOfSemigroup],
+# function(M)
+#   Print(ViewString(M));
+# end);
 #
-#InstallMethod(ViewString, "for an f.p. semigroup",
-#[IsFpSemigroup and HasGeneratorsOfSemigroup],
-#function(M)
-#  local str;
+# InstallMethod(ViewString, "for an f.p. semigroup",
+# [IsFpSemigroup and HasGeneratorsOfSemigroup],
+# function(M)
+#   local str;
 #
-#  str := "<fp monoid with ";
-#  Append(str, String(Length(GeneratorsOfSemigroup(M))));
-#  Append(str, " generator");
-#  if Length(GeneratorsOfSemigroup(M)) > 1 then
-#    Append(str, "s");
-#  fi;
-#  Append(str, " and ");
-#  Append(str, String(Length(RelationsOfFpSemigroup(M))));
-#  Append(str, " relation");
-#  if Length(RelationsOfFpSemigroup(M)) > 1 then
-#    Append(str, "s");
-#  fi;
-#  Append(str, ">");
+#   str := "<fp monoid with ";
+#   Append(str, String(Length(GeneratorsOfSemigroup(M))));
+#   Append(str, " generator");
+#   if Length(GeneratorsOfSemigroup(M)) > 1 then
+#     Append(str, "s");
+#   fi;
+#   Append(str, " and ");
+#   Append(str, String(Length(RelationsOfFpSemigroup(M))));
+#   Append(str, " relation");
+#   if Length(RelationsOfFpSemigroup(M)) > 1 then
+#     Append(str, "s");
+#   fi;
+#   Append(str, ">");
 #
-#  return PRINT_STRINGIFY(str);
-#end);
+#   return PRINT_STRINGIFY(str);
+# end);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsFpSemigroup, IsList],
 function(filt, params)
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
     params[2] := Random([1 .. 8]);
-  elif Length(params) < 2 then # degree
+  elif Length(params) < 2 then  # degree
     params[2] := Random([1 .. 8]);
   fi;
   if not ForAll(params, IsPosInt) then
@@ -232,7 +232,7 @@ InstallMethod(AsMonoid, "for an fp semigroup",
 [IsFpSemigroup],
 function(S)
   if MultiplicativeNeutralElement(S) = fail then
-    return fail; # so that we do the same as the GAP/ref manual says
+    return fail;  # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsFpMonoid, S));
 end);
@@ -465,8 +465,7 @@ SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
 end;
 
 SEMIGROUPS.WordToExtRepObj := function(word)
-  local n, ext_rep_obj, i, j;
-  n           := Length(word);
+  local ext_rep_obj, i, j;
   ext_rep_obj := [];
   i           := 1;
   j           := 1;
@@ -517,24 +516,24 @@ SEMIGROUPS.WordToString := function(word)
   return out;
 end;
 
-## The following method could disappear if there are methods for Green's
-## relations etc so that the other method in attr.gi can be used.
+# The following method could disappear if there are methods for Green's
+# relations etc so that the other method in attr.gi can be used.
 #
-#InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
-#[IsFpSemigroup],
-#function(S)
-#  local e;
+# InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
+# [IsFpSemigroup],
+# function(S)
+#   local e;
 #
-#  if not IsFinite(S) then
-#    TryNextMethod();
-#  fi;
-#  for e in Idempotents(S) do
-#    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
-#      return e;
-#    fi;
-#  od;
-#  return fail;
-#end);
+#   if not IsFinite(S) then
+#     TryNextMethod();
+#   fi;
+#   for e in Idempotents(S) do
+#     if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
+#       return e;
+#     fi;
+#   od;
+#   return fail;
+# end);
 
 InstallMethod(Factorization, "for an fp semigroup and element",
 IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
@@ -601,7 +600,7 @@ function(M)
   map := InverseGeneralMapping(IsomorphismPermGroup(G));
   H   := Source(map);
   o   := Enumerate(LambdaOrb(M));
-  #R_tilde - see page 4 of the paper
+  # R_tilde - see page 4 of the paper
   for m in [2 .. Length(OrbSCC(o))] do
     comp := OrbSCC(o)[m];
     U := SmallGeneratingSet(Stabilizer(H,
@@ -626,9 +625,9 @@ function(M)
              EvaluateWord(GeneratorsOfSemigroup(F),
                           Factorization(S, One(S)))]);
 
-  MF := F / rels; # FpSemigroup which is isomorphic to M, with different gens.
+  MF := F / rels;  # FpSemigroup which is isomorphic to M, with different gens.
   fam := ElementsFamily(FamilyObj(MF));
-  T := Semigroup(Concatenation(SS, GG)); # M with isomorphic generators to MF
+  T := Semigroup(Concatenation(SS, GG));  # M with isomorphic generators to MF
 
   map := x -> ElementOfFpSemigroup(fam, EvaluateWord(GeneratorsOfSemigroup(F),
                                                      Factorization(T, x)));

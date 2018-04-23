@@ -104,7 +104,7 @@ gap> T := JonesMonoid(4);
 gap> IsIsomorphicSemigroup(S, T);
 false
 
-#T# isomorph: IsomorphismSemigroups, for infinite semigroup(s)
+# isomorph: IsomorphismSemigroups, for infinite semigroup(s)
 gap> S := FreeSemigroup(1);;
 gap> T := TrivialSemigroup();;
 gap> IsomorphismSemigroups(S, T);
@@ -113,7 +113,7 @@ gap> IsomorphismSemigroups(S, FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `IsomorphismSemigroups' on 2 arguments
 
-#T# isomorph: IsomorphismSemigroups, for trivial semigroups
+# isomorph: IsomorphismSemigroups, for trivial semigroups
 gap> S := TrivialSemigroup(IsTransformationSemigroup);
 <trivial transformation group of degree 0 with 1 generator>
 gap> T := TrivialSemigroup(IsBipartitionSemigroup);
@@ -131,7 +131,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# isomorph: IsomorphismSemigroups, for monogenic semigroups
+# isomorph: IsomorphismSemigroups, for monogenic semigroups
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 3, 2);
 <commutative non-regular transformation semigroup of size 4, degree 5 with 1 
  generator>
@@ -148,7 +148,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# isomorph: IsomorphismSemigroups, for simple semigroups
+# isomorph: IsomorphismSemigroups, for simple semigroups
 gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(), (1, 3, 2)],
 >                                                 [(2, 3), (1, 2)],
 >                                                 [(), (2, 3, 1)]]);
@@ -179,7 +179,7 @@ true
 gap> IsomorphismSemigroups(U, T);
 fail
 
-#T# isomorph: IsomorphismSemigroups, for 0-simple semigroups
+# isomorph: IsomorphismSemigroups, for 0-simple semigroups
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(), (1, 3, 2)],
 >                                                     [0, (1, 2)],
 >                                                     [(), (2, 3, 1)]]);
@@ -219,7 +219,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# isomorph: IsomorphismSemigroups, non-isomorphic partial order of D-classes
+# isomorph: IsomorphismSemigroups, non-isomorphic partial order of D-classes
 gap> S := ZeroSemigroup(3);
 <commutative non-regular transformation semigroup of size 3, degree 4 with 2 
  generators>
@@ -229,10 +229,10 @@ gap> T := MonogenicSemigroup(3, 1);
 gap> IsomorphismSemigroups(S, T);
 fail
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/isomorph.tst");

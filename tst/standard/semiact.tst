@@ -176,6 +176,6 @@ true
 gap> Number(SymmetricInverseMonoid(4), x -> x in S) = Size(S);
 true
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiact.tst");

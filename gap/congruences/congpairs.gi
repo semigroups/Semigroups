@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congpairs.gi
-#Y  Copyright (C) 2015-17                                Michael C. Torpey
+##  congruences/congpairs.gi
+##  Copyright (C) 2015-17                                Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@
 ##
 #############################################################################
 
-#TODO: A method for MeetXSemigroupCongruences
+# TODO: A method for MeetXSemigroupCongruences
 
 #############################################################################
 # Internal attributes
@@ -114,34 +114,34 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
 
   # TODO redo this!
   # Join the lookup tables
-  #if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
-  #  # First join the union-find tables
-  #  ufdata := UF_COPY(c1!.ufdata);
-  #  uf2 := c2!.ufdata;
-  #  for i in [1 .. UF_SIZE(uf2)] do
-  #    ii := UF_FIND(uf2, i);
-  #    if ii <> i then
-  #      UF_UNION(ufdata, [i, ii]);
-  #    fi;
-  #  od;
-  #  cong!.ufdata := ufdata;
+  # if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
+  #   # First join the union-find tables
+  #   ufdata := UF_COPY(c1!.ufdata);
+  #   uf2 := c2!.ufdata;
+  #   for i in [1 .. UF_SIZE(uf2)] do
+  #     ii := UF_FIND(uf2, i);
+  #     if ii <> i then
+  #       UF_UNION(ufdata, [i, ii]);
+  #     fi;
+  #   od;
+  #   cong!.ufdata := ufdata;
 
-  #  # Now normalise this as a lookup table
-  #  next := 1;
-  #  newtable := EmptyPlist(UF_SIZE(ufdata));
-  #  for i in [1 .. UF_SIZE(ufdata)] do
-  #    ii := UF_FIND(ufdata, i);
-  #    if ii = i then
-  #      newtable[i] := next;
-  #      next := next + 1;
-  #    else
-  #      newtable[i] := newtable[ii];
-  #    fi;
-  #  od;
-  #  SetAsLookupTable(cong, newtable);
-  #fi;
-  # TODO if one or the other does not have the lookup could do TC on
-  # which ever is smaller using the pairs of the other.
+  #   # Now normalise this as a lookup table
+  #   next := 1;
+  #   newtable := EmptyPlist(UF_SIZE(ufdata));
+  #   for i in [1 .. UF_SIZE(ufdata)] do
+  #     ii := UF_FIND(ufdata, i);
+  #     if ii = i then
+  #       newtable[i] := next;
+  #       next := next + 1;
+  #     else
+  #       newtable[i] := newtable[ii];
+  #     fi;
+  #   od;
+  #   SetAsLookupTable(cong, newtable);
+  # fi;
+  #  TODO if one or the other does not have the lookup could do TC on
+  #  which ever is smaller using the pairs of the other.
   return cong;
 end;
 
@@ -467,9 +467,9 @@ function(cong, elm)
   part := EquivalenceRelationPartition(cong);
   pos := PositionProperty(part, l -> [elm, l[1]] in cong);
   if pos = fail then
-    return [elm]; # singleton
+    return [elm];  # singleton
   fi;
-  return part[pos]; # non-singleton
+  return part[pos];  # non-singleton
 end);
 
 InstallMethod(JoinSemigroupCongruences,

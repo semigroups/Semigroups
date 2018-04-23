@@ -15,7 +15,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# ClosureTest1
+# ClosureTest1
 gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >  Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
@@ -35,7 +35,7 @@ gap> NrDClasses(S);
 gap> GroupOfUnits(S);
 <trivial transformation group of degree 0 with 1 generator>
 
-#T# ClosureTest2
+# ClosureTest2
 gap> gens :=
 > [Transformation([1, 3, 9, 3, 12, 1, 15, 1, 19, 3, 1, 9, 1, 9, 22, 15, 3, 1,
 >      24, 15, 1, 26, 1, 28, 1, 30, 1, 32, 1, 34, 1, 36, 1, 38, 1, 40, 1, 42, 1,
@@ -97,7 +97,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#T# ClosureTest3
+# ClosureTest3
 gap> s := Semigroup(gens[1]);; Size(s);
 30
 gap> for i in [2 .. Length(gens)] do
@@ -120,7 +120,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#T# ClosureTest4
+# ClosureTest4
 gap> gens := [Transformation([11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]),
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10]),
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 7, 8, 9, 10]),
@@ -153,7 +153,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#T# ClosureTest5
+# ClosureTest5
 gap> s := Semigroup(gens[1]);;
 gap> s := ClosureSemigroup(s, gens[2]);;
 gap> for i in [2 .. Length(gens)] do
@@ -176,7 +176,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#T# ClosureTest6
+# ClosureTest6
 gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 1, 5, 5]),
 >   Transformation([4, 2, 2, 2, 4])];;
@@ -193,7 +193,7 @@ fail
 gap> GroupOfUnits(s);
 <trivial transformation group of degree 0 with 1 generator>
 
-#T# ClosureTest8
+# ClosureTest8
 gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([2, 4, 1, 2]),
 > Transformation([3, 1, 1, 3]),
@@ -213,7 +213,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
-#T# ClosureTest10
+# ClosureTest10
 gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([1, 4, 1, 2]),
 >  Transformation([2, 4, 1, 1]),
@@ -230,7 +230,7 @@ gap> NrRClasses(S); NrLClasses(S); NrDClasses(S); NrIdempotents(S);
 6
 29
 
-#T# ClosureTest11
+# ClosureTest11
 gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([1, 4, 1, 2]),
 >  Transformation([3, 4, 2, 2]),
@@ -247,7 +247,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
-#T# ClosureSemigroup: testing for enumerable algorithm performance, 1/?
+# ClosureSemigroup: testing for enumerable algorithm performance, 1/?
 gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [2, 3, 4, 5, 6, 7, 1, 8]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 7, 8, 6]),
@@ -267,7 +267,7 @@ gap> EN_SEMI_CURRENT_NR_RULES(T);
 gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(T);
 17
 
-#T# ClosureSemigroup: testing for enumerable algorithm performance, 2/?
+# ClosureSemigroup: testing for enumerable algorithm performance, 2/?
 gap> gens :=
 > [PBR([[], [-1]], [[2], [-2, 1]]),
 >   PBR([[-2, 1], [-1]], [[2], []]),
@@ -292,7 +292,7 @@ gap> EN_SEMI_CURRENT_NR_RULES(S);
 gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(S);
 15
 
-#T# Adding redundant generators in ClosureSemigroups 
+# Adding redundant generators in ClosureSemigroups 
 gap> gens := [Transformation([10, 10, 6, 9, 3, 6, 6, 8, 3, 4]),
 >   Transformation([10, 10, 6, 9, 3, 6, 6, 8, 3, 4]),
 >   Transformation([6, 8, 8, 4, 7, 1, 2, 9, 9, 3]),
@@ -316,7 +316,7 @@ gap> S := ClosureSemigroup(S, gens{[5, 6]});; Size(S);
 gap> S := ClosureSemigroup(S, gens{[7]});; Size(S);
 3063073
 
-#T# 
+# 
 gap> gens := [
 >   PartialPerm([2, 3, 4, 5, 6, 7, 1]),
 >   PartialPerm([2, 1, 0, 4, 0, 6, 0]),
@@ -343,7 +343,7 @@ gap> a;
 [ 7, 498, 743, 3977, 11229, 11817, 11817, 11915, 13679, 13826, 14414, 15002, 
   15198, 16766, 17354 ]
 
-#T# testing enumerable closure semigroup for bipartitions 
+# testing enumerable closure semigroup for bipartitions 
 gap> gens := [Bipartition([[1, 4, -1], [2, -3], [3, 6, -5],
 >   [5, -2, -4, -6]]),
 > Bipartition([[1, -1], [2, 5, 6, -2], [3, -4], [4, -3, -6],
@@ -376,7 +376,7 @@ gap> for i in [1 .. Length(gens)] do
 gap> a;
 [ 2328, 2328, 2328, 2328, 3841, 4257, 4358, 5274, 5468, 5555 ]
 
-#T# ClosureSemigroup for boolean matrices
+# ClosureSemigroup for boolean matrices
 gap> gens := [
 > BooleanMat([[false, true, false, false], [true, false, false, false],
 >   [false, false, false, true], [true, true, false, true]]),
@@ -420,7 +420,7 @@ gap> for i in [10 .. Length(gens)] do;
 gap> a;
 [ 2346, 3316, 3593, 3767, 4000, 4191, 4290, 4747 ]
 
-#T# ClosureTest1
+# ClosureTest1
 gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >  Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
@@ -441,7 +441,7 @@ gap> NrDClasses(s);
 gap> GroupOfUnits(s);
 <trivial transformation group of degree 0 with 1 generator>
 
-#T# ClosureTest2
+# ClosureTest2
 gap> gens := [Transformation([
 > 1, 3, 9, 3, 12, 1, 15, 1, 19, 3, 1, 9, 1, 9, 22, 15, 3, 1, 24, 15, 1, 26, 1,
 > 28, 1, 30, 1, 32, 1, 34, 1, 36, 1, 38, 1, 40, 1, 42, 1, 44, 1, 46, 1, 48, 1,
@@ -502,7 +502,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#T# ClosureTest3
+# ClosureTest3
 gap> s := Semigroup(gens[1]);; Size(s);
 30
 gap> for i in [2 .. Length(gens)] do
@@ -525,7 +525,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-#T# ClosureTest4
+# ClosureTest4
 gap> gens := [Transformation([11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]),
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10]),
 >  Transformation([2, 3, 4, 5, 6, 7, 8, 7, 8, 9, 10]),
@@ -558,7 +558,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#T# ClosureTest5
+# ClosureTest5
 gap> s := Semigroup(gens[1]);;
 gap> s := ClosureSemigroup(s, gens[2]);;
 gap> for i in [2 .. Length(gens)] do
@@ -581,7 +581,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-#T# ClosureTest6
+# ClosureTest6
 gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 1, 5, 5]),
 >   Transformation([4, 2, 2, 2, 4])];;
@@ -598,7 +598,7 @@ fail
 gap> GroupOfUnits(s);
 <trivial transformation group of degree 0 with 1 generator>
 
-#T# ClosureTest8
+# ClosureTest8
 gap> gens := [Transformation([1, 3, 4, 1]),
 > Transformation([2, 4, 1, 2]),
 > Transformation([3, 1, 1, 3]),
@@ -618,7 +618,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
-#T# ClosureTest10
+# ClosureTest10
 gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([1, 4, 1, 2]),
 >  Transformation([2, 4, 1, 1]),
@@ -636,7 +636,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 29
 
-#T# ClosureTest11
+# ClosureTest11
 gap> gens := [Transformation([1, 3, 2, 3]),
 >  Transformation([1, 4, 1, 2]),
 >  Transformation([3, 4, 2, 2]),
@@ -654,7 +654,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(a);
@@ -664,6 +664,6 @@ gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(x);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/closure.tst");

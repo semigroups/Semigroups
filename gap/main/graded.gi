@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  graded.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  graded.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -110,8 +110,7 @@ function(arg)
 
     onlygradesdata := GradedLambdaHT(S);
 
-  else #local
-
+  else  # local
     gradingfunc := function(o, x)
                      return LambdaRank(S)(x);
                    end;
@@ -143,7 +142,7 @@ function(arg)
   o := Orb(gens, lambda, LambdaAct(S), orb);
   SetFilterObj(o, IsGradedLambdaOrb);
 
-  if global then # store o
+  if global then  # store o
     j := LambdaRank(S)(lambda) + 1;
     # the +1 is essential as the rank can be 0
     k := graded!.lens[j] + 1;
@@ -216,7 +215,7 @@ function(arg)
                   end;
 
     onlygradesdata := GradedRhoHT(S);
-  else #local
+  else  # local
     gradingfunc := function(o, x)
                      return RhoRank(S)(x);
                    end;
@@ -247,7 +246,7 @@ function(arg)
   o := Orb(gens, rho, RhoAct(S), orb);
   SetFilterObj(o, IsGradedRhoOrb);
 
-  if global then # store o
+  if global then  # store o
     j := RhoRank(S)(rho) + 1;
     # the +1 is essential as the rank can be 0
     k := graded!.lens[j] + 1;
@@ -359,13 +358,13 @@ function(s)
       return fail;
     fi;
 
-    #where to start looking in lambda_o next time
+    # where to start looking in lambda_o next time
     iter!.l := pos + 1;
 
     val := Position(GradedLambdaOrbs(s), lambda_o[pos]);
-    if val <> fail then # previously calculated graded orbit
+    if val <> fail then  # previously calculated graded orbit
       o := GradedLambdaOrbs(s)[val[1]][val[2]];
-    else # new graded orbit
+    else  # new graded orbit
       word := TraceSchreierTreeForward(lambda_o, pos);
       o := GradedLambdaOrb(s, EvaluateWord(lambda_o, word), true);
       val := o!.position_in_graded;

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  ideallam.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  ideallam.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -82,25 +82,25 @@ end);
 
 # returns the index of the component containing <o[i]>
 
-#InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
-#[IsIdealOrb, IsPosInt],
-#function(o, i)
-#  local nr;
+# InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
+# [IsIdealOrb, IsPosInt],
+# function(o, i)
+#   local nr;
 #
-#  nr := 1;
-#  while i > Length(o!.orbits[nr]) do
-#    i := i - Length(o!.orbits[nr]);
-#    nr := nr + 1;
-#  od;
-#  return nr;
-#end);
+#   nr := 1;
+#   while i > Length(o!.orbits[nr]) do
+#     i := i - Length(o!.orbits[nr]);
+#     nr := nr + 1;
+#   od;
+#   return nr;
+# end);
 
-#InstallMethod(ComponentOfIndex,
-#"for an inverse ideal orb and positive integer",
-#[IsIdealOrb and IsInverseOrb, IsPosInt],
-#function(o, i)
-#  return 1;
-#end);
+# InstallMethod(ComponentOfIndex,
+# "for an inverse ideal orb and positive integer",
+# [IsIdealOrb and IsInverseOrb, IsPosInt],
+# function(o, i)
+#   return 1;
+# end);
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -349,7 +349,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   if len <> 0 then
     record.gradingfunc := function(new, x)
       return HTValue(o!.ht, x) <> fail;
-      #return x in o;
+      # return x in o;
     end;
     record.onlygrades := function(x, data);
       return not x;
@@ -464,7 +464,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   if len <> 0 then
     record.gradingfunc := function(new, x)
       return HTValue(o!.ht, x) <> fail;
-      #return x in o;
+      # return x in o;
     end;
     record.onlygrades := function(x, data);
       return not x;
@@ -551,7 +551,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
 end);
 
 InstallMethod(EvaluateWord, "for an ideal orb and an ideal word (Semigroups)",
-[IsIdealOrb, IsList], 2, # to beat the methods for lambda/rho orbs below
+[IsIdealOrb, IsList], 2,  # to beat the methods for lambda/rho orbs below
 function(o, w)
   local res, gens, i;
   # it is safe to use <GeneratorsOfSemigroup> here since an ideal can't be
@@ -633,7 +633,7 @@ function(o, i)
   leftword := [];
   rightword := [];
 
-  #find the component <nr> containing <i>
+  # find the component <nr> containing <i>
   nr := 1;
   j := i;
   while j > Length(o!.orbits[nr]) do

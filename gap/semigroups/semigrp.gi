@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semigrp.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semigrp.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -130,7 +130,7 @@ function(S)
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
 
-#TODO(later) the next method should really be in the library
+# TODO(later) the next method should really be in the library
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a list",
 [IsList], ReturnFalse);
 
@@ -216,7 +216,7 @@ function(gens, opts)
 
   filts := IsSemigroup and IsAttributeStoringRep;
 
-  if opts.regular then # This overrides everything!
+  if opts.regular then  # This overrides everything!
     filts := filts and IsRegularActingSemigroupRep;
   elif opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
@@ -267,7 +267,7 @@ function(gens, opts)
 
   filts := IsMonoid and IsAttributeStoringRep;
 
-  if opts.regular then # This overrides everything!
+  if opts.regular then  # This overrides everything!
     filts := filts and IsRegularActingSemigroupRep;
   elif opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
@@ -826,7 +826,7 @@ function(Constructor, S, coll, opts)
     # new generators are added.
 
     # We cannot remove inverse from the generators here because this breaks the
-    # correspondence between the generators of <U> and the C++ semigroup in #
+    # correspondence between the generators of <U> and the C++ semigroup in
     # libsemigroups.
     U := Constructor(GeneratorsOfMagma(T), opts);
     U!.__en_semi_cpp_semi := T!.__en_semi_cpp_semi;
@@ -886,7 +886,7 @@ function(S, func, limit)
   until func(x) or IsDoneIterator(iter);
 
   if not func(x) then
-    return fail; # should really return the empty semigroup
+    return fail;  # should really return the empty semigroup
   fi;
 
   T := Semigroup(x);
@@ -916,7 +916,7 @@ function(S, func, limit)
   until func(x) or IsDoneIterator(iter);
 
   if not func(x) then
-    return fail; # should really return the empty semigroup
+    return fail;  # should really return the empty semigroup
   fi;
 
   T := InverseSemigroup(x);
@@ -951,7 +951,7 @@ end);
 InstallMethod(Random,
 "for a semigroup with AsList",
 [IsSemigroup and HasAsList],
-20, # to beat other random methods
+20,  # to beat other random methods
 function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
@@ -959,12 +959,12 @@ end);
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsSemigroup, IsList],
 function(filt, params)
-  if Length(params) < 1 then # nr gens
+  if Length(params) < 1 then  # nr gens
     params[1] := Random([1 .. 20]);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
-  if Length(params) < 2 then # degree / dimension
+  if Length(params) < 2 then  # degree / dimension
     params[2] := Random([1 .. 20]);
   elif not IsPosInt(params[2]) then
     return "the third argument (degree or dimension) must be a pos int,";
@@ -989,14 +989,14 @@ SEMIGROUPS.DefaultRandomInverseSemigroup := function(filt, params)
                                               params[2]));
   elif Length(params) = 3 then
     return AsSemigroup(filt,
-                       params[3], # threshold
+                       params[3],  # threshold
                        RandomInverseSemigroup(IsPartialPermSemigroup,
                                               params[1],
                                               params[2]));
   elif Length(params) = 4 then
     return AsSemigroup(filt,
-                       params[3], # threshold
-                       params[4], # period
+                       params[3],  # threshold
+                       params[4],  # period
                        RandomInverseSemigroup(IsPartialPermSemigroup,
                                               params[1],
                                               params[2]));
@@ -1013,14 +1013,14 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
                                         params[2]));
   elif Length(params) = 3 then
     return AsMonoid(filt,
-                    params[3], # threshold
+                    params[3],  # threshold
                     RandomInverseMonoid(IsPartialPermMonoid,
                                         params[1],
                                         params[2]));
   elif Length(params) = 4 then
     return AsMonoid(filt,
-                    params[3], # threshold
-                    params[4], # period
+                    params[3],  # threshold
+                    params[4],  # period
                     RandomInverseMonoid(IsPartialPermMonoid,
                                         params[1],
                                         params[2]));

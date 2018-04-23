@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# CongUnivTest1: No zero, non-simple
+# CongUnivTest1: No zero, non-simple
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 7, 5]),
 >                    Transformation([5, 7, 1, 6, 1, 7, 6])]);;
 gap> uni := UniversalSemigroupCongruence(S);
@@ -29,7 +29,7 @@ gap> Size(part);
 gap> Set(part[1]) = Elements(S);
 true
 
-#T# CongUnivTest2: Has zero, not 0-simple
+# CongUnivTest2: Has zero, not 0-simple
 gap> S := Semigroup([Transformation([2, 4, 3, 5, 5, 7, 1]),
 >                      Transformation([6, 2, 3, 3, 1, 5])]);;
 gap> uni := UniversalSemigroupCongruence(S);;
@@ -38,7 +38,7 @@ gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# CongUnivTest3: Has zero, is 0-simple
+# CongUnivTest3: Has zero, is 0-simple
 gap> r := ReesZeroMatrixSemigroup(Group([(5, 6)]),
 > [[0, (), 0, 0, 0, 0, 0, 0, 0, (5, 6), 0, 0, (5, 6), (5, 6)],
 >   [(), 0, (), 0, (), (5, 6), 0, (5, 6), 0, 0, (5, 6), (5, 6), (5, 6), ()],
@@ -73,7 +73,7 @@ gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# CongUnivTest4: No zero, is simple
+# CongUnivTest4: No zero, is simple
 gap> S := Semigroup(
 > [Transformation([1, 1, 1, 1, 5, 1, 1]),
 >  Transformation([1, 5, 1, 1, 5, 1, 1]),
@@ -91,13 +91,13 @@ gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# EquivalenceRelationCanonicalLookup
+# EquivalenceRelationCanonicalLookup
 gap> S := FullTransformationMonoid(2);;
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> EquivalenceRelationCanonicalLookup(uni);
 [ 1, 1, 1, 1 ]
 
-#T# Equality checking
+# Equality checking
 gap> S := FullTransformationMonoid(2);;
 gap> T := Semigroup([Transformation([2, 3, 3])]);;
 gap> uniS := UniversalSemigroupCongruence(S);;
@@ -115,7 +115,7 @@ gap> cong := SemigroupCongruence(T, [Transformation([2, 3, 3]),
 gap> uniT = cong;
 true
 
-#T# Pair inclusion
+# Pair inclusion
 gap> S := Semigroup([Transformation([1, 4, 2, 4])]);;
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
@@ -132,7 +132,7 @@ gap> [Transformation([1, 4, 2, 4])] in uni;
 Error, Semigroups: \in (for a relation): usage,
 the first arg <pair> must be a list of length 2,
 
-#T# Classes
+# Classes
 gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),
 >                    PartialPerm([1, 2, 3], [1, 3, 4])]);
 <partial perm semigroup of rank 3 with 2 generators>
@@ -166,7 +166,7 @@ the args <c1> and <c2> must be over the same congruence,
 gap> Size(class);
 11
 
-#T# Meet and join
+# Meet and join
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 >                    Transformation([3, 1, 1, 3])]);;
 gap> T := Semigroup([Transformation([1, 2, 4, 1]),
@@ -215,7 +215,7 @@ gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 4, 1]),
 gap> cong = uni;
 true
 
-#T# GeneratingPairsOfSemigroupCongruence
+# GeneratingPairsOfSemigroupCongruence
 gap> S := Semigroup(IdentityTransformation);
 <trivial transformation group of degree 0 with 1 generator>
 gap> uni := UniversalSemigroupCongruence(S);;
@@ -243,7 +243,7 @@ gap> cong := SemigroupCongruenceByGeneratingPairs(S, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# IsUniversalSemigroupCongruence for a cong by generating pairs
+# IsUniversalSemigroupCongruence for a cong by generating pairs
 gap> S := Semigroup([PartialPerm([1], [2]),
 >                    PartialPerm([1, 2, 3], [2, 3, 1])]);;
 gap> cong := SemigroupCongruence(S, [PartialPerm([1], [1]),
@@ -255,7 +255,7 @@ gap> cong := SemigroupCongruence(S, [PartialPerm([1], [2]),
 gap> IsUniversalSemigroupCongruence(cong);
 false
 
-#T# IsUniversalSemigroupCongruence for an RMS congruence
+# IsUniversalSemigroupCongruence for an RMS congruence
 gap> S := ReesMatrixSemigroup(SymmetricGroup(4),
 >                             [[(), (), (), ()],
 >                              [(2, 4), (), (1, 3), ()],
@@ -271,7 +271,7 @@ gap> cong := RMSCongruenceByLinkedTriple(S, SymmetricGroup(4),
 gap> IsUniversalSemigroupCongruence(cong);
 true
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(badcong);
@@ -286,6 +286,6 @@ gap> Unbind(uni);
 gap> Unbind(uniS);
 gap> Unbind(uniT);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/conguniv.tst");

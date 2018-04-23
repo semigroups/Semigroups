@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# MatrixTest1: Create
+# MatrixTest1: Create
 gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
 > Z(2) * [[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 0, 0], [0, 0, 0, 1]]);
 Matrix(GF(2), [[Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2)], 
@@ -31,11 +31,11 @@ gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
 Error, Semigroups: NewMatrixOverFiniteField: usage,
 the entries of the matrix are not all in GF(2),
 
-#T# MatrixTest2: EvalPrintString
+# MatrixTest2: EvalPrintString
 gap> EvalString(String(M)) = M;
 true
 
-#T# MatrixTest3: IndexPeriodOfSemigroupElement
+# MatrixTest3: IndexPeriodOfSemigroupElement
 gap> M := Matrix(GF(3),
 > [[Z(3) ^ 0, 0 * Z(3), 0 * Z(3), 0 * Z(3), 0 * Z(3)],
 >  [Z(3) ^ 0, 0 * Z(3), 0 * Z(3), 0 * Z(3), 0 * Z(3)],
@@ -52,7 +52,7 @@ gap> M := Matrix(GF(2 ^ 2),
 gap> IndexPeriodOfSemigroupElement(M);
 [ 3, 3 ]
 
-#T# MatrixTest4: SmallestIdempotentPower
+# MatrixTest4: SmallestIdempotentPower
 gap> M := Matrix(GF(5),
 > [[Z(5) ^ 3, 0 * Z(5), Z(5) ^ 0],
 >  [Z(5) ^ 3, 0 * Z(5), 0 * Z(5)],
@@ -252,27 +252,27 @@ gap> IdentityMatrixOverFiniteField(Matrix(GF(17), []), 3);
 Matrix(GF(17), [[Z(17)^0, 0*Z(17), 0*Z(17)], [0*Z(17), Z(17)^0, 0*Z(17)], 
   [0*Z(17), 0*Z(17), Z(17)^0]])
 
-#T# Test Matrix, checker, 1/1
+# Test Matrix, checker, 1/1
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]);
 Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]])
 
-#T# Test One, 1/1
+# Test One, 1/1
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]);
 Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]])
 gap> One(mat);
 Matrix(GF(5), [[Z(5)^0, 0*Z(5)], [0*Z(5), Z(5)^0]])
 
-#T# Test RandomMatrix, 1/1
+# Test RandomMatrix, 1/1
 gap> mat := RandomMatrix(GF(5), 10);
 <10x10 finite field matrix>
 
-#T# Test \*, works, 1/3
+# Test \*, works, 1/3
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
 Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat ^ 2;
 Matrix(GF(5), [[Z(5)^0, 0*Z(5)], [0*Z(5), Z(5)^0]])
 
-#T# Test \*, wrong dims, 2/3
+# Test \*, wrong dims, 2/3
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
 Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(5), [[Z(5)]]);
@@ -281,7 +281,7 @@ gap> mat * mat2;
 Error, Semigroups: \* (for matrices over a finite field): usage,
 the degree or domain of the arguments do not match,
 
-#T# Test \*, wrong base field, 3/3
+# Test \*, wrong base field, 3/3
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
 Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(7), [[0 * Z(7), Z(7) ^ 3], [Z(7), 0 * Z(7)]]);
@@ -290,7 +290,7 @@ gap> mat * mat2;
 Error, Semigroups: \* (for matrices over a finite field): usage,
 the degree or domain of the arguments do not match,
 
-#T# Test Display, 1/1
+# Test Display, 1/1
 gap> mat := Matrix(GF(11), [[Z(11) ^ 9, 0 * Z(11), Z(11), Z(11) ^ 9, 0 * Z(11)],
 >   [Z(11) ^ 3, Z(11) ^ 4, 0 * Z(11), Z(11) ^ 2, Z(11) ^ 7],
 >   [Z(11) ^ 9, Z(11) ^ 3, Z(11) ^ 5, Z(11) ^ 4, Z(11) ^ 4],
@@ -421,9 +421,9 @@ gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(11), [])), true);;
 gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(7), [])), true);;
 gap> HTAdd(ht, RowSpaceBasis(x), true);;
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/ffmat.tst");

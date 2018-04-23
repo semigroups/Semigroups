@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semigraph.gi
-#Y  Copyright (C) 2014-15                 Zak Mesyan and James D. Mitchell
+##  semigraph.gi
+##  Copyright (C) 2014-15                 Zak Mesyan and James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -221,11 +221,10 @@ end);
 InstallMethod(\*, "for elements of a graph inverse semigroup",
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
 function(x, y)
-  local type, graph, nredges, range, source, xobj, yobj, i, j;
+  local type, graph, range, source, xobj, yobj, i, j;
 
   type := FamilyObj(x)!.type;
   graph := x![2];
-  nredges := Length(DigraphSource(graph));
   range := DigraphRange(graph);
   source := DigraphSource(graph);
 
@@ -288,7 +287,7 @@ function(x, y)
     return Objectify(type, [y{[i + 1 .. Length(y)]}, graph]);
   elif j > 1 then
     return Objectify(type, [x{[1 .. j - 1]}, graph]);
-  else #x = y ^ -1
+  else  # x = y ^ -1
     return Range(yobj);
   fi;
 end);

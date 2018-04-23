@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  gracreg.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  gracreg.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -350,13 +350,12 @@ end);
 InstallMethod(NrIdempotents, "for a regular acting *-semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup],
 function(S)
-  local nr, tester, o, scc, lookup, vals, x, i, j, k;
+  local nr, tester, o, scc, vals, x, i, j, k;
 
   nr     := 0;
   tester := IdempotentTester(S);
   o      := Enumerate(LambdaOrb(S));
   scc    := OrbSCC(o);
-  lookup := OrbSCCLookup(o);
 
   for i in [2 .. Length(scc)] do
     vals := scc[i];
@@ -383,7 +382,7 @@ function(S)
   TryNextMethod();
 end);
 
-#TODO other methods for this!
+# TODO other methods for this!
 
 InstallMethod(NrIdempotentsByRank,
 "for a regular star bipartition acting semigroup",

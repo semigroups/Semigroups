@@ -1685,7 +1685,7 @@ gap> GreensJClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `GreensJClasses' on 1 arguments
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);
 gap> Unbind(DDD);
@@ -1701,6 +1701,6 @@ gap> Unbind(S);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gren.tst");

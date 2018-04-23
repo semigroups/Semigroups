@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  factor.gi
-#Y  Copyright (C) 2013-17                                James D. Mitchell
+##  factor.gi
+##  Copyright (C) 2013-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -282,10 +282,10 @@ InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
 function(data, pos)
   local word1, word2, schreiergen, schreierpos, schreiermult, orb;
 
-  word1 := []; # the word obtained by tracing schreierpos and schreiergen
-               # (left multiplication)
-  word2 := []; # the word corresponding to multipliers applied (if any)
-               # (right multiplication)
+  word1 := [];  # the word obtained by tracing schreierpos and schreiergen
+                # (left multiplication)
+  word2 := [];  # the word corresponding to multipliers applied (if any)
+                # (right multiplication)
 
   schreiergen := data!.schreiergen;
   schreierpos := data!.schreierpos;
@@ -317,7 +317,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       # avoid re-hashing x
       return EN_SEMI_FACTORIZATION(S, pos);
@@ -330,12 +330,12 @@ function(S, x)
   scc := OrbSCC(o)[m];
 
   data := SemigroupData(S);
-  pos := Position(data, x);                     #not <fail> since <f> in <s>
-  rep := data[pos][4];                          #rep of R-class of <f>
+  pos := Position(data, x);                     # Not <fail> since <f> in <s>
+  rep := data[pos][4];                          # rep of R-class of <f>
 
-  word1 := TraceSchreierTreeForward(data, pos); #a word equal to <rep>
+  word1 := TraceSchreierTreeForward(data, pos);  # A word equal to <rep>
 
-  # compensate for the action of the multipliers, if necessary
+  # Compensate for the action of the multipliers, if necessary
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
     p := LambdaPerm(S)(rep, x *
@@ -346,7 +346,8 @@ function(S, x)
     p := LambdaPerm(S)(rep, x);
   fi;
 
-  if IsOne(p) then #no need to factorise <p>
+  if IsOne(p) then
+    # No need to factorise <p>
     Append(word1, word2);
     return word1;
   fi;
@@ -370,7 +371,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
@@ -429,7 +430,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any
+    pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
@@ -441,9 +442,10 @@ function(S, x)
   l := Position(o, RhoFunc(S)(x));
 
   # find the R-class rep
-  word1 := TraceSchreierTreeBack(o, l);    #rho value is ok
-  #trace back to get forward since this is a left orbit
-  rep := EvaluateWord(gens, word1);        #but lambda value is wrong
+  word1 := TraceSchreierTreeBack(o, l);
+  # rho value is ok but lambda value is wrong
+  # trace back to get forward since this is a left orbit
+  rep := EvaluateWord(gens, word1);
 
   o := LambdaOrb(S);
   Enumerate(o);
@@ -453,11 +455,10 @@ function(S, x)
 
   k := Position(o, LambdaFunc(S)(rep));
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
-  rep := rep * EvaluateWord(gens, word2);
-  #the R-class rep of the R-class of <f>
-  Append(word1, word2);               #and this word equals <rep>
+  rep := rep * EvaluateWord(gens, word2);  # the R-class rep of the R-class of f
+  Append(word1, word2);                    # and this word equals rep
 
-  #compensate for the action of the multipliers
+  # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
     p := LambdaPerm(S)(rep, x *

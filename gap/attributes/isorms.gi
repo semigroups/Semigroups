@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  isorms.gi
-#Y  Copyright (C) 2014-17                                James D. Mitchell
+##  isorms.gi
+##  Copyright (C) 2014-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -207,16 +207,15 @@ SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
   return out;
 end;
 
-#TODO the next function should be combined with the previous one.
+# TODO the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
-  local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
+  local mat1, mat2, m, rmsgraph, components, reps, imagelist, edges,
   bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
 
   mat1 := Matrix(rms1);
   mat2 := Matrix(rms2);
   m := Length(mat1[1]);
-  n := Length(mat1);
   rmsgraph := RZMSDigraph(rms1);
   components := DigraphConnectedComponents(rmsgraph).comps;
 
@@ -295,7 +294,7 @@ function(R)
 
   if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
           and IsZeroSimpleSemigroup(R)) then
-    TryNextMethod(); #TODO write such a method
+    TryNextMethod();  # TODO write such a method
   fi;
 
   m := Length(Rows(R));
@@ -312,7 +311,7 @@ function(R)
   fi;
 
   SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph); # for genss
+  Size(aut_graph);  # for genss
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -411,15 +410,16 @@ function(R)
 
   ##########################################################################
 
-  if U <> V then # some search required
+  if U <> V then  # some search required
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
          Size(V), " . . . ");
     BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
                                            tester,
                                            ReturnTrue);
                                            # FIXME the pruner prunes too much!
-                                           #SEMIGROUPS.RMSIsoPruner(U, V));
-  else # U = V
+                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+  else
+    # U = V
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -473,7 +473,7 @@ function(R)
   G := UnderlyingSemigroup(R);
   if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
           and IsSimpleSemigroup(R)) then
-    TryNextMethod(); #TODO write such a method
+    TryNextMethod();  # TODO write such a method
   fi;
 
   m := Length(Rows(R));
@@ -506,7 +506,7 @@ function(R)
   fi;
 
   SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph); # for genss
+  Size(aut_graph);  # for genss
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -588,8 +588,8 @@ function(R)
                                            tester,
                                            ReturnTrue);
                                            # FIXME the pruner prunes too much!
-                                           #SEMIGROUPS.RMSIsoPruner(U, V));
-  else # U = V
+                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+  else  # U = V
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -634,7 +634,7 @@ InstallMethod(IsomorphismPermGroup,
 function(G)
   local R, H, iso, x;
 
-  R := Source(Representative(G)); # the Rees (0-)matrix semigroup
+  R := Source(Representative(G));  # the Rees (0-)matrix semigroup
   H := [];
   for x in GeneratorsOfGroup(G) do
     Add(H, Permutation(x, R, POW));
@@ -686,10 +686,10 @@ InstallMethod(IsomorphismSemigroups,
 [IsReesMatrixSemigroup and IsWholeFamily and IsFinite,
  IsReesMatrixSemigroup and IsWholeFamily and IsFinite],
 (RankFilter(IsSimpleSemigroup and IsFinite) - RankFilter(IsReesMatrixSemigroup
-and IsWholeFamily and IsFinite)) + 10, # to beat IsSimpleSemigroup and IsFinite
+and IsWholeFamily and IsFinite)) + 10,  # to beat IsSimpleSemigroup and IsFinite
 function(S, T)
-  local G, H, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n, f,
-  isograph, isogroup, RMSInducedFunction, map, l, g, tup;
+  local G, H, mat, m, n, f, isograph, isogroup, RMSInducedFunction, map, l, g,
+        tup;
 
   G := UnderlyingSemigroup(S);
   H := UnderlyingSemigroup(T);
@@ -725,10 +725,10 @@ function(S, T)
   # being complete bipartite.
 
   isograph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
-  #all isomorphisms from g1 to g2
+  # all isomorphisms from g1 to g2
   isogroup := List(Elements(AutomorphismGroup(G)), x -> x * f);
 
-  #find an induced function, if there is one
+  # find an induced function, if there is one
   RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
   for l in isograph do
     for g in isogroup do
@@ -748,9 +748,8 @@ InstallMethod(IsomorphismSemigroups,
 [IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite,
  IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite],
 function(S, T)
-  local G, H, func, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n,
-  f, groupiso, grS, grT, g, graphiso, tuples, RZMStoRZMSInducedFunction, map, l,
-  tup;
+  local G, H, mat, m, n, f, groupiso, grS, grT, g, graphiso, tuples,
+        RZMStoRZMSInducedFunction, map, l, tup;
 
   G := UnderlyingSemigroup(S);
   H := UnderlyingSemigroup(T);
@@ -800,11 +799,12 @@ function(S, T)
   tuples := EnumeratorOfCartesianProduct(
               List([1 .. Length(DigraphConnectedComponents(grS).comps)],
                    x -> H));
-  #find an induced function, if there is one
+  # find an induced function, if there is one
   RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
   for l in graphiso do
     for g in groupiso do
-      for tup in tuples do #TODO it should be possible to cut this down
+      for tup in tuples do
+        # TODO it should be possible to cut this down
         map := RZMStoRZMSInducedFunction(S, T, l, g, tup);
         if map <> fail then
           return RZMSIsoByTripleNC(S, T, [l, g, map]);

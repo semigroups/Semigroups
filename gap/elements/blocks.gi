@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  blocks.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  blocks.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -62,7 +62,7 @@ function(blocks)
   out := List([1 .. DegreeOfBlocks(blocks)], x -> []);
 
   for block in ext do
-    if block[1] > 0 then # transverse block
+    if block[1] > 0 then  # transverse block
       for i in block do
         out[i] := ShallowCopy(block);
         RemoveSet(out[i], i);

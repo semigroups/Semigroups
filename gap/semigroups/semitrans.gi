@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  semitrans.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  semitrans.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -341,7 +341,7 @@ function(S, T)
   if IsDoneIterator(SS) and IsDoneIterator(TT) then
     # This line is executed by the tests but does not show as such in the code
     # coverage.
-    return false; # S = T
+    return false;  # S = T
   fi;
   return IsDoneIterator(SS);
 end);
@@ -406,9 +406,8 @@ InstallMethod(IsTransitive,
 "for a transformation collection and a positive int",
 [IsTransformationCollection, IsPosInt],
 function(coll, n)
-  local nrgens, graph, i, x;
+  local graph, i, x;
 
-  nrgens := Length(coll);
   graph := EmptyPlist(n);
 
   for i in [1 .. n] do
@@ -449,7 +448,7 @@ function(coll, set)
     graph[i] := EmptyPlist(nrgens);
     for x in coll do
       j := set[i] ^ x;
-      if IsBound(lookup[j]) then # <j> is in <set>!
+      if IsBound(lookup[j]) then  # <j> is in <set>!
         Add(graph[i], lookup[set[i] ^ x]);
       fi;
     od;
@@ -515,7 +514,7 @@ function(S, n)
     fi;
   od;
   if all_perms then
-    return false; # S = <gens> is a group of transformations
+    return false;  # S = <gens> is a group of transformations
   fi;
 
   gr := DigraphOfActionOnPairs(S);
@@ -565,8 +564,8 @@ function(S)
   local n, gens, nrgens, min_rank, rank, min_rank_index, gr, inn, elts, marked,
   squashed, j, t, im, NumberPair, reduced, y, i, k, x;
 
-  n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
-                                           # We must have n >= 2.
+  n := DegreeOfTransformationSemigroup(S);  # Smallest n such that S <= T_n
+                                            # We must have n >= 2.
   gens := GeneratorsOfSemigroup(S);
   nrgens := Length(gens);
   # Find the minimum rank of a generator
@@ -659,8 +658,8 @@ InstallMethod(WreathProduct,
 "for a transformation monoid and a transformation semigroup",
 [IsTransformationMonoid, IsTransformationSemigroup],
 function(M, S)
-  local maps, newmap, gensM, gensS, next, reps, orbs, gen1, n, i, s, x, m, y,
-        rimage;
+  local m, gensM, gensS, orbs, n, rimage, maps, next, gen1, newmap, x, y, s, i;
+
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
                   "the second argument <S> should be a monoid (as semigroup),");
@@ -681,7 +680,7 @@ function(M, S)
     od;
   od;
 
-  maps := []; # final generating set for the wreath product
+  maps := [];  # final generating set for the wreath product
 
   # move copies of M as by the action induced by S
   next := [1 .. m * n];
@@ -769,7 +768,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
@@ -805,7 +804,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 

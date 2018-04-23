@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# SimpleCongTest2: Find all congruences of a simple semigroup
+# SimpleCongTest2: Find all congruences of a simple semigroup
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -52,7 +52,7 @@ gap> congs[j];
 gap> IsSubrelation(congs[i], congs[j]);
 false
 
-#T# SimpleCongTest3: Construct a congruence by generating pairs
+# SimpleCongTest3: Construct a congruence by generating pairs
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -86,7 +86,7 @@ false
 gap> EquivalenceRelationCanonicalLookup(cong1);
 [ 1, 2, 2, 3, 1, 3, 3, 4, 4, 1, 4, 2, 4, 2, 1, 3 ]
 
-#T# SimpleCongTest4: Testing membership in a congruence
+# SimpleCongTest4: Testing membership in a congruence
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -115,7 +115,7 @@ Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 
-#T# SimpleCongTest5: Congruence classes
+# SimpleCongTest5: Congruence classes
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -170,7 +170,7 @@ gap> Size(classx);
 gap> CanonicalRepresentative(classx);
 Transformation( [ 1, 2, 2, 1, 2 ] )
 
-#T# SimpleCongTest6: Join and meet congruences
+# SimpleCongTest6: Join and meet congruences
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -237,7 +237,7 @@ true
 gap> JoinSemigroupCongruences(congs[8], congs[8]) = congs[8];
 true
 
-#T# SimpleCongTest7: Quotients
+# SimpleCongTest7: Quotients
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
@@ -250,7 +250,7 @@ gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1, 2, 2]),
  4 generators> with linked triple (2,3,2)>
 gap> q := S / cong;;
 
-#T# SimpleCongTest8
+# SimpleCongTest8
 # Convert to and from semigroup congruence by generating pairs
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
@@ -261,7 +261,7 @@ gap> ForAll(congs, cong ->
 > cong = SemigroupCongruence(S, GeneratingPairsOfSemigroupCongruence(cong)));
 true
 
-#T# SimpleCongTest9: The universal congruence
+# SimpleCongTest9: The universal congruence
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> IsZeroSimpleSemigroup(S);
@@ -270,7 +270,7 @@ gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of rank 2 with 2 generators>>
 
-#T# Test with a 0-simple semigroup
+# Test with a 0-simple semigroup
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsRegularSemigroup(S);
 true
@@ -282,7 +282,7 @@ gap> congs := CongruencesOfSemigroup(S);
 gap> Size(congs);
 2
 
-#T# Join/Meet: bad input
+# Join/Meet: bad input
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsZeroSimpleSemigroup(S);
 true
@@ -311,7 +311,7 @@ gap> JoinSemigroupCongruences(cong1, cong2);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
-#T# not simple or 0-simple: try next method
+# not simple or 0-simple: try next method
 gap> S := OrderEndomorphisms(2);;
 gap> IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S);
 false
@@ -319,7 +319,7 @@ gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
 3
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(classes);
@@ -343,6 +343,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congsimple.tst");

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  elements.gi
-#Y  Copyright (C) 2016                                      Wilf A. Wilson
+##  elements.gi
+##  Copyright (C) 2016                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,7 +15,7 @@ SEMIGROUPS.IndexPeriodByRank := function(x, rank)
   p := 1;
   s := x ^ 2;
   rank_s := rank(s);
-  powers := [x, s]; # powers[i] = x ^ (2 ^ (i - 1)), e.g. powers[5] = x ^ 16.
+  powers := [x, s];  # powers[i] = x ^ (2 ^ (i - 1)), e.g. powers[5] = x ^ 16.
 
   # Locate the index between its closest powers of 2
   while rank_s <= k - (2 ^ (p - 1)) do
@@ -39,7 +39,7 @@ SEMIGROUPS.IndexPeriodByRank := function(x, rank)
     fi;
     # (2 ^ lower) < index of x <= (2 ^ (lower + 1))
 
-    index := (2 ^ lower) + 1; # index is always a lower bound for the true index
+    index := (2 ^ lower) + 1;  # index is always a lower bound for the true index
     next := lower;
     lower := powers[lower + 1];
 

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  semicons.gi
-#Y  Copyright (C) 2015                                   James D. Mitchell
+##  semicons.gi
+##  Copyright (C) 2015                                   James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -105,8 +105,6 @@ for _IsXSemigroup in ["IsFpSemigroup",
   Concatenation("for ", _IsXSemigroup, " and an integer"),
   [ValueGlobal(_IsXSemigroup), IsInt],
   function(filter, deg)
-    local n;
-    n := Maximum(deg, 1);
     return AsSemigroup(filter,
                        TrivialSemigroupCons(IsTransformationSemigroup, deg));
   end);
@@ -165,7 +163,7 @@ function(filter, m, r)
   t := [1 .. r] + 1;
   t[r] := 1;
 
-  if not m = 1 then # m = 1 specifies a cyclic group
+  if not m = 1 then  # m = 1 specifies a cyclic group
     Append(t, [1 .. m] + r - 1);
   fi;
 
@@ -303,7 +301,7 @@ InstallMethod(RectangularBandCons,
 "for a filter and a positive integer and positive integer",
 [IsTransformationSemigroup, IsPosInt, IsPosInt],
 function(filter, m, n)
-  local L, R, div, deg, gen, gens, min, out, i;
+  local L, R, div, gen, gens, min, out, i;
 
   if m = 1 then
     return RightZeroSemigroup(filter, n);
@@ -318,7 +316,6 @@ function(filter, m, n)
   L := LeftZeroSemigroup(filter, m);
   R := RightZeroSemigroup(filter, n);
   div := DegreeOfTransformationSemigroup(L);
-  deg := div + DegreeOfTransformationSemigroup(R);
 
   gen := function(l, r)
     return Transformation(Concatenation(ListTransformation(L.(l), div),
@@ -328,15 +325,15 @@ function(filter, m, n)
   gens := [];
   min := Minimum(m, n);
 
-  for i in [1 .. min] do # 'diagonal' generators
+  for i in [1 .. min] do  # 'diagonal' generators
     Add(gens, gen(i, i));
   od;
 
-  for i in [min + 1 .. n] do # additional generators when n > m
+  for i in [min + 1 .. n] do  # additional generators when n > m
     Add(gens, gen(1, i));
   od;
 
-  for i in [min + 1 .. m] do # additional generators when n < m
+  for i in [min + 1 .. m] do  # additional generators when n < m
     Add(gens, gen(i, 1));
   od;
 
@@ -481,7 +478,7 @@ function(filter, n)
   gens := [];
   im   := [1 .. R] * 0 + 1;
   iter := IteratorOfTuples([1 .. R], deg - R);
-  NextIterator(iter); # skip the zero
+  NextIterator(iter);  # skip the zero
 
   for i in [1 .. n - 1] do
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));

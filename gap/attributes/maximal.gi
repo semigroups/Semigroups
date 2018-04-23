@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  maximal.gi
-#Y  Copyright (C) 2013-16                                James D. Mitchell
+##  maximal.gi
+##  Copyright (C) 2013-16                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -185,7 +185,7 @@ function(R, opts)
     TryNextMethod();
   fi;
 
-  opts := ShallowCopy(opts); # in case <opts> is immutable
+  opts := ShallowCopy(opts);  # in case <opts> is immutable
 
   # Bind default options
   if not IsBound(opts.number) then
@@ -299,16 +299,16 @@ function(R, opts)
                             "arising from maximal subgroups...");
     subgroups := [];
     if not IsTrivial(G) then
-      iso := RMSNormalization(R);             # The normalization of R
-      inv := InverseGeneralMapping(iso);      # The normalization inverse
-      R_n := Range(iso);                      # R (normalized)
-      G_k := ShallowCopy(MatrixEntries(R_n)); # Gens of the idempotent group
+      iso := RMSNormalization(R);              # The normalization of R
+      inv := InverseGeneralMapping(iso);       # The normalization inverse
+      R_n := Range(iso);                       # R (normalized)
+      G_k := ShallowCopy(MatrixEntries(R_n));  # Gens of the idempotent group
 
       if IsGroup(G) then
         iso_p := IdentityMapping(G);
         inv_p := iso_p;
         invert := InverseOp;
-      else # We need to use methods that apply only to IsGroup, e.g. Normalizer
+      else  # We need to use methods that apply only to IsGroup, e.g. Normalizer
         iso_p := IsomorphismPermGroup(G);
         inv_p := InverseGeneralMapping(iso_p);
         invert := x -> ((x ^ iso_p) ^ -1) ^ inv_p;
@@ -326,7 +326,7 @@ function(R, opts)
         AddSet(G_k, t);
       od;
 
-      if Size(x) < Size(G) then # Otherwise there are no results
+      if Size(x) < Size(G) then  # Otherwise there are no results
         for H in MaximalSubgroupClassReps(G) do
           trans := RightTransversal(G, Normalizer(G, H));
           for t in trans do
@@ -403,7 +403,7 @@ function(R, opts)
 
   zero := MultiplicativeZero(R);
 
-  opts := ShallowCopy(opts); # in case <opts> is immutable
+  opts := ShallowCopy(opts);  # in case <opts> is immutable
 
   # Bind default options
   if not IsBound(opts.number) then
@@ -492,7 +492,7 @@ function(R, opts)
       if not opts.number then
         if opts.gens then
           x := ShallowCopy(GeneratorsOfSemigroup(R));
-          pos := Position(x, zero); # The 0 of <R> is necessarily contained in x
+          pos := Position(x, zero);  # The 0 of <R> is necessarily contained in x
           Remove(x, pos);
         else
           x := ReesZeroMatrixSubsemigroupNC(R, rows, G, cols);
@@ -561,11 +561,11 @@ function(R, opts)
           l := l + 1;
           if deg[l + I] < I then
             x := x + 1;
-            r := cols[l]; # Col <l> corresponds to a row of <mat> with 0's
+            r := cols[l];  # Col <l> corresponds to a row of <mat> with 0's
           fi;
         od;
         if x >= 2 then
-          r := infinity; # At least 2 cols correspond to rows of <mat> with 0s
+          r := infinity;  # At least 2 cols correspond to rows of <mat> with 0s
         fi;
 
         # Remove each possible col in turn...
@@ -574,7 +574,7 @@ function(R, opts)
           x := ReesZeroMatrixSubsemigroupNC(R, rows, G, x);
           if opts.gens then
             x := ShallowCopy(GeneratorsOfSemigroup(x));
-            if opts.zero and (r = 0 or r = l) then # 0 is necessarily a gen.
+            if opts.zero and (r = 0 or r = l) then  # 0 is necessarily a gen.
               Add(x, zero);
             fi;
           else
@@ -640,10 +640,10 @@ function(R, opts)
           i := i + 1;
           if deg[i] < L then
             x := x + 1;
-            r := rows[i]; # Row <i> corresponds to a column of <mat> with 0's
+            r := rows[i];  # Row <i> corresponds to a column of <mat> with 0's
           fi;
         od;
-        if x >= 2 then # At least 2 rows correspond to cols of <mat> with 0's
+        if x >= 2 then  # At least 2 rows correspond to cols of <mat> with 0's
           r := infinity;
         fi;
 
@@ -653,7 +653,7 @@ function(R, opts)
           x := ReesZeroMatrixSubsemigroupNC(R, x, G, cols);
           if opts.gens then
             x := ShallowCopy(GeneratorsOfSemigroup(x));
-            if opts.zero and (r = 0 or r = i) then # 0 must be a gen.
+            if opts.zero and (r = 0 or r = i) then  # 0 must be a gen.
               Add(x, zero);
             fi;
           else
@@ -743,8 +743,8 @@ function(R, opts)
                                         l -> RMSElement(R, i, one, l)));
 
         for x in rectangles do
-          r := x[1]; # the maximal independent set
-          b := x[2]; # a blist representing the maximal independent set
+          r := x[1];  # the maximal independent set
+          b := x[2];  # a blist representing the maximal independent set
 
           # Add generators for two group H-classes (in appropriate locations)
           i1 := First(r, x -> x <= I);
@@ -765,7 +765,7 @@ function(R, opts)
 
           # Add a generator to every row
           for i in Difference([1 .. I], [i1, i2]) do
-            if b[i] then # <b> needs to be indexed differently
+            if b[i] then  # <b> needs to be indexed differently
               Add(x, reps[i][l1]);
             else
               Add(x, reps[i][l2]);
@@ -815,7 +815,7 @@ function(R, opts)
           fi;
 
           if not opts.gens then
-            x := Semigroup(x); # <new> is guaranteed to generate the <0>.
+            x := Semigroup(x);  # <new> is guaranteed to generate the <0>.
           fi;
           Add(out, x);
         od;
@@ -836,15 +836,15 @@ function(R, opts)
     fi;
 
     if not failed then
-      iso := RZMSNormalization(R);       # The normalization of R
-      inv := InverseGeneralMapping(iso); # The normalization inverse
-      R_n := Range(iso);                 # R (normalized)
-      mat := Matrix(R_n);                # Normalized matrix
+      iso := RZMSNormalization(R);        # The normalization of R
+      inv := InverseGeneralMapping(iso);  # The normalization inverse
+      R_n := Range(iso);                  # R (normalized)
+      mat := Matrix(R_n);                 # Normalized matrix
 
       if IsGroup(G) then
         iso_p := IdentityMapping(G);
         inv_p := iso_p;
-      else # We need to use methods that apply only to IsGroup, e.g. Normalizer
+      else  # We need to use methods that apply only to IsGroup, e.g. Normalizer
         iso_p := IsomorphismPermGroup(G);
         inv_p := InverseGeneralMapping(iso_p);
         G := Range(iso_p);
@@ -857,10 +857,11 @@ function(R, opts)
       n := Length(ccs);
       Info(InfoSemigroups, 2, "...the Graham-Houghton graph has ", n, " ",
                               "connected component(s).");
-      I := EmptyPlist(n); # I[k] = list of rows in the k^th connected component
-      L := EmptyPlist(n); # L[k] = list of cols in the k^th connected component
-      comp_row := EmptyPlist(Length(Rows(R_n)));    # row -> connected component
-      comp_col := EmptyPlist(Length(Columns(R_n))); # col -> connected component
+      I := EmptyPlist(n);  # I[k] = list of rows in the k^th connected component
+      L := EmptyPlist(n);  # L[k] = list of cols in the k^th connected component
+
+      comp_row := EmptyPlist(Length(Rows(R_n)));     # row -> connected component
+      comp_col := EmptyPlist(Length(Columns(R_n)));  # col -> connected component
       for k in [1 .. n] do
         comp := ccs[k][1];
         I[k] := comp[1];
@@ -897,9 +898,8 @@ function(R, opts)
         nbs[a][b] := true;
         nbs[b][a] := true;
       od;
-
       # There is roughly 1 'degree of freedom' per connected component of <dig>
-      dig := DigraphByAdjacencyMatrixNC(nbs); # <dig> is graph defined by <nbs>
+      dig := DigraphByAdjacencyMatrixNC(nbs);  # <dig> is graph defined by <nbs>
       sup := DigraphConnectedComponents(dig).comps;
       m := Length(sup);
 
@@ -917,13 +917,13 @@ function(R, opts)
           Remove(P[k], pos);
         fi;
         P[k] := List(P[k], x -> x ^ iso_p);
-        if Size(Group(P[k])) = Size(G) then # If <P[k]> generates <G>
+        if Size(Group(P[k])) = Size(G) then  # If <P[k]> generates <G>
           failed := true;
           break;
         fi;
         pos := Position(P[k], one);
         if pos <> fail then
-          Remove(P[k], pos); # remove the identity from the generating set
+          Remove(P[k], pos);  # remove the identity from the generating set
         fi;
       od;
     fi;
@@ -957,7 +957,7 @@ function(R, opts)
         V := max[i];
 
         if Size(V) < lim then
-          continue; # <V> is not big enough to contain every set <con[k][l]>
+          continue;  # <V> is not big enough to contain every set <con[k][l]>
         fi;
 
         normal := IsNormal(G, V);
@@ -966,7 +966,7 @@ function(R, opts)
         # Check that the 1st cc of each super-comp <j> contains group <P[j]>
         for j in [1 .. m] do
           comp := sup[j];
-          r := comp[1]; # <r> is the least cc of the super-component
+          r := comp[1];  # <r> is the least cc of the super-component
           len := Length(comp);
 
           Assert(0, j <> 1 or r = 1, "1st elt of 1st super-comp must be 1,");
@@ -1043,7 +1043,7 @@ function(R, opts)
           od;
 
           if IsEmpty(results[i][j]) then
-            break; # No results arise from <V[i]> because of super-comp <j>.
+            break;  # No results arise from <V[i]> because of super-comp <j>.
           fi;
         od;
         count := count + Product(List(results[i], Length));
@@ -1138,8 +1138,8 @@ InstallMethod(MaximalSubsemigroupsNC,
 function(S, opts)
   local tot, out, try, gen, D, class_gen, reps, po, below, above, vertex_class,
   x, create_ideal, contain, ideal, inj, inv, R, M, num, num_start, gen_class,
-  above_gen, above_semigroup, outside_gens, to_test, L, LL, RR, m, n, gamma_L,
-  gamma_R, y, comp_L, comp_R, red_L, red_R, k, gamma, red, comp, delta,
+  above_gen, above_semigroup, outside_gens, L, LL, RR, m, n, gamma_L,
+  gamma_R, y, comp_L, comp_R, red_L, red_R, k, gamma, comp, delta,
   label, nredges, delta_prime, l, r, forbidden_L, forbidden_R, rectangles, min,
   bicomp_L, bicomp_R, b, source_L, source_R, L_in, L_out, R_in, R_out,
   L_out_source, R_out_source, L_in_source, R_in_source, found, v, u, H, remove,
@@ -1149,7 +1149,7 @@ function(S, opts)
     TryNextMethod();
   fi;
 
-  opts := ShallowCopy(opts); # in case <opts> is immutable
+  opts := ShallowCopy(opts);  # in case <opts> is immutable
 
   # Bind default options
   if not IsBound(opts.number) then
@@ -1159,7 +1159,7 @@ function(S, opts)
     opts.gens := false;
   fi;
   if IsBound(opts.contain) then
-    opts.contain := ShallowCopy(opts.contain); # assume duplicate-free
+    opts.contain := ShallowCopy(opts.contain);  # assume duplicate-free
   else
     opts.contain := [];
   fi;
@@ -1235,7 +1235,7 @@ function(S, opts)
   # once. And then check to actually see if it is necessary to re-compute ideal
   # Can possibly use <below> to help do this?
 
-  for i in try do # The D-classes to contain are those indexed by <try>
+  for i in try do  # The D-classes to contain are those indexed by <try>
     Unbind(ideal);
 
     ############################################################################
@@ -1268,10 +1268,10 @@ function(S, opts)
         fi;
       fi;
 
-      if IsTrivial(D[i]) then # trivial D-classes include all non-regular ones.
+      if IsTrivial(D[i]) then  # trivial D-classes include all non-regular ones.
         tot := tot + 1;
         if not opts.number then
-          Add(out, ideal); # <ideal> is already in the correct form
+          Add(out, ideal);  # <ideal> is already in the correct form
         fi;
         Info(InfoSemigroups, 1, "* found 1 maximal subsemigroup arising from ",
                                 "D[", i, "], formed by removing it.");
@@ -1499,9 +1499,6 @@ function(S, opts)
     SetIsSymmetricDigraph(delta_prime, true);
     SetDigraphNrEdges(delta_prime, nredges * 2);
     SetDigraphBicomponents(delta_prime, [[1 .. m], [m + 1 .. m + n]]);
-
-    # Colour the vertices of gamma_L and gamma_R
-    red := Concatenation(red_L, red_R);
 
     ############################################################################
     # Find maximal subsemigroups from maximal rectangles

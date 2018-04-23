@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congrees.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  congruences/congrees.gi
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,7 +14,7 @@
 InstallMethod(IsReesCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-1, # Prioritise this function over the one in the library
+1,  # Prioritise this function over the one in the library
 function(cong)
   local S, classes, nontrivial, i, class, ideal;
   # This function is adapted from code in the library
@@ -57,7 +57,7 @@ end);
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
-1, # Prioritise this function over the one in the library
+1,  # Prioritise this function over the one in the library
 function(I)
   local S, fam, type, cong;
   S := Parent(I);
@@ -163,13 +163,6 @@ function(c1, c2)
   I := SemigroupIdeal(Range(c1), MinimalIdealGeneratingSet(I));
   return ReesCongruenceOfSemigroupIdeal(I);
 end);
-
-#InstallMethod(MeetSemigroupCongruences,
-#"for two Rees congruences",
-#[IsReesCongruence, IsReesCongruence],
-#function(c1, c2)
-#
-#end);
 
 InstallMethod(EquivalenceClasses,
 "for a Rees congruence",
@@ -293,11 +286,10 @@ InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for a Rees congruence",
 [IsReesCongruence],
 function(cong)
-  local S, gens, min, nrclasses, pairs, y, x;
+  local S, gens, min, pairs, y, x;
   S := Range(cong);
   gens := MinimalIdealGeneratingSet(SemigroupIdealOfReesCongruence(cong));
   min := MinimalIdeal(S);
-  nrclasses := NrEquivalenceClasses(cong);
   pairs := [];
   cong := SemigroupCongruence(S, pairs);
   for y in min do

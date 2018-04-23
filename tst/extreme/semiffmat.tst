@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# MatrixSemigroupTest1: Create and Size
+# MatrixSemigroupTest1: Create and Size
 gap> M := Matrix(GF(2),
 > [[0 * Z(2), Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0,
 >   Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0, 0 * Z(2), 0 * Z(2),
@@ -84,7 +84,7 @@ true
 gap> NrIdempotents(S) = NrIdempotents(T);
 true
 
-#T# MatrixSemigroupTest2: Create and Size
+# MatrixSemigroupTest2: Create and Size
 gap> S := Semigroup(
 > [Matrix(GF(3),
 > [[Z(3), Z(3), Z(3) ^ 0, Z(3), Z(3) ^ 0],
@@ -109,7 +109,7 @@ gap> S := Semigroup(GeneratorsOfSemigroup(S));
 gap> PartialOrderOfDClasses(S);
 [ [ 1, 2 ], [ 2, 5 ], [ 3 ], [ 3, 4 ], [ 4, 5 ] ]
 
-#T# MatrixSemigroupTest3: Create, Size, MinimalIdeal
+# MatrixSemigroupTest3: Create, Size, MinimalIdeal
 gap> S := Semigroup(
 > [Matrix(GF(3),
 >    [[Z(3), Z(3), Z(3) ^ 0],
@@ -139,7 +139,7 @@ gap> List(M, Size);
 gap> List(M, U -> IsMaximalSubsemigroup(S, U));
 [ true, true ]
 
-#T# MatrixSemigroups3: Upper triangular matrices, SubsemigroupByProperty
+# MatrixSemigroups3: Upper triangular matrices, SubsemigroupByProperty
 gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
@@ -160,7 +160,7 @@ gap> T := SubsemigroupByProperty(S, upper);
 gap> Size(T);
 729
 
-#T# MatrixSemigroups4: ClosureSemigroup
+# MatrixSemigroups4: ClosureSemigroup
 gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
@@ -184,7 +184,7 @@ gap> S;
 gap> Size(S);
 729
 
-#T# MatrixSemigroups5:  
+# MatrixSemigroups5:  
 gap> func := IsGreensDGreaterThanFunc(S);
 function( x, y ) ... end
 gap> x := Random(S);;
@@ -192,7 +192,7 @@ gap> y := Random(S);;
 gap> func(x, y);;
 gap> func(y, x);;
 
-#T# MatrixSemigroups6:
+# MatrixSemigroups6:
 gap> T := Semigroup(Transformation([1, 2, 7, 3, 2, 1, 4, 3]),
 >                   Transformation([5, 7, 8, 2, 7, 3, 8, 5]));
 <transformation semigroup of degree 8 with 2 generators>
@@ -207,7 +207,7 @@ true
 gap> NrIdempotents(S) = NrIdempotents(T);
 true
 
-#T# MatrixSemigroups7:
+# MatrixSemigroups7:
 gap> S := Semigroup(
 > Matrix(GF(2),
 >  [[Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), Z(2) ^ 0, Z(2) ^ 0,
@@ -339,7 +339,7 @@ gap> Size(G);
 gap> StructureDescription(G);
 "PSL(8,2)"
 
-#T# 
+# 
 gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup,
 >                     Semigroup(Z(4) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
 >                               Z(4) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]));
@@ -347,7 +347,7 @@ gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup,
 gap> Size(S);
 27
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(G);
 gap> Unbind(func);
@@ -357,6 +357,6 @@ gap> Unbind(y);
 gap> Unbind(upper);
 gap> Unbind(M);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/semiffmat.tst");

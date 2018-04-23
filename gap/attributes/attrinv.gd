@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  attrinv.gd
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  attrinv.gd
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##                                                        Rhiannon Dougall
 ##                                                          Robert Hancock

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congfpmon.gd
-#Y  Copyright (C) 2017                                   Michael C. Torpey
+##  congruences/congfpmon.gd
+##  Copyright (C) 2017                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -31,7 +31,7 @@ SEMIGROUPS.FpMonCongFromFpSemiCong := function(M, iso, semicong)
   elif semicong!.type = "left" then
     filt := IsLeftSemigroupCongruence;
     set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
-  else # semicong!.type = "right"
+  else  # semicong!.type = "right"
     filt := IsRightSemigroupCongruence;
     set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
   fi;

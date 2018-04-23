@@ -16,7 +16,7 @@ gap> SEMIGROUPS.StartTest();
 # Always use kernel-trace methods if possible in these tests
 gap> SEMIGROUPS.DefaultOptionsRec.cong_by_ker_trace_threshold := 0;;
 
-#T# InverseCongTest1: Create an inverse semigroup congruence
+# InverseCongTest1: Create an inverse semigroup congruence
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]),
 >  PartialPerm([1, 2, 5], [5, 1, 3]),
@@ -112,7 +112,7 @@ true
 gap> [y, z] in ccong;
 false
 
-#T# InverseCongTest2: Universal congruence
+# InverseCongTest2: Universal congruence
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
@@ -121,7 +121,7 @@ gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
 
-#T# InverseSemigroupCongruenceByKernelTrace: Bad Input
+# InverseSemigroupCongruenceByKernelTrace: Bad Input
 gap> S := InverseSemigroup([PartialPerm([2, 4], [5, 6]),
 >                           PartialPerm([1, 2], [3, 4])]);;
 gap> T := InverseSemigroup([PartialPerm([2, 4], [5, 7]),
@@ -150,7 +150,7 @@ gap> cong := InverseSemigroupCongruenceByKernelTrace(S, S, ttrace);
 Error, Semigroups: InverseSemigroupCongruenceByKernelTrace:
 not a valid congruence pair (C2),
 
-#T# ImagesElm: Bad Input
+# ImagesElm: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2], [5, 2]),
 >                           PartialPerm([1, 3], [4, 3])]);;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
@@ -161,7 +161,7 @@ Error, Semigroups: ImagesElm: usage,
 the first arg <cong> is not defined over the semigroup of the second
 argument <elm>,
 
-#T# \in, EquivalenceClassOfElement: Bad Input
+# \in, EquivalenceClassOfElement: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >                           PartialPerm([1, 2, 4], [3, 1, 5]),
 >                           PartialPerm([1, 2, 5], [5, 1, 3]),
@@ -180,7 +180,7 @@ Error, Semigroups: EquivalenceClassOfElement: usage,
 the second arg <elm> must be in the
 semigroup of the first arg <cong>,
 
-#T# Congruence Class Multiplication: Bad Input
+# Congruence Class Multiplication: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >                           PartialPerm([1, 2, 4], [3, 1, 5]),
 >                           PartialPerm([1, 2, 5], [5, 1, 3])]);;
@@ -196,7 +196,7 @@ gap> x * y;
 Error, Semigroups: \*: usage,
 the arguments must be classes of the same congruence,
 
-#T# Non-inverse semigroups
+# Non-inverse semigroups
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),
 >                    Transformation([4, 4, 4, 2])]);;
 gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
@@ -211,7 +211,7 @@ gap> AsInverseSemigroupCongruenceByKernelTrace(cong);
 Error, Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,
 <cong> must be over an inverse semigroup with inverse op,
 
-#T# AsInverseSemigroupCongruenceByKernelTrace: More tests
+# AsInverseSemigroupCongruenceByKernelTrace: More tests
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 >                           PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >                           PartialPerm([1, 3, 5], [5, 1, 3])]);;
@@ -226,7 +226,7 @@ gap> cong := SemigroupCongruence(S,
 <semigroup congruence over <inverse partial perm semigroup of size 258, 
  rank 5 with 3 generators> with congruence pair (256,3)>
 
-#T# MinimumGroupCongruence
+# MinimumGroupCongruence
 gap> S := InverseSemigroup([PartialPerm([1, 2, 5, 6], [5, 2, 1, 4]),
 >                           PartialPerm([1, 2, 3, 4, 5, 7],
 >                                       [1, 4, 6, 3, 5, 2])]);;
@@ -247,7 +247,7 @@ gap> g := Range(IsomorphismPermGroup(q));;
 gap> StructureDescription(g);
 "S3"
 
-#T# JoinSemigroupCongruences
+# JoinSemigroupCongruences
 gap> S := InverseMonoid([PartialPerm([1, 2], [3, 1])]);;
 gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong := SemigroupCongruence(S, pair);;
@@ -258,7 +258,7 @@ gap> JoinSemigroupCongruences(cong, min);
 gap> IsSubrelation(last, cong);
 true
 
-#T# MeetSemigroupCongruences
+# MeetSemigroupCongruences
 gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 1]),
 >                           PartialPerm([1, 3], [3, 1])]);;
 gap> pair1 := [PartialPerm([], []), PartialPerm([1, 3], [1, 3])];;
@@ -269,7 +269,7 @@ gap> MeetSemigroupCongruences(cong1, cong2);
 <semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
  with 2 generators> with congruence pair (12,3)>
 
-#T# Bad input: different semigroups
+# Bad input: different semigroups
 gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 1]),
 >                           PartialPerm([1, 3], [3, 1])]);;
 gap> T := InverseSemigroup([PartialPerm([1, 2], [3, 1])]);;
@@ -288,7 +288,7 @@ gap> IsSubrelation(cong1, cong2);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
-#T# EquivalenceRelationCanonicalLookup
+# EquivalenceRelationCanonicalLookup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >                           PartialPerm([1, 2], [2, 3])]);;
 gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
@@ -298,7 +298,7 @@ gap> cong := SemigroupCongruence(S, pairs);
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(ccong);
@@ -321,6 +321,6 @@ gap> Unbind(x);
 gap> Unbind(y);
 gap> Unbind(z);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/conginv.tst");

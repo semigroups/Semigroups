@@ -28,7 +28,7 @@ gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 #I  Computing adjusted stabilizer chain...
 #16
 
-#T# NormalizerTest4
+# NormalizerTest4
 gap> S := Semigroup(Transformation([4, 4, 8, 8, 8, 8, 4, 8]),
 > Transformation([8, 2, 8, 2, 5, 5, 8, 8]),
 > Transformation([8, 8, 3, 7, 8, 3, 7, 8]),
@@ -38,13 +38,13 @@ Group(())
 gap> Size(last);
 1
 
-#T# NormalizerTest5
+# NormalizerTest5
 gap> S := Semigroup(Transformation([2, 3, 4, 5, 6, 7, 8, 9, 1]),
 > Transformation([4, 2, 3, 4]));;
 gap> Size(Normalizer(SymmetricGroup(9), S));
 54
 
-#T# NormalizerTest6
+# NormalizerTest6
 gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 >   Transformation([1, 3, 3, 5, 2]), Transformation([2, 2, 2, 4, 2]),
 >   Transformation([2, 3, 1, 4, 5]), Transformation([2, 3, 3, 3, 3]),
@@ -54,7 +54,7 @@ gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 gap> Size(Normalizer(SymmetricGroup(5), S));
 6
 
-#T# NormalizerTest7
+# NormalizerTest7
 gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 >   Transformation([1, 3, 3, 5, 2]), Transformation([2, 2, 2, 4, 2]),
 >   Transformation([2, 3, 1, 4, 5]), Transformation([2, 3, 3, 3, 3]),
@@ -64,7 +64,7 @@ gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 gap> Size(Normalizer(SymmetricGroup(5), S));
 6
 
-#T# NormalizerTest8
+# NormalizerTest8
 gap> S := Semigroup(Transformation([1, 5, 3, 1, 5]),
 > Transformation([2, 2, 5, 3, 2]),
 > Transformation([3, 1, 5, 2, 4]), Transformation([3, 5, 4, 3, 2]),
@@ -72,7 +72,7 @@ gap> S := Semigroup(Transformation([1, 5, 3, 1, 5]),
 gap> Size(Normalizer(SymmetricGroup(5), S));
 10
 
-#T# NormalizerTest9
+# NormalizerTest9
 gap> S := Semigroup(Transformation([1, 2, 6, 6, 5, 6]),
 >   Transformation([1, 6, 1, 2, 1, 4]),
 >   Transformation([3, 6, 3, 3, 2, 4]),
@@ -83,7 +83,7 @@ gap> Size(G);
 gap> StructureDescription(G);
 "C5 : C4"
 
-#T# NormalizerTest10
+# NormalizerTest10
 gap> S := Semigroup(Transformation([2, 2, 6, 4, 3, 4]),
 >   Transformation([3, 4, 1, 5, 2, 6]),
 >   Transformation([3, 4, 3, 5, 2, 1]),
@@ -93,7 +93,7 @@ gap> Size(S);
 gap> Size(Normalizer(SymmetricGroup(6), S));
 6
 
-#T# NormalizerTest11
+# NormalizerTest11
 gap> S := Semigroup(
 > Transformation([1, 2, 3, 4, 3]), Transformation([1, 3, 2, 4, 3]),
 > Transformation([2, 2, 3, 5, 1]), Transformation([2, 5, 1, 2, 3]),
@@ -101,7 +101,7 @@ gap> S := Semigroup(
 gap> Normalizer(SymmetricGroup(5), S);
 Group(())
 
-#T# NormalizerTest12
+# NormalizerTest12
 gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 > Transformation([2, 5, 3, 1, 4]),
 > Transformation([4, 1, 1, 3, 4]), Transformation([4, 1, 3, 4, 5]),
@@ -109,7 +109,7 @@ gap> S := Semigroup(Transformation([1, 3, 1, 5, 3]),
 gap> StructureDescription(Normalizer(SymmetricGroup(5), S));
 "D8"
 
-#T# NormalizerTest13
+# NormalizerTest13
 gap> S := Semigroup(Transformation([2, 2, 2, 3, 1]),
 > Transformation([2, 4, 5, 3, 1]),
 > Transformation([3, 1, 3, 2, 2]), Transformation([3, 1, 4, 5, 2]),
@@ -117,13 +117,13 @@ gap> S := Semigroup(Transformation([2, 2, 2, 3, 1]),
 gap> Size(Normalizer(SymmetricGroup(5), S));
 120
 
-#T# NormalizerTest14
+# NormalizerTest14
 gap> S := Semigroup(Transformation([3, 5, 3, 3, 5]),
 > Transformation([6, 2, 4, 2, 2, 6]));;
 gap> Normalizer(SymmetricGroup(6), S);
 Group(())
 
-#T# NormalizerTest15
+# NormalizerTest15
 gap> S := Semigroup(Transformation([1, 2, 6, 6, 5, 6]),
 >    Transformation([1, 6, 1, 2, 1, 4]),
 >    Transformation([3, 6, 3, 3, 2, 4]),
@@ -131,7 +131,7 @@ gap> S := Semigroup(Transformation([1, 2, 6, 6, 5, 6]),
 gap> Size(Normalizer(SymmetricGroup(6), S));
 20
 
-#T# NormalizerTest16
+# NormalizerTest16
 gap> S := Semigroup(
 > Transformation([2, 2, 2, 3, 1]), Transformation([2, 4, 5, 3, 1]),
 > Transformation([3, 1, 3, 2, 2]), Transformation([3, 1, 4, 5, 2]),
@@ -139,7 +139,7 @@ gap> S := Semigroup(
 gap> Size(Normalizer(SymmetricGroup(5), S));
 120
 
-#T# NormalizerTest17
+# NormalizerTest17
 gap> S := Semigroup(AsTransformation((1, 2, 3, 4, 5, 6, 7, 8, 9)),
 > ConstantTransformation(9, 1));;
 gap> Size(Normalizer(SymmetricGroup(9), S));
@@ -147,18 +147,18 @@ gap> Size(Normalizer(SymmetricGroup(9), S));
 gap> Size(Normalizer(SymmetricGroup(9), MinimalIdeal(S)));
 362880
 
-#T# NormalizerTest18 
+# NormalizerTest18 
 gap> S := JonesMonoid(8);;
 gap> Normalizer(S, rec(lambdastab := false, rhostab := false));
 Group([ (1,8)(2,7)(3,6)(4,5) ])
 
-#T# NormalizerTest19
+# NormalizerTest19
 # it is best not to find rhostab or lambdastab here!
 gap> StructureDescription(Normalizer(S,
 > rec(rhostab := false, lambdastab := false, random := true)));
 "C2"
 
-#T# NormalizerTest20
+# NormalizerTest20
 gap> S := InverseSemigroup(
 > [PartialPerm([1, 2, 3, 4], [4, 6, 8, 3]),
 >  PartialPerm([1, 2, 3, 5], [3, 4, 1, 6]),
@@ -173,15 +173,15 @@ gap> S := InverseSemigroup(
 gap> Normalizer(S, rec(lambdastab := false));
 Group(())
 
-#T# NormalizerTest21
+# NormalizerTest21
 # takes about 750ms, with lambdastab=true it takes 10s!
 gap> Normalizer(S, rec(lambdastab := false, random := true));
 Group(())
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(S);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/normalizer.tst");

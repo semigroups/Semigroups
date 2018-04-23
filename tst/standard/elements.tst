@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# elements: SEMIGROUPS.IndexPeriodByRank
+# elements: SEMIGROUPS.IndexPeriodByRank
 gap> x := Transformation(
 > [71, 14, 60, 68, 67, 74, 61, 19, 81, 10, 17, 21, 9, 49, 78,
 >  73, 81, 22, 59, 50, 29, 31, 6, 27, 40, 21, 75, 44, 71, 62, 22, 56, 90, 53,
@@ -39,7 +39,7 @@ gap> x := Bipartition([[1, -2], [2, -1]]);;
 gap> SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition);
 [ 1, 2 ]
 
-#T# elements: IndexPeriodOfSemigroupElement
+# elements: IndexPeriodOfSemigroupElement
 gap> x := PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2]],
 > [[-3, -2, -1, 1, 2], [-3, 2, 3], [-2, -1, 2, 3]]);;
 gap> IndexPeriodOfSemigroupElement(x);
@@ -66,7 +66,7 @@ gap> x := Matrix(IsBooleanMat,
 gap> IndexPeriodOfSemigroupElement(x);
 [ 1, 3 ]
 
-#T# elements: SmallestIdempotentPower
+# elements: SmallestIdempotentPower
 gap> x := PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2]],
 > [[-3, -2, -1, 1, 2], [-3, 2, 3], [-2, -1, 2, 3]]);;
 gap> SmallestIdempotentPower(x);
@@ -90,6 +90,6 @@ the argument <x> must be the generator of a semigroup,
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(x);
 
-#E# 
+# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/elements.tst");

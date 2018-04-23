@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  acting.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+##  acting.gi
+##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -71,7 +71,7 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif Position(S, x) <> fail then # check if x is already known to be in S
+  elif Position(S, x) <> fail then  # check if x is already known to be in S
     return true;
   elif IsFullyEnumerated(S) then
     return false;
@@ -83,16 +83,16 @@ function(x, S)
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
-      #Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-      #     "semigroup.");
+      # Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+      #      "semigroup.");
       return false;
     fi;
   fi;
 
   if HasMinimalIdeal(S) then
     if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
-      #Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-      #     "semigroup.");
+      # Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+      #      "semigroup.");
       return false;
     fi;
   fi;
@@ -307,7 +307,7 @@ end);
 # different for regular/inverse/ideals
 
 InstallMethod(Size, "for an acting semigroup",
-[IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
+[IsActingSemigroup], 2,  # to beat the method for a Rees 0-matrix semigroup
 function(S)
   local data, lenreps, repslens, o, scc, size, n, m, i;
 
@@ -367,8 +367,8 @@ end);
 
 # different method for ideals...
 
-#JDM: this has the same problem as orb in Issue #4, the log is not properly
-#formed if the enumeration stops early.
+# JDM: this has the same problem as orb in Issue #4, the log is not properly
+# formed if the enumeration stops early.
 
 InstallMethod(Enumerate,
 "for an semigroup data, limit, and func",
@@ -376,7 +376,7 @@ InstallMethod(Enumerate,
 function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
   repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
-  schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact,
+  schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda,
   lambdaperm, o, oht, scc, lookup, membership, rho, rho_o, rho_orb, rho_nr,
   rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos,
   rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m,
@@ -397,35 +397,35 @@ function(data, limit, lookfunc)
 
   data!.looking := looking;
 
-  ht := data!.ht;       # so far found R-reps
-  orb := data!.orbit;   # the so far found R-reps data
+  ht := data!.ht;        # so far found R-reps
+  orb := data!.orbit;    # the so far found R-reps data
   nr := Length(orb);
-  i := data!.pos;       # points in orb in position at most i have descendants
-  graph := data!.graph; # orbit graph of orbit of R-classes under left mult
-  reps := data!.reps;   # reps grouped by equal lambda-scc-index and
-                        # rho-value-index
+  i := data!.pos;        # points in orb in position at most i have descendants
+  graph := data!.graph;  # orbit graph of orbit of R-classes under left mult
+  reps := data!.reps;    # reps grouped by equal lambda-scc-index and
+                         # rho-value-index
 
   repslens := data!.repslens;       # Length(reps[m][i])=repslens[m][i]
   lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
 
-  lambdarhoht := data!.lambdarhoht; # HTValue(lambdarhoht, [m,l])=position
-                                    # in reps[m] of R-reps with
-                                    # lambda-scc-index=m and rho-value-index=l
+  lambdarhoht := data!.lambdarhoht;  # HTValue(lambdarhoht, [m,l])=position
+                                     # in reps[m] of R-reps with
+                                     # lambda-scc-index=m and rho-value-index=l
 
-  repslookup := data!.repslookup; # Position(orb, reps[m][i][j])
-                                  # = repslookup[m][i][j]
-                                  # = HTValue(ht, reps[m][i][j])
+  repslookup := data!.repslookup;  # Position(orb, reps[m][i][j])
+                                   # = repslookup[m][i][j]
+                                   # = HTValue(ht, reps[m][i][j])
 
-  orblookup1 := data!.orblookup1; # orblookup1[i] position in reps[m]
-                                  # containing orb[i][4] (the R-rep)
+  orblookup1 := data!.orblookup1;  # orblookup1[i] position in reps[m]
+                                   # containing orb[i][4] (the R-rep)
 
-  orblookup2 := data!.orblookup2; # orblookup2[i] position in
-                                  # reps[m][orblookup1[i]]
-                                  # containing orb[i][4] (the R-rep)
+  orblookup2 := data!.orblookup2;  # orblookup2[i] position in
+                                   # reps[m][orblookup1[i]]
+                                   # containing orb[i][4] (the R-rep)
 
-  rholookup := data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
+  rholookup := data!.rholookup;    # rholookup[i]=rho-value-index of orb[i][4]
 
-  stopper := data!.stopper;       # stop at this place in the orbit
+  stopper := data!.stopper;        # stop at this place in the orbit
 
   # schreier
   schreierpos := data!.schreierpos;
@@ -440,7 +440,6 @@ function(data, limit, lookfunc)
   # lambda
   s := data!.parent;
   lambda := LambdaFunc(s);
-  lambdaact := LambdaAct(s);
   lambdaperm := LambdaPerm(s);
 
   o := LambdaOrb(s);
@@ -450,7 +449,7 @@ function(data, limit, lookfunc)
 
   membership := SchutzGpMembership(s);
 
-  #rho
+  # rho
   rho := RhoFunc(s);
   rho_o := RhoOrb(s);
   rho_orb := rho_o!.orbit;
@@ -500,12 +499,12 @@ function(data, limit, lookfunc)
     suc := false;
     #                                               #
 
-    for j in genstoapply do #JDM
+    for j in genstoapply do  # JDM
       x := gens[j] * orb[i][4];
       pos := htvalue(oht, lambda(x));
-      m := lookup[pos];   #lambda-value-scc-index
+      m := lookup[pos];   # lambda-value-scc-index
 
-      #put lambda(x) in the first position in its scc
+      # put lambda(x) in the first position in its scc
       if pos <> scc[m][1] then
         x := x * LambdaOrbMult(o, m, pos)[2];
       fi;
@@ -513,7 +512,7 @@ function(data, limit, lookfunc)
       rhox := rho(x);
       l := htvalue(rho_ht, rhox);
 
-      if l = fail then #new rho-value, new R-rep
+      if l = fail then  # new rho-value, new R-rep
 
         #                update rho-orbit             #
         rho_nr := rho_nr + 1;
@@ -593,7 +592,7 @@ function(data, limit, lookfunc)
         ind := lambdarhoht[l][m];
         pt := [s, m, o, x, false, nr + 1];
 
-        #check membership in Schutzenberger group via stabiliser chain
+        # check membership in Schutzenberger group via stabiliser chain
         schutz := LambdaOrbStabChain(o, m);
 
         if schutz = true then
@@ -635,13 +634,13 @@ function(data, limit, lookfunc)
           rho_orbitgraph[rholookup[i]][j] := l;
         fi;
       fi;
-      rholookup[nr] := l; # orb[nr] has rho-value in position l of the rho-orb
+      rholookup[nr] := l;  # orb[nr] has rho-value in position l of the rho-orb
 
       orb[nr] := pt;
-      schreierpos[nr] := i; # orb[nr] is obtained from orb[i]
-      schreiergen[nr] := j; # by multiplying by gens[j]
-      schreiermult[nr] := pos; # and ends up in position <pos> of
-                             # its lambda orb
+      schreierpos[nr] := i;     # orb[nr] is obtained from orb[i]
+      schreiergen[nr] := j;     # by multiplying by gens[j]
+      schreiermult[nr] := pos;  # and ends up in position <pos> of
+                                # its lambda orb
       htadd(ht, x, nr);
       graph[nr] := EmptyPlist(nrgens);
       graph[i][j] := nr;
@@ -679,7 +678,7 @@ function(data, limit, lookfunc)
     rho_o!.orbind := [1 .. rho_nr];
   fi;
 
-  #for the rho-orbit
+  # for the rho-orbit
   if i <> 0 then
     rho_o!.pos := rholookup[i];
     rho_o!.depth := rho_depth;

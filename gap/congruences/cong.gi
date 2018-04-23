@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  cong.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+##  cong.gi
+##  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

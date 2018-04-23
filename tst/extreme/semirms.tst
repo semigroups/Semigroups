@@ -14,7 +14,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-#T# ReesMatTest2
+# ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply
 gap> R := ReesZeroMatrixSemigroup(POI(5), [[0, 0, 0], [0, 0, 0]]);
 <Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid of rank 5 with 
@@ -34,7 +34,7 @@ gap> R := ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([], []), 0],
 gap> R := Semigroup(Generators(R));
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 1008 generators>
 
-#T# ReesMatTest3
+# ReesMatTest3
 # Find a source of interesting subsemigroups of Rees 0-matrix semigroups
 gap> S := Semigroup(
 >  Transformation([1, 1, 2, 7, 9, 8, 5, 9, 6]),
@@ -97,26 +97,26 @@ gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 15, (1, 9)(5, 8), 2),
 > RMSElement(R, 22, (1, 9), 1));;
 
-#T# ReesMatTest4: from attributes.xml...
+# ReesMatTest4: from attributes.xml...
 
-#T# ReesMatTest5: StuctureDescriptionMaximalSubgroups
+# ReesMatTest5: StuctureDescriptionMaximalSubgroups
 gap> StructureDescriptionMaximalSubgroups(U[1]);
 [ "1", "D12" ]
 gap> StructureDescriptionMaximalSubgroups(V);
 [ "1", "D12" ]
 
-#T# ReesMatTest6: StructureDescriptionSchutzenbergerGroups 
+# ReesMatTest6: StructureDescriptionSchutzenbergerGroups 
 gap> StructureDescriptionSchutzenbergerGroups(U[5]);
 [ "1", "D12" ]
 
-#T# ReesMatTest7: MinimalDClass
+# ReesMatTest7: MinimalDClass
 gap> List(U, MinimalDClass);
 [ <Green's D-class: 0>, <Green's D-class: 0>, <Green's D-class: 0>, 
   <Green's D-class: 0>, <Green's D-class: 0>, <Green's D-class: 0> ]
 gap> MinimalDClass(V);
 <Green's D-class: 0>
 
-#T# ReesMatTest8: MaximalDClasses
+# ReesMatTest8: MaximalDClasses
 gap> MaximalDClasses(V);
 [ <Green's D-class: (13,(1,6)(5,8),3)>, <Green's D-class: (22,(1,6),1)> ]
 gap> MaximalDClasses(U[4]);
@@ -134,7 +134,7 @@ gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 15, (1, 9)(5, 8), 2),
 > RMSElement(R, 22, (1, 9), 1));;
 
-#T# ReesMatTest9: PrincipalFactor
+# ReesMatTest9: PrincipalFactor
 gap> D := Filtered(DClasses(V), IsRegularGreensClass)[2];
 <Green's D-class: (13,(1,6)(5,8),3)>
 gap> inj := InjectionPrincipalFactor(D);; inv := InverseGeneralMapping(inj);;
@@ -145,12 +145,12 @@ gap> ForAll(D, x ->
 >        (not x * y in D) or (x * y) ^ inj = x ^ inj * y ^ inj));
 true
 
-#T# ReesMatTest10: SmallGeneratingSet
+# ReesMatTest10: SmallGeneratingSet
 gap> Length(SmallGeneratingSet(V)) <= Length(Generators(V));
 true
 gap> Apply(U, x -> Semigroup(SmallGeneratingSet(x)));
 
-#T# ReesMatTest11: MinimalIdeal
+# ReesMatTest11: MinimalIdeal
 gap> MinimalIdeal(V);
 <simple Rees 0-matrix semigroup ideal with 1 generator>
 gap> List(U, MinimalIdeal);
@@ -161,7 +161,7 @@ gap> List(U, MinimalIdeal);
 <simple Rees 0-matrix semigroup ideal with 1 generator>, 
 <simple Rees 0-matrix semigroup ideal with 1 generator> ]
 
-#T# ReesMatTest12: IsomorphismPermGroup
+# ReesMatTest12: IsomorphismPermGroup
 gap> R := ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), [[()]]);;
 gap> T := Semigroup(Filtered(Generators(R), x -> x![1] <> 0));;
 gap> iso := IsomorphismPermGroup(T);
@@ -189,7 +189,7 @@ gap> ForAll(MinimalIdeal(V), x ->
 >        (x * y) ^ iso = x ^ iso * y ^ iso));
 true
 
-#T# ReesMatTest13: GroupOfUnits
+# ReesMatTest13: GroupOfUnits
 gap> R := Semigroup(Generators(R));
 <subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>
 gap> GroupOfUnits(R);
@@ -199,7 +199,7 @@ fail
 gap> GroupOfUnits(U[5]);
 fail
 
-#T# ReesMatTest14: IdempotentGeneratedSubsemigroup
+# ReesMatTest14: IdempotentGeneratedSubsemigroup
 gap> eV := IdempotentGeneratedSubsemigroup(V);;
 gap> Size(eV);
 16
@@ -211,7 +211,7 @@ gap> List(last, Size);
 gap> last2[1] = last2[2];
 true
 
-#T# ReesMatTest15: IrredundantGeneratingSubset
+# ReesMatTest15: IrredundantGeneratingSubset
 gap> a := RMSElement(ParentAttr(V), 1, (1, 6), 3);
 (1,(1,6),3)
 gap> a in IrredundantGeneratingSubset(V);
@@ -221,7 +221,7 @@ gap> Length(IrredundantGeneratingSubset(V));
 gap> U[1] = Semigroup(IrredundantGeneratingSubset(U[1]));
 true
 
-#T# ReesMatTest17: MultiplicativeNeutralElement (for an H-class)
+# ReesMatTest17: MultiplicativeNeutralElement (for an H-class)
 gap> H := First(HClasses(V), IsRegularGreensClass);
 <Green's H-class: 0>
 gap> MultiplicativeNeutralElement(H);
@@ -254,16 +254,16 @@ true
 gap> MultiplicativeNeutralElement(H);
 (17,(1,6),5)
 
-#T# ReesMatTest18: StructureDescription (for an H-class) 
+# ReesMatTest18: StructureDescription (for an H-class) 
 gap> H := First(HClasses(U[5]), IsRegularGreensClass);;
 gap> StructureDescription(H);
 "D12"
 
-#T# ReesMatTest19: Random
+# ReesMatTest19: Random
 gap> Random(V);;
-gap> List(U, Random);; #FIXME no this is not expected
+gap> List(U, Random);;  # FIXME no this is not expected
 
-#T# ReesMatTest20: DClassOf.Class etc
+# ReesMatTest20: DClassOf.Class etc
 gap> H := First(HClasses(V), x -> not IsRegularGreensClass(x));
 <Green's H-class: (1,(1,6),3)>
 gap> DClass(H);
@@ -275,7 +275,7 @@ gap> LClass(H);
 gap> LClass(H) < LClass(V, Representative(V));
 false
 
-#T# ReesMatTest21: DClasses etc...
+# ReesMatTest21: DClasses etc...
 gap> RClasses(V);
 [ <Green's R-class: 0>, <Green's R-class: (13,(1,6)(5,8),3)>, 
   <Green's R-class: (1,(1,6),3)>, <Green's R-class: (7,(1,6)(5,8),3)>, 
@@ -326,13 +326,13 @@ true
 gap> MultiplicativeZero(U[4]) in d;
 true
 
-#T# ReesMatTest22: MultiplicativeZero
+# ReesMatTest22: MultiplicativeZero
 gap> List(U, MultiplicativeZero);
 [ 0, 0, 0, 0, 0, 0 ]
 gap> ForAll(last, IsIdempotent);
 true
 
-#T# ReesMatTest23: GroupHClass
+# ReesMatTest23: GroupHClass
 gap> D := Filtered(DClasses(U[1]), IsRegularGreensClass)[2];
 <Green's D-class: (7,(5,8)(6,9),2)>
 gap> GroupHClass(D);
@@ -346,7 +346,7 @@ gap> GroupHClass(D);
 gap> StructureDescription(last);
 "1"
 
-#T# ReesMatTest24: Idempotents
+# ReesMatTest24: Idempotents
 gap> Idempotents(V);
 [ 0, (13,(1,9,6)(5,8),3), (13,(1,9,6)(5,8),2), (7,(),3), (7,(),2), (23,(),3), 
   (23,(),2), (22,(),5), (22,(),4), (11,(5,8)(6,9),1), (2,(),5), (2,(),4), 
@@ -370,7 +370,7 @@ gap> reps;
 gap> ForAll(last, IsIdempotent);
 true
 
-#T# ReesMatTest25: IsRegularGreensClass
+# ReesMatTest25: IsRegularGreensClass
 gap> Number(RClasses(V), IsRegularGreensClass);
 10
 gap> Number(DClasses(V), IsRegularGreensClass);
@@ -384,7 +384,7 @@ gap> NrRegularDClasses(U[4]);
 gap> Number(LClasses(U[4]), IsRegularGreensClass);
 6
 
-#T# ReesMatTest26: NrIdempotents
+# ReesMatTest26: NrIdempotents
 gap> NrIdempotents(V) = Length(Idempotents(V));
 true
 gap> ForAll(U, x -> NrIdempotents(x) = Length(Idempotents(x)));
@@ -396,7 +396,7 @@ gap> List(RClasses(V), NrIdempotents);
 gap> List(LClasses(R), NrIdempotents);
 [ 1, 1 ]
 
-#T# ReesMatTest27: PartialOrderOfDClasses
+# ReesMatTest27: PartialOrderOfDClasses
 gap> PartialOrderOfDClasses(V);
 [ [ 1 ], [ 1, 2, 3 ], [ 1, 3, 5 ], [ 1, 4, 5 ], [ 1, 5 ] ]
 gap> PartialOrderOfDClasses(U[1]);
@@ -404,7 +404,7 @@ gap> PartialOrderOfDClasses(U[1]);
 gap> PartialOrderOfDClasses(U[2]);
 [ [ 1, 3, 4 ], [ 2, 3, 4 ], [ 3, 4 ], [ 4 ] ]
 
-#T# ReesMatTest28: from properties.xml...
+# ReesMatTest28: from properties.xml...
 gap> IsBand(V);
 false
 gap> List(U, IsBand);
@@ -542,7 +542,7 @@ true
 gap> IsZeroSemigroup(V);
 false
 
-#T# ReesMatTest29: from semigroups.xml ...
+# ReesMatTest29: from semigroups.xml ...
 gap> gens := Generators(V);;
 gap> V := Semigroup(gens[1]);
 <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>
@@ -554,7 +554,7 @@ gap> V;
 gap> Size(V);
 421
 
-#T# ReesMatTest30: from slp.xml...
+# ReesMatTest30: from slp.xml...
 gap> x := RMSElement(V, 22, (1, 6, 9), 1);;
 gap> Factorization(V, x);
 [ 6, 7, 6, 9, 6 ]
@@ -566,11 +566,11 @@ gap> Factorization(R, x);
 gap> EvaluateWord(Generators(R), last);
 0
 gap> x := RMSElement(U[4], 26, (6, 9), 5);;
-gap> Factorization(U[4], x);; # = [ 7, 24, 8, 5]
+gap> Factorization(U[4], x);;  # = [ 7, 24, 8, 5]
 gap> EvaluateWord(Generators(U[4]), last);
 (26,(6,9),5)
 
-#T# ReesMatTest31: Issue 108:
+# ReesMatTest31: Issue 108:
 # IsRegularSemigroup for a RZMS returned false negative
 gap> t1 := Transformation([4, 3, 1, 3]);;
 gap> t2 := Transformation([3, 3, 2, 2]);;
@@ -682,7 +682,7 @@ true
 #gap> RMSInducedFunction(R, (4,7), gam, ());
 #[ true, [ (), (), (), (), (), (), (), () ] ]
 
-#T# ReesMatTest100: IsInverseSemigroup (easy true examples)
+# ReesMatTest100: IsInverseSemigroup (easy true examples)
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> IsInverseSemigroup(R);
@@ -703,7 +703,7 @@ true
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 true
 
-#T# ReesMatTest101: IsInverseSemigroup (false because of underlying semigroup)
+# ReesMatTest101: IsInverseSemigroup (false because of underlying semigroup)
 gap> x := Transformation([1, 1, 2]);;
 gap> T := Semigroup(x);;
 gap> IsInverseSemigroup(T);
@@ -754,7 +754,7 @@ false
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
-#T# ReesMatTest102: IsInverseSemigroup (false because of matrix)
+# ReesMatTest102: IsInverseSemigroup (false because of matrix)
 gap> S := Semigroup(SymmetricInverseMonoid(5));
 <partial perm monoid of rank 5 with 4 generators>
 gap> id := Identity(S);
@@ -808,7 +808,7 @@ gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, id, 0], [0, 0, y]]);;
 gap> IsInverseSemigroup(R);
 true
 
-#T# ReesMatTest103: NrIdempotents and Idempotents for an inverse RZMS
+# ReesMatTest103: NrIdempotents and Idempotents for an inverse RZMS
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> x := PartialPerm([2, 1, 4, 3]);;
@@ -829,7 +829,7 @@ true
 gap> ForAll(R, x -> x in R or not IsIdempotent(x));
 true
 
-#T# ReesMatTest104: NrIdempotents and Idempotents (for a RZMS over a group)
+# ReesMatTest104: NrIdempotents and Idempotents (for a RZMS over a group)
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> NrIdempotents(R);
@@ -875,7 +875,7 @@ true
 gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
 true
 
-#T# ReesMatTest105: IsInverseSemigroup and Idempotents using sub-RZMS
+# ReesMatTest105: IsInverseSemigroup and Idempotents using sub-RZMS
 gap> S := SymmetricInverseMonoid(4);;
 gap> x := PartialPerm([2, 1, 4, 3]);;
 gap> y := PartialPerm([2, 4, 3, 1]);;
@@ -982,7 +982,7 @@ gap> NrIdempotents(T);
 gap> Set(Idempotents(T));
 [ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
 
-#T# ReesMatTest106: Test for Issue #128
+# ReesMatTest106: Test for Issue #128
 gap> S := SymmetricInverseMonoid(5);;
 gap> G := GroupOfUnits(S);;
 gap> id := Identity(S);;
@@ -994,7 +994,7 @@ true
 gap> UnderlyingSemigroup(T);
 <partial perm group of size 120, rank 5 with 73 generators>
 
-#T# ReesMatTest107: RZMSNormalization, errors
+# ReesMatTest107: RZMSNormalization, errors
 gap> T := FullTransformationMonoid(4);
 <full transformation monoid of degree 4>
 gap> G := GroupOfUnits(T);
@@ -1017,7 +1017,7 @@ MappingByFunction( <Rees 0-matrix semigroup 1x1 over <transformation group of
 <transformation group of degree 4 with 2 generators>>
 , function( x ) ... end, function( x ) ... end )
 
-#T# ReesMatTest108: RZMSNormalization, example 1
+# ReesMatTest108: RZMSNormalization, example 1
 gap> G := SymmetricGroup(5);;
 gap> R := ReesZeroMatrixSemigroup(G,
 > [[0, (1, 4)(2, 5, 3), 0], [0, 0, (4, 2, 3)], [(1, 5)(2, 4, 3), 0, 0]]);
@@ -1044,7 +1044,7 @@ gap> x ^ iso;
 gap> (x ^ iso) ^ inv = x;
 true
 
-#T# ReesMatTest109: RZMSNormalization, example 2
+# ReesMatTest109: RZMSNormalization, example 2
 gap> G := SymmetricGroup(4);;
 gap> mat := [
 > [0, 0, (1, 3, 2), 0, (), 0, 0, (1, 2, 3)],
@@ -1084,7 +1084,7 @@ true
 gap> Concatenation(List(comps, x -> x[2])) = Columns(R);
 true
 
-#T# MatrixEntries: Test for Issue #164
+# MatrixEntries: Test for Issue #164
 gap> mat := [
 >  [Bipartition([[1, 2, 3, 4, -2, -3], [-1], [-4]]), 0, 0, 0],
 >  [0, Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]]), 0,
@@ -1112,7 +1112,7 @@ gap> MatrixEntries(R);
   <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
   <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(D);
 gap> Unbind(G);

@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# Bad input
+# Bad input
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
@@ -46,7 +46,7 @@ gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
 Error, Semigroups: EquivalenceClassOfElement: usage,
 <elm> must be an element of the range of <cong>,
 
-#T# A 2-sided example
+# A 2-sided example
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.2 ^ 2, F.2],
 >              [F.1 ^ 3, F.1 ^ 2],
@@ -109,7 +109,7 @@ true
 gap> class1 * class2 = EquivalenceClassOfElement(cong, One(M));
 false
 
-#T# A left congruence example
+# A left congruence example
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
 >              [F.2 ^ 3, F.2 ^ 2],
@@ -172,7 +172,7 @@ gap> Position(enum, M.2 * M.1 * M.2 * M.1);
 gap> Size(enum);
 30
 
-#T# A right congruence example
+# A right congruence example
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
 >              [F.2 ^ 3, F.2 ^ 2],
@@ -240,7 +240,7 @@ gap> Position(enum, M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3);
 gap> Size(enum);
 11
 
-#T# Joining two congs together
+# Joining two congs together
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
 >              [F.1 ^ 3 * F.2, F.1 ^ 3],
@@ -269,7 +269,7 @@ gap> JoinSemigroupCongruences(cong1, cong3);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
-#T# Joining two left congs together
+# Joining two left congs together
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
 >              [F.1 ^ 3 * F.2, F.1 ^ 3],
@@ -298,7 +298,7 @@ gap> JoinLeftSemigroupCongruences(cong1, cong3);
 Error, Semigroups: JoinLeftSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
-#T# Joining two right congs together
+# Joining two right congs together
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
 >              [F.1 ^ 3 * F.2, F.1 ^ 3],
@@ -327,7 +327,7 @@ gap> JoinRightSemigroupCongruences(cong1, cong3);
 Error, Semigroups: JoinRightSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(M);
 gap> Unbind(class1);
@@ -342,6 +342,6 @@ gap> Unbind(pair);
 gap> Unbind(part);
 gap> Unbind(part1);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congfpmon.tst");

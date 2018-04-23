@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  congruences/congpairs.gd
-#Y  Copyright (C) 2015-17                                Michael C. Torpey
+##  congruences/congpairs.gd
+##  Copyright (C) 2015-17                                Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

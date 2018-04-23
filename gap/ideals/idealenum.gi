@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-#W  idealenum.gi
-#Y  Copyright (C) 2014                                   James D. Mitchell
+##  idealenum.gi
+##  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -35,14 +35,14 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
 
   nr := enum!.nr;
 
-  if limit < nr then # we already know descendants of enum[i]
+  if limit < nr then  # we already know descendants of enum[i]
     return enum;
   fi;
 
   if lookfunc <> ReturnFalse then
-    looking := true;            # only applied to new elements, not old ones!!!
-    enum!.found := fail;        # in case we previously looked for something
-                                # and found it
+    looking := true;      # only applied to new elements, not old ones!!!
+    enum!.found := fail;  # in case we previously looked for something
+                          # and found it
     found := false;
   else
     looking := false;
@@ -64,7 +64,7 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
 
   while nr <= limit and i <= nr and not (looking and found) do
 
-    j := indices[i]; # position in <data> corresponding to <enum[i]>
+    j := indices[i];  # position in <data> corresponding to <enum[i]>
     # enumerate <data> until we've seen all the left and right descendants of
     # <data!.elts[j]>...
     if not IsBound(left[j][1]) then
@@ -73,14 +73,14 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
       # installed after every word of length equal to the <j>th element has had
       # its right descendants installed.
       len := Length(data!.words[j]);
-      if not IsBound(data!.lenindex[len + 1]) then # no words longer than <len>
+      if not IsBound(data!.lenindex[len + 1]) then  # no words longer than <len>
                                                    # are known.
         lookfunc2 := function(data, nr)            # so we look for one...
           return Length(data!.words[nr]) = len + 1;
         end;
         Enumerate(data, infinity, lookfunc2);
         if Length(data!.words[data!.nr]) = len + 1 then
-          data!.lenindex[len + 1] := data!.nr; #JDM maybe a bad idea
+          data!.lenindex[len + 1] := data!.nr;  # JDM maybe a bad idea
         fi;
         # at the end of this either there is a word in <data> of length <len+1>
         # or <data> is closed.
@@ -141,18 +141,19 @@ function(I)
   S := SupersemigroupOfIdeal(I);
 
   record :=
-    rec(pos := 1, #      the first position in <indices> whose descendants
-                       # might not have been installed
-        indices := [], # the indices of elements in <I> in <S>
-        nr := 0,       # the length of <indices>
-        lookup := []); # if <data!.elts[i]> is an element of <I>, then
-                       # <lookup[i]=Position(Enumerator(I), Enumerator(S)[i])
+    rec(pos := 1,       # the first position in <indices> whose descendants
+                        # might not have been installed
+        indices := [],  # the indices of elements in <I> in <S>
+        nr := 0,        # the length of <indices>
+        lookup := []);  # if <data!.elts[i]> is an element of <I>, then
+                        # <lookup[i] = Position(Enumerator(I),
+                        #                       Enumerator(S)[i])
 
   # add the generators to <record>
 
   gens := GeneratorsOfSemigroupIdeal(I);
   for i in [1 .. Length(gens)] do
-    pos := PositionCanonical(S, gens[i]); # this should not be fail
+    pos := PositionCanonical(S, gens[i]);  # this should not be fail
     if not IsBound(record.lookup[pos]) then
       record.nr := record.nr + 1;
       record.lookup[pos] := record.nr;
