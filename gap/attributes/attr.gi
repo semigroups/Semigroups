@@ -943,15 +943,14 @@ function(S)
   TryNextMethod();
 end);
 
-InstallImmediateMethod(IndecomposableElements,
-IsDecomposableSemigroup, 0,
-S -> []);
-
 InstallMethod(IndecomposableElements, "for a semigroup",
 [IsSemigroup],
 function(S)
   local out, D;
 
+  if HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S) then
+    return [];
+  fi;
   out := [];
   for D in MaximalDClasses(S) do
     if not IsRegularDClass(D) then

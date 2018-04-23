@@ -1730,7 +1730,7 @@ true
 gap> HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S);
 true
 gap> HasIndecomposableElements(S);
-true
+false
 gap> IndecomposableElements(S);
 [  ]
 gap> S := MonogenicSemigroup(3, 2);;
