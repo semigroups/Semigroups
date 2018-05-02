@@ -21,9 +21,9 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
   if test "$need_included_libsemigroups" = yes;  then
 	AC_MSG_NOTICE([using included libsemigroups...])
   	AC_CHECK_FILE(
-   		[libsemigroups/src/semigroups.h],
+   		[libsemigroups/include/libsemigroups.hpp],
    		[],
-   		[AC_MSG_ERROR([libsemigroups is required, clone or download the repo from https://github.com/james-d-mitchell/libsemigroups into this directory])])
+   		[AC_MSG_ERROR([libsemigroups is required, clone or download the repo from https://github.com/libsemigroups/libsemigroups into this directory])])
 
 	AC_CHECK_FILE(
    		[libsemigroups/VERSION],

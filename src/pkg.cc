@@ -32,12 +32,13 @@
 #include "semigrp.h"
 #include "uf.h"
 
-#include "libsemigroups/cong.h"
-#include "libsemigroups/semigroups.h"
-#include "libsemigroups/uf.h"
+#include "libsemigroups/include/blocks.hpp"
+#include "libsemigroups/include/cong.hpp"
+#include "libsemigroups/include/froidure-pin.hpp"
+#include "libsemigroups/include/uf.hpp"
 
 using libsemigroups::Congruence;
-using libsemigroups::UF;
+using libsemigroups::detail::UF;
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -111,7 +112,7 @@ void TSemiObjFreeFunc(Obj o) {
         // don't use functions to access these since they have too many
         // side effects
         delete CLASS_OBJ<Converter*>(o, 4);
-        delete CLASS_OBJ<Semigroup*>(o, 5);
+        delete CLASS_OBJ<FroidurePin<Element const*>*>(o, 5);
       }
       break;
     }
@@ -121,7 +122,6 @@ void TSemiObjFreeFunc(Obj o) {
 
 void TBipartObjFreeFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
-  bipart_get_cpp(o)->really_delete();
   delete bipart_get_cpp(o);
 }
 
@@ -207,7 +207,7 @@ void TSemiObjLoadFunc(Obj o) {
         ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
         ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
         ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
-        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // Semigroup*
+        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // FroidurePin*
         CHANGED_BAG(o);
       }
       break;
@@ -247,12 +247,12 @@ void TBipartObjSaveFunc(Obj o) {
 }
 
 void TBipartObjLoadFunc(Obj o) {
-  UInt4                   deg    = LoadUInt4();
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->reserve(2 * deg);
+  UInt4                  deg = LoadUInt4();
+  std::vector<u_int32_t> blocks;
+  blocks.reserve(2 * deg);
 
   for (size_t i = 0; i < 2 * deg; i++) {
-    blocks->push_back(LoadUInt4());
+    blocks.push_back(LoadUInt4());
   }
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Bipartition(blocks));
   SEMIGROUPS_ASSERT(ADDR_OBJ(o)[1] == NULL && ADDR_OBJ(o)[2] == NULL);

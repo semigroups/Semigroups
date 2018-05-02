@@ -26,9 +26,9 @@
 #include "semigroups-debug.h"
 #include "src/compiled.h"
 
-#include "libsemigroups/uf.h"
+#include "libsemigroups/include/uf.hpp"
 
-using libsemigroups::UF;
+using libsemigroups::detail::UF;
 
 // GAP level functions
 
@@ -67,7 +67,7 @@ Obj UF_FLATTEN(Obj self, Obj uf) {
 }
 
 Obj UF_TABLE(Obj self, Obj uf) {
-  UF::table_t* table     = CLASS_OBJ<UF*>(uf)->get_table();
+  UF::table_type* table     = CLASS_OBJ<UF*>(uf)->get_table();
   size_t       size      = table->size();
   Obj          gap_table = NEW_PLIST_IMM(T_PLIST_CYC, size);
   // IMMUTABLE since it should not be altered on the GAP level
@@ -79,7 +79,7 @@ Obj UF_TABLE(Obj self, Obj uf) {
 }
 
 Obj UF_BLOCKS(Obj self, Obj uf) {
-  UF::blocks_t const* blocks = CLASS_OBJ<UF*>(uf)->get_blocks();
+  UF::blocks_type const* blocks = CLASS_OBJ<UF*>(uf)->get_blocks();
   size_t              size   = blocks->size();
   size_t              i, j;
 

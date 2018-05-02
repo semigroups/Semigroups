@@ -27,16 +27,34 @@
 #include "rnams.h"
 #include "semigrp.h"
 
-#include "libsemigroups/cong.h"
+#include "libsemigroups/include/cong.hpp"
+#include "libsemigroups/include/fpsemi.hpp"
+#include "libsemigroups/include/report.hpp"
 
-using libsemigroups::Congruence;
-using libsemigroups::Partition;
-using libsemigroups::RecVec;
-using libsemigroups::relation_t;
-using libsemigroups::word_t;
+using libsemigroups::FpSemigroup;
+using libsemigroups::detail::DynamicArray2;
+using libsemigroups::relation_type;
+using libsemigroups::ReportGuard;
+using libsemigroups::word_type;
+using Congruence      = libsemigroups::Congruence;
+using congruence_type = libsemigroups::congruence_type;
 
-static inline word_t plist_to_word_t(gap_list_t plist) {
-  word_t word;
+static inline congruence_type cstring_to_congruence_t(char const* type) {
+  std::string stype = std::string(type);
+  if (stype == "left") {
+    return congruence_type::left;
+  } else if (stype == "right") {
+    return congruence_type::right;
+  } else if (stype == "twosided") {
+    return congruence_type::twosided;
+  } else {
+    ErrorQuit("Unrecognised type %s", (Int) type, 0L);
+    return congruence_type::left;
+  }
+}
+
+static inline word_type plist_to_word_type(gap_list_t plist) {
+  word_type word;
   for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
     Obj j = ELM_PLIST(plist, i);
     SEMIGROUPS_ASSERT(IS_INTOBJ(j));
@@ -45,7 +63,7 @@ static inline word_t plist_to_word_t(gap_list_t plist) {
   return word;
 }
 
-static inline gap_list_t word_t_to_plist(word_t* w) {
+static inline gap_list_t word_type_to_plist(word_type const* w) {
   gap_list_t plist = NEW_PLIST_IMM(T_PLIST_CYC, w->size());
   SET_LEN_PLIST(plist, w->size());
   for (size_t i = 0; i < w->size(); i++) {
@@ -66,13 +84,13 @@ static inline gap_semigroup_t cong_obj_get_range_obj(gap_cong_t o) {
   return ElmPRec(o, RNam_range);
 }
 
-static inline Semigroup* cong_obj_get_range(gap_cong_t o) {
+static inline FroidurePin<Element const*>* cong_obj_get_range(gap_cong_t o) {
   return semi_obj_get_semi_cpp(cong_obj_get_range_obj(o));
 }
 
 static inline bool cong_obj_get_range_type(gap_cong_t o) {
   initRNams();
-  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  // SEMIGROUPS_ASSERT(IsSemigroup<>CongruenceByGeneratingPairsRep(o));
   return semi_obj_get_type(cong_obj_get_range_obj(o));
 }
 
@@ -82,82 +100,67 @@ static inline bool cong_obj_is_fp_cong(gap_cong_t cong) {
 }
 
 static void cong_obj_init_cpp_cong(gap_cong_t o) {
-  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  // SEMIGROUPS_ASSERT(IsSemigroup<>CongruenceByGeneratingPairsRep(o));
   SEMIGROUPS_ASSERT(!cong_obj_has_cpp_cong(o));
-
   initRNams();
-
-  gap_list_t      genpairs  = ElmPRec(o, RNam_genpairs);
-  gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
-  std::string     type      = std::string(CSTR_STRING(ElmPRec(o, RNam_type)));
-  Congruence*     cong;
-  bool            report = semi_obj_get_report(range_obj);
+  gap_list_t                     genpairs  = ElmPRec(o, RNam_genpairs);
+  gap_semigroup_t                range_obj = cong_obj_get_range_obj(o);
+  congruence_type type
+      = cstring_to_congruence_t(CSTR_STRING(ElmPRec(o, RNam_type)));
+  Congruence* cong   = nullptr;
+  bool        report = semi_obj_get_report(range_obj);
+  auto rg = ReportGuard(report);
 
   if (cong_obj_is_fp_cong(o)) {
     size_t nrgens = INT_INTOBJ(ElmPRec(o, RNam_fp_nrgens));
 
+    auto S = libsemigroups::detail::make_unique<FpSemigroup>();
+    S->set_alphabet(nrgens);
+
     // Get the fp semigroup's rels
-    gap_list_t              gap_rels = ElmPRec(o, RNam_fp_rels);
-    word_t                  lhs, rhs;
-    std::vector<relation_t> rels;
-    rels.reserve(LEN_PLIST(gap_rels));
+    gap_list_t gap_rels = ElmPRec(o, RNam_fp_rels);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
       gap_list_t rel = ELM_PLIST(gap_rels, i);
-      lhs            = plist_to_word_t(ELM_PLIST(rel, 1));
-      rhs            = plist_to_word_t(ELM_PLIST(rel, 2));
-      rels.push_back(make_pair(lhs, rhs));
+      S->add_rule(plist_to_word_type(ELM_PLIST(rel, 1)),
+                  plist_to_word_type(ELM_PLIST(rel, 2)));
     }
+
+    cong = new Congruence(type, *S);
 
     // Get the extra pairs
-    gap_list_t              gap_extra = ElmPRec(o, RNam_fp_extra);
-    std::vector<relation_t> extra;
-    extra.reserve(LEN_PLIST(gap_extra));
+    gap_list_t gap_extra = ElmPRec(o, RNam_fp_extra);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_extra); i++) {
       gap_list_t pair = ELM_PLIST(gap_extra, i);
-      lhs             = plist_to_word_t(ELM_PLIST(pair, 1));
-      rhs             = plist_to_word_t(ELM_PLIST(pair, 2));
-      extra.push_back(make_pair(lhs, rhs));
+      cong->add_pair(plist_to_word_type(ELM_PLIST(pair, 1)),
+                     plist_to_word_type(ELM_PLIST(pair, 2)));
     }
-
-    cong = new Congruence(type, nrgens, rels, extra);
-    cong->set_report(report);
   } else if (cong_obj_get_range_type(o) != UNKNOWN) {
-    Semigroup* range = cong_obj_get_range(o);
-    range->set_report(report);
+    FroidurePin<Element const*>* range = cong_obj_get_range(o);
 
-    std::vector<relation_t> extra;
-    word_t                  lhs, rhs;
-
+    cong = new Congruence(type, *range);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
       Obj rhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
-
-      range->factorisation(
-          lhs, INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, lhs_obj)) - 1);
-      range->factorisation(
-          rhs, INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, rhs_obj)) - 1);
-
-      extra.push_back(make_pair(lhs, rhs));
-      lhs.clear();
-      rhs.clear();
+      cong->add_pair(
+          range->factorisation(
+              INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, lhs_obj)) - 1),
+          range->factorisation(
+              INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, rhs_obj)) - 1));
     }
-    cong = new Congruence(type, range, extra);
-    cong->set_report(report);
   } else {
-    gap_rec_t               data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
-    gap_list_t              rules = ElmPRec(data, RNam_rules);
-    gap_list_t              words = ElmPRec(data, RNam_words);
-    std::vector<relation_t> rels;
-    std::vector<relation_t> extra;
+    gap_rec_t data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    // gap_list_t              rules = ElmPRec(data, RNam_rules);
+    gap_list_t words = ElmPRec(data, RNam_words);
 
-    // convert the rules (i.e. relations) to relation_t's
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(rules); i++) {
-      word_t lhs = plist_to_word_t(ELM_PLIST(ELM_PLIST(rules, i), 1));
-      word_t rhs = plist_to_word_t(ELM_PLIST(ELM_PLIST(rules, i), 2));
-      rels.push_back(make_pair(lhs, rhs));
-    }
+    size_t nrgens = LEN_PLIST(semi_obj_get_gens(range_obj));
 
-    // convert the generating pairs to relation_t's
+    cong = new Congruence(type, Congruence::policy::runners::none);
+    cong->set_nr_generators(nrgens);
+
+    auto tc = new libsemigroups::congruence::ToddCoxeter(type);
+    tc->set_nr_generators(nrgens);
+
+    // convert the generating pairs to relation_type's
     for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
       Obj rhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
@@ -166,40 +169,33 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
                           INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, lhs_obj)));
       Obj rhs = ELM_PLIST(words,
                           INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, rhs_obj)));
-
-      extra.push_back(make_pair(plist_to_word_t(lhs), plist_to_word_t(rhs)));
+      tc->add_pair(plist_to_word_type(lhs), plist_to_word_type(rhs));
     }
-
-    size_t nrgens = LEN_PLIST(semi_obj_get_gens(range_obj));
 
     Obj graph;
 
-    if (type == "left") {
+    if (type == congruence_type::left) {
       // the left Cayley graph
       graph = ElmPRec(data, RNam_left);
     } else {
-      SEMIGROUPS_ASSERT(type == "right" || type == "twosided");
+      SEMIGROUPS_ASSERT(type == congruence_type::right
+                        || type == congruence_type::twosided);
       // the right Cayley graph
       graph = ElmPRec(data, RNam_right);
     }
 
-    RecVec<size_t> prefill(nrgens, LEN_PLIST(graph) + 1);
-
-    Obj genslookup = ElmPRec(data, RNam_genslookup);
-    for (size_t i = 0; i < nrgens; i++) {
-      prefill.set(0, i, INT_INTOBJ(ELM_PLIST(genslookup, i + 1)));
-    }
+    DynamicArray2<size_t> table(nrgens, LEN_PLIST(graph));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(graph); i++) {
       Obj next = ELM_PLIST(graph, i);
       for (size_t j = 1; j <= nrgens; j++) {
-        prefill.set(i, j - 1, INT_INTOBJ(ELM_PLIST(next, j)));
+        table.set(i - 1, j - 1, INT_INTOBJ(ELM_PLIST(next, j)) - 1);
       }
     }
-    cong = new Congruence(type, nrgens, std::vector<relation_t>(), extra);
-    cong->set_report(report);
-    cong->set_prefill(prefill);
+    tc->prefill(table);
+    cong->add_runner(*tc);
   }
+  SEMIGROUPS_ASSERT(cong != nullptr);
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
 }
 
@@ -221,17 +217,17 @@ Obj CONG_PAIRS_NR_CLASSES(Obj self, gap_cong_t o) {
 Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
   initRNams();
 
-  word_t lhs, rhs;
+  word_type lhs, rhs;
 
   if (cong_obj_is_fp_cong(o)) {
-    lhs = plist_to_word_t(elm1);
-    rhs = plist_to_word_t(elm2);
+    lhs = plist_to_word_type(elm1);
+    rhs = plist_to_word_type(elm2);
   } else {
     gap_semigroup_t S       = cong_obj_get_range_obj(o);
     size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm1));
     size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm2));
-    SEMIGROUPS_ASSERT(lhs_pos != Semigroup::UNDEFINED);
-    SEMIGROUPS_ASSERT(rhs_pos != Semigroup::UNDEFINED);
+    SEMIGROUPS_ASSERT(lhs_pos != UNDEFINED);
+    SEMIGROUPS_ASSERT(rhs_pos != UNDEFINED);
 
     if (IsbPRec(o, RNam_fin_cong_lookup)) {
       // TODO(JDM) use FindPRec and GET_ELM_PREC
@@ -241,7 +237,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
     }
 
     if (cong_obj_get_range_type(o) != UNKNOWN) {
-      Semigroup* range = cong_obj_get_range(o);
+      FroidurePin<Element const*>* range = cong_obj_get_range(o);
 
       range->factorisation(lhs, lhs_pos - 1);
       range->factorisation(rhs, rhs_pos - 1);
@@ -249,13 +245,13 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
       gap_rec_t  data  = fropin(S, INTOBJ_INT(-1), 0, False);
       gap_list_t words = ElmPRec(data, RNam_words);
 
-      lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
-      rhs = plist_to_word_t(ELM_PLIST(words, rhs_pos));
+      lhs = plist_to_word_type(ELM_PLIST(words, lhs_pos));
+      rhs = plist_to_word_type(ELM_PLIST(words, rhs_pos));
     }
   }
 
   Congruence* cong = cong_obj_get_cpp(o);
-  return (cong->test_equals(lhs, rhs) ? True : False);
+  return (cong->contains(lhs, rhs) ? True : False);
 }
 
 // This describes a total ordering on the classes of the congruence.
@@ -266,18 +262,18 @@ Obj CONG_PAIRS_LESS_THAN(Obj        self,
                          gap_list_t rep2) {
   initRNams();
 
-  word_t lhs, rhs;
+  word_type lhs, rhs;
 
   if (cong_obj_is_fp_cong(o)) {
-    lhs = plist_to_word_t(rep1);
-    rhs = plist_to_word_t(rep2);
+    lhs = plist_to_word_type(rep1);
+    rhs = plist_to_word_type(rep2);
   } else {
     gap_semigroup_t S       = cong_obj_get_range_obj(o);
     size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, rep1));
     size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, rep2));
 
     if (cong_obj_get_range_type(o) != UNKNOWN) {
-      Semigroup* range = cong_obj_get_range(o);
+      FroidurePin<Element const*>* range = cong_obj_get_range(o);
 
       range->factorisation(lhs, lhs_pos - 1);
       range->factorisation(rhs, rhs_pos - 1);
@@ -285,13 +281,13 @@ Obj CONG_PAIRS_LESS_THAN(Obj        self,
       gap_rec_t  data  = fropin(S, INTOBJ_INT(-1), 0, False);
       gap_list_t words = ElmPRec(data, RNam_words);
 
-      lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
-      rhs = plist_to_word_t(ELM_PLIST(words, rhs_pos));
+      lhs = plist_to_word_type(ELM_PLIST(words, lhs_pos));
+      rhs = plist_to_word_type(ELM_PLIST(words, rhs_pos));
     }
   }
 
   Congruence* cong = cong_obj_get_cpp(o);
-  return (cong->test_less_than(lhs, rhs) ? True : False);
+  return (cong->less(lhs, rhs) ? True : False);
 }
 
 Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
@@ -323,13 +319,13 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   Obj lookup;
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
-    Semigroup* range = cong_obj_get_range(o);
-    range->set_report(report);
+    FroidurePin<Element const*>* range = cong_obj_get_range(o);
+    auto rg = ReportGuard(report);
 
     lookup = NEW_PLIST_IMM(T_PLIST_CYC, range->size());
     SET_LEN_PLIST(lookup, range->size());
 
-    word_t word;
+    word_type word;
     for (size_t i = 0; i < range->size(); i++) {
       range->factorisation(word, i);  // changes word in place
       size_t class_index = cong->word_to_class_index(word);
@@ -359,7 +355,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
       size_t class_index
-          = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
+          = cong->word_to_class_index(plist_to_word_type(ELM_PLIST(words, i)));
 
       auto it = class_dictionary.find(class_index);
       if (it == class_dictionary.end()) {
@@ -395,13 +391,12 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
   } else if (cong_obj_is_fp_cong(cong_obj)) {
     // elm should be a gap_list_t representing a word
     Congruence* cong = cong_obj_get_cpp(cong_obj);
-    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(elm)) + 1);
+    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_type(elm)) + 1);
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
-    Congruence* cong  = cong_obj_get_cpp(cong_obj);
-    Semigroup*  range = cong_obj_get_range(cong_obj);
-    range->set_report(report);
-
-    word_t word;
+    Congruence*  cong  = cong_obj_get_cpp(cong_obj);
+    FroidurePin<Element const*>* range = cong_obj_get_range(cong_obj);
+    auto rg = ReportGuard(report);
+    word_type word;
     range->factorisation(
         word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)) - 1);
     return INTOBJ_INT(cong->word_to_class_index(word) + 1);
@@ -412,7 +407,7 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),
                          INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)));
 
-    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(word)) + 1);
+    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_type(word)) + 1);
   }
 }
 
@@ -420,26 +415,22 @@ gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
   initRNams();
   Congruence* cong = cong_obj_get_cpp(o);
 
-  Partition<word_t>* nt_classes = cong->nontrivial_classes();
-
   // Initialise gap_lists
-  gap_list_t gap_lists = NEW_PLIST_IMM(T_PLIST_TAB, nt_classes->size());
-  SET_LEN_PLIST(gap_lists, nt_classes->size());
+  gap_list_t gap_lists
+      = NEW_PLIST_IMM(T_PLIST_TAB, cong->nr_non_trivial_classes());
+  SET_LEN_PLIST(gap_lists, cong->nr_non_trivial_classes());
 
   // Convert the words to plists
-  for (size_t c = 0; c < nt_classes->size(); c++) {
-    gap_list_t next_class
-        = NEW_PLIST_IMM(T_PLIST_TAB, (*nt_classes)[c]->size());
-    SET_LEN_PLIST(next_class, (*nt_classes)[c]->size());
-    for (size_t e = 0; e < (*nt_classes)[c]->size(); e++) {
-      SET_ELM_PLIST(next_class, e + 1, word_t_to_plist((*(*nt_classes)[c])[e]));
+  for (auto it1 = cong->cbegin_ntc(); it1 < cong->cend_ntc(); ++it1) {
+    gap_list_t next_class = NEW_PLIST_IMM(T_PLIST_TAB, it1->size());
+    SET_LEN_PLIST(next_class, it1->size());
+    size_t pos = 0;
+    for (auto it2 = it1->cbegin(); it2 < it1->cend(); ++it2) {
+      SET_ELM_PLIST(next_class, ++pos, word_type_to_plist(&(*it2)));
       CHANGED_BAG(next_class);
     }
-    SET_ELM_PLIST(gap_lists, c + 1, next_class);
+    SET_ELM_PLIST(gap_lists, (it1 - cong->cbegin_ntc()) + 1, next_class);
     CHANGED_BAG(gap_lists);
   }
-
-  delete nt_classes;
-
   return gap_lists;
 }
