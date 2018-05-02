@@ -32,7 +32,7 @@
 #include "src/compiled.h"
 
 using libsemigroups::Element;
-using libsemigroups::glob_reporter;
+using libsemigroups::REPORTER;
 using libsemigroups::Timer;
 
 // Global variables
@@ -97,7 +97,7 @@ inline Obj blocks_new_obj(Blocks* x) {
 
 Obj BIPART_NC(Obj self, Obj gap_blocks) {
   SEMIGROUPS_ASSERT(IS_LIST(gap_blocks));
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  std::vector<u_int32_t> blocks;
 
   size_t degree         = 0;
   size_t nr_left_blocks = 0;
@@ -110,7 +110,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
         SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(gap_blocks, i)));
         degree += LEN_LIST(ELM_LIST(gap_blocks, i));
       }
-      blocks->resize(degree);
+      blocks.resize(degree);
 
       degree /= 2;
 
@@ -120,20 +120,20 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
           SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
           int jj = INT_INTOBJ(ELM_LIST(block, j));
           if (jj < 0) {
-            (*blocks)[-jj + degree - 1] = i - 1;
+            blocks[-jj + degree - 1] = i - 1;
           } else {
             nr_left_blocks    = i;
-            (*blocks)[jj - 1] = i - 1;
+            blocks[jj - 1] = i - 1;
           }
         }
       }
     } else {  // gap_blocks is the internal rep of a bipartition
-      blocks->reserve(LEN_LIST(gap_blocks));
+      blocks.reserve(LEN_LIST(gap_blocks));
       for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
         u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
-        blocks->push_back(index);
+        blocks.push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
       }
       nr_left_blocks = nr_blocks + 1;
@@ -143,7 +143,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
         u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
-        blocks->push_back(index);
+        blocks.push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
       }
       nr_blocks++;
@@ -343,18 +343,17 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
             -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * deg, -1);
+  std::vector<u_int32_t> blocks(2 * deg, -1);
 
   for (size_t i = 0; i < deg; i++) {
-    (*blocks)[i] = xx->at(i);
+    blocks[i] = xx->at(i);
     if (xx->is_transverse_block(xx->at(i))) {
-      (*blocks)[i + deg] = xx->at(i);
+      blocks[i + deg] = xx->at(i);
     } else if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
+      blocks[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
-      (*blocks)[i + deg]        = next;
+      blocks[i + deg]        = next;
       next++;
     }
   }
@@ -380,8 +379,7 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
   auto buf1 = _BUFFER_size_t.begin();
   auto buf2 = _BUFFER_size_t.begin() + 2 * deg;
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * deg, -1);
+  std::vector<u_int32_t> blocks(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
     if (buf2[xx->at(i)] == (size_t) -1) {
@@ -392,8 +390,8 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
         buf1[xx->at(i)] = l_block++;
       }
     }
-    (*blocks)[i - deg] = buf1[xx->at(i)];
-    (*blocks)[i]       = buf2[xx->at(i)];
+    blocks[i - deg] = buf1[xx->at(i)];
+    blocks[i]       = buf2[xx->at(i)];
   }
 
   Bipartition* out = new Bipartition(blocks);
@@ -414,17 +412,16 @@ Obj BIPART_STAR(Obj self, Obj x) {
             -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * deg, -1);
+  std::vector<u_int32_t> blocks(2 * deg, -1);
 
   size_t next = 0;
 
   for (size_t i = 0; i < deg; i++) {
     if (_BUFFER_size_t[xx->at(i + deg)] != (size_t) -1) {
-      (*blocks)[i] = _BUFFER_size_t[xx->at(i + deg)];
+      blocks[i] = _BUFFER_size_t[xx->at(i + deg)];
     } else {
       _BUFFER_size_t[xx->at(i + deg)] = next;
-      (*blocks)[i]                    = next;
+      blocks[i]                    = next;
       next++;
     }
   }
@@ -433,10 +430,10 @@ Obj BIPART_STAR(Obj self, Obj x) {
 
   for (size_t i = 0; i < deg; i++) {
     if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
+      blocks[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
-      (*blocks)[i + deg]        = next;
+      blocks[i + deg]        = next;
       next++;
     }
   }
@@ -559,8 +556,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   size_t deg       = xx->degree();
   size_t nr_blocks = xx->nr_blocks();
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * deg);
+  std::vector<u_int32_t> blocks(2 * deg);
 
   _BUFFER_size_t.clear();
   _BUFFER_size_t.resize(2 * nr_blocks + std::max(deg, pdeg), -1);
@@ -600,8 +596,8 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   }
 
   for (size_t i = 0; i < deg; i++) {
-    (*blocks)[i]       = xx->at(i);
-    (*blocks)[i + deg] = tab2[tab1[xx->at(i + deg)]];
+    blocks[i]       = xx->at(i);
+    blocks[i + deg] = tab2[tab1[xx->at(i + deg)]];
   }
 
   return bipart_new_obj(new Bipartition(blocks));
@@ -788,21 +784,20 @@ Obj BLOCKS_PROJ(Obj self, Obj x) {
   _BUFFER_size_t.clear();
   _BUFFER_size_t.resize(blocks->nr_blocks(), -1);
 
-  std::vector<u_int32_t>* out = new std::vector<u_int32_t>();
-  out->resize(2 * blocks->degree());
+  std::vector<u_int32_t> out(2 * blocks->degree());
   u_int32_t nr_blocks = blocks->nr_blocks();
 
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
     u_int32_t index = blocks->block(i);
-    (*out)[i]       = index;
+    out[i]       = index;
     if (blocks->is_transverse_block(index)) {
-      (*out)[i + blocks->degree()] = index;
+      out[i + blocks->degree()] = index;
     } else {
       if (_BUFFER_size_t[index] == (size_t) -1) {
         _BUFFER_size_t[index] = nr_blocks;
         nr_blocks++;
       }
-      (*out)[i + blocks->degree()] = _BUFFER_size_t[index];
+      out[i + blocks->degree()] = _BUFFER_size_t[index];
     }
   }
   return bipart_new_obj(new Bipartition(out));
@@ -915,22 +910,21 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
     }
   }
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * left->degree());
+  std::vector<u_int32_t> blocks(2 * left->degree());
 
   size_t next = right->nr_blocks();
 
   for (size_t i = 0; i < left->degree(); i++) {
-    (*blocks)[i] = right->block(i);
+    blocks[i] = right->block(i);
     size_t j     = left->block(i);
     if (left->is_transverse_block(j)) {
-      (*blocks)[i + left->degree()] = tab1[fuse_it(j)];
+      blocks[i + left->degree()] = tab1[fuse_it(j)];
     } else {
       if (tab2[j] == (size_t) -1) {
         tab2[j] = next;
         next++;
       }
-      (*blocks)[i + left->degree()] = tab2[j];
+      blocks[i + left->degree()] = tab2[j];
     }
   }
 
@@ -1066,8 +1060,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
        x->nr_blocks(),
        false);
 
-  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
-  out_blocks->resize(2 * x->degree());
+  std::vector<u_int32_t> out_blocks(2 * x->degree());
 
   _BUFFER_size_t.resize(2 * blocks->nr_blocks() + x->nr_blocks(), -1);
   auto tab = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
@@ -1080,12 +1073,12 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
 
   // find the left blocks of the output
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
-    (*out_blocks)[i] = blocks->block(i);
+    out_blocks[i] = blocks->block(i);
     u_int32_t j      = fuse_it(x->at(i) + blocks->nr_blocks());
     if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
-      (*out_blocks)[i + x->degree()] = blocks->nr_blocks();  // junk
+      out_blocks[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
-      (*out_blocks)[i + x->degree()] = tab[j];
+      out_blocks[i + x->degree()] = tab[j];
     }
   }
 
@@ -1159,8 +1152,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
   u_int32_t junk = -1;
   u_int32_t next = 0;
 
-  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
-  out_blocks->resize(2 * x->degree());
+  std::vector<u_int32_t> out_blocks(2 * x->degree());
 
   _BUFFER_size_t.resize(3 * blocks->nr_blocks() + 2 * x->nr_blocks(), -1);
   auto tab1 = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
@@ -1176,7 +1168,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
           tab1[j] = next;
           next++;
         }
-        (*out_blocks)[i] = tab1[j];
+        out_blocks[i] = tab1[j];
         continue;
       }
     }
@@ -1184,7 +1176,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
       junk = next;
       next++;
     }
-    (*out_blocks)[i] = junk;
+    out_blocks[i] = junk;
   }
 
   u_int32_t out_nr_left_blocks = next;
@@ -1194,13 +1186,13 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
   for (u_int32_t i = blocks->degree(); i < 2 * blocks->degree(); i++) {
     u_int32_t j = blocks->block(i - blocks->degree());
     if (blocks->is_transverse_block(j)) {
-      (*out_blocks)[i] = tab1[fuse_it(j)];
+      out_blocks[i] = tab1[fuse_it(j)];
     } else {
       if (tab2[j] == (size_t) -1) {
         tab2[j] = next;
         next++;
       }
-      (*out_blocks)[i] = tab2[j];
+      out_blocks[i] = tab2[j];
     }
   }
 
@@ -1374,8 +1366,8 @@ class IdempotentCounter {
   }
 
   std::vector<size_t> count() {
-    glob_reporter.reset_thread_ids();
-    glob_reporter.set_report(_report);
+    REPORTER.reset_thread_ids();
+    REPORTER.set_report(_report);
     REPORT("using " << _nr_threads << " / "
                     << std::thread::hardware_concurrency() << " threads");
     Timer timer;

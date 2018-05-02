@@ -74,19 +74,19 @@ template <typename T> class TransConverter : public Converter {
   Transformation<T>* convert(Obj o, size_t n) const override {
     SEMIGROUPS_ASSERT(IS_TRANS(o));
 
-    auto x = new std::vector<T>();
-    x->reserve(n);
+    std::vector<T> x;
+    x.reserve(n);
 
     size_t i = 0;
     if (TNUM_OBJ(o) == T_TRANS2) {
       UInt2* pto2 = ADDR_TRANS2(o);
       for (i = 0; i < std::min((size_t) DEG_TRANS2(o), n); i++) {
-        x->push_back(pto2[i]);
+        x.push_back(pto2[i]);
       }
     } else if (TNUM_OBJ(o) == T_TRANS4) {
       UInt4* pto4 = ADDR_TRANS4(o);
       for (i = 0; i < std::min((size_t) DEG_TRANS4(o), n); i++) {
-        x->push_back(pto4[i]);
+        x.push_back(pto4[i]);
       }
     } else {
       // in case of future changes to transformations in GAP
@@ -94,7 +94,7 @@ template <typename T> class TransConverter : public Converter {
     }
 
     for (; i < n; i++) {
-      x->push_back(i);
+      x.push_back(i);
     }
     return new Transformation<T>(x);
   }
@@ -129,26 +129,26 @@ template <typename T> class PPermConverter : public Converter {
   PartialPerm<T>* convert(Obj o, size_t n) const override {
     SEMIGROUPS_ASSERT(IS_PPERM(o));
 
-    auto x = new std::vector<T>();
-    x->reserve(n);
+    std::vector<T> x;
+    x.reserve(n);
 
     size_t i = 0;
     if (TNUM_OBJ(o) == T_PPERM2) {
       UInt2* pto2 = ADDR_PPERM<UInt2>(o);
       for (i = 0; i < std::min((size_t) DEG_PPERM2(o), n); i++) {
         if (pto2[i] == 0) {
-          x->push_back(UNDEFINED);
+          x.push_back(UNDEFINED);
         } else {
-          x->push_back(pto2[i] - 1);
+          x.push_back(pto2[i] - 1);
         }
       }
     } else if (TNUM_OBJ(o) == T_PPERM4) {
       UInt4* pto4 = ADDR_PPERM<UInt4>(o);
       for (i = 0; i < std::min((size_t) DEG_PPERM4(o), n); i++) {
         if (pto4[i] == 0) {
-          x->push_back(UNDEFINED);
+          x.push_back(UNDEFINED);
         } else {
-          x->push_back(pto4[i] - 1);
+          x.push_back(pto4[i] - 1);
         }
       }
     } else {
@@ -157,7 +157,7 @@ template <typename T> class PPermConverter : public Converter {
     }
 
     for (; i < n; i++) {
-      x->push_back(UNDEFINED);
+      x.push_back(UNDEFINED);
     }
     return new PartialPerm<T>(x);
   }
@@ -235,17 +235,17 @@ class MatrixOverSemiringConverter : public Converter {
 
     size_t m = LEN_PLIST(ELM_PLIST(o, 1));
 
-    std::vector<int64_t>* matrix(new std::vector<int64_t>());
-    matrix->reserve(m);
+    std::vector<int64_t> matrix;
+    matrix.reserve(m);
 
     for (size_t i = 0; i < m; i++) {
       Obj row = ELM_PLIST(o, i + 1);
       for (size_t j = 0; j < m; j++) {
         Obj entry = ELM_PLIST(row, j + 1);
         if (EQ(_gap_zero, entry)) {
-          matrix->push_back(_semiring->zero());
+          matrix.push_back(_semiring->zero());
         } else {
-          matrix->push_back(INT_INTOBJ(entry));
+          matrix.push_back(INT_INTOBJ(entry));
         }
       }
     }

@@ -1,5 +1,5 @@
 //
-// Semigroups package for GAP
+// Semigroup<>s package for GAP
 // Copyright (C) 2016 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ using libsemigroups::Congruence;
 using libsemigroups::Partition;
 using libsemigroups::RecVec;
 using libsemigroups::relation_t;
+using libsemigroups::REPORTER;
 using libsemigroups::word_t;
 
 static inline word_t plist_to_word_t(gap_list_t plist) {
@@ -66,13 +67,13 @@ static inline gap_semigroup_t cong_obj_get_range_obj(gap_cong_t o) {
   return ElmPRec(o, RNam_range);
 }
 
-static inline Semigroup* cong_obj_get_range(gap_cong_t o) {
+static inline Semigroup<>* cong_obj_get_range(gap_cong_t o) {
   return semi_obj_get_semi_cpp(cong_obj_get_range_obj(o));
 }
 
 static inline bool cong_obj_get_range_type(gap_cong_t o) {
   initRNams();
-  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  // SEMIGROUPS_ASSERT(IsSemigroup<>CongruenceByGeneratingPairsRep(o));
   return semi_obj_get_type(cong_obj_get_range_obj(o));
 }
 
@@ -82,7 +83,7 @@ static inline bool cong_obj_is_fp_cong(gap_cong_t cong) {
 }
 
 static void cong_obj_init_cpp_cong(gap_cong_t o) {
-  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  // SEMIGROUPS_ASSERT(IsSemigroup<>CongruenceByGeneratingPairsRep(o));
   SEMIGROUPS_ASSERT(!cong_obj_has_cpp_cong(o));
 
   initRNams();
@@ -120,10 +121,10 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     }
 
     cong = new Congruence(type, nrgens, rels, extra);
-    cong->set_report(report);
+    REPORTER.set_report(report);
   } else if (cong_obj_get_range_type(o) != UNKNOWN) {
-    Semigroup* range = cong_obj_get_range(o);
-    range->set_report(report);
+    Semigroup<>* range = cong_obj_get_range(o);
+    REPORTER.set_report(report);
 
     std::vector<relation_t> extra;
     word_t                  lhs, rhs;
@@ -142,7 +143,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
       rhs.clear();
     }
     cong = new Congruence(type, range, extra);
-    cong->set_report(report);
+    REPORTER.set_report(report);
   } else {
     gap_rec_t               data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t              rules = ElmPRec(data, RNam_rules);
@@ -197,7 +198,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
       }
     }
     cong = new Congruence(type, nrgens, std::vector<relation_t>(), extra);
-    cong->set_report(report);
+    REPORTER.set_report(report);
     cong->set_prefill(prefill);
   }
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
@@ -230,8 +231,8 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
     gap_semigroup_t S       = cong_obj_get_range_obj(o);
     size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm1));
     size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm2));
-    SEMIGROUPS_ASSERT(lhs_pos != Semigroup::UNDEFINED);
-    SEMIGROUPS_ASSERT(rhs_pos != Semigroup::UNDEFINED);
+    SEMIGROUPS_ASSERT(lhs_pos != Semigroup<>::UNDEFINED);
+    SEMIGROUPS_ASSERT(rhs_pos != Semigroup<>::UNDEFINED);
 
     if (IsbPRec(o, RNam_fin_cong_lookup)) {
       // TODO(JDM) use FindPRec and GET_ELM_PREC
@@ -242,7 +243,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
     }
 
     if (cong_obj_get_range_type(o) != UNKNOWN) {
-      Semigroup* range = cong_obj_get_range(o);
+      Semigroup<>* range = cong_obj_get_range(o);
 
       range->factorisation(lhs, lhs_pos - 1);
       range->factorisation(rhs, rhs_pos - 1);
@@ -278,7 +279,7 @@ Obj CONG_PAIRS_LESS_THAN(Obj        self,
     size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, rep2));
 
     if (cong_obj_get_range_type(o) != UNKNOWN) {
-      Semigroup* range = cong_obj_get_range(o);
+      Semigroup<>* range = cong_obj_get_range(o);
 
       range->factorisation(lhs, lhs_pos - 1);
       range->factorisation(rhs, rhs_pos - 1);
@@ -324,8 +325,8 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   Obj lookup;
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
-    Semigroup* range = cong_obj_get_range(o);
-    range->set_report(report);
+    Semigroup<>* range = cong_obj_get_range(o);
+    REPORTER.set_report(report);
 
     lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, range->size());
     SET_LEN_PLIST(lookup, range->size());
@@ -400,9 +401,9 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
     Congruence* cong = cong_obj_get_cpp(cong_obj);
     return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(elm)) + 1);
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
-    Congruence* cong  = cong_obj_get_cpp(cong_obj);
-    Semigroup*  range = cong_obj_get_range(cong_obj);
-    range->set_report(report);
+    Congruence*  cong  = cong_obj_get_cpp(cong_obj);
+    Semigroup<>* range = cong_obj_get_range(cong_obj);
+    REPORTER.set_report(report);
 
     word_t word;
     range->factorisation(

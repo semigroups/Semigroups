@@ -57,12 +57,12 @@ enum en_semi_t {
 
 // C++ functions
 
-size_t     semi_obj_get_batch_size(gap_semigroup_t so);
-bool       semi_obj_get_report(gap_semigroup_t so);
-gap_list_t semi_obj_get_gens(gap_semigroup_t so);
-gap_rec_t  semi_obj_get_fropin(gap_semigroup_t so);
-en_semi_t  semi_obj_get_type(gap_semigroup_t so);
-Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
+size_t       semi_obj_get_batch_size(gap_semigroup_t so);
+bool         semi_obj_get_report(gap_semigroup_t so);
+gap_list_t   semi_obj_get_gens(gap_semigroup_t so);
+gap_rec_t    semi_obj_get_fropin(gap_semigroup_t so);
+en_semi_t    semi_obj_get_type(gap_semigroup_t so);
+Semigroup<>* semi_obj_get_semi_cpp(gap_semigroup_t so);
 
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
@@ -84,8 +84,8 @@ static inline size_t en_semi_get_degree(en_semi_obj_t es) {
   return CLASS_OBJ<size_t>(es, 3);
 }
 
-Converter* en_semi_get_converter(en_semi_obj_t es);
-Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es);
+Converter*   en_semi_get_converter(en_semi_obj_t es);
+Semigroup<>* en_semi_get_semi_cpp(en_semi_obj_t es);
 
 // GAP level functions for IsEnumerableSemigroupRep
 
