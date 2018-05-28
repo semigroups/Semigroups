@@ -147,7 +147,6 @@ function(blocks)
   local n, next, seen, i;
 
   n := Length(blocks);
-
   if not IsEvenInt(n) then
     ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
                   "the length of the argument <blocks> must be an even ",
@@ -162,9 +161,8 @@ function(blocks)
                   "integers not exceeding ", n, ",");
   fi;
 
-  n := n / 2;
   next := 0;
-  seen := BlistList([1 .. 2 * Maximum(blocks)], []);
+  seen := BlistList([1 .. Maximum(blocks)], []);
 
   for i in [1 .. n] do
     if not seen[blocks[i]] then
@@ -177,19 +175,6 @@ function(blocks)
       seen[blocks[i]] := true;
     fi;
   od;
-
-  for i in [n + 1 .. 2 * n] do
-    if not seen[blocks[i]] then
-      next := next + 1;
-      if blocks[i] <> next then
-        ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                      "expected ", next, " but found ", blocks[i],
-                      ", in position ", i, ",");
-      fi;
-      seen[blocks[i]] := true;
-    fi;
-  od;
-
   return BIPART_NC(blocks);
 end);
 
