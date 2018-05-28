@@ -601,9 +601,8 @@ gap> MaximalSubsemigroups(U);
   <subsemigroup of 3x4 Rees 0-matrix semigroup with 5 generators> ]
 
 # maximal: MaximalSubsemigroups, for a permutation group, 1
-gap> MaximalSubsemigroups(SymmetricGroup(3));
-[ <group with 1 generator>, <group with 1 generator>, <group with 1 generator>
- , <group with 1 generator> ]
+gap> List(MaximalSubsemigroups(SymmetricGroup(3)), IsGroupAsSemigroup);
+[ true, true, true, true ]
 
 # maximal: MaximalSubsemigroups, for a transformation group, 1
 gap> MaximalSubsemigroups(Semigroup(Transformation([2, 3, 1])))

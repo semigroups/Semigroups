@@ -478,6 +478,14 @@ function(S, x)
   return EN_SEMI_POSITION(S, x);
 end);
 
+InstallMethod(PositionCanonical,
+"for a perm group with known generators and multiplicative element",
+[IsPermGroup and HasGeneratorsOfGroup and IsEnumerableSemigroupRep,
+ IsMultiplicativeElement],
+function(G, x)
+  return EN_SEMI_POSITION(G, x);
+end);
+
 # Position exists so that we can call it on objects with an uninitialised data
 # structure, without first having to initialise the data structure to realise
 # that <x> is not in it.

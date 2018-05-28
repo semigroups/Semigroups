@@ -394,9 +394,9 @@ the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 > BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> IsomorphismPermGroup(S);
-MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>, 
-<group of size 6, with 2 generators>
-, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>
+, Group([ (1,3)(2,5)(4,6), (1,4,5)
+(2,6,3) ]), function( x ) ... end, function( x ) ... end )
 
 # IsomorphismPermGroup, infinite 1 / 1
 gap> IsomorphismPermGroup(FreeMonoid(3));
