@@ -941,7 +941,7 @@ gap> IsMonogenicSemigroup(S);
 true
 gap> x := MinimalSemigroupGeneratingSet(S)[1];;
 gap> S := Semigroup(x, x, x);;
-gap> HasIsMonogenicSemigroup(S) and IsMonogenicSemigroup(S);
+gap> IsMonogenicSemigroup(S);
 true
 
 # properties: IsMonogenicInverseSemigroup, 1
