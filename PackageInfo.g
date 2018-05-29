@@ -169,6 +169,16 @@ Persons := [
 
   rec(
     LastName      := "Smith",
+    FirstNames    := "F.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "fls3@st-andrews.ac.uk",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName      := "Smith",
     FirstNames    := "J.",
     IsAuthor      := false,
     IsMaintainer  := false,
