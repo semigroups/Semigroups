@@ -1068,6 +1068,11 @@ gap> AsSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(3), S);
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(3), S);
 <monoid of 3x3 matrices over GF(3) with 3 generators>
 
+# Test MinimalFactorization for too large monoids
+gap> S := FullTransformationMonoid(10);;
+gap> MinimalFactorization(S, S.3 * S.2);
+[ 4, 3 ]
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigrp.tst");
