@@ -4,16 +4,19 @@
 
   <Author>J. D. Mitchell
     <Email>jdm3@st-and.ac.uk</Email>
-    <Homepage>http://tinyurl.com/jdmitchell</Homepage>
+    <Homepage>http://www-groups.mcs.st-andrews.ac.uk/~jamesm/</Homepage>
   </Author>
 
+  <Author>Stuart Burrell</Author>
   <Author>Manuel Delgado</Author>
   <Author>James East</Author>
   <Author>Attila Egri-Nagy</Author>
   <Author>Nicholas Ham</Author>
   <Author>Julius Jonu&#353;as</Author>
   <Author>Markus Pfeiffer</Author>
+  <Author>Chris Russell</Author>
   <Author>Ben Steinberg</Author>
+  <Author>Finn Smith</Author>
   <Author>Jhevon Smith</Author>
   <Author>Michael Torpey</Author>
   <Author>Wilf A. Wilson</Author>
@@ -81,6 +84,9 @@
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.
     <P/>
+
+    Zak Mesyan contributed to the code for graph inverse semigroups 
+    <Ref Chap="GraphInverseSemigroups"/>.<P/>
 
     Markus Pfeiffer contributed the majority of the code relating to
     semigroups of matrices over finite fields.
