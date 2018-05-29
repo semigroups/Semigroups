@@ -629,5 +629,5 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   fi;
-  return EN_SEMI_FACTORIZATION(S, PositionCanonical(S, x));
+  return ShallowCopy(EN_SEMI_FACTORIZATION(S, PositionCanonical(S, x)));
 end);
