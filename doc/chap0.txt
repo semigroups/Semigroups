@@ -3,10 +3,12 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.15
+                                 Version 3.0.16
   
   
                                  J. D. Mitchell
+  
+                                 Stuart Burrell
   
                                  Manuel Delgado
   
@@ -20,7 +22,11 @@
   
                                 Markus Pfeiffer
   
+                                 Chris Russell
+  
                                  Ben Steinberg
+  
+                                   Finn Smith
   
                                   Jhevon Smith
   
@@ -32,7 +38,7 @@
   
   J. D. Mitchell
       Email:    [7Xmailto:jdm3@st-and.ac.uk[107X
-      Homepage: [7Xhttp://tinyurl.com/jdmitchell[107X
+      Homepage: [7Xhttp://www-groups.mcs.st-andrews.ac.uk/~jamesm/[107X
   
   -------------------------------------------------------
   [1XAbstract[101X
@@ -96,6 +102,8 @@
   
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
+  
+  [33X[0;0YZak Mesyan contributed to the code for graph inverse semigroups [14X11[114X.[133X
   
   [33X[0;0YMarkus  Pfeiffer contributed the majority of the code relating to semigroups
   of matrices over finite fields.[133X
