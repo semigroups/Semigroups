@@ -110,12 +110,12 @@ void TBipartObjCleanFunc(Obj o) {}
 
 void TBlocksObjCleanFunc(Obj o) {}
 
-Int TBipartObjIsMutableObjFuncs(Obj o) {
+Int TBipartObjIsMutableObjFunc(Obj o) {
   // Bipartition objects are mathematically immutable.
   return 0L;
 }
 
-Int TBlocksObjIsMutableObjFuncs(Obj o) {
+Int TBlocksObjIsMutableObjFunc(Obj o) {
   // Blocks objects are mathematically immutable.
   return 0L;
 }
@@ -242,6 +242,28 @@ void TSemiObjLoadFunc(Obj o) {
     default: { SEMIGROUPS_ASSERT(false); }
   }
 }
+
+Obj TSemiObjCopyFunc(Obj o, Int mut) {
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
+  switch (SUBTYPE_OF_T_SEMI(o)) {
+    case T_SEMI_SUBTYPE_UF: {
+      return UF_COPY(0L, o);
+    }
+    default: { return o; }
+  }
+}
+
+Int TSemiObjIsMutableObjFunc(Obj o) {
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
+  switch (SUBTYPE_OF_T_SEMI(o)) {
+    case T_SEMI_SUBTYPE_UF: {
+      return 1L;
+    }
+    default: { return 0L; }
+  }
+}
+
+void TSemiObjCleanFunc(Obj o) {}
 
 void TBipartObjSaveFunc(Obj o) {
   Bipartition* b = bipart_get_cpp(o);
@@ -511,18 +533,19 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
-  T_SEMI                = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
-  InfoBags[T_SEMI].name = "Semigroups package C++ type";
-  PrintObjFuncs[T_SEMI] = TSemiObjPrintFunc;
-  SaveObjFuncs[T_SEMI]  = TSemiObjSaveFunc;
-  LoadObjFuncs[T_SEMI]  = TSemiObjLoadFunc;
+  T_SEMI                    = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
+  InfoBags[T_SEMI].name     = "Semigroups package C++ type";
+  PrintObjFuncs[T_SEMI]     = TSemiObjPrintFunc;
+  SaveObjFuncs[T_SEMI]      = TSemiObjSaveFunc;
+  LoadObjFuncs[T_SEMI]      = TSemiObjLoadFunc;
+  CopyObjFuncs[T_SEMI]      = &TSemiObjCopyFunc;
+  CleanObjFuncs[T_SEMI]     = &TSemiObjCleanFunc;
+  IsMutableObjFuncs[T_SEMI] = &TSemiObjIsMutableObjFunc;
 
   InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
   InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
-
-  // TODO(JDM): CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
 
   // T_BIPART
   T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
@@ -530,7 +553,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   CopyObjFuncs[T_BIPART]      = &TBipartObjCopyFunc;
   CleanObjFuncs[T_BIPART]     = &TBipartObjCleanFunc;
-  IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFuncs;
+  IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFunc;
 
   SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
   LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
@@ -551,7 +574,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   CopyObjFuncs[T_BLOCKS]      = &TBlocksObjCopyFunc;
   CleanObjFuncs[T_BLOCKS]     = &TBlocksObjCleanFunc;
-  IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFuncs;
+  IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFunc;
 
   SaveObjFuncs[T_BLOCKS] = TBlocksObjSaveFunc;
   LoadObjFuncs[T_BLOCKS] = TBlocksObjLoadFunc;
