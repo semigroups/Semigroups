@@ -128,6 +128,17 @@ gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S),
 >                                Factorization(S, x)) = x);
 true
 
+# Test mutability of factorisation and minimal factorisation
+gap> S := OrderEndomorphisms(7);;
+gap> Factorization(S, Transformation([2, 4, 4, 4, 7, 7, 7]));
+[ 7, 8, 4, 5, 6, 7, 2, 2, 3, 4, 2, 6, 5, 7, 8 ]
+gap> IsMutable(last);
+true
+gap> MinimalFactorization(S, Transformation([2, 4, 4, 4, 7, 7, 7]));
+[ 4, 3, 5, 7, 8 ]
+gap> IsMutable(last);
+true
+
 # FactorTest13: Factorization regularity is learned after creation
 gap> S := SingularTransformationSemigroup(5);
 <regular transformation semigroup ideal of degree 5 with 1 generator>
@@ -231,8 +242,6 @@ gap> MinimalFactorization(S, x);
 [ 5, 2, 5, 5, 2, 3 ]
 gap> Factorization(S, x);
 [ 5, 2, 5, 5, 2, 3 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), last) = x;
-true
 
 # factor: NonTrivialFactorization, for an fp semigroup, 1
 gap> S := FreeSemigroup(1);;

@@ -165,7 +165,7 @@ function(S)
     Add(gen, PermList(next));
   od;
 
-  G := Semigroup(gen);
+  G := Group(gen);
   UseIsomorphismRelation(S, G);
 
   iso := function(x)

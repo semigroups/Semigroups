@@ -41,7 +41,7 @@ matrix:
 
     - env:
       - SUITE=test
-      - GAP=master
+      - GAP=stable-4.9
       - PACKAGES=master
       - ABI=64
       sudo:
@@ -49,7 +49,7 @@ matrix:
 
     - env:
       - SUITE=test
-      - GAP=master
+      - GAP=stable-4.9
       - PACKAGES=master
       - ABI=32
       sudo:
@@ -57,7 +57,7 @@ matrix:
 
     - env:
       - SUITE=test
-      - GAP=master
+      - GAP=stable-4.9
       - PACKAGES=newest
       - ABI=64
       sudo:
@@ -65,10 +65,26 @@ matrix:
 
     - env:
       - SUITE=coverage
-      - GAP=master
+      - GAP=stable-4.9
       - PACKAGES=required
       - ABI=64
       - THRESHOLD=95
+      sudo:
+        required
+    
+    - env:
+      - SUITE=test
+      - GAP=master
+      - PACKAGES=newest
+      - ABI=64
+      sudo:
+        required
+    
+    - env:
+      - SUITE=test
+      - GAP=master
+      - PACKAGES=master
+      - ABI=64
       sudo:
         required
 
