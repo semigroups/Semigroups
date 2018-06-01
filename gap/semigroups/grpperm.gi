@@ -143,10 +143,9 @@ end;
 
 # fall back method, same method for ideals
 
-InstallMethod(IsomorphismPermGroup, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)
-  local cay, deg, gen, next, G, iso, inv, i;
+  local cay, deg, G, gen1, gen2, next, pos, iso, inv, i;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -158,23 +157,28 @@ function(S)
 
   cay := OutNeighbours(RightCayleyDigraph(S));
   deg := Size(S);
-  gen := [];
-
+  G   := Group(());
+  gen1 := [];
+  gen2 := [];
   for i in [1 .. Length(cay[1])] do
-    next := List([1 .. deg], j -> cay[j][i]);
-    Add(gen, PermList(next));
+    next := PermList(List([1 .. deg], j -> cay[j][i]));
+    Add(gen1, next);
+    G   := ClosureGroup(G, next);
+    pos := Position(GeneratorsOfGroup(G), next);
+    if pos <> fail then
+      gen2[pos] := i;
+    fi;
   od;
 
-  G := Group(gen);
   UseIsomorphismRelation(S, G);
 
   iso := function(x)
-    return EvaluateWord(gen, Factorization(S, x));
+    return EvaluateWord(gen1, Factorization(S, x));
   end;
 
   inv := function(x)
     return EvaluateWord(GeneratorsOfSemigroup(S),
-                        MinimalFactorization(G, x));
+                        List(MinimalFactorization(G, x), x -> gen2[x]));
   end;
 
   # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
