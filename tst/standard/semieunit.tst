@@ -106,7 +106,7 @@ gap> Image(Mps);
   (2, ()), (2, (2,3)), (2, (1,2,3)), (2, (1,3)), (3, ()), (3, (2,3)), 
   (3, (1,2)), (3, (1,3,2)) ]
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
-<McAlister triple semigroup over Group([ (2,3), (1,2,3), (2,3), (1,3,2) ])>
+<McAlister triple semigroup over Group([ (2,3), (1,2,3) ])>
 gap> ps := InverseSemigroup([PartialPerm([1, 4, 6, 7], [1, 4, 6, 7]),
 >   PartialPerm([2, 3, 6, 7], [2, 3, 6, 7]), PartialPerm([6, 7], [6, 7]),
 >   PartialPerm([2, 3, 5, 6, 7], [2, 3, 5, 6, 7]),
@@ -120,7 +120,7 @@ gap> Elements(Range(Mps));
 gap> IsWholeFamily(Image(Mps));
 true
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
-<McAlister triple semigroup over Group([ (), (), (), (1,2), (1,2), (1,2) ])>
+<McAlister triple semigroup over Group([ (1,2) ])>
 
 #T# AsSemigroup with bad input
 gap> T := Semigroup([PartialPerm([1], [3]),
