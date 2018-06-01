@@ -220,7 +220,7 @@ gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
 gap> G := Range(iso);
-Group([ (1,2,3,4), (1,3)(2,4) ])
+Group([ (1,2,3,4) ])
 gap> S := Semigroup(
 > [Matrix(IsMinPlusMatrix, [[infinity, 0, infinity], [0, infinity, infinity],
 >     [infinity, 0, infinity]]),
