@@ -68,8 +68,8 @@
     Stuart Burrell contributed methods for checking finiteness of semigroups of
     matrices of the max-plus and min-plus semirings.<P/>
 
-    Manuel Delgado and Attila Egri-Nagy contributed to the functions
-    <Ref Func = "Splash"/> and <Ref Oper = "DotString"/>.<P/>
+    Manuel Delgado and Attila Egri-Nagy contributed to the function
+    <Ref Oper = "DotString"/>.<P/>
 
     James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
     the package relating to bipartitions. I would like to thank the University
