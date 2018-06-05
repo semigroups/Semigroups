@@ -798,7 +798,7 @@ for _IsXSemigroup in ["IsTransformationSemigroup",
                       "IsIntegerMatrixSemigroup"] do
   InstallMethod(BrandtSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and a positive integer"),
-  [EvalString(_IsXSemigroup), IsPermGroup, IsPosInt],
+  [ValueGlobal(_IsXSemigroup), IsPermGroup, IsPosInt],
   function(filter, G, n)
     return AsSemigroup(filter,
                        BrandtSemigroupCons(IsPartialPermSemigroup, G, n));

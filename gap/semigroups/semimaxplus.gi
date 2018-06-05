@@ -283,7 +283,7 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
 
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, ", and a semigroup"),
-  [EvalString(_IsXSemigroup), IsSemigroup],
+  [ValueGlobal(_IsXSemigroup), IsSemigroup],
   function(filter, S)
     return IsomorphismSemigroup(filter, 1, S);
   end);
@@ -459,7 +459,7 @@ _InstallIsomorphism1 := function(filter)
 
   InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, " and a semigroup"),
-  [EvalString(IsXMonoid), IsSemigroup],
+  [ValueGlobal(IsXMonoid), IsSemigroup],
   function(filter, S)
     return IsomorphismMonoid(filter, 1, S);
   end);
@@ -493,7 +493,7 @@ _InstallIsomorphism1 := function(filter)
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", IsXSemigroup,
                 " and a transformation semigroup with generators"),
-  [EvalString(IsXSemigroup),
+  [ValueGlobal(IsXSemigroup),
    IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(filt, S)
     return IsomorphismSemigroup(filt, 1, S);
