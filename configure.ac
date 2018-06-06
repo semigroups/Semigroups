@@ -55,11 +55,6 @@ dnl ##
 AC_FIND_GAP
 
 dnl ##
-dnl ## Detect pointer size to distinguish 32 and 64 bit builds
-dnl ##
-AC_CHECK_SIZEOF([void **])
-
-dnl ##
 dnl ## Check for pthread, this seems to be required to compile with GCC
 dnl ##
 AX_PTHREAD(,[AC_MSG_ERROR([pthread is required])])
