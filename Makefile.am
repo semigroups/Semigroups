@@ -18,7 +18,7 @@ semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc
 semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
-semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -march=native
+semigroups_la_CXXFLAGS = -std=gnu++11 -O3 -g -march=native
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
