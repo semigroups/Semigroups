@@ -545,8 +545,10 @@ gap> SmallInverseMonoidGeneratingSet(S);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
 
 # attr: SmallInverseMonoidGeneratingSet: for 0 generators, 2
-gap> S := Group(IdentityTransformation);
-<transformation group of degree 0 with 1 generator>
+gap> S := Group(IdentityTransformation);;
+gap> IsTransformationSemigroup(S) and IsGroup(S) and IsGroupAsSemigroup(S) 
+> and IsTrivial(S);
+true
 gap> S := Subgroup(S, []);
 <trivial transformation group of degree 0 with 0 generators>
 gap> IsInverseMonoid(S) and IsGeneratorsOfInverseSemigroup(S);
@@ -637,8 +639,10 @@ gap> SmallGeneratingSet(S);
 [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 0, 0], [1, 1, 0]]) ]
 
 # attr: SmallGeneratingSet: for a group
-gap> S := Group(IdentityTransformation);
-<transformation group of degree 0 with 1 generator>
+gap> S := Group(IdentityTransformation);;
+gap> IsTransformationSemigroup(S) and IsGroup(S) and IsGroupAsSemigroup(S) 
+> and IsTrivial(S);
+true
 gap> SmallGeneratingSet(S);
 [ IdentityTransformation ]
 

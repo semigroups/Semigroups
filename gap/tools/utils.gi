@@ -409,6 +409,10 @@ SEMIGROUPS.TestManualExamples := function(arg)
   fi;
 
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
+  Apply(ex, function(x)
+    x[1][1] := StripBeginEnd(x[1][1], "\n");
+    return x;
+  end);
 
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   SEMIGROUPS.StartTest();

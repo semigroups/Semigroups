@@ -1152,8 +1152,9 @@ gap> GeneratorsOfInverseSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseMonoid(S);
 [ <identity partial perm on [ 1 ]> ]
-gap> S := Group(IdentityTransformation);
-<transformation group of degree 0 with 1 generator>
+gap> S := Group(IdentityTransformation);;
+gap> IsGroup(S) and IsGroupAsSemigroup(S) and IsTrivial(S);
+true
 gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfMonoid(S);

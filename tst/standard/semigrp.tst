@@ -277,8 +277,7 @@ gap> Generators(I);
 [ <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, 5 ], [ -4, -5 ]> ]
 
 # Test Generators 2
-gap> S := Group(IdentityTransformation);
-<transformation group of degree 0 with 1 generator>
+gap> S := Group(IdentityTransformation);;
 gap> Generators(S);
 [ IdentityTransformation ]
 
