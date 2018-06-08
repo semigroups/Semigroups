@@ -35,6 +35,8 @@ all-local: semigroups.la
 	cp -RL src/libsemigroups/.libs/* $(top_srcdir)/bin/lib/
 if SYS_IS_CYGWIN
 	cp .libs/semigroups.dll $(GAPINSTALLLIB)
+# Cygwin will only look in this directory for dlls
+	cp src/libsemigroups/.libs/cygsemigroups-0.dll $(GAPROOT)/.libs
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif
