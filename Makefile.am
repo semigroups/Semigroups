@@ -18,7 +18,7 @@ semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc
 semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
-semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -march=native
+semigroups_la_CXXFLAGS = -std=gnu++11 -O3 -g -march=native
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
@@ -35,6 +35,8 @@ all-local: semigroups.la
 	cp -RL src/libsemigroups/.libs/* $(top_srcdir)/bin/lib/
 if SYS_IS_CYGWIN
 	cp .libs/semigroups.dll $(GAPINSTALLLIB)
+# Cygwin will only look in this directory for dlls
+	cp src/libsemigroups/.libs/cygsemigroups-0.dll $(GAPROOT)/.libs
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif
