@@ -104,9 +104,10 @@ ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/maximal.gd");
 ReadPackage("semigroups", "gap/attributes/normalizer.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
-ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/translat.gd");
 ReadPackage("semigroups", "gap/attributes/rms-translat.gd");
+
+ReadPackage("semigroups", "gap/attributes/dual.gd");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gd");
 ReadPackage("semigroups", "gap/congruences/congrms.gd");

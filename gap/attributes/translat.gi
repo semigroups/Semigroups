@@ -66,7 +66,7 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
     if IsLeftTranslationsSemigroup(T) then
       return SEMIGROUPS.LeftTranslationsBacktrack(T);
     else
-      return SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(T);
+      return SEMIGROUPS.RightTranslationsByDual(T);
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
@@ -216,6 +216,29 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
     k := bt(reject(k));
   od;
   return translist;
+end;
+
+SEMIGROUPS.RightTranslationsByDual := function(R)
+  local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
+
+  S := UnderlyingSemigroup(R);
+  Sl := AsListCanonical(S);
+  D := DualSemigroup(S);
+  Dl := AsListCanonical(D);
+  map := AntiIsomorphismDualSemigroup(S);
+  dual_trans := LeftTranslations(D);
+  
+  map_list := List(S, x -> []);
+  inv_list := List(S, x -> []);
+  for i in [1 .. Size(S)] do
+    j := Position(Dl, Sl[i] ^ map);
+    map_list[i] := j; 
+    inv_list[j] := i;
+  od;
+
+  return List(dual_trans,
+              d -> RightTranslation(R, Transformation(List([1 .. Size(S)], 
+                                       i -> inv_list[map_list[i] ^ d![1]]))));
 end;
 
 # Choose how to calculate the elements of a translational hull

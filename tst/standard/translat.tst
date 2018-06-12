@@ -162,7 +162,7 @@ gap> R := SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(
 <semigroup of right translations of <commutative non-regular transformation 
  semigroup of size 4, degree 4 with 3 generators> with 17 generators>
 
-#T# Further test translations generation by digraph endomorphisms
+#T# Further test translations generation
 gap> S := Semigroup([Transformation([2, 4, 4, 1]), Transformation([2, 3, 2, 1]), 
 > Transformation([3, 3, 3])]);;
 gap> L := LeftTranslations(S);
@@ -175,6 +175,20 @@ gap> R := RightTranslations(S);
  degree 4 with 3 generators>>
 gap> Size(R);
 55
+
+#T# Test translations backtracking
+gap> for i in [1 .. 4] do
+> L := LeftZeroSemigroup(i);
+> R := RightZeroSemigroup(i);
+> Ll := LeftTranslationsSemigroup(L);;
+> Lr := LeftTranslationsSemigroup(R);;
+> Rl := RightTranslationsSemigroup(L);;
+> Rr := RightTranslationsSemigroup(R);;
+> if not (Size(Ll) = i ^ i and Size(Rr) = i ^ i
+> and Size(Lr) = 1 and Size(Rl) = 1) then
+> Error();
+> fi;
+> od;
 
 #T# Translations and translational hulls of monoids that couldn't be calculated
 gap> S := BrauerMonoid(5);;
@@ -645,8 +659,9 @@ gap> Unbind(f);
 gap> Unbind(G);
 gap> Unbind(g);
 gap> Unbind(L);
-gap> Unbind(LS);
 gap> Unbind(Ll);
+gap> Unbind(Lr);
+gap> Unbind(LS);
 gap> Unbind(l);
 gap> Unbind(lgpfunc);
 gap> Unbind(lt);
