@@ -1055,9 +1055,9 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   SEMIGROUPS_ASSERT(TNUM_OBJ(x_gap) == T_BIPART);
-
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
   Bipartition* x      = bipart_get_cpp(x_gap);
+  SEMIGROUPS_ASSERT(x->degree() == blocks->degree());
 
   fuse(x->degree(),
        blocks->cbegin(),
@@ -1065,15 +1065,26 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
        x->begin() + x->degree(),
        x->nr_blocks(),
        false);
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
+                       == blocks->nr_blocks() + x->nr_blocks());
 
   std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
   out_blocks->resize(2 * x->degree());
 
   _BUFFER_size_t.resize(2 * blocks->nr_blocks() + x->nr_blocks(), -1);
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
+                       == 2 * blocks->nr_blocks() + x->nr_blocks());
+  SEMIGROUPS_ASSERT(std::all_of(
+      _BUFFER_size_t.cbegin() + blocks->nr_blocks() + x->nr_blocks(),
+      _BUFFER_size_t.cend(),
+      [](size_t i) -> bool { return i == static_cast<size_t>(-1); }));
   auto tab = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.end() - tab == blocks->nr_blocks());
 
   for (u_int32_t i = 0; i < blocks->nr_blocks(); i++) {
     if (blocks->is_transverse_block(i)) {
+      SEMIGROUPS_ASSERT(fuse_it(i) < blocks->nr_blocks());
+      SEMIGROUPS_ASSERT(tab + fuse_it(i) < _BUFFER_size_t.end());
       tab[fuse_it(i)] = i;
     }
   }
