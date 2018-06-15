@@ -1093,7 +1093,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
     (*out_blocks)[i] = blocks->block(i);
     u_int32_t j      = fuse_it(x->at(i) + blocks->nr_blocks());
-    if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
+    if (j >= blocks->nr_blocks() || tab[j] == (size_t) -1) {
       (*out_blocks)[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
       (*out_blocks)[i + x->degree()] = tab[j];
