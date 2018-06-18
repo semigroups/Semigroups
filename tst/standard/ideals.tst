@@ -329,6 +329,17 @@ gap> ideals := Ideals(S);;
 gap> Size(ideals);
 179
 
+# SEMIGROUPS_UnbindVariables
+gap> Unbind(A);
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(ideals);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/ideals.tst");
