@@ -26,7 +26,7 @@
 #include "semigroups-debug.h"
 #include "semigrp.h"
 
-using libsemigroups::glob_reporter;
+using libsemigroups::REPORTER;
 using libsemigroups::Timer;
 
 // Macros for the GAP version of the algorithm
@@ -113,7 +113,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
-  glob_reporter.set_report(report);
+  REPORTER.set_report(report);
   REPORT_FROM_FUNC("limit = " << int_limit);
 
   Timer timer;

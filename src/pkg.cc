@@ -138,7 +138,7 @@ void TSemiObjFreeFunc(Obj o) {
         // don't use functions to access these since they have too many
         // side effects
         delete CLASS_OBJ<Converter*>(o, 4);
-        delete CLASS_OBJ<Semigroup*>(o, 5);
+        delete CLASS_OBJ<Semigroup<>*>(o, 5);
       }
       break;
     }
@@ -148,7 +148,6 @@ void TSemiObjFreeFunc(Obj o) {
 
 void TBipartObjFreeFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
-  bipart_get_cpp(o)->really_delete();
   delete bipart_get_cpp(o);
 }
 
@@ -275,11 +274,11 @@ void TBipartObjSaveFunc(Obj o) {
 
 void TBipartObjLoadFunc(Obj o) {
   UInt4                   deg    = LoadUInt4();
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->reserve(2 * deg);
+  std::vector<u_int32_t> blocks;
+  blocks.reserve(2 * deg);
 
   for (size_t i = 0; i < 2 * deg; i++) {
-    blocks->push_back(LoadUInt4());
+    blocks.push_back(LoadUInt4());
   }
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Bipartition(blocks));
   SEMIGROUPS_ASSERT(ADDR_OBJ(o)[1] == NULL && ADDR_OBJ(o)[2] == NULL);

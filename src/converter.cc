@@ -37,15 +37,14 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(IS_BLIST_REP(ELM_PLIST(o, 1)));
 
   size_t             m = LEN_BLIST(ELM_PLIST(o, 1));
-  std::vector<bool>* x(new std::vector<bool>());
-  x->resize(m * m, false);
+  std::vector<bool> x(m * m, false);
 
   for (size_t i = 0; i < m; i++) {
     Obj row = ELM_PLIST(o, i + 1);
     SEMIGROUPS_ASSERT(IS_BLIST_REP(row));
     for (size_t j = 0; j < m; j++) {
       if (ELM_BLIST(row, j + 1) == True) {
-        x->at(i * m + j) = true;
+        x.at(i * m + j) = true;
       }
     }
   }
@@ -89,12 +88,11 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
 
 Bipartition* BipartConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
-  return static_cast<Bipartition*>(
-      static_cast<Element*>(bipart_get_cpp(o))->really_copy());
+  return new Bipartition(*bipart_get_cpp(o));
 }
 
 Obj BipartConverter::unconvert(Element const* x) const {
-  return bipart_new_obj(static_cast<Bipartition*>(x->really_copy()));
+  return bipart_new_obj(new Bipartition(*static_cast<Bipartition const*>(x)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -116,9 +114,8 @@ Obj PBRConverter::get_gap_type(size_t deg) const {
 PBR* PBRConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(CALL_1ARGS(IsPBR, o));
   size_t                               m = INT_INTOBJ(ELM_PLIST(o, 1));
-  std::vector<std::vector<u_int32_t>>* pbr(
-      new std::vector<std::vector<u_int32_t>>());
-  pbr->reserve(m);
+  std::vector<std::vector<u_int32_t>> pbr;
+  pbr.reserve(m);
 
   for (u_int32_t i = 0; i < 2 * m; i++) {
     Obj                    adj = ELM_PLIST(o, i + 2);
@@ -128,7 +125,7 @@ PBR* PBRConverter::convert(Obj o, size_t n) const {
       // assumes that adj is duplicate-free
     }
     std::sort(next.begin(), next.end());
-    pbr->push_back(next);
+    pbr.push_back(next);
   }
   return new PBR(pbr);
 }

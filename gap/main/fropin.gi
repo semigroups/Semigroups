@@ -258,7 +258,9 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
-    return EN_SEMI_POSITION_SORTED(S, x);
+    # Don't call EN_SEMI_POSITION_SORTED directly because then we pass elements
+    # of too high degree which causes an exception in Libsemigroups
+    return PositionSortedOp(S, x);
   end;
 
   enum.ElementNumber := function(enum, nr)
@@ -347,6 +349,8 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
+    # Don't call EN_SEMI_POSITION directly since we may then pass too large
+    # degree pperms or transformations which cause a libsemigroups exception.
     return PositionCanonical(S, x);
   end;
 
@@ -474,7 +478,8 @@ function(S, x)
       or (IsTransformation(x)
           and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
+          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
+          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
     return fail;
   fi;
 
@@ -486,6 +491,9 @@ InstallMethod(PositionCanonical,
 [IsPermGroup and HasGeneratorsOfGroup and IsEnumerableSemigroupRep,
  IsMultiplicativeElement],
 function(G, x)
+  if (not IsPerm(x)) or LargestMovedPointPerm(x) > LargestMovedPoint(G) then
+    return fail;
+  fi;
   return EN_SEMI_POSITION(G, x);
 end);
 
@@ -512,7 +520,8 @@ function(S, x, n)
       or (IsTransformation(x)
           and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
+          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
+          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
     return fail;
   fi;
 
@@ -528,13 +537,13 @@ function(S, x)
       or (IsTransformation(x)
           and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
+          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
+          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
     return fail;
   elif not IsFinite(S) then
     ErrorNoReturn("Semigroups: PositionSortedOp: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-
   return EN_SEMI_POSITION_SORTED(S, x);
 end);
 

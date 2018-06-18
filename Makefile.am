@@ -22,6 +22,14 @@ semigroups_la_CXXFLAGS = $(GAP_CFLAGS) -std=gnu++11 -O3 -g -march=native
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/src/libsemigroups/extern/HPCombi/include
+
+if KERNEL_DEBUG
+semigroups_la_CPPFLAGS += -DDEBUG
+else
+semigroups_la_CPPFLAGS += -DNDEBUG
+endif
+
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
 
 semigroups_la_LIBADD = src/libsemigroups/libsemigroups.la
