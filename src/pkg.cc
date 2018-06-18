@@ -401,7 +401,11 @@ Obj IsActingSemigroup;
  *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
  */
 
+#if defined(GAP_KERNEL_MAJOR_VERSION) && (GAP_KERNEL_MAJOR_VERSION >= 2)
+typedef Obj (*GVarFilt)(Obj, Obj);
+#else
 typedef Obj (*GVarFilt)(/*arguments*/);
+#endif
 
 static StructGVarFilt GVarFilts[] = {
     {"IS_BIPART",
