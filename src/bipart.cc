@@ -48,7 +48,7 @@ static std::vector<bool>   _BUFFER_bool;
 
 Obj bipart_new_obj(Bipartition* x) {
   size_t deg = x->degree() + 1;
-  if (deg > (size_t) LEN_PLIST(TYPES_BIPART)
+  if (deg > static_cast<size_t>(LEN_PLIST(TYPES_BIPART))
       || ELM_PLIST(TYPES_BIPART, deg) == 0) {
     CALL_1ARGS(TYPE_BIPART, INTOBJ_INT(deg - 1));
   }
@@ -116,7 +116,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
 
       for (size_t i = 1; i <= nr_blocks; i++) {
         Obj block = ELM_LIST(gap_blocks, i);
-        for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
+        for (size_t j = 1; j <= static_cast<size_t>(LEN_LIST(block)); j++) {
           SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
           int jj = INT_INTOBJ(ELM_LIST(block, j));
           if (jj < 0) {
@@ -129,7 +129,8 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
       }
     } else {  // gap_blocks is the internal rep of a bipartition
       blocks->reserve(LEN_LIST(gap_blocks));
-      for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
+      for (size_t i = 1; i <= static_cast<size_t>(LEN_LIST(gap_blocks)) / 2;
+           i++) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
         u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
@@ -137,8 +138,8 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
       }
       nr_left_blocks = nr_blocks + 1;
-      for (size_t i = ((size_t) LEN_LIST(gap_blocks) / 2) + 1;
-           i <= (size_t) LEN_LIST(gap_blocks);
+      for (size_t i = (static_cast<size_t>(LEN_LIST(gap_blocks)) / 2) + 1;
+           i <= static_cast<size_t>(LEN_LIST(gap_blocks));
            i++) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
@@ -313,7 +314,7 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   _BUFFER_size_t.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (_BUFFER_size_t[xx->at(i)] == (size_t) -1) {
+    if (_BUFFER_size_t[xx->at(i)] == static_cast<size_t>(-1)) {
       _BUFFER_size_t[xx->at(i)] = index;
       index++;
     }
@@ -350,7 +351,7 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
     (*blocks)[i] = xx->at(i);
     if (xx->is_transverse_block(xx->at(i))) {
       (*blocks)[i + deg] = xx->at(i);
-    } else if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
+    } else if (_BUFFER_size_t[xx->at(i)] != static_cast<size_t>(-1)) {
       (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
@@ -384,7 +385,7 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
   blocks->resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (buf2[xx->at(i)] == (size_t) -1) {
+    if (buf2[xx->at(i)] == static_cast<size_t>(-1)) {
       if (xx->is_transverse_block(xx->at(i))) {
         buf2[xx->at(i)] = buf1[xx->at(i)] = l_block++;
       } else {
@@ -420,7 +421,7 @@ Obj BIPART_STAR(Obj self, Obj x) {
   size_t next = 0;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER_size_t[xx->at(i + deg)] != (size_t) -1) {
+    if (_BUFFER_size_t[xx->at(i + deg)] != static_cast<size_t>(-1)) {
       (*blocks)[i] = _BUFFER_size_t[xx->at(i + deg)];
     } else {
       _BUFFER_size_t[xx->at(i + deg)] = next;
@@ -432,7 +433,7 @@ Obj BIPART_STAR(Obj self, Obj x) {
   size_t nr_left = next;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
+    if (_BUFFER_size_t[xx->at(i)] != static_cast<size_t>(-1)) {
       (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
@@ -592,7 +593,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   size_t next = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (tab1[xx->at(i)] == (size_t) -1) {
+    if (tab1[xx->at(i)] == static_cast<size_t>(-1)) {
       tab1[xx->at(i)] = q[next];
       tab2[next]      = xx->at(i);
       next++;
@@ -692,7 +693,7 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
 
   for (size_t i = 1; i <= nr_blocks; i++) {
     Obj block = ELM_LIST(gap_blocks, i);
-    for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
+    for (size_t j = 1; j <= static_cast<size_t>(LEN_LIST(block)); j++) {
       SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
       int jj = INT_INTOBJ(ELM_LIST(block, j));
       if (jj < 0) {
@@ -798,7 +799,7 @@ Obj BLOCKS_PROJ(Obj self, Obj x) {
     if (blocks->is_transverse_block(index)) {
       (*out)[i + blocks->degree()] = index;
     } else {
-      if (_BUFFER_size_t[index] == (size_t) -1) {
+      if (_BUFFER_size_t[index] == static_cast<size_t>(-1)) {
         _BUFFER_size_t[index] = nr_blocks;
         nr_blocks++;
       }
@@ -926,7 +927,7 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
     if (left->is_transverse_block(j)) {
       (*blocks)[i + left->degree()] = tab1[fuse_it(j)];
     } else {
-      if (tab2[j] == (size_t) -1) {
+      if (tab2[j] == static_cast<size_t>(-1)) {
         tab2[j] = next;
         next++;
       }
@@ -984,7 +985,7 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 
   for (u_int32_t i = 0; i < x->degree(); i++) {
     u_int32_t j = fuse_it(x->at(i));
-    if (tab[j] == (size_t) -1) {
+    if (tab[j] == static_cast<size_t>(-1)) {
       tab[j] = next;
       next++;
     }
@@ -1037,7 +1038,7 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 
   for (u_int32_t i = x->degree(); i < 2 * x->degree(); i++) {
     u_int32_t j = fuse_it(x->at(i) + blocks->nr_blocks());
-    if (tab[j] == (size_t) -1) {
+    if (tab[j] == static_cast<size_t>(-1)) {
       tab[j] = next;
       next++;
     }
@@ -1055,9 +1056,9 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   SEMIGROUPS_ASSERT(TNUM_OBJ(x_gap) == T_BIPART);
-
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
   Bipartition* x      = bipart_get_cpp(x_gap);
+  SEMIGROUPS_ASSERT(x->degree() == blocks->degree());
 
   fuse(x->degree(),
        blocks->cbegin(),
@@ -1065,15 +1066,26 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
        x->begin() + x->degree(),
        x->nr_blocks(),
        false);
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
+                       == blocks->nr_blocks() + x->nr_blocks());
 
   std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
   out_blocks->resize(2 * x->degree());
 
   _BUFFER_size_t.resize(2 * blocks->nr_blocks() + x->nr_blocks(), -1);
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
+                       == 2 * blocks->nr_blocks() + x->nr_blocks());
+  SEMIGROUPS_ASSERT(std::all_of(
+      _BUFFER_size_t.cbegin() + blocks->nr_blocks() + x->nr_blocks(),
+      _BUFFER_size_t.cend(),
+      [](size_t i) -> bool { return i == static_cast<size_t>(-1); }));
   auto tab = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
+  SEMIGROUPS_ASSERT(_BUFFER_size_t.end() - tab == blocks->nr_blocks());
 
   for (u_int32_t i = 0; i < blocks->nr_blocks(); i++) {
     if (blocks->is_transverse_block(i)) {
+      SEMIGROUPS_ASSERT(fuse_it(i) < blocks->nr_blocks());
+      SEMIGROUPS_ASSERT(tab + fuse_it(i) < _BUFFER_size_t.end());
       tab[fuse_it(i)] = i;
     }
   }
@@ -1082,7 +1094,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
     (*out_blocks)[i] = blocks->block(i);
     u_int32_t j      = fuse_it(x->at(i) + blocks->nr_blocks());
-    if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
+    if (j >= blocks->nr_blocks() || tab[j] == static_cast<size_t>(-1)) {
       (*out_blocks)[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
       (*out_blocks)[i + x->degree()] = tab[j];
@@ -1172,7 +1184,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
     if (x->at(i + x->degree()) < x->nr_left_blocks()) {
       u_int32_t j = fuse_it(x->at(i + x->degree()) + blocks->nr_blocks());
       if (_BUFFER_bool[j]) {
-        if (tab1[j] == (size_t) -1) {
+        if (tab1[j] == static_cast<size_t>(-1)) {
           tab1[j] = next;
           next++;
         }
@@ -1196,7 +1208,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
     if (blocks->is_transverse_block(j)) {
       (*out_blocks)[i] = tab1[fuse_it(j)];
     } else {
-      if (tab2[j] == (size_t) -1) {
+      if (tab2[j] == static_cast<size_t>(-1)) {
         tab2[j] = next;
         next++;
       }

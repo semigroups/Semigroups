@@ -19,7 +19,6 @@ semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS) -std=gnu++11 -O3 -g -march=native
-
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
