@@ -327,11 +327,11 @@ void TBlocksObjLoadFunc(Obj o) {
 void TBipartObjMarkSubBags(Obj o) {
   if (ADDR_OBJ(o)[1] != NULL) {
     // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[1]) == T_BLOCKS);
-    MARK_BAG(ADDR_OBJ(o)[1]);
+    MarkBag(ADDR_OBJ(o)[1]);
   }
   if (ADDR_OBJ(o)[2] != NULL) {
     // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[2]) == T_BLOCKS);
-    MARK_BAG(ADDR_OBJ(o)[2]);
+    MarkBag(ADDR_OBJ(o)[2]);
   }
 }
 
