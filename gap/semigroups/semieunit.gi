@@ -117,7 +117,7 @@ function(G, X, Y, act)
   SetMcAlisterTripleSemigroupSemilattice(M, Y);
   SetMcAlisterTripleSemigroupActionHomomorphism(M, hom);
 
-  GeneratorsOfSemigroup(M);
+  SetGeneratorsOfSemigroup(M, SEMIGROUPS.MTSSmallGen(M));
   return M;
 end);
 
@@ -302,7 +302,6 @@ function(S, T)
       McAlisterTripleSemigroupAction(T)((x ^ iso_x), (g ^ iso_g)) ^ rep)) then
     return MappingByFunction(S, T, s -> MTSE(T, s[1] ^ iso_x, s[2] ^ iso_g));
   fi;
-
   return fail;
 end);
 
@@ -807,7 +806,7 @@ function(S)
 end);
 
 ###############################################################################
-# Find E-unitary inverse covers
+# E-unitary inverse covers
 ###############################################################################
 InstallMethod(EUnitaryInverseCover,
 "for an inverse partial perm semigroup",
@@ -841,21 +840,6 @@ function(S)
   return MappingByFunction(InverseSemigroup(cover_gens), S, x -> cover(x, 1));
 end);
 
-InstallMethod(EUnitaryInverseCover,
-"for an inverse semigroup",
-[IsSemigroup],
-function(S)
-  local cov, iso, T;
-  if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: EUnitaryInverseCover: usage,\n",
-                  "the argument must be an inverse semigroup,");
-  fi;
-  iso := IsomorphismPartialPermSemigroup(S);
-  T := Range(iso);
-  cov := EUnitaryInverseCover(T);
-  return CompositionMapping(InverseGeneralMapping(iso), cov);
-end);
-
 # This method extends a partial perm 'x' to a permutation of degree 'deg'.
 SEMIGROUPS.PartialPermExtendToPerm := function(x, deg)
   local c, i, dom, image;
@@ -880,23 +864,35 @@ SEMIGROUPS.PartialPermExtendToPerm := function(x, deg)
   return(PartialPerm(dom, image));
 end;
 
+InstallMethod(EUnitaryInverseCover,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local cov, iso, T;
+  if not IsInverseSemigroup(S) then
+    ErrorNoReturn("Semigroups: EUnitaryInverseCover: usage,\n",
+                  "the argument must be an inverse semigroup,");
+  fi;
+  iso := IsomorphismPartialPermSemigroup(S);
+  T := Range(iso);
+  cov := EUnitaryInverseCover(T);
+  return CompositionMapping(InverseGeneralMapping(iso), cov);
+end);
+
 ###############################################################################
 # TODO:
-# 1) Write hash function that works when group is not a perm group.
+# 1) Write hash function that works when the MTSGroup is not a perm group.
 # 2) Consider hash function for improvements.
 # 3) Write OrderIdeal and FindOrderIrreducibleElements for digraphs package
 #    (order irreducible elements are the ones which generate the semilattice
 #    and order ideals relate to checking condition M2 from Howie).
-# 4) Improve GeneratorsOfSemigroup method.
-# 5) Line break hints for printing MTSEs and McAlisterTripleSemigroups.
-# 6) Implement EUnitaryInverseCover which covers with a McAlisterTriple
-# 7) Improve EUnitaryInverseCover by finding smaller covers
-# 8) Improve IsomorphismSemigroup method.
-# 9) Improve 'if not IsSubgroup(AutomorphismGroup(X), Image(hom)) then' line of
-# McAlisterTripleSemigroup
-# 10) Implement function that turns MTS over a non-perm group into one that is
-# over a perm group.
-# 11) Add to documentation of DigraphReverse returns a digraph where vertex i in
-# the reverse is adjacent to j in the reverse when j is adjacent to i in the
-# original
+# 4) Line break hints for printing MTSEs and McAlisterTripleSemigroups.
+# 5) Implement EUnitaryInverseCover which covers with a McAlisterTriple
+# 6) Improve EUnitaryInverseCover by finding smaller covers
+# 7) Implement function that turns MTS over a non-perm group into one that is
+#    over a perm group.
+# 8) Add to documentation of DigraphReverse returns a digraph where vertex i in
+#    the reverse is adjacent to j in the reverse when j is adjacent to i in the
+#    original
+# 9) Consider shortening McAlisterTripleSemigroupX to McAlisterTripleX
 ###############################################################################

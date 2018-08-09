@@ -102,11 +102,12 @@ gap> ps := InverseSemigroup([PartialPerm([2, 3, 4, 5], [1, 3, 5, 4]),
 > PartialPerm([2, 3, 4, 5], [1, 4, 5, 3])]);;
 gap> Mps := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, ps);;
 gap> Image(Mps);
-[ (1, ()), (1, (2,3)), (1, (1,2)), (1, (1,2,3)), (1, (1,3,2)), (1, (1,3)), 
-  (2, ()), (2, (2,3)), (2, (1,2,3)), (2, (1,3)), (3, ()), (3, (2,3)), 
-  (3, (1,2)), (3, (1,3,2)) ]
+[ (1, ()), (1, (1,2)(3,6)(4,5)), (1, (1,4)(2,6)(3,5)), (1, (1,6,5)(2,4,3)), 
+  (3, ()), (3, (1,3)(2,5)(4,6)), (3, (1,4)(2,6)(3,5)), (3, (1,5,6)(2,3,4)), 
+  (4, ()), (4, (1,2)(3,6)(4,5)), (4, (1,3)(2,5)(4,6)), (4, (1,4)(2,6)(3,5)), 
+  (4, (1,5,6)(2,3,4)), (4, (1,6,5)(2,4,3)) ]
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
-<McAlister triple semigroup over Group([ (2,3), (1,2,3) ])>
+<McAlister triple semigroup over Group([ (1,5,6)(2,3,4), (1,4)(2,6)(3,5) ])>
 gap> ps := InverseSemigroup([PartialPerm([1, 4, 6, 7], [1, 4, 6, 7]),
 >   PartialPerm([2, 3, 6, 7], [2, 3, 6, 7]), PartialPerm([6, 7], [6, 7]),
 >   PartialPerm([2, 3, 5, 6, 7], [2, 3, 5, 6, 7]),
@@ -114,13 +115,30 @@ gap> ps := InverseSemigroup([PartialPerm([1, 4, 6, 7], [1, 4, 6, 7]),
 >   PartialPerm([2, 3, 6, 7], [1, 4, 7, 6]), PartialPerm([6, 7], [7, 6])]);;
 gap> Mps := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, ps);;
 gap> Image(Mps);
-[ (1, ()), (1, (1,2)), (2, ()), (3, ()), (3, (1,2)), (5, ()), (5, (1,2)) ]
+[ (1, ()), (1, (1,2)), (2, ()), (2, (1,2)), (3, ()), (3, (1,2)), (4, ()) ]
 gap> Elements(Range(Mps));
-[ (1, ()), (1, (1,2)), (2, ()), (3, ()), (3, (1,2)), (5, ()), (5, (1,2)) ]
-gap> IsWholeFamily(Image(Mps));
+[ (1, ()), (1, (1,2)), (2, ()), (2, (1,2)), (3, ()), (3, (1,2)), (4, ()) ]
+gap> IsWholeFamily(Range(Mps));
 true
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
 <McAlister triple semigroup over Group([ (1,2) ])>
+
+#T# McAlister triple subsemigroup methods
+gap> S := Semigroup(Image(Mps){[1 .. 3]});
+<McAlister triple subsemigroup over Group([ (1,2) ])>
+gap> attr := [MTSSemilattice, MTSGroup, MTSPartialOrder, MTSAction,
+> MTSActionHomomorphism, MTSUnderlyingAction, MTSComponents,
+> MTSQuotientDigraph, MTSSemilatticeVertexLabelInverseMap];;
+gap> M := Range(Mps);;
+gap> ForAll(attr, A -> A(S) = A(M));
+true
+gap> Print(S, "\n");
+Semigroup([ MTSE(McAlisterTripleSemigroup(Group( [ (1,2) ] ), Digraph( [ [ 1, \
+3 ], [ 2, 3 ], [ 3 ], [ 2, 3, 4 ], [ 1, 3, 5 ] ] ), [ 3, 2, 4, 1 ]), 1, ()), M\
+TSE(McAlisterTripleSemigroup(Group( [ (1,2) ] ), Digraph( [ [ 1, 3 ], [ 2, 3 ]\
+, [ 3 ], [ 2, 3, 4 ], [ 1, 3, 5 ] ] ), [ 3, 2, 4, 1 ]), 1, (1,2)), MTSE(McAlis\
+terTripleSemigroup(Group( [ (1,2) ] ), Digraph( [ [ 1, 3 ], [ 2, 3 ], [ 3 ], [\
+ 2, 3, 4 ], [ 1, 3, 5 ] ] ), [ 3, 2, 4, 1 ]), 2, ()) ]
 
 #T# AsSemigroup with bad input
 gap> T := Semigroup([PartialPerm([1], [3]),
@@ -144,7 +162,7 @@ true
 gap> elms := Enumerator(M);;
 gap> String(elms[1]);
 "MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ],\
- [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, ())"
+ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 2, (3,4,5))"
 gap> OneImmutable(M);
 fail
 gap> M1 := McAlisterTripleSemigroup(G, x, [1, 2]);;
@@ -288,7 +306,8 @@ gap> S := McAlisterTripleSemigroup(Group((4, 5)),
 gap> IsFInverseSemigroup(S);
 false
 
-#T# EUnitaryInverseCover
+#T# EUnitaryInverseCover 
+#TODO: Add checks that these covers are idempotent separating homomorphisms
 gap> S := InverseMonoid([PartialPermNC([1, 3], [1, 3]),
 > PartialPermNC([1, 2], [3, 1]), PartialPermNC([1, 2], [3, 2])]);;
 gap> cov := EUnitaryInverseCover(S);;
@@ -310,6 +329,13 @@ gap> S := Semigroup([Bipartition([[1, 3, -1, -2, -3], [2]]),
 gap> EUnitaryInverseCover(S);
 Error, Semigroups: EUnitaryInverseCover: usage,
 the argument must be an inverse semigroup,
+gap> S := InverseSemigroup([PartialPerm([1, 2, 4], [4, 3, 2]),
+> PartialPerm([1, 3], [3, 4])]);;
+gap> cov := EUnitaryInverseCover(S);;
+gap> IsEUnitaryInverseSemigroup(Source(cov));
+true
+gap> S = Range(cov);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
