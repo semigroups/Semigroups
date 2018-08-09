@@ -178,6 +178,10 @@ gap> M = MTSEParent(MTSE(M, 1, (4, 5)));
 true
 gap> M = McAlisterTripleSemigroupElementParent(MTSE(M, 1, (4, 5)));
 true
+gap> LeftOne(MTSE(M, 4, (2, 4)(3, 5))) = MTSE(M, 4, ());
+true
+gap> RightOne(MTSE(M, 4, (2, 4)(3, 5))) = MTSE(M, 2, ());
+true
 gap> MTSE(M, 10, (2, 3, 4, 5));
 Error, Semigroups: McAlisterTripleSemigroupElement: usage,
 second argument should be a vertex label of the join-semilattice of the McAlis\

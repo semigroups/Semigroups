@@ -739,6 +739,22 @@ function(x, i)
   return InverseOp(x ^ - i);
 end);
 
+InstallMethod(LeftOne, "for a McAlister triple semigroup element rep",
+[IsMcAlisterTripleSemigroupElementRep],
+function(x)
+  local S;
+  S := MTSEParent(x);
+  return MTSE(S, x[1], One(MTSGroup(S)));
+end);
+
+InstallMethod(RightOne, "for a McAlister triple semigroup element rep",
+[IsMcAlisterTripleSemigroupElementRep],
+function(x)
+  local S;
+  S := MTSEParent(x);
+  return MTSE(S, MTSAction(S)(x[1], x[2] ^ -1), One(MTSGroup(S)));
+end);
+
 InstallMethod(ChooseHashFunction, "for McAlister triple semigroup elements",
 [IsMcAlisterTripleSemigroupElement, IsInt],
 function(x, hashlen)
