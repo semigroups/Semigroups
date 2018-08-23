@@ -72,21 +72,21 @@ matrix:
       sudo:
         required
     
-    - env:
-      - SUITE=test
-      - GAP=master
-      - PACKAGES=newest
-      - ABI=64
-      sudo:
-        required
-    
-    - env:
-      - SUITE=test
-      - GAP=master
-      - PACKAGES=master
-      - ABI=64
-      sudo:
-        required
+  # - env:
+  #  - SUITE=test
+  #  - GAP=master
+  #  - PACKAGES=newest
+  #  - ABI=64
+  #  sudo:
+  #    required
+  #
+  # - env:
+  #  - SUITE=test
+  #  - GAP=master
+  #  - PACKAGES=master
+  #  - ABI=64
+  #  sudo:
+  #    required
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
