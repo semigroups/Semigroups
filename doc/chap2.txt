@@ -26,22 +26,22 @@
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.6.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.16.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.17.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.0.16[111X.[133X
+        [11Xsemigroups-3.0.17[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.16[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.17[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://james-d-mitchell.github.io/libsemigroups/[107X) C++ library, which
         requires  a  compiler  implementing  the  C++11  standard.  Inside the
-        [11Xpkg/semigroups-3.0.16[111X directory, type[133X
+        [11Xpkg/semigroups-3.0.17[111X directory, type[133X
   
   [4X      [32X[104X
           [4X./configure[104X
@@ -81,7 +81,7 @@
   functions relating to the enumeration of certain types of semigroups, and it
   is not possible to use the [5XSemigroups[105X package without compiling it.[133X
   
-  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.16[111X directory,
+  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.17[111X directory,
   type[133X
   
   [4X[32X[104X

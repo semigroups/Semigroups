@@ -30,7 +30,7 @@ The  following  is  a  summary of the steps that should lead to a successful ins
 * ensure that the [Digraphs](http://gap-packages.github.io/Digraphs/) package version 0.12.0 or higher is available.  [Digraphs](http://gap-packages.github.io/Digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
 loaded.
 
-* get the [genss](http://gap-packages.github.io/genss/) package version 1.5 or higher 
+* get the [genss](http://gap-packages.github.io/genss/) package version 1.6.5 or higher 
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the [Semigroups](https://gap-packages.github.io/Semigroups) webpage.
 

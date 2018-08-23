@@ -4,6 +4,9 @@
   [33X[0;0YIn  this  chapter  we  describe  a class of semigroups arising from directed
   graphs.[133X
   
+  [33X[0;0YThe  functionality  in  [5XSemigroups[105X  for graph inverse semigroups was written
+  jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews).[133X
+  
   
   [1X11.1 [33X[0;0YCreating graph inverse semigroups[133X[101X
   

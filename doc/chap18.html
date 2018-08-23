@@ -26,34 +26,27 @@
 <div class="ChapSects"><a href="chap18.html#X80E82C6785300A86">18 <span class="Heading">
     Visualising semigroups and elements
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X7B210B8179EFBC5A">18.1 <span class="Heading">
-      Automatic viewing
-    </span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X83B3318784E78415">18.1-1 Splash</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X82E16CAB874A1D84">18.2 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X82E16CAB874A1D84">18.1 <span class="Heading">
       <code class="code">dot</code> pictures
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7F51F3CD7E13D199">18.2-1 DotString</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7C22E8D17D6C23EA">18.2-2 DotSemilatticeOfIdempotents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7F51F3CD7E13D199">18.1-1 DotString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7C22E8D17D6C23EA">18.1-2 DotSemilatticeOfIdempotents</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X83152CA78114E2BD">18.3 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X83152CA78114E2BD">18.2 <span class="Heading">
       <code class="code">tex</code> output
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X80FBF08180F7F181">18.3-1 TexString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X80FBF08180F7F181">18.2-1 TexString</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X7BDDE0FE80D09887">18.4 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X7BDDE0FE80D09887">18.3 <span class="Heading">
       <code class="code">tikz</code> pictures
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7F0971F678B4FC66">18.4-1 TikzString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7F0971F678B4FC66">18.3-1 TikzString</a></span>
 </div></div>
 </div>
 
@@ -61,79 +54,21 @@
     Visualising semigroups and elements
   </span></h3>
 
-<p>There are two operations <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>) and opening the resulting pdf file.</p>
-
-<p><a id="X7B210B8179EFBC5A" name="X7B210B8179EFBC5A"></a></p>
-
-<h4>18.1 <span class="Heading">
-      Automatic viewing
-    </span></h4>
-
-<p>In this section we describe the function <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>) for automatically processing and opening the strings output by <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>)</p>
-
-<p><a id="X83B3318784E78415" name="X83B3318784E78415"></a></p>
-
-<h5>18.1-1 Splash</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Splash</code>( <var class="Arg">str</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: Nothing.</p>
-
-<p>This function attempts to convert the string <var class="Arg">str</var> into a pdf document and open this document, i.e. to splash it all over your monitor.</p>
-
-<p>The string <var class="Arg">str</var> must correspond to a valid <code class="code">dot</code> or <code class="code">LaTeX</code> text file and you must have have <code class="code">GraphViz</code> and <code class="code">pdflatex</code> installed on your computer. For details about these file formats, see <span class="URL"><a href="http://www.latex-project.org">http://www.latex-project.org</a></span> and <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
-
-<p>This function is provided to allow convenient, immediate viewing of the pictures produced by the functions: <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>), <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>), <code class="func">DotSemilatticeOfIdempotents</code> (<a href="chap18.html#X7C22E8D17D6C23EA"><span class="RefLink">18.2-2</span></a>), and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>).</p>
-
-<p>The optional second argument <var class="Arg">opts</var> should be a record with components corresponding to various options, given below.</p>
-
-
-<dl>
-<dt><strong class="Mark">path</strong></dt>
-<dd><p>this should be a string representing the path to the directory where you want <code class="code">Splash</code> to do its work. The default value of this option is <code class="code">"~/"</code>.</p>
-
-</dd>
-<dt><strong class="Mark">directory</strong></dt>
-<dd><p>this should be a string representing the name of the directory in <code class="code">path</code> where you want <code class="code">Splash</code> to do its work. This function will create this directory if does not already exist.</p>
-
-<p>The default value of this option is <code class="code">"tmp.viz"</code> if the option <code class="code">path</code> is present, and the result of <code class="func">DirectoryTemporary</code> (<a href="../../../doc/ref/chap9_mj.html#X8222B1A886E6195E"><span class="RefLink">Reference: DirectoryTemporary</span></a>) is used otherwise.</p>
-
-</dd>
-<dt><strong class="Mark">filename</strong></dt>
-<dd><p>this should be a string representing the name of the file where <var class="Arg">str</var> will be written. The default value of this option is <code class="code">"vizpicture"</code>.</p>
-
-</dd>
-<dt><strong class="Mark">viewer</strong></dt>
-<dd><p>this should be a string representing the name of the program which should open the files produced by <code class="code">GraphViz</code> or <code class="code">pdflatex</code>.</p>
-
-</dd>
-<dt><strong class="Mark">type</strong></dt>
-<dd><p>this option can be used to specify that the string <var class="Arg">str</var> contains a LaTeX or <code class="code">dot</code> document. You can specify this option in <var class="Arg">str</var> directly by making the first line <code class="code">"%latex"</code> or <code class="code">"//dot"</code>. There is no default value for this option, this option must be specified in <var class="Arg">str</var> or in <var class="Arg">opt.type</var>.</p>
-
-</dd>
-<dt><strong class="Mark">filetype</strong></dt>
-<dd><p>this should be a string representing the type of file which <code class="code">Splash</code> should produce. For LaTeX files, this option is ignored and the default value <code class="code">"pdf"</code> is used.</p>
-
-</dd>
-</dl>
-<p>This function was written by Attila Egri-Nagy and Manuel Delgado with some minor changes by J. D. Mitchell.</p>
-
-
-<div class="example"><pre>
-        gap&gt; Splash(DotString(FullTransformationMonoid(4)));</pre></div>
+<p>There are two operations <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.1-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap18.html#X7F0971F678B4FC66"><span class="RefLink">18.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap18.html#X7F51F3CD7E13D199"><span class="RefLink">18.1-1</span></a>) and opening the resulting pdf file.</p>
 
 <p><a id="X82E16CAB874A1D84" name="X82E16CAB874A1D84"></a></p>
 
-<h4>18.2 <span class="Heading">
+<h4>18.1 <span class="Heading">
       <code class="code">dot</code> pictures
     </span></h4>
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
 
-<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
 <p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
 
-<h5>18.2-1 DotString</h5>
+<h5>18.1-1 DotString</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
@@ -188,7 +123,7 @@ TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\
 
 <p><a id="X7C22E8D17D6C23EA" name="X7C22E8D17D6C23EA"></a></p>
 
-<h5>18.2-2 DotSemilatticeOfIdempotents</h5>
+<h5>18.1-2 DotSemilatticeOfIdempotents</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
@@ -212,15 +147,15 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
 
 <p><a id="X83152CA78114E2BD" name="X83152CA78114E2BD"></a></p>
 
-<h4>18.3 <span class="Heading">
+<h4>18.2 <span class="Heading">
       <code class="code">tex</code> output
     </span></h4>
 
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18.html#X7BDDE0FE80D09887"><span class="RefLink">18.4</span></a>.</p>
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18.html#X7BDDE0FE80D09887"><span class="RefLink">18.3</span></a>.</p>
 
 <p><a id="X80FBF08180F7F181" name="X80FBF08180F7F181"></a></p>
 
-<h5>18.3-1 TexString</h5>
+<h5>18.2-1 TexString</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
@@ -238,17 +173,17 @@ d{pmatrix}"</pre></div>
 
 <p><a id="X7BDDE0FE80D09887" name="X7BDDE0FE80D09887"></a></p>
 
-<h4>18.4 <span class="Heading">
+<h4>18.3 <span class="Heading">
       <code class="code">tikz</code> pictures
     </span></h4>
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
 
-<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
 <p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
 
-<h5>18.4-1 TikzString</h5>
+<h5>18.3-1 TikzString</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>

@@ -105,8 +105,8 @@
   [2XDirectProduct[102X 6.4-4 
   [2XDirectProductOp[102X 6.4-4 
   [2XDomainOfBipartition[102X 3.5-10 
-  [2XDotSemilatticeOfIdempotents[102X 18.2-2 
-  [2XDotString[102X 18.2-1 
+  [2XDotSemilatticeOfIdempotents[102X 18.1-2 
+  [2XDotString[102X 18.1-1 
   [2XDualSymmetricInverseMonoid[102X 8.3-7 
   [2XDualSymmetricInverseSemigroup[102X 8.3-7 
   [10XELM_LIST[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 17.2-6 
@@ -641,7 +641,6 @@
   [2XSource[102X, for a graph inverse semigroup element 11.1-2 
   [2XSpecialLinearMonoid[102X 8.5-2 
   [2XSpectralRadius[102X 5.6-3 
-  [2XSplash[102X 18.1-1 
   [2XStar[102X, for a bipartition 3.2-6 
       for a PBR 4.5-1 
   [2XStarOp[102X, for a bipartition 3.2-6 
@@ -654,10 +653,10 @@
   [2XSuccessors[102X 5.3-5 
   [2XSupersemigroupOfIdeal[102X 7.2-3 
   [2XTemperleyLiebMonoid[102X 8.3-3 
-  [2XTexString[102X 18.3-1 
+  [2XTexString[102X 18.2-1 
   [2XThresholdNTPMatrix[102X 5.1-12 
   [2XThresholdTropicalMatrix[102X 5.1-11 
-  [2XTikzString[102X 18.4-1 
+  [2XTikzString[102X 18.3-1 
   [2XTraceOfSemigroupCongruence[102X 16.7-5 
   [2XTransposedMatImmutable[102X, for a matrix over finite field 5.4-8 
   [2XTriangularBooleanMatMonoid[102X 8.6-6 

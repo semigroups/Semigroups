@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.16
+                                 Version 3.0.17
   
   
                                  J. D. Mitchell
@@ -89,8 +89,8 @@
   [33X[0;0YStuart  Burrell contributed methods for checking finiteness of semigroups of
   matrices of the max-plus and min-plus semirings.[133X
   
-  [33X[0;0YManuel  Delgado  and  Attila  Egri-Nagy  contributed to the functions [2XSplash[102X
-  ([14X18.1-1[114X) and [2XDotString[102X ([14X18.2-1[114X).[133X
+  [33X[0;0YManuel  Delgado  and  Attila Egri-Nagy contributed to the function [2XDotString[102X
+  ([14X18.1-1[114X).[133X
   
   [33X[0;0YJames East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
   the  package  relating to bipartitions. I would like to thank the University
@@ -103,7 +103,8 @@
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
   
-  [33X[0;0YZak Mesyan contributed to the code for graph inverse semigroups [14X11[114X.[133X
+  [33X[0;0YZak Mesyan contributed to the code for graph inverse semigroups; see Chapter
+  [14X11[114X.[133X
   
   [33X[0;0YMarkus  Pfeiffer contributed the majority of the code relating to semigroups
   of matrices over finite fields.[133X
@@ -632,15 +633,13 @@
       17.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by
       triples[133X
   18 [33X[0;0YVisualising semigroups and elements[133X
-    18.1 [33X[0;0YAutomatic viewing[133X
-      18.1-1 Splash
-    18.2 [33X[0;0Y[10Xdot[110X pictures[133X
-      18.2-1 DotString
-      18.2-2 DotSemilatticeOfIdempotents
-    18.3 [33X[0;0Y[10Xtex[110X output[133X
-      18.3-1 TexString
-    18.4 [33X[0;0Y[10Xtikz[110X pictures[133X
-      18.4-1 TikzString
+    18.1 [33X[0;0Y[10Xdot[110X pictures[133X
+      18.1-1 DotString
+      18.1-2 DotSemilatticeOfIdempotents
+    18.2 [33X[0;0Y[10Xtex[110X output[133X
+      18.2-1 TexString
+    18.3 [33X[0;0Y[10Xtikz[110X pictures[133X
+      18.3-1 TikzString
   19 [33X[0;0YIO[133X
     19.1 [33X[0;0YReading and writing elements to a file[133X
       19.1-1 ReadGenerators

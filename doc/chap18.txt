@@ -1,91 +1,24 @@
   
   [1X18 [33X[0;0YVisualising semigroups and elements[133X[101X
   
-  [33X[0;0YThere  are  two  operations  [2XTikzString[102X  ([14X18.4-1[114X)  and [2XDotString[102X ([14X18.2-1[114X) in
+  [33X[0;0YThere  are  two  operations  [2XTikzString[102X  ([14X18.3-1[114X)  and [2XDotString[102X ([14X18.1-1[114X) in
   [5XSemigroups[105X  for  creating  LaTeX  and  [10Xdot[110X  (also  known as GraphViz) format
   pictures  of  the Green's class structure of a semigroup and for visualising
   certain  types  of  elements of a semigroup. There is also a function [2XSplash[102X
-  ([14X18.1-1[114X)  for automatically processing the output of [2XTikzString[102X ([14X18.4-1[114X) and
-  [2XDotString[102X ([14X18.2-1[114X) and opening the resulting pdf file.[133X
+  ([14XDigraphs:  Splash[114X)  for  automatically  processing the output of [2XTikzString[102X
+  ([14X18.3-1[114X) and [2XDotString[102X ([14X18.1-1[114X) and opening the resulting pdf file.[133X
   
   
-  [1X18.1 [33X[0;0YAutomatic viewing[133X[101X
-  
-  [33X[0;0YIn  this  section we describe the function [2XSplash[102X ([14X18.1-1[114X) for automatically
-  processing  and  opening  the  strings  output  by  [2XTikzString[102X  ([14X18.4-1[114X) and
-  [2XDotString[102X ([14X18.2-1[114X)[133X
-  
-  [1X18.1-1 Splash[101X
-  
-  [33X[1;0Y[29X[2XSplash[102X( [3Xstr[103X[, [3Xopts[103X] ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YNothing.[133X
-  
-  [33X[0;0YThis  function  attempts  to  convert the string [3Xstr[103X into a pdf document and
-  open this document, i.e. to splash it all over your monitor.[133X
-  
-  [33X[0;0YThe  string  [3Xstr[103X  must  correspond to a valid [10Xdot[110X or [10XLaTeX[110X text file and you
-  must have have [10XGraphViz[110X and [10Xpdflatex[110X installed on your computer. For details
-  about    these    file   formats,   see   [7Xhttp://www.latex-project.org[107X   and
-  [7Xhttp://www.graphviz.org[107X.[133X
-  
-  [33X[0;0YThis  function  is  provided  to  allow convenient, immediate viewing of the
-  pictures   produced   by  the  functions:  [2XTikzString[102X  ([14X18.4-1[114X),  [2XTikzString[102X
-  ([14X18.4-1[114X), [2XDotSemilatticeOfIdempotents[102X ([14X18.2-2[114X), and [2XDotString[102X ([14X18.2-1[114X).[133X
-  
-  [33X[0;0YThe  optional  second  argument  [3Xopts[103X  should  be  a  record with components
-  corresponding to various options, given below.[133X
-  
-  [8Xpath[108X
-        [33X[0;6Ythis  should  be a string representing the path to the directory where
-        you  want  [10XSplash[110X  to do its work. The default value of this option is
-        [10X"~/"[110X.[133X
-  
-  [8Xdirectory[108X
-        [33X[0;6Ythis should be a string representing the name of the directory in [10Xpath[110X
-        where  you  want [10XSplash[110X to do its work. This function will create this
-        directory if does not already exist.[133X
-  
-        [33X[0;6YThe  default  value  of this option is [10X"tmp.viz"[110X if the option [10Xpath[110X is
-        present,    and   the   result   of   [2XDirectoryTemporary[102X   ([14XReference:
-        DirectoryTemporary[114X) is used otherwise.[133X
-  
-  [8Xfilename[108X
-        [33X[0;6Ythis  should  be  a string representing the name of the file where [3Xstr[103X
-        will be written. The default value of this option is [10X"vizpicture"[110X.[133X
-  
-  [8Xviewer[108X
-        [33X[0;6Ythis  should  be  a  string representing the name of the program which
-        should open the files produced by [10XGraphViz[110X or [10Xpdflatex[110X.[133X
-  
-  [8Xtype[108X
-        [33X[0;6Ythis  option  can  be  used  to specify that the string [3Xstr[103X contains a
-        LaTeX  or [10Xdot[110X document. You can specify this option in [3Xstr[103X directly by
-        making  the  first line [10X"%latex"[110X or [10X"//dot"[110X. There is no default value
-        for this option, this option must be specified in [3Xstr[103X or in [3Xopt.type[103X.[133X
-  
-  [8Xfiletype[108X
-        [33X[0;6Ythis  should  be  a  string representing the type of file which [10XSplash[110X
-        should  produce.  For  LaTeX  files,  this  option  is ignored and the
-        default value [10X"pdf"[110X is used.[133X
-  
-  [33X[0;0YThis  function  was written by Attila Egri-Nagy and Manuel Delgado with some
-  minor changes by J. D. Mitchell.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X        gap> Splash(DotString(FullTransformationMonoid(4)));[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X18.2 [33X[0;0Y[10Xdot[110X[101X[1X pictures[133X[101X
+  [1X18.1 [33X[0;0Y[10Xdot[110X[101X[1X pictures[133X[101X
   
   [33X[0;0YIn  this  section,  we  describe  the  operations in [5XSemigroups[105X for creating
   pictures in [10Xdot[110X format.[133X
   
   [33X[0;0YThe  operations  described  in  this  section  return  strings, which can be
   written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
-  viewed using [2XSplash[102X ([14X18.1-1[114X).[133X
+  viewed using [2XSplash[102X ([14XDigraphs: Splash[114X).[133X
   
-  [1X18.2-1 DotString[101X
+  [1X18.1-1 DotString[101X
   
   [33X[1;0Y[29X[2XDotString[102X( [3XS[103X[, [3Xoptions[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
@@ -159,7 +92,7 @@
     [4X[28X1040[128X[104X
   [4X[32X[104X
   
-  [1X18.2-2 DotSemilatticeOfIdempotents[101X
+  [1X18.1-2 DotSemilatticeOfIdempotents[101X
   
   [33X[1;0Y[29X[2XDotSemilatticeOfIdempotents[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
@@ -187,13 +120,13 @@
   [4X[32X[104X
   
   
-  [1X18.3 [33X[0;0Y[10Xtex[110X[101X[1X output[133X[101X
+  [1X18.2 [33X[0;0Y[10Xtex[110X[101X[1X output[133X[101X
   
   [33X[0;0YIn this section, we describe the operations in [5XSemigroups[105X for creating LaTeX
   representations  of  [5XGAP[105X  objects.  For  pictures  of [5XGAP[105X objects please see
-  Section [14X18.4[114X.[133X
+  Section [14X18.3[114X.[133X
   
-  [1X18.3-1 TexString[101X
+  [1X18.2-1 TexString[101X
   
   [33X[1;0Y[29X[2XTexString[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
@@ -214,16 +147,16 @@
   [4X[32X[104X
   
   
-  [1X18.4 [33X[0;0Y[10Xtikz[110X[101X[1X pictures[133X[101X
+  [1X18.3 [33X[0;0Y[10Xtikz[110X[101X[1X pictures[133X[101X
   
   [33X[0;0YIn  this  section,  we  describe  the  operations in [5XSemigroups[105X for creating
   pictures in [10Xtikz[110X format.[133X
   
   [33X[0;0YThe  functions  described  in  this  section  return  a string, which can be
   written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
-  viewed using [2XSplash[102X ([14X18.1-1[114X).[133X
+  viewed using [2XSplash[102X ([14XDigraphs: Splash[114X).[133X
   
-  [1X18.4-1 TikzString[101X
+  [1X18.3-1 TikzString[101X
   
   [33X[1;0Y[29X[2XTikzString[102X( [3Xobj[103X[, [3Xoptions[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA string.[133X
