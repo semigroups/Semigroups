@@ -302,6 +302,44 @@ gap> I := MinimalIdeal(I);
 gap> IsFactorisableInverseMonoid(I);
 false
 
+# Test Ideals method
+gap> S := Semigroup([Transformation([5, 3, 1, 5, 3]),
+>                    Transformation([4, 3, 1, 5, 5]),
+>                    Transformation([1, 5, 5, 4, 2])]);;
+gap> ideals := Ideals(S);;
+gap> Size(ideals);
+17
+gap> IsDuplicateFreeList(ideals);
+true
+gap> S := TrivialSemigroup(IsBlockBijectionSemigroup);;
+gap> ideals := Ideals(S);;
+gap> Size(ideals);
+1
+gap> Size(ideals[1]);
+1
+gap> A := AlternatingGroup(100);;
+gap> ideals := Ideals(S);;
+gap> Size(ideals);
+1
+gap> S := Semigroup([
+>           Bipartition([[1, 2, -1, -4], [3, -5], [4], [5, -2], [-3]]), 
+>           Bipartition([[1, 2, 4, -3, -5], [3, -4], [5, -1, -2]]),
+>           Bipartition([[1, 2, 5, -3, -4], [3, 4, -1, -2], [-5]])]);;
+gap> ideals := Ideals(S);;
+gap> Size(ideals);
+179
+
+# SEMIGROUPS_UnbindVariables
+gap> Unbind(A);
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(ideals);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/ideals.tst");

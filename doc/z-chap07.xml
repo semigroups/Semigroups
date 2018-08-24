@@ -29,6 +29,7 @@
     </Heading>
 
     <#Include Label = "SemigroupIdeal">
+    <#Include Label = "Ideals">
  
   </Section>
  

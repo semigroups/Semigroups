@@ -424,3 +424,23 @@ function(I)
   fi;
   return false;
 end);
+
+InstallMethod(Ideals, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local reps, gr, cliques;
+  # Groups have only one ideal
+  if IsGroup(S) or (HasIsGroupAsSemigroup(S) and IsGroupAsSemigroup(S)) then
+    return [SemigroupIdeal(S, S.1)];
+  fi;
+  reps := DClassReps(S);
+  # Digraph of D-class partial order
+  gr := Digraph(PartialOrderOfDClasses(S));
+  # Graph with an edge between any two comparable D-classes
+  gr := DigraphSymmetricClosure(DigraphReflexiveTransitiveClosure(gr));
+  # Graph with an edge between any two non-comparable D-classes
+  gr := DigraphDual(gr);
+  # All non-empty sets of pairwise incomparable D-classes
+  cliques := DigraphCliques(gr);
+  return List(cliques, clique -> SemigroupIdeal(S, reps{clique}));
+end);

@@ -42,3 +42,5 @@ DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 DeclareAttribute("SupersemigroupOfIdeal", IsSemigroupIdeal);
 
 InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
+
+DeclareAttribute("Ideals", IsSemigroup);

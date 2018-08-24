@@ -152,3 +152,38 @@ false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="Ideals">
+  <ManSection>
+    <Attr Name = "Ideals" Arg = "S" Label = "for a semigroup"/>
+    <Returns>
+      An list of ideals.
+    </Returns>
+    <Description>
+      If <A>S</A> is a finite non-empty semigroup, then this attribute returns a
+      list of all the ideals of <A>S</A>. <P/>
+
+      The ideals are returned in no particular order, and each ideal uses the
+      minimum possible number of generators
+      (see <Ref Attr = "GeneratorsOfSemigroupIdeal"/>).
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([4, 3, 4, 1]),
+>                    Transformation([4, 3, 2, 2])]);
+<transformation semigroup of degree 4 with 2 generators>
+gap> Ideals(S);
+[ <non-regular transformation semigroup ideal of degree 4 with
+      1 generator>, 
+ <non-regular transformation semigroup ideal of degree 4 with
+     1 generator>, 
+<non-regular transformation semigroup ideal of degree 4 with
+    2 generators>, 
+<regular transformation semigroup ideal of degree 4 with 1 generator>,
+<non-regular transformation semigroup ideal of degree 4 with
+  1 generator>, 
+<regular transformation semigroup ideal of degree 4 with 1 generator> 
+]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
