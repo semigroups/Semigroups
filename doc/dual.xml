@@ -1,0 +1,135 @@
+#############################################################################
+##
+#W  dual.xml
+#Y  Copyright (C) 2018                                             Finn Smith
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="DualSemigroup">
+  <ManSection>
+    <Attr Name = "DualSemigroup" Arg = "S"/>
+    <Returns>The dual semigroup of the given semigroup.</Returns>
+    <Description>
+      The dual semigroup of a semigroup <A>S</A> is the semigroup with the
+      same underlying set as <A>S</A>, but with multiplication reversed; this
+      is anti-isomorphic to <A>S</A>. This attribute returns a semigroup
+      isomorphic to the dual semigroup of <A>S</A>.
+<Example>
+<![CDATA[
+gap> S := Semigroup([Transformation([1, 4, 3, 2, 2]),
+> Transformation([5, 4, 4, 1, 2])]);;
+gap> D := DualSemigroup(S);
+<dual semigroup of <transformation semigroup of degree 5 with 2 
+ generators>>
+gap> Size(S) = Size(D);
+true
+gap> NrDClasses(S) = NrDClasses(D);
+true]]></Example> </Description> </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AntiIsomorphismDualSemigroup">
+  <ManSection>
+    <Attr Name= "AntiIsomorphismDualSemigroup" Arg = "S"/>
+    <Returns>
+      An anti-isomorphism from <A>S</A> to the corresponding dual semigroup.
+    </Returns>
+    <Description>
+      The dual semigroup of <A>S</A> mathematically has the same underlying
+      set as <A>S</A>, but is represented with a different set of elements in
+      &Semigroups;. This function returns a mapping which is an anti-isomorphism from
+      <A>S</A> to its dual.
+      <Example>
+<![CDATA[
+gap> S := PartitionMonoid(3);
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
+gap> map := AntiIsomorphismDualSemigroup(S);
+MappingByFunction( <regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators>, <dual semigroup of 
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
+ >, function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(map);;
+gap> x := Bipartition([[1, -2], [2, -3], [3, -1]]);
+<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>
+gap> y := Bipartition([[1], [2, -2], [3, -3], [-1]]);
+<bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ -1 ]>
+gap> (x ^ map) * (y ^ map) = (y * x) ^ map;
+true
+gap> x ^ map;
+<<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>
+  in the dual semigroup>]]></Example> </Description> </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsDualSemigroupElement">
+  <ManSection>
+    <Filt Name = "IsDualSemigroupElement" Type = "Category" Arg="elt"/>
+    <Returns>Returns <K>true</K> if <A>elt</A> has the representation of a dual
+     semigroup element.</Returns>
+    <Description>
+      Elements of a dual semigroup obtained using
+      <Ref Attr = "AntiIsomorphismDualSemigroup"/> normally lie in this
+      category. The exception is elements obtained by applying
+      the map <Ref Attr = "AntiIsomorphismDualSemigroup"/> to elements already
+      in this category. That is, the elements of a semigroup lie in the
+      category <Ref Filt="IsDualSemigroupElement"/> if and only if the
+      elements of the corresponding dual semigroup do not.
+<Example>
+<![CDATA[
+gap> S := SingularPartitionMonoid(4);;
+gap> D := DualSemigroup(S);;
+gap> s := GeneratorsOfSemigroup(S)[1];;
+gap> map := AntiIsomorphismDualSemigroup(S);;
+gap> t := s ^ map;
+<<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
+  in the dual semigroup>
+gap> IsDualSemigroupElement(t);
+true
+gap> inv := InverseGeneralMapping(map);;
+gap> x := t ^ inv;
+<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
+gap> IsDualSemigroupElement(x);
+false]]></Example> </Description> </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsDualSemigroupRep">
+  <ManSection>
+    <Filt Name = "IsDualSemigroupRep" Type = "Category" Arg="sgrp"/>
+    <Returns>Returns <K>true</K> if <A>sgrp</A> is represented as
+      a dual semigroup.</Returns>
+    <Description>
+      Semigroups created using <Ref Func="DualSemigroup"/>
+      normally have this representation. The exception is semigroups
+      which are the dual of semigroups already lying in this category.
+      That is, a semigroup has the representation
+      <Ref Filt="IsDualSemigroupRep"/> if and only if the corresponding
+      dual semigroup does not.
+<Example>
+<![CDATA[
+gap> S := Semigroup([Transformation([3, 5, 1, 1, 2]),
+> Transformation([1, 2, 4, 4, 3])]);
+<transformation semigroup of degree 5 with 2 generators>
+gap> D := DualSemigroup(S);
+<dual semigroup of <transformation semigroup of degree 5 with 2 
+ generators>>
+gap> IsDualSemigroupRep(D);
+true
+gap> R := DualSemigroup(D);
+<transformation semigroup of degree 5 with 2 generators>
+gap> IsDualSemigroupRep(R);
+false
+gap> R = S;
+true
+gap> T := Range(IsomorphismTransformationSemigroup(D));
+<transformation semigroup of size 16, degree 17 with 2 generators>
+gap> IsDualSemigroupRep(T);
+false
+gap> x := Representative(D);
+<Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup>
+gap> V := Semigroup(x);
+<dual semigroup of <commutative transformation semigroup of degree 5 
+ with 1 generator>>
+gap> IsDualSemigroupRep(V);
+true]]></Example> </Description> </ManSection>
+<#/GAPDoc>
