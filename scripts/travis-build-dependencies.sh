@@ -83,13 +83,14 @@ for PKG in "${PKGS[@]}"; do
   else
     if [ "$PACKAGES" == "newest" ]; then
       echo -e "\nGetting latest release of $PKG..."
-      VERSION=`curl -s -L https://github.com/gap-packages/$PKG/releases/latest | grep \<title\> | awk -F' ' '{print $2}'`
+      VERSION=`curl -sL "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
     else
       echo -e "\nGetting required release of $PKG..."
       VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
     fi
-    echo -e "Downloading $PKG-$VERSION..."
-    curl -L -O https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz
+    URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
+    echo -e "Downloading $PKG-$VERSION, from URL:\n$URL"
+    curl -LO "$URL"
     tar xf $PKG-$VERSION.tar.gz
     PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
     rm $PKG-$VERSION.tar.gz
@@ -107,6 +108,7 @@ done
 ################################################################################
 # Install required GAP packages
 cd $GAPROOT/pkg
-curl -L -O http://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz
+echo -e "\nGetting the required GAP packages (smallgrp, transgrp, primgrp)..."
+curl -LO "https://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz"
 tar xf packages-required-master.tar.gz
 rm packages-required-master.tar.gz
