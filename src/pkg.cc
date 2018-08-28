@@ -527,8 +527,8 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
-  T_SEMI                    = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
-  InfoBags[T_SEMI].name     = "Semigroups package C++ type";
+  T_SEMI = RegisterPackageTNUM("Semigroups package C++ type", TSemiObjTypeFunc);
+
   PrintObjFuncs[T_SEMI]     = TSemiObjPrintFunc;
   SaveObjFuncs[T_SEMI]      = TSemiObjSaveFunc;
   LoadObjFuncs[T_SEMI]      = TSemiObjLoadFunc;
@@ -542,8 +542,7 @@ static Int InitKernel(StructInitInfo* module) {
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
   // T_BIPART
-  T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
-  InfoBags[T_BIPART].name = "bipartition";
+  T_BIPART = RegisterPackageTNUM("bipartition", TBipartObjTypeFunc);
 
   CopyObjFuncs[T_BIPART]      = &TBipartObjCopyFunc;
   CleanObjFuncs[T_BIPART]     = &TBipartObjCleanFunc;
@@ -563,8 +562,7 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("TYPES_BIPART", &TYPES_BIPART);
 
   // T_BLOCKS
-  T_BLOCKS = RegisterPackageTNUM("TBlocksObj", TBlocksObjTypeFunc);
-  InfoBags[T_BLOCKS].name = "blocks";
+  T_BLOCKS = RegisterPackageTNUM("blocks", TBlocksObjTypeFunc);
 
   CopyObjFuncs[T_BLOCKS]      = &TBlocksObjCopyFunc;
   CleanObjFuncs[T_BLOCKS]     = &TBlocksObjCleanFunc;
