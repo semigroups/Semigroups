@@ -2,6 +2,10 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.17 (released 23/08/2018)
+
+This version contains some minor improvements and bugfixes.
+
 ### Version 3.0.16 (released 29/05/2018)
 
 This version contains some minor improvements and bugfixes.
