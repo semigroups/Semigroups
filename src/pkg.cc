@@ -110,16 +110,6 @@ void TBipartObjCleanFunc(Obj o) {}
 
 void TBlocksObjCleanFunc(Obj o) {}
 
-Int TBipartObjIsMutableObjFunc(Obj o) {
-  // Bipartition objects are mathematically immutable.
-  return 0L;
-}
-
-Int TBlocksObjIsMutableObjFunc(Obj o) {
-  // Blocks objects are mathematically immutable.
-  return 0L;
-}
-
 // Function to free a T_SEMI Obj during garbage collection.
 
 void TSemiObjFreeFunc(Obj o) {
@@ -537,8 +527,8 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
-  T_SEMI                    = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
-  InfoBags[T_SEMI].name     = "Semigroups package C++ type";
+  T_SEMI = RegisterPackageTNUM("Semigroups package C++ type", TSemiObjTypeFunc);
+
   PrintObjFuncs[T_SEMI]     = TSemiObjPrintFunc;
   SaveObjFuncs[T_SEMI]      = TSemiObjSaveFunc;
   LoadObjFuncs[T_SEMI]      = TSemiObjLoadFunc;
@@ -552,12 +542,11 @@ static Int InitKernel(StructInitInfo* module) {
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
   // T_BIPART
-  T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
-  InfoBags[T_BIPART].name = "bipartition";
+  T_BIPART = RegisterPackageTNUM("bipartition", TBipartObjTypeFunc);
 
   CopyObjFuncs[T_BIPART]      = &TBipartObjCopyFunc;
   CleanObjFuncs[T_BIPART]     = &TBipartObjCleanFunc;
-  IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFunc;
+  IsMutableObjFuncs[T_BIPART] = &AlwaysNo;
 
   SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
   LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
@@ -573,12 +562,11 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("TYPES_BIPART", &TYPES_BIPART);
 
   // T_BLOCKS
-  T_BLOCKS = RegisterPackageTNUM("TBlocksObj", TBlocksObjTypeFunc);
-  InfoBags[T_BLOCKS].name = "blocks";
+  T_BLOCKS = RegisterPackageTNUM("blocks", TBlocksObjTypeFunc);
 
   CopyObjFuncs[T_BLOCKS]      = &TBlocksObjCopyFunc;
   CleanObjFuncs[T_BLOCKS]     = &TBlocksObjCleanFunc;
-  IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFunc;
+  IsMutableObjFuncs[T_BLOCKS] = &AlwaysNo;
 
   SaveObjFuncs[T_BLOCKS] = TBlocksObjSaveFunc;
   LoadObjFuncs[T_BLOCKS] = TBlocksObjLoadFunc;
