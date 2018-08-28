@@ -110,16 +110,6 @@ void TBipartObjCleanFunc(Obj o) {}
 
 void TBlocksObjCleanFunc(Obj o) {}
 
-Int TBipartObjIsMutableObjFunc(Obj o) {
-  // Bipartition objects are mathematically immutable.
-  return 0L;
-}
-
-Int TBlocksObjIsMutableObjFunc(Obj o) {
-  // Blocks objects are mathematically immutable.
-  return 0L;
-}
-
 // Function to free a T_SEMI Obj during garbage collection.
 
 void TSemiObjFreeFunc(Obj o) {
@@ -557,7 +547,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   CopyObjFuncs[T_BIPART]      = &TBipartObjCopyFunc;
   CleanObjFuncs[T_BIPART]     = &TBipartObjCleanFunc;
-  IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFunc;
+  IsMutableObjFuncs[T_BIPART] = &AlwaysNo;
 
   SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
   LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
@@ -578,7 +568,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   CopyObjFuncs[T_BLOCKS]      = &TBlocksObjCopyFunc;
   CleanObjFuncs[T_BLOCKS]     = &TBlocksObjCleanFunc;
-  IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFunc;
+  IsMutableObjFuncs[T_BLOCKS] = &AlwaysNo;
 
   SaveObjFuncs[T_BLOCKS] = TBlocksObjSaveFunc;
   LoadObjFuncs[T_BLOCKS] = TBlocksObjLoadFunc;
