@@ -394,9 +394,9 @@ gap> MinimalDClass(K);
 <Green's D-class: <empty partial perm>>
 gap> I := MinimalIdeal(K);
 <partial perm group of rank 10>
-gap> IsomorphismPermGroup(I);
-MappingByFunction( <trivial partial perm group of rank 10 with 1 generator>
-, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
+gap> x := IsomorphismPermGroup(I);;
+gap> IsTrivial(Range(x));
+true
 
 # IdealsTest9: attributes.gi
 gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),

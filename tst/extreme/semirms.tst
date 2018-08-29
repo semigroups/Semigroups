@@ -176,12 +176,10 @@ gap> ForAll(T, x -> (x ^ iso) ^ inv = x);
 true
 gap> ForAll(T, x -> ForAll(T, y -> (x * y) ^ iso = x ^ iso * y ^ iso));
 true
-gap> iso := IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <trivial group with 1 generator>
-, Group(()), function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <trivial group with 1 generator>
-, function( x ) ... end, function( x ) ... end )
+gap> iso := IsomorphismPermGroup(MinimalIdeal(V));;
+gap> IsTrivial(Range(iso));
+true
+gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(MinimalIdeal(V), x -> (x ^ iso) ^ inv = x);
 true
 gap> ForAll(MinimalIdeal(V), x ->
@@ -1011,11 +1009,13 @@ MappingByFunction( <Rees 0-matrix semigroup 1x1 over
 gap> R := ReesZeroMatrixSemigroup(G, [[id]]);
 <Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
    2 generators>>
-gap> RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 1x1 over <transformation group of 
-  degree 4 with 2 generators>>, <Rees 0-matrix semigroup 1x1 over 
-<transformation group of degree 4 with 2 generators>>
-, function( x ) ... end, function( x ) ... end )
+gap> iso := RZMSNormalization(R);;
+gap> Range(iso);
+<Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
+   2 generators>>
+gap> Matrix(Range(iso));
+[ [ IdentityTransformation ] ]
+gap> inv := InverseGeneralMapping(iso);;
 
 # ReesMatTest108: RZMSNormalization, example 1
 gap> G := SymmetricGroup(5);;

@@ -2854,10 +2854,7 @@ gap> S := Semigroup(
 >      [6, -5], [7, -6], [8, -7]]),
 >  Bipartition([[1, 2, -7], [3, -1, -2], [4, -8], [5, -4],
 >     [6, -5], [7, -3], [8, -6]]), rec(acting := true));;
-gap> iso := IsomorphismPermGroup(S);
-MappingByFunction( <block bijection group of degree 8 with 2 generators>
-, Group([ (1,2,3,7,6,5,4), (1,6,2)
-(3,7,5,4) ]), function( x ) ... end, function( x ) ... end )
+gap> iso := IsomorphismPermGroup(S);;
 gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(S, x -> x ^ iso in Range(iso));
 true

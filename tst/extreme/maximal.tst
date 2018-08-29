@@ -303,9 +303,6 @@ gap> max := MaximalSubsemigroups(S);
   <commutative transformation semigroup of degree 3 with 1 generator> ]
 gap> List(max, Size);
 [ 1, 1 ]
-gap> max;
-[ <trivial transformation group of degree 3 with 1 generator>, 
- <trivial transformation group of degree 3 with 1 generator> ]
 gap> S := Monoid([
 > Transformation([1, 1])]);  # simple semigroup with adjoined zero
 <commutative transformation monoid of degree 2 with 1 generator>
