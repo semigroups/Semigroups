@@ -468,7 +468,7 @@ function(S, t1, t2)
         rowtransformedmat, zerorow, zerocol, pos,
         rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q, c,
         funcs, digraph, cc, comp, iterator, foundfuncs, vals,
-        failedtocomplete, relpointvals,
+        failedtocomplete, relpointvals, queue,
         relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
   mat := Matrix(reesmatsemi);
@@ -513,7 +513,7 @@ function(S, t1, t2)
     rowrels[i] := [];
     for j in [1 .. nrrows] do
       for k in [1 .. nrcols] do
-        if [i, k] in rels and [j, k] in rels then
+        if i <> j and [i, k] in rels and [j, k] in rels then
           rowrels[i][j] := k;
           break;
         fi;
@@ -523,14 +523,17 @@ function(S, t1, t2)
 
   #get connected components
   edges := List(rels, r -> [r[1], r[2] + nrrows]);
-  digraph := DigraphByEdges(edges, nrrows + nrcols);
+  digraph := DigraphSymmetricClosure(DigraphByEdges(edges, nrrows + nrcols));
   cc := DigraphConnectedComponents(digraph);
 
   #only deal with enough elements to hit each relation
   relpoints := [];
-  for i in cc.comps do
-    if Length(i) > 1 then
-      Add(relpoints, i[1]);
+  for cc in cc.comps do
+    # if cc[1] is in the domain
+    if cc[1] <= nrrows and t1[cc[1]] <= nrrows then
+      Add(relpoints, cc[1]);
+    elif cc[1] > nrrows and cc[1] <= nrrows + nrcols and t2[cc[1] - nrrows] <= nrcols then
+      Add(relpoints, cc[1]);
     fi;
   od;
 
@@ -539,42 +542,27 @@ function(S, t1, t2)
     x := ShallowCopy(funcs[1]);
     y := ShallowCopy(funcs[2]);
     for r in relpoints do
-      comp := cc.comps[cc.id[r]];
-      failedtocomplete := false;
-      for n in [2 .. Length(comp)] do
-        j := comp[n];
-        if j <= nrrows then
-          for q in comp do
-            if IsBound(rowrels[q][j]) and not IsBound(x[j]) then
-              k := rowrels[q][j];
-              x[j] := mat[j][t2[k]] * invmat[q][t2[k]] * x[q] *
-                      rowtransformedmat[q][k] * invmat[t1[j]][k];
-              break;
+      queue := [r];
+      n := 1;
+      repeat
+        q := queue[n];
+        # the digraph is bipartite
+        for j in OutNeighbours(digraph)[q] do
+          if j > nrrows then
+            j := j - nrrows;
+            if not IsBound(y[j]) then
+              y[j] := invmat[q][t2[j]] * x[q] * rowtransformedmat[q][j];
+              Add(queue, nrrows + j);
             fi;
-          od;
-          if not IsBound(x[j]) then
-            failedtocomplete := true;
+          else
+            if not IsBound(x[j]) then
+              x[j] := mat[j][t2[q - nrrows]] * y[q - nrrows] * invmat[t1[j]][q - nrrows];
+              Add(queue, j);
+            fi;
           fi;
-        else
-          j := j - nrrows;
-          if not IsBound(y[j]) then
-            for rel in rels do
-              if rel[1] in comp and rel[2] = j then
-                i := rel[1];
-                y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
-                break;
-              fi;
-            od;
-          fi;
-        fi;
-      od;
-      # Might need several passes to fill in everything, since the filling in
-      # propagates through the connected components.
-      if failedtocomplete then
-        funcs := fillin([x, y]);
-        x := funcs[1];
-        y := funcs[2];
-      fi;
+        od;
+        n := n + 1;
+      until n = Size(queue) + 1;
     od;
     return [x, y];
   end;
