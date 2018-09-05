@@ -51,7 +51,8 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a McAlister triple element collection",
 [IsMcAlisterTripleSemigroupElementCollection],
 function(coll)
-  return IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(coll[1])));
+  return
+  IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(Representative(coll))));
     # and McAlisterTripleSemigroupAction(MTSEParent(coll[1])) = OnPoints;
 end);
 
@@ -102,11 +103,10 @@ function(x)
   return NrMovedPoints(x![2]) + 1;
 end);
 
-# TODO correct?
 InstallMethod(ActionDegree, "for a McAlister semigroup element",
 [IsMcAlisterTripleSemigroupElement],
 function(x)
-  return NrMovedPoints(x[2]);
+  return 0;
 end);
 
 InstallMethod(ActionDegree, "for a matrix over finite field object",
@@ -169,14 +169,10 @@ function(R)
   return 0;
 end);
 
-# TODO check this is ok?
-
 InstallMethod(ActionDegree, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
 function(S)
-  local rep;
-  rep := Representative(S);
-  return NrMovedPoints(McAlisterTripleSemigroupGroup(MTSEParent(rep)));
+  return 0;
 end);
 
 InstallMethod(ActionDegree, "for a matrix over finite field semigroup",
@@ -248,8 +244,6 @@ function(R)
   end;
 end);
 
-# TODO: ok?
-
 InstallMethod(ActionRank, "for a McAlister triple semigroup element and int",
 [IsMcAlisterTripleSemigroupElement, IsInt],
 function(f, n)
@@ -259,8 +253,6 @@ function(f, n)
   id      := McAlisterTripleSemigroupComponents(MTSEParent(f)).id;
   return Position(DigraphTopologicalSort(digraph), id[f[1]]);
 end);
-
-# TODO: ok?
 
 InstallMethod(ActionRank, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
@@ -784,11 +776,12 @@ end);
 InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
 
-# TODO improve the upper bound here
 InstallMethod(LambdaBound, "for a McAlister subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S ->
 function(r)
-  return Size(McAlisterTripleSemigroupGroup(MTSEParent(Representative(S))));
+  local G;
+  G := McAlisterTripleSemigroupGroup(MTSEParent(Representative(S)));
+  return Size(Stabilizer(G, r));
 end);
 
 InstallMethod(RhoBound, "for a McAlister subsemigroup",
