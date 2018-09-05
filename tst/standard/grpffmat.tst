@@ -40,9 +40,11 @@ gap> BruteForceInverseCheck := function(map)
 gap> S := Semigroup(
 > [Matrix(GF(2), [[0 * Z(2), Z(2) ^ 0, 0 * Z(2)], [0 * Z(2), 0 * Z(2), Z(2) ^ 0],
 >   [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])]);;
-gap> map := IsomorphismPermGroup(S);
-MappingByFunction( <group of size 3, 3x3 matrices over GF(2) with 1 generator>
-, Group([ (1,2,3) ]), function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPermGroup(S);;
+gap> Source(map);
+<group of size 3, 3x3 matrices over GF(2) with 1 generator>
+gap> Range(map);
+Group([ (1,2,3) ])
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);
@@ -65,10 +67,11 @@ true
 
 # IsomorphismMatrixGroup
 gap> S := Semigroup(Matrix(GF(3), []));;
-gap> IsomorphismMatrixGroup(S);
-MappingByFunction( <trivial group of 0x0 matrices over GF(3) with 1 generator>
-, <pc group of size 1 with 
-0 generators>, function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismMatrixGroup(S);;
+gap> Source(map);
+<trivial group of 0x0 matrices over GF(3) with 1 generator>
+gap> Range(map);
+<pc group of size 1 with 0 generators>
 gap> S := Semigroup(Matrix(GF(3), [[Z(3)]]));;
 gap> G := Group(One(S));
 <group of 1x1 matrices over GF(3) with 1 generator>

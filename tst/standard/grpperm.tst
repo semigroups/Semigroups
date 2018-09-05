@@ -393,10 +393,11 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 > BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
-gap> IsomorphismPermGroup(S);
-MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>
-, Group([ (1,3)(2,5)(4,6), (1,4,5)
-(2,6,3) ]), function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPermGroup(S);;
+gap> Source(map);
+<group of size 6, 3x3 boolean matrices with 2 generators>
+gap> Range(map);
+Group([ (1,3)(2,5)(4,6), (1,4,5)(2,6,3) ])
 
 # IsomorphismPermGroup, infinite 1 / 1
 gap> IsomorphismPermGroup(FreeMonoid(3));
@@ -405,12 +406,14 @@ Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 # IsomorphismPermGroup, for a block bijection semigroup
 gap> S := Semigroup(Bipartition([[1, 2, -3, -4], [3, 4, -1, -2]]));;
-gap> IsomorphismPermGroup(S);
-MappingByFunction( <block bijection group of degree 4 with 1 generator>
-, Group([ (1,2) ]), function( x ) ... end, function( x ) ... end )
-gap> BruteForceIsoCheck(last);
+gap> map := IsomorphismPermGroup(S);;
+gap> Source(map);
+<block bijection group of degree 4 with 1 generator>
+gap> Range(map);
+Group([ (1,2) ])
+gap> BruteForceIsoCheck(map);
 true
-gap> BruteForceInverseCheck(last2);
+gap> BruteForceInverseCheck(map);
 true
 
 # IteratorSortedConjugateStabChain
@@ -641,6 +644,7 @@ gap> Unbind(S);
 gap> Unbind(iso);
 gap> Unbind(x);
 gap> Unbind(y);
+gap> Unbind(map);
 
 #
 gap> SEMIGROUPS.StopTest();

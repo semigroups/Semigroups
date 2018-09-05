@@ -595,21 +595,24 @@ gap> AsMonoid(S);
 fail
 
 # IsomorphismMonoid
-gap> IsomorphismMonoid(IsMaxPlusMatrixMonoid,
-> Semigroup(Transformation([1, 2, 3, 3, 3])));
-MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
- generator>, <trivial group of 1x1 max-plus matrices with 1 generator>
-, function( x ) ... end, function( x ) ... end )
-gap> IsomorphismMonoid(IsTropicalMaxPlusMatrixMonoid, 3,
-> Semigroup(Transformation([1, 2, 3, 3, 3])));
-MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
- generator>, <trivial group of 1x1 tropical max-plus matrices with 1 generator
- >, function( x ) ... end, function( x ) ... end )
-gap> IsomorphismMonoid(IsNTPMatrixMonoid, 3, 4,
-> Semigroup(Transformation([1, 2, 3, 3, 3])));
-MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
- generator>, <trivial group of 1x1 ntp matrices with 1 generator>
-, function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismMonoid(IsMaxPlusMatrixMonoid,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));;
+gap> Source(map);
+<commutative transformation semigroup of degree 5 with 1 generator>
+gap> Range(map);
+<trivial group of 1x1 max-plus matrices with 1 generator>
+gap> map := IsomorphismMonoid(IsTropicalMaxPlusMatrixMonoid, 3,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));;
+gap> Source(map);
+<commutative transformation semigroup of degree 5 with 1 generator>
+gap> Range(map);
+<trivial group of 1x1 tropical max-plus matrices with 1 generator>
+gap> map := IsomorphismMonoid(IsNTPMatrixMonoid, 3, 4,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));;
+gap> Source(map);
+<commutative transformation semigroup of degree 5 with 1 generator>
+gap> Range(map);
+<trivial group of 1x1 ntp matrices with 1 generator>
 
 # FullTropicalMaxPlusMonoid
 gap> FullTropicalMaxPlusMonoid(3, 1);

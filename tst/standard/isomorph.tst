@@ -118,14 +118,7 @@ gap> S := TrivialSemigroup(IsTransformationSemigroup);
 <trivial transformation group of degree 0 with 1 generator>
 gap> T := TrivialSemigroup(IsBipartitionSemigroup);
 <trivial block bijection group of degree 1 with 1 generator>
-gap> map := IsomorphismSemigroups(S, T);
-CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
-  Group(())>, <trivial block bijection group of degree 1 with 1 generator>
-, function( x ) ... end, function( x ) ... end ), CompositionMapping( 
-((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
-[  ] ), [ (), () ]), MappingByFunction( <trivial transformation group of 
-degree 0 with 1 generator>, <Rees matrix semigroup 1x1 over Group(())>
-, function( x ) ... end, function( x ) ... end ) ) )
+gap> map := IsomorphismSemigroups(S, T);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
