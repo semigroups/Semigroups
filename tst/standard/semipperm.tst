@@ -1995,10 +1995,9 @@ gap> S := DihedralGroup(8);
 <pc group of size 8 with 3 generators>
 gap> IsGroupAsSemigroup(S);
 true
-gap> map := IsomorphismPartialPermSemigroup(S);
-MappingByFunction( <pc group of size 8 with 3 generators>, 
-<partial perm group of size 8, rank 8 with 3 generators>
-, function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPartialPermSemigroup(S);;
+gap> Source(map);
+<pc group of size 8 with 3 generators>
 gap> Range(map);
 <partial perm group of size 8, rank 8 with 3 generators>
 gap> BruteForceIsoCheck(map);
@@ -2012,10 +2011,9 @@ gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;
 gap> IsGroupAsSemigroup(S);
 true
-gap> map := IsomorphismPartialPermSemigroup(S);
-MappingByFunction( <partial perm group of rank 5 with 2 generators>, 
+gap> map := IsomorphismPartialPermSemigroup(S);;
+gap> Source(map);
 <partial perm group of rank 5 with 2 generators>
-, function( object ) ... end, function( object ) ... end )
 gap> Range(map);
 <partial perm group of rank 5 with 2 generators>
 gap> BruteForceIsoCheck(map);
