@@ -795,10 +795,11 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
     <Example><![CDATA[
 gap> S := Semigroup(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
-gap> IsomorphismReesMatrixSemigroup(S);
-MappingByFunction( <trivial partial perm group of rank 1 with
-  1 generator>, <Rees matrix semigroup 1x1 over Group(())>
-, function( x ) ... end, function( x ) ... end )
+gap> iso := IsomorphismReesMatrixSemigroup(S);;
+gap> Source(iso) = S;
+true
+gap> Range(iso);
+<Rees matrix semigroup 1x1 over Group(())>
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <partial perm monoid of rank 1 with 2 generators>
 gap> Range(IsomorphismReesZeroMatrixSemigroup(S));

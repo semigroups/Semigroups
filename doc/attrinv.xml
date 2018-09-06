@@ -445,11 +445,10 @@ gap> S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));
 gap> Elements(S);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
   (1,2)(3,4)(5,6)(7,8) ]
-gap> T := SmallerDegreePartialPermRepresentation(S);
-MappingByFunction( <partial perm group of size 2, rank 8 with
-  1 generator>, <partial perm group of rank 2 with 1 generator>
-, function( x ) ... end, function( x ) ... end )
-gap> R := Range(T);
+gap> iso := SmallerDegreePartialPermRepresentation(S);;
+gap> Source(iso) = S;
+true
+gap> R := Range(iso);
 <partial perm group of rank 2 with 1 generator>
 gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
