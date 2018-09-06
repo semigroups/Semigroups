@@ -537,6 +537,11 @@ fail
 gap> InverseImmutable(Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10));
 fail
 
+# Test TraceMat for a finite field matrix
+gap> mat := Matrix(GF(4), [[Z(4), Z(4) ^ 2], [0 * Z(4), Z(4)]]);;
+gap> TraceMat(mat);
+0*Z(2)
+
 # Test DimensionOfMatrixOverSemiring for zero dim
 gap> mat := Matrix(GF(3), []);;
 gap> DimensionOfMatrixOverSemiring(mat);

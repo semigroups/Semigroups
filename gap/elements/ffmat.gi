@@ -44,6 +44,14 @@ function(mat, pos)
   return IsBound(mat!.mat[pos]);
 end);
 
+# This is here to silence some GAP tests when Semigroups is loaded
+# and should become rendundant once the GAP MatrixObj code works
+InstallOtherMethod(TraceMat, "for a plist matrix over finite field",
+[IsPlistMatrixOverFiniteFieldRep],
+function(mat)
+  return TraceMat(mat!.mat);
+end);
+
 # This should be used with caution, it can create corrupt objects
 
 InstallMethod(MatrixNC, "for a matrix over finite field and list",
