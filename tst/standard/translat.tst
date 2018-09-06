@@ -244,14 +244,14 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >       Remove(rclasses, 1);
 >     od;
 >     if Size(lclasses) > Size(rclasses) then
->       #Size(rclasses) = 1
+>       # Size(rclasses) = 1
 >       for j in [1 .. Size(lclasses)] do
 >         r := Representative(Intersection(lclasses[1], rclasses[1]));
 >         Add(reps, r);
 >         Remove(lclasses, 1);
 >       od;
 >     else
->       #Size(lclasses) = 1
+>       # Size(lclasses) = 1
 >       for j in [1 .. Size(rclasses)] do
 >         r := Representative(Intersection(lclasses[1], rclasses[1]));
 >         Add(reps, r);

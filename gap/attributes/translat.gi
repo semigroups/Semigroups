@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  translat.gi
-#Y  Copyright (C) 2015-17                     James D. Mitchell, Finn Smith
+# W  translat.gi
+# Y  Copyright (C) 2015-18                     James D. Mitchell, Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-#TODO Translations semigroups can currently forget their generators - maybe??
+##
 #############################################################################
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls.
@@ -54,262 +54,254 @@
   end;
 
 # Choose how to calculate the elements of a translations semigroup
-  SEMIGROUPS.TranslationsSemigroupElements := function(T)
-    local S;
-    S := UnderlyingSemigroup(T);
-    if IsZeroSimpleSemigroup(S) or
-        IsRectangularBand(S) or
-        IsSimpleSemigroup(S) or
-        SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      return Semigroup(GeneratorsOfSemigroup(T));
-    elif HasGeneratorsOfSemigroup(S) then
-      if IsLeftTranslationsSemigroup(T) then
-        return SEMIGROUPS.LeftTranslationsBacktrack(T);
-      else
-        return SEMIGROUPS.RightTranslationsByDual(T);
-      fi;
+SEMIGROUPS.TranslationsSemigroupElements := function(T)
+  local S;
+  S := UnderlyingSemigroup(T);
+  if IsZeroSimpleSemigroup(S) or
+      IsRectangularBand(S) or
+      IsSimpleSemigroup(S) or
+      SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    return Semigroup(GeneratorsOfSemigroup(T));
+  elif HasGeneratorsOfSemigroup(S) then
+    if IsLeftTranslationsSemigroup(T) then
+      return SEMIGROUPS.LeftTranslationsBacktrack(T);
+    else
+      return SEMIGROUPS.RightTranslationsByDual(T);
     fi;
-      Error("Semigroups: TranslationsSemigroupElements: \n",
-            "no method of calculating this translations semigroup is known,");
-    end;
+  fi;
+  Error("Semigroups: TranslationsSemigroupElements: \n",
+        "no method of calculating this translations semigroup is known,");
+end;
 
+SEMIGROUPS.LeftTranslationsBacktrack := function(L)
+  local n, slist, gens, m, possiblefgenvals, genspos, I, q,
+  possibleidempotentfvals, gen, idempos, extend, next, propagate, reject, bt,
+  whenbound, translist, e, i, s, x, f, k, multtable, pos,
+  posinfgenvals, genpos, restrictionatstage, S;
 
-    SEMIGROUPS.LeftTranslationsBacktrack := function(L)
-      local n, slist, gens, m, possiblefgenvals, genspos, I, q,
-      possibleidempotentfvals, gen, idempos, extend, next, propagate, reject, bt,
-      whenbound, translist, e, i, s, x, f, k, multtable, t, tinv, M, pos,
-      posinfgenvals, genpos, restrictionatstage, S;
+  S     := UnderlyingSemigroup(L);
+  n     := Size(S);
+  slist := AsSortedList(S);
+  gens  := GeneratorsOfSemigroup(S);
+  m     := Size(gens);
 
-      S := UnderlyingSemigroup(L);
-      n := Size(S);
-      slist := AsSortedList(S);
-      gens := GeneratorsOfSemigroup(S);
-      m := Size(gens);
+  multtable               := MultiplicationTable(S);
+  possiblefgenvals        := List([1 .. m], i -> [1 .. n]);
+  genspos                 := List(gens, g -> Position(slist, g));
+  I                       := Idempotents(S);
+  q                       := Size(I);
+  possibleidempotentfvals := [1 .. q];
+  for e in I do
+    possibleidempotentfvals[Position(I, e)] := PositionsProperty(slist,
+                                                   x -> x * e = x);
+  od;
+  for i in [1 .. m] do
+    gen := gens[i];
+    for s in S do
+      if gen * s in Idempotents(S) then
+        idempos             := Position(I, gen * s);
+        possiblefgenvals[i] := Intersection(possiblefgenvals[i],
+                                            PositionsProperty(slist,
+                                              x -> Position(slist, x * s) in
+                                              possibleidempotentfvals[idempos]));
+        possiblefgenvals[i] := Intersection(possiblefgenvals[i],
+                                            PositionsProperty(slist,
+                                              x -> x * s = x * s * gen * s));
+      fi;
+    od;
+  od;
 
-      #t := Transformation(List([1 .. n], i -> Position(slist, AsSortedList(S)[i])));
-      #tinv := InverseOfTransformation(t);
-      #M := MultiplicationTable(S);
+  extend := function(k)
+    # assign the first possible value to the next rep
+    f[genspos[k + 1]]     := possiblefgenvals[k + 1][1];
+    posinfgenvals[k + 1]  := 1;
+    return k + 1;
+  end;
 
-      #multtable := List([1 .. n], i -> List([1 .. n],
-      #                                      j -> M[i ^ tinv][j ^ tinv] ^ t));
-
-    multtable := MultiplicationTable(S);
-
-    possiblefgenvals := List([1 .. m], i -> [1 .. n]);
-
-    genspos := List(gens, g -> Position(slist, g));
-
-    I := Idempotents(S);
-    q := Size(I);
-    possibleidempotentfvals := [1 .. q];
-    for e in I do
-      possibleidempotentfvals[Position(I, e)] := PositionsProperty(slist,
-                                                     x -> x * e = x);
+  next := function(k)
+    for i in [1 .. n] do
+      if whenbound[i] = k then
+        whenbound[i] := 0;
+        Unbind(f[i]);
+      fi;
     od;
     for i in [1 .. m] do
-      gen := gens[i];
-      for s in S do
-        if gen * s in Idempotents(S) then
-          idempos := Position(I, gen * s);
-          possiblefgenvals[i] := Intersection(possiblefgenvals[i],
-                                              PositionsProperty(slist,
-                                                x -> Position(slist, x * s) in
-                                                possibleidempotentfvals[idempos]));
-          possiblefgenvals[i] := Intersection(possiblefgenvals[i],
-                                              PositionsProperty(slist,
-                                                x -> x * s = x * s * gen * s));
-        fi;
-      od;
+      UniteSet(possiblefgenvals[i], restrictionatstage[k][i]);
+      restrictionatstage[k][i] := [];
     od;
+    if posinfgenvals[k] = Size(possiblefgenvals[k]) then
+      return fail;
+    fi;
+    # whenbound[genspos[k]] := k; ???
+    posinfgenvals[k] := posinfgenvals[k] + 1;
+    f[genspos[k]]    := possiblefgenvals[k][posinfgenvals[k]];
+    return k;
+  end;
 
-    extend := function(k)
-      f[genspos[k + 1]] := possiblefgenvals[k + 1][1];
-      posinfgenvals[k + 1] := 1;
-      return k + 1;
-    end;
-
-    next := function(k)
-      for i in [1 .. n] do
-        if whenbound[i] = k then
-          whenbound[i] := 0;
-          Unbind(f[i]);
+  propagate := function(k)
+    # multiply through on the right by S to assign all other possible positions
+    x := genspos[k];
+    for i in [1 .. n] do
+      pos := multtable[x][i];
+      if slist[pos] in gens then
+        # we don't want to restrict f[gens[k]] based on the value of f[gens[k]]
+        # and there's no point restricting f[gens[i]] for i < k
+        genpos := Position(gens, slist[pos]);
+        if genpos > k and multtable[f[x]][i] in possiblefgenvals[genpos] then
+          restrictionatstage[k][genpos] :=
+            UnionSet(restrictionatstage[k][genpos],
+                     Difference(possiblefgenvals[genpos],
+                                [multtable[f[x]][i]]));
+          possiblefgenvals[genpos] := Intersection(possiblefgenvals[genpos],
+                                                   [multtable[f[x]][i]]);
         fi;
-      od;
-      for i in [1 .. m] do
+      fi;
+      if IsBound(f[pos]) then
+        if not f[pos] = multtable[f[x]][i] then
+          return fail;
+        fi;
+        continue;
+      fi;
+      f[pos]          := multtable[f[genspos[k]]][i];
+      whenbound[pos]  := k;
+    od;
+    return k;
+  end;
+
+  reject := function(k)
+    if k = m + 1 then
+      k := m;
+    fi;
+    while k > 0 and next(k) = fail do
+      Unbind(f[genspos[k]]);
+      posinfgenvals[k] := 0;
+      for i in [k .. m] do
         UniteSet(possiblefgenvals[i], restrictionatstage[k][i]);
         restrictionatstage[k][i] := [];
       od;
-      if posinfgenvals[k] = Size(possiblefgenvals[k]) then
-        return fail;
-      fi;
-      #whenbound[genspos[k]] := k;
-      posinfgenvals[k] := posinfgenvals[k] + 1;
-      f[genspos[k]] := possiblefgenvals[k][posinfgenvals[k]];
-      return k;
-    end;
-
-    propagate := function(k)
-      x := genspos[k];
-      for i in [1 .. n] do
-        pos := multtable[x][i];
-        if slist[pos] in gens then
-          # we don't want to restrict f[gens[k]] based on the value of f[gens[k]]
-          # and there's no point restricting f[gens[i]] for i < k
-          genpos := Position(gens, slist[pos]);
-          if genpos > k and multtable[f[x]][i] in possiblefgenvals[genpos] then
-            restrictionatstage[k][genpos] := UnionSet(restrictionatstage[k][genpos],
-                                                       Difference(possiblefgenvals[genpos],
-                                                                  [multtable[f[x]][i]]));
-            possiblefgenvals[genpos] := Intersection(possiblefgenvals[genpos],
-                                                     [multtable[f[x]][i]]);
-          fi;
-        fi;
-        if IsBound(f[pos]) then
-          if not f[pos] = multtable[f[x]][i] then
-            return fail;
-          fi;
-          continue;
-        fi;
-        f[pos] := multtable[f[genspos[k]]][i];
-        whenbound[pos] := k;
-      od;
-      return k;
-    end;
-
-    reject := function(k)
-      if k = m + 1 then
-        k := m;
-      fi;
-      while k > 0 and next(k) = fail do
-        Unbind(f[genspos[k]]);
-        posinfgenvals[k] := 0;
-        for i in [k .. m] do
-          UniteSet(possiblefgenvals[i], restrictionatstage[k][i]);
-          restrictionatstage[k][i] := [];
-        od;
-        k := k - 1;
-      od;
-      return k;
-    end;
-
-    bt := function(k)
-      if k = 0 or k = m + 1 then
-        return k;
-      fi;
-      if propagate(k) = fail then
-        return bt(reject(k));
-      fi;
-      if k = m then
-        return m + 1;
-      fi;
-      return bt(extend(k));
-    end;
-
-    whenbound := List([1 .. n], i -> 0);
-    translist := [];
-    restrictionatstage := List([1 .. m], i -> List([1 .. m], j -> []));
-    f := [];
-    posinfgenvals := List([1 .. m], i -> 0);
-
-    extend(0);
-    k := bt(1);
-    while k = m + 1 do
-      Add(translist, LeftTranslationNC(L, Transformation(ShallowCopy(f))));
-      k := bt(reject(k));
+      k := k - 1;
     od;
-    return translist;
+    return k;
   end;
 
-  SEMIGROUPS.RightTranslationsByDual := function(R)
-    local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
-
-    S := UnderlyingSemigroup(R);
-    Sl := AsSortedList(S);
-    D := DualSemigroup(S);
-    Dl := AsSortedList(D);
-    map := AntiIsomorphismDualSemigroup(S);
-    dual_trans := LeftTranslations(D);
-    
-    map_list := List(S, x -> []);
-    inv_list := List(S, x -> []);
-    for i in [1 .. Size(S)] do
-      j := Position(Dl, Sl[i] ^ map);
-      map_list[i] := j; 
-      inv_list[j] := i;
-    od;
-
-    return List(dual_trans,
-                d -> RightTranslation(R, Transformation(List([1 .. Size(S)], 
-                                         i -> inv_list[map_list[i] ^ d![1]]))));
+  bt := function(k)
+    if k = 0 or k = m + 1 then
+      return k;
+    fi;
+    if propagate(k) = fail then
+      return bt(reject(k));
+    fi;
+    if k = m then
+      return m + 1;
+    fi;
+    return bt(extend(k));
   end;
+
+  whenbound           := List([1 .. n], i -> 0);
+  translist           := [];
+  restrictionatstage  := List([1 .. m], i -> List([1 .. m], j -> []));
+  f                   := [];
+  posinfgenvals       := List([1 .. m], i -> 0);
+
+  extend(0);
+  k := bt(1);
+  while k = m + 1 do
+    Add(translist, LeftTranslationNC(L, Transformation(ShallowCopy(f))));
+    k := bt(reject(k));
+  od;
+  return translist;
+end;
+
+SEMIGROUPS.RightTranslationsByDual := function(R)
+  local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
+
+  S           := UnderlyingSemigroup(R);
+  Sl          := AsSortedList(S);
+  D           := DualSemigroup(S);
+  Dl          := AsSortedList(D);
+  map         := AntiIsomorphismDualSemigroup(S);
+  dual_trans  := LeftTranslations(D);
+
+  map_list := List(S, x -> []);
+  inv_list := List(S, x -> []);
+  for i in [1 .. Size(S)] do
+    j           := Position(Dl, Sl[i] ^ map);
+    map_list[i] := j;
+    inv_list[j] := i;
+  od;
+
+  return List(dual_trans,
+              d -> RightTranslation(R, Transformation(List([1 .. Size(S)],
+                                       i -> inv_list[map_list[i] ^ d![1]]))));
+end;
 
 # Choose how to calculate the elements of a translational hull
-  SEMIGROUPS.Bitranslations := function(H)
-    local S;
-    S := UnderlyingSemigroup(H);
-    if IsRectangularBand(S) then
-      return Semigroup(GeneratorsOfSemigroup(H));
-    elif IsZeroSimpleSemigroup(S) then
-      return SEMIGROUPS.BitranslationsOfZeroSimple(H);
-    elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      return SEMIGROUPS.RMSBitranslations(H);
-    else
-      return SEMIGROUPS.BitranslationsByGenerators(H);
-    fi;
-  end;
+SEMIGROUPS.Bitranslations := function(H)
+  local S;
+  S := UnderlyingSemigroup(H);
+  if IsRectangularBand(S) then
+    return Semigroup(GeneratorsOfSemigroup(H));
+  elif IsZeroSimpleSemigroup(S) then
+    return SEMIGROUPS.BitranslationsOfZeroSimple(H);
+  elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    return SEMIGROUPS.RMSBitranslations(H);
+  else
+    return SEMIGROUPS.BitranslationsByGenerators(H);
+  fi;
+end;
 
 # Left translations are the same as edge-label preserving endomorphisms of the
 # right cayley graph
-  SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
-    local S, digraph, n, nrgens, out, colors, gens, i, j;
+SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
+  local S, digraph, n, nrgens, out, colors, gens, i, j;
 
-    S := UnderlyingSemigroup(L);
+  S := UnderlyingSemigroup(L);
 
-    digraph := RightCayleyGraphSemigroup(S);
-    n       := Length(digraph);
-    nrgens  := Length(digraph[1]);
-    out     := [];
-    colors  := [];
+  digraph := RightCayleyGraphSemigroup(S);
+  n       := Length(digraph);
+  nrgens  := Length(digraph[1]);
+  out     := [];
+  colors  := [];
 
-    for i in [1 .. n] do
-      out[i]    := [];
-      colors[i] := 1;
-      for j in [1 .. nrgens] do
-        out[i][j] := n + nrgens * (i - 1) + j;
-        out[n + nrgens * (i - 1) + j] := [digraph[i][j]];
-        colors[n + nrgens * (i - 1) + j] := j + 1;
-      od;
+  for i in [1 .. n] do
+    out[i]    := [];
+    colors[i] := 1;
+    for j in [1 .. nrgens] do
+      out[i][j]                         := n + nrgens * (i - 1) + j;
+      out[n + nrgens * (i - 1) + j]     := [digraph[i][j]];
+      colors[n + nrgens * (i - 1) + j]  := j + 1;
     od;
-    gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-    Apply(gens, x -> LeftTranslationNC(L, RestrictedTransformation(x, [1 .. n])));
-    return Semigroup(gens, rec(small := true));
-  end;
+  od;
+  gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
+  Apply(gens, x -> LeftTranslationNC(L, RestrictedTransformation(x, [1 .. n])));
+  return Semigroup(gens, rec(small := true));
+end;
 
 # Dual for right translations.
-  SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
-    local S, digraph, n, nrgens, out, colors, gens, i, j;
+SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
+  local S, digraph, n, nrgens, out, colors, gens, i, j;
 
-    S := UnderlyingSemigroup(R);
+  S := UnderlyingSemigroup(R);
 
-    digraph := LeftCayleyGraphSemigroup(S);
-    n       := Length(digraph);
-    nrgens  := Length(digraph[1]);
-    out     := [];
-    colors  := [];
+  digraph := LeftCayleyGraphSemigroup(S);
+  n       := Length(digraph);
+  nrgens  := Length(digraph[1]);
+  out     := [];
+  colors  := [];
 
-    for i in [1 .. n] do
-      out[i]    := [];
-      colors[i] := 1;
-      for j in [1 .. nrgens] do
-        out[i][j] := n + nrgens * (i - 1) + j;
-        out[n + nrgens * (i - 1) + j] := [digraph[i][j]];
-        colors[n + nrgens * (i - 1) + j] := j + 1;
-      od;
+  for i in [1 .. n] do
+    out[i]    := [];
+    colors[i] := 1;
+    for j in [1 .. nrgens] do
+      out[i][j]                         := n + nrgens * (i - 1) + j;
+      out[n + nrgens * (i - 1) + j]     := [digraph[i][j]];
+      colors[n + nrgens * (i - 1) + j]  := j + 1;
     od;
-    gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-    Apply(gens, x -> RightTranslationNC(R, RestrictedTransformation(x, [1 .. n])));
-    return Semigroup(gens, rec(small := true));
-  end;
+  od;
+  gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
+  Apply(gens, x -> RightTranslationNC(R, RestrictedTransformation(x, [1 .. n])));
+  return Semigroup(gens, rec(small := true));
+end;
 
 # Calculates bitranslations of an arbitrary (finite)
 # semigroup with known generators.
@@ -320,180 +312,173 @@
 # s * x_i f(x_k) = (s * x_i)g x_k and x_k f(x_i * s) = (x_k)g x_i * s,
 # as well as restriction by the translation condition if Sx_i intersect Sx_k is
 # non-empty or x_i S intersect x_k S is non-empty.
-  SEMIGROUPS.BitranslationsByGenerators := function(H)
-    local I, L, M, R, S, bt, d, e, extendf, f, flinkedrestrictionatstage,
-    fposrepk, ftransrestrictionatstage, fvalsi, g, glinkedrestrictionatstage,
-    gposrepk, gtransrestrictionatstage, gvalsi, i, ipos, isweaklyreductive, j, k,
-    linkedpairs, m, multtable, multtablepossets, n, p, pos, posfrepsks, posrepsks,
-    possgrepsk, possiblefrepvals, possiblefrepvalsfromidempotent,
-    possiblegrepvals, possiblegrepvalsfromidempotent, possibleidempotentfvals,
-    possibleidempotentgvals, possrepsk, propagatef, propagateg, q, r, reject,
-    reps, repspos, restrictbyweakreductivity, restrictfromf, restrictfromg,
-    restrictionbyweakreductivity, s, slist, t, tinv, transposepossets, unrestrict,
-    whenboundfvals, whenboundgvals, x, y;
+SEMIGROUPS.BitranslationsByGenerators := function(H)
+  local I, L, R, S, bt, e, extendf, f, flinkedrestrictionatstage,
+  fposrepk, ftransrestrictionatstage, fvalsi, g, glinkedrestrictionatstage,
+  gposrepk, gtransrestrictionatstage, gvalsi, i, ipos, isweaklyreductive, j, k,
+  linkedpairs, m, multtable, multtablepossets, n, p, pos, posfrepsks, posrepsks,
+  possgrepsk, possiblefrepvals, possiblefrepvalsfromidempotent,
+  possiblegrepvals, possiblegrepvalsfromidempotent, possibleidempotentfvals,
+  possibleidempotentgvals, possrepsk, propagatef, propagateg, q, reject,
+  reps, repspos, restrictbyweakreductivity, restrictfromf, restrictfromg,
+  s, slist, transposepossets, unrestrict,
+  whenboundfvals, whenboundgvals, x, y;
 
-    S := UnderlyingSemigroup(H);
-    n := Size(S);
-    isweaklyreductive := Size(InnerTranslationalHull(S)) = n;
-    slist := AsSortedList(S);
-    L := LeftTranslationsSemigroup(S);
-    R := RightTranslationsSemigroup(S);
+  S                 := UnderlyingSemigroup(H);
+  n                 := Size(S);
+  isweaklyreductive := Size(InnerTranslationalHull(S)) = n;
+  slist             := AsSortedList(S);
+  L                 := LeftTranslationsSemigroup(S);
+  R                 := RightTranslationsSemigroup(S);
+  multtable         := MultiplicationTable(S);
 
-    #t := Transformation(List([1 .. n], i -> Position(slist, AsSortedList(S)[i])));
-    #tinv := InverseOfTransformation(t);
-    #M := MultiplicationTable(S);
+  reps    := GeneratorsOfSemigroup(S);
+  repspos := [];
+  m       := Size(reps);
+  for i in [1 .. m] do
+    repspos[i] := Position(slist, reps[i]);
+  od;
 
-    #multtable := List([1 .. n], i -> List([1 .. n],
-    #                                      j -> M[i ^ tinv][j ^ tinv] ^ t));
-    
-    multtable := MultiplicationTable(S);
-    
-    reps := GeneratorsOfSemigroup(S);
-    repspos := [];
-    m := Size(reps);
-    for i in [1 .. m] do
-      repspos[i] := Position(slist, reps[i]);
+  # store which elements of the semigroups multiply each given element to form
+  # another given element
+  # eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l)
+  # in the multiplication table, then we store [j,k] in the cell [i][l]
+  multtablepossets := List([1 .. n], x -> List([1 .. n], y -> []));
+  transposepossets := List([1 .. n], x -> List([1 .. n], y -> []));
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      pos := multtable[i][j];
+      Add(multtablepossets[i][pos], j);
+      Add(transposepossets[j][pos], i);
     od;
+  od;
 
-    #store which elements of the semigroups multiply each given element to form
-    #another given element
-    #eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l)
-    #in the multiplication table, then we store [j,k] in the cell [i][l]
-    multtablepossets := List([1 .. n], x -> List([1 .. n], y -> []));
-    transposepossets := List([1 .. n], x -> List([1 .. n], y -> []));
+  I                       := Idempotents(S);
+  q                       := Size(I);
+  possibleidempotentfvals := [1 .. q];
+  possibleidempotentgvals := [1 .. q];
+  for e in I do
+    possibleidempotentfvals[Position(I, e)] := PositionsProperty(slist,
+                                                   x -> x * e = x);
+    possibleidempotentgvals[Position(I, e)] := PositionsProperty(slist,
+                                                   x -> e * x = x);
+  od;
+
+  possiblefrepvals := List([1 .. m], x -> [1 .. n]);
+  possiblegrepvals := List([1 .. m], x -> [1 .. n]);
+
+  # restrict values for f, g based on idemopotents
+  # if e is an idempotent with r_i * s = e
+  # then f(r_i)*s = f(r_i)*s * r_i * s
+  # and f(r_i) satisfies f(r_i) * s = x for some value x such that x * e = e
+  for i in [1 .. m] do
+    for s in S do
+      if IsIdempotent(reps[i] * s) then
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i],
+                                            PositionsProperty(slist,
+                                             x -> x * s = x * s * reps[i] * s));
+        possiblefrepvalsfromidempotent := [];
+        for y in possibleidempotentfvals[Position(I, reps[i] * s)] do
+          UniteSet(possiblefrepvalsfromidempotent,
+                    transposepossets[Position(slist, s)][y]);
+        od;
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i],
+                                              possiblefrepvalsfromidempotent);
+      fi;
+
+      if IsIdempotent(s * reps[i]) then
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i],
+                                            PositionsProperty(slist,
+                                             x -> s * x = s * reps[i] * s * x));
+        possiblegrepvalsfromidempotent := [];
+        for y in possibleidempotentgvals[Position(I, s * reps[i])] do
+          UniteSet(possiblegrepvalsfromidempotent,
+                    multtablepossets[Position(slist, s)][y]);
+        od;
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i],
+                                              possiblegrepvalsfromidempotent);
+      fi;
+    od;
+  od;
+
+  # if S is weakly reductive then every pair of bitranslations permute
+  # i.e. for (f, g) and (f', g') bitranslations, for all s in S,
+  # f(sg') = (fs)g'
+  # so if fs is a generator x_i, then (x_i)g lies in the range of f
+  restrictbyweakreductivity := function(f, g)
+    for i in [1 .. m] do
+      if repspos[i] in f then
+        # add the restriction...
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i], f);
+        # stop the backtracking from undoing the restriction
+        # by only letting it restore those things in the range of f
+        for j in [1 .. m] do
+          gtransrestrictionatstage[i][j]
+            := Intersection(gtransrestrictionatstage[i][j], f);
+          glinkedrestrictionatstage[i][j]
+            := Intersection(glinkedrestrictionatstage[i][j], f);
+        od;
+      fi;
+      if repspos[i] in g then
+        # add the restriction...
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i], g);
+        # stop the backtracking from undoing the restriction
+        # by only letting it restore those things in the range of g
+        for j in [1 .. m] do
+          ftransrestrictionatstage[i][j]
+            := Intersection(ftransrestrictionatstage[i][j], g);
+          flinkedrestrictionatstage[i][j]
+            := Intersection(flinkedrestrictionatstage[i][j], g);
+        od;
+      fi;
+    od;
+  end;
+
+  extendf := function(k)
+    # assign the first possible value of f for the next rep
+    f[repspos[k + 1]] := possiblefrepvals[k + 1][1];
+    return k + 1;
+  end;
+
+  propagatef := function(k)
     for i in [1 .. n] do
-      for j in [1 .. n] do
-        pos := multtable[i][j];
-        Add(multtablepossets[i][pos], j);
-        Add(transposepossets[j][pos], i);
-      od;
+      pos := multtable[repspos[k]][i];
+      if IsBound(f[pos]) then
+        if not f[pos] = multtable[f[repspos[k]]][i] then
+          UniteSet(glinkedrestrictionatstage[k][k], possiblegrepvals[k]);
+          possiblegrepvals[k] := [];
+          return fail;
+        fi;
+      else
+        f[pos]              := multtable[f[repspos[k]]][i];
+        whenboundfvals[pos] := k;
+      fi;
     od;
+    return k;
+  end;
 
-    I := Idempotents(S);
-    q := Size(I);
-    possibleidempotentfvals := [1 .. q];
-    possibleidempotentgvals := [1 .. q];
-    for e in I do
-      possibleidempotentfvals[Position(I, e)] := PositionsProperty(slist,
-                                                     x -> x * e = x);
-      possibleidempotentgvals[Position(I, e)] := PositionsProperty(slist,
-                                                     x -> e * x = x);
+  propagateg := function(k)
+    for i in [1 .. n] do
+      pos := multtable[i][repspos[k]];
+      if IsBound(g[pos]) then
+        if not g[pos] = multtable[i][g[repspos[k]]] then
+          return fail;
+        fi;
+      else
+        g[pos]              := multtable[i][g[repspos[k]]];
+        whenboundgvals[pos] := k;
+      fi;
     od;
+    return k;
+  end;
 
-    possiblefrepvals := List([1 .. m], x -> [1 .. n]);
-    possiblegrepvals := List([1 .. m], x -> [1 .. n]);
-
-    #restrict values for f, g based on idemopotents
-    #if e is an idempotent with r_i * s = e
-    #then f(r_i)*s = f(r_i)*s * r_i * s
-    #and f(r_i) satisfies f(r_i) * s = x for some value x such that x * e = e
-    for i in [1 .. m] do
-      for s in S do
-        if IsIdempotent(reps[i] * s) then
-          possiblefrepvals[i] := Intersection(possiblefrepvals[i],
-                                              PositionsProperty(slist,
-                                               x -> x * s = x * s * reps[i] * s));
-          possiblefrepvalsfromidempotent := [];
-          for y in possibleidempotentfvals[Position(I, reps[i] * s)] do
-            UniteSet(possiblefrepvalsfromidempotent,
-                      transposepossets[Position(slist, s)][y]);
-          od;
-          possiblefrepvals[i] := Intersection(possiblefrepvals[i],
-                                                possiblefrepvalsfromidempotent);
-        fi;
-
-        if IsIdempotent(s * reps[i]) then
-          possiblegrepvals[i] := Intersection(possiblegrepvals[i],
-                                              PositionsProperty(slist,
-                                               x -> s * x = s * reps[i] * s * x));
-          possiblegrepvalsfromidempotent := [];
-          for y in possibleidempotentgvals[Position(I, s * reps[i])] do
-            UniteSet(possiblegrepvalsfromidempotent,
-                      multtablepossets[Position(slist, s)][y]);
-          od;
-          possiblegrepvals[i] := Intersection(possiblegrepvals[i],
-                                                possiblegrepvalsfromidempotent);
-        fi;
-      od;
-    od;
-
-    #if S is weakly reductive then every pair of bitranslations permute
-    #i.e. for (f, g) and (f', g') bitranslations, for all s in S,
-    #f(sg') = (fs)g'
-    #so if fs is a generator x_i, then (x_i)g lies in the range of f
-    restrictbyweakreductivity := function(f, g)
-      for i in [1 .. m] do
-        if repspos[i] in f then
-          # add the restriction...
-          possiblegrepvals[i] := Intersection(possiblegrepvals[i], f);
-          # stop the backtracking from undoing the restriction
-          # by only letting it restore those things in the range of f
-          for j in [1 .. m] do
-            gtransrestrictionatstage[i][j]
-              := Intersection(gtransrestrictionatstage[i][j], f);
-            glinkedrestrictionatstage[i][j]
-              := Intersection(glinkedrestrictionatstage[i][j], f);
-          od;
-        fi;
-        if repspos[i] in g then
-          # add the restriction...
-          possiblefrepvals[i] := Intersection(possiblefrepvals[i], g);
-          # stop the backtracking from undoing the restriction
-          # by only letting it restore those things in the range of g
-          for j in [1 .. m] do
-            ftransrestrictionatstage[i][j]
-              := Intersection(ftransrestrictionatstage[i][j], g);
-            flinkedrestrictionatstage[i][j]
-              := Intersection(flinkedrestrictionatstage[i][j], g);
-          od;
-        fi;
-      od;
-    end;
-
-    extendf := function(k)
-      f[repspos[k + 1]] := possiblefrepvals[k + 1][1];
-      return k + 1;
-    end;
-
-    propagatef := function(k)
-      for i in [1 .. n] do
-        pos := multtable[repspos[k]][i];
-        if IsBound(f[pos]) then
-          if not f[pos] = multtable[f[repspos[k]]][i] then
-            UniteSet(glinkedrestrictionatstage[k][k], possiblegrepvals[k]);
-            possiblegrepvals[k] := [];
-            return fail;
-          fi;
-        else
-          f[pos] := multtable[f[repspos[k]]][i];
-          whenboundfvals[pos] := k;
-        fi;
-      od;
-      return k;
-    end;
-
-    propagateg := function(k)
-      for i in [1 .. n] do
-        pos := multtable[i][repspos[k]];
-        if IsBound(g[pos]) then
-          if not g[pos] = multtable[i][g[repspos[k]]] then
-            return fail;
-          fi;
-        else
-          g[pos] := multtable[i][g[repspos[k]]];
-          whenboundgvals[pos] := k;
-        fi;
-      od;
-      return k;
-    end;
-
-    restrictfromf := function(k)
+  restrictfromf := function(k)
       for i in [k + 1 .. m] do
         ipos := repspos[i];
         for j in [1 .. n] do
-          posrepsks := multtable[repspos[k]][j];
-          posfrepsks := multtable[f[repspos[k]]][j];
-          #restrict by the translation condition
+          posrepsks   := multtable[repspos[k]][j];
+          posfrepsks  := multtable[f[repspos[k]]][j];
+          # restrict by the translation condition
           for p in multtablepossets[ipos][posrepsks] do
             fvalsi := transposepossets[p][posfrepsks];
             UniteSet(ftransrestrictionatstage[i][k],
@@ -504,7 +489,7 @@
             fi;
           od;
 
-          #deal with the cases reps[i] = reps[k] * slist[j]
+          # deal with the cases reps[i] = reps[k] * slist[j]
           if ipos = multtable[repspos[k]][j] then
             fvalsi := [posfrepsks];
             UniteSet(ftransrestrictionatstage[i][k],
@@ -515,7 +500,7 @@
             fi;
         fi;
       od;
-      #deal with the cases reps[i] * slist[j] = reps[k]
+      # deal with the cases reps[i] * slist[j] = reps[k]
       for p in multtablepossets[ipos][repspos[k]] do
         fvalsi := transposepossets[p][f[repspos[k]]];
         UniteSet(ftransrestrictionatstage[i][k],
@@ -529,14 +514,14 @@
     for i in [k .. m] do
       ipos := repspos[i];
       for j in [1 .. n] do
-        #restrict by the linked pair condition
+        # restrict by the linked pair condition
         posrepsks := multtable[repspos[k]][j];
-        gvalsi := transposepossets[posrepsks][multtable[ipos][f[posrepsks]]];
+        gvalsi    := transposepossets[posrepsks][multtable[ipos][f[posrepsks]]];
         UniteSet(glinkedrestrictionatstage[i][k],
                   Difference(possiblegrepvals[i], gvalsi));
         possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
       od;
-      #deal with linked condition on reps[k]
+      # deal with linked condition on reps[k]
       gvalsi := transposepossets[repspos[k]][multtable[ipos][f[repspos[k]]]];
       UniteSet(glinkedrestrictionatstage[i][k],
                 Difference(possiblegrepvals[i], gvalsi));
@@ -552,8 +537,8 @@
     for i in [k + 1 .. m] do
       ipos := repspos[i];
       for j in [1 .. n] do
-        possrepsk := multtable[j][repspos[k]];
-        possgrepsk := multtable[j][g[repspos[k]]];
+        possrepsk   := multtable[j][repspos[k]];
+        possgrepsk  := multtable[j][g[repspos[k]]];
         for p in transposepossets[ipos][possrepsk] do
           gvalsi := multtablepossets[p][possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
@@ -561,7 +546,7 @@
           possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
         od;
 
-        #deal with the cases reps[i] = s * reps[k] and s * reps[i] = reps[k]
+        # deal with the cases reps[i] = s * reps[k] and s * reps[i] = reps[k]
         if ipos = multtable[j][repspos[k]] then
           gvalsi := [possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
@@ -598,7 +583,7 @@
     for i in [k .. m] do
       UniteSet(possiblegrepvals[i], gtransrestrictionatstage[i][k]);
       UniteSet(possiblefrepvals[i], flinkedrestrictionatstage[i][k]);
-      gtransrestrictionatstage[i][k] := [];
+      gtransrestrictionatstage[i][k]  := [];
       flinkedrestrictionatstage[i][k] := [];
     od;
 
@@ -612,7 +597,7 @@
       for i in [k .. m] do
         UniteSet(possiblefrepvals[i], ftransrestrictionatstage[i][k]);
         UniteSet(possiblegrepvals[i], glinkedrestrictionatstage[i][k]);
-        ftransrestrictionatstage[i][k] := [];
+        ftransrestrictionatstage[i][k]  := [];
         glinkedrestrictionatstage[i][k] := [];
       od;
     fi;
@@ -651,13 +636,13 @@
       return k;
     else
       if whenboundfvals[repspos[k]] = 0 then
-        #this occurs iff f[repspos[k]] was set at stage k
-        #and not propagated from another rep
+        # this occurs iff f[repspos[k]] was set at stage k
+        # and not propagated from another rep
         Unbind(f[repspos[k]]);
       fi;
       if whenboundgvals[repspos[k]] = 0 then
-        #this occurs iff g[repspos[k]] was set at stage k
-        #and not propagated from another rep
+        # this occurs iff g[repspos[k]] was set at stage k
+        # and not propagated from another rep
         Unbind(g[repspos[k]]);
       fi;
       unrestrict(k, true);
@@ -692,14 +677,14 @@
     fi;
   end;
 
-  #The actual search
-  ftransrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
+  # The actual search
+  ftransrestrictionatstage  := List([1 .. m], x -> List([1 .. m], y -> []));
   flinkedrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
-  gtransrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
+  gtransrestrictionatstage  := List([1 .. m], x -> List([1 .. m], y -> []));
   glinkedrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
-  whenboundfvals := List([1 .. n], x -> 0);
-  whenboundgvals := ShallowCopy(whenboundfvals);
-  linkedpairs := [];
+  whenboundfvals            := List([1 .. n], x -> 0);
+  whenboundgvals            := ShallowCopy(whenboundfvals);
+  linkedpairs               := [];
 
   f := [];
   g := [];
@@ -734,20 +719,20 @@ function(S)
   fi;
 
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    fam := SEMIGROUPS.FamOfRMSLeftTranslationsByTriple();
-    type := fam!.type;
+    fam   := SEMIGROUPS.FamOfRMSLeftTranslationsByTriple();
+    type  := fam!.type;
   else
-    fam := NewFamily("LeftTranslationsSemigroupElementsFamily",
+    fam       := NewFamily("LeftTranslationsSemigroupElementsFamily",
                       IsLeftTranslationsSemigroupElement);
-    type := NewType(fam, IsLeftTranslationsSemigroupElement);
+    type      := NewType(fam, IsLeftTranslationsSemigroupElement);
     fam!.type := type;
   fi;
 
-  #create the semigroup of left translations
+  # create the semigroup of left translations
   L := Objectify(NewType(CollectionsFamily(fam), IsLeftTranslationsSemigroup
                          and IsWholeFamily and IsAttributeStoringRep), rec());
 
-  #store the type of the elements in the semigroup
+  # store the type of the elements in the semigroup
   SetTypeLeftTranslationsSemigroupElements(L, type);
   SetLeftTranslationsSemigroupOfFamily(fam, L);
   SetUnderlyingSemigroup(L, S);
@@ -766,12 +751,12 @@ function(S)
   fi;
 
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    fam := SEMIGROUPS.FamOfRMSRightTranslationsByTriple();
-    type := fam!.type;
+    fam   := SEMIGROUPS.FamOfRMSRightTranslationsByTriple();
+    type  := fam!.type;
   else
-    fam := NewFamily("RightTranslationsSemigroupElementsFamily",
+    fam       := NewFamily("RightTranslationsSemigroupElementsFamily",
                       IsRightTranslationsSemigroupElement);
-    type := NewType(fam, IsRightTranslationsSemigroupElement);
+    type      := NewType(fam, IsRightTranslationsSemigroupElement);
     fam!.type := type;
   fi;
 
@@ -798,12 +783,12 @@ function(S)
   fi;
 
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    fam := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
-    type := fam!.type;
+    fam   := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
+    type  := fam!.type;
   else
     fam := NewFamily("BitranslationsFamily",
                       IsBitranslation);
-    type := NewType(fam, IsBitranslation);
+    type      := NewType(fam, IsBitranslation);
     fam!.type := type;
   fi;
 
@@ -892,8 +877,8 @@ end);
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
   local R, S, reps, semiList;
-  S := UnderlyingSemigroup(L);
-  reps := [];
+  S     := UnderlyingSemigroup(L);
+  reps  := [];
 
   if not (IsLeftTranslationsSemigroup(L)) then
     ErrorNoReturn("Semigroups: LeftTranslation: \n",
@@ -949,8 +934,8 @@ function(L, x)
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList := AsSortedList(UnderlyingSemigroup(L));
-  mapAsTransList := [];
+  semiList        := AsSortedList(UnderlyingSemigroup(L));
+  mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
     mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
   od;
@@ -964,8 +949,8 @@ InstallGlobalFunction(RightTranslation,
 function(R, x)
   local S, semiList, reps, L;
 
-  S := UnderlyingSemigroup(R);
-  reps := [];
+  S     := UnderlyingSemigroup(R);
+  reps  := [];
 
   if not (IsRightTranslationsSemigroup(R)) then
     ErrorNoReturn("Semigroups: RightTranslation: \n",
@@ -1022,8 +1007,8 @@ function(R, x)
     return Objectify(TypeRightTranslationsSemigroupElements(R), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList := AsSortedList(UnderlyingSemigroup(R));
-  mapAsTransList := [];
+  semiList        := AsSortedList(UnderlyingSemigroup(R));
+  mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
     mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
   od;
@@ -1094,8 +1079,8 @@ function(H, l, r)
   if HasGeneratorsOfSemigroup(S) then
     reps := GeneratorsOfSemigroup(S);
   else
-    dclasses := DClasses(S);
-    reps := [];
+    dclasses  := DClasses(S);
+    reps      := [];
     for d in dclasses do
       lclasses := ShallowCopy(LClasses(d));
       rclasses := ShallowCopy(RClasses(d));
@@ -1106,14 +1091,14 @@ function(H, l, r)
         Remove(rclasses, 1);
       od;
       if Size(lclasses) > Size(rclasses) then
-        #Size(rclasses) = 1
+        # Size(rclasses) = 1
         for j in [1 .. Size(lclasses)] do
           z := Representative(Intersection(lclasses[1], rclasses[1]));
           Add(reps, z);
           Remove(lclasses, 1);
         od;
       else
-        #Size(lclasses) = 1
+        # Size(lclasses) = 1
         for j in [1 .. Size(rclasses)] do
           z := Representative(Intersection(lclasses[1], rclasses[1]));
           Add(reps, z);
@@ -1198,7 +1183,8 @@ function(T)
   fi;
   if IsLeftTranslationsSemigroup(T) then
     n := NrRClasses(S);
-  else n := NrLClasses(S);
+  else
+    n := NrLClasses(S);
   fi;
 
   return n ^ n;
@@ -1233,8 +1219,8 @@ function(T)
     TryNextMethod();
   fi;
 
-  iso := IsomorphismReesMatrixSemigroup(S);
-  inv := InverseGeneralMapping(iso);
+  iso         := IsomorphismReesMatrixSemigroup(S);
+  inv         := InverseGeneralMapping(iso);
   reesMatSemi := Range(iso);
   if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(reesMatSemi));
@@ -1278,9 +1264,9 @@ function(H)
     TryNextMethod();
   fi;
 
-  leftGens := GeneratorsOfSemigroup(LeftTranslationsSemigroup(S));
+  leftGens  := GeneratorsOfSemigroup(LeftTranslationsSemigroup(S));
   rightGens := GeneratorsOfSemigroup(RightTranslationsSemigroup(S));
-  gens := [];
+  gens      := [];
 
   for l in leftGens do
     for r in rightGens do
@@ -1376,7 +1362,7 @@ end);
 InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationsSemigroup],
 function(T)
   local M;
-  M:=Monoid(List(GeneratorsOfSemigroup(T), MonoidByAdjoiningIdentityElt));
+  M := Monoid(List(GeneratorsOfSemigroup(T), MonoidByAdjoiningIdentityElt));
   SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, T);
   return M;
 end);
@@ -1384,7 +1370,7 @@ end);
 InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationalHull],
 function(H)
   local M;
-  M:=Monoid(List(GeneratorsOfSemigroup(H), MonoidByAdjoiningIdentityElt));
+  M := Monoid(List(GeneratorsOfSemigroup(H), MonoidByAdjoiningIdentityElt));
   SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, H);
   return M;
 end);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  rms-translat.gi
-#Y  Copyright (C) 2016-17                                         Finn Smith
+# W  rms-translat.gi
+# Y  Copyright (C) 2016-18                                         Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -24,12 +24,11 @@
 #############################################################################
 # TODO: make sure you can't mix translations of different types in one semigroup
 
-
 #############################################################################
 # 1. Internal Functions
 #############################################################################
 
-#This should go somewhere else
+# This should go somewhere else
 SEMIGROUPS.IsNormalRMSOverGroup := function(S)
   local mat, T, one;
 
@@ -66,16 +65,16 @@ end;
 # TODO: swap rows/columns if more convenient.
 SEMIGROUPS.FindTranslationTransformations := function(S)
   local iso, reesMatSemi, mat, simpleRows, simpleColumns, nrRows, nrCols,
-    transList, partColumns, partColumn, pc, linkedTransList, col, cols,
-    possibleCols, t, q, w, c, x, k, v, f, i, j, foundcol, noclash,
+    transList, partColumns, pc, linkedTransList, col, cols,
+    possibleCols, t, q, w, x, k, v, i, j, foundcol, noclash,
     isPartialSuccess, extend, reject, bt;
-  iso := IsomorphismReesZeroMatrixSemigroup(S);
+  iso         := IsomorphismReesZeroMatrixSemigroup(S);
   reesMatSemi := Range(iso);
-  mat := Matrix(reesMatSemi);
-  simpleRows := List(mat, ShallowCopy);
-  nrRows := Length(simpleRows);
-  nrCols := Length(simpleRows[1]);
-  transList := [];
+  mat         := Matrix(reesMatSemi);
+  simpleRows  := List(mat, ShallowCopy);
+  nrRows      := Length(simpleRows);
+  nrCols      := Length(simpleRows[1]);
+  transList   := [];
   for i in [1 .. Length(simpleRows)] do
     for j in [1 .. Length(simpleRows[i])] do
       if simpleRows[i][j] <> 0 then
@@ -87,14 +86,9 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
 
   isPartialSuccess := function(x)
     for pc in partColumns do
-      #Only check the columns which contain a 1 since
-      #all-zero column can be made by column not in domain of transformation.
-      #No ones in one partial matrix but not in the other...
-      
-      #if 1 in pc and
-      #    ForAll(simpleColumns, c -> 1 in c{[1 .. Length(pc)]} + pc) then
-      #  return false;
-      #fi;
+      # Only check the columns which contain a 1 since
+      # all-zero column can be made by column not in domain of transformation.
+      # No ones in one partial matrix but not in the other...
       if 1 in pc then
         foundcol := false;
         for col in simpleColumns do
@@ -126,6 +120,7 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
   end;
 
   reject := function(q)
+    # return the next list to consider
     k := Length(q);
     if q[k] <= nrRows then
       q[k] := q[k] + 1;
@@ -163,22 +158,22 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     fi;
     return bt(x);
   end;
-  
-  v := 1;
+
+  v           := 1;
   partColumns := List([1 .. nrCols], i -> []);
-  x := [];
-  transList := [bt(x)];
+  x           := [];
+  transList   := [bt(x)];
   while transList[v] <> 0 do
-    v := v + 1;
-    transList[v] := bt(reject(ShallowCopy(transList[v - 1])));
+    v             := v + 1;
+    transList[v]  := bt(reject(ShallowCopy(transList[v - 1])));
   od;
 
   linkedTransList := [];
   # Given each row transformation, look for matching column transformations.
   # Last element of transList will be 0, ignore.
   for k in [1 .. Length(transList) - 1] do
-    t := transList[k];
-    cols := [];
+    t     := transList[k];
+    cols  := [];
     for i in [1 .. Length(simpleRows[1])] do
       col := [];
       for j in [1 .. nrRows] do
@@ -215,16 +210,16 @@ end;
 SEMIGROUPS.FindTranslationFunctionsToGroup :=
 function(S, t1, t2)
   local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
-        rowtransformedmat, zerorow, zerocol, pos,
-        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q, c,
-        funcs, digraph, cc, comp, iterator, foundfuncs, vals,
-        failedtocomplete, relpointvals, queue,
+        rowtransformedmat, zerorow, zerocol,
+        rels, edges, rowrels, relpoints, rel, i, j, k, x, y, r, n, q,
+        funcs, digraph, cc, iterator, foundfuncs,
+        relpointvals, queue,
         relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
-  mat := Matrix(reesmatsemi);
-  nrrows := Length(mat);
-  nrcols := Length(mat[1]);
-  
+  mat         := Matrix(reesmatsemi);
+  nrrows      := Length(mat);
+  nrcols      := Length(mat[1]);
+
   if ValueOption("SEMIGROUPS_gp_is_trivial_perm_gp") = true then
       return [[List([1 .. nrrows], x -> ()), List([1 .. nrcols], y -> ())]];
   fi;
@@ -238,8 +233,8 @@ function(S, t1, t2)
     od;
   od;
   rowtransformedmat := [];
-  zerorow := [];
-  zerocol := [];
+  zerorow           := [];
+  zerocol           := [];
   for i in [1 .. nrcols] do
     zerorow[i] := 0;
   od;
@@ -254,7 +249,7 @@ function(S, t1, t2)
     fi;
   od;
 
-  #for ease of checking the constraints, set up lists of linked indices
+  # for ease of checking the constraints, set up lists of linked indices
   rels := [];
   for i in [1 .. nrrows] do
     for j in [1 .. nrcols] do
@@ -276,29 +271,31 @@ function(S, t1, t2)
     od;
   od;
 
-  #get connected components
-  edges := List(rels, r -> [r[1], r[2] + nrrows]);
+  # get connected components
+  edges   := List(rels, r -> [r[1], r[2] + nrrows]);
   digraph := DigraphSymmetricClosure(DigraphByEdges(edges, nrrows + nrcols));
-  cc := DigraphConnectedComponents(digraph);
+  cc      := DigraphConnectedComponents(digraph);
 
-  #only deal with enough elements to hit each relation
+  # only deal with enough elements to hit each relation
   relpoints := [];
   for cc in cc.comps do
     # if cc[1] is in the domain
     if cc[1] <= nrrows and t1[cc[1]] <= nrrows then
       Add(relpoints, cc[1]);
-    elif cc[1] > nrrows and cc[1] <= nrrows + nrcols and t2[cc[1] - nrrows] <= nrcols then
+    elif cc[1] > nrrows
+         and cc[1] <= nrrows + nrcols
+         and t2[cc[1] - nrrows] <= nrcols then
       Add(relpoints, cc[1]);
     fi;
   od;
 
-  #given a choice of relpoints, fill in everything else possible
   fillin := function(funcs)
+    # given a choice of relpoints, fill in everything else possible
     x := ShallowCopy(funcs[1]);
     y := ShallowCopy(funcs[2]);
     for r in relpoints do
       queue := [r];
-      n := 1;
+      n     := 1;
       repeat
         q := queue[n];
         # the digraph is bipartite
@@ -311,7 +308,9 @@ function(S, t1, t2)
             fi;
           else
             if not IsBound(x[j]) then
-              x[j] := mat[j][t2[q - nrrows]] * y[q - nrrows] * invmat[t1[j]][q - nrrows];
+              x[j] := mat[j][t2[q - nrrows]]
+                      * y[q - nrrows]
+                      * invmat[t1[j]][q - nrrows];
               Add(queue, j);
             fi;
           fi;
@@ -323,6 +322,7 @@ function(S, t1, t2)
   end;
 
   relssatisfied := function(funcs)
+    # check whether the relations are satisfied
     x := funcs[1];
     y := funcs[2];
     for rel in rels do
@@ -337,6 +337,7 @@ function(S, t1, t2)
   end;
 
   funcsfromrelpointvals := function(relpointvals)
+    # given values for the representative points, create the functions
     x := [1 .. nrrows];
     y := [1 .. nrcols];
 
@@ -353,7 +354,7 @@ function(S, t1, t2)
   end;
 
   foundfuncs := [];
-  iterator := IteratorOfCartesianProduct(List(relpoints, i -> [1 .. gpsize]));
+  iterator   := IteratorOfCartesianProduct(List(relpoints, i -> [1 .. gpsize]));
 
   # If S is a commutative group and fails on one choice of relpointvals,
   # it will fail on all of them.
@@ -383,7 +384,7 @@ end;
 # Combine the previous methods to form the translational hull
 # Performance suffers greatly as the size of the group increases.
 SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
-  local S, tt, failedcomponents, iterator, transfuncs, unboundpositions, gplist,
+  local S, tt, iterator, transfuncs, unboundpositions, gplist,
         L, R, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
         nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
         partialfunciterator, funcvals;
@@ -392,20 +393,21 @@ SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
   if not (IsFinite(S) and IsZeroSimpleSemigroup(S)) then
     TryNextMethod();
   fi;
-  iso := IsomorphismReesZeroMatrixSemigroup(S);
-  inv := InverseGeneralMapping(iso);
+  iso         := IsomorphismReesZeroMatrixSemigroup(S);
+  inv         := InverseGeneralMapping(iso);
   reesmatsemi := Range(iso);
-  gplist := AsList(UnderlyingSemigroup(reesmatsemi));
-  nrrows := Length(Matrix(reesmatsemi));
-  nrcols := Length(Matrix(reesmatsemi)[1]);
-  zero := MultiplicativeZero(reesmatsemi);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
-  tt := SEMIGROUPS.FindTranslationTransformations(S);
-  failedcomponents := [];
+  gplist      := AsList(UnderlyingSemigroup(reesmatsemi));
+  nrrows      := Length(Matrix(reesmatsemi));
+  nrcols      := Length(Matrix(reesmatsemi)[1]);
+  zero        := MultiplicativeZero(reesmatsemi);
+  L           := LeftTranslationsSemigroup(S);
+  R           := RightTranslationsSemigroup(S);
+  tt          := SEMIGROUPS.FindTranslationTransformations(S);
   linkedpairs := [];
 
   linkedpairfromfuncs := function(t1, t2, fx, fy)
+    # given transformations on the indices and fns to the group,
+    # create a bitranslation
     fl := function(x)
       if x = zero then
         return zero;
@@ -438,20 +440,23 @@ SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
   end;
 
   for i in [1 .. Length(tt[1])] do
-    t1 := tt[1][i];
-    iterator := tt[2][i];
+    t1        := tt[1][i];
+    iterator  := tt[2][i];
     while not IsDoneIterator(iterator) do
       t2 := NextIterator(iterator);
       if Size(UnderlyingSemigroup(S)) = 1 then
-        transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S, t1, t2 : SEMIGROUPS_gp_is_trivial_perm_gp);
+        transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S,
+                                                                 t1,
+                                                                 t2 :
+                                      SEMIGROUPS_gp_is_trivial_perm_gp);
       else
         transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S, t1, t2);
       fi;
       if not transfuncs = fail then
         for funcs in transfuncs do
-          fx := funcs[1];
-          fy := funcs[2];
-          unboundpositions := [];
+          fx                := funcs[1];
+          fy                := funcs[2];
+          unboundpositions  := [];
           for j in [1 .. nrcols] do
             if not IsBound(fy[j]) then
               Add(unboundpositions, j);
@@ -484,27 +489,25 @@ end;
 # Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
 # Journal of Algebra 46, 1977
 SEMIGROUPS.RMSBitranslations := function(H)
-  local a, f, g, G, i, j, k, L, m, n, P, r, R, s, S, x,
-        inv, iso, normalrms, triples,
-        lefttrans, righttrans, tripletobitranslation,
-        extendf, extendg, nextf, nextg,
+  local a, f, g, G, i, j, k, m, n, P, S, x,
+        triples, extendf, extendg, nextf, nextg,
         partialcheckrow, partialcheckcol,
         reject, bt;
 
-  S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
-  P := Matrix(S);
-  m := Size(P);
-  n := Size(P[1]);
-  G := UnderlyingSemigroup(S);
+  S       := UnderlyingSemigroup(H);
+  P       := Matrix(S);
+  m       := Size(P);
+  n       := Size(P[1]);
+  G       := UnderlyingSemigroup(S);
   triples := [];
 
   extendf := function(k)
+    # TODO: remove this comment
     f[k] := 1;
   end;
 
   extendg := function(k)
+    # TODO: remove this comment
     g[k] := 1;
   end;
 
@@ -582,7 +585,7 @@ SEMIGROUPS.RMSBitranslations := function(H)
     return k;
   end;
 
-  #TODO: add flag to not partial check row/col as appropriate
+  # TODO: add flag to not partial check row/col as appropriate
   bt := function(k)
     if k = 0 then
       return 0;
@@ -669,10 +672,9 @@ end;
 SEMIGROUPS.FamOfRMSLeftTranslationsByTriple := function()
   local fam, type;
 
-  fam := NewFamily("LeftTranslationsSemigroupElementsFamily",
-                    IsLeftTranslationOfNormalRMS);
-
-  type := NewType(fam, IsLeftTranslationOfNormalRMS);
+  fam       := NewFamily("LeftTranslationsSemigroupElementsFamily",
+                          IsLeftTranslationOfNormalRMS);
+  type      := NewType(fam, IsLeftTranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
@@ -680,10 +682,9 @@ end;
 SEMIGROUPS.FamOfRMSRightTranslationsByTriple := function()
   local fam, type;
 
-  fam := NewFamily("RightTranslationsSemigroupElementsFamily",
-                    IsRightTranslationOfNormalRMS);
-
-  type := NewType(fam, IsRightTranslationOfNormalRMS);
+  fam       := NewFamily("RightTranslationsSemigroupElementsFamily",
+                          IsRightTranslationOfNormalRMS);
+  type      := NewType(fam, IsRightTranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
@@ -691,26 +692,24 @@ end;
 SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   local fam, type;
 
-  fam := NewFamily("BitranslationsSemigroupElementsFamily",
-                    IsBitranslationOfNormalRMS);
-
-  type := NewType(fam, IsBitranslationOfNormalRMS);
+  fam       := NewFamily("BitranslationsSemigroupElementsFamily",
+                          IsBitranslationOfNormalRMS);
+  type      := NewType(fam, IsBitranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
 
 SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, a, transI, transJ)
-  local G, I, J, l, leftgpfunc, L, P, r, rightgpfunc, R, S;
+  local I, J, l, leftgpfunc, L, P, r, rightgpfunc, R, S;
 
   S := UnderlyingSemigroup(H);
-  G := UnderlyingSemigroup(S);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
   P := Matrix(S);
   I := Size(P[1]);
   J := Size(P);
 
-  leftgpfunc := List([1 .. I], i -> a * P[1 ^ transJ][i]);
+  leftgpfunc  := List([1 .. I], i -> a * P[1 ^ transJ][i]);
   rightgpfunc := List([1 .. J], j -> P[j][1 ^ transI] * a);
 
   l := LeftTranslationOfNormalRMS(L, leftgpfunc, transI);
@@ -781,7 +780,7 @@ InstallMethod(GeneratorsOfSemigroup,
 "for the semigroup of left/right translations of a finite 0-simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f, groupgens,
+  local S, L, n, iso, inv, reesMatSemi, gens, t, f, groupgens,
         a, fa, G, zero;
 
   S := UnderlyingSemigroup(T);
@@ -789,28 +788,27 @@ function(T)
     TryNextMethod();
   fi;
 
-  semiList := AsList(S);
-  iso := IsomorphismReesZeroMatrixSemigroup(S);
-  inv := InverseGeneralMapping(iso);
+  iso         := IsomorphismReesZeroMatrixSemigroup(S);
+  inv         := InverseGeneralMapping(iso);
   reesMatSemi := Range(iso);
-  zero := MultiplicativeZero(reesMatSemi);
-  L := IsLeftTranslationsSemigroup(T);
+  zero        := MultiplicativeZero(reesMatSemi);
+  L           := IsLeftTranslationsSemigroup(T);
   if L then
     n := Length(Rows(reesMatSemi));
   else
     n := Length(Columns(reesMatSemi));
   fi;
 
-  gens := [];
-  G := UnderlyingSemigroup(reesMatSemi);
+  gens      := [];
+  G         := UnderlyingSemigroup(reesMatSemi);
   groupgens := GeneratorsOfGroup(G);
 
-  #It would be safer (and more correct) to use GeneratorsOfSemigroup here
-  #but the semigroup generated is the same in either case,
-  #from fewer generators in this case.
-  #If the generators of the partial transformation monoid are changed
-  #in the future, this could fail but would be an easy fix
-  #(Monoid -> Semigroup)
+  # It would be safer (and more correct) to use GeneratorsOfSemigroup here
+  # but the semigroup generated is the same in either case,
+  # from fewer generators in this case.
+  # If the generators of the partial transformation monoid are changed
+  # in the future, this could fail but would be an easy fix
+  # (Monoid -> Semigroup)
   for t in GeneratorsOfMonoid(PartialTransformationMonoid(n)) do
     if L then
       f := function(x)
@@ -873,7 +871,7 @@ InstallMethod(GeneratorsOfSemigroup,
 "for the semigroup of left/right translations of a finite simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f, groupgens,
+  local S, L, n, iso, inv, reesMatSemi, gens, t, f, groupgens,
         a, fa, G, IsNRMS, idgpfunc;
 
   S := UnderlyingSemigroup(T);
@@ -881,19 +879,18 @@ function(T)
     TryNextMethod();
   fi;
 
-  semiList := AsList(S);
-  iso := IsomorphismReesMatrixSemigroup(S);
-  inv := InverseGeneralMapping(iso);
+  iso         := IsomorphismReesMatrixSemigroup(S);
+  inv         := InverseGeneralMapping(iso);
   reesMatSemi := Range(iso);
-  L := IsLeftTranslationsSemigroup(T);
+  L           := IsLeftTranslationsSemigroup(T);
 
   if L then
     n := Length(Rows(reesMatSemi));
   else
     n := Length(Columns(reesMatSemi));
   fi;
-  gens := [];
-  G := UnderlyingSemigroup(reesMatSemi);
+  gens      := [];
+  G         := UnderlyingSemigroup(reesMatSemi);
   groupgens := GeneratorsOfGroup(G);
 
   IsNRMS := SEMIGROUPS.IsNormalRMSOverGroup(S);
@@ -901,12 +898,12 @@ function(T)
     idgpfunc := List([1 .. n], i -> MultiplicativeNeutralElement(G));
   fi;
 
-  #It would be safer (and more correct) to use GeneratorsOfSemigroup here
-  #but the semigroup generated is the same in either case,
-  #from fewer generators in this case.
-  #If the generators of the full transformation monoid are changed
-  #in the future, this could fail but would be an easy fix
-  #(Monoid -> Semigroup)
+  # It would be safer (and more correct) to use GeneratorsOfSemigroup here
+  # but the semigroup generated is the same in either case,
+  # from fewer generators in this case.
+  # If the generators of the full transformation monoid are changed
+  # in the future, this could fail but would be an easy fix
+  # (Monoid -> Semigroup)
   for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
     if L then
       if IsNRMS then
@@ -993,7 +990,7 @@ function(T)
     TryNextMethod();
   fi;
   reesMatSemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
-  G := UnderlyingSemigroup(reesMatSemi);
+  G           := UnderlyingSemigroup(reesMatSemi);
   if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(reesMatSemi));
   else
@@ -1012,7 +1009,7 @@ function(T)
     TryNextMethod();
   fi;
   reesMatSemi := Range(IsomorphismReesMatrixSemigroup(S));
-  G := UnderlyingSemigroup(reesMatSemi);
+  G           := UnderlyingSemigroup(reesMatSemi);
   if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(reesMatSemi));
   else
@@ -1105,7 +1102,6 @@ function(R, gpfunc, t)
   return Objectify(TypeRightTranslationsSemigroupElements(R), [gpfunc, t]);
 end);
 
-
 InstallGlobalFunction(BitranslationOfNormalRMS,
 function(H, l, r)
   local i, I, j, J, lf, lt, P, rf, rt, S;
@@ -1144,9 +1140,8 @@ function(H, l, r)
   return Objectify(TypeBitranslations(H), [l, r]);
 end);
 
-
 ############################################################################
-#3. Technical Methods
+# 3. Technical Methods
 ############################################################################
 
 InstallMethod(Representative,
