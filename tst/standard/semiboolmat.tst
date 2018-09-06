@@ -1850,10 +1850,11 @@ gap> IsMonoidAsSemigroup(T);
 true
 gap> U := AsMonoid(T);
 <trivial group of 1x1 boolean matrices with 1 generator>
-gap> IsomorphismMonoid(IsBooleanMatMonoid, U);
-MappingByFunction( <trivial group of 1x1 boolean matrices with 1 generator>, 
+gap> map := IsomorphismMonoid(IsBooleanMatMonoid, U);;
+gap> Source(map);
 <trivial group of 1x1 boolean matrices with 1 generator>
-, function( object ) ... end, function( object ) ... end )
+gap> Range(map);
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
 >        [[0, 0, 1], [0, 0, 0], [0, 0, 0]]),

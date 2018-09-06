@@ -19,7 +19,7 @@ _COMMANDS = 'echo "LoadPackage(\\"semigroups\\", false);;\n'
 _COMMANDS += 'SEMIGROUPS.RunTest({} -> Test(\\"' + f + '\\"));;\n'
 _COMMANDS += '''UncoverageLineByLine();;
 LoadPackage(\\"profiling\\", false);;
-filesdir := \\"''' + os.getcwd() + '''/gap/\\";;\n'''
+filesdir := Concatenation(SEMIGROUPS.PackageDir, \\"/gap/\\");;'''
 _COMMANDS += 'outdir := \\"' + _DIR + '\\";;\n'
 _COMMANDS += 'x := ReadLineByLineProfile(\\"' + _DIR + '/profile.gz\\");;\n'
 _COMMANDS += 'OutputAnnotatedCodeCoverageFiles(x, filesdir, outdir);"'

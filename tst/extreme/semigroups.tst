@@ -180,11 +180,11 @@ gap> GeneratorsOfMonoid(s);
 
 # SemigroupsTest3: Dihedral (perm) group to a partial perm semigroup
 gap> g := DihedralGroup(8);;
-gap> g := Range(IsomorphismPermGroup(g));;
-gap> iso := IsomorphismPartialPermSemigroup(g);
-MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
-(2,6)(3,7)(5,8) ]), <partial perm group of size 8, rank 8 with 3 generators>
-, function( p ) ... end, <Attribute "AsPermutation"> )
+gap> g := Range(IsomorphismPermGroup(g));
+Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) ])
+gap> iso := IsomorphismPartialPermSemigroup(g);;
+gap> Range(iso);
+<partial perm group of size 8, rank 8 with 3 generators>
 gap> inv := InverseGeneralMapping(iso);;
 gap> f := (1, 5)(2, 3)(4, 8)(6, 7);;
 gap> f ^ iso;
@@ -199,14 +199,10 @@ gap> Size(Range(iso));
 # SemigroupsTest4: Symmetric (perm) group to a partial perm semigroup
 gap> s := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <partial perm group of size 24, rank 4 with 2 generators>
-gap> iso := IsomorphismPermGroup(s);
-MappingByFunction( <partial perm group of size 24, rank 4 with 2 generators>
-, Group([ (1,2,3,4), (1,
-2) ]), <Attribute "AsPermutation">, function( x ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( Group([ (1,2,3,4), (1,
-2) ]), <partial perm group of size 24, rank 4 with 2 generators>
-, function( x ) ... end, <Attribute "AsPermutation"> )
+gap> iso := IsomorphismPermGroup(s);;
+gap> Range(iso);
+Group([ (1,2,3,4), (1,2) ])
+gap> inv := InverseGeneralMapping(iso);;
 gap> f := PartialPerm([1, 2, 3, 4], [2, 1, 3, 4]);
 (1,2)(3)(4)
 gap> f in s;
