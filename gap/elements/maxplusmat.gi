@@ -808,6 +808,10 @@ InstallMethod(OneImmutable, "for an integer matrix",
 [IsIntegerMatrix],
 x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, 0, 1)));
 
+InstallOtherMethod(TraceMat, "for an integer matrix",
+[IsIntegerMatrix],
+x -> TraceMat(AsList(x)));
+
 InstallMethod(RandomMatrixCons, "for IsIntegerMatrix and pos int",
 [IsIntegerMatrix, IsPosInt],
 function(filter, dim)
