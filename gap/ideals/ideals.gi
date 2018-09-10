@@ -161,9 +161,9 @@ function(I, J)
     and ForAll(GeneratorsOfSemigroup(J), x -> x in I);
 end);
 
-InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
+InstallMethod(\=, "for a semigroup ideal and finite semigroup with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal,
- IsSemigroup and HasGeneratorsOfSemigroup],
+ IsSemigroup and HasGeneratorsOfSemigroup and IsFinite],
 function(I, S)
   if ForAll(GeneratorsOfSemigroup(S), x -> x in I) then
     if S = Parent(I) then
