@@ -24,9 +24,9 @@ addons:
 # Matrix
 #                    | GAP: master  | GAP: stable-4.9 | GAP: required |
 #--------------------+--------------+-----------------+---------------+
-# packages:   master | 64- & 32-bit |               - |             - |
-# packages:   newest |       64-bit |               - |             - |
-# packages: required |   (coverage) |               - |             - |
+# packages:   master |       64-bit |   64 - & 32-bit |             - |
+# packages:   newest |       64-bit |          64-bit |             - |
+# packages: required |       32-bit |      (coverage) |             - |
 
 # Plus: linting, and code coverage
 
@@ -38,6 +38,30 @@ matrix:
         apt_packages:
       sudo:
         true
+
+    - env:
+      - SUITE=test
+      - GAP=master
+      - PACKAGES=master
+      - ABI=64
+      sudo:
+        required
+
+    - env:
+      - SUITE=test
+      - GAP=master
+      - PACKAGES=newest
+      - ABI=64
+      sudo:
+        required
+
+    - env:
+      - SUITE=test
+      - GAP=master
+      - PACKAGES=required
+      - ABI=32
+      sudo:
+        required
 
     - env:
       - SUITE=test
@@ -71,22 +95,6 @@ matrix:
       - THRESHOLD=95
       sudo:
         required
-    
-  # - env:
-  #  - SUITE=test
-  #  - GAP=master
-  #  - PACKAGES=newest
-  #  - ABI=64
-  #  sudo:
-  #    required
-  #
-  # - env:
-  #  - SUITE=test
-  #  - GAP=master
-  #  - PACKAGES=master
-  #  - ABI=64
-  #  sudo:
-  #    required
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
