@@ -471,6 +471,11 @@ false
 gap> IsGeneratorsOfSemigroup([coll[1]]);
 true
 
+# semiringmat, TraceMat for Integer matrices
+gap> m := Matrix(Integers, [[1, 2, 3], [4, 5, 6], [7, 8, -9]]);;
+gap> TraceMat(m);
+-3
+
 # Test AsTransformation
 gap> mat := Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]);;
 gap> AsTransformation(mat);
@@ -536,6 +541,11 @@ fail
 # Test InverseImmutable, fails
 gap> InverseImmutable(Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10));
 fail
+
+# Test TraceMat for a finite field matrix
+gap> mat := Matrix(GF(4), [[Z(4), Z(4) ^ 2], [0 * Z(4), Z(4)]]);;
+gap> TraceMat(mat);
+0*Z(2)
 
 # Test DimensionOfMatrixOverSemiring for zero dim
 gap> mat := Matrix(GF(3), []);;

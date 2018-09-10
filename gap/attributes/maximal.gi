@@ -1372,11 +1372,6 @@ function(S, opts)
     # Regular and non-trivial non-maximal D-class
     Info(InfoSemigroups, 1, "...D[", i, "] is regular and non-trivial...");
 
-    if Length(contain) = Size(D[i]) then
-      Info(InfoSemigroups, 1, "found no maximal subsemigroups.");
-      continue;
-    fi;
-
     x := Representative(GroupHClass(D[i]));
     # L/R-class reps
     L := HClassReps(GreensRClassOfElement(D[i], x));
