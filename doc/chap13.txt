@@ -1808,10 +1808,11 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]));[127X[104X
     [4X[28X<trivial partial perm group of rank 1 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsomorphismReesMatrixSemigroup(S);[127X[104X
-    [4X[28XMappingByFunction( <trivial partial perm group of rank 1 with[128X[104X
-    [4X[28X  1 generator>, <Rees matrix semigroup 1x1 over Group(())>[128X[104X
-    [4X[28X, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismReesMatrixSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso) = S;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRange(iso);[127X[104X
+    [4X[28X<Rees matrix semigroup 1x1 over Group(())>[128X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]), PartialPerm([]));[127X[104X
     [4X[28X<partial perm monoid of rank 1 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XRange(IsomorphismReesZeroMatrixSemigroup(S));[127X[104X

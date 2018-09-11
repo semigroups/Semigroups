@@ -282,11 +282,10 @@
     [4X[25Xgap>[125X [27XElements(S);[127X[104X
     [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, [128X[104X
     [4X[28X  (1,2)(3,4)(5,6)(7,8) ][128X[104X
-    [4X[25Xgap>[125X [27XT := SmallerDegreePartialPermRepresentation(S);[127X[104X
-    [4X[28XMappingByFunction( <partial perm group of size 2, rank 8 with[128X[104X
-    [4X[28X  1 generator>, <partial perm group of rank 2 with 1 generator>[128X[104X
-    [4X[28X, function( x ) ... end, function( x ) ... end )[128X[104X
-    [4X[25Xgap>[125X [27XR := Range(T);[127X[104X
+    [4X[25Xgap>[125X [27Xiso := SmallerDegreePartialPermRepresentation(S);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso) = S;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR := Range(iso);[127X[104X
     [4X[28X<partial perm group of rank 2 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XElements(R);[127X[104X
     [4X[28X[ <identity partial perm on [ 1, 2 ]>, (1,2) ][128X[104X

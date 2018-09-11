@@ -339,11 +339,10 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
 [ &lt;identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]&gt;, 
   (1,2)(3,4)(5,6)(7,8) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SmallerDegreePartialPermRepresentation(S);</span>
-MappingByFunction( &lt;partial perm group of size 2, rank 8 with
-  1 generator&gt;, &lt;partial perm group of rank 2 with 1 generator&gt;
-, function( x ) ... end, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Range(T);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SmallerDegreePartialPermRepresentation(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso) = S;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Range(iso);</span>
 &lt;partial perm group of rank 2 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(R);</span>
 [ &lt;identity partial perm on [ 1, 2 ]&gt;, (1,2) ]

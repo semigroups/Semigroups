@@ -46,13 +46,13 @@
   
   [33X[0;0YThe argument [3Xfilename[103X should be a string containing the name of a file where
   the  entries  in  [3Xlist[103X  will  be  written  or an [5XIO[105X package file object; see
-  [2XIO_File[102X ([14XIO_File???[114X) and [2XIO_CompressedFile[102X ([14XIO_CompressedFile???[114X).[133X
+  [2XIO_File[102X ([14XIO: IO_File mode[114X) and [2XIO_CompressedFile[102X ([14XIO: IO_CompressedFile[114X).[133X
   
   [33X[0;0YIf  the  optional  third  argument  [3Xappend[103X is given and equals [10X"w"[110X, then the
   previous  content  of  the  file is deleted and overwritten. If the optional
   third  argument is [10X"a"[110X or is not present, then [10Xlist[110X is appended to the file.
-  This  function  returns [2XIO_OK[102X ([14XIO_OK???[114X) if everything went well or [2XIO_ERROR[102X
-  ([14XIO_ERROR???[114X) if something went wrong.[133X
+  This  function returns [2XIO_OK[102X ([14XIO: IO_OK[114X) if everything went well or [2XIO_ERROR[102X
+  ([14XIO: IO_Error[114X) if something went wrong.[133X
   
   [33X[0;0Y[10XWriteGenerators[110X appends a line to the file [3Xfilename[103X for every entry in [3Xlist[103X.
   If any element of [3Xlist[103X is a semigroup, then the generators of that semigroup
@@ -63,7 +63,7 @@
   [33X[0;0YThe file [3Xfilename[103X can be read using [2XReadGenerators[102X ([14X19.1-1[114X).[133X
   
   [33X[0;0YFrom  Version  3.0.0  onwards  the  [5XSemigroups[105X  package  used the [5XIO[105X package
-  pickling  functionality;  see  [14XPickling  and unpickling???[114X for more details.
+  pickling  functionality; see [14X'IO: Pickling and unpickling'[114X for more details.
   This  approach  is  used because it is more general and more robust than the
   methods  used by earlier versions of [5XSemigroups[105X, although the performance is
   somewhat worse, and the resulting files are somewhat larger.[133X

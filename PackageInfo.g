@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0.17">
+##  <!ENTITY VERSION "3.0.18">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.0">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0.17">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.18">
 ##  <!ENTITY COPYRIGHTYEARS "2011-18">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.0.17",
-Date := "23/08/2018",
+Version := "3.0.18",
+Date := "11/09/2018",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -68,7 +68,7 @@ ArchiveURL      := Concatenation(~.SourceRepository.URL,
 Persons := [
   rec(
     LastName      := "Mitchell",
-    FirstNames    := "J. D.",
+    FirstNames    := "James",
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
@@ -79,7 +79,7 @@ Persons := [
 
   rec(
     LastName     := "Burrell",
-    FirstNames    := "S.",
+    FirstNames    := "Stuart",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "sb235@st-andrews.ac.uk ",
@@ -90,7 +90,7 @@ Persons := [
 
   rec(
     LastName     := "Delgado",
-    FirstNames    := "M.",
+    FirstNames    := "Manuel",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
@@ -100,7 +100,7 @@ Persons := [
 
   rec(
     LastName      := "East",
-    FirstNames    := "J.",
+    FirstNames    := "James",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
@@ -110,7 +110,7 @@ Persons := [
 
   rec(
     LastName      := "Egri-Nagy",
-    FirstNames    := "A.",
+    FirstNames    := "Attila",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "attila@egri-nagy.hu",
@@ -120,7 +120,7 @@ Persons := [
 
   rec(
     LastName      := "Ham",
-    FirstNames    := "N.",
+    FirstNames    := "Nicholas",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "nicholas.charles.ham@gmail.com",
@@ -130,7 +130,7 @@ Persons := [
 
   rec(
     LastName      := "Jonusas",
-    FirstNames    := "J.",
+    FirstNames    := "Julius",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "jj252@st-and.ac.uk",
@@ -141,7 +141,7 @@ Persons := [
 
    rec(
     LastName      := "Pfeiffer",
-    FirstNames    := "M.",
+    FirstNames    := "Markus",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
@@ -152,7 +152,7 @@ Persons := [
 
   rec(
     LastName     := "Russell",
-    FirstNames    := "C.",
+    FirstNames    := "Christopher",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "cr66@st-andrews.ac.uk",
@@ -162,14 +162,14 @@ Persons := [
 
   rec(
     LastName      := "Steinberg",
-    FirstNames    := "B.",
+    FirstNames    := "Benjamin",
     IsAuthor      := false,
     IsMaintainer  := false,
     WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/"),
 
   rec(
     LastName      := "Smith",
-    FirstNames    := "F.",
+    FirstNames    := "Finn",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "fls3@st-andrews.ac.uk",
@@ -179,14 +179,14 @@ Persons := [
 
   rec(
     LastName      := "Smith",
-    FirstNames    := "J.",
+    FirstNames    := "Jhevon",
     IsAuthor      := false,
     IsMaintainer  := false,
     WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith"),
 
   rec(
     LastName      := "Torpey",
-    FirstNames    := "M.",
+    FirstNames    := "Michael",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
@@ -197,7 +197,7 @@ Persons := [
 
   rec(
     LastName      := "Wilson",
-    FirstNames    := "W. A.",
+    FirstNames    := "Wilf",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",
