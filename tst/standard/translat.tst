@@ -116,14 +116,13 @@ gap> Size(R);
 81
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);
-<the semigroup of left translations of <0-simple regular semigroup 
- of size 17, with 4 generators>>
-gap> R := RightTranslations(S);
-<the semigroup of right translations of <0-simple regular semigroup 
- of size 17, with 4 generators>>
-gap> H := TranslationalHull(S);
-<translational hull over <0-simple regular semigroup of size 17, with 4 
+<the semigroup of left translations of <0-simple regular semigroup with 4 
  generators>>
+gap> R := RightTranslations(S);
+<the semigroup of right translations of <0-simple regular semigroup with 4 
+ generators>>
+gap> H := TranslationalHull(S);
+<translational hull over <0-simple regular semigroup with 4 generators>>
 gap> Size(H);
 21
 gap> Size(L);
@@ -131,23 +130,17 @@ gap> Size(L);
 gap> Size(R);
 81
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <0-simple regular semigroup of size 17, with 4 
-     generators>>, <left translation on <0-simple regular semigroup 
-     of size 17, with 4 generators>>, 
-  <left translation on <0-simple regular semigroup of size 17, with 4 
-     generators>>, <left translation on <0-simple regular semigroup 
-     of size 17, with 4 generators>>, 
-  <left translation on <0-simple regular semigroup of size 17, with 4 
-     generators>> ]
+[ <left translation on <0-simple regular semigroup with 4 generators>>, 
+  <left translation on <0-simple regular semigroup with 4 generators>>, 
+  <left translation on <0-simple regular semigroup with 4 generators>>, 
+  <left translation on <0-simple regular semigroup with 4 generators>>, 
+  <left translation on <0-simple regular semigroup with 4 generators>> ]
 gap> GeneratorsOfSemigroup(R);
-[ <right translation on <0-simple regular semigroup of size 17, with 4 
-     generators>>, <right translation on <0-simple regular semigroup 
-     of size 17, with 4 generators>>, 
-  <right translation on <0-simple regular semigroup of size 17, with 4 
-     generators>>, <right translation on <0-simple regular semigroup 
-     of size 17, with 4 generators>>, 
-  <right translation on <0-simple regular semigroup of size 17, with 4 
-     generators>> ]
+[ <right translation on <0-simple regular semigroup with 4 generators>>, 
+  <right translation on <0-simple regular semigroup with 4 generators>>, 
+  <right translation on <0-simple regular semigroup with 4 generators>>, 
+  <right translation on <0-simple regular semigroup with 4 generators>>, 
+  <right translation on <0-simple regular semigroup with 4 generators>> ]
 
 #T# Test translations generation by digraph endomorphisms
 gap> S := ZeroSemigroup(4);;
@@ -348,8 +341,8 @@ gap> AsList(S);;
 gap> for h in TranslationalHull(S) do
 > l := h![1];
 > r := h![2];
-> for s in S do
-> for t in S do
+> for s in GeneratorsOfSemigroup(S) do
+> for t in GeneratorsOfSemigroup(S) do
 > if not s * (t ^ l) = (s ^ r) * t then
 > Print(s, t, h);
 > fi;
@@ -418,6 +411,17 @@ gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
 gap> Size(TranslationalHull(T));
 160
+gap> for h in TranslationalHull(T) do
+> l := h![1];
+> r := h![2];
+> for s in GeneratorsOfSemigroup(T) do
+> for t in GeneratorsOfSemigroup(T) do
+> if not s * (t ^ l) = (s ^ r) * t then
+> Print(s, t, h);
+> fi;
+> od;
+> od;
+> od;
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1, 1, 2, 4]), Transformation([3, 1, 3])]);;

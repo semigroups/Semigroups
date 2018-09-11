@@ -1356,25 +1356,6 @@ end);
 # 5. Technical methods
 #############################################################################
 
-# copied from reesmat.gi in GAP library
-# so that we can find Green's relations etc
-
-InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationsSemigroup],
-function(T)
-  local M;
-  M := Monoid(List(GeneratorsOfSemigroup(T), MonoidByAdjoiningIdentityElt));
-  SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, T);
-  return M;
-end);
-
-InstallMethod(MonoidByAdjoiningIdentity, [IsTranslationalHull],
-function(H)
-  local M;
-  M := Monoid(List(GeneratorsOfSemigroup(H), MonoidByAdjoiningIdentityElt));
-  SetUnderlyingSemigroupOfMonoidByAdjoiningIdentity(M, H);
-  return M;
-end);
-
 InstallMethod(AsList, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
