@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.18 (released 11/09/2018)
+
+This version contains some minor changes related to compatibility issues with
+GAP.
+
 ### Version 3.0.17 (released 23/08/2018)
 
 This version contains some minor improvements and bugfixes.
