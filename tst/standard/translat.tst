@@ -186,8 +186,8 @@ gap> for i in [1 .. 4] do
 #T# Translations and translational hulls of monoids that couldn't be calculated
 gap> S := BrauerMonoid(5);;
 gap> L := LeftTranslations(S);
-<the semigroup of left translations of <regular bipartition *-monoid 
- of size 945, degree 5 with 3 generators>>
+<the semigroup of left translations of <regular bipartition *-monoid of 
+ degree 5 with 3 generators>>
 gap> Size(L);
 945
 gap> R := RightTranslations(S);

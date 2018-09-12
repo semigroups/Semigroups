@@ -17,7 +17,7 @@
 ## XTranslationsSemigroup or TranslationalHullSemigroup
 ##
 ## Left/Right translations are stored internally as transformations on the
-## indices of the underlying semigroup (determined by AsSortedList). Hence,
+## indices of the underlying semigroup (determined by AsListCanonical). Hence,
 ## only finite semigroups are supported.
 ##
 ## Much of the implementation in this file was based on the implementation of
@@ -76,16 +76,23 @@ end;
 SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   local n, slist, gens, m, possiblefgenvals, genspos, I, q,
   possibleidempotentfvals, gen, idempos, extend, next, propagate, reject, bt,
-  whenbound, translist, e, i, s, x, f, k, multtable, pos,
-  posinfgenvals, genpos, restrictionatstage, S;
+  whenbound, translist, e, i, s, x, f, k, multtable, pos, sortedlist, t, tinv,
+  posinfgenvals, genpos, restrictionatstage, S, M;
 
-  S     := UnderlyingSemigroup(L);
-  n     := Size(S);
-  slist := AsSortedList(S);
-  gens  := GeneratorsOfSemigroup(S);
-  m     := Size(gens);
+  S           := UnderlyingSemigroup(L);
+  n           := Size(S);
+  slist       := AsListCanonical(S);
+  sortedlist  := AsSortedList(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
 
-  multtable               := MultiplicationTable(S);
+  t := Transformation(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+  tinv := InverseOfTransformation(t);
+  M := MultiplicationTable(S);
+
+  multtable := List([1 .. n], i -> List([1 .. n],
+                                        j -> M[i ^ tinv][j ^ tinv] ^ t));
+    
   possiblefgenvals        := List([1 .. m], i -> [1 .. n]);
   genspos                 := List(gens, g -> Position(slist, g));
   I                       := Idempotents(S);
@@ -102,7 +109,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
         idempos             := Position(I, gen * s);
         possiblefgenvals[i] := Intersection(possiblefgenvals[i],
                                             PositionsProperty(slist,
-                                              x -> Position(slist, x * s) in
+                                              x -> PositionCanonical(S, x * s) in
                                               possibleidempotentfvals[idempos]));
         possiblefgenvals[i] := Intersection(possiblefgenvals[i],
                                             PositionsProperty(slist,
@@ -216,9 +223,9 @@ SEMIGROUPS.RightTranslationsByDual := function(R)
   local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
 
   S           := UnderlyingSemigroup(R);
-  Sl          := AsSortedList(S);
+  Sl          := AsListCanonical(S);
   D           := DualSemigroup(S);
-  Dl          := AsSortedList(D);
+  Dl          := AsListCanonical(D);
   map         := AntiIsomorphismDualSemigroup(S);
   dual_trans  := LeftTranslations(D);
 
@@ -321,16 +328,24 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   possiblegrepvals, possiblegrepvalsfromidempotent, possibleidempotentfvals,
   possibleidempotentgvals, possrepsk, propagatef, propagateg, q, reject,
   reps, repspos, restrictbyweakreductivity, restrictfromf, restrictfromg,
-  s, slist, transposepossets, unrestrict,
-  whenboundfvals, whenboundgvals, x, y;
+  s, t, tinv, slist, sortedlist, transposepossets, unrestrict,
+  whenboundfvals, whenboundgvals, x, y, M;
 
   S                 := UnderlyingSemigroup(H);
   n                 := Size(S);
   isweaklyreductive := Size(InnerTranslationalHull(S)) = n;
-  slist             := AsSortedList(S);
+  slist             := AsListCanonical(S);
+  sortedlist        := AsSortedList(S);
   L                 := LeftTranslationsSemigroup(S);
   R                 := RightTranslationsSemigroup(S);
   multtable         := MultiplicationTable(S);
+
+  t := Transformation(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+  tinv := InverseOfTransformation(t);
+  M := MultiplicationTable(S);
+
+  multtable := List([1 .. n], i -> List([1 .. n],
+                                        j -> M[i ^ tinv][j ^ tinv] ^ t));
 
   reps    := GeneratorsOfSemigroup(S);
   repspos := [];
@@ -873,7 +888,7 @@ end);
 
 # Create a left translation as an element of a left translations semigroup.
 # Second argument should be a mapping on the underlying semigroup or
-# a transformation of its indices (as defined by AsSortedList)
+# a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
   local R, S, reps, semiList;
@@ -909,11 +924,11 @@ function(L, x)
             "the second argument must act on the indices of the underlying ",
             "semigroup of the first argument,");
     fi;
-    semiList := AsSortedList(S);
+    semiList := AsListCanonical(S);
     if ForAny(reps,
               s -> ForAny(S,
-                          t -> semiList[Position(semiList, s) ^ x] * t <>
-                          semiList[Position(semiList, s * t) ^ x])) then
+                          t -> semiList[PositionCanonical(S, s) ^ x] * t <>
+                          semiList[PositionCanonical(S, s * t) ^ x])) then
       ErrorNoReturn("Semigroups: LeftTranslation: \n",
             "the transformation given must define a left translation,");
     fi;
@@ -934,10 +949,11 @@ function(L, x)
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsSortedList(UnderlyingSemigroup(L));
+  semiList        := AsListCanonical(UnderlyingSemigroup(L));
   mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
+    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(L), 
+                                           semiList[i] ^ x);
   od;
 
   return Objectify(TypeLeftTranslationsSemigroupElements(L),
@@ -982,11 +998,11 @@ function(R, x)
             "the second argument must act on the indices of the underlying ",
             "semigroup of the first argument,");
     fi;
-    semiList := AsSortedList(S);
+    semiList := AsListCanonical(S);
     if ForAny(reps,
               s -> ForAny(S, t ->
-                            t * semiList[Position(semiList, s) ^ x]
-                              <> semiList[Position(semiList, t * s) ^ x])) then
+                            t * semiList[PositionCanonical(S, s) ^ x]
+                              <> semiList[PositionCanonical(S, t * s) ^ x])) then
       ErrorNoReturn("Semigroups: RightTranslation: \n",
             "the transformation given must define a right translation,");
     fi;
@@ -1007,10 +1023,11 @@ function(R, x)
     return Objectify(TypeRightTranslationsSemigroupElements(R), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsSortedList(UnderlyingSemigroup(R));
+  semiList        := AsListCanonical(UnderlyingSemigroup(R));
   mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
+    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(R),
+                                           semiList[i] ^ x);
   od;
 
   return Objectify(TypeRightTranslationsSemigroupElements(R),
@@ -1529,21 +1546,17 @@ end);
 InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsTranslationsSemigroupElement],
 function(x, t)
-  local list;
+  local S, list;
   if IsLeftTranslationsSemigroupElement(t) then
-    list := AsSortedList(UnderlyingSemigroup(
-                              LeftTranslationsSemigroupOfFamily(
-                                FamilyObj(t))));
+    S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
   else
-    list := AsSortedList(UnderlyingSemigroup(
-                              RightTranslationsSemigroupOfFamily(
-                                FamilyObj(t))));
+    S := UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t)));
   fi;
-  if not x in list then
+  if not x in S then
     ErrorNoReturn("Semigroups: ^ for a semigroup element and translation: \n",
           "the first argument must be an element of the domain of the second,");
   fi;
-  return list[Position(list, x) ^ t![1]];
+  return EnumeratorCanonical(S)[PositionCanonical(S, x) ^ t![1]];
 end);
 
 InstallMethod(\*, "for translation hull elements (linked pairs)",
