@@ -26,7 +26,7 @@ addons:
 #--------------------+--------+--------------+------------+----------+
 # packages:   master | 64-bit |            - |          - |        - |
 # packages:   newest | 64-bit | 64- & 32-bit |          - |        - |
-# packages: required | 32-bit |   (coverage) |     64-bit |        - |
+# packages: required | 32-bit |   (coverage) |     64-bit |   64-bit |
 
 # Plus: linting
 
@@ -82,6 +82,14 @@ matrix:
     - env:
       - SUITE=test
       - GAP=stable-4.9
+      - PACKAGES=required
+      - ABI=64
+      sudo:
+        required
+
+    - env:
+      - SUITE=test
+      - GAP=required
       - PACKAGES=required
       - ABI=64
       sudo:
