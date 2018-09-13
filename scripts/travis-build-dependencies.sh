@@ -57,19 +57,9 @@ mkdir pkg
 mv $HOME/semigroups $GAPROOT/pkg/semigroups
 
 ################################################################################
-# Get libsemigroups version from file
-if [ -f $GAPROOT/pkg/semigroups/.LIBSEMIGROUPS_VERSION ]; then
-  LIBSEMI=`tr -d '\n' < $GAPROOT/pkg/semigroups/.LIBSEMIGROUPS_VERSION`
-  LIBSEMI=v$LIBSEMI
-else
-  echo -e "\nError, cannot find $GAPROOT/pkg/semigroups/.LIBSEMIGROUPS_VERSION"
-  exit 1
-fi
-
-# Download libsemigroups
-echo -e "\nDownloading libsemigroups $LIBSEMI into $GAPROOT/pkg/semigroups/src..."
-cd $GAPROOT/pkg/semigroups/src
-git clone -b $LIBSEMI --depth=1 https://github.com/james-d-mitchell/libsemigroups.git libsemigroups
+# Install libsemigroups
+cd $GAPROOT/pkg/semigroups
+./prerequisites.sh
 
 ################################################################################
 # Install digraphs, genss, io, orb, and profiling
