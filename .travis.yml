@@ -22,13 +22,13 @@ addons:
       - libtool
 
 # Matrix
-#                    | GAP: master  | GAP: stable-4.9 | GAP: required |
-#--------------------+--------------+-----------------+---------------+
-# packages:   master |       64-bit |   64 - & 32-bit |             - |
-# packages:   newest |       64-bit |          64-bit |             - |
-# packages: required |       32-bit |      (coverage) |             - |
+#       GAP version: | master |  stable-4.10 | stable-4.9 | required |
+#--------------------+--------+--------------+------------+----------+
+# packages:   master | 64-bit |            - |          - |        - |
+# packages:   newest | 64-bit | 64- & 32-bit |          - |        - |
+# packages: required | 32-bit |   (coverage) |     64-bit |        - |
 
-# Plus: linting, and code coverage
+# Plus: linting
 
 matrix:
   include:
@@ -65,16 +65,16 @@ matrix:
 
     - env:
       - SUITE=test
-      - GAP=stable-4.9
-      - PACKAGES=master
+      - GAP=stable-4.10
+      - PACKAGES=newest
       - ABI=64
       sudo:
         required
 
     - env:
       - SUITE=test
-      - GAP=stable-4.9
-      - PACKAGES=master
+      - GAP=stable-4.10
+      - PACKAGES=newest
       - ABI=32
       sudo:
         required
@@ -82,14 +82,14 @@ matrix:
     - env:
       - SUITE=test
       - GAP=stable-4.9
-      - PACKAGES=newest
+      - PACKAGES=required
       - ABI=64
       sudo:
         required
 
     - env:
       - SUITE=coverage
-      - GAP=stable-4.9
+      - GAP=stable-4.10
       - PACKAGES=required
       - ABI=64
       - THRESHOLD=95
