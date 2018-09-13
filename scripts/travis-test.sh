@@ -22,10 +22,11 @@ if [ "$SUITE" == "lint" ]; then
 elif [ "$SUITE" == "coverage" ]; then
 
   echo -e "\nPerforming code coverage tests..."
-  for TEST in $SEMI_DIR/tst/standard/*.tst; do
+  cd $SEMI_DIR
+  for TEST in tst/standard/*.tst; do
     FILENAME=${TEST##*/}
     if [ ! `grep -E "$FILENAME" .covignore` ]; then
-      $SEMI_DIR/scripts/travis-coverage.py $TEST $THRESHOLD | tee -a $TESTLOG
+      scripts/travis-coverage.py $TEST $THRESHOLD | tee -a $TESTLOG
     else
       echo -e "\033[35mignoring $FILENAME, which is listed in .covignore\033[0m"
     fi
