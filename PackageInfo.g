@@ -200,11 +200,13 @@ Persons := [
     FirstNames    := "Wilf",
     IsAuthor      := false,
     IsMaintainer  := false,
-    Email         := "waw7@st-and.ac.uk",
+    Email         := "gap@wilf-wilson.net",
     WWWHome       := "http://wilf.me",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews")],
+    PostalAddress := Concatenation(["Theodor-Lieser-Straße 5, ",
+                                    "06120 Halle (Saale), ",
+                                    "Germany"]),
+    Place         := "Halle (Saale), Germany",
+    Institution   := "University of Halle-Wittenberg")],
 
 Status := "deposited",
 
