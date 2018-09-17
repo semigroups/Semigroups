@@ -702,7 +702,7 @@ function(x)
 
   ext := ExtRepOfObj(x);
 
-  str := Concatenation("\>\>PBR(\>\>", ViewString(ext[1]), "\<\<,");
+  str := Concatenation("\>\>PBR(\>\>", PrintString(ext[1]), "\<\<,");
 
   if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
     Append(str, "\n");
@@ -711,7 +711,7 @@ function(x)
   fi;
 
   Append(str, "\>\>");
-  Append(str, ViewString(ext[2]));
+  Append(str, PrintString(ext[2]));
   Append(str, "\<\<\<\<)");
   return str;
 end);
