@@ -2680,10 +2680,16 @@ Transformation( [ 3, 3, 3 ] )
 # Test IsomorphismTransformationSemigroup for an ideal
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
-gap> map := IsomorphismTransformationSemigroup(MinimalIdeal(S));
-MappingByFunction( <simple transformation semigroup ideal of degree 3 with
-  1 generator>, <regular transformation semigroup ideal of degree 3 with
- 1 generator>, function( x ) ... end, function( x ) ... end )
+gap> x := MinimalIdeal(S);
+<simple transformation semigroup ideal of degree 3 with 1 generator>
+gap> map := IsomorphismTransformationSemigroup(x);;
+gap> x := Range(map);;
+gap> IsSimpleSemigroup(x);
+true
+gap> Size(x) = 3;
+true
+gap> x;
+<simple transformation semigroup ideal of size 3, degree 3 with 1 generator>
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);

@@ -365,6 +365,7 @@ InstallMethod(ViewString,
 "for a Rees 0-matrix subsemigroup ideal with ideal generators",
 [IsReesZeroMatrixSubsemigroup and IsSemigroupIdeal and
  HasGeneratorsOfSemigroupIdeal],
+3,  # to beat ViewString for a semigroup ideal with ideal generators
 function(I)
   local str, nrgens;
 
