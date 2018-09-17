@@ -203,10 +203,10 @@ end);
 ## ViewObj
 ##
 
-InstallMethod(PrintObj, "for a free inverse semigroup element",
-[IsFreeInverseSemigroupElement], ViewObj);
-
 InstallMethod(ViewObj, "for a free inverse semigroup element",
+[IsFreeInverseSemigroupElement], PrintObj);
+
+InstallMethod(PrintObj, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
 

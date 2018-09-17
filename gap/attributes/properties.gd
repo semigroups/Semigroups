@@ -84,7 +84,7 @@ InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
 InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
 InstallTrueMethod(IsCommutativeSemigroup, IsZeroSemigroup);
-InstallTrueMethod(IsCommutativeSemigroup, IsCommutative);
+InstallTrueMethod(IsCommutativeSemigroup, IsCommutative and IsSemigroup);
 InstallTrueMethod(IsCommutative, IsCommutativeSemigroup);
 InstallTrueMethod(IsTrivial,
                   IsLeftZeroSemigroup and IsRightZeroSemigroup);
