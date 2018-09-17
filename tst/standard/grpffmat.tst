@@ -56,10 +56,9 @@ gap> G := Group(GeneratorsOfSemigroup(G));
 <group of 2x2 matrices over GF(2) with 3 generators>
 gap> IsMatrixOverFiniteFieldGroup(G);
 true
-gap> map := IsomorphismPermGroup(G);
-MappingByFunction( <group of 2x2 matrices over GF(2) with 
-3 generators>, Group([ (), (2,3), (1,
-2) ]), function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPermGroup(G);;
+gap> IsomorphismGroups(Range(map), SymmetricGroup(3)) <> fail;
+true
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);

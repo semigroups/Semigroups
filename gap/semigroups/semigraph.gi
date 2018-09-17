@@ -13,6 +13,7 @@ InstallMethod(AsMonoid, "for a graph inverse semigroup",
 
 InstallMethod(ViewString, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
+RankFilter(IsGroupAsSemigroup),  # to beat library method for groups as semigrps
 function(S)
   local n, str;
 
