@@ -285,7 +285,7 @@ AvailabilityTest := function()
 end,
 
 Autoload := false,
-TestFile := "tst/testinstall.tst",
+TestFile := "tst/teststandard.g",
 Keywords := ["transformation semigroups", "partial permutations",
              "inverse semigroups", "Green's relations",
              "free inverse semigroup", "partition monoid", "bipartitions",
