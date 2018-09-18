@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0.18">
+##  <!ENTITY VERSION "3.0.19">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.0">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0.18">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.19">
 ##  <!ENTITY COPYRIGHTYEARS "2011-18">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.0.18",
-Date := "11/09/2018",
+Version := "3.0.19",
+Date := "18/09/2018",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -200,11 +200,13 @@ Persons := [
     FirstNames    := "Wilf",
     IsAuthor      := false,
     IsMaintainer  := false,
-    Email         := "waw7@st-and.ac.uk",
+    Email         := "gap@wilf-wilson.net",
     WWWHome       := "http://wilf.me",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews")],
+    PostalAddress := Concatenation(["Theodor-Lieser-Straße 5, ",
+                                    "06120 Halle (Saale), ",
+                                    "Germany"]),
+    Place         := "Halle (Saale), Germany",
+    Institution   := "University of Halle-Wittenberg")],
 
 Status := "deposited",
 
@@ -283,7 +285,7 @@ AvailabilityTest := function()
 end,
 
 Autoload := false,
-TestFile := "tst/testinstall.tst",
+TestFile := "tst/teststandard.g",
 Keywords := ["transformation semigroups", "partial permutations",
              "inverse semigroups", "Green's relations",
              "free inverse semigroup", "partition monoid", "bipartitions",

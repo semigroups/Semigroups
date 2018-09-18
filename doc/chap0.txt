@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.18
+                                 Version 3.0.19
   
   
                                  J. D. Mitchell

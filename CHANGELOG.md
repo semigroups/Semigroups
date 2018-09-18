@@ -2,6 +2,12 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.19 (released 18/09/2018)
+
+This version contains some minor changes related to compatibility issues with
+GAP, and to resolve some incorrectly delegating methods for print/view/display.
+[[Wilf A. Wilson](http://wilf.me)]
+
 ### Version 3.0.18 (released 11/09/2018)
 
 This version contains some minor changes related to compatibility issues with
