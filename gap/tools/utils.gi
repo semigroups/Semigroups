@@ -160,6 +160,10 @@ SEMIGROUPS.TestDir := function(dir, arg)
     for name in RecNames(arg[1]) do
       opts.testOptions.(name) := arg[1].(name);
     od;
+    # To allow the option from tst/teststandard.g to be processed
+    if "suppressStatusMessage" in RecNames(arg[1]) then
+      opts.suppressStatusMessage := arg[1].suppressStatusMessage;
+    fi;
   elif Length(arg) <> 0 then
     ErrorNoReturn("there must be no arguments, or the argument ",
                   "must be a record");
