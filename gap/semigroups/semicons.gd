@@ -20,3 +20,4 @@ DeclareGlobalFunction("LeftZeroSemigroup");
 DeclareGlobalFunction("RightZeroSemigroup");
 DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
 DeclareGlobalFunction("BrandtSemigroup");
+DeclareOperation("SemilatticeFromDigraph", [IsDigraph]);
