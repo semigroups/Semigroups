@@ -5,11 +5,10 @@ set -o pipefail
 cd ../..
 
 # Remember some important locations
-GAP_DIR=`pwd`
-SEMI_DIR="$GAP_DIR/pkg/semigroups"
-GAP="$GAP_DIR/bin/gap.sh"
+SEMI_DIR="$GAPROOT/pkg/semigroups"
+GAP="$GAPROOT/bin/gap.sh"
 # Create the testlog and remember its location
-touch $GAP_DIR/testlog.txt
+touch $GAPROOT/testlog.txt
 TESTLOG="`pwd`/testlog.txt"
 
 if [ "$SUITE" == "lint" ]; then
@@ -48,12 +47,18 @@ elif [ "$SUITE" == "test" ]; then
   # Run GAP tests, but only in 64-bit, since they're far too slow in 32-bit
   if [ "$ABI" == "64" ]; then
     echo -e "\nRunning GAP's testinstall tests with Semigroups loaded..."
-    echo "LoadPackage(\"semigroups\"); Read(\"$GAP_DIR/tst/testinstall.g\");" |
+    echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testinstall.g\");" |
       $GAP -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
 
-    #echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
-    #echo "LoadPackage(\"semigroups\"); Read(\"$GAP_DIR/tst/testbugfix.g\");" |
-    #  $GAP -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
+    # Run GAP's testbugfix suite, but this only works with Semigroups in master
+    if [ "$GAPBR" == "master" ]; then
+      echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
+      # Delete two very long-running tests
+      rm $GAPROOT/tst/testbugfix/2016-03-03-t00332.tst
+      rm $GAPROOT/tst/testbugfix/2018-05-24-IntermediateSubgroups.tst
+      echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testbugfix.g\");" |
+        $GAP -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
+    fi
   fi
 else
   echo -e "\nUnrecognised test suite"
