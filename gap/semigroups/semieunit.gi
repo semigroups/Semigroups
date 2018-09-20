@@ -164,9 +164,9 @@ InstallMethod(McAlisterTripleSemigroupComponents,
 function(S)
   local G, XX, YY, act, comps, id, next, o, v;
 
-  G := McAlisterTripleSemigroupGroup(S);
-  XX := McAlisterTripleSemigroupPartialOrder(S);
-  YY := McAlisterTripleSemigroupSemilattice(S);
+  G   := McAlisterTripleSemigroupGroup(S);
+  XX  := McAlisterTripleSemigroupPartialOrder(S);
+  YY  := McAlisterTripleSemigroupSemilattice(S);
   act := McAlisterTripleSemigroupAction(S);
 
   comps := [];
@@ -178,7 +178,7 @@ function(S)
       o := Intersection(Orbit(G, v, act), DigraphVertexLabels(YY));
       Add(comps, o);
       id{o} := ListWithIdenticalEntries(Length(o), next);
-      next := next + 1;
+      next  := next + 1;
     fi;
   od;
   return rec(comps := comps, id := id);
@@ -192,7 +192,7 @@ function(S)
   YY_XX := McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap(S);
   # Convert components to vertices of Y, rather than their labels in X.
   comps := List(McAlisterTripleSemigroupComponents(S).comps, c -> YY_XX{c});
-  gr := QuotientDigraph(McAlisterTripleSemigroupSemilattice(S), comps);
+  gr    := QuotientDigraph(McAlisterTripleSemigroupSemilattice(S), comps);
   return DigraphRemoveAllMultipleEdges(gr);
 end);
 
@@ -201,8 +201,8 @@ InstallMethod(McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap,
 [IsMcAlisterTripleSemigroup and IsWholeFamily],
 function(S)
   local XX, YY, XX_YY, YY_XX, i;
-  XX := McAlisterTripleSemigroupPartialOrder(S);
-  YY := McAlisterTripleSemigroupSemilattice(S);
+  XX    := McAlisterTripleSemigroupPartialOrder(S);
+  YY    := McAlisterTripleSemigroupSemilattice(S);
   XX_YY := DigraphVertexLabels(YY);
   if XX_YY <> DigraphVertices(XX) then
     YY_XX := ListWithIdenticalEntries(DigraphNrVertices(XX), 0);
@@ -217,6 +217,7 @@ end);
 
 InstallMethod(String, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
+RankFilter(IsInverseSemigroup and HasGeneratorsOfSemigroup),
 function(S)
   local G, X, Y;
   if not IsWholeFamily(S) then
@@ -287,7 +288,7 @@ function(S, T)
   # automorphism of McAlisterTripleSemilattice(T). Composing this with
   # iso_x will restrict to an isomorphism from (the labels of) YS to YT.
   if not im_YS = DigraphVertexLabels(YT) then
-    A := AutomorphismGroup(XT);
+    A   := AutomorphismGroup(XT);
     rep := RepresentativeAction(A, im_YS, DigraphVertexLabels(YT), OnSets);
     if rep = fail then
       return fail;
@@ -508,7 +509,7 @@ SEMIGROUPS.MTSSmallGen := function(S)
              continue;
            fi;
            alpha    := RepAct(orbs[i][1], orbs[1][1]);
-           gs := List(GeneratorsOfGroup(stabs[i]),
+           gs       := List(GeneratorsOfGroup(stabs[i]),
                       g -> (alpha ^ -1) * g * alpha);
            stabs[1] := ClosureGroup(stabs[1], gs);
            if stabs[1] = Gc1 then
@@ -829,15 +830,15 @@ InstallMethod(EUnitaryInverseCover,
 [IsInverseSemigroup and IsPartialPermCollection],
 function(S)
   local gens, deg, units, G, P, embed, id, cover_gens, s, g, cover, i;
-  gens := GeneratorsOfSemigroup(S);
-  deg := DegreeOfPartialPermSemigroup(S);
+  gens  := GeneratorsOfSemigroup(S);
+  deg   := DegreeOfPartialPermSemigroup(S);
   units := [];
   for s in gens do
     Add(units, SEMIGROUPS.PartialPermExtendToPerm(s, deg));
   od;
   G := InverseSemigroup(units);
 
-  P := DirectProduct(S, G);
+  P     := DirectProduct(S, G);
   embed := SemigroupDirectProductInfo(P).embedding;
   if not IsMonoid(S) then
     id := PartialPerm([1 .. deg]);
@@ -890,7 +891,7 @@ function(S)
                   "the argument must be an inverse semigroup,");
   fi;
   iso := IsomorphismPartialPermSemigroup(S);
-  T := Range(iso);
+  T   := Range(iso);
   cov := EUnitaryInverseCover(T);
   return CompositionMapping(InverseGeneralMapping(iso), cov);
 end);

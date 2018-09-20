@@ -119,10 +119,7 @@ true
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
 <McAlister triple semigroup over Group([ (1,2) ])>
 gap> G := Semigroup(PartialPerm([1, 2, 3], [2, 3, 1]));;
-gap> iso := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, G);
-MappingByFunction( <partial perm group of size 3, rank 3 with 1 generator>
-, <McAlister triple semigroup over Group([ (2,3,
-4) ])>, function( s ) ... end )
+gap> iso := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, G);;
 gap> PartialPerm([1, 2, 3], [2, 3, 1]) ^ iso;;
 
 #T# McAlister triple subsemigroup methods
