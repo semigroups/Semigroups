@@ -27,6 +27,7 @@
     <#Include Label = "ZeroSemigroup">
     <#Include Label = "LeftZeroSemigroup">
     <#Include Label = "BrandtSemigroup">
+    <#Include Label = "SemilatticeFromDigraph">
   </Section>
 
   <!--**********************************************************************-->
