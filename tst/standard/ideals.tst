@@ -340,6 +340,34 @@ gap> ideals := Ideals(S);;
 gap> Size(ideals);
 179
 
+# MultiplicativeZero
+gap> S := FreeSemigroup(2);;
+gap> I := SemigroupIdeal(S, S.1);;
+gap> IsTrivial(I);
+false
+gap> MultiplicativeZero(I);
+fail
+gap> S := FreeSemigroup(2);;
+gap> I := SemigroupIdeal(S, S.2 * S.1);;
+gap> MultiplicativeZero(I);
+fail
+gap> S := SymmetricInverseMonoid(3);;
+gap> I := SemigroupIdeal(S, PartialPerm([2, 1]));;
+gap> MultiplicativeZero(I);
+<empty partial perm>
+
+# IsMultiplicativeZero
+gap> S := SingularTransformationMonoid(3);;
+gap> IsMultiplicativeZero(S, IdentityTransformation);
+false
+gap> GeneratorsOfSemigroup(S);;
+gap> IsMultiplicativeZero(S, Transformation([1, 1, 1]));
+false
+gap> S := SemigroupIdeal(SymmetricInverseSemigroup(3), PartialPerm([2]));;
+gap> GeneratorsOfSemigroup(S);;
+gap> IsMultiplicativeZero(S, EmptyPartialPerm());
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(I);

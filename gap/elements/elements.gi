@@ -116,6 +116,4 @@ InstallMethod(IsMultiplicativeZero,
 "for a semigroup with multiplicative zero and multiplicative element",
 [IsSemigroup and HasMultiplicativeZero, IsMultiplicativeElement],
 SUM_FLAGS,
-function(S, x)
-  return MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S);
-end);
+{S, x} -> MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S));
