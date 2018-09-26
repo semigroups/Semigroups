@@ -77,7 +77,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   local S, n, slist, sortedlist, gens, m, t, tinv, M, multtable,
   possiblefgenvals, genspos, I, q, possibleidempotentfvals, gen, idempos,
   extend, next, propagate, reject, bt, whenbound, translist, restrictionatstage,
-  f, posinfgenvals, k, e, i, s, x, pos, genpos, ipos;
+  f, posinfgenvals, k, e, i, s, x, pos, genpos;
 
   S           := UnderlyingSemigroup(L);
   n           := Size(S);
@@ -86,9 +86,10 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
 
-  t := Transformation(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+  t    := Transformation(List([1 .. n],
+                         i -> PositionCanonical(S, sortedlist[i])));
   tinv := InverseOfTransformation(t);
-  M := MultiplicationTable(S);
+  M    := MultiplicationTable(S);
 
   multtable := List([1 .. n], i -> List([1 .. n],
                                         j -> M[i ^ tinv][j ^ tinv] ^ t));
@@ -340,8 +341,9 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   multtable         := MultiplicationTable(S);
 
   t := Transformation(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+
   tinv := InverseOfTransformation(t);
-  M := MultiplicationTable(S);
+  M    := MultiplicationTable(S);
 
   multtable := List([1 .. n], i -> List([1 .. n],
                                         j -> M[i ^ tinv][j ^ tinv] ^ t));
@@ -954,7 +956,7 @@ function(L, x)
   semiList        := AsListCanonical(UnderlyingSemigroup(L));
   mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(L), 
+    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(L),
                                            semiList[i] ^ x);
   od;
 
@@ -1535,7 +1537,7 @@ end);
 InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsTranslationsSemigroupElement],
 function(x, t)
-  local S, list;
+  local S;
   if IsLeftTranslationsSemigroupElement(t) then
     S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
   else

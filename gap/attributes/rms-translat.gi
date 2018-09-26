@@ -160,12 +160,12 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     return bt(x);
   end;
 
-  v           := 1;
-  partcols   := List([1 .. nrcols], i -> []);
-  x           := [];
-  translist  := [bt(x)];
+  v         := 1;
+  partcols  := List([1 .. nrcols], i -> []);
+  x         := [];
+  translist := [bt(x)];
   while translist[v] <> 0 do
-    v             := v + 1;
+    v            := v + 1;
     translist[v] := bt(reject(ShallowCopy(translist[v - 1])));
   od;
 
@@ -507,12 +507,10 @@ SEMIGROUPS.BitranslationsOfNormalRMS := function(H)
   triples := [];
 
   extendf := function(k)
-    # TODO: remove this comment
     f[k] := 1;
   end;
 
   extendg := function(k)
-    # TODO: remove this comment
     g[k] := 1;
   end;
 
@@ -877,7 +875,8 @@ InstallMethod(GeneratorsOfSemigroup,
 "for the semigroup of left/right translations of a finite simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  local S, iso, inv, reesMatSemi, L, n, gens, G, groupgens, IsNRMS, idgpfunc, f, fa, t, a;
+  local S, iso, inv, reesMatSemi, L, n, gens, G, groupgens, IsNRMS, idgpfunc, f,
+  fa, t, a;
 
   S := UnderlyingSemigroup(T);
   if not (IsSimpleSemigroup(S) and IsFinite(S)) then
