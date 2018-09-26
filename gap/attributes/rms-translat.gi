@@ -488,13 +488,17 @@ end;
 # Uses the characterisation of Theorem 1 in
 # Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
 # Journal of Algebra 46, 1977
-SEMIGROUPS.RMSBitranslations := function(H)
+SEMIGROUPS.BitranslationsOfNormalRMS := function(H)
   local a, f, g, G, i, j, k, m, n, P, S, x,
         triples, extendf, extendg, nextf, nextg,
         partialcheckrow, partialcheckcol,
         reject, bt;
 
   S       := UnderlyingSemigroup(H);
+  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    ErrorNoReturn("Semigroups: SEMIGROUPS.BitranslationsOfNormalRMS: \n",
+                  "the argument must be a normalised RMS over a group,");
+  fi;
   P       := Matrix(S);
   m       := Size(P);
   n       := Size(P[1]);

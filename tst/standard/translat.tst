@@ -275,6 +275,9 @@ gap> mat := [[0, H[4]], [H[4], 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S)) = Size(SEMIGROUPS.bruteforcetranshull(S));
 true
+gap> Size(Semigroup(GeneratorsOfSemigroup(TranslationalHull(S)))) = 
+> Size(TranslationalHull(S));
+true
 gap> S := RectangularBand(2, 3);;
 gap> Size(Semigroup(GeneratorsOfSemigroup(TranslationalHull(S))))
 > = Size(SEMIGROUPS.bruteforcetranshull(S));
@@ -422,6 +425,14 @@ gap> for h in TranslationalHull(T) do
 > od;
 > od;
 > od;
+gap> G := SmallGroup(6, 1);;
+gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> Size(TranslationalHull(T));
+40
+gap> Size(Semigroup(TranslationalHull(T)));
+40
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1, 1, 2, 4]), Transformation([3, 1, 3])]);;

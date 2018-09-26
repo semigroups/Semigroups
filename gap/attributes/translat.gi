@@ -251,7 +251,7 @@ SEMIGROUPS.Bitranslations := function(H)
   elif IsZeroSimpleSemigroup(S) then
     return SEMIGROUPS.BitranslationsOfZeroSimple(H);
   elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    return SEMIGROUPS.RMSBitranslations(H);
+    return SEMIGROUPS.BitranslationsOfNormalRMS(H);
   else
     return SEMIGROUPS.BitranslationsByGenerators(H);
   fi;
@@ -1554,7 +1554,8 @@ function(x, t)
   fi;
   if not x in S then
     ErrorNoReturn("Semigroups: ^ for a semigroup element and translation: \n",
-          "the first argument must be an element of the domain of the second,");
+                  "the first argument must be an element of the domain of the",
+                  " second,");
   fi;
   return EnumeratorCanonical(S)[PositionCanonical(S, x) ^ t![1]];
 end);
