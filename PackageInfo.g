@@ -277,8 +277,9 @@ AvailabilityTest := function()
   semigroups_so := Filename(DirectoriesPackagePrograms("semigroups"),
                             "semigroups.so");
   if (not "semigroups" in SHOW_STAT()) and semigroups_so = fail then
-    Info(InfoWarning, 1, "Semigroups: the kernel module is not compiled, ",
-         "the package cannot be loaded.");
+    LogPackageLoadingMessage(PACKAGE_WARNING,
+                             "the kernel module is not compiled, ",
+                             "the package cannot be loaded.");
     return fail;
   fi;
   return true;
