@@ -246,6 +246,7 @@ InstallMethod(GreensJClassOfElementNC,
 InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
+RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -256,6 +257,7 @@ end);
 InstallMethod(GreensLClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
+RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -266,6 +268,7 @@ end);
 InstallMethod(GreensHClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
+RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -276,6 +279,7 @@ end);
 InstallMethod(GreensDClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
+RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();

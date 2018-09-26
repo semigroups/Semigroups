@@ -38,12 +38,13 @@ $CXX --version
 
 ################################################################################
 # Install GAP
-if [ "$GAP" == "required" ]; then
+GAPTOGET=$GAPBR
+if [ "$GAPTOGET" == "required" ]; then
   cd $HOME/semigroups
-  GAP=v`grep "GAPVERS" PackageInfo.g | awk -F'"' '{print $2}'`
+  GAPTOGET=v`grep "GAPVERS" PackageInfo.g | awk -F'"' '{print $2}'`
 fi
-echo -e "\nInstalling GAP $GAP into $GAPROOT..."
-git clone -b $GAP --depth=1 https://github.com/gap-system/gap.git $GAPROOT
+echo -e "\nInstalling GAP $GAPTOGET into $GAPROOT..."
+git clone -b $GAPTOGET --depth=1 https://github.com/gap-system/gap.git $GAPROOT
 cd $GAPROOT
 if [ -f autogen.sh ]; then
   ./autogen.sh

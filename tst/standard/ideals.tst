@@ -300,7 +300,18 @@ true
 gap> I := MinimalIdeal(I);
 <bipartition group of degree 4>
 gap> IsFactorisableInverseMonoid(I);
-false
+true
+
+# IsFactorisableInverseMonoid
+gap> S := SymmetricInverseMonoid(5);;
+gap> I := MinimalIdeal(S);;
+gap> IsFactorisableInverseMonoid(I);
+true
+gap> J := InverseMonoid(I);;
+gap> I = J;
+true
+gap> IsFactorisableInverseMonoid(J);
+true
 
 # Test Ideals method
 gap> S := Semigroup([Transformation([5, 3, 1, 5, 3]),
