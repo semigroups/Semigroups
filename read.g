@@ -80,11 +80,8 @@ ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/maximal.gi");
 ReadPackage("semigroups", "gap/attributes/normalizer.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
-ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/translat.gi");
 ReadPackage("semigroups", "gap/attributes/rms-translat.gi");
-
-ReadPackage("semigroups", "gap/attributes/dual.gi");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");
 ReadPackage("semigroups", "gap/congruences/congrms.gi");
