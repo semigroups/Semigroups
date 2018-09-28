@@ -93,8 +93,7 @@ Error, Semigroups: FROPIN: usage,
 the argument must be a semigroup with at least 1 generator,
 gap> S := RegularBooleanMatMonoid(3);;
 gap> FROPIN(S);
-rec( batch_size := 8192, 
-  elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
+rec( elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
       Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
       Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
       Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
@@ -122,8 +121,7 @@ rec( batch_size := 8192,
 gap> Size(S);
 506
 gap> FROPIN(S);
-rec( batch_size := 8192, 
-  elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
+rec( elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
       Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
       Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
       Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
