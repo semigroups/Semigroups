@@ -45,8 +45,11 @@ function(iter)
   FG_NextIterator := function(iter)
     local word, output, i;
 
-    NextIterator(iter);
-    word := iter!.word;
+    word := ExtRepOfObj(NextIterator(iter));
+    if IsEmpty(word) then
+      word := ExtRepOfObj(NextIterator(iter));
+    fi;
+
     output := GeneratorsOfInverseSemigroup(semigroup)[word[1]] ^ word[2];
     i := 3;
     while i < Length(word) do

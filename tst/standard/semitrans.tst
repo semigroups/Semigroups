@@ -411,10 +411,9 @@ true
 # isomorphism from transformation semigroup to transformation semigroup
 gap> S := Semigroup(Transformation([5, 2, 2, 3, 2]),
 >                   Transformation([1, 4, 2, 3, 4]));;
-gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <transformation semigroup of degree 5 with 2 generators>, 
-<transformation semigroup of degree 5 with 2 generators>
- , function( object ) ... end, function( object ) ... end )
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> map = IdentityMapping(S);
+true
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
