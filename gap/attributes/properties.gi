@@ -1066,7 +1066,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
-[IsSemigroup], 1,  # to beat the Smallsemi method
+[IsSemigroup], SUM_FLAGS,  # to beat the Smallsemi method
 function(S)
   local e, m, i, j;
 
