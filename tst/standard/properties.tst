@@ -790,12 +790,14 @@ gap> GreensDClasses(S);;
 gap> IsInverseSemigroup(S);
 false
 
-# properties: IsInverseSemigroup, infinite, 4
-gap> S := FreeSemigroup(2);;
-gap> IsInverseSemigroup(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
-s
+# WW: This is removed since, at the moment, a different no method found error
+# is given depending on which packages are loaded
+## properties: IsInverseSemigroup, infinite, 4
+#gap> S := FreeSemigroup(2);;
+#gap> IsInverseSemigroup(S);
+#Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+#Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+#s
 
 # properties: IsLeftSimple, non-regular, 1
 gap> S := RegularBooleanMatMonoid(3);
