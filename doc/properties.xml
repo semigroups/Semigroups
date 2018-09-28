@@ -844,12 +844,37 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsSemigroupWithClosedIdempotents">
+  <ManSection>
+    <Prop Name = "IsSemigroupWithClosedIdempotents" Arg = "S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      <C>IsSemigroupWithClosedIdempotents</C> returns <K>true</K> if the
+      idempotents of the semigroup <A>S</A> form a subsemigroup of <A>S</S>,
+      and <K>false</K> if they do not.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 2]);;
+gap> y := Transformation([1, 3, 3]);;
+gap> S := Semigroup(x, y);
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsSemigroupWithClosedIdempotents(S);
+true
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> IsSemigroupWithClosedIdempotents(S);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsSemigroupWithCommutingIdempotents">
   <ManSection>
     <Prop Name = "IsSemigroupWithCommutingIdempotents" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsSemigroupWithIdempotents</C> returns <K>true</K> if the idempotents
+      <C>IsSemigroupWithCommutingIdempotents</C> returns <K>true</K> if the
+      idempotents
       of the semigroup <A>S</A> commute, and <K>false</K> if they do not. Note
       that such an semigroup is also a block group; see <Ref
         Prop="IsBlockGroup"/>. <P/>

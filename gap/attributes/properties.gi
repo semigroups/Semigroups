@@ -1068,8 +1068,6 @@ end);
 InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
 [IsSemigroup], SUM_FLAGS,  # to beat the Smallsemi method
 function(S)
-  local e, m, i, j;
-
   if not IsFinite(S) then
     # WW we can not test the following line, since the error message we
     # eventually get depends on whether or not Smallsemi is loaded
@@ -1078,22 +1076,36 @@ function(S)
     Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   fi;
+  Info(InfoSemigroups, 2, "the idempotents do not form a subsemigroup");
+  return IsSemigroupWithClosedIdempotents(S);
+end);
+
+InstallMethod(IsSemigroupWithClosedIdempotents, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local e, m, i, j;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
 
   e := Idempotents(S);
-  m := Length(e);
+  m := NrIdempotents(S);
 
   for i in [1 .. m] do
-    for j in [1 .. m] do
-      if not IsIdempotent(e[i] * e[j]) then
+    for j in [i + 1 .. m] do
+      if not IsIdempotent(e[i] * e[j]) or not IsIdempotent(e[j] * e[i]) then
         Info(InfoSemigroups, 2, "the product of idempotents ", i, " and ", j,
-             " is not an idempotent");
+             " (in some order) is not idempotent");
         return false;
       fi;
     od;
   od;
-
   return true;
 end);
+
+InstallTrueMethod(IsSemigroupWithClosedIdempotents,
+                  IsSemigroupWithCommutingIdempotents);
 
 # same method for ideals, works for finite and infinite
 

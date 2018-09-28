@@ -31,6 +31,9 @@ DeclareProperty("IsMonogenicInverseMonoid", IsMonoid);
 DeclareOperation("IsRegularSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
+if not IsBoundGlobal("IsSemigroupWithClosedIdempotents") then
+  DeclareProperty("IsSemigroupWithClosedIdempotents", IsSemigroup);
+fi;
 DeclareProperty("IsSemigroupWithCommutingIdempotents", IsSemigroup);
 DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);

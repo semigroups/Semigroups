@@ -45,7 +45,7 @@ function(S)
 end);
 
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",
-[IsInverseSemigroup],
+[IsGraphInverseSemigroup],
 function(S)
   DoAssignGenVars(GeneratorsOfInverseSemigroup(S));
 end);
