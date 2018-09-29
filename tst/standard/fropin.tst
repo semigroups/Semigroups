@@ -471,6 +471,35 @@ gap> MinimalFactorization(S, Transformation([1, 1, 1, 1]));
 Error, Semigroups: MinimalFactorization:
 the second argument <x> is not an element of the first argument <S>,
 
+# Display
+gap> Display(Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]))); "";
+<partially enumerated semigroup with 0 elements, 0 rules, max word length 0>""
+gap> Display(S); "";
+<fully enumerated semigroup with 27 elements, 20 rules, max word length 6>""
+
+# IsFinite
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
+gap> IsFinite(S);
+false
+gap> S := Semigroup(Matrix(IsIntegerMatrix, [[1, 0], [0, -1]]));;
+gap> IsFinite(S);
+true
+
+# MultiplicationTable
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);;
+gap> MultiplicationTable(S);
+[ [ 1, 2, 3, 4, 3, 4, 1, 2 ], [ 1, 2, 3, 4, 1, 2, 3, 4 ], 
+  [ 3, 4, 1, 2, 1, 2, 3, 4 ], [ 3, 4, 1, 2, 3, 4, 1, 2 ], 
+  [ 5, 6, 7, 8, 7, 8, 5, 6 ], [ 5, 6, 7, 8, 5, 6, 7, 8 ], 
+  [ 7, 8, 5, 6, 5, 6, 7, 8 ], [ 7, 8, 5, 6, 7, 8, 5, 6 ] ]
+
+# PositionCanonical (for a group)
+gap> G := Group((1, 2, 3), (1, 2));;
+gap> IsEnumerableSemigroupRep(G);
+true
+gap> PositionCanonical(G, (1, 3, 2));
+3
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fropin.tst");
