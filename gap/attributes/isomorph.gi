@@ -107,7 +107,7 @@ function(S, T)
   else
     rmsS := S;
   fi;
-  # Take an isomorphism of T to an RMS if appropriate
+  # Take an isomorphism of T to an RMS if appropriate
   if not (IsReesMatrixSemigroup(T) and IsWholeFamily(T)
       and IsPermGroup(UnderlyingSemigroup(T))) then
     invT := IsomorphismReesMatrixSemigroupOverPermGroup(T);
@@ -144,7 +144,7 @@ function(S, T)
   else
     rmsS := S;
   fi;
-  # Take an isomorphism of T to an RZMS if appropriate
+  # Take an isomorphism of T to an RZMS if appropriate
   if not (IsReesZeroMatrixSemigroup(T) and IsWholeFamily(T)
       and IsPermGroup(UnderlyingSemigroup(T))) then
     invT := IsomorphismReesZeroMatrixSemigroupOverPermGroup(T);

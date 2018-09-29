@@ -25,7 +25,7 @@
 # IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
 # IsFreeNormalBand, , IsFundamentalInverseSemigp,
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
-# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
+# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
 
 # same method for ideals, works for finite and infinite
