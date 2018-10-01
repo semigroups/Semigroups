@@ -39,13 +39,14 @@
   elements  of  a  free inverse semigroup: a unique canonical form. Suppose an
   element  of  a  free inverse semigroup is given as a Munn tree. Let [22XL[122X be the
   set  of  words  corresponding to the shortest paths from the start vertex to
-  the  leaves  of the tree. Also let [22Xw[122X be a word corresponding to the shortest
-  path  from start to terminal vertices. The word [22Xvv ^ -1[122X is an idempotent for
-  every  [22Xv[122X in [22XL[122X. The canonical form is given by multiplying these idempotents,
-  in  shortlex order, and then postmultiplying by [22Xw[122X. For example, consider the
-  word  [22Xxyy  ^  -1xx ^ -1x ^ -1[122X again. The words corresponding to the paths to
-  the  leaves  are  in this case [22Xxx[122X and [22Xxy[122X. And [22Xw[122X is an empty word since start
-  and terminal vertices are the same. Therefore, the canonical form is[133X
+  the leaves of the tree. Also let [22Xw[122X be the word corresponding to the shortest
+  path  from  the  start vertex to the terminal vertex. The word [22Xvv ^ -1[122X is an
+  idempotent  for  every  [22Xv[122X  in  [22XL[122X. The canonical form is given by multiplying
+  these  idempotents,  in  shortlex  order, and then postmultiplying by [22Xw[122X. For
+  example,  consider  the  word  [22Xxyy  ^  -1xx  ^  -1x  ^  -1[122X  again. The words
+  corresponding  to  the paths to the leaves are in this case [22Xxx[122X and [22Xxy[122X. And [22Xw[122X
+  is  an empty word since start and terminal vertices are the same. Therefore,
+  the canonical form is[133X
   
   
   [24X[33X[0;6Yxxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.[133X
