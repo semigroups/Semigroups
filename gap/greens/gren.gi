@@ -226,7 +226,7 @@ InstallMethod(GreensRRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, rel;
-  if IsActingSemigroup(S) then
+  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -251,7 +251,7 @@ InstallMethod(GreensLRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, rel;
-  if IsActingSemigroup(S) then
+  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -276,7 +276,7 @@ InstallMethod(GreensDRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, data, rel;
-  if IsActingSemigroup(S) then
+  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -302,7 +302,7 @@ InstallMethod(GreensHRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, data, rel;
-  if IsActingSemigroup(S) then
+  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),

@@ -1149,7 +1149,7 @@ function(S, opts)
     TryNextMethod();
   fi;
 
-  opts := ShallowCopy(opts);  # in case <opts> is immutable
+  opts := ShallowCopy(opts);  # in case <opts> is immutable
 
   # Bind default options
   if not IsBound(opts.number) then

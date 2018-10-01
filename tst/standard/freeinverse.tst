@@ -91,6 +91,8 @@ gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));
 gap> for i in [1 .. 10] do
 > NextIterator(iter);
 > od;
+gap> NextIterator(iter);
+b*a^-1
 gap> IsDoneIterator(iter);
 false
 
