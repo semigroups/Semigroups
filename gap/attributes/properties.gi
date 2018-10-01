@@ -25,7 +25,7 @@
 # IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
 # IsFreeNormalBand, , IsFundamentalInverseSemigp,
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
-# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
+# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
 
 # same method for ideals, works for finite and infinite
@@ -1066,7 +1066,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
-[IsSemigroup], 1,  # to beat the Smallsemi method
+[IsSemigroup], SUM_FLAGS,  # to beat the Smallsemi method
 function(S)
   local e, m, i, j;
 

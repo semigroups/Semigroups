@@ -40,12 +40,12 @@ for name in PACKAGES:
             dirs.append(pkg)
     dirs.sort()
     if len(dirs) == 0:
-        print 'ERROR: can\'t find ' + name
+        print('ERROR: can\'t find ' + name)
         continue
     os.chdir(dirs[-1])
-    print '\n', _LINE_OF_HASHES
-    print '\033[35mmaking ' + os.getcwd() + ' . . .  \033[0m'
-    print _LINE_OF_HASHES, '\n'
+    print('\n', _LINE_OF_HASHES)
+    print('\033[35mmaking ' + os.getcwd() + ' . . .  \033[0m')
+    print(_LINE_OF_HASHES, '\n')
     bash = ['make clean', './configure', 'make']
     for x in bash:
         subprocess.call(x, shell=True)

@@ -92,7 +92,7 @@ gap> for i in [1 .. 10] do
 > NextIterator(iter);
 > od;
 gap> NextIterator(iter);
-a*b
+b*a^-1
 gap> IsDoneIterator(iter);
 false
 

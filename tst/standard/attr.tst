@@ -381,8 +381,8 @@ true
 
 # attr: RightCayleyDigraph, infinite
 gap> LeftCayleyDigraph(FreeInverseSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `LeftCayleyDigraph' on 1 arguments
+Error, Semigroups: LeftCayleyDigraph: usage,
+the first argument (a semigroup) must be finite,
 
 # attr: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(
