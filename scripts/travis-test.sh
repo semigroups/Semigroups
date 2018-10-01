@@ -53,9 +53,10 @@ elif [ "$SUITE" == "test" ]; then
     # Run GAP's testbugfix suite, but this only works with Semigroups in master
     if [ "$GAPBR" == "master" ]; then
       echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
-      # Delete two very long-running tests
+      # Delete some very long-running tests
       rm $GAPROOT/tst/testbugfix/2016-03-03-t00332.tst
       rm $GAPROOT/tst/testbugfix/2018-05-24-IntermediateSubgroups.tst
+      rm $GAPROOT/tst/testbugfix/2018-09-13-MTC.tst
       echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testbugfix.g\");" |
         $GAP -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
     fi
