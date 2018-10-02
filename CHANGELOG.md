@@ -2,6 +2,36 @@
 
 #### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.20 (released 01/10/2018)
+
+This version contains some minor changes related to compatibility issues with
+GAP, was updated to use libsemigroups 0.6.4, and contains bugfixes for the
+following issues:
+
+* [Issue 530](https://github.com/gap-packages/Semigroups/issues/530): there was
+  a bug in the method for `IsFactorisableInverseMonoid` for an ideal of
+  semigroup. It only returned `true` if the parent semigroup was factorisable. 
+  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 531](https://github.com/gap-packages/Semigroups/issues/531): there
+  were some issues with method selection for Green's classes, when the RCWA
+  package was loaded at the same time as [Semigroups](https://gap-packages.github.io/Semigroups/).
+  [[Wilf A. Wilson](http://wilf.me)]
+
+*  [Issue 532](https://github.com/gap-packages/Semigroups/issues/532): the
+   `Iterator` method for free inverse monoids used some implementational
+   details of the method for free group iterators in the GAP library. This
+   caused an error to be reported when [Semigroups](https://gap-packages.github.io/Semigroups/) and RCWA were loaded at the same time.
+   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+*  [Issue 536](https://github.com/gap-packages/Semigroups/issues/536): the
+   `Iterator` method for free inverse monoids did not work as intended, because
+   some words could never be reached.
+   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+*  [Issue 543](https://github.com/gap-packages/Semigroups/issues/543): the [Semigroups](https://gap-packages.github.io/Semigroups/) tests failed when all packages were loaded. 
+  [[Wilf A. Wilson](http://wilf.me)]
+
 ### Version 3.0.19 (released 18/09/2018)
 
 This version contains some minor changes related to compatibility issues with
