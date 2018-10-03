@@ -283,6 +283,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "semiringmat.xml",
                            "semitrans.xml",
                            "trans.xml",
+                           "translat.xml",
                            "utils.xml"];
 
 SEMIGROUPS.ManualExamples := function()

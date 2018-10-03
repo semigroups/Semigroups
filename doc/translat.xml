@@ -102,7 +102,7 @@ gap> Size(H);
       <C>Bitranslation</C>(<A>H, l, r</A>) returns the linked pair 
       (<A>l, r</A>) of translations, belonging to the translational hull 
       <A>H</A>.
-      <Example> <![CDATA[
+      <Example><![CDATA[
 gap> G := SmallGroup(4, 2);;
 gap> A := AsList(G);;
 gap> mat := [[A[1], 0],
@@ -132,7 +132,7 @@ gap> x := Bitranslation(H, l, r);
       [<C>IsRightTranslationsSemigroupElement</C>]. These are both subcategories
       of <C>IsTranslationsSemigroupElement</C>,
       which itself is a subcategory of <C>IsAssociativeElement</C>.
-      <Example> <![CDATA[
+      <Example><![CDATA[
 gap> S := RectangularBand(3, 4);;
 gap> l := Representative(LeftTranslations(S));
 <left translation on <simple transformation semigroup of size 12, 
@@ -155,7 +155,7 @@ false
       All, and only, bitranslations
       belong to <C>IsBitranslation</C>. This is a subcategory of 
       <Ref Filt="IsAssociativeElement" BookName="ref"/>.
-      <Example> <![CDATA[
+      <Example><![CDATA[
 gap> G := SmallGroup(4, 2);;
 gap> A := AsList(G);;
 gap> mat := [[A[1], 0, A[1]],
