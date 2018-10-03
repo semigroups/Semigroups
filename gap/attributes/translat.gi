@@ -948,16 +948,20 @@ end);
 
 InstallGlobalFunction(LeftTranslationNC,
 function(L, x)
-  local semiList, mapAsTransList, i;
+  local S, tup, semiList, mapAsTransList, i;
+  S := UnderlyingSemigroup(L);
+  if IsLeftTranslationOfNormalRMSSemigroup(L) then
+    tup := SEMIGROUPS.LeftTransToNormalRMSTuple(S, x);
+    return LeftTranslationOfNormalRMSNC(L, tup[1], tup[2]);
+  fi;
   if IsTransformation(x) then
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsListCanonical(UnderlyingSemigroup(L));
+  semiList        := AsListCanonical(S);
   mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(L),
-                                           semiList[i] ^ x);
+    mapAsTransList[i] := PositionCanonical(S, semiList[i] ^ x);
   od;
 
   return Objectify(TypeLeftTranslationsSemigroupElements(L),
@@ -1022,16 +1026,20 @@ end);
 
 InstallGlobalFunction(RightTranslationNC,
 function(R, x)
-  local semiList, mapAsTransList, i;
+  local S, tup, semiList, mapAsTransList, i;
+  S := UnderlyingSemigroup(R);
+  if IsRightTranslationOfNormalRMSSemigroup(R) then
+    tup := SEMIGROUPS.RightTransToNormalRMSTuple(S, x);
+    return RightTranslationOfNormalRMSNC(R, tup[1], tup[2]);
+  fi;
   if IsTransformation(x) then
     return Objectify(TypeRightTranslationsSemigroupElements(R), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsListCanonical(UnderlyingSemigroup(R));
+  semiList        := AsListCanonical(S);
   mapAsTransList  := [];
   for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := PositionCanonical(UnderlyingSemigroup(R),
-                                           semiList[i] ^ x);
+    mapAsTransList[i] := PositionCanonical(S, semiList[i] ^ x);
   od;
 
   return Objectify(TypeRightTranslationsSemigroupElements(R),
