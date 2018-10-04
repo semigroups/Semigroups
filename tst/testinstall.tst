@@ -1632,19 +1632,8 @@ gap> IsReesMatrixSemigroup(W);
 true
 gap> IsomorphismSemigroups(S, S);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
-gap> IsomorphismSemigroups(W, W);
-CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
-  Group(())>, <Rees matrix semigroup 1x1 over Group(())>
- , function( v ) ... end, function( u ) ... end ), CompositionMapping( 
-((), IdentityMapping( Group( [ () ] ) ), [ (), () ]), MappingByFunction( 
-<Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
-  Group(())>, function( u ) ... end, function( v ) ... end ) ) )
-gap> IsomorphismSemigroups(S, W);
-CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
-  Group(())>, <Rees matrix semigroup 1x1 over Group(())>
- , function( v ) ... end, function( u ) ... end ),
- ((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
-[  ] ), [ (), () ]) )
+gap> IsomorphismSemigroups(W, W) = IdentityMapping(W);
+true
 gap> IsomorphismSemigroups(W, S);
 CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group( 
 [ () ] ), [  ], [  ] ), [ (), () ]), MappingByFunction( 

@@ -244,9 +244,8 @@ InstallMethod(GreensJClassOfElementNC,
 # Green's classes of an element of a semigroup
 
 InstallMethod(GreensRClassOfElement,
-"for a finite semigroup and multiplicative element",
+"for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -254,10 +253,14 @@ function(S, x)
   return EquivalenceClassOfElement(GreensRRelation(S), x);
 end);
 
-InstallMethod(GreensLClassOfElement,
+InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+{S, x} -> EquivalenceClassOfElement(GreensRRelation(S), x));
+
+InstallMethod(GreensLClassOfElement,
+"for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -265,10 +268,14 @@ function(S, x)
   return EquivalenceClassOfElement(GreensLRelation(S), x);
 end);
 
-InstallMethod(GreensHClassOfElement,
+InstallMethod(GreensLClassOfElement,
 "for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+{S, x} -> EquivalenceClassOfElement(GreensLRelation(S), x));
+
+InstallMethod(GreensHClassOfElement,
+"for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -276,16 +283,25 @@ function(S, x)
   return EquivalenceClassOfElement(GreensHRelation(S), x);
 end);
 
-InstallMethod(GreensDClassOfElement,
+InstallMethod(GreensHClassOfElement,
 "for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+{S, x} -> EquivalenceClassOfElement(GreensHRelation(S), x));
+
+InstallMethod(GreensDClassOfElement,
+"for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite),
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensDRelation(S), x);
 end);
+
+InstallMethod(GreensDClassOfElement,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+{S, x} -> EquivalenceClassOfElement(GreensDRelation(S), x));
 
 # Green's class of a Green's class (coarser from finer)
 
