@@ -63,7 +63,8 @@ function(list, S)
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
-  elif ForAny(list, T -> not IsTransformationMonoid(T)) then
+  elif ForAny(list, T -> not IsTransformationMonoid(T))
+      or ForAll(list, IsGroup) then
     TryNextMethod();
   fi;
 
@@ -91,7 +92,8 @@ function(list, S)
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
   elif not ForAll(list, T -> IsTransformationSemigroup(T)
-                             and IsMonoidAsSemigroup(T)) then
+                             and IsMonoidAsSemigroup(T))
+      or ForAll(list, IsGroup) then
     TryNextMethod();
   fi;
 
@@ -131,7 +133,8 @@ function(list, S)
     # is detected there.
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
-  elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
+  elif ForAny(list, T -> not IsTransformationSemigroup(T))
+      or ForAll(list, IsGroup) then
     TryNextMethod();
   fi;
 

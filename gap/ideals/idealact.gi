@@ -85,6 +85,9 @@ end);
 InstallMethod(GreensDClasses, "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
+  if IsInverseActingSemigroupRep(I) then
+    TryNextMethod();
+  fi;
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
 end);
@@ -94,6 +97,9 @@ InstallMethod(PartialOrderOfDClasses,
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
+  if IsInverseActingSemigroupRep(I) then
+    TryNextMethod();
+  fi;
   data := SemigroupIdealData(I);
   Enumerate(data);
   return data!.poset;
@@ -103,6 +109,9 @@ InstallMethod(DClassReps, "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
+  if IsInverseActingSemigroupRep(I) then
+    TryNextMethod();
+  fi;
   data := SemigroupIdealData(I);
   Enumerate(data);
   return List(data!.dorbit, Representative);
@@ -745,6 +754,10 @@ InstallMethod(\in,
 function(x, I)
   local data, ht, xx, o, l, lookfunc, m, lambdarhoht,
         schutz, ind, reps;
+
+  if IsInverseActingSemigroupRep(I) then
+    TryNextMethod();
+  fi;
 
   if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(I)

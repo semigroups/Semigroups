@@ -21,7 +21,8 @@ function(list, S)
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
   elif ForAny(list,
-              T -> not (IsPartialPermMonoid(T) and IsInverseMonoid(T))) then
+              T -> not (IsPartialPermMonoid(T) and IsInverseMonoid(T)))
+      or ForAll(list, IsGroup) then
     TryNextMethod();
   fi;
 
