@@ -43,6 +43,20 @@ The following additional GAP packages are not required, but suggested:
  {% endfor %}
 {% endif %}
 
+{% if site.data.package.citeas %}
+## Citing
+
+Please, cite this package as
+
+{{site.data.package.citeas}}
+
+You can get more info by typing `Cite("{{ site.data.package.name }}");` in the gap prompt.
+
+{% include button-bibtex.html %}
+
+{% endif %}
+
+
 {% if site.github.issues_url %}
 ## Feedback
 
