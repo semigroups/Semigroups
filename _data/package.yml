@@ -51,7 +51,7 @@ needed-pkgs:
       url: "https://gap-packages.github.io/io"
     - name: "digraphs"
       version: ">=0.12.0"
-      url: "https://gap-packages.github.io/digraphs"
+      url: "https://gap-packages.github.io/Digraphs"
     - name: "genss"
       version: ">=1.6.5"
       url: "https://gap-packages.github.io/genss"
