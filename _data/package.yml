@@ -79,28 +79,20 @@ keywords: |
     transformation semigroups, partial permutations, inverse semigroups, Green's relations, free inverse semigroup, partition monoid, bipartitions, Rees matrix semigroups.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Mit18</span>]   <b class='BibAuthor'>Mitchell, J.</b>,
-     <i class='BibTitle'>Semigroups, A package for semigroups and monoids,
-             Version 3.0.20</i>
-     (<span class='BibYear'>2018</span>)<br />
-    (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://gap-packages.github.io/Semigroups">https://gap-packages.github.io/Semigroups</a></span>.
+    [<span class='BibKey'>Mit18</span>]   <b class='BibAuthor'>J. D. Mitchell et al,</b>,
+     <i class='BibTitle'>Semigroups - GAP package, Version 3.0.20</i>
+     (<span class='BibYear'>2018</span>),<br />
+    <span class='BibHowpublished'><a href="http://dx.doi.org/10.5281/zenodo.592893">http://dx.doi.org/10.5281/zenodo.592893</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ Semigroups3.0.20,
-      author =           {Mitchell, J.},
-      title =            {{Semigroups}, A package for semigroups and monoids, {V}ersion 3.0.20},
-      month =            {Oct},
-      year =             {2018},
-      note =             {GAP package},
-      howpublished =     {\href                    {https://gap-packages.github.io/Semigroups}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
-                          {}{}{}\texttt{Semigroups}}},
-      keywords =         {transformation semigroups; partial permutations; inverse semigroups;
-                          Green's   relations;   free  inverse  semigroup;  partition  monoid;
-                          bipartitions; Rees matrix semigroups},
-      printedkey =       {Mit18}
+    @manual{ Mitchell2018aa,
+      Author = { Mitchell, J. D. and others },
+      Month  = { Oct },
+      Title  = { Semigroups - GAP package, Version 3.0.20 },
+      Doi    = { 10.5281/zenodo.592893 },
+      Url    = { http://dx.doi.org/10.5281/zenodo.592893 },
+      Year   = { 2018 }
     }
 
