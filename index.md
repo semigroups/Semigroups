@@ -63,16 +63,3 @@ You can get more info by typing `Cite("{{ site.data.package.name }}");` in the g
 For bug reports, feature requests and suggestions, please use the
 [issue tracker]({{site.github.issues_url}}).
 {% endif %}
-
-## How to cite {{site.data.package.name}}
-If you are using BibTeX, you can use the following BibTeX entry for the current 
-version of {{site.data.package.name}}:
-
-<pre style="white-space: pre-wrap;">@manual{ Mitchell{{site.data.package.date | date: "%Y"}}aa,
-         Author = { Mitchell, J. D. and others },
-         Month  = { {{site.data.package.date | date: "%b"}} },
-         Title  = { Semigroups - GAP package, Version {{site.data.package.version}} },
-         Doi    = { 10.5281/zenodo.592893 },
-         Url    = { http://dx.doi.org/10.5281/zenodo.592893 },
-         Year   = { {{site.data.package.date | date: "%Y"}} }
-}</pre>
