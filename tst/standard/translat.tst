@@ -296,6 +296,13 @@ gap> Size(H);
 gap> I := InnerTranslationalHull(S);;
 gap> IsWholeFamily(I);
 false
+gap> for h in H do
+>      if not h = Bitranslation(H,
+>                               LeftPartOfBitranslation(h),
+>                               RightPartOfBitranslation(h)) then
+>        Print("failure!");
+>      fi;
+>    od;
 
 #T# Test inner translations
 gap> G := SmallGroup(6, 1);;
@@ -396,9 +403,20 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <simple semigroup of size 96, with 6 generators>> ]
 gap> Size(L) = Size(Semigroup(GeneratorsOfSemigroup(L)));
 true
-gap> Representative(H);
+gap> x := Representative(H);
 <linked pair of translations on <simple semigroup of size 96, with 6 
  generators>>
+gap> l := LeftTranslation(L, MappingByFunction(T, T, x -> x));;
+gap> r := RightTranslation(R, MappingByFunction(T, T, x -> x));;
+gap> Bitranslation(H, l, r) = One(x);
+true
+gap> for x in GeneratorsOfSemigroup(T) do
+>      l := LeftTranslation(L, MappingByFunction(T, T, y -> x * y));;
+>      r := RightTranslation(R, MappingByFunction(T, T, y -> y * x));;
+>      if not Bitranslation(H, l, r) in H then
+>        Print("failure!");
+>      fi;
+>    od;
 gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3],
 > [G.1 * G.2, G.1 * G.3]]);;
 gap> T := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
