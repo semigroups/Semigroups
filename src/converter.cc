@@ -56,7 +56,7 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
   size_t            n = x->degree();
   BooleanMat const* xx(static_cast<BooleanMat const*>(x));
 
-  Obj o = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, n);
+  Obj o = NEW_PLIST_IMM(T_PLIST_TAB_RECT, n);
   SET_LEN_PLIST(o, n);
 
   for (size_t i = 0; i < n; i++) {
@@ -135,7 +135,7 @@ PBR* PBRConverter::convert(Obj o, size_t n) const {
 
 Obj PBRConverter::unconvert(Element const* xx) const {
   PBR const* x(static_cast<PBR const*>(xx));
-  Obj        plist = NEW_PLIST(T_PLIST + IMMUTABLE, 2 * x->degree() + 1);
+  Obj        plist = NEW_PLIST_IMM(T_PLIST, 2 * x->degree() + 1);
   // can't use T_PLIST_TAB/HOM here because some of the subplists might be empty
   SET_LEN_PLIST(plist, 2 * x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree()));
@@ -143,9 +143,9 @@ Obj PBRConverter::unconvert(Element const* xx) const {
     size_t m = x->at(i).size();
     Obj    adj;
     if (m == 0) {
-      adj = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
+      adj = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
     } else {
-      adj = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, m);
+      adj = NEW_PLIST_IMM(T_PLIST_CYC, m);
       for (size_t j = 0; j < x->at(i).size(); j++) {
         SET_ELM_PLIST(adj, j + 1, INTOBJ_INT(x->at(i).at(j) + 1));
       }
