@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"closure.tst"));
+# Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),"closure.tst"));
 gap> START_TEST("Semigroups package: extreme/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
