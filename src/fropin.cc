@@ -331,7 +331,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   AssPRec(data, RNamName("pos"), INTOBJ_INT(i));
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));
 
-  CHANGED_BAG(data);
   CHANGED_BAG(parent);
 
   return data;
@@ -352,7 +351,6 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
     out = NEW_PREC(2);
     AssPRec(out, RNamName("id"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
     AssPRec(out, RNamName("comps"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
-    CHANGED_BAG(out);
     return out;
   }
 
@@ -410,7 +408,6 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   SHRINK_PLIST(comps, LEN_PLIST(comps));
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -433,7 +430,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
     out = NEW_PREC(2);
     AssPRec(out, RNamName("id"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
     AssPRec(out, RNamName("comps"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
-    CHANGED_BAG(out);
     return out;
   }
   comps   = ElmPRec(right, RNamName("comps"));
@@ -506,7 +502,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   out = NEW_PREC(2);
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
-  CHANGED_BAG(out);
 
   return out;
 }
