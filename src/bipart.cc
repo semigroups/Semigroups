@@ -168,7 +168,7 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
   Bipartition* xx = bipart_get_cpp(x);
   size_t       n  = xx->degree();
 
-  Obj ext_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB) + IMMUTABLE,
+  Obj ext_rep = NEW_PLIST(n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB,
                           xx->nr_blocks());
   SET_LEN_PLIST(ext_rep, (Int) xx->nr_blocks());
 
@@ -185,6 +185,7 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
       AssPlist(block, LEN_PLIST(block) + 1, entry);
     }
   }
+  MakeImmutable(ext_rep);
   return ext_rep;
 }
 
@@ -719,7 +720,7 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
   Blocks* xx = blocks_get_cpp(x);
   size_t  n  = xx->degree();
 
-  Obj ext_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB) + IMMUTABLE,
+  Obj ext_rep = NEW_PLIST(n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB,
                           xx->nr_blocks());
   SET_LEN_PLIST(ext_rep, (Int) xx->nr_blocks());
 
@@ -738,6 +739,7 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
       AssPlist(block, LEN_PLIST(block) + 1, entry);
     }
   }
+  MakeImmutable(ext_rep);
   return ext_rep;
 }
 
