@@ -199,7 +199,7 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
   size_t       n  = xx->degree();
 
   Obj int_rep
-      = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC) + IMMUTABLE, 2 * n);
+      = NEW_PLIST_IMM(n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC, 2 * n);
   SET_LEN_PLIST(int_rep, (Int) 2 * n);
 
   for (size_t i = 0; i < 2 * n; i++) {

@@ -256,7 +256,7 @@ class MatrixOverSemiringConverter : public Converter {
     TSubclass const* xx(static_cast<TSubclass const*>(x));
     size_t           n = xx->degree();
 
-    Obj plist = NEW_PLIST(T_PLIST_HOM + IMMUTABLE, n + 2);
+    Obj plist = NEW_PLIST_IMM(T_PLIST_HOM, n + 2);
 
     if (_gap_type == NTPMatrixType) {
       NaturalSemiring* semiring = static_cast<NaturalSemiring*>(_semiring);
@@ -275,7 +275,7 @@ class MatrixOverSemiringConverter : public Converter {
     }
 
     for (size_t i = 0; i < n; i++) {
-      Obj row = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
+      Obj row = NEW_PLIST_IMM(T_PLIST_CYC, n);
       SET_LEN_PLIST(row, n);
       for (size_t j = 0; j < n; j++) {
         int64_t entry = xx->at(i * n + j);
