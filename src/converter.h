@@ -109,15 +109,6 @@ template <typename T> class TransConverter : public Converter {
     }
     return o;
   }
-
- private:
-  inline Obj NEW_TRANS(size_t deg) const {
-    if (deg < 65536) {
-      return NEW_TRANS2(deg);
-    } else {
-      return NEW_TRANS4(deg);
-    }
-  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
