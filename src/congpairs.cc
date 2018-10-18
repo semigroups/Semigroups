@@ -347,7 +347,6 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
       Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i + 1));
-      CHANGED_BAG(partition);
 
       word.clear();
     }
@@ -375,7 +374,6 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
       Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i));
-      CHANGED_BAG(partition);
     }
   }
   AssPRec(o, RNam_fin_cong_partition, partition);

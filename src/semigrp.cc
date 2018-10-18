@@ -115,7 +115,6 @@ gap_list_t word_t_to_plist(word_t const& word) {
   for (size_t i = 0; i < word.size(); i++) {
     SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
   }
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -128,7 +127,6 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
   if (FindPRec(so, RNam_GeneratorsOfMagma, &i, 1)) {
     gap_list_t gens = GET_ELM_PREC(so, i);
     PLAIN_LIST(gens);
-    CHANGED_BAG(gens);
     return gens;
   } else {
 #ifdef SEMIGROUPS_KERNEL_DEBUG
@@ -147,8 +145,6 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
     if (FindPRec(so, RNam_GeneratorsOfMagma, &i, 1)) {
       gap_list_t gens = GET_ELM_PREC(so, i);
       PLAIN_LIST(gens);
-      CHANGED_BAG(gens);
-      CHANGED_BAG(so);
       return gens;
     }
     ErrorQuit("cannot find generators of the semigroup,", 0L, 0L);
@@ -680,7 +676,6 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
     AssPlist(gens, i + 1, converter->unconvert(new_semi_cpp->gens(i)));
   }
   AssPRec(new_so, RNam_GeneratorsOfMagma, gens);
-  CHANGED_BAG(new_so);
 
   // Reset the fropin data since none of it is valid any longer, if any
   gap_rec_t fp = NEW_PREC(0);
@@ -724,7 +719,6 @@ gap_semigroup_t EN_SEMI_CLOSURE_DEST(Obj             self,
   for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
     AssPlist(gens, i + 1, converter->unconvert(semi_cpp->gens(i)));
   }
-  CHANGED_BAG(so);
 
   // Reset the fropin data since none of it is valid any longer
   gap_rec_t fp = NEW_PREC(0);
