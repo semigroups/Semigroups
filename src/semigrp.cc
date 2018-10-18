@@ -101,8 +101,8 @@ static inline gap_list_t iterator_to_plist(Converter* converter,
   size_t i = 1;
   for (auto it = first; it < last; ++it) {
     SET_ELM_PLIST(out, i++, converter->unconvert(*it));
+    CHANGED_BAG(out);
   }
-  CHANGED_BAG(out);
   return out;
 }
 
