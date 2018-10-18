@@ -211,10 +211,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           len     = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len + 1);
 
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(newword)) + sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(oldword)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(newword) + 1, CONST_ADDR_OBJ(oldword) + 1,
                  (size_t)(len * sizeof(Obj)));
           SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len + 1);

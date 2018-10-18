@@ -967,10 +967,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           gap_list_t new_word
               = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(new_word) + 1, CONST_ADDR_OBJ(old_word) + 1,
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(new_word,
                         LEN_PLIST(old_word) + 1,
@@ -985,11 +982,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           gap_list_t new_word
               = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(new_word))
-                     + 2 * sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(new_word) + 2, CONST_ADDR_OBJ(old_word) + 1,
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(
               new_word, 1, INTOBJ_INT(semi_cpp->first_letter(pos_c - 1) + 1));
@@ -1319,10 +1312,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
         gap_list_t new_word
             = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
         // IMMUTABLE since it should not be altered on the GAP level
-        memcpy(reinterpret_cast<void*>(
-                   reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),
-               reinterpret_cast<void*>(
-                   reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+        memcpy(ADDR_OBJ(new_word) + 1, CONST_ADDR_OBJ(old_word) + 1,
                (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
         SET_ELM_PLIST(
             new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation[1] + 1));
