@@ -966,6 +966,159 @@ true
 gap> BruteForceInverseCheck(iso);
 true
 
+# CanonicalMatrix and CanonicalReesZeroMatrixSemigroup
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]),
+> [[(), (2, 3), (2, 3, 4)], [(1, 2)(3, 4), (), (1, 2, 4, 3)],
+> [(1, 4, 2), (1, 3)(2, 4), ()]]);;
+gap> T := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]), 
+> [[(1, 2, 4, 3), (2, 4, 3), (1, 4)(2, 3)], [(1, 4), (), (1, 3)],
+> [(), (1, 3)(2, 4), (1, 3, 4, 2)]]);;
+gap> mat := [[(), (), ()], [(), (1, 4), (1, 2, 4)], 
+> [(), (1, 3, 4, 2), (1, 4, 3, 2)]];;
+gap> CanonicalMatrix(S) = mat;
+true
+gap> CanonicalMatrix(T) = mat;
+true
+gap> S := ReesZeroMatrixSemigroup(Group(
+> [(1, 2, 3), (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+> 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+> 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+> 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+> 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+> 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
+> 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+> 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142)]), [[(),
+> (1, 2, 3)(4, 69, 134, 60, 125, 51, 116, 42, 107, 33, 98, 24, 89, 15, 80, 6,
+> 71, 136, 62, 127, 53, 118, 44, 109, 35, 100, 26, 91, 17, 82, 8, 73, 138, 64,
+> 129, 55, 120, 46, 111, 37, 102, 28, 93, 19, 84, 10, 75, 140, 66, 131, 57, 122,
+> 48, 113, 39, 104, 30, 95, 21, 86, 12, 77, 142, 68, 133, 59, 124, 50, 115, 41,
+> 106, 32, 97, 23, 88, 14, 79, 5, 70, 135, 61, 126, 52, 117, 43, 108, 34, 99,
+> 25, 90, 16, 81, 7, 72, 137, 63, 128, 54, 119, 45, 110, 36, 101, 27, 92, 18,
+> 83, 9, 74, 139, 65, 130, 56, 121, 47, 112, 38, 103, 29, 94, 20, 85, 11, 76,
+> 141, 67, 132, 58, 123, 49, 114, 40, 105, 31, 96, 22, 87, 13, 78), (), ()],
+> [(1, 3, 2)(4, 106, 69, 32, 134, 97, 60, 23, 125, 88, 51, 14, 116, 79, 42, 5,
+> 107, 70, 33, 135, 98, 61, 24, 126, 89, 52, 15, 117, 80, 43, 6, 108, 71, 34,
+> 136, 99, 62, 25, 127, 90, 53, 16, 118, 81, 44, 7, 109, 72, 35, 137, 100, 63,
+> 26, 128, 91, 54, 17, 119, 82, 45, 8, 110, 73, 36, 138, 101, 64, 27, 129, 92,
+> 55, 18, 120, 83, 46, 9, 111, 74, 37, 139, 102, 65, 28, 130, 93, 56, 19, 121,
+> 84, 47, 10, 112, 75, 38, 140, 103, 66, 29, 131, 94, 57, 20, 122, 85, 48, 11,
+> 113, 76, 39, 141, 104, 67, 30, 132, 95, 58, 21, 123, 86, 49, 12, 114, 77, 40,
+> 142, 105, 68, 31, 133, 96, 59, 22, 124, 87, 50, 13, 115, 78, 41), (), (4, 64,
+> 124, 45, 105, 26, 86, 7, 67, 127, 48, 108, 29, 89, 10, 70, 130, 51, 111, 32,
+> 92, 13, 73, 133, 54, 114, 35, 95, 16, 76, 136, 57, 117, 38, 98, 19, 79, 139,
+> 60, 120, 41, 101, 22, 82, 142, 63, 123, 44, 104, 25, 85, 6, 66, 126, 47, 107,
+> 28, 88, 9, 69, 129, 50, 110, 31, 91, 12, 72, 132, 53, 113, 34, 94, 15, 75,
+> 135, 56, 116, 37, 97, 18, 78, 138, 59, 119, 40, 100, 21, 81, 141, 62, 122, 43,
+> 103, 24, 84, 5, 65, 125, 46, 106, 27, 87, 8, 68, 128, 49, 109, 30, 90, 11, 71,
+> 131, 52, 112, 33, 93, 14, 74, 134, 55, 115, 36, 96, 17, 77, 137, 58, 118, 39,
+> 99, 20, 80, 140, 61, 121, 42, 102, 23, 83), 0]]);;
+gap> mat := [[0, (), (), ()], 
+> [(), (), (4, 142, 141, 140, 139, 138, 137, 136, 135, 134, 133, 132, 131, 130,
+> 129, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115,
+> 114, 113, 112, 111, 110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99,
+> 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
+> 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61,
+> 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42,
+> 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23,
+> 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5), (1, 2,
+> 3)(4, 74, 5, 75, 6, 76, 7, 77, 8, 78, 9, 79, 10, 80, 11, 81, 12, 82, 13, 83,
+> 14, 84, 15, 85, 16, 86, 17, 87, 18, 88, 19, 89, 20, 90, 21, 91, 22, 92, 23,
+> 93, 24, 94, 25, 95, 26, 96, 27, 97, 28, 98, 29, 99, 30, 100, 31, 101, 32, 102,
+> 33, 103, 34, 104, 35, 105, 36, 106, 37, 107, 38, 108, 39, 109, 40, 110, 41,
+> 111, 42, 112, 43, 113, 44, 114, 45, 115, 46, 116, 47, 117, 48, 118, 49, 119,
+> 50, 120, 51, 121, 52, 122, 53, 123, 54, 124, 55, 125, 56, 126, 57, 127, 58,
+> 128, 59, 129, 60, 130, 61, 131, 62, 132, 63, 133, 64, 134, 65, 135, 66, 136,
+> 67, 137, 68, 138, 69, 139, 70, 140, 71, 141, 72, 142, 73)]];;
+gap> CanonicalMatrix(S) = mat;
+true
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), (1, 2, 3, 4), 
+> (1, 2, 3, 4), (1, 3)(2, 4), 0], [0, (), (1, 2, 3, 4), (), ()], [0, (), (), (1,
+> 2, 3, 4), ()], [(1, 4, 3, 2), (1, 4, 3, 2), 0, (), (1, 3)(2, 4)], [0, 0, (1,
+> 4, 3, 2), (1, 3)(2, 4), ()]]);;
+gap> mat := [[0, 0, (), (), ()], [0, (), (), (), (1, 3)(2, 4)], 
+> [0, (), (1, 4, 3, 2), (1, 2, 3, 4), (1, 3)(2, 4)], [(), (), 0, (1, 2, 3, 4),
+> (1, 2, 3, 4)], [(), (1, 2, 3, 4), (), (1, 3)(2, 4), 0]];;
+gap> CanonicalMatrix(S) = mat;
+true
+gap> mat = CanonicalMatrix(mat, Group((1, 2, 3, 4)));
+true
+gap> T := CanonicalReesZeroMatrixSemigroup(S);;
+gap> mat = Matrix(T);
+true
+gap> UnderlyingSemigroup(S) = UnderlyingSemigroup(T);
+true
+gap> S := ReesZeroMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(), 0], [(1, 3, 4), (2, 4, 5)], [(1, 5, 2), (1, 5, 2, 4, 3)]]);;
+gap> mat := [[0, ()], [(), ()], [(), (1, 5, 4)]];;
+gap> CanonicalMatrix(S) = mat;
+true
+gap> T := CanonicalReesZeroMatrixSemigroup(S);;
+gap> mat = Matrix(T);
+true
+gap> UnderlyingSemigroup(S) = UnderlyingSemigroup(T);
+true
+
+# CanonicalMatrix and CanonicalReesMatrixSemigroup
+gap> S := ReesMatrixSemigroup(Group([(1, 2), (3, 4)]), 
+> [[(), (), (3, 4), (), ()], [(), (3, 4), (), (3, 4), (1, 2)], [(), (1, 2), (3,
+> 4), (), ()], [(1, 2)(3, 4), (3, 4), (), (), ()], [(), (1, 2), (1, 2)(3, 4),
+> (), ()]]);;
+gap> mat := [[(), (), (), (), ()], [(), (), (), (), (1, 2)], 
+> [(), (), (), (1, 2), ()], [(), (), (3, 4), (3, 4), (1, 2)(3, 4)], [(), (3, 4),
+> (1, 2), (1, 2)(3, 4), (3, 4)]];;
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
+true
+gap> mat = CanonicalMatrix(S);
+true
+gap> mat = CanonicalMatrix(mat, Group((1, 2), (3, 4)));
+true
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+> [[(), (), (1, 5, 4, 2, 3)], [(1, 5, 4), (1, 3, 2, 5, 4), ()], [(), (), (1, 2,
+> 3, 4, 5)], [(), (), ()]]);;
+gap> mat :=
+> [[(), (), ()], [(), (), (1, 5)(2, 4)], [(), (), (1, 4, 5, 2, 3)], [(), 
+> (2, 4, 3), (1, 5, 4)]];;
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
+true
+gap> mat = CanonicalMatrix(S);
+true
+gap> mat = CanonicalMatrix(mat, AlternatingGroup(5));
+true
+
+# CanonicalX error messages
+gap> G := Semigroup([Transformation([2, 1])]);;
+gap> mat := [[IdentityTransformation, IdentityTransformation,
+> IdentityTransformation], [IdentityTransformation, IdentityTransformation,
+> Transformation([2, 1])]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> CanonicalMatrix(mat, G);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `CanonicalMatrix' on 2 arguments
+gap> CanonicalMatrix(S);
+Error, Semigroups: CanonicalMatrix: usage,
+the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
+ich is a group,
+gap> CanonicalReesZeroMatrixSemigroup(S);
+Error, Semigroups: CanonicalMatrix: usage,
+the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
+ich is a group,
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> CanonicalMatrix(S);
+Error, Semigroups: CanonicalMatrix: usage,
+the argument must be a Rees matrix semigroup with underlying semigroup which i\
+s a group,
+gap> CanonicalReesMatrixSemigroup(S);
+Error, Semigroups: CanonicalMatrix: usage,
+the argument must be a Rees matrix semigroup with underlying semigroup which i\
+s a group,
+gap> CanonicalMatrix([[(1, 2, 3)]], Group(()));
+Error, Semigroups: CanonicalMatrix: usage,
+the first argument must be a list of lists containing only elements of the gro\
+up (which is the second argument) or zero,
+gap> CanonicalMatrix([[(), ()], [(1, 2)]], Group((1, 2)));
+Error, Semigroups: CanonicalMatrix: usage,
+the first argument must be a list of lists of identical length,
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(BruteForceInverseCheck);
