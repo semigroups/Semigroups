@@ -948,7 +948,7 @@ InstallMethod(IndecomposableElements, "for a semigroup",
 function(S)
   local out, D;
 
-  if HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S) then
+  if HasIsSurjectiveSemigroup(S) and IsSurjectiveSemigroup(S) then
     return [];
   fi;
   out := [];

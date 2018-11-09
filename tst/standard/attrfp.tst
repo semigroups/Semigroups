@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# properties: IndecomposableSemigroup, for an fp semigroup, 1
+#T# properties: IndecomposableElements, for an fp semigroup, 1
 gap> F := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> S := F / [];;
@@ -35,7 +35,7 @@ gap> S := F / [[F.1 ^ 3, F.1]];
 <fp semigroup on the generators [ s1 ]>
 gap> IsMonoidAsSemigroup(S);
 true
-gap> HasIsDecomposableSemigroup(S);
+gap> HasIsSurjectiveSemigroup(S);
 true
 gap> IndecomposableElements(S);
 [  ]

@@ -12,7 +12,7 @@ InstallMethod(IndecomposableElements, "for an fp semigroup", [IsFpSemigroup],
 function(S)
   local gens, rels, decomposable, uf, lens, pos1, pos2, t1, t2, x, rel;
 
-  if HasIsDecomposableSemigroup(S) then
+  if HasIsSurjectiveSemigroup(S) then
     return [];
   fi;
 

@@ -1769,6 +1769,6 @@ end);
 InstallMethod(IsSemigroupWithAdjoinedZero, "for a semigroup", [IsSemigroup],
 x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);
 
-InstallMethod(IsDecomposableSemigroup, "for a semigroup",
+InstallMethod(IsSurjectiveSemigroup, "for a semigroup",
 [IsSemigroup],
 S -> IsEmpty(IndecomposableElements(S)));
