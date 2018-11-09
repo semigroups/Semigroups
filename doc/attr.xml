@@ -1206,7 +1206,7 @@ gap> GeneratorsSmallest(T);
     <A>S</A>. An element of <A>S</A> is <E>indecomposable</E> if it is not
     decomposable. <P/>
     
-    See also <Ref Prop="IsDecomposableSemigroup" />. <P/>
+    See also <Ref Prop="IsSurjectiveSemigroup" />. <P/>
 
     Note that any generating set for <A>S</A> contains each indecomposable
     element of <A>S</A>. Thus <C>IndecomposableElements(<A>S</A>)</C> is a

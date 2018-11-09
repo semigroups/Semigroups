@@ -95,7 +95,7 @@ InstallTrueMethod(IsFinite, IsMonogenicSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup,
                   IsMonogenicSemigroup and IsRegularSemigroup);
 
-DeclareProperty("IsDecomposableSemigroup", IsSemigroup);
-InstallTrueMethod(IsDecomposableSemigroup, IsRegularSemigroup);
-InstallTrueMethod(IsDecomposableSemigroup, IsMonoidAsSemigroup);
-InstallTrueMethod(IsDecomposableSemigroup, IsIdempotentGenerated);
+DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
+InstallTrueMethod(IsSurjectiveSemigroup, IsRegularSemigroup);
+InstallTrueMethod(IsSurjectiveSemigroup, IsMonoidAsSemigroup);
+InstallTrueMethod(IsSurjectiveSemigroup, IsIdempotentGenerated);

@@ -199,7 +199,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
 
   D := create(out);
   SetIndecomposableElements(D, indecomp_out);
-  SetIsDecomposableSemigroup(D, IsEmpty(indecomp_out));
+  SetIsSurjectiveSemigroup(D, IsEmpty(indecomp_out));
   if ForAny(gens_new, IsEmpty) then
     SetMinimalSemigroupGeneratingSet(D, indecomp_out);
   fi;

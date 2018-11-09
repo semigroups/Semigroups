@@ -1723,7 +1723,7 @@ gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
 gap> S := Semigroup(GeneratorsOfMonoid(S));
 <transformation semigroup of degree 3 with 3 generators>
-gap> HasIsDecomposableSemigroup(S);
+gap> HasIsSurjectiveSemigroup(S);
 false
 gap> IndecomposableElements(S);
 [  ]
@@ -1731,7 +1731,7 @@ gap> S := Semigroup(S);
 <transformation semigroup of degree 3 with 3 generators>
 gap> IsMonoidAsSemigroup(S);
 true
-gap> HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S);
+gap> HasIsSurjectiveSemigroup(S) and IsSurjectiveSemigroup(S);
 true
 gap> HasIndecomposableElements(S);
 false
