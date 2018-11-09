@@ -1,25 +1,11 @@
 dist:
-  trusty
+  xenial
 
 language:
   cpp
 
 compiler:
   gcc
-
-env:
-  global:
-    - COVDIR=coverage
-    - g++=g++-5
-    - gcc=gcc-5
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-5-multilib
-      - libtool
 
 # Matrix
 #       GAP version: | master |  stable-4.10 | stable-4.9 | required |
@@ -34,66 +20,54 @@ matrix:
   include:
     - env:
       - SUITE=lint
-      addons:
-        apt_packages:
-      sudo:
-        true
 
     - env:
       - SUITE=test
       - GAPBR=master
       - PACKAGES=master
       - ABI=64
-      sudo:
-        required
 
     - env:
       - SUITE=test
       - GAPBR=master
       - PACKAGES=newest
       - ABI=64
-      sudo:
-        required
 
     - env:
       - SUITE=test
       - GAPBR=master
       - PACKAGES=required
       - ABI=32
-      sudo:
-        required
-
-    - env:
-      - SUITE=test
-      - GAPBR=stable-4.10
-      - PACKAGES=newest
-      - ABI=64
-      sudo:
-        required
+      addons:
+        apt_packages:
+          - g++-multilib
 
     - env:
       - SUITE=test
       - GAPBR=stable-4.10
       - PACKAGES=newest
       - ABI=32
-      sudo:
-        required
+      addons:
+        apt_packages:
+          - g++-multilib
+
+    - env:
+      - SUITE=test
+      - GAPBR=stable-4.10
+      - PACKAGES=newest
+      - ABI=64
 
     - env:
       - SUITE=test
       - GAPBR=stable-4.9
       - PACKAGES=required
       - ABI=64
-      sudo:
-        required
 
     - env:
       - SUITE=test
       - GAPBR=required
       - PACKAGES=required
       - ABI=64
-      sudo:
-        required
 
     - env:
       - SUITE=coverage
@@ -101,11 +75,9 @@ matrix:
       - PACKAGES=required
       - ABI=64
       - THRESHOLD=95
-      sudo:
-        required
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  # GAP requires special flags for compilation in 32-bit mode
   - if [ "$ABI" == "32" ]; then
       export GAP_FLAGS="ABI=32 --host=i686-linux-gnu";
       export PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 LOPTS=-m32 --host=i686-linux-gnu";
@@ -113,17 +85,6 @@ install:
 
 before_script:
   - export GAPROOT="$HOME/gap"
-  - if [ "$SUITE" != "lint" ]; then
-      echo "deb http://www.mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ zesty main" | sudo tee -a /etc/apt/sources.list;
-      sudo apt-get update -qq;
-      sudo apt-get install --only-upgrade autoconf;
-    fi;
-  - if [ "$ABI" == "64" ]; then sudo apt-get install libgmp-dev; fi;
-  - if [ "$ABI" == "32" ]; then
-      sudo apt-get install libtool 
-      sudo apt-get install libgmp-dev:i386;
-      sudo ln -s /usr/include/asm-generic /usr/include/asm;
-    fi;
   - scripts/travis-build-dependencies.sh
 
 script:

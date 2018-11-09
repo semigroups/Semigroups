@@ -211,10 +211,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           len     = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len + 1);
 
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(newword)) + sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(oldword)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(newword) + 1, CONST_ADDR_OBJ(oldword) + 1,
                  (size_t)(len * sizeof(Obj)));
           SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len + 1);
@@ -334,7 +331,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   AssPRec(data, RNamName("pos"), INTOBJ_INT(i));
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));
 
-  CHANGED_BAG(data);
   CHANGED_BAG(parent);
 
   return data;
@@ -353,9 +349,8 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
 
   if (n == 0) {
     out = NEW_PREC(2);
-    AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0));
-    AssPRec(out, RNamName("comps"), NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0));
-    CHANGED_BAG(out);
+    AssPRec(out, RNamName("id"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
+    AssPRec(out, RNamName("comps"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
     return out;
   }
 
@@ -363,7 +358,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   comps2 = ElmPRec(scc2, RNamName("comps"));
   id2    = ElmPRec(scc2, RNamName("id"));
 
-  id = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
+  id = NEW_PLIST_IMM(T_PLIST_CYC, n);
   SET_LEN_PLIST(id, n);
   // init id
   for (i = 1; i <= n; i++) {
@@ -376,7 +371,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
     ptr[i] = 0;
   }
 
-  comps = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, LEN_PLIST(comps1));
+  comps = NEW_PLIST_IMM(T_PLIST_TAB, LEN_PLIST(comps1));
   SET_LEN_PLIST(comps, 0);
 
   nr = 0;
@@ -385,7 +380,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
     comp1 = ELM_PLIST(comps1, i);
     if (INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1)))) == 0) {
       nr++;
-      new_comp = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(comp1));
+      new_comp = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(comp1));
       SET_LEN_PLIST(new_comp, 0);
       for (j = 1; j <= LEN_PLIST(comp1); j++) {
         k = INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
@@ -413,7 +408,6 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   SHRINK_PLIST(comps, LEN_PLIST(comps));
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -434,9 +428,8 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
 
   if (n == 0) {
     out = NEW_PREC(2);
-    AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0));
-    AssPRec(out, RNamName("comps"), NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0));
-    CHANGED_BAG(out);
+    AssPRec(out, RNamName("id"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
+    AssPRec(out, RNamName("comps"), NEW_PLIST_IMM(T_PLIST_EMPTY, 0));
     return out;
   }
   comps   = ElmPRec(right, RNamName("comps"));
@@ -459,9 +452,9 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
     lookup[i] = 0;
   }
 
-  id = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
+  id = NEW_PLIST_IMM(T_PLIST_CYC, n);
   SET_LEN_PLIST(id, n);
-  comps = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, n);
+  comps = NEW_PLIST_IMM(T_PLIST_TAB, n);
   SET_LEN_PLIST(comps, 0);
 
   hindex = 0;
@@ -482,7 +475,7 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
       hindex++;
       lookup[k] = hindex;
 
-      comp = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 1);
+      comp = NEW_PLIST_IMM(T_PLIST_CYC, 1);
       SET_LEN_PLIST(comp, 0);
       SET_ELM_PLIST(comps, hindex, comp);
       SET_LEN_PLIST(comps, hindex);
@@ -509,7 +502,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   out = NEW_PREC(2);
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
-  CHANGED_BAG(out);
 
   return out;
 }

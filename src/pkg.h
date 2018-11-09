@@ -48,6 +48,13 @@
 
 #include "src/compiled.h"
 
+#if !defined(GAP_KERNEL_MAJOR_VERSION) || GAP_KERNEL_MAJOR_VERSION < 3
+// compatibility with GAP <= 4.9
+static inline Obj NEW_PLIST_IMM(UInt type, Int plen) {
+    return NEW_PLIST(type | IMMUTABLE, plen);
+}
+#endif
+
 // The following typedefs are used in the Semigroups package kernel module code
 // to increase the readability of the code.
 

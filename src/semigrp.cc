@@ -101,21 +101,20 @@ static inline gap_list_t iterator_to_plist(Converter* converter,
   size_t i = 1;
   for (auto it = first; it < last; ++it) {
     SET_ELM_PLIST(out, i++, converter->unconvert(*it));
+    CHANGED_BAG(out);
   }
-  CHANGED_BAG(out);
   return out;
 }
 
 gap_list_t word_t_to_plist(word_t const& word) {
   SEMIGROUPS_ASSERT(!word.empty());
-  gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, word.size());
+  gap_list_t out = NEW_PLIST_IMM(T_PLIST_CYC, word.size());
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, word.size());
 
   for (size_t i = 0; i < word.size(); i++) {
     SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
   }
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -128,7 +127,6 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
   if (FindPRec(so, RNam_GeneratorsOfMagma, &i, 1)) {
     gap_list_t gens = GET_ELM_PREC(so, i);
     PLAIN_LIST(gens);
-    CHANGED_BAG(gens);
     return gens;
   } else {
 #ifdef SEMIGROUPS_KERNEL_DEBUG
@@ -147,8 +145,6 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
     if (FindPRec(so, RNam_GeneratorsOfMagma, &i, 1)) {
       gap_list_t gens = GET_ELM_PREC(so, i);
       PLAIN_LIST(gens);
-      CHANGED_BAG(gens);
-      CHANGED_BAG(so);
       return gens;
     }
     ErrorQuit("cannot find generators of the semigroup,", 0L, 0L);
@@ -555,7 +551,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     semi_cpp->set_report(semi_obj_get_report(so));
     Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
+    gap_list_t out = NEW_PLIST_IMM(T_PLIST_HOM_SSORT, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
     size_t i = 1;
     for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
@@ -680,7 +676,6 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
     AssPlist(gens, i + 1, converter->unconvert(new_semi_cpp->gens(i)));
   }
   AssPRec(new_so, RNam_GeneratorsOfMagma, gens);
-  CHANGED_BAG(new_so);
 
   // Reset the fropin data since none of it is valid any longer, if any
   gap_rec_t fp = NEW_PREC(0);
@@ -724,7 +719,6 @@ gap_semigroup_t EN_SEMI_CLOSURE_DEST(Obj             self,
   for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
     AssPlist(gens, i + 1, converter->unconvert(semi_cpp->gens(i)));
   }
-  CHANGED_BAG(so);
 
   // Reset the fropin data since none of it is valid any longer
   gap_rec_t fp = NEW_PREC(0);
@@ -948,7 +942,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       word_t w;  // changed in place by the next line
       semi_cpp->set_report(semi_obj_get_report(so));
       semi_cpp->factorisation(w, pos_c - 1);
-      words = NEW_PLIST(T_PLIST + IMMUTABLE, pos_c);
+      words = NEW_PLIST_IMM(T_PLIST, pos_c);
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(words, pos_c);
       SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));
@@ -965,12 +959,9 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
             && ELM_PLIST(words, prefix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, prefix);
           gap_list_t new_word
-              = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+              = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(new_word) + 1, CONST_ADDR_OBJ(old_word) + 1,
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(new_word,
                         LEN_PLIST(old_word) + 1,
@@ -983,13 +974,9 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
                    && ELM_PLIST(words, suffix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, suffix);
           gap_list_t new_word
-              = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+              = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           // IMMUTABLE since it should not be altered on the GAP level
-          memcpy(reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(new_word))
-                     + 2 * sizeof(Obj)),
-                 reinterpret_cast<void*>(
-                     reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+          memcpy(ADDR_OBJ(new_word) + 2, CONST_ADDR_OBJ(old_word) + 1,
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(
               new_word, 1, INTOBJ_INT(semi_cpp->first_letter(pos_c - 1) + 1));
@@ -1079,7 +1066,7 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
 
     size_t     size = LEN_PLIST(left);
     size_t     nr   = 0;
-    gap_list_t out  = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+    gap_list_t out  = NEW_PLIST_IMM(T_PLIST_CYC, 0);
     // IMMUTABLE since it should not be altered on the GAP level
     SET_LEN_PLIST(out, 0);
     for (size_t pos = 1; pos <= size; pos++) {
@@ -1104,7 +1091,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
-  gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+  gap_list_t out = NEW_PLIST_IMM(T_PLIST_CYC, 0);
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, 0);
   size_t len = 0;
@@ -1286,7 +1273,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
       Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
       semi_cpp->set_report(semi_obj_get_report(so));
       gap_list_t rules
-          = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, semi_cpp->nrrules());
+          = NEW_PLIST_IMM(T_PLIST_TAB_RECT, semi_cpp->nrrules());
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(rules, semi_cpp->nrrules());
       size_t nr = 0;
@@ -1296,11 +1283,11 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
       semi_cpp->next_relation(relation);
 
       while (relation.size() == 2) {
-        gap_list_t next = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, 2);
+        gap_list_t next = NEW_PLIST_IMM(T_PLIST_TAB, 2);
         // IMMUTABLE since it should not be altered on the GAP level
         SET_LEN_PLIST(next, 2);
         for (size_t i = 0; i < 2; i++) {
-          gap_list_t w = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 1);
+          gap_list_t w = NEW_PLIST_IMM(T_PLIST_CYC, 1);
           // IMMUTABLE since it should not be altered on the GAP level
           SET_LEN_PLIST(w, 1);
           SET_ELM_PLIST(w, 1, INTOBJ_INT(relation[i] + 1));
@@ -1317,18 +1304,15 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
         gap_list_t old_word
             = EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[0] + 1));
         gap_list_t new_word
-            = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+            = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
         // IMMUTABLE since it should not be altered on the GAP level
-        memcpy(reinterpret_cast<void*>(
-                   reinterpret_cast<char*>(ADDR_OBJ(new_word)) + sizeof(Obj)),
-               reinterpret_cast<void*>(
-                   reinterpret_cast<char*>(ADDR_OBJ(old_word)) + sizeof(Obj)),
+        memcpy(ADDR_OBJ(new_word) + 1, CONST_ADDR_OBJ(old_word) + 1,
                (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
         SET_ELM_PLIST(
             new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation[1] + 1));
         SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
 
-        gap_list_t next = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, 2);
+        gap_list_t next = NEW_PLIST_IMM(T_PLIST_TAB, 2);
         // IMMUTABLE since it should not be altered on the GAP level
         SET_LEN_PLIST(next, 2);
         SET_ELM_PLIST(next, 1, new_word);

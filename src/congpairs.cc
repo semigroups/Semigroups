@@ -46,7 +46,7 @@ static inline word_t plist_to_word_t(gap_list_t plist) {
 }
 
 static inline gap_list_t word_t_to_plist(word_t* w) {
-  gap_list_t plist = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, w->size());
+  gap_list_t plist = NEW_PLIST_IMM(T_PLIST_CYC, w->size());
   SET_LEN_PLIST(plist, w->size());
   for (size_t i = 0; i < w->size(); i++) {
     SET_ELM_PLIST(plist, i + 1, INTOBJ_INT((*w)[i] + 1));
@@ -307,7 +307,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
   bool            report    = semi_obj_get_report(range_obj);
 
-  Obj partition = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, cong->nr_classes());
+  Obj partition = NEW_PLIST_IMM(T_PLIST_TAB, cong->nr_classes());
   SET_LEN_PLIST(partition, cong->nr_classes());
 
   // Map a class index to a new index in the range [1..nrclasses]
@@ -315,7 +315,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   size_t                             next_unused_class_index = 1;
 
   for (size_t i = 0; i < cong->nr_classes(); i++) {
-    Obj next = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+    Obj next = NEW_PLIST_IMM(T_PLIST_CYC, 0);
     SET_LEN_PLIST(next, 0);  // should never be 0 later on, so this should be ok
     SET_ELM_PLIST(partition, i + 1, next);
     CHANGED_BAG(partition);
@@ -327,7 +327,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     Semigroup* range = cong_obj_get_range(o);
     range->set_report(report);
 
-    lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, range->size());
+    lookup = NEW_PLIST_IMM(T_PLIST_CYC, range->size());
     SET_LEN_PLIST(lookup, range->size());
 
     word_t word;
@@ -347,7 +347,6 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
       Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i + 1));
-      CHANGED_BAG(partition);
 
       word.clear();
     }
@@ -356,7 +355,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
         = fropin(cong_obj_get_range_obj(o), INTOBJ_INT(-1), 0, False);
     Obj words = ElmPRec(data, RNam_words);
 
-    lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(words));
+    lookup = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(words));
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
@@ -375,7 +374,6 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
       Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i));
-      CHANGED_BAG(partition);
     }
   }
   AssPRec(o, RNam_fin_cong_partition, partition);
@@ -426,13 +424,13 @@ gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
   Partition<word_t>* nt_classes = cong->nontrivial_classes();
 
   // Initialise gap_lists
-  gap_list_t gap_lists = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, nt_classes->size());
+  gap_list_t gap_lists = NEW_PLIST_IMM(T_PLIST_TAB, nt_classes->size());
   SET_LEN_PLIST(gap_lists, nt_classes->size());
 
   // Convert the words to plists
   for (size_t c = 0; c < nt_classes->size(); c++) {
     gap_list_t next_class
-        = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, (*nt_classes)[c]->size());
+        = NEW_PLIST_IMM(T_PLIST_TAB, (*nt_classes)[c]->size());
     SET_LEN_PLIST(next_class, (*nt_classes)[c]->size());
     for (size_t e = 0; e < (*nt_classes)[c]->size(); e++) {
       SET_ELM_PLIST(next_class, e + 1, word_t_to_plist((*(*nt_classes)[c])[e]));

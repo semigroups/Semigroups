@@ -57,23 +57,6 @@ UInt T_SEMI   = 0;
 UInt T_BIPART = 0;
 UInt T_BLOCKS = 0;
 
-// Save/Load a UInt with length the current wordsize
-inline void SaveUIntBiggest(UInt n) {
-#ifdef SYSTEM_IS_32_BIT
-  SaveUInt4(n);
-#else
-  SaveUInt8(n);
-#endif
-}
-
-inline UInt LoadUIntBiggest() {
-#ifdef SYSTEM_IS_32_BIT
-  return LoadUInt4();
-#else
-  return LoadUInt8();
-#endif
-}
-
 // Function to print a T_SEMI Obj.
 
 void TSemiObjPrintFunc(Obj o) {
@@ -171,9 +154,9 @@ void TSemiObjSaveFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UF: {
       UF* uf = CLASS_OBJ<UF*>(o);
-      SaveUIntBiggest(uf->get_size());
+      SaveUInt(uf->get_size());
       for (size_t i = 0; i < uf->get_size(); i++) {
-        SaveUIntBiggest(uf->find(i));
+        SaveUInt(uf->find(i));
       }
       break;
     }
@@ -203,11 +186,11 @@ void TSemiObjLoadFunc(Obj o) {
 
   switch (type) {
     case T_SEMI_SUBTYPE_UF: {
-      size_t               size  = LoadUIntBiggest();
+      size_t               size  = LoadUInt();
       std::vector<size_t>* table = new std::vector<size_t>();
       table->reserve(size);
       for (size_t i = 0; i < size; i++) {
-        table->push_back(LoadUIntBiggest());
+        table->push_back(LoadUInt());
       }
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UF(*table));
       break;
