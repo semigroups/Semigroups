@@ -64,7 +64,10 @@ cd $GAPROOT/pkg/semigroups
 
 ################################################################################
 # Install digraphs, genss, io, orb, and profiling
-PKGS=( "digraphs" "genss" "io" "orb" "profiling" )
+PKGS=( "digraphs" "genss" "io" "orb" )
+if [ "$SUITE"  == "coverage" ]; then
+  PKGS+=( "profiling" )
+fi
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
   if [ "$PACKAGES" == "master" ] || [ "$PKG" == "profiling" ]; then
