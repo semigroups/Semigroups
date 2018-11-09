@@ -315,7 +315,7 @@ function(list, S)
   combine := x -> Bipartition(Concatenation(x));
   convert := function(element, degree, offset)
     local x, i, j;
-    x := ShallowCopy(ExtRepOfObj(element));
+    x := List(ExtRepOfObj(element), ShallowCopy);
     for i in [1 .. Length(x)] do
       for j in [1 .. Length(x[i])] do
         if IsPosInt(x[i][j]) then
