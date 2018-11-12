@@ -31,6 +31,14 @@ gap> S := F / [[F.1 ^ 3, F.1 ^ 2]];
 <fp semigroup on the generators [ s1 ]>
 gap> IndecomposableElements(S);
 [ s1 ]
+gap> S := F / [[F.1 ^ 3, F.1]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> HasIsDecomposableSemigroup(S);
+true
+gap> IndecomposableElements(S);
+[  ]
 gap> F := FreeSemigroup(3);
 <free semigroup on the generators [ s1, s2, s3 ]>
 gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];

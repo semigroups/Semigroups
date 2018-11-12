@@ -12,6 +12,10 @@ InstallMethod(IndecomposableElements, "for an fp semigroup", [IsFpSemigroup],
 function(S)
   local gens, rels, decomposable, uf, lens, pos1, pos2, t1, t2, x, rel;
 
+  if HasIsDecomposableSemigroup(S) then
+    return [];
+  fi;
+
   gens := GeneratorsOfSemigroup(FreeSemigroupOfFpSemigroup(S));
   rels := RelationsOfFpSemigroup(S);
   decomposable := BlistList(gens, []);
