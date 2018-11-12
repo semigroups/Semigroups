@@ -125,8 +125,8 @@ gap> MinimalFactorization(S, x);
     operation returns a non-trivial word in the generators of the semigroup
     <A>S</A> that equals <A>x</A>, if one exists. The definition of
     a word in the generators is the same as given in <Ref Oper="Factorization"
-      /> for semigroups and inverse semigroups. A word is non-trivial if it has
-    non-trivial length. <P/>
+      /> for semigroups and inverse semigroups. A word is non-trivial if it
+    has length two or more. <P/>
 
     If no non-trivial word for <A>x</A> exists, then <A>x</A> is an
     indecomposable element of <A>S</A> and this operation returns <K>fail</K>;
