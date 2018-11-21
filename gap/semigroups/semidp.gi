@@ -40,7 +40,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
   if not IsList(S) or IsEmpty(S) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.DirectProductOp: usage,\n",
                   "the first argument <S> must be a non-empty list,");
-  elif ForAll(S, IsInverseMonoid and HasGeneratorsOfInverseMonoid) then
+  elif ForAll(S, HasGeneratorsOfInverseMonoid) then
     f := GeneratorsOfInverseMonoid;
     create := InverseMonoid;
   elif ForAll(S, IsMonoid) then
