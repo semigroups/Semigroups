@@ -1,8 +1,8 @@
 ### CHANGELOG - [Semigroups](https://gap-packages.github.io/Semigroups) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+#### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
-### Version 3.1.0 (released TODO/12/2018)
+### Version 3.1.0 (released 14/01/2019)
 
 This is a major release of the Semigroups package, including several changes to
 existing behaviour, new functionality, and bugfixes.
