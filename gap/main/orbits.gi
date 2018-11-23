@@ -226,7 +226,6 @@ function(gens, w)
 end);
 
 InstallGlobalFunction(EnumeratePosition,
-"for an orbit, value, and boolean",
 function(arg)
   local o, val, onlynew, pos;
 
@@ -266,7 +265,6 @@ function(arg)
 end);
 
 InstallGlobalFunction(LookForInOrb,
-"for an orbit, a function, and positive integer",
 function(o, func, start)
   local pos, i;
 

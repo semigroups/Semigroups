@@ -16,9 +16,6 @@
 ##
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
-[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup and IsFinite,
- IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
- IsDenseList],
 function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   # Check that the kernel is an inverse subsemigroup
@@ -75,10 +72,6 @@ function(S, kernel, traceBlocks)
 end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
-[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
- and IsFinite and IsEnumerableSemigroupRep,
- IsSemigroup,
- IsDenseList],
 function(S, kernel, traceBlocks)
   local traceLookup, ES, fam, cong, i, elm;
 
