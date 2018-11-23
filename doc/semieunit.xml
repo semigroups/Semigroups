@@ -118,11 +118,7 @@ gap> T := McAlisterTripleSemigroup(A, x, y);
 gap> S = T;
 false
 gap> IsIsomorphicSemigroup(S, T);
-true
-gap> GeneratorsOfSemigroup(T);
-[ (1, ()), (4, ()), (5, ()), (1, (2,4)(3,5)) ]
-gap> AsSemigroup(IsPartialPermSemigroup, T);
-<inverse partial perm monoid of size 4, rank 4 with 4 generators>]]></Example>
+true]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>

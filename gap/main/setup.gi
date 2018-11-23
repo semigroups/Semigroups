@@ -47,6 +47,15 @@ function(coll)
   return IsPermGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
+InstallMethod(IsGeneratorsOfActingSemigroup,
+"for a McAlister triple element collection",
+[IsMcAlisterTripleSemigroupElementCollection],
+function(coll)
+  return
+  IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(Representative(coll))));
+    # and McAlisterTripleSemigroupAction(MTSEParent(coll[1])) = OnPoints;
+end);
+
 # FIXME with the below uncommented many tests fail
 ## The HasRows and HasColumns could be removed if it was possible to apply
 ## immediate methods to Rees 0-matrix semigroups
@@ -94,6 +103,12 @@ function(x)
   return NrMovedPoints(x![2]) + 1;
 end);
 
+InstallMethod(ActionDegree, "for a McAlister semigroup element",
+[IsMcAlisterTripleSemigroupElement],
+function(x)
+  return 0;
+end);
+
 InstallMethod(ActionDegree, "for a matrix over finite field object",
 [IsMatrixOverFiniteField], DimensionOfMatrixOverSemiring);
 
@@ -124,6 +139,12 @@ function(coll)
   return DimensionOfMatrixOverSemiring(coll[1]);
 end);
 
+InstallMethod(ActionDegree, "for a McAlister semigroup element collection",
+[IsMcAlisterTripleSemigroupElementCollection],
+function(coll)
+  return MaximumList(List(coll, x -> ActionDegree(x)));
+end);
+
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
@@ -145,6 +166,12 @@ function(R)
     parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
     return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
+  return 0;
+end);
+
+InstallMethod(ActionDegree, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
   return 0;
 end);
 
@@ -217,6 +244,22 @@ function(R)
   end;
 end);
 
+InstallMethod(ActionRank, "for a McAlister triple semigroup element and int",
+[IsMcAlisterTripleSemigroupElement, IsInt],
+function(f, n)
+  local digraph, id;
+  digraph := McAlisterTripleSemigroupQuotientDigraph(MTSEParent(f));
+  digraph := DigraphReverse(digraph);
+  id      := McAlisterTripleSemigroupComponents(MTSEParent(f)).id;
+  return Position(DigraphTopologicalSort(digraph), id[f[1]]);
+end);
+
+InstallMethod(ActionRank, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  return x -> ActionDegree(S);
+end);
+
 InstallMethod(ActionRank, "for a matrix object and integer",
 [IsMatrixOverFiniteField, IsInt],
 function(x, i)
@@ -243,6 +286,9 @@ InstallMethod(MinActionRank, "for a bipartition semigroup",
 InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> 0);
 
+InstallMethod(MinActionRank, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], x -> 1);
+
 InstallMethod(MinActionRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], x -> 0);
 
@@ -260,6 +306,9 @@ InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
 InstallMethod(LambdaOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
 
+InstallMethod(LambdaOrbOpts, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> rec());
+
 InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], s -> rec());
 
@@ -274,6 +323,9 @@ InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
 
 InstallMethod(RhoOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
+
+InstallMethod(RhoOrbOpts, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], s -> rec());
@@ -305,6 +357,24 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
   else
     return 0;
   fi;
+end);
+
+InstallMethod(LambdaAct, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  local act, digraph;
+  S := MTSEParent(Representative(S));
+  act     := McAlisterTripleSemigroupAction(S);
+  digraph := McAlisterTripleSemigroupPartialOrder(S);
+  return
+  function(pt, x)
+    if pt = 0 then
+      return act(x[1], x[2] ^ -1);
+    fi;
+    return PartialOrderDigraphJoinOfVertices(digraph,
+                                             act(pt, x[2] ^ -1),
+                                             act(x[1], x[2] ^ -1));
+  end;
 end);
 
 InstallMethod(LambdaAct, "for a matrix semigroup",
@@ -345,6 +415,24 @@ InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
+InstallMethod(RhoAct, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  local act, digraph;
+  S := MTSEParent(Representative(S));
+  act     := McAlisterTripleSemigroupAction(S);
+  digraph := McAlisterTripleSemigroupPartialOrder(S);
+  return
+    function(pt, x)
+      if pt = 0 then
+        return x[1];
+      fi;
+      return PartialOrderDigraphJoinOfVertices(digraph,
+                                               act(pt, x[2]),
+                                               x[1]);
+    end;
+end);
+
 InstallMethod(RhoAct, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
@@ -369,6 +457,9 @@ end);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
+
+InstallMethod(LambdaOrbSeed, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> 0);
 
 InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
@@ -396,6 +487,9 @@ end);
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
+
+InstallMethod(RhoOrbSeed, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> 0);
 
 InstallMethod(RhoOrbSeed, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], LambdaOrbSeed);
@@ -427,6 +521,14 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
   return 0;
 end);
 
+InstallMethod(LambdaFunc, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  local act;
+  act := McAlisterTripleSemigroupAction(MTSEParent(Representative(S)));
+  return x -> act(x[1], x[2] ^ -1);
+end);
+
 InstallMethod(LambdaFunc, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 s -> function(mat)
@@ -454,6 +556,12 @@ InstallMethod(RhoFunc, "for a bipartition semigroup",
 InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> (x -> x![1]));
 
+InstallMethod(RhoFunc, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  return x -> x[1];
+end);
+
 InstallMethod(RhoFunc, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
@@ -464,7 +572,7 @@ function(S)
     end;
 end);
 
-# the function used to calculate the rank of lambda or rho value
+# The function used to calculate the rank of lambda or rho value
 
 InstallMethod(LambdaRank, "for a transformation semigroup",
 [IsTransformationSemigroup], x -> Length);
@@ -485,6 +593,17 @@ function(x)
     parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
     return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
+end);
+
+InstallMethod(LambdaRank, "for a McAlister subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(x)
+  local T;
+  if x = 0 then
+    return 0;
+  fi;
+  T := MTSEParent(Representative(S));
+  return ActionRank(MTSE(T, x, One(McAlisterTripleSemigroupGroup(T))), 0);
 end);
 
 # Why are there row spaces and matrices passed in here?
@@ -512,6 +631,17 @@ InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
 InstallMethod(RhoRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> LambdaRank(S));
 
+InstallMethod(RhoRank, "for a McAlister subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(x)
+  local T;
+  if x = 0 then
+    return 0;
+  fi;
+  T := MTSEParent(Representative(S));
+  return ActionRank(MTSE(T, x, One(McAlisterTripleSemigroupGroup(T))), 0);
+end);
+
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right
 # like the inverse of f on Y.
 
@@ -522,6 +652,11 @@ InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> function(x, f)
                                  return f ^ -1;
                                end);
+
+InstallMethod(LambdaInverse, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> function(x, f)
+                                   return f ^ -1;
+                                 end);
 
 InstallMethod(LambdaInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_INV_RIGHT);
@@ -558,6 +693,11 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
   function(dom, f)
     return f ^ -1;
   end);
+
+InstallMethod(RhoInverse, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S -> function(x, f)
+                                        return f ^ -1;
+                                      end);
 
 # JDM better method for this!!
 
@@ -636,6 +776,17 @@ end);
 InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
 
+InstallMethod(LambdaBound, "for a McAlister subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(r)
+  local G;
+  G := McAlisterTripleSemigroupGroup(MTSEParent(Representative(S)));
+  return Size(Stabilizer(G, r));
+end);
+
+InstallMethod(RhoBound, "for a McAlister subsemigroup",
+[IsMcAlisterTripleSubsemigroup], LambdaBound);
+
 InstallMethod(LambdaBound, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
@@ -705,6 +856,15 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
     return ();
   end);
 
+InstallMethod(LambdaIdentity, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+  S -> function(r)
+    return ();
+  end);
+
+InstallMethod(RhoIdentity, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], LambdaIdentity);
+
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
@@ -739,6 +899,12 @@ function(x, y)
   return x![2] ^ -1 * y![2];
 end);
 
+InstallMethod(LambdaPerm, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  return {x, y} -> x[2] ^ -1 * y[2];
+end);
+
 # Returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
 # yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
 
@@ -763,7 +929,20 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
 function(x, y)
-  return ();
+  return ();  # FIXME is this right???? This is not right!!
+end);
+
+InstallMethod(LambdaConjugator, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
+function(S)
+  local T, G, act;
+  T := MTSEParent(Representative(S));
+  G := McAlisterTripleSemigroupGroup(T);
+  act := MTSUnderlyingAction(T);  # MTSAction is not an action, causes problems
+  return {x, y} -> RepresentativeAction(G,
+                                        LambdaFunc(S)(x),
+                                        LambdaFunc(S)(y),
+                                        act);
 end);
 
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
@@ -801,6 +980,12 @@ function(j, i)
   return Matrix(parent)[j][i] <> 0;
 end);
 
+InstallMethod(IdempotentTester, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(x, y)
+  return x = y;
+end);
+
 InstallMethod(IdempotentTester, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
     return MatrixOverFiniteFieldIdempotentTester(S, x, y);
@@ -830,6 +1015,14 @@ function(j, i)
                    [i, mat[j][i] ^ -1, j, mat]);
 end);
 
+InstallMethod(IdempotentCreator, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(x, y)
+  local T;
+  T := MTSEParent(Representative(S));
+  return MTSE(T, x, One(McAlisterTripleSemigroupGroup(T)));
+end);
+
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
     return MatrixOverFiniteFieldIdempotentCreator(S, x, y);
@@ -853,11 +1046,18 @@ InstallMethod(StabilizerAction, "for a bipartition semigroup",
 InstallMethod(StabilizerAction, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
 function(x, p)
-
   if x![1] = 0 then
     return x;
   fi;
   return Objectify(TypeObj(x), [x![1], x![2] * p, x![3], x![4]]);
+end);
+
+InstallMethod(StabilizerAction, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup], S ->
+function(x, p)
+  local T;
+  T := MTSEParent(x);
+  return MTSE(T, x[1], x[2] * p);
 end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
@@ -886,6 +1086,10 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for an acting Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
 
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+"for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup and IsActingSemigroup], ReturnFalse);
+
 InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
                   IsMatrixOverFiniteFieldSemigroup);
 
@@ -907,6 +1111,14 @@ end);
 
 InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x) = ();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a McAlister triple subsemigroup",
+[IsMcAlisterTripleSubsemigroup],
 function(S)
   return function(stab, x)
     return SiftedPermutation(stab, x) = ();
@@ -940,6 +1152,10 @@ InstallMethod(FakeOne, "for a bipartition collection",
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection], R -> SEMIGROUPS.UniversalFakeOne);
+
+InstallMethod(FakeOne, "for a McAlister triple semigroup element collection",
+[IsMcAlisterTripleSemigroupElementCollection],
+S -> SEMIGROUPS.UniversalFakeOne);
 
 # Matrix semigroup elements
 InstallMethod(FakeOne, "for an FFE coll coll coll",
