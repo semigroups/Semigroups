@@ -945,6 +945,11 @@ gap> x := MinimalSemigroupGeneratingSet(S)[1];;
 gap> S := Semigroup(x, x, x);;
 gap> IsMonogenicSemigroup(S);
 true
+gap> S := Subsemigroup(FullTransformationMonoid(2), []);;
+gap> IsEmpty(S);
+true
+gap> IsMonogenicSemigroup(S);
+false
 
 # properties: IsMonogenicInverseSemigroup, 1
 gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup,

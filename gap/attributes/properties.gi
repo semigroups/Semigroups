@@ -777,7 +777,7 @@ function(S)
   gens := GeneratorsOfSemigroup(S);
   if Length(gens) <= 1 then
     SetMinimalSemigroupGeneratingSet(S, gens);
-    return true;
+    return Length(gens) = 1;
   elif CanEasilyCompareElements(gens)
       and ForAll([2 .. Length(gens)], i -> gens[1] = gens[i]) then
     SetMinimalSemigroupGeneratingSet(S, [gens[1]]);
