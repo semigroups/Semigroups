@@ -134,8 +134,12 @@ true
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 2);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
-gap> D := DirectProduct(S, S, S);
-<commutative transformation semigroup of size 8, degree 9 with 7 generators>
+gap> D := DirectProduct(S, S, S);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<commutative non-regular transformation semigroup of size 8, degree 9 with 7 
+ generators>
 gap> HasIndecomposableElements(D);
 true
 gap> IndecomposableElements(D);
@@ -169,8 +173,12 @@ gap> IndecomposableElements(D);
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 3);
 <commutative non-regular transformation semigroup of size 3, degree 4 with 2 
  generators>
-gap> D := DirectProduct(S, S);
-<commutative transformation semigroup of size 9, degree 8 with 8 generators>
+gap> D := DirectProduct(S, S);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<commutative non-regular transformation semigroup of size 9, degree 8 with 8 
+ generators>
 gap> ProductCheck(D, [S, S], true);
 true
 gap> D := Semigroup(D);
@@ -181,8 +189,11 @@ true
 #T# semidp: DirectProduct, for transformation semigroups, 4
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
-gap> D := DirectProduct(S, S);
-<transformation monoid of size 729, degree 6 with 6 generators>
+gap> D := DirectProduct(S, S);;
+gap> IsRegularSemigroup(D);
+true
+gap> D;
+<regular transformation monoid of size 729, degree 6 with 6 generators>
 gap> ProductCheck(D, [S, S], false);
 true
 gap> HasIndecomposableElements(D);
@@ -295,8 +306,11 @@ gap> S := ZeroSemigroup(IsPartialPermSemigroup, 3);
  generators>
 gap> T := SymmetricInverseMonoid(3);
 <symmetric inverse monoid of degree 3>
-gap> D := DirectProduct(S, T, S);
-<partial perm semigroup of size 306, rank 7 with 272 generators>
+gap> D := DirectProduct(S, T, S);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<non-regular partial perm semigroup of size 306, rank 7 with 272 generators>
 gap> ProductCheck(D, [S, T, S], false);
 true
 
@@ -354,8 +368,11 @@ gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 5, 3);
  generator>
 gap> T := SymmetricInverseMonoid(3);
 <symmetric inverse monoid of degree 3>
-gap> D := DirectProduct(S, T);
-<partial perm semigroup of size 238, rank 10 with 34 generators>
+gap> D := DirectProduct(S, T);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<non-regular partial perm semigroup of size 238, rank 10 with 34 generators>
 gap> ProductCheck(D, [S, T], false);
 true
 gap> D := Semigroup(D);
@@ -403,23 +420,34 @@ gap> S := ZeroSemigroup(IsBipartitionSemigroup, 3);
 gap> T := ZeroSemigroup(IsBipartitionSemigroup, 5);
 <commutative non-regular bipartition semigroup of size 5, degree 5 with 4 
  generators>
-gap> D := DirectProduct(S, T);
-<commutative bipartition semigroup of size 15, degree 9 with 14 generators>
+gap> D := DirectProduct(S, T);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<commutative non-regular bipartition semigroup of size 15, degree 9 with 14 
+ generators>
 gap> ProductCheck(D, [S, T], true);
 true
 gap> D := Semigroup(D);;
 gap> IsZeroSemigroup(D) and Size(D) = Size(S) * Size(T);
 true
-gap> D := DirectProduct(T, S);
-<commutative bipartition semigroup of size 15, degree 9 with 14 generators>
+gap> D := DirectProduct(T, S);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<commutative non-regular bipartition semigroup of size 15, degree 9 with 14 
+ generators>
 gap> ProductCheck(D, [T, S], true);
 true
 gap> D := Semigroup(D);
 <bipartition semigroup of degree 9 with 14 generators>
 gap> IsZeroSemigroup(D) and Size(D) = Size(S) * Size(T);
 true
-gap> D := DirectProduct(S, PartitionMonoid(2), T);
-<bipartition semigroup of size 225, degree 11 with 210 generators>
+gap> D := DirectProduct(S, PartitionMonoid(2), T);;
+gap> IsRegularSemigroup(D);
+false
+gap> D;
+<non-regular bipartition semigroup of size 225, degree 11 with 210 generators>
 gap> ProductCheck(D, [S, PartitionMonoid(2), T], false);
 true
 gap> D := Semigroup(D);
@@ -430,8 +458,11 @@ gap> Size(D);
 #T# semidp: DirectProductOp, for bipartition semigroups, 3
 gap> S := PartitionMonoid(2);
 <regular bipartition *-monoid of size 15, degree 2 with 3 generators>
-gap> D := DirectProduct(S, S, S, S);
-<bipartition monoid of size 50625, degree 8 with 12 generators>
+gap> D := DirectProduct(S, S, S, S);;
+gap> IsRegularSemigroup(D);
+true
+gap> D;
+<regular bipartition monoid of size 50625, degree 8 with 12 generators>
 gap> ProductCheck(D, [S, S, S, S], false);
 true
 gap> D := Monoid(D);
@@ -459,12 +490,18 @@ true
 
 #T# semidp: DirectProductOp, for PBR semigroups, 1
 gap> S := FullPBRMonoid(1);;
-gap> D := DirectProduct(S);
-<pbr monoid of degree 1 with 4 generators>
+gap> D := DirectProduct(S);;
+gap> IsRegularSemigroup(D);
+true
+gap> D;
+<regular pbr monoid of degree 1 with 4 generators>
 gap> ProductCheck(D, [S], true);
 true
-gap> D := DirectProduct(S, S);
-<pbr monoid of degree 2 with 8 generators>
+gap> D := DirectProduct(S, S);;
+gap> IsRegularSemigroup(D);
+true
+gap> D;
+<regular pbr monoid of degree 2 with 8 generators>
 gap> ProductCheck(D, [S, S], false);
 true
 gap> Size(D);
@@ -521,12 +558,20 @@ true
 #T# semidp: DirectProductOp, for a mix of semigroups, 3
 gap> S := PartitionMonoid(1);;
 gap> T := FullTransformationMonoid(1);;
-gap> D := DirectProduct(S, T);
-<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> D := DirectProduct(S, T);;
+gap> IsInverseSemigroup(D);
+true
+gap> D;
+<commutative inverse transformation monoid of size 2, degree 2 with 1 
+ generator>
 gap> ProductCheck(D, [S, T], true);
 true
-gap> D := DirectProduct(T, S);
-<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> D := DirectProduct(T, S);;
+gap> IsInverseMonoid(D);
+true
+gap> D;
+<commutative inverse transformation monoid of size 2, degree 2 with 1 
+ generator>
 gap> ProductCheck(D, [T, S], true);
 true
 
