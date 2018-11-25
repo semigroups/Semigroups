@@ -2143,6 +2143,13 @@ gap> y := Iterator(S);
 <iterator>
 gap> for x in y do od;
 
+#T# GeneratorsOfGroup
+gap> S := Group([], PartialPerm([1, 2]));;
+gap> GeneratorsOfGroup(S);
+[  ]
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1, 2 ]> ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);

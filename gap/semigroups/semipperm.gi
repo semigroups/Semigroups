@@ -94,7 +94,15 @@ end);
 
 InstallImmediateMethod(GeneratorsOfSemigroup,
 IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup,
-0, GeneratorsOfGroup);
+0,
+function(G)
+  if IsEmpty(GeneratorsOfGroup(G)) then
+    # WW: really this should be `return [One(G)];`, but this fails when running
+    #     GAP's `tst/testinstall.g` for some reason that I can't figure out.
+    TryNextMethod();
+  fi;
+  return GeneratorsOfGroup(G);
+end);
 
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup",
