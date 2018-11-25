@@ -43,9 +43,9 @@ gap> D := DirectProduct(S, T);
 <commutative inverse partial perm monoid of rank 5 with 1 generator>
 gap> Elements(D);
 [ <identity partial perm on [ 1, 2, 3, 4, 5 ]>, (1,2)(3)(4)(5) ]
-gap> S := PartitionMonoid(3);;
-gap> D := DirectProduct(S, S, S);
-<bipartition monoid of size 8365427, degree 9 with 12 generators>
+gap> S := PartitionMonoid(2);;
+gap> D := DirectProduct(S, S, S);; IsRegularSemigroup(D);; D;
+<regular bipartition monoid of size 3375, degree 6 with 9 generators>
 gap> S := Semigroup([PartialPerm([2, 5, 0, 1, 3]),
 >                    PartialPerm([5, 2, 4, 3])]);;
 gap> T := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;
