@@ -281,7 +281,9 @@ function(arg)
   fi;
 
   for coll in collcoll do
-    if IsSemigroup(coll) then
+    if IsSemigroup(coll)
+        and not (IsReesMatrixSemigroup(coll)
+                 or IsReesZeroMatrixSemigroup(coll)) then
       coll := GeneratorsOfSemigroup(coll);
       # We could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which

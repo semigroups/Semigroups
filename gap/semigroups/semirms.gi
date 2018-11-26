@@ -953,3 +953,50 @@ function(R)
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
          + 1;
 end);
+
+#############################################################################
+# Pickler
+#############################################################################
+
+InstallMethod(IO_Pickle, "for a Rees matrix semigroup",
+[IsFile, IsReesMatrixSemigroup],
+function(file, x)
+  if IO_Write(file, "RMSX") = fail then
+    return IO_Error;
+  fi;
+  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+    return IO_Error;
+  fi;
+  return IO_OK;
+end);
+
+IO_Unpicklers.RMSX := function(file)
+  local x;
+  x := IO_Unpickle(file);
+  if x = IO_Error then
+    return IO_Error;
+  fi;
+  return ReesMatrixSemigroup(x[1], x[2]);
+end;
+
+InstallMethod(IO_Pickle, "for a Rees 0-matrix semigroup",
+[IsFile, IsReesZeroMatrixSemigroup],
+function(file, x)
+  if IO_Write(file, "RZMS") = fail then
+    return IO_Error;
+  fi;
+  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+    return IO_Error;
+  fi;
+  return IO_OK;
+end);
+
+IO_Unpicklers.RZMS := function(file)
+  local x;
+  x := IO_Unpickle(file);
+  if x = IO_Error then
+    return IO_Error;
+  fi;
+  return ReesZeroMatrixSemigroup(x[1], x[2]);
+end;
+
