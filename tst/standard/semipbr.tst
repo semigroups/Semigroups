@@ -2110,6 +2110,33 @@ gap> S := Semigroup([
 gap> AsMonoid(S);
 <pbr monoid of size 4, degree 4 with 2 generators>
 
+# Operator \<
+gap> A := Monoid([
+>   PBR([[]], [[1]]),
+>   PBR([[-1, 1]], [[1]]),
+>   PBR([[-1]], [[]]),
+>   PBR([[-1]], [[-1, 1]])]);;
+gap> B := Monoid([
+>  PBR([[]], [[]]),
+>  PBR([[1]], [[]]),
+>  PBR([[1]], [[-1]]),
+>  PBR([[-1, 1]], [[1]]),
+>  PBR([[-1]], [[]]),
+>  PBR([[-1]], [[-1, 1]]),
+>  PBR([[]], [[-1, 1]])]);;
+gap> A < B;
+true
+gap> B < A;
+false
+gap> A = B;
+false
+gap> C := Monoid([PBR([[-2, -1, 1, 2], [-1]], [[-1, 1, 2], [-1, 1]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 1, 2]], [[-2, -1, 1, 2], [-2, 2]])]);;
+gap> C > A;
+true
+gap> C > B;
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

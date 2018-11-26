@@ -171,3 +171,12 @@ InstallMethod(IsomorphismMonoid,
 function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
+
+InstallMethod(\<, "for pbr semigroups",
+[IsPBRSemigroup, IsPBRSemigroup],
+function(S, T)
+  if DegreeOfPBRSemigroup(S) <> DegreeOfPBRSemigroup(T) then
+    return DegreeOfPBRSemigroup(S) < DegreeOfPBRSemigroup(T);
+  fi;
+  TryNextMethod();
+end);

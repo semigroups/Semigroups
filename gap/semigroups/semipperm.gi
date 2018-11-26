@@ -958,3 +958,20 @@ function(S)
 
   return t;
 end);
+
+InstallMethod(\<, "for partial perm semigroups",
+[IsPartialPermSemigroup, IsPartialPermSemigroup],
+function(S, T)
+  if DegreeOfPartialPermSemigroup(S)
+      <> DegreeOfPartialPermSemigroup(T)
+      or CodegreeOfPartialPermSemigroup(S)
+      <> CodegreeOfPartialPermSemigroup(T) then
+    return DegreeOfPartialPermSemigroup(S)
+      < DegreeOfPartialPermSemigroup(T) or
+      (DegreeOfPartialPermSemigroup(S)
+       = DegreeOfPartialPermSemigroup(T)
+       and CodegreeOfPartialPermSemigroup(S)
+       < CodegreeOfPartialPermSemigroup(T));
+  fi;
+  TryNextMethod();
+end);

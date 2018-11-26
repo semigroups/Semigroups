@@ -2150,6 +2150,23 @@ gap> GeneratorsOfGroup(S);
 gap> GeneratorsOfSemigroup(S);
 [ <identity partial perm on [ 1, 2 ]> ]
 
+# Operator \<
+gap> S := Semigroup([
+>  PartialPerm([1, 2, 3, 5, 6, 7, 8], [9, 6, 11, 2, 3, 10, 4]),
+>  PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 6, 9, 3, 5, 10, 1]),
+>  PartialPerm([1, 3, 4, 5, 6, 8], [8, 9, 1, 10, 6, 11]),
+>  PartialPerm([1, 2, 3, 5, 6, 7, 8], [7, 3, 4, 5, 2, 11, 8]),
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7], [1, 10, 8, 6, 4, 9, 5])]);;
+gap> S < S;
+false
+gap> T := SymmetricInverseMonoid(4);;
+gap> T < S;
+true
+gap> T > S;
+false
+gap> T = S;
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);

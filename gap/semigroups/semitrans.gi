@@ -318,32 +318,12 @@ end);
 InstallMethod(\<, "for transformation semigroups",
 [IsTransformationSemigroup, IsTransformationSemigroup],
 function(S, T)
-  local des, det, SS, TT, s, t;
-
-  des := DegreeOfTransformationSemigroup(S);
-  det := DegreeOfTransformationSemigroup(T);
-
-  if des <> det then
-    return des < det;
+  if DegreeOfTransformationSemigroup(S)
+      <> DegreeOfTransformationSemigroup(T) then
+    return DegreeOfTransformationSemigroup(S)
+      < DegreeOfTransformationSemigroup(T);
   fi;
-
-  SS := IteratorSorted(S);
-  TT := IteratorSorted(T);
-
-  while not (IsDoneIterator(SS) or IsDoneIterator(TT)) do
-    s := NextIterator(SS);
-    t := NextIterator(TT);
-    if s <> t then
-      return s < t;
-    fi;
-  od;
-
-  if IsDoneIterator(SS) and IsDoneIterator(TT) then
-    # This line is executed by the tests but does not show as such in the code
-    # coverage.
-    return false;  # S = T
-  fi;
-  return IsDoneIterator(SS);
+  TryNextMethod();
 end);
 
 InstallMethod(SmallestElementSemigroup,
