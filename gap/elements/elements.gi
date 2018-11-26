@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  elements.gi
-##  Copyright (C) 2016                                      Wilf A. Wilson
+##  Copyright (C) 2016-18                                   Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -111,3 +111,9 @@ function(x)
   od;
   return pow;
 end);
+
+InstallMethod(IsMultiplicativeZero,
+"for a semigroup with multiplicative zero and multiplicative element",
+[IsSemigroup and HasMultiplicativeZero, IsMultiplicativeElement],
+SUM_FLAGS,
+{S, x} -> MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S));

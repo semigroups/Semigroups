@@ -420,14 +420,10 @@ InstallMethod(MultiplicativeZero, "for a semigroup",
 function(S)
   local D, rep, gens;
 
-  if not IsFinite(S) then
-    TryNextMethod();
-  elif IsSemigroupIdeal(S)
+  if IsSemigroupIdeal(S)
       and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
-  fi;
-
-  if HasMinimalDClass(S) then
+  elif HasMinimalDClass(S) then
     D := MinimalDClass(S);
     if HasSize(D) then
       if IsTrivial(D) then
@@ -435,10 +431,10 @@ function(S)
       fi;
       return fail;
     fi;
-  fi;
-
-  if IsSemigroupIdeal(S) then
+  elif IsSemigroupIdeal(S) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
+  elif not IsFinite(S) then
+    TryNextMethod();
   fi;
 
   rep := RepresentativeOfMinimalIdeal(S);

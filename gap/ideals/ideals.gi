@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  ideals.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  Copyright (C) 2013-18                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -412,7 +412,7 @@ function(I)
   fi;
 
   gens := GeneratorsOfSemigroupIdeal(I);
-  return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
+  return ForAll(gens, x -> gens[1] = x) and IsMultiplicativeZero(I, gens[1]);
 end);
 
 InstallMethod(IsFactorisableInverseMonoid, "for an inverse semigroup ideal",
@@ -442,4 +442,19 @@ function(S)
   # All non-empty sets of pairwise incomparable D-classes
   cliques := DigraphCliques(gr);
   return List(cliques, clique -> SemigroupIdeal(S, reps{clique}));
+end);
+
+InstallMethod(IsMultiplicativeZero,
+"for a semigroup ideal and multiplicative element",
+[IsSemigroupIdeal, IsMultiplicativeElement],
+function(I, x)
+  local gens;
+  if not x in I then
+    return false;
+  elif HasGeneratorsOfSemigroup(I) then
+    gens := GeneratorsOfSemigroup(I);
+  else
+    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
+  fi;
+  return ForAll(gens, g -> g * x = x and x * g = x);
 end);

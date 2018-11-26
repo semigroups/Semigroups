@@ -87,6 +87,15 @@ gap> SmallestIdempotentPower(GeneratorsOfMagma(FreeMagma(1))[1]);
 Error, Semigroups: SmallestIdempotentPower: usage,
 the argument <x> must be the generator of a semigroup,
 
+# elements: IsMultiplicativeZero
+gap> S := SymmetricInverseMonoid(3);;
+gap> x := MultiplicativeZero(S);
+<empty partial perm>
+gap> IsMultiplicativeZero(S, x);
+true
+gap> IsMultiplicativeZero(S, PartialPerm([1]));
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(x);
 
