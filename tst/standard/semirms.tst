@@ -2960,6 +2960,31 @@ gap> R := ReesMatrixSemigroup(S, [[S.1]]);
 gap> Size(R);
 infinity
 
+# Pickling
+gap> filename := Concatenation(SEMIGROUPS.PackageDir,
+> "/tst/standard/rms.p");;
+gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
+<Rees matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> WriteGenerators(filename, [R]);
+IO_OK
+gap> RR := ReadGenerators(filename)[1];
+<Rees matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> Matrix(RR) = Matrix(R); 
+true
+gap> UnderlyingSemigroup(RR) = UnderlyingSemigroup(R); 
+true
+gap> R := ReesZeroMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> WriteGenerators(filename, [R]);
+IO_OK
+gap> RR := ReadGenerators(filename)[1];
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> Matrix(RR) = Matrix(R); 
+true
+gap> UnderlyingSemigroup(RR) = UnderlyingSemigroup(R); 
+true
+gap> Exec("rm ", filename);
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
