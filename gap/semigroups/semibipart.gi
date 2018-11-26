@@ -614,3 +614,12 @@ end);
 
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> DegreeOfBipartition(Representative(S)));
+
+InstallMethod(\<, "for bipartition semigroups",
+[IsBipartitionSemigroup, IsBipartitionSemigroup],
+function(S, T)
+  if DegreeOfBipartitionSemigroup(S) <> DegreeOfBipartitionSemigroup(T) then
+    return DegreeOfBipartitionSemigroup(S) < DegreeOfBipartitionSemigroup(T);
+  fi;
+  TryNextMethod();
+end);

@@ -2609,6 +2609,28 @@ gap> GeneratorsOfInverseMonoid(S);
 gap> InverseMonoid(last) = S;
 true
 
+# Operator < 
+gap> A := Semigroup(Bipartition([[1, 2], [-1], [-2]]),
+> Bipartition([[1, 2, -1, -2]]));
+<bipartition semigroup of degree 2 with 2 generators>
+gap> B := Semigroup([Bipartition([[1, 2, -2], [-1]]),
+>  Bipartition([[1, 2, -1], [-2]])]);
+<bipartition semigroup of degree 2 with 2 generators>
+gap> C := Monoid([Bipartition([[1, -1]])]);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> A < B;
+true
+gap> B < A;
+false
+gap> B = A;
+false
+gap> C = A;
+false
+gap> C < A;
+true
+gap> C < B;
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

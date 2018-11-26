@@ -13,23 +13,25 @@
 ## whether they are acting or not, i.e. they should work for all semigroups.
 ## It is organized as follows:
 ##
-##   1. Helper functions
+##   1.  Helper functions
 ##
-##   2. Generators
+##   2.  Generators
 ##
-##   3. Semigroup/Monoid/InverseSemigroup/InverseMonoidByGenerators
+##   3.  Semigroup/Monoid/InverseSemigroup/InverseMonoidByGenerators
 ##
-##   4. RegularSemigroup
+##   4.  RegularSemigroup
 ##
-##   5. ClosureSemigroup/Monoid
+##   5.  ClosureSemigroup/Monoid
 ##
-##   6. ClosureInverseSemigroup/Monoid
+##   6.  ClosureInverseSemigroup/Monoid
 ##
-##   7. Subsemigroups
+##   7.  Subsemigroups
 ##
-##   8. Random semigroups and elements
+##   8.  Random semigroups and elements
 ##
-##   9. Changing representation: AsSemigroup, AsMonoid
+##   9.  Changing representation: AsSemigroup, AsMonoid
+##
+##   10. Operators
 ##
 #############################################################################
 
@@ -1354,4 +1356,36 @@ InstallMethod(AsMonoid, "for a filter, ring, and semigroup",
 [IsFunction and IsOperation, IsRing, IsSemigroup],
 function(filt, R, S)
   return Range(IsomorphismMonoid(filt, R, S));
+end);
+
+#############################################################################
+## 10. Operators
+#############################################################################
+
+InstallMethod(\<, "for semigroups in the same family", IsIdenticalObj,
+[IsSemigroup, IsSemigroup],
+function(S, T)
+  local SS, TT, s, t;
+
+  if not IsFinite(S) or not IsFinite(T) then
+    TryNextMethod();
+  fi;
+
+  SS := IteratorSorted(S);
+  TT := IteratorSorted(T);
+
+  while not (IsDoneIterator(SS) or IsDoneIterator(TT)) do
+    s := NextIterator(SS);
+    t := NextIterator(TT);
+    if s <> t then
+      return s < t;
+    fi;
+  od;
+
+  if IsDoneIterator(SS) and IsDoneIterator(TT) then
+    # This line is executed by the tests but does not show as such in the code
+    # coverage.
+    return false;  # S = T
+  fi;
+  return IsDoneIterator(SS);
 end);
