@@ -1729,8 +1729,7 @@ gap> Size(I);
 4
 
 # Issue 459: IsTrivial method broken for semigroups with 0 generators
-gap> M0 := Magma(FamilyObj([1]), []);
-<commutative semigroup with 0 generators>
+gap> M0 := Magma(FamilyObj([1]), []);;
 gap> IsTrivial(M0);
 false
 gap> Size(M0);
