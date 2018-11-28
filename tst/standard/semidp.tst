@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();;
 # Helper functions
 ################################################################################
 
-#T# semifp: Embedding and Projection testers
+#  semifp: Embedding and Projection testers
 gap> BruteForceHomomCheck := function(map)
 >   local s, t, smap, tmap, S;
 >   S := Source(map);
@@ -52,7 +52,7 @@ gap> ProductCheck := function(product, arguments, homom)
 # Testing errors
 ################################################################################
 
-#T# semidp: SEMIGROUPS.DirectProductOp, errors, 1
+#  semidp: SEMIGROUPS.DirectProductOp, errors, 1
 gap> SEMIGROUPS.DirectProductOp(fail, fail, fail, fail, fail);
 Error, Semigroups: SEMIGROUPS.DirectProductOp: usage,
 the first argument <S> must be a non-empty list,
@@ -60,7 +60,7 @@ gap> SEMIGROUPS.DirectProductOp([], fail, fail, fail, fail);
 Error, Semigroups: SEMIGROUPS.DirectProductOp: usage,
 the first argument <S> must be a non-empty list,
 
-#T# semidp: DirectProductOp, for transformation semigroups, errors, 1
+#  semidp: DirectProductOp, for transformation semigroups, errors, 1
 gap> DirectProductOp([], Monoid(Transformation([1, 1])));
 Error, Semigroups: DirectProductOp: usage,
 the first argument must be a non-empty list,
@@ -76,7 +76,7 @@ gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
 Error, Semigroups: DirectProductOp: usage,
 the second argument must be one of the semigroups contained in <list>,
 
-#T# semidp: DirectProductOp, for partial perm semigroups, errors, 1
+#  semidp: DirectProductOp, for partial perm semigroups, errors, 1
 gap> DirectProductOp([], Semigroup(PartialPerm([1 .. 3])));
 Error, Semigroups: DirectProductOp: usage,
 the first argument must be a non-empty list,
@@ -85,7 +85,7 @@ gap> DirectProductOp([Semigroup(IdentityTransformation)],
 Error, Semigroups: DirectProductOp: usage,
 the second argument must be one of the semigroups contained in <list>,
 
-#T# semidp: DirectProductOp, for bipartition semigroups, errors, 1
+#  semidp: DirectProductOp, for bipartition semigroups, errors, 1
 gap> DirectProductOp([], PartitionMonoid(1));
 Error, Semigroups: DirectProductOp: usage,
 the first argument must be a non-empty list,
@@ -93,7 +93,7 @@ gap> DirectProductOp([PartitionMonoid(1)], PartitionMonoid(2));
 Error, Semigroups: DirectProductOp: usage,
 the second argument must be one of the semigroups contained in <list>,
 
-#T# semidp: DirectProductOp, for PBR semigroups, errors, 1
+#  semidp: DirectProductOp, for PBR semigroups, errors, 1
 gap> DirectProductOp([], FullPBRMonoid(1));
 Error, Semigroups: DirectProductOp: usage,
 the first argument must be a non-empty list,
@@ -101,7 +101,7 @@ gap> DirectProductOp([FullPBRMonoid(1)], FullPBRMonoid(2));
 Error, Semigroups: DirectProductOp: usage,
 the second argument must be one of the semigroups contained in <list>,
 
-#T# semidp: DirectProductOp, for a mix of semigroups, errors, 1
+#  semidp: DirectProductOp, for a mix of semigroups, errors, 1
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> T := ReesMatrixSemigroup(SymmetricGroup(4), [[(1, 4, 3)], [()]]);
@@ -120,7 +120,7 @@ Error, no 2nd choice method found for `DirectProductOp' on 2 arguments
 # Testing transformation semigroups
 ################################################################################
 
-#T# semidp: DirectProduct, for transformation semigroups, 1
+#  semidp: DirectProduct, for transformation semigroups, 1
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 2);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
@@ -130,7 +130,7 @@ true
 gap> S = D;
 true
 
-#T# semidp: DirectProduct, for transformation semigroups, 2
+#  semidp: DirectProduct, for transformation semigroups, 2
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 2);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
@@ -169,7 +169,7 @@ gap> IndecomposableElements(D);
   Transformation( [ 1, 1, 2, 4, 4, 5, 7, 7, 7 ] ), 
   Transformation( [ 1, 1, 2, 4, 4, 5, 7, 7, 8 ] ) ]
 
-#T# semidp: DirectProduct, for transformation semigroups, 3
+#  semidp: DirectProduct, for transformation semigroups, 3
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 3);
 <commutative non-regular transformation semigroup of size 3, degree 4 with 2 
  generators>
@@ -186,7 +186,7 @@ gap> D := Semigroup(D);
 gap> IsZeroSemigroup(D) and Size(D) = 9;
 true
 
-#T# semidp: DirectProduct, for transformation semigroups, 4
+#  semidp: DirectProduct, for transformation semigroups, 4
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
 gap> D := DirectProduct(S, S);;
@@ -207,7 +207,7 @@ gap> Set(GeneratorsOfMonoid(D));
 gap> Size(D) = Size(S) ^ 2 and Size(D) = 27 ^ 2;
 true
 
-#T# semidp: DirectProduct, for transformation semigroups, 5
+#  semidp: DirectProduct, for transformation semigroups, 5
 gap> S := Semigroup([
 > Transformation([1, 2, 3, 3, 3]),
 > Transformation([1, 1, 3, 3, 3])]);
@@ -217,7 +217,7 @@ gap> D := DirectProduct(S, S);
 gap> ProductCheck(D, [S, S], true);
 true
 
-#T# semidp: DirectProduct, for transformation semigroups, 6
+#  semidp: DirectProduct, for transformation semigroups, 6
 gap> list := [
 >  Semigroup([Transformation([1, 2, 3, 3, 3])]),
 >  Semigroup([Transformation([2, 1])])];;
@@ -231,7 +231,7 @@ gap> Elements(D);
 gap> Size(D);
 2
 
-#T# semidp: DirectProduct, for transformation semigroups, 7
+#  semidp: DirectProduct, for transformation semigroups, 7
 gap> list := [
 >  Semigroup([Transformation([2, 1])]),
 >  Semigroup([Transformation([1, 2, 3, 3, 3])])];;
@@ -245,7 +245,7 @@ gap> Elements(D);
 gap> Size(D);
 2
 
-#T# semidp: DirectProduct, for transformation semigroups, 8
+#  semidp: DirectProduct, for transformation semigroups, 8
 gap> list := [
 >  Semigroup([Transformation([1, 2, 3, 3, 3])]),
 >  Semigroup([Transformation([2, 1])]),
@@ -270,7 +270,7 @@ gap> Elements(D);
 # Testing partial perm semigroups
 ################################################################################
 
-#T# semidp: DirectProduct, for partial perm semigroups, 1
+#  semidp: DirectProduct, for partial perm semigroups, 1
 gap> S := Semigroup([PartialPerm([3], [3]), PartialPerm([2], [1])]);;
 gap> Size(S);
 3
@@ -280,7 +280,7 @@ true
 gap> S = D;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 2
+#  semidp: DirectProduct, for partial perm semigroups, 2
 gap> S := Semigroup([PartialPerm([3], [3]), PartialPerm([2], [1])]);;
 gap> D := DirectProduct(S, S);;
 gap> ProductCheck(D, [S, S], true);
@@ -288,7 +288,7 @@ true
 gap> Size(Semigroup(D)) = 9;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 3
+#  semidp: DirectProduct, for partial perm semigroups, 3
 gap> T := SymmetricInverseMonoid(3);
 <symmetric inverse monoid of degree 3>
 gap> D := DirectProduct(T, T, T);
@@ -300,7 +300,7 @@ gap> D := InverseMonoid(D);
 gap> Size(D) = Size(T) ^ 3;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 4
+#  semidp: DirectProduct, for partial perm semigroups, 4
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 3);
 <commutative non-regular partial perm semigroup of size 3, rank 2 with 2 
  generators>
@@ -314,7 +314,7 @@ gap> D;
 gap> ProductCheck(D, [S, T, S], false);
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 5
+#  semidp: DirectProduct, for partial perm semigroups, 5
 gap> T := SymmetricInverseMonoid(3);
 <symmetric inverse monoid of degree 3>
 gap> T := SemigroupIdeal(T, PartialPerm([1, 2]));;
@@ -326,13 +326,13 @@ gap> D := Semigroup(D);;
 gap> Size(D) = Size(T) ^ 3;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 6
+#  semidp: DirectProduct, for partial perm semigroups, 6
 gap> S := DirectProduct(SymmetricInverseMonoid(3), SymmetricInverseMonoid(3));
 <inverse partial perm monoid of rank 6 with 6 generators>
 gap> Size(S) = 34 ^ 2;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 7
+#  semidp: DirectProduct, for partial perm semigroups, 7
 gap> S := Semigroup([PartialPerm([3], [3]), PartialPerm([2], [1])]);
 <partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
@@ -340,7 +340,7 @@ gap> Size(S);
 gap> DirectProduct(S) = S;
 true
 
-#T# semidp: DirectProduct, for partial perm semigroups, 8
+#  semidp: DirectProduct, for partial perm semigroups, 8
 gap> S := Semigroup([PartialPerm([3], [3]), PartialPerm([2], [1])]);
 <partial perm semigroup of rank 2 with 2 generators>
 gap> T := DirectProduct(S, S);
@@ -362,7 +362,7 @@ gap> D := Semigroup(D);
 gap> Size(D) = Size(S) ^ 3;
 true
 
-#T# semidp: DirectProductOp, for partial perm semigroups, 9
+#  semidp: DirectProductOp, for partial perm semigroups, 9
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 5, 3);
 <commutative non-regular partial perm semigroup of size 7, rank 7 with 1 
  generator>
@@ -386,7 +386,7 @@ true
 # Testing bipartition semigroups
 ################################################################################
 
-#T# semidp: DirectProductOp, for bipartition semigroups, 1
+#  semidp: DirectProductOp, for bipartition semigroups, 1
 gap> S := Semigroup([
 >  Bipartition([[1, 3], [2, 4, -2], [5, -1, -3, -4], [-5]]),
 >  Bipartition([[1, 2, 3, 4, 5, -1, -5], [-2], [-3], [-4]]),
@@ -413,7 +413,7 @@ gap> D := Semigroup(D);
 gap> Size(D);
 100
 
-#T# semidp: DirectProductOp, for bipartition semigroups, 2
+#  semidp: DirectProductOp, for bipartition semigroups, 2
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 3);
 <commutative non-regular bipartition semigroup of size 3, degree 4 with 2 
  generators>
@@ -455,7 +455,7 @@ gap> D := Semigroup(D);
 gap> Size(D);
 225
 
-#T# semidp: DirectProductOp, for bipartition semigroups, 3
+#  semidp: DirectProductOp, for bipartition semigroups, 3
 gap> S := PartitionMonoid(2);
 <regular bipartition *-monoid of size 15, degree 2 with 3 generators>
 gap> D := DirectProduct(S, S, S, S);;
@@ -470,7 +470,7 @@ gap> D := Monoid(D);
 gap> Size(D) = 15 ^ 4;
 true
 
-#T# semidp: DirectProductOp, for bipartition semigroups, 4
+#  semidp: DirectProductOp, for bipartition semigroups, 4
 gap> list := [
 >  Semigroup([
 >    Bipartition([[1, 2, 3, -3], [-1, -2]]),
@@ -488,7 +488,7 @@ true
 # Testing PBR semigroups
 ################################################################################
 
-#T# semidp: DirectProductOp, for PBR semigroups, 1
+#  semidp: DirectProductOp, for PBR semigroups, 1
 gap> S := FullPBRMonoid(1);;
 gap> D := DirectProduct(S);;
 gap> IsRegularSemigroup(D);
@@ -507,7 +507,7 @@ true
 gap> Size(D);
 256
 
-#T# semidp: DirectProductOp, for PBR semigroups, 2
+#  semidp: DirectProductOp, for PBR semigroups, 2
 gap> list := [
 >  Semigroup([
 >    PBR([[1, 2], [-2, 1, 2]], [[-1, 1], [-2, -1, 1]]),
@@ -526,7 +526,7 @@ true
 # Testing mixing semigroups
 ################################################################################
 
-#T# semidp: DirectProductOp, for a mix of semigroups, 1
+#  semidp: DirectProductOp, for a mix of semigroups, 1
 gap> S := [
 > PartitionMonoid(1),
 > FullTransformationMonoid(1),
@@ -544,7 +544,7 @@ true
 gap> Size(D);
 4
 
-#T# semidp: DirectProductOp, for a mix of semigroups, 2
+#  semidp: DirectProductOp, for a mix of semigroups, 2
 gap> S := [
 > PartitionMonoid(1),
 > FullPBRMonoid(1),
@@ -555,7 +555,7 @@ gap> D := DirectProductOp(S, S[2]);
 gap> ProductCheck(D, S, false);
 true
 
-#T# semidp: DirectProductOp, for a mix of semigroups, 3
+#  semidp: DirectProductOp, for a mix of semigroups, 3
 gap> S := PartitionMonoid(1);;
 gap> T := FullTransformationMonoid(1);;
 gap> D := DirectProduct(S, T);;
@@ -581,7 +581,7 @@ true
 
 # Embedding
 
-#T# semidp: Embedding, for a semigroup with direct product info, 1
+#  semidp: Embedding, for a semigroup with direct product info, 1
 gap> S := LeftZeroSemigroup(3);;
 gap> Embedding(S, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -616,7 +616,7 @@ Error, Semigroups: Embedding: usage,
 the direct product information for <D> has become corrupted,
 please re-create the object,
 
-#T# semidp: Embedding and Projection, for a semigroup with direct product info
+#  semidp: Embedding and Projection, for a semigroup with direct product info
 gap> list := [
 >  Semigroup([
 >    Transformation([5, 1, 4, 1, 1]),
@@ -676,7 +676,7 @@ true
 
 # Projection
 
-#T# semidp: Projection, for a semigroup with direct product info, 1
+#  semidp: Projection, for a semigroup with direct product info, 1
 gap> S := RightZeroSemigroup(3);;
 gap> Projection(S, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -713,7 +713,7 @@ please re-create the object,
 
 # Size
 
-#T# semidp: Size, for a semigroup with direct product info, 1
+#  semidp: Size, for a semigroup with direct product info, 1
 gap> S := Semigroup(FullTransformationMonoid(2));;
 gap> D := DirectProduct(S, S, S);;
 gap> HasSize(D);
@@ -723,33 +723,33 @@ true
 gap> Size(D);
 64
 
-#T# semidp: Size, for a semigroup with direct product info, 2
+#  semidp: Size, for a semigroup with direct product info, 2
 gap> S := Monoid([Transformation([2, 1]), Transformation([1, 1])]);;
 gap> Size(DirectProduct(S));
 4
 
 # IsCommutative
 
-#T# semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 1
+#  semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 1
 gap> S := IdempotentGeneratedSubsemigroup(DualSymmetricInverseMonoid(4));;
 gap> T := SymmetricInverseMonoid(1);;
 gap> D := DirectProduct(S, T);;
 gap> IsCommutativeSemigroup(D);
 true
 
-#T# semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 2
+#  semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 2
 gap> S := IdempotentGeneratedSubsemigroup(DualSymmetricInverseMonoid(4));;
 gap> T := FullTransformationMonoid(2);;
 gap> D := DirectProduct(S, T);;
 gap> IsCommutativeSemigroup(D);
 false
 
-#T# semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 3
+#  semidp: IsCommutativeSemigroup, for a semigroup with direct product info, 3
 gap> S := Monoid([Transformation([2, 1]), Transformation([1, 1])]);;
 gap> IsCommutativeSemigroup(DirectProduct(S));
 false
 
-#T# semidp: DirectProduct, for a semigroup with repeated generators
+#  semidp: DirectProduct, for a semigroup with repeated generators
 gap> S := Semigroup([
 >  PBR([[-2, 1, 2], [-2, -1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
 >  PBR([[-2, -1, 1, 2], [-2, -1, 1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
@@ -763,7 +763,7 @@ gap> Size(S);
 gap> Size(Semigroup(DirectProduct(S, S)));
 225
 
-#T# semidp: DirectProduct, for very large semigroups
+#  semidp: DirectProduct, for very large semigroups
 gap> S := FullTransformationMonoid(50);;
 gap> S := DirectProduct(S, S, S);;
 gap> Size(S);
@@ -772,7 +772,7 @@ gap> Size(S);
 000000000000000000000000000000000000000000000000000000000000000000000000000000\
 000000000000000000000
 
-#T# SEMIGROUPS_UnbindVariables
+#  SEMIGROUPS_UnbindVariables
 gap> Unbind(list);
 gap> Unbind(S);
 gap> Unbind(T);

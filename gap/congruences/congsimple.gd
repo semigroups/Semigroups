@@ -57,8 +57,6 @@ function(S, pairs)
   return cong;
 end;
 
-#
-
 SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
   local fam, cong;
   # Construct the object
@@ -70,8 +68,6 @@ SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
   SetRange(cong, S);
   return cong;
 end;
-
-#
 
 SEMIGROUPS.SimpleClassFromRMSclass := function(cong, rmsclass)
   local fam, class;

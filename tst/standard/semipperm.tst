@@ -1990,7 +1990,7 @@ MappingByFunction( <bipartition semigroup of degree 3 with 3 generators>,
 gap> I := SemigroupIdeal(T, T.1 * T.2 * T.3);;
 gap> IsomorphismPartialPermSemigroup(I);;
 
-#T# semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 1
+#  semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 1
 gap> S := DihedralGroup(8);
 <pc group of size 8 with 3 generators>
 gap> IsGroupAsSemigroup(S);
@@ -2005,7 +2005,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 2
+#  semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 2
 gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),
 >  PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;
@@ -2021,7 +2021,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 1
+#  semipperm: IsomorphismPartialPermSemigroup, for a zero group, 1
 gap> S := Range(InjectionZeroMagma(SymmetricGroup(5)));
 <Sym( [ 1 .. 5 ] ) with 0 adjoined>
 gap> map := IsomorphismPartialPermSemigroup(S);
@@ -2035,7 +2035,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 2
+#  semipperm: IsomorphismPartialPermSemigroup, for a zero group, 2
 gap> S := Range(InjectionZeroMagma(TrivialGroup(IsPcGroup)));
 <<pc group of size 1 with 0 generators> with 0 adjoined>
 gap> map := IsomorphismPartialPermSemigroup(S);;
@@ -2046,7 +2046,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 3
+#  semipperm: IsomorphismPartialPermSemigroup, for a zero group, 3
 gap> S := Range(InjectionZeroMagma(SL(2, 2)));
 <SL(2,2) with 0 adjoined>
 gap> map := IsomorphismPartialPermSemigroup(S);
@@ -2143,7 +2143,7 @@ gap> y := Iterator(S);
 <iterator>
 gap> for x in y do od;
 
-#T# GeneratorsOfGroup
+#  GeneratorsOfGroup
 gap> S := Group([], PartialPerm([1, 2]));;
 gap> GeneratorsOfGroup(S);
 [  ]

@@ -432,8 +432,6 @@ function(list, S)
   return prod;
 end);
 
-#
-
 InstallMethod(Embedding,
 "for a semigroup with semigroup direct product info and a pos int",
 [IsSemigroup and HasSemigroupDirectProductInfo, IsPosInt],
@@ -497,8 +495,6 @@ function(D, i)
   info.projections[i] := map;
   return map;
 end);
-
-#
 
 InstallMethod(Size,
 "for a semigroup with semigroup direct product info",

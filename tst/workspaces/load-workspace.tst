@@ -24,7 +24,7 @@ gap> SEMIGROUPS.StartTest();
 ##  file.
 #############################################################################
 
-#T# Union-find structures
+#  Union-find structures
 gap> UF_TABLE(uftable1);
 [ 1, 2, 3, 2, 5, 6, 7, 8, 2, 10 ]
 gap> UF_TABLE(uftable2);
@@ -36,7 +36,7 @@ gap> UF_FIND(uftable3, 20222);
 gap> UF_FIND(uftable3, 234);
 234
 
-#T# Congruences from libsemigroups
+#  Congruences from libsemigroups
 gap> NrEquivalenceClasses(cong);
 4
 gap> [Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
@@ -51,7 +51,7 @@ false
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
-#T# Semigroups from libsemigroups
+#  Semigroups from libsemigroups
 gap> Size(T); 
 9
 gap> NrIdempotents(T);
@@ -83,7 +83,7 @@ gap> idd := Idempotents(DD);
 gap> ForAll(idd, x -> x in U);
 true
 
-#T# Bipartitions
+#  Bipartitions
 gap> y;
 <bipartition: [ 1, 3 ], [ 2, 4, -1 ], [ 5, 6, -2, -3 ], [ -4, -5 ], [ -6 ]>
 gap> IsBipartition(y);
@@ -127,7 +127,7 @@ false
 gap> IsPartialPermBipartition(y);
 false
 
-#T# Blocks
+#  Blocks
 gap> b;
 <blocks: [ 1*, 3* ], [ 2, 4, 7 ], [ 5*, 6*, 8*, 9* ], [ 10* ]>
 gap> ProjectionFromBlocks(b);

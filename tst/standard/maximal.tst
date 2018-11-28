@@ -853,7 +853,7 @@ gap> max := MaximalSubsemigroups(R, rec(types := [6], contain := contain));
 gap> M in max;
 true
 
-#T# maximal: maximal subsemigroups that contain all of a non-trivial non-maximal
+#  maximal: maximal subsemigroups that contain all of a non-trivial non-maximal
 # regular D-class
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 2])]);;
 gap> max := MaximalSubsemigroups(S, rec(contain := GeneratorsOfMonoid(S)));;

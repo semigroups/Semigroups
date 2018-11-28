@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# properties: IndecomposableElements, for an fp semigroup, 1
+#  properties: IndecomposableElements, for an fp semigroup, 1
 gap> F := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> S := F / [];;
@@ -46,7 +46,7 @@ gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];
 gap> IndecomposableElements(S);
 [  ]
 
-#T# SEMIGROUPS_UnbindVariables
+#  SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(S);
 
