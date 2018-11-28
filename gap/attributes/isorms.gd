@@ -40,10 +40,9 @@ DeclareAttribute("IsomorphismReesMatrixSemigroupOverPermGroup", IsSemigroup);
 DeclareAttribute("IsomorphismReesZeroMatrixSemigroupOverPermGroup",
                  IsSemigroup);
 
-DeclareOperation("CanonicalMatrix", [IsList, IsPermGroup]);
-DeclareAttribute("CanonicalMatrix", IsReesZeroMatrixSemigroup);
-DeclareAttribute("CanonicalMatrix", IsReesMatrixSemigroup);
+DeclareAttribute("ReesZeroMatrixSemigroupCanonicalLabelling",
+                 IsReesZeroMatrixSemigroup);
+DeclareOperation("OnReesZeroMatrixSemigroups",
+                 [IsReesZeroMatrixSemigroup, IsPerm]);
 DeclareAttribute("CanonicalReesZeroMatrixSemigroup",
                  IsReesZeroMatrixSemigroup);
-DeclareAttribute("CanonicalReesMatrixSemigroup",
-                 IsReesMatrixSemigroup);

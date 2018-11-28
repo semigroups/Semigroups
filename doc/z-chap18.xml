@@ -49,6 +49,9 @@
     <#Include Label = "ELM_LIST">
     <#Include Label = "CompositionMapping2">
     <#Include Label = "ImagesElm">
+    <#Include Label = "ReesZeroMatrixSemigroupCanonicalLabelling">
+    <#Include Label = "CanonicalReesZeroMatrixSemigroup">
+    <#Include Label = "OnReesZeroMatrixSemigroups">
 
     <!--********************************************************************-->
 

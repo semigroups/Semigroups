@@ -1276,162 +1276,217 @@ function(S)
            end);
 end);
 
-# Go from a triple in I x J x {1 .. |G| + 1} to an integer in
-# [1 .. |I| * |J| * (|G| + 1)]. Inverse of Unflatten3DPoint.
-SEMIGROUPS.Flatten3DPoint := function(dimensions, point)
-  return (point[1] - 1) * dimensions[2] * dimensions[3] +
-    (point[2] - 1) * dimensions[3] + (point[3] - 1) + 1;
-end;
-
-# Go from an integer in [1 .. |I| * |J| * (|G| + 1)] to an element of
-# I x J x {1 .. |G| + 1}. Inverse of Flatten3DPoint.
-SEMIGROUPS.Unflatten3DPoint := function(dimensions, value)
-   local ret;
-   ret    := [];
-   value  := value - 1;
-   ret[3] := value mod dimensions[3] + 1;
-   value  := value - (ret[3] - 1);
-   value  := value / dimensions[3];
-   ret[2] := value mod dimensions[2] + 1;
-   value  := value - (ret[2] - 1);
-   ret[1] := value / dimensions[2] + 1;
-   return ret;
-end;
-
-# Unflatten the entries of a set representing a matrix over a 0-group and return
-# the corresponding matrix. Inverse of ZeroGroupMatrixToSet.
-SEMIGROUPS.SetToZeroGroupMatrix := function(set, nr_rows, nr_cols, G)
-  local 0G, mat, dim, point, x;
-  0G  := Concatenation([0], Enumerator(G));
-  mat := List([1 .. nr_rows], a -> EmptyPlist(nr_cols));
-  dim := [nr_rows, nr_cols, Size(G) + 1];
-  for x in set do
-    point                   := SEMIGROUPS.Unflatten3DPoint(dim, x);
-    mat[point[1]][point[2]] := 0G[point[3]];
-  od;
-  return mat;
-end;
-
-# Flatten the entries of a matrix over a 0-group and return as a set of
-# integers. Inverse of SetToZeroGroupMatrix.
-SEMIGROUPS.ZeroGroupMatrixToSet := function(mat, nr_rows, nr_cols, G)
-  local set, dim, i, j;
-  set := [];
-  dim := [nr_rows, nr_cols, Size(G) + 1];
-  for i in [1 .. nr_rows] do
-    for j in [1 .. nr_cols] do
-      if mat[i][j] = 0 then
-        Add(set, SEMIGROUPS.Flatten3DPoint(dim, [i, j, 1]));
-      else
-        Add(set,
-          SEMIGROUPS.Flatten3DPoint(dim, [i, j, 1 + Position(Enumerator(G),
-                                                             mat[i][j])]));
-      fi;
-    od;
-  od;
-  return set;
-end;
-
-# The representation of the group ((G \wr S_m) \times (G \wr S_n)) \rtimes
-# Aut(G) acting on [1 .. |I| * |J| * (|G| + 1)] where the integers correspond to
-# entries of a J x I matrix with entries from the 0-group G_0.
-SEMIGROUPS.RZMSMatrixIsomorphismGroup := function(nr_rows, nr_cols, G)
-  local ApplyPermWholeDimension, ApplyPermSingleAssignDimension, dim, S, rows,
-  cols, gens, elms, rmlt, grswaps, lmlt, gcswaps, auto;
-
-  ApplyPermWholeDimension := function(dimensions, dim, perm)
-    local map, point, i;
-      map := [];
-      for i in [1 .. Product(dimensions)] do
-        point      := SEMIGROUPS.Unflatten3DPoint(dimensions, i);
-        point[dim] := point[dim] ^ perm;
-        map[i]     := SEMIGROUPS.Flatten3DPoint(dimensions, point);
-      od;
-    return PermList(map);
-  end;
-
-  ApplyPermSingleAssignDimension  := function(dimensions, dim,
-                                              perm, fixdim, fixval)
-    local map, point, i;
-    map := [];
-    for i in [1 .. Product(dimensions)] do
-      point := SEMIGROUPS.Unflatten3DPoint(dimensions, i);
-      if point[fixdim] = fixval then
-        point[dim] := point[dim] ^ perm;
-      fi;
-      map[i] := SEMIGROUPS.Flatten3DPoint(dimensions, point);
-    od;
-    return PermList(map);
-  end;
-
-  dim := [nr_rows, nr_cols, Size(G) + 1];
-  # Row Swaps
-  S    := SymmetricGroup(nr_rows);
-  rows := List(GeneratorsOfGroup(S),
-               x -> ApplyPermWholeDimension(dim, 1, x));
-
-  # Col swaps
-  S    := SymmetricGroup(nr_cols);
-  cols := List(GeneratorsOfGroup(S),
-               x -> ApplyPermWholeDimension(dim, 2, x));
-
-  gens := GeneratorsOfGroup(G);
-  elms := ShallowCopy(Enumerator(G));
-
-  # Apply g to each row (left multiplication by inverse):
-  rmlt := List(gens, g -> PermList(Concatenation([1],
-          1 + List(elms, e -> Position(elms, g ^ -1 * e)))));
-  grswaps := List(rmlt, g -> ApplyPermSingleAssignDimension(dim, 3, g, 1, 1));
-
-  # Apply g to each col (right multiplication):
-  lmlt := List(gens, g -> PermList(Concatenation([1],
-          1 + List(elms, e -> Position(elms, e * g)))));
-  gcswaps := List(lmlt, g -> ApplyPermSingleAssignDimension(dim, 3, g, 2, 1));
-
-  # Automorphisms of G
-  S    := AutomorphismGroup(G);
-  auto := Filtered(GeneratorsOfGroup(S), x -> not IsInnerAutomorphism(x));
-  auto := List(auto, x -> List(Enumerator(G), a ->
-          Position(Enumerator(G), a ^ x)));
-  Apply(auto, a -> PermList(Concatenation([1], a + 1)));
-  auto := List(auto, x -> ApplyPermWholeDimension(dim, 3, x));
-
-  # The RZMS matrix isomorphism group
-  return Group(Flat([rows, cols, grswaps, gcswaps, auto]));
-end;
-
-InstallMethod(CanonicalMatrix,
-"for a list and a group",
-[IsList, IsPermGroup],
-function(M, G)
-  local m, n, setM, GG;
-  m := Length(M);
-  n := Length(M[1]);
-  if not ForAll(M{[2 .. m]}, row -> Length(row) = n) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
-                  "the first argument must be a list of lists of identical ",
-                  "length,");
-  elif not ForAll(M, row -> ForAll(row, x -> x in G or x = 0)) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
-                  "the first argument must be a list of lists containing only",
-                  " elements of the group (which is the second argument) ",
-                  "or zero,");
-  fi;
-  setM := SEMIGROUPS.ZeroGroupMatrixToSet(M, m, n, G);
-  GG   := SEMIGROUPS.RZMSMatrixIsomorphismGroup(m, n, G);
-  return SEMIGROUPS.SetToZeroGroupMatrix(SmallestImageSet(GG, setM), m, n, G);
-end);
-
-InstallMethod(CanonicalMatrix,
-"for a Rees zero matrix semigroup",
+InstallMethod(ReesZeroMatrixSemigroupCanonicalLabelling,
+"for a Rees zero matrix semigroup and a perm",
 [IsReesZeroMatrixSemigroup],
 function(S)
+  local Flatten3DPoint, Unflatten3DPoint, SetToZeroGroupMatrix,
+  ZeroGroupMatrixToSet, RZMSMatrixIsomorphismGroup, M, G, m, n, setM, GG;
+  # Go from a triple in I x J x {1 .. |G| + 1} to an integer in
+  # [1 .. |I| * |J| * (|G| + 1)]. Inverse of Unflatten3DPoint.
+  Flatten3DPoint := function(dimensions, point)
+    return (point[1] - 1) * dimensions[2] * dimensions[3] +
+      (point[2] - 1) * dimensions[3] + (point[3] - 1) + 1;
+  end;
+
+  # Go from an integer in [1 .. |I| * |J| * (|G| + 1)] to an element of
+  # I x J x {1 .. |G| + 1}. Inverse of Flatten3DPoint.
+  Unflatten3DPoint := function(dimensions, value)
+     local ret;
+     ret    := [];
+     value  := value - 1;
+     ret[3] := value mod dimensions[3] + 1;
+     value  := value - (ret[3] - 1);
+     value  := value / dimensions[3];
+     ret[2] := value mod dimensions[2] + 1;
+     value  := value - (ret[2] - 1);
+     ret[1] := value / dimensions[2] + 1;
+     return ret;
+  end;
+
+  # Unflatten the entries of a set representing a matrix over a 0-group and
+  # return the corresponding matrix. Inverse of ZeroGroupMatrixToSet.
+  SetToZeroGroupMatrix := function(set, nr_rows, nr_cols, G)
+    local 0G, mat, dim, point, x;
+    0G  := Concatenation([0], Enumerator(G));
+    mat := List([1 .. nr_rows], a -> EmptyPlist(nr_cols));
+    dim := [nr_rows, nr_cols, Size(G) + 1];
+    for x in set do
+      point                   := Unflatten3DPoint(dim, x);
+      mat[point[1]][point[2]] := 0G[point[3]];
+    od;
+    return mat;
+  end;
+
+  # Flatten the entries of a matrix over a 0-group and return as a set of
+  # integers. Inverse of SetToZeroGroupMatrix.
+  ZeroGroupMatrixToSet := function(mat, nr_rows, nr_cols, G)
+    local set, dim, i, j;
+    set := [];
+    dim := [nr_rows, nr_cols, Size(G) + 1];
+    for i in [1 .. nr_rows] do
+      for j in [1 .. nr_cols] do
+        if mat[i][j] = 0 then
+          Add(set, Flatten3DPoint(dim, [i, j, 1]));
+        else
+          Add(set,
+            Flatten3DPoint(dim, [i, j, 1 + Position(Enumerator(G),
+                                                               mat[i][j])]));
+        fi;
+      od;
+    od;
+    return set;
+  end;
+
+  # The representation of the group ((G \wr S_m) \times (G \wr S_n)) \rtimes
+  # Aut(G) acting on [1 .. |I| * |J| * (|G| + 1)] where the integers correspond
+  # to entries of a J x I matrix with entries from the 0-group G_0.
+  RZMSMatrixIsomorphismGroup := function(nr_rows, nr_cols, G)
+    local ApplyPermWholeDimension, ApplyPermSingleAssignDimension, dim, S, rows,
+    cols, gens, elms, rmlt, grswaps, lmlt, gcswaps, auto;
+
+    ApplyPermWholeDimension := function(dimensions, dim, perm)
+      local map, point, i;
+        map := [];
+        for i in [1 .. Product(dimensions)] do
+          point      := Unflatten3DPoint(dimensions, i);
+          point[dim] := point[dim] ^ perm;
+          map[i]     := Flatten3DPoint(dimensions, point);
+        od;
+      return PermList(map);
+    end;
+
+    ApplyPermSingleAssignDimension  := function(dimensions, dim,
+                                                perm, fixdim, fixval)
+      local map, point, i;
+      map := [];
+      for i in [1 .. Product(dimensions)] do
+        point := Unflatten3DPoint(dimensions, i);
+        if point[fixdim] = fixval then
+          point[dim] := point[dim] ^ perm;
+        fi;
+        map[i] := Flatten3DPoint(dimensions, point);
+      od;
+      return PermList(map);
+    end;
+
+    dim := [nr_rows, nr_cols, Size(G) + 1];
+    # Row Swaps
+    S    := SymmetricGroup(nr_rows);
+    rows := List(GeneratorsOfGroup(S),
+                 x -> ApplyPermWholeDimension(dim, 1, x));
+
+    # Col swaps
+    S    := SymmetricGroup(nr_cols);
+    cols := List(GeneratorsOfGroup(S),
+                 x -> ApplyPermWholeDimension(dim, 2, x));
+
+    gens := GeneratorsOfGroup(G);
+    elms := ShallowCopy(Enumerator(G));
+
+    # Apply g to each row (left multiplication by inverse):
+    rmlt := List(gens, g -> PermList(Concatenation([1],
+            1 + List(elms, e -> Position(elms, g ^ -1 * e)))));
+    grswaps := List(rmlt, g -> ApplyPermSingleAssignDimension(dim, 3, g, 1, 1));
+
+    # Apply g to each col (right multiplication):
+    lmlt := List(gens, g -> PermList(Concatenation([1],
+            1 + List(elms, e -> Position(elms, e * g)))));
+    gcswaps := List(lmlt, g -> ApplyPermSingleAssignDimension(dim, 3, g, 2, 1));
+
+    # Automorphisms of G
+    S    := AutomorphismGroup(G);
+    auto := Filtered(GeneratorsOfGroup(S), x -> not IsInnerAutomorphism(x));
+    auto := List(auto, x -> List(Enumerator(G), a ->
+            Position(Enumerator(G), a ^ x)));
+    Apply(auto, a -> PermList(Concatenation([1], a + 1)));
+    auto := List(auto, x -> ApplyPermWholeDimension(dim, 3, x));
+
+    # The RZMS matrix isomorphism group
+    return Group(Flat([rows, cols, grswaps, gcswaps, auto]));
+  end;
+
+  M    := Matrix(S);
+  G    := UnderlyingSemigroup(S);
   if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
+    ErrorNoReturn("Semigroups: ReesZeroMatrixSemigroupCanonicalLabelling: ",
+                  "usage,\n",
                   "the argument must be a Rees zero matrix semigroup with ",
                   "underlying semigroup which is a group,");
   fi;
-  return CanonicalMatrix(Matrix(S), UnderlyingSemigroup(S));
+  m    := Length(M);
+  n    := Length(M[1]);
+  setM := ZeroGroupMatrixToSet(M, m, n, G);
+  GG   := RZMSMatrixIsomorphismGroup(m, n, G);
+  return ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(
+                                 SmallestImageSet(GG, setM), m, n, G));
+end);
+
+InstallMethod(OnReesZeroMatrixSemigroups,
+"for a Rees zero matrix semigroup and a perm",
+[IsReesZeroMatrixSemigroup, IsPerm],
+function(S, g)
+  local Flatten3DPoint, Unflatten3DPoint, SetToZeroGroupMatrix,
+  ZeroGroupMatrixToSet, G, M, m, n, setM;
+  Flatten3DPoint := function(dimensions, point)
+    return (point[1] - 1) * dimensions[2] * dimensions[3] +
+      (point[2] - 1) * dimensions[3] + (point[3] - 1) + 1;
+  end;
+
+  Unflatten3DPoint := function(dimensions, value)
+     local ret;
+     ret    := [];
+     value  := value - 1;
+     ret[3] := value mod dimensions[3] + 1;
+     value  := value - (ret[3] - 1);
+     value  := value / dimensions[3];
+     ret[2] := value mod dimensions[2] + 1;
+     value  := value - (ret[2] - 1);
+     ret[1] := value / dimensions[2] + 1;
+     return ret;
+  end;
+
+  SetToZeroGroupMatrix := function(set, nr_rows, nr_cols, G)
+    local 0G, mat, dim, point, x;
+    0G  := Concatenation([0], Enumerator(G));
+    mat := List([1 .. nr_rows], a -> EmptyPlist(nr_cols));
+    dim := [nr_rows, nr_cols, Size(G) + 1];
+    for x in set do
+      point                   := Unflatten3DPoint(dim, x);
+      mat[point[1]][point[2]] := 0G[point[3]];
+    od;
+    return mat;
+  end;
+
+  ZeroGroupMatrixToSet := function(mat, nr_rows, nr_cols, G)
+    local set, dim, i, j;
+    set := [];
+    dim := [nr_rows, nr_cols, Size(G) + 1];
+    for i in [1 .. nr_rows] do
+      for j in [1 .. nr_cols] do
+        if mat[i][j] = 0 then
+          Add(set, Flatten3DPoint(dim, [i, j, 1]));
+        else
+          Add(set,
+            Flatten3DPoint(dim, [i, j, 1 + Position(Enumerator(G),
+                                                               mat[i][j])]));
+        fi;
+      od;
+    od;
+    return set;
+  end;
+
+  G    := UnderlyingSemigroup(S);
+  if not IsGroup(UnderlyingSemigroup(S)) then
+    ErrorNoReturn("Semigroups: OnReesZeroMatrixSemigroups: usage,\n",
+                  "the first argument must be a Rees zero matrix semigroup ",
+                  "with underlying semigroup which is a group,");
+  fi;
+  M    := Matrix(S);
+  m    := Length(M);
+  n    := Length(M[1]);
+  setM := OnSets(ZeroGroupMatrixToSet(M, m, n, G), g);
+  return ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(setM, m, n, G));
 end);
 
 InstallMethod(CanonicalReesZeroMatrixSemigroup,
@@ -1441,36 +1496,10 @@ function(S)
   local G;
   G := UnderlyingSemigroup(S);
   if not IsGroup(G) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
+    ErrorNoReturn("Semigroups: CanonicalReesZeroMatrixSemigroup: usage,\n",
                   "the argument must be a Rees zero matrix semigroup with ",
                   "underlying semigroup which is a group,");
   fi;
-  return ReesZeroMatrixSemigroup(G, CanonicalMatrix(Matrix(S), G));
-end);
-
-InstallMethod(CanonicalMatrix,
-"for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
-function(S)
-  if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
-                  "the argument must be a Rees matrix semigroup with ",
-                  "underlying semigroup which is a group,");
-  fi;
-  return CanonicalMatrix(Matrix(S), UnderlyingSemigroup(S));
-end);
-
-# TODO: two RZMS created from canonical matrixes are not equal in GAP
-InstallMethod(CanonicalReesMatrixSemigroup,
-"for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
-function(S)
-  local G;
-  G := UnderlyingSemigroup(S);
-  if not IsGroup(G) then
-    ErrorNoReturn("Semigroups: CanonicalMatrix: usage,\n",
-                  "the argument must be a Rees matrix semigroup with ",
-                  "underlying semigroup which is a group,");
-  fi;
-  return ReesMatrixSemigroup(G, CanonicalMatrix(Matrix(S), G));
+  return ReesZeroMatrixSemigroup(G,
+    ReesZeroMatrixSemigroupCanonicalLabelling(S));
 end);
