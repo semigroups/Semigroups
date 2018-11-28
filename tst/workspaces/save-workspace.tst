@@ -25,7 +25,7 @@ gap> SEMIGROUPS.StartTest();
 ##  that they are saved to disk correctly.  Do not reuse variable names.
 #############################################################################
 
-#T# Union-find structures
+#  Union-find structures
 gap> uftable1 := UF_NEW(10);;
 gap> UF_UNION(uftable1, [4, 9]);;
 gap> UF_UNION(uftable1, [4, 2]);;
@@ -33,7 +33,7 @@ gap> uftable2 := UF_NEW(1);;
 gap> uftable3 := UF_NEW(30000);;
 gap> UF_UNION(uftable3, [20222, 234]);;
 
-#T# Congruences from libsemigroups
+#  Congruences from libsemigroups
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -44,7 +44,7 @@ gap> NrEquivalenceClasses(cong);
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
-#T# Semigroups from libsemigroups
+#  Semigroups from libsemigroups
 gap> T := Semigroup(Matrix(IsBooleanMat, [[0, 1], [0, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 1]]), 
@@ -84,7 +84,7 @@ gap> idd := Idempotents(DD);
 gap> ForAll(idd, x -> x in U);
 true
 
-#T# Bipartitions
+#  Bipartitions
 gap> y := Bipartition([[1, 3], [2, 4, -1], [5, 6, -2, -3], [-4, -5], [-6]]);
 <bipartition: [ 1, 3 ], [ 2, 4, -1 ], [ 5, 6, -2, -3 ], [ -4, -5 ], [ -6 ]>
 gap> IsBipartition(y);
@@ -128,7 +128,7 @@ false
 gap> IsPartialPermBipartition(y);
 false
 
-#T# Blocks
+#  Blocks
 gap> b := BlocksNC([[1, 3], [-2, -4, -7], [5, 6, 8, 9], [10]]);
 <blocks: [ 1*, 3* ], [ 2, 4, 7 ], [ 5*, 6*, 8*, 9* ], [ 10* ]>
 gap> ProjectionFromBlocks(b);

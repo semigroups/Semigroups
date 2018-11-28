@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.TestRec.InfoLevelInfoSmallsemi := InfoLevel(InfoSmallsemi);;
 gap> SetInfoLevel(InfoSmallsemi, 0);;
 
-#T# McAlisterTriple
+#  McAlisterTriple
 gap> inv_semigroups := AllSmallSemigroups([2 .. 7], IsInverseSemigroup, true);;
 gap> e_unitary_semigroups := Filtered(inv_semigroups, IsEUnitaryInverseSemigroup);;
 gap> triples := ShallowCopy(e_unitary_semigroups);;
@@ -41,7 +41,7 @@ gap> Apply(triples, a -> BruteForceIsoCheck(a));;
 gap> false in triples;
 false
 
-#T# SEMIGROUPS_UnbindVariables
+#  SEMIGROUPS_UnbindVariables
 gap> Unbind(e_unitary_semigroups);
 gap> Unbind(inv_semigroups);
 gap> Unbind(triples);

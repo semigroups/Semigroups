@@ -35,7 +35,7 @@ gap> BruteForceInverseCheck := function(map)
 >     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
 > end;;
 
-#T# Creation of dual semigroups and elements - 1
+#  Creation of dual semigroups and elements - 1
 gap> S := Semigroup([Transformation([1, 3, 2]), Transformation([1, 4, 4, 2])]);
 <transformation semigroup of degree 4 with 2 generators>
 gap> T := DualSemigroup(S);
@@ -53,7 +53,7 @@ gap> AsSSortedList(T);
 gap> Size(T);
 6
 
-#T# Creation of dual semigroups and elements - 2
+#  Creation of dual semigroups and elements - 2
 gap> S := Semigroup([Transformation([2, 6, 3, 2, 4, 2]),
 > Transformation([5, 5, 6, 1, 4, 5]),
 > Transformation([5, 3, 1, 6, 4, 5])]);;
@@ -71,7 +71,7 @@ gap> AsSortedList(T) = AsSortedList(List(S,
 > s -> s ^ iso));
 true
 
-#T# Creation of dual semigroups and elements - 3
+#  Creation of dual semigroups and elements - 3
 gap> S := FullTransformationMonoid(20);;
 gap> T := DualSemigroup(S);;
 gap> HasGeneratorsOfSemigroup(T);
@@ -79,7 +79,7 @@ true
 gap> HasGeneratorsOfMonoid(T);
 true
 
-#T# DClasses of dual semigroups - 1
+#  DClasses of dual semigroups - 1
 gap> S := Semigroup([Transformation([2, 6, 3, 2, 4, 2]),
 > Transformation([5, 5, 6, 1, 4, 5]),
 > Transformation([5, 3, 1, 6, 4, 5])]);;
@@ -100,7 +100,7 @@ gap> for i in [1 .. Size(DS) - 1] do
 > fi;
 > od;
 
-#T# Green's classes of dual semigroups
+#  Green's classes of dual semigroups
 gap> S := Semigroup([Transformation([2, 6, 3, 2, 4, 2]),
 > Transformation([5, 5, 6, 1, 4, 5])]);;
 gap> T := DualSemigroup(S);;
@@ -126,24 +126,24 @@ gap> ForAll(HClasses(T),
 > Representative(x) ^ iso)));
 true
 
-#T# Representatives
+#  Representatives
 gap> S := FullTransformationMonoid(20);;
 gap> T := DualSemigroup(S);;
 gap> Representative(T);
 <IdentityTransformation in the dual semigroup>
 
-#T# Size
+#  Size
 gap> S := FullTransformationMonoid(20);;
 gap> T := DualSemigroup(S);;
 gap> Size(T);
 104857600000000000000000000
 
-#T# AsList
+#  AsList
 gap> S := FullTransformationMonoid(6);;
 gap> T := DualSemigroup(S);;
 gap> AsList(T);;
 
-#T# One and MultiplicativeNeutralElement - 1
+#  One and MultiplicativeNeutralElement - 1
 gap> S := FullBooleanMatMonoid(5);;
 gap> T := DualSemigroup(S);;
 gap> One(Representative(T));
@@ -152,7 +152,7 @@ gap> One(Representative(T));
 gap> One(Representative(T)) = MultiplicativeNeutralElement(T);
 true
 
-#T# One and MultiplicativeNeutralElement - 2
+#  One and MultiplicativeNeutralElement - 2
 gap> S := Semigroup([Transformation([2, 6, 3, 2, 4, 2]),
 > Transformation([5, 5, 6, 1, 4, 5])]);;
 gap> IsMonoidAsSemigroup(S);
@@ -163,7 +163,7 @@ gap> One(Representative(T));
 gap> MultiplicativeNeutralElement(T);
 fail
 
-#T# AntiIsomorphisms
+#  AntiIsomorphisms
 gap> S := FullTransformationMonoid(5);;
 gap> T := DualSemigroup(S);;
 gap> HasAntiIsomorphismTransformationSemigroup(T);
@@ -187,7 +187,7 @@ x ) ... end )
 gap> ForAll(S, x -> (x ^ antiso) ^ invantiso = x);
 true
 
-#T# AntiIsomorphism brute force checking - 1
+#  AntiIsomorphism brute force checking - 1
 gap> S := FullTropicalMaxPlusMonoid(2, 4);;
 gap> antiiso := AntiIsomorphismDualSemigroup(S);;
 gap> BruteForceAntiIsoCheck(antiiso);
@@ -195,7 +195,7 @@ true
 gap> BruteForceInverseCheck(antiiso);
 true
 
-#T# AntiIsomorphism brute force checking - 2
+#  AntiIsomorphism brute force checking - 2
 gap> S := PlanarPartitionMonoid(3);;
 gap> antiiso := AntiIsomorphismDualSemigroup(S);;
 gap> BruteForceAntiIsoCheck(antiiso);
@@ -203,7 +203,7 @@ true
 gap> BruteForceInverseCheck(antiiso);
 true
 
-#T# AntiIsomorphism brute force checking - 3
+#  AntiIsomorphism brute force checking - 3
 gap> S := OrderEndomorphisms(6);;
 gap> antiiso := AntiIsomorphismDualSemigroup(S);;
 gap> BruteForceAntiIsoCheck(antiiso);
@@ -211,7 +211,7 @@ true
 gap> BruteForceInverseCheck(antiiso);
 true
 
-#T# Subsemigroups of a dual semigroup
+#  Subsemigroups of a dual semigroup
 gap> S := FullBooleanMatMonoid(4);
 <monoid of 4x4 boolean matrices with 7 generators>
 gap> T := DualSemigroup(S);
@@ -280,7 +280,7 @@ gap> V := DualSemigroup(U);
 gap> V = Semigroup(GeneratorsOfSemigroup(S){[3 .. 5]});
 true
 
-#T# UnderlyingElementOfDualSemigroupElement
+#  UnderlyingElementOfDualSemigroupElement
 gap> S := SingularPartitionMonoid(4);;
 gap> D := DualSemigroup(S);;
 gap> d := Representative(D);
@@ -298,7 +298,7 @@ gap> T := Semigroup(GeneratorsOfSemigroup(D){[1000 .. 2000]});
 gap> UnderlyingElementOfDualSemigroupElement(Representative(T));
 <bipartition: [ 1, 2, -1 ], [ 3, -2 ], [ 4 ], [ -3, -4 ]>
 
-#T# UnbindVariables
+#  UnbindVariables
 gap> Unbind(antiso);
 gap> Unbind(inv);
 gap> Unbind(invantiso);
