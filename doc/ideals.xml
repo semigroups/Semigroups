@@ -161,7 +161,7 @@ false]]></Example>
     </Returns>
     <Description>
       If <A>S</A> is a finite non-empty semigroup, then this attribute returns a
-      list of all the ideals of <A>S</A>. <P/>
+      list of the non-empty two-sided ideals of <A>S</A>. <P/>
 
       The ideals are returned in no particular order, and each ideal uses the
       minimum possible number of generators
