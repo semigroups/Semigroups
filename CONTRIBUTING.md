@@ -1,6 +1,6 @@
 ## Contributing to the Semigroups package for GAP
 
-#### Copyright (C) 2011-16 James D. Mitchell
+#### Copyright (C) 2011-18 James D. Mitchell
 #### Licensing information is available in the LICENSE file.   
 
 We invite everyone to contribute by submitting patches, pull requests, and bug
@@ -26,13 +26,18 @@ reports. We would like to make the contributing process as easy as possible.
   Please clean up any messes that you find, and don't
   leave behind new messes for the next contributor.
 
-## Branches
+### Branches for contributions
 
-New features should be developed in feature branches in a fork of the
-repository. You should regularly merge/rebase the *next* release branch into
-your feature branch. Releases are currently made from the stable-2.7 branch If
-there is more than one open branch with this type of name, please use the
-lowest numbered such branch.  When you think your changes are ready to go into
+Bugfixes and technical changes should be made in branches off the next release
+branch, in a fork of the repository.  Releases are currently made from
+`stable-3.1` branch.  If there is more than one open branch with this type of
+name, then please use the lowest numbered such branch.
+
+New features should be developed in branches off the `master` branch, in
+a fork of the repository. You should regularly merge/rebase the `master` branch
+into your feature branch.
+
+When you think your changes are ready to go into
 a release, please make a pull request.
 
 Before asking us to merge your code please ensure that: 
@@ -41,7 +46,7 @@ Before asking us to merge your code please ensure that:
 * all of the tests run without errors
 * you have used the coding conventions below
 
-## Coding conventions
+### Coding conventions
 
 * 2 spaces for indentation
 * continuation of lines containing `if`, `for`, `while` should be indented by
