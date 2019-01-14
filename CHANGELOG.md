@@ -1,6 +1,145 @@
-### CHANGELOG - [Semigroups](https://gap-packages.github.io/Semigroups/) package for [GAP](http://www.gap-system.org)
+### CHANGELOG - [Semigroups](https://gap-packages.github.io/Semigroups) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-18 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+#### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+
+### Version 3.1.0 (released 14/01/2019)
+
+This is a major release of the Semigroups package, including several changes to
+existing behaviour, new functionality, and bugfixes.
+
+#### Changed functionality in this release
+
+* Congruence posets are now digraph objects (in the sense of the
+  [Digraphs](https://gap-packages.github.io/Digraphs) package) rather than lists
+  of lists. This applies to `LatticeOfCongruences`, `PosetOfCongruences`, and
+  several other functions. This change was made by [Michael
+  Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) in [PR
+  #385](https://github.com/gap-packages/Semigroups/pull/385).
+* The attributes `LeftCayleyDigraph` and `RightCayleyDigraph` are introduced to
+  replace `LeftCayleyGraphSemigroup` and `RightCayleyGraphSemigroup`. These new
+  attributes return digraph objects (in the sense of the
+  [Digraphs](https://gap-packages.github.io/Digraphs) package) rather than
+  lists of out-neighbours. There are also several new functions for visualising
+  Cayley digraphs, such as `TikzLeftCayleyDigraph`, `DotLeftCayleyDigraph`, and
+  `DotStringDigraph`.
+  This functionality was all added by
+  [J. D.  Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #348](https://github.com/gap-packages/Semigroups/pull/348).
+* `IteratorFromPickledFile` has been replaced by `IteratorFromGeneratorsFile`,
+  and `IteratorFromOldGeneratorsFile` has been removed. The behaviour of
+  `WriteGenerators` has also been modified slightly.  This work was done by
+  [J. D.  Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #419](https://github.com/gap-packages/Semigroups/pull/419).
+
+#### New functionality in this release
+
+* Finn Smith added support for creating and representing dual semigroups in
+  [PR #470](https://github.com/gap-packages/Semigroups/pull/470),
+  via the new commands `DualSemigroup` and `AntiIsomorphismDualSemigroup`.
+* Chris Russell added support for representing E-unitary inverse semigroups by
+  McAlister triple semigroups, via the command `McAlisterTripleSemigroup` and
+  others, in the PRs
+  [#271](https://github.com/gap-packages/Semigroups/pull/271) and
+  [#507](https://github.com/gap-packages/Semigroups/pull/507). Chris also
+  introduced the related functions `EUnitaryInverseCover`,
+  `IsFInverseSemigroup`, and `IsFInverseMonoid`.
+* It is now possible to use the Semigroups package to construct direct products
+  of arbitrary finite semigroups with the command `DirectProduct`. Direct
+  products created in this way support the commands `Projection` and
+  `Embedding`. To enable the creation of direct products of arbitrary finite
+  semigroups, the related commands `NonTrivialFactorization`,
+  `IndecomposableElements`, and `IsSurjectiveSemigroup` were introduced. This
+  work was done by
+  [Wilf A. Wilson](http://wilf.me) in
+  PRs [#347](https://github.com/gap-packages/Semigroups/pull/347)
+  and [#558](https://github.com/gap-packages/Semigroups/pull/558).
+* The functions `NambooripadPartialOrder` and `NambooripadLeqRegularSemigroup`
+  were added by Chris Russell in PRs
+  [#467](https://github.com/gap-packages/Semigroups/pull/467) and
+  [#479](https://github.com/gap-packages/Semigroups/pull/479).
+* The option `numbers` is available when calling `DotString` on a congruence
+  poset (added by
+  [Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) in
+  [PR #455](https://github.com/gap-packages/Semigroups/pull/455)).
+* More `Info` statements can be produced, if desired, during computations of
+  congruence lattices
+  (added by [Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) in
+  [PR #403](https://github.com/gap-packages/Semigroups/pull/403)).
+* It is now possible to construct all non-empty two-sided ideals of a finite
+  semigroup with the command `Ideals` (added by
+  [Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) in
+  [PR #500](https://github.com/gap-packages/Semigroups/pull/500)).
+* `WriteMultiplicatiomTable`, `ReadMultiplicationTable`, and
+  `IteratorFromMultiplicationTableFile` were added by Chris Russell in [PR
+  #339](https://github.com/gap-packages/Digraphs/pull/339)
+* A new constructor `BrandtSemigroup` was added by
+  [J. D.  Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #411](https://github.com/gap-packages/Semigroups/pull/411).
+* The command `WreathProduct` can be now applied to construct the wreath
+  producth of a transformation monoid or permutation group with a transformation
+  semigroup or permutation group. This work was done by Fernando Flores Brito in
+  [PR #262](https://github.com/gap-packages/Semigroups/pull/262).
+* `SemigroupsTestAll` was introduced by
+  [Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) in
+  PRs [#404](https://github.com/gap-packages/Semigroups/pull/404)
+  and
+  [#446](https://github.com/gap-packages/Semigroups/pull/446).
+* Some basic methods for `MinimalSemigroupGeneratingSet` were implemented by
+  [Wilf A.  Wilson](http://wilf.me) in
+  [PR #407](https://github.com/gap-packages/Semigroups/pull/407).
+* It is now possible to write and read Rees matrix semigroups and Rees 0-matrix
+  semigroups to and from files with `WriteGenerators` and `ReadGenerators`
+  (added by
+  [J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #569](https://github.com/gap-packages/Semigroups/pull/569)).
+* Special methods for `IsIdempotentGenerated` and
+  `IdempotentGeneratedSubsemigroup` for Rees matrix semigroups and Rees 0-matrix
+  semigroups were added by
+  [Wilf A. Wilson](http://wilf.me) in
+  [PR #325](https://github.com/gap-packages/Semigroups/pull/325).
+* Special methods for `IsomorphismPartialPermSemigroup` for groups and
+  zero-groups were added by [Wilf A. Wilson](http://wilf.me) in
+  [PR #406](https://github.com/gap-packages/Semigroups/pull/406).
+* Semigroups in more kinds of families are now comparable via `\<`, including
+  pairs of semigroups of partial permutations, pairs of semigroups of
+  bipartitions, and pairs of semigroups of PBRs (added by
+  [J. D.  Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #568](https://github.com/gap-packages/Semigroups/pull/568)).
+
+#### Issues resolved by this release
+
+* The documentation now clarifies that only those subsemigroups of regular Rees
+  0-matrix semigroups defined over *permutation* groups are acting semigroups.
+  This problem was reported by [Wilf A. Wilson](http://wilf.me) in
+  [Issue #336](https://github.com/gap-packages/Semigroups/issues/336) and fixed
+  by [J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm) in
+  [PR #337](https://github.com/gap-packages/Semigroups/pull/337).
+* There was a bug in the kernel module that related to computing with bipartitions,
+  which would sometime cause an unexpected error. This was reported by
+  [Wilf A.  Wilson](http://wilf.me) and Finn Smith in
+  [Issue #444](https://github.com/gap-packages/Semigroups/issues/444), and fixed
+  by Finn Smith in [PR #466](https://github.com/gap-packages/Semigroups/pull/466).
+* The Semigroups package would sometimes automatically set the
+  `GeneratorsOfSemigroup` of a trivial group of partial permutations to be an
+  empty list. This was reported and fixed by [Wilf A. Wilson](http://wilf.me) in
+  [PR #565](https://github.com/gap-packages/Semigroups/pull/565).
+* The function `IsMonogenicSemigroup` incorrectly returned `true`
+  for an empty semigroup. This was reported and fixed by
+  [Wilf A. Wilson](http://wilf.me)
+  in [PR #567](https://github.com/gap-packages/Semigroups/pull/567).
+
+There have also been many technical changes to the package and its kernel
+module, including many by [Max Horn](https://github.com/fingolfin), such as
+those in PRs [#490](https://github.com/gap-packages/Semigroups/pull/490),
+[#491](https://github.com/gap-packages/Semigroups/pull/491),
+[#493](hhttps://github.com/gap-packages/Semigroups/pull/493),
+[#501](hhttps://github.com/gap-packages/Semigroups/pull/501),
+[#553](hhttps://github.com/gap-packages/Semigroups/pull/553), and
+[#562](hhttps://github.com/gap-packages/Semigroups/pull/562).
+
+Semigroups now requires version 4.8.1 of the [orb
+package](https://gap-packages.github.io/orb), or newer.
+
 
 ### Version 3.0.20 (released 01/10/2018)
 
@@ -11,25 +150,25 @@ following issues:
 * [Issue 530](https://github.com/gap-packages/Semigroups/issues/530): there was
   a bug in the method for `IsFactorisableInverseMonoid` for an ideal of
   semigroup. It only returned `true` if the parent semigroup was factorisable. 
-  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 * [Issue 531](https://github.com/gap-packages/Semigroups/issues/531): there
   were some issues with method selection for Green's classes, when the RCWA
-  package was loaded at the same time as [Semigroups](https://gap-packages.github.io/Semigroups/).
+  package was loaded at the same time as [Semigroups](https://gap-packages.github.io/Semigroups).
   [[Wilf A. Wilson](http://wilf.me)]
 
 *  [Issue 532](https://github.com/gap-packages/Semigroups/issues/532): the
    `Iterator` method for free inverse monoids used some implementational
    details of the method for free group iterators in the GAP library. This
-   caused an error to be reported when [Semigroups](https://gap-packages.github.io/Semigroups/) and RCWA were loaded at the same time.
-   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+   caused an error to be reported when [Semigroups](https://gap-packages.github.io/Semigroups) and RCWA were loaded at the same time.
+   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 *  [Issue 536](https://github.com/gap-packages/Semigroups/issues/536): the
    `Iterator` method for free inverse monoids did not work as intended, because
    some words could never be reached.
-   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+   [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
-*  [Issue 543](https://github.com/gap-packages/Semigroups/issues/543): the [Semigroups](https://gap-packages.github.io/Semigroups/) tests failed when all packages were loaded. 
+*  [Issue 543](https://github.com/gap-packages/Semigroups/issues/543): the [Semigroups](https://gap-packages.github.io/Semigroups) tests failed when all packages were loaded. 
   [[Wilf A. Wilson](http://wilf.me)]
 
 ### Version 3.0.19 (released 18/09/2018)
@@ -55,17 +194,17 @@ This version contains some minor improvements and bugfixes.
 
 This version contains some bugfixes, and some improved functionality:
 * [Issue 444](https://github.com/gap-packages/Semigroups/issues/444): there was a garbage collection error in the kernel module that sometimes resulted in a GAP error "\<func\> must return a value". [F. Smith] 
-* [Issue 459](https://github.com/gap-packages/Semigroups/issues/459): the method for `IsTrivial` did not check if the number of generators was non-zero. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
-* [PR 457](https://github.com/gap-packages/Semigroups/pull/457): an improved method for finding a set of generating pairs of a congruence over a Rees 0-matrix semigroup represented as a linked triple [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)] 
-* [Issue 461](https://github.com/gap-packages/Semigroups/issues/461): `NrCongruenceClasses` sometimes returned the wrong result for classes of semigroups not defined in the [Semigroups](https://gap-packages.github.io/Semigroups/) package. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
-* [Issue 463](https://github.com/gap-packages/Semigroups/pull/463): replaced use of `EvalString` by `ValueGlobal`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 459](https://github.com/gap-packages/Semigroups/issues/459): the method for `IsTrivial` did not check if the number of generators was non-zero. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
+* [PR 457](https://github.com/gap-packages/Semigroups/pull/457): an improved method for finding a set of generating pairs of a congruence over a Rees 0-matrix semigroup represented as a linked triple [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)] 
+* [Issue 461](https://github.com/gap-packages/Semigroups/issues/461): `NrCongruenceClasses` sometimes returned the wrong result for classes of semigroups not defined in the [Semigroups](https://gap-packages.github.io/Semigroups) package. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
+* [Issue 463](https://github.com/gap-packages/Semigroups/pull/463): replaced use of `EvalString` by `ValueGlobal`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 ### Version 3.0.14 (released 15/02/2018)
 
 This version contains a fix for the following issue, this was resolved by
 updating the version of libsemigroups to 0.6.3:
 
-* [Issue 450](https://github.com/gap-packages/Semigroups/issues/450): There was an intermittent error in some methods for congruences and finitely presented semigroups arising from a bug in libsemigroups. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 450](https://github.com/gap-packages/Semigroups/issues/450): There was an intermittent error in some methods for congruences and finitely presented semigroups arising from a bug in libsemigroups. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 ### Version 3.0.13 (released 08/02/2018)
 
@@ -85,8 +224,8 @@ The following improvements have been made:
 
 The following issues are resolved:
 
-* [Issue 424](https://github.com/gap-packages/Semigroups/issues/424): the operation `MinimalFactorization` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
-* [Issue 435](https://github.com/gap-packages/Semigroups/issues/435): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 424](https://github.com/gap-packages/Semigroups/issues/424): the operation `MinimalFactorization` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
+* [Issue 435](https://github.com/gap-packages/Semigroups/issues/435): the operation `ClosureInverseMonoid` sometimes returned incorrect results. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 ### Version 3.0.11 (released 18/12/2017)
 
@@ -113,20 +252,20 @@ This version contains some minor bugfixes, and updates for compatibility GAP
 This version contains some minor bugfixes, fixes some issues where some tests
 in the main GAP repo returned different output when Semigroups was loaded than
 when it was not, and updates the kernel module for version 0.5.2 of
-[libsemigroups](https://james-d-mitchell.github.io/libsemigroups/). The
+[libsemigroups](https://james-d-mitchell.github.io/libsemigroups). The
 configuration option `--enable-debug` was added.  
 
 The following issues are resolved:
 
 * [Issue 389](https://github.com/gap-packages/Semigroups/issues/389): the most general method for `NaturalPartialOrder` sometimes returned incorrect results.  [[Wilf A. Wilson](http://wilf.me)]
-* [Issue 393](https://github.com/gap-packages/Semigroups/issues/393): `StructureDescription` for finitely presented groups failed with an error when Semigroups was loaded.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
-* [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test `tst/testinstall/semigrp.tst` failed because of a missing method for `NrEquivalenceClasses` for a generic semigroup congruence.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)] and [[Wilf A. Wilson](http://wilf.me)]
+* [Issue 393](https://github.com/gap-packages/Semigroups/issues/393): `StructureDescription` for finitely presented groups failed with an error when Semigroups was loaded.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
+* [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test `tst/testinstall/semigrp.tst` failed because of a missing method for `NrEquivalenceClasses` for a generic semigroup congruence.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)] and [[Wilf A. Wilson](http://wilf.me)]
 
 ### Version 3.0.6 (released 27/09/2017)
 
 This version contains some minor bugfixes, improves the compatibility of
 Semigroups with other GAP packages, and updates the kernel
-module for version 0.5.0 of [libsemigroups](https://james-d-mitchell.github.io/libsemigroups/) 
+module for version 0.5.0 of [libsemigroups](https://james-d-mitchell.github.io/libsemigroups) 
 
 The following issues are resolved:
 * [Issue 371](https://github.com/gap-packages/Semigroups/issues/371): the identity element of some types of monoids was not added to its `GeneratorsOfSemigroup`. This meant that the semigroup generated by `GeneratorsOfSemigroup(M)` was not equal to `M` in some rare cases.  [[Wilf A. Wilson](http://wilf.me)]
@@ -135,21 +274,21 @@ The following issues are resolved:
 ### Version 3.0.5 (released 23/08/2017)
 
 This version contains some minor tweaks and the following issue is resolved:
-* [Issue 352](https://github.com/gap-packages/Semigroups/issues/352): There was a name clash with some other GAP packages using `RandomMatrix` and `IsTorsion`.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)] 
+* [Issue 352](https://github.com/gap-packages/Semigroups/issues/352): There was a name clash with some other GAP packages using `RandomMatrix` and `IsTorsion`.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)] 
 
 ### Version 3.0.4 (released 16/07/2017)
 
 Some minor issues are fixed in this release:
-* [Issue 342](https://github.com/gap-packages/Semigroups/issues/342): `DirectProduct` for transformation semigroups returned the wrong answer when applied to semigroups satisfying `IsMonoidAsSemigroup`.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 342](https://github.com/gap-packages/Semigroups/issues/342): `DirectProduct` for transformation semigroups returned the wrong answer when applied to semigroups satisfying `IsMonoidAsSemigroup`.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
-Some documentation and tests were added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+Some documentation and tests were added. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 ### Version 3.0.3 (released 21/06/2017)
 
 Some minor issues are fixed in this release:
-* [Issue 336](https://github.com/gap-packages/Semigroups/issues/336): Rees (0-)matrix semigroups over non-permutation groups sometimes resulted in an error.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 336](https://github.com/gap-packages/Semigroups/issues/336): Rees (0-)matrix semigroups over non-permutation groups sometimes resulted in an error.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 * A method was added for `IsEUnitaryInverseSemigroup` for non-inverse semigroups, which previously resulted in no method found. [Chris Russell]
-* Some error messages were improved in `ReadGenerators` and `WriteGenerators`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)] 
+* Some error messages were improved in `ReadGenerators` and `WriteGenerators`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)] 
 
 ### Version 3.0.2 (released 16/06/2017)
 
@@ -157,11 +296,11 @@ This is an minor release fixing some minor issues in the last
 release. 
 
 The following issues were resolved:
-* [Issue 330](https://github.com/gap-packages/Semigroups/issues/330): `InversesOfSemigroupElement` some times returned an incorrect value, specifically when applied to the identity of a transformation monoid.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
-* [Issue 328](https://github.com/gap-packages/Semigroups/issues/328): when using Linux the package compiled but failed to link pthreads and so the kernel module failed to load in GAP.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+* [Issue 330](https://github.com/gap-packages/Semigroups/issues/330): `InversesOfSemigroupElement` some times returned an incorrect value, specifically when applied to the identity of a transformation monoid.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
+* [Issue 328](https://github.com/gap-packages/Semigroups/issues/328): when using Linux the package compiled but failed to link pthreads and so the kernel module failed to load in GAP.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm)]
 
 There are improvements to the following:
-* some missing documentation was added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+* some missing documentation was added. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 * the subsemigroup returned by `IdempotentGeneratedSubsemigroup` for Rees
   (0-)matrix semigroup over a group has a smaller generating set than
   previously, and can be found more quickly. [[Wilf A. Wilson](http://wilf.me)]
@@ -218,7 +357,7 @@ element. [[Wilf A. Wilson](http://wilf.me)]
 * [Issue 164](https://github.com/gap-packages/Semigroups/issues/164) `MatrixEntries` 
 gave an error for Rees 0-matrix semigroups whose
 matrices contain `0`. [[Wilf A. Wilson](http://wilf.me)]
-* Some tests failed when GAP was compiled in 32-bit mode. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+* Some tests failed when GAP was compiled in 32-bit mode. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 ### Version 2.7.6 (released 19/04/2016)
 This is a very minor release changing the name of the `README` (to `README.md`) in
@@ -233,7 +372,7 @@ method `IsomorphismPermGroup` was applied to a semigroups of non-permutation
 transformations the returned mapping was not an isomorphism. 
 
 ### Version 2.7.4 (released 02/03/2016)
-This is a minor release to fix [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/), and to correct the required version of GAP (from 4.8.2 to 4.8.3). In [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/) the function `IsZeroSimpleSemigroup` entered an infinite loop for some examples of semigroups of partial permutations. 
+This is a minor release to fix [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150), and to correct the required version of GAP (from 4.8.2 to 4.8.3). In [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150) the function `IsZeroSimpleSemigroup` entered an infinite loop for some examples of semigroups of partial permutations. 
 
 ### Version 2.7.3 (released 15/02/2016)
 This is a minor release to fix some manual examples, to correct the package url
@@ -250,7 +389,7 @@ This is a minor release to fix to remove `ErrorMayQuit` which was renamed
 ### Version 2.7.1 (released 19/12/2015)
 
 This is a minor release to fix [Issue
-144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
+144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144).
 This issue resulted in `IsInverseSemigroup` sometimes returning `true` for
 semigroups which were not inverse. This occurred when the \\(\mathscr{D}\\)-classes of the semigroup were computed before the method for `IsInverseSemigroup` was first
 run. 
@@ -268,9 +407,9 @@ This is a minor release including some changes for compatibility with GAP 4.8, a
 
 #### Issues Resolved in Version 2.7
 
-* [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136/):
+* [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136):
 `CyclesOfPartialPermSemigroup` sometimes resulted in an error due to using `DegreeOfPartialPermSemigroup` instead of the maximum of the degree and the codegree. [[James Mitchell](http://tinyurl.com/jdmitchell)]
-* [Issue 141](https://bitbucket.org/james-d-mitchell/semigroups/issue/141/):
+* [Issue 141](https://bitbucket.org/james-d-mitchell/semigroups/issue/141):
  `PartialOrderOfDClasses` sometimes resulted in an error. This bug was
  introduced in Semigroups 2.6 and did not effect any previous versions.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
@@ -283,7 +422,7 @@ This release includes some bugfixes, some minor new features, and one major new 
 
 * extensive new features for computing with semigroups, monoids, and ideals, of
  matrices with entries in a finite field.  See Chapter 7 of the manual for more
- details. [[Markus Pfeiffer](http://morphism.de/~markusp/)]
+ details. [[Markus Pfeiffer](http://morphism.de/~markusp)]
 
 * The functions `RectangularBand`, `MonogenicSemigroup`, and `ZeroSemigroup`
 now have an optional first argument to specify the category of the result;
@@ -300,12 +439,12 @@ in a similar sense.
 
 #### Issues Resolved in Version 2.6
 
-*  [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131/): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+*  [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
-*  [Issue 132](https://bitbucket.org/james-d-mitchell/semigroups/issue/132/): this was a feature request to introduce the operations `MotzkinMonoid` and `PartialJonesMonoid`.
+*  [Issue 132](https://bitbucket.org/james-d-mitchell/semigroups/issue/132): this was a feature request to introduce the operations `MotzkinMonoid` and `PartialJonesMonoid`.
 [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-*  [Issue 134](https://bitbucket.org/james-d-mitchell/semigroups/issue/134/): the operation `PartialBrauerMonoid` returned the wrong answer when the argument was `1`. The returned semigroup was not the partial brauer monoid of degree 1. 
+*  [Issue 134](https://bitbucket.org/james-d-mitchell/semigroups/issue/134): the operation `PartialBrauerMonoid` returned the wrong answer when the argument was `1`. The returned semigroup was not the partial brauer monoid of degree 1. 
 [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
 ### Version 2.5 (released 01/06/2015)
@@ -324,23 +463,23 @@ is introduced, along with new methods for `Idempotents` and
 [[Wilf A. Wilson](http://wilf.me)]
 
 * The documentation for congruences has been improved and new tests have
-been added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+been added. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 * A `UniversalSemigroupCongruence` now returns a much smaller set
-of generating pairs. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+of generating pairs. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 #### Issues Resolved in Version 2.5
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
-*  [Issue 126](https://bitbucket.org/james-d-mitchell/semigroups/issue/126/): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+*  [Issue 126](https://bitbucket.org/james-d-mitchell/semigroups/issue/126): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-*  [Issue 127](https://bitbucket.org/james-d-mitchell/semigroups/issue/127/): the main algorithm for computing with ideals of acting semigroups which know they are regular contained a bug that resulted in incorrect results. In some cases, some \\(\mathscr{D}\\)-classes were counted more than once, and the returned value of `Size` was higher than the actual size of the ideal. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+*  [Issue 127](https://bitbucket.org/james-d-mitchell/semigroups/issue/127): the main algorithm for computing with ideals of acting semigroups which know they are regular contained a bug that resulted in incorrect results. In some cases, some \\(\mathscr{D}\\)-classes were counted more than once, and the returned value of `Size` was higher than the actual size of the ideal. [[James Mitchell](http://tinyurl.com/jdmitchell)]
   
-*  [Issue 128](https://bitbucket.org/james-d-mitchell/semigroups/issue/128/): in some special cases `UnderlyingSemigroup`, `ViewObj`, `Size`, and related methods, for Rees 0-matrix semigroups over non-groups returned an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+*  [Issue 128](https://bitbucket.org/james-d-mitchell/semigroups/issue/128): in some special cases `UnderlyingSemigroup`, `ViewObj`, `Size`, and related methods, for Rees 0-matrix semigroups over non-groups returned an error. [[James Mitchell](http://tinyurl.com/jdmitchell)]
   
 * The universal congruence specified by generating pairs on a (0-)simple
-semigroup no longer causes an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+semigroup no longer causes an error. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 	
 ### Version 2.4.1 (released 15/05/2015)
 This is a extremely minor release to change 1 character in the PackageInfo.g
@@ -367,49 +506,49 @@ elements. This new method choose elements at random with uniform
 probability. [[Wilf A. Wilson](http://wilf.me)]
 
 * The documentation and tests for congruences has been improved.
-[[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/) and [Wilf A. Wilson](http://wilf.me)]
+[[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25) and [Wilf A. Wilson](http://wilf.me)]
 
 * The functionality for Rees congruences has been rewritten and
-improved. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+improved. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 * There is a new `Enumerator` method for congruence classes of a
-semigroup congruence. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+semigroup congruence. [[Michael Torpey](http://www-groups.mcs.st-and.ac.uk/~mct25)]
 
 #### Issues Resolved in Version 2.4
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
-* [Issue 88](https://bitbucket.org/james-d-mitchell/semigroups/issue/88/): an inefficiency in `JoinIrreducibleDClasses` of an
+* [Issue 88](https://bitbucket.org/james-d-mitchell/semigroups/issue/88): an inefficiency in `JoinIrreducibleDClasses` of an
 inverse semigroup ideal resulted in a call to
 `GeneratorsOfSemigroup`. 
 
-* [Issue 94](https://bitbucket.org/james-d-mitchell/semigroups/issue/94/): `EquivalenceClasses` of the trivial congruence (generated
+* [Issue 94](https://bitbucket.org/james-d-mitchell/semigroups/issue/94): `EquivalenceClasses` of the trivial congruence (generated
 by 0 pairs of elements) returned an error. 
 
-* [Issue 95](https://bitbucket.org/james-d-mitchell/semigroups/issue/95/): The class containing the zero element of a Rees
+* [Issue 95](https://bitbucket.org/james-d-mitchell/semigroups/issue/95): The class containing the zero element of a Rees
 0-matrix semigroup was not returned by `EquivalenceClasses` of a
 congruence over a Rees 0-matrix semigroup.
 
-* [Issue 108](https://bitbucket.org/james-d-mitchell/semigroups/issue/108/): `IsRegularSemigroup` with argument a Rees 0-matrix
+* [Issue 108](https://bitbucket.org/james-d-mitchell/semigroups/issue/108): `IsRegularSemigroup` with argument a Rees 0-matrix
 semigroup returned an error.
 
-* [Issue 119](https://bitbucket.org/james-d-mitchell/semigroups/issue/119/): `NrCongruencesClasses` and related methods did not work for
+* [Issue 119](https://bitbucket.org/james-d-mitchell/semigroups/issue/119): `NrCongruencesClasses` and related methods did not work for
 Rees congruences.
 
-* [Issue 121](https://bitbucket.org/james-d-mitchell/semigroups/issue/121/): `MultiplicativeZero` and `IsMultiplicativeZero` sometimes
+* [Issue 121](https://bitbucket.org/james-d-mitchell/semigroups/issue/121): `MultiplicativeZero` and `IsMultiplicativeZero` sometimes
 returned incorrect results when applied to a non-acting semigroup
 (i.e. a semigroup not of transformations, partial permutations,
 partitions, or subsemigroups of a Rees 0-matrix semigroup). 
 
-* [Issue 122](https://bitbucket.org/james-d-mitchell/semigroups/issue/122/): A bug in the creation of Green's classes of ideals of semigroups, which resulted in an error.
+* [Issue 122](https://bitbucket.org/james-d-mitchell/semigroups/issue/122): A bug in the creation of Green's classes of ideals of semigroups, which resulted in an error.
 
-* [Issue 123](https://bitbucket.org/james-d-mitchell/semigroups/issue/123/): `IsZeroSemigroup` sometimes returned a false positive when applied to a non-acting semigroup. 
+* [Issue 123](https://bitbucket.org/james-d-mitchell/semigroups/issue/123): `IsZeroSemigroup` sometimes returned a false positive when applied to a non-acting semigroup. 
 
 ### Version 2.3 (released 16/03/2015)
 This is a minor release including some internal refactoring, and
 subsequent bugfixes, and stability improvements.
 
-* [Issue 116](https://bitbucket.org/james-d-mitchell/semigroups/issue/116/) was resolved. In some cases when the default length of hash tables in [Semigroups](https://gap-packages.github.io/Semigroups/) was set to be very small, a segmentation fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb/) package (see [Issue 10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
+* [Issue 116](https://bitbucket.org/james-d-mitchell/semigroups/issue/116) was resolved. In some cases when the default length of hash tables in [Semigroups](https://gap-packages.github.io/Semigroups) was set to be very small, a segmentation fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb) package (see [Issue 10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
 
 ### Version 2.2 (released 20/01/2015)
 This is a minor release including some bug fixes, performance
@@ -424,7 +563,7 @@ improvements, and additional functionality.
 
 * Error messages are more uniform.
 
-* The function `RegularDClasses` was introduced to resolve [Issue 102](https://bitbucket.org/james-d-mitchell/semigroups/issue/102/).
+* The function `RegularDClasses` was introduced to resolve [Issue 102](https://bitbucket.org/james-d-mitchell/semigroups/issue/102).
 
 * The documentation and code for semigroup congruences has been
 improved, and is better integrated with the core [GAP](http://www.gap-system.org) system.
@@ -437,31 +576,31 @@ improved, and is better integrated with the core [GAP](http://www.gap-system.org
 ideals of some semigroups in standard examples semigroups, such as
 `SingularTransformationSemigroup`.
 
-* [Issue 102](https://bitbucket.org/james-d-mitchell/semigroups/issue/102/): we introduced `RegularDClasses`. 
+* [Issue 102](https://bitbucket.org/james-d-mitchell/semigroups/issue/102): we introduced `RegularDClasses`. 
 
-* [Issue 104](https://bitbucket.org/james-d-mitchell/semigroups/issue/104/): the performance of `MaximalSubsemigroups` when applied to
+* [Issue 104](https://bitbucket.org/james-d-mitchell/semigroups/issue/104): the performance of `MaximalSubsemigroups` when applied to
 an inverse semigroup has been improved. 
 
-* [Issue 105](https://bitbucket.org/james-d-mitchell/semigroups/issue/105/): `CyclesOfPartialPerm` is now documented and does not
+* [Issue 105](https://bitbucket.org/james-d-mitchell/semigroups/issue/105): `CyclesOfPartialPerm` is now documented and does not
 return nonsense. 
 
-* [Issue 106](https://bitbucket.org/james-d-mitchell/semigroups/issue/106/): `MaximalSubsemigroups` sometimes failed when the
+* [Issue 106](https://bitbucket.org/james-d-mitchell/semigroups/issue/106): `MaximalSubsemigroups` sometimes failed when the
 ResClasses package was loaded. We refactored the code so that the
 method from ResClasses is no longer applied.
 
-* [Issue 107](https://bitbucket.org/james-d-mitchell/semigroups/issue/107/): A bug in the creation of Green's classes of an ideal of
+* [Issue 107](https://bitbucket.org/james-d-mitchell/semigroups/issue/107): A bug in the creation of Green's classes of an ideal of
 a semigroup, which sometimes caused an error, has been resolved.
 This issue often caused `MaximalSubsemigroups` to stop in an error.
 
-* [Issue 110](https://bitbucket.org/james-d-mitchell/semigroups/issue/110/): `MaximalSubsemigroups` can be applied to any class of
+* [Issue 110](https://bitbucket.org/james-d-mitchell/semigroups/issue/110): `MaximalSubsemigroups` can be applied to any class of
 semigroup where it is possible to find an isomorphism to a
 transformation semigroup. 
 
-* [Issue 111](https://bitbucket.org/james-d-mitchell/semigroups/issue/111/): `POPI(1)` returned the wrong semigroup. Similar issues
+* [Issue 111](https://bitbucket.org/james-d-mitchell/semigroups/issue/111): `POPI(1)` returned the wrong semigroup. Similar issues
 existed in other corner cases, and these have been resolved too.
 
 ### Version 2.1.1 (released 09/09/2014)
-This is a very minor release to fix an issue caused by only loading the packages needed (but not required) by [Semigroups](https://gap-packages.github.io/Semigroups/).
+This is a very minor release to fix an issue caused by only loading the packages needed (but not required) by [Semigroups](https://gap-packages.github.io/Semigroups).
 
 ### Version 2.1 (released 04/09/2014)
 This is a minor release including some bug fixes and performance
@@ -510,25 +649,25 @@ were an odd number of lines.
 * The documentation for `InverseSubsemigroupByProperty` did not
 specify the arguments of the function. 
 
-* [Issue 82](https://bitbucket.org/james-d-mitchell/semigroups/issue/82/): it is now possible to take the quotient of a semigroup
+* [Issue 82](https://bitbucket.org/james-d-mitchell/semigroups/issue/82): it is now possible to take the quotient of a semigroup
 by an ideal using the `/` operator. 
 
-* [Issue 96](https://bitbucket.org/james-d-mitchell/semigroups/issue/96/): `IsIsomorphicSemigroup` sometimes returned a false
+* [Issue 96](https://bitbucket.org/james-d-mitchell/semigroups/issue/96): `IsIsomorphicSemigroup` sometimes returned a false
 negative by incorrectly comparing the output of
 `PartialOrderOfDClasses` (up to isomorphism) rather than the
 transitive reflexive closure of `PartialOrderOfDClasses`.
 
-* [Issue 97](https://bitbucket.org/james-d-mitchell/semigroups/issue/97/): there was a bug in the `Normalizer` method, which
+* [Issue 97](https://bitbucket.org/james-d-mitchell/semigroups/issue/97): there was a bug in the `Normalizer` method, which
 caused [GAP](http://www.gap-system.org) to crash when the argument was a monoid with 0
 generators. 
 
-* [Issue 98](https://bitbucket.org/james-d-mitchell/semigroups/issue/98/): `PartitionMonoid(1)` returned the wrong answer, it was
+* [Issue 98](https://bitbucket.org/james-d-mitchell/semigroups/issue/98): `PartitionMonoid(1)` returned the wrong answer, it was
 missing the non-identity element. 
 
-* [Issue 99](https://bitbucket.org/james-d-mitchell/semigroups/issue/99/): the documentation for `PartialOrderOfDClasses` was
+* [Issue 99](https://bitbucket.org/james-d-mitchell/semigroups/issue/99): the documentation for `PartialOrderOfDClasses` was
 incorrect. 
 
-* [Issue 103](https://bitbucket.org/james-d-mitchell/semigroups/issue/103/): under certain circumstances an error was given when
+* [Issue 103](https://bitbucket.org/james-d-mitchell/semigroups/issue/103): under certain circumstances an error was given when
 trying to compute with an ideal of an inverse semigroup. 
 
 ### Version 2.0 (released 17/04/2014)
@@ -612,7 +751,7 @@ operation for `NaturalLeqPartialPerm`, and other such functions.
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
-* the main algorithm underlying many of the methods in [Semigroups](https://gap-packages.github.io/Semigroups/) has been revised to avoid computing the same information more than once. Some further internal rearranging and cleaning up was done. 
+* the main algorithm underlying many of the methods in [Semigroups](https://gap-packages.github.io/Semigroups) has been revised to avoid computing the same information more than once. Some further internal rearranging and cleaning up was done. 
 
 * `MinimalIdeal` and `SingularTransformationSemigroup` now returns an ideal rather than a semigroup defined by a generating set;
 
@@ -622,10 +761,10 @@ Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-
 semigroups were resolved. These issues would have caused [GAP](http://www.gap-system.org) to give
 an error in certain circumstances.
 
-* [Issue 33](https://bitbucket.org/james-d-mitchell/semigroups/issue/33/): an error was returned when trying to calculate the size,
+* [Issue 33](https://bitbucket.org/james-d-mitchell/semigroups/issue/33): an error was returned when trying to calculate the size,
 or multiply elements in the quotient of a semigroup by an ideal.
 
-* [Issue 36](https://bitbucket.org/james-d-mitchell/semigroups/issue/36/),[Issue 64](https://bitbucket.org/james-d-mitchell/semigroups/issue/64/): the function `SmallGeneratingSet` was ambiguous, in
+* [Issue 36](https://bitbucket.org/james-d-mitchell/semigroups/issue/36),[Issue 64](https://bitbucket.org/james-d-mitchell/semigroups/issue/64): the function `SmallGeneratingSet` was ambiguous, in
 the sense that it was sometimes unclear how to recreate a semigroup
 from its small generating set. For example, `SmallGeneratingSet` of a
 monoid could return an empty list, but this empty list could not be
@@ -635,33 +774,33 @@ the functions `SmallSemigroupGeneratingSet`, `SmallMonoidGeneratingSet`,
 These functions can also now be applied to collections of elements,
 i.e. not only to semigroups. 
 
-* [Issue 47](https://bitbucket.org/james-d-mitchell/semigroups/issue/47/): `ClosureSemigroup` had several bugs that could, in some
+* [Issue 47](https://bitbucket.org/james-d-mitchell/semigroups/issue/47): `ClosureSemigroup` had several bugs that could, in some
 cases, result in incorrect results, or semigroups with invalid data
 structures. 
 
-* [Issue 50](https://bitbucket.org/james-d-mitchell/semigroups/issue/50/) and [Issue 59](https://bitbucket.org/james-d-mitchell/semigroups/issue/59/): `WriteGenerators` wrote nothing to a file in the case
+* [Issue 50](https://bitbucket.org/james-d-mitchell/semigroups/issue/50) and [Issue 59](https://bitbucket.org/james-d-mitchell/semigroups/issue/59): `WriteGenerators` wrote nothing to a file in the case
 that it was not piping through `xz` or `gzip`. 
 
-* [Issue 55](https://bitbucket.org/james-d-mitchell/semigroups/issue/55/): `DotDClasses` did not work when the argument was a Rees
+* [Issue 55](https://bitbucket.org/james-d-mitchell/semigroups/issue/55): `DotDClasses` did not work when the argument was a Rees
 0-matrix semigroup (it worked as intended when the argument was a
 subsemigroup of such a semigroup defined by a generating set). 
 
-* [Issue 56](https://bitbucket.org/james-d-mitchell/semigroups/issue/56/): the functions `Monoid` and `InverseMonoid` sometimes
+* [Issue 56](https://bitbucket.org/james-d-mitchell/semigroups/issue/56): the functions `Monoid` and `InverseMonoid` sometimes
 did not contain their identity element.
 
-* [Issue 57](https://bitbucket.org/james-d-mitchell/semigroups/issue/57/): under certain circumstances a bug in the [GAP](http://www.gap-system.org) kernel
+* [Issue 57](https://bitbucket.org/james-d-mitchell/semigroups/issue/57): under certain circumstances a bug in the [GAP](http://www.gap-system.org) kernel
 function `INV_KER_TRANS`, that didn't handle kernels and
 transformations with different length and degree properly, caused
 [GAP](http://www.gap-system.org) to give an error.
 
-* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63/): there was an error in the [GAP](http://www.gap-system.org) library functions `Monoid`
+* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63): there was an error in the [GAP](http://www.gap-system.org) library functions `Monoid`
 and `InverseMonoid`, when they were passed a monoid as an argument. 
 
-* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63/) (and [Issue 4](https://github.com/gap-system/orb/issues/) in the [Orb](http://gap-system.github.io/orb/) package): a bug in the [Orb](http://gap-system.github.io/orb/) package meant that the log of an `Orb` was not properly updated if the enumeration stopped early because we found something we were looking for. This caused [Semigroups](https://gap-packages.github.io/Semigroups/) to return incorrect results in some rare cases. 
+* [Issue 63](https://bitbucket.org/james-d-mitchell/semigroups/issue/63) (and [Issue 4](https://github.com/gap-system/orb/issues) in the [Orb](http://gap-system.github.io/orb) package): a bug in the [Orb](http://gap-system.github.io/orb) package meant that the log of an `Orb` was not properly updated if the enumeration stopped early because we found something we were looking for. This caused [Semigroups](https://gap-packages.github.io/Semigroups) to return incorrect results in some rare cases. 
 
-* [Issue 72](https://bitbucket.org/james-d-mitchell/semigroups/issue/72/): the method for `IsomorphismTransformationSemigroup` applied to a binary relation monoid returned an isomorphism to a transformation semigroup which was missing the image of the identity. 
+* [Issue 72](https://bitbucket.org/james-d-mitchell/semigroups/issue/72): the method for `IsomorphismTransformationSemigroup` applied to a binary relation monoid returned an isomorphism to a transformation semigroup which was missing the image of the identity. 
 
-* [Issue 89](https://bitbucket.org/james-d-mitchell/semigroups/issue/89/): there was a bug in `TRANS_IMG_CONJ` which failed to handle
+* [Issue 89](https://bitbucket.org/james-d-mitchell/semigroups/issue/89): there was a bug in `TRANS_IMG_CONJ` which failed to handle
 transformations of unequal degrees correctly. This causes incorrect
 results to be returned when considering semigroups generated by
 transformations of unequal degrees.
@@ -685,14 +824,14 @@ to the library methods for AsPermutation. The declarations of
 IsomorphismPermGroup and ClosureSemigroup were moved/changed to
 avoid warnings that their methods matched more than one
 declaration. These warnings were exposed by doing LoadAllPackages,
-but were not present when loading [Semigroups](https://gap-packages.github.io/Semigroups/) by itself.
+but were not present when loading [Semigroups](https://gap-packages.github.io/Semigroups) by itself.
 
 ### Version 1.3 (released 11/10/13)
 Version 1.3 contains many bug fixes, extensions and improvements in
 the documentation, and several new methods and functions. Most
 notably are (in no particular order): 
 
-* the methods in [Semigroups](https://gap-packages.github.io/Semigroups/) have been extended to apply to
+* the methods in [Semigroups](https://gap-packages.github.io/Semigroups) have been extended to apply to
 arbitrary subsemigroups of regular Rees 0-matrix semigroups over
 groups; 
 
@@ -731,7 +870,7 @@ in 2012, and were largely written by [Wilf A. Wilson](http://wilf.me) and Robert
 
 Free inverse semigroups, and their elements, are also introduced,
 this part of the package was written by [Julius
-Jonusas](http://www-groups.mcs.st-andrews.ac.uk/~julius/) (who wishes
+Jonusas](http://www-groups.mcs.st-andrews.ac.uk/~julius) (who wishes
 to acknowledge the support of the Carnegie Trust).
 
 ### Version 1.1 (released 11/06/13)
@@ -741,7 +880,7 @@ one test in everyfunction.tst which was consequence of the
 declarations of `IsGreens.Class`.
 
 ### Version 1.0 (released 07/06/13)
-The package has been renamed from Citrus to [Semigroups](https://gap-packages.github.io/Semigroups/). The package
+The package has been renamed from Citrus to [Semigroups](https://gap-packages.github.io/Semigroups). The package
 has been completely overhauled, the performance has been improved,
 and the code has been generalized so that in the future the same
 code can be used to compute with other types of semigroups.  

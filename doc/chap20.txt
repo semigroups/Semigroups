@@ -1,0 +1,158 @@
+  
+  [1X20 [33X[0;0YIO[133X[101X
+  
+  
+  [1X20.1 [33X[0;0YReading and writing elements to a file[133X[101X
+  
+  [33X[0;0YThe  functions  [2XReadGenerators[102X  ([14X20.1-1[114X) and [2XWriteGenerators[102X ([14X20.1-2[114X) can be
+  used to read or write, respectively, elements of a semigroup to a file.[133X
+  
+  [1X20.1-1 ReadGenerators[101X
+  
+  [33X[1;0Y[29X[2XReadGenerators[102X( [3Xfilename[103X[, [3Xnr[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA list of lists of semigroup elements.[133X
+  
+  [33X[0;0YIf  [3Xfilename[103X  is  an [5XIO[105X package file object or is the name of a file created
+  using  [2XWriteGenerators[102X ([14X20.1-2[114X), then [10XReadGenerators[110X returns the contents of
+  this file as a list of lists of elements of a semigroup.[133X
+  
+  [33X[0;0YIf  the  optional second argument [3Xnr[103X is present, then [10XReadGenerators[110X returns
+  the elements stored in the [3Xnr[103Xth line of [3Xfilename[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile := Concatenation(SEMIGROUPS.PackageDir,[127X[104X
+    [4X[25X>[125X [27X"/data/tst/testdata");;[127X[104X
+    [4X[25Xgap>[125X [27XReadGenerators(file, 13);[127X[104X
+    [4X[28X[ <identity partial perm on [ 2, 3, 4, 5, 6 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 2, 3, 5, 6 ]>, [1,2](5)(6) ][128X[104X
+  [4X[32X[104X
+  
+  [1X20.1-2 WriteGenerators[101X
+  
+  [33X[1;0Y[29X[2XWriteGenerators[102X( [3Xfilename[103X, [3Xlist[103X[, [3Xappend[103X][, [3Xfunction[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIO_OK[110X or [10XIO_ERROR[110X.[133X
+  
+  [33X[0;0YThis  function  provides  a  method for writing collections of elements of a
+  semigroup to a file. The resulting file can be further compressed using [10Xgzip[110X
+  or [10Xxz[110X.[133X
+  
+  [33X[0;0YThe argument [3Xlist[103X should be a list of lists of elements, or semigroups.[133X
+  
+  [33X[0;0YThe argument [3Xfilename[103X should be a string containing the name of a file or an
+  [5XIO[105X  package  file  object  where  the  entries  in [3Xlist[103X will be written; see
+  [2XIO_File[102X ([14XIO: IO_File mode[114X) and [2XIO_CompressedFile[102X ([14XIO: IO_CompressedFile[114X).[133X
+  
+  [33X[0;0YIf  the optional third argument [3Xappend[103X is not present or is given and equals
+  [10X"w"[110X,  then  the  previous content of the file is deleted and overwritten. If
+  the third argument is [10X"a"[110X, then [10Xlist[110X is appended to the file.[133X
+  
+  [33X[0;0YIf any element of [3Xlist[103X is a semigroup, then the generators of that semigroup
+  are   written   to   [3Xfilename[103X.  More  specifically,  the  list  returned  by
+  [2XGeneratorsOfSemigroup[102X  ([14XReference:  GeneratorsOfSemigroup[114X) is written to the
+  file.[133X
+  
+  [33X[0;0YThis  function returns [2XIO_OK[102X ([14XIO: IO_OK[114X) if everything went well or [2XIO_ERROR[102X
+  ([14XIO: IO_Error[114X) if something went wrong.[133X
+  
+  [33X[0;0YThe  file  produced  by  [10XWriteGenerators[110X  can  be  read using [2XReadGenerators[102X
+  ([14X20.1-1[114X).[133X
+  
+  [33X[0;0YFrom  Version  3.0.0  onwards  the  [5XSemigroups[105X  package  used the [5XIO[105X package
+  pickling  functionality; see [14X'IO: Pickling and unpickling'[114X for more details.
+  This  approach  is  used because it is more general and more robust than the
+  methods  used by earlier versions of [5XSemigroups[105X, although the performance is
+  somewhat worse, and the resulting files are somewhat larger.[133X
+  
+  [1X20.1-3 IteratorFromGeneratorsFile[101X
+  
+  [33X[1;0Y[29X[2XIteratorFromGeneratorsFile[102X( [3Xfilename[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0YIf  [3Xfilename[103X  is  a  file  or a string containing the name of a file created
+  using  [2XWriteGenerators[102X  ([14X20.1-2[114X), then [10XIteratorFromGeneratorsFile[110X returns an
+  iterator  [10Xiter[110X  such  that [10XNextIterator(iter)[110X returns the next collection of
+  generators stored in the file [3Xfilename[103X.[133X
+  
+  [33X[0;0YThis function is a convenient way of, for example, looping over a collection
+  of  generators  in  a  file  without  loading  every object in the file into
+  memory.  This  might  be  useful  if the file contains more information than
+  there is available memory.[133X
+  
+  [33X[0;0YIf you want to get an iterator for a file written using [10XWriteGenerators[110X from
+  a   version   of   [5XSemigroups[105X   before  version  3.0.0,  then  you  can  use
+  [10XIteratorFromOldGeneratorsFile[110X.[133X
+  
+  
+  [1X20.2 [33X[0;0YReading and writing multiplication tables to a file[133X[101X
+  
+  [33X[0;0YThe  functions [2XReadMultiplicationTable[102X ([14X20.2-1[114X) and [2XWriteMultiplicationTable[102X
+  ([14X20.2-2[114X)  can  be used to read or write, respectively, multiplication tables
+  to a file.[133X
+  
+  [1X20.2-1 ReadMultiplicationTable[101X
+  
+  [33X[1;0Y[29X[2XReadMultiplicationTable[102X( [3Xfilename[103X[, [3Xnr[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA list of multiplication tables.[133X
+  
+  [33X[0;0YIf   [3Xfilename[103X   is   a  file  or  is  the  name  of  a  file  created  using
+  [2XWriteMultiplicationTable[102X  ([14X20.2-2[114X), then [10XReadMultiplicationTable[110X returns the
+  contents of this file as a list of multiplication tables.[133X
+  
+  [33X[0;0YIf  the optional second argument [3Xnr[103X is present, then [10XReadMultiplicationTable[110X
+  returns the mutiplication table stored in the [3Xnr[103Xth line of [3Xfilename[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile := Concatenation(SEMIGROUPS.PackageDir,[127X[104X
+    [4X[25X>[125X [27X"/data/tst/tables.gz");;[127X[104X
+    [4X[25Xgap>[125X [27Xtab := ReadMultiplicationTable(file, 12);[127X[104X
+    [4X[28X[ [ 1, 1, 3, 4, 5, 6, 7, 8, 9, 6 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],[128X[104X
+    [4X[28X  [ 3, 3, 1, 5, 4, 7, 6, 9, 8, 7 ], [ 4, 4, 9, 6, 3, 8, 5, 1, 7, 8 ], [128X[104X
+    [4X[28X  [ 5, 5, 8, 7, 1, 9, 4, 3, 6, 9 ], [ 6, 6, 7, 8, 9, 1, 3, 4, 5, 1 ], [128X[104X
+    [4X[28X  [ 7, 7, 6, 9, 8, 3, 1, 5, 4, 3 ], [ 8, 8, 5, 1, 7, 4, 9, 6, 3, 4 ], [128X[104X
+    [4X[28X  [ 9, 9, 4, 3, 6, 5, 8, 7, 1, 5 ], [ 6, 10, 7, 8, 9, 1, 3, 4, 5, 2 ] [128X[104X
+    [4X[28X ][128X[104X
+  [4X[32X[104X
+  
+  [1X20.2-2 WriteMultiplicationTable[101X
+  
+  [33X[1;0Y[29X[2XWriteMultiplicationTable[102X( [3Xfilename[103X, [3Xlist[103X[, [3Xappend[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10XIO_OK[110X or [10XIO_ERROR[110X.[133X
+  
+  [33X[0;0YThis  function  provides  a method for writing collections of multiplication
+  tables to a file. The resulting file can be further compressed using [10Xgzip[110X or
+  [10Xxz[110X.  This function applies to square arrays with a maximum of 255 rows where
+  the  entries  are integers from [10X[1, 2, .., n][110X (where [10Xn[110X is the number of rows
+  in the array.[133X
+  
+  [33X[0;0YThe argument [3Xlist[103X should be a list of multiplication tables.[133X
+  
+  [33X[0;0YThe  argument [3Xfilename[103X should be a file or a string containing the name of a
+  file where the entries in [3Xlist[103X will be written or an [5XIO[105X package file object;
+  see    [2XIO_File[102X    ([14XIO:    IO_File    mode[114X)    and   [2XIO_CompressedFile[102X   ([14XIO:
+  IO_CompressedFile[114X).[133X
+  
+  [33X[0;0YIf  the optional third argument [3Xappend[103X is not present or is given and equals
+  [10X"w"[110X,  then  the  previous content of the file is deleted and overwritten. If
+  the  third  argument  is  given  and equals [10X"a"[110X then [10Xlist[110X is appended to the
+  file.  This  function  returns  [2XIO_OK[102X ([14XIO: IO_OK[114X) if everything went well or
+  [2XIO_ERROR[102X ([14XIO: IO_Error[114X) if something went wrong.[133X
+  
+  [33X[0;0YThe  multiplication  tables saved in [3Xfilename[103X can be recovered from the file
+  using [2XReadMultiplicationTable[102X ([14X20.2-1[114X).[133X
+  
+  [1X20.2-3 IteratorFromMultiplicationTableFile[101X
+  
+  [33X[1;0Y[29X[2XIteratorFromMultiplicationTableFile[102X( [3Xfilename[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0YIf  [3Xfilename[103X  is  a  file  or a string containing the name of a file created
+  using            [2XWriteMultiplicationTable[102X           ([14X20.2-2[114X),           then
+  [10XIteratorFromMultiplicationTableFile[110X  returns  an  iterator  [10Xiter[110X  such  that
+  [10XNextIterator(iter)[110X  returns the next multiplication table stored in the file
+  [3Xfilename[103X.[133X
+  
+  [33X[0;0YThis function is a convenient way of, for example, looping over a collection
+  of  multiplication tables in a file without loading every object in the file
+  into memory. This might be useful if the file contains more information than
+  there is available memory.[133X
+  

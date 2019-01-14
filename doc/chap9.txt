@@ -81,7 +81,7 @@
   consists  of the elements [22Xf ^ m, ..., f ^ m + r - 1[122X and is isomorphic to the
   cyclic group of order [22Xr[122X.[133X
   
-  [33X[0;0YSee  [2XIsMonogenicSemigroup[102X  ([14X14.1-10[114X)  for  more  information about monogenic
+  [33X[0;0YSee  [2XIsMonogenicSemigroup[102X  ([14X15.1-11[114X)  for  more  information about monogenic
   semigroups.[133X
   
   [4X[32X  Example  [32X[104X
@@ -121,7 +121,7 @@
   
   [30X    [33X[0;6Y[10XIsReesMatrixSemigroup[110X.[133X
   
-  [33X[0;0YSee  [2XIsRectangularBand[102X  ([14X14.1-14[114X)  for  more  information  about rectangular
+  [33X[0;0YSee  [2XIsRectangularBand[102X  ([14X15.1-15[114X)  for  more  information  about rectangular
   bands.[133X
   
   [4X[32X  Example  [32X[104X
@@ -162,7 +162,7 @@
   
   [30X    [33X[0;6Y[10XIsReesZeroMatrixSemigroup[110X (provided that [10X[3Xn[103X[10X > 1[110X).[133X
   
-  [33X[0;0YSee [2XIsZeroSemigroup[102X ([14X14.1-26[114X) for more information about zero semigroups.[133X
+  [33X[0;0YSee [2XIsZeroSemigroup[102X ([14X15.1-27[114X) for more information about zero semigroups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := ZeroSemigroup(5);[127X[104X
@@ -199,8 +199,8 @@
   simply calls [10XRectangularBand([[3Xfilt[103X[10X,] 1, [3Xn[103X[10X)[110X.[133X
   
   [33X[0;0YFor  more  information about [10XRectangularBand[110X, including its permitted values
-  of  [3Xfilt[103X,  see [2XRectangularBand[102X ([14X9.1-3[114X). See [2XIsLeftZeroSemigroup[102X ([14X14.1-9[114X) and
-  [2XIsRightZeroSemigroup[102X  ([14X14.1-17[114X)  for  more  information  about left zero and
+  of  [3Xfilt[103X, see [2XRectangularBand[102X ([14X9.1-3[114X). See [2XIsLeftZeroSemigroup[102X ([14X15.1-10[114X) and
+  [2XIsRightZeroSemigroup[102X  ([14X15.1-18[114X)  for  more  information  about left zero and
   right zero semigroups.[133X
   
   [4X[32X  Example  [32X[104X
@@ -214,5 +214,70 @@
     [4X[28X<regular bipartition semigroup of size 5, degree 3 with 5 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsRightZeroSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-6 BrandtSemigroup[101X
+  
+  [33X[1;0Y[29X[2XBrandtSemigroup[102X( [[[3Xfilt[103X, ][3XG[103X, ][3Xn[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YAn [3Xn[103X by [3Xn[103X Brandt semigroup over the group [3XG[103X.[133X
+  
+  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer, then this function returns an [3Xn[103X by [3Xn[103X Brandt
+  semigroup over the group [3XG[103X in the representation given by the filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YThe optional argument [3Xfilt[103X can be any of the following:[133X
+  
+  [30X    [33X[0;6Y[10XIsPartialPermSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
+  
+  [30X    [33X[0;6Y[10XIsReesZeroMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsNTPMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsMinPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsTropicalMinPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsProjectiveMaxPlusMatrixSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsIntegerMatrixSemigroup.[110X[133X
+  
+  [33X[0;0YThe  optional argument [3XG[103X defaults to a trivial permutation group. If present
+  [3XG[103X must be a permutation group, unless [3Xfilt[103X is [10XIsReesZeroMatrixSemigroup[110X when
+  [3XG[103X may be any type of finite group.[133X
+  
+  [33X[0;0YSee [2XIsBrandtSemigroup[102X ([14X16.2-2[114X) for more information about Brandt semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(5);[127X[104X
+    [4X[28X<0-simple inverse partial perm semigroup of rank 5 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsTransformationSemigroup, 15);[127X[104X
+    [4X[28X<0-simple transformation semigroup of degree 16 with 28 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X226[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28XTransformation( [ 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,[128X[104X
+    [4X[28X  16, 16, 16 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(Group((1, 2)), 3);[127X[104X
+    [4X[28X<0-simple inverse partial perm semigroup of rank 6 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);[127X[104X
+    [4X[28X<0-simple transformation semigroup of degree 7 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsReesZeroMatrixSemigroup, [127X[104X
+    [4X[25X>[125X [27X                        DihedralGroup(4), [127X[104X
+    [4X[25X>[125X [27X                        2);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with [128X[104X
+    [4X[28X 2 generators>>[128X[104X
   [4X[32X[104X
   

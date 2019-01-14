@@ -18,7 +18,7 @@
   [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.5.1 or higher is available. [5XIO[105X
         must be compiled before [5XSemigroups[105X can be loaded.[133X
   
-  [30X    [33X[0;6Yensure  that the [5XOrb[105X package version 4.8.0 or higher is available. [5XOrb[105X
+  [30X    [33X[0;6Yensure  that the [5XOrb[105X package version 4.8.1 or higher is available. [5XOrb[105X
         and [5XSemigroups[105X both perform better if [5XOrb[105X is compiled.[133X
   
   [30X    [33X[0;6Yensure   that  the  [5XDigraphs[105X  package  version  0.12.0  or  higher  is
@@ -26,22 +26,22 @@
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.6.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package  archive  [11Xsemigroups-3.0.20.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-3.1.0.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.0.20[111X.[133X
+        [11Xsemigroups-3.1.0[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X and so on. Move the directory [11Xsemigroups-3.0.20[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-3.1.0[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://james-d-mitchell.github.io/libsemigroups/[107X) C++ library, which
         requires  a  compiler  implementing  the  C++11  standard.  Inside the
-        [11Xpkg/semigroups-3.0.20[111X directory, type[133X
+        [11Xpkg/semigroups-3.1.0[111X directory, type[133X
   
   [4X      [32X[104X
           [4X./configure[104X
@@ -68,7 +68,7 @@
   components  of  actions,  which underpin many of the features of [5XSemigroups[105X.
   The  [5XIO[105X package is used to read and write elements of a semigroup to a file.
   The  [5Xgenss[105X  package  is used in a non-deterministic version of the operation
-  [2XNormalizer[102X  ([14X13.11-1[114X)  and  in calculating the stabiliser of a Rees 0-matrix
+  [2XNormalizer[102X  ([14X14.11-1[114X)  and  in calculating the stabiliser of a Rees 0-matrix
   semigroup's matrix. The [5XDigraphs[105X package is used in a variety of ways in the
   [5XSemigroups[105X  package,  in  particular,  to  apply  standard  graph  theoretic
   algorithms to certain data structures.[133X
@@ -81,7 +81,7 @@
   functions relating to the enumeration of certain types of semigroups, and it
   is not possible to use the [5XSemigroups[105X package without compiling it.[133X
   
-  [33X[0;0YTo  compile the kernel component inside the [11Xpkg/semigroups-3.0.20[111X directory,
+  [33X[0;0YTo  compile  the kernel component inside the [11Xpkg/semigroups-3.1.0[111X directory,
   type[133X
   
   [4X[32X[104X
@@ -182,6 +182,19 @@
   
   [33X[0;0YEach test file is run twice, once when the methods for semigroups satisfying
   [2XIsActingSemigroup[102X ([14X6.1-3[114X) are enabled and once when they are disabled.[133X
+  
+  [1X2.5-4 SemigroupsTestAll[101X
+  
+  [33X[1;0Y[29X[2XSemigroupsTestAll[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis  function  should  be called with no argument to compile the [5XSemigroups[105X
+  package's  documentation,  run  the standard suite of tests, and run all the
+  examples  from the documentation to ensure that their output is correct. The
+  value  returned  is  [9Xtrue[109X if all the tests succeed, and [9Xfalse[109X otherwise. The
+  whole process should take no more than a few minutes.[133X
+  
+  [33X[0;0YSee [2XSemigroupsMakeDoc[102X ([14X2.4-1[114X) and [2XSemigroupsTestStandard[102X ([14X2.5-2[114X).[133X
   
   
   [1X2.6 [33X[0;0YMore information during a computation[133X[101X

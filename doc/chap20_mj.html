@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 20: 
+    IO
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap20"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap20.html">[MathJax off]</a></p>
+<p><a id="X80CDCB927B3E5BB9" name="X80CDCB927B3E5BB9"></a></p>
+<div class="ChapSects"><a href="chap20_mj.html#X80CDCB927B3E5BB9">20 <span class="Heading">
+    IO
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap20_mj.html#X7CE72BB17F2D49F8">20.1 <span class="Heading">Reading and writing elements to a file</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X8728096E8427EDE8">20.1-1 ReadGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X78041E8F87EFDE62">20.1-2 WriteGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X8711D6E280F87E67">20.1-3 IteratorFromGeneratorsFile</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap20_mj.html#X7AB8E281795A4964">20.2 <span class="Heading">Reading and writing multiplication tables to a file</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X805058C07F9373B4">20.2-1 ReadMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X868B824B7E24FA96">20.2-2 WriteMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap20_mj.html#X85708F5B7FBE3549">20.2-3 IteratorFromMultiplicationTableFile</a></span>
+</div></div>
+</div>
+
+<h3>20 <span class="Heading">
+    IO
+  </span></h3>
+
+<p><a id="X7CE72BB17F2D49F8" name="X7CE72BB17F2D49F8"></a></p>
+
+<h4>20.1 <span class="Heading">Reading and writing elements to a file</span></h4>
+
+<p>The functions <code class="func">ReadGenerators</code> (<a href="chap20_mj.html#X8728096E8427EDE8"><span class="RefLink">20.1-1</span></a>) and <code class="func">WriteGenerators</code> (<a href="chap20_mj.html#X78041E8F87EFDE62"><span class="RefLink">20.1-2</span></a>) can be used to read or write, respectively, elements of a semigroup to a file.</p>
+
+<p><a id="X8728096E8427EDE8" name="X8728096E8427EDE8"></a></p>
+
+<h5>20.1-1 ReadGenerators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadGenerators</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: A list of lists of semigroup elements.</p>
+
+<p>If <var class="Arg">filename</var> is an <strong class="pkg">IO</strong> package file object or is the name of a file created using <code class="func">WriteGenerators</code> (<a href="chap20_mj.html#X78041E8F87EFDE62"><span class="RefLink">20.1-2</span></a>), then <code class="code">ReadGenerators</code> returns the contents of this file as a list of lists of elements of a semigroup.</p>
+
+<p>If the optional second argument <var class="Arg">nr</var> is present, then <code class="code">ReadGenerators</code> returns the elements stored in the <var class="Arg">nr</var>th line of <var class="Arg">filename</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file := Concatenation(SEMIGROUPS.PackageDir,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">"/data/tst/testdata");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadGenerators(file, 13);</span>
+[ &lt;identity partial perm on [ 2, 3, 4, 5, 6 ]&gt;, 
+  &lt;identity partial perm on [ 2, 3, 5, 6 ]&gt;, [1,2](5)(6) ]</pre></div>
+
+<p><a id="X78041E8F87EFDE62" name="X78041E8F87EFDE62"></a></p>
+
+<h5>20.1-2 WriteGenerators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteGenerators</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">append</var>][, <var class="Arg">function</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">IO_OK</code> or <code class="code">IO_ERROR</code>.</p>
+
+<p>This function provides a method for writing collections of elements of a semigroup to a file. The resulting file can be further compressed using <code class="code">gzip</code> or <code class="code">xz</code>.</p>
+
+<p>The argument <var class="Arg">list</var> should be a list of lists of elements, or semigroups.</p>
+
+<p>The argument <var class="Arg">filename</var> should be a string containing the name of a file or an <strong class="pkg">IO</strong> package file object where the entries in <var class="Arg">list</var> will be written; see <code class="func">IO_File</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap4_mj.html#X7EC160D07E815DBB"><span class="RefLink">IO: IO_File mode</span></a>) and <code class="func">IO_CompressedFile</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap4_mj.html#X7B425F3B7A68C2FB"><span class="RefLink">IO: IO_CompressedFile</span></a>).</p>
+
+<p>If the optional third argument <var class="Arg">append</var> is not present or is given and equals <code class="code">"w"</code>, then the previous content of the file is deleted and overwritten. If the third argument is <code class="code">"a"</code>, then <code class="code">list</code> is appended to the file.</p>
+
+<p>If any element of <var class="Arg">list</var> is a semigroup, then the generators of that semigroup are written to <var class="Arg">filename</var>. More specifically, the list returned by <code class="func">GeneratorsOfSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>) is written to the file.</p>
+
+<p>This function returns <code class="func">IO_OK</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap5_mj.html#X7D4D092B8401EA0F"><span class="RefLink">IO: IO_OK</span></a>) if everything went well or <code class="func">IO_ERROR</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap5_mj.html#X86E06A128511BA25"><span class="RefLink">IO: IO_Error</span></a>) if something went wrong.</p>
+
+<p>The file produced by <code class="code">WriteGenerators</code> can be read using <code class="func">ReadGenerators</code> (<a href="chap20_mj.html#X8728096E8427EDE8"><span class="RefLink">20.1-1</span></a>).</p>
+
+<p>From Version 3.0.0 onwards the <strong class="pkg">Semigroups</strong> package used the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> package pickling functionality; see <a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap5_mj.html#X7F68A8F47F87B243"><span class="RefLink">IO: Pickling and unpickling</span></a> for more details. This approach is used because it is more general and more robust than the methods used by earlier versions of <strong class="pkg">Semigroups</strong>, although the performance is somewhat worse, and the resulting files are somewhat larger.</p>
+
+<p><a id="X8711D6E280F87E67" name="X8711D6E280F87E67"></a></p>
+
+<h5>20.1-3 IteratorFromGeneratorsFile</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromGeneratorsFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: An iterator.</p>
+
+<p>If <var class="Arg">filename</var> is a file or a string containing the name of a file created using <code class="func">WriteGenerators</code> (<a href="chap20_mj.html#X78041E8F87EFDE62"><span class="RefLink">20.1-2</span></a>), then <code class="code">IteratorFromGeneratorsFile</code> returns an iterator <code class="code">iter</code> such that <code class="code">NextIterator(iter)</code> returns the next collection of generators stored in the file <var class="Arg">filename</var>.</p>
+
+<p>This function is a convenient way of, for example, looping over a collection of generators in a file without loading every object in the file into memory. This might be useful if the file contains more information than there is available memory.</p>
+
+<p>If you want to get an iterator for a file written using <code class="code">WriteGenerators</code> from a version of <strong class="pkg">Semigroups</strong> before version 3.0.0, then you can use <code class="code">IteratorFromOldGeneratorsFile</code>.</p>
+
+<p><a id="X7AB8E281795A4964" name="X7AB8E281795A4964"></a></p>
+
+<h4>20.2 <span class="Heading">Reading and writing multiplication tables to a file</span></h4>
+
+<p>The functions <code class="func">ReadMultiplicationTable</code> (<a href="chap20_mj.html#X805058C07F9373B4"><span class="RefLink">20.2-1</span></a>) and <code class="func">WriteMultiplicationTable</code> (<a href="chap20_mj.html#X868B824B7E24FA96"><span class="RefLink">20.2-2</span></a>) can be used to read or write, respectively, multiplication tables to a file.</p>
+
+<p><a id="X805058C07F9373B4" name="X805058C07F9373B4"></a></p>
+
+<h5>20.2-1 ReadMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadMultiplicationTable</code>( <var class="Arg">filename</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: A list of multiplication tables.</p>
+
+<p>If <var class="Arg">filename</var> is a file or is the name of a file created using <code class="func">WriteMultiplicationTable</code> (<a href="chap20_mj.html#X868B824B7E24FA96"><span class="RefLink">20.2-2</span></a>), then <code class="code">ReadMultiplicationTable</code> returns the contents of this file as a list of multiplication tables.</p>
+
+<p>If the optional second argument <var class="Arg">nr</var> is present, then <code class="code">ReadMultiplicationTable</code> returns the mutiplication table stored in the <var class="Arg">nr</var>th line of <var class="Arg">filename</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file := Concatenation(SEMIGROUPS.PackageDir,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">"/data/tst/tables.gz");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tab := ReadMultiplicationTable(file, 12);</span>
+[ [ 1, 1, 3, 4, 5, 6, 7, 8, 9, 6 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+  [ 3, 3, 1, 5, 4, 7, 6, 9, 8, 7 ], [ 4, 4, 9, 6, 3, 8, 5, 1, 7, 8 ], 
+  [ 5, 5, 8, 7, 1, 9, 4, 3, 6, 9 ], [ 6, 6, 7, 8, 9, 1, 3, 4, 5, 1 ], 
+  [ 7, 7, 6, 9, 8, 3, 1, 5, 4, 3 ], [ 8, 8, 5, 1, 7, 4, 9, 6, 3, 4 ], 
+  [ 9, 9, 4, 3, 6, 5, 8, 7, 1, 5 ], [ 6, 10, 7, 8, 9, 1, 3, 4, 5, 2 ] 
+ ]</pre></div>
+
+<p><a id="X868B824B7E24FA96" name="X868B824B7E24FA96"></a></p>
+
+<h5>20.2-2 WriteMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteMultiplicationTable</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">append</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">IO_OK</code> or <code class="code">IO_ERROR</code>.</p>
+
+<p>This function provides a method for writing collections of multiplication tables to a file. The resulting file can be further compressed using <code class="code">gzip</code> or <code class="code">xz</code>. This function applies to square arrays with a maximum of 255 rows where the entries are integers from <code class="code">[1, 2, .., n]</code> (where <code class="code">n</code> is the number of rows in the array.</p>
+
+<p>The argument <var class="Arg">list</var> should be a list of multiplication tables.</p>
+
+<p>The argument <var class="Arg">filename</var> should be a file or a string containing the name of a file where the entries in <var class="Arg">list</var> will be written or an <strong class="pkg">IO</strong> package file object; see <code class="func">IO_File</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap4_mj.html#X7EC160D07E815DBB"><span class="RefLink">IO: IO_File mode</span></a>) and <code class="func">IO_CompressedFile</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap4_mj.html#X7B425F3B7A68C2FB"><span class="RefLink">IO: IO_CompressedFile</span></a>).</p>
+
+<p>If the optional third argument <var class="Arg">append</var> is not present or is given and equals <code class="code">"w"</code>, then the previous content of the file is deleted and overwritten. If the third argument is given and equals <code class="code">"a"</code> then <code class="code">list</code> is appended to the file. This function returns <code class="func">IO_OK</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap5_mj.html#X7D4D092B8401EA0F"><span class="RefLink">IO: IO_OK</span></a>) if everything went well or <code class="func">IO_ERROR</code> (<a href="/Users/jdm/.gap/pkg/io-4.5.4/doc/chap5_mj.html#X86E06A128511BA25"><span class="RefLink">IO: IO_Error</span></a>) if something went wrong.</p>
+
+<p>The multiplication tables saved in <var class="Arg">filename</var> can be recovered from the file using <code class="func">ReadMultiplicationTable</code> (<a href="chap20_mj.html#X805058C07F9373B4"><span class="RefLink">20.2-1</span></a>).</p>
+
+<p><a id="X85708F5B7FBE3549" name="X85708F5B7FBE3549"></a></p>
+
+<h5>20.2-3 IteratorFromMultiplicationTableFile</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorFromMultiplicationTableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: An iterator.</p>
+
+<p>If <var class="Arg">filename</var> is a file or a string containing the name of a file created using <code class="func">WriteMultiplicationTable</code> (<a href="chap20_mj.html#X868B824B7E24FA96"><span class="RefLink">20.2-2</span></a>), then <code class="code">IteratorFromMultiplicationTableFile</code> returns an iterator <code class="code">iter</code> such that <code class="code">NextIterator(iter)</code> returns the next multiplication table stored in the file <var class="Arg">filename</var>.</p>
+
+<p>This function is a convenient way of, for example, looping over a collection of multiplication tables in a file without loading every object in the file into memory. This might be useful if the file contains more information than there is available memory.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -45,6 +45,36 @@
     [4X[28X<inverse partial perm semigroup ideal of rank 10 with 1025 generators>[128X[104X
   [4X[32X[104X
   
+  [1X7.1-2 Ideals[101X
+  
+  [33X[1;0Y[29X[2XIdeals[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn list of ideals.[133X
+  
+  [33X[0;0YIf  [3XS[103X is a finite non-empty semigroup, then this attribute returns a list of
+  the non-empty two-sided ideals of [3XS[103X.[133X
+  
+  [33X[0;0YThe  ideals  are  returned  in  no particular order, and each ideal uses the
+  minimum   possible  number  of  generators  (see  [2XGeneratorsOfSemigroupIdeal[102X
+  ([14X7.2-1[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([4, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                   Transformation([4, 3, 2, 2])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 4 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIdeals(S);[127X[104X
+    [4X[28X[ <non-regular transformation semigroup ideal of degree 4 with[128X[104X
+    [4X[28X      1 generator>, [128X[104X
+    [4X[28X <non-regular transformation semigroup ideal of degree 4 with[128X[104X
+    [4X[28X     1 generator>, [128X[104X
+    [4X[28X<non-regular transformation semigroup ideal of degree 4 with[128X[104X
+    [4X[28X    2 generators>, [128X[104X
+    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>,[128X[104X
+    [4X[28X<non-regular transformation semigroup ideal of degree 4 with[128X[104X
+    [4X[28X  1 generator>, [128X[104X
+    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator> [128X[104X
+    [4X[28X][128X[104X
+  [4X[32X[104X
+  
   
   [1X7.2 [33X[0;0YAttributes of ideals[133X[101X
   

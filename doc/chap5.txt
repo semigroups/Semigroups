@@ -1492,13 +1492,13 @@
   [30X    [33X[0;6Y[2XNormalizeSemigroup[102X ([14X5.7-5[114X)[133X
   
   [33X[0;0YRandom   matrix   semigroups   can   be   created   by  using  the  function
-  [2XRandomSemigroup[102X ([14X6.6-1[114X). We can also create a matrix semigroup isomorphic to
-  a  given  semigroup  by  using  [2XIsomorphismSemigroup[102X ([14X6.5-1[114X) and [2XAsSemigroup[102X
-  ([14X6.5-3[114X).  These functions require a filter, and accept any of the filters in
+  [2XRandomSemigroup[102X ([14X6.7-1[114X). We can also create a matrix semigroup isomorphic to
+  a  given  semigroup  by  using  [2XIsomorphismSemigroup[102X ([14X6.6-1[114X) and [2XAsSemigroup[102X
+  ([14X6.6-3[114X).  These functions require a filter, and accept any of the filters in
   Section [14X5.7-1[114X.[133X
   
   [33X[0;0YThere  are  corresponding  functions  which  can be used for matrix monoids:
-  [2XRandomMonoid[102X ([14X6.6-1[114X), [2XIsomorphismMonoid[102X ([14X6.5-2[114X), and [2XAsMonoid[102X ([14X6.5-4[114X). These
+  [2XRandomMonoid[102X ([14X6.7-1[114X), [2XIsomorphismMonoid[102X ([14X6.6-2[114X), and [2XAsMonoid[102X ([14X6.6-4[114X). These
   can be used with the filters in Section [14X5.7-2[114X.[133X
   
   

@@ -4,12 +4,12 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package for [5XGAP[105X version 3.0.20.
-  [5XSemigroups[105X  3.0.20  is  a distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.1.0.
+  [5XSemigroups[105X  3.1.0  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   
-  [33X[0;0Y[5XSemigroups[105X  3.0.20  contains  efficient  methods  for  creating  semigroups,
+  [33X[0;0Y[5XSemigroups[105X   3.1.0  contains  efficient  methods  for  creating  semigroups,
   monoids,  inverse  semigroups  and  their  ideals, calculating their Green's
   structure,  size,  elements,  group  of  units,  minimal  ideal, and testing
   membership,  finding  the  inverses  of  a  regular element, and factorizing
@@ -27,7 +27,7 @@
   [33X[0;0YMany standard examples of semigroups and classes of semigroups are provided;
   see  Section  [14X8[114X.  [5XSemigroups[105X  also  provides  functions  to  read  and write
   collections  of  elements  of  a  semigroup  to  a  file; see [2XReadGenerators[102X
-  ([14X19.1-1[114X) and [2XWriteGenerators[102X ([14X19.1-2[114X).[133X
+  ([14X20.1-1[114X) and [2XWriteGenerators[102X ([14X20.1-2[114X).[133X
   
   [33X[0;0YThere  are  functions  in  [5XSemigroups[105X  to define and manipulate free inverse
   semigroups  and  free  bands; this part of the package was written by Julius
@@ -77,15 +77,15 @@
   [8XPart V: the structure of a semigroup or monoid[108X
         [33X[0;6Ythe  functionality  of  the [5XSemigroups[105X package for determining various
         structural  properties of a given semigroup or monoid are described in
-        Chapters [14X12[114X, [14X13[114X, and [14X14[114X. Attributes and properties specific to inverse
-        semigroups are described in Chapter [14X15[114X.[133X
+        Chapters [14X13[114X, [14X14[114X, and [14X15[114X. Attributes and properties specific to inverse
+        semigroups are described in Chapter [14X16[114X.[133X
   
   [8XPart VI: congruences, quotients, and homomorphisms[108X
         [33X[0;6Ymethods  for  creating  and manipulating congruences and homomorphisms
-        are described by Chapters [14X16[114X and [14X17[114X.[133X
+        are described by Chapters [14X17[114X and [14X18[114X.[133X
   
   [8XPart VII: utilities and helper functions[108X
         [33X[0;6Yfunctions  for  reading and writing semigroups and their elements, and
         for  visualising  semigroups, and some of their elements, can be found
-        in Chapters [14X18[114X and [14X19[114X.[133X
+        in Chapters [14X19[114X and [14X20[114X.[133X
   

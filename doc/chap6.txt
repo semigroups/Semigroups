@@ -51,11 +51,11 @@
   
   [33X[0;0YThere  are methods in [5XSemigroups[105X for computing individual Green's classes of
   an  acting  semigroup  without  computing  the  entire data structure of the
-  underlying  semigroup;  see  [2XGreensRClassOfElementNC[102X  ([14X12.1-3[114X).  It  is also
+  underlying  semigroup;  see  [2XGreensRClassOfElementNC[102X  ([14X13.1-3[114X).  It  is also
   possible  to  compute  the  [13XR[113X-classes,  the  number  of  elements  and  test
   membership  in  a  semigroup  without  computing  all the elements; see, for
-  example,  [2XGreensRClasses[102X ([14X12.1-4[114X), [2XRClassReps[102X ([14X12.1-5[114X), [2XIteratorOfRClassReps[102X
-  ([14X12.2-1[114X),  [2XIteratorOfRClasses[102X  ([14X12.2-2[114X), or [2XNrRClasses[102X ([14X12.1-9[114X). This may be
+  example,  [2XGreensRClasses[102X ([14X13.1-4[114X), [2XRClassReps[102X ([14X13.1-5[114X), [2XIteratorOfRClassReps[102X
+  ([14X13.2-1[114X),  [2XIteratorOfRClasses[102X  ([14X13.2-2[114X), or [2XNrRClasses[102X ([14X13.1-9[114X). This may be
   useful  if  you want to study a very large semigroup where computing all the
   elements of the semigroup is not feasible.[133X
   
@@ -163,9 +163,9 @@
   [33X[0;0YEvery semigroup with this representation can have the Froidure-Pin algorithm
   applied to it; see Section [14X6.1-2[114X for more details.[133X
   
-  [33X[0;0YBasic  operations  for  enumerable  semigroups are [2XAsListCanonical[102X ([14X13.1-1[114X),
-  [2XEnumeratorCanonical[102X  ([14X13.1-1[114X), [2XIteratorCanonical[102X ([14X13.1-1[114X), [2XPositionCanonical[102X
-  ([14X13.1-2[114X), [2XEnumerate[102X ([14X13.1-3[114X), and [2XIsFullyEnumerated[102X ([14X13.1-4[114X).[133X
+  [33X[0;0YBasic  operations  for  enumerable  semigroups are [2XAsListCanonical[102X ([14X14.1-1[114X),
+  [2XEnumeratorCanonical[102X  ([14X14.1-1[114X), [2XIteratorCanonical[102X ([14X14.1-1[114X), [2XPositionCanonical[102X
+  ([14X14.1-2[114X), [2XEnumerate[102X ([14X14.1-3[114X), and [2XIsFullyEnumerated[102X ([14X14.1-4[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]));;[127X[104X
@@ -305,7 +305,7 @@
         "kernel  and  trace"  method  has  better  complexity than the generic
         method,  but has large overheads which make it a poor choice for small
         semigroups.  The  default  value  for  this  component  is [10X10 ^ 5[110X. See
-        Section [14X16.7[114X for more information about the "kernel and trace" method.[133X
+        Section [14X17.7[114X for more information about the "kernel and trace" method.[133X
   
   [8X[10Xreport[110X[8X[108X
         [33X[0;6Ythis  component  should  be either [9Xtrue[109X or [9Xfalse[109X. If this component is
@@ -517,45 +517,211 @@
   [33X[1;0Y[29X[2XDirectProductOp[102X( [3Xlist[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
   
-  [33X[0;0YThe   function   [10XDirectProduct[110X   takes   an  arbitrary  positive  number  of
-  transformation  semigroups  and  returns  another  transformation  semigroup
-  isomorphic  to  their  direct  product.  The  operation  [10XDirectProductOp[110X  is
-  included   for   consistency  with  the  [5XGAP[105X  library  (see  [2XDirectProductOp[102X
-  ([14XReference:  DirectProductOp[114X)).  It  takes  exactly  two arguments, namely a
-  non-empty   list   [10Xlist[110X  of  transformation  semigroups  and  one  of  these
-  semigroups, [10XS[110X.[133X
+  [33X[0;0YThe  function  [10XDirectProduct[110X  takes  an  arbitrary positive number of finite
+  semigroups,  and  returns  a  semigroup  that  is isomorphic to their direct
+  product.[133X
+  
+  [33X[0;0YIf  these finite semigroups are all partial perm semigroups, all bipartition
+  semigroups, or all PBR semigroups, then [10XDirectProduct[110X returns a semigroup of
+  the same type. Otherwise, [10XDirectProduct[110X returns a transformation semigroup.[133X
+  
+  [33X[0;0YThe  operation  [10XDirectProductOp[110X  is  included  for  consistency with the [5XGAP[105X
+  library (see [2XDirectProductOp[102X ([14XReference: DirectProductOp[114X)). It takes exactly
+  two  arguments,  namely a non-empty list [3Xlist[103X of semigroups and one of these
+  semigroups,  [3XS[103X,  and  returns the same result as [10XCallFuncList(DirectProduct,
+  [3Xlist[103X[10X)[110X.[133X
+  
+  [33X[0;0YIf  [10XD[110X is the direct product of a collection of semigroups, then an embedding
+  of  the  [10Xi[110Xth factor into [10XD[110X can be accessed with the command [10XEmbedding(D, i)[110X,
+  and  a  projection of [10XD[110X onto its [10Xi[110Xth factor can be accessed with the command
+  [10XProjection(D,  i)[110X;  see  [2XEmbedding[102X  ([14XReference:  Embedding[114X)  and  [2XProjection[102X
+  ([14XReference: Projection[114X) for more information.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XT := Semigroup(Transformation([1, 2, 3, 3, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27XDP := DirectProduct(S, T);[127X[104X
-    [4X[28X<commutative transformation semigroup of degree 7 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XElements(DP);[127X[104X
-    [4X[28X[ Transformation( [ 1, 2, 3, 4, 5, 5, 5 ] ), [128X[104X
-    [4X[28X  Transformation( [ 2, 1, 3, 4, 5, 5, 5 ] ) ][128X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([Transformation([2, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X                Transformation([3, 3, 2, 3, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XT := Semigroup([Transformation([3, 5, 4, 2, 6, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XDP := DirectProduct(S, T);[127X[104X
-    [4X[28X<transformation semigroup of degree 11 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(DP);[127X[104X
-    [4X[28X35[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([PartialPerm([2, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := InverseMonoid([PartialPerm([1, 2, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, T);[127X[104X
+    [4X[28X<commutative inverse partial perm monoid of rank 5 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(D);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5 ]>, (1,2)(3)(4)(5) ][128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(2);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, S, S);; IsRegularSemigroup(D);; D;[127X[104X
+    [4X[28X<regular bipartition monoid of size 3375, degree 6 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([PartialPerm([2, 5, 0, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X                   PartialPerm([5, 2, 4, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, T);[127X[104X
+    [4X[28X<transformation semigroup of size 122, degree 9 with 63 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(D) = Size(S) * Size(T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-5 WreathProduct[101X
+  
+  [33X[1;0Y[29X[2XWreathProduct[102X( [3XM[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
+  
+  [33X[0;0YIf  [3XM[103X is a transformation monoid (or a permutation group) of degree [10Xm[110X, and [3XS[103X
+  is  a  transformation  semigroup  (or  permutation  group)  of degree [10Xs[110X, the
+  operation  [10XWreathProduct([3XM[103X[10X,  [3XS[103X[10X)[110X  returns  the  wreath product of [3XM[103X and [3XS[103X, in
+  terms of an embedding in the full transformation monoid of degree [10Xm * s[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XT := FullTransformationMonoid(3);;[127X[104X
+    [4X[25Xgap>[125X [27XC := Group((1, 3));;[127X[104X
+    [4X[25Xgap>[125X [27XW := WreathProduct(T, C);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(W);[127X[104X
+    [4X[28X39366[128X[104X
+    [4X[25Xgap>[125X [27XWW := WreathProduct(C, T);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(WW);[127X[104X
+    [4X[28X216[128X[104X
   [4X[32X[104X
   
   
-  [1X6.5 [33X[0;0YChanging the representation of a semigroup[133X[101X
+  [1X6.5 [33X[0;0YDual semigroups[133X[101X
+  
+  [33X[0;0YThe  [13Xdual  semigroup[113X  of  a  semigroup  [10XS[110X  is  the  semigroup  with the same
+  underlying  set  of  elements  but  with  reversed  multiplication;  this is
+  anti-isomorphic to [10XS[110X. In [5XSemigroups[105X a semigroup and its dual are represented
+  with disjoint sets of elements.[133X
+  
+  [1X6.5-1 DualSemigroup[101X
+  
+  [33X[1;0Y[29X[2XDualSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe dual semigroup of the given semigroup.[133X
+  
+  [33X[0;0YThe  dual  semigroup  of  a  semigroup  [3XS[103X  is  the  semigroup  with the same
+  underlying   set   as   [3XS[103X,   but   with  multiplication  reversed;  this  is
+  anti-isomorphic  to  [3XS[103X. This attribute returns a semigroup isomorphic to the
+  dual semigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 2, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 4, 4, 1, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X generators>>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S) = Size(D);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNrDClasses(S) = NrDClasses(D);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-2 IsDualSemigroupRep[101X
+  
+  [33X[1;0Y[29X[2XIsDualSemigroupRep[102X( [3Xsgrp[103X ) [32X Category[133X
+  [6XReturns:[106X  [33X[0;10YReturns [9Xtrue[109X if [3Xsgrp[103X is represented as a dual semigroup.[133X
+  
+  [33X[0;0YSemigroups   created   using   [2XDualSemigroup[102X   ([14X6.5-1[114X)  normally  have  this
+  representation. The exception is semigroups which are the dual of semigroups
+  already  lying in this category. That is, a semigroup has the representation
+  [2XIsDualSemigroupRep[102X if and only if the corresponding dual semigroup does not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 5, 1, 1, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 2, 4, 4, 3])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X generators>>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(D);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR := DualSemigroup(D);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(R);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XR = S;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismTransformationSemigroup(D));[127X[104X
+    [4X[28X<transformation semigroup of size 16, degree 17 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xx := Representative(D);[127X[104X
+    [4X[28X<Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup>[128X[104X
+    [4X[25Xgap>[125X [27XV := Semigroup(x);[127X[104X
+    [4X[28X<dual semigroup of <commutative transformation semigroup of degree 5 [128X[104X
+    [4X[28X with 1 generator>>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(V);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-3 IsDualSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XIsDualSemigroupElement[102X( [3Xelt[103X ) [32X Category[133X
+  [6XReturns:[106X  [33X[0;10YReturns  [9Xtrue[109X  if  [3Xelt[103X  has the representation of a dual semigroup
+            element.[133X
+  
+  [33X[0;0YElements  of  a  dual  semigroup obtained using [2XAntiIsomorphismDualSemigroup[102X
+  ([14X6.5-4[114X) normally lie in this category. The exception is elements obtained by
+  applying the map [2XAntiIsomorphismDualSemigroup[102X ([14X6.5-4[114X) to elements already in
+  this  category.  That  is,  the  elements of a semigroup lie in the category
+  [2XIsDualSemigroupElement[102X if and only if the elements of the corresponding dual
+  semigroup do not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := SingularPartitionMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xs := GeneratorsOfSemigroup(S)[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xt := s ^ map;[127X[104X
+    [4X[28X<<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[28X  in the dual semigroup>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupElement(t);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(map);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := t ^ inv;[127X[104X
+    [4X[28X<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupElement(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-4 AntiIsomorphismDualSemigroup[101X
+  
+  [33X[1;0Y[29X[2XAntiIsomorphismDualSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn anti-isomorphism from [3XS[103X to the corresponding dual semigroup.[133X
+  
+  [33X[0;0YThe dual semigroup of [3XS[103X mathematically has the same underlying set as [3XS[103X, but
+  is represented with a different set of elements in [5XSemigroups[105X. This function
+  returns a mapping which is an anti-isomorphism from [3XS[103X to its dual.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualSemigroup(S);[127X[104X
+    [4X[28XMappingByFunction( <regular bipartition *-monoid of size 203, [128X[104X
+    [4X[28X degree 3 with 4 generators>, <dual semigroup of [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
+    [4X[28X >, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(map);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, -2], [2, -3], [3, -1]]);[127X[104X
+    [4X[28X<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xy := Bipartition([[1], [2, -2], [3, -3], [-1]]);[127X[104X
+    [4X[28X<bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27X(x ^ map) * (y ^ map) = (y * x) ^ map;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx ^ map;[127X[104X
+    [4X[28X<<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>[128X[104X
+    [4X[28X  in the dual semigroup>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.6 [33X[0;0YChanging the representation of a semigroup[133X[101X
   
   [33X[0;0YThe    [5XSemigroups[105X    package    provides    two    convenient   constructors
-  [2XIsomorphismSemigroup[102X  ([14X6.5-1[114X) and [2XIsomorphismMonoid[102X ([14X6.5-2[114X) for changing the
+  [2XIsomorphismSemigroup[102X  ([14X6.6-1[114X) and [2XIsomorphismMonoid[102X ([14X6.6-2[114X) for changing the
   representation  of a given semigroup or monoid. These methods can be used to
   find  an  isomorphism  from  any semigroup to a semigroup of any other type,
   provided such an isomorphism exists.[133X
   
-  [33X[0;0YNote    that   at   present   neither   [2XIsomorphismSemigroup[102X   ([14X6.5-1[114X)   nor
-  [2XIsomorphismMonoid[102X  ([14X6.5-2[114X)  can  be  used  to  determine  whether  two given
+  [33X[0;0YNote    that   at   present   neither   [2XIsomorphismSemigroup[102X   ([14X6.6-1[114X)   nor
+  [2XIsomorphismMonoid[102X  ([14X6.6-2[114X)  can  be  used  to  determine  whether  two given
   semigroups, or monoids, are isomorphic.[133X
   
-  [33X[0;0YSome  methods for [2XIsomorphismSemigroup[102X ([14X6.5-1[114X) and [2XIsomorphismMonoid[102X ([14X6.5-2[114X)
+  [33X[0;0YSome  methods for [2XIsomorphismSemigroup[102X ([14X6.6-1[114X) and [2XIsomorphismMonoid[102X ([14X6.6-2[114X)
   are based on methods for the [5XGAP[105X library operations:[133X
   
   [30X    [33X[0;6Y[2XIsomorphismReesMatrixSemigroup[102X                             ([14XReference:
@@ -576,11 +742,11 @@
   [30X    [33X[0;6Y[2XIsomorphismFpSemigroup[102X    ([14XReference:    IsomorphismFpSemigroup[114X)   and
         [10XIsomorphismFpMonoid[110X.[133X
   
-  [33X[0;0YThe operation [2XIsomorphismMonoid[102X ([14X6.5-2[114X) can be used to return an isomorphism
+  [33X[0;0YThe operation [2XIsomorphismMonoid[102X ([14X6.6-2[114X) can be used to return an isomorphism
   from a semigroup which is mathematically a monoid (but does not below to the
   category  of  monoids  in [5XGAP[105X [2XIsMonoid[102X ([14XReference: IsMonoid[114X)) into a monoid.
-  This  is  the  primary  purpose  of the operation [2XIsomorphismMonoid[102X ([14X6.5-2[114X).
-  Either [2XIsomorphismSemigroup[102X ([14X6.5-1[114X) or [2XIsomorphismMonoid[102X ([14X6.5-2[114X) can be used
+  This  is  the  primary  purpose  of the operation [2XIsomorphismMonoid[102X ([14X6.6-2[114X).
+  Either [2XIsomorphismSemigroup[102X ([14X6.6-1[114X) or [2XIsomorphismMonoid[102X ([14X6.6-2[114X) can be used
   to  change the representation of a monoid, but only the latter is guaranteed
   to return an object in the category of monoids.[133X
   
@@ -612,10 +778,10 @@
   
   [33X[0;0YThere  are  some  further methods in [5XSemigroups[105X for obtaining an isomorphism
   from  a  Rees  matrix, or 0-matrix, semigroup to another such semigroup with
-  particular   properties;   [2XRMSNormalization[102X  ([14X6.5-7[114X)  and  [2XRZMSNormalization[102X
-  ([14X6.5-6[114X).[133X
+  particular   properties;   [2XRMSNormalization[102X  ([14X6.6-7[114X)  and  [2XRZMSNormalization[102X
+  ([14X6.6-6[114X).[133X
   
-  [1X6.5-1 IsomorphismSemigroup[101X
+  [1X6.6-1 IsomorphismSemigroup[101X
   
   [33X[1;0Y[29X[2XIsomorphismSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism of semigroups.[133X
@@ -628,7 +794,7 @@
   [2XIsTransformationSemigroup[102X       ([14XReference:      IsTransformationSemigroup[114X),
   [2XIsFpSemigroup[102X  ([14XReference:  IsFpSemigroup[114X),  and  [2XIsPBRSemigroup[102X ([14X4.6-1[114X) are
   some  possible  values  for  [3Xfilt[103X.  Note that [3Xfilt[103X should not be of the form
-  [10XIsXMonoid[110X;  see [2XIsomorphismMonoid[102X ([14X6.5-2[114X). The second argument [3XS[103X should be a
+  [10XIsXMonoid[110X;  see [2XIsomorphismMonoid[102X ([14X6.6-2[114X). The second argument [3XS[103X should be a
   semigroup.[133X
   
   [33X[0;0Y[10XIsomorphismSemigroup[110X  returns  an isomorphism from [3XS[103X to a semigroup [3XT[103X of the
@@ -697,7 +863,7 @@
     [4X[28X generators>, function( x ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
-  [1X6.5-2 IsomorphismMonoid[101X
+  [1X6.6-2 IsomorphismMonoid[101X
   
   [33X[1;0Y[29X[2XIsomorphismMonoid[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism of monoids.[133X
@@ -710,10 +876,10 @@
   [2XIsTransformationMonoid[102X   ([14XReference:   IsTransformationMonoid[114X),   [2XIsFpMonoid[102X
   ([14XReference:  IsFpMonoid[114X),  and [2XIsBipartitionMonoid[102X ([14X3.8-1[114X) are some possible
   values  for [3Xfilt[103X. Note that [3Xfilt[103X should not be of the form [10XIsXSemigroup[110X; see
-  [2XIsomorphismSemigroup[102X  ([14X6.5-1[114X).  The  second argument [3XS[103X should be a semigroup
+  [2XIsomorphismSemigroup[102X  ([14X6.6-1[114X).  The  second argument [3XS[103X should be a semigroup
   which  is  mathematically  a  monoid  but which may or may not belong to the
   category  [2XIsMonoid[102X  ([14XReference:  IsMonoid[114X)  of  monoids  in [5XGAP[105X, i.e. [3XS[103X must
-  satisfy [2XIsMonoidAsSemigroup[102X ([14X14.1-12[114X).[133X
+  satisfy [2XIsMonoidAsSemigroup[102X ([14X15.1-13[114X).[133X
   
   [33X[0;0Y[10XIsomorphismMonoid[110X  returns  a  monoid isomorphism from [3XS[103X to a semigroup [3XT[103X of
   the  type described by [3Xfilt[103X, if such an isomorphism exists. In this context,
@@ -753,13 +919,13 @@
     [4X[28X[ m1, m2 ]>, function( x ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
-  [1X6.5-3 AsSemigroup[101X
+  [1X6.6-3 AsSemigroup[101X
   
   [33X[1;0Y[29X[2XAsSemigroup[102X( [3Xfilt[103X, [3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
   [33X[0;0Y[10XAsSemigroup([3Xfilt[103X[10X,  [3XS[103X[10X)[110X is just shorthand for [10XRange(IsomorphismSemigroup([3Xfilt[103X[10X,
-  [3XS[103X[10X))[110X,  when  [3XS[103X  is  a  semigroup;  see  [2XIsomorphismSemigroup[102X ([14X6.5-1[114X) for more
+  [3XS[103X[10X))[110X,  when  [3XS[103X  is  a  semigroup;  see  [2XIsomorphismSemigroup[102X ([14X6.6-1[114X) for more
   details.[133X
   
   [33X[0;0YNote  that  if  the  argument  [3XS[103X belongs to the category of monoids [2XIsMonoid[102X
@@ -797,13 +963,13 @@
     [4X[28X5[128X[104X
   [4X[32X[104X
   
-  [1X6.5-4 AsMonoid[101X
+  [1X6.6-4 AsMonoid[101X
   
   [33X[1;0Y[29X[2XAsMonoid[102X( [[3Xfilt[103X, ][3XS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA monoid or [9Xfail[109X.[133X
   
   [33X[0;0Y[10XAsMonoid([3Xfilt[103X[10X,  [3XS[103X[10X)[110X  is just shorthand for [10XRange(IsomorphismMonoid([3Xfilt[103X[10X, [3XS[103X[10X))[110X,
-  when  [3XS[103X  is  a  semigroup  or monoid; see [2XIsomorphismMonoid[102X ([14X6.5-2[114X) for more
+  when  [3XS[103X  is  a  semigroup  or monoid; see [2XIsomorphismMonoid[102X ([14X6.6-2[114X) for more
   details.[133X
   
   [33X[0;0YIf  the first argument [3Xfilt[103X is omitted and the semigroup [3XS[103X is mathematically
@@ -813,7 +979,7 @@
   first argument [3Xfilt[103X is omitted, then [3XS[103X is returned.[133X
   
   [33X[0;0YIf  the  first argument [3Xfilt[103X is omitted and the semigroup [3XS[103X is not a monoid,
-  i.e.  it  does  not  satisfy  [2XIsMonoidAsSemigroup[102X  ([14X14.1-12[114X),  then  [9Xfail[109X is
+  i.e.  it  does  not  satisfy  [2XIsMonoidAsSemigroup[102X  ([14X15.1-13[114X),  then  [9Xfail[109X is
   returned.[133X
   
   [4X[32X  Example  [32X[104X
@@ -834,13 +1000,13 @@
     [4X[28X<bipartition monoid of size 3, degree 3 with 2 generators>[128X[104X
   [4X[32X[104X
   
-  [1X6.5-5 IsomorphismPermGroup[101X
+  [1X6.6-5 IsomorphismPermGroup[101X
   
   [33X[1;0Y[29X[2XIsomorphismPermGroup[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  the  semigroup  [3XS[103X  is  mathematically  a  group,  so  that  it satisfies
-  [2XIsGroupAsSemigroup[102X    ([14X14.1-6[114X),   then   [10XIsomorphismPermGroup[110X   returns   an
+  [2XIsGroupAsSemigroup[102X    ([14X15.1-7[114X),   then   [10XIsomorphismPermGroup[110X   returns   an
   isomorphism to a permutation group.[133X
   
   [33X[0;0YIf [3XS[103X is not a group then an error is given.[133X
@@ -876,7 +1042,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X6.5-6 RZMSNormalization[101X
+  [1X6.6-6 RZMSNormalization[101X
   
   [33X[1;0Y[29X[2XRZMSNormalization[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
@@ -892,7 +1058,7 @@
         of columns it contains).[133X
   
         [33X[0;6YIf  the  index  sets [22XI[122X and [22XΛ[122X are partitioned into [22Xk[122X parts according to
-        the  [2XRZMSConnectedComponents[102X  ([14X13.14-2[114X)  of [22XS[122X, giving a disjoint union
+        the  [2XRZMSConnectedComponents[102X  ([14X14.14-2[114X)  of [22XS[122X, giving a disjoint union
         [22XI=I_1∪...∪  I_k[122X  and  [22XΛ=Λ_1∪...∪Λ_k[122X, then the [22Xr[122Xth block corresponds to
         the sub-matrix [22XQ_r[122X of [22XQ[122X defined by [22XI_r[122X and [22XΛ_r[122X.[133X
   
@@ -907,7 +1073,7 @@
         rows/columns of [22XQ[122X.[133X
   
   [33X[0;0YFurthermore,  if [22XT[122X is a group (i.e. a semigroup for which [2XIsGroupAsSemigroup[102X
-  ([14X14.1-6[114X)  returns [9Xtrue[109X), then the non-zero entries of the structure matrix [22XQ[122X
+  ([14X15.1-7[114X)  returns [9Xtrue[109X), then the non-zero entries of the structure matrix [22XQ[122X
   are chosen such that the following hold:[133X
   
   [30X    [33X[0;6YThe first non-zero entry of every row and every column is equal to the
@@ -952,13 +1118,13 @@
     [4X[28X ][128X[104X
   [4X[32X[104X
   
-  [1X6.5-7 RMSNormalization[101X
+  [1X6.6-7 RMSNormalization[101X
   
   [33X[1;0Y[29X[2XRMSNormalization[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YIf  [3XR[103X  is a Rees matrix semigroup over a group [10XG[110X (i.e. a semigroup for which
-  [2XIsGroupAsSemigroup[102X  ([14X14.1-6[114X) returns [9Xtrue[109X), then [10XRMSNormalization[110X returns an
+  [2XIsGroupAsSemigroup[102X  ([14X15.1-7[114X) returns [9Xtrue[109X), then [10XRMSNormalization[110X returns an
   isomorphism from [3XR[103X to a [13Xnormalized[113X Rees matrix semigroup [10XS[110X over [10XG[110X.[133X
   
   [33X[0;0YThe  semigroup [10XS[110X is normalized in the sense that the first entry of each row
@@ -982,9 +1148,9 @@
   [4X[32X[104X
   
   
-  [1X6.6 [33X[0;0YRandom semigroups[133X[101X
+  [1X6.7 [33X[0;0YRandom semigroups[133X[101X
   
-  [1X6.6-1 RandomSemigroup[101X
+  [1X6.7-1 RandomSemigroup[101X
   
   [33X[1;0Y[29X[2XRandomSemigroup[102X( [3Xarg...[103X ) [32X function[133X
   [33X[1;0Y[29X[2XRandomMonoid[102X( [3Xarg...[103X ) [32X function[133X
@@ -1096,9 +1262,9 @@
   [4X[32X[104X
   
   
-  [1X6.7 [33X[0;0YEndomorphism monoid of a digraph[133X[101X
+  [1X6.8 [33X[0;0YEndomorphism monoid of a digraph[133X[101X
   
-  [1X6.7-1 EndomorphismMonoid[101X
+  [1X6.8-1 EndomorphismMonoid[101X
   
   [33X[1;0Y[29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XEndomorphismMonoid[102X( [3Xdigraph[103X, [3Xcolors[103X ) [32X operation[133X

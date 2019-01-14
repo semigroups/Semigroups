@@ -9,7 +9,7 @@
   src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 18: 
-    Visualising semigroups and elements
+    Semigroup homomorphisms
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -20,264 +20,368 @@
 <body class="chap18"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap18.html">[MathJax off]</a></p>
-<p><a id="X80E82C6785300A86" name="X80E82C6785300A86"></a></p>
-<div class="ChapSects"><a href="chap18_mj.html#X80E82C6785300A86">18 <span class="Heading">
-    Visualising semigroups and elements
+<p><a id="X861935DB81A478C2" name="X861935DB81A478C2"></a></p>
+<div class="ChapSects"><a href="chap18_mj.html#X861935DB81A478C2">18 <span class="Heading">
+    Semigroup homomorphisms
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X82E16CAB874A1D84">18.1 <span class="Heading">
-      <code class="code">dot</code> pictures
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7A8945817BD44943">18.1 <span class="Heading">
+      Isomorphisms of arbitrary semigroups
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F51F3CD7E13D199">18.1-1 DotString</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7C22E8D17D6C23EA">18.1-2 DotSemilatticeOfIdempotents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7A6D59247F15935E">18.1-1 IsIsomorphicSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7DE212DF7DF0A4E9">18.1-2 SmallestMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X8248C522825E2684">18.1-3 IsomorphismSemigroups</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X83152CA78114E2BD">18.2 <span class="Heading">
-      <code class="code">tex</code> output
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X80DE3DB0782D9358">18.2 <span class="Heading">
+      Isomorphisms of Rees (0-)matrix semigroups
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X80FBF08180F7F181">18.2-1 TexString</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7BDDE0FE80D09887">18.3 <span class="Heading">
-      <code class="code">tikz</code> pictures
-    </span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X82FCB1E585429FEA">18.2-1 IsRMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X82B0BDCD7CBDCC2E">18.2-2 RMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X81C4DE427D4A3D6C">18.2-3 ELM_LIST</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7A02528F8721F378">18.2-4 CompositionMapping2</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F159C1179C93C11">18.2-5 ImagesElm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7CAD3F5D81053DD0">18.2-6 <span class="Heading">
+        Operators for isomorphisms of Rees (0-)matrix semigroup by triples
+      </span></a>
 </span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F0971F678B4FC66">18.3-1 TikzString</a></span>
 </div></div>
 </div>
 
 <h3>18 <span class="Heading">
-    Visualising semigroups and elements
+    Semigroup homomorphisms
   </span></h3>
 
-<p>There are two operations <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.1-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.1-1</span></a>) and opening the resulting pdf file.</p>
+<p>In this chapter we describe the various ways to define a homomorphism from a semigroup to another semigroup.</p>
 
-<p><a id="X82E16CAB874A1D84" name="X82E16CAB874A1D84"></a></p>
+<p><a id="X7A8945817BD44943" name="X7A8945817BD44943"></a></p>
 
 <h4>18.1 <span class="Heading">
-      <code class="code">dot</code> pictures
+      Isomorphisms of arbitrary semigroups
     </span></h4>
 
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
+<p><a id="X7A6D59247F15935E" name="X7A6D59247F15935E"></a></p>
 
-<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
+<h5>18.1-1 IsIsomorphicSemigroup</h5>
 
-<p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<h5>18.1-1 DotString</h5>
+<p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then this operation attempts to determine whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic semigroups by using the operation <code class="func">IsomorphismSemigroups</code> (<a href="chap18_mj.html#X8248C522825E2684"><span class="RefLink">18.1-3</span></a>). If <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns an isomorphism, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">true</code>, while if <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">fail</code>, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">false</code>. Note that in some cases, at present, there is no method for determining whether <var class="Arg">S</var> is isomorphic to <var class="Arg">T</var>, even if it is obvious to the user whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic. There are plans to improve this in the future.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A string.</p>
-
-<p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each \(\mathscr{D}\)-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
-
-<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
-
-<p>The \(\mathscr{D}\)-classes are shown as eggbox diagrams with \(\mathscr{L}\)-classes as rows and \(\mathscr{R}\)-classes as columns; group \(\mathscr{H}\)-classes are shaded gray and contain an asterisk. The \(\mathscr{L}\)-classes and \(\mathscr{R}\)-classes within a \(\mathscr{D}\)-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). The \(\mathscr{D}\)-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one \(\mathscr{D}\)-class to another indicates that the higher \(\mathscr{D}\)-class is greater than the lower one in the \(\mathscr{D}\)-order on <var class="Arg">S</var>.</p>
-
-<p>If the optional second argument <var class="Arg">options</var> is present, it can be used to specify some options for output.</p>
-
-
-<dl>
-<dt><strong class="Mark">number</strong></dt>
-<dd><p>if <code class="code"><var class="Arg">options</var>.number</code> is <code class="keyw">false</code>, then the \(\mathscr{D}\)-classes in the diagram are not numbered according to their index in the list of \(\mathscr{D}\)-classes of <var class="Arg">S</var>. The default value for this option is <code class="keyw">true</code>.</p>
-
-</dd>
-<dt><strong class="Mark">maximal</strong></dt>
-<dd><p>if <code class="code"><var class="Arg">options</var>.maximal</code> is <code class="keyw">true</code>, then the structure description of the group \(\mathscr{H}\)-classes is displayed; see <code class="func">StructureDescription</code> (<a href="../../../doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>). Setting this attribute to <code class="keyw">true</code> can adversely affect the performance of <code class="code">DotString</code>. The default value for this option is <code class="keyw">false</code>.</p>
-
-</dd>
-<dt><strong class="Mark">normal</strong></dt>
-<dd><p>if <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">false</code>, then the \(\mathscr{L}\)- and \(\mathscr{R}\)-classes within each \(\mathscr{D}\)-class arranged to correspond to <code class="func">PrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). If <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">true</code>, they are instead arranged to correspond to <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). Setting this attribute to <code class="keyw">false</code> may improve the performance of <code class="code">DotString</code> as it avoids the computation of <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X7EBB4F1981CC2AE9"><span class="RefLink">12.4-7</span></a>). The default value for this option is <code class="keyw">true</code>.</p>
-
-</dd>
-</dl>
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(3);</span>
-&lt;full transformation monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotString(S);</span>
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=blac\
-k,arrowhead=none]\n1 [shape=box style=invisible label=&lt;\n&lt;TABLE BORDE\
-R=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
-1\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BORDER = \"0\" &gt; 1&lt;/TD&gt;&lt;/TR&gt;\
-&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n2 [shape=box style\
-=invisible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\
-\"10\" CELLSPACING=\"0\" PORT=\"2\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"\
-3\" BORDER = \"0\" &gt; 2&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BG\
-COLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLO\
-R=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/T\
-D&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;T\
-D BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n3 [shape=box style=invis\
-ible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
- CELLSPACING=\"0\" PORT=\"3\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BO\
-RDER = \"0\" &gt; 3&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;\
-TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\
-\n&lt;/TABLE&gt;&gt;];\n1 -&gt; 2\n2 -&gt; 3\n }"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FileString("t3.dot", DotString(S));</span>
-1040</pre></div>
-
-<p><a id="X7C22E8D17D6C23EA" name="X7C22E8D17D6C23EA"></a></p>
-
-<h5>18.1-2 DotSemilatticeOfIdempotents</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A string.</p>
-
-<p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="../../../doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>). The idempotents are grouped by the \(\mathscr{D}\)-class they belong to.</p>
-
-<p>The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
+<p>If the size of <var class="Arg">S</var> and <var class="Arg">T</var> is rather small — with approximately 50 or fewer elements — then it is possible to calculate whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic by using <code class="func">SmallestMultiplicationTable</code> (<a href="chap18_mj.html#X7DE212DF7DF0A4E9"><span class="RefLink">18.1-2</span></a>), but this is not currently done by <code class="code">IsIsomorphicSemigroup</code>. In particular, <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic if and only if <code class="code">SmallestMultiplicationTable(<var class="Arg">S</var>) = SmallestMultiplicationTable(<var class="Arg">T</var>)</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);</span>
-&lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotSemilatticeOfIdempotents(S);</span>
-"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \
-cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
- cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\
- -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\
-\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \
-6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
- -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1, 2, 4], [1, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 3, 5], [1, 2, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsTransformationSemigroup, S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(FullTransformationMonoid(4),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartitionMonoid(4));</span>
+false</pre></div>
 
-<p><a id="X83152CA78114E2BD" name="X83152CA78114E2BD"></a></p>
+<p><a id="X7DE212DF7DF0A4E9" name="X7DE212DF7DF0A4E9"></a></p>
+
+<h5>18.1-2 SmallestMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: The lex-least multiplication table of a semigroup.</p>
+
+<p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> is an isomorphism invariant of semigroups, and so it can, for example, be used to check if two semigroups are isomorphic.</p>
+
+<p>Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
+
+<p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="/Users/jdm/.gap/pkg/smallsemi-0.6.11/doc/chap4.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1, -3], [-2]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1], [-2], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3], [-1], [-2, -3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, -1], [3, -2], [-3]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMultiplicationTable(S);</span>
+[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
+  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
+  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
+  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]</pre></div>
+
+<p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
+
+<h5>18.1-3 IsomorphismSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An isomorphism, or <code class="keyw">fail</code>.</p>
+
+<p>This operation attempts to find an isomorphism from the semigroup <var class="Arg">S</var> to the semigroup <var class="Arg">T</var>. If it finds one, then it is returned, and if not, then <code class="keyw">fail</code> is returned.</p>
+
+<p>For many types of semigroup, <code class="code">IsomorphismSemigroups</code> is not able to determine whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, and so this operation may result in an "Error, no method found". <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ; however it is harder to construct an isomorphism for semigroups that are isomorphic.</p>
+
+<p>At present, <code class="code">IsomorphismSemigroups</code> is only able to return an isomorphism when <var class="Arg">S</var> and <var class="Arg">T</var> are finite simple, 0-simple, or monogenic semigroups, or when <code class="code"><var class="Arg">S</var> = <var class="Arg">T</var></code>. See <code class="func">IsSimpleSemigroup</code> (<a href="chap15_mj.html#X836F4692839F4874"><span class="RefLink">15.1-22</span></a>), <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap15_mj.html#X8193A60F839C064E"><span class="RefLink">15.1-28</span></a>), and <code class="func">IsMonogenicSemigroup</code> (<a href="chap15_mj.html#X79D46BAB7E327AD1"><span class="RefLink">15.1-11</span></a>) for more information about these types of semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsTransformationSemigroup, 4, 5);</span>
+&lt;regular transformation semigroup of size 20, degree 9 with 5 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(IsBipartitionSemigroup, 4, 5);</span>
+&lt;regular bipartition semigroup of size 20, degree 3 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T) &lt;&gt; fail;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(FullTransformationMonoid(5),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([1, 2, 3, 4, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PrincipalFactor(D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(UnderlyingSemigroup(S));</span>
+"S4"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
+&lt;Rees 0-matrix semigroup 10x5 over S4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(PartitionMonoid(5),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1], [2, -2], [3, -3], [4, -4], [5, -5], [-1]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := PrincipalFactor(D);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(UnderlyingSemigroup(T));</span>
+"S4"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T;</span>
+&lt;Rees 0-matrix semigroup 15x15 over S4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T);</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(FullTransformationMonoid(5),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                       Transformation([1, 1, 2, 3, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := PrincipalFactor(DClass(I, I.1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(UnderlyingSemigroup(T));</span>
+"S4"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T;</span>
+&lt;Rees 0-matrix semigroup 10x5 over S4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T) &lt;&gt; fail;</span>
+true</pre></div>
+
+<p><a id="X80DE3DB0782D9358" name="X80DE3DB0782D9358"></a></p>
 
 <h4>18.2 <span class="Heading">
-      <code class="code">tex</code> output
+      Isomorphisms of Rees (0-)matrix semigroups
     </span></h4>
 
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18_mj.html#X7BDDE0FE80D09887"><span class="RefLink">18.3</span></a>.</p>
+<p>An isomorphism between two regular finite Rees (0-)matrix semigroups whose underlying semigroups are groups can be described by a triple defined in terms of the matrices and underlying groups of the semigroups. For a full description of the theory involved, see Section 3.4 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
 
-<p><a id="X80FBF08180F7F181" name="X80FBF08180F7F181"></a></p>
+<p>An isomorphism described in this way can be constructed using <code class="func">RMSIsoByTriple</code> (<a href="chap18_mj.html#X82B0BDCD7CBDCC2E"><span class="RefLink">18.2-2</span></a>) or <code class="func">RZMSIsoByTriple</code> (<a href="chap18_mj.html#X82B0BDCD7CBDCC2E"><span class="RefLink">18.2-2</span></a>), and will satisfy the filter <code class="func">IsRMSIsoByTriple</code> (<a href="chap18_mj.html#X82FCB1E585429FEA"><span class="RefLink">18.2-1</span></a>) or <code class="func">IsRZMSIsoByTriple</code> (<a href="chap18_mj.html#X82FCB1E585429FEA"><span class="RefLink">18.2-1</span></a>).</p>
 
-<h5>18.2-1 TexString</h5>
+<p><a id="X82FCB1E585429FEA" name="X82FCB1E585429FEA"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A string.</p>
+<h5>18.2-1 IsRMSIsoByTriple</h5>
 
-<p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional paramater <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="../../../doc/ref/chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSIsoByTriple</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSIsoByTriple</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>The isomorphisms between finite Rees matrix or 0-matrix semigroups <code class="code">S</code> and <code class="code">T</code> over groups <code class="code">G</code> and <code class="code">H</code>, respectively, specified by a triple consisting of:</p>
+
+<ol>
+<li><p>an isomorphism of the underlying graph of <code class="code">S</code> to the underlying graph of of <code class="code">T</code></p>
+
+</li>
+<li><p>an isomorphism from <code class="code">G</code> to <code class="code">H</code></p>
+
+</li>
+<li><p>a function from <code class="code">Rows(S)</code> union <code class="code">Columns(S)</code> to <code class="code">H</code></p>
+
+</li>
+</ol>
+<p>belong to the categories <code class="code">IsRMSIsoByTriple</code> and <code class="code">IsRZMSIsoByTriple</code>. Basic operators for such isomorphism are given in <a href="chap18_mj.html#X7CAD3F5D81053DD0"><span class="RefLink">18.2-6</span></a>, and basic operations are: <code class="func">Range</code> (<a href="../../../doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Source</code> (<a href="../../../doc/ref/chap32_mj.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">ELM_LIST</code> (<a href="chap18_mj.html#X81C4DE427D4A3D6C"><span class="RefLink">18.2-3</span></a>), <code class="func">CompositionMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X7ED1E4E27CCE2DCA"><span class="RefLink">Reference: CompositionMapping</span></a>), <code class="func">ImagesElm</code> (<a href="chap18_mj.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">ImagesRepresentative</code> (<a href="chap18_mj.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">InverseGeneralMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X865FC25A87D36F3D"><span class="RefLink">Reference: InverseGeneralMapping</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="../../../doc/ref/chap32_mj.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">IsOne</code> (<a href="../../../doc/ref/chap31_mj.html#X814D78347858EC13"><span class="RefLink">Reference: IsOne</span></a>).</p>
+
+<p><a id="X82B0BDCD7CBDCC2E" name="X82B0BDCD7CBDCC2E"></a></p>
+
+<h5>18.2-2 RMSIsoByTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSIsoByTriple</code>( <var class="Arg">R1</var>, <var class="Arg">R2</var>, <var class="Arg">triple</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An isomorphism.</p>
+
+<p>If <var class="Arg">R1</var> and <var class="Arg">R2</var> are isomorphic regular Rees 0-matrix semigroups whose underlying semigroups are groups then <code class="code">RZMSIsoByTriple</code> returns the isomorphism between <var class="Arg">R1</var> and <var class="Arg">R2</var> defined by <var class="Arg">triple</var>, which should be a list consisting of the following:</p>
+
+
+<ul>
+<li><p><code class="code"><var class="Arg">triple</var>[1]</code> should be a permutation describing an isomorphism from the graph of <var class="Arg">R1</var> to the graph of <var class="Arg">R2</var>, i.e. it should satisfy <code class="code">OnDigraphs(RZMSDigraph(<var class="Arg">R1</var>), <var class="Arg">triple</var>[1]) = RZMSDigraph(<var class="Arg">R2</var>)</code>.</p>
+
+</li>
+<li><p><code class="code"><var class="Arg">triple</var>[2]</code> should be an isomorphism from the underlying group of <var class="Arg">R1</var> to the underlying group of <var class="Arg">R2</var> (see <code class="func">UnderlyingSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7D9719F887AFCF8F"><span class="RefLink">Reference: UnderlyingSemigroup for a rees 0-matrix semigroup</span></a>)).</p>
+
+</li>
+<li><p><code class="code"><var class="Arg">triple</var>[3]</code> should be a list of elements from the underlying group of <var class="Arg">R2</var>. If the <code class="func">Matrix</code> (<a href="../../../doc/ref/chap51_mj.html#X879384D479EB1D82"><span class="RefLink">Reference: Matrix</span></a>) of <var class="Arg">R1</var> has <span class="SimpleMath">\(m\)</span> columns and <span class="SimpleMath">\(n\)</span> rows, then the list should have length <span class="SimpleMath">\(m + n\)</span>, where the first <span class="SimpleMath">\(m\)</span> entries should correspond to the columns of <var class="Arg">R1</var>'s matrix, and the last <span class="SimpleMath">\(n\)</span> entries should correspond to the rows. These column and row entries should correspond to the <span class="SimpleMath">\(u_i\)</span> and <span class="SimpleMath">\(v_\lambda\)</span> elements in Theorem 3.4.1 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
+
+</li>
+</ul>
+<p>If <var class="Arg">triple</var> describes a valid isomorphism from <var class="Arg">R1</var> to <var class="Arg">R2</var> then this will return an object in the category <code class="func">IsRZMSIsoByTriple</code> (<a href="chap18_mj.html#X82FCB1E585429FEA"><span class="RefLink">18.2-1</span></a>); otherwise an error will be returned.</p>
+
+<p>If <var class="Arg">R1</var> and <var class="Arg">R2</var> are instead Rees matrix semigroups (without zero) then <code class="code">RMSIsoByTriple</code> should be used instead. This operation is used in the same way, but it should be noted that since an RMS's graph is a complete bipartite graph, <code class="code"><var class="Arg">triple</var>[1]</code> can be any permutation on <code class="code">[1 .. m + n]</code>, so long as no point in <code class="code">[1 .. m]</code> is mapped to a point in <code class="code">[m + 1 .. m + n]</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([6, 2, 4, 3, 6, 4]));</span>
-"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 \\\\\n  6 &amp; 2 &amp; 4 &amp; 3 &amp; 6 &amp;\
- 4\n\\end{pmatrix}"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([1, 2, 1, 3]), 5);</span>
-"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 \\\\\n  1 &amp; 2 &amp; 1 &amp; 3 &amp; 5\n\\en\
-d{pmatrix}"</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := SymmetricGroup(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 3)], [(1, 2, 3), (), (2, 3)], [0, 0, ()]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ReesZeroMatrixSemigroup(g, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMapping(g);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_elms_list := [(), (), (), (), (), ()];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RZMSIsoByTriple(R, R, [(), id, g_elms_list]);</span>
+((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ), 
+[ (), (), (), (), (), () ])
+</pre></div>
 
-<p><a id="X7BDDE0FE80D09887" name="X7BDDE0FE80D09887"></a></p>
+<p><a id="X81C4DE427D4A3D6C" name="X81C4DE427D4A3D6C"></a></p>
 
-<h4>18.3 <span class="Heading">
-      <code class="code">tikz</code> pictures
-    </span></h4>
+<h5>18.2-3 ELM_LIST</h5>
 
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ELM_LIST</code>( <var class="Arg">map</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A component of an isomorphism of Rees (0-)matrix semigroups by triple.</p>
 
-<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="../../../pkg/digraphs/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
+<p><code class="code">ELM_LIST(<var class="Arg">map</var>, <var class="Arg">i</var>)</code> returns the <code class="code">i</code>th component of the Rees (0-)matrix semigroup isomorphism by triple <var class="Arg">map</var> when <code class="code">i = 1, 2, 3</code>.</p>
 
-<p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
+<p>The components of an isomorphism of Rees (0-)matrix semigroups by triple are:</p>
 
-<h5>18.3-1 TikzString</h5>
+<ol>
+<li><p>An isomorphism of the underlying graphs of the source and range of <var class="Arg">map</var>, respectively.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A string.</p>
+</li>
+<li><p>An isomorphism of the underlying groups of the source and range of <var class="Arg">map</var>, respectively.</p>
 
-<p>This function produces a graphical representation of the object <var class="Arg">obj</var> using the <code class="code">tikz</code> package for LaTeX. More precisely, this operation outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">obj</var>.</p>
+</li>
+<li><p>An function from the union of the rows and columns of the source of <var class="Arg">map</var> to the underlying group of the range of <var class="Arg">map</var>.</p>
 
-<p>Currently the following types of objects are supported:</p>
+</li>
+</ol>
+<p><a id="X7A02528F8721F378" name="X7A02528F8721F378"></a></p>
+
+<h5>18.2-4 CompositionMapping2</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A Rees (0-)matrix semigroup by triple.</p>
+
+<p>If <var class="Arg">map1</var> and <var class="Arg">map2</var> are isomorphisms of Rees matrix or 0-matrix semigroups specified by triples and the range of <var class="Arg">map2</var> is contained in the source of <var class="Arg">map1</var>, then <code class="code">CompositionMapping2(<var class="Arg">map1</var>, <var class="Arg">map2</var>)</code> returns the isomorphism from <code class="code">Source(<var class="Arg">map2</var>)</code> to <code class="code">Range(<var class="Arg">map1</var>)</code> specified by the triple with components:</p>
+
+<ol>
+<li><p><code class="code"><var class="Arg">map1</var>[1] * <var class="Arg">map2</var>[1]</code></p>
+
+</li>
+<li><p><code class="code"><var class="Arg">map1</var>[2] * <var class="Arg">map2</var>[2]</code></p>
+
+</li>
+<li><p>the componentwise product of <code class="code"><var class="Arg">map1</var>[1] * <var class="Arg">map2</var>[3]</code> and <code class="code"><var class="Arg">map1</var>[3] * <var class="Arg">map2</var>[2]</code>.</p>
+
+</li>
+</ol>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(1, 3)(2, 4), (1, 4, 3, 2), (), (1, 2, 3, 4), (1, 3)(2, 4), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(1, 4, 3, 2), 0, (), (1, 4, 3, 2), (1, 2, 3, 4), (1, 2, 3, 4)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(), (), (1, 4, 3, 2), (1, 2, 3, 4), 0, (1, 2, 3, 4)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(1, 2, 3, 4), (1, 4, 3, 2), (1, 2, 3, 4), 0, (), (1, 2, 3, 4)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(1, 3)(2, 4), (1, 2, 3, 4), 0, (), (1, 4, 3, 2), (1, 2, 3, 4)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [0, (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), ()]]);</span>
+&lt;Rees 0-matrix semigroup 6x6 over Group([ (1,2,3,4) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AutomorphismGroup(R);</span>
+&lt;automorphism group of &lt;Rees 0-matrix semigroup 6x6 over Group([ (1,2,
+3,4) ])&gt; with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G.2;</span>
+((), IdentityMapping( Group( [ (1,2,3,4) ] ) ), 
+[ (), (), (), (), (), (), (), (), (), (), (), () ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G.3;</span>
+(( 2, 4, 6, 3)( 7,11, 8,10), GroupHomomorphismByImages( Group( 
+[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], 
+[ (1,2,3,4) ] ), [ (), (1,4,3,2), (1,4,3,2), (), (1,4,3,2), 
+  (1,3)(2,4), (), (1,3)(2,4), (), (1,2,3,4), (1,2,3,4), (1,4,3,2) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CompositionMapping2(G.2, G.3);</span>
+(( 2, 4, 6, 3)( 7,11, 8,10), GroupHomomorphismByImages( Group( 
+[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], 
+[ (1,2,3,4) ] ), [ (), (1,4,3,2), (1,4,3,2), (), (1,4,3,2), 
+  (1,3)(2,4), (), (1,3)(2,4), (), (1,2,3,4), (1,2,3,4), (1,4,3,2) ])</pre></div>
+
+<p><a id="X7F159C1179C93C11" name="X7F159C1179C93C11"></a></p>
+
+<h5>18.2-5 ImagesElm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">pt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An element of a Rees (0-)matrix semigroup or a list containing such an element.</p>
+
+<p>If <var class="Arg">map</var> is an isomorphism of Rees matrix or 0-matrix semigroups specified by a triple and <var class="Arg">pt</var> is an element of the source of <var class="Arg">map</var>, then <code class="code">ImagesRepresentative(<var class="Arg">map</var>, <var class="Arg">pt</var>) = <var class="Arg">pt</var> ^ <var class="Arg">map</var></code> returns the image of <var class="Arg">pt</var> under <var class="Arg">map</var>.</p>
+
+<p>The image of <var class="Arg">pt</var> under <var class="Arg">map</var> of <code class="code">Range(<var class="Arg">map</var>)</code> is the element with components:</p>
+
+<ol>
+<li><p><code class="code"><var class="Arg">pt</var>[1] ^ <var class="Arg">map</var>[1]</code></p>
+
+</li>
+<li><p><code class="code">(<var class="Arg">pt</var>[1] ^ <var class="Arg">map</var>[3]) * (<var class="Arg">pt</var>[2] ^ <var class="Arg">map</var>[2]) * (<var class="Arg">pt</var>[3] ^ <var class="Arg">map</var>[3]) ^ -1</code></p>
+
+</li>
+<li><p><code class="code"><var class="Arg">pt</var>[3] ^ <var class="Arg">map</var>[1]</code>.</p>
+
+</li>
+</ol>
+<p><code class="code">ImagesElm(<var class="Arg">map</var>, <var class="Arg">pt</var>)</code> simply returns <code class="code">[ImagesRepresentative(<var class="Arg">map</var>, <var class="Arg">pt</var>)]</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[0, (2, 8), 0, 0, 0, (2, 8, 6)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(), 0, (2, 8, 6), (2, 6), (2, 6, 8), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [0, (2, 8, 6), 0, 0, 0, (2, 8)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);</span>
+&lt;Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,6) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := RZMSIsoByTriple(R, R,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[(), IdentityMapping(Group([(2, 8), (2, 8, 6)])),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[(), (2, 6, 8), (), (), (), (2, 8, 6),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> (2, 8, 6), (), (), (), (2, 6, 8), ()]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImagesElm(map, RMSElement(R, 1, (2, 8), 2));</span>
+[ (1,(2,8),2) ]</pre></div>
+
+<p><a id="X7CAD3F5D81053DD0" name="X7CAD3F5D81053DD0"></a></p>
+
+<h5>18.2-6 <span class="Heading">
+        Operators for isomorphisms of Rees (0-)matrix semigroup by triples
+      </span></h5>
 
 
 <dl>
-<dt><strong class="Mark">blocks</strong></dt>
-<dd><p>If <var class="Arg">obj</var> is the left or right blocks of a bipartition, then <code class="code">TikzString</code> returns a graphical representation of these blocks; see Section <a href="chap3_mj.html#X87684C148592F831"><span class="RefLink">3.6</span></a>.</p>
+<dt><strong class="Mark"><code class="code"><var class="Arg">map</var>[<var class="Arg">i</var>]</code></strong></dt>
+<dd><p><code class="code"><var class="Arg">map</var>[i]</code> returns the <var class="Arg">i</var>th component of the Rees (0-)matrix semigroup isomorphism by triple <var class="Arg">map</var> when <code class="code"><var class="Arg">i</var> = 1, 2, 3</code>; see <code class="func">ELM_LIST</code> (<a href="chap18_mj.html#X81C4DE427D4A3D6C"><span class="RefLink">18.2-3</span></a>).</p>
 
 </dd>
-<dt><strong class="Mark">bipartitions</strong></dt>
-<dd><p>If <var class="Arg">obj</var> is a bipartition, then <code class="code">TikzString</code> returns a graphical representation of <var class="Arg">obj</var>.</p>
-
-<p>If the optional second argument <var class="Arg">options</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">f</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">obj</var> is less than 20. See Chapter <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more details about bipartitions.</p>
+<dt><strong class="Mark"><code class="code"><var class="Arg">map1</var> * <var class="Arg">map2</var></code></strong></dt>
+<dd><p>returns the composition of <var class="Arg">map2</var> and <var class="Arg">map1</var>; see <code class="func">CompositionMapping2</code> (<a href="chap18_mj.html#X7A02528F8721F378"><span class="RefLink">18.2-4</span></a>).</p>
 
 </dd>
-<dt><strong class="Mark">pbrs</strong></dt>
-<dd><p>If <var class="Arg">obj</var> is a PBR, then <code class="code">TikzString</code> returns a graphical representation <var class="Arg">obj</var>; see Section <a href="chap3_mj.html#X87684C148592F831"><span class="RefLink">3.6</span></a>.</p>
+<dt><strong class="Mark"><code class="code"><var class="Arg">map1</var> &lt; <var class="Arg">map2</var></code></strong></dt>
+<dd><p>returns <code class="keyw">true</code> if <var class="Arg">map1</var> is lexicographically less than <var class="Arg">map2</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">map1</var> = <var class="Arg">map2</var></code></strong></dt>
+<dd><p>returns <code class="keyw">true</code> if the Rees (0-)matrix semigroup isomorphisms by triple <var class="Arg">map1</var> and <var class="Arg">map2</var> have equal source and range, and are equal as functions, and <code class="keyw">false</code> otherwise.</p>
+
+<p>It is possible for <var class="Arg">map1</var> and <var class="Arg">map2</var> to be equal but to have distinct components.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">pt</var> ^ <var class="Arg">map</var></code></strong></dt>
+<dd><p>returns the image of the element <var class="Arg">pt</var> of the source of <var class="Arg">map</var> under the isomorphism <var class="Arg">map</var>; see <code class="func">ImagesElm</code> (<a href="chap18_mj.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>).</p>
 
 </dd>
 </dl>
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(RightBlocks(x));</span>
-"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
-t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
-\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\
-aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
-.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \
- \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
-raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
-.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
- and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(x);</span>
-"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
-t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
-fill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \
- \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\
-\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\
-,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\
-.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\
-le(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\
-ircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\
-)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\
-\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \
-\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\
-aw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\
-circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
-,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\
-(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\
-ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
-\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
-ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
-%lines\n\\end{tikzpicture}\n\n\\end{document}"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(UniversalPBR(2));</span>
-"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{docume\
-nt}\n\\usetikzlibrary{arrows}\n\\usetikzlibrary{arrows.meta}\n\\newco\
-mmand{\\arc}{\\draw[semithick, -{&gt;[width = 1.5mm, length = 2.5mm]}]}\
-\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, i\
-nner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = \
-0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110}\
-,\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % \
-vertices and labels\n  \\foreach \\i in {1,...,2} {\n    \\node [vert\
-ex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\
-\n  }\n\n  \\foreach \\i in {1,...,2} {\n    \\node [vertex] at (\\i/\
-1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  \
-% arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \
-\\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666666\
-66667, 2.125) and (0.93333333333333324, 2.125) .. (2);\n\n  % arcs fr\
-om vertex -1\n  \\arc (-1) .. controls (1.0666666666666667, 0.875) an\
-d (0.93333333333333324, 0.875) .. (-2);\n  \\arc (-1) edge [botloop] \
-(-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % arcs from ve\
-rtex 2\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. co\
-ntrols (0.93333333333333324, 2.125) and (1.0666666666666667, 2.125) .\
-. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n \
- \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.9333333\
-3333333324, 0.875) and (1.0666666666666667, 0.875) .. (-1);\n  \\arc \
-(-2) to (1);\n  \\arc (-2) to (2);\n\n\\end{tikzpicture}\n\\end{docum\
-ent}"</pre></div>
-
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

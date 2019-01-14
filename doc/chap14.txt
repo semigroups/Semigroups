@@ -1,824 +1,1968 @@
   
-  [1X14 [33X[0;0YProperties of semigroups[133X[101X
+  [1X14 [33X[0;0YAttributes and operations for semigroups[133X[101X
   
   [33X[0;0YIn  this chapter we decribe the methods that are available in [5XSemigroups[105X for
-  determining various properties of a semigroup.[133X
+  determining  the  attributes of a semigroup, and the operations which can be
+  applied to a semigroup.[133X
   
   
-  [1X14.1 [33X[0;0YProperties of semigroups[133X[101X
+  [1X14.1 [33X[0;0YAccessing the elements of a semigroup[133X[101X
   
-  [33X[0;0YIn  this  section  we  describe  the  properties  of a semigroup that can be
-  determined using the [5XSemigroups[105X package.[133X
+  [1X14.1-1 AsListCanonical[101X
   
-  [1X14.1-1 IsBand[101X
+  [33X[1;0Y[29X[2XAsListCanonical[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XEnumeratorCanonical[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIteratorCanonical[102X( [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA list, enumerator, or iterator.[133X
   
-  [33X[1;0Y[29X[2XIsBand[102X( [3XS[103X ) [32X property[133X
+  [33X[0;0YWhen    the    argument   [3XS[103X   is   a   semigroup   in   the   representation
+  [2XIsEnumerableSemigroupRep[102X  ([14X6.1-4[114X),  [10XAsListCanonical[110X  returns  a  list of the
+  elements  of  [3XS[103X  in  the  order  they  are  enumerated  by  the Froidure-Pin
+  Algorithm.  This is the same as the order used to index the elements of [3XS[103X in
+  [2XRightCayleyDigraph[102X ([14X14.2-1[114X) and [2XLeftCayleyDigraph[102X ([14X14.2-1[114X).[133X
+  
+  [33X[0;0Y[10XEnumeratorCanonical[110X  and  [10XIteratorCanonical[110X  return  an  enumerator  and  an
+  iterator  where the elements are ordered in the same way as [10XAsListCanonical[110X.
+  Using  [10XEnumeratorCanonical[110X  or  [10XIteratorCanonical[110X will often use less memory
+  than  [10XAsListCanonical[110X,  but  may  have  slightly  worse  performance  if the
+  elements  of  the  semigroup are looped over repeatedly. [10XEnumeratorCanonical[110X
+  returns  the  same  list as [10XAsListCanonical[110X if [10XAsListCanonical[110X has ever been
+  called for [3XS[103X.[133X
+  
+  [33X[0;0YIf [3XS[103X is an acting semigroup, then the value returned by [10XAsList[110X may not equal
+  the  value returned by [10XAsListCanonical[110X. [10XAsListCanonical[110X exists so that there
+  is  a method for obtaining the elements of [3XS[103X in the particular order used by
+  [2XRightCayleyDigraph[102X ([14X14.2-1[114X) and [2XLeftCayleyDigraph[102X ([14X14.2-1[114X).[133X
+  
+  [33X[0;0YSee also [2XPositionCanonical[102X ([14X14.1-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XAsListCanonical(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 3, 2 ] ), IdentityTransformation ][128X[104X
+    [4X[25Xgap>[125X [27XIteratorCanonical(S);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27XEnumeratorCanonical(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 3, 2 ] ), IdentityTransformation ][128X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([Matrix(IsBooleanMat, [[1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                                      [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                                      [0, 1, 0]])]);[127X[104X
+    [4X[28X<commutative monoid of 3x3 boolean matrices with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27Xit := IteratorCanonical(S);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(it);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27Xen := EnumeratorCanonical(S);[127X[104X
+    [4X[28X<enumerator of <commutative monoid of 3x3 boolean matrices with 1 [128X[104X
+    [4X[28X generator>>[128X[104X
+    [4X[25Xgap>[125X [27Xen[1];[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XPosition(en, en[1]);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XLength(en);[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  [1X14.1-2 PositionCanonical[101X
+  
+  [33X[1;0Y[29X[2XPositionCanonical[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0Y[10XIsBand[110X returns [9Xtrue[109X if every element of the semigroup [3XS[103X is an idempotent and
-  [9Xfalse[109X  if  it  is  not.  An inverse semigroup is band if and only if it is a
-  semilattice; see [2XIsSemilattice[102X ([14X14.1-20[114X).[133X
+  [33X[0;0YWhen    the    argument   [3XS[103X   is   a   semigroup   in   the   representation
+  [2XIsEnumerableSemigroupRep[102X ([14X6.1-4[114X) and [3Xx[103X is an element of [3XS[103X, [10XPositionCanonical[110X
+  returns the position of [3Xx[103X in [10XAsListCanonical([3XS[103X[10X)[110X or equivalently the position
+  of [3Xx[103X in [10XEnumeratorCanonical([3XS[103X[10X)[110X.[133X
+  
+  [33X[0;0YSee also [2XAsListCanonical[102X ([14X14.1-1[114X) and [2XEnumeratorCanonical[102X ([14X14.1-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTropicalMaxPlusMonoid(2, 3);[127X[104X
+    [4X[28X<monoid of 2x2 tropical max-plus matrices with 13 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(IsTropicalMaxPlusMatrix, [[1, 3], [2, 1]], 3);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[1, 3], [2, 1]], 3)[128X[104X
+    [4X[25Xgap>[125X [27XPositionCanonical(S, x);[127X[104X
+    [4X[28X234[128X[104X
+    [4X[25Xgap>[125X [27XEnumeratorCanonical(S)[234] = x;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X14.1-3 Enumerate[101X
+  
+  [33X[1;0Y[29X[2XEnumerate[102X( [3XS[103X[, [3Xlimit[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA semigroup (the argument).[133X
+  
+  [33X[0;0YIf [3XS[103X is a semigroup with representation [2XIsEnumerableSemigroupRep[102X ([14X6.1-4[114X) and
+  [3Xlimit[103X is a positive integer, then this operation can be used to enumerate at
+  least  [3Xlimit[103X  elements of [3XS[103X, or [10XSize([3XS[103X[10X)[110X elements if this is less than [3Xlimit[103X,
+  using the Froidure-Pin Algorithm.[133X
+  
+  [33X[0;0YIf  the  optional  second argument [3Xlimit[103X is not given, then the semigroup is
+  enumerated until all of its elements have been found.[133X
+  
+  [33X[0;0YFor  reasons  of  performance,  [3XS[103X  is enumerated in batches according to the
+  option  [10Xbatch_size[110X,  which  can  be specified when [3XS[103X is created; see Section
+  [14X6.3[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(7);[127X[104X
+    [4X[28X<full transformation monoid of degree 7>[128X[104X
+    [4X[25Xgap>[125X [27XEnumerate(S, 1000);[127X[104X
+    [4X[28X<full transformation monoid of degree 7>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(S);[127X[104X
+    [4X[28X<partially enumerated semigroup with 8197 elements, [128X[104X
+    [4X[28X224 rules, max word length 11>[128X[104X
+  [4X[32X[104X
+  
+  [1X14.1-4 IsFullyEnumerated[101X
+  
+  [33X[1;0Y[29X[2XIsFullyEnumerated[102X( [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is  a semigroup with representation [2XIsEnumerableSemigroupRep[102X ([14X6.1-4[114X),
+  then  this operation returns [9Xtrue[109X if the Froidure-Pin Algorithm has been run
+  to completion (i.e. all of the elements of [3XS[103X have been found) and [9Xfalse[109X if [3XS[103X
+  has not been fully enumerated.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullBooleanMatMonoid(4);[127X[104X
+    [4X[28X<monoid of 4x4 boolean matrices with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27XEnumerate(S, 1000);[127X[104X
+    [4X[28X<monoid of 4x4 boolean matrices with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFullyEnumerated(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X65536[128X[104X
+    [4X[25Xgap>[125X [27XIsFullyEnumerated(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.2 [33X[0;0YCayley graphs[133X[101X
+  
+  [1X14.2-1 RightCayleyDigraph[101X
+  
+  [33X[1;0Y[29X[2XRightCayleyDigraph[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftCayleyDigraph[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of lists of positive integers.[133X
+  
+  [33X[0;0YWhen    the    argument   [3XS[103X   is   a   semigroup   in   the   representation
+  [2XIsEnumerableSemigroupRep[102X   ([14X6.1-4[114X),  [10XRightCayleyDigraph[110X  returns  the  right
+  Cayley  graphs  of  [3XS[103X, as a [2XDigraph[102X ([14XDigraphs: Digraph[114X) [10Xdigraph[110X where vertex
+  [10XOutNeighbours(digraph)[i][j][110X is [10XPositionCanonical([3XS[103X[10X, AsListCanonical([3XS[103X[10X)[i] *
+  GeneratorsOfSemigroup([3XS[103X[10X)[j])[110X.  The  digraph returned by [10XLeftCayleyDigraph[110X is
+  defined analogously.[133X
+  
+  [33X[0;0YThe   digraph   returned   by   this   attribute  belongs  to  the  category
+  [2XIsCayleyDigraph[102X   ([14XDigraphs:  IsCayleyDigraph[114X),  the  semigroup  [3XS[103X  and  the
+  generators  used  to  create  the  digraph can be recovered from the digraph
+  using   [2XSemigroupOfCayleyDigraph[102X  ([14XDigraphs:  SemigroupOfCayleyDigraph[114X)  and
+  [2XGeneratorsOfCayleyDigraph[102X ([14XDigraphs: GeneratorsOfCayleyDigraph[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(2);[127X[104X
+    [4X[28X<full transformation monoid of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XRightCayleyDigraph(S);[127X[104X
+    [4X[28X<multidigraph with 4 vertices, 12 edges>[128X[104X
+    [4X[25Xgap>[125X [27XLeftCayleyDigraph(S);[127X[104X
+    [4X[28X<multidigraph with 4 vertices, 12 edges>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.3 [33X[0;0YRandom elements of a semigroup[133X[101X
+  
+  [1X14.3-1 Random[101X
+  
+  [33X[1;0Y[29X[2XRandom[102X( [3XS[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10YA random element.[133X
+  
+  [33X[0;0YThis  function  returns a random element of the semigroup [3XS[103X. If the elements
+  of  [3XS[103X have been calculated, then one of these is chosen randomly. Otherwise,
+  if  the  data  structure for [3XS[103X is known, then a random element of a randomly
+  chosen  [13XR[113X-class  is  returned.  If  the  data  structure  for [3XS[103X has not been
+  calculated,     then     a     short     product     (at     most     [10X2    *
+  Length(GeneratorsOfSemigroup([3XS[103X[10X))[110X) of generators is returned.[133X
+  
+  
+  [1X14.4 [33X[0;0YProperties of elements in a semigroup[133X[101X
+  
+  [1X14.4-1 IndexPeriodOfSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XIndexPeriodOfSemigroupElement[102X( [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA list of two positive integers.[133X
+  
+  [33X[0;0YIf  [3Xx[103X  is a semigroup element, then [10XIndexPeriodOfSemigroupElement([3Xx[103X[10X)[110X returns
+  the  pair  [10X[m,  r][110X,  where [10Xm[110X and [10Xr[110X are the least positive integers such that
+  [10X[3Xx[103X[10X^(m  + r) = [3Xx[103X[10X ^ m[110X. The number [10Xm[110X is known as the [13Xindex[113X of [3Xx[103X, and the number[10Xr[110X
+  is known as the [13Xperiod[113X of [3Xx[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([2, 6, 3, 5, 6, 1]);;[127X[104X
+    [4X[25Xgap>[125X [27XIndexPeriodOfSemigroupElement(x);[127X[104X
+    [4X[28X[ 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27Xm := IndexPeriodOfSemigroupElement(x)[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xr := IndexPeriodOfSemigroupElement(x)[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xx ^ (m + r) = x ^ m;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([0, 2, 3, 0, 5]);[127X[104X
+    [4X[28X<identity partial perm on [ 2, 3, 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsIdempotent(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIndexPeriodOfSemigroupElement(x);[127X[104X
+    [4X[28X[ 1, 1 ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.4-2 SmallestIdempotentPower[101X
+  
+  [33X[1;0Y[29X[2XSmallestIdempotentPower[102X( [3Xx[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0YIf  [3Xx[103X  is  a  semigroup element, then [10XSmallestIdempotentPower([3Xx[103X[10X)[110X returns the
+  least  positive  integer  [10Xn[110X  such  that  [10X[3Xx[103X[10X^n[110X  is an idempotent. The smallest
+  idempotent  power  of  [3Xx[103X  is  the  least multiple of the period of [3Xx[103X that is
+  greater  than  or equal to the index of [3Xx[103X; see [2XIndexPeriodOfSemigroupElement[102X
+  ([14X14.4-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([4, 1, 4, 5, 1]);[127X[104X
+    [4X[28XTransformation( [ 4, 1, 4, 5, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XSmallestIdempotentPower(x);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XForAll([1 .. 2], i -> not IsIdempotent(x ^ i));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIdempotent(x ^ 3);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, 2, -3, -4], [3, -5], [4, -1], [5, -2]]);[127X[104X
+    [4X[28X<block bijection: [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -1 ], [ 5, -2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XSmallestIdempotentPower(x);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XForAll([1 .. 3], i -> not IsIdempotent(x ^ i));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([]);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XSmallestIdempotentPower(x);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XIsIdempotent(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.5 [33X[0;0YExpressing semigroup elements as words in generators[133X[101X
+  
+  [33X[0;0YIt  is  possible  to  express  an  element  of  a semigroup as a word in the
+  generators  of that semigroup. This section describes how to accomplish this
+  in [5XSemigroups[105X.[133X
+  
+  [1X14.5-1 EvaluateWord[101X
+  
+  [33X[1;0Y[29X[2XEvaluateWord[102X( [3Xgens[103X, [3Xw[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA semigroup element.[133X
+  
+  [33X[0;0YThe  argument  [3Xgens[103X  should be a collection of generators of a semigroup and
+  the  argument  [3Xw[103X should be a list of positive integers less than or equal to
+  the  length  of  [3Xgens[103X. This operation evaluates the word [3Xw[103X in the generators
+  [3Xgens[103X. More precisely, [10XEvaluateWord([3Xgens[103X[10X, [3Xw[103X[10X)[110X returns the equivalent of:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XProduct(List(w, i -> gens[i]));[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ysee also [2XFactorization[102X ([14X14.5-2[114X).[133X
+  
+  [8Xfor elements of a semigroup[108X
+        [33X[0;6YWhen  [3Xgens[103X  is  a  list  of elements of a semigroup and [3Xw[103X is a list of
+        positive  integers  less  than  or  equal  to the length of [3Xgens[103X, this
+        operation  returns  the  product  [10Xgens[w[1]]  *  gens[w[2]]  *  .. . *
+        gens[w[n]][110X when the length of [3Xw[103X is [10Xn[110X.[133X
+  
+  [8Xfor elements of an inverse semigroup[108X
+        [33X[0;6YWhen  [3Xgens[103X  is  a list of elements with a semigroup inverse and [3Xw[103X is a
+        list  of  non-zero  integers  whose absolute value does not exceed the
+        length  of [3Xgens[103X, this operation returns the product [10Xgens[AbsInt(w[1])]
+        ^ SignInt(w[1]) * .. . * gens[AbsInt(w[n])] ^ SignInt(w[n])[110X where [10Xn[110X is
+        the length of [3Xw[103X.[133X
+  
+  [33X[0;0YNote  that  [10XEvaluateWord([3Xgens[103X[10X,  [])[110X returns [10XOne([3Xgens[103X[10X)[110X if [3Xgens[103X belongs to the
+  category              [2XIsMultiplicativeElementWithOne[102X             ([14XReference:
+  IsMultiplicativeElementWithOne[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens := [[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 4, 4, 6, 8, 8, 6, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 7, 4, 1, 4, 6, 5, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 6, 2, 4, 2, 2, 2, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([4, 3, 6, 4, 2, 1, 2, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([4, 5, 1, 3, 8, 5, 8, 2])];;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(gens);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([1, 4, 6, 1, 7, 2, 7, 6]);;[127X[104X
+    [4X[25Xgap>[125X [27Xword := Factorization(S, x);[127X[104X
+    [4X[28X[ 4, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XEvaluateWord(gens, word);[127X[104X
+    [4X[28XTransformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(10);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]);[127X[104X
+    [4X[28X[3,7][8,1,2,6,9][10,5][128X[104X
+    [4X[25Xgap>[125X [27Xword := Factorization(S, x);[127X[104X
+    [4X[28X[ -2, -2, -2, -2, -3, -2, -2, -2, -2, -2, 5, 2, 5, 5, 2, 5, 2, 2, 2, [128X[104X
+    [4X[28X  2, -3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XEvaluateWord(GeneratorsOfSemigroup(S), word);[127X[104X
+    [4X[28X[3,7][8,1,2,6,9][10,5][128X[104X
+  [4X[32X[104X
+  
+  [1X14.5-2 Factorization[101X
+  
+  [33X[1;0Y[29X[2XFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
+  
+  [8Xfor semigroups[108X
+        [33X[0;6YWhen  [3XS[103X is a semigroup and [3Xx[103X belongs to [3XS[103X, [10XFactorization[110X return a word
+        in  the  generators of [3XS[103X that is equal to [3Xx[103X. In this case, a word is a
+        list   of   positive   integers   where  an  entry  [10Xi[110X  corresponds  to
+        [10XGeneratorsOfSemigroups(S)[i][110X. More specifically,[133X
+  
+  [4X      [32X  Example  [32X[104X
+          [4X[28XEvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;[128X[104X
+        [4X[32X[104X
+  
+  [8Xfor inverse semigroups[108X
+        [33X[0;6YWhen  [3XS[103X  is  an  inverse  semigroup  and [3Xx[103X belongs to [3XS[103X, [10XFactorization[110X
+        return a word in the generators of [3XS[103X that is equal to [3Xx[103X. In this case,
+        a  word is a list of non-zero integers where an entry [10Xi[110X corresponds to
+        [10XGeneratorsOfSemigroup(S)[i][110X       and      [10X-i[110X      corresponds      to
+        [10XGeneratorsOfSemigroup(S)[i] ^ -1[110X. As in the previous case,[133X
+  
+  [4X      [32X  Example  [32X[104X
+          [4X[28XEvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;[128X[104X
+        [4X[32X[104X
+  
+  [33X[0;0YNote that [10XFactorization[110X does not always return a word of minimum length; see
+  [2XMinimalFactorization[102X ([14X14.5-3[114X).[133X
+  
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X14.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  GeneratorsOfSemigroup[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens := [Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([4, 10, 5, 6, 4, 1, 2, 7, 1, 2])];;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(gens);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([1, 10, 2, 10, 1, 2, 7, 10, 2, 7]);;[127X[104X
+    [4X[25Xgap>[125X [27Xword := Factorization(S, x);[127X[104X
+    [4X[28X[ 2, 2, 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XEvaluateWord(gens, word);[127X[104X
+    [4X[28XTransformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(8);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 8>[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 4, 5, 8], [7, 1, 4, 3, 2, 6]);[127X[104X
+    [4X[28X[5,2,1,7][8,6](3,4)[128X[104X
+    [4X[25Xgap>[125X [27Xword := Factorization(S, x);[127X[104X
+    [4X[28X[ -2, -2, -2, -2, -2, -2, 2, 4, 4, 2, 3, 2, -3, -2, -2, 3, 2, -3, -2, [128X[104X
+    [4X[28X  -2, 4, -3, -4, 2, 2, 3, -2, -3, 4, -3, -4, 2, 2, 3, -2, -3, 2, 2, [128X[104X
+    [4X[28X  3, -2, -3, 2, 2, 3, -2, -3, 4, -3, -4, 3, 2, -3, -2, -2, 3, 2, -3, [128X[104X
+    [4X[28X  -2, -2, 4, 3, -4, 3, 2, -3, -2, -2, 3, 2, -3, -2, -2, 3, 2, 2, 3, [128X[104X
+    [4X[28X  2, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XEvaluateWord(GeneratorsOfSemigroup(S), word);[127X[104X
+    [4X[28X[5,2,1,7][8,6](3,4)[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(6);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := S.1 * S.2 * S.3 * S.2 * S.1;[127X[104X
+    [4X[28X<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], [128X[104X
+    [4X[28X [ 5, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xword := Factorization(S, x);[127X[104X
+    [4X[28X[ -2, -2, -2, -2, -2, 4, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XEvaluateWord(GeneratorsOfSemigroup(S), word);[127X[104X
+    [4X[28X<block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], [128X[104X
+    [4X[28X [ 5, -1 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X14.5-3 MinimalFactorization[101X
+  
+  [33X[1;0Y[29X[2XMinimalFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA minimal word in the generators.[133X
+  
+  [33X[0;0YThis  operation  returns  a  minimal  length  word  in the generators of the
+  semigroup  [3XS[103X  that  equals  the element [3Xx[103X. In this case, a word is a list of
+  positive     integers     where     an     entry     [10Xi[110X     corresponds    to
+  [10XGeneratorsOfSemigroups([3XS[103X[10X)[i][110X. More specifically,[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XEvaluateWord(GeneratorsOfSemigroup(S), MinimalFactorization(S, x)) = x;[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[10XMinimalFactorization[110X involves exhaustively enumerating [3XS[103X until the element [3Xx[103X
+  is   found,   and   so  [10XMinimalFactorization[110X  may  be  less  efficient  than
+  [2XFactorization[102X ([14X14.5-2[114X) for some semigroups.[133X
+  
+  [33X[0;0YUnlike  [2XFactorization[102X  ([14X14.5-2[114X)  this operation does not distinguish between
+  semigroups  and  inverse  semigroups.  See  also  [2XEvaluateWord[102X  ([14X14.5-1[114X) and
+  [2XGeneratorsOfSemigroup[102X ([14XReference: GeneratorsOfSemigroup[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 10, 5, 6, 4, 1, 2, 7, 1, 2]));[127X[104X
+    [4X[28X<transformation semigroup of degree 10 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([8, 8, 2, 2, 9, 2, 8, 8, 9, 9]);[127X[104X
+    [4X[28XTransformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )[128X[104X
+    [4X[25Xgap>[125X [27XFactorization(S, x);[127X[104X
+    [4X[28X[ 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XMinimalFactorization(S, x);[127X[104X
+    [4X[28X[ 1, 2, 1, 1, 1, 1, 2, 2, 1 ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.5-4 NonTrivialFactorization[101X
+  
+  [33X[1;0Y[29X[2XNonTrivialFactorization[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA non-trivial word in the generators, or [9Xfail[109X.[133X
+  
+  [33X[0;0YWhen  [3XS[103X  is  a  semigroup  and  [3Xx[103X  belongs  to  [3XS[103X,  this operation returns a
+  non-trivial  word in the generators of the semigroup [3XS[103X that equals [3Xx[103X, if one
+  exists.  The  definition of a word in the generators is the same as given in
+  [2XFactorization[102X  ([14X14.5-2[114X)  for  semigroups  and  inverse semigroups. A word is
+  non-trivial if it has length two or more.[133X
+  
+  [33X[0;0YIf  no non-trivial word for [3Xx[103X exists, then [3Xx[103X is an indecomposable element of
+  [3XS[103X and this operation returns [9Xfail[109X; see [2XIndecomposableElements[102X ([14X14.6-6[114X).[133X
+  
+  [33X[0;0YWhen  [3Xx[103X  does not belong to [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X, any factorization of [3Xx[103X
+  is  non-trivial. In this case, [10XNonTrivialFactorization[110X returns the same word
+  as [2XFactorization[102X ([14X14.5-2[114X).[133X
+  
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X14.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  GeneratorsOfSemigroup[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([5, 4, 2, 1, 3]);;[127X[104X
+    [4X[25Xgap>[125X [27Xy := Transformation([4, 4, 2, 4, 1]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([x, y]);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XNonTrivialFactorization(S, x * y);[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XFactorization(S, x);[127X[104X
+    [4X[28X[ 1 ][128X[104X
+    [4X[25Xgap>[125X [27XNonTrivialFactorization(S, x);[127X[104X
+    [4X[28X[ 1, 1, 1, 1, 1, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XFactorization(S, y);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XNonTrivialFactorization(S, y);[127X[104X
+    [4X[28X[ 2, 1, 1, 2, 1, 1, 2, 1, 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xz := PartialPerm([2]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(z);[127X[104X
+    [4X[28X<commutative partial perm semigroup of rank 1 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XNonTrivialFactorization(S, z);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.6 [33X[0;0YGenerating sets[133X[101X
+  
+  [1X14.6-1 Generators[101X
+  
+  [33X[1;0Y[29X[2XGenerators[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of generators.[133X
+  
+  [33X[0;0Y[10XGenerators[110X returns a generating set that can be used to define the semigroup
+  [3XS[103X. The generators of a monoid or inverse semigroup [3XS[103X, say, can be defined in
+  several  ways,  for  example,  including  or excluding the identity element,
+  including  or  not  the  inverses  of  the  generators.  [10XGenerators[110X uses the
+  definition that returns the least number of generators. If no generating set
+  for [3XS[103X is known, then [10XGeneratorsOfSemigroup[110X is used by default.[133X
+  
+  [8Xfor a group[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X   is   a   synonym   for  [2XGeneratorsOfGroup[102X  ([14XReference:
+        GeneratorsOfGroup[114X).[133X
+  
+  [8Xfor an ideal of semigroup[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X is a synonym for [2XGeneratorsOfSemigroupIdeal[102X ([14X7.2-1[114X).[133X
+  
+  [8Xfor a semigroup[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X  is  a  synonym  for  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+        GeneratorsOfSemigroup[114X).[133X
+  
+  [8Xfor a monoid[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X   is   a   synonym  for  [2XGeneratorsOfMonoid[102X  ([14XReference:
+        GeneratorsOfMonoid[114X).[133X
+  
+  [8Xfor an inverse semigroup[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X    is   a   synonym   for   [2XGeneratorsOfInverseSemigroup[102X
+        ([14XReference: GeneratorsOfInverseSemigroup[114X).[133X
+  
+  [8Xfor an inverse monoid[108X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X  is  a synonym for [2XGeneratorsOfInverseMonoid[102X ([14XReference:
+        GeneratorsOfInverseMonoid[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XM := Monoid([[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),[127X[104X
+    [4X[25X>[125X [27XTransformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9])]);;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup(M);[127X[104X
+    [4X[28X[ IdentityTransformation, [128X[104X
+    [4X[28X  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMonoid(M);[127X[104X
+    [4X[28X[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XGenerators(M);[127X[104X
+    [4X[28X[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Generators(M));;[127X[104X
+    [4X[25Xgap>[125X [27XGenerators(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.6-2 SmallGeneratingSet[101X
+  
+  [33X[1;0Y[29X[2XSmallGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSmallSemigroupGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSmallMonoidGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSmallInverseSemigroupGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSmallInverseMonoidGeneratingSet[102X( [3Xcoll[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA small generating set for a semigroup.[133X
+  
+  [33X[0;0YThe  attributes  [10XSmallXGeneratingSet[110X  return  a  relatively small generating
+  subset  of  the  collection of elements [3Xcoll[103X, which can also be a semigroup.
+  The  returned  value  of  [10XSmallXGeneratingSet[110X,  where  applicable,  has  the
+  property that[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X      X(SmallXGeneratingSet(coll)) = X(coll);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ywhere  [10XX[110X  is  any  of  [2XSemigroup[102X  ([14XReference: Semigroup[114X), [2XMonoid[102X ([14XReference:
+  Monoid[114X),  [2XInverseSemigroup[102X  ([14XReference:  InverseSemigroup[114X), or [2XInverseMonoid[102X
+  ([14XReference: InverseMonoid[114X).[133X
+  
+  [33X[0;0YIf  the  number  of generators for [3XS[103X is already relatively small, then these
+  functions will often return the original generating set. These functions may
+  return different results in different [5XGAP[105X sessions.[133X
+  
+  [33X[0;0Y[10XSmallGeneratingSet[110X   returns   the   smallest  of  the  returned  values  of
+  [10XSmallXGeneratingSet[110X which is applicable to [3Xcoll[103X; see [2XGenerators[102X ([14X14.6-1[114X).[133X
+  
+  [33X[0;0YAs  neither  irredundancy,  nor  minimal  length are proven, these functions
+  usually  return an answer much more quickly than [2XIrredundantGeneratingSubset[102X
+  ([14X14.6-3[114X).  These  functions  can  be used whenever a small generating set is
+  desired which does not necessarily needs to be minimal.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 2, 3, 2, 4]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 5, 4, 3, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 1, 4, 2, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 4, 4, 2, 1]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 1, 4, 3, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 2, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27XTransformation([4, 4, 3, 3, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 1, 5, 5, 3]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 4, 3, 5, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 5, 4, 5, 5])]);;[127X[104X
+    [4X[25Xgap>[125X [27XSmallGeneratingSet(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 4, 3, 3, 5 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := RandomInverseMonoid(IsPartialPermMonoid, 10000, 10);;[127X[104X
+    [4X[25Xgap>[125X [27XSmallGeneratingSet(S);[127X[104X
+    [4X[28X[ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ],[128X[104X
+    [4X[28X  [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ],[128X[104X
+    [4X[28X  [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] -> [ 1, 6, 4, 8, 2, 10, 7, 3, 9 ] ][128X[104X
+    [4X[25Xgap>[125X [27XM := MathieuGroup(24);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := List([1 .. 1000], x -> Random(M));;[127X[104X
+    [4X[25Xgap>[125X [27XAppend(mat, [1 .. 1000] * 0);[127X[104X
+    [4X[25Xgap>[125X [27Xmat := List([1 .. 138], x -> List([1 .. 57], x -> Random(mat)));;[127X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(M, mat);;[127X[104X
+    [4X[25Xgap>[125X [27XU := Semigroup(List([1 .. 200], x -> Random(R)));[127X[104X
+    [4X[28X<subsemigroup of 57x138 Rees 0-matrix semigroup with 100 generators>[128X[104X
+    [4X[25Xgap>[125X [27XLength(SmallGeneratingSet(U));[127X[104X
+    [4X[28X84[128X[104X
+    [4X[25Xgap>[125X [27XS := RandomSemigroup(IsBipartitionSemigroup, 100, 4);[127X[104X
+    [4X[28X<bipartition semigroup of degree 4 with 96 generators>[128X[104X
+    [4X[25Xgap>[125X [27XLength(SmallGeneratingSet(S));[127X[104X
+    [4X[28X13[128X[104X
+  [4X[32X[104X
+  
+  [1X14.6-3 IrredundantGeneratingSubset[101X
+  
+  [33X[1;0Y[29X[2XIrredundantGeneratingSubset[102X( [3Xcoll[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA list of irredundant generators.[133X
+  
+  [33X[0;0YIf  [3Xcoll[103X  is  a  collection  of  elements of a semigroup, then this function
+  returns  a  subset  [10XU[110X  of [3Xcoll[103X such that no element of [10XU[110X is generated by the
+  other elements of [10XU[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 1, 4, 6, 2, 3]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 2, 3, 4, 5, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([4, 6, 3, 4, 2, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 4, 6, 3, 1, 3]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 2, 6, 5, 4, 3]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 5, 5, 1, 2, 4]),[127X[104X
+    [4X[25X>[125X [27XTransformation([6, 5, 1, 3, 3, 4]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 3, 4, 3, 2, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIrredundantGeneratingSubset(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := RandomInverseMonoid(IsPartialPermMonoid, 1000, 10);[127X[104X
+    [4X[28X<inverse partial perm monoid of degree 10 with 1000 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallGeneratingSet(S);[127X[104X
+    [4X[28X[ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], [128X[104X
+    [4X[28X  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ][128X[104X
+    [4X[28X  [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIrredundantGeneratingSubset(last);[127X[104X
+    [4X[28X[ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], [128X[104X
+    [4X[28X  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], [128X[104X
+    [4X[28X  [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := RandomSemigroup(IsBipartitionSemigroup, 1000, 4);[127X[104X
+    [4X[28X<bipartition semigroup of degree 4 with 749 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallGeneratingSet(S);[127X[104X
+    [4X[28X[ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -4 ], [ 2, 4, -1, -3 ], [ 3, -2 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -1, -3 ], [ 2, -4 ], [ 3, 4, -2 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -2 ], [ 2, -1, -3 ], [ 3, 4, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 3, -1 ], [ 2, -3 ], [ 4, -2, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -1 ], [ 2, 4, -4 ], [ 3, -2, -3 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, -2 ], [ 3, -1, -4 ], [ 4, -3 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIrredundantGeneratingSubset(last);[127X[104X
+    [4X[28X[ <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]> ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.6-4 MinimalSemigroupGeneratingSet[101X
+  
+  [33X[1;0Y[29X[2XMinimalSemigroupGeneratingSet[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMinimalMonoidGeneratingSet[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA minimal generating set for a semigroup.[133X
+  
+  [33X[0;0YThe attribute [10XMinimalXGeneratingSet[110X returns a minimal generating set for the
+  semigroup   [3XS[103X,   with   respect   to   length.   The   returned   value   of
+  [10XMinimalXGeneratingSet[110X,   where  applicable,  is  a  minimal-length  list  of
+  elements of [3XS[103X with the property that[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X      X(MinimalXGeneratingSet(S)) = S;[128X[104X
+    [4X[28X    [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ywhere  [10XX[110X  is  either [2XSemigroup[102X ([14XReference: Semigroup[114X), or [2XMonoid[102X ([14XReference:
+  Monoid[114X).[133X
+  
+  [33X[0;0YFor  many  types  of  semigroup,  it  is  not  currently  possible to find a
+  [10XMinimalXGeneratingSet[110X with the [5XSemigroups[105X package.[133X
+  
+  [33X[0;0YSee   also   [2XSmallGeneratingSet[102X   ([14X14.6-2[114X)  and  [2XIrredundantGeneratingSubset[102X
+  ([14X14.6-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := MonogenicSemigroup(3, 6);;[127X[104X
+    [4X[25Xgap>[125X [27XMinimalSemigroupGeneratingSet(S);[127X[104X
+    [4X[28X[ Transformation( [ 2, 3, 4, 5, 6, 1, 6, 7, 8 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XMinimalSemigroupGeneratingSet(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 2, 3, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([2, 3, 4, 5, 1, 0, 6, 7]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([3, 4, 5, 1, 2, 0, 0, 6])]);[127X[104X
+    [4X[28X<partial perm monoid of rank 8 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMinimalMonoidGeneratingSet(S);[127X[104X
+    [4X[28X[ [8,7,6](1,2,3,4,5) ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.6-5 GeneratorsSmallest[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsSmallest[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA set of elements.[133X
+  
+  [33X[0;0YFor  a  semigroup  [3XS[103X, [10XGeneratorsSmallest[110X returns the lexicographically least
+  set of elements [10XX[110X such that [10XX[110X generates [3XS[103X as a semigroup, and such that [10XX[110X is
+  lexicographically  ordered  and  has  the  property  that  each  [10XX[i][110X is not
+  generated by [10XX[1], X[2], ..., X[i-1][110X.[133X
+  
+  [33X[0;0YIt  can be difficult to find the set of generators [10XX[110X, and it might contain a
+  substantial proportion of the elements of [3XS[103X.[133X
+  
+  [33X[0;0YTwo  semigroups  have the same set of elements if and only if their smallest
+  generating sets are equal. However, due to the complexity of determining the
+  [10XGeneratorsSmallest[110X,  this  is  not the method used by the [5XSemigroups[105X package
+  when comparing semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
+    [4X[25X>[125X [27X Transformation([1, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X Transformation([2, 4, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 1, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 3, 4, 1])]);[127X[104X
+    [4X[28X<transformation monoid of degree 4 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsSmallest(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 2, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 2, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ), [128X[104X
+    [4X[28X  IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup(Bipartition([[1, 2, 3], [4, -1], [-2], [-3], [-4]]),[127X[104X
+    [4X[25X>[125X [27X                  Bipartition([[1, -3, -4], [2, 3, 4, -2], [-1]]),[127X[104X
+    [4X[25X>[125X [27X                  Bipartition([[1, 2, 3, 4, -2], [-1, -4], [-3]]),[127X[104X
+    [4X[25X>[125X [27X                  Bipartition([[1, 2, 3, 4], [-1], [-2], [-3, -4]]),[127X[104X
+    [4X[25X>[125X [27X                  Bipartition([[1, 2, -1, -2], [3, 4, -3], [-4]]));[127X[104X
+    [4X[28X<bipartition semigroup of degree 4 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsSmallest(T);[127X[104X
+    [4X[28X[ <bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -1, -2 ], [ -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ -1 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1, -4 ], [ -3 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1 ], [ -3, -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -3 ], [ -1, -2 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4 ], [ -1, -2, -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3, 4, -3, -4 ], [ -1 ], [ -2 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 3 ], [ 4, -1, -2, -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, -1, -2 ], [ 3, 4, -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3 ], [ 2, 3, 4, -1, -2 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, -3, -4 ], [ 2, 3, 4, -2 ], [ -1 ]> ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.6-6 IndecomposableElements[101X
+  
+  [33X[1;0Y[29X[2XIndecomposableElements[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of elements.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is  a semigroup, then this attribute returns the set of elements of [3XS[103X
+  that  are  not  decomposable.  A  element  of [3XS[103X is [13Xdecomposable[113X if it can be
+  written  as  the  product  of  two  elements  in  [3XS[103X.  An  element  of  [3XS[103X  is
+  [13Xindecomposable[113X if it is not decomposable.[133X
+  
+  [33X[0;0YSee also [2XIsSurjectiveSemigroup[102X ([14X15.1-6[114X).[133X
+  
+  [33X[0;0YNote  that  any generating set for [3XS[103X contains each indecomposable element of
+  [3XS[103X. Thus [10XIndecomposableElements([3XS[103X[10X)[110X is a subset of [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 1, 2, 3]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 1, 1, 2])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 4 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := IndecomposableElements(S);[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 2, 3 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(GeneratorsOfSemigroup(S), x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := FullTransformationMonoid(10);[127X[104X
+    [4X[28X<full transformation monoid of degree 10>[128X[104X
+    [4X[25Xgap>[125X [27XIndecomposableElements(T);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XB := ZeroSemigroup(IsBipartitionSemigroup, 3);[127X[104X
+    [4X[28X<commutative non-regular bipartition semigroup of size 3, degree 4 [128X[104X
+    [4X[28X with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIndecomposableElements(B);[127X[104X
+    [4X[28X[ <bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]>, [128X[104X
+    [4X[28X  <bipartition: [ 1, 2, 4, -1 ], [ 3, -2 ], [ -3 ], [ -4 ]> ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.7 [33X[0;0YMinimal ideals and multiplicative zeros[133X[101X
+  
+  [33X[0;0YIn  this section we describe the attributes of a semigroup that can be found
+  using the [5XSemigroups[105X package.[133X
+  
+  [1X14.7-1 MinimalIdeal[101X
+  
+  [33X[1;0Y[29X[2XMinimalIdeal[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe minimal ideal of a semigroup.[133X
+  
+  [33X[0;0YThe  minimal  ideal  of  a  semigroup  is  the  least  ideal with respect to
+  containment.[133X
+  
+  [33X[0;0YIt  is significantly easier to find the minimal [13XD[113X-class of a semigroup, than
+  to find its [13XD[113X-classes.[133X
+  
+  [33X[0;0YSee   also   [2XRepresentativeOfMinimalIdeal[102X  ([14X14.7-2[114X),  [2XPartialOrderOfDClasses[102X
+  ([14X13.1-10[114X), [2XIsGreensLessThanOrEqual[102X ([14XReference: IsGreensLessThanOrEqual[114X), and
+  [2XMinimalDClass[102X ([14X13.1-6[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),[127X[104X
-    [4X[25X>[125X [27XTransformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsBand(S);[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 3, 6, 3, 4, 6, 10, 1]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 2, 3, 8, 4, 1, 3, 4, 9, 7]));;[127X[104X
+    [4X[25Xgap>[125X [27XMinimalIdeal(S);[127X[104X
+    [4X[28X<simple transformation semigroup ideal of degree 10 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(MinimalIdeal(S));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), [128X[104X
+    [4X[28X  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DClass(S, x);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(GreensDClasses(S), x -> IsGreensLessThanOrEqual(D, x));[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMinimalIdeal(POI(10));[127X[104X
+    [4X[28X<partial perm group of rank 10>[128X[104X
+    [4X[25Xgap>[125X [27XMinimalIdeal(BrauerMonoid(6));[127X[104X
+    [4X[28X<simple bipartition *-semigroup ideal of degree 6 with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  [1X14.7-2 RepresentativeOfMinimalIdeal[101X
+  
+  [33X[1;0Y[29X[2XRepresentativeOfMinimalIdeal[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRepresentativeOfMinimalDClass[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn element of the minimal ideal of a semigroup.[133X
+  
+  [33X[0;0YThe  minimal  ideal  of  a  semigroup  is  the  least  ideal with respect to
+  containment.[133X
+  
+  [33X[0;0YThis  method  returns  a  representative  element  of the minimal ideal of [3XS[103X
+  without  having to create the minimal ideal itself. In general, beyond being
+  a  member  of  the  minimal ideal, the returned element is not guaranteed to
+  have  any  special  properties.  However, the element will coincide with the
+  zero element of [3XS[103X if one exists.[133X
+  
+  [33X[0;0YThis  method  works particularly well if [3XS[103X is a semigroup of transformations
+  or partial permutations.[133X
+  
+  [33X[0;0YSee also [2XMinimalIdeal[102X ([14X14.7-1[114X) and [2XMinimalDClass[102X ([14X13.1-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(10);;[127X[104X
+    [4X[25Xgap>[125X [27XRepresentativeOfMinimalIdeal(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XB := Semigroup([[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -1], [2], [3], [4, -3], [5, 6, -5, -6],[127X[104X
+    [4X[25X>[125X [27X  [-2, -4]])]);;[127X[104X
+    [4X[25Xgap>[125X [27XRepresentativeOfMinimalIdeal(B);[127X[104X
+    [4X[28X<bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ], [128X[104X
+    [4X[28X [ -2, -4 ], [ -3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([5, 1, 6, 2, 2, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 5, 5, 1, 6, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XRepresentativeOfMinimalDClass(S);[127X[104X
+    [4X[28XTransformation( [ 1, 2, 2, 5, 5, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XMinimalDClass(S);[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 1, 2, 2, 5, 5, 1 ] )>[128X[104X
+  [4X[32X[104X
+  
+  [1X14.7-3 MultiplicativeZero[101X
+  
+  [33X[1;0Y[29X[2XMultiplicativeZero[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe zero element of a semigroup.[133X
+  
+  [33X[0;0Y[10XMultiplicativeZero[110X  returns the zero element of the semigroup [3XS[103X if it exists
+  and   [9Xfail[109X   if   it  does  not.  See  also  [2XMultiplicativeZero[102X  ([14XReference:
+  MultiplicativeZero[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 2, 6, 6, 5, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 6, 3, 6, 2, 1, 6]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28XTransformation( [ 1, 1, 1, 1, 1, 1, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 8, 3, 7, 1, 5, 2, 6]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 5, 7, 2, 5, 6, 3, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([6, 7, 4, 1, 4, 1, 6, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([8, 8, 5, 1, 7, 5, 2, 8]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
-    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 8, 9], [5, 8, 7, 6, 9, 1]),[127X[104X
-    [4X[25X>[125X [27XPartialPerm([1, 3, 4, 7, 8, 9, 10], [2, 3, 8, 7, 10, 6, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsBand(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsBand(IdempotentGeneratedSubsemigroup(S));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := PartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4 [128X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 3, 4], [5, 3, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4], [4, 3, 1, 2]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 3, 4, 5], [2, 4, 5, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(6);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 4213597, degree 6 with 4 [128X[104X
     [4X[28X generators>[128X[104X
-    [4X[25Xgap>[125X [27XM := MinimalIdeal(S);[127X[104X
-    [4X[28X<simple bipartition *-semigroup ideal of degree 4 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsBand(M);[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(6);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 6 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>[128X[104X
   [4X[32X[104X
   
-  [1X14.1-2 IsBlockGroup[101X
+  [1X14.7-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero[101X
   
-  [33X[1;0Y[29X[2XIsBlockGroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [33X[1;0Y[29X[2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA semigroup, or [9Xfail[109X.[133X
   
-  [33X[0;0Y[10XIsBlockGroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is a block group and [9Xfalse[109X if
-  it is not.[133X
+  [33X[0;0YIf  [3XS[103X  is  a  semigroup  for  which the property [2XIsSemigroupWithAdjoinedZero[102X
+  ([14X15.1-20[114X) is true, (i.e. [3XS[103X has a [2XMultiplicativeZero[102X ([14X14.7-3[114X) and the set [22X[3XS[103X ∖
+  {  0 }[122X is a subsemigroup of [3XS[103X), then this method returns the semigroup [22X[3XS[103X ∖ {
+  0 }[122X.[133X
   
-  [33X[0;0YA  semigroup  [3XS[103X  is  a  [13Xblock  group[113X if every [13XL[113X-class and every [13XR[113X-class of [3XS[103X
-  contains  at most one idempotent. Every semigroup of partial permutations is
-  a block group.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([5, 6, 7, 3, 1, 4, 2, 8]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 6, 8, 5, 7, 4, 2, 8]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockGroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([2, 1, 10, 4, 5, 9, 7, 4, 8, 4]),[127X[104X
-    [4X[25X>[125X [27XTransformation([10, 7, 5, 6, 1, 3, 9, 7, 10, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockGroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1, 2], [5, 4]),[127X[104X
-    [4X[25X>[125X [27X                  PartialPerm([1, 2, 3], [1, 2, 5]),[127X[104X
-    [4X[25X>[125X [27X                  PartialPerm([1, 2, 3], [2, 1, 5]),[127X[104X
-    [4X[25X>[125X [27X                  PartialPerm([1, 3, 4], [3, 1, 2]),[127X[104X
-    [4X[25X>[125X [27X                  PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XT := AsSemigroup(IsBlockBijectionSemigroup, S);[127X[104X
-    [4X[28X<block bijection semigroup of degree 6 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsBlockGroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsBlockGroup(AsSemigroup(IsBipartitionSemigroup, S));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XBipartition([[1, -2], [2, -3], [3, -4], [4, -1]]),[127X[104X
-    [4X[25X>[125X [27XBipartition([[1, -2], [2, -1], [3, -3], [4, -4]]),[127X[104X
-    [4X[25X>[125X [27XBipartition([[1, 2, -3], [3, -1, -2], [4, -4]]),[127X[104X
-    [4X[25X>[125X [27XBipartition([[1, -1], [2, -2], [3, -3], [4, -4]]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockGroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-3 IsCommutativeSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsCommutativeSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsCommutativeSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is commutative and
-  [9Xfalse[109X  if  it  is not. The function [2XIsCommutative[102X ([14XReference: IsCommutative[114X)
-  can also be used to test if a semigroup is commutative.[133X
-  
-  [33X[0;0YA semigroup [3XS[103X is [13Xcommutative[113X if [10Xx * y = y * x[110X for all [10Xx, y[110X in [3XS[103X.[133X
+  [33X[0;0YOtherwise,    if    [3XS[103X    is    a    semigroup   for   which   the   property
+  [2XIsSemigroupWithAdjoinedZero[102X  ([14X15.1-20[114X)  is  [9Xfalse[109X,  then this method returns
+  [9Xfail[109X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCommutativeSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsCommutative(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
-    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6], [2, 5, 1, 3, 9, 6]),[127X[104X
-    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 6, 8], [8, 5, 7, 6, 2, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCommutativeSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XBipartition([[1, 2, 3, 6, 7, -1, -4, -6],[127X[104X
-    [4X[25X>[125X [27X             [4, 5, 8, -2, -3, -5, -7, -8]]),[127X[104X
-    [4X[25X>[125X [27X Bipartition([[1, 2, -3, -4], [3, -5], [4, -6], [5, -7],[127X[104X
-    [4X[25X>[125X [27X              [6, -8], [7, -1], [8, -2]]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCommutativeSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-4 IsCompletelyRegularSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsCompletelyRegularSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsCompletelyRegularSemigroup[110X  returns [9Xtrue[109X if every element of the semigroup
-  [3XS[103X is contained in a subgroup of [3XS[103X.[133X
-  
-  [33X[0;0YAn  inverse  semigroup is completely regular if and only if it is a Clifford
-  semigroup; see [2XIsCliffordSemigroup[102X ([14X15.2-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 2, 4, 3, 6, 5, 4]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([1, 2, 5, 6, 3, 4, 5]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([2, 1, 2, 2, 2, 2, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCompletelyRegularSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsInverseSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCompletelyRegularSemigroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsCliffordSemigroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XBipartition([[1, 3, -4], [2, 4, -1, -2], [-3]]),[127X[104X
-    [4X[25X>[125X [27XBipartition([[1, -1], [2, 3, 4, -3], [-2, -4]]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCompletelyRegularSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-5 IsCongruenceFreeSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsCongruenceFreeSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsCongruenceFreeSemigroup[110X   returns   [9Xtrue[109X   if   the   semigroup   [3XS[103X  is  a
-  congruence-free semigroup and [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA   semigroup   [3XS[103X  is  [13Xcongruence-free[113X  if  it  has  no  non-trivial  proper
-  congruences.[133X
-  
-  [33X[0;0YA  semigroup with zero is congruence-free if and only if it is isomorphic to
-  a  regular  Rees  0-matrix  semigroup  [10XR[110X  whose  underlying semigroup is the
-  trivial  group,  no  two  rows  of the matrix of [10XR[110X are identical, and no two
-  columns are identical; see Theorem 3.7.1 in [How95].[133X
-  
-  [33X[0;0YA  semigroup  without  zero is congruence-free if and only if it is a simple
-  group or has order 2; see Theorem 3.7.2 in [How95].[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 2, 3, 3, 4]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCongruenceFreeSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 2, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([5, 3, 4, 4, 6, 6]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsCongruenceFreeSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-6 IsGroupAsSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsGroupAsSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsGroupAsSemigroup[110X   returns  [9Xtrue[109X  if  and  only  if  the  semigroup  [3XS[103X  is
-  mathematically a group.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG := SymmetricGroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 3, 4, 5, 1, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 1, 3, 4, 5, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([6, 6, 6, 6, 6, 6])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 6 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28XTransformation( [ 6, 6, 6, 6, 6, 6 ] )[128X[104X
+    [4X[25Xgap>[125X [27XG := UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsGroupAsSemigroup(G);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := AsSemigroup(IsPartialPermSemigroup, G);[127X[104X
-    [4X[28X<partial perm group of size 120, rank 5 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(S);[127X[104X
+    [4X[25Xgap>[125X [27XIsZeroGroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG := SymmetricGroup([1, 2, 10]);;[127X[104X
-    [4X[25Xgap>[125X [27XT := AsSemigroup(IsBlockBijectionSemigroup, G);[127X[104X
-    [4X[28X<inverse block bijection semigroup of size 6, degree 11 with 2 [128X[104X
-    [4X[28X generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X14.1-7 [33X[0;0YIsIdempotentGenerated[133X[101X
-  
-  [33X[1;0Y[29X[2XIsIdempotentGenerated[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsSemiband[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsIdempotentGenerated[110X  and  [10XIsSemiband[110X  return  [9Xtrue[109X  if  the semigroup [3XS[103X is
-  generated  by  its  idempotents and [9Xfalse[109X if it is not. See also [2XIdempotents[102X
-  ([14X13.9-1[114X) and [2XIdempotentGeneratedSubsemigroup[102X ([14X13.9-3[114X).[133X
-  
-  [33X[0;0YAn  inverse  semigroup  is  idempotent-generated  if  and  only  if  it is a
-  semilattice; see [2XIsSemilattice[102X ([14X14.1-20[114X).[133X
-  
-  [33X[0;0YThe terms semiband and idempotent-generated are synonymous in this context.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SingularTransformationSemigroup(4);[127X[104X
-    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsIdempotentGenerated(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := SingularBrauerMonoid(5);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 5 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsIdempotentGenerated(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-8 IsLeftSimple[101X
-  
-  [33X[1;0Y[29X[2XIsLeftSimple[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsRightSimple[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsLeftSimple[110X  and [10XIsRightSimple[110X returns [9Xtrue[109X if the semigroup [3XS[103X has only one
-  [13XL[113X-class  or one [13XR[113X-class, respectively, and returns [9Xfalse[109X if it has more than
-  one.[133X
-  
-  [33X[0;0YAn inverse semigroup is left simple if and only if it is right simple if and
-  only if it is a group; see [2XIsGroupAsSemigroup[102X ([14X14.1-6[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([6, 7, 9, 6, 8, 9, 8, 7, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 8, 9, 6, 8, 8, 7, 9, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 8, 9, 7, 8, 8, 7, 9, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 9, 8, 6, 7, 9, 7, 8, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 9, 9, 6, 8, 8, 7, 9, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 9, 9, 7, 8, 8, 6, 9, 7]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([7, 8, 8, 7, 9, 9, 7, 8, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([7, 9, 9, 7, 6, 9, 6, 8, 7]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([8, 7, 6, 9, 8, 6, 8, 7, 9]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 6, 6, 7, 8, 8, 7, 6, 9]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 6, 6, 7, 9, 6, 9, 8, 7]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 6, 7, 9, 6, 6, 9, 7, 8]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 6, 8, 7, 9, 6, 9, 8, 7]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 7, 6, 8, 7, 7, 9, 6, 8]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 7, 7, 8, 9, 6, 9, 7, 8]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([9, 8, 8, 9, 6, 7, 6, 8, 9]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsRightSimple(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsLeftSimple(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XNrRClasses(S);[127X[104X
-    [4X[28X16[128X[104X
-    [4X[25Xgap>[125X [27XS := BrauerMonoid(6);;[127X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(RClass(S, Random(MinimalDClass(S))));;[127X[104X
-    [4X[25Xgap>[125X [27XIsLeftSimple(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsRightSimple(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-9 IsLeftZeroSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsLeftZeroSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsLeftZeroSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X is a left zero semigroup
-  and [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  a  [13Xleft  zero  semigroup[113X  if [10Xx*y=x[110X for all [10Xx,y[110X. An inverse
-  semigroup is a left zero semigroup if and only if it is trivial.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1, 4, 3, 5]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 2, 3, 1, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsRightZeroSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 2, 3, 3, 1]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 3, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsLeftZeroSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-10 IsMonogenicSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsMonogenicSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsMonogenicSemigroup[110X  returns  [9Xtrue[109X  if  the semigroup [3XS[103X is monogenic and it
-  returns [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  [13Xmonogenic[113X if it is generated by a single element. See also
-  [2XIsMonogenicMonoid[102X   ([14X14.1-11[114X),   [2XIsMonogenicInverseSemigroup[102X  ([14X15.2-7[114X),  and
-  [2XIsMonogenicInverseMonoid[102X ([14X15.2-8[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([127X[104X
-    [4X[25X>[125X [27X [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),[127X[104X
-    [4X[25X>[125X [27XTransformation([127X[104X
-    [4X[25X>[125X [27X [2, 2, 2, 8, 11, 15, 11, 10, 2, 10, 11, 2, 10, 4, 7]),[127X[104X
-    [4X[25X>[125X [27XTransformation([127X[104X
-    [4X[25X>[125X [27X [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),[127X[104X
-    [4X[25X>[125X [27XTransformation([127X[104X
-    [4X[25X>[125X [27X [2, 2, 12, 7, 8, 14, 8, 11, 2, 11, 10, 2, 11, 15, 4]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XBipartition([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -2, -5, -7, -9],[127X[104X
-    [4X[25X>[125X [27X             [-1, -10], [-3, -4, -6, -8]]),[127X[104X
-    [4X[25X>[125X [27X Bipartition([[1, 4, 7, 8, -2], [2, 3, 5, 10, -5],[127X[104X
-    [4X[25X>[125X [27X              [6, 9, -7, -9], [-1, -10], [-3, -4, -6, -8]]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(5);;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-11 IsMonogenicMonoid[101X
-  
-  [33X[1;0Y[29X[2XIsMonogenicMonoid[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsMonogenicMonoid[110X  returns [9Xtrue[109X if the monoid [3XS[103X is a monogenic monoid and it
-  returns [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  monoid  is  [13Xmonogenic[113X if it is generated as a monoid by a single element.
-  See   also   [2XIsMonogenicSemigroup[102X   ([14X14.1-10[114X)  and  [2XIsMonogenicInverseMonoid[102X
-  ([14X15.2-8[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;[127X[104X
-    [4X[25Xgap>[125X [27XS := Monoid(x, x ^ 2, x ^ 3);;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicMonoid(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(5);;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonogenicMonoid(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-12 IsMonoidAsSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsMonoidAsSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsMonoidAsSemigroup[110X  returns  [9Xtrue[109X  if  and  only  if  the  semigroup  [3XS[103X  is
-  mathematically   a   monoid,   i.e.   if   and   only   if   it  contains  a
-  [2XMultiplicativeNeutralElement[102X ([14XReference: MultiplicativeNeutralElement[114X).[133X
-  
-  [33X[0;0YIt  is  possible that a semigroup which satisfies [10XIsMonoidAsSemigroup[110X is not
-  in  the [5XGAP[105X category [2XIsMonoid[102X ([14XReference: IsMonoid[114X). This is possible if the
-  [2XMultiplicativeNeutralElement[102X  ([14XReference: MultiplicativeNeutralElement[114X) of [3XS[103X
-  is  not  equal  to the [2XOne[102X ([14XReference: One[114X) of any element in [3XS[103X. Therefore a
-  semigroup satisfying [10XIsMonoidAsSemigroup[110X may not possess the attributes of a
-  monoid (such as, [2XGeneratorsOfMonoid[102X ([14XReference: GeneratorsOfMonoid[114X)).[133X
-  
-  [33X[0;0YSee  also [2XOne[102X ([14XReference: One[114X), [2XIsInverseMonoid[102X ([14XReference: IsInverseMonoid[114X)
-  and                [2XIsomorphismTransformationMonoid[102X               ([14XReference:
-  IsomorphismTransformationMonoid[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonoidAsSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsMonoid(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(S);[127X[104X
-    [4X[28XTransformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )[128X[104X
-    [4X[25Xgap>[125X [27XT := AsSemigroup(IsBipartitionSemigroup, S);;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonoidAsSemigroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsMonoid(T);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XOne(T);[127X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(6);;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XG := UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);[127X[104X
     [4X[28Xfail[128X[104X
-    [4X[25Xgap>[125X [27XS := Monoid(Transformation([8, 2, 8, 9, 10, 6, 2, 8, 7, 8]),[127X[104X
-    [4X[25X>[125X [27X               Transformation([9, 2, 6, 3, 6, 4, 5, 5, 3, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsMonoidAsSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X14.1-13 IsOrthodoxSemigroup[101X
   
-  [33X[1;0Y[29X[2XIsOrthodoxSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [1X14.8 [33X[0;0YGroup of units and identity elements[133X[101X
   
-  [33X[0;0Y[10XIsOrthodoxSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X is orthodox and [9Xfalse[109X if
-  it is not.[133X
+  [1X14.8-1 GroupOfUnits[101X
   
-  [33X[0;0YA  semigroup is [13Xorthodox[113X if it is regular and its idempotent elements form a
-  subsemigroup. Every inverse semigroup is also an orthodox semigroup.[133X
+  [33X[1;0Y[29X[2XGroupOfUnits[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe group of units of a semigroup or [9Xfail[109X.[133X
   
-  [33X[0;0YSee  also  [2XIsRegularSemigroup[102X  ([14X14.1-16[114X)  and [2XIsRegularSemigroup[102X ([14XReference:
-  IsRegularSemigroup[114X).[133X
+  [33X[0;0Y[10XGroupOfUnits[110X returns the group of units of the semigroup [3XS[103X as a subsemigroup
+  of  [3XS[103X if it exists and returns [9Xfail[109X if it does not. Use [2XIsomorphismPermGroup[102X
+  ([14X6.6-5[114X) if you require a permutation representation of the group of units.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 1, 1, 4, 5, 4]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 1, 1, 2]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 1, 1, 3]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([5, 5, 5, 5, 5, 5]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsOrthodoxSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(GeneratorsOfSemigroup(S));;[127X[104X
-    [4X[25Xgap>[125X [27XIsOrthodoxSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
+  [33X[0;0YIf  a semigroup [3XS[103X has an identity [10Xe[110X, then the [13Xgroup of units[113X of [3XS[103X is the set
+  of those [10Xs[110X in [3XS[103X such that there exists [10Xt[110X in [3XS[103X where [10Xs*t=t*s=e[110X. Equivalently,
+  the group of units is the [13XH[113X-class of the identity of [3XS[103X.[133X
   
-  [1X14.1-14 IsRectangularBand[101X
-  
-  [33X[1;0Y[29X[2XIsRectangularBand[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsRectangularBand[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a rectangular band and
-  [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA semigroup [3XS[103X is a [13Xrectangular band[113X if for all [22Xx, y, z[122X in [3XS[103X we have that [22Xx ^
-  2 = x[122X and [22Xxyz = xz[122X.[133X
-  
-  [33X[0;0YEquivalently,  [3XS[103X  is a [13Xrectangular band[113X if [3XS[103X is isomorphic to a semigroup of
-  the form [22XI × Λ[122X with multiplication [22X(i, λ)(j, μ) = (i, μ)[122X. In this case, [3XS[103X is
-  called an [22X|I| × |Λ|[122X [13Xrectangular band[113X.[133X
-  
-  [33X[0;0YAn inverse semigroup is a rectangular band if and only if it is a group.[133X
+  [33X[0;0YSee    also    [2XGreensHClassOfElement[102X   ([14XReference:   GreensHClassOfElement[114X),
+  [2XIsMonoidAsSemigroup[102X  ([14X15.1-13[114X), and [2XMultiplicativeNeutralElement[102X ([14XReference:
+  MultiplicativeNeutralElement[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),[127X[104X
-    [4X[25X>[125X [27XTransformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsRectangularBand(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsRectangularBand(MinimalIdeal(PartitionMonoid(4)));[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25X>[125X [27XTransformation([1, 2, 5, 4, 3, 8, 7, 6]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 6, 3, 4, 7, 2, 5, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 1, 6, 7, 8, 3, 4, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 2, 3, 6, 1, 6, 1, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 2, 3, 6, 3, 4, 7, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X5304[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(GroupOfUnits(S));[127X[104X
+    [4X[28X"C2 x S4"[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10],[127X[104X
+    [4X[25X>[125X [27X            [2, 4, 5, 3, 6, 7, 10, 9, 8, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 10],[127X[104X
+    [4X[25X>[125X [27X            [8, 2, 3, 1, 4, 5, 10, 6, 9]));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(GroupOfUnits(S));[127X[104X
+    [4X[28X"C8"[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 3, 4], [4, 3, 5]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5], [3, 1, 5, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XGroupOfUnits(S);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1, -3], [-2]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -1], [2, 3, -2, -3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -2], [2, -3], [3, -1]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1], [2, 3, -2], [-1, -3]]));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(GroupOfUnits(S));[127X[104X
+    [4X[28X"C3"[128X[104X
   [4X[32X[104X
   
-  [1X14.1-15 IsRectangularGroup[101X
   
-  [33X[1;0Y[29X[2XIsRectangularGroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [1X14.9 [33X[0;0YIdempotents[133X[101X
   
-  [33X[0;0YA  semigroup is [13Xrectangular group[113X if it is the direct product of a group and
-  a rectangular band. Or equivalently, if it is orthodox and simple.[133X
+  [1X14.9-1 Idempotents[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));[127X[104X
-    [4X[28X<transformation group of size 7920, degree 11 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XR := RectangularBand(3, 2);[127X[104X
-    [4X[28X<regular transformation semigroup of size 6, degree 6 with 3 [128X[104X
-    [4X[28X generators>[128X[104X
-    [4X[25Xgap>[125X [27XS := DirectProduct(G, R);;[127X[104X
-    [4X[25Xgap>[125X [27XIsRectangularGroup(R);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsRectangularGroup(G);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsRectangularGroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsRectangularGroup(JonesMonoid(3));[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
+  [33X[1;0Y[29X[2XIdempotents[102X( [3Xobj[103X[, [3Xn[103X] ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of idempotents.[133X
   
-  [1X14.1-16 IsRegularSemigroup[101X
+  [33X[0;0YThe  argument  [3Xobj[103X  should  be  a  semigroup,  [13XD[113X-class, [13XH[113X-class, [13XL[113X-class, or
+  [13XR[113X-class.[133X
   
-  [33X[1;0Y[29X[2XIsRegularSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [33X[0;0YIf  the optional second argument [3Xn[103X is present and [3Xobj[103X is a semigroup, then a
+  list  of  the  idempotents  in  [3Xobj[103X  of  rank [3Xn[103X is returned. If you are only
+  interested  in  the  idempotents of a given rank, then the second version of
+  the  function  will  probably  be  faster.  However,  if the optional second
+  argument  is  present,  then  nothing is stored in [3Xobj[103X and so every time the
+  function is called the computation must be repeated.[133X
   
-  [33X[0;0Y[10XIsRegularSemigroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is regular and [9Xfalse[109X if
-  it is not.[133X
-  
-  [33X[0;0YA semigroup [10XS[110X is [13Xregular[113X if for all [10Xx[110X in [10XS[110X there exists [10Xy[110X in [10XS[110X such that [10Xx *
-  y  *  x  = x[110X. Every inverse semigroup is regular, and a semigroup of partial
-  permutations is regular if and only if it is an inverse semigroup.[133X
+  [33X[0;0YThis  functions  produce  essentially  the  same  output  as the [5XGAP[105X library
+  function  with  the same name; see [2XIdempotents[102X ([14XReference: Idempotents[114X). The
+  main  difference  is  that  this function can be applied to a wider class of
+  objects as described above.[133X
   
   [33X[0;0YSee  also [2XIsRegularDClass[102X ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X
-  ([14X12.3-2[114X),          and         [2XIsRegularSemigroupElement[102X         ([14XReference:
-  IsRegularSemigroupElement[114X).[133X
+  ([14X13.3-2[114X)  [2XIsGroupHClass[102X  ([14XReference: IsGroupHClass[114X), [2XNrIdempotents[102X ([14X14.9-2[114X),
+  and [2XGroupHClass[102X ([14X13.4-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIsRegularSemigroup(FullTransformationSemigroup(5));[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 3, 1, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XIdempotents(S, 1);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XAsSet(Idempotents(S, 2));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XAsSet(Idempotents(S));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), IdentityTransformation, [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 2, 2, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([2, 2, 4, 4]);;[127X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClassOfElement(S, x);;[127X[104X
+    [4X[25Xgap>[125X [27XIdempotents(R);[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([4, 2, 2, 4]);;[127X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElement(S, x);;[127X[104X
+    [4X[25Xgap>[125X [27XAsSet(Idempotents(L));[127X[104X
+    [4X[28X[ Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XD := DClassOfLClass(L);;[127X[104X
+    [4X[25Xgap>[125X [27XAsSet(Idempotents(D));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElement(S, Transformation([3, 1, 1, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XAsSet(Idempotents(L));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XH := GroupHClass(D);[127X[104X
+    [4X[28X<Green's H-class: Transformation( [ 1, 1, 3, 3 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XIdempotents(H);[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([10, 6, 3, 4, 9, 0, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XIdempotents(S, 1);[127X[104X
+    [4X[28X[ <identity partial perm on [ 4 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIdempotents(S, 0);[127X[104X
+    [4X[28X[  ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.9-2 NrIdempotents[101X
+  
+  [33X[1;0Y[29X[2XNrIdempotents[102X( [3Xobj[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0YThis  function  returns  the number of idempotents in [3Xobj[103X where [3Xobj[103X can be a
+  semigroup,  [13XD[113X-,  [13XL[113X-,  [13XH[113X-,  or  [13XR[113X-class.  If  the  actual idempotents are not
+  required,   then  it  is  more  efficient  to  use  [10XNrIdempotents(obj)[110X  than
+  [10XLength(Idempotents(obj))[110X  since  the  idempotents themselves are not created
+  when [10XNrIdempotents[110X is called.[133X
+  
+  [33X[0;0YSee  also  [2XIdempotents[102X  ([14XReference:  Idempotents[114X)  and [2XIdempotents[102X ([14X14.9-1[114X),
+  [2XIsRegularDClass[102X  ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X ([14X13.3-2[114X)
+  [2XIsGroupHClass[102X ([14XReference: IsGroupHClass[114X), and [2XGroupHClass[102X ([14X13.4-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 3, 1, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(S);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([2, 2, 4, 4]);;[127X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClassOfElement(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(R);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([4, 2, 2, 4]);;[127X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElement(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(L);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XD := DClassOfLClass(L);;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(D);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElement(S, Transformation([3, 1, 1, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(L);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XH := GroupHClass(D);;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(H);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 7, 9, 10],[127X[104X
+    [4X[25X>[125X [27X             [6, 7, 2, 9, 1, 5, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 9, 10],[127X[104X
+    [4X[25X>[125X [27X            [8, 1, 9, 4, 10, 5, 6, 7]));;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(S);[127X[104X
+    [4X[28X236[128X[104X
+    [4X[25Xgap>[125X [27Xf := PartialPerm([2, 3, 7, 9, 10],[127X[104X
+    [4X[25X>[125X [27X                    [7, 2, 1, 5, 3]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DClassNC(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(D);[127X[104X
+    [4X[28X13[128X[104X
+  [4X[32X[104X
+  
+  [1X14.9-3 IdempotentGeneratedSubsemigroup[101X
+  
+  [33X[1;0Y[29X[2XIdempotentGeneratedSubsemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA semigroup.[133X
+  
+  [33X[0;0Y[10XIdempotentGeneratedSubsemigroup[110X  returns the subsemigroup of the semigroup [3XS[103X
+  generated by the idempotents of [3XS[103X.[133X
+  
+  [33X[0;0YSee also [2XIdempotents[102X ([14X14.9-1[114X) and [2XSmallGeneratingSet[102X ([14X14.6-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 4, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 4, 5, 5]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 4, 6, 5]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 5, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 3, 7, 4, 5, 7]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 4, 8, 8, 3, 8, 7]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 8, 4, 5, 6, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([7, 7, 7, 4, 5, 6, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XIdempotentGeneratedSubsemigroup(S) =[127X[104X
+    [4X[25X>[125X [27XMonoid(Transformation([1, 1]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 1]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 2]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 1]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 2]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 2]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 4]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 5, 2]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 5, 5]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 5, 7, 7]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 4, 7, 6, 7]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 6, 5, 6]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 3, 7, 5, 6, 7]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([1, 2, 8, 4, 5, 6, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X       Transformation([2, 2]));[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsRegularSemigroup(JonesMonoid(5));[127X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(5);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 5>[128X[104X
+    [4X[25Xgap>[125X [27XIdempotentGeneratedSubsemigroup(S);[127X[104X
+    [4X[28X<inverse partial perm monoid of rank 5 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseSemigroup(5);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIdempotentGeneratedSubsemigroup(S);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 5 with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsSemilattice(last);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X14.1-17 IsRightZeroSemigroup[101X
   
-  [33X[1;0Y[29X[2XIsRightZeroSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [1X14.10 [33X[0;0YMaximal subsemigroups[133X[101X
   
-  [33X[0;0Y[10XIsRightZeroSemigroup[110X  returns  [9Xtrue[109X  if  the [3XS[103X is a right zero semigroup and
-  [9Xfalse[109X if it is not.[133X
+  [33X[0;0YThe   [5XSemigroups[105X   package   provides   methods  to  calculate  the  maximal
+  subsemigroups  of  a  finite  semigroup,  subject  to  various conditions. A
+  [13Xmaximal  subsemigroup[113X  of  a  semigroup  is  a  proper  subsemigroup that is
+  contained in no other proper subsemigroup of the semigroup.[133X
   
-  [33X[0;0YA  semigroup  [10XS[110X is a [13Xright zero semigroup[113X if [10Xx * y = y[110X for all [10Xx, y[110X in [10XS[110X. An
-  inverse semigroup is a right zero semigroup if and only if it is trivial.[133X
+  [33X[0;0YWhen  computing  the  maximal  subsemigroups  of  a  regular Rees (0-)matrix
+  semigroup  over a group, additional functionality is available. As described
+  in  [GGR68],  a  maximal  subsemigroup  of  a finite regular Rees (0-)matrix
+  semigroup  over  a  group  is  one of 6 possible types. Using the [5XSemigroups[105X
+  package,  it  is  possible to search for only those maximal subsemigroups of
+  certain types.[133X
+  
+  [33X[0;0YA  maximal subsemigroup of such a Rees (0-)matrix semigroup [10XR[110X over a group [10XG[110X
+  is either:[133X
+  
+  [31X1[131X   [33X[0;6Y[10X{0};[110X[133X
+  
+  [31X2[131X   [33X[0;6Yformed by removing [10X0[110X;[133X
+  
+  [31X3[131X   [33X[0;6Yformed by removing a column (a non-zero [13XL[113X-class);[133X
+  
+  [31X4[131X   [33X[0;6Yformed by removing a row (a non-zero [13XR[113X-class);[133X
+  
+  [31X5[131X   [33X[0;6Yformed by removing a set of both rows and columns;[133X
+  
+  [31X6[131X   [33X[0;6Yisomorphic  to a Rees (0-)matrix semigroup of the same dimensions over
+        a  maximal  subgroup  of  [10XG[110X  (in  particular, the maximal subsemigroup
+        intersects every [13XH[113X-class of [10XR[110X).[133X
+  
+  [33X[0;0YNote  that  if  [10XR[110X  is  a  Rees  matrix  semigroup  then  it  has  no maximal
+  subsemigroups  of types 1, 2, or 5. Only types 3, 4, and 6 are relevant to a
+  Rees matrix semigroup.[133X
+  
+  [1X14.10-1 MaximalSubsemigroups[101X
+  
+  [33X[1;0Y[29X[2XMaximalSubsemigroups[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMaximalSubsemigroups[102X( [3XS[103X, [3Xopts[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe maximal subsemigroups of [3XS[103X.[133X
+  
+  [33X[0;0YIf  [3XS[103X is a finite semigroup, then the attribute [10XMaximalSubsemigroups[110X returns
+  a  list  of  the  non-empty  maximal subsemigroups of [3XS[103X. The methods used by
+  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW16].[133X
+  
+  [33X[0;0YIt is computationally expensive to search for the maximal subsemigroups of a
+  semigroup,  and  so  computations involving [10XMaximalSubsemigroups[110X may be very
+  lengthy.   A   substantial   amount   of  information  on  the  progress  of
+  [10XMaximalSubsemigroups[110X  is  provided  through  the  info  class [2XInfoSemigroups[102X
+  ([14X2.6-1[114X), with increasingly detailed information given at levels 1, 2, and 3.[133X
+  
+  [33X[0;0YThe behaviour of [10XMaximalSubsemigroups[110X can be altered via the second argument
+  [3Xopts[103X, which should be a record. The optional components of [3Xopts[103X are:[133X
+  
+  [8Xgens (a boolean)[108X
+        [33X[0;6YIf  [10X[3Xopts[103X[10X.gens[110X  is [9Xfalse[109X or unspecified, then the maximal subsemigroups
+        themselves  are  returned  and  not  just  generating  sets  for these
+        subsemigroups.[133X
+  
+        [33X[0;6YIt can be more computationally expensive to return the generating sets
+        for   the   maximal   subsemigroups,   than   to  return  the  maximal
+        subsemigroups themselves.[133X
+  
+  [8Xcontain (a list)[108X
+        [33X[0;6YIf  [10X[3Xopts[103X[10X.contain[110X  is  duplicate-free  list  of  elements  of  [3XS[103X,  then
+        [10XMaximalSubsemigroups[110X  will  search  for the maximal subsemigroups of [3XS[103X
+        which contain those elements.[133X
+  
+  [8XD (a [13XD[113X-class)[108X
+        [33X[0;6YFor  a  maximal subsemigroup [10XM[110X of a finite semigroup [3XS[103X, there exists a
+        unique  [13XD[113X-class  which  contains  the  complement  of [10XM[110X in [3XS[103X. In other
+        words,  the  elements  of  [3XS[103X  which  [10XM[110X lacks are contained in a unique
+        [13XD[113X-class.[133X
+  
+        [33X[0;6YIf  [10X[3Xopts[103X[10X.D[110X  is  a  [13XD[113X-class of [3XS[103X, then [10XMaximalSubsemigroups[110X will search
+        exclusively  for  those maximal subsemigroups of [3XS[103X whose complement is
+        contained in [10X[3Xopts[103X[10X.D[110X.[133X
+  
+  [8Xtypes (a list)[108X
+        [33X[0;6Y[13XThis  option  is  relevant  only  if  [3XS[103X  is  a regular Rees (0-)matrix
+        semigroup over a group.[113X[133X
+  
+        [33X[0;6YAs  described  at  the  start  of  this  subsection,  [14X14.10[114X, a maximal
+        subsemigroup  of  a  regular Rees (0-)matrix semigroup over a group is
+        one of 6 possible types.[133X
+  
+        [33X[0;6YIf  [3XS[103X  is  a  regular  Rees  (0-)matrix  semigroup  over  a  group and
+        [10X[3Xopts[103X[10X.types[110X  is  a  subset  of [10X[1 .. 6][110X, then [10XMaximalSubsemigroups[110X will
+        search for those maximal subsemigroups of [3XS[103X of the types enumerated by
+        [10X[3Xopts[103X[10X.types[110X.[133X
+  
+        [33X[0;6YThe default value for this option is [10X[1 .. 6][110X (i.e. no restriction).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1, 4, 3, 5]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 2, 3, 1, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsRightZeroSemigroup(S);[127X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(3);[127X[104X
+    [4X[28X<full transformation monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XMaximalSubsemigroups(S);[127X[104X
+    [4X[28X[ <transformation semigroup of degree 3 with 7 generators>, [128X[104X
+    [4X[28X  <transformation semigroup of degree 3 with 7 generators>, [128X[104X
+    [4X[28X  <transformation semigroup of degree 3 with 7 generators>, [128X[104X
+    [4X[28X  <transformation semigroup of degree 3 with 7 generators>, [128X[104X
+    [4X[28X  <transformation monoid of degree 3 with 5 generators> ][128X[104X
+    [4X[25Xgap>[125X [27XMaximalSubsemigroups(S,[127X[104X
+    [4X[25X>[125X [27Xrec(gens := true, D := DClass(S, Transformation([2, 2, 3]))));[127X[104X
+    [4X[28X[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ), [128X[104X
+    [4X[28X      Transformation( [ 2, 2, 2 ] ), IdentityTransformation, [128X[104X
+    [4X[28X      Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ) ] ][128X[104X
+    [4X[25Xgap>[125X [27XMaximalSubsemigroups(S,[127X[104X
+    [4X[25X>[125X [27Xrec(contain := [Transformation([2, 3, 1])]));[127X[104X
+    [4X[28X[ <transformation semigroup of degree 3 with 7 generators>, [128X[104X
+    [4X[28X  <transformation monoid of degree 3 with 5 generators> ][128X[104X
+    [4X[25Xgap>[125X [27XR := PrincipalFactor([127X[104X
+    [4X[25X>[125X [27XDClass(FullTransformationMonoid(4), Transformation([2, 2])));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>[128X[104X
+    [4X[25Xgap>[125X [27XMaximalSubsemigroups(R, rec(types := [5],[127X[104X
+    [4X[25X>[125X [27X  contain := [RMSElement(R, 1, (), 1),[127X[104X
+    [4X[25X>[125X [27X              RMSElement(R, 1, (2, 3), 2)]));[127X[104X
+    [4X[28X[ <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, [128X[104X
+    [4X[28X  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, [128X[104X
+    [4X[28X  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, [128X[104X
+    [4X[28X  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators> ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.10-2 NrMaximalSubsemigroups[101X
+  
+  [33X[1;0Y[29X[2XNrMaximalSubsemigroups[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe number of maximal subsemigroups of [3XS[103X.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is a finite semigroup, then [10XNrMaximalSubsemigroups[110X returns the number
+  of   non-empty   maximal   subsemigroups   of   [3XS[103X.   The   methods  used  by
+  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW16].[133X
+  
+  [33X[0;0YIt  can  be significantly faster to find the number of maximal subsemigroups
+  of a semigroup than to find the maximal subsemigroups themselves.[133X
+  
+  [33X[0;0YUnless  the  maximal  subsemigroups  of  [3XS[103X  are  already  known, the command
+  [10XNrMaximalSubsemigroups([3XS[103X[10X)[110X  simply  calls the command [10XMaximalSubsemigroups([3XS[103X[10X,
+  rec(number := true))[110X.[133X
+  
+  [33X[0;0YFor  more  information about searching for maximal subsemigroups of a finite
+  semigroup  in  the [5XSemigroups[105X package, and for information about the options
+  available  to  alter  the  search,  see  [2XMaximalSubsemigroups[102X  ([14X14.10-1[114X). By
+  supplying  the  additional option [10X[3Xopts[103X[10X.number :=[110X [9Xtrue[109X, the number of maximal
+  subsemigroups will be returned rather than the subsemigroups themselves.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(3);[127X[104X
+    [4X[28X<full transformation monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XNrMaximalSubsemigroups(S);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(3, 4);;[127X[104X
+    [4X[25Xgap>[125X [27XNrMaximalSubsemigroups(S);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27XR := PrincipalFactor([127X[104X
+    [4X[25X>[125X [27XDClass(FullTransformationMonoid(4), Transformation([2, 2])));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>[128X[104X
+    [4X[25Xgap>[125X [27XMaximalSubsemigroups(R, rec(number := true, types := [3, 4]));[127X[104X
+    [4X[28X10[128X[104X
+  [4X[32X[104X
+  
+  [1X14.10-3 IsMaximalSubsemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsMaximalSubsemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  [3XS[103X  and  [3XT[103X are semigroups, then [10XIsMaximalSubsemigroup[110X returns [9Xtrue[109X if and
+  only if [3XT[103X is a maximal subsemigroup of [3XS[103X.[133X
+  
+  [33X[0;0YA [13Xmaximal subsemigroup[113X of [3XS[103X is a proper subsemigroup of [3XS[103X which is contained
+  in no other proper subsemigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := ZeroSemigroup(2);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMaximalSubsemigroup(S, Semigroup(MultiplicativeZero(S)));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(4);[127X[104X
+    [4X[28X<full transformation monoid of degree 4>[128X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup(Transformation([3, 4, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 4, 2, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 1, 1, 3]));[127X[104X
+    [4X[28X<transformation semigroup of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsMaximalSubsemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR := Semigroup(Transformation([3, 4, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 4, 2, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 1, 1, 3]));[127X[104X
+    [4X[28X<transformation semigroup of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsMaximalSubsemigroup(S, R);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 2, 3, 3, 1]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([1, 2, 4, 4, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsRightZeroSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   
-  [1X14.1-18 [33X[0;0YIsXTrivial[133X[101X
+  [1X14.11 [33X[0;0YThe normalizer of a semigroup[133X[101X
   
-  [33X[1;0Y[29X[2XIsRTrivial[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsLTrivial[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsHTrivial[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsDTrivial[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsAperiodicSemigroup[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsCombinatorialSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [1X14.11-1 Normalizer[101X
   
-  [33X[0;0Y[10XIsXTrivial[110X  returns  [9Xtrue[109X  if  Green's  [13XR[113X-relation,  [13XL[113X-relation, [13XH[113X-relation,
-  [13XD[113X-relation,  respectively,  on the semigroup [3XS[103X is trivial and [9Xfalse[109X if it is
-  not.  These  properties  can also be applied to a Green's class instead of a
-  semigroup where applicable.[133X
+  [33X[1;0Y[29X[2XNormalizer[102X( [3XG[103X, [3XS[103X[, [3Xopts[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XNormalizer[102X( [3XS[103X[, [3Xopts[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA permutation group.[133X
   
-  [33X[0;0YFor  inverse  semigroups,  the  properties  of  being  [13XR[113X-trivial, [13XL[113X-trivial,
-  [13XD[113X-trivial, and a semilattice are equivalent; see [2XIsSemilattice[102X ([14X14.1-20[114X).[133X
+  [33X[0;0YIn   its   first   form,   this  function  returns  the  normalizer  of  the
+  transformation,  partial perm, or bipartition semigroup [3XS[103X in the permutation
+  group  [3XG[103X.  In its second form, the normalizer of [3XS[103X in the symmetric group on
+  [10X[1 .. n][110X where [10Xn[110X is the degree of [3XS[103X is returned.[133X
   
-  [33X[0;0YA   semigroup   is  [13Xaperiodic[113X  if  its  contains  no  non-trivial  subgroups
-  (equivalently,  all  of its group [13XH[113X-classes are trivial). A finite semigroup
-  is aperiodic if and only if it is [13XH[113X-trivial.[133X
+  [33X[0;0YThe  [12Xnormalizer[112X  of a transformation semigroup [3XS[103X in a permutation group [3XG[103X in
+  the  subgroup [10XH[110X of [3XG[103X consisting of those elements in [10Xg[110X in [3XG[103X conjugating [3XS[103X to
+  [3XS[103X, i.e. [10X[3XS[103X[10X ^ g = [3XS[103X[10X[110X.[133X
   
-  [33X[0;0Y[13XCombinatorial[113X is a synonym for aperiodic in this context.[133X
+  [33X[0;0YAnalogous  definitions  can  be  given  for  a  partial perm and bipartition
+  semigroups.[133X
+  
+  [33X[0;0YThe method used by this operation is based on Section 3 in [ABMN10].[133X
+  
+  [33X[0;0YThe  optional  final  argument  [3Xopts[103X  allows you to specify various options,
+  which  determine  how  the  normalizer  is  calculated.  The values of these
+  options  can  dramatically  change  the  time it takes for this operation to
+  complete.   In   different  situations,  different  options  give  the  best
+  performance.[133X
+  
+  [33X[0;0YThe argument [3Xopts[103X should be a record, and the available options are:[133X
+  
+  [8Xrandom[108X
+        [33X[0;6YIf  this  option  has  the  value  [9Xtrue[109X,  then  the  non-deterministic
+        algorithms  in  [5Xgenss[105X are used in [10XNormalizer[110X. So, there is some chance
+        that  [10XNormalizer[110X  will  return  an  incorrect result in this case, but
+        these   methods  can  also  be  much  faster  than  the  deterministic
+        algorithms which are used if this option is [9Xfalse[109X.[133X
+  
+        [33X[0;6YThe default value for this option is [9Xfalse[109X.[133X
+  
+  [8Xlambdastab[108X
+        [33X[0;6YIf this option has the value [9Xtrue[109X, then [10XNormalizer[110X initially finds the
+        setwise  stabilizer  of the images or right blocks of the semigroup [3XS[103X.
+        Sometimes this improves the performance of [10XNormalizer[110X and sometimes it
+        does not. If this option in [9Xfalse[109X, then this setwise stabilizer is not
+        found.[133X
+  
+        [33X[0;6YThe default value for this option is [9Xtrue[109X.[133X
+  
+  [8Xrhostab[108X
+        [33X[0;6YIf this option has the value [9Xtrue[109X, then [10XNormalizer[110X initially finds the
+        setwise  stabilizer  of  the  kernels,  domains, or left blocks of the
+        semigroup [3XS[103X. Sometimes this improves the performance of [10XNormalizer[110X and
+        sometimes  it  does  not.  If  this  option is [9Xfalse[109X, the this setwise
+        stabilizer is not found.[133X
+  
+        [33X[0;6YIf [3XS[103X is an inverse semigroup, then this option is ignored.[133X
+  
+        [33X[0;6YThe default value for this option is [9Xtrue[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := BrauerMonoid(8);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 8 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(Normalizer(S));[127X[104X
+    [4X[28X"S8"[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(PartialPerm([2, 5, 6, 3, 8]),[127X[104X
+    [4X[25X>[125X [27X                         PartialPerm([3, 6, 0, 2, 0, 0, 5, 7]));;[127X[104X
+    [4X[25Xgap>[125X [27XNormalizer(S, rec(random := true, lambdastab := false));[127X[104X
+    [4X[28X#I  Have 33389 points.[128X[104X
+    [4X[28X#I  Have 40136 points in new orbit.[128X[104X
+    [4X[28XGroup(())[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.12 [33X[0;0YAttributes of transformations and transformation semigroups[133X[101X
+  
+  [1X14.12-1 ComponentRepsOfTransformationSemigroup[101X
+  
+  [33X[1;0Y[29X[2XComponentRepsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe representatives of components of a transformation semigroup.[133X
+  
+  [33X[0;0YThis function returns the representatives of the components of the action of
+  the  transformation  semigroup [3XS[103X on the set of positive integers not greater
+  than the degree of [3XS[103X.[133X
+  
+  [33X[0;0YThe representatives are the least set of points such that every point can be
+  reached from some representative under the action of [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27X Transformation([1, 5, 1, 3, 7, 10, 6, 2, 7, 10]),[127X[104X
-    [4X[25X>[125X [27X Transformation([4, 4, 5, 6, 7, 7, 7, 4, 3, 10]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsHTrivial(S);[127X[104X
+    [4X[25X>[125X [27XTransformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;[127X[104X
+    [4X[25Xgap>[125X [27XComponentRepsOfTransformationSemigroup(S);[127X[104X
+    [4X[28X[ 2, 3, 8 ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-2 ComponentsOfTransformationSemigroup[101X
+  
+  [33X[1;0Y[29X[2XComponentsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe components of a transformation semigroup.[133X
+  
+  [33X[0;0YThis  function  returns  the  components of the action of the transformation
+  semigroup  [3XS[103X  on the set of positive integers not greater than the degree of
+  [3XS[103X; the components of [3XS[103X partition this set.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XTransformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;[127X[104X
+    [4X[25Xgap>[125X [27XComponentsOfTransformationSemigroup(S);[127X[104X
+    [4X[28X[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-3 CyclesOfTransformationSemigroup[101X
+  
+  [33X[1;0Y[29X[2XCyclesOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe cycles of a transformation semigroup.[133X
+  
+  [33X[0;0YThis  function  returns the cycles, or strongly connected components, of the
+  action of the transformation semigroup [3XS[103X on the set of positive integers not
+  greater than the degree of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XTransformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;[127X[104X
+    [4X[25Xgap>[125X [27XCyclesOfTransformationSemigroup(S);[127X[104X
+    [4X[28X[ [ 12 ], [ 1, 11 ], [ 1, 11, 12, 5, 4, 6 ], [128X[104X
+    [4X[28X  [ 1, 11, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 6 ], [128X[104X
+    [4X[28X  [ 1, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 10, 9, 11 ], [128X[104X
+    [4X[28X  [ 11, 12, 5, 4, 10, 9 ], [ 12, 5, 4, 10, 7 ], [ 4, 10, 7 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-4 DigraphOfActionOnPairs[101X
+  
+  [33X[1;0Y[29X[2XDigraphOfActionOnPairs[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDigraphOfActionOnPairs[102X( [3XS[103X, [3Xn[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA digraph, or [9Xfail[109X.[133X
+  
+  [33X[0;0YIf [3XS[103X is a transformation semigroup and [3Xn[103X is a non-negative integer such that
+  [3XS[103X  acts  on the points [10X[1 .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns a
+  digraph representing the [2XOnSets[102X ([14XReference: OnSets[114X) action of [3XS[103X on the pairs
+  of points in [10X[1 .. [3Xn[103X[10X][110X.[133X
+  
+  [33X[0;0YIf the optional argument [3Xn[103X is not specified, then by default the degree of [3XS[103X
+  will  be  chosen  for  [3Xn[103X;  see  [2XDegreeOfTransformationSemigroup[102X  ([14XReference:
+  DegreeOfTransformationSemigroup[114X).  If  the semigroup [3XS[103X does not act on [10X[1 ..
+  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
+  
+  [33X[0;0YThe  digraph returned by [10XDigraphOfActionOnPairs[110X has [22X[3Xn[103X + n choose 2[122X vertices:
+  the  vertices  [10X[1  ..  [3Xn[103X[10X][110X  correspond  to  the  points  in [10X[1 .. [3Xn[103X[10X][110X, and the
+  remaining  vertices  correspond  to  the  pairs  of points in [10X[1 .. [3Xn[103X[10X][110X. This
+  correspondence   is  stored  in  the  vertex  labels  of  the  digraph;  see
+  [2XDigraphVertexLabels[102X ([14XDigraphs: DigraphVertexLabels[114X).[133X
+  
+  [33X[0;0YThe  edges of the digraph are defined as follows. For each pair [10X{i, j}[110X in [10X[1
+  ..  [3Xn[103X[10X][110X,  and  for  each generator [10Xf[110X in [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X, there is an
+  edge  from the vertex corresponding to [10X{i, j}[110X to the vertex corresponding to
+  [10X{i  ^  f,  j  ^  f}[110X. Since [10Xf[110X is a transformation, the set [10X{i ^ f, j ^ f}[110X may
+  correspond  to  a  pair (in the case that [10Xi ^ f <> j ^ f[110X), or to a point (in
+  the  case  that  [10Xi ^ f = j ^ f[110X). The label of an edge is the position of the
+  first  transformation  within  [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X  that  maps the pair
+  corresponding  to  the  source vertex to the pair/point corresponding to the
+  range  vertex.  See [2XGeneratorsOfSemigroup[102X ([14XReference: GeneratorsOfSemigroup[114X)
+  and [2XDigraphEdgeLabels[102X ([14XDigraphs: DigraphEdgeLabels[114X) for further information.[133X
+  
+  [33X[0;0YNote  that  the  digraph  returned by [10XDigraphOfActionOnPairs[110X has no multiple
+  edges; see [2XIsMultiDigraph[102X ([14XDigraphs: IsMultiDigraph[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([2, 4, 3, 4, 7, 1, 6]);;[127X[104X
+    [4X[25Xgap>[125X [27Xy := Transformation([3, 3, 2, 3, 5, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(x, y);[127X[104X
+    [4X[28X<transformation semigroup of degree 7 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xgr := DigraphOfActionOnPairs(S);[127X[104X
+    [4X[28X<digraph with 28 vertices, 41 edges>[128X[104X
+    [4X[25Xgap>[125X [27XOnSets([2, 5], x);[127X[104X
+    [4X[28X[ 4, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XDigraphVertexLabel(gr, 16);[127X[104X
+    [4X[28X[ 2, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XDigraphVertexLabel(gr, 25);[127X[104X
+    [4X[28X[ 4, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XDigraphEdgeLabel(gr, 16, 25);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xgr := DigraphOfActionOnPairs(S, 4);[127X[104X
+    [4X[28X<digraph with 10 vertices, 11 edges>[128X[104X
+    [4X[25Xgap>[125X [27XDigraphVertexLabels(gr);[127X[104X
+    [4X[28X[ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], [128X[104X
+    [4X[28X  [ 3, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XDigraphOfActionOnPairs(S, 5);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-5 DigraphOfActionOnPoints[101X
+  
+  [33X[1;0Y[29X[2XDigraphOfActionOnPoints[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDigraphOfActionOnPoints[102X( [3XS[103X, [3Xn[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA digraph, or [9Xfail[109X.[133X
+  
+  [33X[0;0YIf [3XS[103X is a transformation semigroup and [3Xn[103X is a non-negative integer such that
+  [3XS[103X  acts on the points [10X[1 .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPoints([3XS[103X[10X, [3Xn[103X[10X)[110X returns a
+  digraph  representing  the [2XOnPoints[102X ([14XReference: OnPoints[114X) action of [3XS[103X on the
+  set [10X[1 .. [3Xn[103X[10X][110X.[133X
+  
+  [33X[0;0YIf the optional argument [3Xn[103X is not specified, then by default the degree of [3XS[103X
+  will  be  chosen  for  [3Xn[103X;  see  [2XDegreeOfTransformationSemigroup[102X  ([14XReference:
+  DegreeOfTransformationSemigroup[114X).  If  the semigroup [3XS[103X does not act on [10X[1 ..
+  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
+  
+  [33X[0;0YThe  digraph  returned  by  [10XDigraphOfActionOnPairs[110X has [3Xn[103X vertices, where the
+  vertex  [10Xi[110X  corresponds to the point [10Xi[110X. For each point [10Xi[110X in [10X[1 .. [3Xn[103X[10X][110X, and for
+  each  generator  [10Xf[110X  in  [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X,  there is an edge from the
+  vertex  [10Xi[110X  to  the  vertex  [10Xi  ^  f[110X.  See  [2XGeneratorsOfSemigroup[102X ([14XReference:
+  GeneratorsOfSemigroup[114X) for further information.[133X
+  
+  [33X[0;0YNote  that  the  digraph returned by [10XDigraphOfActionOnPoints[110X has no multiple
+  edges; see [2XIsMultiDigraph[102X ([14XDigraphs: IsMultiDigraph[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([2, 4, 2, 4, 7, 1, 6]);;[127X[104X
+    [4X[25Xgap>[125X [27Xy := Transformation([3, 3, 2, 3, 5, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(x, y);[127X[104X
+    [4X[28X<transformation semigroup of degree 7 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xgr := DigraphOfActionOnPoints(S);[127X[104X
+    [4X[28X<digraph with 7 vertices, 12 edges>[128X[104X
+    [4X[25Xgap>[125X [27XOnPoints(2, x);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xgr2 := DigraphOfActionOnPoints(S, 4);[127X[104X
+    [4X[28X<digraph with 4 vertices, 7 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xgr2 = InducedSubdigraph(gr, [1 .. 4]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDigraphOfActionOnPoints(S, 5);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-6 FixedPointsOfTransformationSemigroup[101X
+  
+  [33X[1;0Y[29X[2XFixedPointsOfTransformationSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA set of positive integers.[133X
+  
+  [33X[0;0YIf       [3XS[103X       is       a       transformation       semigroup,       then
+  [10XFixedPointsOfTransformationSemigroup([3XS[103X[10X)[110X returns the set of points [10Xi[110X in [10X[1 ..
+  DegreeOfTransformationSemigroup([3XS[103X[10X)][110X such that [10Xi ^ f = i[110X for all [10Xf[110X in [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([1, 4, 2, 4, 3, 7, 7]);[127X[104X
+    [4X[28XTransformation( [ 1, 4, 2, 4, 3, 7, 7 ] )[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(f);[127X[104X
+    [4X[28X<commutative transformation semigroup of degree 7 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XFixedPointsOfTransformationSemigroup(S);[127X[104X
+    [4X[28X[ 1, 4, 7 ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-7 IsTransitive[101X
+  
+  [33X[1;0Y[29X[2XIsTransitive[102X( [3XS[103X[, [3XX[103X] ) [32X property[133X
+  [33X[1;0Y[29X[2XIsTransitive[102X( [3XS[103X[, [3Xn[103X] ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  transformation semigroup [3XS[103X is [13Xtransitive[113X or [13Xstrongly connected[113X on the set
+  [3XX[103X if for every [10Xi, j[110X in [3XX[103X there is an element [10Xs[110X in [3XS[103X such that [10Xi ^ s = j[110X.[133X
+  
+  [33X[0;0YIf  the  optional second argument is a positive integer [3Xn[103X, then [10XIsTransitive[110X
+  returns [9Xtrue[109X if [3XS[103X is transitive on [10X[1 .. [3Xn[103X[10X][110X, and [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YIf  the  optional  second  argument is not provided, then the degree of [3XS[103X is
+  used    by    default;   see   [2XDegreeOfTransformationSemigroup[102X   ([14XReference:
+  DegreeOfTransformationSemigroup[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);[127X[104X
+    [4X[28X<bipartition semigroup of degree 6 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XAsSemigroup(IsTransformationSemigroup, S);[127X[104X
+    [4X[28X<transformation semigroup of size 11, degree 12 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsTransitive(last);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsTransitive(AsSemigroup(Group((1, 2, 3))));[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-8 SmallestElementSemigroup[101X
+  
+  [33X[1;0Y[29X[2XSmallestElementSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLargestElementSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA transformation.[133X
+  
+  [33X[0;0YThese   attributes   return   the   smallest  and  largest  element  of  the
+  transformation  semigroup  [3XS[103X, respectively. Smallest means the first element
+  in the sorted set of elements of [3XS[103X and largest means the last element in the
+  set of elements.[133X
+  
+  [33X[0;0YIt  is  not necessary to find the elements of the semigroup to determine the
+  smallest  or  largest  element,  and  this  function has considerable better
+  performance than the equivalent [10XElements([3XS[103X[10X)[1][110X and [10XElements([3XS[103X[10X)[Size([3XS[103X[10X)][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([127X[104X
+    [4X[25X>[125X [27XTransformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]),[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7]));[127X[104X
+    [4X[28X<transformation monoid of degree 11 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallestElementSemigroup(S);[127X[104X
+    [4X[28XIdentityTransformation[128X[104X
+    [4X[25Xgap>[125X [27XLargestElementSemigroup(S);[127X[104X
+    [4X[28XTransformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )[128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-9 CanonicalTransformation[101X
+  
+  [33X[1;0Y[29X[2XCanonicalTransformation[102X( [3Xtrans[103X[, [3Xn[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA transformation.[133X
+  
+  [33X[0;0YIf  [3Xtrans[103X is a transformation, and [3Xn[103X is a non-negative integer such that the
+  restriction  of [3Xtrans[103X to [9X[1 .. n][109X defines a transformation of [10X[1 .. n][110X, then
+  [10XCanonicalTransformation[110X   returns   a   canonical   representative   of  the
+  transformation [3Xtrans[103X restricted to [10X[1 .. n][110X.[133X
+  
+  [33X[0;0YMore  specifically,  let [10XC(n)[110X be a class of transformations of degree [3Xn[103X such
+  that  [10XAsDigraph[110X  returns  isomorphic  digraphs  for  every  pair  of element
+  elements  in  [10XC(n)[110X. Recall that for a transformation [3Xtrans[103X and integer [3Xn[103X the
+  function [10XAsDigraph[110X returns a digraph with [3Xn[103X vertices and an edge with source
+  [10Xx[110X  and  range  [10Xx^trans[110X  for  every  [10Xx[110X  in [10X[1 .. n][110X. See [2XAsDigraph[102X ([14XDigraphs:
+  AsDigraph[114X).  Then [10XCanonicalTransformation[110X returns a canonical representative
+  of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([5, 1, 4, 1, 1]);[127X[104X
+    [4X[28XTransformation( [ 5, 1, 4, 1, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xy := Transformation([3, 3, 2, 3, 1]);[127X[104X
+    [4X[28XTransformation( [ 3, 3, 2, 3, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalTransformation(x);[127X[104X
+    [4X[28XTransformation( [ 5, 5, 1, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalTransformation(y);[127X[104X
+    [4X[28XTransformation( [ 5, 5, 1, 5, 4 ] )[128X[104X
+  [4X[32X[104X
+  
+  [1X14.12-10 IsConnectedTransformationSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsConnectedTransformationSemigroup[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  transformation  semigroup  [3XS[103X  is connected if the digraph returned by the
+  function   [10XDigraphOfActionOnPoints[110X   is  connected.  See  [2XIsConnectedDigraph[102X
+  ([14XDigraphs:  IsConnectedDigraph[114X)  and  [2XDigraphOfActionOnPoints[102X ([14X14.12-5[114X). The
+  function  [10XIsConnectedTransformationSemigroup[110X returns [9Xtrue[109X if the semigroup [3XS[103X
+  is connected and [9Xfalse[109X otherwise.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27X Transformation([2, 4, 3, 4]),[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 3, 2, 3, 3])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsConnectedTransformationSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.13 [33X[0;0YAttributes of partial perm semigroups[133X[101X
+  
+  [1X14.13-1 ComponentRepsOfPartialPermSemigroup[101X
+  
+  [33X[1;0Y[29X[2XComponentRepsOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe representatives of components of a partial perm semigroup.[133X
+  
+  [33X[0;0YThis function returns the representatives of the components of the action of
+  the  partial  perm  semigroup  [3XS[103X on the set of positive integers where it is
+  defined.[133X
+  
+  [33X[0;0YThe representatives are the least set of points such that every point can be
+  reached from some representative under the action of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19],[127X[104X
+    [4X[25X>[125X [27X            [9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20],[127X[104X
+    [4X[25X>[125X [27X            [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19])]);;[127X[104X
+    [4X[25Xgap>[125X [27XComponentRepsOfPartialPermSemigroup(S);[127X[104X
+    [4X[28X[ 1, 4, 6, 10, 15, 17 ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.13-2 ComponentsOfPartialPermSemigroup[101X
+  
+  [33X[1;0Y[29X[2XComponentsOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe components of a partial perm semigroup.[133X
+  
+  [33X[0;0YThis  function  returns  the  components  of  the action of the partial perm
+  semigroup  [3XS[103X  on  the  set  of  positive  integers  where it is defined; the
+  components of [3XS[103X partition this set.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19],[127X[104X
+    [4X[25X>[125X [27X            [9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20],[127X[104X
+    [4X[25X>[125X [27X            [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19])]);;[127X[104X
+    [4X[25Xgap>[125X [27XComponentsOfPartialPermSemigroup(S);[127X[104X
+    [4X[28X[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20 ], [128X[104X
+    [4X[28X  [ 15 ], [ 17 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.13-3 CyclesOfPartialPerm[101X
+  
+  [33X[1;0Y[29X[2XCyclesOfPartialPerm[102X( [3Xx[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe cycles of a partial perm.[133X
+  
+  [33X[0;0YThis  function  returns the cycles, or strongly connected components, of the
+  action  of  the  partial  perm [3Xx[103X on the set of positive integers where it is
+  defined.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([3, 1, 4, 2, 5, 0, 0, 6, 0, 7]);[127X[104X
+    [4X[28X[8,6][10,7](1,3,4,2)(5)[128X[104X
+    [4X[25Xgap>[125X [27XCyclesOfPartialPerm(x);[127X[104X
+    [4X[28X[ [ 3, 4, 2, 1 ], [ 5 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X14.13-4 CyclesOfPartialPermSemigroup[101X
+  
+  [33X[1;0Y[29X[2XCyclesOfPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe cycles of a partial perm semigroup.[133X
+  
+  [33X[0;0YThis  function  returns the cycles, or strongly connected components, of the
+  action of the partial perm semigroup [3XS[103X on the set of positive integers where
+  it is defined.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19],[127X[104X
+    [4X[25X>[125X [27X            [9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20],[127X[104X
+    [4X[25X>[125X [27X            [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19])]);;[127X[104X
+    [4X[25Xgap>[125X [27XCyclesOfPartialPermSemigroup(S);[127X[104X
+    [4X[28X[ [ 1, 9, 12, 14, 2, 20, 19, 3, 8, 11 ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  content  in  this  chapter  is  based  partly on work by Zachary Mesyan
+  ([7Xhttps://academics.uccs.edu/zmesyan[107X).  A  full  description  of  the objects
+  described can be found in [MM16].[133X
+  
+  
+  [1X14.14 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X[101X
+  
+  [1X14.14-1 RZMSDigraph[101X
+  
+  [33X[1;0Y[29X[2XRZMSDigraph[102X( [3XR[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA digraph.[133X
+  
+  [33X[0;0YIf  [3XR[103X  is  an  [22Xn[122X  by  [22Xm[122X Rees 0-matrix semigroup [22XM^0[I, T, Λ; P][122X (so that [22XI =
+  {1,2,...,n}[122X  and  [22XΛ  =  {1,2,...,m}[122X)  then  [10XRZMSDigraph[110X  returns a symmetric
+  bipartite  digraph  with  [22Xn+m[122X  vertices.  An  index [22Xi ∈ I[122X corresponds to the
+  vertex [22Xi[122X and an index [22Xj ∈ Λ[122X corresponds to the vertex [22Xj + n[122X.[133X
+  
+  [33X[0;0YTwo vertices [22Xv[122X and [22Xw[122X in [10XRZMSDigraph([110X[3XR[103X[10X)[110X are adjacent if and only if [22Xv∈ I[122X, [22Xw -
+  n∈ Λ[122X, and [10XP[w - n][v][110X [22X≠ 0[122X.[133X
+  
+  [33X[0;0YThis digraph is commonly called the [13XGraham-Houghton graph[113X of [3XR[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR := PrincipalFactor([127X[104X
+    [4X[25X>[125X [27XDClass(FullTransformationMonoid(5),[127X[104X
+    [4X[25X>[125X [27X       Transformation([2, 4, 1, 5, 5])));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>[128X[104X
+    [4X[25Xgap>[125X [27Xgr := RZMSDigraph(R);[127X[104X
+    [4X[28X<digraph with 15 vertices, 40 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xe := DigraphEdges(gr)[1];[127X[104X
+    [4X[28X[ 1, 11 ][128X[104X
+    [4X[25Xgap>[125X [27XMatrix(R)[e[2] - 10][e[1]] <> 0;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X14.14-2 RZMSConnectedComponents[101X
+  
+  [33X[1;0Y[29X[2XRZMSConnectedComponents[102X( [3XR[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe connected components of a Rees 0-matrix semigroup.[133X
+  
+  [33X[0;0YIf  [3XR[103X  is  an  [22Xn[122X  by  [22Xm[122X Rees 0-matrix semigroup [22XM^0[I, T, Λ; P][122X (so that [22XI =
+  {1,2,...,n}[122X  and  [22XΛ  = {1,2,...,m}[122X) then [10XRZMSConnectedComponents[110X returns the
+  connected components of [3XR[103X.[133X
+  
+  [33X[0;0Y[13XConnectedness[113X   is  an  equivalence  relation  on  the  indices  of  [3XR[103X:  the
+  equivalence  classes  of the relation are called the [13Xconnected components[113X of
+  [3XR[103X, and two indices in [22XI ∪ Λ[122X are connected if and only if their corresponding
+  vertices  in  [10XRZMSDigraph([110X[3XR[103X[10X)[110X are connected (see [2XRZMSDigraph[102X ([14X14.14-1[114X)). If [3XR[103X
+  has  [22Xn[122X connected components, then [10XRZMSConnectedComponents[110X will return a list
+  of pairs:[133X
+  
+  [33X[0;0Y[10X[ [ [110X[22XI_1, Λ_1[122X[10X ], [110X[22X...[122X[10X, [ [110X[22XI_k, Λ_k[122X[10X ] ][110X[133X
+  
+  [33X[0;0Ywhere  [22XI  = I_1 ⊔ ⋯ ⊔ I_k[122X, [22XΛ = Λ_1 ⊔ ⋯ ⊔ Λ_k[122X, and for each [22Xl[122X the set [22XI_l∪Λ_l[122X
+  is  a  connected  component  of  [3XR[103X.  Note that at most one of [22XI_l[122X and [22XΛ_l[122X is
+  possibly  empty.  The  ordering of the connected components in the result in
+  unspecified.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(SymmetricGroup(5),[127X[104X
+    [4X[25X>[125X [27X[[(), 0, (1, 3), (4, 5), 0],[127X[104X
+    [4X[25X>[125X [27X [0, (), 0, 0, (1, 3, 4, 5)],[127X[104X
+    [4X[25X>[125X [27X [0, 0, (1, 5)(2, 3), 0, 0],[127X[104X
+    [4X[25X>[125X [27X [0, (2, 3)(1, 4), 0, 0, 0]]);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 5x4 over Sym( [ 1 .. 5 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XRZMSConnectedComponents(R);[127X[104X
+    [4X[28X[ [ [ 1, 3, 4 ], [ 1, 3 ] ], [ [ 2, 5 ], [ 2, 4 ] ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.15 [33X[0;0YChanging the representation of a semigroup[133X[101X
+  
+  [1X14.15-1 IsomorphismReesMatrixSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismReesMatrixSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismReesZeroMatrixSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismReesMatrixSemigroupOverPermGroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismReesZeroMatrixSemigroupOverPermGroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0YIf the semigroup [3XS[103X is finite and simple, then [10XIsomorphismReesMatrixSemigroup[110X
+  returns an isomorphism to a Rees matrix semigroup over some group (usually a
+  permutation  group), and [10XIsomorphismReesMatrixSemigroupOverPermGroup[110X returns
+  an isomorphism to a Rees matrix semigroup over a permutation group.[133X
+  
+  [33X[0;0YIf [3XS[103X is finite and 0-simple, then [10XIsomorphismReesZeroMatrixSemigroup[110X returns
+  an  isomorphism  to  a  Rees  0-matrix  semigroup over some group (usually a
+  permutation   group),   and  [10XIsomorphismReesZeroMatrixSemigroupOverPermGroup[110X
+  returns  an  isomorphism  to  a  Rees  0-matrix semigroup over a permutation
+  group.[133X
+  
+  [33X[0;0YSee also [2XInjectionPrincipalFactor[102X ([14X13.4-7[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]));[127X[104X
+    [4X[28X<trivial partial perm group of rank 1 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismReesMatrixSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso) = S;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRange(iso);[127X[104X
+    [4X[28X<Rees matrix semigroup 1x1 over Group(())>[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]), PartialPerm([]));[127X[104X
+    [4X[28X<partial perm monoid of rank 1 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XRange(IsomorphismReesZeroMatrixSemigroup(S));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 1x1 over Group(())>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.16 [33X[0;0YThe Nambooripad Partial Order of a regular semigroup[133X[101X
+  
+  [1X14.16-1 NambooripadLeqRegularSemigroup[101X
+  
+  [33X[1;0Y[29X[2XNambooripadLeqRegularSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA function.[133X
+  
+  [33X[0;0Y[10XNambooripadLeqRegularSemigroup[110X  returns  a  function  that,  when  given two
+  elements  [10Xx, y[110X of the regular semigroup [3XS[103X, returns [9Xtrue[109X if [10Xx[110X is less than or
+  equal   to   [10Xy[110X   in   the   Nambooripad   partial   order  on  [3XS[103X.  See  also
+  [2XNambooripadPartialOrder[102X ([14X14.16-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X108[128X[104X
-    [4X[25Xgap>[125X [27XIsRTrivial(S);[127X[104X
+    [4X[28X15[128X[104X
+    [4X[25Xgap>[125X [27XNambooripadPartialOrder(S);[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsLTrivial(S);[127X[104X
-    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNambooripadLeqRegularSemigroup(S)(Elements(S)[2], Elements(S)[15]);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X14.1-19 IsSemigroupWithAdjoinedZero[101X
+  [1X14.16-2 NambooripadPartialOrder[101X
   
-  [33X[1;0Y[29X[2XIsSemigroupWithAdjoinedZero[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [33X[1;0Y[29X[2XNambooripadPartialOrder[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe Nambooripad partial order on a regular semigroup.[133X
   
-  [33X[0;0Y[10XIsSemigroupWithAdjoinedZero[110X returns [9Xtrue[109X if the semigroup [3XS[103X can be expressed
-  as  the  disjoint union of subsemigroups [22X[3XS[103X ∖ { 0 }[122X and [22X{ 0 }[122X (where [22X0[122X is the
-  [2XMultiplicativeZero[102X ([14X13.7-3[114X) of [3XS[103X).[133X
+  [33X[0;0YThe  [13XNambooripad  partial order[113X [22X≤[122X on a regular semigroup [3XS[103X is defined by [10Xs[110X[22X≤[122X[10Xt[110X
+  if  the  principal  right  ideal  of  [10XS[110X  generated  by [10Xs[110X is contained in the
+  principal  right  ideal  of [10XS[110X generated by [10Xt[110X and there is an idempotent [10Xe[110X in
+  the  [13XR[113X-class  of  [10Xs[110X  such that [10Xs[110X[22X=[122X[10Xet[110X. The Nambooripad partial order coincides
+  with   the   natural  partial  order  when  considering  inverse  semigroups
+  [2XNaturalPartialOrder[102X ([14XReference: NaturalPartialOrder[114X).[133X
   
-  [33X[0;0YIf  this  is not the case, then either [3XS[103X lacks a multiplicative zero, or the
-  set [22X[3XS[103X ∖ { 0 }[122X is not a subsemigroup of [3XS[103X, and so [10XIsSemigroupWithAdjoinedZero[110X
-  returns [9Xfalse[109X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 3, 4, 5, 1, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([2, 1, 3, 4, 5, 6]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([6, 6, 6, 6, 6, 6]));[127X[104X
-    [4X[28X<transformation semigroup of degree 6 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroGroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSemigroupWithAdjoinedZero(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
-    [4X[25Xgap>[125X [27XIsSemigroupWithAdjoinedZero(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-20 IsSemilattice[101X
-  
-  [33X[1;0Y[29X[2XIsSemilattice[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsSemilattice[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a semilattice and [9Xfalse[109X if
-  it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  a [13Xsemilattice[113X if it is commutative and every element is an
-  idempotent. The idempotents of an inverse semigroup form a semilattice.[133X
+  [33X[0;0Y[10XNambooripadPartialOrder[110X returns the Nambooripad partial order on the regular
+  semigroup  [3XS[103X  as  a  list  of  sets  of  positive  integers where entry [10Xi[110X in
+  [10XNaturalPartialOrder([3XS[103X[10X)[110X  is  the  set of positions in [10XElements([3XS[103X[10X)[110X of elements
+  which  are less than [10XElements([3XS[103X[10X)[i][110X. See also [2XNambooripadLeqRegularSemigroup[102X
+  ([14X14.16-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 5, 1, 7, 3, 7, 7]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 6, 5, 7, 2, 1, 7]));;[127X[104X
+    [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X631[128X[104X
-    [4X[25Xgap>[125X [27XIsInverseSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XA := Semigroup(Idempotents(S));[127X[104X
-    [4X[28X<transformation semigroup of degree 7 with 32 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSemilattice(A);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := FactorisableDualSymmetricInverseMonoid(5);;[127X[104X
-    [4X[25Xgap>[125X [27XS := IdempotentGeneratedSubsemigroup(S);;[127X[104X
-    [4X[25Xgap>[125X [27XIsSemilattice(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X14.1-21 [33X[0;0YIsSimpleSemigroup[133X[101X
-  
-  [33X[1;0Y[29X[2XIsSimpleSemigroup[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsCompletelySimpleSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsSimpleSemigroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is simple and [9Xfalse[109X if it
-  is not.[133X
-  
-  [33X[0;0YA  semigroup  is  [13Xsimple[113X  if it has no proper 2-sided ideals. A semigroup is
-  [13Xcompletely  simple[113X  if  it  is  simple  and possesses minimal left and right
-  ideals. A finite semigroup is simple if and only if it is completely simple.
-  An inverse semigroup is simple if and only if it is a group.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27X Transformation([2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2]),[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3]),[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 7, 3, 9, 5, 11, 7, 1, 9, 3, 11, 5, 5]),[127X[104X
-    [4X[25X>[125X [27X Transformation([7, 7, 9, 9, 11, 11, 1, 1, 3, 3, 5, 5, 7]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsSimpleSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsCompletelySimpleSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSimpleSemigroup(MinimalIdeal(BrauerMonoid(6)));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XR := Range(IsomorphismReesMatrixSemigroup([127X[104X
-    [4X[25X>[125X [27XMinimalIdeal(BrauerMonoid(6))));[127X[104X
-    [4X[28X<Rees matrix semigroup 15x15 over Group(())>[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-22 IsSynchronizingSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsSynchronizingSemigroup[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsSynchronizingSemigroup[102X( [3XS[103X, [3Xn[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YFor  a  positive  integer  [3Xn[103X,  [10XIsSynchronizingSemigroup[110X  returns [9Xtrue[109X if the
-  semigroup of transformations [3XS[103X contains a transformation with constant value
-  on  [10X[1  ..  [3Xn[103X[10X][110X. Note that this function will return true whenever [10X[3Xn[103X[10X = 1[110X. See
-  also [2XConstantTransformation[102X ([14XReference: ConstantTransformation[114X).[133X
-  
-  [33X[0;0YIf the optional second argument is not specified, then [3Xn[103X will be taken to be
-  the      value      of      [2XDegreeOfTransformationSemigroup[102X      ([14XReference:
-  DegreeOfTransformationSemigroup[114X) for [3XS[103X.[133X
-  
-  [33X[0;0YNote  that  the  semigroup  consisting of the identity transformation is the
-  unique  transformation  semigroup  with  degree [10X0[110X. In this special case, the
-  function [10XIsSynchronizingSemigroup[110X will return [9Xfalse[109X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]),[127X[104X
-    [4X[25X>[125X [27XTransformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsSynchronizingSemigroup(S, 10);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]),[127X[104X
-    [4X[25X>[125X [27XTransformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsSynchronizingSemigroup(S, 10);[127X[104X
+    [4X[28X15[128X[104X
+    [4X[25Xgap>[125X [27XNambooripadPartialOrder(S);[127X[104X
+    [4X[28X[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [128X[104X
+    [4X[28X  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XRepresentative(MinimalIdeal(S));[127X[104X
-    [4X[28XTransformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-23 IsUnitRegularMonoid[101X
-  
-  [33X[1;0Y[29X[2XIsUnitRegularMonoid[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if the semigroup [3XS[103X is unit regular and [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  monoid  is  [13Xunit regular[113X if and only if for every [10X>x[110X in [3XS[103X there exists an
-  element [10Xy[110X in the group of units of [3XS[103X such that [10Xx*y*x=x[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIsUnitRegularMonoid(FullTransformationMonoid(3));[127X[104X
+    [4X[25Xgap>[125X [27XNambooripadLeqRegularSemigroup(S)(Elements(S)[2], Elements(S)[15]);[127X[104X
     [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-24 IsZeroGroup[101X
-  
-  [33X[1;0Y[29X[2XIsZeroGroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsZeroGroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a zero group and [9Xfalse[109X if it
-  is not.[133X
-  
-  [33X[0;0YA  semigroup [10XS[110X is a [13Xzero group[113X if there exists an element [10Xz[110X in [10XS[110X such that [10XS[110X
-  without  [10Xz[110X  is  a group and [10Xx*z=z*x=z[110X for all [10Xx[110X in [10XS[110X. Every zero group is an
-  inverse semigroup.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5, 9]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 3, 8, 2, 5, 6, 4, 4, 9]),[127X[104X
-    [4X[25X>[125X [27X                  ConstantTransformation(9, 9));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroGroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroGroup(T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroGroup(JonesMonoid(2));[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-25 IsZeroRectangularBand[101X
-  
-  [33X[1;0Y[29X[2XIsZeroRectangularBand[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsZeroRectangularBand[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is a zero rectangular
-  band and [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  a  [13X0-rectangular band[113X if it is 0-simple and [13XH[113X-trivial; see
-  also  [2XIsZeroSimpleSemigroup[102X  ([14X14.1-27[114X)  and [2XIsHTrivial[102X ([14X14.1-18[114X). An inverse
-  semigroup  is  a  0-rectangular  band  if  and  only if it is a 0-group; see
-  [2XIsZeroGroup[102X ([14X14.1-24[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27X Transformation([1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1, 13,[127X[104X
-    [4X[25X>[125X [27X                 1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1,[127X[104X
-    [4X[25X>[125X [27X                11, 1, 1, 1, 23, 1, 16, 19, 1, 1, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 4, 8, 1, 10, 1, 8, 1, 1, 1, 10, 1, 8, 10, 1, 1,[127X[104X
-    [4X[25X>[125X [27X                20, 1, 22, 1, 8, 1, 1, 1, 1, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 6, 6, 1, 1, 1, 6, 1, 1, 1, 1, 1, 6, 1, 6, 1, 1,[127X[104X
-    [4X[25X>[125X [27X                6, 1, 1, 24, 1, 1, 1, 1, 6]));;[127X[104X
-    [4X[25Xgap>[125X [27XD := DClass(S,[127X[104X
-    [4X[25X>[125X [27XTransformation([1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1,[127X[104X
-    [4X[25X>[125X [27X                1, 1, 1, 1, 1, 1, 1, 1, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroRectangularBand(Semigroup(D));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroRectangularBand(Semigroup(GreensDClasses(S)[1]));[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-26 IsZeroSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsZeroSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsZeroSemigroup[110X  returns  [9Xtrue[109X  if  the  semigroup [3XS[103X is a zero semigroup and
-  [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  semigroup  [10XS[110X  is  a [13Xzero semigroup[113X if there exists an element [10Xz[110X in [10XS[110X such
-  that [10Xx*y=z[110X for all [10Xx,y[110X in [10XS[110X. An inverse semigroup is a zero semigroup if and
-  only if it is trivial.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([4, 7, 6, 3, 1, 5, 3, 6, 5, 9]),[127X[104X
-    [4X[25X>[125X [27XTransformation([5, 3, 5, 1, 9, 3, 8, 7, 4, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27X Transformation([7, 8, 8, 8, 5, 8, 8, 8]),[127X[104X
-    [4X[25X>[125X [27X Transformation([8, 8, 8, 8, 5, 7, 8, 8]),[127X[104X
-    [4X[25X>[125X [27X Transformation([8, 7, 8, 8, 5, 8, 8, 8]),[127X[104X
-    [4X[25X>[125X [27X Transformation([8, 8, 8, 7, 5, 8, 8, 8]),[127X[104X
-    [4X[25X>[125X [27X Transformation([8, 8, 7, 8, 5, 8, 8, 8]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
-    [4X[28XTransformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )[128X[104X
-  [4X[32X[104X
-  
-  [1X14.1-27 IsZeroSimpleSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsZeroSimpleSemigroup[102X( [3XS[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0Y[10XIsZeroSimpleSemigroup[110X  returns [9Xtrue[109X if the semigroup [3XS[103X is 0-simple and [9Xfalse[109X
-  if it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  a [13X0-simple[113X if it has no two-sided ideals other than itself
-  and  the  set  containing  the  zero  element;  see  also [2XMultiplicativeZero[102X
-  ([14X13.7-3[114X).  An  inverse  semigroup  is 0-simple if and only if it is a Brandt
-  semigroup; see [2XIsBrandtSemigroup[102X ([14X15.2-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27X Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 5, 17,[127X[104X
-    [4X[25X>[125X [27X                 17, 17, 17, 17, 17]),[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 17, 17, 17, 11, 17, 17, 17, 17, 17, 17, 17,[127X[104X
-    [4X[25X>[125X [27X                 17, 17, 17, 17, 17]),[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 4, 17,[127X[104X
-    [4X[25X>[125X [27X                 17, 17, 17, 17, 17]),[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 17, 17, 5, 17, 17, 17, 17, 17, 17, 17, 17,[127X[104X
-    [4X[25X>[125X [27X                 17, 17, 17, 17, 17]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroSimpleSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),[127X[104X
-    [4X[25X>[125X [27XTransformation([2, 3, 4, 5, 6, 8, 7, 1, 2, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsZeroSimpleSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   

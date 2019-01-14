@@ -592,7 +592,7 @@
   [33X[0;0YWith  this  definition,  [2XAsPBR[102X  ([14X4.3-1[114X)  and  [2XAsPermutation[102X  ([14X4.3-4[114X)  define
   mutually  inverse  isomorphisms  from the symmetric group of degree [10Xn[110X to the
   subgroup  of  the full PBR monoid of degree [10Xn[110X consisting of all the elements
-  satisfying  [10XIsPermPBR[110X (i.e. the [2XGroupOfUnits[102X ([14X13.8-1[114X) of the full PBR monoid
+  satisfying  [10XIsPermPBR[110X (i.e. the [2XGroupOfUnits[102X ([14X14.8-1[114X) of the full PBR monoid
   of degree [10Xn[110X).[133X
   
   [4X[32X  Example  [32X[104X

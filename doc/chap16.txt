@@ -1,1727 +1,747 @@
   
-  [1X16 [33X[0;0YCongruences[133X[101X
+  [1X16 [33X[0;0YProperties and attributes specific to inverse semigroups[133X[101X
   
-  [33X[0;0YCongruences in [5XSemigroups[105X can be described in several different ways:[133X
+  [33X[0;0YIn  this  chapter  we  describe the attributes which are specific to inverse
+  semigroups that can be determined using [5XSemigroups[105X.[133X
   
-  [30X    [33X[0;6YGenerating pairs -- the minimal congruence which contains these pairs[133X
+  [33X[0;0YThe functions[133X
   
-  [30X    [33X[0;6YRees congruences -- the congruence specified by a given ideal[133X
+  [30X    [33X[0;6Y[2XIsJoinIrreducible[102X ([14X16.2-7[114X)[133X
   
-  [30X    [33X[0;6YUniversal congruences -- the unique congruence with only one class[133X
+  [30X    [33X[0;6Y[2XIsMajorantlyClosed[102X ([14X16.2-8[114X)[133X
   
-  [30X    [33X[0;6YLinked triples -- only for simple or 0-simple semigroups (see below)[133X
+  [30X    [33X[0;6Y[2XJoinIrreducibleDClasses[102X ([14X16.1-2[114X)[133X
   
-  [30X    [33X[0;6YKernel and trace -- only for inverse semigroups[133X
+  [30X    [33X[0;6Y[2XMajorantClosure[102X ([14X16.1-3[114X)[133X
   
-  [33X[0;0YThe  operation  [2XSemigroupCongruence[102X  ([14X16.2-1[114X)  can  be used to create any of
-  these,  interpreting  the  arguments  in  a  smart  way.  The  usual  way of
-  specifying  a  congruence will be by giving a set of generating pairs, but a
-  user  with  an  ideal  could  instead  create a Rees congruence or universal
-  congruence.[133X
+  [30X    [33X[0;6Y[2XMinorants[102X ([14X16.1-4[114X)[133X
   
-  [33X[0;0YIf  a  congruence is specified by generating pairs on a simple, 0-simple, or
-  inverse semigroup, then the congruence may be converted automatically to one
-  of  the  last  two  items in the above list, to reduce the complexity of any
-  calculations to be performed. The user need not manually specify, or even be
-  aware of, the congruence's linked triple or kernel and trace.[133X
+  [30X    [33X[0;6Y[2XRightCosetsOfInverseSemigroup[102X ([14X16.1-6[114X)[133X
   
-  [33X[0;0YWe  can  also  create  left  congruences  and  right  congruences, using the
-  [2XLeftSemigroupCongruence[102X   ([14X16.2-2[114X)   and  [2XRightSemigroupCongruence[102X  ([14X16.2-3[114X)
-  functions.[133X
+  [30X    [33X[0;6Y[2XSmallerDegreePartialPermRepresentation[102X ([14X16.1-8[114X)[133X
   
-  [33X[0;0YPlease  note  that  congruence  objects  made  in  [5XGAP[105X  before  loading  the
-  [5XSemigroups[105X  package  may not behave correctly after [5XSemigroups[105X is loaded. If
-  [5XSemigroups[105X  is  loaded  at  the  beginning  of  the  session,  or before any
-  congruence work is done, then the objects should behave correctly.[133X
+  [30X    [33X[0;6Y[2XVagnerPrestonRepresentation[102X ([14X16.1-9[114X)[133X
+  
+  [33X[0;0Ywere written by Wilf A. Wilson and Robert Hancock.[133X
+  
+  [33X[0;0YThe  function  [2XCharacterTableOfInverseSemigroup[102X  ([14X16.1-10[114X)  was  written  by
+  Jhevon Smith and Ben Steinberg.[133X
   
   
-  [1X16.1 [33X[0;0YSemigroup congruence objects[133X[101X
+  [1X16.1 [33X[0;0YAttributes specific to inverse semigroups[133X[101X
   
-  [1X16.1-1 IsSemigroupCongruence[101X
+  [1X16.1-1 NaturalLeqInverseSemigroup[101X
   
-  [33X[1;0Y[29X[2XIsSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XNaturalLeqInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn function.[133X
   
-  [33X[0;0YA  semigroup  congruence  [10Xcong[110X  is  an equivalence relation on a semigroup [10XS[110X
-  which respects left and right multiplication.[133X
-  
-  [33X[0;0YThat  is, if [22X(a,b)[122X is a pair in [10Xcong[110X, and [22Xx[122X is an element of [10XS[110X, then [22X(ax,bx)[122X
-  and [22X(xa,xb)[122X are both in [10Xcong[110X.[133X
-  
-  [33X[0;0YThe  simplest  way  of  creating  a  congruence in [5XSemigroups[105X is by a set of
-  [13Xgenerating pairs[113X. See [2XSemigroupCongruence[102X ([14X16.2-1[114X).[133X
+  [33X[0;0Y[10XNaturalLeqInverseSemigroup[110X  returns a function that, when given two elements
+  [10Xx,  y[110X of the inverse semigroup [3XS[103X, returns [9Xtrue[109X if [10Xx[110X is less than or equal to
+  [10Xy[110X in the natural partial order on [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<semigroup congruence over <simple transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with linked triple (2,4,1)>[128X[104X
-    [4X[25Xgap>[125X [27XIsSemigroupCongruence(cong);[127X[104X
+    [4X[25Xgap>[125X [27XS := Monoid(Transformation([1, 3, 4, 4]),[127X[104X
+    [4X[25X>[125X [27X               Transformation([1, 4, 2, 4]));[127X[104X
+    [4X[28X<transformation monoid of degree 4 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsInverseSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.1-2 IsLeftSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XIsLeftSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
-  
-  [33X[0;0YA left semigroup congruence [10Xcong[110X is an equivalence relation on a semigroup [10XS[110X
-  which respects left multiplication.[133X
-  
-  [33X[0;0YThat  is, if [22X(a,b)[122X is a pair in [10Xcong[110X, and [22Xx[122X is an element of [10XS[110X, then [22X(xa,xb)[122X
-  is also in [10Xcong[110X.[133X
-  
-  [33X[0;0YThe  simplest way of creating a left congruence in [5XSemigroups[105X is by a set of
-  [13Xgenerating pairs[113X. See [2XLeftSemigroupCongruence[102X ([14X16.2-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := LeftSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<left semigroup congruence over <transformation semigroup of degree 5 [128X[104X
-    [4X[28X with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XIsLeftSemigroupCongruence(cong);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.1-3 IsRightSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XIsRightSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
-  
-  [33X[0;0YA  right semigroup congruence [10Xcong[110X is an equivalence relation on a semigroup
-  [10XS[110X which respects right multiplication.[133X
-  
-  [33X[0;0YThat  is, if [22X(a,b)[122X is a pair in [10Xcong[110X, and [22Xx[122X is an element of [10XS[110X, then [22X(ax,bx)[122X
-  is also in [10Xcong[110X.[133X
-  
-  [33X[0;0YThe simplest way of creating a right congruence in [5XSemigroups[105X is by a set of
-  [13Xgenerating pairs[113X. See [2XRightSemigroupCongruence[102X ([14X16.2-3[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27XRightSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<right semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XIsRightSemigroupCongruence(cong);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.2 [33X[0;0YCreating congruences[133X[101X
-  
-  [1X16.2-1 SemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
-  
-  [33X[0;0YThis function returns a semigroup congruence over the semigroup [3XS[103X.[133X
-  
-  [33X[0;0YIf  [3Xpairs[103X  is  a  list  of  lists  of size 2 with elements from [3XS[103X, then this
-  function  will  return  the semigroup congruence defined by these generating
-  pairs. The individual pairs may instead be given as separate arguments.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27XSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<semigroup congruence over <simple transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with linked triple (2,4,1)>[128X[104X
-    [4X[25Xgap>[125X [27XSemigroupCongruence(S, pair1, pair2);[127X[104X
-    [4X[28X<semigroup congruence over <simple transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with linked triple (2,4,1)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.2-2 LeftSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XLeftSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YA left semigroup congruence.[133X
-  
-  [33X[0;0YThis function returns a left semigroup congruence over the semigroup [3XS[103X.[133X
-  
-  [33X[0;0YIf  [3Xpairs[103X  is  a  list  of  lists  of size 2 with elements from [3XS[103X, then this
-  function will return the least left semigroup congruence on [3XS[103X which contains
-  these  generating  pairs.  The  individual  pairs  may  instead  be given as
-  separate arguments.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27XLeftSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<left semigroup congruence over <transformation semigroup of degree 5 [128X[104X
-    [4X[28X with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XLeftSemigroupCongruence(S, pair1, pair2);[127X[104X
-    [4X[28X<left semigroup congruence over <transformation semigroup of degree 5 [128X[104X
-    [4X[28X with 4 generators> with 2 generating pairs>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.2-3 RightSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XRightSemigroupCongruence[102X( [3XS[103X, [3Xpairs[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YA right semigroup congruence.[133X
-  
-  [33X[0;0YThis function returns a right semigroup congruence over the semigroup [3XS[103X.[133X
-  
-  [33X[0;0YIf  [3Xpairs[103X  is  a  list  of  lists  of size 2 with elements from [3XS[103X, then this
-  function  will  return  the  least  right  semigroup  congruence  on [3XS[103X which
-  contains  these  generating pairs. The individual pairs may instead be given
-  as separate arguments.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27XRightSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<right semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XRightSemigroupCongruence(S, pair1, pair2);[127X[104X
-    [4X[28X<right semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with 2 generating pairs>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.2-4 GeneratingPairsOfSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XGeneratingPairsOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGeneratingPairsOfLeftSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGeneratingPairsOfRightSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
-  
-  [33X[0;0YIf [3Xcong[103X is a semigroup congruence, then [10XGeneratingPairsOfSemigroupCongruence[110X
-  returns  a  list  of  pairs  of elements from [10XRange([3Xcong[103X[10X)[110X that [13Xgenerates[113X the
-  congruence;  i.e.  [3Xcong[103X  is  the  least  congruence  on  the semigroup which
-  contains all the pairs in the list.[133X
-  
-  [33X[0;0YIf    [3Xcong[103X    is    a    left    or   right   semigroup   congruence,   then
-  [10XGeneratingPairsOfLeft/RightSemigroupCongruence[110X  will  instead give a list of
-  pairs which generate it as a left or right congruence. Note that, although a
-  congruence  is  also  a left and right congruence, its generating pairs as a
-  left or right congruence may differ from its generating pairs as a two-sided
-  congruence.[133X
-  
-  [33X[0;0YA   congruence  can  be  defined  using  a  set  of  generating  pairs:  see
-  [2XSemigroupCongruence[102X    ([14X16.2-1[114X),   [2XLeftSemigroupCongruence[102X   ([14X16.2-2[114X),   and
-  [2XRightSemigroupCongruence[102X ([14X16.2-3[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 3, 2, 3]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([3, 4, 4, 1])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpairs :=[127X[104X
-    [4X[25X>[125X [27X    [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], [127X[104X
-    [4X[25X>[125X [27X     [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, pairs);;[127X[104X
-    [4X[25Xgap>[125X [27XGeneratingPairsOfSemigroupCongruence(cong);[127X[104X
-    [4X[28X[ [ Transformation( [ 1, 1, 1, 1 ] ), [128X[104X
-    [4X[28X      Transformation( [ 2, 2, 2, 3 ] ) ], [128X[104X
-    [4X[28X  [ Transformation( [ 2, 2, 3, 2 ] ), [128X[104X
-    [4X[28X      Transformation( [ 3, 3, 2, 3 ] ) ] ][128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.3 [33X[0;0YCongruence classes[133X[101X
-  
-  [1X16.3-1 IsCongruenceClass[101X
-  
-  [33X[1;0Y[29X[2XIsCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
-  
-  [33X[0;0YThis  category  contains  any  object  which  is  an  equivalence class of a
-  semigroup  congruence  (see  [2XIsSemigroupCongruence[102X ([14X16.1-1[114X)). An object will
-  only  be  in  this  category  if  the  relation  is  known to be a semigroup
-  congruence when the congruence class is created.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, [Transformation([1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X                                   Transformation([2, 1, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := EquivalenceClassOfElement(cong,[127X[104X
-    [4X[25X>[125X [27X                                      Transformation([3, 1, 1]));[127X[104X
-    [4X[28X<congruence class of Transformation( [ 3, 1, 1 ] )>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruenceClass(class);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-2 IsLeftCongruenceClass[101X
-  
-  [33X[1;0Y[29X[2XIsLeftCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
-  
-  [33X[0;0YThis  category  contains  any object which is an equivalence class of a left
-  semigroup  congruence  (see  [2XIsLeftSemigroupCongruence[102X  ([14X16.1-2[114X)). An object
-  will  only  be  in  this  category  if  the  relation  is known to be a left
-  semigroup congruence when the class is created.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpairs := [Transformation([1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([2, 1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := LeftSemigroupCongruence(S, pairs);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := EquivalenceClassOfElement(cong,[127X[104X
-    [4X[25X>[125X [27X                                      Transformation([3, 1, 1]));[127X[104X
-    [4X[28X<left congruence class of Transformation( [ 3, 1, 1 ] )>[128X[104X
-    [4X[25Xgap>[125X [27XIsLeftCongruenceClass(class);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-3 IsRightCongruenceClass[101X
-  
-  [33X[1;0Y[29X[2XIsRightCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
-  
-  [33X[0;0YThis  category  contains any object which is an equivalence class of a right
-  semigroup  congruence  (see  [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X)). An object
-  will  only  be  in  this  category  if  the  relation is known to be a right
-  semigroup congruence when the class is created.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpairs := [Transformation([1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([2, 1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RightSemigroupCongruence(S, pairs);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := EquivalenceClassOfElement(cong,[127X[104X
-    [4X[25X>[125X [27X                                      Transformation([3, 1, 1]));[127X[104X
-    [4X[28X<right congruence class of Transformation( [ 3, 1, 1 ] )>[128X[104X
-    [4X[25Xgap>[125X [27XIsRightCongruenceClass(class);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-4 CongruenceClassOfElement[101X
-  
-  [33X[1;0Y[29X[2XCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLeftCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRightCongruenceClassOfElement[102X( [3Xcong[103X, [3Xelm[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YAn equivalence class.[133X
-  
-  [33X[0;0YThese  operations  act as a synonym of [10XEquivalenceClassOfElement[110X in the case
-  that the argument [3Xcong[103X is a congruence, left congruence, or right congruence
-  (respectively) of a semigroup.[133X
-  
-  [33X[0;0YSee [2XIsLeftSemigroupCongruence[102X ([14X16.1-2[114X), [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X),
-  and [2XIsSemigroupCongruence[102X ([14X16.1-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := CongruencesOfSemigroup(S)[3];;[127X[104X
-    [4X[25Xgap>[125X [27Xelm := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;[127X[104X
-    [4X[25Xgap>[125X [27XCongruenceClassOfElement(cong, elm);[127X[104X
-    [4X[28X<congruence class of (1,(1,3,2),1)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-5 CongruenceClasses[101X
-  
-  [33X[1;0Y[29X[2XCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
-  
-  [33X[0;0YThese operations act as a synonym of [10XEquivalenceClasses[110X in the case that the
-  argument  [3Xcong[103X  is  a  congruence,  left  congruence,  or  right  congruence
-  (respectively) of a semigroup.[133X
-  
-  [33X[0;0YSee [2XIsLeftSemigroupCongruence[102X ([14X16.1-2[114X), [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X),
-  and [2XIsSemigroupCongruence[102X ([14X16.1-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, pair);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := CongruenceClasses(cong);;[127X[104X
-    [4X[25Xgap>[125X [27XSet(classes);[127X[104X
-    [4X[28X[ <congruence class of Transformation( [ 3, 3, 3 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 2, 1, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 1, 2, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of IdentityTransformation>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 3 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 1 ] )> ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-6 NonTrivialEquivalenceClasses[101X
-  
-  [33X[1;0Y[29X[2XNonTrivialEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
-  
-  [33X[0;0YIf  [3Xeq[103X is an equivalence relation, then this attribute returns a list of all
-  equivalence classes of [3Xeq[103X which contain more than one element.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([Transformation([1, 2, 2]),[127X[104X
-    [4X[25X>[125X [27X                Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, [Transformation([1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X                                   Transformation([2, 1, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := NonTrivialEquivalenceClasses(cong);;[127X[104X
-    [4X[25Xgap>[125X [27XSet(classes);[127X[104X
-    [4X[28X[ <congruence class of Transformation( [ 3, 3, 3 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 2, 1, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 1, 2, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 3 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 1 ] )> ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-7 NonTrivialCongruenceClasses[101X
-  
-  [33X[1;0Y[29X[2XNonTrivialCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNonTrivialLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNonTrivialRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
-  
-  [33X[0;0YThese  operations  act  as  a synonym of [10XNonTrivialEquivalenceClasses[110X in the
-  case  that  the  argument  [3Xcong[103X  is  a congruence, left congruence, or right
-  congruence (respectively) of a semigroup.[133X
-  
-  [33X[0;0YSee [2XIsLeftSemigroupCongruence[102X ([14X16.1-2[114X), [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X),
-  and [2XIsSemigroupCongruence[102X ([14X16.1-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X                                        Transformation([2, 1, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := NonTrivialRightCongruenceClasses(cong);;[127X[104X
-    [4X[25Xgap>[125X [27XSet(classes);[127X[104X
-    [4X[28X[ <right congruence class of Transformation( [ 2, 1, 2 ] )>, [128X[104X
-    [4X[28X  <right congruence class of Transformation( [ 3, 1, 3 ] )> ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-8 NrEquivalenceClasses[101X
-  
-  [33X[1;0Y[29X[2XNrEquivalenceClasses[102X( [3Xeq[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
-  
-  [33X[0;0YIf  [3Xeq[103X  is an equivalence relation, then this attribute describes the number
-  of equivalence classes it has.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X                                [[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := CongruencesOfSemigroup(S)[3];;[127X[104X
-    [4X[25Xgap>[125X [27XNrEquivalenceClasses(cong);[127X[104X
-    [4X[28X9[128X[104X
-  [4X[32X[104X
-  
-  [1X16.3-9 NrCongruenceClasses[101X
-  
-  [33X[1;0Y[29X[2XNrCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNrLeftCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNrRightCongruenceClasses[102X( [3Xcong[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of equivalence classes.[133X
-  
-  [33X[0;0YThese  operations  act as a synonym of [10XNrEquivalenceClasses[110X in the case that
-  the  argument  [3Xcong[103X  is  a  congruence, left congruence, or right congruence
-  (respectively) of a semigroup.[133X
-  
-  [33X[0;0YSee [2XIsLeftSemigroupCongruence[102X ([14X16.1-2[114X), [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X),
-  and [2XIsSemigroupCongruence[102X ([14X16.1-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, pair);;[127X[104X
-    [4X[25Xgap>[125X [27XNrCongruenceClasses(cong);[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X6[128X[104X
-    [4X[25Xgap>[125X [27Xcong := RightSemigroupCongruence(S, pair);;[127X[104X
-    [4X[25Xgap>[125X [27XNrRightCongruenceClasses(cong);[127X[104X
-    [4X[28X10[128X[104X
+    [4X[25Xgap>[125X [27XNaturalPartialOrder(S);[127X[104X
+    [4X[28X[ [ 2, 5, 6 ], [ 6 ], [ 6 ], [ 6 ], [ 6 ], [  ] ][128X[104X
   [4X[32X[104X
   
-  [1X16.3-10 EquivalenceRelationLookup[101X
+  [1X16.1-2 JoinIrreducibleDClasses[101X
   
-  [33X[1;0Y[29X[2XEquivalenceRelationLookup[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list.[133X
+  [33X[1;0Y[29X[2XJoinIrreducibleDClasses[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of [13XD[113X-classes.[133X
   
-  [33X[0;0YThis attribute describes the (left, right or two-sided) semigroup congruence
-  [3Xcong[103X  as  a  list  of  positive  integers with length the size of the finite
-  semigroup over which [3Xcong[103X is defined.[133X
+  [33X[0;0Y[10XJoinIrreducibleDClasses[110X  returns a list of the join irreducible [13XD[113X-classes of
+  the  inverse  semigroup of partial permutations, block bijections or partial
+  permutation bipartitions [3XS[103X.[133X
   
-  [33X[0;0YEach  position  in the list corresponds to an element of the semigroup (in a
-  consistent  canonical  order)  and  the integer at that position is a unique
-  identifier  for  that element's congruence class under [3Xcong[103X. Two elements of
-  the  semigroup  on  which  the  congruence  is  defined  are  related in the
-  congruence  if  and  only  if  they have the same number at their respective
-  positions in the lookup.[133X
-  
-  [33X[0;0YNote   that   the   order   in   which   numbers   appear  in  the  list  is
-  non-deterministic,  and  two  congruence  objects  which  describe  the same
-  equivalence  relation might therefore have different lookups. Note also that
-  the  maximum value of the list may not be the number of classes of [3Xcong[103X, and
-  that    any    integer    might    not    be    included.    However,    see
-  [2XEquivalenceRelationCanonicalLookup[102X ([14X16.3-11[114X).[133X
-  
-  [33X[0;0YSee          also          [2XEquivalenceRelationPartition[102X          ([14XReference:
-  EquivalenceRelationPartition[114X).[133X
+  [33X[0;0YA  [13Xjoin  irreducible  [13XD[113X-class[113X  is a [13XD[113X-class containing only join irreducible
+  elements.  See  [2XIsJoinIrreducible[102X  ([14X16.2-7[114X).  If a [13XD[113X-class contains one join
+  irreducible  element,  then  all  of  the  elements  in the [13XD[113X-class are join
+  irreducible.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S,[127X[104X
-    [4X[25X>[125X [27X[Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xlookup := EquivalenceRelationLookup(cong);;[127X[104X
-    [4X[25Xgap>[125X [27Xlookup[3] = lookup[8];[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xlookup[2] = lookup[9];[127X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(S);[127X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 2 ]>> ][128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1]),[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([0, 2])]);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(T);[127X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 2 ]>> ][128X[104X
+    [4X[25Xgap>[125X [27XD := DualSymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(D);[127X[104X
+    [4X[28X[ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ][128X[104X
+  [4X[32X[104X
+  
+  [1X16.1-3 MajorantClosure[101X
+  
+  [33X[1;0Y[29X[2XMajorantClosure[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA majorantly closed list of elements.[133X
+  
+  [33X[0;0Y[10XMajorantClosure[110X  returns  a majorantly closed subset of an inverse semigroup
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions, [3XS[103X, as a list. See [2XIsMajorantlyClosed[102X ([14X16.2-8[114X).[133X
+  
+  [33X[0;0YThe result contains all elements of [3XS[103X which are greater than or equal to any
+  element    of    [3XT[103X    (with   respect   to   the   natural   partial   order
+  [2XNaturalLeqPartialPerm[102X  ([14XReference:  NaturalLeqPartialPerm[114X)).  In particular,
+  the result is a superset of [3XT[103X.[133X
+  
+  [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(4);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 4>[128X[104X
+    [4X[25Xgap>[125X [27XT := [PartialPerm([1, 0, 3, 0])];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 3 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XU := MajorantClosure(S, T);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 3 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3 ]>, [2,4](1)(3), [4,2](1)(3), [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 3, 4 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,4)(3) ][128X[104X
+    [4X[25Xgap>[125X [27XB := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -3], [2, -4], [3, -2], [4, -1], [5, -5]])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := [Bipartition([[1, -2], [2, 3, 5, -1, -3, -5], [4, -4]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -4], [2, 3, 5, -1, -3, -5], [4, -2]])];;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(B, T);[127X[104X
     [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XMajorantClosure(B, T);[127X[104X
+    [4X[28X[ <block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[28X    , <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], [128X[104X
+    [4X[28X     [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], [ 3, -1 ], [ 4, -2 ]>[128X[104X
+    [4X[28X    , <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ], [128X[104X
+    [4X[28X     [ 4, -2 ]>, <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], [128X[104X
+    [4X[28X     [ 4, -2 ], [ 5, -5 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(B, last);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X16.3-11 EquivalenceRelationCanonicalLookup[101X
+  [1X16.1-4 Minorants[101X
   
-  [33X[1;0Y[29X[2XEquivalenceRelationCanonicalLookup[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list.[133X
+  [33X[1;0Y[29X[2XMinorants[102X( [3XS[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA list of elements.[133X
   
-  [33X[0;0YThis attribute describes the semigroup congruence [3Xcong[103X as a list of positive
-  integers  with  length  the  size of the finite semigroup over which [3Xcong[103X is
-  defined.[133X
+  [33X[0;0Y[10XMinorants[110X   takes  an  element  [3Xf[103X  from  an  inverse  semigroup  of  partial
+  permutations,  block  bijections  or partial permutation bipartitions [3XS[103X, and
+  returns a list of the minorants of [3Xf[103X in [3XS[103X.[133X
   
-  [33X[0;0YEach  position  in the list corresponds to an element of the semigroup (in a
-  consistent  canonical  order)  and  the integer at that position is a unique
-  identifier  for  that  element's  congruence  class under [3Xcong[103X. The value of
-  [10XEquivalenceRelationCanonicalLookup[110X   has   the   property   that  the  first
-  appearance  of  the  value  [10Xi[110X is strictly later than the first appearance of
-  [10Xi-1[110X,  and  that  all  entries  in  the  list  will  be  from the range [10X[1 ..
-  NrEquivalenceClasses([3Xcong[103X[10X)][110X.  As  such, two congruences on a given semigroup
-  are equal if and only if their canonical lookups are equal.[133X
-  
-  [33X[0;0YTwo elements of the semigroup on which the congruence is defined are related
-  in  the  congruence  if  and  only  if  they  have  the same number at their
-  respective positions in the lookup.[133X
-  
-  [33X[0;0YSee        also        [2XEquivalenceRelationLookup[102X        ([14X16.3-10[114X)        and
-  [2XEquivalenceRelationPartition[102X ([14XReference: EquivalenceRelationPartition[114X).[133X
+  [33X[0;0YA  [13Xminorant[113X  of  [3Xf[103X  is  an element of [3XS[103X which is strictly less than [3Xf[103X in the
+  natural   partial   order   of   [3XS[103X.  See  [2XNaturalLeqPartialPerm[102X  ([14XReference:
+  NaturalLeqPartialPerm[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
-    [4X[25X>[125X [27X Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S,[127X[104X
-    [4X[25X>[125X [27X[Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27XEquivalenceRelationCanonicalLookup(cong);[127X[104X
-    [4X[28X[ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Elements(S)[13];[127X[104X
+    [4X[28X[1,3](2)[128X[104X
+    [4X[25Xgap>[125X [27XMinorants(S, x);[127X[104X
+    [4X[28X[ <empty partial perm>, [1,3], <identity partial perm on [ 2 ]> ][128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([3, 2, 4, 0]);[127X[104X
+    [4X[28X[1,3,4](2)[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XMinorants(S, x);[127X[104X
+    [4X[28X[ <identity partial perm on [ 2 ]>, [1,3](2), [3,4](2) ][128X[104X
   [4X[32X[104X
   
-  [1X16.3-12 EquivalenceRelationCanonicalPartition[101X
+  [1X16.1-5 PrimitiveIdempotents[101X
   
-  [33X[1;0Y[29X[2XEquivalenceRelationCanonicalPartition[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
+  [33X[1;0Y[29X[2XPrimitiveIdempotents[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of elements.[133X
   
-  [33X[0;0YThis  attribute returns a list of lists of elements of the underlying set of
-  the  semigroup  congruence  [3Xcong[103X.  These  lists are precisely the nontrivial
-  equivalence  classes  of  [3Xcong[103X.  The  order  in  which the classes appear is
-  deterministic,  and  the  order  of  the  elements inside each class is also
-  deterministic.    Hence,    two    congruence    objects   have   the   same
-  [10XEquivalenceRelationCanonicalPartition[110X  if and only if they describe the same
-  relation.[133X
-  
-  [33X[0;0YSee          also          [2XEquivalenceRelationPartition[102X          ([14XReference:
-  EquivalenceRelationPartition[114X),  a  similar  attribute  which  does  not have
-  canonical ordering, but which is likely to be faster.[133X
+  [33X[0;0YAn  idempotent  in an inverse semigroup [3XS[103X is [13Xprimitive[113X if it is non-zero and
+  minimal    with    respect    to    the    [2XNaturalPartialOrder[102X   ([14XReference:
+  NaturalPartialOrder[114X)   on   [3XS[103X.  [10XPrimitiveIdempotents[110X  returns  the  list  of
+  primitive idempotents in the inverse semigroup [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 3, 3]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([2, 4, 3, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, [Transformation([1, 4, 3, 3]),[127X[104X
-    [4X[25X>[125X [27X                                   Transformation([1, 3, 3, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XEquivalenceRelationCanonicalPartition(cong);[127X[104X
-    [4X[28X[ [ Transformation( [ 1, 3, 3, 3 ] ), [128X[104X
-    [4X[28X      Transformation( [ 1, 4, 3, 3 ] ) ], [128X[104X
-    [4X[28X  [ Transformation( [ 3, 3, 3, 3 ] ), [128X[104X
-    [4X[28X      Transformation( [ 4, 3, 3, 3 ] ) ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1], [4]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3], [2, 1, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3], [3, 1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XSet(PrimitiveIdempotents(S));[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 3 ]>, <identity partial perm on [ 4 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSet(PrimitiveIdempotents(S));[127X[104X
+    [4X[28X[ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]> ][128X[104X
   [4X[32X[104X
   
-  [1X16.3-13 OnLeftCongruenceClasses[101X
+  [1X16.1-6 RightCosetsOfInverseSemigroup[101X
   
-  [33X[1;0Y[29X[2XOnLeftCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA left congruence class.[133X
+  [33X[1;0Y[29X[2XRightCosetsOfInverseSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA list of lists of elements.[133X
   
-  [33X[0;0YIf  [3Xclass[103X  is  an equivalence class of the left semigroup congruence [10Xcong[110X on
-  the semigroup [10XS[110X, and [3Xelm[103X is an element of [10XS[110X, then this operation returns the
-  equivalence  class  of  [10Xcong[110X  containing the element [10X[3Xelm[103X[10X * x[110X, where [10Xx[110X is any
-  element  of  [3Xclass[103X.  The  result is well-defined by the definition of a left
-  congruence.[133X
+  [33X[0;0Y[10XRightCosetsOfInverseSemigroup[110X takes a majorantly closed inverse subsemigroup
+  [3XT[103X  of  an  inverse  semigroup  of  partial permutations, block bijections or
+  partial  permutation  bipartitions  [3XS[103X.  See [2XIsMajorantlyClosed[102X ([14X16.2-8[114X). The
+  result is a list of the right cosets of [3XT[103X in [3XS[103X.[133X
   
-  [33X[0;0YSee [2XIsLeftSemigroupCongruence[102X ([14X16.1-2[114X) and [2XIsLeftCongruenceClass[102X ([14X16.3-2[114X).[133X
+  [33X[0;0YFor  [22Xs  ∈ S[122X, the right coset [22XoverlineTs[122X is defined if and only if [22Xss^-1 ∈ T[122X,
+  in  which  case  it is defined to be the majorant closure of the set [22XTs[122X. See
+  [2XMajorantClosure[102X   ([14X16.1-3[114X).   Distinct   cosets  are  disjoint  but  do  not
+  necessarily partition [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := LeftSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<left semigroup congruence over <transformation semigroup of degree 5 [128X[104X
-    [4X[28X with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27Xx := Transformation([3, 4, 3, 4, 3]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := LeftCongruenceClassOfElement(cong, x);[127X[104X
-    [4X[28X<left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>[128X[104X
-    [4X[25Xgap>[125X [27Xelm := Transformation([1, 2, 2, 1, 2]);;[127X[104X
-    [4X[25Xgap>[125X [27XOnLeftCongruenceClasses(class, elm);[127X[104X
-    [4X[28X<left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));[127X[104X
+    [4X[28X<inverse partial perm monoid of rank 3 with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRC := RightCosetsOfInverseSemigroup(S, T);[127X[104X
+    [4X[28X[ [ <identity partial perm on [ 1 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3) ], [128X[104X
+    [4X[28X  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], [128X[104X
+    [4X[28X  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
-  [1X16.3-14 OnRightCongruenceClasses[101X
+  [1X16.1-7 SameMinorantsSubgroup[101X
   
-  [33X[1;0Y[29X[2XOnRightCongruenceClasses[102X( [3Xclass[103X, [3Xelm[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA right congruence class.[133X
+  [33X[1;0Y[29X[2XSameMinorantsSubgroup[102X( [3XH[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of elements of the group [13XH[113X-class [3XH[103X.[133X
   
-  [33X[0;0YIf  [3Xclass[103X  is an equivalence class of the right semigroup congruence [10Xcong[110X on
-  the semigroup [10XS[110X, and [3Xelm[103X is an element of [10XS[110X, then this operation returns the
-  equivalence  class  of  [10Xcong[110X  containing the element [10Xx * [3Xelm[103X[10X[110X, where [10Xx[110X is any
-  element  of  [3Xclass[103X.  The result is well-defined by the definition of a right
-  congruence.[133X
+  [33X[0;0YGiven  a  group  [13XH[113X-class  [3XH[103X in an inverse semigroup of partial permutations,
+  block     bijections     or     partial    permutation    bipartitions    [10XS[110X,
+  [10XSameMinorantsSubgroup[110X  returns  a  list  of the elements of [3XH[103X which have the
+  same  strict  minorants as the identity element of [3XH[103X. A [13Xstrict minorant[113X of [10Xx[110X
+  in  [3XH[103X  is  an element of [10XS[110X which is less than [10Xx[110X (with respect to the natural
+  partial order), but is not equal to [10Xx[110X.[133X
   
-  [33X[0;0YSee [2XIsRightSemigroupCongruence[102X ([14X16.1-3[114X) and [2XIsRightCongruenceClass[102X ([14X16.3-3[114X).[133X
+  [33X[0;0YThe returned list of elements of [3XH[103X describe a subgroup of [3XH[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27X  Transformation([2, 1, 1, 2, 1]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 4]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X  Transformation([4, 3, 3, 4, 4])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([3, 4, 3, 4, 3]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([1, 2, 1, 2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [Transformation([4, 3, 4, 3, 4]),[127X[104X
-    [4X[25X>[125X [27X             Transformation([3, 4, 3, 4, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RightSemigroupCongruence(S, [pair1, pair2]);[127X[104X
-    [4X[28X<right semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X degree 5 with 4 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27Xx := Transformation([3, 4, 3, 4, 3]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := RightCongruenceClassOfElement(cong, x);[127X[104X
-    [4X[28X<right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>[128X[104X
-    [4X[25Xgap>[125X [27Xelm := Transformation([1, 2, 2, 1, 2]);;[127X[104X
-    [4X[25Xgap>[125X [27XOnRightCongruenceClasses(class, elm);[127X[104X
-    [4X[28X<right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XH := GroupHClass(DClass(S, PartialPerm([1, 2, 3])));[127X[104X
+    [4X[28X<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XElements(H);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2)(3), [128X[104X
+    [4X[28X  (1,2,3), (1,3,2), (1,3)(2) ][128X[104X
+    [4X[25Xgap>[125X [27XSameMinorantsSubgroup(H);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4], [1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1], [1]), PartialPerm([2], [2]));[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XElements(T);[127X[104X
+    [4X[28X[ <empty partial perm>, <identity partial perm on [ 1 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 2 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
+    [4X[25Xgap>[125X [27Xx := GroupHClass(DClass(T, PartialPerm([1, 2, 3, 4])));[127X[104X
+    [4X[28X<Green's H-class: <identity partial perm on [ 1, 2, 3, 4 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XElements(x);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
+    [4X[25Xgap>[125X [27XAsSet(SameMinorantsSubgroup(x));[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
   [4X[32X[104X
   
+  [1X16.1-8 SmallerDegreePartialPermRepresentation[101X
   
-  [1X16.4 [33X[0;0YFinding the congruences of a semigroup[133X[101X
+  [33X[1;0Y[29X[2XSmallerDegreePartialPermRepresentation[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
-  [1X16.4-1 CongruencesOfSemigroup[101X
+  [33X[0;0Y[10XSmallerDegreePartialPermRepresentation[110X  attempts to find an isomorphism from
+  the inverse semigroup [3XS[103X to an inverse semigroup of partial permutations with
+  small  degree.  If  [3XS[103X  is  already  a partial permutation semigroup, and the
+  function cannot reduce the degree, the identity mapping is returned.[133X
   
-  [33X[1;0Y[29X[2XCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YThe congruences of a semigroup.[133X
-  
-  [33X[0;0YThis  attribute  gives  a list of the left, right, or 2-sided congruences of
-  the semigroup [3XS[103X.[133X
-  
-  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
-  result  will  only  include  congruences generated by pairs of elements from
-  [3Xrestriction[103X. Otherwise, all congruences will be calculated.[133X
-  
-  [33X[0;0YSee also [2XLatticeOfCongruences[102X ([14X16.4-5[114X).[133X
+  [33X[0;0YThere  is  no  guarantee that the smallest possible degree representation is
+  returned. For more information see [Sch92].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X                                [[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcongs := CongruencesOfSemigroup(S);;[127X[104X
-    [4X[25Xgap>[125X [27XLength(congs);[127X[104X
-    [4X[28X4[128X[104X
-    [4X[25Xgap>[125X [27XSet(congs, NrCongruenceClasses);[127X[104X
-    [4X[28X[ 1, 5, 9, 25 ][128X[104X
-    [4X[25Xgap>[125X [27Xpos := Position(congs, UniversalSemigroupCongruence(S));;[127X[104X
-    [4X[25Xgap>[125X [27Xcongs[pos];[127X[104X
-    [4X[28X<universal semigroup congruence over [128X[104X
-    [4X[28X<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));[127X[104X
+    [4X[28X<partial perm group of rank 8 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(S);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, [128X[104X
+    [4X[28X  (1,2)(3,4)(5,6)(7,8) ][128X[104X
+    [4X[25Xgap>[125X [27Xiso := SmallerDegreePartialPermRepresentation(S);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso) = S;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XR := Range(iso);[127X[104X
+    [4X[28X<partial perm group of rank 2 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(R);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2 ]>, (1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));[127X[104X
+    [4X[28X<inverse partial perm monoid of size 6721, rank 6721 with 3 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallerDegreePartialPermRepresentation(T);[127X[104X
+    [4X[28XMappingByFunction( <inverse partial perm monoid of size 6721, [128X[104X
+    [4X[28X rank 6721 with 3 generators>, <inverse partial perm semigroup of [128X[104X
+    [4X[28X rank 30 with 3 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
-  [1X16.4-2 MinimalCongruencesOfSemigroup[101X
+  [1X16.1-9 VagnerPrestonRepresentation[101X
   
-  [33X[1;0Y[29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XMinimalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XMinimalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XMinimalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YThe congruences of a semigroup.[133X
+  [33X[1;0Y[29X[2XVagnerPrestonRepresentation[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn isomorphism to an inverse semigroup of partial permutations.[133X
   
-  [33X[0;0YIf  [3XS[103X is a semigroup, then the attribute [10XMinimalCongruencesOfSemigroup[110X gives
-  a  list  of  all  the  congruences  on  [3XS[103X which are [13Xminimal[113X. A congruence is
-  minimal  iff  it  is  non-trivial  and  contains  no  other  congruences  as
-  subrelations (apart from the trivial congruence).[133X
+  [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
+  [3XS[103X  where  the  elements  of [3XS[103X have a unique semigroup inverse accessible via
+  [2XInverse[102X   ([14XReference:   Inverse[114X),   to  the  inverse  semigroup  of  partial
+  permutations [3XT[103X of degree equal to the size of [3XS[103X, which is obtained using the
+  Vagner-Preston Representation Theorem.[133X
   
-  [33X[0;0Y[10XMinimalLeftCongruencesOfSemigroup[110X  and [10XMinimalRightCongruencesOfSemigroup[110X do
-  the same thing, but for left congruences and right congruences respectively.
-  Note  that  any  congruence  is  also  a left congruence, but that a minimal
-  congruence may not be a minimal left congruence.[133X
+  [33X[0;0YMore    precisely,   if   [22Xf:S->   T[122X   is   the   isomorphism   returned   by
+  [10XVagnerPrestonRepresentation([3XS[103X[10X)[110X  and  [22Xx[122X  is  in  [3XS[103X,  then [22Xf(x)[122X is the partial
+  permutation  with  domain  [22XSx^-1[122X  and  range  [22XSx^-1x[122X defined by [22Xf(x): sx^-1↦
+  sx^-1x[122X.[133X
   
-  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
-  result  will  only  include  congruences generated by pairs of elements from
-  [3Xrestriction[103X. Otherwise, all congruences will be calculated.[133X
-  
-  [33X[0;0YSee also [2XCongruencesOfSemigroup[102X ([14X16.4-1[114X) and [2XPrincipalCongruencesOfSemigroup[102X
-  ([14X16.4-3[114X).[133X
+  [33X[0;0YIn  many  cases, it is possible to find a smaller degree representation than
+  that        provided        by       [10XVagnerPrestonRepresentation[110X       using
+  [2XIsomorphismPartialPermSemigroup[102X ([14XReference: IsomorphismPartialPermSemigroup[114X)
+  or [2XSmallerDegreePartialPermRepresentation[102X ([14X16.1-8[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27Xmin := MinimalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
-    [4X[25Xgap>[125X [27Xminl := MinimalLeftCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <left semigroup congruence over <transformation semigroup [128X[104X
-    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
-    [4X[28X  <left semigroup congruence over <transformation semigroup [128X[104X
-    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
-    [4X[28X  <left semigroup congruence over <transformation semigroup [128X[104X
-    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs> [128X[104X
-    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27Xiso := VagnerPrestonRepresentation(S);[127X[104X
+    [4X[28XMappingByFunction( <symmetric inverse monoid of degree 2>, [128X[104X
+    [4X[28X<inverse partial perm monoid of rank 7 with 2 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XRespectsMultiplication(iso);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(iso);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(S, x -> (x ^ iso) ^ inv = x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XV := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -4], [2, -1], [3, -5], [4], [5], [-2], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -5], [2, -1], [3, -3], [4], [5], [-2], [-4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -2], [2, -4], [3, -5], [4, -1], [5, -3]]));[127X[104X
+    [4X[28X<inverse bipartition semigroup of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsInverseSemigroup(V);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XVagnerPrestonRepresentation(V);[127X[104X
+    [4X[28XMappingByFunction( <inverse bipartition semigroup of size 394, [128X[104X
+    [4X[28X degree 5 with 3 generators>, <inverse partial perm semigroup of [128X[104X
+    [4X[28X rank 394 with 5 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
-  [1X16.4-3 PrincipalCongruencesOfSemigroup[101X
+  [1X16.1-10 CharacterTableOfInverseSemigroup[101X
   
-  [33X[1;0Y[29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPrincipalCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPrincipalLeftCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPrincipalRightCongruencesOfSemigroup[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list.[133X
+  [33X[1;0Y[29X[2XCharacterTableOfInverseSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe  character  table  of  the  inverse  semigroup [3XS[103X and a list of
+            conjugacy class representatives of [3XS[103X.[133X
   
-  [33X[0;0YIf  [3XS[103X  is  a  semigroup,  then the attribute [10XPrincipalCongruencesOfSemigroup[110X
-  gives  a  list of all the congruences on [3XS[103X which are [13Xprincipal[113X. A congruence
-  is principal if and only if it is non-trivial and can be defined by a single
-  generating pair.[133X
+  [33X[0;0YReturns  a  list with two entries: the first entry being the character table
+  of  the inverse semigroup [3XS[103X as a matrix, while the second entry is a list of
+  conjugacy class representatives of [3XS[103X.[133X
   
-  [33X[0;0Y[10XPrincipalLeftCongruencesOfSemigroup[110X and [10XPrincipalRightCongruencesOfSemigroup[110X
-  do   the  same  thing,  but  for  left  congruences  and  right  congruences
-  respectively.  Note  that  any  congruence  is a left congruence and a right
-  congruence,  but  that  a  principal  congruence may not be a principal left
-  congruence or a principal right congruence.[133X
+  [33X[0;0YThe  order of the columns in the character table matrix follows the order of
+  the  conjugacy class representatives list. The conjugacy representatives are
+  grouped by [13XD[113X-class and then sorted by rank. Also, as is typical of character
+  tables,  the rows of the matrix correspond to the irreducible characters and
+  the columns correspond to the conjugacy classes.[133X
   
-  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
-  result  will  only  include  congruences generated by pairs of elements from
-  [3Xrestriction[103X. Otherwise, all congruences will be calculated.[133X
-  
-  [33X[0;0YSee  also  [2XCongruencesOfSemigroup[102X ([14X16.4-1[114X) and [2XMinimalCongruencesOfSemigroup[102X
-  ([14X16.4-2[114X).[133X
+  [33X[0;0YThis function was contributed by Jhevon Smith and Ben Steinberg.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
-    [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1, 2], [3, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [1, 3, 4]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [2, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4], [3, 4, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XCharacterTableOfInverseSemigroup(S);[127X[104X
+    [4X[28X[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],[128X[104X
+    [4X[28X      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], [128X[104X
+    [4X[28X  [ <identity partial perm on [ 1, 2, 3, 4 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3, 4 ]>, (1,3,4), (1,4,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3 ]>, (1,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 3 ]>, <empty partial perm> ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XCharacterTableOfInverseSemigroup(S);[127X[104X
+    [4X[28X[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], [128X[104X
+    [4X[28X      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], [128X[104X
+    [4X[28X  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), [128X[104X
+    [4X[28X      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 2, 3 ]>, (2,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 1 ]>, <empty partial perm> ] ][128X[104X
   [4X[32X[104X
   
-  [1X16.4-4 IsCongruencePoset[101X
+  [1X16.1-11 EUnitaryInverseCover[101X
   
-  [33X[1;0Y[29X[2XIsCongruencePoset[102X( [3Xposet[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XEUnitaryInverseCover[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA homomorphism between semigroups.[133X
+  
+  [33X[0;0YIf  the  argument  [3XS[103X  is  an  inverse semigroup then this function returns a
+  finite  E-unitary  inverse  cover  of  [3XS[103X. A finite E-unitary cover of [3XS[103X is a
+  surjective  idempotent  separating  homomorphism  from  a  finite  semigroup
+  satisfying   [2XIsEUnitaryInverseSemigroup[102X   ([14X16.2-3[114X)   to   [3XS[103X.   A   semigroup
+  homomorphism  is  said to be idempotent separating if no two idempotents are
+  mapped to the same element of the image.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([PartialPermNC([1, 2], [2, 1]),[127X[104X
+    [4X[25X>[125X [27XPartialPermNC([1], [1])]);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 2 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xcov := EUnitaryInverseCover(S);[127X[104X
+    [4X[28XMappingByFunction( <inverse partial perm semigroup of rank 4 with 2 [128X[104X
+    [4X[28X generators>, <inverse partial perm semigroup of rank 2 with 2 [128X[104X
+    [4X[28X generators>, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(Source(cov));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS = Range(cov);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X16.2 [33X[0;0YProperties of inverse semigroups[133X[101X
+  
+  [1X16.2-1 IsCliffordSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsCliffordSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThis  category  contains  all  congruence  posets.  A  [13Xcongruence poset[113X is a
-  partially  ordered  set  of congruences over a specific semigroup, where the
-  ordering  is  defined  by  containment  according to [2XIsSubrelation[102X ([14X16.5-1[114X):
-  given two congruences [10Xcong1[110X and [10Xcong2[110X, we say that [10Xcong1[110X < [10Xcong2[110X if and only
-  if  [10Xcong1[110X  is  a  subrelation  (a refinement) of [10Xcong2[110X. The congruences in a
-  congruence poset can be left, right, or two-sided.[133X
-  
-  [33X[0;0YA  congruence  poset  is  displayed  as a list of lists, which describes the
-  partial  order  of  its  congruences: the integer [10Xj[110X appears in list [10Xi[110X if and
-  only  if  the  congruence  numbered  [10Xj[110X  is  a  subrelation of the congruence
-  numbered [10Xi[110X. The list of congruences can be obtained using [2XCongruencesOfPoset[102X
-  ([14X16.4-7[114X).   Congruence   posets  can  be  created  using  [2XPosetOfCongruences[102X
-  ([14X16.4-9[114X),  [2XJoinSemilatticeOfCongruences[102X  ([14X16.4-10[114X), and [2XLatticeOfCongruences[102X
-  ([14X16.4-5[114X).[133X
+  [33X[0;0Y[10XIsCliffordSemigroup[110X  returns  [9Xtrue[109X  if  the  semigroup  [3XS[103X is regular and its
+  idempotents are central, and [9Xfalse[109X if it is not.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := LatticeOfCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ][128X[104X
-    [4X[25Xgap>[125X [27XIsCongruencePoset(poset);[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 3, 4, 5, 6, 2, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 5, 3, 6, 8, 4, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xposet[3];[127X[104X
-    [4X[28X[ 1, 2, 4 ][128X[104X
-    [4X[25Xgap>[125X [27XT := FullTransformationMonoid(3);;[127X[104X
-    [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(T);;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := JoinSemilatticeOfCongruences(congs,[127X[104X
-    [4X[25X>[125X [27X                                         JoinSemigroupCongruences);[127X[104X
-    [4X[28X[ [ 4, 6 ], [ 1, 3, 4, 5, 6 ], [ 1, 4, 5, 6 ], [ 6 ], [ 1, 4, 6 ], [128X[104X
-    [4X[28X  [  ] ][128X[104X
-    [4X[25Xgap>[125X [27XIsCongruencePoset(poset);[127X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XLength(poset);[127X[104X
-    [4X[28X6[128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-5 LatticeOfCongruences[101X
-  
-  [33X[1;0Y[29X[2XLatticeOfCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XLatticeOfLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XLatticeOfRightCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XLatticeOfCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLatticeOfLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLatticeOfRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
-  
-  [33X[0;0YIf [3XS[103X is a semigroup, then [10XLatticeOfCongruences[110X gives a list of lists showing
-  how  the  congruences  of  [3XS[103X  are  contained  in  each other. The congruence
-  numbered  [22Xi[122X is a subcongruence of the congruence numbered [22Xj[122X if and only if [22Xi[122X
-  is   in   the  [22Xj[122Xth  list.  The  numbering  is  according  to  the  order  in
-  [2XCongruencesOfPoset[102X ([14X16.4-7[114X).[133X
-  
-  [33X[0;0Y[10XLatticeOfLeftCongruences[110X and [10XLatticeOfRightCongruences[110X do the same thing for
-  left and right congruences respectively.[133X
-  
-  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
-  result  will  only  include  congruences generated by pairs of elements from
-  [3Xrestriction[103X. Otherwise, all congruences will be calculated.[133X
-  
-  [33X[0;0YSee [2XCongruencesOfSemigroup[102X ([14X16.4-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
-    [4X[25Xgap>[125X [27XLatticeOfCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1, 3 ], [ 1 ] ][128X[104X
-    [4X[25Xgap>[125X [27XLatticeOfLeftCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1, 3 ], [ 1 ] ][128X[104X
-    [4X[25Xgap>[125X [27XLatticeOfRightCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ][128X[104X
-    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
-    [4X[25Xgap>[125X [27Xrestriction := [Transformation([1, 1, 1, 1]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([1, 1, 1, 2]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([1, 1, 1, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xlatt := LatticeOfCongruences(S, restriction);[127X[104X
-    [4X[28X[ [  ], [ 1 ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-6 PosetOfPrincipalCongruences[101X
-  
-  [33X[1;0Y[29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPosetOfPrincipalRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
-  
-  [33X[0;0YIf  [3XS[103X  is a semigroup, then [10XPosetOfPrincipalCongruences[110X returns a congruence
-  poset  object  which contains all the principal congruences of [3XS[103X, ordered by
-  containment  according  to [2XIsSubrelation[102X ([14X16.5-1[114X). A congruence is [13Xprincipal[113X
-  if    it    can    be    defined    by    a    single    generating    pair.
-  [10XPosetOfPrincipalLeftCongruences[110X  and [10XPosetOfPrincipalRightCongruences[110X do the
-  same thing for left and right congruences respectively.[133X
-  
-  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
-  result  will  only  include  principal  congruences  generated  by  pairs of
-  elements  from  [3Xrestriction[103X.  Otherwise,  all  principal congruences will be
-  calculated.[133X
-  
-  [33X[0;0YSee  also  [2XLatticeOfCongruences[102X ([14X16.4-5[114X) and [2XPrincipalCongruencesOfSemigroup[102X
-  ([14X16.4-3[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 3, 1]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([2, 3, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XPosetOfPrincipalLeftCongruences(S);[127X[104X
-    [4X[28X[ [ 8, 11 ], [  ], [ 1, 2, 8, 11, 12 ], [ 2, 7, 10, 11, 12 ], [ 2 ], [128X[104X
-    [4X[28X  [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12 ], [ 10, 12 ], [ 11 ], [128X[104X
-    [4X[28X  [ 2, 11, 12 ], [ 12 ], [  ], [  ] ][128X[104X
-    [4X[25Xgap>[125X [27XPosetOfPrincipalCongruences(S);[127X[104X
-    [4X[28X[ [ 2, 3 ], [  ], [ 2 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xrestriction := [Transformation([3, 2, 3]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([3, 1, 3]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([2, 2, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := PosetOfPrincipalRightCongruences(S, restriction);[127X[104X
-    [4X[28X[ [ 2, 3 ], [  ], [  ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-7 CongruencesOfPoset[101X
-  
-  [33X[1;0Y[29X[2XCongruencesOfPoset[102X( [3Xposet[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list.[133X
-  
-  [33X[0;0YIf [3Xposet[103X is a congruence poset object, then this attribute returns a list of
-  all  the  congruence  objects  in  the  poset  (these may be left, right, or
-  two-sided).  The  order of this list corresponds to the order of the entries
-  in the poset.[133X
-  
-  [33X[0;0YSee also [2XLatticeOfCongruences[102X ([14X16.4-5[114X) and [2XCongruencesOfSemigroup[102X ([14X16.4-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
-    [4X[25Xgap>[125X [27Xlatt := LatticeOfRightCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ][128X[104X
-    [4X[25Xgap>[125X [27XCongruencesOfPoset(latt);[127X[104X
-    [4X[28X[ <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 0 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 2 generating pairs> ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-8 UnderlyingSemigroupOfCongruencePoset[101X
-  
-  [33X[1;0Y[29X[2XUnderlyingSemigroupOfCongruencePoset[102X( [3Xposet[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup.[133X
-  
-  [33X[0;0YIf  [3Xposet[103X  is  a  congruence  poset  object, then this attribute returns the
-  semigroup on which all its congruences are defined.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);[127X[104X
-    [4X[28X<regular transformation monoid of degree 2 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27Xlatt := LatticeOfRightCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ][128X[104X
-    [4X[25Xgap>[125X [27XUnderlyingSemigroupOfCongruencePoset(latt) = S;[127X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XT := IdempotentGeneratedSubsemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(T);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X16.4-9 PosetOfCongruences[101X
+  [1X16.2-2 IsBrandtSemigroup[101X
   
-  [33X[1;0Y[29X[2XPosetOfCongruences[102X( [3Xcoll[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
-  
-  [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
-  right, or two-sided) then this operation returns the congruence poset formed
-  by these congruences partially ordered by containment.[133X
-  
-  [33X[0;0YThis  operation  does  not  create  any  new  congruences or take any joins.
-  However,    see    [2XJoinSemilatticeOfCongruences[102X    ([14X16.4-10[114X).    See    also
-  [2XIsCongruencePoset[102X ([14X16.4-4[114X) and [2XLatticeOfCongruences[102X ([14X16.4-5[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [Transformation([1, 1]), IdentityTransformation];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [IdentityTransformation, Transformation([2, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, [])];;[127X[104X
-    [4X[25Xgap>[125X [27XPosetOfCongruences(coll);[127X[104X
-    [4X[28X[ [ 3 ], [ 3 ], [  ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-10 JoinSemilatticeOfCongruences[101X
-  
-  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xcoll[103X, [3Xjoin_func[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xposet[103X, [3Xjoin_func[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
-  
-  [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
-  right,  or two-sided) and [3Xjoin_func[103X is a function for taking the join of two
-  of  the  congruences  (such  as [2XJoinSemigroupCongruences[102X ([14X16.5-4[114X)) then this
-  operation returns the congruence poset formed by these congruences partially
-  ordered by containment, along with all their joins.[133X
-  
-  [33X[0;0YAlternatively,  a congruence poset [3Xposet[103X can be specified; in this case, the
-  congruences  contained  in  [3Xposet[103X  will  be  used  in  place  of  [3Xcoll[103X,  and
-  information already known about their containments will be used.[133X
-  
-  [33X[0;0YSee also [2XIsCongruencePoset[102X ([14X16.4-4[114X) and [2XPosetOfCongruences[102X ([14X16.4-9[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair3 := [PartialPerm([1, 2], [1, 2]), [127X[104X
-    [4X[25X>[125X [27X             PartialPerm([1, 2], [2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair3)];;[127X[104X
-    [4X[25Xgap>[125X [27XJoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);[127X[104X
-    [4X[28X[ [  ], [  ], [ 1 ], [ 1, 2, 3 ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.4-11 MinimalCongruences[101X
-  
-  [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xcoll[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xposet[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list.[133X
-  
-  [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
-  right,  or  two-sided)  then  this  attribute  returns  a  list  of  all the
-  congruences   from   [3Xcoll[103X  which  do  not  contain  any  of  the  others  as
-  subrelations.[133X
-  
-  [33X[0;0YAlternatively,  a congruence poset [3Xposet[103X can be specified; in this case, the
-  congruences  contained  in  [3Xposet[103X  will  be  used  in  place  of  [3Xcoll[103X,  and
-  information already known about their containments will be used.[133X
-  
-  [33X[0;0YThis  function  should  not  be  confused with [2XMinimalCongruencesOfSemigroup[102X
-  ([14X16.4-2[114X).   See   also  [2XIsCongruencePoset[102X  ([14X16.4-4[114X)  and  [2XPosetOfCongruences[102X
-  ([14X16.4-9[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
-    [4X[25Xgap>[125X [27Xpair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair3 := [PartialPerm([1, 2], [1, 2]),[127X[104X
-    [4X[25X>[125X [27X             PartialPerm([1, 2], [2, 1])];;[127X[104X
-    [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
-    [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair3)];;[127X[104X
-    [4X[25Xgap>[125X [27XMinimalCongruences(coll);[127X[104X
-    [4X[28X[ <right semigroup congruence over <symmetric inverse monoid of degree\[128X[104X
-    [4X[28X 2> with 1 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <symmetric inverse monoid of degree\[128X[104X
-    [4X[28X 2> with 1 generating pairs> ][128X[104X
-    [4X[25Xgap>[125X [27Xposet := LatticeOfCongruences(S);[127X[104X
-    [4X[28X[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ][128X[104X
-    [4X[25Xgap>[125X [27XMinimalCongruences(poset);[127X[104X
-    [4X[28X[ <semigroup congruence over <symmetric inverse monoid of degree 2> wi\[128X[104X
-    [4X[28Xth 0 generating pairs> ][128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.5 [33X[0;0YComparing congruences[133X[101X
-  
-  [1X16.5-1 IsSubrelation[101X
-  
-  [33X[1;0Y[29X[2XIsSubrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YTrue or false.[133X
-  
-  [33X[0;0YIf  [3Xcong1[103X  and  [3Xcong2[103X  are  congruences  over  the same semigroup, then this
-  operation returns whether [3Xcong2[103X is a refinement of [3Xcong1[103X, i.e. whether every
-  pair in [3Xcong2[103X is contained in [3Xcong1[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),[127X[104X
-    [4X[25X>[125X [27X                                    RMSElement(S, 1, (), 1)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong2 := SemigroupCongruence(S, []);;[127X[104X
-    [4X[25Xgap>[125X [27XIsSubrelation(cong1, cong2);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSubrelation(cong2, cong1);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X16.5-2 IsSuperrelation[101X
-  
-  [33X[1;0Y[29X[2XIsSuperrelation[102X( [3Xcong1[103X, [3Xcong2[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YTrue or false.[133X
-  
-  [33X[0;0YIf  [3Xcong1[103X  and  [3Xcong2[103X  are  congruences  over  the same semigroup, then this
-  operation returns whether [3Xcong1[103X is a refinement of [3Xcong2[103X, i.e. whether every
-  pair in [3Xcong1[103X is contained in [3Xcong2[103X.[133X
-  
-  [33X[0;0YSee [2XIsSubrelation[102X ([14X16.5-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),[127X[104X
-    [4X[25X>[125X [27X                                    RMSElement(S, 1, (), 1)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong2 := SemigroupCongruence(S, []);;[127X[104X
-    [4X[25Xgap>[125X [27XIsSuperrelation(cong1, cong2);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsSuperrelation(cong2, cong1);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.5-3 MeetSemigroupCongruences[101X
-  
-  [33X[1;0Y[29X[2XMeetSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
-  
-  [33X[0;0YThis  operation  returns the [13Xmeet[113X of the two semigroup congruences [3Xc1[103X and [3Xc2[103X
-  -- that is, the largest semigroup congruence contained in both [3Xc1[103X and [3Xc2[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),[127X[104X
-    [4X[25X>[125X [27X                                    RMSElement(S, 1, (), 1)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong2 := SemigroupCongruence(S, []);;[127X[104X
-    [4X[25Xgap>[125X [27XMeetSemigroupCongruences(cong1, cong2);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 2x2 over [128X[104X
-    [4X[28X  Sym( [ 1 .. 3 ] )> with linked triple (1,2,2)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.5-4 JoinSemigroupCongruences[101X
-  
-  [33X[1;0Y[29X[2XJoinSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XJoinLeftSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XJoinRightSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
-  
-  [33X[0;0YThis  operation  returns the [13Xjoin[113X of the two semigroup congruences [3Xc1[103X and [3Xc2[103X
-  --  that  is, the smallest semigroup congruence containing all the relations
-  in both [3Xc1[103X and [3Xc2[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),[127X[104X
-    [4X[25X>[125X [27X                                    RMSElement(S, 1, (), 1)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong2 := SemigroupCongruence(S, []);;[127X[104X
-    [4X[25Xgap>[125X [27XJoinSemigroupCongruences(cong1, cong2);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 2x2 over [128X[104X
-    [4X[28X  Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.6 [33X[0;0YCongruences on Rees matrix semigroups[133X[101X
-  
-  [33X[0;0YThis  section  describes  the  implementation  of  congruences of simple and
-  0-simple  semigroups in the [5XSemigroups[105X package, and the functions associated
-  with  them.  This  code  and this part of the manual were written by Michael
-  Torpey.  Most  of  the theorems used in this chapter are from Section 3.5 of
-  [How95].[133X
-  
-  [33X[0;0YBy  the  Rees  Theorem,  any  0-simple  semigroup  [22XS[122X is isomorphic to a [13XRees
-  0-matrix  semigroup[113X  (see [14X'Reference: Rees Matrix Semigroups'[114X) over a group,
-  with a regular sandwich matrix.[133X
-  
-  [33X[0;0YThat  is,  [10XS[110X  is isomorphic to [10XM ^ 0[G; I, L; P][110X where [10XG[110X is a group, [10XL[110X and [10XI[110X
-  are  non-empty  sets and the matrix [10XP[110X is regular in the sense that it has no
-  rows or columns consisting solely of zeroes.[133X
-  
-  [33X[0;0YThe  congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with
-  the [13Xlinked triple[113X, which is a triple of the form [10X[N, S, T][110X where:[133X
-  
-  [30X    [33X[0;6Y[10XN[110X is a normal subgroup of the underlying group [10XG[110X,[133X
-  
-  [30X    [33X[0;6Y[10XS[110X is an equivalence relation on the columns of [10XP[110X,[133X
-  
-  [30X    [33X[0;6Y[10XT[110X is an equivalence relation on the rows of [10XP[110X,[133X
-  
-  [33X[0;0Ysatisfying the following conditions:[133X
-  
-  [30X    [33X[0;6Ya  pair of [10XS[110X-related columns must contain zeroes in precisely the same
-        rows,[133X
-  
-  [30X    [33X[0;6Ya  pair  of  [10XT[110X-related  rows must contain zeroes in precisely the same
-        columns,[133X
-  
-  [30X    [33X[0;6Yif [10Xi[110X and [10Xj[110X are [10XS[110X-related, [10Xk[110X and [10Xl[110X are [10XT[110X-related and the matrix entries
-        [22Xp_k, i, p_k, j, p_l, i, p_l, j ≠ 0[122X, then [22Xq_k, l, i, j ∈ N[122X, where[133X
-  
-  
-  [24X      [33X[0;6Yq_{k, l, i, j} = p_{k, i} p_{l, i} ^ {-1} p_{l, j} p_{k, j} ^ {-1}.[133X
-  
-  [124X
-  
-  [33X[0;0YBy  Theorem  3.5.9  in  [How95],  for  any  finite  0-simple  Rees  0-matrix
-  semigroup,  there  is  a bijection between its non-universal congruences and
-  its  linked triples. In this way, we can internally represent any congruence
-  of such a semigroup by storing its associated linked triple instead of a set
-  of  generating  pairs,  and  thus  perform  many  calculations  on  it  more
-  efficiently.[133X
-  
-  [33X[0;0YIf a congruence is defined by a linked triple [10X(N, S, T)[110X, then a single class
-  of  that  congruence can be defined by a triple [10X(Nx, i / S, k / S)[110X, where [10XNx[110X
-  is  a  right coset of [10XN[110X, [10Xi / S[110X is the equivalence class of [10Xi[110X in [10XS[110X, and [10Xk / S[110X
-  is  the  equivalence  class  of [10Xk[110X in [10XT[110X. Thus we can internally represent any
-  class  of  such  a congruence as a triple simply consisting of a right coset
-  and two positive integers.[133X
-  
-  [33X[0;0YAn  analogous  condition  exists  for  finite  simple Rees matrix semigroups
-  without zero.[133X
-  
-  [1X16.6-1 IsRMSCongruenceByLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XIsRMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
-  [33X[1;0Y[29X[2XIsRZMSCongruenceByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
+  [33X[1;0Y[29X[2XIsBrandtSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThese  categories describe a type of semigroup congruence over a Rees matrix
-  or 0-matrix semigroup. Externally, an object of this type may be used in the
-  same   way  as  any  other  object  in  the  category  [2XIsSemigroupCongruence[102X
-  ([14XReference:  IsSemigroupCongruence[114X)  but it is represented internally by its
-  [13Xlinked  triple[113X, and certain functions may take advantage of this information
-  to reduce computation times.[133X
-  
-  [33X[0;0YAn  object  of this type may be constructed with [10XRMSCongruenceByLinkedTriple[110X
-  or  [10XRZMSCongruenceByLinkedTriple[110X,  or  this  representation  may be selected
-  automatically by [2XSemigroupCongruence[102X ([14X16.2-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := Group([(1, 4, 5), (1, 5, 3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],[127X[104X
-    [4X[25X>[125X [27X           [0, (), 0, 0, (3, 5), 0],[127X[104X
-    [4X[25X>[125X [27X           [(), 0, 0, (3, 5), 0, 0]];;[127X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
-    [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
-    [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;[127X[104X
-    [4X[25Xgap>[125X [27XIsRZMSCongruenceByLinkedTriple(cong);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-2 RMSCongruenceByLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XRMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XRZMSCongruenceByLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix semigroup congruence by linked triple.[133X
-  
-  [33X[0;0YThis  function  returns  a  semigroup  congruence  over  the  Rees matrix or
-  0-matrix  semigroup  [3XS[103X  corresponding  to  the  linked triple ([3XN[103X, [3XcolBlocks[103X,
-  [3XrowBlocks[103X).  The  argument  [3XN[103X  should be a normal subgroup of the underlying
-  semigroup of [3XS[103X; [3XcolBlocks[103X should be a partition of the columns of the matrix
-  of  [3XS[103X;  and  [3XrowBlocks[103X should be a partition of the rows of the matrix of [3XS[103X.
-  For  example,  if  the  matrix  has 5 rows, then a possibility for [3XrowBlocks[103X
-  might be [10X[[1, 3], [2, 5], [4]][110X.[133X
-  
-  [33X[0;0YIf  the arguments describe a valid linked triple on [3XS[103X, then an object in the
-  category [10XIsRZMSCongruenceByLinkedTriple[110X is returned. This object can be used
-  like any other semigroup congruence in [5XGAP[105X.[133X
-  
-  [33X[0;0YIf  the  arguments  describe  a  triple  which  is  not  [13Xlinked[113X in the sense
-  described above, then this function returns an error.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := Group([(1, 4, 5), (1, 5, 3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],[127X[104X
-    [4X[25X>[125X [27X           [0, (), 0, 0, (3, 5), 0],[127X[104X
-    [4X[25X>[125X [27X           [(), 0, 0, (3, 5), 0, 0]];;[127X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
-    [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
-    [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 6x3 over [128X[104X
-    [4X[28X  Group([ (1,4,5), (1,5,3,4) ])> with linked triple (2^2,4,3)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-3 IsRMSCongruenceClassByLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XIsRMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
-  [33X[1;0Y[29X[2XIsRZMSCongruenceClassByLinkedTriple[102X( [3Xobj[103X ) [32X category[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YThese categories contain the congruence classes of a semigroup congruence of
-  the      categories      [2XIsRMSCongruenceByLinkedTriple[102X      ([14X16.6-1[114X)     and
-  [2XIsRZMSCongruenceByLinkedTriple[102X ([14X16.6-1[114X) respectively.[133X
-  
-  [33X[0;0YAn  object  of  one  of these types may be used in the same way as any other
-  object  in  the  category  [2XIsCongruenceClass[102X  ([14X16.3-1[114X),  but  the  class  is
-  represented  internally  by  information  related to the congruence's [13Xlinked
-  triple[113X,  and  certain  functions  may  take advantage of this information to
-  reduce computation times.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := Group([(1, 4, 5), (1, 5, 3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],[127X[104X
-    [4X[25X>[125X [27X           [0, (), 0, 0, (3, 5), 0],[127X[104X
-    [4X[25X>[125X [27X           [(), 0, 0, (3, 5), 0, 0]];;[127X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
-    [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
-    [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := CongruenceClasses(cong);;[127X[104X
-    [4X[25Xgap>[125X [27XIsRZMSCongruenceClassByLinkedTriple(classes[1]);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-4 RMSCongruenceClassByLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XRMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRZMSCongruenceClassByLinkedTriple[102X( [3Xcong[103X, [3XnCoset[103X, [3XcolClass[103X, [3XrowClass[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA  Rees  matrix  or  0-matrix semigroup congruence class by linked
-            triple.[133X
-  
-  [33X[0;0YThis  operation  returns  one  congruence  class  of the congruence [3Xcong[103X, as
-  defined by the other three parameters.[133X
-  
-  [33X[0;0YThe  argument [3Xcong[103X must be a Rees matrix or 0-matrix semigroup congruence by
-  linked  triple.  If  the  linked  triple consists of the three parameters [10XN[110X,
-  [10XcolBlocks[110X  and  [10XrowBlocks[110X,  then [3XnCoset[103X must be a right coset of [10XN[110X, [3XcolClass[103X
-  must  be  a  positive  integer  corresponding  to  a  position  in  the list
-  [10XcolBlocks[110X,  and  [3XrowClass[103X  must  be  a  positive  integer corresponding to a
-  position in the list [10XrowBlocks[110X.[133X
-  
-  [33X[0;0YIf   the  arguments  are  valid,  an  [10XIsRMSCongruenceClassByLinkedTriple[110X  or
-  [10XIsRZMSCongruenceClassByLinkedTriple[110X  object  is  returned, which can be used
-  like any other equivalence class in [5XGAP[105X. Otherwise, an error is returned.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := Group([(1, 4, 5), (1, 5, 3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],[127X[104X
-    [4X[25X>[125X [27X           [0, (), 0, 0, (3, 5), 0],[127X[104X
-    [4X[25X>[125X [27X           [(), 0, 0, (3, 5), 0, 0]];;[127X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
-    [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
-    [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := RZMSCongruenceClassByLinkedTriple(cong,[127X[104X
-    [4X[25X>[125X [27XRightCoset(N, (1, 5)), 2, 3);[127X[104X
-    [4X[28X<congruence class of (2,(3,4),3)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-5 IsLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XIsLinkedTriple[102X( [3XS[103X, [3XN[103X, [3XcolBlocks[103X, [3XrowBlocks[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YThis  operation  returns  true  if  and only if the arguments ([3XN[103X, [3XcolBlocks[103X,
-  [3XrowBlocks[103X) describe a linked triple of the Rees matrix or 0-matrix semigroup
-  [3XS[103X, as described above.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := Group([(1, 4, 5), (1, 5, 3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],[127X[104X
-    [4X[25X>[125X [27X           [0, (), 0, 0, (3, 5), 0],[127X[104X
-    [4X[25X>[125X [27X           [(), 0, 0, (3, 5), 0, 0]];;[127X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
-    [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
-    [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
-    [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27XIsLinkedTriple(S, N, colBlocks, rowBlocks);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-6 CanonicalRepresentative[101X
-  
-  [33X[1;0Y[29X[2XCanonicalRepresentative[102X( [3Xclass[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA congruence class.[133X
-  
-  [33X[0;0YThis attribute gives a canonical representative for the semigroup congruence
-  class [3Xclass[103X. This representative can be used to identify a class uniquely.[133X
-  
-  [33X[0;0YAt present this only works for simple and 0-simple semigroups.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := CongruencesOfSemigroup(S)[3];;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := CongruenceClasses(cong)[3];;[127X[104X
-    [4X[25Xgap>[125X [27XCanonicalRepresentative(class);[127X[104X
-    [4X[28X(1,(1,2,3),2)[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-7 AsSemigroupCongruenceByGeneratingPairs[101X
-  
-  [33X[1;0Y[29X[2XAsSemigroupCongruenceByGeneratingPairs[102X( [3Xcong[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
-  
-  [33X[0;0YThis  operation  takes  [3Xcong[103X,  a  semigroup congruence, and returns the same
-  congruence  relation,  but  described  by  [5XGAP[105X's  default method of defining
-  semigroup congruences: a set of generating pairs for the congruence.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X                                [[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := CongruencesOfSemigroup(S)[3];;[127X[104X
-    [4X[25Xgap>[125X [27XAsSemigroupCongruenceByGeneratingPairs(cong);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 2x2 over [128X[104X
-    [4X[28X  Sym( [ 1 .. 3 ] )> with 1 generating pairs>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.6-8 AsRMSCongruenceByLinkedTriple[101X
-  
-  [33X[1;0Y[29X[2XAsRMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAsRZMSCongruenceByLinkedTriple[102X( [3Xcong[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix semigroup congruence by linked triple.[133X
-  
-  [33X[0;0YThis  operation  takes  a  semigroup congruence [3Xcong[103X over a finite simple or
-  0-simple  Rees 0-matrix semigroup, and returns that congruence relation in a
-  new  form:  as  either  a  congruence  by  linked  triple,  or  a  universal
-  congruence.[133X
-  
-  [33X[0;0YIf the congruence is not defined over an appropriate type of semigroup, then
-  this function returns an error.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xx := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;[127X[104X
-    [4X[25Xgap>[125X [27Xy := ReesZeroMatrixSemigroupElement(S, 1, (), 1);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;[127X[104X
-    [4X[25Xgap>[125X [27XAsRZMSCongruenceByLinkedTriple(cong);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 2x2 over [128X[104X
-    [4X[28X  Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.7 [33X[0;0YCongruences on inverse semigroups[133X[101X
-  
-  [33X[0;0YThis   section  describes  the  implementation  of  congruences  of  inverse
-  semigroups  in  the  [5XSemigroups[105X  package,  and the functions associated with
-  them.  This code and this part of the manual were written by Michael Torpey.
-  Most of the theorems used in this chapter are from Section 5.3 of [How95].[133X
-  
-  [33X[0;0YThe  congruences  of an inverse semigroup are in 1-1 correspondence with its
-  [13Xcongruence pairs[113X. A congruence pair is a pair [10X(N, t)[110X such that:[133X
-  
-  [30X    [33X[0;6Y[10XN[110X  is  a  normal  subsemigroup  of  [10XS[110X  --  that  is,  a self-conjugate
-        subsemigroup which contains all the idempotents of [10XS[110X,[133X
-  
-  [30X    [33X[0;6Y[10Xt[110X  is a normal congruence on [10XE[110X, the subsemigroup of all idempotents in
-        [10XS[110X  --  that  is, a congruence on [10XE[110X such that if [22X(e, f)[122X is a pair in [10Xt[110X,
-        then the pair [22X(a ^ -1 e a, a ^ -1 f a)[122X is also in [10Xt[110X,[133X
-  
-  [33X[0;0Ysatisfying the following conditions:[133X
-  
-  [30X    [33X[0;6YIf [22Xae ∈ N[122X and [22X(e, a ^ -1 a) ∈ t[122X, then [22Xa ∈ N[122X,[133X
-  
-  [30X    [33X[0;6YIf [22Xa ∈ N[122X, then [22X(aa ^ -1 , a ^ -1 a) ∈ t[122X.[133X
-  
-  [33X[0;0YBy Theorem 5.3.3 in [How95], for any inverse semigroup, there is a bijection
-  between  its  congruences  and  its  congruence  pairs.  In this way, we can
-  internally  represent  any  congruence  of  such  a semigroup by storing its
-  associated  congruence  pair  instead of a set of generating pairs, and thus
-  perform many calculations on it more efficiently.[133X
-  
-  [33X[0;0YIf  we  have a congruence [10XC[110X with congruence pair [10X(N, t)[110X, it turns out that [10XN[110X
-  is  its [13Xkernel[113X (that is, the set of all elements congruent to an idempotent)
-  and  that [10Xt[110X is its [13Xtrace[113X (that is, the restriction of [10XC[110X to the idempotents).
-  Hence,  we  refer  to a congruence stored in this format as a "congruence by
-  kernel and trace".[133X
-  
-  [33X[0;0YSee  [10Xcong_by_ker_trace_threshold[110X  in  Section  [14X6.3[114X  for details on when this
-  method is used.[133X
-  
-  [1X16.7-1 IsInverseSemigroupCongruenceByKernelTrace[101X
-  
-  [33X[1;0Y[29X[2XIsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X Category[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YThis  category  contains  any  inverse  semigroup  congruence  [3Xcong[103X which is
-  represented  internally  by  its  kernel  and trace. The [2XSemigroupCongruence[102X
-  ([14X16.2-1[114X)  function  may  create  an  object  of  this  category if its first
-  argument  [3XS[103X  is an inverse semigroup and has sufficiently large size. It can
-  be treated like any other semigroup congruence object.[133X
-  
-  [33X[0;0YSee     [How95]     Section    5.3    for    more    details.    See    also
-  [2XInverseSemigroupCongruenceByKernelTrace[102X ([14X16.7-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([4, 3, 1, 2]),[127X[104X
-    [4X[25X>[125X [27X PartialPerm([1, 4, 2, 0, 3])],[127X[104X
-    [4X[25X>[125X [27X rec(cong_by_ker_trace_threshold := 0));;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, []);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
-    [4X[28X of size 351, rank 5 with 2 generators> with congruence pair (24,24)>[128X[104X
-    [4X[25Xgap>[125X [27XIsInverseSemigroupCongruenceByKernelTrace(cong);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-2 InverseSemigroupCongruenceByKernelTrace[101X
-  
-  [33X[1;0Y[29X[2XInverseSemigroupCongruenceByKernelTrace[102X( [3XS[103X, [3Xkernel[103X, [3XtraceBlocks[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
-  
-  [33X[0;0YIf  [3XS[103X is an inverse semigroup, [3Xkernel[103X is a subsemigroup of [3XS[103X, [3XtraceBlocks[103X is
-  a  list  of  lists  describing  a  congruence  on  the idempotents of [3XS[103X, and
-  [22X([3Xkernel[103X, [3Xtrace[103X)[122X describes a valid congruence pair for [3XS[103X (see [How95] Section
-  5.3)  then  this  function  returns the semigroup congruence defined by that
-  congruence pair.[133X
-  
-  [33X[0;0YSee also [2XKernelOfSemigroupCongruence[102X ([14X16.7-4[114X) and [2XTraceOfSemigroupCongruence[102X
-  ([14X16.7-5[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xkernel := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([1, 0, 3]), PartialPerm([0, 2, 3]),[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([1, 2]), PartialPerm([3]),[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xtrace := [[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([0, 2, 3])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([1, 2])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([1, 0, 3])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([0, 0, 3]), PartialPerm([0, 2]),[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([1]), PartialPerm([], [])]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup of rank 3 [128X[104X
-    [4X[28X with 2 generators> with congruence pair (13,4)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-3 AsInverseSemigroupCongruenceByKernelTrace[101X
-  
-  [33X[1;0Y[29X[2XAsInverseSemigroupCongruenceByKernelTrace[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
-  
-  [33X[0;0YIf  [3Xcong[103X  is  a  semigroup  congruence  over an inverse semigroup, then this
-  attribute returns an object which describes the same congruence, but with an
-  internal representation defined by that congruence's kernel and trace.[133X
-  
-  [33X[0;0YSee [How95] section 5.3 for more details.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XI := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruenceByGeneratingPairs(I,[127X[104X
-    [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup of rank 3 [128X[104X
-    [4X[28X with 2 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27Xcong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup of rank 3 [128X[104X
-    [4X[28X with 2 generators> with congruence pair (19,1)>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-4 KernelOfSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XKernelOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse semigroup.[133X
-  
-  [33X[0;0YIf  [3Xcong[103X  is  a  congruence  over  a  semigroup  with  inverse op, then this
-  attribute  returns  the  [13Xkernel[113X  of  that  congruence;  that is, the inverse
-  subsemigroup  consisting  of all elements which are related to an idempotent
-  by [3Xcong[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XI := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(I,[127X[104X
-    [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
-    [4X[28X of size 19, rank 3 with 2 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XKernelOfSemigroupCongruence(cong);[127X[104X
-    [4X[28X<inverse partial perm semigroup of rank 3 with 5 generators>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-5 TraceOfSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XTraceOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
-  
-  [33X[0;0YIf  [3Xcong[103X  is  an inverse semigroup congruence by kernel and trace, then this
-  attribute  returns  the  restriction  of  [3Xcong[103X  to  the  idempotents  of the
-  semigroup.  This  is in block form: each idempotent will appear in precisely
-  one  list,  and two idempotents will be in the same list if and only if they
-  are related by [3Xcong[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XI := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(I,[127X[104X
-    [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
-    [4X[28X of size 19, rank 3 with 2 generators> with 2 generating pairs>[128X[104X
-    [4X[25Xgap>[125X [27XTraceOfSemigroupCongruence(cong);[127X[104X
-    [4X[28X[ [ <empty partial perm>, <identity partial perm on [ 1 ]>, [128X[104X
-    [4X[28X      <identity partial perm on [ 2 ]>, [128X[104X
-    [4X[28X      <identity partial perm on [ 1, 2 ]>, [128X[104X
-    [4X[28X      <identity partial perm on [ 3 ]>, [128X[104X
-    [4X[28X      <identity partial perm on [ 2, 3 ]>, [128X[104X
-    [4X[28X      <identity partial perm on [ 1, 3 ]> ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-6 IsInverseSemigroupCongruenceClassByKernelTrace[101X
-  
-  [33X[1;0Y[29X[2XIsInverseSemigroupCongruenceClassByKernelTrace[102X( [3Xobj[103X ) [32X Category[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YThis  category  contains  any congruence class which belongs to a congruence
-  which   is   represented   internally   by   its   kernel   and  trace.  See
-  [2XInverseSemigroupCongruenceByKernelTrace[102X ([14X16.7-2[114X).[133X
-  
-  [33X[0;0YSee [How95] Section 5.3 for more details.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XI := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X PartialPerm([2, 3]), PartialPerm([2, 0, 3])],[127X[104X
-    [4X[25X>[125X [27Xrec(cong_by_ker_trace_threshold := 0));;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(I,[127X[104X
-    [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
-    [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xclass := CongruenceClassOfElement(cong,[127X[104X
-    [4X[25X>[125X [27X                                     PartialPerm([1, 2], [2, 3]));;[127X[104X
-    [4X[25Xgap>[125X [27XIsInverseSemigroupCongruenceClassByKernelTrace(class);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X16.7-7 MinimumGroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XMinimumGroupCongruence[102X( [3XS[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse semigroup congruence by kernel and trace.[133X
-  
-  [33X[0;0YIf  [3XS[103X  is  an  inverse  semigroup,  then  this  function  returns  the least
-  congruence on [3XS[103X whose quotient is a group.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([5, 2, 0, 0, 1, 4]),[127X[104X
-    [4X[25X>[125X [27X  PartialPerm([1, 4, 6, 3, 5, 0, 2])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := MinimumGroupCongruence(S);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup of rank 7 [128X[104X
-    [4X[28X with 2 generators> with congruence pair (59,1)>[128X[104X
-    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(S / cong);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X16.8 [33X[0;0YRees congruences[133X[101X
-  
-  [33X[0;0YA  Rees  congruence is defined by a semigroup ideal. It is a congruence on a
-  semigroup  [10XS[110X  which has one congruence class equal to a semigroup ideal [10XI[110X of
-  [10XS[110X, and every other congruence class being a singleton.[133X
-  
-  [1X16.8-1 SemigroupIdealOfReesCongruence[101X
-  
-  [33X[1;0Y[29X[2XSemigroupIdealOfReesCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup ideal.[133X
-  
-  [33X[0;0YIf   [3Xcong[103X   is   a   rees   congruence   (see  [2XIsReesCongruence[102X  ([14XReference:
-  IsReesCongruence[114X))  then this attribute returns the two-sided ideal that was
-  used  to  define  it,  i.e.~the  ideal  of  elements in the only non-trivial
-  congruence class of [3Xcong[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
-    [4X[25X>[125X [27XTransformation([2, 3, 4, 3, 1, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([6, 4, 4, 4, 6, 1])]);;[127X[104X
-    [4X[25Xgap>[125X [27XI := SemigroupIdeal(S,[127X[104X
-    [4X[25X>[125X [27XTransformation([4, 4, 4, 4, 4, 2]),[127X[104X
-    [4X[25X>[125X [27XTransformation([3, 3, 3, 3, 3, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := ReesCongruenceOfSemigroupIdeal(I);;[127X[104X
-    [4X[25Xgap>[125X [27XSemigroupIdealOfReesCongruence(cong);[127X[104X
-    [4X[28X<non-regular transformation semigroup ideal of degree 6 with[128X[104X
-    [4X[28X  2 generators>[128X[104X
-  [4X[32X[104X
-  
-  [1X16.8-2 IsReesCongruenceClass[101X
-  
-  [33X[1;0Y[29X[2XIsReesCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YThis  category  describes  a  congruence  class  of  a  Rees  congruence.  A
-  congruence class of a Rees congruence either contains all the elements of an
-  ideal,    or    is    a    singleton   (see   [2XIsReesCongruence[102X   ([14XReference:
-  IsReesCongruence[114X)).[133X
-  
-  [33X[0;0YAn  object  of this type may be used in the same way as any other congruence
-  class object.[133X
+  [33X[0;0Y[10XIsBrandtSemigroup[110X  return  [9Xtrue[109X  if  the  semigroup  [3XS[103X  is a finite 0-simple
+  inverse  semigroup,  and  [9Xfalse[109X if it is not. See also [2XIsZeroSimpleSemigroup[102X
+  ([14X15.1-28[114X) and [2XIsInverseSemigroup[102X ([14XReference: IsInverseSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
-    [4X[25X>[125X [27XTransformation([2, 3, 4, 3, 1, 1]),[127X[104X
-    [4X[25X>[125X [27XTransformation([6, 4, 4, 4, 6, 1]));;[127X[104X
-    [4X[25Xgap>[125X [27XI := SemigroupIdeal(S,[127X[104X
-    [4X[25X>[125X [27XTransformation([4, 4, 4, 4, 4, 2]),[127X[104X
-    [4X[25X>[125X [27XTransformation([3, 3, 3, 3, 3, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := ReesCongruenceOfSemigroupIdeal(I);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := CongruenceClasses(cong);;[127X[104X
-    [4X[25Xgap>[125X [27XIsReesCongruenceClass(classes[1]);[127X[104X
+    [4X[25X>[125X [27XTransformation([2, 8, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 8, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 3, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 6, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 1, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 1, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 4, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 8, 7, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 8, 8, 2, 8]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DClass(S,[127X[104X
+    [4X[25X>[125X [27X               Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]));;[127X[104X
+    [4X[25Xgap>[125X [27XR := InjectionPrincipalFactor(D);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PreImages(R, GeneratorsOfSemigroup(Range(R))));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X16.2-3 IsEUnitaryInverseSemigroup[101X
   
-  [1X16.9 [33X[0;0YUniversal congruences[133X[101X
-  
-  [33X[0;0YThe linked triples of a completely 0-simple Rees 0-matrix semigroup describe
-  only its non-universal congruences. In any one of these, the zero element of
-  the  semigroup  is  related only to itself. However, for any semigroup [22XS[122X the
-  universal  relation  [22XS  xS[122X is a congruence; called the [13Xuniversal congruence[113X.
-  The universal congruence on a semigroup has its own unique representation.[133X
-  
-  [33X[0;0YSince  many things we want to calculate about congruences are trivial in the
-  case   of  the  universal  congruence,  this  package  contains  a  category
-  specifically designed for it, [10XIsUniversalSemigroupCongruence[110X. We also define
-  [10XIsUniversalSemigroupCongruenceClass[110X,  which represents the single congruence
-  class of the universal congruence.[133X
-  
-  [1X16.9-1 IsUniversalSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XIsUniversalSemigroupCongruence[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsEUnitaryInverseSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThis  property describes a type of semigroup congruence, which must refer to
-  the [13Xuniversal semigroup congruence[113X [22XS × S[122X. Externally, an object of this type
-  may  be  used  in  the  same  way  as  any  other  object  in  the  category
-  [2XIsSemigroupCongruence[102X ([14XReference: IsSemigroupCongruence[114X).[133X
+  [33X[0;0YAs  described  in  Section  5.9  of  [How95],  an  inverse  semigroup [3XS[103X with
+  semilattice of idempotents [3XE[103X is [13XE-unitary[113X if for[133X
   
-  [33X[0;0YAn  object of this type may be constructed with [10XUniversalSemigroupCongruence[110X
-  or this representation may be selected automatically as an alternative to an
-  [10XIsRZMSCongruenceByLinkedTriple[110X object (since the universal congruence cannot
-  be represented by a linked triple).[133X
+  [33X[0;0Yfor s in S and e in E, es in E implies s in E.[133X
+  
+  [33X[0;0YEquivalently,  [3XS[103X  is  [13XE-unitary[113X  if [3XE[103X is closed in the natural partial order
+  (see Proposition 5.9.1 in [How95]):[133X
+  
+  [33X[0;0Yfor s in S and e in E, e less than s implies s in E.[133X
+  
+  [33X[0;0YThis  condition  is  equivalent  to  [3XE[103X  being  majorantly  closed  in [3XS[103X. See
+  [2XIdempotentGeneratedSubsemigroup[102X  ([14X14.9-3[114X)  and  [2XIsMajorantlyClosed[102X ([14X16.2-8[114X).
+  Hence  an  inverse  semigroup  of  partial permutations, block bijections or
+  partial  permutation bipartitions is [13XE-unitary[113X if and only if the idempotent
+  semilattice is majorantly closed.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 2, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XU := UniversalSemigroupCongruence(S);;[127X[104X
-    [4X[25Xgap>[125X [27XIsUniversalSemigroupCongruence(U);[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4], [2, 3, 1, 6]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5], [3, 2, 1, 6]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xe := IdempotentGeneratedSubsemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(Difference(S, e), x -> not ForAny(e, y -> y * x in e));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4, 6, 8], [2, 5, 10, 7, 9]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 8, 9, 2, 10, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5, 6, 7, 9], [9, 8, 4, 1, 6, 7, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XU := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(U);[127X[104X
+    [4X[28X"S5"[128X[104X
   [4X[32X[104X
   
-  [1X16.9-2 IsUniversalSemigroupCongruenceClass[101X
+  [1X16.2-4 IsFInverseSemigroup[101X
   
-  [33X[1;0Y[29X[2XIsUniversalSemigroupCongruenceClass[102X( [3Xobj[103X ) [32X category[133X
+  [33X[1;0Y[29X[2XIsFInverseSemigroup[102X( [3XS[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThis  category  describes a class of the universal semigroup congruence (see
-  [2XIsUniversalSemigroupCongruence[102X  ([14X16.9-1[114X)).  A universal semigroup congruence
-  by  definition has precisely one congruence class, which contains all of the
-  elements of the semigroup in question.[133X
+  [33X[0;0YThis  functions  determines  whether  a  given  semigroup  is  an  F-inverse
+  semigroup.   An   F-inverse   semigroup   is  a  semigroup  which  satisfies
+  [2XIsEUnitaryInverseSemigroup[102X  ([14X16.2-3[114X)  as  well  as  being isomorphic to some
+  [2XMcAlisterTripleSemigroup[102X            ([14X12.1-2[114X)            where            the
+  [2XMcAlisterTripleSemigroupPartialOrder[102X            ([14X12.1-4[114X)           satisfies
+  [2XIsJoinSemilatticeDigraph[102X   ([14XDigraphs:  IsJoinSemilatticeDigraph[114X).  McAlister
+  triple  semigroups  are  a represenation of E-unitary inverse semigroups and
+  more can be read about them in Chapter [14X12[114X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 2, 3])]);;[127X[104X
-    [4X[25Xgap>[125X [27XU := UniversalSemigroupCongruence(S);;[127X[104X
-    [4X[25Xgap>[125X [27Xclasses := CongruenceClasses(U);;[127X[104X
-    [4X[25Xgap>[125X [27XIsUniversalSemigroupCongruenceClass(classes[1]);[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([PartialPermNC([1, 2], [1, 2]),[127X[104X
+    [4X[25X>[125X [27XPartialPermNC([1, 2, 3], [1, 2, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPermNC([1, 2, 4], [1, 2, 4]),[127X[104X
+    [4X[25X>[125X [27XPartialPermNC([1, 2], [2, 1]), PartialPermNC([1, 2, 3], [2, 1, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPermNC([1, 2, 4], [2, 1, 4])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFInverseSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFInverseSemigroup(IdempotentGeneratedSubsemigroup(S));[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X16.9-3 UniversalSemigroupCongruence[101X
+  [1X16.2-5 IsFInverseMonoid[101X
   
-  [33X[1;0Y[29X[2XUniversalSemigroupCongruence[102X( [3XS[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA universal semigroup congruence.[133X
+  [33X[1;0Y[29X[2XIsFInverseMonoid[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThis  operation returns the universal semigroup congruence for the semigroup
-  [3XS[103X. It can be used in the same way as any other semigroup congruence object.[133X
+  [33X[0;0YThis function determines whether a given semigroup is an F-inverse monoid. A
+  semigroup  is  an  F-inverse  monoid  when it satisfies [2XIsMonoid[102X ([14XReference:
+  IsMonoid[114X) and [2XIsFInverseSemigroup[102X ([14X16.2-4[114X).[133X
+  
+  [1X16.2-6 IsFactorisableInverseMonoid[101X
+  
+  [33X[1;0Y[29X[2XIsFactorisableInverseMonoid[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YAn  inverse  monoid  is  [13Xfactorisable[113X  if every element is the product of an
+  element  of  the  group  of  units  and an idempotent; see also [2XGroupOfUnits[102X
+  ([14X14.8-1[114X)  and  [2XIdempotents[102X  ([14X14.9-1[114X).  Hence an inverse semigroup of partial
+  permutations  is  factorisable  if and only if each of its generators is the
+  restriction of some element in the group of units.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
-    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
-    [4X[25Xgap>[125X [27XUniversalSemigroupCongruence(S);[127X[104X
-    [4X[28X<universal semigroup congruence over [128X[104X
-    [4X[28X<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 4], [3, 1, 4]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5], [4, 1, 5, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(SymmetricInverseSemigroup(5));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(DualSymmetricInverseMonoid(5));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS := FactorisableDualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X16.2-7 IsJoinIrreducible[101X
+  
+  [33X[1;0Y[29X[2XIsJoinIrreducible[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsJoinIrreducible[110X  determines whether an element [3Xx[103X of an inverse semigroup [3XS[103X
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions is join irreducible.[133X
+  
+  [33X[0;0YAn  element [3Xx[103X is [13Xjoin irreducible[113X when it is not the least upper bound (with
+  respect  to  the  natural  partial  order  [2XNaturalLeqPartialPerm[102X ([14XReference:
+  NaturalLeqPartialPerm[114X)) of any subset of [3XS[103X not containing [3Xx[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3]);[127X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(S, x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([0, 2])]);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xy := PartialPerm([1, 2, 3, 4]);[127X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3, 4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(T, y);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XB := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -5], [2, -2], [3, 5, 6, 7, -1, -4, -6, -7], [4, -3]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -1], [2, -3], [3, -4], [4, 5, 7, -2, -6, -7], [6, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -2], [2, -4], [3, -6], [4, -1], [5, 7, -3, -7], [6, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -5], [2, -1], [3, -6], [4, 5, 7, -2, -4, -7], [6, -3]])]);[127X[104X
+    [4X[28X<inverse block bijection semigroup of degree 7 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[127X[104X
+    [4X[25X>[125X [27X  [1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7], [4, -1]]);[127X[104X
+    [4X[28X<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], [128X[104X
+    [4X[28X [ 4, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(B, x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(B, B.1);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X16.2-8 IsMajorantlyClosed[101X
+  
+  [33X[1;0Y[29X[2XIsMajorantlyClosed[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMajorantlyClosed[110X  determines whether the subset [3XT[103X of the inverse semigroup
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions [3XS[103X is majorantly closed in [3XS[103X. See also [2XMajorantClosure[102X ([14X16.1-3[114X).[133X
+  
+  [33X[0;0YWe  say  that  [3XT[103X  is [13Xmajorantly closed[113X in [3XS[103X if it contains all elements of [3XS[103X
+  which  are  greater  than  or equal to any element of [3XT[103X, with respect to the
+  natural     partial    order.    See    [2XNaturalLeqPartialPerm[102X    ([14XReference:
+  NaturalLeqPartialPerm[114X).[133X
+  
+  [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XT := [Elements(S)[2]];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XU := [Elements(S)[2], Elements(S)[6]];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ][128X[104X
+    [4X[28X    > ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XD := DualSymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, -2], [2, -3], [3, -1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(D, [x]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xy := Bipartition([[1, 2, -1, -2], [3, -3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(D, [x, y]);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X16.2-9 IsMonogenicInverseSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsMonogenicInverseSemigroup[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMonogenicInverseSemigroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is a monogenic
+  inverse semigroup and it returns [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YA  inverse semigroup is [13Xmonogenic[113X if it is generated as an inverse semigroup
+  by   a   single   element.   See  also  [2XIsMonogenicSemigroup[102X  ([14X15.1-11[114X)  and
+  [2XIsMonogenicInverseMonoid[102X ([14X16.2-10[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x, x ^ 2, x ^ 3);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := RandomBlockBijection(100);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x, x ^ 2, x ^ 20);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X16.2-10 IsMonogenicInverseMonoid[101X
+  
+  [33X[1;0Y[29X[2XIsMonogenicInverseMonoid[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMonogenicInverseMonoid[110X returns [9Xtrue[109X if the monoid [3XS[103X is a monogenic inverse
+  monoid and it returns [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YA  inverse  monoid is [13Xmonogenic[113X if it is generated as an inverse monoid by a
+  single   element.   See   also   [2XIsMonogenicInverseSemigroup[102X   ([14X16.2-9[114X)  and
+  [2XIsMonogenicMonoid[102X ([14X15.1-12[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid(x, x ^ 2, x ^ 3);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := RandomBlockBijection(100);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid(x, x ^ 2, x ^ 20);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
