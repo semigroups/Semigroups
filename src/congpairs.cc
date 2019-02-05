@@ -236,9 +236,8 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
     if (IsbPRec(o, RNam_fin_cong_lookup)) {
       // TODO(JDM) use FindPRec and GET_ELM_PREC
       Obj lookup = ElmPRec(o, RNam_fin_cong_lookup);
-      Obj out    = True;
-      EQ_INTOBJS(out, ELM_PLIST(lookup, lhs_pos), ELM_PLIST(lookup, rhs_pos));
-      return out;
+      int out    = (ELM_PLIST(lookup, lhs_pos) == ELM_PLIST(lookup, rhs_pos));
+      return out ? True : False;
     }
 
     if (cong_obj_get_range_type(o) != UNKNOWN) {
