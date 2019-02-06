@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE file SYSTEM "bibxmlext.dtd">
+<file>
+<entry id="Donoven2018aa"><article>
+  <author>
+    <name><first>C.</first><last>Donoven</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+    <name><first>W.</first><last>Wilson</last></name>
+  </author>  
+  <title>Computing maximal subsemigroups of a finite semigroup</title>
+  <journal>Journal of Algebra</journal>
+  <year>2018</year>
+  <volume>505</volume>
+  <pages>559-596</pages>
+  <month>July</month>
+  <other type="doi">doi.org/10.1016/j.jalgebra.2018.01.044</other>
+  <other type="eprint">1606.05583</other>
+</article></entry>
+
+<entry id="East2019aa"><article>
+  <author>
+    <name><first>James</first><last>East</last></name>
+  </author>  
+  <title>Presentations for rook partition monoids and algebras and their
+      singular ideals</title>
+  <journal>J. Pure and Applied Algebra</journal>
+  <year>2019</year>
+  <volume>223</volume>
+  <pages>1097-1122</pages>
+  <month>March</month>
+  <url>https://www.sciencedirect.com/science/article/pii/S0022404918301403</url>
+  <other type="issue">3</other>
+</article></entry>
+
+<entry id="Grood2006aa"><article>
+  <author>
+    <name><first>Cheryl</first><last>Grood</last></name>
+  </author>  
+  <title>The rook partition algebra</title>
+  <journal>J. Combin. Theory Ser. A</journal>
+  <year>2006</year>
+  <volume>113</volume>
+  <number>2</number>
+  <pages>325–351</pages>
+  <issn>0097-3165</issn>
+  <url>http://dx.doi.org/10.1016/j.jcta.2005.03.006</url>
+  <other type="doi">10.1016/j.jcta.2005.03.006</other>
+</article></entry>
+
+<entry id="Kudryavtseva2015aa"><article>
+  <author>
+    <name><first>Ganna</first><last>Kudryavtseva</last></name>
+    <name><first>Victor</first><last>Maltcev</last></name>
+    <name><first>Abdullahi</first><last>Umar</last></name>
+  </author>  
+  <title>Presentation for the partial dual symmetric inverse monoid</title>
+  <journal>Comm. Algebra</journal>
+  <year>2015</year>
+  <volume>43</volume>
+  <number>4</number>
+  <pages>1621–1639</pages>
+  <issn>0092-7872</issn>
+  <url>http://dx.doi.org/10.1080/00927872.2013.876031</url>
+  <other type="doi">10.1080/00927872.2013.876031</other>
+</article></entry>
+
+<entry id="Kudryavtseva2011aa"><article>
+  <author>
+    <name><first>Ganna</first><last>Kudryavtseva</last></name>
+    <name><first>Victor</first><last>Maltcev</last></name>
+  </author>  
+  <title>Two generalisations of the symmetric inverse semigroups</title>
+  <journal>Publ. Math. Debrecen</journal>
+  <year>2011</year>
+  <volume>78</volume>
+  <number>2</number>
+  <pages>253–282</pages>
+  <issn>0033-3883</issn>
+  <url>http://dx.doi.org/10.5486/PMD.2011.4375</url>
+  <other type="doi">10.5486/PMD.2011.4375</other>
+</article></entry>
+
+<entry id="JunttilaKaski"><inproceedings>
+  <author>
+    <name><first>Tommi</first><last>Junttila</last></name>
+    <name><first>Petteri</first><last>Kaski</last></name>
+  </author>  
+  <title>Engineering an efficient canonical labeling tool for large and sparse
+      graphs</title>
+  <booktitle>Proceedings of the Ninth Workshop on Algorithm Engineering and
+      Experiments and the Fourth Workshop on Analytic Algorithms and
+      Combinatorics</booktitle>
+  <year>2007</year>
+  <editor>
+    <name><first>David</first><last>Applegate</last></name>
+    <name><first>Gerth Stølting</first><last>Brodal</last></name>
+    <name><first>Daniel</first><last>Panario</last></name>
+    <name><first>Robert</first><last>Sedgewick</last></name>
+  </editor>  
+  <pages>135–149</pages>
+  <publisher>SIAM</publisher>
+</inproceedings></entry>
+
+<entry id="Martin2011aa"><article>
+  <author>
+    <name><first>Paul</first><last>Martin</last></name>
+    <name><first>Volodymyr</first><last>Mazorchuk</last></name>
+  </author>  
+  <title>Partitioned binary relations</title>
+  <journal>arXiv:1102.0862</journal>
+  <year>2011</year>
+</article></entry>
+
+<entry id="Pin2009aa"><manual>
+  <author>
+    <name><first>Jean-Eric</first><last>Pin</last></name>
+  </author>  
+  <title>Semigroupe 2.01: a software for computing finite semigroups</title>
+  <organization>Laboratoire d'Informatique Algorithmique : Fondements et
+      Applications (LIAFA), CNRS et Université Paris 7</organization>
+  <edition>2.01</edition>
+  <year>2009</year>
+</manual></entry>
+
+<entry id="Froidure1997aa"><incollection>
+  <author>
+    <name><first>Véronique</first><last>Froidure</last></name>
+    <name><first>Jean-Eric</first><last>Pin</last></name>
+  </author>  
+  <title>Algorithms for computing finite semigroups</title>
+  <booktitle>Foundations of computational mathematics (<C>R</C>io de
+      <C>J</C>aneiro, 1997)</booktitle>
+  <publisher>Springer</publisher>
+  <year>1997</year>
+  <pages>112–126</pages>
+  <address>Berlin</address>
+</incollection></entry>
+
+<entry id="Mitchell2019aa"><article>
+  <author>
+  <name><first></first><last>J. East A. Egri-Nagy J. D. Mitchell</last></name>
+    <name><first>Y.</first><last>Péresse</last></name>
+  </author>  
+  <title>Computing finite semigroups</title>
+  <journal>J. Symbolic Computation</journal>
+  <year>2019</year>
+  <volume>92</volume>
+  <pages>110 - 155</pages>
+  <url>https://www.sciencedirect.com/science/article/pii/S0747717118300087</url>
+  <other type="doi">https://doi.org/10.1016/j.jsc.2018.01.002</other>
+</article></entry>
+
+<entry id="Gabow2000aa"><article>
+  <author>
+    <name><first>Harold N.</first><last>Gabow</last></name>
+  </author>  
+  <title>Path-based depth-first search for strong and biconnected
+      components</title>
+  <journal>Information Processing Letters</journal>
+  <year>2000</year>
+  <volume>74</volume>
+  <number>3-4</number>
+  <pages>107 - 114</pages>
+  <issn>0020-0190</issn>
+  <keywords>Algorithms</keywords>
+  <url>http://www.sciencedirect.com/science/article/pii/S002001900000051X</url>
+  <other type="doi">http://dx.doi.org/10.1016/S0020-0190(00)00051-X</other>
+</article></entry>
+
+<entry id="Araujo2015aa"><article>
+  <author>
+    <name><first>J.</first><last>Araújo</last></name>
+    <name><first>W.</first><last>Bentz</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+    <name><first>Csaba</first><last>Schneider</last></name>
+  </author>  
+  <title>The rank of the semigroup of transformations stabilising a partition
+      of a finite set</title>
+  <journal>Math. Proc. Camb. Phil. Soc.</journal>
+  <year>2015</year>
+  <volume>159</volume>
+  <pages>339 - 353</pages>
+  <other type="issue">2</other>
+</article></entry>
+
+<entry id="Fitzgerald1998aa"><article>
+  <author>
+    <name><first>D. G.</first><last>Fitzgerald</last></name>
+    <name><first>J.</first><last>Leech</last></name>
+  </author>  
+  <title>Dual symmetric inverse monoids and representation theory</title>
+  <journal>J. Austral. Math. Soc. A</journal>
+  <year>1998</year>
+  <volume>64</volume>
+  <pages>345-67</pages>
+  <keywords>imported</keywords>
+</article></entry>
+
+<entry id="Graham1968aa"><article>
+  <author>
+    <name><first>N.</first><last>Graham</last></name>
+    <name><first>R.</first><last>Graham</last></name>
+    <name><first>J.</first><last>Rhodes</last></name>
+  </author>  
+  <title>Maximal subsemigroups of finite semigroups</title>
+  <journal>J. Combinatorial Theory</journal>
+  <year>1968</year>
+  <volume>4</volume>
+  <pages>203–209</pages>
+</article></entry>
+
+<entry id="Graham1968Graph"><article>
+  <author>
+    <name><first>R.</first><last>Graham</last></name>
+  </author>  
+  <title>On finite 0-simple semigroups and graph theory</title>
+  <journal>Mathematical systems theory</journal>
+  <year>1968</year>
+  <volume>2</volume>
+  <number>4</number>
+  <pages>325–339</pages>
+</article></entry>
+
+<entry id="Halverson2005PartitionAlgebras"><article>
+  <author>
+    <name><first>Tom</first><last>Halverson</last></name>
+    <name><first>Arun</first><last>Ram</last></name>
+  </author>  
+  <title>Partition algebras</title>
+  <journal>European Journal of Combinatorics</journal>
+  <year>2005</year>
+  <volume>26</volume>
+  <number>6</number>
+  <pages>869–921</pages>
+  <other type="publisher">Elsevier</other>
+</article></entry>
+
+<entry id="Schein1992aa"><article>
+  <author>
+    <name><first>Boris M.</first><last>Schein</last></name>
+  </author>  
+  <title>The minimal degree of a finite inverse semigroup</title>
+  <journal>Trans. Amer. Math. Soc.</journal>
+  <year>1992</year>
+  <volume>333</volume>
+  <number>2</number>
+  <pages>877–888</pages>
+</article></entry>
+
+<entry id="Araujo2009aa"><article>
+  <author>
+    <name><first>J.</first><last>Araújo</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+    <name><first>Csaba</first><last>Schneider</last></name>
+  </author>  
+  <title>Groups that together with any transformation generate regular
+      semigroups or idempotent generated semigroups</title>
+  <journal>Journal of Algebra</journal>
+  <year>2011</year>
+  <volume>343</volume>
+  <other type="issue">1</other>
+</article></entry>
+
+<entry id="Kudryavtseva2009aa"><article>
+  <author>
+    <name><first>Ganna</first><last>Kudryavtseva</last></name>
+    <name><first>Volodymyr</first><last>Mazorchuk</last></name>
+  </author>  
+  <title>On <C>K</C>iselman's semigroup</title>
+  <journal>Yokohama Math. J.</journal>
+  <year>2009</year>
+  <volume>55</volume>
+  <number>1</number>
+  <pages>21–46</pages>
+</article></entry>
+
+<entry id="Gray2008aa"><article>
+  <author>
+    <name><first>R.</first><last>Gray</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+  </author>  
+  <title>Largest subsemigroups of the full transformation monoid</title>
+  <journal>Discrete Math.</journal>
+  <year>2008</year>
+  <volume>308</volume>
+  <number>20</number>
+  <pages>4801–4810</pages>
+</article></entry>
+
+<entry id="Araujo2010aa"><article>
+  <author>
+    <name><first>J.</first><last>Araújo</last></name>
+    <name><first>P. V.</first><last>Bünau</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+    <name><first>M.</first><last>Neunhöffer</last></name>
+  </author>  
+  <title>Computing automorphisms of semigroups</title>
+  <journal>J. Symbolic Computation</journal>
+  <year>2010</year>
+  <volume>45</volume>
+  <number>3</number>
+  <pages>373–392</pages>
+</article></entry>
+
+<entry id="Lallement1990aa"><article>
+  <author>
+    <name><first>G.</first><last>Lallement</last></name>
+    <name><first>R.</first><last>McFadden</last></name>
+  </author>  
+  <title>On the determination of <C>G</C>reen's relations in finite
+      transformation semigroups</title>
+  <journal>J. Symbolic Computation</journal>
+  <year>1990</year>
+  <volume>10</volume>
+  <number>5</number>
+  <pages>481–498</pages>
+  <issn>0747-7171</issn>
+</article></entry>
+
+<entry id="Linton2002aa"><article>
+  <author>
+    <name><first>S. A.</first><last>Linton</last></name>
+    <name><first>G.</first><last>Pfeiffer</last></name>
+    <name><first>E. F.</first><last>Robertson</last></name>
+    <name><first>N.</first><last>Ruškuc</last></name>
+  </author>  
+  <title>Computing transformation semigroups</title>
+  <journal>J. Symbolic Computation</journal>
+  <year>2002</year>
+  <volume>33</volume>
+  <number>2</number>
+  <pages>145–162</pages>
+</article></entry>
+
+<entry id="Linton1998aa"><article>
+  <author>
+    <name><first>S. A.</first><last>Linton</last></name>
+    <name><first>G.</first><last>Pfeiffer</last></name>
+    <name><first>E. F.</first><last>Robertson</last></name>
+    <name><first>N.</first><last>Ruškuc</last></name>
+  </author>  
+  <title>Groups and actions in transformation semigroups</title>
+  <journal>Math. Z.</journal>
+  <year>1998</year>
+  <volume>228</volume>
+  <number>3</number>
+  <pages>435–450</pages>
+</article></entry>
+
+<entry id="Howie1995aa"><book>
+  <author>
+    <name><first>John M.</first><last>Howie</last></name>
+  </author>  
+  <title>Fundamentals of semigroup theory</title>
+  <publisher>The Clarendon Press Oxford University Press</publisher>
+  <year>1995</year>
+  <volume>12</volume>
+  <series>London Mathematical Society Monographs. New Series</series>
+  <address>New York</address>
+  <note>Oxford Science Publications</note>
+  <isbn>0-19-851194-9</isbn>
+  <other type="pages">x+351</other>
+</book></entry>
+
+<entry id="Gomes1992aa"><article>
+  <author>
+    <name><first>Gracinda M. S.</first><last>Gomes</last></name>
+    <name><first>John M.</first><last>Howie</last></name>
+  </author>  
+  <title>On the ranks of certain semigroups of order-preserving
+      transformations</title>
+  <journal>Semigroup Forum</journal>
+  <year>1992</year>
+  <volume>45</volume>
+  <number>3</number>
+  <pages>272–282</pages>
+  <issn>0037-1912</issn>
+</article></entry>
+
+<entry id="Arthur2000aa"><article>
+  <author>
+    <name><first>Robert E.</first><last>Arthur</last></name>
+    <name><first>N.</first><last>Ruskuc</last></name>
+  </author>  
+  <title>Presentations for two extensions of the monoid of order-preserving
+      mappings on a finite chain</title>
+  <journal>Southeast Asian Bull. Math.</journal>
+  <year>2000</year>
+  <volume>24</volume>
+  <number>1</number>
+  <pages>1–7</pages>
+  <issn>0129-2021</issn>
+</article></entry>
+
+<entry id="Mandel1977aa"><article>
+  <author>
+    <name><first>Simon I</first><last>Mandel A. </last></name>
+  </author>  
+  <title>On Finite Semigroups of Matrices</title>
+  <journal>Theoretical Computer Science</journal>
+  <year>1977</year>
+  <volume>5</volume>
+  <pages>101–111</pages>
+</article></entry>
+
+<entry id="Gaubert1996aa"><article>
+  <author>
+    <name><first>S.</first><last>Gaubert</last></name>
+  </author>  
+  <title>On the <C>B</C>urnside problem for <C>S</C>emigroups of
+      <C>M</C>atrices over the (max, +) <C>A</C>lgebra</title>
+  <journal>Semigroup Forum</journal>
+  <year>1996</year>
+  <volume>5</volume>
+  <pages>271-292</pages>
+</article></entry>
+
+<entry id="Bacelli1992aa"><book>
+  <author>
+  <name><first>Quadrat J. P.</first><last>Baccelli F. Cohen G. Olsder G. J.
+      </last></name>
+  </author>  
+  <title>Synchronisation and <C>L</C>inearity: An <C>A</C>lgebra for
+      <C>D</C>iscrete <C>E</C>vent <C>S</C>ystems</title>
+  <publisher>Wiley</publisher>
+  <year>1992</year>
+</book></entry>
+
+<entry id="Kacie2009aa"><mastersthesis>
+  <author>
+    <name><first>K. G.</first><last>Farlow</last></name>
+  </author>  
+  <title><C>Max-Plus Algebra</C></title>
+  <school>Virginia <C>P</C>olytechnic <C>I</C>nstitute and <C>S</C>tate <C>U</C>niversity</school>
+  <year>2009</year>
+  <address>United States</address>
+</mastersthesis></entry>
+
+<entry id="Burrell2016aa"><mastersthesis>
+  <author>
+    <name><first>S. A.</first><last>Burrell</last></name>
+  </author>  
+  <title><C>The Order Problem for Natural and Tropical Matrix
+      Semigroups</C></title>
+  <school>University of St Andrews</school>
+  <year>2016</year>
+  <type><C>MM</C>ath project</type>
+  <address>United Kingdom</address>
+</mastersthesis></entry>
+
+<entry id="Simon1978aa"><inproceedings>
+  <author>
+    <name><first>I.</first><last>Simon</last></name>
+  </author>  
+  <title>Limited Subsets of a Free Monoid</title>
+  <booktitle>Proceedings of the 19th Annual Symposium on Foundations of
+      Computer Science</booktitle>
+  <year>1978</year>
+  <series>SFCS '78</series>
+  <pages>143–150</pages>
+  <address>Washington, DC, USA</address>
+  <publisher>IEEE Computer Society</publisher>
+  <url>http://dx.doi.org/10.1109/SFCS.1978.21</url>
+  <other type="doi">10.1109/SFCS.1978.21</other>
+</inproceedings></entry>
+
+<entry id="Johnson1975aa"><article>
+  <author>
+    <name><first>D. B.</first><last>Johnson</last></name>
+  </author>  
+  <title>Finding all the elementary circuits of a directed graph</title>
+  <journal>SIAM J. Comput.</journal>
+  <year>1975</year>
+  <volume>4</volume>
+  <pages>77-84</pages>
+</article></entry>
+
+<entry id="auinger2012krohn"><article>
+  <author>
+    <name><first>Karl</first><last>Auinger</last></name>
+  </author>  
+  <title>Krohn–<C>R</C>hodes complexity of <C>B</C>rauer type
+      semigroups</title>
+  <journal>Portugaliae Mathematica</journal>
+  <year>2012</year>
+  <volume>69</volume>
+  <number>4</number>
+  <pages>341–360</pages>
+</article></entry>
+
+<entry id="Mesyan2016"><article>
+  <author>
+    <name><first>Zachary</first><last>Mesyan</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
+  </author>  
+  <title>The structure of a graph inverse semigroup</title>
+  <journal>Semigroup Forum</journal>
+  <year>2016</year>
+  <volume>93</volume>
+  <number>1</number>
+  <pages>111–130</pages>
+  <month>March</month>
+  <url>https://doi.org/10.1007/s00233-016-9793-x</url>
+  <other type="doi">10.1007/s00233-016-9793-x</other>
+  <other type="publisher">Springer Nature</other>
+</article></entry>
+
+<entry id="Brouwer2015aa"><article>
+  <author>
+    <name><first>Andries E.</first><last>Brouwer</last></name>
+    <name><first>Jan</first><last>Draisma</last></name>
+    <name><first>Bart J.</first><last>Frenk</last></name>
+  </author>  
+  <title>Lossy Gossip and Composition of Metrics</title>
+  <journal>Discrete &amp; Computational Geometry</journal>
+  <year>2015</year>
+  <volume>53</volume>
+  <number>4</number>
+  <pages>890–913</pages>
+  <issn>1432-0444</issn>
+  <url>http://dx.doi.org/10.1007/s00454-015-9666-1</url>
+  <other type="doi">10.1007/s00454-015-9666-1</other>
+</article></entry>
+
+</file>
