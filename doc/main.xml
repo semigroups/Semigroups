@@ -77,7 +77,7 @@
   <!-- <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->
 </Body>
 
-<Bibliography Databases="semigroups" />
+<Bibliography Databases="new_bibliography.xml" />
 <TheIndex/>
 <!-- visualising -->
 </Book>

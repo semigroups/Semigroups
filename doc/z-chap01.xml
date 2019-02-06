@@ -26,7 +26,7 @@
     a semigroup in a permutation group (using the method from <Cite Key =
       "Araujo2010aa"/>), the maximal subsemigroups of a finite semigroup (based
     on <Cite Key = "Graham1968aa"/> and described in <Cite Key =
-      "Donoven2016aa"/>), smaller degree partial permutation representations
+      "Donoven2018aa"/>), smaller degree partial permutation representations
     (based on <Cite Key = "Schein1992aa"/>) and the character table of an
     inverse semigroup.  There are functions for producing pictures of the
     Green's structure of a semigroup (inspired by 
@@ -58,9 +58,9 @@
       BookName = "ref"/> or <Ref Sect = "Green's Relations" BookName = "ref"/>.
   </Section>
 
-  If you find a bug or an issue with the package, then report this using the
+  If you find a bug or an issue with the package, please visit the
   <URL Text = "issue
-    tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.
+    tracker">https://github.com/gap-packages/Semigroups/issues</URL>.
 
   <Section Label = "Overview">
     <Heading>

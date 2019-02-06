@@ -28,7 +28,7 @@
       <P/>
 
       <C>EndomorphismsPartition</C> returns a monoid with a minimal size
-      generating set, as described in <Cite Key = "Araujo2014aa"/>.
+      generating set, as described in <Cite Key = "Araujo2015aa"/>.
 
       <Example><![CDATA[
 gap> S := EndomorphismsPartition([3, 3, 3]);
@@ -220,7 +220,7 @@ gap> Size(S);
       of the partition monoid of degree <C><A>n</A> + 1</C> consisting of those
       bipartitions with <C><A>n</A> + 1</C> and <C>-<A>n</A> - 1</C> in the same
       block; see <Cite Key="Halverson2005PartitionAlgebras"/>, <Cite
-        Key="Grood2006aa"/>, and <Cite Key="East2016aa"/>.
+        Key="Grood2006aa"/>, and <Cite Key="East2019aa"/>.
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(4);
