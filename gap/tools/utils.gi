@@ -749,6 +749,7 @@ end;
 
 InstallGlobalFunction(SemigroupsMakeDoc,
 function()
+  SetGapDocLaTeXOptions("utf8");
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
                               "/doc"),
                 "main.xml", SEMIGROUPS.DocXMLFiles, "semigroups", "MathJax",
