@@ -1033,7 +1033,7 @@ true]]></Example>
 
   The output of this attribute is difficult to describe for other types of
   semigroup.  However, a general description is given in
-  <Cite Key = "East2015aa"/>.
+  <Cite Key = "Mitchell2019aa"/>.
 
   <Example><![CDATA[
 gap> S := Semigroup(Transformation([4, 4, 3, 5, 3]),

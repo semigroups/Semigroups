@@ -19,7 +19,7 @@
         Acting semigroups
       </Heading>
       The first type of fundamental algorithms are those described in <Cite Key
-        = "East2015aa"/>, which when applied to a semigroup with relatively
+        = "Mitchell2019aa"/>, which when applied to a semigroup with relatively
       large subgroups are the most efficient methods in the &Semigroups;
       package. For example, the complexity of computing, say, the size of a
       transformation semigroup that happens to be a group, is the same as the
@@ -41,7 +41,7 @@
       <P/>
       
       We refer to semigroups to which the algorithms in 
-      <Cite Key = "East2015aa"/> can be applied as <E>acting semigroups</E>,
+      <Cite Key = "Mitchell2019aa"/> can be applied as <E>acting semigroups</E>,
       and such semigroups belong to the category 
       <Ref Filt="IsActingSemigroup"/>.<P/>
 
@@ -86,7 +86,7 @@
       Both implementations outperform the
       algorithms for acting semigroups when applied to semigroups with small
       (trivial) subgroups.  This method is also used to determine the structure of
-      a semigroup when the algorithms described in <Cite Key = "East2015aa"/>
+      a semigroup when the algorithms described in <Cite Key = "Mitchell2019aa"/>
       do not apply. It is possible to specify which methods should be applied
       to a given semigroup; see Section 
       <Ref Sect = "Options when creating semigroups"/>.<P/>

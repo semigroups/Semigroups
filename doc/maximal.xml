@@ -22,7 +22,7 @@
     <C>MaximalSubsemigroups</C> returns a list of the non-empty maximal
     subsemigroups of <A>S</A>.  The methods used by <C>MaximalSubsemigroups</C>
     are based on <Cite Key="Graham1968aa"/>, and are described in
-    <Cite Key="Donoven2016aa"/>.
+    <Cite Key="Donoven2018aa"/>.
 
     <P/>
 
@@ -140,7 +140,7 @@ gap> MaximalSubsemigroups(R, rec(types := [5],
     If <A>S</A> is a finite semigroup, then <C>NrMaximalSubsemigroups</C>
     returns the number of non-empty maximal subsemigroups of <A>S</A>.  The
     methods used by <C>MaximalSubsemigroups</C> are based on <Cite
-      Key="Graham1968aa"/>, and are described in <Cite Key="Donoven2016aa"/>.
+      Key="Graham1968aa"/>, and are described in <Cite Key="Donoven2018aa"/>.
 
     <P/>
 
