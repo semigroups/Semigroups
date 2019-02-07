@@ -1682,8 +1682,8 @@ gap> F := FreeGroup("r", "s");;
 gap> r := F.1;;
 gap> s := F.2;;
 gap> G := F / [s * r * s ^ (- 1) * r ^ (- 1)];;
-gap> StructureDescription(G);
-"C0 x C0"
+gap> StructureDescription(G) in ["C0 x C0", "Z x Z"];
+true
 
 # Issue 389: NaturalPartialOrder
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
