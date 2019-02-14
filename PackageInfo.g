@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.1.0">
+##  <!ENTITY VERSION "3.1.1">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.1">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.1.0">
+##  <!ENTITY ARCHIVENAME "semigroups-3.1.1">
 ##  <!ENTITY COPYRIGHTYEARS "2011-19">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.1.0",
-Date := "14/01/2019",
+Version := "3.1.1",
+Date := "15/02/2019",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
