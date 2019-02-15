@@ -81,6 +81,10 @@
     semigroups.
     <P/>
 
+    Max Horn contributed many patches and fixes to the kernel module, in
+    particular. 
+    <P/>
+
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.
     <P/>
@@ -99,6 +103,9 @@
     <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
 
     Michael Torpey contributed the part of the package relating to congruences.
+    <P/>
+    
+    Murray Whyte was kind enough to update the bibliography in 2019.
     <P/>
 
     Wilf A. Wilson contributed to the part of the package relating maximal

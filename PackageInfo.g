@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-18                                James D. Mitchell
+##  Copyright (C) 2011-19                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -89,7 +89,7 @@ Persons := [
     Institution   := "University of St Andrews"),
 
   rec(
-    LastName     := "Delgado",
+    LastName      := "Delgado",
     FirstNames    := "Manuel",
     IsAuthor      := false,
     IsMaintainer  := false,
@@ -127,6 +127,23 @@ Persons := [
     WWWHome       := "https://n-ham.github.io",
     Place         := "Hobart, Tasmania",
     Institution   := "University of Tasmania"),
+
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "max.horn@math.uni-giessen.de",
+    WWWHome       := "http://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "AG Algebra\n",
+                       "Mathematisches Institut\n",
+                       "Justus-Liebig-Universität Gießen\n",
+                       "Arndtstraße 2\n",
+                       "35392 Gießen\n",
+                       "Germany"),
+    Place         := "Gießen",
+    Institution   := "Justus-Liebig-Universität Gießen"),
 
   rec(
     LastName      := "Jonusas",
@@ -191,6 +208,16 @@ Persons := [
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
     WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~mct25/",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName      := "Whyte",
+    FirstNames    := "Murray",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "mw231@st-andrews.ac.uk",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
