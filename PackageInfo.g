@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-18                                James D. Mitchell
+##  Copyright (C) 2011-19                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.1.0">
+##  <!ENTITY VERSION "3.1.1">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.1">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.1.0">
+##  <!ENTITY ARCHIVENAME "semigroups-3.1.1">
 ##  <!ENTITY COPYRIGHTYEARS "2011-19">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.1.0",
-Date := "14/01/2019",
+Version := "3.1.1",
+Date := "15/02/2019",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -89,7 +89,7 @@ Persons := [
     Institution   := "University of St Andrews"),
 
   rec(
-    LastName     := "Delgado",
+    LastName      := "Delgado",
     FirstNames    := "Manuel",
     IsAuthor      := false,
     IsMaintainer  := false,
@@ -127,6 +127,23 @@ Persons := [
     WWWHome       := "https://n-ham.github.io",
     Place         := "Hobart, Tasmania",
     Institution   := "University of Tasmania"),
+
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "max.horn@math.uni-giessen.de",
+    WWWHome       := "http://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "AG Algebra\n",
+                       "Mathematisches Institut\n",
+                       "Justus-Liebig-Universität Gießen\n",
+                       "Arndtstraße 2\n",
+                       "35392 Gießen\n",
+                       "Germany"),
+    Place         := "Gießen",
+    Institution   := "Justus-Liebig-Universität Gießen"),
 
   rec(
     LastName      := "Jonusas",
@@ -191,6 +208,16 @@ Persons := [
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
     WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~mct25/",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName      := "Whyte",
+    FirstNames    := "Murray",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "mw231@st-andrews.ac.uk",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),

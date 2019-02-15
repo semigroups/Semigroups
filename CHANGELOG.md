@@ -2,6 +2,12 @@
 
 #### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.1.1 (released 15/02/2019)
+
+This is a minor release of the Semigroups package, including some minor changes
+in the kernel module (by Max Horn) and the bibliography section of the manual
+has been fixed and updated (by Murray Whyte).
+
 ### Version 3.1.0 (released 14/01/2019)
 
 This is a major release of the Semigroups package, including several changes to
