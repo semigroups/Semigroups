@@ -1205,7 +1205,7 @@
   
   [33X[0;0YIf  [3XS[103X is a finite semigroup, then the attribute [10XMaximalSubsemigroups[110X returns
   a  list  of  the  non-empty  maximal subsemigroups of [3XS[103X. The methods used by
-  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW16].[133X
+  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW18].[133X
   
   [33X[0;0YIt is computationally expensive to search for the maximal subsemigroups of a
   semigroup,  and  so  computations involving [10XMaximalSubsemigroups[110X may be very
@@ -1292,7 +1292,7 @@
   
   [33X[0;0YIf  [3XS[103X  is a finite semigroup, then [10XNrMaximalSubsemigroups[110X returns the number
   of   non-empty   maximal   subsemigroups   of   [3XS[103X.   The   methods  used  by
-  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW16].[133X
+  [10XMaximalSubsemigroups[110X are based on [GGR68], and are described in [DMW18].[133X
   
   [33X[0;0YIt  can  be significantly faster to find the number of maximal subsemigroups
   of a semigroup than to find the maximal subsemigroups themselves.[133X

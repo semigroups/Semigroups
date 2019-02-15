@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.1.0
+                                 Version 3.1.1
   
   
                                  J. D. Mitchell
@@ -100,6 +100,9 @@
   [33X[0;0YNick   Ham   contributed  many  of  the  standard  examples  of  bipartition
   semigroups.[133X
   
+  [33X[0;0YMax  Horn  contributed  many  patches  and  fixes  to  the kernel module, in
+  particular.[133X
+  
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
   
@@ -116,6 +119,8 @@
   [2XCharacterTableOfInverseSemigroup[102X ([14X16.1-10[114X).[133X
   
   [33X[0;0YMichael Torpey contributed the part of the package relating to congruences.[133X
+  
+  [33X[0;0YMurray Whyte was kind enough to update the bibliography in 2019.[133X
   
   [33X[0;0YWilf  A.  Wilson  contributed  to  the  part of the package relating maximal
   subsemigroups  and  smaller  degree  partial  permutation representations of

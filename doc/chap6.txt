@@ -16,7 +16,7 @@
   
   [1X6.1-1 [33X[0;0YActing semigroups[133X[101X
   
-  [33X[0;0YThe  first  type of fundamental algorithms are those described in [EENMP15],
+  [33X[0;0YThe  first  type  of  fundamental  algorithms are those described in [MP19],
   which  when  applied  to a semigroup with relatively large subgroups are the
   most   efficient  methods  in  the  [5XSemigroups[105X  package.  For  example,  the
   complexity  of  computing,  say, the size of a transformation semigroup that
@@ -32,8 +32,8 @@
   0-matrix  semigroups  over  permutation groups (see Chapter [14X'Reference: Rees
   Matrix Semigroups'[114X), and matrices over a finite field (see Section [14X5.4[114X).[133X
   
-  [33X[0;0YWe  refer  to semigroups to which the algorithms in [EENMP15] can be applied
-  as   [13Xacting   semigroups[113X,   and  such  semigroups  belong  to  the  category
+  [33X[0;0YWe  refer  to semigroups to which the algorithms in [MP19] can be applied as
+  [13Xacting   semigroups[113X,   and   such   semigroups   belong   to   the  category
   [2XIsActingSemigroup[102X ([14X6.1-3[114X).[133X
   
   [33X[0;0YIf  you  know  [13Xa  priori[113X that the semigroup you want to compute is large and
@@ -70,7 +70,7 @@
   [33X[0;0YBoth  implementations  outperform  the algorithms for acting semigroups when
   applied  to  semigroups  with small (trivial) subgroups. This method is also
   used to determine the structure of a semigroup when the algorithms described
-  in [EENMP15] do not apply. It is possible to specify which methods should be
+  in  [MP19]  do  not apply. It is possible to specify which methods should be
   applied to a given semigroup; see Section [14X6.3[114X.[133X
   
   [33X[0;0YWe refer to semigroups to which the Froidure-Pin Algorithm can be applied in
