@@ -94,7 +94,12 @@ for PKG in "${PKGS[@]}"; do
     ./autogen.sh
   fi
   if [ -f configure ]; then
-    ./configure $PKG_FLAGS
+    if [ "$PKG" == "orb" ]; then
+      # orb doesn't accept package flags
+      ./configure
+    else
+      ./configure $PKG_FLAGS
+    fi
     make
   fi
 done
