@@ -33,7 +33,7 @@ installation of [Semigroups](https://gap-packages.github.io/Semigroups):
 
 * get the [IO](http://gap-packages.github.io/io) package version 4.5.1 or higher
 
-* get the [orb](http://gap-packages.github.io/orb) package version 4.8.1 or
+* get the [orb](http://gap-packages.github.io/orb) package version 4.8.2 or
   higher
 
 Both [orb](http://gap-packages.github.io/orb) and
