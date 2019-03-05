@@ -6,8 +6,8 @@
 #
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src/libsemigroups
-AM_CPPFLAGS = -I$(srcdir)/src/libsemigroups
+SUBDIRS = libsemigroups
+AM_CPPFLAGS = -I$(srcdir)/libsemigroups
 
 BINARCHDIR = bin/$(GAPARCH)
 GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
@@ -23,7 +23,7 @@ semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
 
-semigroups_la_LIBADD = src/libsemigroups/libsemigroups.la
+semigroups_la_LIBADD = libsemigroups/libsemigroups.la
 
 if SYS_IS_CYGWIN
 semigroups_la_LDFLAGS += -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
@@ -31,11 +31,11 @@ endif
 
 all-local: semigroups.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR) $(top_srcdir)/bin/lib
-	cp -RL src/libsemigroups/.libs/* $(top_srcdir)/bin/lib/
+	cp -RL libsemigroups/.libs/* $(top_srcdir)/bin/lib/
 if SYS_IS_CYGWIN
 	cp .libs/semigroups.dll $(GAPINSTALLLIB)
 # Cygwin will only look in this directory for dlls
-	cp src/libsemigroups/.libs/cygsemigroups-0.dll $(GAPROOT)/.libs
+	cp libsemigroups/.libs/cygsemigroups-0.dll $(GAPROOT)/.libs
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif

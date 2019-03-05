@@ -28,7 +28,7 @@
 #include <utility>
 #include <vector>
 
-#include "libsemigroups/src/semigroups.h"
+#include "libsemigroups/semigroups.h"
 #include "src/compiled.h"
 
 using libsemigroups::Element;

@@ -27,7 +27,7 @@
 #include "rnams.h"
 #include "semigrp.h"
 
-#include "libsemigroups/src/cong.h"
+#include "libsemigroups/cong.h"
 
 using libsemigroups::Congruence;
 using libsemigroups::Partition;
