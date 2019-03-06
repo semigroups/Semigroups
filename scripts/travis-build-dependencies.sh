@@ -1,8 +1,12 @@
 # If a command fails, exit this script with an error code
 set -e
 
-cd ..
-mv Semigroups $HOME/semigroups
+if ["$SUITE" != "test"] && ["$SUITE" != "coverage"] && ["$SUITE" != "lint"]; then
+  echo -e "\nError, unrecognised Travis suite: $SUITE"
+  exit 1
+fi
+
+mv ../Semigroups $HOME/semigroups
 
 ################################################################################
 # Install software necessary for linting: cpplint and gaplint
@@ -10,16 +14,13 @@ mv Semigroups $HOME/semigroups
 
 if [ "$SUITE" == "lint" ]; then
 
-  # Install cpplint
-  cd $HOME
+  # Install cpplint and gaplint
   sudo pip install cpplint
-
-  # Install gaplint
   sudo pip install gaplint
 
   # Move Semigroups package into a GAP folder structure, so that cpplint is happy
-  mkdir gap gap/.git gap/pkg
-  mv semigroups $HOME/gap/pkg/semigroups
+  mkdir $HOME/gap $HOME/gap/.git $HOME/gap/pkg
+  mv $HOME/semigroups $HOME/gap/pkg/semigroups
 
   exit 0
 fi
@@ -28,28 +29,17 @@ fi
 # Install software necessary for tests and coverage: GAP and packages
 ################################################################################ 
 
-if [ "$SUITE" != "test" ] && [ "$SUITE" != "coverage" ]; then
-  echo -e "\nError, unrecognised Travis suite: $SUITE"
-  exit 1
-fi
-
-# Display compiler version
-$CXX --version
-
 ################################################################################
 # Install GAP
-GAPTOGET=$GAPBR
-if [ "$GAPTOGET" == "required" ]; then
-  cd $HOME/semigroups
-  GAPTOGET=v`grep "GAPVERS" PackageInfo.g | awk -F'"' '{print $2}'`
+echo -e "\nInstalling GAP..."
+if [ "$GAP" == "required" ]; then
+  GAP=v`grep "GAPVERS" $HOME/semigroups/PackageInfo.g | awk -F'"' '{print $2}'`
 fi
-echo -e "\nInstalling GAP $GAPTOGET into $GAPROOT..."
-git clone -b $GAPTOGET --depth=1 https://github.com/gap-system/gap.git $GAPROOT
+echo -e "\nInstalling GAP $GAP into $GAPROOT..."
+git clone -b $GAP --depth=1 https://github.com/gap-system/gap.git $GAPROOT
 cd $GAPROOT
-if [ -f autogen.sh ]; then
-  ./autogen.sh
-fi
-./configure --with-gmp=system $GAP_FLAGS $PKG_FLAGS
+./autogen.sh
+./configure --with-gmp=system $GAP_FLAGS
 make -j4
 mkdir pkg
 
@@ -68,34 +58,28 @@ PKGS=( "digraphs" "genss" "io" "orb" )
 if [ "$SUITE"  == "coverage" ]; then
   PKGS+=( "profiling" )
 fi
+
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
-  if [ "$PACKAGES" == "master" ] || [ "$PKG" == "profiling" ]; then
-    echo -e "\nGetting master branch of $PKG repository..."
-    git clone -b master --depth=1 https://github.com/gap-packages/$PKG.git $PKG
-    PKGDIR=$PKG
+
+  # Get the relevant version number
+  if [ "$PACKAGES" == "latest" ] || [ "$PKG" == "profiling" ]; then
+    VERSION=`curl -sL "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
   else
-    if [ "$PACKAGES" == "newest" ]; then
-      echo -e "\nGetting latest release of $PKG..."
-      VERSION=`curl -sL "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
+    VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+  fi
+
+  URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
+  echo -e "\nDownloading $PKG-$VERSION ($PACKAGES version), from URL:\n$URL"
+  curl -L "$URL" -o $PKG-$VERSION.tar.gz
+  tar xf $PKG-$VERSION.tar.gz && rm $PKG-$VERSION.tar.gz
+
+  if [ -f $PKG-$VERSION/configure ]; then
+    if [ "$PKG" == "orb" ]; then
+      cd $PKG-$VERSION && ./configure && make # orb doesn't accept package flags
     else
-      echo -e "\nGetting required release of $PKG..."
-      VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+      cd $PKG-$VERSION && ./configure $PKG_FLAGS && make
     fi
-    URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
-    echo -e "Downloading $PKG-$VERSION, from URL:\n$URL"
-    curl -LO "$URL"
-    tar xf $PKG-$VERSION.tar.gz
-    PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
-    rm $PKG-$VERSION.tar.gz
-  fi
-  cd $PKGDIR
-  if [ -f autogen.sh ]; then
-    ./autogen.sh
-  fi
-  if [ -f configure ]; then
-    ./configure $PKG_FLAGS
-    make
   fi
 done
 

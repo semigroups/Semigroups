@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Next version
+
+Semigroups now requires version 4.8.2 of the [orb
+package](https://gap-packages.github.io/orb), or newer.
+
 ### Version 3.1.1 (released 15/02/2019)
 
 This is a minor release of the Semigroups package, including some minor changes
