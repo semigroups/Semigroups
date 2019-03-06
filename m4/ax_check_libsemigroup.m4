@@ -14,14 +14,8 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
   	[need_included_libsemigroups=no],
   	[need_included_libsemigroups=yes])
 
-  if test "$need_included_libsemigroups" = yes; then
-     AC_MSG_NOTICE([Using included libsemigroups.])
-     if test "$with_included_libsemigroups" = no; then
-	with_included_libsemigroups=yes
-     fi
-  fi
-
-  if test "$with_included_libsemigroups" = yes;  then
+  if test "$with_included_libsemigroups" = yes -o "$need_included_libsemigroups" = yes;  then
+	AC_MSG_NOTICE([Using included libsemigroups.])
   	AC_CHECK_FILE(
    		[libsemigroups/src/semigroups.h],
    		[],
@@ -42,11 +36,10 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                    [],
                    [AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])]
                   )
-	LIBSEMIGROUPS_CFLAGS = -I$(srcdir)/libsemigroups
-	LIBSEMIGROUPS_LIBS = libsemigroups/libsemigroups.la
-
+	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-Ilibsemigroups'])
+	AC_SUBST(LIBSEMIGROUPS_LIBS, ['libsemigroups/libsemigroups.la'])
   fi
   AC_CONFIG_SUBDIRS([libsemigroups])
 
-  AM_CONDITIONAL([WITH_INCLUDED_LIBSEMIGROUPS], [test "$with_included_libsemigroups" = yes])
+  AM_CONDITIONAL([WITH_INCLUDED_LIBSEMIGROUPS], [test "$with_included_libsemigroups" = yes -o "$need_included_libsemigroups" = yes])
 ])
