@@ -8,6 +8,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 if WITH_INCLUDED_LIBSEMIGROUPS
   SUBDIRS = libsemigroups
+  # the following triggers "make install" on libsemigroups
+  BUILT_SOURCES = bin/include/libsemigroups/blocks.h
 endif
 
 AM_CPPFLAGS = @LIBSEMIGROUPS_CFLAGS@
@@ -21,8 +23,8 @@ semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc
 semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
-semigroups_la_CXXFLAGS = $(GAP_CFLAGS) -std=gnu++11 -O3 -g -march=native
-semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)
+semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3 -g -march=native
+semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
 
@@ -31,6 +33,10 @@ semigroups_la_LIBADD = @LIBSEMIGROUPS_LIBS@
 if SYS_IS_CYGWIN
 semigroups_la_LDFLAGS += -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
 endif
+
+# the following is only run if BUILT_SOURCES is wound up
+bin/include/libsemigroups/blocks.h:
+	$(MAKE) -C libsemigroups install
 
 all-local: semigroups.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR) $(top_srcdir)/bin/lib

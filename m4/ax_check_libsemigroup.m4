@@ -36,7 +36,7 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                    [],
                    [AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])]
                   )
-	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-Ilibsemigroups'])
+	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include'])
 	AC_SUBST(LIBSEMIGROUPS_LIBS, ['libsemigroups/libsemigroups.la'])
   fi
   AC_CONFIG_SUBDIRS([libsemigroups])
