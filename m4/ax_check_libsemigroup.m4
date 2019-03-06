@@ -25,7 +25,7 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
 	AC_CHECK_FILE(
    		[libsemigroups/VERSION],
    		[],
-   		[AC_MSG_ERROR([libsemigroups version 0.6.1 or higher is required])])
+		[AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])])
 
 	AC_MSG_CHECKING([libsemigroups version])
 	FOUND_LIBSEMIGROUPS_VERSION="$(cat libsemigroups/VERSION)"
