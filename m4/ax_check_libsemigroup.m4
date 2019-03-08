@@ -1,20 +1,21 @@
 dnl handle libsemigroups checks
 dnl
-dnl if --with-included-libsemigroups is supplied, always use the included version
-dnl otherwise, use an external version if it is known to pkg-config and is new enough
-dnl failing the latter, use the included version
+dnl if --with-external-libsemigroups is supplied,
+dnl use it if it is known to pkg-config and is new enough;
+dnl otherwise use the included version
 dnl
 AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
-  AC_ARG_WITH([included-libsemigroups],
-	      [AC_HELP_STRING([--with-included-libsemigroups],
-			      [use the libsemigroups included here])])
+  AC_ARG_WITH([external-libsemigroups],
+	      [AC_HELP_STRING([--with-external-libsemigroups],
+			      [use the external libsemigroups])])
   REQUI_LIBSEMIGROUPS_VERSION="$(cat .LIBSEMIGROUPS_VERSION)"
   need_included_libsemigroups=yes
-  PKG_CHECK_MODULES([LIBSEMIGROUPS], [libsemigroups >= $REQUI_LIBSEMIGROUPS_VERSION], 
-  	[need_included_libsemigroups=no],
-  	[need_included_libsemigroups=yes])
-
-  if test "$with_included_libsemigroups" = yes -o "$need_included_libsemigroups" = yes;  then
+  if test "$with_external_libsemigroups" = yes;  then
+	PKG_CHECK_MODULES([LIBSEMIGROUPS], [libsemigroups >= $REQUI_LIBSEMIGROUPS_VERSION],
+	[need_included_libsemigroups=no],
+	[need_included_libsemigroups=yes])
+  fi
+  if test "$need_included_libsemigroups" = yes;  then
 	AC_MSG_NOTICE([Using included libsemigroups.])
   	AC_CHECK_FILE(
    		[libsemigroups/src/semigroups.h],
@@ -41,5 +42,5 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
   fi
   AC_CONFIG_SUBDIRS([libsemigroups])
 
-  AM_CONDITIONAL([WITH_INCLUDED_LIBSEMIGROUPS], [test "$with_included_libsemigroups" = yes -o "$need_included_libsemigroups" = yes])
+  AM_CONDITIONAL([WITH_INCLUDED_LIBSEMIGROUPS], [test "$need_included_libsemigroups" = yes])
 ])
