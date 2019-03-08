@@ -9,6 +9,8 @@ ACLOCAL_AMFLAGS = -I m4
 if WITH_INCLUDED_LIBSEMIGROUPS
   SUBDIRS = libsemigroups
   # the following triggers "make install" on libsemigroups
+  # note that making it a concrete file prevents this target
+  # to be needlessly re-run if libsemigroups/ is not changed.
   BUILT_SOURCES = bin/include/libsemigroups/blocks.h
 endif
 
