@@ -40,7 +40,7 @@
 
 #include "semigroups-debug.h"
 
-#include "libsemigroups/src/elements.h"
+#include "libsemigroups/elements.h"
 
 using libsemigroups::Bipartition;
 using libsemigroups::BooleanMat;

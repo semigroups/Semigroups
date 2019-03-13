@@ -14,7 +14,6 @@ AC_CONFIG_SRCDIR([src/pkg.cc])
 AC_CONFIG_HEADER([src/_pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([cnf])
-AC_CONFIG_SUBDIRS([src/libsemigroups])
 
 dnl ##
 dnl ## Get canonical host info
@@ -31,9 +30,9 @@ AM_PROG_AR
 AX_PREFIX_CONFIG_H([src/semigroups-config.h],[],[src/_pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
-dnl ## src/libsemigroups which is why this contains ../.. 
+dnl ## libsemigroups which is why this contains ../ 
 dnl ## FIXME figure out how to do this properly
-AC_PREFIX_DEFAULT('${abs_top_builddir}/../../bin/')
+AC_PREFIX_DEFAULT('${abs_top_builddir}/../bin/')
 
 dnl ##
 dnl ## Set the language
@@ -75,30 +74,7 @@ else
 fi
 
 dnl ## Check for libsemigroups
-AC_CHECK_FILE(
-   [src/libsemigroups/src/semigroups.h],
-   [],
-   [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from
-    https://github.com/james-d-mitchell/libsemigroups into the src directory])]
-   )
-
-dnl ## Check for a version of libsemigroups with VERSION file
-AC_CHECK_FILE(
-   [src/libsemigroups/VERSION],
-   [],
-   [AC_MSG_ERROR([libsemigroups version 0.6.1 or higher is required])]
-   )
-
-AC_MSG_CHECKING([libsemigroups version])
-REQUI_LIBSEMIGROUPS_VERSION="$(cat .LIBSEMIGROUPS_VERSION)"
-FOUND_LIBSEMIGROUPS_VERSION="$(cat src/libsemigroups/VERSION)"
-AC_MSG_RESULT([$FOUND_LIBSEMIGROUPS_VERSION])
-AX_COMPARE_VERSION($FOUND_LIBSEMIGROUPS_VERSION, 
-                   [ge], 
-                   $REQUI_LIBSEMIGROUPS_VERSION,
-                   [], 
-                   [AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])]
-                  )
+AX_CHECK_LIBSEMIGROUPS
 
 dnl ## User setting: Debug mode (off by default)
 AC_ARG_ENABLE([debug],

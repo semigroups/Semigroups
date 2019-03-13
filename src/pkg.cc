@@ -32,9 +32,9 @@
 #include "semigrp.h"
 #include "uf.h"
 
-#include "libsemigroups/src/cong.h"
-#include "libsemigroups/src/semigroups.h"
-#include "libsemigroups/src/uf.h"
+#include "libsemigroups/cong.h"
+#include "libsemigroups/semigroups.h"
+#include "libsemigroups/uf.h"
 
 using libsemigroups::Congruence;
 using libsemigroups::UF;

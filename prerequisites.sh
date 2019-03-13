@@ -1,7 +1,7 @@
 set -e
 
 SEMI_DIR=`dirname "$0"`
-LIBS_DIR="$SEMI_DIR/src/libsemigroups"
+LIBS_DIR="$SEMI_DIR/libsemigroups"
 
 # Get libsemigroups version from file
 if [ -f $SEMI_DIR/.LIBSEMIGROUPS_VERSION ]; then
