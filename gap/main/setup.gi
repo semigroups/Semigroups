@@ -247,11 +247,7 @@ end);
 InstallMethod(ActionRank, "for a McAlister triple semigroup element and int",
 [IsMcAlisterTripleSemigroupElement, IsInt],
 function(f, n)
-  local digraph, id;
-  digraph := McAlisterTripleSemigroupQuotientDigraph(MTSEParent(f));
-  digraph := DigraphReverse(digraph);
-  id      := McAlisterTripleSemigroupComponents(MTSEParent(f)).id;
-  return Position(DigraphTopologicalSort(digraph), id[f[1]]);
+  return f[1];
 end);
 
 InstallMethod(ActionRank, "for a McAlister triple subsemigroup",
@@ -781,7 +777,7 @@ InstallMethod(LambdaBound, "for a McAlister subsemigroup",
 function(r)
   local G;
   G := McAlisterTripleSemigroupGroup(MTSEParent(Representative(S)));
-  return Size(Stabilizer(G, r));
+  return Size(Stabilizer(G, r, McAlisterTripleSemigroupAction(S)));
 end);
 
 InstallMethod(RhoBound, "for a McAlister subsemigroup",

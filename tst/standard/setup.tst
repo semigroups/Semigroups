@@ -549,16 +549,16 @@ gap> x(1);
 gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaRank(M);;
 gap> x(1);
-2
-gap> x(2);
 1
+gap> x(2);
+2
 gap> x(0);
 0
 gap> x := RhoRank(M);;
 gap> x(1);
-2
-gap> x(2);
 1
+gap> x(2);
+2
 gap> x(0);
 0
 
@@ -1074,7 +1074,7 @@ true
 
 # SchutzGpMembership, for an MTS
 gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
-gap> M := Semigroup(Elements(M));;
+gap> M := Semigroup(MTSE(M, 2, (2, 3)), MTSE(M, 3, (2, 3)));;
 gap> o := LambdaOrb(M);; Enumerate(o);;
 gap> schutz := LambdaOrbStabChain(o, 3);;
 gap> SchutzGpMembership(M)(schutz, ());
