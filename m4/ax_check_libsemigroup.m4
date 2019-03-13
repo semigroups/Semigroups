@@ -39,8 +39,8 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                   )
 	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include'])
 	AC_SUBST(LIBSEMIGROUPS_LIBS, ['bin/lib/libsemigroups.la'])
+        AC_CONFIG_SUBDIRS([libsemigroups])
   fi
-  AC_CONFIG_SUBDIRS([libsemigroups])
 
   AM_CONDITIONAL([WITH_INCLUDED_LIBSEMIGROUPS], [test "$need_included_libsemigroups" = yes])
 ])
