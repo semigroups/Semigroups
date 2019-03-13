@@ -19,7 +19,7 @@
 #ifndef SEMIGROUPS_SRC_BIPART_H_
 #define SEMIGROUPS_SRC_BIPART_H_
 
-#include "libsemigroups/src/elements.h"
+#include "libsemigroups/elements.h"
 #include "pkg.h"
 #include "semigroups-debug.h"
 #include "src/compiled.h"
