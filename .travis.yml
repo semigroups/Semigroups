@@ -75,6 +75,25 @@ matrix:
       - PACKAGES=required
       - THRESHOLD=95
 
+    - env:
+      - SUITE=external-libsemigroups
+      - ABI=64
+      - GAP=stable-4.10
+      - PACKAGES=required
+      - SEMIGROUPS_PKG_EXTRA_FLAGS=--with-external-libsemigroups
+      - PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/miniconda2/lib/pkgconfig
+
+before_install:
+  - if [ "$SUITE" == "external-libsemigroups" ]; then
+      wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+      chmod +x miniconda.sh;
+      ./miniconda.sh -b;
+      export PATH=/home/travis/miniconda2/bin:$PATH;
+      conda update --yes conda;
+      conda config --add channels conda-forge;
+      conda install --yes libsemigroups;
+    fi;
+
 install:
   # GAP and some packages require special flags for compilation in 32-bit mode
   - if [ "$ABI" == "32" ]; then
