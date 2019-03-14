@@ -26,7 +26,7 @@ elif [ "$SUITE" == "coverage" ]; then
     fi
   done
 
-elif [ "$SUITE" == "test" ]; then
+else
 
   cd $SEMI_DIR/tst/workspaces
   echo -e "\nRunning SaveWorkspace tests..."
