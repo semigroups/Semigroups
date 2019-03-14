@@ -1,11 +1,6 @@
 # If a command fails, exit this script with an error code
 set -e
 
-if ["$SUITE" != "test"] && ["$SUITE" != "coverage"] && ["$SUITE" != "lint"]; then
-  echo -e "\nError, unrecognised Travis suite: $SUITE"
-  exit 1
-fi
-
 mv ../Semigroups $HOME/semigroups
 
 ################################################################################
@@ -50,7 +45,13 @@ mv $HOME/semigroups $GAPROOT/pkg/semigroups
 ################################################################################
 # Install libsemigroups
 cd $GAPROOT/pkg/semigroups
-./prerequisites.sh
+if [ "$SUITE" != "external-libsemigroups" ]; then
+  ./prerequisites.sh
+else
+  # Autoreconf requires that this directory exists even if we don't use the
+  # included libsemigroups . . .
+  mkdir libsemigroups 
+fi
 
 ################################################################################
 # Install digraphs, genss, io, orb, and profiling
