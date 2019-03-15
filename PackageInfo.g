@@ -158,6 +158,20 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
+  rec(
+    LastName      := "Pasechnik",
+    FirstNames    := "Dima V.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "dmitrii.pasechnik@cs.ox.ac.uk",
+    WWWHome       := "http://users.ox.ac.uk/~coml0531/",
+    PostalAddress := Concatenation(["Pembroke College, ",
+                                    "St. Aldates, ",
+                                    "Oxford OX1 1DW, ",
+                                    "England"]),
+    Place         := "Oxford",
+    Institution   := "University of Oxford"),
+
    rec(
     LastName      := "Pfeiffer",
     FirstNames    := "Markus",
@@ -170,7 +184,7 @@ Persons := [
     Institution   := "University of St Andrews"),
 
   rec(
-    LastName     := "Russell",
+    LastName      := "Russell",
     FirstNames    := "Christopher",
     IsAuthor      := false,
     IsMaintainer  := false,

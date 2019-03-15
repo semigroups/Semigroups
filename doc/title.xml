@@ -91,6 +91,9 @@
 
     Zak Mesyan contributed to the code for graph inverse semigroups; see Chapter
     <Ref Chap="GraphInverseSemigroups"/>.<P/>
+    
+    Dima Pasechnik contributed to the build system of the kernel module.
+    <P/>
 
     Markus Pfeiffer contributed the majority of the code relating to
     semigroups of matrices over finite fields.
