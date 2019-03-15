@@ -69,10 +69,24 @@ Both [orb](http://gap-packages.github.io/orb) and
   [Semigroups](https://gap-packages.github.io/Semigroups) package.
   [Semigroups](https://gap-packages.github.io/Semigroups) uses the
   [libsemigroups](https://james-d-mitchell.github.io/libsemigroups) C++ library,
-  which requires a compiler implementing the C++11 standard. To compile, inside
-  the `pkg/semigroups-x.x.x` directory, type
+  which requires a compiler implementing the C++11 standard.
+
+  You may either build
+  [libsemigroups](https://james-d-mitchell.github.io/libsemigroups) along with
+  [Semigroups](https://gap-packages.github.io/Semigroups), or have it installed
+  at a custom or standard location, as explained in its documentation.  To
+  compile in the former case, inside the `pkg/semigroups-x.x.x` directory, type
     * `./configure`
     * `make`
+
+  For the latter case, you need working [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
+  tool; assuming [libsemigroups](https://james-d-mitchell.github.io/libsemigroups) was installed at
+  location `/foo/bar`, type
+    * `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig ./configure --with-external-libsemigroups`
+    * `make`
+
+  (If [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) has `/foo/bar` among its default
+  locations, then `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig` part above may be omitted).
 
   If you are using GCC to compile
   [Semigroups](https://gap-packages.github.io/Semigroups), then version 5.0 or
