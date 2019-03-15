@@ -7,6 +7,14 @@
 Semigroups now requires version 4.8.2 of the [orb
 package](https://gap-packages.github.io/orb), or newer.
 
+### Version 3.1.2 (released 15/03/2019)
+
+This is a minor release of the Semigroups package, including some changes to
+the build system (by [D. V. Pasechnik](http://users.ox.ac.uk/~coml0531/)), one
+issue was fixed ([Issue 581](https://github.com/gap-packages/Semigroups/issues/581)
+by Chris Russell and James Mitchell), and the version of libsemigroups required
+was increased to 0.6.7.
+
 ### Version 3.1.1 (released 15/02/2019)
 
 This is a minor release of the Semigroups package, including some minor changes
