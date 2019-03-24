@@ -340,7 +340,7 @@ end);
 
 InstallMethod(GeneratorsOfMunnSemigroup, "for a semilattice", [IsSemigroup],
 function(S)
-  local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k;
+  local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k, y;
 
   if not IsSemilattice(S) then
     ErrorNoReturn("Semigroups: GeneratorsOfMunnSemigroup: usage,\n",
@@ -360,13 +360,13 @@ function(S)
       su[Length(x)] := [];
     fi;
     Add(au[Length(x)], AutomorphismGroup(gr)
-                       ^ MappingPermListList(DigraphVertices(gr),
+                       ^ MappingPermListList(DigraphVertices(gr), 
                                              SortedList(x)));
     Add(id[Length(x)], SortedList(x));
     Add(su[Length(x)], gr);
   od;
 
-  #  Error();
+  #Error();
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do
