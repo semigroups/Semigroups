@@ -335,7 +335,7 @@ gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
       <Example><![CDATA[
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
 > [-infinity, 10, -2], [-infinity, 2, 1]]));
-<digraph with 3 vertices, 7 edges>
+<immutable digraph with 3 vertices, 7 edges>
 ]]></Example>
     </Description>
   </ManSection>

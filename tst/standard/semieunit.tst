@@ -39,11 +39,11 @@ gap> M1 := M;;
 gap> M = M1;
 true
 gap> String(M);
-"McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [ 1,\
- 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])"
+"McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( IsImmutableDi\
+graph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])"
 gap> Print(M, "\n");
-McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [ 1, \
-2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])
+McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( IsImmutableDig\
+raph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])
 
 #  McAlisterTripleSemigroup with bad inputs
 gap> G1 := FreeGroup(1);;
@@ -133,11 +133,12 @@ gap> ForAll(attr, A -> A(S) = A(M));
 true
 gap> Print(Semigroup(Elements(M1){[1, 2, 3]}), "\n");
 Semigroup([ MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digrap\
-h( [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, ()), M\
-TSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [\
- 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (4,5)), MTSE(McAlis\
-terTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [ 1, 2 ], [\
- 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (3,4)) ]
+h( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ \
+1 .. 4 ]), 1, ()), MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ),\
+ Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] \
+] ), [ 1 .. 4 ]), 1, (4,5)), MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2\
+ .. 5 ] ), Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ],\
+ [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (3,4)) ]
 
 #  AsSemigroup with bad input
 gap> T := Semigroup([PartialPerm([1], [3]),
@@ -252,7 +253,7 @@ fail
 
 #  IsomorphismSemigroups, where RepresentativeAction fails
 gap> gr := DigraphFromDigraph6String("+H_A?GC_Q@G~wA?G");
-<digraph with 9 vertices, 20 edges>
+<immutable digraph with 9 vertices, 20 edges>
 gap> G := Group((1, 2, 3)(4, 5, 6), (8, 9));;
 gap> S1 := McAlisterTripleSemigroup(G, gr, [1, 4, 5, 7, 8]);
 <McAlister triple semigroup over Group([ (1,2,3)(4,5,6), (8,9) ])>

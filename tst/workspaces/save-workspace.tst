@@ -143,9 +143,9 @@ gap> NrTransverseBlocks(b);
 gap> DegreeOfBlocks(b);
 10
 gap> AsDigraph(b);
-<digraph with 10 vertices, 23 edges>
+<immutable digraph with 10 vertices, 23 edges>
 gap> CanonicalBlocks(b);
-<blocks: [ 1*, 2*, 3*, 4* ], [ 5, 6, 7 ], [ 8*, 9* ], [ 10* ]>
+<blocks: [ 1* ], [ 2*, 3* ], [ 4*, 5*, 6*, 7* ], [ 8, 9, 10 ]>
 
 #############################################################################
 ##  Tests end here

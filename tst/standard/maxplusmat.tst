@@ -458,7 +458,7 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 # maxplusmat: UnweightedPrecedenceDigraph for a max-plus matrix
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
 > [-infinity, 10, -2], [-infinity, 2, 1]]));
-<digraph with 3 vertices, 7 edges>
+<immutable digraph with 3 vertices, 7 edges>
 
 # maxplusmat: InverseOp for a max-plus matrix
 gap> mat := Matrix(IsMaxPlusMatrix, [[-1, -infinity, -infinity],
@@ -508,7 +508,7 @@ fail
 gap> mat := Matrix(IsMaxPlusMatrix, [[0, -3, 0, -2], [-1, 1, -1, 0],
 >  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]]);;
 gap> UnweightedPrecedenceDigraph(mat);
-<digraph with 4 vertices, 12 edges>
+<immutable digraph with 4 vertices, 12 edges>
 gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -3, 3, -1, -1], 
 > [1, 1, 1, -2, 0], [-infinity, 0, 0, 1, -1], [2, 2, 1, 0, -infinity],
 > [1, -1, 5, -infinity, -infinity]]);;

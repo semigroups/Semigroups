@@ -233,7 +233,7 @@ gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
 gap> S := Semigroup(x, y);
 <transformation semigroup of degree 7 with 2 generators>
 gap> gr := DigraphOfActionOnPairs(S);
-<digraph with 28 vertices, 41 edges>
+<immutable digraph with 28 vertices, 41 edges>
 gap> OnSets([2, 5], x);
 [ 4, 7 ]
 gap> DigraphVertexLabel(gr, 16);
@@ -243,7 +243,7 @@ gap> DigraphVertexLabel(gr, 25);
 gap> DigraphEdgeLabel(gr, 16, 25);
 1
 gap> gr := DigraphOfActionOnPairs(S, 4);
-<digraph with 10 vertices, 11 edges>
+<immutable digraph with 10 vertices, 11 edges>
 gap> DigraphVertexLabels(gr);
 [ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], 
   [ 3, 4 ] ]
@@ -292,11 +292,11 @@ gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
 gap> S := Semigroup(x, y);
 <transformation semigroup of degree 7 with 2 generators>
 gap> gr := DigraphOfActionOnPoints(S);
-<digraph with 7 vertices, 12 edges>
+<immutable digraph with 7 vertices, 12 edges>
 gap> OnPoints(2, x);
 4
 gap> gr2 := DigraphOfActionOnPoints(S, 4);
-<digraph with 4 vertices, 7 edges>
+<immutable digraph with 4 vertices, 7 edges>
 gap> gr2 = InducedSubdigraph(gr, [1 .. 4]);
 true
 gap> DigraphOfActionOnPoints(S, 5);

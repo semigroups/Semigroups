@@ -1936,7 +1936,7 @@ gap> s := NambooripadPartialOrder(S);
   [ 1, 14, 46, 47, 55, 69, 70, 75, 78 ], [ 47, 78 ], [ 47, 78 ], [ 47, 78 ], 
   [ 1, 78 ], [ 32, 78 ], [ 47, 78 ], [ 1, 78 ], [ 32, 78 ], [ 47, 78 ], [  ] ]
 gap> GR := Digraph(s);
-<digraph with 78 vertices, 316 edges>
+<immutable digraph with 78 vertices, 316 edges>
 gap> IsPartialOrderDigraph(DigraphReflexiveTransitiveClosure(GR));
 true
 gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
