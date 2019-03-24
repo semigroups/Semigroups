@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.1.1">
+##  <!ENTITY VERSION "3.1.2">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.1.1">
+##  <!ENTITY ARCHIVENAME "semigroups-3.1.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-19">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,10 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.1.1",
-Date := "15/02/2019",
+Version := "3.1.2",
+Date := "15/03/2019",  # dd/mm/yyyy format
+License := "GPL-3.0-or-later",
+
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -156,6 +158,20 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
+  rec(
+    LastName      := "Pasechnik",
+    FirstNames    := "Dima V.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "dmitrii.pasechnik@cs.ox.ac.uk",
+    WWWHome       := "http://users.ox.ac.uk/~coml0531/",
+    PostalAddress := Concatenation(["Pembroke College, ",
+                                    "St. Aldates, ",
+                                    "Oxford OX1 1DW, ",
+                                    "England"]),
+    Place         := "Oxford",
+    Institution   := "University of Oxford"),
+
    rec(
     LastName      := "Pfeiffer",
     FirstNames    := "Markus",
@@ -168,7 +184,7 @@ Persons := [
     Institution   := "University of St Andrews"),
 
   rec(
-    LastName     := "Russell",
+    LastName      := "Russell",
     FirstNames    := "Christopher",
     IsAuthor      := false,
     IsMaintainer  := false,
