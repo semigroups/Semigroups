@@ -208,9 +208,9 @@ true]]></Example>
 gap> S := FullTransformationMonoid(2);
 <full transformation monoid of degree 2>
 gap> RightCayleyDigraph(S);
-<multidigraph with 4 vertices, 12 edges>
+<immutable multidigraph with 4 vertices, 12 edges>
 gap> LeftCayleyDigraph(S);
-<multidigraph with 4 vertices, 12 edges>]]></Example>
+<immutable multidigraph with 4 vertices, 12 edges>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

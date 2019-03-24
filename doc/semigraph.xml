@@ -57,7 +57,7 @@
 gap> gr := Digraph([[2, 5, 8, 10], [2, 3, 4, 5, 6, 8, 9, 10], [1],
 >                   [3, 5, 7, 8, 10], [2, 5, 7], [3, 6, 7, 9, 10],
 >                   [1, 4], [1, 5, 9], [1, 2, 7, 8], [3, 5]]);
-<digraph with 10 vertices, 37 edges>
+<immutable digraph with 10 vertices, 37 edges>
 gap> S := GraphInverseSemigroup(gr);
 <infinite graph inverse semigroup with 10 vertices, 37 edges>
 gap> GeneratorsOfInverseSemigroup(S);
@@ -176,10 +176,10 @@ true
 
     <Example><![CDATA[
 gap> gr := Digraph([[], [1], [3]]);
-<digraph with 3 vertices, 2 edges>
+<immutable digraph with 3 vertices, 2 edges>
 gap> S := GraphInverseSemigroup(gr);;
 gap> GraphOfGraphInverseSemigroup(S);
-<digraph with 3 vertices, 2 edges>
+<immutable digraph with 3 vertices, 2 edges>
 ]]></Example>
   </Description>
 </ManSection>
@@ -210,7 +210,7 @@ gap> GraphOfGraphInverseSemigroup(S);
 
 <Example><![CDATA[
 gap> gr := Digraph([[], [1], [2]]);
-<digraph with 3 vertices, 2 edges>
+<immutable digraph with 3 vertices, 2 edges>
 gap> S := GraphInverseSemigroup(gr);
 <finite graph inverse semigroup with 3 vertices, 2 edges>
 gap> Elements(S);

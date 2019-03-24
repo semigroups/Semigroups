@@ -104,9 +104,9 @@
 
      <Example><![CDATA[
 gap> x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);
-<digraph with 5 vertices, 11 edges>
+<immutable digraph with 5 vertices, 11 edges>
 gap> y := InducedSubdigraph(x, [1, 4, 5]);
-<digraph with 3 vertices, 6 edges>
+<immutable digraph with 3 vertices, 6 edges>
 gap> DigraphVertexLabels(y);
 [ 1, 4, 5 ]
 gap> A := AutomorphismGroup(x);
@@ -207,9 +207,9 @@ true]]></Example>
       are synonyms.
 <Example><![CDATA[
 gap> x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);
-<digraph with 5 vertices, 11 edges>
+<immutable digraph with 5 vertices, 11 edges>
 gap> y := InducedSubdigraph(x, [1, 2, 3]);
-<digraph with 3 vertices, 6 edges>
+<immutable digraph with 3 vertices, 6 edges>
 gap> A := AutomorphismGroup(x);
 Group([ (2,4)(3,5) ])
 gap> S := McAlisterTripleSemigroup(A, x, y, OnPoints);

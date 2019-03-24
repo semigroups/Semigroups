@@ -37,9 +37,9 @@ Transformation( [ 5, 1, 4, 1, 1 ] )
 gap> y := Transformation([3, 3, 2, 3, 1]);
 Transformation( [ 3, 3, 2, 3, 1 ] )
 gap> CanonicalTransformation(x);
-Transformation( [ 5, 5, 1, 5, 4 ] )
+Transformation( [ 3, 5, 2, 2, 2 ] )
 gap> CanonicalTransformation(y);
-Transformation( [ 5, 5, 1, 5, 4 ] )]]></Example>
+Transformation( [ 3, 5, 2, 2, 2 ] )]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>

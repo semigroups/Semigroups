@@ -11,7 +11,7 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "3.1.5">
 ##  <!ENTITY GAPVERS "4.9.0">
-##  <!ENTITY DIGRAPHSVERS "0.12.0">
+##  <!ENTITY DIGRAPHSVERS "1.0.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
@@ -290,7 +290,7 @@ Dependencies := rec(
   GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
-                          ["digraphs", ">=0.12.0"],
+                          ["digraphs", ">=1.0.0"],
                           ["genss", ">=1.6.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 

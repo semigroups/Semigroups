@@ -148,17 +148,15 @@ gap> x := Bipartition([[1, 4, 7, 8, 12, -1, -5, -14],
 > [-10, -13, -15]]);;
 gap> blocks := LeftBlocks(x);;
 gap> CanonicalBlocks(blocks);
-<blocks: [ 1*, 2*, 3*, 4*, 5* ], [ 6*, 7*, 8*, 9*, 10* ], [ 11*, 12*, 13*, 14*\
- ], [ 15*, 16*, 17*, 18* ], [ 19*, 20* ]>
+<blocks: [ 1*, 2* ], [ 3*, 4*, 5*, 6* ], [ 7*, 8*, 9*, 10* ], [ 11*, 12*, 13*,\
+ 14*, 15* ], [ 16*, 17*, 18*, 19*, 20* ]>
 gap> blocks := RightBlocks(x);;
 gap> CanonicalBlocks(blocks);
-<blocks: [ 1, 2, 3, 4 ], 
-[ 5, 6, 7 
- ], [ 8*, 9*, 10* ], [ 11*, 12*, 13* ], [ 14*, 15*, 16* ], [ 17*, 18* ], [ 19*\
-, 20* ]>
+<blocks: [ 1*, 2* ], [ 3*, 4* ], [ 5*, 6*, 7* ], [ 8*, 9*, 10* ], [ 11*, 12*, \
+13* ], [ 14, 15, 16 ], [ 17, 18, 19, 20 ]>
 gap> Print(last); "this string allows us to test the PrintObj method";
-BlocksNC([ [ -1, -2, -3, -4 ], [ -5, -6, -7 ], [ 8, 9, 10 ], [ 11, 12, 13 ], [\
- 14, 15, 16 ], [ 17, 18 ], [ 19, 20 ] ])"this string allows us to test the Pri\
+BlocksNC([ [ 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ], [ 8, 9, 10 ], [ 11, 12, 13 ], [ -1\
+4, -15, -16 ], [ -17, -18, -19, -20 ] ])"this string allows us to test the Pri\
 ntObj method"
 
 # Test empty blocks

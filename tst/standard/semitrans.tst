@@ -165,7 +165,7 @@ gap> GeneratorsOfSemigroup(S ^ (1, 7, 8, 6, 10)(3, 9, 5, 4));
 # SemiTransTest6
 # DigraphOfActionOnPoints for a transformation semigroup (and a pos int)
 gap> gr := DigraphOfActionOnPoints(FullTransformationSemigroup(4));
-<digraph with 4 vertices, 9 edges>
+<immutable digraph with 4 vertices, 9 edges>
 gap> OutNeighbours(gr);
 [ [ 1, 2 ], [ 1, 2, 3 ], [ 3, 4 ], [ 1, 4 ] ]
 gap> S := Semigroup([
@@ -178,7 +178,7 @@ the second argument <n> must be non-negative,
 gap> DigraphOfActionOnPoints(S, 5);
 fail
 gap> gr := DigraphOfActionOnPoints(S);
-<digraph with 8 vertices, 22 edges>
+<immutable digraph with 8 vertices, 22 edges>
 gap> DigraphOfActionOnPoints(S, 0) = EmptyDigraph(0);
 true
 gap> DigraphOfActionOnPoints(S, 8) = gr;
@@ -187,7 +187,7 @@ gap> OutNeighbours(gr);
 [ [ 2, 3, 4 ], [ 3, 6, 8 ], [ 1, 2, 7 ], [ 2, 4, 7 ], [ 5, 6, 7 ], [ 1, 6 ], 
   [ 1, 6, 7 ], [ 1, 5 ] ]
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(1));
-<digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(2), 1);
 fail
 
@@ -2687,19 +2687,19 @@ gap> Size(M);
 
 # semitrans: DigraphOfActionOnPairs, 1
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1));
-<digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 1);
-<digraph with 1 vertex, 0 edges>
+<immutable empty digraph with 1 vertex>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 3);
-<digraph with 6 vertices, 3 edges>
+<immutable digraph with 6 vertices, 3 edges>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 2);
-<digraph with 3 vertices, 1 edge>
+<immutable digraph with 3 vertices, 1 edge>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 0);
-<digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> IsEmptyDigraph(gr);
 true
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(2), 0);
-<digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> IsEmptyDigraph(gr);
 true
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), -1);
@@ -2708,7 +2708,7 @@ the second argument <n> must be non-negative,
 gap> S := FullTransformationMonoid(4);
 <full transformation monoid of degree 4>
 gap> gr := DigraphOfActionOnPairs(S);
-<digraph with 10 vertices, 19 edges>
+<immutable digraph with 10 vertices, 19 edges>
 gap> HasDigraphOfActionOnPairs(S);
 true
 gap> OutNeighbours(gr);
@@ -2723,9 +2723,9 @@ gap> DigraphOfActionOnPairs(FullTransformationMonoid(3), 2);
 fail
 gap> S := FullTransformationMonoid(3);;
 gap> DigraphOfActionOnPairs(S);
-<digraph with 6 vertices, 9 edges>
+<immutable digraph with 6 vertices, 9 edges>
 gap> DigraphOfActionOnPairs(S, 3);
-<digraph with 6 vertices, 9 edges>
+<immutable digraph with 6 vertices, 9 edges>
 
 # Iterator, for a full transformation monoid
 gap> S := FullTransformationMonoid(4);;

@@ -14,9 +14,9 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 # semigraph: test 1
-gap> gr := Digraph(rec(nrvertices := 5,
-> source := [1, 2, 2, 4, 4], range := [2, 3, 5, 3, 5]));
-<digraph with 5 vertices, 5 edges>
+gap> gr := Digraph(rec(DigraphNrVertices := 5,
+> DigraphSource := [1, 2, 2, 4, 4], DigraphRange := [2, 3, 5, 3, 5]));
+<immutable digraph with 5 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(gr);
 <finite graph inverse semigroup with 5 vertices, 5 edges>
 gap> Size(S);
@@ -58,13 +58,14 @@ gap> List(x, Range);
   v_4, v_2, v_1, v_1, v_2, v_3, v_4, v_5 ]
 gap> AssignGeneratorVariables(S);
 gap> String(gr);
-"Digraph( [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] )"
+"Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] )"
 gap> String(S);
-"GraphInverseSemigroup( Digraph( [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] ) )"
+"GraphInverseSemigroup( Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [\
+ 3, 5 ], [ ] ] ) )"
 gap> EvalString(String(S)) = S;
 false
 gap> gr := Digraph([[1]]);
-<digraph with 1 vertex, 1 edge>
+<immutable digraph with 1 vertex, 1 edge>
 gap> S := GraphInverseSemigroup(gr);
 <infinite graph inverse semigroup with 1 vertex, 1 edge>
 gap> e_1 ^ -1;
@@ -82,8 +83,8 @@ gap> e_1 * e_1 ^ -1 = v_1;
 false
 
 # Test Source/Range
-gap> gr := Digraph(rec(nrvertices := 5,
-> source := [1, 2, 2, 4, 4], range := [2, 3, 5, 3, 5]));;
+gap> gr := Digraph(rec(DigraphNrVertices := 5,
+> DigraphSource := [1, 2, 2, 4, 4], DigraphRange := [2, 3, 5, 3, 5]));;
 gap> S := GraphInverseSemigroup(gr);
 <finite graph inverse semigroup with 5 vertices, 5 edges>
 gap> s := MultiplicativeZero(S);
@@ -96,8 +97,8 @@ Error, Semigroups: Range: usage,
 the argument <x> must not be the zero,
 
 # Test \*
-gap> gr := Digraph(rec(nrvertices := 5,
-> source := [1, 2, 3], range := [2, 3, 4]));;
+gap> gr := Digraph(rec(DigraphNrVertices := 5,
+> DigraphSource := [1, 2, 3], DigraphRange := [2, 3, 4]));;
 gap> S := GraphInverseSemigroup(gr);
 <finite graph inverse semigroup with 5 vertices, 3 edges>
 gap> AssignGeneratorVariables(S);
