@@ -96,20 +96,21 @@ end);
 InstallMethod(SmallestIdempotentPower, "for a multiplicative element",
 [IsMultiplicativeElement],
 function(x)
-  local a, ind, per, pow;
+  local a, index, period, r;
 
   if not IsGeneratorsOfSemigroup([x]) then
     ErrorNoReturn("Semigroups: SmallestIdempotentPower: usage,\n",
                   "the argument <x> must be the generator of a semigroup,");
   fi;
   a := IndexPeriodOfSemigroupElement(x);
-  ind := a[1];
-  per := a[2];
-  pow := per;
-  while pow < ind do
-    pow := pow + per;
-  od;
-  return pow;
+  index := a[1];
+  period := a[2];
+  # From Howie 1995, page 11
+  r := index mod period;
+  if r = 0 then
+    return index;
+  fi;
+  return index + period - r;
 end);
 
 InstallMethod(IsMultiplicativeZero,
