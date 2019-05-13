@@ -164,14 +164,16 @@ gap> List(U, MinimalIdeal);
 # ReesMatTest12: IsomorphismPermGroup
 gap> R := ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), [[()]]);;
 gap> T := Semigroup(Filtered(Generators(R), x -> x![1] <> 0));;
-gap> iso := IsomorphismPermGroup(T);
-MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)
-(5,6,7,8) ]), function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)
-(5,6,7,8) ]), <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+gap> iso := IsomorphismPermGroup(T);;
+gap> Source(iso) = T;
+true
+gap> Range(iso);
+Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+gap> inv := InverseGeneralMapping(iso);;
+gap> Source(inv);
+Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+gap> Range(inv) = T;
+true
 gap> ForAll(T, x -> (x ^ iso) ^ inv = x);
 true
 gap> ForAll(T, x -> ForAll(T, y -> (x * y) ^ iso = x ^ iso * y ^ iso));

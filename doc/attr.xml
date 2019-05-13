@@ -553,16 +553,15 @@ gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),
 >                   Transformation([3, 3, 8, 2, 5, 6, 4, 4]));;
 gap> IsGroupAsSemigroup(S);
 true
-gap> Range(IsomorphismPermGroup(S));
-Group([ (5,6,8), (2,3,8,4) ])
+gap> iso := IsomorphismPermGroup(S);;
+gap> Source(iso) = S and Range(iso) = Group([(5, 6, 8), (2, 3, 8, 4)]);
+true
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <partial perm group of size 24, rank 4 with 2 generators>
-gap> IsomorphismPermGroup(S);
-MappingByFunction( <partial perm group of size 24, rank 4 with
-  2 generators>, Group([ (1,2,3,4), (1,
-2) ]), <Attribute "AsPermutation">, function( x ) ... end )
+gap> Range(IsomorphismPermGroup(S));
+Group([ (1,2,3,4), (1,2) ])
 gap> G := GroupOfUnits(PartitionMonoid(4));
 <block bijection group of degree 4 with 2 generators>
 gap> StructureDescription(G);

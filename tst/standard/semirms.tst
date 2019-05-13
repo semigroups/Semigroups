@@ -2674,10 +2674,9 @@ true
 gap> BruteForceInverseCheck(map);
 true
 gap> S := Semigroup(RMSElementNC(R, 1, (1, 3), 1));;
-gap> map := IsomorphismPermGroup(S);
-MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
- with 1 generator>, Group([ (1,
-2) ]), function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPermGroup(S);;
+gap> Range(map);
+Group([ (1,2) ])
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

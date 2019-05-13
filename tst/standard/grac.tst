@@ -1180,10 +1180,11 @@ gap> H := GroupHClass(D);
 <Green's H-class: IdentityTransformation>
 gap> IsGroupHClass(H);
 true
-gap> IsomorphismPermGroup(H);
-MappingByFunction( <Green's H-class: IdentityTransformation>, Group([ (5,9)
-(6,10)(7,11)(8,12), (2,9,5,3)(4,10,13,7)(6,11)
-(8,12,14,15) ]), function( x ) ... end, function( x ) ... end )
+gap> x := IsomorphismPermGroup(H);;
+gap> Source(x) = H;
+true
+gap> GeneratorsOfGroup(Range(x));
+[ (5,9)(6,10)(7,11)(8,12), (2,9,5,3)(4,10,13,7)(6,11)(8,12,14,15) ]
 gap> IsomorphismPermGroup(HClass(S, S.1));
 Error, Semigroups: IsomorphismPermGroup: usage,
 the H-class is not a group,
