@@ -94,10 +94,13 @@ gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
-gap> G := Range(iso);
-Group([ (1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)
-(22,23,24), (1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)
-(20,23)(21,24) ])
+gap> G := Range(iso);;
+gap> Length(GeneratorsOfGroup(G));
+2
+gap> GeneratorsOfGroup(G)[1];
+(1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)(22,23,24)
+gap> GeneratorsOfGroup(G)[2];
+(1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)(20,23)(21,24)
 
 # IsomorphismPermGroup: for a PBR Semigroup
 gap> S := Semigroup([PBR([[-1], [-4], [-2], [-3]], [[1], [3], [4], [2]]),
@@ -106,10 +109,13 @@ gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
-gap> G := Range(iso);
-Group([ (1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)
-(22,23,24), (1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)
-(20,23)(21,24) ])
+gap> G := Range(iso);;
+gap> Length(GeneratorsOfGroup(G));
+2
+gap> GeneratorsOfGroup(G)[1];
+(1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)(22,23,24)
+gap> GeneratorsOfGroup(G)[2];
+(1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)(20,23)(21,24)
 gap> S := Semigroup([PBR([[2], [2]], [[], []]),
 >                    PBR([[], [-2]], [[], [-2, 2]])]);;
 gap> iso := IsomorphismPermGroup(S);

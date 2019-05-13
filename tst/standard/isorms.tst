@@ -43,9 +43,9 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
-gap> A := AutomorphismGroup(R);
-<automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,
-6) ])> with 24 generators>
+gap> A := AutomorphismGroup(R);;
+gap> Length(GeneratorsOfSemigroup(A));
+24
 gap> Size(Range(IsomorphismPermGroup(A)));
 82944
 
@@ -58,15 +58,15 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
-gap> A := AutomorphismGroup(R);
+gap> A := AutomorphismGroup(R);;
 #I  finding automorphisms of the graph . . . 2304 found
 #I  finding the stabilizer of matrix . . . 12
 #I  finding the automorphism group of the group . . . found 6
 #I  finding the stabilizer of matrix entries . . . 1
 #I  the graph has 2 connected components
 #I  backtracking in the direct product of size 2304 . . . 
-<automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,
-6) ])> with 24 generators>
+gap> Length(GeneratorsOfSemigroup(A));
+24
 gap> Size(Range(IsomorphismPermGroup(A)));
 82944
 gap> SetInfoLevel(InfoSemigroups, 0);
@@ -118,11 +118,11 @@ true
 # AutomorphismGroup: for a RZMS with trivial automorphism group of graph
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 >                                 [[(1, 3), (1, 2)], [0, (2, 3)]]);;
-gap> AutomorphismGroup(R);
-<automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
-2) ])> with 4 generators>
-gap> Size(last);
+gap> A := AutomorphismGroup(R);;
+gap> Size(A);
 6
+gap> IsAbelian(A);
+false
 
 # AutomorphismGroup: for a RZMS over not a group
 gap> S := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
@@ -400,9 +400,9 @@ IdentityMapping( <Rees matrix semigroup 2x2 over Group(())> )
 # \=: RZMS and RZMS elements 1/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
 > [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
-gap> G := AutomorphismGroup(R);
-<automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
-3) ])> with 5 generators>
+gap> G := AutomorphismGroup(R);;
+gap> Length(GeneratorsOfSemigroup(G));
+5
 gap> map := RZMSIsoByTriple(R, R,
 > [(1, 2)(3, 4), IdentityMapping(Group((1, 2, 3))), [(), (), (), ()]]);
 ((1,2)(3,4), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
@@ -425,14 +425,14 @@ IdentityMapping( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ),
 # \=: RZMS and RZMS elements 2/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
 > [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
-gap> G := AutomorphismGroup(R);
-<automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
-3) ])> with 5 generators>
+gap> G := AutomorphismGroup(R);;
+gap> Length(GeneratorsOfSemigroup(G));
+5
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 > [[0, (1, 2, 3)], [(1, 3, 2), ()]]);;
-gap> H := AutomorphismGroup(S);
-<automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
-2) ])> with 4 generators>
+gap> H := AutomorphismGroup(S);;
+gap> Length(GeneratorsOfSemigroup(H));
+4
 gap> G.1 = H.1;
 false
 gap> CompositionMapping2(G.1, G.2);
@@ -638,12 +638,7 @@ gap> G1 := SymmetricGroup(IsPermGroup, 2);;
 gap> R1 := ReesMatrixSemigroup(G1, [[Identity(G1)]]);;
 gap> G2 := SymmetricGroup(IsPcGroup, 2);;
 gap> R2 := ReesMatrixSemigroup(G2, [[Identity(G2)]]);;
-gap> map := IsomorphismSemigroups(R1, R2);
-CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
-  Group([ (1,2) ])>, <Rees matrix semigroup 1x1 over <pc group of size 2 with 
- 1 generators>>, function( x ) ... end, function( x ) ... end ),
- ((), GroupHomomorphismByImages( SymmetricGroup( [ 1 .. 2 ] ), Group( 
-[ (1,2) ] ), [ (1,2) ], [ (1,2) ] ), [ (), () ]) )
+gap> map := IsomorphismSemigroups(R1, R2);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

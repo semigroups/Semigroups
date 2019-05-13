@@ -206,10 +206,7 @@ gap> x2 := Digraph([[1, 3, 4, 5], [2, 3, 4, 5], [3, 5], [4, 5], [5]]);;
 gap> G2 := Group([(1, 2)]);;
 gap> M1 := McAlisterTripleSemigroup(G1, x1, [1, 2, 3, 4]);;
 gap> M2 := McAlisterTripleSemigroup(G2, x2, [1, 3, 4, 5]);;
-gap> IsomorphismSemigroups(M1, M2);
-MappingByFunction( <McAlister triple semigroup over Group([ (4,
-5) ])>, <McAlister triple semigroup over Group([ (1,
-2) ])>, function( s ) ... end )
+gap> IsomorphismSemigroups(M1, M2);;
 gap> x3 := Digraph([[1], [1, 2], [1, 3], [1, 2, 4], [1, 2, 5], [1, 3, 6],
 > [1, 3, 7]]);;
 gap> y3 := Digraph([[1], [1, 2], [1, 2, 3], [1, 2, 4]]);;
@@ -219,10 +216,7 @@ gap> SetDigraphVertexLabels(y4, [1, 2, 4, 5]);;
 gap> G3 := Group([(6, 7), (4, 5), (2, 3)(4, 6)(5, 7)]);;
 gap> M3 := McAlisterTripleSemigroup(G3, x3, y3);;
 gap> M4 := McAlisterTripleSemigroup(G3, x3, y4);;
-gap> IsomorphismSemigroups(M3, M4);
-MappingByFunction( <McAlister triple semigroup over Group([ (6,7), (4,5), (2,
-3)(4,6)(5,7) ])>, <McAlister triple semigroup over Group([ (6,7), (4,5), (2,3)
-(4,6)(5,7) ])>, function( s ) ... end )
+gap> IsomorphismSemigroups(M3, M4);;
 gap> IsomorphismSemigroups(M1, M3);
 fail
 gap> M5 := McAlisterTripleSemigroup(G3, x3, [1, 2, 3, 4, 5]);;

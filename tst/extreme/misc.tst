@@ -3531,10 +3531,11 @@ true
 gap> iso := IsomorphismPermGroup(h);
 MappingByFunction( <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
   >, Group([ (3,6)(4,5) ]), function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( Group([ (3,6)
-(4,5) ]), <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
- , function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(iso);;
+gap> Source(inv);
+Group([ (3,6)(4,5) ])
+gap> Range(inv);
+<Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
 gap> ForAll(h, x -> (x ^ iso) ^ inv = x);
 true
 
@@ -3575,10 +3576,11 @@ gap> h := GroupHClass(DClass(h));
 gap> iso := IsomorphismPermGroup(h);
 MappingByFunction( <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
  , Group([ (1,2), (2,3) ]), function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(iso);
-MappingByFunction( Group([ (1,2), (2,
-3) ]), <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
- , function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(iso);;
+gap> Source(inv);
+Group([ (1,2), (2,3) ])
+gap> Range(inv);
+<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> ForAll(h, x -> (x ^ iso) ^ inv = x);
 true
 gap> repeat h := NextIterator(iter); until Size(h) > 1;

@@ -1231,10 +1231,11 @@ gap> IsRegularDClass(D);
 true
 gap> H := GroupHClass(D);
 <Green's H-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])>
-gap> IsomorphismPermGroup(H);
-MappingByFunction( <Green's H-class: Matrix(IsBooleanMat, 
-  [[1, 0, 0], [0, 1, 0], [0, 0, 1]])>, Group([ (1,2)(3,5)(4,6), (1,5,4)
-(2,6,3) ]), function( h ) ... end )
+gap> x := IsomorphismPermGroup(H);;
+gap> Source(x) = H;
+true
+gap> Range(x);
+Group([ (1,2)(3,5)(4,6), (1,5,4)(2,6,3) ])
 gap> H := HClass(S, Matrix(IsBooleanMat, [[0, 0, 1], [0, 0, 1], [0, 0, 0]]));;
 gap> IsomorphismPermGroup(H);
 Error, Semigroups: IsomorphismPermGroup: usage,

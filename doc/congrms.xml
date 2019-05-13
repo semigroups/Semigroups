@@ -112,9 +112,8 @@ gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
 gap> rowBlocks := [[1], [2], [3]];;
-gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);
-<semigroup congruence over <Rees 0-matrix semigroup 6x3 over 
-  Group([ (1,4,5), (1,5,3,4) ])> with linked triple (2^2,4,3)>]]></Example>
+gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

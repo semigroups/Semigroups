@@ -116,10 +116,11 @@ gap> x := RMSElement(R, 1, (1, 2, 3, 4), 1);;
 gap> y := RMSElement(R, 6, (1, 3, 4, 2), 5);;
 gap> S := Semigroup(x, y);;
 gap> D := DClass(S, x);;
-gap> InjectionPrincipalFactor(D);
-MappingByFunction( <Green's D-class: (1,(1,2,3,4),1)>, 
-<Rees matrix semigroup 1x1 over Group([ (1,2,3,
-4) ])>, function( x ) ... end, function( x ) ... end )
+gap> inj := InjectionPrincipalFactor(D);;
+gap> Source(inj) = D;
+true
+gap> Range(inj);
+<Rees matrix semigroup 1x1 over Group([ (1,2,3,4) ])>
 
 # attract: InjectionPrincipalFactor 4/6
 gap> D := GreensDClassOfElement(
@@ -127,11 +128,12 @@ gap> D := GreensDClassOfElement(
 >   Transformation([1, 3, 4, 1, 3]),
 >   Transformation([5, 5, 1, 1, 3])]),
 > Transformation([5, 5, 1, 1, 3]));;
-gap> map := InjectionPrincipalFactor(D);
-MappingByFunction( <Green's D-class: Transformation( [ 5, 5, 1, 1, 3 ] )>, 
-<Rees matrix semigroup 1x1 over Group([ (1,5,
-3) ])>, function( x ) ... end, function( x ) ... end )
-gap> Transformation([5, 1, 1, 1, 3]) ^ map;
+gap> inj := InjectionPrincipalFactor(D);;
+gap> Source(inj) = D;
+true
+gap> Range(inj);
+<Rees matrix semigroup 1x1 over Group([ (1,5,3) ])>
+gap> Transformation([5, 1, 1, 1, 3]) ^ inj;
 fail
 
 # attract: InjectionPrincipalFactor 5/6
@@ -316,6 +318,7 @@ gap> Unbind(I);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(foo);
+gap> Unbind(inj);
 gap> Unbind(inv);
 gap> Unbind(map);
 gap> Unbind(x);
