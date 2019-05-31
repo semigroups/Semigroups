@@ -107,8 +107,12 @@
     <name><first>Volodymyr</first><last>Mazorchuk</last></name>
   </author>  
   <title>Partitioned binary relations</title>
-  <journal>arXiv:1102.0862</journal>
-  <year>2011</year>
+  <journal>Mathematica Scandinavica</journal>
+  <volume>113</volume>
+  <pages>30-52</pages>
+  <year>2013</year>
+  <url>https://www.mscand.dk/article/view/15480</url>
+  <other type="doi">https://doi.org/10.7146/math.scand.a-15480</other>
 </article></entry>
 
 <entry id="Pin2009aa"><manual>
@@ -138,7 +142,9 @@
 
 <entry id="Mitchell2019aa"><article>
   <author>
-  <name><first></first><last>J. East A. Egri-Nagy J. D. Mitchell</last></name>
+    <name><first>J.</first><last>East</last></name>
+    <name><first>A.</first><last>Egri-Nagy</last></name>
+    <name><first>J. D.</first><last>Mitchell</last></name>
     <name><first>Y.</first><last>Péresse</last></name>
   </author>  
   <title>Computing finite semigroups</title>
