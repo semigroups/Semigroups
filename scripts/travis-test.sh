@@ -50,10 +50,11 @@ else
     # Run GAP testbugfix with Semigroups loaded; this only works with GAP master
     if [ "$GAP" == "master" ]; then
       echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
-      # Delete some very long-running tests
+      # Delete some problematic or very long-running tests
       rm $GAPROOT/tst/testbugfix/2016-03-03-t00332.tst
       rm $GAPROOT/tst/testbugfix/2018-05-24-IntermediateSubgroups.tst
       rm $GAPROOT/tst/testbugfix/2018-09-13-MTC.tst
+      rm $GAPROOT/tst/testbugfix/2018-12-06-GroupWithGenerators.tst
       echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testbugfix.g\");" |
         $GAPSH -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
     fi
