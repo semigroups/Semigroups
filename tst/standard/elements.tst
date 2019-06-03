@@ -71,6 +71,18 @@ gap> x := PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2]],
 > [[-3, -2, -1, 1, 2], [-3, 2, 3], [-2, -1, 2, 3]]);;
 gap> SmallestIdempotentPower(x);
 2
+gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
+true
+gap> x := PBR([[-2, 2], [-1]], [[1], [1, 2]]);;
+gap> SmallestIdempotentPower(x);
+4
+gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
+true
+gap> x := PBR([[-2], [-1]], [[1], [1, 2]]);;
+gap> SmallestIdempotentPower(x);
+2
+gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
+true
 gap> x := Transformation(
 > [71, 14, 60, 68, 67, 74, 61, 19, 81, 10, 17, 21, 9, 49, 78,
 >  73, 81, 22, 59, 50, 29, 31, 6, 27, 40, 21, 75, 44, 71, 62, 22, 56, 90, 53,
@@ -80,9 +92,13 @@ gap> x := Transformation(
 >  93, 44, 4, 96, 11, 39, 14, 57, 34]);;
 gap> SmallestIdempotentPower(x);
 42
+gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
+true
 gap> x := Transformation([2, 6, 4, 5, 3, 7, 8, 8]);;
 gap> SmallestIdempotentPower(x);
 6
+gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
+true
 gap> SmallestIdempotentPower(GeneratorsOfMagma(FreeMagma(1))[1]);
 Error, Semigroups: SmallestIdempotentPower: usage,
 the argument <x> must be the generator of a semigroup,
