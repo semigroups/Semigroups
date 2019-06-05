@@ -821,7 +821,8 @@ gap> S := Semigroup([Transformation([1, 4, 2, 5, 8, 6, 2, 7]),
 >  Transformation([2, 6, 6, 4, 2, 2, 1, 2]),
 >  Transformation([3, 6, 6, 7, 8, 2, 1, 5]),
 >  Transformation([3, 7, 4, 5, 4, 6, 6, 2]),
->  Transformation([5, 7, 5, 2, 8, 1, 2, 4])]);;
+>  Transformation([5, 7, 5, 2, 8, 1, 2, 4])],
+>  rec(acting := true));;
 gap> NrMaximalSubsemigroups(S);
 5
 

@@ -32,23 +32,13 @@ end);
 InstallMethod(NrMaximalSubsemigroups,
 "for a semigroup with known maximal subsemigroups",
 [IsSemigroup and HasMaximalSubsemigroups],
-function(S)
-  return Length(MaximalSubsemigroups(S));
-end);
+S -> Length(MaximalSubsemigroups(S)));
 
-InstallMethod(NrMaximalSubsemigroups,
-"for a semigroup",
-[IsSemigroup],
-function(S)
-  return MaximalSubsemigroupsNC(S, rec(number := true));
-end);
+InstallMethod(NrMaximalSubsemigroups, "for a semigroup", [IsSemigroup],
+S -> MaximalSubsemigroupsNC(S, rec(number := true)));
 
-InstallMethod(MaximalSubsemigroups,
-"for a semigroup",
-[IsSemigroup],
-function(S)
-  return MaximalSubsemigroupsNC(S, rec(number := false));
-end);
+InstallMethod(MaximalSubsemigroups, "for a semigroup", [IsSemigroup],
+S -> MaximalSubsemigroupsNC(S, rec(number := false)));
 
 # MaximalSubsemigroups(S, r):
 #
