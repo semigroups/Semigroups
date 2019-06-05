@@ -1934,20 +1934,16 @@ gap> ExtRepOfObj(T.1);
 
 # Test RandomSemigroup
 gap> RandomSemigroup(IsFpSemigroup);;
-gap> RandomSemigroup(IsFpSemigroup, 3);
-<fp semigroup on the generators [ s1, s2, s3 ]>
-gap> RandomSemigroup(IsFpSemigroup, 5, 5);
-<fp semigroup on the generators [ s1, s2, s3, s4, s5 ]>
+gap> RandomSemigroup(IsFpSemigroup, 3);;
+gap> RandomSemigroup(IsFpSemigroup, 5, 5);;
 gap> RandomSemigroup(IsFpSemigroup, "a");
 Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
 the parameter must be pos ints,
 
 # Test RandomMonoid
 gap> RandomMonoid(IsFpMonoid);;
-gap> RandomMonoid(IsFpMonoid, 3);
-<fp monoid on the generators [ m1, m2, m3 ]>
-gap> RandomMonoid(IsFpMonoid, 5, 5);
-<fp monoid on the generators [ m1, m2, m3, m4, m5 ]>
+gap> RandomMonoid(IsFpMonoid, 3);;
+gap> RandomMonoid(IsFpMonoid, 5, 5);;
 gap> RandomMonoid(IsFpMonoid, "a");
 Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
 the parameter must be pos ints,
