@@ -2,10 +2,14 @@
 
 #### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
-### Next version
+### Version 3.1.3 (released 07/06/2019)
 
+This is a minor release of the Semigroups package, including some improvements to 
+`SmallestIdempotentPower` and `RepresentativeOfMinimalIdeal` by 
+[Wilf A. Wilson](http://wilf.me) and some other minor modifications.
 Semigroups now requires version 4.8.2 of the [orb
 package](https://gap-packages.github.io/orb), or newer.
+
 
 ### Version 3.1.2 (released 15/03/2019)
 
