@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.1.2">
+##  <!ENTITY VERSION "3.1.3">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.12.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.1.2">
+##  <!ENTITY ARCHIVENAME "semigroups-3.1.3">
 ##  <!ENTITY COPYRIGHTYEARS "2011-19">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.1.2",
-Date := "15/03/2019",  # dd/mm/yyyy format
+Version := "3.1.3",
+Date := "07/06/2019",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -135,17 +135,16 @@ Persons := [
     FirstNames    := "Max",
     IsAuthor      := false,
     IsMaintainer  := false,
-    Email         := "max.horn@math.uni-giessen.de",
+    Email         := "max.horn@uni-siegen.de",
     WWWHome       := "http://www.quendi.de/math",
     PostalAddress := Concatenation(
-                       "AG Algebra\n",
-                       "Mathematisches Institut\n",
-                       "Justus-Liebig-Universität Gießen\n",
-                       "Arndtstraße 2\n",
-                       "35392 Gießen\n",
+                       "Department Mathematik\n",
+                       "Universität Siegen\n",
+                       "Walter-Flex-Straße 3\n",
+                       "57072 Siegen\n",
                        "Germany"),
-    Place         := "Gießen",
-    Institution   := "Justus-Liebig-Universität Gießen"),
+    Place         := "Siegen",
+    Institution   := "Universität Siegen"),
 
   rec(
     LastName      := "Jonusas",

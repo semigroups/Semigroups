@@ -16,7 +16,7 @@
   
   [1X6.1-1 [33X[0;0YActing semigroups[133X[101X
   
-  [33X[0;0YThe  first  type  of  fundamental  algorithms are those described in [MP19],
+  [33X[0;0YThe  first  type of fundamental algorithms are those described in [EENMP19],
   which  when  applied  to a semigroup with relatively large subgroups are the
   most   efficient  methods  in  the  [5XSemigroups[105X  package.  For  example,  the
   complexity  of  computing,  say, the size of a transformation semigroup that
@@ -32,8 +32,8 @@
   0-matrix  semigroups  over  permutation groups (see Chapter [14X'Reference: Rees
   Matrix Semigroups'[114X), and matrices over a finite field (see Section [14X5.4[114X).[133X
   
-  [33X[0;0YWe  refer  to semigroups to which the algorithms in [MP19] can be applied as
-  [13Xacting   semigroups[113X,   and   such   semigroups   belong   to   the  category
+  [33X[0;0YWe  refer  to semigroups to which the algorithms in [EENMP19] can be applied
+  as   [13Xacting   semigroups[113X,   and  such  semigroups  belong  to  the  category
   [2XIsActingSemigroup[102X ([14X6.1-3[114X).[133X
   
   [33X[0;0YIf  you  know  [13Xa  priori[113X that the semigroup you want to compute is large and
@@ -70,7 +70,7 @@
   [33X[0;0YBoth  implementations  outperform  the algorithms for acting semigroups when
   applied  to  semigroups  with small (trivial) subgroups. This method is also
   used to determine the structure of a semigroup when the algorithms described
-  in  [MP19]  do  not apply. It is possible to specify which methods should be
+  in [EENMP19] do not apply. It is possible to specify which methods should be
   applied to a given semigroup; see Section [14X6.3[114X.[133X
   
   [33X[0;0YWe refer to semigroups to which the Froidure-Pin Algorithm can be applied in
@@ -84,7 +84,7 @@
   can  be applied to semigroups consisting of the following types of elements:
   transformations  (see  [14X'Reference:  Transformations'[114X),  partial permutations
   (see  [14X'Reference:  Partial  permutations'[114X),  bipartitions  (see  Chapter [14X3[114X),
-  partitioned  binary  relations  (see  Chapter  [14X4[114X)  as defined in [MM11]; and
+  partitioned  binary  relations  (see  Chapter  [14X4[114X)  as defined in [MM13]; and
   matrices over the following semirings:[133X
   
   [30X    [33X[0;6Ythe  [13XBoolean  semiring[113X [22X{0, 1}[122X where [22X0 + 0 = 0[122X, [22X0 + 1 = 1 + 1 = 1 + 0 =
@@ -1018,16 +1018,15 @@
     [4X[25X>[125X [27X                  Transformation([3, 3, 8, 2, 5, 6, 4, 4]));;[127X[104X
     [4X[25Xgap>[125X [27XIsGroupAsSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XRange(IsomorphismPermGroup(S));[127X[104X
-    [4X[28XGroup([ (5,6,8), (2,3,8,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismPermGroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso) = S and Range(iso) = Group([(5, 6, 8), (2, 3, 8, 4)]);[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(Range(IsomorphismPermGroup(S)));[127X[104X
     [4X[28X"S6"[128X[104X
     [4X[25Xgap>[125X [27XS := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));[127X[104X
     [4X[28X<partial perm group of size 24, rank 4 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsomorphismPermGroup(S);[127X[104X
-    [4X[28XMappingByFunction( <partial perm group of size 24, rank 4 with[128X[104X
-    [4X[28X  2 generators>, Group([ (1,2,3,4), (1,[128X[104X
-    [4X[28X2) ]), <Attribute "AsPermutation">, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XRange(IsomorphismPermGroup(S));[127X[104X
+    [4X[28XGroup([ (1,2,3,4), (1,2) ])[128X[104X
     [4X[25Xgap>[125X [27XG := GroupOfUnits(PartitionMonoid(4));[127X[104X
     [4X[28X<block bijection group of degree 4 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(G);[127X[104X

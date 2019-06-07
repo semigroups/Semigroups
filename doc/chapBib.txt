@@ -30,6 +30,9 @@
   [[20XEas19[120X]  [16XEast, J.[116X, [17XPresentations for rook partition monoids and algebras and
   their singular ideals[117X, [18XJ. Pure and Applied Algebra[118X, [19X223[119X (2019), 1097-1122.
   
+  [[20XEENMP19[120X]  [16XEast,  J.,  Egri-Nagy,  A.,  Mitchell,  J.  D.  and  Péresse, Y.[116X,
+  [17XComputing finite semigroups[117X, [18XJ. Symbolic Computation[118X, [19X92[119X (2019), 110 - 155.
+  
   [[20XFar09[120X]   [16XFarlow,   K.  G.[116X,  [17XMax-Plus  Algebra[117X,  Master's  thesis,  Virginia
   Polytechnic Institute and State University, United States (2009).
   
@@ -72,14 +75,11 @@
   partial  dual  symmetric  inverse  monoid[117X,  [18XComm.  Algebra[118X,  [19X43[119X,  4  (2015),
   1621–1639.
   
-  [[20XMM11[120X]   [16XMartin,   P.  and  Mazorchuk,  V.[116X,  [17XPartitioned  binary  relations[117X,
-  [18XarXiv:1102.0862[118X (2011).
+  [[20XMM13[120X]   [16XMartin,   P.  and  Mazorchuk,  V.[116X,  [17XPartitioned  binary  relations[117X,
+  [18XMathematica Scandinavica[118X, [19X113[119X (2013), 30-52.
   
   [[20XMM16[120X]  [16XMesyan,  Z.  and  Mitchell,  J. D.[116X, [17XThe structure of a graph inverse
   semigroup[117X, [18XSemigroup Forum[118X, Springer Nature, [19X93[119X, 1 (2016), 111–130.
-  
-  [[20XMP19[120X]  [16XJ.  East  A.  Egri-Nagy  J.  D. Mitchell, and Péresse, Y.[116X, [17XComputing
-  finite semigroups[117X, [18XJ. Symbolic Computation[118X, [19X92[119X (2019), 110 - 155.
   
   [[20XSch92[120X]  [16XSchein,  B.  M.[116X,  [17XThe minimal degree of a finite inverse semigroup[117X,
   [18XTrans. Amer. Math. Soc.[118X, [19X333[119X, 2 (1992), 877–888.

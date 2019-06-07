@@ -1240,9 +1240,7 @@
     [4X[25Xgap>[125X [27XN := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;[127X[104X
     [4X[25Xgap>[125X [27XcolBlocks := [[1], [2, 5], [3, 6], [4]];;[127X[104X
     [4X[25Xgap>[125X [27XrowBlocks := [[1], [2], [3]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);[127X[104X
-    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 6x3 over [128X[104X
-    [4X[28X  Group([ (1,4,5), (1,5,3,4) ])> with linked triple (2^2,4,3)>[128X[104X
+    [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;[127X[104X
   [4X[32X[104X
   
   [1X17.6-3 IsRMSCongruenceClassByLinkedTriple[101X

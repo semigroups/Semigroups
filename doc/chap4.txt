@@ -5,7 +5,7 @@
   manipulating  partitioned  binary relations, henceforth referred to by their
   acronym PBRs. We begin by describing what these objects are.[133X
   
-  [33X[0;0YPBRs  were  introduced in the paper [MM11] as, roughly speaking, the maximum
+  [33X[0;0YPBRs  were  introduced in the paper [MM13] as, roughly speaking, the maximum
   generalization    of    bipartitions    and   related   objects.   Although,
   mathematically,  bipartitions  are  a  special  type  of  PBR, in [5XSemigroups[105X
   bipartitions  and  PBRs  are  currently  distinct  types  of  objects. It is
