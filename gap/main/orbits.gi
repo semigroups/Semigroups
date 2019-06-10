@@ -162,30 +162,30 @@ InstallMethod(EvaluateWord,
 "for multiplicative element with one coll and list of integers",
 [IsMultiplicativeElementWithOneCollection, IsList],
 function(gens, w)
-    local i, res;
-    if Length(w) = 0  then
-      return One(gens);
-    fi;
-    res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
-    for i in [2 .. Length(w)]  do
-      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
-    od;
-    return res;
+  local i, res;
+  if Length(w) = 0  then
+    return One(gens);
+  fi;
+  res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
+  for i in [2 .. Length(w)]  do
+    res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
+  od;
+  return res;
 end);
 
 InstallMethod(EvaluateWord,
 "for multiplicative element coll and list of integers",
 [IsMultiplicativeElementCollection, IsList],
 function(gens, w)
-    local i, res;
-    if Length(w) = 0  then
-      return SEMIGROUPS.UniversalFakeOne;
-    fi;
-    res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
-    for i in [2 .. Length(w)]  do
-      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
-    od;
-    return res;
+  local i, res;
+  if Length(w) = 0 then
+    return SEMIGROUPS.UniversalFakeOne;
+  fi;
+  res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
+  for i in [2 .. Length(w)]  do
+    res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
+  od;
+  return res;
 end);
 
 InstallMethod(EvaluateExtRepObjWord,
@@ -193,18 +193,18 @@ InstallMethod(EvaluateExtRepObjWord,
 [IsMultiplicativeElementCollection, IsList],
 function(gens, w)
   local res, i;
-    if Length(w) = 0 then
-      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-                    "must be a non-empty list");
-    elif Length(w) mod 2 = 1 then
-      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-                    "must be a list of even length");
-    fi;
-    res := gens[AbsInt(w[1])] ^ w[2];
-    for i in [3, 5 .. Length(w) - 1] do
-      res := res * gens[AbsInt(w[i])] ^ w[i + 1];
-    od;
-    return res;
+  if Length(w) = 0 then
+    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+    "must be a non-empty list");
+  elif Length(w) mod 2 = 1 then
+    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+    "must be a list of even length");
+  fi;
+  res := gens[AbsInt(w[1])] ^ w[2];
+  for i in [3, 5 .. Length(w) - 1] do
+    res := res * gens[AbsInt(w[i])] ^ w[i + 1];
+  od;
+  return res;
 end);
 
 InstallMethod(EvaluateExtRepObjWord,
@@ -212,17 +212,17 @@ InstallMethod(EvaluateExtRepObjWord,
 [IsMultiplicativeElementWithOneCollection, IsList],
 function(gens, w)
   local res, i;
-    if Length(w) = 0 then
-      return One(gens);
-    elif Length(w) mod 2 = 1 then
-      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-                    "must be a list of even length");
-    fi;
-    res := gens[AbsInt(w[1])] ^ w[2];
-    for i in [3, 5 .. Length(w) - 1] do
-      res := res * gens[AbsInt(w[i])] ^ w[i + 1];
-    od;
-    return res;
+  if Length(w) = 0 then
+    return One(gens);
+  elif Length(w) mod 2 = 1 then
+    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+    "must be a list of even length");
+  fi;
+  res := gens[AbsInt(w[1])] ^ w[2];
+  for i in [3, 5 .. Length(w) - 1] do
+    res := res * gens[AbsInt(w[i])] ^ w[i + 1];
+  od;
+  return res;
 end);
 
 InstallGlobalFunction(EnumeratePosition,

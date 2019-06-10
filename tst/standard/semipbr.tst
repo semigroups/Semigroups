@@ -1887,7 +1887,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
-<pbr semigroup of size 6, degree 6 with 2 generators>
+<pbr monoid of size 6, degree 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1909,7 +1909,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsMonoid(IsPBRMonoid, S);
-<pbr monoid of size 6, degree 6 with 2 generators>
+<pbr monoid of size 6, degree 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

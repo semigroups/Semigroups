@@ -1644,7 +1644,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
-<semigroup of size 6, 6x6 boolean matrices with 2 generators>
+<monoid of size 6, 6x6 boolean matrices with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1666,7 +1666,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);
-<semigroup of size 6, 6x6 boolean matrices with 2 generators>
+<monoid of size 6, 6x6 boolean matrices with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

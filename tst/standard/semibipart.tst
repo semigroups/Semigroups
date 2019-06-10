@@ -2117,7 +2117,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
-<block bijection group of size 6, degree 6 with 2 generators>
+<block bijection group of size 6, degree 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -2139,7 +2139,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
-<block bijection group of size 6, degree 6 with 2 generators>
+<block bijection group of size 6, degree 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

@@ -177,8 +177,19 @@ function(S)
   end;
 
   inv := function(x)
+    local w, i;
+    w := ExtRepOfObj(Factorization(G, x));
+    if Length(w) = 0 then
+      return MultiplicativeNeutralElement(S);
+    fi;
+    for i in [2, 4 .. Length(w)] do
+      if w[i] < 0 then
+        w[i] := Order(GeneratorsOfGroup(G)[w[i - 1]]) + w[i];
+      fi;
+    od;
+    w := SEMIGROUPS.ExtRepObjToWord(w);
     return EvaluateWord(GeneratorsOfSemigroup(S),
-                        List(MinimalFactorization(G, x), x -> gen2[x]));
+                        List(w, x -> gen2[x]));
   end;
 
   # TODO replace this with SemigroupIsomorphismByImagesOfGenerators

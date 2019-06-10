@@ -1839,7 +1839,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsMonoid(IsPartialPermMonoid, S);
-<inverse partial perm monoid of size 6, rank 6 with 2 generators>
+<inverse partial perm monoid of size 6, rank 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
