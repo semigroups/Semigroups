@@ -22,7 +22,7 @@ IsSemigroup and IsGeneratorsOfEnumerableSemigroup);
 
 # This is optional, but it is useful in several places, for example, to be able
 # to use MinimalFactorization with a perm group.
-InstallTrueMethod(IsEnumerableSemigroupRep, IsGroup and IsFinite);
+# InstallTrueMethod(IsEnumerableSemigroupRep, IsGroup and IsFinite);
 
 # This should be removed ultimately, but is included now because there are too
 # few methods for fp semigroup and monoids at present.

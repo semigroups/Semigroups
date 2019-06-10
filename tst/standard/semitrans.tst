@@ -2179,7 +2179,7 @@ true
 #   convert from non-perm group  to IsTransformationSemigroup
 gap> S := DihedralGroup(6);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of size 6, degree 6 with 2 generators>
+<transformation monoid of size 6, degree 6 with 5 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

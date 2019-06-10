@@ -940,12 +940,12 @@ gap> BruteForceInverseCheck(iso);
 true
 gap> G := AllSmallGroups(8)[3];;
 gap> G := AsSemigroup(IsTransformationSemigroup, G);
-<transformation semigroup of size 8, degree 8 with 3 generators>
+<transformation monoid of size 8, degree 8 with 7 generators>
 gap> x := IdentityTransformation;;
-gap> y := Transformation([4, 7, 6, 1, 8, 3, 2, 5]);;
+gap> y := Transformation([4, 6, 7, 1, 8, 2, 3, 5]);;
 gap> R := ReesZeroMatrixSemigroup(G, [[x, 0, 0], [0, x, 0], [0, 0, x]]);
-<Rees 0-matrix semigroup 3x3 over <transformation semigroup of size 8, 
-  degree 8 with 3 generators>>
+<Rees 0-matrix semigroup 3x3 over <transformation monoid of size 8, degree 8 
+  with 7 generators>>
 gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(R);;
 gap> BruteForceIsoCheck(iso);
 true
@@ -959,7 +959,7 @@ gap> BruteForceInverseCheck(iso);
 true
 gap> R := ReesZeroMatrixSemigroup(G, [[y, 0, 0], [0, y, 0], [0, 0, y]]);
 <Rees 0-matrix semigroup 3x3 over <transformation group of size 8, 
-  degree 8 with 3 generators>>
+  degree 8 with 7 generators>>
 gap> S := Semigroup(RMSElement(R, 1, x, 2), RMSElement(R, 2, x, 1));;
 gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);;
 gap> BruteForceIsoCheck(iso);
