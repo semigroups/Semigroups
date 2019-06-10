@@ -450,6 +450,9 @@ end);
 InstallMethod(MultiplicativeZero, "for a free semigroup",
 [IsFreeSemigroup], ReturnFail);
 
+InstallMethod(MultiplicativeZero, "for a free inverse semigroup",
+[IsFreeInverseSemigroup], ReturnFail);
+
 InstallMethod(LengthOfLongestDClassChain, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -713,16 +716,17 @@ InstallMethod(RepresentativeOfMinimalIdeal, "for a semigroup",
 [IsSemigroup],
 function(S)
 
-  if not IsFinite(S) then
-    TryNextMethod();
+  if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
+    return MultiplicativeZero(S);
+  elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    # This catches known trivial semigroups
+    return Representative(S);
   elif IsSemigroupIdeal(S) and
       (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
        or not HasGeneratorsOfSemigroup(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
-    # This catches known trivial semigroups
-    # WW: The idea is to quickly get at an arbitrary element of the semigroup
-    return Representative(S);
+  elif not IsFinite(S) then
+    TryNextMethod();
   fi;
 
   return RepresentativeOfMinimalIdealNC(S);
