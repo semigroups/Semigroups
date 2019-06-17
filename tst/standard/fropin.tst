@@ -517,9 +517,7 @@ gap> MultiplicationTable(S);
 # PositionCanonical (for a group)
 gap> G := Group((1, 2, 3), (1, 2));;
 gap> IsEnumerableSemigroupRep(G);
-true
-gap> PositionCanonical(G, (1, 3, 2));
-3
+false
 
 #
 gap> SEMIGROUPS.StopTest();

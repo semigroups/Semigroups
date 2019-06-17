@@ -1823,7 +1823,7 @@ true
 gap> S := DihedralGroup(IsPermGroup, 4);
 Group([ (1,2), (3,4) ])
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
-<Rees matrix semigroup 1x1 over Group([ (1,3)(2,4), (1,2)(3,4) ])>
+<Rees matrix semigroup 1x1 over Group([ (1,2)(3,4), (1,3)(2,4) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
