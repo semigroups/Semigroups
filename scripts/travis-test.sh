@@ -28,18 +28,25 @@ elif [ "$SUITE" == "coverage" ]; then
 
 else
 
+  # Temporary workaround because of GAP being weird with memory
+  if [ "$ABI" == "32" ]; then
+    MEM=1g
+  elif [ "$ABI" == "64" ]; then
+    MEM=2g
+  fi
+
   cd $SEMI_DIR/tst/workspaces
   echo -e "\nRunning SaveWorkspace tests..."
   echo "LoadPackage(\"semigroups\"); SemigroupsTestInstall(); Test(\"save-workspace.tst\"); quit; quit; quit;" |
-    $GAPSH -A -r -m 512m -o 1g -s 1g -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -A -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning LoadWorkspace tests..."
   echo "Test(\"load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" |
-    $GAPSH -L test-output.w -A -x 80 -r -m 512m -o 1g -s 1g -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -L test-output.w -A -x 80 -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning Semigroups package standard tests and manual examples..."
   echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
-    $GAPSH -A -x 80 -r -m 512m -o 1g -s 1g -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -A -x 80 -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   # Run GAP tests, but only in 64-bit, since they're far too slow in 32-bit
   if [ "$ABI" == "64" ]; then
