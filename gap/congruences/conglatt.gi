@@ -49,10 +49,10 @@ DigraphNrVertices);
 
 SEMIGROUPS.PrincipalXCongruencePosetNC :=
   function(S,
-           restriction,
+           pairs,
            SemigroupXCongruence,
            GeneratingPairsOfXSemigroupCongruence)
-  local report, pairs, total, congs, nrcongs, children, parents, last_collected,
+  local report, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p,
         poset;
 
@@ -61,8 +61,7 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
   SEMIGROUPS.OptionsRec(S).report := false;
 
   # Only try pairs from <restriction>
-  pairs := IteratorOfCombinations(AsList(restriction), 2);
-  total := Binomial(Size(restriction), 2);
+  total := Length(pairs);
 
   # Get all the unique principal congs
   Info(InfoSemigroups, 1, "Finding principal congruences . . .");
@@ -78,6 +77,7 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
     newparents := [];   # Parents of newcong
     newcong := SemigroupXCongruence(S, pair);
     for i in [1 .. Length(congs)] do
+      if Length(GeneratingPairsOfXSemigroupCongruence(congs[i])) <> 0 then
       pair1 := GeneratingPairsOfXSemigroupCongruence(congs[i])[1];
       if CongruenceTestMembershipNC(congs[i], pair[1], pair[2]) then
         if CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
@@ -90,6 +90,7 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
       elif CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
         Add(newchildren, i);
       fi;
+    fi;
     od;
     nr := nr + 1;
     if nr > last_collected + 1999 then

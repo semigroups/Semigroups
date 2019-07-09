@@ -34,6 +34,8 @@ using libsemigroups::Timer;
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
+#define REPORT_FROM_FUNC2(stuff) std::cout << stuff << std::endl;
+
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
   SET_LEN_PLIST(ELM_PLIST(plist, i), j);
@@ -114,7 +116,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
   glob_reporter.set_report(report);
-  REPORT_FROM_FUNC("limit = " << int_limit);
+  REPORT_FROM_FUNC2("limit = " << int_limit);
 
   Timer timer;
 
@@ -314,14 +316,14 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
     if (i <= nr) {
-      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
+      REPORT_FROM_FUNC2("found " << nr << " elements, " << nrrules
                                 << " rules, max word length " << len + 1
                                 << ", so far");
     } else {
-      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
+      REPORT_FROM_FUNC2("found " << nr << " elements, " << nrrules
                                 << " rules, max word length " << len + 1
                                 << ", finished!");
-      REPORT_FROM_FUNC("elapsed time = " << timer);  // NOLINT()
+      REPORT_FROM_FUNC2("elapsed time = " << timer);  // NOLINT()
     }
   }
 

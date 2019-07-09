@@ -687,6 +687,332 @@ function(data, limit, lookfunc)
   return data;
 end);
 
+RelativeLambdaOrb := function(S, T)
+  local o, D, act, schreiergen, schreierpos, genstoapply, gens, x, pos, i, j, m;
+
+  o   := Enumerate(LambdaOrb(S));
+  Unbind(o!.scc);
+  Unbind(o!.scc_lookup);
+
+  D   := List([1 .. Length(o)], x -> []);
+  act := LambdaAct(S);
+  schreiergen := ListWithIdenticalEntries(Length(o), fail);
+  schreierpos := ListWithIdenticalEntries(Length(o), fail);
+  genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
+  gens := GeneratorsOfSemigroup(T);
+
+  for i in [1 .. Length(o)] do
+    x := o[i];
+    for j in genstoapply do
+      pos := Position(o, act(x, gens[j]));
+      Add(D[i], pos);
+      if i < pos and schreiergen[pos] = fail then
+        schreiergen[pos] := j;
+        schreierpos[pos] := i;
+      fi;
+    od;
+  od;
+  o!.orbitgraph := D;
+  # Compute scc wrt to the new orbit graph, but scc reps using the old Schreier
+  # tree.
+  for m in [2 .. Length(OrbSCC(o))] do
+    LambdaOrbRep(o, m);
+  od;
+
+  o!.gens        := GeneratorsOfSemigroup(T);
+  o!.schreierpos := schreierpos;
+  o!.schreiergen := schreiergen;
+
+  return o;
+end;
+
+RelativeSemigroupData := function(s, t)
+  local data, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht,
+  repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos,
+  schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaperm, o,
+  oht, scc, lookup, membership, rho, rho_o, rho_orb, rho_nr, rho_ht,
+  rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth,
+  rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, ind,
+  pt, schutz, data_val, old, j, n;
+
+  data := SemigroupData(s);
+
+  ht := data!.ht;        # so far found R-reps
+  orb := data!.orbit;    # the so far found R-reps data
+  nr := Length(orb);
+  i := data!.pos;        # points in orb in position at most i have descendants
+  graph := data!.graph;  # orbit graph of orbit of R-classes under left mult
+  reps := data!.reps;    # reps grouped by equal lambda-scc-index and
+                         # rho-value-index
+
+  repslens := data!.repslens;       # Length(reps[m][i])=repslens[m][i]
+  lenreps := data!.lenreps;         # lenreps[m]=Length(reps[m])
+
+  lambdarhoht := data!.lambdarhoht;  # HTValue(lambdarhoht, [m,l])=position
+                                     # in reps[m] of R-reps with
+                                     # lambda-scc-index=m and rho-value-index=l
+
+  repslookup := data!.repslookup;  # Position(orb, reps[m][i][j])
+                                   # = repslookup[m][i][j]
+                                   # = HTValue(ht, reps[m][i][j])
+
+  orblookup1 := data!.orblookup1;  # orblookup1[i] position in reps[m]
+                                   # containing orb[i][4] (the R-rep)
+
+  orblookup2 := data!.orblookup2;  # orblookup2[i] position in
+                                   # reps[m][orblookup1[i]]
+                                   # containing orb[i][4] (the R-rep)
+
+  rholookup := data!.rholookup;    # rholookup[i]=rho-value-index of orb[i][4]
+
+  stopper := data!.stopper;        # stop at this place in the orbit
+
+  # schreier
+  schreierpos := data!.schreierpos;
+  schreiergen := data!.schreiergen;
+  schreiermult := data!.schreiermult;
+
+  # generators
+  gens := data!.gens;
+  nrgens := Length(gens);
+  genstoapply := data!.genstoapply;
+
+  # lambda
+  s := data!.parent;
+  lambda := LambdaFunc(s);
+  lambdaperm := LambdaPerm(s);
+
+  o := RelativeLambdaOrb(s, t);
+  oht := o!.ht;
+  scc := OrbSCC(o);
+  lookup := o!.scc_lookup;
+
+  membership := SchutzGpMembership(s);
+
+  # rho
+  rho := RhoFunc(s);
+  rho_o := RhoOrb(s);
+  rho_orb := rho_o!.orbit;
+  rho_nr := Length(rho_orb);
+  rho_ht := rho_o!.ht;
+  rho_schreiergen := rho_o!.schreiergen;
+  rho_schreierpos := rho_o!.schreierpos;
+
+  rho_log := rho_o!.log;
+  rho_logind := rho_o!.logind;
+  rho_logpos := rho_o!.logpos;
+  rho_depth := rho_o!.depth;
+  rho_depthmarks := rho_o!.depthmarks;
+
+  rho_orbitgraph := rho_o!.orbitgraph;
+
+  # initialise the data if necessary
+  if data!.init = false then
+    for i in [2 .. Length(scc)] do
+      reps[i] := [];
+      repslookup[i] := [];
+      repslens[i] := [];
+      lenreps[i] := 0;
+    od;
+    data!.init := true;
+    i := data!.pos;
+  fi;
+
+  if IsBoundGlobal("ORBC") then
+    htadd := HTAdd_TreeHash_C;
+    htvalue := HTValue_TreeHash_C;
+  else
+    htadd := HTAdd;
+    htvalue := HTValue;
+  fi;
+
+  while i < nr and i <> stopper do
+    Print("at ", i, " of ", nr, "\r\c");
+    i := i + 1;
+
+    #               for the rho-orbit               #
+    if rholookup[i] >= rho_depthmarks[rho_depth + 1] then
+      rho_depth := rho_depth + 1;
+      rho_depthmarks[rho_depth + 1] := rho_nr + 1;
+    fi;
+    rho_logind[rholookup[i]] := rho_logpos;
+    suc := false;
+    #                                               #
+
+    for j in genstoapply do  # JDM
+      x := gens[j] * orb[i][4];
+      pos := htvalue(oht, lambda(x));
+      m := lookup[pos];   # lambda-value-scc-index
+
+      # put lambda(x) in the first position in its scc
+      if pos <> scc[m][1] then
+        x := x * LambdaOrbMult(o, m, pos)[2];
+      fi;
+
+      rhox := rho(x);
+      l := htvalue(rho_ht, rhox);
+
+      if l = fail then  # new rho-value, new R-rep
+
+        #                update rho-orbit             #
+        rho_nr := rho_nr + 1;
+        l := rho_nr;
+        rho_orb[rho_nr] := rhox;
+        htadd(rho_ht, rhox, rho_nr);
+
+        rho_orbitgraph[rho_nr] := EmptyPlist(nrgens);
+        rho_orbitgraph[rholookup[i]][j] := rho_nr;
+
+        rho_schreiergen[rho_nr] := j;
+        rho_schreierpos[rho_nr] := rholookup[i];
+
+        suc := true;
+        rho_log[rho_logpos] := j;
+        rho_log[rho_logpos + 1] := rho_nr;
+        rho_logpos := rho_logpos + 2;
+        rho_o!.logpos := rho_logpos;
+        #                                              #
+
+        nr := nr + 1;
+        lenreps[m] := lenreps[m] + 1;
+        ind := lenreps[m];
+        lambdarhoht[l] := [];
+        lambdarhoht[l][m] := ind;
+
+        reps[m][ind] := [x];
+        repslookup[m][ind] := [nr];
+        repslens[m][ind] := 1;
+
+        orblookup1[nr] := ind;
+        orblookup2[nr] := 1;
+
+        pt := [s, m, o, x, false, nr];
+        # semigroup, lambda orb scc index, lambda orb, rep,
+        # IsGreensClassNC, index in orbit
+
+      elif not IsBound(lambdarhoht[l]) then
+        # old rho-value, but new lambda-rho-combination
+        # update rho orbit graph
+        rho_orbitgraph[rholookup[i]][j] := l;
+        nr := nr + 1;
+        lenreps[m] := lenreps[m] + 1;
+        ind := lenreps[m];
+        lambdarhoht[l] := [];
+        lambdarhoht[l][m] := ind;
+
+        reps[m][ind] := [x];
+        repslookup[m][ind] := [nr];
+        repslens[m][ind] := 1;
+
+        orblookup1[nr] := ind;
+        orblookup2[nr] := 1;
+
+        pt := [s, m, o, x, false, nr];
+      elif not IsBound(lambdarhoht[l][m]) then
+        # old rho-value, but new lambda-rho-combination
+
+        # update rho orbit graph
+        rho_orbitgraph[rholookup[i]][j] := l;
+
+        nr := nr + 1;
+        lenreps[m] := lenreps[m] + 1;
+        ind := lenreps[m];
+        lambdarhoht[l][m] := ind;
+
+        reps[m][ind] := [x];
+        repslookup[m][ind] := [nr];
+        repslens[m][ind] := 1;
+
+        orblookup1[nr] := ind;
+        orblookup2[nr] := 1;
+
+        pt := [s, m, o, x, false, nr];
+      else
+        # old lambda-rho combination
+        ind := lambdarhoht[l][m];
+        pt := [s, m, o, x, false, nr + 1];
+
+        # check membership in Schutzenberger group via stabiliser chain
+        schutz := LambdaOrbStabChain(o, m);
+
+        if schutz = true then
+          # the Schutzenberger group is the symmetric group
+          graph[i][j] := repslookup[m][ind][1];
+          rho_orbitgraph[rholookup[i]][j] := l;
+          continue;
+        else
+          if schutz = false then
+            # the Schutzenberger group is trivial
+            data_val := htvalue(ht, x);
+            if data_val <> fail then
+              graph[i][j] := data_val;
+              rho_orbitgraph[rholookup[i]][j] := l;
+              continue;
+            fi;
+          else
+            # the Schutzenberger group is neither trivial nor symmetric group
+            old := false;
+            for n in [1 .. repslens[m][ind]] do
+              if membership(schutz, lambdaperm(reps[m][ind][n], x)) then
+                old := true;
+                graph[i][j] := repslookup[m][ind][n];
+                rho_orbitgraph[rholookup[i]][j] := l;
+                break;
+              fi;
+            od;
+            if old then
+              continue;
+            fi;
+          fi;
+          nr := nr + 1;
+          repslens[m][ind] := repslens[m][ind] + 1;
+          reps[m][ind][repslens[m][ind]] := x;
+          repslookup[m][ind][repslens[m][ind]] := nr;
+          orblookup1[nr] := ind;
+          orblookup2[nr] := repslens[m][ind];
+          # update rho orbit graph and rholookup
+          rho_orbitgraph[rholookup[i]][j] := l;
+        fi;
+      fi;
+      rholookup[nr] := l;  # orb[nr] has rho-value in position l of the rho-orb
+
+      orb[nr] := pt;
+      schreierpos[nr] := i;     # orb[nr] is obtained from orb[i]
+      schreiergen[nr] := j;     # by multiplying by gens[j]
+      schreiermult[nr] := pos;  # and ends up in position <pos> of
+                                # its lambda orb
+      htadd(ht, x, nr);
+      graph[nr] := EmptyPlist(nrgens);
+      graph[i][j] := nr;
+    od;
+
+    # for the rho-orbit
+    if suc then
+      rho_log[rho_logpos - 2] := -rho_log[rho_logpos - 2];
+    else
+      rho_logind[rholookup[i]] := 0;
+    fi;
+
+  od;
+
+  # for the data-orbit
+  data!.pos := i;
+
+  if nr = i then
+    SetFilterObj(data, IsClosedData);
+    SetFilterObj(rho_o, IsClosedOrbit);
+    rho_o!.orbind := [1 .. rho_nr];
+  fi;
+
+  # for the rho-orbit
+  if i <> 0 then
+    rho_o!.pos := rholookup[i];
+    rho_o!.depth := rho_depth;
+  fi;
+  Print("\n");
+  return data;
+end;
+
 # not currently applicable for ideals
 
 InstallMethod(OrbitGraph, "for semigroup data",
