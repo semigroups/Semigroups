@@ -92,7 +92,7 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 Enjoy!
 
 [Semigroups]: https://gap-packages.github.io/Semigroups
-[libsemigroups]: https://james-d-mitchell.github.io/libsemigroups
+[libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
 [orb]: http://gap-packages.github.io/orb
 [Digraphs]: http://gap-packages.github.io/Digraphs

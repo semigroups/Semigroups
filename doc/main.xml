@@ -15,7 +15,7 @@
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
 </URL></Alt><Alt Only='Text'><Package>IO</Package></Alt>">
      <!ENTITY libsemigroups "<Alt Not='Text'><URL Text='libsemigroups'>
-     https://james-d-mitchell.github.io/libsemigroups/</URL></Alt><Alt Only='Text'><Package>libsemigroups</Package></Alt>">
+     https://libsemigroups.github.io/libsemigroups/</URL></Alt><Alt Only='Text'><Package>libsemigroups</Package></Alt>">
      <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
      <!ENTITY H "<Alt Only='HTML'>\(\mathscr{H}\)</Alt><Alt

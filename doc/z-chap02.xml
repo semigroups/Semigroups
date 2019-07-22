@@ -57,7 +57,7 @@
         from version 3.0.0, it is necessary to compile the &Semigroups; package.
         &Semigroups; uses the 
         <URL Text =
-          "libsemigroups">https://james-d-mitchell.github.io/libsemigroups/</URL>
+          "libsemigroups">https://libsemigroups.github.io/libsemigroups/</URL>
         C++ library, which requires a compiler
         implementing the C++11 standard. 
         Inside the <F>pkg/&ARCHIVENAME;</F> directory, type
