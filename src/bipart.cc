@@ -288,26 +288,28 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BIPART);
 
-  Bipartition* xx = bipart_get_cpp(x);
-  Bipartition* yy = bipart_get_cpp(y);
-
 // The following is done to avoid leaking memory
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-  Blocks* xb = xx->left_blocks();
-  Blocks* yb = yy->left_blocks();
+  Blocks* xb = bipart_get_cpp(x)->left_blocks();
+  Blocks* yb = bipart_get_cpp(y)->left_blocks();
   SEMIGROUPS_ASSERT(*xb == *yb);
   delete xb;
   delete yb;
-  xb = xx->right_blocks();
-  yb = yy->right_blocks();
+  xb = bipart_get_cpp(x)->right_blocks();
+  yb = bipart_get_cpp(y)->right_blocks();
   SEMIGROUPS_ASSERT(*xb == *yb);
   delete xb;
   delete yb;
 #endif
 
-  size_t deg  = xx->degree();
+  size_t deg  = bipart_get_cpp(x)->degree();
   Obj    p    = NEW_PERM4(deg);
   UInt4* ptrp = ADDR_PERM4(p);
+
+  Bipartition* xx = bipart_get_cpp(x);
+  Bipartition* yy = bipart_get_cpp(y);
+
+  SEMIGROUPS_ASSERT(xx->degree() == yy->degree());
 
   // find indices of right blocks of <x>
   size_t index = 0;

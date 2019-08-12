@@ -53,6 +53,9 @@ else
   mkdir libsemigroups 
 fi
 
+# Common curl settings
+CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L"
+
 ################################################################################
 # Install digraphs, genss, io, orb, and profiling
 PKGS=( "digraphs" "genss" "io" "orb" )
@@ -65,14 +68,14 @@ for PKG in "${PKGS[@]}"; do
 
   # Get the relevant version number
   if [ "$PACKAGES" == "latest" ] || [ "$PKG" == "profiling" ]; then
-    VERSION=`curl -sL "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
+    VERSION=`$CURL -s "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
   else
     VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
   fi
 
   URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
   echo -e "\nDownloading $PKG-$VERSION ($PACKAGES version), from URL:\n$URL"
-  curl -L "$URL" -o $PKG-$VERSION.tar.gz
+  $CURL "$URL" -o $PKG-$VERSION.tar.gz
   tar xf $PKG-$VERSION.tar.gz && rm $PKG-$VERSION.tar.gz
 
   if [ -f $PKG-$VERSION/configure ]; then
@@ -88,6 +91,6 @@ done
 # Install required GAP packages
 cd $GAPROOT/pkg
 echo -e "\nGetting the required GAP packages (smallgrp, transgrp, primgrp)..."
-curl -LO "https://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz"
+$CURL -O "https://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz"
 tar xf packages-required-master.tar.gz
 rm packages-required-master.tar.gz

@@ -31,4 +31,4 @@ fi
 
 # Download libsemigroups
 echo -e "Downloading libsemigroups v$VERS into $LIBS_DIR..."
-git clone -b v$VERS --depth=1 https://github.com/james-d-mitchell/libsemigroups.git $LIBS_DIR
+git clone -b v$VERS --depth=1 https://github.com/libsemigroups/libsemigroups.git $LIBS_DIR
