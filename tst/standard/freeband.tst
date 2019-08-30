@@ -195,9 +195,6 @@ x1x3x1
 gap> HTValue(ht, new);
 fail
 gap> z := HTAdd(ht, new, true);;
-gap> z in [35014, 33159]   # for 32-bit and 64-bit mode, <= GAP 4.10.*
-> or z in [96834, 66618];  # for 32-bit and 64-bit mode, >= GAP 4.11
-true
 gap> while not IsDoneIterator(iter) do
 > HTAdd(ht, NextIterator(iter), true);
 > od;
