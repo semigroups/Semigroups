@@ -54,7 +54,7 @@
   approximately 50 elements.[133X
   
   [33X[0;0Y[10XSmallestMultiplicationTable[110X   is  based  on  the  function  [2XIdSmallSemigroup[102X
-  ([14XIdSmallSemigroup???[114X) by Andreas Distler.[133X
+  ([14XSmallsemi: IdSmallSemigroup[114X) by Andreas Distler.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
