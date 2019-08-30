@@ -2,6 +2,10 @@
 
 #### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.1.4 (released 30/08/2019)
+
+This is a minor release fixing some minor issues, mostly related to compatibility with GAP 4.11.
+
 ### Version 3.1.3 (released 07/06/2019)
 
 This is a minor release of the Semigroups package, including some improvements to 
