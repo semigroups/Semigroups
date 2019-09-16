@@ -154,13 +154,13 @@ function(type, mat)
 end);
 
 InstallMethod(MatrixNC, "for a filter and list",
-[IsOperation and IsFunction, IsList],
+[IsOperation, IsList],
 function(filter, mat)
   return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat);
 end);
 
 InstallMethod(MatrixNC, "for a filter, list, function",
-[IsOperation and IsFunction, IsList, IsFunction],
+[IsOperation, IsList, IsFunction],
 function(filter, mat, preproc)
   return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter),
                   preproc(mat));
@@ -188,7 +188,7 @@ end);
 
 InstallMethod(Matrix,
 "for a filter, homogeneous list, pos int, and pos int",
-[IsOperation and IsFunction, IsHomogeneousList, IsInt, IsInt],
+[IsOperation, IsHomogeneousList, IsInt, IsInt],
 function(filter, mat, threshold, period)
   local checker, row;
 
@@ -221,7 +221,7 @@ end);
 
 InstallMethod(Matrix,
 "for a filter, homogeneous list, and pos int",
-[IsOperation and IsFunction, IsHomogeneousList, IsPosInt],
+[IsOperation, IsHomogeneousList, IsPosInt],
 function(filter, mat, threshold)
   local checker, row;
 
@@ -253,7 +253,7 @@ function(filter, mat, threshold)
 end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",
-[IsFunction and IsOperation, IsHomogeneousList],
+[IsOperation, IsHomogeneousList],
 function(filter, mat)
   local row;
 
@@ -329,19 +329,19 @@ function(R, mat)
 end);
 
 InstallMethod(RandomMatrix, "for an operation and pos int",
-[IsOperation and IsFunction, IsPosInt],
+[IsOperation, IsPosInt],
 function(op, dim)
   return RandomMatrixCons(op, dim);
 end);
 
 InstallMethod(RandomMatrix, "for an operation, pos int, and int",
-[IsOperation and IsFunction, IsPosInt, IsInt],
+[IsOperation, IsPosInt, IsInt],
 function(op, dim, threshold)
   return RandomMatrixCons(op, dim, threshold);
 end);
 
 InstallMethod(RandomMatrix, "for an operation, pos int, int, and int",
-[IsOperation and IsFunction, IsPosInt, IsInt, IsInt],
+[IsOperation, IsPosInt, IsInt, IsInt],
 function(op, dim, threshold, period)
   return RandomMatrixCons(op, dim, threshold, period);
 end);
