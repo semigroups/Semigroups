@@ -21,18 +21,18 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 function(filt, params)
   local order, i;
   if Length(params) < 1 then  # rows I
-    params[1] := Random([1 .. 100]);
+    params[1] := Random(1, 100);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of rows) must be a pos int,";
   fi;
   if Length(params) < 2 then  # cols J
-    params[2] := Random([1 .. 100]);
+    params[2] := Random(1, 100);
   elif not IsPosInt(params[2]) then
     return "the third argument (number of columns) must be a pos int,";
   fi;
   if Length(params) < 3 then  # group
-    order := Random([1 .. 2047]);
-    i := Random([1 .. NumberSmallGroups(order)]);
+    order := Random(1, 2047);
+    i := Random(1, NumberSmallGroups(order));
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
   elif not IsPermGroup(params[3]) then
     return "the fourth argument must be a perm group,";
@@ -71,7 +71,7 @@ function(filt, params)
 
   for i in I do
     for j in J do
-      if Random([1, 2]) = 1 then
+      if Random(1, 2) = 1 then
         mat[j][i] := Random(G);
       fi;
     od;
@@ -94,7 +94,7 @@ function(filt, params)
 
   for i in I do
     for j in J do
-      if Random([1, 2]) = 1 then
+      if Random(1, 2) = 1 then
         mat[j][i] := Random(G);
       fi;
     od;
@@ -134,7 +134,7 @@ function(filt, params)
 
   for i in I do
     for j in J do
-      if Random([1, 2]) = 1 then
+      if Random(1, 2) = 1 then
         mat[j][i] := Random(G);
       fi;
     od;
