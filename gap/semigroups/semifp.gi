@@ -160,10 +160,10 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsFpSemigroup, IsList],
 function(filt, params)
   if Length(params) < 1 then  # nr gens
-    params[1] := Random([1 .. 20]);
-    params[2] := Random([1 .. 8]);
+    params[1] := Random(1, 20);
+    params[2] := Random(1, 8);
   elif Length(params) < 2 then  # degree
-    params[2] := Random([1 .. 8]);
+    params[2] := Random(1, 8);
   fi;
   if not ForAll(params, IsPosInt) then
     ErrorNoReturn("Semigroups: SEMIGROUPS_ProcessRandomArgsCons: ",

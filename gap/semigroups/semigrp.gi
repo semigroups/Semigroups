@@ -955,19 +955,19 @@ InstallMethod(Random,
 [IsSemigroup and HasAsList],
 20,  # to beat other random methods
 function(S)
-  return AsList(S)[Random([1 .. Size(S)])];
+  return AsList(S)[Random(1, Size(S))];
 end);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsSemigroup, IsList],
 function(filt, params)
   if Length(params) < 1 then  # nr gens
-    params[1] := Random([1 .. 20]);
+    params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then  # degree / dimension
-    params[2] := Random([1 .. 20]);
+    params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
     return "the third argument (degree or dimension) must be a pos int,";
   fi;
