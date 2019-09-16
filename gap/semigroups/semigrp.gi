@@ -1283,7 +1283,7 @@ end);
 # a monoid, into a monoid of pbrs).
 
 InstallMethod(AsSemigroup, "for a filter and a semigroup",
-[IsFunction and IsOperation, IsSemigroup],
+[IsOperation, IsSemigroup],
 function(filt, S)
 
   if Tester(filt)(S) and filt(S) then
@@ -1304,26 +1304,26 @@ function(filt, S)
 end);
 
 InstallMethod(AsSemigroup, "for a filter, pos int, a semigroup",
-[IsFunction and IsOperation, IsPosInt, IsSemigroup],
+[IsOperation, IsPosInt, IsSemigroup],
 function(filt, threshold, S)
   return Range(IsomorphismSemigroup(filt, threshold, S));
 end);
 
 InstallMethod(AsSemigroup,
 "for a filter, pos int, pos int, a semigroup",
-[IsFunction and IsOperation, IsPosInt, IsPosInt, IsSemigroup],
+[IsOperation, IsPosInt, IsPosInt, IsSemigroup],
 function(filt, threshold, period, S)
   return Range(IsomorphismSemigroup(filt, threshold, period, S));
 end);
 
 InstallMethod(AsSemigroup, "for a filter, ring, and semigroup",
-[IsFunction and IsOperation, IsRing, IsSemigroup],
+[IsOperation, IsRing, IsSemigroup],
 function(filt, R, S)
   return Range(IsomorphismSemigroup(filt, R, S));
 end);
 
 InstallMethod(AsMonoid, "for a filter and a semigroup",
-[IsFunction and IsOperation, IsSemigroup],
+[IsOperation, IsSemigroup],
 function(filt, S)
 
   if IsMonoid(S) and Tester(filt)(S) and filt(S) then
@@ -1340,20 +1340,20 @@ function(filt, S)
 end);
 
 InstallMethod(AsMonoid, "for a filter, pos int, and a semigroup",
-[IsFunction and IsOperation, IsPosInt, IsSemigroup],
+[IsOperation, IsPosInt, IsSemigroup],
 function(filt, threshold, S)
   return Range(IsomorphismMonoid(filt, threshold, S));
 end);
 
 InstallMethod(AsMonoid,
 "for a filter, pos int, pos int, and a semigroup",
-[IsFunction and IsOperation, IsPosInt, IsPosInt, IsSemigroup],
+[IsOperation, IsPosInt, IsPosInt, IsSemigroup],
 function(filt, threshold, period, S)
   return Range(IsomorphismMonoid(filt, threshold, period, S));
 end);
 
 InstallMethod(AsMonoid, "for a filter, ring, and semigroup",
-[IsFunction and IsOperation, IsRing, IsSemigroup],
+[IsOperation, IsRing, IsSemigroup],
 function(filt, R, S)
   return Range(IsomorphismMonoid(filt, R, S));
 end);

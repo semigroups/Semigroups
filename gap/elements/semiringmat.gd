@@ -25,9 +25,9 @@ DeclareAttribute("OneImmutable", IsMatrixOverSemiringCollection);
 # IsList rather than IsHomogeneousList to allow us to
 # include the threshold and/or period.
 DeclareOperation("MatrixNC", [IsType, IsList]);
-DeclareOperation("MatrixNC", [IsOperation and IsFunction,
+DeclareOperation("MatrixNC", [IsOperation,
                               IsList]);
-DeclareOperation("MatrixNC", [IsOperation and IsFunction,
+DeclareOperation("MatrixNC", [IsOperation,
                               IsList,
                               IsFunction]);
 # create another matrix of the same type as the first arg using the second
@@ -35,10 +35,10 @@ DeclareOperation("MatrixNC", [IsOperation and IsFunction,
 DeclareOperation("MatrixNC", [IsMatrixOverSemiring,
                               IsList]);
 
-DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList]);
-DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
+DeclareOperation("Matrix", [IsOperation, IsHomogeneousList]);
+DeclareOperation("Matrix", [IsOperation, IsHomogeneousList,
                             IsPosInt]);
-DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
+DeclareOperation("Matrix", [IsOperation, IsHomogeneousList,
                             IsInt, IsInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 DeclareOperation("Matrix", [IsSemiring, IsMatrixOverSemiring]);
@@ -74,11 +74,11 @@ DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
 
 DeclareAttribute("AsTransformation", IsMatrixOverSemiring);
 
-DeclareOperation("RandomMatrix", [IsOperation and IsFunction, IsPosInt]);
+DeclareOperation("RandomMatrix", [IsOperation, IsPosInt]);
 DeclareOperation("RandomMatrix",
-                 [IsOperation and IsFunction, IsPosInt, IsInt]);
+                 [IsOperation, IsPosInt, IsInt]);
 DeclareOperation("RandomMatrix",
-                 [IsOperation and IsFunction, IsPosInt, IsInt, IsInt]);
+                 [IsOperation, IsPosInt, IsInt, IsInt]);
 DeclareOperation("RandomMatrix", [IsSemiring, IsInt]);
 DeclareOperation("RandomMatrix", [IsSemiring, IsInt, IsPosInt]);
 DeclareOperation("RandomMatrix", [IsSemiring, IsInt, IsList]);
