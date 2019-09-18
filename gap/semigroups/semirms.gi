@@ -301,13 +301,16 @@ end);
 
 InstallMethod(Representative,
 "for a Rees 0-matrix subsemigroup with rows, columns and matrix",
-[IsReesZeroMatrixSubsemigroup and HasRows and HasColumns and HasMatrix],
+[IsReesZeroMatrixSubsemigroup
+    and HasRowsOfReesZeroMatrixSemigroup
+    and HasColumnsOfReesZeroMatrixSemigroup
+    and HasMatrixOfReesZeroMatrixSemigroup],
 function(R)
   return Objectify(TypeReesMatrixSemigroupElements(R),
-                   [Rows(R)[1],
+                   [RowsOfReesZeroMatrixSemigroup(R)[1],
                     Representative(UnderlyingSemigroup(R)),
-                    Columns(R)[1],
-                    Matrix(R)]);
+                    ColumnsOfReesZeroMatrixSemigroup(R)[1],
+                    MatrixOfReesZeroMatrixSemigroup(R)]);
 end);
 
 # This method is only required because of some problems in the library code for
@@ -315,13 +318,16 @@ end);
 
 InstallMethod(Representative,
 "for a Rees matrix subsemigroup with rows, columns, and matrix",
-[IsReesMatrixSubsemigroup and HasRows and HasColumns and HasMatrix],
+[IsReesMatrixSubsemigroup
+    and HasRowsOfReesMatrixSemigroup
+    and HasColumnsOfReesMatrixSemigroup
+    and HasMatrixOfReesMatrixSemigroup],
 function(R)
   return Objectify(TypeReesMatrixSemigroupElements(R),
-                   [Rows(R)[1],
+                   [RowsOfReesMatrixSemigroup(R)[1],
                     Representative(UnderlyingSemigroup(R)),
-                    Columns(R)[1],
-                    Matrix(R)]);
+                    ColumnsOfReesMatrixSemigroup(R)[1],
+                    MatrixOfReesMatrixSemigroup(R)]);
 end);
 
 # same method for ideals

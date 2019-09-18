@@ -68,7 +68,8 @@ IsGeneratorsOfSemigroup);
 # Rees(Zero)MatrixSemigroup code.
 
 InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
-IsReesZeroMatrixSubsemigroup and HasRows and HasColumns, 0,
+IsReesZeroMatrixSubsemigroup and HasRowsOfReesZeroMatrixSemigroup
+    and HasColumnsOfReesZeroMatrixSemigroup, 0,
 function(R)
   return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
 end);
@@ -87,7 +88,8 @@ end);
 # Rees(Zero)MatrixSemigroup code.
 
 InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
-IsReesMatrixSubsemigroup and HasRows and HasColumns, 0,
+IsReesMatrixSubsemigroup and HasRowsOfReesMatrixSemigroup
+    and HasColumnsOfReesMatrixSemigroup, 0,
 function(R)
   return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
 end);
