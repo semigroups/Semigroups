@@ -2,6 +2,13 @@
 
 #### Copyright (C) 2011-19 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.1.5 (released 19/09/2019)
+
+This is a minor release including several cleanups, changes for compatibility
+with GAP, and to add the possibility to pass a `RandomSource` as a first
+argument to some methods. All the changes in this release were made by 
+[Max Horn](http://www.quendi.de/math).
+
 ### Version 3.1.4 (released 30/08/2019)
 
 This is a minor release fixing some minor issues, mostly related to compatibility with GAP 4.11.
