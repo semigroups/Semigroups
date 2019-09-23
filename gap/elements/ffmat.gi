@@ -30,7 +30,7 @@ InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
 function(mat, pos)
   if not IsBound(mat[pos]) then
-    ErrorNoReturn("Semigroups: ELM_LIST (for a plist matrix over finite",
+    ErrorNoReturn("Semigroups: ELM_LIST (for a plist matrix over finite ",
                   "field):\nthe position is greater than the dimension ",
                   "of the matrix,");
   fi;

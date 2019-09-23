@@ -194,7 +194,7 @@ function(filter, mat, threshold, period)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 1st argument must be a square table,");
+                  "the 2nd argument must define a square matrix,");
   fi;
 
   if filter <> IsNTPMatrix then
@@ -227,7 +227,7 @@ function(filter, mat, threshold)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 1st argument must be a square table,");
+                  "the 2nd argument must define a square matrix,");
   fi;
 
   if filter <> IsTropicalMaxPlusMatrix
@@ -259,7 +259,7 @@ function(filter, mat)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 1st argument must be a square table,");
+                  "the 2nd argument must define a square matrix,");
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
@@ -293,7 +293,7 @@ function(semiring, mat)
   if not IsEmpty(mat)
       and (not IsRectangularTable(mat) or Length(mat) <> Length(mat[1])) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 1st argument must be a square table,");
+                  "the 2nd argument must define a square matrix,");
   elif IsField(semiring) and IsFinite(semiring) then
     return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                     semiring,
