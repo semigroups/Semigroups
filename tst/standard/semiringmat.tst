@@ -92,10 +92,10 @@ Matrix(IsTropicalMaxPlusMatrix, [[0, -infinity], [-infinity, 0]], 5)
 # 1/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [2]], 3, 3);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 gap> Matrix(IsNTPMatrix, [[1, 1, 3], [1, 2, 3]], 3, 3);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 2/3
@@ -112,10 +112,10 @@ the entries in the 2nd argument do not define a matrix of type IsNTPMatrix,
 # semiringmat: Matrix, for a filter, homogeneous list, and pos int, 1/3
 gap> Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2]], 3);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 gap> Matrix(IsTropicalMaxPlusMatrix, [[1, 1, 3], [1, 2, 3]], 3);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 
 # semiringmat: Matrix, for a filter, homogeneous list, and pos int, 2/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3);
@@ -131,10 +131,10 @@ usMatrix,
 # semiringmat: Matrix, for a filter and homogeneous list, 1/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2]]);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 gap> Matrix(IsIntegerMatrix, [[1, 1, 3], [1, 2, 3]]);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 
 # semiringmat: Matrix, for a filter and homogeneous list, 2/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [1, 2]]);
@@ -150,10 +150,10 @@ the entries in the 2nd argument do not define a matrix of type IsIntegerMatrix\
 # semiringmat: Matrix, for a semiring and homogeneous list, 1/3
 gap> Matrix(Integers, [[1, 1], [2]]);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 gap> Matrix(Integers, [[1, 1, 3], [1, 2, 3]]);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 2/3
 gap> Matrix(Rationals, [[1, 1], [2, 2]]);
@@ -610,7 +610,7 @@ false
 # Test Matrix for a finite field and list consisting of an empty list
 gap> Matrix(GF(3), [[]]);
 Error, Semigroups: Matrix: usage,
-the 1st argument must be a square table,
+the 2nd argument must define a square matrix,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
