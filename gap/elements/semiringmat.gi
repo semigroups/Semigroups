@@ -17,6 +17,13 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+# TEMPORARY (Wilf: I don't remember why I added this)
+InstallMethod(IsOne, "for a matrix over finite field",
+[IsMatrixOverFiniteField],
+mat -> mat = One(mat));
+# TODO Experiment with ListOp for our matrix objects
+# TODO Experiment with Unpack for our matrix objects
+
 #############################################################################
 # Internal
 #############################################################################
@@ -268,6 +275,18 @@ function(filter, mat)
   return MatrixNC(filter, List(mat, ShallowCopy));
 end);
 
+InstallMethod(Matrix, "for a semiring and empty list",
+[IsSemiring, IsList and IsEmpty],
+function(semiring, mat)
+  if IsField(semiring) and IsFinite(semiring) then
+    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                    semiring, mat);
+  elif IsIntegers(semiring) then
+    return MatrixNC(IsIntegerMatrix, mat);
+  fi;
+  TryNextMethod();
+end);
+
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
   local entry_ok, checker, row;
 
@@ -376,12 +395,11 @@ end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)],
-            i -> ShallowCopy(mat[i])));
+mat -> List([1 .. NrRows(mat)], i -> ShallowCopy(mat[i])));
 
 InstallMethod(AsList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)], i -> mat[i]));
+mat -> List([1 .. NrRows(mat)], i -> mat[i]));
 
 InstallMethod(Iterator, "for a matrix over semiring",
 [IsMatrixOverSemiring],
@@ -412,7 +430,7 @@ function(mat)
   return IteratorByFunctions(iter);
 end);
 
-InstallMethod(ELM_LIST, "for a matrix over semiring",
+InstallOtherMethod(\[\], "for a matrix over semiring and a pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then
@@ -421,6 +439,22 @@ function(mat, pos)
   fi;
   return mat![pos];
 end);
+
+InstallMethod(MatElm,
+"for a plist matrix over semiring positional rep, and two pos ints",
+[IsPlistMatrixOverSemiringPositionalRep, IsPosInt, IsPosInt],
+function(mat, row, col)
+  if Maximum(row, col) > NumberRows(mat) then
+    ErrorNoReturn("Semigroups: [,] (for a matrix over semiring):\n",
+                  "the matrix only has ", NrRows(mat), " rows and columns,");
+  fi;
+  return mat![row][col];
+end);
+
+# TODO W: Need to be sure that this is necessary for good reasons
+InstallMethod(\^,
+"for a matrix over semiring and a pos int",
+[IsMatrixOverSemiring, IsPosInt], POW_OBJ_INT);
 
 InstallMethod(IsBound\[\],
 "for a plist matrix over semiring positional rep and pos int",
@@ -478,6 +512,12 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 [IsMatrixOverSemiringCollection], ReturnFalse);
 
 InstallMethod(DimensionOfMatrixOverSemiring, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberRows, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberColumns, "for a matrix over a semiring",
 [IsMatrixOverSemiring],
 function(mat)
   if IsBound(mat[1]) then

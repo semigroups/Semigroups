@@ -26,7 +26,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 # It is not currently possible to create any type of matrix except
 # IsPlistMatrixOverFiniteFieldRep
 
-InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
+InstallOtherMethod(\[\], "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
 function(mat, pos)
   if not IsBound(mat[pos]) then
@@ -39,15 +39,17 @@ end);
 InstallMethod(IsBound\[\],
 "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
-function(mat, pos)
-  return IsBound(mat!.mat[pos]);
-end);
+{mat, pos} -> IsBound(mat!.mat[pos]));
 
-# This is here to silence some GAP tests when Semigroups is loaded
-# and should become rendundant once the GAP MatrixObj code works
-InstallOtherMethod(TraceMat, "for a plist matrix over finite field",
-[IsPlistMatrixOverFiniteFieldRep],
-mat -> TraceMat(mat!.mat));
+InstallMethod(MatElm,
+"for a plist matrix over finite field positional rep, and two pos ints",
+[IsPlistMatrixOverFiniteFieldRep, IsPosInt, IsPosInt],
+function(mat, row, col)
+  if Maximum(row, col) > NumberRows(mat) then
+    ErrorNoReturn("a position is greater than the dimension of the matrix");
+  fi;
+  return mat!.mat[row][col];
+end);
 
 # This should be used with caution, it can create corrupt objects
 

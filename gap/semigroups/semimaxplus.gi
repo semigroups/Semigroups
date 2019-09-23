@@ -660,7 +660,7 @@ function(S)
   local gens, dim, func, m, rad, T;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
@@ -695,7 +695,7 @@ function(S)
   local gens, dim, func, m, critcol, d, ngens, i;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
