@@ -199,8 +199,7 @@ function(filter, mat, threshold, period)
 
   if filter <> IsNTPMatrix then
     ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given ",
-                  "arguments,");
+                  "cannot create a matrix from the given arguments,");
   fi;
 
   checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
@@ -233,8 +232,7 @@ function(filter, mat, threshold)
   if filter <> IsTropicalMaxPlusMatrix
       and filter <> IsTropicalMinPlusMatrix then
     ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given ",
-                  "arguments,");
+                  "cannot create a matrix from the given arguments,");
   fi;
 
   checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
@@ -265,8 +263,7 @@ function(filter, mat)
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
                     IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
     ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given ",
-                  "arguments,");
+                  "cannot create a matrix from the given arguments,");
   fi;
 
   if filter = IsBooleanMat then
@@ -288,7 +285,7 @@ end);
 InstallMethod(Matrix, "for a semiring and homogeneous list",
 [IsSemiring, IsHomogeneousList],
 function(semiring, mat)
-  local filter, entry_ok, checker, row;
+  local entry_ok, checker, row;
 
   if not IsEmpty(mat)
       and (not IsRectangularTable(mat) or Length(mat) <> Length(mat[1])) then
@@ -298,15 +295,12 @@ function(semiring, mat)
     return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                     semiring,
                                     mat);
-  elif IsIntegers(semiring) then
-    filter := IsIntegerMatrix;
-  else
+  elif not IsIntegers(semiring) then
     ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given ",
-                  "arguments,");
+                  "cannot create a matrix from the given arguments,");
   fi;
 
-  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter);
+  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(IsIntegerMatrix);
   checker := function(x)
     return entry_ok(x) and x in semiring;
   end;
@@ -315,30 +309,24 @@ function(semiring, mat)
     if not ForAll(row, checker) then
       ErrorNoReturn("Semigroups: Matrix: usage,\n",
                     "the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(filter), ",");
+                    "of type ", NameFunction(IsIntegerMatrix), ",");
     fi;
   od;
 
-  return MatrixNC(filter, List(mat, ShallowCopy));
+  return MatrixNC(IsIntegerMatrix, List(mat, ShallowCopy));
 end);
 
 InstallMethod(Matrix, "for a semiring and matrix over semiring",
 [IsSemiring, IsMatrixOverSemiring],
-function(R, mat)
-  return Matrix(R, AsList(mat));
-end);
+{R, mat} -> Matrix(R, AsList(mat)));
 
 InstallMethod(RandomMatrix, "for an operation and pos int",
 [IsOperation, IsPosInt],
-function(op, dim)
-  return RandomMatrixCons(op, dim);
-end);
+{op, dim} -> RandomMatrixCons(op, dim));
 
 InstallMethod(RandomMatrix, "for an operation, pos int, and int",
 [IsOperation, IsPosInt, IsInt],
-function(op, dim, threshold)
-  return RandomMatrixCons(op, dim, threshold);
-end);
+{op, dim, threshold} -> RandomMatrixCons(op, dim, threshold));
 
 InstallMethod(RandomMatrix, "for an operation, pos int, int, and int",
 [IsOperation, IsPosInt, IsInt, IsInt],
@@ -540,7 +528,6 @@ function(coll)
                   "usage,\nthe argument <coll> must be a collection of ",
                   "matrices of equal dimension,");
   fi;
-
   return dim;
 end);
 
@@ -551,9 +538,7 @@ end);
 InstallMethod(DimensionOfMatrixOverSemiringCollection,
 "for a matrix over semiring semigroup",
 [IsMatrixOverSemiringSemigroup],
-function(S)
-  return DimensionOfMatrixOverSemiring(Representative(S));
-end);
+S -> DimensionOfMatrixOverSemiring(Representative(S)));
 
 InstallMethod(Display, "for a matrix over semiring collection",
 [IsMatrixOverSemiringCollection],
