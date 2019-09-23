@@ -89,10 +89,6 @@ DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
 # DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
-DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
-
-# FIXME shouldn't this be IsMultiplicativeZero??
-DeclareProperty("IsZero", IsMatrixOverFiniteField);
 
 #############################################################################
 ## Declarations specifically for finite field matrices collections
@@ -138,7 +134,7 @@ BindGlobal("PlistRowBasisOverFiniteFieldType",
 
 DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
                       IsMatrixOverFiniteField and IsComponentObjectRep and
-                      IsAttributeStoringRep, ["mat"]);
+                      IsAttributeStoringRep and IsRowListMatrix, ["mat"]);
 BindGlobal("PlistMatrixOverFiniteFieldFamily",
            NewFamily("PlistMatrixOverFiniteFieldFamily",
                      IsMatrixOverFiniteField, CanEasilyCompareElements));

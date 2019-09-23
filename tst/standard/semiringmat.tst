@@ -434,7 +434,7 @@ gap> mat := Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;
 gap> mat[1];
 [ 0, 1, 0 ]
 gap> mat[4];
-Error, Semigroups: ELM_LIST (for a matrix over semiring):
+Error, Semigroups: [] (for a matrix over semiring):
 the position is greater than the dimension of the matrix,
 
 # semiringmat, pickling

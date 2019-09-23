@@ -787,11 +787,11 @@ function(S)
   local gens, dim, func, m, rad, T;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
-                j -> Maximum(List([1 .. Length(gens)], k -> gens[k][i][j])));
+                j -> Maximum(List([1 .. Length(gens)], k -> gens[k][i, j])));
   end;
 
   m := Matrix(IsMaxPlusMatrix, List([1 .. dim], func));
@@ -822,11 +822,11 @@ function(S)
   local gens, dim, func, m, critcol, d, ngens, i;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
-                j -> Maximum(List([1 .. Length(gens)], k -> gens[k][i][j])));
+                j -> Maximum(List([1 .. Length(gens)], k -> gens[k][i, j])));
   end;
 
   # Sum with respect to max-plus algebra of generators of S.
