@@ -35,9 +35,6 @@ DeclareSynonym("IsProjectiveMaxPlusMatrixSemigroup",
 DeclareSynonym("IsNTPMatrixSemigroup",
                IsSemigroup and IsNTPMatrixCollection);
 
-DeclareSynonym("IsIntegerMatrixSemigroup",
-               IsSemigroup and IsIntegerMatrixCollection);
-
 DeclareSynonym("IsMaxPlusMatrixMonoid",
                IsMonoid and IsMaxPlusMatrixCollection);
 
@@ -60,9 +57,6 @@ DeclareSynonym("IsProjectiveMaxPlusMatrixMonoid",
 
 DeclareSynonym("IsNTPMatrixMonoid",
                IsMonoid and IsNTPMatrixCollection);
-
-DeclareSynonym("IsIntegerMatrixMonoid",
-               IsMonoid and IsIntegerMatrixCollection);
 
 InstallTrueMethod(IsFinite, IsTropicalMaxPlusMatrixSemigroup);
 InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixSemigroup);

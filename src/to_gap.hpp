@@ -85,7 +85,6 @@ namespace gapbind14 {
     Obj
     make_matrix(T const& x, Obj gap_t, size_t extra_capacity, F&& func = F()) {
       size_t n      = x.number_of_rows();
-      size_t extra  = 0;
       Obj    result = NEW_PLIST(T_PLIST, n + extra_capacity);
       SET_LEN_PLIST(result, n + extra_capacity);
 
@@ -97,9 +96,11 @@ namespace gapbind14 {
         }
         AssPlist(result, i + 1, row);
       }
-      RetypeBag(result, T_POSOBJ);
-      SET_TYPE_POSOBJ(result, gap_t);
-      CHANGED_BAG(result);
+      if (gap_t != nullptr) {
+        RetypeBag(result, T_POSOBJ);
+        SET_TYPE_POSOBJ(result, gap_t);
+        CHANGED_BAG(result);
+      }
       return result;
     }
   }  // namespace detail
@@ -226,7 +227,7 @@ namespace gapbind14 {
   struct to_gap<libsemigroups::IntMat<>> {
     using IntMat_ = libsemigroups::IntMat<>;
     Obj operator()(IntMat_ const& x) {
-      return detail::make_matrix(x, IntegerMatrixType, 0);
+      return CALL_2ARGS(Matrix, Integers, detail::make_matrix(x, nullptr, 0));
     }
   };
 

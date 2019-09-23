@@ -45,6 +45,7 @@ ReadPackage("semigroups", "gap/semigroups/semibipart.gi");
 ReadPackage("semigroups", "gap/semigroups/semipperm.gi");
 ReadPackage("semigroups", "gap/semigroups/semitrans.gi");
 ReadPackage("semigroups", "gap/semigroups/semipbr.gi");
+ReadPackage("semigroups", "gap/semigroups/semintmat.gi");
 ReadPackage("semigroups", "gap/semigroups/semimaxplus.gi");
 ReadPackage("semigroups", "gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups", "gap/semigroups/semiboolmat.gi");

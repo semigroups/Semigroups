@@ -21,7 +21,7 @@
     <!-- <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type =
          "Category"/> -->
     <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsIntegerMatrix"           Arg = "obj" Type = "Category"/>
+    <Filt Name = "Integers"           Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &SEMIGROUPS; is a member of one of these
@@ -88,10 +88,6 @@
     <Filt Name = "IsNTPMatrixCollection"               Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsNTPMatrixCollColl"                 Arg = "obj" Type =
-      "Category"/>
-    <Filt Name = "IsIntegerMatrixCollection"           Arg = "obj" Type =
-      "Category"/>
-    <Filt Name = "IsIntegerMatrixCollColl"             Arg = "obj" Type =
       "Category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
@@ -186,18 +182,19 @@ gap> PeriodNTPMatrix(mat);
     <Returns>An integer matrix.</Returns>
     <Description>
       If <A>mat</A> is an integer matrix (i.e. belongs to the category
-      <Ref Filt = "IsIntegerMatrix"/>) whose inverse (if it exists) is also an
+      <Ref Filt = "Integers"/>) whose inverse (if it exists) is also an
       integer matrix, then <C>InverseOp</C> returns the inverse of <A>mat</A>.
       <P/>
 
       An integer matrix has an integer matrix inverse if and only if it
       has determinant one.
       <Example><![CDATA[
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1],
->                                    [0, 1, 0],
->                                    [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1],
+>                             [0, 1, 0],
+>                             [1, 0, 0]]);
+<3x3-matrix over Integers>
 gap> InverseOp(mat);
-Matrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
+<3x3-matrix over Integers>
 gap> mat * InverseOp(mat) = One(mat);
 true
 ]]></Example>
@@ -211,7 +208,7 @@ true
     <Returns><K>true</K> or <K>false</K></Returns>
     <Description>
       If <A>mat</A> is an integer matrix (i.e. belongs to the
-      category <Ref Filt = "IsIntegerMatrix"/>), then <C>IsTorsion</C> returns
+      category <Ref Filt = "Integers"/>), then <C>IsTorsion</C> returns
       <K>true</K> if <A>mat</A> is torsion and <K>false</K> otherwise. <P/>
 
       An integer matrix <A>mat</A> is torsion if and only if there exists an
@@ -219,15 +216,17 @@ true
       equal to the identity matrix.
 
       <Example><![CDATA[
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1],
->                                    [0, 1, 0],
->                                    [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1],
+>                             [0, 1, 0],
+>                             [1, 0, 0]]);
+<3x3-matrix over Integers>
 gap> IsTorsion(mat);
 true
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],
->                                    [0, -1, 0, 0],
->                                    [4, 4, 2, -1],
->                                    [1, 1, 0, 3]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1, 0],
+>                             [0, -1, 0, 0],
+>                             [4, 4, 2, -1],
+>                             [1, 1, 0, 3]]);
+<4x4-matrix over Integers>
 gap> IsTorsion(mat);
 false
 ]]></Example>
@@ -240,21 +239,20 @@ false
     <Attr Name = "Order" Arg = "mat"/>
     <Returns>An integer or <C>infinity</C>.</Returns>
     <Description>
-      If <A>mat</A> is an integer matrix (i.e. belongs to the
-      category <Ref Filt = "IsIntegerMatrix"/>), then <C>InverseOp</C> returns
-      the order of <A>mat</A>. The order of <A>mat</A> is the smallest integer
-      power of <A>mat</A> equal to the identity. If no such integer exists,
-      the order is equal to <C>infinity</C>.
+      If <A>mat</A> is an integer matrix, then <C>InverseOp</C> returns the
+      order of <A>mat</A>. The order of <A>mat</A> is the smallest integer
+      power of <A>mat</A> equal to the identity. If no such integer exists, the
+      order is equal to <C>infinity</C>.
       <Example><![CDATA[
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],
->                                    [0, -1, 0, 0],
->                                    [4, 4, 2, -1],
->                                    [1, 1, 0, 3]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1, 0],
+>                             [0, -1, 0, 0],
+>                             [4, 4, 2, -1],
+>                             [1, 1, 0, 3]]);;
 gap> Order(mat);
 infinity
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1],
->                                    [0, 1, 0],
->                                    [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1],
+>                             [0, 1, 0],
+>                             [1, 0, 0]]);;
 gap> Order(mat);
 4
 ]]></Example>

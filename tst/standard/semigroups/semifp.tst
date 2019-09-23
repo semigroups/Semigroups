@@ -338,11 +338,11 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsFpSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0],
 > [0, 0, 1],
 > [0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 > [0, 0, 1],
 > [0, 0, 1]])]);
@@ -674,11 +674,11 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsFpSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 > [0, 1, 0],
 > [0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0],
 > [0, 0, 1],
 > [0, 0, 1]])]);
@@ -1025,13 +1025,13 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsFpMonoid
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0],
 >         [1, 0, 0, 0, 0],
 >         [1, 0, 0, 0, 0],
@@ -1377,11 +1377,11 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsFpMonoid
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1],
 >         [0, 1, 0],
 >         [0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 1, 0],
 >         [1, 0, 0]])]);

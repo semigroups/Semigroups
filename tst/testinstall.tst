@@ -1260,11 +1260,11 @@ Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 # Test for not being allowed to generate a semigroup with matrices of
 # different dimensions
 gap> Semigroup(
-> Matrix(IsIntegerMatrix, [[0, -3, 0, -2],
+> Matrix(Integers, [[0, -3, 0, -2],
 >                          [-1, 1, -1, 0],
 >                          [0, 1, 0, 1],
 >                          [0, 0, 2, 0]]),
-> Matrix(IsIntegerMatrix, [[4, 0, -2],
+> Matrix(Integers, [[4, 0, -2],
 >                          [1, -3, 0],
 >                          [5, -1, -4]]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
@@ -1778,8 +1778,10 @@ gap> EquivalenceRelationLookup(cong);
 Error, the argument (a 2-sided congruence) must have finite range
 
 # Issue 788
-gap> S := GLM(2, 2);;
-gap> Matrix(GF(4), One(S));;
+gap> S := GLM(2, 2);
+<general linear monoid 2x2 over GF(2)>
+gap> Matrix(GF(4), One(S));
+Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 gap> Size(Elements(S));
 16
 

@@ -44,9 +44,6 @@
           <Ref Filt = "IsProjectiveMaxPlusMatrix"/> and a tropical max-plus
           matrix or (non-tropical) max-plus matrix;
         </Item> -->
-        <Item>
-          <Ref Filt = "IsIntegerMatrix"/> and an ntp matrix.
-        </Item>
       </List>
 
       The version of the operation with arguments <A>filt</A>, <A>mat</A>, and
@@ -92,8 +89,8 @@ Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
 gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
-gap> AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
+gap> Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -120,8 +117,8 @@ gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 6);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
-gap> mat := AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
+gap> mat := Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
     </Description>
@@ -144,11 +141,6 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
       underlying list of lists of the matrix over semiring <A>mat</A>.
  
       <Example><![CDATA[
-gap> mat := Matrix(IsIntegerMatrix, [[0, 2],
->                                    [3, 5]]);
-Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
-gap> AsList(mat);
-[ [ 0, 2 ], [ 3, 5 ] ]
 gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2],
 >                          [Z(7) ^ 4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
@@ -356,14 +348,14 @@ gap> Matrix(IsNTPMatrix, [[0, 0, 0],
 >                         [2, 2, 2]],
 >           2, 1);
 Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
-gap> Matrix(IsIntegerMatrix, [[-1, -2, 0],
->                             [0, 3, -1],
->                             [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+<3x3-matrix over Integers>
+gap> Matrix(Integers, [[-1, -2, 0],
+>                      [0, 3, -1],
+>                      [1, 0, -3]]);
+<3x3-matrix over Integers>
 ]]></Example>
 <!-- Another test, for a matrix over a finite field
 gap> Matrix(GF(3), [[Z(3), Z(3) ^ 0, Z(3)],
@@ -443,10 +435,10 @@ Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1],
   [2, 2, 1]], 2)
 gap> RandomMatrix(IsNTPMatrix, 3, 2, 5);
 Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)
-gap> RandomMatrix(IsIntegerMatrix, 2);
-Matrix(IsIntegerMatrix, [[1, 3], [0, 0]])
 gap> RandomMatrix(Integers, 2);
-Matrix(IsIntegerMatrix, [[-1, 0], [0, -1]])
+Matrix(Integers, [[1, 3], [0, 0]])
+gap> RandomMatrix(Integers, 2);
+Matrix(Integers, [[-1, 0], [0, -1]])
 gap> RandomMatrix(GF(5), 1);
 Matrix(GF(5), [[Z(5)^0]])]]></Log>
     </Description>

@@ -479,7 +479,7 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsPartialPermSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1],
 >         [0, 1]])]);
 <commutative semigroup of 2x2 integer matrices with 1 generator>
@@ -804,11 +804,11 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsPartialPermSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 0, 1],
 >         [0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1],
 >         [1, 0, 0],
 >         [0, 0, 1]])]);
@@ -1132,7 +1132,7 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsPartialPermMonoid
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1], [1, 0]])]);
 <commutative semigroup of 2x2 integer matrices with 1 generator>
 gap> T := AsMonoid(IsPartialPermMonoid, S);
@@ -1480,17 +1480,17 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsPartialPermMonoid
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0],
 >         [0, 0, 0, 1],
 >         [0, 0, 1, 0],
 >         [0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0],
 >         [0, 0, 0, 1],
 >         [0, 0, 0, 1],
 >         [0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 1],
 >         [0, 0, 0, 1],
 >         [1, 0, 0, 0],

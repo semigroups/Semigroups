@@ -124,7 +124,7 @@ function(S)
   local gens;
   gens := GeneratorsOfMonoid(S);
   if CanEasilyCompareElements(gens) and Length(gens) = 1
-      and gens[1] = One(gens) then
+      and gens[1] = One(gens[1]) then
     return true;
   fi;
   TryNextMethod();
@@ -135,7 +135,7 @@ function(S)
   local gens;
   gens := GeneratorsOfSemigroup(S);
   if CanEasilyCompareElements(gens) and Length(gens) = 1
-      and gens[1] = One(gens) then
+      and gens[1] = One(gens[1]) then
     return true;
   fi;
   TryNextMethod();
@@ -184,6 +184,11 @@ function(gens, opts)
     filts := filts and IsActingSemigroup;
   fi;
 
+  if IsMatrixObj(Representative(gens))
+      and BaseDomain(Representative(gens)) = Integers then
+    filts := filts and IsIntegerMatrixSemigroup;
+  fi;
+
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetGeneratorsOfMagma(S, AsList(gens));
 
@@ -191,17 +196,17 @@ function(gens, opts)
 end);
 
 InstallMethod(MonoidByGenerators,
-"for a finite multiplicative element collection",
-[IsMultiplicativeElementCollection and IsFinite],
+"for a finite list or collection",
+[IsListOrCollection and IsFinite],
 function(gens)
   return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 InstallMethod(MonoidByGenerators,
-"for a finite multiplicative element collection and record",
-[IsMultiplicativeElementCollection and IsFinite, IsRecord],
+"for a finite list or collection and record",
+[IsListOrCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local mgens, pos, filts, S;
+  local mgens, pos, filts, one, S;
 
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
   mgens := ShallowCopy(gens);
@@ -232,11 +237,18 @@ function(gens, opts)
   elif opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
   fi;
+  if IsMatrixObj(Representative(gens))
+      and BaseDomain(Representative(gens)) = Integers then
+    one := One(Representative(gens));
+    filts := filts and IsIntegerMatrixMonoid;
+  else
+    one := One(gens);
+  fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
 
-  if not CanEasilyCompareElements(gens) or not One(gens) in gens then
-    SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
+  if not CanEasilyCompareElements(gens) or not one in gens then
+    SetGeneratorsOfMagma(S, Concatenation([one], gens));
   else
     SetGeneratorsOfMagma(S, AsList(gens));
   fi;

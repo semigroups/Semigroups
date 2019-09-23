@@ -281,7 +281,6 @@ Obj IsProjectiveMaxPlusMatrix;
 Obj ProjectiveMaxPlusMatrixType;
 Obj IsNTPMatrix;
 Obj NTPMatrixType;
-Obj IsIntegerMatrix;
 Obj IntegerMatrixType;
 Obj IsPBR;
 Obj TYPES_PBR;
@@ -290,6 +289,11 @@ Obj DegreeOfPBR;
 Obj LARGEST_MOVED_PT_TRANS;
 
 Obj IsSemigroup;
+Obj IsMatrixObj;
+Obj BaseDomain;
+Obj Matrix;
+Obj Integers;
+Obj NrRows;
 
 /*****************************************************************************
  *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -467,12 +471,16 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsNTPMatrix", &IsNTPMatrix);
   ImportGVarFromLibrary("NTPMatrixType", &NTPMatrixType);
 
-  ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
   ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
 
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
+  ImportGVarFromLibrary("IsMatrixObj", &IsMatrixObj);
+  ImportGVarFromLibrary("BaseDomain", &BaseDomain);
+  ImportGVarFromLibrary("Integers", &Integers);
+  ImportGVarFromLibrary("NrRows", &NrRows);
+  ImportGVarFromLibrary("Matrix", &Matrix);
 
   return 0;
 }

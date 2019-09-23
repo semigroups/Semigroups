@@ -46,8 +46,16 @@ Unbind(_IsXSemigroup);
 ## Random for matrices with 0 additional parameters
 #############################################################################
 
-_InstallRandom0 := function(IsXMatrix)
-  local IsXSemigroup, IsXMonoid;
+_InstallRandom0 := function(params)
+  local IsXMatrix, FilterPlaceHolder, IsXSemigroup, IsXMonoid;
+
+  if not IsString(params) then
+    IsXMatrix         := params[1];
+    FilterPlaceHolder := params[2];
+  else
+    IsXMatrix         := params;
+    FilterPlaceHolder := params;
+  fi;
 
   IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
@@ -69,7 +77,7 @@ _InstallRandom0 := function(IsXMatrix)
   [ValueGlobal(IsXSemigroup), IsList],
   function(filt, params)
     return Semigroup(List([1 .. params[1]],
-                          i -> RandomMatrix(ValueGlobal(IsXMatrix),
+                          i -> RandomMatrix(ValueGlobal(FilterPlaceHolder),
                                             params[2])));
   end);
 
@@ -78,14 +86,15 @@ _InstallRandom0 := function(IsXMatrix)
   [ValueGlobal(IsXMonoid), IsList],
   function(filt, params)
     return Monoid(List([1 .. params[1]],
-                       i -> RandomMatrix(ValueGlobal(IsXMatrix), params[2])));
+                       i -> RandomMatrix(ValueGlobal(FilterPlaceHolder),
+                                         params[2])));
   end);
 end;
 
 for _IsXMatrix in ["IsMaxPlusMatrix",
                    "IsMinPlusMatrix",
-                   "IsProjectiveMaxPlusMatrix",
-                   "IsIntegerMatrix"] do
+                   ["IsIntegerMatrix", "Integers"],
+                   "IsProjectiveMaxPlusMatrix"] do
   _InstallRandom0(_IsXMatrix);
 od;
 
@@ -238,8 +247,8 @@ end);
 
 for _IsXMatrix in ["IsMaxPlusMatrix",
                    "IsMinPlusMatrix",
-                   "IsProjectiveMaxPlusMatrix",
-                   "IsIntegerMatrix"] do
+                   "IsIntegerMatrix",
+                   "IsProjectiveMaxPlusMatrix"] do
 
   _IsXSemigroup := Concatenation(_IsXMatrix, "Semigroup");
 
@@ -379,30 +388,32 @@ _InstallIsomorphism0 := function(filter)
     return IsomorphismSemigroup(ValueGlobal(IsXSemigroup), S);
   end);
 
-  InstallMethod(IsomorphismSemigroup,
-  Concatenation("for ", IsXSemigroup,
-                " and a transformation semigroup with generators"),
-  [ValueGlobal(IsXSemigroup),
-   IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  function(filt, S)
-    local n, map, T;
+  if IsXMatrix <> "IsIntegerMatrix" then
+    InstallMethod(IsomorphismSemigroup,
+    Concatenation("for ", IsXSemigroup,
+                  " and a transformation semigroup with generators"),
+    [ValueGlobal(IsXSemigroup),
+     IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+    function(filt, S)
+      local n, map, T;
 
-    n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
-    map  := x -> AsMatrix(ValueGlobal(IsXMatrix), x, n);
-    T := Semigroup(List(GeneratorsOfSemigroup(S), map));
-    UseIsomorphismRelation(S, T);
+      n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
+      map  := x -> AsMatrix(ValueGlobal(IsXMatrix), x, n);
+      T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+      UseIsomorphismRelation(S, T);
 
-    return SemigroupIsomorphismByFunctionNC(S,
-                                            T,
-                                            map,
-                                            AsTransformation);
-  end);
+      return SemigroupIsomorphismByFunctionNC(S,
+                                              T,
+                                              map,
+                                              AsTransformation);
+    end);
+  fi;
 end;
 
 for _IsXMatrix in ["IsMaxPlusMatrix",
                    "IsMinPlusMatrix",
-                   "IsProjectiveMaxPlusMatrix",
-                   "IsIntegerMatrix"] do
+                   "IsIntegerMatrix",
+                   "IsProjectiveMaxPlusMatrix"] do
   _InstallIsomorphism0(_IsXMatrix);
 od;
 
@@ -660,7 +671,7 @@ function(S)
   local gens, dim, func, m, rad, T;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
@@ -695,7 +706,7 @@ function(S)
   local gens, dim, func, m, critcol, d, ngens, i;
 
   gens := GeneratorsOfSemigroup(S);
-  dim := Length(gens[1][1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(gens));
 
   func := function(i)
     return List([1 .. dim],
@@ -716,33 +727,3 @@ function(S)
   return Semigroup(ngens);
 end);
 
-InstallMethod(IsFinite,
-"for a semigroup of matrices of positive integers",
-[IsIntegerMatrixSemigroup],
-3,  # to beat the method for semigroups with CanUseLibsemigroupsFroidurePin
-function(S)
-  local gens, ET, mat, row, val;
-
-  gens := GeneratorsOfSemigroup(S);
-  for mat in gens do
-    for row in mat do
-      for val in row do
-        if val < 0 then
-          TryNextMethod();
-        fi;
-      od;
-    od;
-  od;
-
-  ET := Idempotents(Semigroup(List(gens,
-                                   x -> AsMatrix(IsNTPMatrix, x, 1, 2))));
-
-  for mat in ET do
-    mat := AsMatrix(IsIntegerMatrix, mat);
-    if mat ^ 2 <> mat ^ 3 then
-      return false;
-    fi;
-  od;
-
-  return true;
-end);

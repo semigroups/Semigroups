@@ -31,7 +31,7 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := Matrix(IsMaxPlusMatrix, 
+gap> mat2 := Matrix(IsMaxPlusMatrix,
 >                   [[0, 1, 1, 0, -infinity], 
 >                    [0, -3, -2, -2, -infinity],
 >                    [-4, 0, -2, 2, -infinity], 
@@ -54,7 +54,7 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := Matrix(IsMinPlusMatrix, 
+gap> mat2 := Matrix(IsMinPlusMatrix,
 >                   [[0, 1, 1, 0, infinity], 
 >                    [0, -3, -2, -2, infinity],
 >                    [-4, 0, -2, 2, infinity], 
@@ -200,30 +200,30 @@ gap> A := Matrix(IsNTPMatrix, [[1, 0], [1, 1]], 59, 0);
 Error, the 3rd argument (a pos. int.) is not > 0
 
 # maxplusmat: test integer matrix code, 1/1
-gap> mat := Matrix(IsIntegerMatrix, [[-1, -2, 0],
+gap> mat := Matrix(Integers, [[-1, -2, 0],
 >                             [0, 3, -1],
 >                             [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+<3x3-matrix over Integers>
 gap> mat2 := Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+<3x3-matrix over Integers>
 gap> mat2 * mat;
-Matrix(IsIntegerMatrix, [[1, -4, 2], [-1, 9, 0], [-4, -2, 9]])
+<3x3-matrix over Integers>
 gap> One(mat);
-Matrix(IsIntegerMatrix, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+<immutable 3x3-matrix over Integers>
 gap> One(mat) * mat = mat;
 true
 gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat3 := Matrix(IsIntegerMatrix, [[2, 2, 0, 1, 0], [2, 3, 0, 1, -2],
+gap> mat3 := Matrix(Integers, [[2, 2, 0, 1, 0], [2, 3, 0, 1, -2],
 > [-2, -2, -2, 0, 3], [0, 2, -1, 0, 0], [0, 1, 0, -1, -1]]);;
 gap> mat * mat3;
-Matrix(IsIntegerMatrix, [[-6, -8, 0], [8, 11, 2], [8, 8, 6]])
+Error, \*: Matrices do not fit together
 gap> RandomMatrix(Integers, 20);
-<20x20 integer matrix>
+<20x20-matrix over Integers>
 
 # maxplusmat: AsMatrix, trop. min-plus <-> min-plus, 1/3
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, infinity, 1], [0, infinity, 2],
@@ -269,8 +269,8 @@ Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
 gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
-gap> AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
+gap> Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -307,14 +307,14 @@ gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 6);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
-gap> mat := AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
+gap> mat := Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
 
 # maxplusmat: IsFinite, for a semigroup of integer matrices, 1/3
-gap> [Matrix(IsIntegerMatrix, [[0, 2, 1], [1, 0, 1], [0, 2, 1]]),
->     Matrix(IsIntegerMatrix, [[5, 1, 1], [0, 0, 1], [2, 4, 3]])];;
+gap> [Matrix(Integers, [[0, 2, 1], [1, 0, 1], [0, 2, 1]]),
+>     Matrix(Integers, [[5, 1, 1], [0, 0, 1], [2, 4, 3]])];;
 gap> S := Semigroup(last);
 <semigroup of 3x3 integer matrices with 2 generators>
 gap> IsFinite(S);
@@ -323,32 +323,35 @@ gap> Size(S);
 infinity
 
 # maxplusmat: IsFinite, for a semigroup of integer matrices, 2/3
-gap> S := Semigroup(Matrix(IsIntegerMatrix,
+gap> S := Semigroup(Matrix(Integers,
 >                   [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]));
 <commutative semigroup of 3x3 integer matrices with 1 generator>
 gap> IsFinite(S);
 true
 
 # maxplusmat: IsFinite, for a semigroup of integer matrices, 3/3
-gap> S := Semigroup(Matrix(IsIntegerMatrix,
+gap> S := Semigroup(Matrix(Integers,
 >                   [[1, 0, 0], [0, 1, 0], [0, 0, 0]]));
 <commutative semigroup of 3x3 integer matrices with 1 generator>
 gap> IsFinite(S);
 true
 
 # maxplusmat: InverseOp, for integer matrices
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
 gap> InverseOp(mat);
-Matrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
+<3x3-matrix over Integers>
 gap> mat * InverseOp(mat) = One(mat);
 true
 gap> InverseOp(mat) * mat = One(mat);
 true
-gap> mat := Matrix(IsIntegerMatrix, [[0, -3, 0, -2], [-1, 1, -1, 0], 
+gap> mat := Matrix(Integers, [[0, -3, 0, -2], [-1, 1, -1, 0],
 > [0, 1, 0, 1], [0, 0, 2, 0]]);;
-gap> InverseOp(mat);
-fail
-gap> mat := Matrix(IsIntegerMatrix,
+
+# TODO(MatrixObj-later): with MatrixObj's this returns an invalid answer see
+# https://github.com/gap-system/gap/issues/4884
+# gap> InverseOp(mat); 
+# fail
+gap> mat := Matrix(Integers,
 > [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -375,14 +378,14 @@ gap> mat * InverseOp(mat) = One(mat);
 true
 
 # maxplusmat: Order, for integer matrices
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
 gap> Order(mat);
 4
-gap> mat := Matrix(IsIntegerMatrix, [[0, -3, 0, -2], [-1, 1, -1, 0], 
+gap> mat := Matrix(Integers, [[0, -3, 0, -2], [-1, 1, -1, 0],
 > [0, 1, 0, 1], [0, 0, 2, 0]]);;
 gap> Order(mat);
 infinity
-gap> mat := Matrix(IsIntegerMatrix,
+gap> mat := Matrix(Integers,
 > [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -405,20 +408,20 @@ gap> mat := Matrix(IsIntegerMatrix,
 >  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]);;
 gap> Order(mat);
 10
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0], [0, -1, 0, 0], 
+gap> mat := Matrix(Integers, [[0, 0, -1, 0], [0, -1, 0, 0],
 > [4, 4, 2, -1], [1, 1, 0, 3]]);;
 gap> Order(mat);
 infinity
 
 # maxplusmat: IsTorsion, for integer matrices
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
+gap> mat := Matrix(Integers, [[0, 0, -1], [0, 1, 0], [1, 0, 0]]);;
 gap> IsTorsion(mat);
 true
-gap> mat := Matrix(IsIntegerMatrix, [[0, -3, 0, -2], [-1, 1, -1, 0], 
+gap> mat := Matrix(Integers, [[0, -3, 0, -2], [-1, 1, -1, 0],
 > [0, 1, 0, 1], [0, 0, 2, 0]]);;
 gap> IsTorsion(mat);
 false
-gap> mat := Matrix(IsIntegerMatrix,
+gap> mat := Matrix(Integers,
 > [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -441,7 +444,7 @@ gap> mat := Matrix(IsIntegerMatrix,
 >  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]);;
 gap> IsTorsion(mat);
 true
-gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0], [0, -1, 0, 0], 
+gap> mat := Matrix(Integers, [[0, 0, -1, 0], [0, -1, 0, 0],
 > [4, 4, 2, -1], [1, 1, 0, 3]]);;
 gap> IsTorsion(mat);
 false
@@ -491,7 +494,7 @@ gap> InverseOp(mat) * mat = One(mat);
 true
 gap> mat * InverseOp(mat) = One(mat);
 true
-gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -1, 3, -infinity], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -1, 3, -infinity],
 > [4, 0, -4, 1], [-2, 1, 1, 1], [0, -infinity, 5, 0]]);;
 gap> InverseOp(mat);
 fail
@@ -509,7 +512,7 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[0, -3, 0, -2], [-1, 1, -1, 0],
 >  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]]);;
 gap> UnweightedPrecedenceDigraph(mat);
 <immutable digraph with 4 vertices, 12 edges>
-gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -3, 3, -1, -1], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -3, 3, -1, -1],
 > [1, 1, 1, -2, 0], [-infinity, 0, 0, 1, -1], [2, 2, 1, 0, -infinity],
 > [1, -1, 5, -infinity, -infinity]]);;
 
@@ -524,12 +527,12 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[-1, -infinity, 1, -1, 0],
 >  [1, -1, -1, -infinity, 0], [-infinity, 1, -1, -infinity, 3]]);;
 gap> SpectralRadius(mat);
 4
-gap> mat := Matrix(IsMaxPlusMatrix, [[2, 4, 3, -1, 1], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[2, 4, 3, -1, 1],
 > [-infinity, -1, 1, 1, -1], [-1, 0, 3, 0, -1], [1, 3, 0, -infinity, -1],
 > [0, 0, -1, -infinity, -infinity]]);;
 gap> SpectralRadius(mat);
 3
-gap> mat := Matrix(IsMaxPlusMatrix, [[4, 4, 2, -1, 1], 
+gap> mat := Matrix(IsMaxPlusMatrix, [[4, 4, 2, -1, 1],
 > [1, 0, 3, 0, -3], [0, 0, 4, 0, 2],
 > [-3, 1, 0, 0, -infinity], [4, -infinity, 1, 2, -3]]);;
 gap> SpectralRadius(mat);
@@ -542,7 +545,7 @@ gap> SpectralRadius(mat);
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 4
-gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],  
+gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity], 
 > [-infinity, -infinity, -infinity], [-infinity, 1, -infinity]]));
 -infinity
 
@@ -582,11 +585,11 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 0, 0], [1, 0, 0]], 3, 3)
 gap> AsMatrix(IsNTPMatrix, IdentityTransformation, 3, 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `AsMatrix' on 5 arguments
-gap> AsMatrix(IsIntegerMatrix, Transformation([2, 1, 1]));
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 0, 0], [1, 0, 0]])
-gap> AsMatrix(IsIntegerMatrix, IdentityTransformation);
+gap> Matrix(Integers, Transformation([2, 1, 1]));
+<3x3-matrix over Integers>
+gap> Matrix(Integers, IdentityTransformation);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `AsMatrix' on 3 arguments
+Error, no 1st choice method found for `Matrix' on 3 arguments
 
 # Test SEMIGROUPS_TypeViewStringOfMatrixOverSemiring and RandomMatrix
 gap> RandomMatrix(IsMaxPlusMatrix, 10);

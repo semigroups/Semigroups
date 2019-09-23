@@ -1236,21 +1236,11 @@ GreensDClassOfElement(
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> S := AsSemigroup(IsIntegerMatrixSemigroup, S);
-<monoid of 8x8 integer matrices with 4 generators>
-gap> D := DClass(S, S.2);
-<Green's D-class: Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], 
-   [0, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], 
-   [0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0], 
-   [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 0], 
-   [0, 0, 0, 0, 0, 0, 0, 1]])>
+<semigroup of 8x8 integer matrices with 5 generators>
+gap> D := DClass(S, S.2);;
 gap> IsRegularDClass(D);
 true
-gap> H := GroupHClass(D);
-<Green's H-class: Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], 
-   [0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0], 
-   [0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0], 
-   [0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0], 
-   [0, 0, 0, 0, 0, 0, 0, 1]])>
+gap> H := GroupHClass(D);;
 gap> x := IsomorphismPermGroup(H);;
 gap> Source(x) = H;
 true
@@ -1260,13 +1250,10 @@ gap> Representative(H) ^ x;
 ()
 gap> y := InverseGeneralMapping(x);;
 gap> () ^ y;
-Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], 
-  [0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0], 
-  [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0], 
-  [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 1]])
+<immutable 8x8-matrix over Integers>
 gap> () ^ y = Representative(H);
 true
-gap> Matrix(IsIntegerMatrix, [[0, 0, -1, -1, 3, 3, 1, -1], 
+gap> Matrix(Integers, [[0, 0, -1, -1, 3, 3, 1, -1], 
 >                             [1, -1, 0, 2, 7, 5, 0, -1],
 >                             [-3, 4, 0, 2, 0, -1, 0, 0], 
 >                             [4, 0, 0, 0, 1, 2, 2, 0], 
@@ -1277,7 +1264,7 @@ gap> Matrix(IsIntegerMatrix, [[0, 0, -1, -1, 3, 3, 1, -1],
 Error, the argument does not belong to the domain of the function
 gap> (1, 10) ^ y;
 Error, the argument does not belong to the domain of the function
-gap> H := HClass(S, Matrix(IsIntegerMatrix, 
+gap> H := HClass(S, Matrix(Integers, 
 > [[1, 0, 0, 0, 0, 0, 0, 0], 
 >  [1, 0, 0, 0, 0, 0, 0, 0], 
 >  [0, 1, 0, 0, 0, 0, 0, 0],

@@ -28,7 +28,8 @@
 ##
 ##   7. NTP matrices
 ##
-##   8. Integer matrices
+##   8. Integer matrices TODO(later) remove integer matrix stuff to its own
+##      file
 ##
 #############################################################################
 
@@ -733,9 +734,12 @@ end);
 
 InstallMethod(AsMatrix,
 "for IsNTPMatrix, ntp matrix, pos int, pos int",
-[IsNTPMatrix, IsIntegerMatrix, IsPosInt, IsPosInt],
+[IsNTPMatrix, IsMatrixObj, IsPosInt, IsPosInt],
 function(filter, mat, threshold, period)
-  return MatrixNC(filter, SEMIGROUPS.NaturalizeMat(AsMutableList(mat),
+  if BaseDomain(mat) <> Integers then
+    TryNextMethod();
+  fi;
+  return MatrixNC(filter, SEMIGROUPS.NaturalizeMat(Unpack(mat),
                                                    threshold,
                                                    period));
 end);
@@ -762,104 +766,60 @@ end);
 #############################################################################
 
 InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
-"for an integer matrix",
-[IsIntegerMatrix], x -> "integer");
-
-InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
-"for an integer matrix",
-[IsIntegerMatrix], x -> IsIntegerMatrix);
-
-InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsIntegerMatrix",
-[IsIntegerMatrix], x -> IntegerMatrixType);
-
-InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
-"for IsIntegerMatrix", [IsIntegerMatrix],
-function(filter)
-  return IsInt;
+"for a matrix obj",
+[IsMatrixObj],
+function(x)
+  if BaseDomain(x) = Integers then
+    return "integer";
+  fi;
+  TryNextMethod();
 end);
 
-InstallMethod(\*, "for integer matrices",
-[IsIntegerMatrix, IsIntegerMatrix],
-function(x, y)
-  local n, xy, i, j, k;
-
-  n := Minimum(Length(x![1]), Length(y![1]));
-  xy := List([1 .. n], x -> EmptyPlist(n));
-
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      xy[i][j] := 0;
-      for k in [1 .. n] do
-        xy[i][j] := xy[i][j] + x![i][k] * y![k][j];
-      od;
-    od;
-  od;
-  return MatrixNC(x, xy);
-end);
-
-InstallMethod(OneImmutable, "for an integer matrix",
-[IsIntegerMatrix],
-x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, 0, 1)));
-
-InstallOtherMethod(TraceMat, "for an integer matrix",
-[IsIntegerMatrix],
-x -> TraceMat(AsList(x)));
-
-InstallMethod(RandomMatrixCons, "for IsIntegerMatrix and pos int",
-[IsIntegerMatrix, IsPosInt],
-function(filter, dim)
-  return MatrixNC(filter, SEMIGROUPS.RandomIntegerMatrix(dim, false));
+InstallMethod(OneImmutable, "for an integer matrix obj",
+[IsMatrixObj],
+function(x)
+  if BaseDomain(x) <> Integers or IsList(x) then
+    TryNextMethod();
+  fi;
+  return Matrix(x, SEMIGROUPS.IdentityMat(x, 0, 1));
 end);
 
 InstallMethod(RandomMatrixOp, "for Integers and pos int",
 [IsIntegers, IsPosInt],
 function(semiring, n)
-  return RandomMatrix(IsIntegerMatrix, n);
+  return Matrix(semiring, SEMIGROUPS.RandomIntegerMatrix(n, false));
 end);
 
-InstallMethod(InverseOp, "for an integer matrix",
-[IsIntegerMatrix],
+# TODO(MatrixObj-later) this method should be in the GAP library
+InstallMethod(Order, "for an integer matrix obj",
+[IsMatrixObj],
 function(mat)
-
-  mat := AsList(mat);
-
-  if DeterminantIntMat(mat) <> 1 then
-    return fail;
+  if not IsIntegers(BaseDomain(mat)) then
+    TryNextMethod();
   fi;
-
-  return Matrix(IsIntegerMatrix, InverseOp(mat));
+  return Order(Unpack(mat));
 end);
 
-InstallMethod(Order, "for an integer matrix",
-[IsIntegerMatrix],
+InstallMethod(IsTorsion, "for an integer matrix obj",
+[IsMatrixObj],
 function(mat)
-  return Order(AsList(mat));
+  if not IsIntegers(BaseDomain(mat)) then
+    TryNextMethod();
+  fi;
+  return Order(mat) <> infinity;
 end);
 
-InstallMethod(IsTorsion, "for an integer matrix",
-[IsIntegerMatrix],
-function(mat)
-  return Order(AsList(mat)) <> infinity;
+InstallMethod(Matrix,
+"for Integers and transformation",
+[IsIntegers, IsTransformation],
+function(semiring, x)
+  return Matrix(semiring, x, DegreeOfTransformation(x));
 end);
 
-InstallMethod(AsMatrix,
-"for IsIntegerMatrix, ntp matrix",
-[IsIntegerMatrix, IsNTPMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
-
-InstallMethod(AsMatrix,
-"for IsIntegerMatrix, transformation",
-[IsIntegerMatrix, IsTransformation],
-function(filter, x)
-  return AsMatrix(filter, x, DegreeOfTransformation(x));
-end);
-
-InstallMethod(AsMatrix,
-"for IsIntegerMatrix, transformation, pos int",
-[IsIntegerMatrix, IsTransformation, IsPosInt],
-function(filter, x, dim)
-  return MatrixNC(filter,
-                  SEMIGROUPS.MatrixTrans(x, dim, 0, 1));
+InstallMethod(Matrix,
+"for Integers, transformation, pos int",
+[IsIntegers, IsTransformation, IsPosInt],
+function(semiring, x, dim)
+  return Matrix(semiring,
+                SEMIGROUPS.MatrixTrans(x, dim, 0, 1));
 end);

@@ -177,9 +177,7 @@ function(M)
 
   if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
     TryNextMethod();
-  fi;
-
-  if Length(GeneratorsOfMonoid(M)) = 1 then
+  elif Length(GeneratorsOfMonoid(M)) = 1 then
     generators_plural := "";
   else
     generators_plural := "s";

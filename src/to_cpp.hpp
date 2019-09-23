@@ -67,6 +67,7 @@ namespace libsemigroups {
 
 using libsemigroups::BMat;
 using libsemigroups::BMat8;
+using libsemigroups::IntMat;
 using semigroups::WBMat8;
 
 using libsemigroups::IntMat;
@@ -215,7 +216,7 @@ namespace gapbind14 {
   struct to_cpp<WBMat8 const&> : to_cpp<WBMat8> {};
 
   ////////////////////////////////////////////////////////////////////////
-  // IntMat + MaxPlusMat + MinPlusMat
+  // MaxPlusMat + MinPlusMat
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
@@ -259,13 +260,32 @@ namespace gapbind14 {
 
   template <>
   struct to_cpp<IntMat<>> {
-    using cpp_type = IntMat<>;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    IntMat<> operator()(Obj o) const {
-      if (CALL_1ARGS(IsIntegerMatrix, o) != True) {
-        ErrorQuit("expected integer matrix, found %s", (Int) TNAM_OBJ(o), 0L);
+    IntMat<> operator()(Obj o) {
+      if (CALL_1ARGS(IsMatrixObj, o) != True) {
+        ErrorMayQuit("expected a matrix obj found %s!", (Int) TNAM_OBJ(o), 0L);
+      } else if (!EQ(CALL_1ARGS(BaseDomain, o), Integers)) {
+        ErrorMayQuit(
+            "expected a base domain of matrix to be the integers!", 0L, 0L);
       }
-      return detail::init_cpp_matrix<IntMat<>>(o);
+
+      size_t m = INT_INTOBJ(CALL_1ARGS(NrRows, o));
+      if (m == 0) {
+        ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
+      }
+      IntMat<> x(m, m);
+      using scalar_type = typename IntMat<>::scalar_type;
+      for (size_t i = 0; i < m; i++) {
+        for (size_t j = 0; j < m; j++) {
+          SEMIGROUPS_ASSERT(
+              IS_INTOBJ(ELM_MAT(o, INTOBJ_INT(i + 1), INTOBJ_INT(j + 1))));
+          x(i, j) = to_cpp<scalar_type>()(
+              ELM_MAT(o, INTOBJ_INT(i + 1), INTOBJ_INT(j + 1)));
+        }
+      }
+      GAPBIND14_TRY(libsemigroups::validate(x));
+      return x;
     }
   };
 
@@ -447,8 +467,8 @@ namespace gapbind14 {
             "expected integer in position 2, got %s", (Int) TNAM_OBJ(t), 0L);
       }
 
-      Obj    x = ELM_PLIST(t, 1);
-      size_t N = INT_INTOBJ(ELM_PLIST(t, 2));
+      Obj                    x = ELM_PLIST(t, 1);
+      decltype(DEG_TRANS(x)) N = INT_INTOBJ(ELM_PLIST(t, 2));
 
       if (INT_INTOBJ(CALL_1ARGS(LARGEST_MOVED_PT_TRANS, x)) > N) {
         ErrorQuit("expected transformation with largest moved point not "
