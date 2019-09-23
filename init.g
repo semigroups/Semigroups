@@ -78,6 +78,7 @@ ReadPackage("semigroups", "gap/semigroups/semiffmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semifp.gd");
 ReadPackage("semigroups", "gap/semigroups/semigraph.gd");
 ReadPackage("semigroups", "gap/semigroups/semigrp.gd");
+ReadPackage("semigroups", "gap/semigroups/semintmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semimaxplus.gd");
 ReadPackage("semigroups", "gap/semigroups/semipbr.gd");
 ReadPackage("semigroups", "gap/semigroups/semipperm.gd");

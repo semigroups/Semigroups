@@ -351,10 +351,10 @@ Group([ (), (1,2), (3,4,5) ])
 
 # IsomorphismPermGroup: for a Integer Matrix Semigroup
 gap> S := Semigroup(
-> [Matrix(IsIntegerMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
+> [Matrix(Integers, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
 >     [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1],
 >     [0, 0, 0, 0, 1, 0]]),
-> Matrix(IsIntegerMatrix, [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0],
+> Matrix(Integers, [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0],
 >     [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0],
 >     [1, 0, 0, 0, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);;
@@ -364,7 +364,7 @@ true
 gap> G := Range(iso);
 Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
 gap> S := Semigroup(
-> [Matrix(IsIntegerMatrix, [[0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0],
+> [Matrix(Integers, [[0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0],
 >     [0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 0],
 >     [0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 1]])]);;
 gap> iso := IsomorphismPermGroup(S);

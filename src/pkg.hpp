@@ -58,7 +58,6 @@ extern Obj ProjectiveMaxPlusMatrixType;
 extern Obj IsProjectiveMaxPlusMatrix;
 extern Obj IsNTPMatrix;
 extern Obj NTPMatrixType;
-extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
 extern Obj IsPBR;
 extern Obj DegreeOfPBR;
@@ -70,6 +69,11 @@ extern Obj TYPES_BIPART;
 extern Obj LARGEST_MOVED_PT_TRANS;
 
 extern Obj IsSemigroup;
+extern Obj IsMatrixObj;
+extern Obj BaseDomain;
+extern Obj Integers;
+extern Obj NrRows;
+extern Obj Matrix;
 
 namespace libsemigroups {
   class FpSemigroup;

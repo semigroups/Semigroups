@@ -342,7 +342,7 @@ gap> ReadGenerators(fname);
          [ 10, -1, -4 ], [ -2, -7 ], [ -10 ]> ], 
   [ [2,5,12,7,1,3][6,4,8][11,9] ] ]
 gap> WriteGenerators(fname, 
->                    [[Matrix(IsIntegerMatrix, [[0]])]], 
+>                    [[Matrix(Integers, [[0]])]], 
 >                    "w",
 >                    SEMIGROUPS.WriteGeneratorsLine);
 Error, the 2nd argument is incompatible with the file format

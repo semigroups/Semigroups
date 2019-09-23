@@ -278,7 +278,7 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
 gap> IsFinite(S);
 false
-gap> S := Semigroup(Matrix(IsIntegerMatrix,
+gap> S := Semigroup(Matrix(Integers,
 >                   [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]));
 <commutative semigroup of 3x3 integer matrices with 1 generator>
 gap> IsFinite(S);

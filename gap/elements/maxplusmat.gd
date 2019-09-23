@@ -11,6 +11,10 @@
 # This file contains declarations for max-plus, min-plus, tropical max-plus,
 # tropical min-plus matrices, and natural number matrices.
 
+DeclareProperty("IsTorsion", IsMatrixObj);
+DeclareOperation("Matrix", [IsIntegers, IsTransformation]);
+DeclareOperation("Matrix", [IsIntegers, IsTransformation, IsPosInt]);
+
 #############################################################################
 ## 1. Max-plus matrices
 #############################################################################
@@ -125,20 +129,3 @@ BindGlobal("NTPMatrixType",
 
 DeclareAttribute("ThresholdNTPMatrix", IsNTPMatrix);
 DeclareAttribute("PeriodNTPMatrix", IsNTPMatrix);
-
-#############################################################################
-## 8. Integer matrices
-#############################################################################
-
-DeclareCategory("IsIntegerMatrix",
-                IsMatrixOverSemiring
-                and IsPlistMatrixOverSemiringPositionalRep);
-DeclareCategoryCollections("IsIntegerMatrix");
-DeclareCategoryCollections("IsIntegerMatrixCollection");
-
-BindGlobal("IntegerMatrixType",
-           NewType(NewFamily("IntegerMatrixFamily",
-                             IsIntegerMatrix,
-                             CanEasilySortElements,
-                             CanEasilySortElements),
-                   IsIntegerMatrix));

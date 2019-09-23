@@ -247,9 +247,9 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsBipartitionSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1], [0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0], [1, 0]])]);
 <semigroup of 2x2 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
@@ -568,9 +568,9 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsBipartitionSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0], [0, 1, 0], [0, 1, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1], [0, 0, 1], [0, 0, 1]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
@@ -985,7 +985,7 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsBipartitionMonoid
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 1, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0, 0, 0],
@@ -994,7 +994,7 @@ gap> S := Semigroup([
 >         [0, 0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 0, 0, 1, 0],
 >         [0, 0, 0, 0, 0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 0, 1, 0],
@@ -1003,7 +1003,7 @@ gap> S := Semigroup([
 >         [0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 0, 1, 0],
 >         [0, 0, 0, 0, 1, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 1, 0, 0, 0, 0, 0],
@@ -1509,7 +1509,7 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsBipartitionMonoid
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -1522,7 +1522,7 @@ gap> S := Monoid([
 >         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 >         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],

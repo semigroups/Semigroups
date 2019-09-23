@@ -334,7 +334,7 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0],
 >         [1, 0, 0, 0, 0, 0, 0],
@@ -342,7 +342,7 @@ gap> S := Semigroup([
 >         [0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0],
 >         [1, 0, 0, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0, 0],
@@ -350,7 +350,7 @@ gap> S := Semigroup([
 >         [0, 1, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0],
 >         [0, 0, 1, 0, 0, 0, 0],
@@ -812,21 +812,21 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 1, 0],
 >         [0, 0, 1, 0, 0, 0],
 >         [1, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0],
 >         [1, 0, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 1, 0],
 >         [0, 1, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0],
@@ -1209,11 +1209,11 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1],
 >         [0, 1, 0],
 >         [1, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 1, 0],
 >         [0, 1, 0]])]);
@@ -1701,7 +1701,7 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesMatrixSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1], [1, 0]])]);
 <commutative monoid of 2x2 integer matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);

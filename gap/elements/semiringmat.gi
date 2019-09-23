@@ -28,10 +28,10 @@ SEMIGROUPS.TropicalizeMat := function(mat, threshold)
   mat[n + 1] := threshold;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if IsInt(mat[i][j]) then
-        mat[i][j] := AbsInt(mat[i][j]);
-        if mat[i][j] > threshold then
-          mat[i][j] := threshold;
+      if IsInt(mat[i, j]) then
+        mat[i, j] := AbsInt(mat[i, j]);
+        if mat[i, j] > threshold then
+          mat[i, j] := threshold;
         fi;
       fi;
     od;
@@ -75,7 +75,7 @@ SEMIGROUPS.MatrixTrans := function(x, dim, zero, one)
 
   mat := List([1 .. dim], x -> ShallowCopy([1 .. dim] * 0 + zero));
   for i in [1 .. dim] do
-    mat[i][i ^ x] := one;
+    mat[i, i ^ x] := one;
   od;
   return mat;
 end;
@@ -95,7 +95,7 @@ function(file, mat)
   pickle := [SEMIGROUPS_FilterOfMatrixOverSemiring(mat), []];
   i := 1;
   while IsBound(mat![i]) do
-    pickle[2][i] := mat![i];
+    pickle[2, i] := mat![i];
     i := i + 1;
   od;
 
@@ -112,6 +112,20 @@ IO_Unpicklers.MOSR := function(file)
   fi;
   return CallFuncList(MatrixNC, arg);
 end;
+
+InstallMethod(IsGeneratorsOfSemigroup, "for a generalized row vector",
+[IsGeneralizedRowVector],
+# TODO(MatrixObj-later) is this the best way to recognise a collection of
+# MatrixObj?
+function(coll)
+  local n;
+  if ForAll(coll, IsMatrixObj)
+      and ForAll(coll, x -> BaseDomain(x) = Integers) then
+    n := NrRows(Representative(coll));
+    return ForAll(coll, x -> NrRows(x) = n and NrCols(x) = n);
+  fi;
+  TryNextMethod();
+end);
 
 InstallMethod(IsGeneratorsOfSemigroup,
 "for a matrix over semiring collection",
@@ -212,8 +226,6 @@ end);
 InstallMethod(Matrix,
 "for a filter, homogeneous list, and pos int",
 [IsOperation, IsHomogeneousList, IsPosInt],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 function(filter, mat, threshold)
   local checker, row;
 
@@ -240,8 +252,6 @@ end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",
 [IsOperation, IsHomogeneousList],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 function(filter, mat)
   local row;
 
@@ -250,8 +260,7 @@ function(filter, mat)
   elif not filter in [IsBooleanMat,
                       IsMaxPlusMatrix,
                       IsMinPlusMatrix,
-                      IsProjectiveMaxPlusMatrix,
-                      IsIntegerMatrix] then
+                      IsProjectiveMaxPlusMatrix] then
     TryNextMethod();
   elif filter = IsBooleanMat then
     return BooleanMat(mat);
@@ -268,45 +277,41 @@ function(filter, mat)
   return MatrixNC(filter, List(mat, ShallowCopy));
 end);
 
-SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
-  local entry_ok, checker, row;
-
-  if not IsEmpty(mat)
-      and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
-    TryNextMethod();
-  elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
-    TryNextMethod();
-  elif IsField(semiring) and IsFinite(semiring) then
+InstallMethod(Matrix, "for a semiring and empty list",
+[IsSemiring, IsList and IsEmpty],
+function(semiring, mat)
+  if IsField(semiring) and IsFinite(semiring) then
     return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                    semiring,
-                                    mat);
-  elif not IsIntegers(semiring) then
+                                    semiring, mat);
+  elif IsIntegers(semiring) then
+    return Matrix(Integers, mat);
+  fi;
+  TryNextMethod();
+end);
+
+# TODO MatrixObj is this required?
+SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
+  if IsHomogeneousList(mat) then
+    if not (IsList(mat) and  IsEmpty(mat))
+        and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
+      TryNextMethod();
+    elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
+      TryNextMethod();
+    elif IsField(semiring) and IsFinite(semiring) then
+      return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                      semiring,
+                                      mat);
+    elif not IsIntegers(semiring) then
+      TryNextMethod();
+    fi;
+  else
     TryNextMethod();
   fi;
-
-  entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(IsIntegerMatrix);
-  checker := function(x)
-    return entry_ok(x) and x in semiring;
-  end;
-
-  for row in mat do
-    if not ForAll(row, checker) then
-      ErrorNoReturn("the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(IsIntegerMatrix));
-    fi;
-  od;
-
-  return MatrixNC(IsIntegerMatrix, List(mat, ShallowCopy));
+  return Matrix(Integers, mat);
 end;
 
 InstallMethod(Matrix, "for a semiring and homogenous list",
-[IsSemiring, IsHomogeneousList],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
-SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
-
-InstallMethod(Matrix, "for a semiring and a matrix obj",
-[IsSemiring, IsMatrixObj],
+[IsField and IsFinite, IsHomogeneousList],
 20,  # WORKAROUND for a similar ranking offset in GAP master
      # TODO: remove this once GAP master has adjusted
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
@@ -318,18 +323,13 @@ InstallMethod(Matrix, "for a semiring and matrix over semiring",
 {R, mat} -> Matrix(R, AsList(mat)));
 
 InstallMethod(RandomMatrix, "for an operation and pos int",
-[IsOperation, IsPosInt],
-{op, dim} -> RandomMatrixCons(op, dim));
+[IsOperation, IsPosInt], RandomMatrixCons);
 
 InstallMethod(RandomMatrix, "for an operation, pos int, and int",
-[IsOperation, IsPosInt, IsInt],
-{op, dim, threshold} -> RandomMatrixCons(op, dim, threshold));
+[IsOperation, IsPosInt, IsInt], RandomMatrixCons);
 
 InstallMethod(RandomMatrix, "for an operation, pos int, int, and int",
-[IsOperation, IsPosInt, IsInt, IsInt],
-function(op, dim, threshold, period)
-  return RandomMatrixCons(op, dim, threshold, period);
-end);
+[IsOperation, IsPosInt, IsInt, IsInt], RandomMatrixCons);
 
 InstallMethod(RandomMatrix, "for a semiring and non-negative int",
 [IsSemiring, IsInt],
@@ -376,12 +376,11 @@ end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)],
-            i -> ShallowCopy(mat[i])));
+mat -> List([1 .. NrRows(mat)], i -> ShallowCopy(mat[i])));
 
 InstallMethod(AsList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)], i -> mat[i]));
+mat -> List([1 .. NrRows(mat)], i -> mat[i]));
 
 InstallMethod(Iterator, "for a matrix over semiring",
 [IsMatrixOverSemiring],
@@ -412,7 +411,7 @@ function(mat)
   return IteratorByFunctions(iter);
 end);
 
-InstallMethod(ELM_LIST, "for a matrix over semiring",
+InstallOtherMethod(\[\], "for a matrix over semiring and a pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then
@@ -420,6 +419,19 @@ function(mat, pos)
 
   fi;
   return mat![pos];
+end);
+
+InstallMethod(MatElm,
+"for a plist matrix over semiring positional rep, and two pos ints",
+[IsPlistMatrixOverSemiringPositionalRep, IsPosInt, IsPosInt],
+function(mat, row, col)
+  if Maximum(row, col) > NumberRows(mat) then
+    ErrorNoReturn(
+      StringFormatted("the 1st argument (a matrix) only is {1}x{1}, ",
+                      NrRows(mat)),
+      StringFormatted("but trying to access [{}, {}]", row, col));
+  fi;
+  return mat![row][col];
 end);
 
 InstallMethod(IsBound\[\],
@@ -478,6 +490,12 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 [IsMatrixOverSemiringCollection], ReturnFalse);
 
 InstallMethod(DimensionOfMatrixOverSemiring, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberRows, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberColumns, "for a matrix over a semiring",
 [IsMatrixOverSemiring],
 function(mat)
   if IsBound(mat[1]) then

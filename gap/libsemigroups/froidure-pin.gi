@@ -19,6 +19,7 @@ for x in [IsFpSemigroup,
           IsTransformationSemigroup,
           IsBooleanMatSemigroup,
           IsIntegerMatrixSemigroup,
+          IsIntegerMatrixMonoid,
           IsMaxPlusMatrixSemigroup,
           IsMinPlusMatrixSemigroup,
           IsTropicalMinPlusMatrixSemigroup,
@@ -100,6 +101,9 @@ InstallMethod(FroidurePinMemFnRec, "for a bipartition semigroup",
 InstallMethod(FroidurePinMemFnRec, "for an integer matrix semigroup",
 [IsIntegerMatrixSemigroup], S -> libsemigroups.FroidurePinIntMat);
 
+InstallMethod(FroidurePinMemFnRec, "for an integer matrix monoid",
+[IsIntegerMatrixMonoid], S -> libsemigroups.FroidurePinIntMat);
+
 InstallMethod(FroidurePinMemFnRec, "for an max-plus matrix semigroup",
 [IsMaxPlusMatrixSemigroup], S -> libsemigroups.FroidurePinMaxPlusMat);
 
@@ -136,8 +140,8 @@ InstallMethod(FroidurePinMemFnRec, "for quotient semigroup",
 
 BindGlobal("_GetElement",
 function(coll, x)
-  Assert(1, IsMultiplicativeElementCollection(coll));
-  Assert(1, IsMultiplicativeElement(x));
+  Assert(1, IsMultiplicativeElementCollection(coll) or IsMatrixObj(x));
+  Assert(1, IsMultiplicativeElement(x) or IsMatrixObj(x));
   if IsPartialPermCollection(coll) then
     return [x, Maximum(DegreeOfPartialPermCollection(coll),
                        CodegreeOfPartialPermCollection(coll))];
@@ -313,7 +317,6 @@ function(S, x)
     C := QuotientSemigroupCongruence(S);
     return CongruenceWordToClassIndex(C, Factorization(T, Representative(x)));
   fi;
-
   pos := FroidurePinMemFnRec(S).position(LibsemigroupsFroidurePin(S),
                                          _GetElement(S, x));
   if pos < 0 then

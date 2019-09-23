@@ -341,7 +341,7 @@ true
 # AsSemigroup:
 #   convert from IsIntegerMatrixSemigroup to IsMaxPlusMatrixSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0, 0, 0, 0],

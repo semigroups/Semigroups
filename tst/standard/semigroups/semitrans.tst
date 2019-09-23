@@ -494,7 +494,7 @@ true
 
 # isomorphism from an integer mat semigroup to transformation semigroup
 gap> S := Semigroup(
->  Matrix(IsIntegerMatrix,
+>  Matrix(Integers,
 >     [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -512,7 +512,7 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix,
+>  Matrix(Integers,
 >     [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -530,7 +530,7 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix,
+>  Matrix(Integers,
 >     [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -548,7 +548,7 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix,
+>  Matrix(Integers,
 >     [[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -800,12 +800,12 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0],
 >         [1, 0, 0, 0],
 >         [0, 1, 0, 0],
 >         [0, 1, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0],
 >         [0, 0, 1, 0],
 >         [0, 0, 1, 0],
@@ -1253,11 +1253,11 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 0, 1],
 >         [0, 1, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 1, 0],
 >         [0, 1, 0]])]);
@@ -1588,11 +1588,11 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 0, 1],
 >         [0, 1, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0],
 >         [0, 1, 0],
 >         [0, 1, 0]])]);
@@ -1937,13 +1937,13 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0],
 >         [1, 0, 0, 0, 0],
 >         [1, 0, 0, 0, 0],

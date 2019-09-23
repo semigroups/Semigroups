@@ -69,6 +69,11 @@ DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsTransformation]);
 
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrixObj,
+                                IsPosInt,
+                                IsPosInt]);
+
 DeclareAttribute("AsTransformation", IsMatrixOverSemiring);
 
 DeclareOperation("RandomMatrix", [IsOperation, IsPosInt]);
@@ -109,6 +114,8 @@ DeclareProperty("IsTorsion", IsMatrixOverSemiring);
 # properties satisfied (or not) by the object.
 DeclareAttribute("SEMIGROUPS_TypeViewStringOfMatrixOverSemiring",
                  IsMatrixOverSemiring);
+DeclareAttribute("SEMIGROUPS_TypeViewStringOfMatrixOverSemiring",
+                 IsMatrixObj);
 DeclareAttribute("SEMIGROUPS_FilterOfMatrixOverSemiring",
                  IsMatrixOverSemiring);
 
@@ -121,3 +128,9 @@ DeclareConstructor("SEMIGROUPS_MatrixOverSemiringEntryCheckerCons",
                    [IsMatrixOverSemiring, IsPosInt]);
 DeclareConstructor("SEMIGROUPS_MatrixOverSemiringEntryCheckerCons",
                    [IsMatrixOverSemiring, IsInt, IsInt]);
+
+DeclareOperation("MatElm", [IsMatrixOverSemiring, IsPosInt, IsPosInt]);
+DeclareAttribute("TransposedMatImmutable", IsMatrixOverSemiring);
+DeclareAttribute("NumberRows", IsMatrixOverSemiring);
+DeclareAttribute("NumberColumns", IsMatrixOverSemiring);
+DeclareProperty("IsZero", IsMatrixOverSemiring);

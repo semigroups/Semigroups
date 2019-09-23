@@ -61,16 +61,16 @@ gap> Matrix(IsNTPMatrix, [[0, 0, 0],
 Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(IsIntegerMatrix, [[-1, -2, 0],
->                             [0, 3, -1],
->                             [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+gap> Matrix(Integers, [[-1, -2, 0],
+>                      [0, 3, -1],
+>                      [1, 0, -3]]);
+<3x3-matrix over Integers>
 gap> TransposedMat(TransposedMat(last)) = last;
 true
 gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1],
 >                      [1, 0, -3]]);
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+<3x3-matrix over Integers>
 gap> TransposedMat(TransposedMat(last)) = last;
 true
 
@@ -99,9 +99,9 @@ Error, no 2nd choice method found for `Matrix' on 4 arguments
 
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 2/3
-gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3, 3);
+gap> Matrix(Integers, [[1, 1], [2, 2]], 3, 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `Matrix' on 4 arguments
+Error, no 1st choice method found for `Matrix' on 4 arguments
 
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 3/3
@@ -115,22 +115,20 @@ Error, the 2nd argument must define a square matrix
 gap> Matrix(IsTropicalMaxPlusMatrix, [[1, 1, 3], [1, 2, 3]], 3);
 Error, the 2nd argument must define a square matrix
 
-# semiringmat: Matrix, for a filter, homogeneous list, and pos int, 2/3
-gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3);
-Error, cannot create a matrix from the given arguments
-
 # semiringmat: Matrix, for a filter, homogeneous list, and pos int, 3/3
 gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1], [2, 10]], 3);
 Error, the entries in the 2nd argument do not define a matrix of type IsTropic\
 alMinPlusMatrix
 
-# semiringmat: Matrix, for a filter and homogeneous list, 1/3
-gap> Matrix(IsIntegerMatrix, [[1, 1], [2]]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `Matrix' on 2 arguments
-gap> Matrix(IsIntegerMatrix, [[1, 1, 3], [1, 2, 3]]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `Matrix' on 2 arguments
+# semiringmat: Matrix, for Integers and homogeneous list, 1/3
+# TODO(MatrixObj-later) the following works fine in MatrixObj land
+# see https://github.com/gap-system/gap/issues/4885
+# gap> Matrix(Integers, [[1, 1], [2]]);
+# Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+# Error, no 2nd choice method found for `Matrix' on 2 arguments
+# The following works fine in GAP 4.12.x but not in GAP 4.11.1
+# gap> Matrix(Integers, [[1, 1, 3], [1, 2, 3]]);
+# <2x3-matrix over Integers>
 
 # semiringmat: Matrix, for a filter and homogeneous list, 2/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [1, 2]]);
@@ -138,9 +136,11 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `Matrix' on 2 arguments
 
 # semiringmat: Matrix, for a filter and homogeneous list, 3/3
-gap> Matrix(IsIntegerMatrix, [[1, 1], [2, E(8)]]);
-Error, the entries in the 2nd argument do not define a matrix of type IsIntege\
-rMatrix
+# TODO(MatrixObj-later) the following works fine in MatrixObj land
+# see: https://github.com/gap-system/gap/issues/4884
+# gap> Matrix(Integers, [[1, 1], [2, E(8)]]);
+# Error, the entries in the 2nd argument do not define a matrix of type IsIntege\
+# rMatrix
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 1/3
 # WORKAROUND: disabled until https://github.com/gap-system/gap/issues/4814
@@ -153,12 +153,14 @@ gap> Matrix(Rationals, [[1, 1], [2, 2]]);
 <2x2-matrix over Rationals>
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 3/3
-gap> Matrix(Integers, [[1, 1], [2, E(8)]]);
-Error, the entries in the 2nd argument do not define a matrix of type IsIntege\
-rMatrix
+# TODO(MatrixObj-later) the following works fine in MatrixObj land
+# see: https://github.com/gap-system/gap/issues/4884
+# gap> Matrix(Integers, [[1, 1], [2, E(8)]]);
+# Error, the entries in the 2nd argument do not define a matrix of type IsIntege\
+# rMatrix
 
 # semiringmat: RandomMatrix, 1
-gap> RandomMatrix(IsIntegerMatrix, 2);;
+gap> RandomMatrix(Integers, 2);;
 
 # semiringmat: RandomMatrix, 2
 gap> RandomMatrix(IsTropicalMaxPlusMatrix, 2, 2);;
@@ -166,11 +168,13 @@ gap> RandomMatrix(IsTropicalMaxPlusMatrix, 2, 2);;
 # semiringmat: RandomMatrix, 3
 gap> RandomMatrix(IsNTPMatrix, 2, 2, 2);;
 
-# # semiringmat: RandomMatrix, 4
-# gap> RandomMatrix(GF(7), 2);;
-#
-# # semiringmat: RandomMatrix, 5
-# gap> RandomMatrix(7, 2);;
+# semiringmat: RandomMatrix, 4
+gap> RandomMatrix(GF(7), 2);;
+
+# semiringmat: RandomMatrix, 5
+gap> RandomMatrix(7, 2);;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RandomMatrix' on 2 arguments
 
 # semiringmat: RandomMatrix, 6
 gap> RandomMatrix(7, 2, 3);
@@ -283,7 +287,7 @@ gap> AsSet(AsList(S));
   <9x9 tropical min-plus matrix> ]
 
 # semiringmat: \<, equal matrices, 2/4
-gap> mat := Matrix(IsIntegerMatrix, [[-2, 0], [0, 3]]);;
+gap> mat := Matrix(Integers, [[-2, 0], [0, 3]]);;
 gap> mat < mat;
 false
 
@@ -364,8 +368,8 @@ Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
 gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
-gap> AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
+gap> Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;
 gap> mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -402,33 +406,17 @@ gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 6);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 gap> mat := AsMatrix(IsNTPMatrix, mat, 2, 1);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
-gap> mat := AsMatrix(IsIntegerMatrix, mat);
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
+gap> mat := Matrix(Integers, mat);
+<3x3-matrix over Integers>
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
 
-# semiringmat: Iterator, for a matrix over semiring 1/1
-gap> mat := Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;
-gap> for row in mat do od;
-gap> iter := Iterator(mat);
-<iterator>
-gap> NextIterator(iter);
-[ 0, 1, 0 ]
-gap> for x in iter do od;
-gap> NextIterator(iter);
-fail
-gap> iter := ShallowCopy(iter);
-<iterator>
-gap> IsDoneIterator(iter);
-false
-gap> for x in iter do od;
-
 # semiringmat: ELM_LIST, 1/1
-gap> mat := Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;
+gap> mat := Matrix(Integers, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;
 gap> mat[1];
-[ 0, 1, 0 ]
+<plist vector over Integers of length 3>
 gap> mat[4];
-Error, the position is greater than the dimension of the matrix
+Error, List Element: <list>[4] must have an assigned value
 
 # semiringmat, pickling
 gap> S := FullTropicalMaxPlusMonoid(2, 10);
@@ -450,9 +438,9 @@ true
 gap> Exec("rm ", filename);
 
 # semiringmat, IsGeneratorsOfSemigroup
-gap> coll := [Matrix(IsIntegerMatrix, [[-1, -1, 0, 3, 0], [-1, 1, 3, 0, 0],
+gap> coll := [Matrix(Integers, [[-1, -1, 0, 3, 0], [-1, 1, 3, 0, 0],
 >      [-1, 0, 0, -1, 0], [0, 4, 4, 2, -1], [1, 1, 0, 3, 0]]),
->  Matrix(IsIntegerMatrix, [[-3, 0, 0, 4, 0, 2], [-3, 1, 0, 0, 0, 4],
+>  Matrix(Integers, [[-3, 0, 0, 4, 0, 2], [-3, 1, 0, 0, 0, 4],
 >      [0, 1, 2, -3, 3, -1], [-2, 0, 0, 3, -1, 1], [0, -3, 3, -1, -1, 1],
 >      [1, 1, -2, 0, 0, 0]])];;
 gap> IsGeneratorsOfSemigroup(coll);
@@ -505,16 +493,16 @@ false
 
 # Test Matrix for a finite field
 gap> mat := Matrix(GF(3), [[Z(3)]]);
-Matrix(GF(3), [[Z(3)]])
+[ [ Z(3) ] ]
 gap> Matrix(GF(3), mat);
-Matrix(GF(3), [[Z(3)]])
+[ [ Z(3) ] ]
 
 # Test RandomMatrix for a finite field
 gap> mat := RandomMatrix(GF(3), 3, 2);;
-gap> RowRank(mat);
+gap> Rank(mat);
 2
 gap> mat := RandomMatrix(GF(3), 3, [2, 3]);;
-gap> RowRank(mat) in [2, 3];
+gap> Rank(mat) in [2, 3];
 true
 
 # Test OneImmutable, fails
@@ -536,11 +524,6 @@ gap> mat := Matrix(GF(4), [[Z(4), Z(4) ^ 2], [0 * Z(4), Z(4)]]);;
 gap> TraceMat(mat);
 0*Z(2)
 
-# Test DimensionOfMatrixOverSemiring for zero dim
-gap> mat := Matrix(GF(3), []);;
-gap> DimensionOfMatrixOverSemiring(mat);
-0
-
 # Test DimensionOfMatrixOverSemiringCollection, for a list
 gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
 >             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 9)];;
@@ -556,11 +539,6 @@ gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10));;
 gap> DimensionOfMatrixOverSemiringCollection(S);
 2
 
-# Test PrintString for 0 dim
-gap> mat := Matrix(GF(3), []);;
-gap> PrintString(mat);
-"\>\>Matrix(\<\>GF(3)\<, \>[]\<)\<"
-
 # Test String
 gap> mat := Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10);;
 gap> String(mat);
@@ -570,11 +548,6 @@ true
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);;
 gap> String(mat);
 "Matrix(IsTropicalMaxPlusMatrix, [ [ 2, 2 ], [ 0, 1 ] ], 10)"
-gap> mat = EvalString(String(mat));
-true
-gap> mat := Matrix(GF(3), []);;
-gap> String(mat);
-"Matrix(GF(3), [ ])"
 gap> mat = EvalString(String(mat));
 true
 

@@ -310,7 +310,7 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsPBRSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0, 0, 0],
 >         [0, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -320,7 +320,7 @@ gap> S := Semigroup([
 >         [0, 0, 0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 0, 0, 0, 0, 0, 1, 0],
 >         [1, 0, 0, 0, 0, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 0, 1, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -761,7 +761,7 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsPBRSemigroup
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0, 0, 0],
@@ -771,7 +771,7 @@ gap> S := Monoid([
 >         [0, 0, 0, 0, 0, 0, 0, 0, 1],
 >         [0, 0, 0, 0, 0, 0, 0, 0, 1],
 >         [0, 0, 0, 0, 0, 0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -1160,13 +1160,13 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsPBRMonoid
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 1, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0],
 >         [1, 0, 0, 0, 0],
 >         [1, 0, 0, 0, 0],
@@ -1552,7 +1552,7 @@ true
 # AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsPBRMonoid
 gap> S := Monoid([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 1, 0, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0, 0, 0],
 >         [0, 0, 0, 0, 0, 1, 0],
@@ -1560,7 +1560,7 @@ gap> S := Monoid([
 >         [0, 0, 0, 0, 0, 0, 1],
 >         [0, 0, 0, 0, 0, 1, 0],
 >         [0, 0, 0, 0, 0, 0, 1]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0, 0, 0],
 >         [0, 0, 0, 0, 1, 0, 0],
 >         [0, 0, 1, 0, 0, 0, 0],

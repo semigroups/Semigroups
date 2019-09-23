@@ -361,13 +361,13 @@ true
 # AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[1, 0, 0, 0, 0],
 >         [0, 0, 0, 1, 0],
 >         [0, 0, 1, 0, 0],
 >         [0, 0, 0, 1, 0],
 >         [1, 0, 0, 0, 0]]),
-> Matrix(IsIntegerMatrix,
+> Matrix(Integers,
 >        [[0, 0, 1, 0, 0],
 >         [0, 1, 0, 0, 0],
 >         [0, 0, 1, 0, 0],
