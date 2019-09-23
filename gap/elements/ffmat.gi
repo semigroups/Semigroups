@@ -48,17 +48,13 @@ end);
 # and should become rendundant once the GAP MatrixObj code works
 InstallOtherMethod(TraceMat, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
-function(mat)
-  return TraceMat(mat!.mat);
-end);
+mat -> TraceMat(mat!.mat));
 
 # This should be used with caution, it can create corrupt objects
 
 InstallMethod(MatrixNC, "for a matrix over finite field and list",
 [IsMatrixOverFiniteField, IsList],
-function(sample, mat)
-  return MatrixNC(sample, ShallowCopy(mat));
-end);
+{sample, mat} -> MatrixNC(sample, ShallowCopy(mat)));
 
 InstallMethod(MatrixNC, "for a matrix over finite field and mutable list",
 [IsMatrixOverFiniteField, IsList and IsMutable],
