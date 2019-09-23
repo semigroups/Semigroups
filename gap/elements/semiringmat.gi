@@ -471,7 +471,7 @@ function(mat, pos)
   return IsBound(mat![pos]) and pos <= Length(mat![1]);
 end);
 
-InstallMethod(TransposedMat, "for a matrix over semiring",
+InstallMethod(TransposedMatImmutable, "for a matrix over semiring",
 [IsPlistMatrixOverSemiringPositionalRep],
 function(x)
   local n, y, i, j;
