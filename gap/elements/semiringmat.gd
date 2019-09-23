@@ -105,7 +105,7 @@ DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("DimensionOfMatrixOverSemiringCollection",
                  IsMatrixOverSemiringCollection);
-DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
+DeclareAttribute("TransposedMatImmutable", IsMatrixOverSemiring);
 DeclareProperty("IsTorsion", IsMatrixOverSemiring);
 
 # Cannot use TypeObj since it can contain information about
