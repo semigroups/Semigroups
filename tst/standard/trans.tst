@@ -16,9 +16,9 @@ gap> SEMIGROUPS.StartTest();
 # Test CanonicalTransformation
 gap> f := Transformation([10, 8, 4, 6, 4, 5, 3, 8, 8, 2]);;
 gap> CanonicalTransformation(f);
-Transformation( [ 10, 9, 10, 1, 2, 4, 9, 7, 8, 10 ] )
+Transformation( [ 6, 8, 2, 7, 4, 5, 5, 10, 10, 10 ] )
 gap> CanonicalTransformation(CanonicalTransformation(f));
-Transformation( [ 10, 9, 10, 1, 2, 4, 9, 7, 8, 10 ] )
+Transformation( [ 6, 8, 2, 7, 4, 5, 5, 10, 10, 10 ] )
 gap> Number(Set(FullTransformationMonoid(5),
 >               x -> CanonicalTransformation(x, 5)));
 47

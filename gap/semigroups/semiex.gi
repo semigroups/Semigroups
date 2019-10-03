@@ -353,18 +353,20 @@ function(S)
   su := [];  # induced subdigraphs corresponding to ideals
 
   for x in OutNeighbors(po) do
-    gr := InducedSubdigraph(po, x);
+    gr := InducedSubdigraph(po, SortedList(x));
     if not IsBound(au[Length(x)]) then
       au[Length(x)] := [];
       id[Length(x)] := [];
       su[Length(x)] := [];
     fi;
     Add(au[Length(x)], AutomorphismGroup(gr)
-                       ^ MappingPermListList(DigraphVertices(gr), x));
-    Add(id[Length(x)], x);
+                       ^ MappingPermListList(DigraphVertices(gr),
+                                             SortedList(x)));
+    Add(id[Length(x)], SortedList(x));
     Add(su[Length(x)], gr);
   od;
 
+  #  Error();
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do
@@ -372,7 +374,7 @@ function(S)
       continue;
     fi;
     for j in [1 .. Length(id[i])] do
-      e := PartialPermNC(id[i][j], id[i][j]);
+      e := PartialPerm(id[i][j], id[i][j]);
       for p in GeneratorsOfGroup(au[i][j]) do
         Add(out, e * p);
       od;
@@ -389,7 +391,7 @@ function(S)
   od;
 
   min := id[1][1][1];  # the index of the element in the minimal ideal
-  Add(out, PartialPermNC([min], [min]));
+  Add(out, PartialPerm([min], [min]));
 
   # All ideals of size 2 are isomorphic and have trivial automorphism group
   for j in [1 .. Length(id[2])] do
@@ -398,9 +400,9 @@ function(S)
     pos := Position(id[2][j], min);
     for k in [j + 1 .. Length(id[2])] do
       if Position(id[2][k], min) = pos then
-        Add(out, PartialPermNC(id[2][j], id[2][k]));
+        Add(out, PartialPerm(id[2][j], id[2][k]));
       else
-        Add(out, PartialPermNC(id[2][j], Reversed(id[2][k])));
+        Add(out, PartialPerm(id[2][j], Reversed(id[2][k])));
       fi;
     od;
   od;

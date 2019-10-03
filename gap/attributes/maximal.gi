@@ -889,7 +889,7 @@ function(R, opts)
         nbs[b][a] := true;
       od;
       # There is roughly 1 'degree of freedom' per connected component of <dig>
-      dig := DigraphByAdjacencyMatrixNC(nbs);  # <dig> is graph defined by <nbs>
+      dig := DigraphByAdjacencyMatrix(nbs);  # <dig> is graph defined by <nbs>
       sup := DigraphConnectedComponents(dig).comps;
       m := Length(sup);
 
@@ -1181,7 +1181,7 @@ function(S, opts)
     below := DigraphReflexiveTransitiveReduction(po);
     above := DigraphReverse(below);
     SetIsAcyclicDigraph(above, true);
-    above := DigraphTransitiveClosureNC(above, false);
+    above := DigraphRemoveLoops(DigraphTransitiveClosure(above));
     above := InducedSubdigraph(above, try);
 
     # <vertex_class[i]> is the vertex number of <above> corresponding to <D[i]>
@@ -1405,8 +1405,10 @@ function(S, opts)
     comp_R := DigraphStronglyConnectedComponents(gamma_R);
     gamma_L := QuotientDigraph(gamma_L, comp_L.comps);
     gamma_L := DigraphRemoveLoops(DigraphRemoveAllMultipleEdges(gamma_L));
+    ClearDigraphVertexLabels(gamma_L);
     gamma_R := QuotientDigraph(gamma_R, comp_R.comps);
     gamma_R := DigraphRemoveLoops(DigraphRemoveAllMultipleEdges(gamma_R));
+    ClearDigraphVertexLabels(gamma_R);
 
     m := DigraphNrVertices(gamma_L);
     n := DigraphNrVertices(gamma_R);
@@ -1435,7 +1437,7 @@ function(S, opts)
         od;
       od;
     od;
-    delta := DigraphByAdjacencyMatrixNC(delta);
+    delta := DigraphByAdjacencyMatrix(delta);
     SetIsBipartiteDigraph(delta, true);
     SetIsSymmetricDigraph(delta, true);
     SetDigraphNrEdges(delta, nredges * 2);
@@ -1479,7 +1481,7 @@ function(S, opts)
       od;
     od;
 
-    delta_prime := DigraphByAdjacencyMatrixNC(delta_prime);
+    delta_prime := DigraphByAdjacencyMatrix(delta_prime);
     SetIsBipartiteDigraph(delta_prime, true);
     SetIsSymmetricDigraph(delta_prime, true);
     SetDigraphNrEdges(delta_prime, nredges * 2);

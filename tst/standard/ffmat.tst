@@ -86,13 +86,13 @@ gap> SEMIGROUPS_TypeOfMatrixOverSemiringCons(IsPlistMatrixOverFiniteFieldRep);;
 # Test ELM_LIST and IsBound
 gap> mat := Matrix(GF(3), []);;
 gap> mat[1];
-Error, Semigroups: ELM_LIST (for a plist matrix over finitefield):
+Error, Semigroups: ELM_LIST (for a plist matrix over finite field):
 the position is greater than the dimension of the matrix,
 gap> mat := Matrix(GF(3), Z(3) * [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);;
 gap> mat[1];
 [ Z(3), 0*Z(3), 0*Z(3) ]
 gap> mat[4];
-Error, Semigroups: ELM_LIST (for a plist matrix over finitefield):
+Error, Semigroups: ELM_LIST (for a plist matrix over finite field):
 the position is greater than the dimension of the matrix,
 
 # Test MatrixNC for a sample

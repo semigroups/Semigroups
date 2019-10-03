@@ -30,7 +30,7 @@ InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
 function(mat, pos)
   if not IsBound(mat[pos]) then
-    ErrorNoReturn("Semigroups: ELM_LIST (for a plist matrix over finite",
+    ErrorNoReturn("Semigroups: ELM_LIST (for a plist matrix over finite ",
                   "field):\nthe position is greater than the dimension ",
                   "of the matrix,");
   fi;
@@ -48,17 +48,13 @@ end);
 # and should become rendundant once the GAP MatrixObj code works
 InstallOtherMethod(TraceMat, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
-function(mat)
-  return TraceMat(mat!.mat);
-end);
+mat -> TraceMat(mat!.mat));
 
 # This should be used with caution, it can create corrupt objects
 
 InstallMethod(MatrixNC, "for a matrix over finite field and list",
 [IsMatrixOverFiniteField, IsList],
-function(sample, mat)
-  return MatrixNC(sample, ShallowCopy(mat));
-end);
+{sample, mat} -> MatrixNC(sample, ShallowCopy(mat)));
 
 InstallMethod(MatrixNC, "for a matrix over finite field and mutable list",
 [IsMatrixOverFiniteField, IsList and IsMutable],
@@ -312,7 +308,7 @@ end);
 # TODO known information can be copied!
 
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
   if DimensionOfMatrixOverSemiring(m) = 0 then
     return m;
@@ -327,14 +323,14 @@ InstallMethod(AsList, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep], x -> x!.mat);
 
 InstallMethod(RowSpaceBasis, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
    ComputeRowSpaceAndTransformation(m);
    return RowSpaceBasis(m);
 end);
 
 InstallMethod(RowRank, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
   ComputeRowSpaceAndTransformation(m);
   return RowRank(m);
@@ -343,7 +339,7 @@ end);
 # Should this go in a helper function, it also works
 # similarly to the thing done below.
 InstallMethod(RightInverse, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
   local deg, u, rsp, zv, se, i;
 
@@ -375,7 +371,7 @@ function(m)
 end);
 
 InstallMethod(LeftInverse, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
   return TransposedMat(RightInverse(TransposedMat(m)));
 end);
@@ -384,11 +380,11 @@ end);
 # with other operations, so we have to be very careful.
 
 InstallMethod(InverseMutable, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 InverseImmutable);
 
 InstallMethod(InverseImmutable, "for a plist matrix over finite field",
-[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+[IsPlistMatrixOverFiniteFieldRep],
 function(m)
   local x;
 
