@@ -15,13 +15,11 @@ compiler:
 matrix:
   include:
     - env:
-      - SUITE=lint
-
-    - env:
-      - SUITE=test
+      - SUITE=coverage
       - ABI=64
       - GAP=master
-      - PACKAGES=latest
+      - PACKAGES=required
+      - THRESHOLD=95
 
     - env:
       - SUITE=test
@@ -40,6 +38,12 @@ matrix:
       addons:
         apt_packages:
           - g++-multilib
+
+    - env:
+      - SUITE=test
+      - ABI=64
+      - GAP=master
+      - PACKAGES=latest
 
     - env:
       - SUITE=external-libsemigroups
@@ -74,11 +78,7 @@ matrix:
       - PACKAGES=required
 
     - env:
-      - SUITE=coverage
-      - ABI=64
-      - GAP=master
-      - PACKAGES=required
-      - THRESHOLD=95
+      - SUITE=lint
 
 before_install:
   - if [ "$SUITE" == "external-libsemigroups" ]; then
