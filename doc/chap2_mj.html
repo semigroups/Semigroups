@@ -74,22 +74,22 @@
 <li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package version 4.8.2 or higher is available. <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> and <strong class="pkg">Semigroups</strong> both perform better if <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> is compiled.</p>
 
 </li>
-<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package version 0.12.0 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
+<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package version 1.0.0 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
 <li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package version 1.6.5 or higher is available.</p>
 
 </li>
-<li><p>download the package archive <code class="file">semigroups-3.1.5.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
+<li><p>download the package archive <code class="file">semigroups-3.2.0.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.1.5</code>.</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.2.0</code>.</p>
 
 </li>
-<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.1.5</code> into the <code class="file">pkg</code> directory.</p>
+<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.2.0</code> into the <code class="file">pkg</code> directory.</p>
 
 </li>
-<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++11 standard. Inside the <code class="file">pkg/semigroups-3.1.5</code> directory, type</p>
+<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href="https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++11 standard. Inside the <code class="file">pkg/semigroups-3.2.0</code> directory, type</p>
 
 
 <div class="example"><pre>
@@ -122,7 +122,7 @@ make</pre></div>
 
 <p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a <strong class="pkg">GAP</strong> kernel module written in C/C++ and this must be compiled. The kernel module contains low-level functions relating to the enumeration of certain types of semigroups, and it is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
 
-<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.1.5</code> directory, type</p>
+<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.2.0</code> directory, type</p>
 
 
 <div class="example"><pre>

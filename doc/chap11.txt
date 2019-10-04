@@ -49,7 +49,7 @@
     [4X[25Xgap>[125X [27Xgr := Digraph([[2, 5, 8, 10], [2, 3, 4, 5, 6, 8, 9, 10], [1],[127X[104X
     [4X[25X>[125X [27X                  [3, 5, 7, 8, 10], [2, 5, 7], [3, 6, 7, 9, 10],[127X[104X
     [4X[25X>[125X [27X                  [1, 4], [1, 5, 9], [1, 2, 7, 8], [3, 5]]);[127X[104X
-    [4X[28X<digraph with 10 vertices, 37 edges>[128X[104X
+    [4X[28X<immutable digraph with 10 vertices, 37 edges>[128X[104X
     [4X[25Xgap>[125X [27XS := GraphInverseSemigroup(gr);[127X[104X
     [4X[28X<infinite graph inverse semigroup with 10 vertices, 37 edges>[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfInverseSemigroup(S);[127X[104X
@@ -155,10 +155,10 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgr := Digraph([[], [1], [3]]);[127X[104X
-    [4X[28X<digraph with 3 vertices, 2 edges>[128X[104X
+    [4X[28X<immutable digraph with 3 vertices, 2 edges>[128X[104X
     [4X[25Xgap>[125X [27XS := GraphInverseSemigroup(gr);;[127X[104X
     [4X[25Xgap>[125X [27XGraphOfGraphInverseSemigroup(S);[127X[104X
-    [4X[28X<digraph with 3 vertices, 2 edges>[128X[104X
+    [4X[28X<immutable digraph with 3 vertices, 2 edges>[128X[104X
   [4X[32X[104X
   
   [1X11.1-6 IsGraphInverseSemigroupElementCollection[101X
@@ -181,7 +181,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgr := Digraph([[], [1], [2]]);[127X[104X
-    [4X[28X<digraph with 3 vertices, 2 edges>[128X[104X
+    [4X[28X<immutable digraph with 3 vertices, 2 edges>[128X[104X
     [4X[25Xgap>[125X [27XS := GraphInverseSemigroup(gr);[127X[104X
     [4X[28X<finite graph inverse semigroup with 3 vertices, 2 edges>[128X[104X
     [4X[25Xgap>[125X [27XElements(S);[127X[104X

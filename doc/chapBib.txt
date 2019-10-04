@@ -23,7 +23,7 @@
   [[20XBur16[120X]  [16XBurrell,  S.  A.[116X, [17XThe Order Problem for Natural and Tropical Matrix
   Semigroups[117X, MMath project, University of St Andrews, United Kingdom (2016).
   
-  [[20XDMW18[120X]  [16XDonoven,  C.,  Mitchell,  J.  D.  and Wilson, W.[116X, [17XComputing maximal
+  [[20XDMW18[120X]  [16XDonoven,  C.,  Mitchell, J. D. and Wilson, W. A.[116X, [17XComputing maximal
   subsemigroups  of  a  finite  semigroup[117X,  [18XJournal  of  Algebra[118X,  [19X505[119X (2018),
   559-596.
   

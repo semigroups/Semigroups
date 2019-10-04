@@ -143,9 +143,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
-    [4X[28X<digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[28X<immutable digraph with 5 vertices, 11 edges>[128X[104X
     [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 4, 5]);[127X[104X
-    [4X[28X<digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[28X<immutable digraph with 3 vertices, 6 edges>[128X[104X
     [4X[25Xgap>[125X [27XDigraphVertexLabels(y);[127X[104X
     [4X[28X[ 1, 4, 5 ][128X[104X
     [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
@@ -224,9 +224,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
-    [4X[28X<digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[28X<immutable digraph with 5 vertices, 11 edges>[128X[104X
     [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 2, 3]);[127X[104X
-    [4X[28X<digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[28X<immutable digraph with 3 vertices, 6 edges>[128X[104X
     [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
     [4X[28XGroup([ (2,4)(3,5) ])[128X[104X
     [4X[25Xgap>[125X [27XS := McAlisterTripleSemigroup(A, x, y, OnPoints);[127X[104X

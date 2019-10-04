@@ -161,9 +161,9 @@
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);</span>
-&lt;digraph with 5 vertices, 11 edges&gt;
+&lt;immutable digraph with 5 vertices, 11 edges&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := InducedSubdigraph(x, [1, 4, 5]);</span>
-&lt;digraph with 3 vertices, 6 edges&gt;
+&lt;immutable digraph with 3 vertices, 6 edges&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DigraphVertexLabels(y);</span>
 [ 1, 4, 5 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroup(x);</span>
@@ -238,9 +238,9 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);</span>
-&lt;digraph with 5 vertices, 11 edges&gt;
+&lt;immutable digraph with 5 vertices, 11 edges&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := InducedSubdigraph(x, [1, 2, 3]);</span>
-&lt;digraph with 3 vertices, 6 edges&gt;
+&lt;immutable digraph with 3 vertices, 6 edges&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroup(x);</span>
 Group([ (2,4)(3,5) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := McAlisterTripleSemigroup(A, x, y, OnPoints);</span>

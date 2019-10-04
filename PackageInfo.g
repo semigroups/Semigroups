@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.1.5">
+##  <!ENTITY VERSION "3.2.0">
 ##  <!ENTITY GAPVERS "4.9.0">
-##  <!ENTITY DIGRAPHSVERS "0.12.0">
+##  <!ENTITY DIGRAPHSVERS "1.0.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.1.5">
+##  <!ENTITY ARCHIVENAME "semigroups-3.2.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-19">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.1.5",
-Date := "19/09/2019",  # dd/mm/yyyy format
+Version := "3.2.0",
+Date := "04/10/2019",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -136,13 +136,10 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "max.horn@uni-siegen.de",
-    WWWHome       := "http://www.quendi.de/math",
+    WWWHome       := "https://www.quendi.de/math",
     PostalAddress := Concatenation(
-                       "Department Mathematik\n",
-                       "Universität Siegen\n",
-                       "Walter-Flex-Straße 3\n",
-                       "57072 Siegen\n",
-                       "Germany"),
+                       "Department Mathematik, Universität Siegen, ",
+                       "Walter-Flex-Straße 3, 57072 Siegen, Germany"),
     Place         := "Siegen",
     Institution   := "Universität Siegen"),
 
@@ -151,11 +148,13 @@ Persons := [
     FirstNames    := "Julius",
     IsAuthor      := false,
     IsMaintainer  := false,
-    Email         := "jj252@st-and.ac.uk",
-    PostalAddress := _STANDREWS,
-    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~julius/",
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    Email         := "julius.jonusas@tuwien.ac.at",
+    WWWHome       := "http://julius.jonusas.work",
+    PostalAddress := Concatenation([
+                       "Institut für Diskrete Mathematik und Geometrie, ",
+                       "Wiedner Hauptstrasse 8-10, 1040 Wien, Austria"]),
+    Place         := "Wien, Austria",
+    Institution   := "TU Wien"),
 
   rec(
     LastName      := "Pasechnik",
@@ -222,7 +221,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~mct25/",
+    WWWHome       := "https://mtorpey.github.io",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -290,7 +289,7 @@ Dependencies := rec(
   GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
-                          ["digraphs", ">=0.12.0"],
+                          ["digraphs", ">=1.0.0"],
                           ["genss", ">=1.6.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 

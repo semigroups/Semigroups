@@ -37,7 +37,7 @@ installation of [Semigroups]:
 Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 [orb]!
 
-* ensure that the [Digraphs] package version 0.12.0 or higher is available.
+* ensure that the [Digraphs] package version 1.0.0 or higher is available.
   [Digraphs] must be compiled before [Semigroups] can be loaded.
 
 * get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or

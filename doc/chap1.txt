@@ -4,12 +4,12 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.1.5.
-  [5XSemigroups[105X  3.1.5  is  a  distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.2.0.
+  [5XSemigroups[105X  3.2.0  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   
-  [33X[0;0Y[5XSemigroups[105X   3.1.5  contains  efficient  methods  for  creating  semigroups,
+  [33X[0;0Y[5XSemigroups[105X   3.2.0  contains  efficient  methods  for  creating  semigroups,
   monoids,  inverse  semigroups  and  their  ideals, calculating their Green's
   structure,  size,  elements,  group  of  units,  minimal  ideal, and testing
   membership,  finding  the  inverses  of  a  regular element, and factorizing
