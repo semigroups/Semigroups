@@ -3,6 +3,13 @@ Copyright © 2011-19 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.2.0 (released 04/10/2019)
+
+This is a minor release including several cleanups, changes for compatibility
+with [GAP][], and to update the required version of the [Digraphs package][] to
+v1.0.0. The changes in this release were made by [James D. Mitchell][] and
+[Wilf A.  Wilson][].
+
 ### Version 3.1.5 (released 19/09/2019)
 
 This is a minor release including several cleanups, changes for compatibility
