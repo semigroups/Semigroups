@@ -98,7 +98,6 @@ function(S)
 end);
 
 InstallGlobalFunction(UnderlyingElementOfDualSemigroupElement,
-"for a dual semigroup element",
 function(s)
   if not IsDualSemigroupElement(s) then
     ErrorNoReturn("Semigroups: UnderlyingElementOfDualSemigroupElement: \n",
