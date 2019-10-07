@@ -82,7 +82,7 @@ end);
 InstallMethod(ViewString,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-6,  # to beat the library method
+8,  # to beat the library method
 _ViewStringForSemigroupsIdeals);
 
 InstallMethod(ViewString,
