@@ -327,6 +327,10 @@ InstallMethod(RhoOrbOpts, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], s -> rec());
 
 # the lambda and rho acts
+if not IsBound(OnPosIntSetsTrans) then
+  BindGlobal("OnPosIntSetsTrans", ON_POS_INT_SETS_TRANS);
+fi;
+
 InstallMethod(LambdaAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)

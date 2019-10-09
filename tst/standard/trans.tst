@@ -54,6 +54,63 @@ guments
 gap> TransformationByImageAndKernel([1 .. 4], [[1 .. 4]]);
 fail
 
+# OnPosIntSetsTrans: for a transformation
+gap> OnPosIntSetsTrans([], Transformation([1, 1]), 0);
+[  ]
+gap> OnPosIntSetsTrans([1, 2], Transformation([1, 1]), 0);
+[ 1 ]
+gap> OnPosIntSetsTrans([1, 2, 10], Transformation([1, 1]), 0);
+[ 1, 10 ]
+gap> OnPosIntSetsTrans([1, 2, 10], Transformation([65535], [65537]), 0);
+[ 1, 2, 10 ]
+gap> OnPosIntSetsTrans([1, 65535, 65538], Transformation([65535], [65537]), 0);
+[ 1, 65537, 65538 ]
+gap> OnPosIntSetsTrans([1, 2, 10, 65537], Transformation([65537], [1]), 0);
+[ 1, 2, 10 ]
+gap> OnPosIntSetsTrans([1, 2, 10, 65535], Transformation([65535], [5]), 0);
+[ 1, 2, 5, 10 ]
+gap> OnPosIntSetsTrans([1 .. 20], 
+>                      Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 0);
+[ 1, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+gap> OnPosIntSetsTrans([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 19, 324, 4124, 123124],
+>                      Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 0);
+[ 1, 5, 7, 8, 9, 10, 11, 19, 324, 4124, 123124 ]
+gap> OnPosIntSetsTrans([], Transformation([1, 1]), 10);
+[  ]
+gap> OnPosIntSetsTrans([1, 2], Transformation([1, 1]), 10);
+[ 1 ]
+gap> OnPosIntSetsTrans([1, 2, 10], Transformation([1, 1]), 10);
+[ 1, 10 ]
+gap> OnPosIntSetsTrans([1, 2, 10], Transformation([65535], [65537]), 10);
+[ 1, 2, 10 ]
+gap> OnPosIntSetsTrans([1, 65535, 65538], Transformation([65535], [65537]), 10);
+[ 1, 65537, 65538 ]
+gap> OnPosIntSetsTrans([1, 2, 10, 65537], Transformation([65537], [1]), 12);
+[ 1, 2, 10 ]
+gap> OnPosIntSetsTrans([1, 2, 10, 65535], Transformation([65535], [5]), 130);
+[ 1, 2, 5, 10 ]
+gap> OnPosIntSetsTrans([1 .. 20], 
+>                      Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 10);
+[ 1, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+gap> OnPosIntSetsTrans([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 19, 324, 4124, 123124],
+>                      Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 10);
+[ 1, 5, 7, 8, 9, 10, 11, 19, 324, 4124, 123124 ]
+gap> OnPosIntSetsTrans([0],
+>           Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 0);
+[  ]
+gap> OnPosIntSetsTrans([0],
+>           Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 10);
+[ 1, 5, 7, 8, 9, 10 ]
+gap> OnPosIntSetsTrans([0],
+>           Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9]), 20);
+[ 1, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+gap> OnPosIntSetsTrans([1], "a", 20);
+Error, OnPosIntSetsTrans: <f> must be a transformation (not a list (string))
+gap> OnPosIntSetsTrans([0], "a", 20);
+Error, OnPosIntSetsTrans: <f> must be a transformation (not a list (string))
+gap> OnPosIntSetsTrans(1, "a", 20);
+Error, OnPosIntSetsTrans: <f> must be a transformation (not a list (string))
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 

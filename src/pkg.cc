@@ -24,6 +24,8 @@
 
 #include <iostream>
 
+#include "src/trans.h"
+
 #include "bipart.h"
 #include "congpairs.h"
 #include "converter.h"
@@ -57,6 +59,126 @@ UInt T_SEMI   = 0;
 UInt T_BIPART = 0;
 UInt T_BLOCKS = 0;
 
+// Forward decl
+Obj FuncIMAGE_SET_TRANS_INT(Obj, Obj, Obj);
+
+static inline Int IS_MUTABLE_PLIST(Obj list) {
+  return !((TNUM_OBJ(list) - T_PLIST) % 2);
+}
+
+static void REMOVE_DUPS_PLIST_INTOBJ(Obj res) {
+  Obj  tmp;
+  UInt i, k, len;
+  Obj* data;
+
+  len = LEN_PLIST(res);
+
+  if (0 < len) {
+    data = ADDR_OBJ(res);
+    tmp  = data[1];
+    k    = 1;
+    for (i = 2; i <= len; i++) {
+      if (tmp != data[i]) {
+        k++;
+        tmp     = data[i];
+        data[k] = tmp;
+      }
+    }
+    if (k < len) {
+      ResizeBag(res, (k + 1) * sizeof(Obj));
+      SET_LEN_PLIST(res, k);
+    }
+  }
+}
+
+static void SORT_PLIST_CYC(Obj res) {
+  Obj  tmp;
+  UInt h, i, k, len;
+
+  len = LEN_PLIST(res);
+
+  if (0 < len) {
+    h = 1;
+    while (9 * h + 4 < len) {
+      h = 3 * h + 1;
+    }
+    while (0 < h) {
+      for (i = h + 1; i <= len; i++) {
+        tmp = CONST_ADDR_OBJ(res)[i];
+        k   = i;
+        while (h < k && ((Int) tmp < (Int)(CONST_ADDR_OBJ(res)[k - h]))) {
+          ADDR_OBJ(res)[k] = CONST_ADDR_OBJ(res)[k - h];
+          k -= h;
+        }
+        ADDR_OBJ(res)[k] = tmp;
+      }
+      h = h / 3;
+    }
+    CHANGED_BAG(res);
+  }
+}
+
+static Obj ON_POS_INT_SETS_TRANS(Obj self, Obj set, Obj f, Obj n) {
+  const UInt2* ptf2;
+  const UInt4* ptf4;
+  const Obj*   ptset;
+  UInt         deg;
+  Obj *        ptres, res;
+  UInt         i, k;
+
+  if (LEN_LIST(set) == 0) {
+    return set;
+  }
+
+  if (LEN_LIST(set) == 1 && INT_INTOBJ(ELM_LIST(set, 1)) == 0) {
+    return FuncIMAGE_SET_TRANS_INT(self, f, n);
+  }
+
+  PLAIN_LIST(set);
+
+  res = NEW_PLIST(IS_MUTABLE_PLIST(set) ? T_PLIST_CYC_SSORT
+                                        : T_PLIST_CYC_SSORT + IMMUTABLE,
+                  LEN_LIST(set));
+
+  ADDR_OBJ(res)[0] = CONST_ADDR_OBJ(set)[0];
+
+  ptset = CONST_ADDR_OBJ(set) + LEN_LIST(set);
+  ptres = ADDR_OBJ(res) + LEN_LIST(set);
+
+  if (TNUM_OBJ(f) == T_TRANS2) {
+    ptf2 = CONST_ADDR_TRANS2(f);
+    deg  = DEG_TRANS2(f);
+    for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+      k = INT_INTOBJ(*ptset);
+      if (k <= deg) {
+        k = ptf2[k - 1] + 1;
+      }
+      *ptres = INTOBJ_INT(k);
+    }
+    SORT_PLIST_CYC(res);
+    REMOVE_DUPS_PLIST_INTOBJ(res);
+    return res;
+  } else if (TNUM_OBJ(f) == T_TRANS4) {
+    ptf4 = CONST_ADDR_TRANS4(f);
+    deg  = DEG_TRANS4(f);
+    for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+      k = INT_INTOBJ(*ptset);
+      if (k <= deg) {
+        k = ptf4[k - 1] + 1;
+      }
+      *ptres = INTOBJ_INT(k);
+    }
+    SORT_PLIST_CYC(res);
+    REMOVE_DUPS_PLIST_INTOBJ(res);
+    return res;
+  }
+  ErrorQuit("OnPosIntSetsTrans: the argument must be a "
+            "transformation (not a %s)",
+            (Int) TNAM_OBJ(f),
+            0L);
+  return 0L;
+}
+
 // Function to print a T_SEMI Obj.
 
 void TSemiObjPrintFunc(Obj o) {
@@ -73,7 +195,9 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -115,7 +239,9 @@ void TSemiObjFreeFunc(Obj o) {
       }
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -212,7 +338,9 @@ void TSemiObjLoadFunc(Obj o) {
       }
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -222,7 +350,9 @@ Obj TSemiObjCopyFunc(Obj o, Int mut) {
     case T_SEMI_SUBTYPE_UF: {
       return UF_COPY(0L, o);
     }
-    default: { return o; }
+    default: {
+      return o;
+    }
   }
 }
 
@@ -232,7 +362,9 @@ Int TSemiObjIsMutableObjFunc(Obj o) {
     case T_SEMI_SUBTYPE_UF: {
       return 1L;
     }
-    default: { return 0L; }
+    default: {
+      return 0L;
+    }
   }
 }
 
@@ -406,6 +538,8 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
+    GVAR_ENTRY("pkg.cc", ON_POS_INT_SETS_TRANS, 3, "set, f, n"),
+
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
