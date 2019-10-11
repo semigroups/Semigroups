@@ -176,7 +176,9 @@ static Obj ON_POS_INT_SETS_TRANS(Obj self, Obj set, Obj f, Obj n) {
             "transformation (not a %s)",
             (Int) TNAM_OBJ(f),
             0L);
-  return 0L;
+  SORT_PLIST_CYC(res);
+  REMOVE_DUPS_PLIST_INTOBJ(res);
+  return res;
 }
 
 // Function to print a T_SEMI Obj.
