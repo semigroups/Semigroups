@@ -905,7 +905,7 @@ gap> R := PrincipalFactor(
 >        Transformation([2, 4, 1, 5, 5])));
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
 gap> gr := RZMSDigraph(R);
-<immutable digraph with 15 vertices, 40 edges>
+<immutable bipartite digraph with bicomponent sizes 10 and 5>
 gap> e := DigraphEdges(gr)[1];
 [ 1, 11 ]
 gap> Matrix(R)[e[2] - 10][e[1]] <> 0;

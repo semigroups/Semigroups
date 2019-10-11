@@ -2549,7 +2549,7 @@ gap> o1 := NaturalPartialOrder(AsSemigroup(IsBipartitionSemigroup,
   [ 27, 31, 34 ], [ 27, 33, 34 ], [ 34 ], [ 30, 31, 34 ], [ 30, 32, 34 ], 
   [ 34 ], [ 34 ], [ 34 ], [ 34 ], [  ] ]
 gap> gr1 := DigraphReflexiveTransitiveClosure(Digraph(o1));
-<immutable digraph with 34 vertices, 139 edges>
+<immutable preorder digraph with 34 vertices, 139 edges>
 gap> o2 := NaturalPartialOrder(SymmetricInverseMonoid(3));
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 7 ], 
   [ 1, 3, 5 ], [ 1, 3, 7 ], [ 1, 4, 5 ], [ 1, 4, 6 ], [ 1 ], [ 1 ], [ 1 ], 
@@ -2559,7 +2559,7 @@ gap> o2 := NaturalPartialOrder(SymmetricInverseMonoid(3));
   [ 1, 3, 5, 10, 16, 18, 28 ], [ 1, 3, 7, 11, 14, 21, 27 ], [ 1, 4, 14 ], 
   [ 1, 4, 15 ], [ 1, 4, 5, 12, 15, 17, 32 ], [ 1, 4, 6, 13, 14, 19, 31 ] ]
 gap> gr2 := DigraphReflexiveTransitiveClosure(Digraph(o2));
-<immutable digraph with 34 vertices, 139 edges>
+<immutable preorder digraph with 34 vertices, 139 edges>
 gap> IsomorphismDigraphs(gr1, gr2);
 (1,25,19,31,14,3,26,20,32,15,33,16,12,27,6,24,5,23,18,13,28,21,4,9,10,30,7,2,
 8,29,22,17,34)

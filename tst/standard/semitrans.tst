@@ -187,7 +187,7 @@ gap> OutNeighbours(gr);
 [ [ 2, 3, 4 ], [ 3, 6, 8 ], [ 1, 2, 7 ], [ 2, 4, 7 ], [ 5, 6, 7 ], [ 1, 6 ], 
   [ 1, 6, 7 ], [ 1, 5 ] ]
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(1));
-<immutable digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(2), 1);
 fail
 
@@ -2687,19 +2687,19 @@ gap> Size(M);
 
 # semitrans: DigraphOfActionOnPairs, 1
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1));
-<immutable digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 1);
-<immutable digraph with 1 vertex, 0 edges>
+<immutable empty digraph with 1 vertex>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 3);
 <immutable digraph with 6 vertices, 3 edges>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 2);
 <immutable digraph with 3 vertices, 1 edge>
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 0);
-<immutable digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> IsEmptyDigraph(gr);
 true
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(2), 0);
-<immutable digraph with 0 vertices, 0 edges>
+<immutable empty digraph with 0 vertices>
 gap> IsEmptyDigraph(gr);
 true
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), -1);
@@ -2778,13 +2778,13 @@ false
 
 # DigraphCore
 gap> D := CompleteBipartiteDigraph(4, 4);
-<immutable digraph with 8 vertices, 32 edges>
+<immutable complete bipartite digraph with bicomponent sizes 4 and 4>
 gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> IsIsomorphicDigraph(CompleteDigraph(2),
 >    InducedSubdigraph(D, DigraphCore(D)));
 true
 gap> D := CycleDigraph(10);
-<immutable digraph with 10 vertices, 10 edges>
+<immutable cycle digraph with 10 vertices>
 gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
