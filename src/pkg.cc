@@ -60,7 +60,7 @@ UInt T_BIPART = 0;
 UInt T_BLOCKS = 0;
 
 // Forward decl
-Obj FuncIMAGE_SET_TRANS_INT(Obj, Obj, Obj);
+extern Obj FuncIMAGE_SET_TRANS_INT(Obj, Obj, Obj);
 
 static inline Int IS_MUTABLE_PLIST(Obj list) {
   return !((TNUM_OBJ(list) - T_PLIST) % 2);
