@@ -130,7 +130,7 @@ static Obj ON_POS_INT_SETS_TRANS(Obj self, Obj set, Obj f, Obj n) {
     return set;
   }
 
-  if (LEN_LIST(set) == 1 && INT_INTOBJ(ELM_LIST(set, 1)) == 0) {
+  if (LEN_LIST(set) == 1 && ELM_LIST(set, 1) == INTOBJ_INT(0)) {
     return FuncIMAGE_SET_TRANS_INT(self, f, n);
   }
 
