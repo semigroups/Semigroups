@@ -373,7 +373,6 @@ gap> WW := WreathProduct(C, T);;
 gap> Size(WW);
 216
 ]]></Example>
-
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>

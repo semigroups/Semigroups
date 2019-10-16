@@ -366,7 +366,7 @@ function(S)
     Add(su[Length(x)], gr);
   od;
 
-  #  Error();
+  # Error();
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do

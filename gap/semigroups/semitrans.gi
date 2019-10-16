@@ -1014,3 +1014,12 @@ function(digraph, colors)
                                     colors, colors)[1];
 
 end);
+
+InstallMethod(DigraphCore,
+"for a digraph with generators of endomorphism monoid",
+[IsDigraph and HasGeneratorsOfEndomorphismMonoidAttr],
+function(D)
+  local x;
+  x := RepresentativeOfMinimalIdeal(EndomorphismMonoid(D));
+  return ImageSetOfTransformation(x, DigraphNrVertices(D));
+end);

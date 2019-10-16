@@ -38,6 +38,8 @@ DeclareOperation("IsTransitive", [IsTransformationCollection, IsList]);
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
 DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 
+DeclareAttribute("DigraphCore", IsDigraph);
+
 DeclareOperation("WreathProduct",
                  [IsMultiplicativeElementCollection,
                   IsMultiplicativeElementCollection]);
