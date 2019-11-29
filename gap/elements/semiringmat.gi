@@ -282,22 +282,21 @@ function(filter, mat)
   return MatrixNC(filter, List(mat, ShallowCopy));
 end);
 
-InstallMethod(Matrix, "for a semiring and homogeneous list",
-[IsSemiring, IsHomogeneousList],
-function(semiring, mat)
+SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
   local entry_ok, checker, row;
 
   if not IsEmpty(mat)
-      and (not IsRectangularTable(mat) or Length(mat) <> Length(mat[1])) then
+      and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 2nd argument must define a square matrix,");
+                  "the 2nd argument <mat> does not give a rectangular table,");
+  elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
+    TryNextMethod();
   elif IsField(semiring) and IsFinite(semiring) then
     return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                     semiring,
                                     mat);
   elif not IsIntegers(semiring) then
-    ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given arguments,");
+    TryNextMethod();
   fi;
 
   entry_ok := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(IsIntegerMatrix);
@@ -314,7 +313,19 @@ function(semiring, mat)
   od;
 
   return MatrixNC(IsIntegerMatrix, List(mat, ShallowCopy));
-end);
+end;
+
+InstallMethod(Matrix, "for a semiring and homogenous list",
+[IsSemiring, IsHomogeneousList],
+SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
+
+if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
+  InstallMethod(Matrix, "for a semiring and a matrix obj",
+  [IsSemiring, IsMatrixObj],
+  SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
+fi;
+
+Unbind(SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 InstallMethod(Matrix, "for a semiring and matrix over semiring",
 [IsSemiring, IsMatrixOverSemiring],
