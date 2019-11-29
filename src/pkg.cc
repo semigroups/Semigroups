@@ -74,7 +74,9 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -116,7 +118,9 @@ void TSemiObjFreeFunc(Obj o) {
       }
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -212,7 +216,9 @@ void TSemiObjLoadFunc(Obj o) {
       }
       break;
     }
-    default: { SEMIGROUPS_ASSERT(false); }
+    default: {
+      SEMIGROUPS_ASSERT(false);
+    }
   }
 }
 
@@ -222,7 +228,9 @@ Obj TSemiObjCopyFunc(Obj o, Int mut) {
     case T_SEMI_SUBTYPE_UF: {
       return UF_COPY(0L, o);
     }
-    default: { return o; }
+    default: {
+      return o;
+    }
   }
 }
 
@@ -232,7 +240,9 @@ Int TSemiObjIsMutableObjFunc(Obj o) {
     case T_SEMI_SUBTYPE_UF: {
       return 1L;
     }
-    default: { return 0L; }
+    default: {
+      return 0L;
+    }
   }
 }
 

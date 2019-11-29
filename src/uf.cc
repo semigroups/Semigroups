@@ -68,8 +68,8 @@ Obj UF_FLATTEN(Obj self, Obj uf) {
 
 Obj UF_TABLE(Obj self, Obj uf) {
   UF::table_type* table     = CLASS_OBJ<UF*>(uf)->get_table();
-  size_t       size      = table->size();
-  Obj          gap_table = NEW_PLIST_IMM(T_PLIST_CYC, size);
+  size_t          size      = table->size();
+  Obj             gap_table = NEW_PLIST_IMM(T_PLIST_CYC, size);
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(gap_table, size);
   for (size_t i = 0; i < size; i++) {
@@ -80,8 +80,8 @@ Obj UF_TABLE(Obj self, Obj uf) {
 
 Obj UF_BLOCKS(Obj self, Obj uf) {
   UF::blocks_type const* blocks = CLASS_OBJ<UF*>(uf)->get_blocks();
-  size_t              size   = blocks->size();
-  size_t              i, j;
+  size_t                 size   = blocks->size();
+  size_t                 i, j;
 
   // Rewrite each block as a PLIST object, and put it into a PLIST.
   Obj gap_blocks = NEW_PLIST(T_PLIST, 0);

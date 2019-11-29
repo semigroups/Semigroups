@@ -32,10 +32,10 @@
 #include "libsemigroups/include/report.hpp"
 
 using libsemigroups::FpSemigroup;
-using libsemigroups::detail::DynamicArray2;
 using libsemigroups::relation_type;
 using libsemigroups::ReportGuard;
 using libsemigroups::word_type;
+using libsemigroups::detail::DynamicArray2;
 using Congruence      = libsemigroups::Congruence;
 using congruence_type = libsemigroups::congruence_type;
 
@@ -103,13 +103,13 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
   // SEMIGROUPS_ASSERT(IsSemigroup<>CongruenceByGeneratingPairsRep(o));
   SEMIGROUPS_ASSERT(!cong_obj_has_cpp_cong(o));
   initRNams();
-  gap_list_t                     genpairs  = ElmPRec(o, RNam_genpairs);
-  gap_semigroup_t                range_obj = cong_obj_get_range_obj(o);
+  gap_list_t      genpairs  = ElmPRec(o, RNam_genpairs);
+  gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
   congruence_type type
       = cstring_to_congruence_t(CSTR_STRING(ElmPRec(o, RNam_type)));
   Congruence* cong   = nullptr;
   bool        report = semi_obj_get_report(range_obj);
-  auto rg = ReportGuard(report);
+  auto        rg     = ReportGuard(report);
 
   if (cong_obj_is_fp_cong(o)) {
     size_t nrgens = INT_INTOBJ(ElmPRec(o, RNam_fp_nrgens));
@@ -320,7 +320,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     FroidurePin<Element const*>* range = cong_obj_get_range(o);
-    auto rg = ReportGuard(report);
+    auto                         rg    = ReportGuard(report);
 
     lookup = NEW_PLIST_IMM(T_PLIST_CYC, range->size());
     SET_LEN_PLIST(lookup, range->size());
@@ -393,10 +393,10 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
     Congruence* cong = cong_obj_get_cpp(cong_obj);
     return INTOBJ_INT(cong->word_to_class_index(plist_to_word_type(elm)) + 1);
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
-    Congruence*  cong  = cong_obj_get_cpp(cong_obj);
+    Congruence*                  cong  = cong_obj_get_cpp(cong_obj);
     FroidurePin<Element const*>* range = cong_obj_get_range(cong_obj);
-    auto rg = ReportGuard(report);
-    word_type word;
+    auto                         rg    = ReportGuard(report);
+    word_type                    word;
     range->factorisation(
         word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)) - 1);
     return INTOBJ_INT(cong->word_to_class_index(word) + 1);

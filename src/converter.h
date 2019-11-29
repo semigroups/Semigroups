@@ -45,7 +45,6 @@
 using libsemigroups::Bipartition;
 using libsemigroups::BooleanMat;
 using libsemigroups::Element;
-using libsemigroups::detail::MatrixOverSemiringBase;
 using libsemigroups::NaturalSemiring;
 using libsemigroups::PartialPerm;
 using libsemigroups::PBR;
@@ -54,6 +53,7 @@ using libsemigroups::Semiring;
 using libsemigroups::SemiringWithThreshold;
 using libsemigroups::Transformation;
 using libsemigroups::UNDEFINED;
+using libsemigroups::detail::MatrixOverSemiringBase;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class
