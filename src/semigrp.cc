@@ -86,8 +86,9 @@ void delete_vec(std::vector<TElementType*>* vec) {
   }
 }
 
-std::vector<Element*>*
-plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
+std::vector<Element*>* plist_to_vec(Converter* converter,
+                                    gap_list_t elements,
+                                    size_t     degree) {
   SEMIGROUPS_ASSERT(IS_PLIST(elements));
 
   auto out = new std::vector<Element*>();
@@ -99,8 +100,9 @@ plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
 }
 
 template <typename T>
-static inline gap_list_t
-iterator_to_plist(Converter* converter, T first, T last) {
+static inline gap_list_t iterator_to_plist(Converter* converter,
+                                           T          first,
+                                           T          last) {
   gap_list_t out
       = NEW_PLIST((first == last ? T_PLIST_EMPTY : T_PLIST_HOM), last - first);
   SET_LEN_PLIST(out, last - first);
@@ -698,8 +700,9 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
 // the elements in <so>. If this is not the case, then this should not be
 // called but ClosureSemigroup should be instead, on the GAP level.
 
-gap_semigroup_t
-EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t plist) {
+gap_semigroup_t EN_SEMI_CLOSURE_DEST(Obj             self,
+                                     gap_semigroup_t so,
+                                     gap_list_t      plist) {
   CHECK_SEMI_OBJ(so);
   CHECK_PLIST(plist);
 
@@ -792,8 +795,9 @@ gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so) {
 
 // Get the <pos> element of <S> this is not cached anywhere for cpp semigroups
 
-gap_element_t
-EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
+gap_element_t EN_SEMI_ELEMENT_NUMBER(Obj             self,
+                                     gap_semigroup_t so,
+                                     gap_int_t       pos) {
   CHECK_SEMI_OBJ(so);
   CHECK_POS_INTOBJ(pos);
 
@@ -833,8 +837,9 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
   }
 }
 
-gap_element_t
-EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos) {
+gap_element_t EN_SEMI_ELEMENT_NUMBER_SORTED(Obj             self,
+                                            gap_semigroup_t so,
+                                            gap_int_t       pos) {
   CHECK_SEMI_OBJ(so);
   CHECK_POS_INTOBJ(pos);
 
@@ -924,8 +929,9 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
   return out;
 }
 
-gap_semigroup_t
-EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit) {
+gap_semigroup_t EN_SEMI_ENUMERATE(Obj             self,
+                                  gap_semigroup_t so,
+                                  gap_int_t       limit) {
   CHECK_SEMI_OBJ(so);
   CHECK_INTOBJ(limit);
   size_t c_limit   = (INT_INTOBJ(limit) < 0 ? LIMIT_MAX : INT_INTOBJ(limit));
@@ -1247,8 +1253,9 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
 
 // Get the position of <x> with out any further enumeration
 
-gap_int_t
-EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
+gap_int_t EN_SEMI_CURRENT_POSITION(Obj             self,
+                                   gap_semigroup_t so,
+                                   gap_element_t   x) {
   CHECK_SEMI_OBJ(so);
 
   en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
@@ -1265,8 +1272,9 @@ EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
   }
 }
 
-gap_int_t
-EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x) {
+gap_int_t EN_SEMI_POSITION_SORTED(Obj             self,
+                                  gap_semigroup_t so,
+                                  gap_element_t   x) {
   CHECK_SEMI_OBJ(so);
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
