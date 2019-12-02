@@ -26,7 +26,7 @@
 #include "semigroups-debug.h"
 #include "src/compiled.h"
 
-#include "libsemigroups/include/uf.hpp"
+#include "libsemigroups/uf.hpp"
 
 using libsemigroups::detail::UF;
 

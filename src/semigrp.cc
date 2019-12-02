@@ -26,7 +26,7 @@
 #include "bipart.h"
 #include "converter.h"
 #include "fropin.h"
-#include "libsemigroups/include/froidure-pin-base.hpp"
+#include "libsemigroups/froidure-pin-base.hpp"
 #include "pkg.h"
 #include "src/compiled.h"
 
