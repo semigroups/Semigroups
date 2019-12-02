@@ -19,10 +19,14 @@
 #ifndef SEMIGROUPS_SRC_BIPART_H_
 #define SEMIGROUPS_SRC_BIPART_H_
 
-#include "libsemigroups/elements.h"
+#include "libsemigroups/element.hpp"
+
+// GAP headers
+#include "src/compiled.h"
+
+// Semigroups pkg headers
 #include "pkg.h"
 #include "semigroups-debug.h"
-#include "src/compiled.h"
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;

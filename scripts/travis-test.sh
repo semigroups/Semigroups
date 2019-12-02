@@ -38,21 +38,21 @@ else
   cd $SEMI_DIR/tst/workspaces
   echo -e "\nRunning SaveWorkspace tests..."
   echo "LoadPackage(\"semigroups\"); SemigroupsTestInstall(); Test(\"save-workspace.tst\"); quit; quit; quit;" |
-    $GAPSH -A -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -A -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning LoadWorkspace tests..."
   echo "Test(\"load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" |
-    $GAPSH -L test-output.w -A -x 80 -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -L test-output.w -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning Semigroups package standard tests and manual examples..."
   echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
-    $GAPSH -A -x 80 -r -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
+    $GAPSH -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   # Run GAP tests, but only in 64-bit, since they're far too slow in 32-bit
   if [ "$ABI" == "64" ]; then
     echo -e "\nRunning GAP's testinstall tests with Semigroups loaded..."
     echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testinstall.g\");" |
-      $GAPSH -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
+      $GAPSH -A -x 80 -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
 
     # Run GAP testbugfix with Semigroups loaded; this only works with GAP master
     if [ "$GAP" == "master" ]; then
@@ -63,7 +63,7 @@ else
       rm $GAPROOT/tst/testbugfix/2018-09-13-MTC.tst
       rm $GAPROOT/tst/testbugfix/2018-12-06-GroupWithGenerators.tst
       echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testbugfix.g\");" |
-        $GAPSH -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
+        $GAPSH -A -x 80 -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
     fi
   fi
 fi

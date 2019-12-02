@@ -19,7 +19,7 @@ if [ -d $LIBS_DIR ] && [ "$(ls -A $LIBS_DIR)" ]; then
     echo -e "Error, it is not possible to determine the libsemigroups version"
     exit 2
   fi
-  INSTALLED=`tr -d '\n' < $LIBS_DIR/VERSION`
+  INSTALLED=`tr -d '\n' < $LIBS_DIR/.VERSION`
   echo -e "The installed version of libsemigroups is v$INSTALLED"
   LEAST=`echo -e "$VERS\n$INSTALLED" | sort -V | head -n1`
   if ! [ "$VERS" == "$LEAST" ]; then
@@ -31,4 +31,5 @@ fi
 
 # Download libsemigroups
 echo -e "Downloading libsemigroups v$VERS into $LIBS_DIR..."
-git clone -b v$VERS --depth=1 https://github.com/libsemigroups/libsemigroups.git $LIBS_DIR
+curl -L -O https://github.com/libsemigroups/libsemigroups/releases/download/v$VERS/libsemigroups-$VERS.tar.gz
+tar -xzf libsemigroups-$VERS.tar.gz && rm -f libsemigroups-$VERS.tar.gz && mv libsemigroups-$VERS $LIBS_DIR 

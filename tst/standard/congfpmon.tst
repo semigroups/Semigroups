@@ -96,12 +96,9 @@ false
 gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
-gap> enum[3];
-(m2*m1)^2
-gap> enum[11];
-m2*m1*m2
-gap> Position(enum, M.2 * M.1 * M.2 * M.1);
-3
+gap> AsSSortedList(enum);
+[ m2, m1^2, m1*m2, m2*m1, m1^2*m2, m1*m2*m1, m2*m1*m2, m1^2*m2*m1, (m1*m2)^2, 
+  (m2*m1)^2, (m1*m2)^2*m1 ]
 gap> Size(enum);
 11
 gap> class1 * class2 = EquivalenceClassOfElement(cong, M.2 ^ 20 * M.1 ^ 42);
@@ -164,11 +161,11 @@ gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
 gap> enum[3];
-m1^2
+m2*m1
 gap> enum[11];
-m2^2*m1^2
+m2*m1^3
 gap> Position(enum, M.2 * M.1 * M.2 * M.1);
-13
+12
 gap> Size(enum);
 30
 
@@ -232,7 +229,7 @@ gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
 gap> enum[3];
-m1*m2
+m2^2
 gap> enum[11];
 m1*(m1*m2)^2*m1^3
 gap> Position(enum, M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3);

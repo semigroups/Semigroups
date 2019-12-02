@@ -51,7 +51,7 @@
 #if !defined(GAP_KERNEL_MAJOR_VERSION) || GAP_KERNEL_MAJOR_VERSION < 3
 // compatibility with GAP <= 4.9
 static inline Obj NEW_PLIST_IMM(UInt type, Int plen) {
-    return NEW_PLIST(type | IMMUTABLE, plen);
+  return NEW_PLIST(type | IMMUTABLE, plen);
 }
 #endif
 
@@ -101,7 +101,8 @@ inline Obj OBJ_CLASS(Class* cpp_class, t_semi_subtype_t type, size_t size = 2) {
 
 // Get a pointer to a C++ object of type Class from GAP Obj of type T_SEMI
 
-template <typename Class> inline Class CLASS_OBJ(Obj o, size_t pos = 1) {
+template <typename Class>
+inline Class CLASS_OBJ(Obj o, size_t pos = 1) {
   return reinterpret_cast<Class>(ADDR_OBJ(o)[pos]);
 }
 
