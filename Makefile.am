@@ -11,7 +11,7 @@ if WITH_INCLUDED_LIBSEMIGROUPS
   # the following triggers "make install" on libsemigroups
   # note that making it a concrete file prevents this target
   # to be needlessly re-run if libsemigroups/ is not changed.
-  BUILT_SOURCES = bin/include/libsemigroups/blocks.h
+  BUILT_SOURCES = bin/include/libsemigroups/libsemigroups.hpp
 endif
 
 AM_CPPFLAGS = @LIBSEMIGROUPS_CFLAGS@
@@ -28,6 +28,21 @@ semigroups_la_SOURCES += src/semigrp.cc
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3 -g -march=native
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
+
+if WITH_INCLUDED_LIBSEMIGROUPS
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-5.3.0/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
+endif
+semigroups_la_CPPFLAGS += -DFMT_HEADER_ONLY
+
+if KERNEL_DEBUG
+semigroups_la_CPPFLAGS += -DDEBUG
+else
+semigroups_la_CPPFLAGS += -DNDEBUG
+endif
+
 semigroups_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
 
 semigroups_la_LIBADD = @LIBSEMIGROUPS_LIBS@
@@ -37,7 +52,7 @@ semigroups_la_LDFLAGS += -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(
 endif
 
 # the following is only run if BUILT_SOURCES is wound up
-bin/include/libsemigroups/blocks.h:
+bin/include/libsemigroups/libsemigroups.hpp:
 	$(MAKE) -C libsemigroups install
 
 all-local: semigroups.la

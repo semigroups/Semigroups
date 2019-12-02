@@ -21,13 +21,11 @@
 #include <algorithm>
 #include <iostream>
 
-#include "libsemigroups/report.h"
 #include "rnams.h"
 #include "semigroups-debug.h"
 #include "semigrp.h"
 
-using libsemigroups::glob_reporter;
-using libsemigroups::Timer;
+using libsemigroups::detail::Timer;
 
 // Macros for the GAP version of the algorithm
 
@@ -112,9 +110,9 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     return data;
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
-
-  glob_reporter.set_report(report);
-  REPORT_FROM_FUNC("limit = " << int_limit);
+  if (report) {
+    std::cout << "limit = " << int_limit << "\n";
+  }
 
   Timer timer;
 
@@ -211,7 +209,8 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           len     = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len + 1);
 
-          memcpy(ADDR_OBJ(newword) + 1, CONST_ADDR_OBJ(oldword) + 1,
+          memcpy(ADDR_OBJ(newword) + 1,
+                 CONST_ADDR_OBJ(oldword) + 1,
                  (size_t)(len * sizeof(Obj)));
           SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len + 1);
@@ -313,15 +312,16 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
-    if (i <= nr) {
-      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
-                                << " rules, max word length " << len + 1
-                                << ", so far");
-    } else {
-      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
-                                << " rules, max word length " << len + 1
-                                << ", finished!");
-      REPORT_FROM_FUNC("elapsed time = " << timer);  // NOLINT()
+    if (report) {
+      if (i <= nr) {
+        std::cout << "found " << nr << " elements, " << nrrules
+                  << " rules, max word length " << len + 1 << ", so far,\n";
+      } else {
+        std::cout << "found " << nr << " elements, " << nrrules
+                  << " rules, max word length " << len + 1 << ", finished!\n";
+        // NOLINTNEXTLINE(build/include_what_you_use)
+        std::cout << "elapsed time = " << timer.string() << "\n";
+      }
     }
   }
 
