@@ -39,8 +39,8 @@
 #include "pkg.h"
 #include "semigroups-debug.h"
 
-#include "libsemigroups/include/element.hpp"
-#include "libsemigroups/include/semiring.hpp"
+#include "libsemigroups/element.hpp"
+#include "libsemigroups/semiring.hpp"
 
 using libsemigroups::Bipartition;
 using libsemigroups::BooleanMat;
