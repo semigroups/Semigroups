@@ -28,8 +28,8 @@
 #include <utility>
 #include <vector>
 
-#include "libsemigroups/include/blocks.hpp"
-#include "libsemigroups/include/froidure-pin.hpp"
+#include "libsemigroups/blocks.hpp"
+#include "libsemigroups/froidure-pin.hpp"
 
 #include "src/compiled.h"
 

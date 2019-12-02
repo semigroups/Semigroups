@@ -27,9 +27,9 @@
 #include "rnams.h"
 #include "semigrp.h"
 
-#include "libsemigroups/include/cong.hpp"
-#include "libsemigroups/include/fpsemi.hpp"
-#include "libsemigroups/include/report.hpp"
+#include "libsemigroups/cong.hpp"
+#include "libsemigroups/fpsemi.hpp"
+#include "libsemigroups/report.hpp"
 
 using libsemigroups::FpSemigroup;
 using libsemigroups::relation_type;

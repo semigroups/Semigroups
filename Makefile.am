@@ -29,9 +29,12 @@ semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3 -
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
+if WITH_INCLUDED_LIBSEMIGROUPS
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-5.3.0/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
+endif
 semigroups_la_CPPFLAGS += -DFMT_HEADER_ONLY
 
 if KERNEL_DEBUG

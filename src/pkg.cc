@@ -32,10 +32,10 @@
 #include "semigrp.h"
 #include "uf.h"
 
-#include "libsemigroups/include/blocks.hpp"
-#include "libsemigroups/include/cong.hpp"
-#include "libsemigroups/include/froidure-pin.hpp"
-#include "libsemigroups/include/uf.hpp"
+#include "libsemigroups/blocks.hpp"
+#include "libsemigroups/cong.hpp"
+#include "libsemigroups/froidure-pin.hpp"
+#include "libsemigroups/uf.hpp"
 
 using libsemigroups::Congruence;
 using libsemigroups::detail::UF;
