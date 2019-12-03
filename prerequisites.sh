@@ -15,7 +15,7 @@ echo -e "libsemigroups v$VERS is required by this version of Semigroups"
 
 if [ -d $LIBS_DIR ] && [ "$(ls -A $LIBS_DIR)" ]; then
   echo -e "the $LIBS_DIR directory exists and is non-empty"
-  if ! [ -f $LIBS_DIR/VERSION ]; then
+  if ! [ -f $LIBS_DIR/.VERSION ]; then
     echo -e "Error, it is not possible to determine the libsemigroups version"
     exit 2
   fi
