@@ -260,6 +260,9 @@ function(arg)
   fi;
 
   if not IsList(collcoll) or IsEmpty(collcoll) then
+    if IsString(name) then
+      IO_Close(file);
+    fi;
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
                   "the second argument must be a non-empty list,");
   fi;
@@ -267,6 +270,9 @@ function(arg)
   if encoder = fail then
     encoder := IO_Pickle;
   elif not IsFunction(encoder) then
+    if IsString(name) then
+      IO_Close(file);
+    fi;
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
                   "the third or fourth argument must be a function,");
   fi;
@@ -276,6 +282,9 @@ function(arg)
       and ForAny(collcoll, x -> not (IsTransformationCollection(x)
                                      or IsPartialPermCollection(x)
                                      or IsBipartitionCollection(x))) then
+    if IsString(name) then
+      IO_Close(file);
+    fi;
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
                   "the second argument is incompatible with the file format,");
   fi;
@@ -295,7 +304,7 @@ function(arg)
     fi;
   od;
 
-  if IsString(arg[1]) then
+  if IsString(name) then
     IO_Close(file);
   fi;
   return IO_OK;
@@ -466,10 +475,16 @@ function(arg)
   for i in [1 .. Length(coll)] do
     n := Size(coll[i]);  # Don't assume all multiplcation tables are same size.
     if not (IsRectangularTable(coll[i]) and IsInt(coll[i][1][1])) then
+      if IsString(name) then
+        IO_Close(file);
+      fi;
       ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
                     "the second argument must be a collection of rectangular ",
                     "tables containing only integers,");
     elif not n < 256 then
+      if IsString(name) then
+        IO_Close(file);
+      fi;
       ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
                     "the second argument must be a collection of rectangular ",
                     "tables with at most 255 rows,");
@@ -479,6 +494,9 @@ function(arg)
     for j in [1 .. n] do
       for k in [1 .. n] do
         if not (0 < coll[i][j][k] and coll[i][j][k] <= n) then
+          if IsString(name) then
+            IO_Close(file);
+          fi;
           ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
                         "the second argument must be a collection of ",
                         "rectangular tables with integer entries from [1, 2, ",
@@ -499,7 +517,7 @@ function(arg)
     fi;
   od;
 
-  if IsString(arg[1]) then
+  if IsString(name) then
     IO_Close(file);
   fi;
   return IO_OK;
