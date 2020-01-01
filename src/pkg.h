@@ -43,10 +43,11 @@
 #include <iostream>
 #include <vector>
 
+#include "src/compiled.h"
+
 #include "rnams.h"
 #include "semigroups-debug.h"
 
-#include "src/compiled.h"
 
 #if !defined(GAP_KERNEL_MAJOR_VERSION) || GAP_KERNEL_MAJOR_VERSION < 3
 // compatibility with GAP <= 4.9
