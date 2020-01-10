@@ -1651,6 +1651,65 @@ false
 gap> DClass(S, S.2) < DClass(T, T.1);
 false
 
+# BruteForceIsoCheck helper functions
+gap> BruteForceIsoCheck := function(iso)
+>   local x, y;
+>   if not IsInjective(iso) or not IsSurjective(iso) then
+>     return false;
+>   fi;
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
+>       if x ^ iso * y ^ iso <> (x * y) ^ iso then
+>         return false;
+>       fi;
+>     od;
+>   od;
+>   return true;
+> end;;
+gap> BruteForceInverseCheck := function(map)
+> local inv;
+>   inv := InverseGeneralMapping(map);
+>   return ForAll(Source(map), x -> x = (x ^ map) ^ inv)
+>     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
+> end;;
+
+# Issue #637
+gap> H := HClass(FullTransformationMonoid(4), Transformation([2, 2, 2]));
+<Green's H-class: Transformation( [ 2, 2, 2 ] )>
+gap> map := IsomorphismPermGroup(H);;
+gap> Transformation([2, 2, 2, 2]) ^ map;
+Error, argument does not belong to the domain of the function,
+gap> map := InverseGeneralMapping(map);;
+gap> (1, 3) ^ map;
+Error, argument does not belong to the domain of the function,
+gap> BruteForceIsoCheck(map);
+true
+
+# Second part of Issue #637
+gap> H := HClass(FullTransformationMonoid(4), Transformation([3, 1, 2, 3]));;
+gap> map := IsomorphismPermGroup(H);;
+gap> BruteForceIsoCheck := function(iso)
+>     local x, y;
+>     if not IsInjective(iso) or not IsSurjective(iso) then
+>         return false;
+>     fi;
+>     for x in Source(iso) do
+>         for y in Source(iso) do
+>             if
+>              not ImageElm(iso, x) * ImageElm(iso, y)
+>                    = ImageElm(iso, x * y) then
+>                 Print(x, " ", y, "\n");
+>                 return false;
+>             fi;
+>         od;
+>     od;
+>     return true;
+> end;;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);
