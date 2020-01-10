@@ -36,7 +36,7 @@ SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
   G := Range(map);
   mat := [];
 
-  rep := Representative(GroupHClass(D));
+  rep := MultiplicativeNeutralElement(GroupHClass(D));
   R := HClassReps(LClass(D, rep));
   L := HClassReps(RClass(D, rep));
 

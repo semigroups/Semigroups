@@ -100,7 +100,7 @@ end);
 InstallMethod(IsomorphismPermGroup, "for H-class of a semigroup",
 [IsGreensHClass],
 function(H)
-  local G, p, h;
+  local G, x, map, inv;
 
   if not IsGroupHClass(H) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
@@ -108,17 +108,30 @@ function(H)
   fi;
 
   G := Group(());
-
-  for h in H do
-    p := Permutation(h, AsSet(H), OnRight);
-    if not p in G then
-      G := ClosureGroup(G, p);
+  for x in H do
+    x := Permutation(x, AsSet(H), OnRight);
+    if not x in G then
+      G := ClosureGroup(G, x);
       if Size(G) = Size(H) then
         break;
       fi;
     fi;
   od;
-  return MappingByFunction(H, G, h -> Permutation(h, AsSet(H), OnRight));
+  map := function(x)
+    if not x in H then
+      ErrorNoReturn("argument does not belong to the domain of the ",
+                    "function,");
+    fi;
+    return Permutation(x, AsSet(H), OnRight);
+  end;
+  inv := function(x)
+    if not x in G then
+      ErrorNoReturn("argument does not belong to the domain of the ",
+                    "function,");
+    fi;
+    return First(H, h -> map(h) = x);
+  end;
+  return MappingByFunction(H, G, map, inv);
 end);
 
 InstallMethod(StructureDescription, "for a Green's H-class",
