@@ -94,6 +94,9 @@ AS_IF([test "x$enable_debug" = xyes],
 
 AM_CONDITIONAL([KERNEL_DEBUG], [test "x$enable_debug" = xyes])
 
+AX_CHECK_COMPILE_FLAG(-march=native, 
+                      AX_APPEND_FLAG(-march=native))
+
 dnl ##
 dnl ## Output everything
 dnl ##

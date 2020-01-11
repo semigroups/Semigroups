@@ -15,7 +15,6 @@
 *.lab
 *.lo
 *.log
-*.m4
 *.orig
 *.out
 *.pdf
@@ -63,7 +62,6 @@ doc/manual.six
 gh-pages
 lcov*
 libtool
-m4
 pkgconfig.h.in~
 src/.deps
 src/.dirstamp
@@ -79,3 +77,8 @@ wiki/
 tmp
 *.Plo
 new_bibliography.xml.bib
+libtool.m4
+ltoptions.m4
+ltsugar.m4
+ltversion.m4
+lt~obsolete.m4
