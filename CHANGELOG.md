@@ -1,12 +1,26 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-19 [James D. Mitchell][] et al.
+Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 3.2.2 (released 17/01/2020)
+
+This is a minor release to update the version of [libsemigroups][] to v1.0.5,
+to include some changes for compatibility with [GAP][], and to fix the following issues 
+
+* [Issue #632](https://github.com/gap-packages/Semigroups/issues/632) where
+  file objects were not closed properly if an error was given;
+* [Issue #636](https://github.com/gap-packages/Semigroups/issues/636) the
+  compiler flag `-march=native` is only added if it is supported by the compiler;
+* [Issue #637](https://github.com/gap-packages/Semigroups/issues/637) where  
+  `IsomorphismPermGroup` sometimes returned an incorrect answer.
+
+The changes in this release were made by [Max Horn][] and [James D. Mitchell][].
 
 ### Version 3.2.1 (released 04/12/2019)
 
 This is a minor release to update the version of [libsemigroups][] to v1.0.2,
-and to include some changes for compatibility with [GAP][] The changes in this
+and to include some changes for compatibility with [GAP][]. The changes in this
 release were made by [James D. Mitchell][] and [Wilf A.  Wilson][].
 
 ### Version 3.2.0 (released 04/10/2019)
