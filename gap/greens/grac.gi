@@ -1632,25 +1632,35 @@ end);
 InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
-  local iso, inv;
+  local map, iso, inv;
 
   if not IsGroupHClass(H) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
                   "the H-class is not a group,");
   fi;
 
-  if IsMatrixOverFiniteFieldSemigroup(Parent(H)) then
-    iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
-    inv := InverseGeneralMapping(iso);
-    return MappingByFunction(H, Range(iso),
-     x -> LambdaPerm(Parent(H))(Representative(H), x) ^ iso,
-     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
-                                      x ^ inv));
+  if not IsPermGroup(SchutzenbergerGroup(H)) then
+    map := IsomorphismPermGroup(SchutzenbergerGroup(H));
   else
-    return MappingByFunction(H, SchutzenbergerGroup(H),
-     x -> LambdaPerm(Parent(H))(Representative(H), x),
-     x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
+    map := IdentityMapping(SchutzenbergerGroup(H));
   fi;
+
+  iso := function(x)
+    if not x in H then
+      ErrorNoReturn("argument does not belong to the domain of the ",
+                    "function,");
+    fi;
+    return LambdaPerm(Parent(H))(MultiplicativeNeutralElement(H), x) ^ map;
+  end;
+  inv := function(x)
+    if not x in Image(map) then
+      ErrorNoReturn("argument does not belong to the domain of the ",
+      "function,");
+    fi;
+    return StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
+                                       x ^ InverseGeneralMapping(map));
+  end;
+  return MappingByFunction(H, SchutzenbergerGroup(H), iso, inv);
 end);
 
 # different method for regular/inverse/ideals

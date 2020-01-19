@@ -1,6 +1,6 @@
 # README - Semigroups package for GAP
 
-#### Copyright (C) 2011-19 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
+#### Copyright (C) 2011-20 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)
 [![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.1)](https://travis-ci.org/gap-packages/Semigroups)
