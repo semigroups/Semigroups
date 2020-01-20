@@ -21,9 +21,14 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
   if test "$need_included_libsemigroups" = yes;  then
 	AC_MSG_NOTICE([using included libsemigroups...])
   	AC_CHECK_FILE(
-   		[libsemigroups/include/libsemigroups.hpp],
+   		[libsemigroups/include/libsemigroups/libsemigroups.hpp],
    		[],
-   		[AC_MSG_ERROR([libsemigroups is required, clone or download the repo from https://github.com/libsemigroups/libsemigroups into this directory])])
+   		dnl Temporary workaround for backward compatibility with
+   		dnl libsemigroups pre PR 172: Includes in libsemigroups/
+   		[AC_CHECK_FILE(
+   		   [libsemigroups/include/libsemigroups.hpp],
+                   [],
+                   [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from https://github.com/libsemigroups/libsemigroups into this directory])])])
 
 	AC_CHECK_FILE(
    		[libsemigroups/.VERSION],
