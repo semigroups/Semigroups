@@ -51,10 +51,15 @@ gap> EndomorphismMonoid(gr);
 gap> gr := CompleteDigraph(3);;
 gap> EndomorphismMonoid(gr);
 <transformation group of size 6, degree 3 with 2 generators>
-gap> EndomorphismMonoid(gr, [1, 2, 2]);
-<transformation group of degree 3 with 1 generator>
-gap> EndomorphismMonoid(gr, [[1], [2, 3]]);
-<transformation group of degree 3 with 1 generator>]]></Example>
+gap> S := EndomorphismMonoid(gr, [1, 2, 2]);;
+gap> IsGroupAsSemigroup(S);
+true
+gap> Size(S);
+2
+gap> S := EndomorphismMonoid(gr, [[1], [2, 3]]);;
+gap> S := EndomorphismMonoid(gr, [1, 2, 2]);;
+gap> IsGroupAsSemigroup(S);
+true]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
