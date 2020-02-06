@@ -114,18 +114,18 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
   if (cong_obj_is_fp_cong(o)) {
     size_t nrgens = INT_INTOBJ(ElmPRec(o, RNam_fp_nrgens));
 
-    auto S = libsemigroups::detail::make_unique<FpSemigroup>();
-    S->set_alphabet(nrgens);
+    FpSemigroup S;
+    S.set_alphabet(nrgens);
 
     // Get the fp semigroup's rels
     gap_list_t gap_rels = ElmPRec(o, RNam_fp_rels);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
       gap_list_t rel = ELM_PLIST(gap_rels, i);
-      S->add_rule(plist_to_word_type(ELM_PLIST(rel, 1)),
+      S.add_rule(plist_to_word_type(ELM_PLIST(rel, 1)),
                   plist_to_word_type(ELM_PLIST(rel, 2)));
     }
 
-    cong = new Congruence(type, *S);
+    cong = new Congruence(type, S);
 
     // Get the extra pairs
     gap_list_t gap_extra = ElmPRec(o, RNam_fp_extra);
@@ -149,7 +149,6 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     }
   } else {
     gap_rec_t data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
-    // gap_list_t              rules = ElmPRec(data, RNam_rules);
     gap_list_t words = ElmPRec(data, RNam_words);
 
     size_t nrgens = LEN_PLIST(semi_obj_get_gens(range_obj));
@@ -157,8 +156,8 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     cong = new Congruence(type, Congruence::policy::runners::none);
     cong->set_nr_generators(nrgens);
 
-    auto tc = new libsemigroups::congruence::ToddCoxeter(type);
-    tc->set_nr_generators(nrgens);
+    libsemigroups::congruence::ToddCoxeter tc(type);
+    tc.set_nr_generators(nrgens);
 
     // convert the generating pairs to relation_type's
     for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
@@ -169,7 +168,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
                           INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, lhs_obj)));
       Obj rhs = ELM_PLIST(words,
                           INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, rhs_obj)));
-      tc->add_pair(plist_to_word_type(lhs), plist_to_word_type(rhs));
+      tc.add_pair(plist_to_word_type(lhs), plist_to_word_type(rhs));
     }
 
     Obj graph;
@@ -192,8 +191,8 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
         table.set(i - 1, j - 1, INT_INTOBJ(ELM_PLIST(next, j)) - 1);
       }
     }
-    tc->prefill(table);
-    cong->add_runner(*tc);
+    tc.prefill(table);
+    cong->add_runner(tc);
   }
   SEMIGROUPS_ASSERT(cong != nullptr);
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
