@@ -7,7 +7,6 @@
 ##
 
 PACKAGE := "Semigroups";
-PrintTo("VERSION", PackageInfo(PACKAGE)[1].Version);
 LoadPackage("GAPDoc");
 LoadPackage("semigroups");
 
