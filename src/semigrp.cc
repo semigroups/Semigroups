@@ -42,13 +42,13 @@ using libsemigroups::UNDEFINED;
 using libsemigroups::word_type;
 
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-#define ERROR(obj, message)                               \
-  char buf[128];                                          \
-  strncpy(buf, __func__, sizeof(buf));                    \
-  strncat(buf, ": ", (sizeof(buf) * 2));                  \
-  strncat(buf, message, (sizeof(buf) * strlen(message))); \
-  strncat(buf, " not a %s,", (sizeof(buf) * 9));          \
-  ErrorQuit(buf, (Int) TNAM_OBJ(obj), 0L);
+#define ERROR(obj, message) \
+  static std::string buf;   \
+  buf += __func__;          \
+  buf += ": ";              \
+  buf += message;           \
+  buf += " not a %s,";      \
+  ErrorQuit(buf.c_str(), (Int) TNAM_OBJ(obj), 0L);
 
 #define CHECK_SEMI_OBJ(obj)                        \
   if (CALL_1ARGS(IsSemigroup, obj) != True) {      \
@@ -84,6 +84,7 @@ void delete_vec(std::vector<TElementType*>* vec) {
   for (auto x : *vec) {
     delete x;
   }
+  delete vec;
 }
 
 std::vector<Element*>* plist_to_vec(Converter* converter,
