@@ -151,12 +151,6 @@ the entries in the 2nd argument do not define a matrix of type IsIntegerMatrix\
 gap> Matrix(Integers, [[1, 1], [2]]);
 Error, Semigroups: Matrix: usage,
 the 2nd argument <mat> does not give a rectangular table,
-gap> if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
->   View(Matrix(Integers, [[1, 1, 3], [1, 2, 3]])); Print("\n");
-> else
->   Print("Error, NewMatrix: Length of l is not a multiple of rl\n");
-> fi;
-Error, NewMatrix: Length of l is not a multiple of rl
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 2/3
 gap> if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
