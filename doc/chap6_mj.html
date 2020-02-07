@@ -1164,10 +1164,15 @@ Matrix(IsNTPMatrix, [[2]], 3, 4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := CompleteDigraph(3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndomorphismMonoid(gr);</span>
 &lt;transformation group of size 6, degree 3 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndomorphismMonoid(gr, [1, 2, 2]);</span>
-&lt;transformation group of degree 3 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndomorphismMonoid(gr, [[1], [2, 3]]);</span>
-&lt;transformation group of degree 3 with 1 generator&gt;</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [1, 2, 2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [[1], [2, 3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [1, 2, 2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
+true</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>

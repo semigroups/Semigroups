@@ -3,6 +3,12 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.2.3 (released 07/02/2020)
+
+This is a minor release to make some changes fo compatibility with the
+[Digraphs package][] v1.1.1 and [GAP][], and to fix a memory leak in the kernel
+module.
+
 ### Version 3.2.2 (released 17/01/2020)
 
 This is a minor release to update the version of [libsemigroups][] to v1.0.5,
