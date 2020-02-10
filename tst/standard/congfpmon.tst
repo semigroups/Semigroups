@@ -160,12 +160,12 @@ false
 gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
-gap> enum[3];
-m2*m1
-gap> enum[11];
-m2*m1^3
-gap> Position(enum, M.2 * M.1 * M.2 * M.1);
-12
+gap> M.2 * M.1 in enum;
+true
+gap> M.2 * M.1 ^ 3 in enum;
+true
+gap> M.2 * M.1 * M.2 * M.1 in enum;
+true
 gap> Size(enum);
 30
 
