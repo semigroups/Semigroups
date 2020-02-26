@@ -71,3 +71,5 @@ DeclareSynonymAttr("IsPartialOrderBooleanMat", IsReflexiveBooleanMat and
                    IsAntiSymmetricBooleanMat and IsTransitiveBooleanMat);
 DeclareSynonymAttr("IsEquivalenceBooleanMat", IsReflexiveBooleanMat and
                    IsSymmetricBooleanMat and IsTransitiveBooleanMat);
+
+DeclareProperty("IsTransformationBooleanMat", IsBooleanMat);

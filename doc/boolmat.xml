@@ -674,4 +674,19 @@ gap> Bell(3);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsTransformationBooleanMat">
+  <ManSection>
+    <Prop Name = "IsTransformationBooleanMat" Arg = "mat"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A boolean matrix is a <B>transformation</B> if every row contains 
+      precisely one <K>true</K> value.
+
+      <Example><![CDATA[
+gap> Number(FullBooleanMatMonoid(3), IsTransformationBooleanMat);
+27]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 
