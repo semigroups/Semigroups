@@ -792,26 +792,27 @@ InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup with generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local n, pts, o, pos, T, i;
-
+  local T, map, inv, n, pts, o, pos, i;
   n := Length(Representative(S)![1]);
-  pts := [];
-  for i in [1 .. n] do
-    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
-    pts := Union(pts, AsList(o));
-  od;
-  pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
-  T := Semigroup(List(GeneratorsOfSemigroup(S),
-                      x -> TransformationOpNC(x, pts, OnBlist)));
+  if ForAll(GeneratorsOfSemigroup(S), IsTransformationBooleanMat) then
+    T := Semigroup(List(GeneratorsOfSemigroup(S), AsTransformation));
+    map := AsTransformation;
+    inv := x -> AsBooleanMat(x, n);
+  else
+    pts := [];
+    for i in [1 .. n] do
+      o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
+      pts := Union(pts, AsList(o));
+    od;
+    pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
+    T := Semigroup(List(GeneratorsOfSemigroup(S),
+                        x -> TransformationOpNC(x, pts, OnBlist)));
+    map := x -> TransformationOpNC(x, pts, OnBlist);
+    inv := x -> BooleanMat(List([1 .. n], i -> pts[pos[i] ^ x]));
+  fi;
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> TransformationOpNC(x,
-                                                               pts,
-                                                               OnBlist),
-                                       x -> BooleanMat(List([1 .. n],
-                                                       i -> pts[pos[i] ^ x])));
+  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
