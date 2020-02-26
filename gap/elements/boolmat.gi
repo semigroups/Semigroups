@@ -727,3 +727,16 @@ InstallMethod(IsOntoBooleanMat, "for a boolean matrix",
 function(x)
   return IsTotalBooleanMat(TransposedMat(x));
 end);
+
+InstallMethod(IsTransformationBooleanMat, "for a boolean matrix",
+[IsBooleanMat],
+function(x)
+  local n, i;
+  n := Length(x[1]);
+  for i in [1 .. n] do
+    if SizeBlist(x[i]) <> 1 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
