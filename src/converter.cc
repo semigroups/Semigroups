@@ -34,14 +34,19 @@ using libsemigroups::SemiringWithThreshold;
 
 BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(CALL_1ARGS(IsBooleanMat, o));
-  SEMIGROUPS_ASSERT(IS_BLIST_REP(ELM_PLIST(o, 1)));
+  SEMIGROUPS_ASSERT(IS_PLIST(o));
+  SEMIGROUPS_ASSERT(LEN_PLIST(o) > 0);
 
-  size_t            m = LEN_BLIST(ELM_PLIST(o, 1));
+  Obj               row = ELM_PLIST(o, 1);
+  SEMIGROUPS_ASSERT(IS_PLIST(row) || IS_BLIST_REP(row));
+  size_t            m   = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
   std::vector<bool> x(m * m, false);
 
   for (size_t i = 0; i < m; i++) {
-    Obj row = ELM_PLIST(o, i + 1);
-    SEMIGROUPS_ASSERT(IS_BLIST_REP(row));
+    row = ELM_PLIST(o, i + 1);
+    if (!IS_BLIST_REP(row)) {
+      ConvBlist(row);
+    }
     for (size_t j = 0; j < m; j++) {
       if (ELM_BLIST(row, j + 1) == True) {
         x.at(i * m + j) = true;
