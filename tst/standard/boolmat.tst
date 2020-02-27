@@ -549,6 +549,18 @@ gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 1, 0],
 gap> AsBooleanMat(AsDigraph(mat)) = mat;
 true
 
+# Fix converter for BMats in the kernel, prior to PR #647 the size of returned
+# below was 4, which is nonsense.
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[false, true], [false, true]]),
+> Matrix(IsBooleanMat,
+>        [[true, false], [true, false]])]);
+<semigroup of 2x2 boolean matrices with 2 generators>
+gap> Union2(AsList(S.2)[1], AsList(S.2)[2]);;
+gap> Size(S);
+2
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(blist);
