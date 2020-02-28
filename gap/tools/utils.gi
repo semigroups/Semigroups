@@ -111,6 +111,7 @@ SEMIGROUPS.StopTest := function()
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
+  GASMAN("collect");
   return;
 end;
 
