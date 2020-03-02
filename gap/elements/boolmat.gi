@@ -251,7 +251,8 @@ function(x)
   n := Length(x![1]);
   for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
-      if IsSubsetBlist(x![i], x![j]) then
+      if IsSubsetBlist(x![i], x![j]) or
+          IsSubsetBlist(x![j], x![i]) then
         return false;
       fi;
     od;
@@ -265,8 +266,8 @@ function(x)
   local n, contained, row, i, j, k;
 
   n := Length(x![1]);
-  for i in [1 .. n - 1] do
-    for j in [i + 1 .. n] do
+  for i in [1 .. n] do
+    for j in Concatenation([1 .. i - 1], [i + 1 .. n]) do
       contained := true;
       for k in [1 .. n] do
         row := x![k];
