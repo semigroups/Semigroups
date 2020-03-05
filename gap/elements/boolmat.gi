@@ -267,17 +267,19 @@ function(x)
 
   n := Length(x![1]);
   for i in [1 .. n] do
-    for j in Concatenation([1 .. i - 1], [i + 1 .. n]) do
-      contained := true;
-      for k in [1 .. n] do
-        row := x![k];
-        if (row[j] and not row[i]) then
-          contained := false;
-          break;
+    for j in [1 .. n] do
+      if i <> j then
+        contained := true;
+        for k in [1 .. n] do
+          row := x![k];
+          if (row[j] and not row[i]) then
+            contained := false;
+            break;
+          fi;
+        od;
+        if contained then
+          return false;
         fi;
-      od;
-      if contained then
-        return false;
       fi;
     od;
   od;
