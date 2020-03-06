@@ -217,15 +217,19 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 gap> Successors(x);
 [ [ 1, 4 ], [ 1, 3 ], [  ], [ 2, 3 ] ]
 
-# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 1/2
-gap> mat := BooleanMat([[0, 1, 1, 0],
+# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 1/4
+gap> mat := BooleanMat([[1, 1, 1, 0],
 >                       [1, 0, 1, 1],
 >                       [1, 1, 0, 1],
 >                       [0, 1, 1, 1]]);;
+gap> IsRowTrimBooleanMat(mat);
+true
+gap> IsColTrimBooleanMat(mat);
+true
 gap> IsTrimBooleanMat(mat);
 true
 
-# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 2/2
+# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 2/4
 gap> mat := BooleanMat([[0, 1, 1, 0],
 >                       [0, 0, 1, 0],
 >                       [1, 0, 0, 1],
@@ -233,6 +237,30 @@ gap> mat := BooleanMat([[0, 1, 1, 0],
 gap> IsRowTrimBooleanMat(mat);
 false
 gap> IsColTrimBooleanMat(mat);
+false
+
+# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 3/4
+gap> mat := BooleanMat([[1, 0, 1, 0],
+>                       [0, 0, 1, 0],
+>                       [1, 0, 0, 1],
+>                       [1, 1, 1, 0]]);;
+gap> IsRowTrimBooleanMat(mat);
+false
+gap> IsColTrimBooleanMat(mat);
+false
+gap> IsTrimBooleanMat(mat);
+false
+
+# boolmat: Is(Row/Column)TrimBooleanMat, for a boolean mat, 4/4
+gap> mat := BooleanMat([[0, 1, 1, 0],
+>                       [0, 1, 0, 1],
+>                       [1, 0, 0, 1],
+>                       [0, 0, 1, 1]]);;
+gap> IsRowTrimBooleanMat(mat);
+true
+gap> IsColTrimBooleanMat(mat);
+false
+gap> IsTrimBooleanMat(mat);
 false
 
 # boolmat: NumberBooleanMat/BooleanMatNumber, for a boolean mat, 1/2
