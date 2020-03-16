@@ -1,3 +1,6 @@
+os:
+  linux
+
 dist:
   xenial
 
@@ -7,12 +10,17 @@ language:
 compiler:
   gcc
 
+branches:
+  only:
+  - master
+  - /^stable-\d+\.\d+/
+
 #   GAP version: |       master | stb-4.11 | stb-4.10 | stb-4.9 | required |
 # ---------------+--------------+----------+----------+---------+----------+
 # pkgs:   latest | 64- & 32-bit |   32-bit |        - |       - |        - |
 # pkgs: required |  coverage-64 | 64-conda |   64-bit |  32-bit |  64--bit |
 
-matrix:
+jobs:
   include:
     - env:
       - SUITE=coverage
