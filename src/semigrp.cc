@@ -41,14 +41,14 @@ using libsemigroups::TropicalMinPlusSemiring;
 using libsemigroups::UNDEFINED;
 using libsemigroups::word_type;
 
+#define ERROR(obj, message) error(obj, message, __func__)
+static void error(Obj obj, const char* message, const char* func) {
+  auto buf
+      = std::string(func) + ": " + message + " not a " + TNAM_OBJ(obj) + ",";
+  ErrorQuit(buf.c_str(), 0L, 0L);
+}
+
 #ifdef SEMIGROUPS_KERNEL_DEBUG
-#define ERROR(obj, message) \
-  static std::string buf;   \
-  buf += __func__;          \
-  buf += ": ";              \
-  buf += message;           \
-  buf += " not a %s,";      \
-  ErrorQuit(buf.c_str(), (Int) TNAM_OBJ(obj), 0L);
 
 #define CHECK_SEMI_OBJ(obj)                        \
   if (CALL_1ARGS(IsSemigroup, obj) != True) {      \
