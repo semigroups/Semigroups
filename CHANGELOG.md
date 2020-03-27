@@ -3,6 +3,13 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.2.5 (released 28/03/2020)
+
+This is a minor release to fixing some build issues for windows [Chris Jefferson][]
+and fixing an issue in `IsRowTrimBooleanMat`, `IsColTrimBooleanMat`, and
+`IsTrimBooleanMat` [Finn Smith] see
+[Issue #654](https://github.com/gap-packages/Semigroups/issues/654) for more details.
+
 ### Version 3.2.4 (released 28/02/2020)
 
 This is a minor release to fix a memory leak and some other issues in the
@@ -1239,6 +1246,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Michael Torpey]: https://mtorpey.github.io
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: http://wilf.me
+[Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
 [GAP]: https://www.gap-system.org
 [Digraphs package]: https://gap-packages.github.io/Digraphs
 [Digraphs]: https://gap-packages.github.io/Digraphs
