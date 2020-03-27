@@ -1178,6 +1178,11 @@ ormation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ]\<\> )\<\<)\<\<"
 gap> PrintString((GreensDRelation(S)));
 "\>\>\>GreensDRelation\<(\>\nMonoid( \>[ Transformation( [ 2, 3, 1 ] ), Transf\
 ormation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ]\<\> )\<\<)\<\<"
+gap> PrintObj(GreensDRelation(S)); "This string allows us to test PrintObj";
+GreensDRelation(
+   Monoid( 
+   [ Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ), Transformation\
+( [ 1, 2, 1 ] ) ] ))"This string allows us to test PrintObj"
 
 # Test ViewString, PrintString, for Green's classes, 1/1
 gap> S := FullBooleanMatMonoid(3);;
@@ -1221,22 +1226,70 @@ IsBooleanMat\<, \>[\>\>[0, 1, 0]\<, \<\>\>[0, 0, 1]\<, \<\>\>[1, 0, 0]\<\<]\<)\
 Mat\<, \>[\>\>[1, 1, 0]\<, \<\>\>[1, 0, 1]\<, \<\>\>[0, 1, 1]\<\<]\<)\<\<\<\> \
 )\<,\< \>\>\>Matrix(\<\>IsBooleanMat\<, \>[\>\>[0, 1, 0]\<, \<\>\>[0, 0, 1]\<,\
  \<\>\>[1, 0, 0]\<\<]\<)\<\<)\<\<"
+gap> PrintObj(DClass(S, S.2)); "This string allows us to test PrintObj";
+GreensDClassOfElement(
+  Monoid( Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]])
+    Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
+    Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
+    Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]), 
+    Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 1], [0, 1, 1]]) ), 
+  Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]))
+ "This string allows us to test PrintObj"
 
 # Test IsomorphismPermGroup (for an H-class)
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
+gap> S := AsSemigroup(IsIntegerMatrixSemigroup, S);
+<monoid of 8x8 integer matrices with 4 generators>
 gap> D := DClass(S, S.2);
-<Green's D-class: Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]])>
+<Green's D-class: Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], 
+   [0, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], 
+   [0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0], 
+   [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 0], 
+   [0, 0, 0, 0, 0, 0, 0, 1]])>
 gap> IsRegularDClass(D);
 true
 gap> H := GroupHClass(D);
-<Green's H-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])>
+<Green's H-class: Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], 
+   [0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0], 
+   [0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0], 
+   [0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0], 
+   [0, 0, 0, 0, 0, 0, 0, 1]])>
 gap> x := IsomorphismPermGroup(H);;
 gap> Source(x) = H;
 true
 gap> Range(x);
-Group([ (1,2)(3,5)(4,6), (1,5,4)(2,6,3) ])
-gap> H := HClass(S, Matrix(IsBooleanMat, [[0, 0, 1], [0, 0, 1], [0, 0, 0]]));;
+Group([ (1,3)(2,4)(5,6), (1,4,5)(2,3,6) ])
+gap> Representative(H) ^ x;
+()
+gap> y := InverseGeneralMapping(x);;
+gap> () ^ y;
+Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 1]])
+gap> () ^ y = Representative(H);
+true
+gap> Matrix(IsIntegerMatrix, [[0, 0, -1, -1, 3, 3, 1, -1], 
+>                             [1, -1, 0, 2, 7, 5, 0, -1],
+>                             [-3, 4, 0, 2, 0, -1, 0, 0], 
+>                             [4, 0, 0, 0, 1, 2, 2, 0], 
+>                             [-2, 2, 0, -1, 0, 0, 0, 3],
+>                             [0, 2, 0, -1, -2, -2, 1, 2], 
+>                             [0, 0, 0, -2, -3, 0, 0, -1], 
+>                             [0, 0, 2, 0, 0, 0, 1, 2]]) ^ x;
+Error, argument does not belong to the domain of the function,
+gap> (1, 10) ^ y;
+Error, argument does not belong to the domain of the function,
+gap> H := HClass(S, Matrix(IsIntegerMatrix, 
+> [[1, 0, 0, 0, 0, 0, 0, 0], 
+>  [1, 0, 0, 0, 0, 0, 0, 0], 
+>  [0, 1, 0, 0, 0, 0, 0, 0],
+>  [0, 0, 0, 0, 0, 1, 0, 0], 
+>  [1, 0, 0, 0, 0, 0, 0, 0], 
+>  [0, 0, 1, 0, 0, 0, 0, 0],
+>  [0, 1, 0, 0, 0, 0, 0, 0], 
+>  [0, 0, 0, 0, 0, 0, 0, 1]]));;
 gap> IsomorphismPermGroup(H);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the H-class is not a group,
