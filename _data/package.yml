@@ -1,6 +1,6 @@
 name: Semigroups
-version: 3.2.4
-date: 2020-02-28
+version: 3.2.5
+date: 2020-03-28
 description: |
     A package for semigroups and monoids
 
@@ -73,7 +73,7 @@ packageinfo: https://gap-packages.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/Semigroups/releases/download/v3.2.4/semigroups-3.2.4.tar.gz
+      url: https://github.com/gap-packages/Semigroups/releases/download/v3.2.5/semigroups-3.2.5.tar.gz
 
 abstract: |
     <p>The Semigroups package is a GAP package containing methods for semigroups, monoids, and inverse semigroups.  There are particularly efficient methods for semigroups or ideals consisting of transformations, partial permutations, bipartitions, partitioned binary relations, subsemigroups of regular Rees 0-matrix semigroups, and matrices of various semirings including boolean matrices, matrices over finite fields, and certain tropical matrices.</p><p>Semigroups contains efficient methods for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and so on. It is possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p><p>There are methods for finding presentations for a semigroup, the congruences of a semigroup, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, smaller degree partial permutation representations, and the character tables of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing graphical representations of certain types of elements.</p>
