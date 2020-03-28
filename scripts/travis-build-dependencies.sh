@@ -62,6 +62,9 @@ PKGS=( "digraphs" "genss" "io" "orb" )
 if [ "$SUITE"  == "coverage" ]; then
   PKGS+=( "profiling" )
 fi
+if [ "$PACKAGES" == "latest" ]; then 
+  PKGS+=( "datastructures" )
+fi
 
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
@@ -79,7 +82,7 @@ for PKG in "${PKGS[@]}"; do
   tar xf $PKG-$VERSION.tar.gz && rm $PKG-$VERSION.tar.gz
 
   if [ -f $PKG-$VERSION/configure ]; then
-    if [ "$PKG" == "orb" ]; then
+    if [ "$PKG" == "orb" ] || [ "$PKG" == "datastructures" ]; then
       cd $PKG-$VERSION && ./configure && make # orb doesn't accept package flags
     else
       cd $PKG-$VERSION && ./configure $PKG_FLAGS && make
