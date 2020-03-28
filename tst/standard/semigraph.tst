@@ -57,11 +57,25 @@ gap> List(x, Range);
   v_2, v_1, v_3, v_4, v_2, v_1, v_5, v_4, v_2, v_1, v_3, v_4, v_2, v_1, v_5, 
   v_4, v_2, v_1, v_1, v_2, v_3, v_4, v_5 ]
 gap> AssignGeneratorVariables(S);
-gap> String(gr);
-"Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] )"
-gap> String(S);
-"GraphInverseSemigroup( Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [\
- 3, 5 ], [ ] ] ) )"
+gap> s := String(gr);;
+gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
+> value := (s = "DigraphFromDigraph6String(\"&DOS@O?\")");
+> else
+> value := (s = 
+> "Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] )");
+> fi;
+gap> value;
+true
+gap> s := String(S);;
+gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
+> value := (s = "GraphInverseSemigroup( DigraphFromDigraph6String(\"&DOS@O?\") )");
+> else
+> value := (s = 
+> "GraphInverseSemigroup( Digraph( IsImmutableDigraph, [ [ 2 ], [ 3, 5 ], [ ], [\
+>  3, 5 ], [ ] ] ) )");
+> fi;
+gap> value;
+true
 gap> EvalString(String(S)) = S;
 false
 gap> gr := Digraph([[1]]);
