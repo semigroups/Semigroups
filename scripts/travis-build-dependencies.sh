@@ -76,6 +76,11 @@ for PKG in "${PKGS[@]}"; do
     VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
   fi
 
+  if [ -z $VERSION ]; then
+    echo -e "\nCould not determine the version number of the package $PKG!! Aborting..."
+    exit 1
+  fi
+
   URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
   echo -e "\nDownloading $PKG-$VERSION ($PACKAGES version), from URL:\n$URL"
   $CURL "$URL" -o $PKG-$VERSION.tar.gz
