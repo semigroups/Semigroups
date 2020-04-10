@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  isomorph.gi
-##  Copyright (C) 2014-17                                James D. Mitchell
+##  Copyright (C) 2014-20                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,16 +15,42 @@
 # 0-matrix semigroups can be found in the files semitrans.gi, semipperm.gi,
 # semibipart.gi , and reesmat.gi.
 
-# returns the lex-least multiplication table of the semigroup <S>
+InstallMethod(OnMultiplicationTable, "for a multiplication table, and perm",
+[IsRectangularTable, IsPerm],
+function(table, p)
+  local out;
+  out := Permuted(table, p);
+  Apply(out, x -> OnTuples(x, p));
+  Apply(out, x -> Permuted(x, p));
+  return out;
+end);
 
+InstallMethod(CanonicalMultiplicationTablePerm, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, p;
+  D := SEMIGROUPS.DigraphFromMultTable(S);
+  p := BlissCanonicalLabelling(D[1], D[2]);
+  return RestrictedPerm(p, [1 .. Size(S)]);
+end);
+
+InstallMethod(CanonicalMultiplicationTable, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return OnMultiplicationTable(MultiplicationTable(S),
+                               CanonicalMultiplicationTablePerm(S));
+end);
+
+# Returns the lex-least multiplication table of the semigroup <S>
 InstallMethod(SmallestMultiplicationTable, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local LitNum, NumLit, diag2lits, tbl2lits, lits_to_tbl, onLiterals, n, mtS,
-  diagS, phi, diaglitsS, minS, permS, tbllitsS, stabS;
+  local LitNum, NumLit, DiagonalToLits, TableToLits, LitsToTable, OnLiterals,
+  n, phi, lits, p, stab, table;
 
   LitNum := function(ln, n)
-    return [QuoInt(ln - 1, n ^ 2) + 1, QuoInt((ln - 1) mod n ^ 2, n) + 1,
+    return [QuoInt(ln - 1, n ^ 2) + 1,
+            QuoInt((ln - 1) mod n ^ 2, n) + 1,
             (ln - 1) mod n + 1];
   end;
 
@@ -33,11 +59,11 @@ function(S)
     return (lit[1] - 1) * n ^ 2 + (lit[2] - 1) * n + lit[3];
   end;
 
-  diag2lits := function(diag, n)
+  DiagonalToLits := function(diag, n)
     return List([1 .. n], i -> NumLit([i, i, diag[i]], n));
   end;
 
-  tbl2lits := function(table, n)
+  TableToLits := function(table, n)
     local literals, val, i, j;
     literals := [];
     for i in [1 .. n] do
@@ -46,11 +72,10 @@ function(S)
         Add(literals, NumLit([i, j, val], n));
       od;
     od;
-
     return literals;
   end;
 
-  lits_to_tbl := function(lits, n)
+  LitsToTable := function(lits, n)
     local table, i, j;
     table := [];
     for i in [0 .. n - 1] do
@@ -62,30 +87,24 @@ function(S)
     return table;
   end;
 
-  onLiterals := n -> function(ln, pi)
-    local lit, imlit;
-    lit := LitNum(ln, n);
-    imlit := OnTuples(lit, pi);
-    return NumLit(imlit, n);
+  OnLiterals := n -> function(ln, pi)
+    return NumLit(OnTuples(LitNum(ln, n), pi), n);
   end;
 
   # for not too big semigroups...
-  n := Size(S);
-  mtS := MultiplicationTable(S);
-  diagS := DiagonalOfMat(mtS);
-  phi := ActionHomomorphism(SymmetricGroup(n), [1 .. n ^ 3], onLiterals(n));
+  n   := Size(S);
+  phi := ActionHomomorphism(SymmetricGroup(n), [1 .. n ^ 3], OnLiterals(n));
 
   # get minimal representative of diagonal
-  diaglitsS := diag2lits(diagS, n);
-  minS := SmallestImageSet(Image(phi), diaglitsS);
-  permS := RepresentativeAction(Image(phi), diaglitsS, minS, OnSets);
-  diagS := List(minS, x -> LitNum(x, n)[3]);
+  lits := DiagonalToLits(DiagonalOfMat(MultiplicationTable(S)), n);
+  p    := MinimalImagePerm(Image(phi), lits, OnSets);
+  lits := OnSets(lits, p);
 
   # work with stabiliser of new diagonal on changed table
-  tbllitsS := OnSets(tbl2lits(mtS, n), permS);
-  stabS := Stabilizer(Image(phi), minS, OnSets);
+  stab  := Stabilizer(Image(phi), lits, OnSets);
+  table := OnSets(TableToLits(MultiplicationTable(S), n), p);
 
-  return lits_to_tbl(SmallestImageSet(stabS, tbllitsS), n);
+  return LitsToTable(MinimalImage(stab, table, OnSets), n);
 end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
@@ -171,50 +190,119 @@ end);
 InstallMethod(IsomorphismSemigroups, "for finite monogenic semigroups",
 [IsMonogenicSemigroup and IsFinite, IsMonogenicSemigroup and IsFinite],
 function(S, T)
-  local genS, genT, SS, TT;
+  local s, t, SS, TT, map, inv;
+
+  if IsSimpleSemigroup(S) then
+    if IsSimpleSemigroup(T) then
+      return IsomorphismSemigroups(S, T);
+    else
+      return fail;
+    fi;
+  elif Size(S) <> Size(T) or NrDClasses(S) <> NrDClasses(T) then
+    return fail;
+  fi;
 
   # Monogenic semigroups are of the same size, are not groups, and have the
   # same number of D-classes by this point, and so they are isomorphism
-  genS := Representative(MaximalDClasses(S)[1]);
-  genT := Representative(MaximalDClasses(T)[1]);
-  SS := Semigroup(genS);
-  TT := Semigroup(genT);
-  return MagmaIsomorphismByFunctionsNC(S, T,
-           x -> genT ^ Length(Factorization(SS, x)),
-           x -> genS ^ Length(Factorization(TT, x)));
+  s := Representative(MaximalDClasses(S)[1]);
+  t := Representative(MaximalDClasses(T)[1]);
+  SS := Semigroup(s);
+  TT := Semigroup(t);
+  map := x -> t ^ Length(Factorization(SS, x));
+  inv := x -> s ^ Length(Factorization(TT, x));
+  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
+
+SEMIGROUPS.DigraphFromMultTable := function(S)
+  local M, n, Color1Node, Color2Node, Color3Node, Widget, out, colors, x, y, z;
+
+  M := MultiplicationTable(S);
+  n := Size(S);
+
+  # The original nodes
+  Color1Node := function(i)
+    return i;
+  end;
+
+  # i = 1 .. n, j = 1 .. n
+  Color2Node := function(i, j)
+    Assert(1, 1 <= i and i <= n);
+    Assert(1, 1 <= j and j <= n);
+    return i * n + j;
+  end;
+
+  Color3Node := function(i, j)
+    Assert(1, 1 <= i and i <= n);
+    Assert(1, 1 <= j and j <= n);
+    return n ^ 2 + Color2Node(i, j);
+  end;
+
+  Widget := function(i)
+    Assert(1, 1 <= i and i <= n);
+    return 2 * n ^ 2 + n + i;
+  end;
+
+  out := List([1 .. 2 * n ^ 2 + 2 * n], x -> []);
+  colors := ListWithIdenticalEntries(n, 1);
+  Append(colors, ListWithIdenticalEntries(n ^ 2, 2));
+  Append(colors, ListWithIdenticalEntries(n ^ 2, 3));
+  Append(colors, ListWithIdenticalEntries(n, 2));
+
+  for x in [1 .. n] do
+    for y in [1 .. n] do
+      Add(out[Color1Node(x)], Color2Node(x, y));
+      if x = y then
+        Add(out[Color2Node(x, y)], Widget(x));
+      fi;
+      Add(out[Color2Node(x, y)], Color3Node(x, y));
+      Add(out[Color3Node(x, y)], M[x][y]);
+      for z in [1 .. n] do
+        if z <> x then
+          Add(out[Color2Node(x, y)], Color2Node(z, y));
+        fi;
+      od;
+    od;
+  od;
+  return [Digraph(out), colors];
+end;
 
 InstallMethod(IsomorphismSemigroups, "for semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  local pS, pT;
+  local invariants, map, DS, DT, p, inv;
 
+  # TODO more invariants
+  invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
+                 NrLClasses, NrDClasses, NrRClasses, NrHClasses, NrIdempotents];
   if S = T then
     return MagmaIsomorphismByFunctionsNC(S, T, IdFunc, IdFunc);
   elif IsFinite(S) <> IsFinite(T) then
     return fail;
   elif not IsFinite(S) then
     TryNextMethod();
-  elif IsSimpleSemigroup(S) <> IsSimpleSemigroup(T) or
-      IsZeroSimpleSemigroup(S) <> IsZeroSimpleSemigroup(T) or
-      Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
-      NrDClasses(S) <> NrDClasses(T) or NrLClasses(S) <> NrLClasses(T) or
-      NrHClasses(S) <> NrHClasses(T) or NrIdempotents(S) <> NrIdempotents(T)
-      then
-    return fail;
-  fi;
-
-  if IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)
+  elif IsTransformationSemigroup(T)
+      and HasIsomorphismTransformationSemigroup(S) then
+    map := IsomorphismTransformationSemigroup(S);
+    if T = Range(map) then
+      return map;
+    fi;
+  elif (IsSimpleSemigroup(S) and IsSimpleSemigroup(T))
+      or (IsZeroSimpleSemigroup(S) and IsZeroSimpleSemigroup(T))
       or (IsMonogenicSemigroup(S) and IsMonogenicSemigroup(T)) then
     return IsomorphismSemigroups(S, T);
-  fi;
-
-  # Compare the partial orders of the D-classes
-  pS := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
-  pT := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(T)));
-  if not IsIsomorphicDigraph(pS, pT) then
+  elif not ForAll(invariants,
+                  func -> func(S) = func(T)) then
     return fail;
   fi;
 
-  TryNextMethod();
+  DS := SEMIGROUPS.DigraphFromMultTable(S);
+  DT := SEMIGROUPS.DigraphFromMultTable(T);
+  p := IsomorphismDigraphs(DS[1], DT[1], DS[2], DT[2]);
+  if p = fail then
+    return fail;
+  fi;
+  p := RestrictedPerm(p, [1 .. Size(S)]);
+  map := x -> AsSSortedList(T)[PositionSorted(S, x) ^ p];
+  inv := x -> AsSSortedList(S)[PositionSorted(T, x) ^ (p ^ -1)];
+  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);

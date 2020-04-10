@@ -17,6 +17,9 @@
 
     <#Include Label = "IsIsomorphicSemigroup">
     <#Include Label = "SmallestMultiplicationTable">
+    <#Include Label = "CanonicalMultiplicationTable">
+    <#Include Label = "CanonicalMultiplicationTablePerm">
+    <#Include Label = "OnMultiplicationTable">
     <#Include Label = "IsomorphismSemigroups">
 
   </Section>

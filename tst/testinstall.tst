@@ -731,8 +731,7 @@ gap> T := Semigroup(Transformation([1, 2, 3, 1]),
 >                   Transformation([2, 3, 3, 3]),
 >                   Transformation([3, 2, 3, 3]));;
 gap> IsIsomorphicSemigroup(S, T);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `IsomorphismSemigroups' on 2 arguments
+true
 gap> SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
 true
 

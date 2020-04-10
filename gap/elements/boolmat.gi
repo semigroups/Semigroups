@@ -624,9 +624,6 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-# FIXME The following could be done without SmallestImageSet using vertex
-# colors. Not sure how.
-
 InstallMethod(CanonicalBooleanMatNC,
 "for perm group, perm group, and boolean mat",
 [IsPermGroup, IsPermGroup, IsBooleanMat],
@@ -648,8 +645,9 @@ function(G, H, x)
   end;
 
    map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
-   return SEMIGROUPS.BooleanMatSet(SmallestImageSet(Image(map),
-                                   SEMIGROUPS.SetBooleanMat(x)));
+   return SEMIGROUPS.BooleanMatSet(CanonicalImage(Image(map),
+                                                  SEMIGROUPS.SetBooleanMat(x),
+                                                  OnSets));
 end);
 
 InstallMethod(IsSymmetricBooleanMat, "for a boolean matrix",

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  isomorph.gd
-##  Copyright (C) 2014-15                                James D. Mitchell
+##  Copyright (C) 2014-20                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,4 +10,7 @@
 
 DeclareOperation("IsomorphismSemigroups", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("SmallestMultiplicationTable", IsSemigroup);
+DeclareAttribute("CanonicalMultiplicationTable", IsSemigroup);
+DeclareAttribute("CanonicalMultiplicationTablePerm", IsSemigroup);
+DeclareOperation("OnMultiplicationTable", [IsRectangularTable, IsPerm]);
 DeclareOperation("IsIsomorphicSemigroup", [IsSemigroup, IsSemigroup]);

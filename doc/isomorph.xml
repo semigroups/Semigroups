@@ -1,12 +1,116 @@
 #############################################################################
 ##
 #W  isomorph.xml
-#Y  Copyright (C) 2014                                   James D. Mitchell
+#Y  Copyright (C) 2014-20                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="OnMultiplicationTable">
+<ManSection>
+  <Oper Name = "OnMultiplicationTable" Arg = "table, p"/>
+  <Returns>
+    A multiplication table.
+  </Returns>
+  <Description>
+    If <A>table</A> is a multiplication table of a semigroup and the second
+    argument <A>p</A> is a permutation of 
+    <C>[1 .. Length(<A>table</A>)]</C>, then this operation returns a
+    multiplication table of a semigroup isomorphic to that defined by
+    <A>table</A> where the elements <C>[1 .. Length(<A>table</A>)]</C> are
+    relabelled according to <A>p</A>.
+
+    <Example><![CDATA[
+gap> table := [[1, 1, 3, 4, 5, 6, 7, 8], 
+>              [1, 1, 3, 4, 5, 6, 7, 8], 
+>              [1, 1, 3, 4, 5, 6, 7, 8], 
+>              [1, 3, 3, 4, 5, 6, 7, 8], 
+>              [5, 5, 6, 7, 5, 6, 7, 8], 
+>              [5, 5, 6, 7, 5, 6, 7, 8], 
+>              [5, 6, 6, 7, 5, 6, 7, 8], 
+>              [5, 6, 6, 7, 5, 6, 7, 8]];;
+gap> p := (1, 2, 3, 4)(10, 11, 12);;
+gap> OnMultiplicationTable(table, p);
+[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
+  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ], 
+  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CanonicalMultiplicationTablePerm">
+<ManSection>
+  <Attr Name = "CanonicalMultiplicationTablePerm" Arg = "S"/>
+  <Returns>
+    A permutation.
+  </Returns>
+  <Description>
+    This function returns a permutation <C>p</C> such that 
+    <C>OnMultiplicationTable(MultiplicationTable(<A>S</A>), p);</C>
+    equals <C>CanonicalMultiplicationTable(<A>S</A>)</C>. <P/>
+
+    See <Ref Attr="CanonicalMultiplicationTable"/> for more details.
+
+    <Example><![CDATA[
+gap> S := Semigroup(
+> Bipartition([[1, 2, 3, -1, -3], [-2]]),
+> Bipartition([[1, 2, 3, -1], [-2], [-3]]),
+> Bipartition([[1, 2, 3], [-1], [-2, -3]]),
+> Bipartition([[1, 2, -1], [3, -2], [-3]]));;
+gap> Size(S);
+8
+gap> CanonicalMultiplicationTablePerm(S);
+(1,5,8,3,6,7,2,4)]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CanonicalMultiplicationTable">
+  <ManSection>
+    <Attr Name = "CanonicalMultiplicationTable" Arg = "S"/>
+    <Returns>
+      An isomorphism invariant multiplication table of a semigroup.
+    </Returns>
+    <Description>
+      This function returns a multiplication table of a semigroup
+      isomorphic to the semigroup <A>S</A>. <C>CanonicalMultiplicationTable</C>
+      is an isomorphism invariant of semigroups, and so it can, for example, be
+      used to check if two semigroups are isomorphic. <P/>
+
+      <C>CanonicalMultiplicationTable</C> uses the machinery for canonical
+        labelling of vertex coloured digraphs in &bliss; via 
+      <Ref Oper="BlissCanonicalLabelling" Label="for a digraph and a list"
+        BookName="digraphs"/>.<P/>
+
+      The multiplication table returned by this function is the result of 
+      <C>OnMultiplicationTable(MultiplicationTable(<A>S</A>),
+        CanonicalMultiplicationTablePerm(<A>S</A>));</C><P/>
+
+      Note that the performance of <C>CanonicalMultiplicationTable</C> is
+        vastly superior to that of <C>SmallestMultiplicationTable</C>.<P/>
+
+      See also: <Ref Attr= "CanonicalMultiplicationTablePerm"/> and 
+      <Ref Oper="OnMultiplicationTable"/>.
+
+      <Example><![CDATA[
+gap> S := Semigroup(
+> Bipartition([[1, 2, 3, -1, -3], [-2]]),
+> Bipartition([[1, 2, 3, -1], [-2], [-3]]),
+> Bipartition([[1, 2, 3], [-1], [-2, -3]]),
+> Bipartition([[1, 2, -1], [3, -2], [-3]]));;
+gap> Size(S);
+8
+gap> CanonicalMultiplicationTable(S);
+[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ], 
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
 
 <#GAPDoc Label="SmallestMultiplicationTable">
   <ManSection>
@@ -18,7 +122,8 @@
       This function returns the lex-least multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
       is an isomorphism invariant of semigroups, and so it can, for example, be
-      used to check if two semigroups are isomorphic. <P/>
+      used to check if two semigroups are isomorphic (although this is not
+        recommended). <P/>
 
       Due to the high complexity of computing the smallest multiplication table
       of a semigroup, this function only performs well for semigroups with
@@ -26,7 +131,13 @@
 
       <C>SmallestMultiplicationTable</C> is based on the function
       <Ref Attr = "IdSmallSemigroup" BookName = "Smallsemi"/> by Andreas
-      Distler.<P/>
+        Distler.<P/>
+
+      From Version 3.3.0 of &Semigroups; this attribute is computed using
+        <Ref Func="MinimalImage" BookName = "images"/> from the
+        <Package>Images</Package>.
+
+      See also: <Ref Attr= "CanonicalMultiplicationTable"/>.
 
       <Example><![CDATA[
 gap> S := Semigroup(
@@ -64,14 +175,6 @@ gap> SmallestMultiplicationTable(S);
       if it is obvious to the user whether or not <A>S</A> and <A>T</A> are
       isomorphic. There are plans to improve this in the future. <P/>
 
-      If the size of <A>S</A> and <A>T</A> is rather small &#8212; with
-      approximately 50 or fewer elements &#8212; then it is possible to
-      calculate whether <A>S</A> and <A>T</A> are isomorphic by using <Ref Attr
-        = "SmallestMultiplicationTable" />, but this is not currently done by
-      <C>IsIsomorphicSemigroup</C>. In particular, <A>S</A> and <A>T</A> are
-      isomorphic if and only if <C>SmallestMultiplicationTable(<A>S</A>) =
-        SmallestMultiplicationTable(<A>T</A>)</C>.
-
       <Example><![CDATA[
 gap> S := Semigroup(PartialPerm([1, 2, 4], [1, 3, 5]),
 >                   PartialPerm([1, 3, 5], [1, 2, 4]));;
@@ -96,20 +199,19 @@ false]]></Example>
       to the semigroup <A>T</A>. If it finds one, then it is returned, and if
       not, then <K>fail</K> is returned. <P/>
 
-      For many types of semigroup, <C>IsomorphismSemigroups</C> is not able
-      to determine whether or not <A>S</A> and <A>T</A> are isomorphic, and so
-      this operation may result in an "Error, no method found".
-      <C>IsomorphismSemigroups</C> may be able deduce that <A>S</A> and <A>T</A>
-      are not isomorphic by finding that some of their semigroup-theoretic
-      properties differ; however it is harder to construct an isomorphism for
-      semigroups that are isomorphic. <P/>
+      <C>IsomorphismSemigroups</C> uses the machinery for finding isomorphisms
+        between vertex coloured digraphs in &bliss; via 
+      <Ref Oper="IsomorphismDigraphs" 
+           Label="for digraphs and homogeneous lists"
+           BookName="digraphs"/> using digraphs constructed from the
+        multiplication tables of <A>S</A> and <A>T</A>.
+      <P/>
 
-      At present, <C>IsomorphismSemigroups</C> is only able to return an
-      isomorphism when <A>S</A> and <A>T</A> are finite simple, 0-simple, or
-      monogenic semigroups, or when <C><A>S</A> = <A>T</A></C>. 
-      See <Ref Prop="IsSimpleSemigroup" />, <Ref Prop="IsZeroSimpleSemigroup"
-        />, and <Ref Prop="IsMonogenicSemigroup" /> for more information
-      about these types of semigroups.
+      Note that finding an isomorphism between two semigroups is difficult, and
+      may not be possible for semigroups whose size exceeds approximately
+      2048 elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
+      able deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
+      that some of their semigroup-theoretic properties differ.
 
       <Example><![CDATA[
 gap> S := RectangularBand(IsTransformationSemigroup, 4, 5);
