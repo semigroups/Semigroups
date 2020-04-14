@@ -29,7 +29,7 @@ InstallMethod(CanonicalMultiplicationTablePerm, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, p;
-  D := SEMIGROUPS.DigraphFromMultTable(S);
+  D := SEMIGROUPS.CanonicalDigraph(S);
   p := BlissCanonicalLabelling(D[1], D[2]);
   return RestrictedPerm(p, [1 .. Size(S)]);
 end);
@@ -203,7 +203,7 @@ function(S, T)
   fi;
 
   # Monogenic semigroups are of the same size, are not groups, and have the
-  # same number of D-classes by this point, and so they are isomorphism
+  # same number of D-classes by this point, and so they are isomorphic
   s := Representative(MaximalDClasses(S)[1]);
   t := Representative(MaximalDClasses(T)[1]);
   SS := Semigroup(s);
@@ -213,16 +213,16 @@ function(S, T)
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
-SEMIGROUPS.DigraphFromMultTable := function(S)
+# TODO when/if Digraphs has vertex coloured digraphs, make this a user facing
+# function
+SEMIGROUPS.CanonicalDigraph := function(S)
   local M, n, Color1Node, Color2Node, Color3Node, Widget, out, colors, x, y, z;
 
   M := MultiplicationTable(S);
   n := Size(S);
 
   # The original nodes
-  Color1Node := function(i)
-    return i;
-  end;
+  Color1Node := IdFunc;
 
   # i = 1 .. n, j = 1 .. n
   Color2Node := function(i, j)
@@ -231,31 +231,21 @@ SEMIGROUPS.DigraphFromMultTable := function(S)
     return i * n + j;
   end;
 
-  Color3Node := function(i, j)
-    Assert(1, 1 <= i and i <= n);
-    Assert(1, 1 <= j and j <= n);
-    return n ^ 2 + Color2Node(i, j);
-  end;
-
   Widget := function(i)
     Assert(1, 1 <= i and i <= n);
-    return 2 * n ^ 2 + n + i;
+    return n ^ 2 + n + i;
   end;
 
-  out := List([1 .. 2 * n ^ 2 + 2 * n], x -> []);
+  out := List([1 .. n ^ 2 + 2 * n], x -> []);
   colors := ListWithIdenticalEntries(n, 1);
   Append(colors, ListWithIdenticalEntries(n ^ 2, 2));
-  Append(colors, ListWithIdenticalEntries(n ^ 2, 3));
-  Append(colors, ListWithIdenticalEntries(n, 2));
+  Append(colors, ListWithIdenticalEntries(n, 3));
 
   for x in [1 .. n] do
+    Add(out[Color2Node(x, x)], Widget(x));
     for y in [1 .. n] do
       Add(out[Color1Node(x)], Color2Node(x, y));
-      if x = y then
-        Add(out[Color2Node(x, y)], Widget(x));
-      fi;
-      Add(out[Color2Node(x, y)], Color3Node(x, y));
-      Add(out[Color3Node(x, y)], M[x][y]);
+      Add(out[Color2Node(x, y)], Color1Node(M[x][y]));
       for z in [1 .. n] do
         if z <> x then
           Add(out[Color2Node(x, y)], Color2Node(z, y));
@@ -295,8 +285,8 @@ function(S, T)
     return fail;
   fi;
 
-  DS := SEMIGROUPS.DigraphFromMultTable(S);
-  DT := SEMIGROUPS.DigraphFromMultTable(T);
+  DS := SEMIGROUPS.CanonicalDigraph(S);
+  DT := SEMIGROUPS.CanonicalDigraph(T);
   p := IsomorphismDigraphs(DS[1], DT[1], DS[2], DT[2]);
   if p = fail then
     return fail;
@@ -305,4 +295,35 @@ function(S, T)
   map := x -> AsSSortedList(T)[PositionSorted(S, x) ^ p];
   inv := x -> AsSSortedList(S)[PositionSorted(T, x) ^ (p ^ -1)];
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+end);
+
+InstallMethod(AutomorphismGroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, G, X, map, Y, H;
+  # JDM: I'm not sure I trust the AutomorphismGroup methods for Rees 0-matrix
+  # semigroups, and so this method doesn't try to use them in the case that S
+  # is 0-simple, or simple. Note that the first test in tst/standard/isorms.tst
+  # is much much faster using the R(Z)MS specific method.
+
+  # TODO use the R(Z)MS specific method if we have a (0-)simple semigroup.
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+  D := SEMIGROUPS.CanonicalDigraph(S);
+  G := AutomorphismGroup(D[1], D[2]);
+  X := List(GeneratorsOfGroup(G), x -> RestrictedPerm(x, [1 .. Size(S)]));
+  G := Group(X);
+  map := p -> (x -> AsSSortedList(S)[PositionSorted(S, x) ^ p]);
+  Y := List(GeneratorsOfGroup(G),
+            p -> MagmaIsomorphismByFunctionsNC(S,
+                                               S,
+                                               map(p),
+                                               map(p ^ -1)));
+  H := Group(Y);
+  SetNiceMonomorphism(H, GroupHomomorphismByImagesNC(H, G, Y, X));
+  SetIsHandledByNiceMonomorphism(H, true);
+  UseIsomorphismRelation(H, G);
+  return H;
 end);

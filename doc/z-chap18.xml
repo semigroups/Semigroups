@@ -21,6 +21,7 @@
     <#Include Label = "CanonicalMultiplicationTablePerm">
     <#Include Label = "OnMultiplicationTable">
     <#Include Label = "IsomorphismSemigroups">
+    <#Include Label = "AutomorphismGroup">
 
   </Section>
  

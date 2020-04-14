@@ -72,13 +72,14 @@ gap> CanonicalMultiplicationTablePerm(S);
   <ManSection>
     <Attr Name = "CanonicalMultiplicationTable" Arg = "S"/>
     <Returns>
-      An isomorphism invariant multiplication table of a semigroup.
+      A canonical multiplication table (up to isomorphism) of a semigroup.
     </Returns>
     <Description>
       This function returns a multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>CanonicalMultiplicationTable</C>
-      is an isomorphism invariant of semigroups, and so it can, for example, be
-      used to check if two semigroups are isomorphic. <P/>
+      returns a multiplication that is canonical, in the sense that if two
+      semigroups <C>S</C> and <C>T</C> are isomorphic, then the return values
+      of <C>CanonicalMultiplicationTable</C> are equal. <P/>
 
       <C>CanonicalMultiplicationTable</C> uses the machinery for canonical
         labelling of vertex coloured digraphs in &bliss; via 
@@ -121,9 +122,8 @@ gap> CanonicalMultiplicationTable(S);
     <Description>
       This function returns the lex-least multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
-      is an isomorphism invariant of semigroups, and so it can, for example, be
-      used to check if two semigroups are isomorphic (although this is not
-        recommended). <P/>
+      returns the lex-least multiplication of any semigroup isomoprhic to
+      <A>S</A>.
 
       Due to the high complexity of computing the smallest multiplication table
       of a semigroup, this function only performs well for semigroups with
@@ -208,8 +208,8 @@ false]]></Example>
       <P/>
 
       Note that finding an isomorphism between two semigroups is difficult, and
-      may not be possible for semigroups whose size exceeds approximately
-      2048 elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
+      may not be possible for semigroups whose size exceeds a few hundred 
+      elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
       able deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
       that some of their semigroup-theoretic properties differ.
 
@@ -246,6 +246,32 @@ gap> T;
 <Rees 0-matrix semigroup 10x5 over S4>
 gap> IsomorphismSemigroups(S, T) <> fail;
 true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+  
+<#GAPDoc Label="AutomorphismGroup">
+  <ManSection>
+    <Oper Name = "AutomorphismGroup" Arg = "S" Label="for a semigroup"/>
+    <Returns>
+      A group.
+    </Returns>
+    <Description>
+      This operation returns the group of automorphisms of the semigroup <A>S</A>. 
+
+      <C>AutomorphismGroup</C> uses &bliss; via  
+      <Ref Oper="AutomorphismGroup" 
+           Label="for a digraph and a homogeneous list"
+           BookName="digraphs"/> using a vertex coloured digraph constructed
+      from the multiplication table of <A>S</A>. Consequently, this method is
+      only really feasible for semigroups whose size does not exceed a few hundred elements.
+      <P/>
+      <Example><![CDATA[
+gap> S := RectangularBand(IsTransformationSemigroup, 4, 5);
+<regular transformation semigroup of size 20, degree 9 with 5 
+ generators>
+gap> StructureDescription(AutomorphismGroup(S));
+"S4 x S5"]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
