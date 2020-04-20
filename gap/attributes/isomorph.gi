@@ -216,7 +216,7 @@ end);
 # TODO when/if Digraphs has vertex coloured digraphs, make this a user facing
 # function
 SEMIGROUPS.CanonicalDigraph := function(S)
-  local M, n, Color1Node, Color2Node, Color3Node, Widget, out, colors, x, y, z;
+  local M, n, Color1Node, Color2Node, Widget, out, colors, x, y, z;
 
   M := MultiplicationTable(S);
   n := Size(S);
