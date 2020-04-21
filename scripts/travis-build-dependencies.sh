@@ -57,8 +57,8 @@ fi
 CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L"
 
 ################################################################################
-# Install digraphs, genss, io, orb, and profiling
-PKGS=( "digraphs" "genss" "io" "orb" )
+# Install digraphs, genss, io, orb, images, and profiling
+PKGS=( "digraphs" "genss" "io" "orb" "images")
 if [ "$SUITE"  == "coverage" ]; then
   PKGS+=( "profiling" )
 fi

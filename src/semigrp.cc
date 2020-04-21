@@ -1281,8 +1281,7 @@ gap_int_t EN_SEMI_POSITION_SORTED(Obj             self,
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
   if (en_semi_get_type(es) == UNKNOWN) {
-    ErrorQuit("EN_SEMI_POSITION_SORTED: this shouldn't happen!", 0L, 0L);
-    return 0L;
+    return INTOBJ_INT(PositionSortedDensePlist(EN_SEMI_AS_SET(self, so), x));
   } else {
     size_t                       deg      = en_semi_get_degree(es);
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);

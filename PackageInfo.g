@@ -290,7 +290,8 @@ Dependencies := rec(
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
                           ["digraphs", ">=1.0.0"],
-                          ["genss", ">=1.6.5"]],
+                          ["genss", ">=1.6.5"],
+                          ["images", ">=1.3.0"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 
   ExternalConditions := []),
