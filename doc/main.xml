@@ -45,6 +45,9 @@
      <!ENTITY bliss "<Alt Not='Text'><URL
    Text='bliss'>http://www.tcs.tkk.fi/Software/bliss/</URL></Alt><Alt
    Only='Text'><Package>bliss</Package></Alt>">
+     <!ENTITY images "<Alt Not='Text'><URL Text='images'>
+     https://gap-packages.github.io/images/
+</URL></Alt><Alt Only='Text'><Package>images</Package></Alt>">
    ]>
 
 <Book Name="semigroups">
