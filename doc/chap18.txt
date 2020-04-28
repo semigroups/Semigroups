@@ -14,19 +14,14 @@
   
   [33X[0;0YIf [3XS[103X and [3XT[103X are semigroups, then this operation attempts to determine whether
   [3XS[103X    and    [3XT[103X   are   isomorphic   semigroups   by   using   the   operation
-  [2XIsomorphismSemigroups[102X  ([14X18.1-3[114X).  If  [10XIsomorphismSemigroups([3XS[103X[10X, [3XT[103X[10X)[110X returns an
+  [2XIsomorphismSemigroups[102X  ([14X18.1-6[114X).  If  [10XIsomorphismSemigroups([3XS[103X[10X, [3XT[103X[10X)[110X returns an
   isomorphism,   then  [10XIsIsomorphicSemigroup([3XS[103X[10X,  [3XT[103X[10X)[110X  returns  [9Xtrue[109X,  while  if
   [10XIsomorphismSemigroups([3XS[103X[10X,  [3XT[103X[10X)[110X  returns [9Xfail[109X, then [10XIsIsomorphicSemigroup([3XS[103X[10X, [3XT[103X[10X)[110X
-  returns  [9Xfalse[109X.  Note that in some cases, at present, there is no method for
-  determining  whether [3XS[103X is isomorphic to [3XT[103X, even if it is obvious to the user
-  whether  or  not  [3XS[103X and [3XT[103X are isomorphic. There are plans to improve this in
-  the future.[133X
+  returns [9Xfalse[109X.[133X
   
-  [33X[0;0YIf  the  size  of  [3XS[103X  and [3XT[103X is rather small — with approximately 50 or fewer
-  elements  —  then it is possible to calculate whether [3XS[103X and [3XT[103X are isomorphic
-  by  using  [2XSmallestMultiplicationTable[102X  ([14X18.1-2[114X),  but this is not currently
-  done  by [10XIsIsomorphicSemigroup[110X. In particular, [3XS[103X and [3XT[103X are isomorphic if and
-  only if [10XSmallestMultiplicationTable([3XS[103X[10X) = SmallestMultiplicationTable([3XT[103X[10X)[110X.[133X
+  [33X[0;0YNote  that  in  some  cases,  at present, there is no method for determining
+  whether  [3XS[103X  is isomorphic to [3XT[103X, even if it is obvious to the user whether or
+  not [3XS[103X and [3XT[103X are isomorphic. There are plans to improve this in the future.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1, 2, 4], [1, 3, 5]),[127X[104X
@@ -45,16 +40,18 @@
   [6XReturns:[106X  [33X[0;10YThe lex-least multiplication table of a semigroup.[133X
   
   [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
-  isomorphic to the semigroup [3XS[103X. [10XSmallestMultiplicationTable[110X is an isomorphism
-  invariant of semigroups, and so it can, for example, be used to check if two
-  semigroups are isomorphic.[133X
-  
-  [33X[0;0YDue to the high complexity of computing the smallest multiplication table of
-  a  semigroup,  this  function only performs well for semigroups with at most
-  approximately 50 elements.[133X
+  isomorphic  to  the  semigroup  [3XS[103X.  [10XSmallestMultiplicationTable[110X  returns the
+  lex-least  multiplication  of any semigroup isomoprhic to [3XS[103X. Due to the high
+  complexity  of  computing  the smallest multiplication table of a semigroup,
+  this  function  only performs well for semigroups with at most approximately
+  50 elements.[133X
   
   [33X[0;0Y[10XSmallestMultiplicationTable[110X   is  based  on  the  function  [2XIdSmallSemigroup[102X
   ([14XSmallsemi: IdSmallSemigroup[114X) by Andreas Distler.[133X
+  
+  [33X[0;0YFrom   Version   3.3.0  of  [5XSemigroups[105X  this  attribute  is  computed  using
+  [2XMinimalImage[102X  ([14Ximages:  MinimalImage[114X) from the the [5Ximages[105X package. See also:
+  [2XCanonicalMultiplicationTable[102X ([14X18.1-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
@@ -71,7 +68,101 @@
     [4X[28X  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ][128X[104X
   [4X[32X[104X
   
-  [1X18.1-3 IsomorphismSemigroups[101X
+  [1X18.1-3 CanonicalMultiplicationTable[101X
+  
+  [33X[1;0Y[29X[2XCanonicalMultiplicationTable[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA   canonical  multiplication  table  (up  to  isomorphism)  of  a
+            semigroup.[133X
+  
+  [33X[0;0YThis  function  returns  a multiplication table of a semigroup isomorphic to
+  the  semigroup [3XS[103X. [10XCanonicalMultiplicationTable[110X returns a multiplication that
+  is  canonical,  in  the sense that if two semigroups [10XS[110X and [10XT[110X are isomorphic,
+  then the return values of [10XCanonicalMultiplicationTable[110X are equal.[133X
+  
+  [33X[0;0Y[10XCanonicalMultiplicationTable[110X  uses  the machinery for canonical labelling of
+  vertex  coloured  digraphs  in  [5Xbliss[105X via [2XBlissCanonicalLabelling[102X ([14XDigraphs:
+  BlissCanonicalLabelling for a digraph and a list[114X).[133X
+  
+  [33X[0;0YThe  multiplication  table  returned  by  this  function  is  the  result of
+  [10XOnMultiplicationTable(MultiplicationTable([3XS[103X[10X),
+  CanonicalMultiplicationTablePerm([3XS[103X[10X));[110X[133X
+  
+  [33X[0;0YNote that the performance of [10XCanonicalMultiplicationTable[110X is vastly superior
+  to that of [10XSmallestMultiplicationTable[110X.[133X
+  
+  [33X[0;0YSee       also:      [2XCanonicalMultiplicationTablePerm[102X      ([14X18.1-4[114X)      and
+  [2XOnMultiplicationTable[102X ([14X18.1-5[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1, -3], [-2]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1], [-2], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3], [-1], [-2, -3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, -1], [3, -2], [-3]]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalMultiplicationTable(S);[127X[104X
+    [4X[28X[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-4 CanonicalMultiplicationTablePerm[101X
+  
+  [33X[1;0Y[29X[2XCanonicalMultiplicationTablePerm[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA permutation.[133X
+  
+  [33X[0;0YThis      function     returns     a     permutation     [10Xp[110X     such     that
+  [10XOnMultiplicationTable(MultiplicationTable([3XS[103X[10X),           p);[110X           equals
+  [10XCanonicalMultiplicationTable([3XS[103X[10X)[110X.[133X
+  
+  [33X[0;0YSee [2XCanonicalMultiplicationTable[102X ([14X18.1-3[114X) for more details.[133X
+  
+  [33X[0;0Y[10XCanonicalMultiplicationTablePerm[110X  uses the machinery for canonical labelling
+  of  vertex coloured digraphs in [5Xbliss[105X via [2XBlissCanonicalLabelling[102X ([14XDigraphs:
+  BlissCanonicalLabelling for a digraph and a list[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1, -3], [-2]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1], [-2], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3], [-1], [-2, -3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, -1], [3, -2], [-3]]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalMultiplicationTablePerm(S);[127X[104X
+    [4X[28X(1,5,8,3,6,7,2,4)[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-5 OnMultiplicationTable[101X
+  
+  [33X[1;0Y[29X[2XOnMultiplicationTable[102X( [3Xtable[103X, [3Xp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA multiplication table.[133X
+  
+  [33X[0;0YIf  [3Xtable[103X is a multiplication table of a semigroup and the second argument [3Xp[103X
+  is  a  permutation  of  [10X[1  .. Length([3Xtable[103X[10X)][110X, then this operation returns a
+  multiplication  table  of  a  semigroup  isomorphic to that defined by [3Xtable[103X
+  where the elements [10X[1 .. Length([3Xtable[103X[10X)][110X are relabelled according to [3Xp[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xtable := [[1, 1, 3, 4, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [1, 1, 3, 4, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [1, 1, 3, 4, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [1, 3, 3, 4, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [5, 5, 6, 7, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [5, 5, 6, 7, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [5, 6, 6, 7, 5, 6, 7, 8], [127X[104X
+    [4X[25X>[125X [27X             [5, 6, 6, 7, 5, 6, 7, 8]];;[127X[104X
+    [4X[25Xgap>[125X [27Xp := (1, 2, 3, 4)(10, 11, 12);;[127X[104X
+    [4X[25Xgap>[125X [27XOnMultiplicationTable(table, p);[127X[104X
+    [4X[28X[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-6 IsomorphismSemigroups[101X
   
   [33X[1;0Y[29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism, or [9Xfail[109X.[133X
@@ -80,18 +171,16 @@
   semigroup  [3XT[103X. If it finds one, then it is returned, and if not, then [9Xfail[109X is
   returned.[133X
   
-  [33X[0;0YFor  many types of semigroup, [10XIsomorphismSemigroups[110X is not able to determine
-  whether  or  not [3XS[103X and [3XT[103X are isomorphic, and so this operation may result in
-  an "Error, no method found". [10XIsomorphismSemigroups[110X may be able deduce that [3XS[103X
-  and  [3XT[103X  are not isomorphic by finding that some of their semigroup-theoretic
-  properties  differ;  however  it  is  harder to construct an isomorphism for
-  semigroups that are isomorphic.[133X
+  [33X[0;0Y[10XIsomorphismSemigroups[110X  uses  the  machinery for finding isomorphisms between
+  vertex   coloured  digraphs  in  [5Xbliss[105X  via  [2XIsomorphismDigraphs[102X  ([14XDigraphs:
+  IsomorphismDigraphs  for  digraphs  and  homogeneous  lists[114X)  using digraphs
+  constructed from the multiplication tables of [3XS[103X and [3XT[103X.[133X
   
-  [33X[0;0YAt present, [10XIsomorphismSemigroups[110X is only able to return an isomorphism when
-  [3XS[103X and [3XT[103X are finite simple, 0-simple, or monogenic semigroups, or when [10X[3XS[103X[10X = [3XT[103X[10X[110X.
-  See   [2XIsSimpleSemigroup[102X   ([14X15.1-22[114X),  [2XIsZeroSimpleSemigroup[102X  ([14X15.1-28[114X),  and
-  [2XIsMonogenicSemigroup[102X  ([14X15.1-11[114X)  for  more  information about these types of
-  semigroups.[133X
+  [33X[0;0YNote  that  finding  an isomorphism between two semigroups is difficult, and
+  may  not  be  possible  for  semigroups  whose  size  exceeds  a few hundred
+  elements. On the other hand, [10XIsomorphismSemigroups[110X may be able deduce that [3XS[103X
+  and  [3XT[103X  are not isomorphic by finding that some of their semigroup-theoretic
+  properties differ.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := RectangularBand(IsTransformationSemigroup, 4, 5);[127X[104X
@@ -126,6 +215,26 @@
     [4X[28X<Rees 0-matrix semigroup 10x5 over S4>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T) <> fail;[127X[104X
     [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-7 AutomorphismGroup[101X
+  
+  [33X[1;0Y[29X[2XAutomorphismGroup[102X( [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA group.[133X
+  
+  [33X[0;0YThis  operation  returns  the  group  of  automorphisms  of the semigroup [3XS[103X.
+  [10XAutomorphismGroup[110X    uses    [5Xbliss[105X    via    [2XAutomorphismGroup[102X    ([14XDigraphs:
+  AutomorphismGroup  for  a  digraph  and  a  homogeneous list[114X) using a vertex
+  coloured   digraph   constructed   from   the  multiplication  table  of  [3XS[103X.
+  Consequently,  this method is only really feasible for semigroups whose size
+  does not exceed a few hundred elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(IsTransformationSemigroup, 4, 5);[127X[104X
+    [4X[28X<regular transformation semigroup of size 20, degree 9 with 5 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(AutomorphismGroup(S));[127X[104X
+    [4X[28X"S4 x S5"[128X[104X
   [4X[32X[104X
   
   

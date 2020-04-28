@@ -43,6 +43,9 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 * get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or
   higher 
 
+* get the [images](http://gap-packages.github.io/images) package version 1.3.0 or
+  higher 
+
 * download the package archive `semigroups-x.x.x.tar.gz` from the
   [Semigroups] webpage.
 

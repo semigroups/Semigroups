@@ -71,6 +71,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A68D87982A07C6F">5.3-14 IsTotalBooleanMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D9BECEA7E9B72A7">5.3-15 IsPartialOrderBooleanMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X82EA957982B79827">5.3-16 IsEquivalenceBooleanMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7E6B588887D34A0A">5.3-17 IsTransformationBooleanMat</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X873822B6830CE367">5.4 <span class="Heading">
       Matrices over finite fields
@@ -1242,6 +1243,20 @@ true</pre></div>
 5
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Bell(3);</span>
 5</pre></div>
+
+<p><a id="X7E6B588887D34A0A" name="X7E6B588887D34A0A"></a></p>
+
+<h5>5.3-17 IsTransformationBooleanMat</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationBooleanMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A boolean matrix is a <strong class="button">transformation</strong> if every row contains precisely one <code class="keyw">true</code> value.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Number(FullBooleanMatMonoid(3), IsTransformationBooleanMat);</span>
+27</pre></div>
 
 <p><a id="X873822B6830CE367" name="X873822B6830CE367"></a></p>
 

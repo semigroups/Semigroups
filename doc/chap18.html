@@ -33,7 +33,11 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7A6D59247F15935E">18.1-1 IsIsomorphicSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7DE212DF7DF0A4E9">18.1-2 SmallestMultiplicationTable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X8248C522825E2684">18.1-3 IsomorphismSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7FFEEFF484039A42">18.1-3 CanonicalMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X869533A7819EC2F8">18.1-4 CanonicalMultiplicationTablePerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X83BC6B998479BD27">18.1-5 OnMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X8248C522825E2684">18.1-6 IsomorphismSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X79BFF4E77A8090EF">18.1-7 AutomorphismGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18.html#X80DE3DB0782D9358">18.2 <span class="Heading">
       Isomorphisms of Rees (0-)matrix semigroups
@@ -71,9 +75,9 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then this operation attempts to determine whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic semigroups by using the operation <code class="func">IsomorphismSemigroups</code> (<a href="chap18.html#X8248C522825E2684"><span class="RefLink">18.1-3</span></a>). If <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns an isomorphism, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">true</code>, while if <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">fail</code>, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">false</code>. Note that in some cases, at present, there is no method for determining whether <var class="Arg">S</var> is isomorphic to <var class="Arg">T</var>, even if it is obvious to the user whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic. There are plans to improve this in the future.</p>
+<p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then this operation attempts to determine whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic semigroups by using the operation <code class="func">IsomorphismSemigroups</code> (<a href="chap18.html#X8248C522825E2684"><span class="RefLink">18.1-6</span></a>). If <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns an isomorphism, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">true</code>, while if <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">fail</code>, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">false</code>.</p>
 
-<p>If the size of <var class="Arg">S</var> and <var class="Arg">T</var> is rather small — with approximately 50 or fewer elements — then it is possible to calculate whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic by using <code class="func">SmallestMultiplicationTable</code> (<a href="chap18.html#X7DE212DF7DF0A4E9"><span class="RefLink">18.1-2</span></a>), but this is not currently done by <code class="code">IsIsomorphicSemigroup</code>. In particular, <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic if and only if <code class="code">SmallestMultiplicationTable(<var class="Arg">S</var>) = SmallestMultiplicationTable(<var class="Arg">T</var>)</code>.</p>
+<p>Note that in some cases, at present, there is no method for determining whether <var class="Arg">S</var> is isomorphic to <var class="Arg">T</var>, even if it is obvious to the user whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic. There are plans to improve this in the future.</p>
 
 
 <div class="example"><pre>
@@ -93,11 +97,11 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The lex-least multiplication table of a semigroup.</p>
 
-<p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> is an isomorphism invariant of semigroups, and so it can, for example, be used to check if two semigroups are isomorphic.</p>
-
-<p>Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
+<p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> returns the lex-least multiplication of any semigroup isomoprhic to <var class="Arg">S</var>. Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
 
 <p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="../../../pkg/smallsemi/doc/chap4_mj.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
+
+<p>From Version 3.3.0 of <strong class="pkg">Semigroups</strong> this attribute is computed using <code class="func">MinimalImage</code> (<a href="/Users/jdm/.gap/pkg/images-1.3.0/doc/chap2_mj.html#X7E9EFA0E7A997586"><span class="RefLink">images: MinimalImage</span></a>) from the the <span class="URL"><a href=" https://gap-packages.github.io/images/ ">images</a></span> package. See also: <code class="func">CanonicalMultiplicationTable</code> (<a href="chap18.html#X7FFEEFF484039A42"><span class="RefLink">18.1-3</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -114,18 +118,101 @@ false</pre></div>
   [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
   [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]</pre></div>
 
+<p><a id="X7FFEEFF484039A42" name="X7FFEEFF484039A42"></a></p>
+
+<h5>18.1-3 CanonicalMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A canonical multiplication table (up to isomorphism) of a semigroup.</p>
+
+<p>This function returns a multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">CanonicalMultiplicationTable</code> returns a multiplication that is canonical, in the sense that if two semigroups <code class="code">S</code> and <code class="code">T</code> are isomorphic, then the return values of <code class="code">CanonicalMultiplicationTable</code> are equal.</p>
+
+<p><code class="code">CanonicalMultiplicationTable</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="../../../pkg/digraphs/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
+
+<p>The multiplication table returned by this function is the result of <code class="code">OnMultiplicationTable(MultiplicationTable(<var class="Arg">S</var>), CanonicalMultiplicationTablePerm(<var class="Arg">S</var>));</code></p>
+
+<p>Note that the performance of <code class="code">CanonicalMultiplicationTable</code> is vastly superior to that of <code class="code">SmallestMultiplicationTable</code>.</p>
+
+<p>See also: <code class="func">CanonicalMultiplicationTablePerm</code> (<a href="chap18.html#X869533A7819EC2F8"><span class="RefLink">18.1-4</span></a>) and <code class="func">OnMultiplicationTable</code> (<a href="chap18.html#X83BC6B998479BD27"><span class="RefLink">18.1-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1, -3], [-2]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1], [-2], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3], [-1], [-2, -3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, -1], [3, -2], [-3]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalMultiplicationTable(S);</span>
+[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ], 
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]</pre></div>
+
+<p><a id="X869533A7819EC2F8" name="X869533A7819EC2F8"></a></p>
+
+<h5>18.1-4 CanonicalMultiplicationTablePerm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalMultiplicationTablePerm</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A permutation.</p>
+
+<p>This function returns a permutation <code class="code">p</code> such that <code class="code">OnMultiplicationTable(MultiplicationTable(<var class="Arg">S</var>), p);</code> equals <code class="code">CanonicalMultiplicationTable(<var class="Arg">S</var>)</code>.</p>
+
+<p>See <code class="func">CanonicalMultiplicationTable</code> (<a href="chap18.html#X7FFEEFF484039A42"><span class="RefLink">18.1-3</span></a>) for more details.</p>
+
+<p><code class="code">CanonicalMultiplicationTablePerm</code> uses the machinery for canonical labelling of vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">BlissCanonicalLabelling</code> (<a href="../../../pkg/digraphs/doc/chap7_mj.html#X87DA265D803DB337"><span class="RefLink">Digraphs: BlissCanonicalLabelling for a digraph and a list</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1, -3], [-2]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -1], [-2], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3], [-1], [-2, -3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, -1], [3, -2], [-3]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalMultiplicationTablePerm(S);</span>
+(1,5,8,3,6,7,2,4)</pre></div>
+
+<p><a id="X83BC6B998479BD27" name="X83BC6B998479BD27"></a></p>
+
+<h5>18.1-5 OnMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnMultiplicationTable</code>( <var class="Arg">table</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A multiplication table.</p>
+
+<p>If <var class="Arg">table</var> is a multiplication table of a semigroup and the second argument <var class="Arg">p</var> is a permutation of <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code>, then this operation returns a multiplication table of a semigroup isomorphic to that defined by <var class="Arg">table</var> where the elements <code class="code">[1 .. Length(<var class="Arg">table</var>)]</code> are relabelled according to <var class="Arg">p</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">table := [[1, 1, 3, 4, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 3, 3, 4, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 6, 6, 7, 5, 6, 7, 8], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 6, 6, 7, 5, 6, 7, 8]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := (1, 2, 3, 4)(10, 11, 12);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnMultiplicationTable(table, p);</span>
+[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
+  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
+  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ], 
+  [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]</pre></div>
+
 <p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
 
-<h5>18.1-3 IsomorphismSemigroups</h5>
+<h5>18.1-6 IsomorphismSemigroups</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism, or <code class="keyw">fail</code>.</p>
 
 <p>This operation attempts to find an isomorphism from the semigroup <var class="Arg">S</var> to the semigroup <var class="Arg">T</var>. If it finds one, then it is returned, and if not, then <code class="keyw">fail</code> is returned.</p>
 
-<p>For many types of semigroup, <code class="code">IsomorphismSemigroups</code> is not able to determine whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, and so this operation may result in an "Error, no method found". <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ; however it is harder to construct an isomorphism for semigroups that are isomorphic.</p>
+<p><code class="code">IsomorphismSemigroups</code> uses the machinery for finding isomorphisms between vertex coloured digraphs in <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">IsomorphismDigraphs</code> (<a href="../../../pkg/digraphs/doc/chap7_mj.html#X7ED93C0F86D9D34F"><span class="RefLink">Digraphs: IsomorphismDigraphs for digraphs and homogeneous lists</span></a>) using digraphs constructed from the multiplication tables of <var class="Arg">S</var> and <var class="Arg">T</var>.</p>
 
-<p>At present, <code class="code">IsomorphismSemigroups</code> is only able to return an isomorphism when <var class="Arg">S</var> and <var class="Arg">T</var> are finite simple, 0-simple, or monogenic semigroups, or when <code class="code"><var class="Arg">S</var> = <var class="Arg">T</var></code>. See <code class="func">IsSimpleSemigroup</code> (<a href="chap15.html#X836F4692839F4874"><span class="RefLink">15.1-22</span></a>), <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap15.html#X8193A60F839C064E"><span class="RefLink">15.1-28</span></a>), and <code class="func">IsMonogenicSemigroup</code> (<a href="chap15.html#X79D46BAB7E327AD1"><span class="RefLink">15.1-11</span></a>) for more information about these types of semigroups.</p>
+<p>Note that finding an isomorphism between two semigroups is difficult, and may not be possible for semigroups whose size exceeds a few hundred elements. On the other hand, <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ.</p>
 
 
 <div class="example"><pre>
@@ -161,6 +248,23 @@ fail
 &lt;Rees 0-matrix semigroup 10x5 over S4&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T) &lt;&gt; fail;</span>
 true</pre></div>
+
+<p><a id="X79BFF4E77A8090EF" name="X79BFF4E77A8090EF"></a></p>
+
+<h5>18.1-7 AutomorphismGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A group.</p>
+
+<p>This operation returns the group of automorphisms of the semigroup <var class="Arg">S</var>. <code class="code">AutomorphismGroup</code> uses <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> via <code class="func">AutomorphismGroup</code> (<a href="../../../pkg/digraphs/doc/chap7_mj.html#X877732B1783C391B"><span class="RefLink">Digraphs: AutomorphismGroup for a digraph and a homogeneous list</span></a>) using a vertex coloured digraph constructed from the multiplication table of <var class="Arg">S</var>. Consequently, this method is only really feasible for semigroups whose size does not exceed a few hundred elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsTransformationSemigroup, 4, 5);</span>
+&lt;regular transformation semigroup of size 20, degree 9 with 5 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(AutomorphismGroup(S));</span>
+"S4 x S5"</pre></div>
 
 <p><a id="X80DE3DB0782D9358" name="X80DE3DB0782D9358"></a></p>
 

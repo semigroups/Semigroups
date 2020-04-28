@@ -1560,9 +1560,9 @@
   [33X[0;0YIf the optional argument [3Xn[103X is not specified, then by default the degree of [3XS[103X
   will  be  chosen  for  [3Xn[103X;  see  [2XDegreeOfTransformationSemigroup[102X  ([14XReference:
   DegreeOfTransformationSemigroup[114X).  If  the semigroup [3XS[103X does not act on [10X[1 ..
-  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
+  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPoints([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
   
-  [33X[0;0YThe  digraph  returned  by  [10XDigraphOfActionOnPairs[110X has [3Xn[103X vertices, where the
+  [33X[0;0YThe  digraph  returned  by [10XDigraphOfActionOnPoints[110X has [3Xn[103X vertices, where the
   vertex  [10Xi[110X  corresponds to the point [10Xi[110X. For each point [10Xi[110X in [10X[1 .. [3Xn[103X[10X][110X, and for
   each  generator  [10Xf[110X  in  [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X,  there is an edge from the
   vertex  [10Xi[110X  to  the  vertex  [10Xi  ^  f[110X.  See  [2XGeneratorsOfSemigroup[102X ([14XReference:
