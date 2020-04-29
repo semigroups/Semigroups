@@ -966,18 +966,18 @@ true
 gap> BruteForceInverseCheck(iso);
 true
 
-# CanonicalMatrix and CanonicalReesZeroMatrixSemigroup
+# ReesZeroMatrixSemigroupCanonicalLabelling and CanonicalReesZeroMatrixSemigroup
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]),
 > [[(), (2, 3), (2, 3, 4)], [(1, 2)(3, 4), (), (1, 2, 4, 3)],
 > [(1, 4, 2), (1, 3)(2, 4), ()]]);;
 gap> T := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]), 
 > [[(1, 2, 4, 3), (2, 4, 3), (1, 4)(2, 3)], [(1, 4), (), (1, 3)],
 > [(), (1, 3)(2, 4), (1, 3, 4, 2)]]);;
-gap> mat := [[(), (), ()], [(), (1, 4), (1, 2, 4)], 
-> [(), (1, 3, 4, 2), (1, 4, 3, 2)]];;
-gap> CanonicalMatrix(S) = mat;
+gap> mat := [[(), (), ()], [(1, 4), (), (2, 4)],
+> [(), (1, 3), (1, 4, 3, 2)]];;
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
 true
-gap> CanonicalMatrix(T) = mat;
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(T) = mat;
 true
 gap> S := ReesZeroMatrixSemigroup(Group(
 > [(1, 2, 3), (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -1012,35 +1012,33 @@ gap> S := ReesZeroMatrixSemigroup(Group(
 > 103, 24, 84, 5, 65, 125, 46, 106, 27, 87, 8, 68, 128, 49, 109, 30, 90, 11, 71,
 > 131, 52, 112, 33, 93, 14, 74, 134, 55, 115, 36, 96, 17, 77, 137, 58, 118, 39,
 > 99, 20, 80, 140, 61, 121, 42, 102, 23, 83), 0]]);;
-gap> mat := [[0, (), (), ()], 
-> [(), (), (4, 142, 141, 140, 139, 138, 137, 136, 135, 134, 133, 132, 131, 130,
-> 129, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115,
-> 114, 113, 112, 111, 110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99,
-> 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
-> 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61,
-> 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42,
-> 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23,
-> 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5), (1, 2,
-> 3)(4, 74, 5, 75, 6, 76, 7, 77, 8, 78, 9, 79, 10, 80, 11, 81, 12, 82, 13, 83,
-> 14, 84, 15, 85, 16, 86, 17, 87, 18, 88, 19, 89, 20, 90, 21, 91, 22, 92, 23,
-> 93, 24, 94, 25, 95, 26, 96, 27, 97, 28, 98, 29, 99, 30, 100, 31, 101, 32, 102,
-> 33, 103, 34, 104, 35, 105, 36, 106, 37, 107, 38, 108, 39, 109, 40, 110, 41,
-> 111, 42, 112, 43, 113, 44, 114, 45, 115, 46, 116, 47, 117, 48, 118, 49, 119,
-> 50, 120, 51, 121, 52, 122, 53, 123, 54, 124, 55, 125, 56, 126, 57, 127, 58,
-> 128, 59, 129, 60, 130, 61, 131, 62, 132, 63, 133, 64, 134, 65, 135, 66, 136,
-> 67, 137, 68, 138, 69, 139, 70, 140, 71, 141, 72, 142, 73)]];;
-gap> CanonicalMatrix(S) = mat;
+gap> mat := [[0, (), (), ()],
+> [(),  (),  (4, 96, 49, 141, 94, 47, 139, 92, 45, 137, 90, 43, 135, 88, 41,
+> 133, 86, 39, 131, 84, 37, 129, 82, 35, 127, 80, 33, 125, 78, 31, 123, 76, 29,
+> 121, 74, 27, 119, 72, 25, 117, 70, 23, 115, 68, 21, 113, 66, 19, 111, 64, 17,
+> 109, 62, 15, 107, 60, 13, 105, 58, 11, 103, 56, 9, 101, 54, 7, 99, 52, 5, 97,
+> 50, 142, 95, 48, 140, 93, 46, 138, 91, 44, 136, 89, 42, 134, 87, 40, 132, 85,
+> 38, 130, 83, 36, 128, 81, 34, 126, 79, 32, 124, 77, 30, 122, 75, 28, 120, 73,
+> 26, 118, 71, 24, 116, 69, 22, 114, 67, 20, 112, 65, 18, 110, 63, 16, 108, 61,
+> 14, 106, 59, 12, 104, 57, 10, 102, 55, 8, 100, 53, 6, 98, 51), (1, 2, 3)(4,
+> 142, 141, 140, 139, 138, 137, 136, 135, 134, 133, 132, 131, 130, 129, 128,
+> 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113,
+> 112, 111, 110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99, 98, 97,
+> 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78,
+> 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60, 59,
+> 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40,
+> 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21,
+> 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5)]];;
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
 true
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), (1, 2, 3, 4), 
 > (1, 2, 3, 4), (1, 3)(2, 4), 0], [0, (), (1, 2, 3, 4), (), ()], [0, (), (), (1,
 > 2, 3, 4), ()], [(1, 4, 3, 2), (1, 4, 3, 2), 0, (), (1, 3)(2, 4)], [0, 0, (1,
 > 4, 3, 2), (1, 3)(2, 4), ()]]);;
-gap> mat := [[0, 0, (), (), ()], [0, (), (), (), (1, 3)(2, 4)], 
-> [0, (), (1, 4, 3, 2), (1, 2, 3, 4), (1, 3)(2, 4)], [(), (), 0, (1, 2, 3, 4),
-> (1, 2, 3, 4)], [(), (1, 2, 3, 4), (), (1, 3)(2, 4), 0]];;
-gap> CanonicalMatrix(S) = mat;
-true
-gap> mat = CanonicalMatrix(mat, Group((1, 2, 3, 4)));
+gap> mat := [[(), 0, 0, (), ()], [0, (), (), (1, 4, 3, 2), (1, 2, 3, 4)],
+> [(), (), (1, 2, 3, 4), (), 0], [(1, 3)(2, 4), 0, (), (), ()],
+> [(), 0, (1, 3)(2, 4), (1, 2, 3, 4), (1, 4, 3, 2)]];;
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
 true
 gap> T := CanonicalReesZeroMatrixSemigroup(S);;
 gap> mat = Matrix(T);
@@ -1050,39 +1048,33 @@ true
 gap> S := ReesZeroMatrixSemigroup(AlternatingGroup([1 .. 5]),
 > [[(), 0], [(1, 3, 4), (2, 4, 5)], [(1, 5, 2), (1, 5, 2, 4, 3)]]);;
 gap> mat := [[0, ()], [(), ()], [(), (1, 5, 4)]];;
-gap> CanonicalMatrix(S) = mat;
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
 true
 gap> T := CanonicalReesZeroMatrixSemigroup(S);;
 gap> mat = Matrix(T);
 true
 gap> UnderlyingSemigroup(S) = UnderlyingSemigroup(T);
 true
-
-# CanonicalMatrix and CanonicalReesMatrixSemigroup
-gap> S := ReesMatrixSemigroup(Group([(1, 2), (3, 4)]), 
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2), (3, 4)]), 
 > [[(), (), (3, 4), (), ()], [(), (3, 4), (), (3, 4), (1, 2)], [(), (1, 2), (3,
 > 4), (), ()], [(1, 2)(3, 4), (3, 4), (), (), ()], [(), (1, 2), (1, 2)(3, 4),
 > (), ()]]);;
-gap> mat := [[(), (), (), (), ()], [(), (), (), (), (1, 2)], 
-> [(), (), (), (1, 2), ()], [(), (), (3, 4), (3, 4), (1, 2)(3, 4)], [(), (3, 4),
-> (1, 2), (1, 2)(3, 4), (3, 4)]];;
-gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
+gap> mat := [[(), (), (), (), ()], [(), (), (), (), (1, 2)],
+> [(), (), (), (1, 2), ()], [(), (3, 4), (1, 2)(3, 4), (), (1, 2)],
+> [(), (), (3, 4), (1, 2)(3, 4), (3, 4)]];;
+gap> mat = Matrix(CanonicalReesZeroMatrixSemigroup(S));
 true
-gap> mat = CanonicalMatrix(S);
+gap> mat = ReesZeroMatrixSemigroupCanonicalLabelling(S);
 true
-gap> mat = CanonicalMatrix(mat, Group((1, 2), (3, 4)));
-true
-gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
+gap> S := ReesZeroMatrixSemigroup(AlternatingGroup([1 .. 5]),
 > [[(), (), (1, 5, 4, 2, 3)], [(1, 5, 4), (1, 3, 2, 5, 4), ()], [(), (), (1, 2,
 > 3, 4, 5)], [(), (), ()]]);;
 gap> mat :=
-> [[(), (), ()], [(), (), (1, 5)(2, 4)], [(), (), (1, 4, 5, 2, 3)], [(), 
-> (2, 4, 3), (1, 5, 4)]];;
-gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
+> [[(), (), ()], [(), (), (1, 4)(2, 5)], [(), (), (1, 3, 5, 4, 2)],
+> [(), (1, 3, 4), (1, 3, 5)]];;
+gap> mat = Matrix(CanonicalReesZeroMatrixSemigroup(S));
 true
-gap> mat = CanonicalMatrix(S);
-true
-gap> mat = CanonicalMatrix(mat, AlternatingGroup(5));
+gap> mat = ReesZeroMatrixSemigroupCanonicalLabelling(S);
 true
 
 # CanonicalX error messages
@@ -1091,33 +1083,14 @@ gap> mat := [[IdentityTransformation, IdentityTransformation,
 > IdentityTransformation], [IdentityTransformation, IdentityTransformation,
 > Transformation([2, 1])]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> CanonicalMatrix(mat, G);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `CanonicalMatrix' on 2 arguments
-gap> CanonicalMatrix(S);
-Error, Semigroups: CanonicalMatrix: usage,
+gap> ReesZeroMatrixSemigroupCanonicalLabelling(S);
+Error, Semigroups: ReesZeroMatrixSemigroupCanonicalLabelling: usage,
 the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
 ich is a group,
 gap> CanonicalReesZeroMatrixSemigroup(S);
-Error, Semigroups: CanonicalMatrix: usage,
+Error, Semigroups: CanonicalReesZeroMatrixSemigroup: usage,
 the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
 ich is a group,
-gap> S := ReesMatrixSemigroup(G, mat);;
-gap> CanonicalMatrix(S);
-Error, Semigroups: CanonicalMatrix: usage,
-the argument must be a Rees matrix semigroup with underlying semigroup which i\
-s a group,
-gap> CanonicalReesMatrixSemigroup(S);
-Error, Semigroups: CanonicalMatrix: usage,
-the argument must be a Rees matrix semigroup with underlying semigroup which i\
-s a group,
-gap> CanonicalMatrix([[(1, 2, 3)]], Group(()));
-Error, Semigroups: CanonicalMatrix: usage,
-the first argument must be a list of lists containing only elements of the gro\
-up (which is the second argument) or zero,
-gap> CanonicalMatrix([[(), ()], [(1, 2)]], Group((1, 2)));
-Error, Semigroups: CanonicalMatrix: usage,
-the first argument must be a list of lists of identical length,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);

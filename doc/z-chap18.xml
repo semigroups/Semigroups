@@ -51,7 +51,6 @@
     <#Include Label = "ImagesElm">
     <#Include Label = "ReesZeroMatrixSemigroupCanonicalLabelling">
     <#Include Label = "CanonicalReesZeroMatrixSemigroup">
-    <#Include Label = "OnReesZeroMatrixSemigroups">
 
     <!--********************************************************************-->
 

@@ -1418,75 +1418,8 @@ function(S)
   n    := Length(M[1]);
   setM := ZeroGroupMatrixToSet(M, m, n, G);
   GG   := RZMSMatrixIsomorphismGroup(m, n, G);
-  return ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(
-                                 SmallestImageSet(GG, setM), m, n, G));
-end);
-
-InstallMethod(OnReesZeroMatrixSemigroups,
-"for a Rees zero matrix semigroup and a perm",
-[IsReesZeroMatrixSemigroup, IsPerm],
-function(S, g)
-  local Flatten3DPoint, Unflatten3DPoint, SetToZeroGroupMatrix,
-  ZeroGroupMatrixToSet, G, M, m, n, setM;
-  Flatten3DPoint := function(dimensions, point)
-    return (point[1] - 1) * dimensions[2] * dimensions[3] +
-      (point[2] - 1) * dimensions[3] + (point[3] - 1) + 1;
-  end;
-
-  Unflatten3DPoint := function(dimensions, value)
-     local ret;
-     ret    := [];
-     value  := value - 1;
-     ret[3] := value mod dimensions[3] + 1;
-     value  := value - (ret[3] - 1);
-     value  := value / dimensions[3];
-     ret[2] := value mod dimensions[2] + 1;
-     value  := value - (ret[2] - 1);
-     ret[1] := value / dimensions[2] + 1;
-     return ret;
-  end;
-
-  SetToZeroGroupMatrix := function(set, nr_rows, nr_cols, G)
-    local 0G, mat, dim, point, x;
-    0G  := Concatenation([0], Enumerator(G));
-    mat := List([1 .. nr_rows], a -> EmptyPlist(nr_cols));
-    dim := [nr_rows, nr_cols, Size(G) + 1];
-    for x in set do
-      point                   := Unflatten3DPoint(dim, x);
-      mat[point[1]][point[2]] := 0G[point[3]];
-    od;
-    return mat;
-  end;
-
-  ZeroGroupMatrixToSet := function(mat, nr_rows, nr_cols, G)
-    local set, dim, i, j;
-    set := [];
-    dim := [nr_rows, nr_cols, Size(G) + 1];
-    for i in [1 .. nr_rows] do
-      for j in [1 .. nr_cols] do
-        if mat[i][j] = 0 then
-          Add(set, Flatten3DPoint(dim, [i, j, 1]));
-        else
-          Add(set,
-            Flatten3DPoint(dim, [i, j, 1 + Position(Enumerator(G),
-                                                               mat[i][j])]));
-        fi;
-      od;
-    od;
-    return set;
-  end;
-
-  G    := UnderlyingSemigroup(S);
-  if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: OnReesZeroMatrixSemigroups: usage,\n",
-                  "the first argument must be a Rees zero matrix semigroup ",
-                  "with underlying semigroup which is a group,");
-  fi;
-  M    := Matrix(S);
-  m    := Length(M);
-  n    := Length(M[1]);
-  setM := OnSets(ZeroGroupMatrixToSet(M, m, n, G), g);
-  return ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(setM, m, n, G));
+  return Matrix(ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(
+                CanonicalImage(GG, setM, OnSets), m, n, G)));
 end);
 
 InstallMethod(CanonicalReesZeroMatrixSemigroup,
