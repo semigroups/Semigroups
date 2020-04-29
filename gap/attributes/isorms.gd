@@ -40,7 +40,7 @@ DeclareAttribute("IsomorphismReesMatrixSemigroupOverPermGroup", IsSemigroup);
 DeclareAttribute("IsomorphismReesZeroMatrixSemigroupOverPermGroup",
                  IsSemigroup);
 
-DeclareAttribute("ReesZeroMatrixSemigroupCanonicalLabelling",
-                 IsReesZeroMatrixSemigroup);
 DeclareAttribute("CanonicalReesZeroMatrixSemigroup",
                  IsReesZeroMatrixSemigroup);
+DeclareAttribute("CanonicalReesMatrixSemigroup",
+                 IsReesMatrixSemigroup);

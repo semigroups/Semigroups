@@ -1276,8 +1276,8 @@ function(S)
            end);
 end);
 
-InstallMethod(ReesZeroMatrixSemigroupCanonicalLabelling,
-"for a Rees zero matrix semigroup and a perm",
+InstallMethod(CanonicalReesZeroMatrixSemigroup,
+"for a Rees zero matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(S)
   local Flatten3DPoint, Unflatten3DPoint, SetToZeroGroupMatrix,
@@ -1409,7 +1409,7 @@ function(S)
   M    := Matrix(S);
   G    := UnderlyingSemigroup(S);
   if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: ReesZeroMatrixSemigroupCanonicalLabelling: ",
+    ErrorNoReturn("Semigroups: CanonicalReesZeroMatrixSemigroup: ",
                   "usage,\n",
                   "the argument must be a Rees zero matrix semigroup with ",
                   "underlying semigroup which is a group,");
@@ -1418,21 +1418,22 @@ function(S)
   n    := Length(M[1]);
   setM := ZeroGroupMatrixToSet(M, m, n, G);
   GG   := RZMSMatrixIsomorphismGroup(m, n, G);
-  return Matrix(ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(
-                CanonicalImage(GG, setM, OnSets), m, n, G)));
+  return ReesZeroMatrixSemigroup(G, SetToZeroGroupMatrix(
+                                 CanonicalImage(GG, setM, OnSets), m, n, G));
 end);
 
-InstallMethod(CanonicalReesZeroMatrixSemigroup,
+InstallMethod(CanonicalReesMatrixSemigroup,
 "for a Rees zero matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+[IsReesMatrixSemigroup],
 function(S)
-  local G;
-  G := UnderlyingSemigroup(S);
+  local G, mat;
+  G   := UnderlyingSemigroup(S);
   if not IsGroup(G) then
-    ErrorNoReturn("Semigroups: CanonicalReesZeroMatrixSemigroup: usage,\n",
-                  "the argument must be a Rees zero matrix semigroup with ",
+    ErrorNoReturn("Semigroups: CanonicalReesMatrixSemigroup: usage,\n",
+                  "the argument must be a Rees matrix semigroup with ",
                   "underlying semigroup which is a group,");
   fi;
-  return ReesZeroMatrixSemigroup(G,
-    ReesZeroMatrixSemigroupCanonicalLabelling(S));
+  mat := Matrix(CanonicalReesZeroMatrixSemigroup(
+           ReesZeroMatrixSemigroup(G, Matrix(S))));
+  return ReesMatrixSemigroup(G, mat);
 end);

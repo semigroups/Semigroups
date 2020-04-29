@@ -966,7 +966,7 @@ true
 gap> BruteForceInverseCheck(iso);
 true
 
-# ReesZeroMatrixSemigroupCanonicalLabelling and CanonicalReesZeroMatrixSemigroup
+# CanonicalReesZeroMatrixSemigroup
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]),
 > [[(), (2, 3), (2, 3, 4)], [(1, 2)(3, 4), (), (1, 2, 4, 3)],
 > [(1, 4, 2), (1, 3)(2, 4), ()]]);;
@@ -975,9 +975,9 @@ gap> T := ReesZeroMatrixSemigroup(SymmetricGroup([1 .. 4]),
 > [(), (1, 3)(2, 4), (1, 3, 4, 2)]]);;
 gap> mat := [[(), (), ()], [(1, 4), (), (2, 4)],
 > [(), (1, 3), (1, 4, 3, 2)]];;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
+gap> Matrix(CanonicalReesZeroMatrixSemigroup(S)) = mat;
 true
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(T) = mat;
+gap> Matrix(CanonicalReesZeroMatrixSemigroup(T)) = mat;
 true
 gap> S := ReesZeroMatrixSemigroup(Group(
 > [(1, 2, 3), (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -1029,7 +1029,7 @@ gap> mat := [[0, (), (), ()],
 > 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40,
 > 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21,
 > 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5)]];;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
+gap> Matrix(CanonicalReesZeroMatrixSemigroup(S)) = mat;
 true
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), (1, 2, 3, 4), 
 > (1, 2, 3, 4), (1, 3)(2, 4), 0], [0, (), (1, 2, 3, 4), (), ()], [0, (), (), (1,
@@ -1038,7 +1038,7 @@ gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), (1, 2, 3, 4),
 gap> mat := [[(), 0, 0, (), ()], [0, (), (), (1, 4, 3, 2), (1, 2, 3, 4)],
 > [(), (), (1, 2, 3, 4), (), 0], [(1, 3)(2, 4), 0, (), (), ()],
 > [(), 0, (1, 3)(2, 4), (1, 2, 3, 4), (1, 4, 3, 2)]];;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
+gap> Matrix(CanonicalReesZeroMatrixSemigroup(S)) = mat;
 true
 gap> T := CanonicalReesZeroMatrixSemigroup(S);;
 gap> mat = Matrix(T);
@@ -1048,33 +1048,35 @@ true
 gap> S := ReesZeroMatrixSemigroup(AlternatingGroup([1 .. 5]),
 > [[(), 0], [(1, 3, 4), (2, 4, 5)], [(1, 5, 2), (1, 5, 2, 4, 3)]]);;
 gap> mat := [[0, ()], [(), ()], [(), (1, 5, 4)]];;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S) = mat;
+gap> Matrix(CanonicalReesZeroMatrixSemigroup(S)) = mat;
 true
 gap> T := CanonicalReesZeroMatrixSemigroup(S);;
 gap> mat = Matrix(T);
 true
 gap> UnderlyingSemigroup(S) = UnderlyingSemigroup(T);
 true
-gap> S := ReesZeroMatrixSemigroup(Group([(1, 2), (3, 4)]), 
+
+# CanonicalReesMatrixSemigroup
+gap> S := ReesMatrixSemigroup(Group([(1, 2), (3, 4)]), 
 > [[(), (), (3, 4), (), ()], [(), (3, 4), (), (3, 4), (1, 2)], [(), (1, 2), (3,
 > 4), (), ()], [(1, 2)(3, 4), (3, 4), (), (), ()], [(), (1, 2), (1, 2)(3, 4),
 > (), ()]]);;
 gap> mat := [[(), (), (), (), ()], [(), (), (), (), (1, 2)],
 > [(), (), (), (1, 2), ()], [(), (3, 4), (1, 2)(3, 4), (), (1, 2)],
 > [(), (), (3, 4), (1, 2)(3, 4), (3, 4)]];;
-gap> mat = Matrix(CanonicalReesZeroMatrixSemigroup(S));
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
 true
-gap> mat = ReesZeroMatrixSemigroupCanonicalLabelling(S);
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
 true
-gap> S := ReesZeroMatrixSemigroup(AlternatingGroup([1 .. 5]),
+gap> S := ReesMatrixSemigroup(AlternatingGroup([1 .. 5]),
 > [[(), (), (1, 5, 4, 2, 3)], [(1, 5, 4), (1, 3, 2, 5, 4), ()], [(), (), (1, 2,
 > 3, 4, 5)], [(), (), ()]]);;
 gap> mat :=
 > [[(), (), ()], [(), (), (1, 4)(2, 5)], [(), (), (1, 3, 5, 4, 2)],
 > [(), (1, 3, 4), (1, 3, 5)]];;
-gap> mat = Matrix(CanonicalReesZeroMatrixSemigroup(S));
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
 true
-gap> mat = ReesZeroMatrixSemigroupCanonicalLabelling(S);
+gap> mat = Matrix(CanonicalReesMatrixSemigroup(S));
 true
 
 # CanonicalX error messages
@@ -1083,14 +1085,15 @@ gap> mat := [[IdentityTransformation, IdentityTransformation,
 > IdentityTransformation], [IdentityTransformation, IdentityTransformation,
 > Transformation([2, 1])]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S);
-Error, Semigroups: ReesZeroMatrixSemigroupCanonicalLabelling: usage,
-the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
-ich is a group,
 gap> CanonicalReesZeroMatrixSemigroup(S);
 Error, Semigroups: CanonicalReesZeroMatrixSemigroup: usage,
 the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
 ich is a group,
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> CanonicalReesMatrixSemigroup(S);
+Error, Semigroups: CanonicalReesMatrixSemigroup: usage,
+the argument must be a Rees matrix semigroup with underlying semigroup which i\
+s a group,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);

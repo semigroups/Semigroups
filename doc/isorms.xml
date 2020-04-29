@@ -267,39 +267,6 @@ gap> ImagesElm(map, RMSElement(R, 1, (2, 8), 2));
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ReesZeroMatrixSemigroupCanonicalLabelling">
-  <ManSection>
-    <Attr Name = "ReesZeroMatrixSemigroupCanonicalLabelling"
-      Label = "for a Rees zero matrix semigroup" Arg = "S"/>
-    <Returns>
-      A matrix with entries from a group or 0.
-    </Returns>
-
-    <Description>
-      If <A>S</A> is a Rees zero matrix group then
-      <C>ReesZeroMatrixSemigroupCanonicalLabelling</C> returns a matrix <C>M</C>
-      with entries in <C>G</C> - the <Ref Attr="IsUnderlyingSemigroup"/>
-      of <A>S</A>, such that the Rees zero matrix semigroup defined by
-      <C>ReesZeroMatrixSemigroup(G, M)</C> is isomorphic to <A>S</A>. Furthermore
-      the output <C>M</C> is canonical in the sense that for any two inputs
-      which are isomorphic Rees zero matrix semigroups the output of this function
-      is the same. <P/>
-
-      <Example><![CDATA[
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
-> [[(), (1, 3, 2)], [(), ()]]);;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S);
-[ [ (), () ], [ (), (1,2,3) ] ]
-gap> T := ReesZeroMatrixSemigroup(SymmetricGroup(3),
-> [[(1, 2, 3), ()], [(), ()]]);;
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(T);
-[ [ (), () ], [ (), (1,2,3) ] ]
-gap> IsIsomorphicSemigroup(S, T);
-true]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="CanonicalReesZeroMatrixSemigroup">
   <ManSection>
     <Attr Name = "CanonicalReesZeroMatrixSemigroup" 
@@ -310,10 +277,17 @@ true]]></Example>
     </Returns>
 
     <Description>
-      This returns the Rees (zero) matrix semigroup <C>T</C> which has the same 
-      <Ref Attr="UnderlyingSemigroup"/> as <A>S</A> but the <Ref Attr="Matrix"/>
-      of <C>T</C> is the <Ref Filt="ReesZeroMatrixSemigroupCanonicalLabelling"/>
-      of <A>S</A>.
+      If <A>S</A> is a Rees 0-matrix semigroup then 
+      <C>CanonicalReesZeroMatrixSemigroup</C> returns an isomorphic Rees
+      0-matrix semigroup <C>T</C> with the same
+      <Ref Attr="IsUnderlyingSemigroup"/> as <A>S</A> but the
+      <Ref Attr="Matrix"/> of <C>T</C> has been canonicalized. The output
+      <C>T</C> is canonical in the sense that for any two inputs
+      which are isomorphic Rees zero matrix semigroups the output of this
+      function is the same.<P/>
+      CanonicalReesMatrixSemigroup works the same but for Rees matrix
+      semigroups.
+
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(), ()]]);;
@@ -322,8 +296,6 @@ gap> T := CanonicalReesZeroMatrixSemigroup(S);
 gap> Matrix(S);
 [ [ (), (1,3,2) ], [ (), () ] ]
 gap> Matrix(T);
-[ [ (), () ], [ (), (1,2,3) ] ]
-gap> ReesZeroMatrixSemigroupCanonicalLabelling(S);
 [ [ (), () ], [ (), (1,2,3) ] ]]]></Example>
     </Description>
   </ManSection>
