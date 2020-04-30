@@ -24,7 +24,7 @@
 
 #include "pkg.h"
 #include "semigroups-debug.h"
-#include "src/compiled.h"
+#include "compiled.h"
 
 #include "libsemigroups/uf.hpp"
 

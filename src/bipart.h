@@ -20,7 +20,7 @@
 #define SEMIGROUPS_SRC_BIPART_H_
 
 // GAP headers
-#include "src/compiled.h"
+#include "compiled.h"
 
 // Semigroups pkg headers
 #include "pkg.h"

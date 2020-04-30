@@ -21,7 +21,7 @@
 #ifndef SEMIGROUPS_SRC_SEMIGRP_H_
 #define SEMIGROUPS_SRC_SEMIGRP_H_
 
-#include "src/compiled.h"  // GAP headers
+#include "compiled.h"  // GAP headers
 
 #include "libsemigroups/froidure-pin.hpp"
 

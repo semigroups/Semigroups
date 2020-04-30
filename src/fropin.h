@@ -20,7 +20,7 @@
 #define SEMIGROUPS_SRC_FROPIN_H_
 
 #include "pkg.h"
-#include "src/compiled.h"
+#include "compiled.h"
 
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 

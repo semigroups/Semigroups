@@ -24,7 +24,7 @@
 #define SEMIGROUPS_SRC_UF_H_
 
 #include "pkg.h"
-#include "src/compiled.h"
+#include "compiled.h"
 
 // GAP level functions
 

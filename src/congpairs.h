@@ -31,7 +31,7 @@
 
 #include <cstddef>
 
-#include "src/compiled.h"
+#include "compiled.h"
 
 // GAP level functions
 

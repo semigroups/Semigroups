@@ -34,7 +34,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "src/compiled.h"
+#include "compiled.h"
 
 #include "pkg.h"
 #include "semigroups-debug.h"
