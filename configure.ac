@@ -51,7 +51,7 @@ LT_INIT([disable-static dlopen win32-dll])
 dnl ##
 dnl ## Locate the GAP root dir
 dnl ##
-AC_FIND_GAP
+FIND_GAP
 
 dnl ##
 dnl ## Check for pthread, this seems to be required to compile with GCC
