@@ -28,7 +28,7 @@
 #include "fropin.h"
 #include "libsemigroups/froidure-pin-base.hpp"
 #include "pkg.h"
-#include "src/compiled.h"
+#include "compiled.h"
 
 using libsemigroups::Integers;
 using libsemigroups::LIMIT_MAX;

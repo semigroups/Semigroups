@@ -21,7 +21,7 @@
 #ifndef SEMIGROUPS_SRC_RNAMS_H_
 #define SEMIGROUPS_SRC_RNAMS_H_
 
-#include "src/compiled.h"  // GAP headers
+#include "compiled.h"  // GAP headers
 
 static Int RNam_batch_size        = 0;
 static Int RNam_cong              = 0;

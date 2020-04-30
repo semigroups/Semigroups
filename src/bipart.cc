@@ -28,7 +28,7 @@
 #include <utility>
 #include <vector>
 
-#include "src/compiled.h"
+#include "compiled.h"
 
 #include "libsemigroups/blocks.hpp"
 #include "libsemigroups/froidure-pin.hpp"

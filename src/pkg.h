@@ -43,7 +43,7 @@
 #include <iostream>
 #include <vector>
 
-#include "src/compiled.h"
+#include "compiled.h"
 
 #include "rnams.h"
 #include "semigroups-debug.h"
