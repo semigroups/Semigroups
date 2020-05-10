@@ -642,13 +642,7 @@ gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
 true
-gap> map := InverseGeneralMapping(map);
-InverseGeneralMapping( CompositionMapping( MappingByFunction( 
-<Rees matrix semigroup 1x1 over Group([ (1,2) ])>, 
-<Rees matrix semigroup 1x1 over <pc group of size 2 with 1 generators>>
- , function( x ) ... end, function( x ) ... end ),
- ((), GroupHomomorphismByImages( SymmetricGroup( [ 1 .. 2 ] ), Group( 
-[ (1,2) ] ), [ (1,2) ], [ (1,2) ] ), [ (), () ]) ) )
+gap> map := InverseGeneralMapping(map);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -875,12 +869,9 @@ gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
 true
-gap> G := CyclicGroup(IsPcGroup, 5);
-<pc group of size 5 with 1 generators>
-gap> R := ReesZeroMatrixSemigroup(G, [[One(G), 0], [One(G), One(G)]]);
-<Rees 0-matrix semigroup 2x2 over <pc group of size 5 with 1 generators>>
-gap> S := ReesZeroMatrixSemigroup(G, [[One(G), One(G)], [0, One(G)]]);
-<Rees 0-matrix semigroup 2x2 over <pc group of size 5 with 1 generators>>
+gap> G := CyclicGroup(IsPcGroup, 5);;
+gap> R := ReesZeroMatrixSemigroup(G, [[One(G), 0], [One(G), One(G)]]);;
+gap> S := ReesZeroMatrixSemigroup(G, [[One(G), One(G)], [0, One(G)]]);;
 gap> map := IsomorphismSemigroups(R, S);;
 gap> BruteForceIsoCheck(map);
 true
