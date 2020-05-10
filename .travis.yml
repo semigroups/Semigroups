@@ -11,9 +11,8 @@ compiler:
   gcc
 
 branches:
-  only:
-  - master
-  - /^stable-\d+\.\d+/
+  except:
+    - /^rc-v\d+\.\d+\.\d+/
 
 #   GAP version: |       master | stb-4.11 | stb-4.10 | stb-4.9 | required |
 # ---------------+--------------+----------+----------+---------+----------+
