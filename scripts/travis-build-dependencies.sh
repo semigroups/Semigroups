@@ -57,8 +57,8 @@ fi
 CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L"
 
 ################################################################################
-# Install digraphs, genss, io, orb, and profiling
-PKGS=( "digraphs" "genss" "io" "orb" )
+# Install digraphs, genss, io, orb, images, and profiling
+PKGS=( "digraphs" "genss" "io" "orb" "images")
 if [ "$SUITE"  == "coverage" ]; then
   PKGS+=( "profiling" )
 fi
@@ -74,6 +74,11 @@ for PKG in "${PKGS[@]}"; do
     VERSION=`$CURL -s "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
   else
     VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+  fi
+
+  if [ -z $VERSION ]; then
+    echo -e "\nCould not determine the version number of the package $PKG!! Aborting..."
+    exit 1
   fi
 
   URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"

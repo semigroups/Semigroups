@@ -3,6 +3,14 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.3.0 (released 28/04/2020)
+
+This is a minor release fixing some issues in the build system 
+[Chris Jefferson][], some improvements to the isomorphism capabilities of the
+package [James D. Mitchell][], and the introduction of a rudimentary function
+to compute the automorphism group of an arbitrary semigroup. From v3.3.0, the 
+Semigroups package requires the [images package][] version 1.3.0 or higher. 
+
 ### Version 3.2.5 (released 28/03/2020)
 
 This is a minor release to fixing some build issues for windows [Chris Jefferson][]
@@ -1259,3 +1267,5 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [orb package]: https://gap-packages.github.io/orb
 [orb]: https://gap-packages.github.io/orb
 [Bitbucket issue tracker]: http://bitbucket.org/james-d-mitchell/semigroups/issues
+[images package]: https://gap-packages.github.io/images
+

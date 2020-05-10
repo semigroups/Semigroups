@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups", "gap/smallestimage.g");
-
 ReadPackage("semigroups", "gap/hash.gi");
 
 ReadPackage("semigroups", "gap/elements/star.gi");

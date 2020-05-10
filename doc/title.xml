@@ -81,8 +81,11 @@
     semigroups.
     <P/>
 
-    Max Horn contributed many patches and fixes to the kernel module, in
-    particular. 
+    Max Horn contributed many patches and fixes, in particular, to the kernel
+    module.
+    <P/>
+      
+    Chris Jefferson contributed several patches and fixes to the build system.
     <P/>
 
     Julius Jonu&#353;as contributed the part of the package relating to free

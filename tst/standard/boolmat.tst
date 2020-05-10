@@ -589,6 +589,26 @@ gap> Union2(AsList(S.2)[1], AsList(S.2)[2]);;
 gap> Size(S);
 2
 
+# IsTransformationBooleanMat
+gap> x := Transformation([10, 8, 4, 6, 4, 5, 3, 8, 8, 2]);
+Transformation( [ 10, 8, 4, 6, 4, 5, 3, 8, 8, 2 ] )
+gap> y := AsBooleanMat(x);
+<10x10 boolean matrix>
+gap> IsTransformationBooleanMat(y);
+true
+gap> AsTransformation(y) = x;
+true
+gap> z := Matrix(IsBooleanMat,
+>           [[1, 1, 1, 1], 
+>            [1, 1, 1, 1], 
+>            [0, 1, 0, 1], 
+>            [1, 1, 0, 1]]);
+Matrix(IsBooleanMat, [[1, 1, 1, 1], [1, 1, 1, 1], [0, 1, 0, 1], [1, 1, 0, 1]])
+gap> IsTransformationBooleanMat(z);
+false
+gap> AsTransformation(z);
+fail
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(blist);

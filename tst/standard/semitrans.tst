@@ -2776,6 +2776,19 @@ true
 gap> Transformation([2, 1, 4, 3, 6, 5, 6, 5, 7, 8]) in WW;
 false
 
+# DigraphCore
+gap> D := CompleteBipartiteDigraph(4, 4);
+<immutable complete bipartite digraph with bicomponent sizes 4 and 4>
+gap> GeneratorsOfEndomorphismMonoid(D);;
+gap> IsIsomorphicDigraph(CompleteDigraph(2),
+>    InducedSubdigraph(D, DigraphCore(D)));
+true
+gap> D := CycleDigraph(10);
+<immutable cycle digraph with 10 vertices>
+gap> GeneratorsOfEndomorphismMonoid(D);;
+gap> DigraphCore(D);
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(BruteForceInverseCheck);

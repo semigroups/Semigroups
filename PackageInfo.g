@@ -9,13 +9,14 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.2.5">
+##  <!ENTITY VERSION "3.3.0">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "1.0.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.2.5">
+##  <!ENTITY IMAGESVERS "1.3.0">
+##  <!ENTITY ARCHIVENAME "semigroups-3.3.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-20">
 ##  <#/GAPDoc>
 
@@ -47,8 +48,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.2.5",
-Date := "28/03/2020",  # dd/mm/yyyy format
+Version := "3.3.0",
+Date := "28/04/2020",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -145,6 +146,16 @@ Persons := [
                        "Germany"),
     Place         := "Kaiserslautern, Germany",
     Institution   := "TU Kaiserslautern"),
+
+  rec(
+    LastName      := "Jefferson",
+    FirstNames    := "Christopher",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "caj21@st-andrews.ac.uk",
+    WWWHome       := "http://caj.host.cs.st-andrews.ac.uk/",
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
 
   rec(
     LastName      := "Jonusas",
@@ -293,7 +304,8 @@ Dependencies := rec(
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
                           ["digraphs", ">=1.0.0"],
-                          ["genss", ">=1.6.5"]],
+                          ["genss", ">=1.6.5"],
+                          ["images", ">=1.3.0"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 
   ExternalConditions := []),

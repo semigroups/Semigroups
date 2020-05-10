@@ -23,7 +23,7 @@ AC_CANONICAL_HOST
 dnl ##
 dnl ## Setup automake
 dnl ##
-AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
+AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects nostdinc])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
 

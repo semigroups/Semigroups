@@ -71,7 +71,8 @@ Before asking us to merge your code please ensure that:
   name should have the prefix `SEMIGROUPS_` or it should have the suffix `NC`.
   If a function or method is for use in one file only, then it should be
   assigned using `BindGlobal` in that file. 
-* there should be no non-global functions
+* functions should only be assigned using the `foo := function()` syntax if they
+  are local variables inside another function; all other functions should be global.
 * error messages should be in the following format: 
   `ErrorNoReturn("Semigroups: NameOfWhateverContainingError: \n", 
                  "something went wrong");`
