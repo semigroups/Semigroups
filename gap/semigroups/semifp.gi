@@ -636,3 +636,162 @@ function(M)
 
   return MagmaIsomorphismByFunctionsNC(M, MF, map, inv);
 end);
+
+InstallMethod(ParseRelations,
+"for a list of free generators and a string",
+[IsDenseList, IsString],
+function(gens, inputstring)
+    local newinputstring, g, chartoel, RemoveBrackets, ParseRelation, output;
+
+    if IsSemigroup( gens ) then
+        gens := GeneratorsOfGroup( gens );
+    fi;
+
+    if ForAny(gens, x -> not Size(String(x)) = 1) then
+        ErrorNoReturn("multicharacter generators are not accepted");
+    fi;
+
+    if ForAny(gens, x -> String(x) in ["^", "(", ")", " ", ","]) then
+        ErrorNoReturn("the characters ^() , are not accepted as generators");
+    fi;
+
+    newinputstring := Filtered(inputstring, x -> not x = ' ');
+
+    for g in gens do
+      newinputstring := ReplacedString(newinputstring,
+                        [String(g)[1], '^'], ['(', String(g)[1], ')', '^']);
+    od;
+
+    RemoveBrackets := function(word)
+        local i, product, lbracket, rbracket, nestcount, index, chartoel,
+              baseposition;
+
+        if word = "" then
+            return ErrorNoReturn("empty product is not accepted");
+        fi;
+
+        #if the number of left brackets is different from the number of right
+        #brackets they can't possibly pair up
+        if not Size(Filtered(word, x -> x = '(')) =
+               Size(Filtered(word, x -> x = ')')) then
+            ErrorNoReturn("invalid bracket structure");
+        fi;
+
+        #if the ^ is at the end of the string there is no exponent.
+        #if the ^ is at the start of the string there is no base.
+        if word[1] = '^' or word[Size(word)] = '^' then
+            ErrorNoReturn("invalid power structure");
+        fi;
+        #checks that all ^s have an exponent.
+        for index in [1 .. Size(word)] do
+            if word[index] = '^' then
+                if not word[index + 1] in "0123456789" then
+                    ErrorNoReturn("invalid power structure");
+                fi;
+                if word[index - 1] in "0123456789^" then
+                    ErrorNoReturn("invalid power structure");
+                fi;
+            fi;
+        od;
+
+        #converts a character to the element it represents
+        chartoel := function(char)
+            local i;
+            for i in [1 .. Size(gens)] do
+                if String(gens[i])[1] = char then
+                    return gens[i];
+                fi;
+            od;
+            ErrorNoReturn("unassigned character");
+        end;
+
+        #i acts as a pointer to positions in the string.
+        product := "";
+        i := 1;
+        while i <= Size(word) do
+            #if there are no brackets the character is left as it is.
+            if not word[i] = '(' then
+                if product = "" then
+                  product := chartoel(word[i]);
+                else
+                  product := product * chartoel(word[i]);
+                fi;
+            else
+                lbracket := i;
+                rbracket := -1;
+                #tracks how 'deep' the position of i is in terms of nested
+                #brackets
+                nestcount := 0;
+                i := i + 1;
+                while i <= Size(word) do
+                    if word[i] = '(' then
+                        nestcount := nestcount + 1;
+                    elif word[i] = ')' then
+                        if nestcount = 0 then
+                            rbracket := i;
+                            break;
+                        else
+                            nestcount := nestcount - 1;
+                        fi;
+                    fi;
+                    i := i+1;
+                od;
+                #as i is always positive, if rbracket is -1 that means that
+                #the found left bracket has no corresponding right bracket.
+                #note: if this never occurs then every left bracket has a
+                #corresponding right bracket and as the number of each bracket
+                #is equal every right bracket has a corresponding left bracket
+                #and the bracket structure is valid.
+                if rbracket = -1 then
+                    ErrorNoReturn("invalid bracket structure");
+                fi;
+                #if rbracket is not followed by ^ then the value inside the
+                #bracket is appended (recursion is used to remove any brackets
+                #in this value)
+                if rbracket = Size(word) or (not word[rbracket + 1] = '^') then
+                    if product = "" then
+                      product := RemoveBrackets(word{[lbracket + 1 .. rbracket - 1]});
+                    else
+                      product := product *
+                                 RemoveBrackets(word{[lbracket + 1 .. rbracket - 1]});
+                    fi;
+                #if rbracket is followed by ^ then the value inside the
+                #bracket is appended the given number of times
+                else
+                    i := i + 2;
+                    while i <= Size(word) do
+                        if word[i] in "0123456789" then
+                            i := i + 1;
+                        else
+                            break;
+                        fi;
+                    od;
+                    if product = "" then
+                       product := RemoveBrackets(word{[lbracket + 1 ..
+                                                       rbracket - 1]}) ^
+                                  Int(word{[rbracket + 2 .. i - 1]});
+                    else
+                       product := product *
+                                  RemoveBrackets(word{[lbracket + 1 ..
+                                                       rbracket - 1]}) ^
+                                  Int(word{[rbracket + 2 .. i - 1]});
+                    fi;
+                    i := i - 1;
+                fi;
+            fi;
+            i := i + 1;
+        od;
+        return product;
+    end;
+
+    ParseRelation := x-> List(SplitString(x, "="), RemoveBrackets);
+
+    output := List(SplitString(newinputstring, ","), ParseRelation);
+
+    output := Filtered(output, x -> Size(x) >= 2);
+
+    output := List(output, x -> List([1 .. Size(x) - 1], y -> [x[y], x[y+1]]));
+
+    return Concatenation(output);
+end);
+

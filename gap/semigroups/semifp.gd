@@ -7,4 +7,5 @@
 ##
 #############################################################################
 ##
+DeclareOperation("ParseRelations", [IsDenseList, IsString]);
 
