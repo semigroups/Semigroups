@@ -228,12 +228,13 @@ false
 gap> class1 = class2;
 false
 gap> enum := Enumerator(class1);;
-gap> enum[3];
-m2^2
-gap> enum[11];
-m1*(m1*m2)^2*m1^3
-gap> Position(enum, M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3);
-11
+gap> M.2 ^ 2 in enum;
+true
+gap> M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3 in enum;
+true
+gap> enum[Position(enum, M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3)]
+> = M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3;
+true
 gap> Size(enum);
 11
 
