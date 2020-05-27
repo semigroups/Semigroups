@@ -280,7 +280,7 @@
   <Section>
 
     <Heading>
-      The Nambooripad Partial Order of a regular semigroup
+      The Nambooripad partial order of a regular semigroup
     </Heading>
 
     <#Include Label = "NambooripadLeqRegularSemigroup">
