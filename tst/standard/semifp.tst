@@ -2134,6 +2134,18 @@ true
 gap> EvaluateExtRepObjWord(Generators(F), []);
 <identity ...>
 
+# Test ParseRelations
+gap> f := FreeSemigroup("x", "y", "e");                 
+<free semigroup on the generators [ x, y, e ]>
+gap> ParseRelations(GeneratorsOfSemigroup(f), "ex=x=xe, ey=y=ye, xy = e");
+[ [ e*x, x ], [ x, x*e ], [ e*y, y ], [ y, y*e ], [ x*y, e ] ]
+gap> f := FreeSemigroup("x", "y", "a", "b", "@");                              
+<free semigroup on the generators [ x, y, a, b, @ ]>
+gap> ParseRelations(GeneratorsOfSemigroup(f), ",x=@^3(yx^2)=a,b(a@)^3x=@@@@");
+[ [ x, @^3*y*x^2 ], [ @^3*y*x^2, a ], [ b*(a*@)^3*x, @^4 ] ]
+gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
+[ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
