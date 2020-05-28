@@ -1900,7 +1900,7 @@
   [4X[32X[104X
   
   
-  [1X14.16 [33X[0;0YThe Nambooripad Partial Order of a regular semigroup[133X[101X
+  [1X14.16 [33X[0;0YThe Nambooripad partial order of a regular semigroup[133X[101X
   
   [1X14.16-1 NambooripadLeqRegularSemigroup[101X
   

@@ -3,6 +3,12 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.3.1 (released 28/05/2020)
+
+This is a minor release fixing some issues in the build system [Max Horn][]
+related to compatibility with future versions of GAP, and some other minor
+fixes by [James D. Mitchell][] and [Wilf A. Wilson][].
+
 ### Version 3.3.0 (released 28/04/2020)
 
 This is a minor release fixing some issues in the build system 

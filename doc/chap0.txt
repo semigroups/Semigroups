@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.3.0
+                                 Version 3.3.1
   
   
                                  J. D. Mitchell
@@ -534,7 +534,7 @@
       14.14-2 RZMSConnectedComponents
     14.15 [33X[0;0YChanging the representation of a semigroup[133X
       14.15-1 IsomorphismReesMatrixSemigroup
-    14.16 [33X[0;0YThe Nambooripad Partial Order of a regular semigroup[133X
+    14.16 [33X[0;0YThe Nambooripad partial order of a regular semigroup[133X
       14.16-1 NambooripadLeqRegularSemigroup
       14.16-2 NambooripadPartialOrder
   15 [33X[0;0YProperties of semigroups[133X
