@@ -805,3 +805,93 @@ for _IsXSemigroup in ["IsTransformationSemigroup",
   end);
 od;
 Unbind(_IsXSemigroup);
+
+InstallMethod(StrongSemilatticeOfSemigroups,
+"for a digraph, a list, and a list",
+[IsDigraph, IsList, IsList],
+function(D, semigroups, homomorphisms)
+  local efam, etype, type, out;
+
+  # TODO check that the arguments are valid
+  efam := NewFamily("StrongSemilatticeOfSemigroupsElementsFamily", IsSSSE);
+  etype := NewType(efam, IsSSSERep);
+
+  type := NewType(CollectionsFamily(efam),
+                  IsStrongSemilatticeOfSemigroups
+                    and IsComponentObjectRep
+                    and IsAttributeStoringRep);
+
+  out := rec();
+  ObjectifyWithAttributes(out,
+                          type,
+                          SemilatticeOfStrongSemilatticeOfSemigroups,
+                          DigraphReflexiveTransitiveClosure(D),
+                          SemigroupsOfStrongSemilatticeOfSemigroups,
+                          semigroups,
+                          HomomorphismsOfStrongSemilatticeOfSemigroups,
+                          homomorphisms,
+                          ElementTypeOfStrongSemilatticeOfSemigroups,
+                          etype);
+  return out;
+end);
+
+InstallMethod(GeneratorsOfMagma, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  local T, gens, i;
+  T := SemigroupsOfStrongSemilatticeOfSemigroups(S);
+  gens := [];
+  for i in [1 .. Length(T)] do
+    Append(gens, List(GeneratorsOfSemigroup(T[i]), x -> SSSE(S, i, x)));
+  od;
+  return gens;
+end);
+
+InstallMethod(Size, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
+end);
+
+InstallMethod(ViewString, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  return StringFormatted("<strong semilattice of {} semigroups>",
+                         Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
+end);
+
+InstallMethod(SSSE,
+"for a strong semilattice of semigroups, a pos int, and an associative elt",
+[IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
+function(S, n, x)
+  # TODO check that the args make sense
+  return Objectify(ElementTypeOfStrongSemilatticeOfSemigroups(S), [S, n, x]);
+end);
+
+# TODO implement \=, \< for IsSSSREP
+
+InstallMethod(\*, "for SSSEs", IsIdenticalObj,
+[IsSSSERep, IsSSSERep],
+function(x, y)
+  local D, meet, maps;
+  D    := SemilatticeOfStrongSemilatticeOfSemigroups(x![1]);
+  meet := PartialOrderDigraphMeetOfVertices(D, x![2], y![2]);
+  maps := HomomorphismsOfStrongSemilatticeOfSemigroups(x![1]);
+  # TODO should compose functions if necessary!
+  # TODO check if x and y belong to the same semigroup, or if x < y.
+  return SSSE(x![1],
+              meet,
+              maps[x![2]][meet](x![3]) * maps[y![2]][meet](y![3]));
+end);
+
+InstallMethod(ViewString, "for a SSSE",
+[IsSSSERep],
+function(x)
+  return Concatenation("SSSE(", ViewString(x![2]), ", ", ViewString(x![3]), ")");
+end);
+
+# InstallMethod(StrongSemilatticeOfSemigroups, "for a SSSE rep",
+# [IsSSSERep],
+# function(x)
+#   return x![1];
+# end);
