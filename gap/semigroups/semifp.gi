@@ -643,48 +643,55 @@ InstallMethod(ParseRelations,
 function(gens, inputstring)
     local newinputstring, g, chartoel, RemoveBrackets, ParseRelation, output;
 
-    if ForAny(gens, x -> not Size(String(x)) = 1) then
-        ErrorNoReturn("multicharacter generators are not accepted");
-    fi;
-
-    if ForAny(gens, x -> String(x) in ["^", "(", ")", " ", ","]) then
-        ErrorNoReturn("the characters ^() , are not accepted as generators");
-    fi;
+    for g in gens do
+      if not (Size(String(g)) = 1 and String(g)[1]
+         in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") then
+        ErrorNoReturn(Concatenation(
+        "expected a single english letter but found ", String(g)));
+      fi;
+    od;
 
     newinputstring := Filtered(inputstring, x -> not x = ' ');
-
     for g in gens do
       newinputstring := ReplacedString(newinputstring,
                         [String(g)[1], '^'], ['(', String(g)[1], ')', '^']);
     od;
 
     RemoveBrackets := function(word)
-        local i, product, lbracket, rbracket, nestcount, index, chartoel;
-
+        local i, product, lbracket, rbracket, nestcount, index, p, chartoel;
         if word = "" then
-            return ErrorNoReturn("empty product is not accepted");
+            ErrorNoReturn(Concatenation("expected a product of free",
+                          " generators but found an empty string"));
         fi;
 
         # if the number of left brackets is different from the number of right
         # brackets they can't possibly pair up
         if not Size(Filtered(word, x -> x = '(')) =
                Size(Filtered(word, x -> x = ')')) then
-            ErrorNoReturn("invalid bracket structure");
+            ErrorNoReturn(Concatenation("expected the number of open brackets",
+                          "to match the number of closed brackets"));
         fi;
 
         # if the ^ is at the end of the string there is no exponent.
         # if the ^ is at the start of the string there is no base.
-        if word[1] = '^' or word[Size(word)] = '^' then
-            ErrorNoReturn("invalid power structure");
+        if word[1] = '^' then
+            ErrorNoReturn(Concatenation("expected ^ to be preceded by a ) or",
+                          " a generator but found begining of string"));
+        elif word[Size(word)] = '^' then
+            ErrorNoReturn(Concatenation("expected ^ to be followed by a ",
+                          "positive integer but found end of string"));
         fi;
         # checks that all ^s have an exponent.
         for index in [1 .. Size(word)] do
             if word[index] = '^' then
                 if not word[index + 1] in "0123456789" then
-                    ErrorNoReturn("invalid power structure");
+                  ErrorNoReturn(Concatenation("expected ^ to be followed by",
+                  " a positive integer but found ", [word[index + 1]]));
                 fi;
-                if word[index - 1] in "0123456789^" then
-                    ErrorNoReturn("invalid power structure");
+                if word[index - 1] in "0123456789^(" then
+                  ErrorNoReturn(Concatenation(
+                  "expected ^ to be preceded by a ) or a generator",
+                  " but found ", [word[index - 1]]));
                 fi;
             fi;
         od;
@@ -697,7 +704,8 @@ function(gens, inputstring)
                     return gens[i];
                 fi;
             od;
-            ErrorNoReturn("unassigned character");
+            ErrorNoReturn(Concatenation("expected a free semigroup generator",
+                          " but found ", [char]));
         end;
 
         # i acts as a pointer to positions in the string.
@@ -738,7 +746,7 @@ function(gens, inputstring)
                 # is equal every right bracket has a corresponding left bracket
                 # and the bracket structure is valid.
                 if rbracket = -1 then
-                    ErrorNoReturn("invalid bracket structure");
+                    ErrorNoReturn("expected each ( to correspond to a )");
                 fi;
                 # if rbracket is not followed by ^ then the value inside the
                 # bracket is appended (recursion is used to remove any brackets
@@ -763,15 +771,19 @@ function(gens, inputstring)
                             break;
                         fi;
                     od;
+
+                    p := Int(word{[rbracket + 2 .. i - 1]});
+                    if p = 0 then
+                      ErrorNoReturn(Concatenation("expected ^ to be followed",
+                      " by a positive integer but found 0"));
+                    fi;
                     if product = "" then
                        product := RemoveBrackets(word{[lbracket + 1 ..
-                                                       rbracket - 1]}) ^
-                                  Int(word{[rbracket + 2 .. i - 1]});
+                                                       rbracket - 1]}) ^ p;
                     else
                        product := product *
                                   RemoveBrackets(word{[lbracket + 1 ..
-                                                       rbracket - 1]}) ^
-                                  Int(word{[rbracket + 2 .. i - 1]});
+                                                       rbracket - 1]}) ^ p;
                     fi;
                     i := i - 1;
                 fi;
@@ -782,14 +794,14 @@ function(gens, inputstring)
     end;
 
     ParseRelation := x -> List(SplitString(x, "="), RemoveBrackets);
-
     output := List(SplitString(newinputstring, ","), ParseRelation);
-
+    if ForAny(output, x -> Size(x) = 1) then
+      ErrorNoReturn(Concatenation("expected a product of free",
+                          " generators but found an empty string"));
+    fi;
     output := Filtered(output, x -> Size(x) >= 2);
-
     output := List(output,
                    x -> List([1 .. Size(x) - 1], y -> [x[y], x[y + 1]]));
-
     return Concatenation(output);
 end);
 

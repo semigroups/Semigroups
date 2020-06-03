@@ -2139,10 +2139,10 @@ gap> f := FreeSemigroup("x", "y", "e");
 <free semigroup on the generators [ x, y, e ]>
 gap> ParseRelations(GeneratorsOfSemigroup(f), "ex=x=xe, ey=y=ye, xy = e");
 [ [ e*x, x ], [ x, x*e ], [ e*y, y ], [ y, y*e ], [ x*y, e ] ]
-gap> f := FreeSemigroup("x", "y", "a", "b", "@");                              
-<free semigroup on the generators [ x, y, a, b, @ ]>
-gap> ParseRelations(GeneratorsOfSemigroup(f), ",x=@^3(yx^2)=a,b(a@)^3x=@@@@");
-[ [ x, @^3*y*x^2 ], [ @^3*y*x^2, a ], [ b*(a*@)^3*x, @^4 ] ]
+gap> f := FreeSemigroup("x", "y", "a", "b", "X");                              
+<free semigroup on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfSemigroup(f), ",x=X^3(yx^2)=a,b(aX)^3x=XXXX");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ] ]
 gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
 [ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
 
