@@ -836,7 +836,7 @@ function(D, semigroups, homomorphisms)
                     "equal to OutNeighbours(D)[i]");
     fi;
     for s in homomorphisms[i] do
-      if not IsMapping(s) then
+      if Length(homomorphisms[i]) > 0 and not IsMapping(s) then
         ErrorNoReturn("expected a list of lists of mappings as third argument");
       fi;
     od;
