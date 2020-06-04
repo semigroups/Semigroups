@@ -810,9 +810,39 @@ InstallMethod(StrongSemilatticeOfSemigroups,
 "for a digraph, a list, and a list",
 [IsDigraph, IsList, IsList],
 function(D, semigroups, homomorphisms)
-  local efam, etype, type, out;
-
-  # TODO check that the arguments are valid
+  local efam, etype, type, out, s, i;
+  if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
+    ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
+                  "is a meet semilattice digraph as first argument");
+    for s in semigroups do
+      if not IsSemigroup(s) then
+        ErrorNoReturn("expected a list of semigroups as second argument");
+      fi;
+    od;
+  elif DigraphNrVertices(D) <> Length(semigroups) then
+    ErrorNoReturn("the number of vertices of the first argumement D must ",
+                  "be equal to the length of the second argument semigroups");
+  elif DigraphNrVertices(D) <> Length(homomorphisms) then
+    ErrorNoReturn("where D is the first argument, expected a list of length ",
+                  "DigraphNrVertices(D) as third argument");
+  fi;
+  for i in [1 .. DigraphNrVertices(D)] do
+    if not IsList(homomorphisms[i]) then
+      ErrorNoReturn("expected a list of lists as third argument");
+    fi;
+    if Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
+      ErrorNoReturn("where D and homomorphisms are the 1st and 3rd arguments ",
+                    "respectively, the length of homomorphisms[i] must be ",
+                    "equal to OutNeighbours(D)[i]");
+    fi;
+    for s in homomorphisms[i] do
+      if not IsMapping(s) then
+        ErrorNoReturn("expected a list of lists of mappings as third argument");
+      fi;
+    od;
+  od;
+  # I think this works for now as argument checking: we can update this when we
+  # figure out more specifics of what we want the arguments to be
   efam := NewFamily("StrongSemilatticeOfSemigroupsElementsFamily", IsSSSE);
   etype := NewType(efam, IsSSSERep);
 
@@ -864,7 +894,15 @@ InstallMethod(SSSE,
 "for a strong semilattice of semigroups, a pos int, and an associative elt",
 [IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
 function(S, n, x)
-  # TODO check that the args make sense
+  if n > Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)) then
+    ErrorNoReturn("where S and n are the 1st and 2nd arguments respectively, ",
+                  "expected n to be an integer between 1 and ",
+                  "Size(SemigroupsOfStrongSemilatticeOfSemigroups(S))");
+  elif not x in SemigroupsOfStrongSemilatticeOfSemigroups(S)[n] then
+    ErrorNoReturn("where S, n and x are the 1st, 2nd and 3rd arguments ",
+                  "respectively, expected x to be an element of ",
+                  "SemigroupsOfStrongSemilatticeOfSemigroups(S)[n]");
+  fi;
   return Objectify(ElementTypeOfStrongSemilatticeOfSemigroups(S), [S, n, x]);
 end);
 
