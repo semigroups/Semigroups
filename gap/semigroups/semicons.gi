@@ -878,10 +878,14 @@ function(x, y)
   meet := PartialOrderDigraphMeetOfVertices(D, x![2], y![2]);
   maps := HomomorphismsOfStrongSemilatticeOfSemigroups(x![1]);
   # TODO should compose functions if necessary!
+  #      no longer necessary since we'll take the "refl. trans. closure"
+  #      of the homomorphisms and store in a  matrix.
   # TODO check if x and y belong to the same semigroup, or if x < y.
+  #      this is no longer necessary since we will ensure we fill in the
+  #      maps matrix with the identity down the diagonal.
   return SSSE(x![1],
               meet,
-              maps[x![2]][meet](x![3]) * maps[y![2]][meet](y![3]));
+              (x![3] ^ ( maps[meet][x![2]] )) * (y![3] ^ ( maps[meet][y![2]] )));
 end);
 
 InstallMethod(ViewString, "for a SSSE",
