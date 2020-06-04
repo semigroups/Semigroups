@@ -869,6 +869,21 @@ function(S, n, x)
 end);
 
 # TODO implement \=, \< for IsSSSREP
+InstallMethod(\=, "for SSSEs", IsIdenticalObj,
+[IsSSSERep, IsSSSERep],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2] and x![3] = y![3];
+end);
+
+InstallMethod(\<, "for SSSEs", IsIdenticalObj,
+[IsSSSERep, IsSSSERep],
+function(x, y)
+  local D;
+  D := SemilatticeOfStrongSemilatticeOfSemigroups(x![1]);
+  return x![1] = y![1]
+         and ((x![2] <> y![2] and IsDigraphEdge(D, x![2], y![2]))
+              or (x![2] = y![2] and x![3] < y![3]));
+end);
 
 InstallMethod(\*, "for SSSEs", IsIdenticalObj,
 [IsSSSERep, IsSSSERep],
@@ -881,7 +896,7 @@ function(x, y)
   # TODO check if x and y belong to the same semigroup, or if x < y.
   return SSSE(x![1],
               meet,
-              maps[x![2]][meet](x![3]) * maps[y![2]][meet](y![3]));
+              x![3] ^ maps[x![2]][meet] * y![3] ^ maps[y![2]][meet]);
 end);
 
 InstallMethod(ViewString, "for a SSSE",

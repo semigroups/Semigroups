@@ -26,7 +26,6 @@ DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
 DeclareCategory("IsSSSE", IsAssociativeElement);
 DeclareCategoryCollections("IsSSSE");
 
-
 # Objects in IsSSERep have 2 slots:
 # 1) the strong semilattice of semigroup of which this is an element;
 # 2) the node of the digraph;
