@@ -486,6 +486,20 @@ gap> y := PBR(
 gap> IsUniversalPBR(x * y);
 true
 
+# Test operators for PBRs of different degree
+gap> x := PBR([[-2, 1, 2], [-2, -1, 2]], [[1, 2], [-1, 1]]);
+PBR([ [ -2, 1, 2 ], [ -2, -1, 2 ] ], [ [ 1, 2 ], [ -1, 1 ] ])
+gap> y := PBR([[-1, 1]], [[-1, 1]]);
+PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
+gap> x * y;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `*' on 2 arguments
+gap> x < y;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `<' on 2 arguments
+gap> x = y;
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(filename);

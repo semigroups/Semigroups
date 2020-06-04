@@ -555,7 +555,7 @@ end);
 InstallMethod(DegreeOfPBR, "for a pbr",
 [IsPBR], pbr -> pbr![1]);
 
-InstallMethod(\*, "for pbrs",
+InstallMethod(\*, "for pbrs", IsIdenticalObj,
 [IsPBR, IsPBR],
 function(x, y)
   local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j;
@@ -723,7 +723,7 @@ function(x)
   return Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
 end);
 
-InstallMethod(\=, "for pbrs",
+InstallMethod(\=, "for pbrs", IsIdenticalObj,
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
@@ -737,7 +737,7 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(\<, "for pbrs",
+InstallMethod(\<, "for pbrs", IsIdenticalObj,
 [IsPBR, IsPBR],
 function(x, y)
   local n, i;
