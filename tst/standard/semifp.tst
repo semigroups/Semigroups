@@ -2145,6 +2145,30 @@ gap> ParseRelations(GeneratorsOfSemigroup(f), ",x=X^3(yx^2)=a,b(aX)^3x=XXXX");
 [ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ] ]
 gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
 [ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
+gap> f := FreeSemigroup("x", "y", "a", "b", "X", "@");;
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y");
+Error, expected a single english letter but found @
+gap> f := FreeSemigroup("x", "y");;
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=()");
+Error, expected a product of free generators but found an empty string
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(");
+Error, expected the number of open brackets to match the number of closed brac\
+kets
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(^2)");
+Error, expected ^ to be preceded by a ) or a generator but found (
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=a^");
+Error, expected ^ to be followed by a positive integer but found end of string
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=x^y");
+Error, expected ^ to be followed by a positive integer but found y
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=^y");
+Error, expected ^ to be preceded by a ) or a generator but found begining of s\
+tring
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=a");
+Error, expected a free semigroup generator but found a
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y^0");
+Error, expected ^ to be followed by a positive integer but found 0
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=");
+Error, expected a product of free generators but found an empty string
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

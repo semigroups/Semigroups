@@ -669,7 +669,7 @@ function(gens, inputstring)
         if not Size(Filtered(word, x -> x = '(')) =
                Size(Filtered(word, x -> x = ')')) then
             ErrorNoReturn(Concatenation("expected the number of open brackets",
-                          "to match the number of closed brackets"));
+                          " to match the number of closed brackets"));
         fi;
 
         # if the ^ is at the end of the string there is no exponent.
@@ -739,15 +739,6 @@ function(gens, inputstring)
                     fi;
                     i := i + 1;
                 od;
-                # as i is always positive, if rbracket is -1 that means that
-                # the found left bracket has no corresponding right bracket.
-                # note: if this never occurs then every left bracket has a
-                # corresponding right bracket and as the number of each bracket
-                # is equal every right bracket has a corresponding left bracket
-                # and the bracket structure is valid.
-                if rbracket = -1 then
-                    ErrorNoReturn("expected each ( to correspond to a )");
-                fi;
                 # if rbracket is not followed by ^ then the value inside the
                 # bracket is appended (recursion is used to remove any brackets
                 # in this value)
