@@ -837,11 +837,16 @@ function(D, semigroups, homomorphisms)
                     "equal to OutNeighbours(D)[i]");
     fi;
     for s in homomorphisms[i] do
-      if Length(homomorphisms[i]) > 0 and not IsMapping(s) then
-        ErrorNoReturn("expected a list of lists of mappings as third argument");
+      if Length(homomorphisms[i]) > 0 and not RespectsMultiplication(s) then
+        ErrorNoReturn("expected a list of lists of homomorphisms ",
+                      "as third argument");
       fi;
     od;
   od;
+  # TODO add: check commutativity; check domains and ranges of homs make sense;
+  # check all homs are actally homomorphisms.
+  # otherwise errors will only show up when trying to actually multiply things.
+
   # I think this works for now as argument checking: we can update this when we
   # figure out more specifics of what we want the arguments to be
   efam := NewFamily("StrongSemilatticeOfSemigroupsElementsFamily", IsSSSE);
