@@ -836,15 +836,26 @@ function(D, semigroups, homomorphisms)
                     "respectively, the length of homomorphisms[i] must be ",
                     "equal to OutNeighbours(D)[i]");
     fi;
-    for s in homomorphisms[i] do
-      if Length(homomorphisms[i]) > 0 and not RespectsMultiplication(s) then
+    for j in [1 .. Length(homomorphisms[i])] do
+      if not RespectsMultiplication(homomorphisms[i][j]) then
         ErrorNoReturn("expected a list of lists of homomorphisms ",
                       "as third argument");
       fi;
+      if  (not IsSubset(Source(homomorphisms[i][j]),
+                        semigroups[OutNeighbours(D)[i][j]])) or
+          (not IsSubset(semigroups[i],
+                        Range(homomorphisms[i][j]))) then
+        ErrorNoReturn("expected homomorphism from ",
+                      OutNeighbours(D)[i][j],
+                      " to ",
+                      i,
+                      " to have correct source and range");
+      fi;
     od;
   od;
-  # TODO add: check commutativity; check domains and ranges of homs make sense;
-  # check all homs are actally homomorphisms.
+  # TODO add: check commutativity;
+  # check domains and ranges of homs make sense; (done)
+  # check all homs are actally homomorphisms. (done)
   # otherwise errors will only show up when trying to actually multiply things.
 
   # I think this works for now as argument checking: we can update this when we
