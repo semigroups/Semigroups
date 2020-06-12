@@ -850,7 +850,8 @@ function(D, semigroups, homomorphisms)
   type := NewType(CollectionsFamily(efam),
                   IsStrongSemilatticeOfSemigroups
                     and IsComponentObjectRep
-                    and IsAttributeStoringRep);
+                    and IsAttributeStoringRep
+                    and IsEnumerableSemigroupRep);
 
   # the next section converts the list of homomorphisms into a matrix,
   # composing when necessary.
@@ -941,14 +942,9 @@ function(x, y)
   return x![1] = y![1] and x![2] = y![2] and x![3] = y![3];
 end);
 
-InstallMethod(\<, "for SSSEs", IsIdenticalObj,
-[IsSSSERep, IsSSSERep],
+InstallMethod(\<, "for SSSEs", IsIdenticalObj, [IsSSSERep, IsSSSERep],
 function(x, y)
-  local D;
-  D := SemilatticeOfStrongSemilatticeOfSemigroups(x![1]);
-  return x![1] = y![1]
-         and ((x![2] <> y![2] and IsDigraphEdge(D, x![2], y![2]))
-              or (x![2] = y![2] and x![3] < y![3]));
+  return (x![2] < y![2]) or (x![2] = y![2] and x![3] < y![3]);
 end);
 
 InstallMethod(\*, "for SSSEs", IsIdenticalObj,
@@ -980,3 +976,15 @@ end);
 # function(x)
 #   return x![1];
 # end);
+
+InstallMethod(ChooseHashFunction, "for SSSE and int",
+[IsSSSERep, IsInt],
+function(x, data)
+  local hashes, hashfunc;
+  hashes := List(SemigroupsOfStrongSemilatticeOfSemigroups(x![1]),
+                 y -> ChooseHashFunction(Representative(y), data));
+  hashfunc := function(y, d)
+    return 17 * y![2] + hashes[y![2]].func(y![3], d);
+  end;
+  return rec(func := hashfunc, data := data);
+end);
