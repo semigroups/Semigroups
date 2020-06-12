@@ -854,25 +854,27 @@ function(D, semigroups, homomorphisms)
 
   # the next section converts the list of homomorphisms into a matrix,
   # composing when necessary.
-  maps := [ ];
+  maps := [];
   n := Length(semigroups);
   rtclosure := DigraphReflexiveTransitiveClosure(D);
   for i in [1 .. n] do
     Add(maps, []);
     for j in [1 .. n] do
       if i = j then
-	Add(maps[i], IdentityMapping(semigroups[i]));
+        Add(maps[i], IdentityMapping(semigroups[i]));
       elif IsDigraphEdge(rtclosure, [i, j]) then
-	path := DigraphPath(D, i, j);
-	len  := Length(path[2]);
-	tobecomposed := List([1 .. len], x -> homomorphisms[path[1][x]][path[2][x]]);
-	Add(maps[i], CompositionMapping(tobecomposed));
-	# NB. perhaps a dynamic programming approach would be more efficient here.
-	# for some larger digraphs, the current method might compute some compositions
-	# of homomorphisms several times.
+        path := DigraphPath(D, i, j);
+        len  := Length(path[2]);
+        tobecomposed := List([1 .. len],
+                              x -> homomorphisms[path[1][x]][path[2][x]]);
+        Add(maps[i], CompositionMapping(tobecomposed));
+        # NB. perhaps a dynamic programming approach would be more
+        # efficient here.
+        # for some larger digraphs, the current method might compute some
+        # compositions of homomorphisms several times.
       else
-	Add(maps[i], fail);
-	# is fail a reasonable thing to add here?
+        Add(maps[i], fail);
+        # is fail a reasonable thing to add here?
       fi;
     od;
   od;
