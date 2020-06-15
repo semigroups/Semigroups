@@ -38,6 +38,11 @@ function(cong)
   S := Range(cong);
   gens := GeneratorsOfSemigroup(S);
   words_part := CONG_PAIRS_NONTRIVIAL_CLASSES(cong);
+  if words_part = fail then
+    # libsemigroups can't compute the non-trivial classes, and threw an
+    # exception.
+    return List(Filtered(EquivalenceClasses(cong), x -> Size(x) > 1), AsList);
+  fi;
   return List(words_part, c -> List(c, w -> Product(w, i -> gens[i])));
 end);
 
