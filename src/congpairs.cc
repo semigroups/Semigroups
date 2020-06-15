@@ -414,6 +414,12 @@ gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
   initRNams();
   Congruence* cong = cong_obj_get_cpp(o);
 
+  try {
+    cong->nr_non_trivial_classes();
+  } catch (libsemigroups::LibsemigroupsException& e) {
+    return Fail;
+  }
+
   // Initialise gap_lists
   gap_list_t gap_lists
       = NEW_PLIST_IMM(T_PLIST_TAB, cong->nr_non_trivial_classes());
