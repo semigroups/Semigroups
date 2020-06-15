@@ -1747,6 +1747,12 @@ false
 gap> IsUniversalSemigroupCongruence(cong);
 false
 
+# Issues 676-677
+gap> S := FreeBand(2);;
+gap> cong := SemigroupCongruence(S, []);;
+gap> NonTrivialCongruenceClasses(cong);
+[  ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
