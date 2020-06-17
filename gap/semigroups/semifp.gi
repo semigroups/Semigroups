@@ -794,5 +794,5 @@ function(gens, inputstring)
     output := List(output,
                    x -> List([1 .. Size(x) - 1], y -> [x[y], x[y + 1]]));
     return Concatenation(output);
-end); 
+end);
 
