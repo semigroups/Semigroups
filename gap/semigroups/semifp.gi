@@ -700,7 +700,7 @@ function(gens, inputstring)
         chartoel := function(char)
             local i;
             for i in [1 .. Size(gens)] do
-                if String(gens[i])[1] = char then
+                if char = String(gens[i])[1] then
                     return gens[i];
                 fi;
             od;
