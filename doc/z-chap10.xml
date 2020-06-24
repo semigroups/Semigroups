@@ -180,4 +180,13 @@ x1x2x2^-1x1^-1x1x2]]></Example>
 
     <#Include Label = "GreensDClassOfElement" >
   </Section>
+
+
+  <Section>
+    <Heading> Words as strings in finitely presented semigroups
+    </Heading>
+
+    <#Include Label = "WordToString" >
+    <#Include Label = "RandomWord" > 
+  </Section>
 </Chapter>
