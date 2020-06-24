@@ -670,7 +670,7 @@ function(gens, inputstring)
 
         # if the number of left brackets is different from the number of right
         # brackets they can't possibly pair up
-        if not Number(word, x -> x = '(') = Number(word, x -> x = ')') then
+        if Number(word, x -> x = '(') <> Number(word, x -> x = ')') then
             ErrorNoReturn(Concatenation("expected the number of open brackets",
                           " to match the number of closed brackets"));
         fi;
