@@ -647,7 +647,9 @@ function(gens, inputstring)
       if not (Size(String(g)) = 1 and String(g)[1]
          in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") then
         ErrorNoReturn(Concatenation(
-        "expected a single english letter but found ", String(g)));
+        "expected the first argument to be a list of a free semigroup ",
+        "generators represented by single English letter but found ",
+        "the generator ", String(g)));
       fi;
     od;
 
@@ -660,14 +662,15 @@ function(gens, inputstring)
     RemoveBrackets := function(word)
         local i, product, lbracket, rbracket, nestcount, index, p, chartoel;
         if word = "" then
-            ErrorNoReturn(Concatenation("expected a product of free",
-                          " generators but found an empty string"));
+            ErrorNoReturn(Concatenation("expected the second argument to be",
+                          " a string listing the relations of a semigroup",
+                          " but found an = symbol which isn't pairing two",
+                          " words"));
         fi;
 
         # if the number of left brackets is different from the number of right
         # brackets they can't possibly pair up
-        if not Size(Filtered(word, x -> x = '(')) =
-               Size(Filtered(word, x -> x = ')')) then
+        if not Number(word, x -> x = '(') = Number(word, x -> x = ')') then
             ErrorNoReturn(Concatenation("expected the number of open brackets",
                           " to match the number of closed brackets"));
         fi;
@@ -676,7 +679,7 @@ function(gens, inputstring)
         # if the ^ is at the start of the string there is no base.
         if word[1] = '^' then
             ErrorNoReturn(Concatenation("expected ^ to be preceded by a ) or",
-                          " a generator but found begining of string"));
+                          " a generator but found beginning of string"));
         elif word[Size(word)] = '^' then
             ErrorNoReturn(Concatenation("expected ^ to be followed by a ",
                           "positive integer but found end of string"));
@@ -787,8 +790,10 @@ function(gens, inputstring)
     ParseRelation := x -> List(SplitString(x, "="), RemoveBrackets);
     output := List(SplitString(newinputstring, ","), ParseRelation);
     if ForAny(output, x -> Size(x) = 1) then
-      ErrorNoReturn(Concatenation("expected a product of free",
-                          " generators but found an empty string"));
+      ErrorNoReturn(Concatenation("expected the second argument to be",
+                    " a string listing the relations of a semigroup",
+                    " but found an = symbol which isn't pairing two",
+                    " words"));
     fi;
     output := Filtered(output, x -> Size(x) >= 2);
     output := List(output,
