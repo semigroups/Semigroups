@@ -1253,7 +1253,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 `IsZeroRectangularBand`, `IsZeroSimpleSemigroup`.
 
 [D. V. Pasechnik]: http://users.ox.ac.uk/~coml0531
-[James D. Mitchell]: http://www-groups.mcs.st-andrews.ac.uk/~jamesm
+[James D. Mitchell]: https://jdbm.me
 [Julius Jonusas]: http://julius.jonusas.work
 [Markus Pfeiffer]: http://morphism.de/~markusp
 [Max Horn]: http://www.quendi.de/math
