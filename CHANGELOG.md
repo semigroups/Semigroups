@@ -3,6 +3,21 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.3.2 (released 28/06/2020)
+
+This is a very minor release fixing the following issues.
+
+* [Issue #676](https://github.com/gap-packages/Semigroups/issues/676) and 
+  [Issue #677](https://github.com/gap-packages/Semigroups/issues/677) reported
+  by Reinis Cirpons, where for some congruences `NonTrivialCongruenceClasses`
+  failed to work, but `CongruenceClasses` did work. This was caused by an issue
+  in `EquivalenceRelationPartition`; resolved by [James D. Mitchell][].
+
+* An issue in the equality, less than, and product methods for PBRs which
+  previously permitted PBRs of different degrees to be given as arguments,
+  resulting in unhelpful errors from within the implementations of these
+  methods; resolved by [James D. Mitchell][].
+
 ### Version 3.3.1 (released 28/05/2020)
 
 This is a minor release fixing some issues in the build system [Max Horn][]
