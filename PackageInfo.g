@@ -9,14 +9,14 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.3.1">
+##  <!ENTITY VERSION "3.3.2">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "1.0.0">
 ##  <!ENTITY ORBVERS "4.8.2">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.6.5">
 ##  <!ENTITY IMAGESVERS "1.3.0">
-##  <!ENTITY ARCHIVENAME "semigroups-3.3.1">
+##  <!ENTITY ARCHIVENAME "semigroups-3.3.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-20">
 ##  <#/GAPDoc>
 
@@ -48,8 +48,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.3.1",
-Date := "28/05/2020",  # dd/mm/yyyy format
+Version := "3.3.2",
+Date := "28/06/2020",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -74,8 +74,8 @@ Persons := [
     FirstNames    := "James",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/",
+    Email         := "jdm3@st-andrews.ac.uk",
+    WWWHome       := "https://jdbm.me",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),

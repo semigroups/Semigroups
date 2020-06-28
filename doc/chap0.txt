@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.3.1
+                                 Version 3.3.2
   
   
                                  J. D. Mitchell
@@ -37,8 +37,8 @@
   
   
   J. D. Mitchell
-      Email:    [7Xmailto:jdm3@st-and.ac.uk[107X
-      Homepage: [7Xhttp://www-groups.mcs.st-andrews.ac.uk/~jamesm/[107X
+      Email:    [7Xmailto:jdm3@st-andrews.ac.uk[107X
+      Homepage: [7Xhttps://jdbm.me[107X
   
   -------------------------------------------------------
   [1XAbstract[101X
