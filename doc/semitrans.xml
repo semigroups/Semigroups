@@ -376,3 +376,42 @@ gap> Size(WW);
     </Description>
   </ManSection>
 <#/GAPDoc>
+<#GAPDoc Label="SingularClosureTransformationSemigroup">
+   <ManSection>
+    <Oper Name="SingularClosureTransformationSemigroup " Arg="G,n"/>
+    <Returns>A Transformation monoid which contains all singular transformations.</Returns>
+    <Description>
+      When <A>G</A> is a subgroup of the symmertic group on <A>n</A> points then 
+	  this returns the least transformation monoid of degree <A>n</A> which contains 
+	  <A>G</A> and all singular transformatiosn. 
+	  
+      <Example><![CDATA[
+	SingularClosureTransformationSemigroup(Group((1,2),(3,4)),4);
+]]></Example>
+	gap> SingularClosureTransformationSemigroup(Group((1,2),(3,4)),4);
+	<transformation semigroup of degree 4 with 6 generators>
+	 Generators(SingularClosureTransformationSemigroup(Group((1,2),(3,4)),4));
+	[ Transformation( [ 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 4, 4 ] ), Transformation( [ 3, 2, 3 ] ), Transformation( [ 1, 2, 4, 3 ] ), Transformation( [ 2, 1 ] ) ]
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SingularClosurePartialTransformationSemigroup">
+   <ManSection>
+    <Oper Name="SingularClosurePartialTransformationSemigroup" Arg="G,n"/>
+    <Returns>A partial transformation monoid which contains all singular partial transformations.</Returns>
+    <Description>
+      When <A>G</A> is a subgroup of the symmertic group on <A>n</A> points then 
+	  this returns the least patrial transformation monoid of degree <A>n</A> which
+	  contains <A>G</A> and all singular partial transformatiosn. 
+	  
+      <Example><![CDATA[
+	gap> SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4)),4);
+	<transformation semigroup of degree 5 with 8 generators>
+	gap>Generators(SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4)),4));
+	[ Transformation( [ 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 4, 4 ] ), Transformation( [ 3, 2, 3 ] ), Transformation( [ 5, 2, 3, 4, 5 ] ), Transformation( [ 1, 5, 3, 4, 5 ] ), Transformation( [ 2, 1 ] ),
+	Transformation( [ 1, 2, 4, 3 ] ) ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

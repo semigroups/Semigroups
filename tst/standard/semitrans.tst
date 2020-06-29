@@ -2789,6 +2789,34 @@ gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 
+#SingularClosureTransformationSemigroup
+gap>S:= SingularClosureTransformationSemigroup(SymmetricGroup(4),4);
+gap>Size(S)=4^4;
+true
+gap>S:= SingularClosureTransformationSemigroup(Group((1,2),(3,4),4);
+gap>Size(S)=(4^4+Size(Group((1,2),(3,4));
+true
+gap>S:= SingularClosureTransformationSemigroup(Group((1,2)(3,4),4);
+gap>Size(S)=(4^4+Size(Group((1,2)(3,4));
+true
+gap>S:= SingularClosureTransformationSemigroup(Group((1,2)(3,4),6);
+gap>Size(S)=(6^6+Size(Group((1,2)(3,4));
+true
+
+#SingularClosurePartialTransformationSemigroup
+gap>S:= SingularClosurePartialTransformationSemigroup(SymmetricGroup(4),4);
+gap>Size(S)=5^4;
+true
+gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4),4);
+gap>Size(S)=(5^4+Size(Group((1,2),(3,4));
+true
+gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4),4);
+gap>Size(S)=(5^4+Size(Group((1,2)(3,4));
+true
+gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4),6);
+gap>Size(S)=(7^6+Size(Group((1,2)(3,4));
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(BruteForceInverseCheck);
