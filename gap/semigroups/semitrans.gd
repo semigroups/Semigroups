@@ -44,5 +44,7 @@ DeclareOperation("WreathProduct",
                  [IsMultiplicativeElementCollection,
                   IsMultiplicativeElementCollection]);
 
-DeclareOperation("SingularClosureTransformationSemigroup",[IsGroup,IsPosInt]);
-DeclareOperation("SingularClosurePartialTransformationSemigroup",[IsGroup,IsPosInt]);
+DeclareOperation("SingularClosureTransformationSemigroup",
+ [IsGroup, IsPosInt]);
+DeclareOperation("SingularClosurePartialTransformationSemigroup",
+ [IsGroup, IsPosInt]);
