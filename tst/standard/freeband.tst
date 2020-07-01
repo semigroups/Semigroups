@@ -237,6 +237,32 @@ gap> ContentOfFreeBandElement(S.2 * S.1);
 gap> FreeBand(100);
 <free band with 100 generators>
 
+# Test EqualInFreeBand
+gap> x := [1, 4, 2, 3, 10];
+[ 1, 4, 2, 3, 10 ]
+gap> y := [1, 4, 1, 4, 2, 3, 10];
+[ 1, 4, 1, 4, 2, 3, 10 ]
+gap> EqualInFreeBand(x, y);
+true
+gap> x := "aaaaaaaaaaaaaaaaaababaaaaaaabbbbb";
+"aaaaaaaaaaaaaaaaaababaaaaaaabbbbb"
+gap> y := "ab";
+"ab"
+gap> EqualInFreeBand(x, y);
+true
+gap> EqualInFreeBand("a", "b");
+false
+gap> EqualInFreeBand("", "");
+true
+gap> x := "abcbcccbabacab";
+"abcbcccbabacab"
+gap> y := "abcab";
+"abcab"
+gap> EqualInFreeBand(x, y);
+true
+gap> EqualInFreeBand("abac", "abad");
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(S);

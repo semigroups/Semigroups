@@ -420,6 +420,323 @@ function(S)
   fi;
 end);
 
+InstallMethod(EqualInFreeBand, "for two strings",
+[IsString, IsString],
+function(w1_in, w2_in)
+  if IsEmpty(w1_in) or IsEmpty(w2_in) then
+    return IsEmpty(w1_in) and IsEmpty(w2_in);
+    # Necessary since [] is recognised as a string yet the below
+    # doesn't work with it.
+  fi;
+  w1_in := List(w1_in, IntChar);
+  w2_in := List(w2_in, IntChar);
+  return EqualInFreeBand(w1_in, w2_in);
+end);
+
+# This is an implementation of the algorithm described in Jakub Radoszewski
+# and Wojciech Rytter's paper 'Efficient Testing of Equivalence of Words
+# in a Free Idempotent Semigroup⋆'
+
+InstallMethod(EqualInFreeBand, "for two lists of positive integers",
+[IsList, IsList],
+function(w1_in, w2_in)
+  local ListOfPosIntsToStandardListOfPosInts, Right, Left, LevelEdges,
+  RadixSort, StripFreeBandString, w1, w2, dollar, l1, l2, w, c, check,
+  rightk, leftk, edgecodes, rightm, leftm, i, k;
+
+  ListOfPosIntsToStandardListOfPosInts := function(list)
+    local L, distinct_chars, lookup, i;
+    if not IsList(list) then
+      ErrorNoReturn("expected a list as the argument");
+    fi;
+    for i in list do
+      if not IsPosInt(i) then
+        ErrorNoReturn("expected a list of positive integers as the argument");
+      fi;
+    od;
+    L := Length(list);
+    if L = 0 then
+      return [];
+    fi;
+
+    distinct_chars  := 1;
+    lookup          := [];
+    lookup[list[1]] := 1;
+    list[1]         := 1;
+
+    for i in [2 .. L] do
+      if IsBound(lookup[list[i]]) then
+        list[i] := lookup[list[i]];
+      else
+        distinct_chars  := distinct_chars + 1;
+        lookup[list[i]] := distinct_chars;
+        list[i]         := lookup[list[i]];
+      fi;
+    od;
+
+    return list;
+  end;
+
+  Right := function(w, k)
+    local max_char, right, i, j, content_size, multiplicity, length_w;
+    if not IsList(w) then
+      ErrorNoReturn("expected a list as first argument");
+    elif not IsPosInt(k) then
+      ErrorNoReturn("expected a positive integer as second argument");
+    fi;
+    max_char := 0;
+    for i in w do
+      if not IsPosInt(i) then
+        ErrorNoReturn("expected a list of positive integers as first argument");
+      fi;
+      if i > max_char + 1 then
+        ErrorNoReturn("expected first argument w to be a list of positive ",
+                      "integers which contains at least one instance of each ",
+                      "integer in [1 .. Maximum(w)], and whose entries are ",
+                      "ordered in order of first appearence.");
+      elif i > max_char then
+        max_char := max_char + 1;
+      fi;
+    od;
+    length_w := Length(w);
+    if length_w = 0 then
+      return [];
+    fi;
+
+    j            := 0;
+    right        := [];
+    content_size := 0;
+    multiplicity := ListWithIdenticalEntries(Maximum(w), 0);
+
+    for i in [1 .. length_w] do
+      if i > 1 then
+        multiplicity[w[i - 1]] := multiplicity[w[i - 1]] - 1;
+        if multiplicity[w[i - 1]] = 0 then
+          content_size := content_size - 1;
+        fi;
+      fi;
+      while j < length_w and
+          (multiplicity[w[j + 1]] <> 0 or content_size < k) do
+        j := j + 1;
+        if multiplicity[w[j]] = 0 then
+          content_size := content_size + 1;
+        fi;
+        multiplicity[w[j]] := multiplicity[w[j]] + 1;
+      od;
+      if content_size = k then
+        right[i] := j;
+      else
+        right[i] := fail;
+      fi;
+    od;
+    return right;
+  end;
+
+  Left := function(w, k)
+    local max_char, i, left, length_w;
+    if not IsList(w) then
+      ErrorNoReturn("expected a list as first argument");
+    elif not IsPosInt(k) then
+      ErrorNoReturn("expected a positive integer as second argument");
+    fi;
+    max_char := 0;
+    for i in w do
+      if not IsPosInt(i) then
+        ErrorNoReturn("expected a list of positive integers as first argument");
+      elif i > max_char + 1 then
+        ErrorNoReturn("expected first argument w to be a list of positive ",
+                      "integers which contains at least one instance of each ",
+                      "integer in [1 .. Maximum(w)], and whose entries are ",
+                      "ordered in order of first appearence.");
+      elif i > max_char then
+        max_char := max_char + 1;
+      fi;
+    od;
+
+    length_w := Length(w);
+    w        := ListOfPosIntsToStandardListOfPosInts(Reversed(w));
+    left     := Reversed(Right(w, k));
+    for i in [1 .. length_w] do
+      if left[i] <> fail then
+        left[i] := length_w - left[i] + 1;
+      fi;
+    od;
+    return left;
+  end;
+
+  LevelEdges := function(w, k, radix, rightk, leftk, rightm, leftm)
+    local n, outr, outl, i;
+    if not IsList(w) then
+      ErrorNoReturn("expected a string as the argument, found ", w);
+    fi;
+    if not IsPosInt(k) then
+      ErrorNoReturn("expected a positive integer as second argument");
+    fi;
+    if not k <= Length(w) then
+      ErrorNoReturn("level k cannot be greater than length of word");
+    fi;
+    if not (IsList(radix) and IsList(rightk)
+                          and IsList(leftk)
+                          and IsList(rightm)
+                          and IsList(leftm)) then
+      ErrorNoReturn("expected final five arguments to be lists");
+    fi;
+
+    n    := Length(w);
+
+    outr := [];
+    outl := [];
+
+    if k = 1 then
+      for i in [1 .. n] do
+        Add(outr, [1, w[i], w[i], 1]);
+        Add(outl, [1, w[i], w[i], 1]);
+      od;
+    else
+      for i in [1 .. n] do
+        if rightk[i] <> fail then
+          Add(outr, [radix[i], w[rightm[i] + 1],
+                     w[leftm[rightk[i]] - 1], radix[rightk[i] + n]]);
+        else
+          Add(outr, [fail, fail, fail, fail]);
+        fi;
+
+        if leftk[i] <> fail then
+          Add(outl, [radix[leftk[i]], w[rightm[leftk[i]] + 1],
+                     w[leftm[i] - 1], radix[i + n]]);
+        else
+          Add(outl, [fail, fail, fail, fail]);
+        fi;
+      od;
+    fi;
+    return Concatenation(outr, outl);
+  end;
+
+  RadixSort := function(level_edges, alphabet_size)
+    local B, result, count_sort, i, n, counter;
+
+    count_sort := function(B, i, radix)
+      local counts, j, result;
+
+      counts := ListWithIdenticalEntries(radix + 1, 0);
+      for j in [1 .. Length(B)] do
+        if level_edges[B[j]][i] <> fail then
+          counts[level_edges[B[j]][i]] := counts[level_edges[B[j]][i]] + 1;
+        else
+          counts[radix + 1] := counts[radix + 1] + 1;
+        fi;
+      od;
+      for j in [2 .. radix + 1] do
+        counts[j] := counts[j] + counts[j - 1];
+      od;
+      result := [1 .. Length(B)];
+      for j in [Length(B), Length(B) - 1 .. 1] do
+        if level_edges[B[j]][i] <> fail then
+          result[counts[level_edges[B[j]][i]]] := B[j];
+          counts[level_edges[B[j]][i]]         :=
+                                      counts[level_edges[B[j]][i]] - 1;
+        else
+          result[counts[radix + 1]] := B[j];
+          counts[radix + 1]         := counts[radix + 1] - 1;
+        fi;
+      od;
+      return result;
+    end;
+
+    n := Length(level_edges);
+    B := [1 .. n];
+    B := count_sort(B, 1, n);
+    B := count_sort(B, 2, alphabet_size);
+    B := count_sort(B, 3, alphabet_size);
+    B := count_sort(B, 4, n);
+
+    result  := ListWithIdenticalEntries(n, fail);
+    counter := 1;
+    for i in [2 .. n] do
+      if level_edges[B[i]] <> level_edges[B[i - 1]] then
+        counter := counter + 1;
+      fi;
+      result[B[i]] := counter;
+    od;
+    result[B[1]] := 1;
+
+    return result;
+  end;
+
+  StripFreeBandString := function(w)
+    local last, out, i;
+    if not IsList(w) then
+      ErrorNoReturn("expected a list, got ", w);
+    fi;
+    if Length(w) = 0 or Length(w) = 1 then
+      return w;
+    fi;
+
+    last := w[1];
+    out  := [last];
+    for i in [2 .. Length(w)] do
+      if w[i] <> last then
+        Add(out, w[i]);
+        last := w[i];
+      fi;
+    od;
+    return out;
+  end;
+
+  if IsEmpty(w1_in) or IsEmpty(w2_in) then
+    return IsEmpty(w1_in) and IsEmpty(w2_in);
+  fi;
+
+  w1 := StripFreeBandString(w1_in);
+  w2 := StripFreeBandString(w2_in);
+
+  if w1 = w2 then
+    return true;
+  fi;
+
+  dollar := Maximum(Maximum(w1), Maximum(w2)) + 1;
+  l1     := Length(w1);
+  l2     := Length(w2);
+
+  w := Concatenation(w1, [dollar], w2);
+  w := ListOfPosIntsToStandardListOfPosInts(w);
+
+  c     := w[l1 + 1];
+  check := ListWithIdenticalEntries(c, false);
+  for i in [l1 + 2 .. l1 + 1 + l2] do
+    if w[i] >= c then
+      return false;
+    else
+      check[w[i]] := true;
+    fi;
+  od;
+  if SizeBlist(check) <> c - 1 then
+    return false;
+  fi;
+
+  if c = 2 then
+    return true;
+  fi;
+
+  rightk    := [];
+  leftk     := [];
+  edgecodes := [];
+
+  for k in [1 .. c - 1] do
+    rightm := rightk;
+    leftm  := leftk;
+
+    rightk := Right(w, k);
+    leftk  := Left(w, k);
+
+    edgecodes := LevelEdges(w, k, edgecodes, rightk, leftk, rightm, leftm);
+
+    edgecodes := RadixSort(edgecodes, c);
+  od;
+
+  return edgecodes[1] = edgecodes[l1 + 2];
+end);
+
 # TODO Is there a more efficient way to compare elements? JJ
 
 InstallMethod(\=, "for elements of a free band",
