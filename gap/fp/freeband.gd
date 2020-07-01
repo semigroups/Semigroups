@@ -18,3 +18,6 @@ DeclareGlobalFunction("FreeBand");
 DeclareAttribute("ContentOfFreeBandElement", IsFreeBandElement);
 DeclareAttribute("ContentOfFreeBandElementCollection",
                  IsFreeBandElementCollection);
+
+DeclareOperation("EqualInFreeBand", [IsList, IsList]);
+DeclareOperation("EqualInFreeBand", [IsString, IsString]);
