@@ -305,7 +305,8 @@ Dependencies := rec(
                           ["io", ">=4.5.1"],
                           ["digraphs", ">=1.3.0"],
                           ["genss", ">=1.6.5"],
-                          ["images", ">=1.3.0"]],
+                          ["images", ">=1.3.0"],
+                          ["datastructures", ">=0.2.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 
   ExternalConditions := []),
