@@ -636,3 +636,168 @@ function(M)
 
   return MagmaIsomorphismByFunctionsNC(M, MF, map, inv);
 end);
+
+InstallMethod(ParseRelations,
+"for a list of free generators and a string",
+[IsDenseList, IsString],
+function(gens, inputstring)
+    local newinputstring, g, chartoel, RemoveBrackets, ParseRelation, output;
+
+    for g in gens do
+      if not (Size(String(g)) = 1 and String(g)[1]
+         in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") then
+        ErrorNoReturn(Concatenation(
+        "expected the first argument to be a list of a free semigroup ",
+        "generators represented by single English letter but found ",
+        "the generator ", String(g)));
+      fi;
+    od;
+
+    newinputstring := Filtered(inputstring, x -> not x = ' ');
+    for g in gens do
+      newinputstring := ReplacedString(newinputstring,
+                        [String(g)[1], '^'], ['(', String(g)[1], ')', '^']);
+    od;
+
+    RemoveBrackets := function(word)
+        local i, product, lbracket, rbracket, nestcount, index, p, chartoel;
+        if word = "" then
+            ErrorNoReturn(Concatenation("expected the second argument to be",
+                          " a string listing the relations of a semigroup",
+                          " but found an = symbol which isn't pairing two",
+                          " words"));
+        fi;
+
+        # if the number of left brackets is different from the number of right
+        # brackets they can't possibly pair up
+        if Number(word, x -> x = '(') <> Number(word, x -> x = ')') then
+            ErrorNoReturn(Concatenation("expected the number of open brackets",
+                          " to match the number of closed brackets"));
+        fi;
+
+        # if the ^ is at the end of the string there is no exponent.
+        # if the ^ is at the start of the string there is no base.
+        if word[1] = '^' then
+            ErrorNoReturn(Concatenation("expected ^ to be preceded by a ) or",
+                          " a generator but found beginning of string"));
+        elif word[Size(word)] = '^' then
+            ErrorNoReturn(Concatenation("expected ^ to be followed by a ",
+                          "positive integer but found end of string"));
+        fi;
+        # checks that all ^s have an exponent.
+        for index in [1 .. Size(word)] do
+            if word[index] = '^' then
+                if not word[index + 1] in "0123456789" then
+                  ErrorNoReturn(Concatenation("expected ^ to be followed by",
+                  " a positive integer but found ", [word[index + 1]]));
+                fi;
+                if word[index - 1] in "0123456789^(" then
+                  ErrorNoReturn(Concatenation(
+                  "expected ^ to be preceded by a ) or a generator",
+                  " but found ", [word[index - 1]]));
+                fi;
+            fi;
+        od;
+
+        # converts a character to the element it represents
+        chartoel := function(char)
+            local i;
+            for i in [1 .. Size(gens)] do
+                if char = String(gens[i])[1] then
+                    return gens[i];
+                fi;
+            od;
+            ErrorNoReturn(Concatenation("expected a free semigroup generator",
+                          " but found ", [char]));
+        end;
+
+        # i acts as a pointer to positions in the string.
+        product := "";
+        i := 1;
+        while i <= Size(word) do
+            # if there are no brackets the character is left as it is.
+            if not word[i] = '(' then
+                if product = "" then
+                  product := chartoel(word[i]);
+                else
+                  product := product * chartoel(word[i]);
+                fi;
+            else
+                lbracket := i;
+                rbracket := -1;
+                # tracks how 'deep' the position of i is in terms of nested
+                # brackets
+                nestcount := 0;
+                i := i + 1;
+                while i <= Size(word) do
+                    if word[i] = '(' then
+                        nestcount := nestcount + 1;
+                    elif word[i] = ')' then
+                        if nestcount = 0 then
+                            rbracket := i;
+                            break;
+                        else
+                            nestcount := nestcount - 1;
+                        fi;
+                    fi;
+                    i := i + 1;
+                od;
+                # if rbracket is not followed by ^ then the value inside the
+                # bracket is appended (recursion is used to remove any brackets
+                # in this value)
+                if rbracket = Size(word) or (not word[rbracket + 1] = '^') then
+                    if product = "" then
+                      product := RemoveBrackets(
+                                 word{[lbracket + 1 .. rbracket - 1]});
+                    else
+                      product := product *
+                                 RemoveBrackets(
+                                 word{[lbracket + 1 .. rbracket - 1]});
+                    fi;
+                # if rbracket is followed by ^ then the value inside the
+                # bracket is appended the given number of time
+                else
+                    i := i + 2;
+                    while i <= Size(word) do
+                        if word[i] in "0123456789" then
+                            i := i + 1;
+                        else
+                            break;
+                        fi;
+                    od;
+
+                    p := Int(word{[rbracket + 2 .. i - 1]});
+                    if p = 0 then
+                      ErrorNoReturn(Concatenation("expected ^ to be followed",
+                      " by a positive integer but found 0"));
+                    fi;
+                    if product = "" then
+                       product := RemoveBrackets(word{[lbracket + 1 ..
+                                                       rbracket - 1]}) ^ p;
+                    else
+                       product := product *
+                                  RemoveBrackets(word{[lbracket + 1 ..
+                                                       rbracket - 1]}) ^ p;
+                    fi;
+                    i := i - 1;
+                fi;
+            fi;
+            i := i + 1;
+        od;
+        return product;
+    end;
+
+    ParseRelation := x -> List(SplitString(x, "="), RemoveBrackets);
+    output := List(SplitString(newinputstring, ","), ParseRelation);
+    if ForAny(output, x -> Size(x) = 1) then
+      ErrorNoReturn(Concatenation("expected the second argument to be",
+                    " a string listing the relations of a semigroup",
+                    " but found an = symbol which isn't pairing two",
+                    " words"));
+    fi;
+    output := Filtered(output, x -> Size(x) >= 2);
+    output := List(output,
+                   x -> List([1 .. Size(x) - 1], y -> [x[y], x[y + 1]]));
+    return Concatenation(output);
+end);
+
