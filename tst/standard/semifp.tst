@@ -2134,6 +2134,45 @@ true
 gap> EvaluateExtRepObjWord(Generators(F), []);
 <identity ...>
 
+# Test ParseRelations
+gap> f := FreeSemigroup("x", "y", "e");                 
+<free semigroup on the generators [ x, y, e ]>
+gap> ParseRelations(GeneratorsOfSemigroup(f), "ex=x=xe, ey=y=ye, xy = e");
+[ [ e*x, x ], [ x, x*e ], [ e*y, y ], [ y, y*e ], [ x*y, e ] ]
+gap> f := FreeSemigroup("x", "y", "a", "b", "X");                              
+<free semigroup on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfSemigroup(f), ",x=X^3(yx^2)=a,b(aX)^3x=XXXX");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ] ]
+gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
+[ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
+gap> f := FreeSemigroup("x", "y", "a", "b", "X", "@");;
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y");
+Error, expected the first argument to be a list of a free semigroup generators\
+ represented by single English letter but found the generator @
+gap> f := FreeSemigroup("x", "y");;
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=()");
+Error, expected the second argument to be a string listing the relations of a \
+semigroup but found an = symbol which isn't pairing two words
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(");
+Error, expected the number of open brackets to match the number of closed brac\
+kets
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(^2)");
+Error, expected ^ to be preceded by a ) or a generator but found (
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=a^");
+Error, expected ^ to be followed by a positive integer but found end of string
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=x^y");
+Error, expected ^ to be followed by a positive integer but found y
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=^y");
+Error, expected ^ to be preceded by a ) or a generator but found beginning of \
+string
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=a");
+Error, expected a free semigroup generator but found a
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y^0");
+Error, expected ^ to be followed by a positive integer but found 0
+gap> ParseRelations(GeneratorsOfSemigroup(f), "x=");
+Error, expected the second argument to be a string listing the relations of a \
+semigroup but found an = symbol which isn't pairing two words
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
