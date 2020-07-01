@@ -2776,6 +2776,42 @@ true
 gap> Transformation([2, 1, 4, 3, 6, 5, 6, 5, 7, 8]) in WW;
 false
 
+# Test SingularClosureTransformationSemigroup
+gap> S:=SingularClosureTransformationSemigroup(SymmetricGroup(4),4);
+<transformation semigroup of degree 4 with 3 generators>
+gap> Size(S)=(4^4);
+true
+gap> S:=SingularClosureTransformationSemigroup(Group((1,2),(3,4)),4);
+<transformation semigroup of degree 4 with 6 generators>
+gap> Size(S)=(4^4-Factorial(4)+Size(Group((1,2),(3,4))));
+true
+gap> S:=SingularClosureTransformationSemigroup(Group((1,2)(3,4)),4);
+<transformation semigroup of degree 4 with 5 generators>
+gap> Size(S)=(4^4-Factorial(4)+Size(Group((1,2)(3,4))));
+true
+gap> S:=SingularClosureTransformationSemigroup(Group((1,2)(3,4)),6);
+<transformation semigroup of degree 6 with 10 generators>
+gap> Size(S)=(6^6-Factorial(6)+Size(Group((1,2)(3,4))));
+true
+
+# Test SingularClosurePartialTransformationSemigroup
+gap> S:=SingularClosurePartialTransformationSemigroup(SymmetricGroup(4),4);
+<transformation semigroup of degree 5 with 4 generators>
+gap> Size(S)=(5^4);
+true
+gap> S:=SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4)),4);
+<transformation semigroup of degree 5 with 8 generators>
+gap> Size(S)=(5^4-Factorial(4)+Size(Group((1,2),(3,4))));
+true
+gap> S:=SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4)),4);
+<transformation semigroup of degree 5 with 7 generators>
+gap> Size(S)=(5^4-Factorial(4)+Size(Group((1,2)(3,4))));
+true
+gap> S:=SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4),(5,6,7)),7);
+<transformation semigroup of degree 8 with 12 generators>
+gap> Size(S)=(8^7-Factorial(7)+Size(Group((1,2)(3,4),(5,6,7))));
+true
+
 # DigraphCore
 gap> D := CompleteBipartiteDigraph(4, 4);
 <immutable complete bipartite digraph with bicomponent sizes 4 and 4>
@@ -2788,34 +2824,6 @@ gap> D := CycleDigraph(10);
 gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-
-#SingularClosureTransformationSemigroup
-gap>S:= SingularClosureTransformationSemigroup(SymmetricGroup(4),4);
-gap>Size(S)=4^4;
-true
-gap>S:= SingularClosureTransformationSemigroup(Group((1,2),(3,4),4);
-gap>Size(S)=(4^4+Size(Group((1,2),(3,4));
-true
-gap>S:= SingularClosureTransformationSemigroup(Group((1,2)(3,4),4);
-gap>Size(S)=(4^4+Size(Group((1,2)(3,4));
-true
-gap>S:= SingularClosureTransformationSemigroup(Group((1,2)(3,4),6);
-gap>Size(S)=(6^6+Size(Group((1,2)(3,4));
-true
-
-#SingularClosurePartialTransformationSemigroup
-gap>S:= SingularClosurePartialTransformationSemigroup(SymmetricGroup(4),4);
-gap>Size(S)=5^4;
-true
-gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4),4);
-gap>Size(S)=(5^4+Size(Group((1,2),(3,4));
-true
-gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4),4);
-gap>Size(S)=(5^4+Size(Group((1,2)(3,4));
-true
-gap>S:= SingularClosurePartialTransformationSemigroup(Group((1,2)(3,4),6);
-gap>Size(S)=(7^6+Size(Group((1,2)(3,4));
-true
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
