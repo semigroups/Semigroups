@@ -284,7 +284,8 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "semiringmat.xml",
                            "semitrans.xml",
                            "trans.xml",
-                           "utils.xml"];
+                           "utils.xml",
+                           "word.xml"];
 
 SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
