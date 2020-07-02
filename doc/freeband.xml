@@ -190,3 +190,23 @@ gap> ContentOfFreeBandElementCollection([x, y]);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="ToddCoxeterBand">
+  <ManSection>
+    <Oper Name="ToddCoxeterBand"  Arg="n, R"/>
+    <Description>
+      This operation takes band presentation, where <A>n</A> is the size
+      of alphabet <C>A = [1 .. n]</C> and <A>R</A> is a list of lists of
+      words over <C>A</C>, representing the relations. It computes the
+      band defined by this band presentation via a band-specific version
+      of the Todd-Coxeter algorithm. If <A>R</A> is the empty list, then
+      the free band over <C>A</C> is computed.
+      
+      <!--
+      TODO: I think we should write a little more about the algorithm here
+      once we've finalised it. We should also add some examples, once we've
+      decided on exactly what the output should be.
+      -->
+    </Description>
+  </ManSection>
+<#/GAPDoc>

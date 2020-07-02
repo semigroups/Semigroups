@@ -154,6 +154,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     <#Include Label = "IsFreeBandElementCollection">
     <#Include Label = "IsFreeBandSubsemigroup">
     <#Include Label = "ContentOfFreeBandElement">
+    <#Include Label = "ToddCoxeterBand">
     
   </Section>
 
