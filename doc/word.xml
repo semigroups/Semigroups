@@ -44,3 +44,60 @@ gap> RandomWord(8, 4);
 </Description> 
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="StandardiseWord" >
+<ManSection>
+  <Oper Name = "StandardiseWord" Arg = "w"/>
+  <Oper Name = "StandardizeWord" Arg = "w"/>
+  <Returns>
+    A list of positive integers.
+  </Returns>
+  <Description>
+    This function takes a word <A>w</A>, consisting of <C>n</C> distinct
+    positive integers and returns a word <C>s</C> where the characters of
+    <C>s</C> correspond to those of <A>w</A> in order of first appearence.<P/>
+
+    The word <A>w</A> is changed in-place into word <C>s</C>.
+  <Example><![CDATA[
+gap> w := [3, 1, 2];
+[ 3, 1, 2 ]
+gap> StandardiseWord(w);
+[ 1, 2, 3 ]
+gap> w;
+[ 1, 2, 3 ]
+gap> w := [4, 2, 10, 2];
+[ 4, 2, 10, 2 ]
+gap> StandardiseWord(w);
+[ 1, 2, 3, 2 ]]]></Example> 
+</Description> 
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StringToWord" >
+<ManSection>
+  <Oper Name = "StringToWord" Arg = "s"
+    Label="for a string"/>
+  <Returns>
+    A list of positive integers.
+  </Returns>
+  <Description>
+    This function takes a string <A>s</A>, consisting of <C>n</C> distinct
+    positive integers and returns a word <C>w</C> (i.e. a list of positive
+    integers) over the alphabet <C>[1 .. n]</C>. The positive integers of
+    <C>w</C> correspond to the characters of <A>s</A>, in order of first
+    appearence.
+  <Example><![CDATA[
+gap> w := "abac";
+"abac"
+gap> StringToWord(w);
+[ 1, 2, 1, 3 ]
+gap> w := "ccala";
+"ccala"
+gap> StringToWord(w);
+[ 1, 1, 2, 3, 2 ]
+gap> StringToWord(w);
+[ 1, 2, 3, 4 ]
+]]></Example> 
+</Description> 
+</ManSection>
+<#/GAPDoc>
