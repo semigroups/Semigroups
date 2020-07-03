@@ -183,10 +183,12 @@ x1x2x2^-1x1^-1x1x2]]></Example>
 
 
   <Section>
-    <Heading> Words as strings in finitely presented semigroups
+    <Heading> Words and strings in finitely presented semigroups
     </Heading>
 
     <#Include Label = "WordToString" >
-    <#Include Label = "RandomWord" > 
+    <#Include Label = "RandomWord" >
+    <#Include Label = "StandardiseWord" >
+    <#Include Label = "StringToWord" >
   </Section>
 </Chapter>
