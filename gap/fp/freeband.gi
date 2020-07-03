@@ -440,42 +440,8 @@ end);
 InstallMethod(EqualInFreeBand, "for two lists of positive integers",
 [IsList, IsList],
 function(w1_in, w2_in)
-  local ListOfPosIntsToStandardListOfPosInts, Right, Left, LevelEdges,
-  RadixSort, StripFreeBandString, w1, w2, dollar, l1, l2, w, c, check,
-  rightk, leftk, edgecodes, rightm, leftm, i, k;
-
-  ListOfPosIntsToStandardListOfPosInts := function(list)
-    local L, distinct_chars, lookup, i;
-    if not IsList(list) then
-      ErrorNoReturn("expected a list as the argument");
-    fi;
-    for i in list do
-      if not IsPosInt(i) then
-        ErrorNoReturn("expected a list of positive integers as the argument");
-      fi;
-    od;
-    L := Length(list);
-    if L = 0 then
-      return [];
-    fi;
-
-    distinct_chars  := 1;
-    lookup          := [];
-    lookup[list[1]] := 1;
-    list[1]         := 1;
-
-    for i in [2 .. L] do
-      if IsBound(lookup[list[i]]) then
-        list[i] := lookup[list[i]];
-      else
-        distinct_chars  := distinct_chars + 1;
-        lookup[list[i]] := distinct_chars;
-        list[i]         := lookup[list[i]];
-      fi;
-    od;
-
-    return list;
-  end;
+  local Right, Left, LevelEdges, RadixSort, StripFreeBandString, w1, w2, dollar,
+  l1, l2, w, c, check, rightk, leftk, edgecodes, rightm, leftm, i, k;
 
   Right := function(w, k)
     local max_char, right, i, j, content_size, multiplicity, length_w;
@@ -554,7 +520,7 @@ function(w1_in, w2_in)
     od;
 
     length_w := Length(w);
-    w        := ListOfPosIntsToStandardListOfPosInts(Reversed(w));
+    w        := StandardiseWord(Reversed(w));
     left     := Reversed(Right(w, k));
     for i in [1 .. length_w] do
       if left[i] <> fail then
@@ -699,7 +665,7 @@ function(w1_in, w2_in)
   l2     := Length(w2);
 
   w := Concatenation(w1, [dollar], w2);
-  w := ListOfPosIntsToStandardListOfPosInts(w);
+  w := StandardiseWord(w);
 
   c     := w[l1 + 1];
   check := ListWithIdenticalEntries(c, false);
