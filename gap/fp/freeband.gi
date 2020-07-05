@@ -550,3 +550,149 @@ function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForFreeBandElements,
              data := hashlen);
 end);
+
+SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
+  local u, i;
+
+  if tuple in x!.lookup then
+    return x!.lookup[tuple];
+  fi;
+
+  x!.cont[tuple[1]] := true;
+  x!.cont[tuple[3]] := true;
+
+  if Length(x!.graveyard) <> 0 then
+    u := Remove(x!.graveyard);
+    for i in [2, 4] do
+      if x!.graph[u][i] <> 0 then
+        x!.indeg[x!.graph[u][i]] := x!.indeg[x!.graph[u][i]] - 1;
+        if x!.indeg[x!.graph[u][i]] = 0 then
+          Add(x!.graveyard, x!.graph[u][i]);
+        fi;
+      fi;
+    od;
+    Unbind(x!.lookup[x!.graph[u]]);
+    x!.graph[u] := tuple;
+  else
+    u := Length(x!.graph) + 1;
+    Add(x!.graph, tuple);
+    Add(x!.indeg, 0);
+  fi;
+
+  x!.lookup[tuple] := u;
+
+  if x!.root = tuple[2] or x!.root = tuple[4] then
+    x!.root := u;
+  fi;
+
+  for i in [2, 4] do
+    if tuple[i] <> 0 then
+      x!.indeg[tuple[i]] := x!.indeg[tuple[i]] + 1;
+    fi;
+  od;
+  return u;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
+  local u, v, w, add_spine;
+
+  add_spine := function(v)
+    local first, curr, prev;
+    if x!.graph[v][3] <> 0 then
+      first := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, v, x!.graph[v][3], 0]);
+    else
+      first := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, v, a, v]);
+      return first;
+    fi;
+    prev := first;
+    while v <> 0 do
+      v := x!.graph[v][4];
+      if x!.graph[v][3] <> 0 then
+        curr := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+                [a, v, x!.graph[v][3], 0]);
+      else
+        curr := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+                [a, v, a, v]);
+        x!.graph[prev][4] := curr;
+        x!.indeg[curr] := x!.indeg[curr] + 1;
+        return first;
+      fi;
+      x!.graph[prev][4] := curr;
+      x!.indeg[curr] := x!.indeg[curr] + 1;
+      if x!.graph[v][4] = 0 then
+        x!.graph[curr][4] := v;
+        x!.indeg[v] := x!.indeg[v] + 1;
+      fi;
+      prev := curr;
+    od;
+    return first;
+  end;
+
+  if not x!.cont[a] then
+    x!.root := add_spine(x!.root);
+  else
+    u := x!.root;
+    while x!.graph[u][3] <> a do
+      u := x!.graph[u][4];
+    od;
+    w := x!.graph[u][4];
+    v := x!.graph[w][4];
+    if v <> 0 then
+      x!.indeg[w] := x!.indeg[w] - 1;
+      if x!.indeg[w] = 0 then
+        Add(x!.graveyard, w);
+      fi;
+      x!.graph[w][4] := 0;
+      x!.graph[u][3] := x!.graph[w][3];
+      x!.indeg[v] := x!.indeg[v] - 1;
+      x!.graph[u][4] := add_spine(v);
+      x!.indeg[x!.graph[u][4]] := x!.indeg[x!.graph[u][4]] + 1;
+    fi;
+  fi;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices := function(x)
+  local i, j, u, v;
+  i := 1;
+  u := Length(x!.graph);
+  while i <= Length(x!.graveyard) and u > 0 do
+    v := x!.graveyard[i];
+    if u <> v then
+      if u = x!.root then
+        x!.root := v;
+      fi;
+      x!.indeg[v] := x!.indeg[u];
+      x!.graph[v] := x!.graph[u];
+    fi;
+    Remove(x!.graph);
+    Remove(x!.indeg);
+  od;
+  for i in [1 .. Length(x!.graph)] do
+    for j in [2, 4] do
+      if x!.graph[i][j] > u then
+        x!.graph[i][j] := x!.graveyard[x!.graph[i][j] - u];
+      fi;
+    od;
+  od;
+  x!.graveyard := [];
+end;
+
+SEMIGROUPS.FreeBandElementByGraph := function(S)
+  local F, type, x, s;
+  F    := NewFamily("FreeBandElementsByGraphFamily", IsFreeBandElementByGraph);
+  type := NewType(F, IsFreeBandElementByGraph and IsPositionalObjectRep);
+  x    := Objectify(type, rec(root := 1,
+                              graph := [[0, 0, 0, 0]],
+                              cont := BlistList([1 .. Maximum(S)], []),
+                              graveyard := [],
+                              indeg := [0],
+                              lookup := HashMap()));
+  x!.lookup[[0, 0, 0, 0]] := 1;
+  for s in S do
+    SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter(x, s);
+  od;
+  # SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices(x);
+  return x;
+end;
