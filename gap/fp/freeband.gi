@@ -561,6 +561,12 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
   x!.cont[tuple[1]] := true;
   x!.cont[tuple[3]] := true;
 
+  for i in [2, 4] do
+    if tuple[i] <> 0 then
+      x!.indeg[tuple[i]] := x!.indeg[tuple[i]] + 1;
+    fi;
+  od;
+
   if Length(x!.graveyard) <> 0 then
     u := Remove(x!.graveyard);
     for i in [2, 4] do
@@ -568,10 +574,10 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
         x!.indeg[x!.graph[u][i]] := x!.indeg[x!.graph[u][i]] - 1;
         if x!.indeg[x!.graph[u][i]] = 0 then
           Add(x!.graveyard, x!.graph[u][i]);
+          Unbind(x!.lookup[x!.graph[u][i]]);
         fi;
       fi;
     od;
-    Unbind(x!.lookup[x!.graph[u]]);
     x!.graph[u] := tuple;
   else
     u := Length(x!.graph) + 1;
@@ -585,11 +591,6 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
     x!.root := u;
   fi;
 
-  for i in [2, 4] do
-    if tuple[i] <> 0 then
-      x!.indeg[tuple[i]] := x!.indeg[tuple[i]] + 1;
-    fi;
-  od;
   return u;
 end;
 
@@ -597,37 +598,19 @@ SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
   local u, v, w, add_spine;
 
   add_spine := function(v)
-    local first, curr, prev;
-    if x!.graph[v][3] <> 0 then
-      first := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
-               [a, v, x!.graph[v][3], 0]);
-    else
-      first := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
-               [a, v, a, v]);
-      return first;
-    fi;
-    prev := first;
-    while v <> 0 do
+    local u, que;
+    que := [];
+    while x!.graph[v][1] <> 0 do
+      Add(que, v);
       v := x!.graph[v][4];
-      if x!.graph[v][3] <> 0 then
-        curr := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
-                [a, v, x!.graph[v][3], 0]);
-      else
-        curr := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
-                [a, v, a, v]);
-        x!.graph[prev][4] := curr;
-        x!.indeg[curr] := x!.indeg[curr] + 1;
-        return first;
-      fi;
-      x!.graph[prev][4] := curr;
-      x!.indeg[curr] := x!.indeg[curr] + 1;
-      if x!.graph[v][4] = 0 then
-        x!.graph[curr][4] := v;
-        x!.indeg[v] := x!.indeg[v] + 1;
-      fi;
-      prev := curr;
     od;
-    return first;
+    v := SEMIGROUPS.FreeBandElementByGraphInsertNode(x, [a, v, a, v]);
+    while Length(que) > 0 do
+      u := Remove(que);
+      v := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+           [a, u, x!.graph[u][3], v]);
+    od;
+    return v;
   end;
 
   if not x!.cont[a] then
@@ -643,12 +626,13 @@ SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
       x!.indeg[w] := x!.indeg[w] - 1;
       if x!.indeg[w] = 0 then
         Add(x!.graveyard, w);
+        Unbind(x!.lookup[x!.graph[w]]);
       fi;
-      x!.graph[w][4] := 0;
+      Unbind(x!.lookup[x!.graph[u]]);
       x!.graph[u][3] := x!.graph[w][3];
-      x!.indeg[v] := x!.indeg[v] - 1;
       x!.graph[u][4] := add_spine(v);
       x!.indeg[x!.graph[u][4]] := x!.indeg[x!.graph[u][4]] + 1;
+      x!.lookup[x!.graph[u]] := u;
     fi;
   fi;
 end;
@@ -677,6 +661,38 @@ SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices := function(x)
     od;
   od;
   x!.graveyard := [];
+end;
+
+SEMIGROUPS.FreeBandElementByGraphDotString := function(x)
+  local S, i;
+  S := "//dot\ndigraph {\nedge [colorscheme=set19]\n";
+  S := Concatenation(S, "node [shape=circle style=filled colorscheme=set19]\n");
+  x!.graveyard := Set(x!.graveyard);
+  for i in [1 .. Length(x!.graph)] do
+    if i in x!.graveyard then
+      S := Concatenation(S, String(i), " [fillcolor=white]\n");
+    else
+      S := Concatenation(S, String(i), "\n");
+    fi;
+  od;
+  for i in [1 .. Length(x!.graph)] do
+    if x!.graph[i][2] <> 0 then
+      S := Concatenation(S, String(i), "->",
+                         String(x!.graph[i][2]),
+                         " [arrowhead=empty color=",
+                         String(x!.graph[i][1]),
+                         "]\n");
+    fi;
+    if x!.graph[i][4] <> 0 then
+      S := Concatenation(S, String(i), "->",
+                         String(x!.graph[i][4]),
+                         " [arrowhead=normal color=",
+                         String(x!.graph[i][3]),
+                         "]\n");
+    fi;
+  od;
+  S := Concatenation(S, "}");
+  return S;
 end;
 
 SEMIGROUPS.FreeBandElementByGraph := function(S)
