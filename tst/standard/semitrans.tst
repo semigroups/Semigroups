@@ -2789,6 +2789,59 @@ gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 
+# SmallGeneratingSet
+# transfomatoins
+gap> S := Semigroup([Transformation([2, 2]), Transformation([3, 2, 3]), Transformation([1, 2, 3, 1]), Transformation([1, 2, 4, 4]), Transformation([2, 1, 4, 3])]);
+<transformation semigroup of degree 4 with 5 generators>
+gap> S := Semigroup(S);
+<transformation semigroup of degree 4 with 5 generators>
+gap> Size(SmallGeneratingSet(S));
+5
+gap> S := Semigroup([Transformation([2, 2]), Transformation([1, 2, 1]), Transformation([1, 2, 4, 4]), Transformation([3, 2, 3]), Transformation([1, 2, 4, 3]), Transformation([2, 1])]);
+<transformation semigroup of degree 4 with 6 generators>
+gap> S := Semigroup(S);
+<transformation semigroup of degree 4 with 6 generators>
+gap> Size(SmallGeneratingSet(S));
+6
+gap> S := Semigroup([Transformation([2, 2]), Transformation([2, 1]), Transformation([2, 3, 4, 1])]);
+<transformation semigroup of degree 4 with 3 generators>
+gap> S := Semigroup(S);
+<transformation semigroup of degree 4 with 3 generators>
+gap> Size(SmallGeneratingSet(S));
+3
+gap> S := Semigroup([Transformation([2, 2]), Transformation([3, 2, 3]), Transformation([4, 2, 3, 4]), Transformation([1, 2, 3, 4, 1]), Transformation([1, 2, 3, 4, 5, 1]), Transformation([1, 2, 4, 4]), Transformation([1, 2, 5, 4, 5]), Transformation([1, 2, 3, 4, 5, 3]), Transformation([1, 2, 3, 4, 6, 6]), Transformation([2, 1, 4, 3])]);
+<transformation semigroup of degree 6 with 10 generators>
+gap> S := Semigroup(S);
+<transformation semigroup of degree 6 with 10 generators>
+gap> Size(SmallGeneratingSet(S));
+10
+
+# partial transformations
+gap> S := Semigroup([Transformation([2, 2]), Transformation([3, 2, 3]), Transformation([1, 2, 3, 1]), Transformation([1, 2, 4, 4]), Transformation([5, 2, 3, 4, 5]), Transformation([1, 2, 5, 4, 5]), Transformation([2, 1, 4, 3])]);
+<transformation semigroup of degree 5 with 7 generators>
+gap> S := S;
+<transformation semigroup of degree 5 with 7 generators>
+gap> Size(SmallGeneratingSet(S));
+7
+gap> S := Semigroup([Transformation([2, 2]), Transformation([1, 2, 1]), Transformation([1, 2, 4, 4]), Transformation([3, 2, 3]), Transformation([5, 2, 3, 4, 5]), Transformation([1, 2, 5, 4, 5]), Transformation([2, 1]), Transformation([1, 2, 4, 3])]);
+<transformation semigroup of degree 5 with 8 generators>
+gap> S := S;
+<transformation semigroup of degree 5 with 8 generators>
+gap> Size(SmallGeneratingSet(S));
+8
+gap> S := Semigroup([Transformation([2, 2]), Transformation([5, 2, 3, 4, 5]), Transformation([2, 3, 4, 1]), Transformation([2, 1])]);
+<transformation semigroup of degree 5 with 4 generators>
+gap> Ss := S;
+<transformation semigroup of degree 5 with 4 generators>
+gap> Size(SmallGeneratingSet(S));
+4
+gap> S := Semigroup([Transformation([2, 2]), Transformation([3, 2, 3]), Transformation([4, 2, 3, 4]), Transformation([1, 2, 3, 4, 1]), Transformation([1, 2, 3, 4, 5, 1]), Transformation([1, 2, 4, 4]), Transformation([1, 2, 5, 4, 5]), Transformation([1, 2, 3, 4, 5, 3]), Transformation([1, 2, 3, 4, 6, 6]), Transformation([7, 2, 3, 4, 5, 6, 7]), Transformation([1, 2, 7, 4, 5, 6, 7]), Transformation([1, 2, 3, 4, 7, 6, 7]), Transformation([1, 2, 3, 4, 5, 7, 7]), Transformation([2, 1, 4, 3])]);
+<transformation semigroup of degree 7 with 14 generators>
+gap> S := S;
+<transformation semigroup of degree 7 with 14 generators>
+gap> Size(SmallGeneratingSet(S));
+14
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(BruteForceInverseCheck);

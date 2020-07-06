@@ -691,6 +691,172 @@ function(M, S)
   return Semigroup(maps);
 end);
 
+InstallMethod(SmallGeneratingSet,  " for transformation monoid",
+ [IsTransformationMonoid],
+function(T)
+  local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
+  Digo, nlc, sing, g, gcount, m, v, vcount, STM, SPTM, ispart, istrans;
+
+  # Check if is of the form <G U Singn>
+  n := DegreeOfTransformationSemigroup(T);
+  STM := Size(SingularTransformationMonoid(n));
+  SPTM := n ^ (n - 1) - Factorial(n - 1);
+  T := List(T);
+  sing := [1 .. STM];
+  g := [1 .. (Size(T) - STM)];
+  gcount := 1;
+  i := 1;
+  for t in [1 .. Size(T)] do
+    if T[t] in AsSemigroup(IsTransformationSemigroup, SymmetricGroup(n)) then
+      g[gcount] := T[t];
+      gcount := gcount + 1;
+    else
+      sing[i] := T[t];
+      i := i + 1;
+    fi;
+  od;
+  i := 1;
+  if Size(g) = 0 then
+    TryNextMethod();
+  fi;
+  if IsPosInt(sing[SPTM]) then
+    ispart := false;
+      istrans := false;
+  elif IsPosInt(sing[SPTM]) = false and IsPosInt(sing[SPTM + 1]) then
+    ispart := true;
+      istrans := false;
+  elif IsPosInt(sing[STM]) = false then
+    ispart := false;
+      istrans := true;
+  elif IsPosInt(sing[STM]) = false then
+  fi;
+  if ispart = false and istrans = false then
+     TryNextMethod();
+  fi;
+  if ispart = true then
+    n := n - 1;
+  fi;
+
+  G := Group(g);
+  # Digraph with nodes {1,  .., n} and an edge from x to y if there exists g in
+  # G such that g(x)  =  y.
+  D := Digraph([1 .. n], {x, y} -> ForAny(G, g -> x ^ g = y));
+  # List such that if v is vertex in digraph D,  then id[v] is the index of the
+  # strongly connected component of D containing v
+  id := DigraphStronglyConnectedComponents(D).id;
+  # Takes a pair [i,  j] and returns the pair consisting of the index of the scc
+  # of D containing i and the index of the scc of D containing j.
+  f := pair -> [id[pair[1]], id[pair[2]]];
+  # Compute the orbits of G on pairs
+  o := Orbits(G, Combinations([1 .. n], 2), OnSets);
+  # List(o,  x -> f(x[1])) apply the function f (above) to one representative
+  # from every orbit of o,  and create the digraph with these edges.
+  O := DigraphByEdges(List(o, x -> f(x[1])));
+  # removes loops to count number of non loops
+  d := DigraphNrEdges(DigraphRemoveLoops(O));
+  v := DigraphNrVertices(O);
+  # special case for if quoteient is a point
+  if v = 1 then
+    e := DigraphNrEdges(O);
+    if ispart = true then
+      N := [1 .. e + v + Size(SmallGeneratingSet(G))];
+    else
+      N := [1 .. e + Size(SmallGeneratingSet(G))];
+    fi;
+    for i in [1 .. DigraphNrEdges(O)] do
+      K := o[i][1][1];
+      L := o[i][1][2];
+      N[i] := Transformation([K], [L]);
+    od;
+    # cases are if only 1 non loop and otherweise
+  elif d = 1 then
+    e := DigraphNrEdges(O);
+    if ispart = true then
+      N := [1 .. e + 1 + v + Size(SmallGeneratingSet(G))];
+    else
+      N := [1 .. (e + 1 + Size(SmallGeneratingSet(G)))];
+    fi;
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+        N[i] := Transformation([K], [L]);
+      else
+        q := i;
+      fi;
+    od;
+    I := o[q][1][1];
+    J := o[q][1][2];
+    K := o[q][2][2];
+    N[q] := Transformation([J], [I]);
+    N[e + 1] := Transformation([I, J], [J, K]);
+    # second case as StrongOrientation function only works
+    # on graphs with more vertex than 2
+  elif d = 2 then
+    e := DigraphNrEdges(O);
+    if ispart = true then
+      N := [1 .. e + v + Size(SmallGeneratingSet(G))];
+    else
+      N := [1 .. e + Size(SmallGeneratingSet(G))];
+    fi;
+    nlc := 0;
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      elif nlc < 1 then
+        K := (o)[i][1][1];
+        L := (o)[i][1][2];
+        nlc := nlc + 1;
+      else
+        K := (o)[i][1][2];
+        L := (o)[i][1][1];
+      fi;
+      N[i] := Transformation([K], [L]);
+    od;
+  else
+    e := DigraphNrEdges(O);
+    if ispart = true then
+      N := [1 .. e + v + Size(SmallGeneratingSet(G))];
+    else;
+      N := [1 .. e + Size(SmallGeneratingSet(G))];
+    fi;
+    Digo := StrongOrientation(DigraphSymmetricClosure(O));
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      elif DigraphEdges(O)[i][1] in DigraphEdges(Digo) then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      else
+        K := o[i][1][2];
+        L := o[i][1][1];
+      fi;
+         # using these start and end point values construct
+         # a transfomarion which is constant on that edge
+      N[i] := Transformation([K], [L]);
+    od;
+  fi;
+  if ispart = true then
+    if d = 1 then
+      for vcount in [1 .. v] do
+        N[e + 1 + vcount] := Transformation([Orbits(G, [1 .. n])
+        [vcount][1]], [n + 1]);
+      od;
+    else
+      for vcount in [1 .. v] do
+        N[e + vcount] := Transformation([Orbits(G, [1 .. n])
+        [vcount][1]], [n + 1]);
+      od;
+    fi;
+  fi;
+  for m in [1 .. Size(SmallGeneratingSet(G))] do
+    N[Size(N) + 1 - m] := SmallGeneratingSet(G)[m];
+  od;
+  return N;
+end);
+
 #############################################################################
 # ?. Isomorphisms
 #############################################################################

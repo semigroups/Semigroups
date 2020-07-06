@@ -376,3 +376,26 @@ gap> Size(WW);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="SmallGeneratingSet">
+   <ManSection>
+    <Oper Name="SmallGeneratingSet" Arg="G"/>
+    <Returns>A small generating set which with maximal idempotent elements .</Returns>
+    <Description>
+      When <A>G</A> is a semigroup of either transformations or partial 
+	  tansformations this function will check that the semigroup can be
+	  expressed as the union of G, a subgroup of the symetric group, and 
+	  all singular transformations or partial transformations.
+	  This returns a small generating set for the transformation or 
+	  partial transformation monoid of degree <A>n</A> which contains 
+	  <A>G</A> and all singular transformatiosn. This generating set is 
+	  to contain the same amount of idempotent generating elements as the 
+	  idempotent rank of the monoid. This would be a minimal generating set
+	  if the SmallGeneratingSet function returns a generating set of size 
+	  equal to the rank of <A>G</A>.
+	  
+	  <Example><![CDATA[
+	]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
