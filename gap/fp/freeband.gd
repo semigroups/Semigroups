@@ -20,4 +20,3 @@ DeclareAttribute("ContentOfFreeBandElementCollection",
                  IsFreeBandElementCollection);
 
 DeclareOperation("EqualInFreeBand", [IsList, IsList]);
-DeclareOperation("EqualInFreeBand", [IsString, IsString]);
