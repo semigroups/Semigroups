@@ -12,10 +12,18 @@ InstallMethod(WordToString, "for a string and a list",
 [IsString, IsList],
 function(alphabet, word)
   local str, i;
-   if Maximum(word) > Length(alphabet) then
-     ErrorNoReturn("Semigroups: WordToString: usage,\n",
-                   "there are not enough letters in the alphabet,");
-   fi;
+  if Length(word) = 0 then
+    return "";
+  fi;
+  for i in word do
+    if not IsPosInt(i) then
+      ErrorNoReturn("expected a list of positive integers as second argument");
+    fi;
+  od;
+  if Maximum(word) > Length(alphabet) then
+    ErrorNoReturn("Semigroups: WordToString: usage,\n",
+                  "there are not enough letters in the alphabet,");
+  fi;
   str := "";
   for i in word do
      Add(str, alphabet[i]);
@@ -23,10 +31,15 @@ function(alphabet, word)
   return str;
 end);
 
-InstallMethod(RandomWord, "for two integers",
+InstallMethod(RandomWord, "for two non-negative integers",
 [IsInt, IsInt],
 function(length, number_letters)
   local word, i;
+  if length < 0 then
+    ErrorNoReturn("expected non-negative integer as first argument");
+  elif number_letters < 0 then
+    ErrorNoReturn("expected non-negative integer as second argument");
+  fi;
   word := EmptyPlist(length);
   for i in [1 .. length] do
       Add(word, Random([1 .. number_letters]));
