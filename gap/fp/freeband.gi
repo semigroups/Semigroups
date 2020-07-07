@@ -638,29 +638,52 @@ SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
 end;
 
 SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices := function(x)
-  local i, j, u, v;
+  local l, r, i, j, n, u, v, is_dead, new_pos;
   i := 1;
-  u := Length(x!.graph);
-  while i <= Length(x!.graveyard) and u > 0 do
-    v := x!.graveyard[i];
-    if u <> v then
-      if u = x!.root then
-        x!.root := v;
-      fi;
-      x!.indeg[v] := x!.indeg[u];
-      x!.graph[v] := x!.graph[u];
-    fi;
-    Remove(x!.graph);
-    Remove(x!.indeg);
-  od;
-  for i in [1 .. Length(x!.graph)] do
+  n := Length(x!.graveyard);
+  while i <= n do
+    u := x!.graveyard[i];
     for j in [2, 4] do
-      if x!.graph[i][j] > u then
-        x!.graph[i][j] := x!.graveyard[x!.graph[i][j] - u];
+      v := x!.graph[u][j];
+      x!.indeg[v] := x!.indeg[v] - 1;
+      if x!.indeg[v] = 0 then
+        Add(x!.graveyard, v);
+        Unbind(x!.lookup[x!.graph[v]]);
+        n := n + 1;
       fi;
     od;
+    i := i + 1;
   od;
+  is_dead := BlistList([1 .. Length(x!.graph)], x!.graveyard);
+  new_pos := ListWithIdenticalEntries(Length(x!.graph), 0);
+  i := 1;
+  for u in [1 .. Length(x!.graph)] do
+    if not is_dead[u] then
+      new_pos[u] := i;
+      i := i + 1;
+    fi;
+  od;
+  x!.root := new_pos[x!.root];
+  x!.lookup := HashMap();
+  for u in [1 .. Length(x!.graph)] do
+    if not is_dead[u] then
+      l := 0;
+      if x!.graph[u][2] <> 0 then
+        l := new_pos[x!.graph[u][2]];
+      fi;
+      r := 0;
+      if x!.graph[u][4] <> 0 then
+        r := new_pos[x!.graph[u][4]];
+      fi;
+      x!.graph[new_pos[u]] := [x!.graph[u][1], l, x!.graph[u][3], r];
+      x!.indeg[new_pos[u]] := x!.indeg[u];
+      x!.lookup[x!.graph[new_pos[u]]] := new_pos[u];
+    fi;
+  od;
+  x!.graph := x!.graph{[1 .. i - 1]};
+  x!.indeg := x!.indeg{[1 .. i - 1]};
   x!.graveyard := [];
+  return x!.root;
 end;
 
 SEMIGROUPS.FreeBandElementByGraphDotString := function(x)
@@ -711,4 +734,62 @@ SEMIGROUPS.FreeBandElementByGraph := function(S)
   od;
   # SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices(x);
   return x;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphIsEqual := function(x, y)
+  local que, u, v, seen_x, seen_y, i;
+  if x!.cont <> y!.cont then
+    return false;
+  fi;
+  que := [[x!.root, y!.root]];
+  seen_x := BlistList([1 .. Length(x!.graph)], []);
+  seen_x[x!.root] := true;
+  seen_y := BlistList([1 .. Length(y!.graph)], []);
+  seen_y[y!.root] := true;
+  while Length(que) <> 0 do
+    u := Remove(que);
+    v := u[2];
+    u := u[1];
+    if x!.graph[u][1] <> y!.graph[v][1] or x!.graph[u][3] <> y!.graph[v][3] then
+      return false;
+    fi;
+    for i in [2, 4] do
+      if (x!.graph[u][i] = 0 and y!.graph[v][i] <> 0) or
+          (x!.graph[u][i] <> 0 and y!.graph[v][i] = 0) then
+        return false;
+      fi;
+      if x!.graph[u][i] <> 0 then
+        if (seen_x[x!.graph[u][i]] and not seen_y[y!.graph[v][i]]) or
+            (not seen_x[x!.graph[u][i]] and seen_y[y!.graph[v][i]]) then
+          return false;
+        fi;
+        if not seen_x[x!.graph[u][i]] then
+          Add(que, [x!.graph[u][i], y!.graph[v][i]]);
+          seen_x[x!.graph[u][i]] := true;
+          seen_y[y!.graph[v][i]] := true;
+        fi;
+      fi;
+    od;
+  od;
+  return true;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphCanonicalWord := function(x)
+  local S, recursive_step;
+
+  recursive_step := function(u, l, r)
+    local m;
+    if x!.graph[u][1] = 0 then
+      return;
+    fi;
+    m := QuoInt(r + l, 2);
+    S[m] := x!.graph[u][1];
+    S[m + 1] := x!.graph[u][3];
+    recursive_step(x!.graph[u][2], l, m - 1);
+    recursive_step(x!.graph[u][4], m + 2, r);
+  end;
+
+  S := ListWithIdenticalEntries(2 ^ (SizeBlist(x!.cont) + 1) - 2, 0);
+  recursive_step(x!.root, 1, Length(S));
+  return S;
 end;
