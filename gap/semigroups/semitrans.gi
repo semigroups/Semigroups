@@ -694,20 +694,21 @@ end);
 InstallMethod(SmallGeneratingSet,  " for transformation monoid",
  [IsTransformationMonoid],
 function(T)
-  local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
+  local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i, SG,
   Digo, nlc, sing, g, gcount, m, v, vcount, STM, SPTM, ispart, istrans;
 
   # Check if is of the form <G U Singn>
   n := DegreeOfTransformationSemigroup(T);
-  STM := Size(SingularTransformationMonoid(n));
+  STM := n ^ n - Factorial(n);
   SPTM := n ^ (n - 1) - Factorial(n - 1);
   T := List(T);
   sing := [1 .. STM];
   g := [1 .. (Size(T) - STM)];
   gcount := 1;
+  SG := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(n));
   i := 1;
   for t in [1 .. Size(T)] do
-    if T[t] in AsSemigroup(IsTransformationSemigroup, SymmetricGroup(n)) then
+    if T[t] in SG then
       g[gcount] := T[t];
       gcount := gcount + 1;
     else
