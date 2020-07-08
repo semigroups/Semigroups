@@ -699,6 +699,9 @@ function(T)
 
   # Check if is of the form <G U Singn>
   n := DegreeOfTransformationSemigroup(T);
+  if n < 1 then
+    TryNextMethod();
+  fi;
   STM := n ^ n - Factorial(n);
   SPTM := n ^ (n - 1) - Factorial(n - 1);
   T := List(T);
