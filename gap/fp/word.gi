@@ -17,7 +17,8 @@ function(alphabet, word)
   fi;
   for i in word do
     if not IsPosInt(i) then
-      ErrorNoReturn("expected a list of positive integers as second argument");
+      ErrorNoReturn("Semigroups: WordToString: usage,\n",
+                    "expected list of positive integers as second argument,");
     fi;
   od;
   if Maximum(word) > Length(alphabet) then
@@ -39,6 +40,8 @@ function(length, number_letters)
     ErrorNoReturn("expected non-negative integer as first argument");
   elif number_letters < 0 then
     ErrorNoReturn("expected non-negative integer as second argument");
+  elif number_letters = 0 and length > 0 then
+    ErrorNoReturn("first argument cannot be positive if second is zero");
   fi;
   word := EmptyPlist(length);
   for i in [1 .. length] do
@@ -51,9 +54,6 @@ InstallMethod(StandardiseWord, "for a list of positive integers",
 [IsList],
 function(w)
   local L, distinct_chars, lookup, i;
-  if not IsList(w) then
-    ErrorNoReturn("expected a list as argument");
-  fi;
 
   L := Length(w);
   if L = 0 then
