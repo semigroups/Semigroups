@@ -393,9 +393,6 @@ gap> Size(WW);
 	  idempotent rank of the monoid. This would be a minimal generating set
 	  if the SmallGeneratingSet function returns a generating set of size 
 	  equal to the rank of <A>G</A>.
-	  
-	  <Example><![CDATA[
-	]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
