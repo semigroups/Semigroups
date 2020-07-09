@@ -551,6 +551,131 @@ function(x, hashlen)
              data := hashlen);
 end);
 
+SEMIGROUPS.PrefixTupleOfFreeBandElement := function(word, n)
+  local lookup, distinct, L, i;
+  # word is a list of pos ints. n is the content size.
+  # Returns a list: first element is largest prefix of word which has content
+  # size n - 1.
+  # Second element is nth character to make its first appearance.
+
+  # Start with some argument checks and easy outputs (shouldn't be used).
+  if not (IsList(word) and not IsEmpty(word)) then
+    ErrorNoReturn("expected a non-empty list of pos ints as first argument");
+  fi;
+  if not IsPosInt(n) then
+    ErrorNoReturn("expected a positive integer as second argument");
+  fi;
+  if n > Length(word) then
+    ErrorNoReturn("second argument (content size) must be smaller than length ",
+                  "of first argument (word)");
+  fi;
+  if n = 1 then
+    return [[], word[1]];
+  fi;
+
+  # If the arguments are nontrivial, start scanning the word.
+  lookup          := [];
+  lookup[word[1]] := 1;
+  distinct        := 1;
+  L               := Length(word);
+  for i in [2 .. L] do
+    if not IsBound(lookup[word[i]]) then
+      distinct := distinct + 1;
+      if distinct = n then
+        # in this case the number of distinct letters has hit the max
+        return [word{[1 .. i - 1]}, word[i]];
+      fi;
+      lookup[word[i]] := distinct;
+    fi;
+  od;
+
+  # if distinct never reached n, then n was larger than content of word.
+  ErrorNoReturn("second argument (content size) must be at most equal to the ",
+                "number of distinct entries in the first argument");
+end;
+
+SEMIGROUPS.ShortCanonicalFormOfFreeBandElement := function(word)
+  local L, lookup, distinct, l1, l2, preftup, sufftup, pref, suff,
+  n1, n2, n, char, i;
+  # Returns shortest representation of the free band equivalence class of
+  # the input.
+  if not IsList(word) then
+    ErrorNoReturn("Expected a list of pos ints as input");
+  fi;
+  for char in word do
+    if not IsPosInt(char) then
+      ErrorNoReturn("Expected a list of pos ints as input");
+    fi;
+  od;
+
+  # Check if word is short, in which case output is easy.
+  L := Length(word);
+  if L = 0 then
+    return [];
+  elif L = 1 then
+    return word;
+  fi;
+
+  # If word is longer: first we need size of the alph.
+  lookup          := [];
+  lookup[word[1]] := 1;
+  distinct        := 1;
+  for i in [2 .. L] do
+    if not IsBound(lookup[word[i]]) then
+      distinct        := distinct + 1;
+      lookup[word[i]] := distinct;
+    fi;
+  od;
+
+  # If the  size of the alph is 1 or 2, output is easy.
+  if distinct = 1 then
+    # only one letter. Delete copies.
+    return [word[1]];
+  fi;
+  if distinct = 2 then
+    # then only the first and last letters matter.
+    if word[1] <> word[L] then
+      return [word[1], word[L]];
+    fi;
+    # otherwise the first and last are same. Need to know middle.
+    l1 := word[1];
+    for char in word do
+      if char <> l1 then
+        l2 := char;
+        return [l1, l2, l1];
+      fi;
+    od;
+  fi;
+
+  # If we've made it this far then the content is at least of size 3.
+  # Need to find prefix and suffix. Note suffix will be reversed in the output.
+  preftup := SEMIGROUPS.PrefixTupleOfFreeBandElement(word, distinct);
+  sufftup := SEMIGROUPS.PrefixTupleOfFreeBandElement(Reversed(word), distinct);
+
+  # Turn the two tuples into the two halves of the output.
+  pref := SEMIGROUPS.ShortCanonicalFormOfFreeBandElement(preftup[1]);
+  Add(pref, preftup[2]);
+
+  suff := SEMIGROUPS.ShortCanonicalFormOfFreeBandElement(sufftup[1]);
+  Add(suff, sufftup[2]);
+  suff := Reversed(suff);
+
+  # Now see if any cancellations are possible between suffixes of pref and
+  # prefixes of suff. Give priority to longest possible.
+  n1 := Length(pref);
+  n2 := Length(suff);
+  n  := Minimum(n1, n2);
+  for i in [0 .. n - 1] do
+    if pref{[n1 - n + i + 1 .. n1]} = suff{[1 .. n - i]} then
+      # a cancellation is possible. Cancel and return.
+      return Concatenation(pref, suff{[n - i + 1 .. n2]});
+    fi;
+  od;
+
+  # If we've made it this far then no cancellations are possible.
+  return Concatenation(pref, suff);
+end;
+
 InstallMethod(ToddCoxeterBand, "for a pos int and list of lists of words",
 [IsPosInt, IsList],
 function(N, R)
