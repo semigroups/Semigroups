@@ -680,46 +680,48 @@ InstallMethod(ToddCoxeterBand, "for a pos int and list of lists of words",
 [IsPosInt, IsList],
 function(N, R)
   local new_coset, tauf, canon, push_relation, process_coincidences,
-  A, F, G, k, active_cosets, table, coincidences, words, n, word,
-  pair, char, coset;
-
-  for pair in R do
-    if not IsList(pair) then
-      ErrorNoReturn("expected a list of lists as second argument");
-    elif Length(pair) <> 2 then
-      ErrorNoReturn("expected a list of lists with length 2 as second argument");
-    fi;
-    for word in pair do
-      for n in word do
-        if n < 1 or n > N then
-          ErrorNoReturn("expected a list of lists containing 2 words over ",
-                        "[1 .. N] as second argument");
-        fi;
-      od;
-    od;
-  od;
+  A, k, active_cosets, table, coincidences, words, n, word,
+  pair, char, coset, i, tau;
 
   new_coset := function(coset, char)
-    local new_word, pos;
-    # new_coset for bands is smart. If the word created, once reduced,
-    # is already somewhere else in the list, then it just sets
-    # table[coset][char] to be that coset.
+    local new_word, target, cosetm, charm, pword;
+    # intelligently creates a new coset ONLY if (non-forced) tau(coset, char)
+    # is not defined.
     if table[coset][char] = 0 then
       new_word := canon(Concatenation(words[coset], [char]));
-      pos      := Position(words, new_word);
+      target   := tau(1, new_word);
 
-      if pos = fail then
-        # in this case the word is genuinely new and we make a new coset
-        table[coset][char] := k;
-        active_cosets[k]   := true;
-        Add(table, ListWithIdenticalEntries(Length(A), 0));
-        Add(words, new_word);
-        k := k + 1;
+      if target = 0 then
+        # in this case following new_word from empty word does not lead us the
+        # full way and we need to define more cosets.
+        # Need to follow word again to see how far we got before undefined.
+        cosetm := 1;
+        pword  := [];  # partial word, add letters to it each time
+        for charm in new_word do
+          # extend partial word
+          Add(pword, charm);
+          if table[cosetm][charm] = 0 then
+            # edge is undefined, define a new one.
+            table[cosetm][charm] := k;
+            active_cosets[k]     := true;
+            Add(table, ListWithIdenticalEntries(Length(A), 0));
+            Add(words, ShallowCopy(pword));
+            # we need to re-canonicalise pword at the moment because canon does
+            # not always output the shortlex-least word.
+            # TODO remove this comment soon
+            k := k + 1;
+          fi;
+          cosetm := table[cosetm][charm];
+        od;
+
+        # now we've defined all the intermediate words, get the original
+        # request to point in the right place.
+        table[coset][char] := k - 1;  # k had been incremented 1 too many
 
       else
-        # word already exists
-        table[coset][char] := pos;
-
+        # in this case following new_word led us somewhere and we should
+        # point there
+        table[coset][char] := target;
       fi;
     fi;
   end;
@@ -741,12 +743,28 @@ function(N, R)
     return coset;
   end;
 
+  tau := function(coset, word)
+    local char;
+    # non-forced tau, checks whether you can get the whole way.
+    # for use in new-coset.
+    if Length(word) = 0 then
+      return coset;
+    fi;
+    for char in word do
+      if table[coset][char] = 0 then
+        return 0;
+      fi;
+      coset := table[coset][char];
+    od;
+    return coset;
+  end;
+
   canon := function(word)
     # expresses a word in free band-canonical form.
-    if IsEmpty(word) then
-      return [];
-    fi;
-    return SEMIGROUPS.FreeBandElmToWord(EvaluateWord(G, word));
+    # NOTE: it is essential to the validity of this algorithm that the canonical
+    # form returned is shortlex minimal. Otherwise new_coset doesn't work
+    # properly.
+    return SEMIGROUPS.ShortCanonicalFormOfFreeBandElement(word);
   end;
 
   push_relation := function(coset, u, v)
@@ -808,8 +826,8 @@ function(N, R)
   end;
 
   A             := [1 .. N];
-  F             := FreeBand(N);
-  G             := GeneratorsOfSemigroup(F);
+  # F             := FreeBand(N);               # obsolete since new canon func
+  # G             := GeneratorsOfSemigroup(F);  # obsolete since new canon func
   k             := 2;
   active_cosets := [true];
   table         := [[]];
@@ -837,9 +855,16 @@ function(N, R)
       od;
 
       # push the current coset through every known implicit relation
-      for word in ListBlist(words, active_cosets) do
+      for word in words do
         pair := [Concatenation(word, word), word];
         push_relation(n, pair[1], pair[2]);  # word is already canonical
+      od;
+
+      # push every previous coset through the current implicit relation
+      word := words[n];
+      pair := [Concatenation(word, word), word];
+      for i in ListBlist([1 .. n - 1], active_cosets{[1 .. n - 1]}) do
+        push_relation(i, pair[1], pair[2]);
       od;
 
     fi;
