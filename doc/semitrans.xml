@@ -385,11 +385,6 @@ gap> Size(WW);
       When <A>G</A> is a subgroup of the symmertic group on <A>n</A> points then 
 	  this returns the least Partition monoid of degree <A>n</A> which contains 
 	  <A>G</A> and all singular Partitions.
-	  
-      <Example><![CDATA[
-gap> SingularClosurePartitionSemigroupSemigroup(Group((1, 2), (3, 4)), 4);
-<bipartition semigroup of degree 4 with 10 generators>
-]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
