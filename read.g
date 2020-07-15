@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+ReadPackage("semigroups", "gap/smallestimage.g");
+
 ReadPackage("semigroups", "gap/hash.gi");
 
 ReadPackage("semigroups", "gap/elements/star.gi");
@@ -49,6 +51,7 @@ ReadPackage("semigroups", "gap/semigroups/grpffmat.gi");
 ReadPackage("semigroups", "gap/semigroups/semiquo.gi");
 ReadPackage("semigroups", "gap/semigroups/semieunit.gi");
 ReadPackage("semigroups", "gap/semigroups/semidp.gi");
+ReadPackage("semigroups", "gap/semigroups/cosetmonoid.gi");
 
 ReadPackage("semigroups", "gap/ideals/ideals.gi");
 ReadPackage("semigroups", "gap/ideals/idealact.gi");
