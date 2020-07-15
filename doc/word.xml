@@ -18,7 +18,7 @@
     Returns the word <A>word</A> that is given in the form of a list, in 
     the form of a string of letters of the <A>alphabet</A>.
  <Example><![CDATA[
- gap> WordToString("abcd", [4, 2, 3, 1, 1, 4, 2, 3]);
+gap> WordToString("abcd", [4, 2, 3, 1, 1, 4, 2, 3]);
 "dbcaadbc"]]></Example>
     </Description>
    </ManSection>
