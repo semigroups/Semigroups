@@ -33,7 +33,7 @@ function(G)
       rep := Representative(cosets[i][j]);
       newgens := Concatenation(Generators(subgroups[i]),
                   Generators(E ^ (rep ^ -1)));
-      if newgens = [] then 
+      if newgens = [] then
         newgens := [()];
       fi;
       newgroup := Group(newgens);
@@ -53,7 +53,7 @@ function(G)
 
   gens := Concatenation(gens, Generators(G));
 
-  Apply(gens, x -> 
+  Apply(gens, x ->
         Transformation(List(cosetpositions, y -> genprod(y[1], y[2], x))));
 
   return Semigroup(gens);
