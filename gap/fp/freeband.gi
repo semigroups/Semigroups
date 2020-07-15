@@ -816,7 +816,8 @@ SEMIGROUPS.FreeBandElementByGraphCanonicalWord := function(x)
     w := x!.graph[u][4];
     while x!.graph[w][1] <> 0 do
       if x!.graph[w][1] = x!.graph[u][1] and
-          x!.graph[v][3] = x!.graph[u][3] then
+          x!.graph[v][3] = x!.graph[u][3] and
+          x!.graph[w][2] = x!.graph[v][4] then
         u := w;
         v := x!.graph[u][2];
         w := x!.graph[u][4];
