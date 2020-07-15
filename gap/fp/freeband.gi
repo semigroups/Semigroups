@@ -574,7 +574,7 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
         x!.indeg[x!.graph[u][i]] := x!.indeg[x!.graph[u][i]] - 1;
         if x!.indeg[x!.graph[u][i]] = 0 then
           Add(x!.graveyard, x!.graph[u][i]);
-          Unbind(x!.lookup[x!.graph[u][i]]);
+          Unbind(x!.lookup[x!.graph[x!.graph[u][i]]]);
         fi;
       fi;
     od;
@@ -595,52 +595,57 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
 end;
 
 SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
-  local que, u, v, w, add_spine;
+  local que, u, v, w;
 
-  add_spine := function(v)
-    local u, que;
-    que := [];
-    while x!.graph[v][1] <> 0 do
-      Add(que, v);
-      v := x!.graph[v][4];
-    od;
-    v := SEMIGROUPS.FreeBandElementByGraphInsertNode(x, [a, v, a, v]);
-    while Length(que) > 0 do
-      u := Remove(que);
-      v := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
-           [a, u, x!.graph[u][3], v]);
-    od;
-    return v;
-  end;
-
-  if not x!.cont[a] then
-    x!.root := add_spine(x!.root);
-  else
-    que = [x!.root];
-    u := x!.root;
-    while x!.graph[u][3] <> a do
-      u := x!.graph[u][4];
-      Add(que, u);
-    od;
-    w := x!.graph[u][4];
-    v := x!.graph[w][4];
-
-    v := SEMIGROUPS.FreeBandElementByGraphInsertNode(
-         [x!.graph[u][1], x!.graph[u][2],
-          x!.graph[w][3], add_spine(v)]);
-    while v <> u do
-    od;
-    x!.indeg[w] := x!.indeg[w] - 1;
-    Unbind(x!.lookup[x!.graph[u]]);
-    x!.graph[u][3] := x!.graph[w][3];
-    x!.graph[u][4] := add_spine(v);
-    x!.indeg[x!.graph[u][4]] := x!.indeg[x!.graph[u][4]] + 1;
-    x!.lookup[x!.graph[u]] := u;
-    if x!.indeg[w] = 0 then
-      Add(x!.graveyard, w);
-      Unbind(x!.lookup[x!.graph[w]]);
-    fi;
+  if x!.graph[x!.root][1] = 0 then
+    x!.root := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, x!.root, a, x!.root]);
+    return;
   fi;
+
+  u   := x!.root;
+  que := [];
+  while x!.graph[u][1] <> 0 do
+    Add(que, u);
+    u := x!.graph[u][4];
+  od;
+  u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+       [a, u, a, u]);
+  v := Remove(que);
+  if u = v then
+    return;
+  fi;
+  while Length(que) > 0 do
+    w := v;
+    v := Remove(que);
+    if x!.graph[v][3] = a then
+      break;
+    fi;
+    u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+         [a, w, x!.graph[w][3], u]);
+  od;
+
+  if x!.graph[v][3] <> a then
+    x!.root := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, v, x!.graph[v][3], u]);
+    return;
+  fi;
+
+  u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+       [x!.graph[v][1], x!.graph[v][2], x!.graph[w][3], u]);
+
+  while Length(que) > 0 do
+    v := Remove(que);
+    u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+         [x!.graph[v][1], x!.graph[v][2], x!.graph[v][3], u]);
+  od;
+
+  if u <> v then
+    Add(x!.graveyard, v);
+    Unbind(x!.lookup[x!.graph[v]]);
+  fi;
+
+  x!.root := u;
 end;
 
 SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices := function(x)
