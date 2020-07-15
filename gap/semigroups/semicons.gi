@@ -810,8 +810,9 @@ InstallMethod(StrongSemilatticeOfSemigroups,
 "for a digraph, a list, and a list",
 [IsDigraph, IsList, IsList],
 function(D, semigroups, homomorphisms)
-  local efam, etype, type, out, s, i, j,
-        maps, n, rtclosure, path, len, tobecomposed;
+  local efam, etype, type, maps, n, rtclosure, path, len, tobecomposed, gens,
+  out, s, i, j;
+
   if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
     ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
                   "is a meet semilattice digraph as first argument");
@@ -866,8 +867,7 @@ function(D, semigroups, homomorphisms)
   type := NewType(CollectionsFamily(efam),
                   IsStrongSemilatticeOfSemigroups
                     and IsComponentObjectRep
-                    and IsAttributeStoringRep
-                    and IsEnumerableSemigroupRep);
+                    and IsAttributeStoringRep);
 
   # the next section converts the list of homomorphisms into a matrix,
   # composing when necessary.
@@ -897,6 +897,13 @@ function(D, semigroups, homomorphisms)
   od;
 
   out := rec();
+
+  gens := [];
+  for i in [1 .. Length(semigroups)] do
+    Append(gens, List(GeneratorsOfSemigroup(semigroups[i]),
+                      x -> Objectify(etype, [out, i, x])));
+  od;
+
   ObjectifyWithAttributes(out,
                           type,
                           SemilatticeOfStrongSemilatticeOfSemigroups,
@@ -906,27 +913,17 @@ function(D, semigroups, homomorphisms)
                           HomomorphismsOfStrongSemilatticeOfSemigroups,
                           maps,
                           ElementTypeOfStrongSemilatticeOfSemigroups,
-                          etype);
+                          etype,
+                          GeneratorsOfMagma,
+                          gens);
   return out;
 end);
 
-InstallMethod(GeneratorsOfMagma, "for a strong semilattice of semigroups",
-[IsStrongSemilatticeOfSemigroups],
-function(S)
-  local T, gens, i;
-  T := SemigroupsOfStrongSemilatticeOfSemigroups(S);
-  gens := [];
-  for i in [1 .. Length(T)] do
-    Append(gens, List(GeneratorsOfSemigroup(T[i]), x -> SSSE(S, i, x)));
-  od;
-  return gens;
-end);
-
-InstallMethod(Size, "for a strong semilattice of semigroups",
-[IsStrongSemilatticeOfSemigroups],
-function(S)
-  return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
-end);
+# InstallMethod(Size, "for a strong semilattice of semigroups",
+# [IsStrongSemilatticeOfSemigroups],
+# function(S)
+#   return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
+# end);
 
 InstallMethod(ViewString, "for a strong semilattice of semigroups",
 [IsStrongSemilatticeOfSemigroups],
