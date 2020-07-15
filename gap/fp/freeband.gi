@@ -595,7 +595,7 @@ SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
 end;
 
 SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
-  local u, v, w, add_spine;
+  local que, u, v, w, add_spine;
 
   add_spine := function(v)
     local u, que;
@@ -616,23 +616,29 @@ SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
   if not x!.cont[a] then
     x!.root := add_spine(x!.root);
   else
+    que = [x!.root];
     u := x!.root;
     while x!.graph[u][3] <> a do
       u := x!.graph[u][4];
+      Add(que, u);
     od;
     w := x!.graph[u][4];
     v := x!.graph[w][4];
-    if v <> 0 then
-      x!.indeg[w] := x!.indeg[w] - 1;
-      if x!.indeg[w] = 0 then
-        Add(x!.graveyard, w);
-        Unbind(x!.lookup[x!.graph[w]]);
-      fi;
-      Unbind(x!.lookup[x!.graph[u]]);
-      x!.graph[u][3] := x!.graph[w][3];
-      x!.graph[u][4] := add_spine(v);
-      x!.indeg[x!.graph[u][4]] := x!.indeg[x!.graph[u][4]] + 1;
-      x!.lookup[x!.graph[u]] := u;
+
+    v := SEMIGROUPS.FreeBandElementByGraphInsertNode(
+         [x!.graph[u][1], x!.graph[u][2],
+          x!.graph[w][3], add_spine(v)]);
+    while v <> u do
+    od;
+    x!.indeg[w] := x!.indeg[w] - 1;
+    Unbind(x!.lookup[x!.graph[u]]);
+    x!.graph[u][3] := x!.graph[w][3];
+    x!.graph[u][4] := add_spine(v);
+    x!.indeg[x!.graph[u][4]] := x!.indeg[x!.graph[u][4]] + 1;
+    x!.lookup[x!.graph[u]] := u;
+    if x!.indeg[w] = 0 then
+      Add(x!.graveyard, w);
+      Unbind(x!.lookup[x!.graph[w]]);
     fi;
   fi;
 end;
@@ -774,22 +780,50 @@ SEMIGROUPS.FreeBandElementByGraphIsEqual := function(x, y)
   return true;
 end;
 
+SEMIGROUPS.FreeBandElementByGraphCopy := function(x)
+  local lookup, key;
+  lookup := HashMap();
+  for key in Keys(x!.lookup) do
+    lookup[key] := x!.lookup[key];
+  od;
+  return Objectify(TypeObj(x),
+                   rec(root := x!.root,
+                      graph := ShallowCopy(x!.graph),
+                       cont := ShallowCopy(x!.cont),
+                  graveyard := ShallowCopy(x!.graveyard),
+                      indeg := ShallowCopy(x!.indeg),
+                     lookup := lookup));
+end;
+
 SEMIGROUPS.FreeBandElementByGraphCanonicalWord := function(x)
-  local S, recursive_step;
-
-  recursive_step := function(u, l, r)
-    local m;
-    if x!.graph[u][1] = 0 then
-      return;
+  local S, que, u, v, w;
+  S   := [];
+  que := [];
+  u   := x!.root;
+  while x!.graph[u][1] <> 0 do
+    Add(que, u);
+    u := x!.graph[u][2];
+  od;
+  while Length(que) <> 0 do
+    u := Remove(que);
+    Add(S, x!.graph[u][1]);
+    v := x!.graph[u][2];
+    w := x!.graph[u][4];
+    while x!.graph[w][1] <> 0 do
+      if x!.graph[w][1] = x!.graph[u][1] and
+          x!.graph[v][3] = x!.graph[u][3] then
+        u := w;
+        v := x!.graph[u][2];
+        w := x!.graph[u][4];
+      else
+        Add(que, w);
+        w := x!.graph[w][2];
+        v := x!.graph[v][4];
+      fi;
+    od;
+    if x!.graph[u][1] <> x!.graph[u][3] then
+      Add(S, x!.graph[u][3]);
     fi;
-    m := QuoInt(r + l, 2);
-    S[m] := x!.graph[u][1];
-    S[m + 1] := x!.graph[u][3];
-    recursive_step(x!.graph[u][2], l, m - 1);
-    recursive_step(x!.graph[u][4], m + 2, r);
-  end;
-
-  S := ListWithIdenticalEntries(2 ^ (SizeBlist(x!.cont) + 1) - 2, 0);
-  recursive_step(x!.root, 1, Length(S));
+  od;
   return S;
 end;
