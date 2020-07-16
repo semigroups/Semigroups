@@ -811,7 +811,7 @@ InstallMethod(StrongSemilatticeOfSemigroups,
 [IsDigraph, IsList, IsList],
 function(D, semigroups, homomorphisms)
   local efam, etype, type, maps, n, rtclosure, path, len, tobecomposed, gens,
-  out, s, i, j;
+  out, s, i, j, paths, firsthom;
 
   if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
     ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
@@ -854,11 +854,7 @@ function(D, semigroups, homomorphisms)
       fi;
     od;
   od;
-  # TODO add: check commutativity;
-  # otherwise errors will only show up when trying to actually multiply things.
 
-  # I think this works for now as argument checking: we can update this when we
-  # figure out more specifics of what we want the arguments to be
   efam := NewFamily("StrongSemilatticeOfSemigroupsElementsFamily", IsSSSE);
   etype := NewType(efam, IsSSSERep);
 
@@ -878,11 +874,31 @@ function(D, semigroups, homomorphisms)
       if i = j then
         Add(maps[i], IdentityMapping(semigroups[i]));
       elif IsDigraphEdge(rtclosure, [i, j]) then
-        path := DigraphPath(D, i, j);
-        len  := Length(path[2]);
+        paths        := IteratorOfPaths(D, i, j);
+        path         := NextIterator(paths);
+        len          := Length(path[2]);
         tobecomposed := List([1 .. len],
                               x -> homomorphisms[path[1][x]][path[2][x]]);
-        Add(maps[i], CompositionMapping(tobecomposed));
+        firsthom     := CompositionMapping(tobecomposed);
+
+        # now check the first composition is the same as the composition along
+        # all other paths from i to j
+        while not IsDoneIterator(paths) do
+          path         := NextIterator(paths);
+          len          := Length(path[2]);
+          tobecomposed := List([1 .. len],
+                                x -> homomorphisms[path[1][x]][path[2][x]]);
+          if CompositionMapping(tobecomposed) <> firsthom then
+            ErrorNoReturn("Composing homomorphisms along different paths from ",
+                          i,
+                          " to ",
+                          j,
+                          " does not produce the same result. The ",
+                          "homomorphisms must commute");
+          fi;
+        od;
+        # If no errors so far, then all paths commute and we can add the comp.
+        Add(maps[i], firsthom);
         # NB. perhaps a dynamic programming approach would be more
         # efficient here.
         # for some larger digraphs, the current method might compute some
