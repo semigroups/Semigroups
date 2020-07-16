@@ -887,6 +887,7 @@ function(D, semigroups, homomorphisms)
         # efficient here.
         # for some larger digraphs, the current method might compute some
         # compositions of homomorphisms several times.
+        # This should be a FIXME.
       else
         Add(maps[i], fail);
         # is fail a reasonable thing to add here?
@@ -964,12 +965,6 @@ function(x, y)
   D    := SemilatticeOfStrongSemilatticeOfSemigroups(x![1]);
   meet := PartialOrderDigraphMeetOfVertices(D, x![2], y![2]);
   maps := HomomorphismsOfStrongSemilatticeOfSemigroups(x![1]);
-  # TODO should compose functions if necessary!
-  #      no longer necessary since we'll take the "refl. trans. closure"
-  #      of the homomorphisms and store in a  matrix.
-  # TODO check if x and y belong to the same semigroup, or if x < y.
-  #      this is no longer necessary since we will ensure we fill in the
-  #      maps matrix with the identity down the diagonal.
   return SSSE(x![1],
               meet,
               (x![3] ^ (maps[meet][x![2]])) * (y![3] ^ (maps[meet][y![2]])));
