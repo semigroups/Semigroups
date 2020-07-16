@@ -855,8 +855,6 @@ function(D, semigroups, homomorphisms)
     od;
   od;
   # TODO add: check commutativity;
-  # check domains and ranges of homs make sense; (done)
-  # check all homs are actally homomorphisms. (done)
   # otherwise errors will only show up when trying to actually multiply things.
 
   # I think this works for now as argument checking: we can update this when we
@@ -919,11 +917,11 @@ function(D, semigroups, homomorphisms)
   return out;
 end);
 
-# InstallMethod(Size, "for a strong semilattice of semigroups",
-# [IsStrongSemilatticeOfSemigroups],
-# function(S)
-#   return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
-# end);
+InstallMethod(Size, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
+end);
 
 InstallMethod(ViewString, "for a strong semilattice of semigroups",
 [IsStrongSemilatticeOfSemigroups],
@@ -948,7 +946,6 @@ function(S, n, x)
   return Objectify(ElementTypeOfStrongSemilatticeOfSemigroups(S), [S, n, x]);
 end);
 
-# TODO implement \=, \< for IsSSSREP
 InstallMethod(\=, "for SSSEs", IsIdenticalObj,
 [IsSSSERep, IsSSSERep],
 function(x, y)
