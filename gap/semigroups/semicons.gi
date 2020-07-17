@@ -872,6 +872,16 @@ function(D, semigroups, homomorphisms)
     Add(maps, []);
     for j in [1 .. n] do
       if i = j then
+        # First check that if a homomorphism from i to i was defined, it
+        # is the identity
+        if IsDigraphEdge(D, [i, i]) then
+          if homomorphisms[i][Position(OutNeighboursOfVertex(D, i), i)]
+              <> IdentityMapping(semigroups[i]) then
+             ErrorNoReturn("Expected homomorphism from ",
+                           i, " to ", i,
+                           " to be the identity");
+           fi;
+        fi;
         Add(maps[i], IdentityMapping(semigroups[i]));
       elif IsDigraphEdge(rtclosure, [i, j]) then
         paths        := IteratorOfPaths(D, i, j);
