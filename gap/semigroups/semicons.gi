@@ -813,6 +813,9 @@ function(D, semigroups, homomorphisms)
   local efam, etype, type, maps, n, rtclosure, path, len, tobecomposed, gens,
   out, s, i, j, paths, firsthom;
 
+  #  TODO would it be advisable to ensure all the semigroups are distinct?
+  #  In the GAP sense of distinct, that is
+
   if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
     ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
                   "is a meet semilattice digraph as first argument");
@@ -1002,11 +1005,11 @@ function(x)
   return Concatenation("SSSE(", ViewString(x![2]), ", ", ViewString(x![3]), ")");
 end);
 
-# InstallMethod(StrongSemilatticeOfSemigroups, "for a SSSE rep",
-# [IsSSSERep],
-# function(x)
-#   return x![1];
-# end);
+InstallMethod(StrongSemilatticeOfSemigroups, "for a SSSE rep",
+[IsSSSERep],
+function(x)
+  return x![1];
+end);
 
 InstallMethod(ChooseHashFunction, "for SSSE and int",
 [IsSSSERep, IsInt],

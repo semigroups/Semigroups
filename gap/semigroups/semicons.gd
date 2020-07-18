@@ -21,8 +21,6 @@ DeclareGlobalFunction("RightZeroSemigroup");
 DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
 DeclareGlobalFunction("BrandtSemigroup");
 
-DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
-
 DeclareCategory("IsSSSE", IsAssociativeElement);
 DeclareCategoryCollections("IsSSSE");
 
@@ -31,6 +29,9 @@ DeclareCategoryCollections("IsSSSE");
 # 2) the node of the digraph;
 # 3) the underlying semigroup element itself.
 DeclareRepresentation("IsSSSERep", IsSSSE and IsPositionalObjectRep, 2);
+
+DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
+DeclareOperation("StrongSemilatticeOfSemigroups", [IsSSSERep]);
 
 DeclareCategory("IsStrongSemilatticeOfSemigroups",
                 IsSemigroup and IsSSSECollection);
