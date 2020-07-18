@@ -1150,16 +1150,44 @@ fail
 
 #
 gap> Unbind(S);
+
 # Unbind strong semilattice vars
 # TODO use less global variables
-gap> Unbind(D, L, H, SSS);
-gap> Unbind(tr, id, sm, cf, mp, sl);
-gap> Unbind(c1, c2, m1, m2);
-gap> Unbind(x, y, z);
-gap> Unbind(S1, S2, S3, S4, S5);
-gap> Unbind(map53f, map53, map31f, map31, map52f, map52, map21f, map21, map43);
-gap> Unbind(cong31, cong311, cong312, cong313);
-
+gap> Unbind(D);
+gap> Unbind(L);
+gap> Unbind(H);
+gap> Unbind(SSS);
+gap> Unbind(tr);
+gap> Unbind(id);
+gap> Unbind(sm);
+gap> Unbind(cf);
+gap> Unbind(mp);
+gap> Unbind(sl);
+gap> Unbind(c1);
+gap> Unbind(c2);
+gap> Unbind(m1);
+gap> Unbind(m2);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(S1);
+gap> Unbind(S2);
+gap> Unbind(S3);
+gap> Unbind(S4);
+gap> Unbind(S5);
+gap> Unbind(map53f);
+gap> Unbind(map53);
+gap> Unbind(map31f);
+gap> Unbind(map31);
+gap> Unbind(map52f);
+gap> Unbind(map52);
+gap> Unbind(map21f);
+gap> Unbind(map21);
+gap> Unbind(map43);
+gap> Unbind(cong31);
+gap> Unbind(cong311);
+gap> Unbind(cong312);
+gap> Unbind(cong313);
 
 # 
 gap> SEMIGROUPS.StopTest();
