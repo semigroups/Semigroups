@@ -819,12 +819,13 @@ function(D, semigroups, homomorphisms)
   if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
     ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
                   "is a meet semilattice digraph as first argument");
-    for s in semigroups do
-      if not IsSemigroup(s) then
-        ErrorNoReturn("expected a list of semigroups as second argument");
-      fi;
-    od;
-  elif DigraphNrVertices(D) <> Length(semigroups) then
+  fi;
+  for s in semigroups do
+    if not IsSemigroup(s) then
+      ErrorNoReturn("expected a list of semigroups as second argument");
+    fi;
+  od;
+  if DigraphNrVertices(D) <> Length(semigroups) then
     ErrorNoReturn("the number of vertices of the first argumement D must ",
                   "be equal to the length of the second argument semigroups");
   elif DigraphNrVertices(D) <> Length(homomorphisms) then
@@ -843,7 +844,8 @@ function(D, semigroups, homomorphisms)
     for j in [1 .. Length(homomorphisms[i])] do
       if not RespectsMultiplication(homomorphisms[i][j]) then
         ErrorNoReturn("expected a list of lists of homomorphisms ",
-                      "as third argument");
+                      "as third argument. homomorphisms[", i,
+                      "][", j, "] is not a homomorphism");
       fi;
       if  (not IsSubset(Source(homomorphisms[i][j]),
                         semigroups[OutNeighbours(D)[i][j]])) or
@@ -965,9 +967,9 @@ InstallMethod(SSSE,
 [IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
 function(S, n, x)
   if n > Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)) then
-    ErrorNoReturn("where S and n are the 1st and 2nd arguments respectively, ",
-                  "expected n to be an integer between 1 and ",
-                  "Size(SemigroupsOfStrongSemilatticeOfSemigroups(S))");
+    ErrorNoReturn("expected second argument to be an integer between 1 and ",
+                  "the size of the semilattice, i.e. ",
+                  Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
   elif not x in SemigroupsOfStrongSemilatticeOfSemigroups(S)[n] then
     ErrorNoReturn("where S, n and x are the 1st, 2nd and 3rd arguments ",
                   "respectively, expected x to be an element of ",
@@ -1011,14 +1013,16 @@ function(x)
   return x![1];
 end);
 
-InstallMethod(ChooseHashFunction, "for SSSE and int",
-[IsSSSERep, IsInt],
-function(x, data)
-  local hashes, hashfunc;
-  hashes := List(SemigroupsOfStrongSemilatticeOfSemigroups(x![1]),
-                 y -> ChooseHashFunction(Representative(y), data));
-  hashfunc := function(y, d)
-    return 17 * y![2] + hashes[y![2]].func(y![3], d);
-  end;
-  return rec(func := hashfunc, data := data);
-end);
+# TODO hash function currently unused
+
+# InstallMethod(ChooseHashFunction, "for SSSE and int",
+# [IsSSSERep, IsInt],
+# function(x, data)
+#   local hashes, hashfunc;
+#   hashes := List(SemigroupsOfStrongSemilatticeOfSemigroups(x![1]),
+#                  y -> ChooseHashFunction(Representative(y), data));
+#   hashfunc := function(y, d)
+#     return 17 * y![2] + hashes[y![2]].func(y![3], d);
+#   end;
+#   return rec(func := hashfunc, data := data);
+# end);
