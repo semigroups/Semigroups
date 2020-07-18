@@ -1150,6 +1150,16 @@ fail
 
 #
 gap> Unbind(S);
+# Unbind strong semilattice vars
+# TODO use less global variables
+gap> Unbind(D, L, H, SSS);
+gap> Unbind(tr, id, sm, cf, mp, sl);
+gap> Unbind(c1, c2, m1, m2);
+gap> Unbind(x, y, z);
+gap> Unbind(S1, S2, S3, S4, S5);
+gap> Unbind(map53f, map53, map31f, map31, map52f, map52, map21f, map21, map43);
+gap> Unbind(cong31, cong311, cong312, cong313);
+
 
 # 
 gap> SEMIGROUPS.StopTest();
