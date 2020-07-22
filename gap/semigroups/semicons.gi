@@ -958,8 +958,11 @@ end);
 InstallMethod(ViewString, "for a strong semilattice of semigroups",
 [IsStrongSemilatticeOfSemigroups],
 function(S)
-  return StringFormatted("<strong semilattice of {} semigroups>",
-                         Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
+  local size;
+  size := Size(SemigroupsOfStrongSemilatticeOfSemigroups(S));
+  return Concatenation("<strong semilattice of ",
+                       String(size),
+                       " semigroups>");
 end);
 
 InstallMethod(SSSE,
