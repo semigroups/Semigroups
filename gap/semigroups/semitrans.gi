@@ -696,10 +696,13 @@ InstallMethod(SmallGeneratingSet,  " for transformation monoid",
 function(T)
   local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i, SG,
   Digo, nlc, sing, g, gcount, m, v, vcount, STM, SPTM, ispart, istrans;
- 
+
   # Check if is of the form <G U Singn>
   n := DegreeOfTransformationSemigroup(T);
-  # Check if the method is valid to run 
+  # Check if the method is valid to run
+  if n < 2 then
+    TryNextMethod();
+  fi;
   if (Generators(SingularTransformationMonoid(n)) in T) = false then
     TryNextMethod();
   fi;
