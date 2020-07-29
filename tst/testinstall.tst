@@ -1753,6 +1753,21 @@ gap> cong := SemigroupCongruence(S, []);;
 gap> NonTrivialCongruenceClasses(cong);
 [  ]
 
+# Issue 680
+gap> F := FreeSemigroup(2);;
+gap> s1 := F.1;; s2 := F.2;;
+gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
+>             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
+gap> S := F / rels;
+<fp semigroup on the generators [ s1, s2 ]>
+gap> Size(S);
+infinity
+gap> CongruenceByGeneratingPairsPartition(S!.cong);
+Error, the argument <cong> has infinitely many classes,
+gap> EquivalenceRelationLookup(S!.cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

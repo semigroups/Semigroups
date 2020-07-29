@@ -61,6 +61,9 @@ function(cong)
   local enum, nrclasses, part, i, word;
   enum := Enumerator(Range(cong));
   nrclasses := NrEquivalenceClasses(cong);
+  if nrclasses = infinity then
+    ErrorNoReturn("the argument <cong> has infinitely many classes,");
+  fi;
   part := EmptyPlist(nrclasses);
   for i in [1 .. nrclasses] do
     part[i] := [];

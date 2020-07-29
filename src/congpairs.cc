@@ -210,7 +210,12 @@ static Congruence* cong_obj_get_cpp(gap_cong_t cong) {
 }
 
 Obj CONG_PAIRS_NR_CLASSES(Obj self, gap_cong_t o) {
-  return INTOBJ_INT(cong_obj_get_cpp(o)->nr_classes());
+  auto n = cong_obj_get_cpp(o)->nr_classes();
+  if (n != libsemigroups::POSITIVE_INFINITY) {
+    return INTOBJ_INT(n);
+  } else {
+    return Pinfinity;
+  }
 }
 
 Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
@@ -300,6 +305,10 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   Congruence*     cong      = cong_obj_get_cpp(o);
   gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
   bool            report    = semi_obj_get_report(range_obj);
+
+  if (cong->nr_classes() == libsemigroups::POSITIVE_INFINITY) {
+    ErrorQuit("the congruence has infinitely many classes!", 0L, 0L);
+  }
 
   Obj partition = NEW_PLIST_IMM(T_PLIST_TAB, cong->nr_classes());
   SET_LEN_PLIST(partition, cong->nr_classes());
