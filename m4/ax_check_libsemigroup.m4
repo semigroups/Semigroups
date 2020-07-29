@@ -30,10 +30,14 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                    [],
                    [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from https://github.com/libsemigroups/libsemigroups into this directory])])])
 
+        dnl Temporary workaround for compatibility with dev version of
+        dnl libsemigroups which doesn't contain .VERSION file by default
 	AC_CHECK_FILE(
    		[libsemigroups/.VERSION],
    		[],
-		[AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])])
+                [AC_CHECK_FILE([libsemigroups/etc/version-number.sh], 
+                               [cd libsemigroups && etc/version-number.sh > .TMP_VERSION && mv .TMP_VERSION .VERSION && cd ..],
+                               [AC_MSG_ERROR([cannot determine the version of libsemigroups])])])
 
 	AC_MSG_CHECKING([libsemigroups version])
 	FOUND_LIBSEMIGROUPS_VERSION="$(cat libsemigroups/.VERSION)"
