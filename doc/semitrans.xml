@@ -383,7 +383,7 @@ gap> Size(WW);
     <Description>
       When <A>G</A> is a subgroup of the symmetric group on <A>n</A> points,
 	  this returns the least transformation monoid of degree <A>n</A> which contains 
-	  <A>G</A> and all singular transformatiosn. 
+	  <A>G</A> and all singular transformations. 
 	  
       <Example><![CDATA[
 	SingularClosureTransformationSemigroup(Group((1,2),(3,4)),4);
