@@ -376,3 +376,19 @@ gap> Size(WW);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="SmallGeneratingSet">
+   <ManSection>
+    <Oper Name="SmallGeneratingSet" Arg="G"/>
+    <Returns>A small generating set with maximal idempotent elements.</Returns>
+    <Description>
+      When <A>G</A> is a subgroup of the Partition Monoid on <A>n</A> points. 
+	  of the form <A>N</A> union </A>SingularPartitionMonoid(n)</A> where <A>N</A>
+	  is a subgroup of the symmetric group on <A>n</A> points then this
+	  returns the small generating set which contains an equal number of 
+	  idempotent partitions as the idempotent rank of G. This set would be 
+	  minimal if <A>SmallGeneratingSet(N)</A> is of size equal to the rank of
+	  <A>N</A>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
