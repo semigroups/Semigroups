@@ -381,7 +381,7 @@ gap> Size(WW);
     <Oper Name="SingularClosureTransformationSemigroup " Arg="G,n"/>
     <Returns>A transformation monoid which contains all singular transformations.</Returns>
     <Description>
-      When <A>G</A> is a subgroup of the symmertic group on <A>n</A> points then 
+      When <A>G</A> is a subgroup of the symmetric group on <A>n</A> points,
 	  this returns the least transformation monoid of degree <A>n</A> which contains 
 	  <A>G</A> and all singular transformatiosn. 
 	  
