@@ -408,7 +408,7 @@ gap> Size(WW);
       <Example><![CDATA[
 	gap> SingularClosurePartialTransformationSemigroup(Group((1, 2), (3, 4)), 4);
 	<transformation semigroup of degree 5 with 8 generators>
-	gap>Generators(SingularClosurePartialTransformationSemigroup(Group((1,2),(3,4)),4));
+	gap> Generators(SingularClosurePartialTransformationSemigroup(Group((1, 2), (3, 4)), 4));
 	[ Transformation( [ 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 4, 4 ] ), Transformation( [ 3, 2, 3 ] ), Transformation( [ 5, 2, 3, 4, 5 ] ), Transformation( [ 1, 5, 3, 4, 5 ] ), Transformation( [ 2, 1 ] ),
 	Transformation( [ 1, 2, 4, 3 ] ) ]
 ]]></Example>
