@@ -402,7 +402,7 @@ gap> Size(WW);
     <Returns>A partial transformation monoid which contains all singular partial transformations.</Returns>
     <Description>
       When <A>G</A> is a subgroup of the symmetric group on <A>n</A> points,
-	  this returns the least patrial transformation monoid of degree <A>n</A> which
+	  this returns the least partial transformation monoid of degree <A>n</A> which
 	  contains <A>G</A> and all singular partial transformatiosn. 
 	  
       <Example><![CDATA[
