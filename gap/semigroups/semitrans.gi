@@ -703,10 +703,7 @@ function(T)
   if n < 2 then
     TryNextMethod();
   fi;
-  if (Generators(SingularTransformationMonoid(n)) in T) = false then
-    TryNextMethod();
-  fi;
-  if n < 1 then
+  if (Generators(SingularTransformationMonoid(n))[1] in T) = false then
     TryNextMethod();
   fi;
   STM := n ^ n - Factorial(n);

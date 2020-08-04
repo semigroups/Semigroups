@@ -90,7 +90,7 @@
     <#Include Label = "MinimalGeneratingSet">
     <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IndecomposableElements">
- 
+    <#Include Label = "TransformationMonoidSmallGeneratingSet">
   </Section>
 
   <!--**********************************************************************-->

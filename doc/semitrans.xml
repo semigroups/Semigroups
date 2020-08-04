@@ -377,7 +377,7 @@ gap> Size(WW);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SmallGeneratingSet">
+<#GAPDoc Label="TransformationMonoidSmallGeneratingSet">
    <ManSection>
     <Oper Name="SmallGeneratingSet" Arg="G"/>
     <Returns>A small generating set which with maximal idempotent elements .</Returns>
