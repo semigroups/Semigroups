@@ -692,7 +692,7 @@ function(M, S)
 end);
 
 InstallMethod(SmallGeneratingSet, " for partition monoid",
-[IsBipartitionSemigroup],
+[IsBipartitionMonoid],
 function(T)
   local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
   Digo, nlc, sing, g, gcount, v, SPM, spm, M, j, k, Ext;
