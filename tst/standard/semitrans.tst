@@ -2789,9 +2789,9 @@ gap> S := SingularClosurePartitionSemigroup(SymmetricGroup(4), 4);
 <bipartition semigroup of degree 4 with 4 generators>
 gap> Size(S) = Bell(2 * 4);
 true
-gap> S := SingularClosurePartitionSemigroup(Group((1, 2), (3, 4)), 6);
-<bipartition semigroup of degree 6 with 18 generators>
-gap> Size(S) = Bell(2 * 6) - Factorial(6) + 4;
+gap> S := SingularClosurePartitionSemigroup(Group((1, 2)), 4);
+<bipartition semigroup of degree 4 with 9 generators>
+gap> Size(S) = Bell(2 * 4) - Factorial(4) + 2;
 true
 
 # DigraphCore
