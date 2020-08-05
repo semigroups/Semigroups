@@ -73,9 +73,10 @@ Before asking us to merge your code please ensure that:
   assigned using `BindGlobal` in that file. 
 * functions should only be assigned using the `foo := function()` syntax if they
   are local variables inside another function; all other functions should be global.
-* error messages should be in the following format: 
-  `ErrorNoReturn("Semigroups: NameOfWhateverContainingError: \n", 
-                 "something went wrong");`
+* error messages should give enough information for the user to know what they need
+  to change. For example, if a function has received the wrong input type, an
+  appropriate error to return is: `ErrorNoReturn("expected [something] as 2nd
+  argument, found [something else]")`.
 * functions and variables which will be unbound after they are read must have
  an underscore '_' at the start.
 * non-user operations must start SEMIGROUPS_
