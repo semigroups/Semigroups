@@ -383,8 +383,8 @@ gap> Size(WW);
     <Returns>A Partition monoid which contains all singular Partitions.</Returns>
     <Description>
       When <A>G</A> is a subgroup of the symmertic group on <A>n</A> points then 
-	  this returns the least Partition monoid of degree <A>n</A> which contains 
-	  <A>G</A> and all singular Partitions.
+	  this returns the least, by containment, Partition monoid of degree 
+          <A>n</A> which contains <A>G</A> and all singular Partitions.
     </Description>
   </ManSection>
 <#/GAPDoc>
