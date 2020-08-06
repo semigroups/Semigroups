@@ -2792,35 +2792,22 @@ gap> DigraphCore(D);
 # SmallGeneratingSet partitions
 gap> S := Semigroup([Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]), Bipartition([[1, 2, -2], [3, -3], [4, -4], [-1]]), Bipartition([[1], [2, -2], [3, -1, -3], [4, -4]]), Bipartition([[1, 3, -3], [2, -2], [4, -4], [-1]]), Bipartition([[1, -1, -4], [2, -2], [3, -3], [4]]), Bipartition([[1, 4, -1], [2, -2], [3, -3], [-4]]), Bipartition([[1, -1], [2, -2], [3], [4, -3, -4]]), Bipartition([[1, -1], [2, -2], [3, 4, -4], [-3]]), Bipartition([[1, -2], [2, -1], [3, -4], [4, -3]])]);
 <bipartition semigroup of degree 4 with 9 generators>
-gap> SmallGeneratingSet(S);
-[ <bipartition: [ 1 ], [ 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -4 ], [ 4, -3 ]>, 
-  <bipartition: [ 1, 4, -1 ], [ 2, -2 ], [ 3, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, -1, -4 ], [ 2, -2 ], [ 3, -3 ], [ 4 ]>, 
-  <bipartition: [ 1, 3, -3 ], [ 2, -2 ], [ 4, -4 ], [ -1 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, 4, -4 ], [ -3 ]>, 
-  <bipartition: [ 1, 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ -1 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3 ], [ 4, -3, -4 ]>, 
-  <bipartition: [ 1 ], [ 2, -2 ], [ 3, -1, -3 ], [ 4, -4 ]> ]
+gap> Size(SmallGeneratingSet(S));
+9
+gap> Size(Semigroup(SmallGeneratingSet(S))) = (Bell(2 * 4) - Factorial(4) + 2);
+true
 gap> S := Semigroup([Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]), Bipartition([[1, 2, -2], [3, -3], [4, -4], [-1]]), Bipartition([[1, -1, -3], [2, -2], [3], [4, -4]]), Bipartition([[1, 3, -1], [2, -2], [4, -4], [-3]]), Bipartition([[1, -1], [2, -2], [3], [4, -3, -4]]), Bipartition([[1, -1], [2, -2], [3, 4, -4], [-3]]), Bipartition([[1], [2, -2], [3, -1, -3], [4, -4]]), Bipartition([[1, 3, -3], [2, -2], [4, -4], [-1]]), Bipartition([[1, -1], [2, -2], [3, -4], [4, -3]]), Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]])]);
 <bipartition semigroup of degree 4 with 10 generators>
-gap> SmallGeneratingSet(S);
-[ <bipartition: [ 1 ], [ 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -3 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3 ], [ 4, -3, -4 ]>, 
-  <bipartition: [ 1 ], [ 2, -2 ], [ 3, -1, -3 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, -1, -3 ], [ 2, -2 ], [ 3 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, 4, -4 ], [ -3 ]>, 
-  <bipartition: [ 1, 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ -1 ]>, 
-  <bipartition: [ 1, 3, -3 ], [ 2, -2 ], [ 4, -4 ], [ -1 ]> ]
+gap> Size(SmallGeneratingSet(S));
+9
+gap> Size(Semigroup(SmallGeneratingSet(S))) = (Bell(2 * 4) - Factorial(4) + 4);
+true
 gap> S := Semigroup([Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]), Bipartition([[1, 2, -2], [3, -3], [4, -4], [-1]]), Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]), Bipartition([[1, -2], [2, -3], [3, -4], [4, -1]])]);
 <bipartition semigroup of degree 4 with 4 generators>
-gap> SmallGeneratingSet(S);
-[ <bipartition: [ 1 ], [ 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -4 ], [ 4, -1 ]>, 
-  <bipartition: [ 1, 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ -1 ]> ]
+gap> Size(SmallGeneratingSet(S));
+4
+gap> Size(Semigroup(SmallGeneratingSet(S))) = (Bell(2 * 4)- Factorial(4) + Factorial(4));
+true
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
