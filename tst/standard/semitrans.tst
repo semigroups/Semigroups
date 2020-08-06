@@ -2806,7 +2806,7 @@ gap> S := Semigroup([Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]), Bipartit
 <bipartition semigroup of degree 4 with 4 generators>
 gap> Size(SmallGeneratingSet(S));
 4
-gap> Size(Semigroup(SmallGeneratingSet(S))) = (Bell(2 * 4)- Factorial(4) + Factorial(4));
+gap> Size(Semigroup(SmallGeneratingSet(S))) = (Bell(2 * 4) - Factorial(4) + Factorial(4));
 true
 
 # SEMIGROUPS_UnbindVariables
