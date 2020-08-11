@@ -319,7 +319,6 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   for (size_t i = 0; i < cong->nr_classes(); i++) {
     Obj next = NEW_PLIST_IMM(T_PLIST_CYC, 0);
-    SET_LEN_PLIST(next, 0);  // should never be 0 later on, so this should be ok
     SET_ELM_PLIST(partition, i + 1, next);
     CHANGED_BAG(partition);
   }

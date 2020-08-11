@@ -85,7 +85,6 @@ Obj UF_BLOCKS(Obj self, Obj uf) {
 
   // Rewrite each block as a PLIST object, and put it into a PLIST.
   Obj gap_blocks = NEW_PLIST(T_PLIST, 0);
-  SET_LEN_PLIST(gap_blocks, 0);
   for (i = 0; i < size; i++) {
     if ((*blocks)[i] != nullptr) {  // nullptr represents a hole in the list
       Obj block = NEW_PLIST(T_PLIST_CYC, (*blocks)[i]->size());
@@ -116,7 +115,6 @@ gap_list_t UF_BLOCK_REPS(Obj self, Obj uf) {
   size_t next_rep = uf_cpp->next_rep();
 
   gap_list_t out = NEW_PLIST(T_PLIST_CYC, 0);
-  SET_LEN_PLIST(out, 0);
   size_t nr = 0;
 
   while (next_rep < uf_cpp->get_size()) {

@@ -29,13 +29,13 @@ using libsemigroups::detail::Timer;
 
 // Macros for the GAP version of the algorithm
 
+#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
+
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
-  SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
-  SET_LEN_PLIST(ELM_PLIST(plist, i), j);
-  CHANGED_BAG(plist);
+  ASS_LIST(ELM_PLIST(plist, i), j, val);
 }
 
 // Fast product using left and right Cayley graphs
@@ -147,9 +147,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   words = ElmPRec(data, RNamName("words"));
   // words[i] is a word in the gens equal to elts[i]
   rules = ElmPRec(data, RNamName("rules"));
-  if (TNUM_OBJ(rules) == T_PLIST_EMPTY) {
-    RetypeBag(rules, T_PLIST_CYC);
-  }
 
   // hash table
   ht = ElmPRec(data, RNamName("ht"));
@@ -182,7 +179,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     while (i <= nr && (UInt) LEN_PLIST(ELM_PLIST(words, i)) == len && !stop) {
       b = INT_INTOBJ(ELM_PLIST(first, i));
       s = INT_INTOBJ(ELM_PLIST(suffix, i));
-      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC);  // from T_PLIST_EMPTY
       for (j = 1; j <= nrgens; j++) {
         if (s != 0 && ELM_PLIST2(reduced, s, j) == False) {
           r = INT_PLIST2(right, s, j);
@@ -212,8 +208,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           memcpy(ADDR_OBJ(newword) + 1,
                  CONST_ADDR_OBJ(oldword) + 1,
                  (size_t)(len * sizeof(Obj)));
-          SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
-          SET_LEN_PLIST(newword, len + 1);
+          ASS_LIST(newword, len + 1, INTOBJ_INT(j));
 
           objval = CALL_2ARGS(HTValue, ht, newElt);
           if (objval != Fail) {
@@ -223,7 +218,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
             SET_LEN_PLIST(newrule, 2);
             CHANGED_BAG(newrule);
             nrrules++;
-            AssPlist(rules, nrrules, newrule);
+            ASS_LIST(rules, nrrules, newrule);
             SET_ELM_PLIST2(right, i, j, objval);
           } else {
             nr++;
@@ -258,14 +253,12 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
             AssPlist(prefix, nr, INTOBJ_INT(i));
 
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
-            SET_LEN_PLIST(empty, 0);
             AssPlist(right, nr, empty);
 
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
-            SET_LEN_PLIST(empty, 0);
             AssPlist(left, nr, empty);
 
-            empty = NEW_PLIST(T_PLIST_CYC, nrgens);
+            empty = NEW_PLIST(T_PLIST, nrgens);
             for (k = 1; k <= nrgens; k++) {
               SET_ELM_PLIST(empty, k, False);
             }
@@ -291,7 +284,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     if (i > nr || (UInt) LEN_PLIST(ELM_PLIST(words, i)) != len) {
       if (len > 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           p = INT_INTOBJ(ELM_PLIST(prefix, j));
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
@@ -301,7 +293,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
         }
       } else if (len == 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
             SET_ELM_PLIST2(
@@ -372,16 +363,14 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   }
 
   comps = NEW_PLIST_IMM(T_PLIST_TAB, LEN_PLIST(comps1));
-  SET_LEN_PLIST(comps, 0);
 
   nr = 0;
 
   for (i = 1; i <= LEN_PLIST(comps1); i++) {
     comp1 = ELM_PLIST(comps1, i);
-    if (INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1)))) == 0) {
+    if (ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1))) == INTOBJ_INT(0)) {
       nr++;
       new_comp = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(comp1));
-      SET_LEN_PLIST(new_comp, 0);
       for (j = 1; j <= LEN_PLIST(comp1); j++) {
         k = INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
         if (reinterpret_cast<UInt*>(ADDR_OBJ(seen))[k] == 0) {
@@ -392,15 +381,12 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
             SET_ELM_PLIST(id, INT_INTOBJ(x), INTOBJ_INT(nr));
             len = LEN_PLIST(new_comp);
             AssPlist(new_comp, len + 1, x);
-            SET_LEN_PLIST(new_comp, len + 1);
           }
         }
       }
       SHRINK_PLIST(new_comp, LEN_PLIST(new_comp));
       len = LEN_PLIST(comps) + 1;
-      SET_ELM_PLIST(comps, len, new_comp);
-      SET_LEN_PLIST(comps, len);
-      CHANGED_BAG(comps);
+      AssPlist(comps, len, new_comp);
     }
   }
 
@@ -455,7 +441,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   id = NEW_PLIST_IMM(T_PLIST_CYC, n);
   SET_LEN_PLIST(id, n);
   comps = NEW_PLIST_IMM(T_PLIST_TAB, n);
-  SET_LEN_PLIST(comps, 0);
 
   hindex = 0;
   rindex = 0;
@@ -476,10 +461,7 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
       lookup[k] = hindex;
 
       comp = NEW_PLIST_IMM(T_PLIST_CYC, 1);
-      SET_LEN_PLIST(comp, 0);
-      SET_ELM_PLIST(comps, hindex, comp);
-      SET_LEN_PLIST(comps, hindex);
-      CHANGED_BAG(comps);
+      AssPlist(comps, hindex, comp);
 
       sorted = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps;
       lookup = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps + n;
@@ -488,7 +470,6 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
     comp = ELM_PLIST(comps, k);
     len  = LEN_PLIST(comp) + 1;
     AssPlist(comp, len, INTOBJ_INT(j));
-    SET_LEN_PLIST(comp, len);
 
     SET_ELM_PLIST(id, j, INTOBJ_INT(k));
   }
