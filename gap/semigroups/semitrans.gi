@@ -694,7 +694,7 @@ end);
 InstallMethod(SmallGeneratingSet, " for partition monoid",
 [IsBipartitionSemigroup],
 function(T)
-  local G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
+  local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
   Digo, nlc, sing, g, gcount, v, SPM, spm, M, j, k, Ext;
   # Check if is of the form <G U Singn>
   n    := DegreeOfBipartitionCollection(T);
@@ -707,12 +707,12 @@ function(T)
   gcount := 1;
   i      := 1;
   spm    := AsSemigroup(IsBipartitionSemigroup, SymmetricGroup(n));
-  for element in T do
-    if element in spm then
-      g[gcount] := AsTransformation(element);
+  for t in T do
+    if t in spm then
+      g[gcount] := AsTransformation(t);
       gcount := gcount + 1;
     else
-      sing[i] := element;
+      sing[i] := t;
       i := i + 1;
     fi;
   od;
