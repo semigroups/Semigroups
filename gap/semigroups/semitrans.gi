@@ -697,24 +697,24 @@ function(T)
   local t, G, n, D, id, f, o, O, d, I, J, K, L, N, e, q, i,
   Digo, nlc, sing, g, gcount, v, SPM, spm, M, j, k, Ext;
   # Check if is of the form <G U Singn>
-  n := DegreeOfBipartitionCollection(T);
-  SPM := Bell(2 * n) - Factorial(n);
-  T := List(T);
+  n    := DegreeOfBipartitionCollection(T);
+  SPM  := Bell(2 * n) - Factorial(n);
+  T    := List(T);
   sing := [1 .. SPM];
-  g := [1 .. (Size(T) - SPM)];
+  g    := [1 .. (Size(T) - SPM)];
   if Size(g) = 0 then
     TryNextMethod();
   fi;  
   gcount := 1;
-  i := 1;
-  spm := AsSemigroup(IsBipartitionSemigroup, SymmetricGroup(n));
+  i      := 1;
+  spm    := AsSemigroup(IsBipartitionSemigroup, SymmetricGroup(n));
   for t in [1 .. Size(T)] do
     if T[t] in spm then
       g[gcount] := AsTransformation(T[t]);
       gcount := gcount + 1;
     else
       sing[i] := T[t];
-      i := i + 1;
+      i       := i + 1;
     fi;
   od;
   i := 1;
@@ -744,7 +744,7 @@ function(T)
   # calculate number of digraph vertices
   v := DigraphNrVertices(O);
   g := Size(SmallGeneratingSet(G));
-  # special case for if quoteient is a point
+  # special case for if quotient is a point
   e := DigraphNrEdges(O);
   N := [1 .. (2 * e) + g];
   if v = 1 then
@@ -753,7 +753,7 @@ function(T)
       L := o[i][1][2];
       N[2 * i] := AsBipartition(Transformation([K], [L]), n);
     od;
-    # cases are if only 1 non loop and otherweise
+    # cases are if only 1 non loop and otherwise
   elif d = 1 then
     e := DigraphNrEdges(O);
     N := [1 .. (2 * e) + 2 + g];
@@ -807,7 +807,7 @@ function(T)
         L := o[i][1][1];
       fi;
       # using these start and end point values
-      # construct a transfomarion which is constant on that edge
+      # construct a transformation which is constant on that edge
       N[2 * i] := AsBipartition(Transformation([K], [L]), n);
     od;
   fi;
