@@ -702,6 +702,9 @@ function(T)
   T := List(T);
   sing := [1 .. SPM];
   g := [1 .. (Size(T) - SPM)];
+  if Size(g) = 0 then
+    TryNextMethod();
+  fi;  
   gcount := 1;
   i := 1;
   spm := AsSemigroup(IsBipartitionSemigroup, SymmetricGroup(n));
