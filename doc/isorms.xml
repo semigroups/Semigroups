@@ -285,7 +285,7 @@ gap> ImagesElm(map, RMSElement(R, 1, (2, 8), 2));
       <C>T</C> is canonical in the sense that for any two inputs
       which are isomorphic Rees zero matrix semigroups the output of this
       function is the same.<P/>
-      CanonicalReesMatrixSemigroup works the same but for Rees matrix
+      <Ref Attr="CanonicalReesMatrixSemigroup"/> works the same but for Rees matrix
       semigroups.
 
       <Example><![CDATA[
