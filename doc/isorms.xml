@@ -269,8 +269,8 @@ gap> ImagesElm(map, RMSElement(R, 1, (2, 8), 2));
 
 <#GAPDoc Label="CanonicalReesZeroMatrixSemigroup">
   <ManSection>
-    <Attr Name = "CanonicalReesZeroMatrixSemigroup" 
-      Label = "for a Rees zero matrix semigroup" Arg = "S"/>
+    <Attr Name = "CanonicalReesZeroMatrixSemigroup" Arg = "S"/>
+    <Attr Name = "CanonicalReesMatrixSemigroup" Arg = "S"/>
 
     <Returns>
       A Rees zero matrix semigroup.
@@ -285,7 +285,7 @@ gap> ImagesElm(map, RMSElement(R, 1, (2, 8), 2));
       <C>T</C> is canonical in the sense that for any two inputs
       which are isomorphic Rees zero matrix semigroups the output of this
       function is the same.<P/>
-      <Ref Attr="CanonicalReesMatrixSemigroup"/> works the same but for Rees matrix
+      <C>CanonicalReesMatrixSemigroup</C> works the same but for Rees matrix
       semigroups.
 
       <Example><![CDATA[
