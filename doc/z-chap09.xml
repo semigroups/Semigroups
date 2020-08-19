@@ -50,11 +50,9 @@
     The product of two elements <M>x \in S_a, y \in S_b</M> is defined to lie
     in the semigroup <M>S_c</M>, corresponding to the meet <M>c</M> of
     <M>a, b \in Y</M>. The exact element of <M>S_c</M> equal to the product
-    is obtained using the homomorphisms of the SSS:
+    is obtained using the homomorphisms of the SSS: <M>xy = (x f_{ac})
+    (y f_{bc})</M>.
     <P/>
-
-    <!-- TODO formatting -->
-    <M>xy = (x f_{ac})(y f_{bc}).</M>
 
     <#Include Label = "StrongSemilatticeOfSemigroups">
     <#Include Label = "SSSE">
