@@ -39,3 +39,8 @@ DeclareProperty("IsAutomorphismGroupOfRMSOrRZMS", IsGroup and IsFinite);
 DeclareAttribute("IsomorphismReesMatrixSemigroupOverPermGroup", IsSemigroup);
 DeclareAttribute("IsomorphismReesZeroMatrixSemigroupOverPermGroup",
                  IsSemigroup);
+
+DeclareAttribute("CanonicalReesZeroMatrixSemigroup",
+                 IsReesZeroMatrixSemigroup);
+DeclareAttribute("CanonicalReesMatrixSemigroup",
+                 IsReesMatrixSemigroup);
