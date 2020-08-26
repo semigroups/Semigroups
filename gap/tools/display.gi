@@ -9,11 +9,17 @@
 ##
 
 #############################################################################
-
-SEMIGROUPS.TikzInit := Concatenation("%latex\n",
-                                     "\\documentclass{minimal}\n",
-                                     "\\usepackage{tikz}\n",
-                                     "\\begin{document}\n");
+SEMIGROUPS.GetTikzInit := function(opts)
+  local s;
+  s := Concatenation("%latex\n",
+                     "\\documentclass{minimal}\n",
+                     "\\usepackage{tikz}\n");
+  if IsBound(opts.extraInit) then
+    Append(s, opts.extraInit);
+  fi;
+  Append(s, "\\begin{document}\n");
+  return s;
+end;
 
 SEMIGROUPS.TikzEnd := "\\end{document}";
 
@@ -22,11 +28,17 @@ SEMIGROUPS.TikzColors := ["red", "green", "blue", "cyan", "magenta", "yellow",
                           "lime", "olive", "orange", "pink", "purple", "teal",
                           "violet", "white"];
 
-SEMIGROUPS.TikzArcPBR := Concatenation("\\newcommand{\\arc}{\\draw[semithick, ",
-                                       "-{>[width = 1.5mm, length = ",
-                                       "2.5mm]}]}\n");
+SEMIGROUPS.TikzPBRInit := Concatenation("\\usetikzlibrary{arrows}\n",
+                                        "\\usetikzlibrary{arrows.meta}\n",
+                                        "\\newcommand{\\arc}{\\draw[semithick,",
+                                        " -{>[width = 1.5mm, length = ",
+                                        "2.5mm]}]}\n");
 
-SEMIGROUPS.TikzPBROpts         := rec(labels := false);
+SEMIGROUPS.TikzPBROpts := rec(beginDocument := true,
+                              endDocument := true,
+                              extraInit := SEMIGROUPS.TikzPBRInit,
+                              labels := false);
+
 SEMIGROUPS.TikzBipartitionOpts := rec(colors        := false,
                                       beginDocument := true,
                                       endDocument   := true,
@@ -35,7 +47,35 @@ SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
                                       edges  := "below",
                                       colors := false);
 
+###############################################################################
+
+InstallMethod(TikzString, "for a collection and record",
+[IsCollection, IsRecord],
+function(coll, opts)
+  local str, x;
+
+  str := ShallowCopy(SEMIGROUPS.GetTikzInit(opts));
+  Append(str, "\\begin{center}\n");
+  opts.beginDocument := false;
+  opts.endDocument   := false;
+
+  for x in coll do
+    Append(str, TikzString(x, opts));
+    Append(str, "\n\\bigskip\\bigskip\n\n");
+  od;
+  Append(str, "\\end{center}");
+
+  Append(str, ShallowCopy(SEMIGROUPS.TikzEnd));
+  return str;
+end);
+
 #############################################################################
+
+InstallMethod(TikzString, "for a pbr collection",
+[IsPBRCollection],
+function(coll)
+  return TikzString(coll, SEMIGROUPS.TikzPBROpts);
+end);
 
 InstallMethod(TikzString, "for a pbr",
 [IsPBR],
@@ -50,10 +90,14 @@ function(x, opts)
 
   ext := ExtRepOfObj(x);
   n   := DegreeOfPBR(x);
-  str := ShallowCopy(SEMIGROUPS.TikzInit);
-  Append(str, "\\usetikzlibrary{arrows}\n");
-  Append(str, "\\usetikzlibrary{arrows.meta}\n");
-  Append(str, SEMIGROUPS.TikzArcPBR);
+
+  SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.TikzPBROpts, opts);
+
+  if opts.beginDocument = true then
+    str := ShallowCopy(SEMIGROUPS.GetTikzInit(opts));
+  else
+    str := "";
+  fi;
   Append(str, "\\begin{tikzpicture}[\n");
   Append(str, "  vertex/.style={circle, draw, fill=black, inner sep =");
   Append(str, "0.04cm},\n");
@@ -182,7 +226,9 @@ function(x, opts)
   od;
 
   Append(str, "\\end{tikzpicture}\n");
-  Append(str, SEMIGROUPS.TikzEnd);
+  if opts.endDocument = true then
+    Append(str, ShallowCopy(SEMIGROUPS.TikzEnd));
+  fi;
   return str;
 end);
 
@@ -192,26 +238,6 @@ InstallMethod(TikzString, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
   return TikzString(coll, SEMIGROUPS.TikzBipartitionOpts);
-end);
-
-InstallMethod(TikzString, "for a bipartition collection and record",
-[IsBipartitionCollection, IsRecord],
-function(coll, opts)
-  local str, x;
-
-  str := ShallowCopy(SEMIGROUPS.TikzInit);
-  Append(str, "\\begin{center}");
-  opts.beginDocument := false;
-  opts.endDocument   := false;
-
-  for x in coll do
-    Append(str, TikzString(x, opts));
-    Append(str, "\n\\bigskip\\bigskip\n\n");
-  od;
-  Append(str, "\\end{center}");
-
-  Append(str, ShallowCopy(SEMIGROUPS.TikzEnd));
-  return str;
 end);
 
 InstallMethod(TikzString, "for a bipartition",
@@ -242,7 +268,7 @@ function(x, opts)
   n   := DegreeOfBipartition(x);
 
   if opts.beginDocument = true then
-    str := ShallowCopy(SEMIGROUPS.TikzInit);
+    str := ShallowCopy(SEMIGROUPS.GetTikzInit(opts));
   else
     str := "";
   fi;
