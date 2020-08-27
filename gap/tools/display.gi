@@ -52,15 +52,16 @@ SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
 InstallMethod(TikzString, "for a collection and record",
 [IsCollection, IsRecord],
 function(coll, opts)
-  local str, x;
+  local outOpts, str, x;
 
   str := ShallowCopy(SEMIGROUPS.GetTikzInit(opts));
   Append(str, "\\begin{center}\n");
-  opts.beginDocument := false;
-  opts.endDocument   := false;
+  outOpts := ShallowCopy(opts);
+  outOpts.beginDocument := false;
+  outOpts.endDocument   := false;
 
   for x in coll do
-    Append(str, TikzString(x, opts));
+    Append(str, TikzString(x, outOpts));
     Append(str, "\n\\bigskip\\bigskip\n\n");
   od;
   Append(str, "\\end{center}");

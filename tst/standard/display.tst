@@ -15,45 +15,51 @@ gap> SEMIGROUPS.StartTest();;
 
 # Test TikzString for a pbr
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]));
-"\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =\
-0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop\
-/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min dis\
-tance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i \
-in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\
-\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [v\
-ertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\
-\n\n  % arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .. controls (1.0\
-666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333\
-335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666666\
-6666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n\n  % arc\
-s from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333\
-335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [t\
-oploop] (2);\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2) to\
- (2);\n\n  % arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc (3) .. controls\
- (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333333\
-3333335) .. (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\
-\n\n\\end{tikzpicture}\n"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\\begin{document}\n\\begin{tikzpicture}[\n  v\
+ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
+ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
+, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in =\
+ 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node \
+[vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  \
+}\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n\
+    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n\
+  \\arc (1) to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.333333333\
+3333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs fro\
+m vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335)\
+ and (1.2, 1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (2)\
+ .. controls (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667\
+, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs fro\
+m vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from verte\
+x 3\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333\
+333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % arcs\
+ from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\en\
+d{document}"
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]),
 > rec(labels := true));
-"\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =\
-0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop\
-/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min dis\
-tance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i \
-in {1,...,3} {\n    \\node [vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {\
-};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1\
-,...,3} {\n    \\node [vertex, label={[yshift=-15mm,xshift=-0.5mm]-\\i}] at (\
-\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arc\
-s from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .. controls (1.066666666666\
-6667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333335) .. (2)\
-;\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.\
-0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n\n  % arcs from vert\
-ex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1\
-.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2)\
-;\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  \
-% arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.6000000\
-000000001, 2.3333333333333335) and (1.7333333333333334, 2.3333333333333335) ..\
- (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{t\
-ikzpicture}\n"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\\begin{document}\n\\begin{tikzpicture}[\n  v\
+ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
+ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
+, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in =\
+ 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node \
+[vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i\
+) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vert\
+ex, label={[yshift=-15mm,xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n    \\node \
+[ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1)\
+ to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) an\
+d (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\
+\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, \
+1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (2) .. control\
+s (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333\
+333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\
+\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n  \\ar\
+c (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.333333333333333\
+5) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % arcs from verte\
+x -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\end{document}\
+"
 
 # TikzString for a pbr collection
 gap> x := PBR([[1], [], []], [[2], [-2, 1, 2], [1, 2, 3]]);;
@@ -417,18 +423,19 @@ draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -\
 
 # Test TikzString for a bipartition
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]));
-"\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1\
-, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \
-\\fill(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) node [above] {$3$\
-};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.1666666666666667) and (3,\
- 1.1666666666666667) .. (3, 1.875);\n\n  %block number 2\n  %vertices and labe\
-ls\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\\
-fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n \
- \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill(\
-2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \\fill(3, 0)circ\
-le(.125);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw(2, 0.1\
-25) .. controls (2, 0.66666666666666663) and (3, 0.66666666666666663) .. (3, 0\
-.125);\n\\end{tikzpicture}\n\n"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{document}\n\\be\
+gin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)c\
+ircle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill\
+(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) node [above] {$3$};\n\n\
+  %lines\n  \\draw(1, 1.875) .. controls (1, 1.1666666666666667) and (3, 1.166\
+6666666666667) .. (3, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \
+\\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1\
+, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\dra\
+w(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)c\
+ircle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \\fill(3, 0)circle(.12\
+5);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw(2, 0.125) ..\
+ controls (2, 0.66666666666666663) and (3, 0.66666666666666663) .. (3, 0.125);\
+\n\\end{tikzpicture}\n\n\\end{document}"
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]), 
 > rec(colors := true, labels := true, beginDocument := true, 
 >     endDocument := true));
@@ -1018,6 +1025,10 @@ Error, no 2nd choice method found for `DotString' on 1 arguments
 gap> TikzRightCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
+
+# SEMIGROUPS_UnbindVariables
+gap> Unbind(x);
+gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
