@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.3.2
+                                 Version 3.4.0
   
   
                                  J. D. Mitchell
@@ -16,7 +16,15 @@
   
                                 Attila Egri-Nagy
   
+                                  Luke Elliott
+  
                                   Nicholas Ham
+  
+                                    Max Horn
+  
+                                Chris Jefferson
+  
+                                 Dima Pasechnik
   
                                  Julius Jonušas
   
@@ -31,6 +39,8 @@
                                   Jhevon Smith
   
                                  Michael Torpey
+  
+                                  Murray Whyte
   
                                  Wilf A. Wilson
   
@@ -672,7 +682,8 @@
       18.2-3 ELM_LIST
       18.2-4 CompositionMapping2
       18.2-5 ImagesElm
-      18.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by
+      18.2-6 CanonicalReesZeroMatrixSemigroup
+      18.2-7 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by
       triples[133X
   19 [33X[0;0YVisualising semigroups and elements[133X
     19.1 [33X[0;0Y[10Xdot[110X pictures[133X

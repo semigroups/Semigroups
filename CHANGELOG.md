@@ -3,6 +3,21 @@ Copyright © 2011-20 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 3.4.0 (released 28/08/2020)
+
+This is a minor release with the following new features added to the package:
+
+* `CanonicalReesMatrixSemigroup` and `CanonicalReesZeroMatrixSemigroup` written by Chris Russell. 
+* `ParseRelations` for finitely presented semigroups or monoids written by [Luke Elliott][]. 
+* `TikzString` method was implemented for collections of PBRs by [Finn Smith][]. 
+
+The following bugs/issues were resolved:
+
+* [Issue #685](https://github.com/gap-packages/Semigroups/issues/685): after some somewhat recent changes in [libsemigroups][] some infinite finitely presented semigroups in GAP reported their size as being `-2`. Fixed by [James D. Mitchell][].
+* [Issue #680](https://github.com/gap-packages/Semigroups/issues/680): Semigroups did not compile with recent git versions of `libsemigroups`. Reported by [Wilf A. Wilson][] fixed by [James D. Mitchell][].
+
+The required minimum version of [libsemigroups][] is now v1.1.0,
+
 ### Version 3.3.2 (released 28/06/2020)
 
 This is a very minor release fixing the following issues.
@@ -1276,6 +1291,8 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: http://wilf.me
 [Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
+[Finn Smith]: https://flsmith.github.io
+[Luke Elliott]: https://le27.github.io/Luke-Elliott/
 [GAP]: https://www.gap-system.org
 [Digraphs package]: https://gap-packages.github.io/Digraphs
 [Digraphs]: https://gap-packages.github.io/Digraphs

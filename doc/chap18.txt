@@ -265,7 +265,7 @@
   [31X3[131X   [33X[0;6Ya function from [10XRows(S)[110X union [10XColumns(S)[110X to [10XH[110X[133X
   
   [33X[0;0Ybelong  to  the  categories  [10XIsRMSIsoByTriple[110X  and  [10XIsRZMSIsoByTriple[110X. Basic
-  operators  for  such  isomorphism  are given in [14X18.2-6[114X, and basic operations
+  operators  for  such  isomorphism  are given in [14X18.2-7[114X, and basic operations
   are:   [2XRange[102X   ([14XReference:  range[114X),  [2XSource[102X  ([14XReference:  Source[114X),  [2XELM_LIST[102X
   ([14X18.2-3[114X),   [2XCompositionMapping[102X  ([14XReference:  CompositionMapping[114X),  [2XImagesElm[102X
   ([14X18.2-5[114X),  [2XImagesRepresentative[102X  ([14X18.2-5[114X), [2XInverseGeneralMapping[102X ([14XReference:
@@ -421,8 +421,34 @@
     [4X[28X[ (1,(2,8),2) ][128X[104X
   [4X[32X[104X
   
+  [1X18.2-6 CanonicalReesZeroMatrixSemigroup[101X
   
-  [1X18.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by triples[133X[101X
+  [33X[1;0Y[29X[2XCanonicalReesZeroMatrixSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCanonicalReesMatrixSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA Rees zero matrix semigroup.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is  a  Rees  0-matrix semigroup then [10XCanonicalReesZeroMatrixSemigroup[110X
+  returns   an   isomorphic   Rees   0-matrix   semigroup   [10XT[110X  with  the  same
+  [2XIsUnderlyingSemigroup[102X  ([14X???IsUnderlyingSemigroup???[114X)  as  [3XS[103X  but  the [2XMatrix[102X
+  ([14X???Matrix???[114X) of [10XT[110X has been canonicalized. The output [10XT[110X is canonical in the
+  sense  that  for  any  two  inputs  which  are  isomorphic  Rees zero matrix
+  semigroups the output of this function is the same.[133X
+  
+  [33X[0;0Y[10XCanonicalReesMatrixSemigroup[110X works the same but for Rees matrix semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
+    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(), ()]]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := CanonicalReesZeroMatrixSemigroup(S);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(S);[127X[104X
+    [4X[28X[ [ (), (1,3,2) ], [ (), () ] ][128X[104X
+    [4X[25Xgap>[125X [27XMatrix(T);[127X[104X
+    [4X[28X[ [ (), () ], [ (), (1,2,3) ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.2-7 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by triples[133X[101X
   
   [8X[10X[3Xmap[103X[8X[10X[[3Xi[103X[8X[10X][110X[8X[108X
         [33X[0;6Y[10X[3Xmap[103X[10X[i][110X  returns  the  [3Xi[103Xth  component  of the Rees (0-)matrix semigroup

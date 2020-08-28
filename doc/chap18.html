@@ -49,7 +49,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X81C4DE427D4A3D6C">18.2-3 ELM_LIST</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7A02528F8721F378">18.2-4 CompositionMapping2</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7F159C1179C93C11">18.2-5 ImagesElm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7CAD3F5D81053DD0">18.2-6 <span class="Heading">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X8765885F784557B9">18.2-6 CanonicalReesZeroMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18.html#X7CAD3F5D81053DD0">18.2-7 <span class="Heading">
         Operators for isomorphisms of Rees (0-)matrix semigroup by triples
       </span></a>
 </span>
@@ -295,7 +296,7 @@ true</pre></div>
 
 </li>
 </ol>
-<p>belong to the categories <code class="code">IsRMSIsoByTriple</code> and <code class="code">IsRZMSIsoByTriple</code>. Basic operators for such isomorphism are given in <a href="chap18.html#X7CAD3F5D81053DD0"><span class="RefLink">18.2-6</span></a>, and basic operations are: <code class="func">Range</code> (<a href="../../../doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Source</code> (<a href="../../../doc/ref/chap32_mj.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">ELM_LIST</code> (<a href="chap18.html#X81C4DE427D4A3D6C"><span class="RefLink">18.2-3</span></a>), <code class="func">CompositionMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X7ED1E4E27CCE2DCA"><span class="RefLink">Reference: CompositionMapping</span></a>), <code class="func">ImagesElm</code> (<a href="chap18.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">ImagesRepresentative</code> (<a href="chap18.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">InverseGeneralMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X865FC25A87D36F3D"><span class="RefLink">Reference: InverseGeneralMapping</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="../../../doc/ref/chap32_mj.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">IsOne</code> (<a href="../../../doc/ref/chap31_mj.html#X814D78347858EC13"><span class="RefLink">Reference: IsOne</span></a>).</p>
+<p>belong to the categories <code class="code">IsRMSIsoByTriple</code> and <code class="code">IsRZMSIsoByTriple</code>. Basic operators for such isomorphism are given in <a href="chap18.html#X7CAD3F5D81053DD0"><span class="RefLink">18.2-7</span></a>, and basic operations are: <code class="func">Range</code> (<a href="../../../doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Source</code> (<a href="../../../doc/ref/chap32_mj.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">ELM_LIST</code> (<a href="chap18.html#X81C4DE427D4A3D6C"><span class="RefLink">18.2-3</span></a>), <code class="func">CompositionMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X7ED1E4E27CCE2DCA"><span class="RefLink">Reference: CompositionMapping</span></a>), <code class="func">ImagesElm</code> (<a href="chap18.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">ImagesRepresentative</code> (<a href="chap18.html#X7F159C1179C93C11"><span class="RefLink">18.2-5</span></a>), <code class="func">InverseGeneralMapping</code> (<a href="../../../doc/ref/chap32_mj.html#X865FC25A87D36F3D"><span class="RefLink">Reference: InverseGeneralMapping</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="../../../doc/ref/chap32_mj.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">IsOne</code> (<a href="../../../doc/ref/chap31_mj.html#X814D78347858EC13"><span class="RefLink">Reference: IsOne</span></a>).</p>
 
 <p><a id="X82B0BDCD7CBDCC2E" name="X82B0BDCD7CBDCC2E"></a></p>
 
@@ -445,9 +446,32 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImagesElm(map, RMSElement(R, 1, (2, 8), 2));</span>
 [ (1,(2,8),2) ]</pre></div>
 
+<p><a id="X8765885F784557B9" name="X8765885F784557B9"></a></p>
+
+<h5>18.2-6 CanonicalReesZeroMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A Rees zero matrix semigroup.</p>
+
+<p>If <var class="Arg">S</var> is a Rees 0-matrix semigroup then <code class="code">CanonicalReesZeroMatrixSemigroup</code> returns an isomorphic Rees 0-matrix semigroup <code class="code">T</code> with the same <code class="func">IsUnderlyingSemigroup</code> (<span class="RefLink">???</span>) as <var class="Arg">S</var> but the <code class="func">Matrix</code> (<span class="RefLink">???</span>) of <code class="code">T</code> has been canonicalized. The output <code class="code">T</code> is canonical in the sense that for any two inputs which are isomorphic Rees zero matrix semigroups the output of this function is the same.</p>
+
+<p><code class="code">CanonicalReesMatrixSemigroup</code> works the same but for Rees matrix semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(), ()]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := CanonicalReesZeroMatrixSemigroup(S);</span>
+&lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(S);</span>
+[ [ (), (1,3,2) ], [ (), () ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(T);</span>
+[ [ (), () ], [ (), (1,2,3) ] ]</pre></div>
+
 <p><a id="X7CAD3F5D81053DD0" name="X7CAD3F5D81053DD0"></a></p>
 
-<h5>18.2-6 <span class="Heading">
+<h5>18.2-7 <span class="Heading">
         Operators for isomorphisms of Rees (0-)matrix semigroup by triples
       </span></h5>
 
