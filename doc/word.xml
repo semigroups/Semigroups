@@ -9,14 +9,15 @@
 
 <#GAPDoc Label="WordToString" >
 <ManSection>
-  <Oper Name = "WordToString" Arg = "alphabet, word"
+  <Oper Name = "WordToString" Arg = "A, w"
     Label="for a string and a list"/>
   <Returns>
-    The <A>word</A> in the form of a string.
+    A string.
   </Returns>
   <Description>
-    Returns the word <A>word</A> that is given in the form of a list, in 
-    the form of a string of letters of the <A>alphabet</A>.
+    Returns the word <A>w</A>, in the form of a string of letters
+    of the alphabet <A>A</A>. The alphabet is given as a string containing
+    its members.
  <Example><![CDATA[
 gap> WordToString("abcd", [4, 2, 3, 1, 1, 4, 2, 3]);
 "dbcaadbc"]]></Example>
@@ -26,14 +27,13 @@ gap> WordToString("abcd", [4, 2, 3, 1, 1, 4, 2, 3]);
 
 <#GAPDoc Label="RandomWord" >
 <ManSection>
-  <Oper Name = "RandomWord" Arg = "length, number_letters"
+  <Oper Name = "RandomWord" Arg = "l, n"
     Label="for two integers"/>
   <Returns>
-    A random word of length <A>length</A> in the form of a list using 
-    <A>number_letters</A> letters.
+    A word.
   </Returns>
   <Description>
-	  Returns a random word of length <A>length</A>
+    Returns a random word of length <A>l</A> over <A>n</A> letters.
   <Example><![CDATA[
 gap> RandomWord(8, 5);
 [ 2, 4, 3, 4, 5, 3, 3, 2 ]
