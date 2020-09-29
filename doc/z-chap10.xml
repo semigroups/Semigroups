@@ -185,6 +185,8 @@ x1x2x2^-1x1^-1x1x2]]></Example>
   <Section>
     <Heading> Words and strings in finitely presented semigroups
     </Heading>
+    This section contains various methods for dealing with words, which for
+    these purposes are lists of positive integers.
 
     <#Include Label = "WordToString" >
     <#Include Label = "RandomWord" >
