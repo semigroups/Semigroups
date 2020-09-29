@@ -444,26 +444,8 @@ function(w1_in, w2_in)
   l1, l2, w, c, check, rightk, leftk, edgecodes, rightm, leftm, i, k;
 
   Right := function(w, k)
-    local max_char, right, i, j, content_size, multiplicity, length_w;
-    if not IsList(w) then
-      ErrorNoReturn("expected a list as first argument");
-    elif not IsPosInt(k) then
-      ErrorNoReturn("expected a positive integer as second argument");
-    fi;
-    max_char := 0;
-    for i in w do
-      if not IsPosInt(i) then
-        ErrorNoReturn("expected a list of positive integers as first argument");
-      fi;
-      if i > max_char + 1 then
-        ErrorNoReturn("expected first argument w to be a list of positive ",
-                      "integers which contains at least one instance of each ",
-                      "integer in [1 .. Maximum(w)], and whose entries are ",
-                      "ordered in order of first appearence.");
-      elif i > max_char then
-        max_char := max_char + 1;
-      fi;
-    od;
+    local right, i, j, content_size, multiplicity, length_w;
+
     length_w := Length(w);
     if length_w = 0 then
       return [];
@@ -499,25 +481,7 @@ function(w1_in, w2_in)
   end;
 
   Left := function(w, k)
-    local max_char, i, left, length_w;
-    if not IsList(w) then
-      ErrorNoReturn("expected a list as first argument");
-    elif not IsPosInt(k) then
-      ErrorNoReturn("expected a positive integer as second argument");
-    fi;
-    max_char := 0;
-    for i in w do
-      if not IsPosInt(i) then
-        ErrorNoReturn("expected a list of positive integers as first argument");
-      elif i > max_char + 1 then
-        ErrorNoReturn("expected first argument w to be a list of positive ",
-                      "integers which contains at least one instance of each ",
-                      "integer in [1 .. Maximum(w)], and whose entries are ",
-                      "ordered in order of first appearence.");
-      elif i > max_char then
-        max_char := max_char + 1;
-      fi;
-    od;
+    local i, left, length_w;
 
     length_w := Length(w);
     w        := StandardiseWord(Reversed(w));
@@ -532,24 +496,8 @@ function(w1_in, w2_in)
 
   LevelEdges := function(w, k, radix, rightk, leftk, rightm, leftm)
     local n, outr, outl, i;
-    if not IsList(w) then
-      ErrorNoReturn("expected a string as the argument, found ", w);
-    fi;
-    if not IsPosInt(k) then
-      ErrorNoReturn("expected a positive integer as second argument");
-    fi;
-    if not k <= Length(w) then
-      ErrorNoReturn("level k cannot be greater than length of word");
-    fi;
-    if not (IsList(radix) and IsList(rightk)
-                          and IsList(leftk)
-                          and IsList(rightm)
-                          and IsList(leftm)) then
-      ErrorNoReturn("expected final five arguments to be lists");
-    fi;
 
     n    := Length(w);
-
     outr := [];
     outl := [];
 
