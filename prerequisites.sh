@@ -22,7 +22,7 @@ if [ -d $LIBS_DIR ] && [ "$(ls -A $LIBS_DIR)" ]; then
   INSTALLED=`tr -d '\n' < $LIBS_DIR/.VERSION`
   echo -e "The installed version of libsemigroups is v$INSTALLED"
   LEAST=`echo -e "$VERS\n$INSTALLED" | sort -V | head -n1`
-  if ! [ "$VERS" == "$LEAST" ]; then
+  if [[ "$VERS" != "$LEAST" ]]; then
     echo -e "Error, the installed version of libsemigroups is too old"
     exit 3
   fi
