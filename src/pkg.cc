@@ -34,6 +34,7 @@
 
 #include "libsemigroups/blocks.hpp"
 #include "libsemigroups/cong.hpp"
+#include "libsemigroups/element-adapters.hpp"
 #include "libsemigroups/froidure-pin.hpp"
 #include "libsemigroups/uf.hpp"
 

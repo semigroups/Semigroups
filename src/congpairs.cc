@@ -122,7 +122,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
       gap_list_t rel = ELM_PLIST(gap_rels, i);
       S.add_rule(plist_to_word_type(ELM_PLIST(rel, 1)),
-                  plist_to_word_type(ELM_PLIST(rel, 2)));
+                 plist_to_word_type(ELM_PLIST(rel, 2)));
     }
 
     cong = new Congruence(type, S);
@@ -148,7 +148,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
               INT_INTOBJ(EN_SEMI_POSITION(0L, range_obj, rhs_obj)) - 1));
     }
   } else {
-    gap_rec_t data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    gap_rec_t  data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t words = ElmPRec(data, RNam_words);
 
     size_t nrgens = LEN_PLIST(semi_obj_get_gens(range_obj));

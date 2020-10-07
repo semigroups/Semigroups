@@ -1436,7 +1436,7 @@ class IdempotentCounter {
         }
       }
     }
-    REPORT_DEFAULT("finished in %llu", timer.string());
+    REPORT_DEFAULT("finished in %llu", timer.string().c_str());
   }
 
   // This is basically the same as BLOCKS_E_TESTER, but is required because we
