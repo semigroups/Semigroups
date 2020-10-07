@@ -23,6 +23,7 @@
 
 #include "compiled.h"  // GAP headers
 
+#include "libsemigroups/element-adapters.hpp"
 #include "libsemigroups/froidure-pin.hpp"
 
 #include "converter.h"
