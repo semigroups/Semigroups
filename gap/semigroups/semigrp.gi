@@ -182,8 +182,8 @@ function(S)
 end);
 
 InstallMethod(MagmaByGenerators,
-"for a finite multiplicative element collection",
-[IsMultiplicativeElementCollection and IsFinite], SemigroupByGenerators);
+"for a finite associative element collection",
+[IsAssociativeElementCollection and IsFinite], SemigroupByGenerators);
 
 InstallMethod(SemigroupByGenerators,
 "for a finite multiplicative element collection",
