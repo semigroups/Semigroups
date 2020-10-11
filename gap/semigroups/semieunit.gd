@@ -37,6 +37,8 @@ DeclareSynonymAttr("IsMTS", IsMcAlisterTripleSemigroup);
 DeclareSynonym("IsMcAlisterTripleSubsemigroup",
 IsMcAlisterTripleSemigroupElementCollection and IsSemigroup);
 
+InstallTrueMethod(IsFinite, IsMcAlisterTripleSubsemigroup);
+
 # This is a representation for McAlister triple semigroup, which are
 # created via the function McAlisterTripleSemigroup.
 #
@@ -108,7 +110,7 @@ DeclareSynonymAttr("MTSQuotientDigraph",
 
 # Operations for relating to McAlister triple semigroups
 DeclareAttribute("IsomorphismMcAlisterTripleSemigroup",
-                IsSemigroup);
+                 IsSemigroup);
 
 # Operations for creating McAlister triple semigroup elements
 DeclareOperation("McAlisterTripleSemigroupElement",

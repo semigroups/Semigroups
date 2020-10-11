@@ -8,7 +8,7 @@
 #############################################################################
 
 ## This file contains methods for Green's classes/relations for semigroups
-## in IsEnumerableSemigroupRep.
+## with CanComputeFroidurePin.
 
 # Green's classes in this representation have a single component which contains
 # the strongly connected compontents of the appropriate Cayley graph, it
@@ -24,7 +24,7 @@ DeclareRepresentation("IsEnumerableSemigroupGreensRelationRep",
                       IsComponentObjectRep and IsGreensRelation,
                       ["data"]);
 
-DeclareAttribute("DClassType", IsEnumerableSemigroupRep);
-DeclareAttribute("HClassType", IsEnumerableSemigroupRep);
-DeclareAttribute("LClassType", IsEnumerableSemigroupRep);
-DeclareAttribute("RClassType", IsEnumerableSemigroupRep);
+DeclareAttribute("DClassType", IsSemigroup);
+DeclareAttribute("HClassType", IsSemigroup);
+DeclareAttribute("LClassType", IsSemigroup);
+DeclareAttribute("RClassType", IsSemigroup);

@@ -982,8 +982,7 @@ gap> S := Semigroup([
 > Bipartition([[1, -1], [2, 3, 4, 5, -2], [-3], [-4], [-5]]),
 > Bipartition([[1, -2], [2, 3, 4, 5, -1], [-3], [-4], [-5]])]);
 <bipartition semigroup of degree 5 with 2 generators>
-gap> T := AsMonoid(IsPBRMonoid, S);
-<commutative pbr monoid of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPBRMonoid, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1005,8 +1004,7 @@ true
 gap> S := Semigroup([
 > Transformation([1, 2, 2, 2, 2]), Transformation([2, 1, 1, 1, 1])]);
 <transformation semigroup of degree 5 with 2 generators>
-gap> T := AsMonoid(IsPBRMonoid, S);
-<commutative pbr monoid of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPBRMonoid, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1040,7 +1038,7 @@ gap> S := Semigroup([
 >         [true, false, false, false, false]])]);
 <semigroup of 5x5 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsPBRMonoid, S);
-<commutative pbr monoid of degree 2 with 1 generator>
+<commutative pbr monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

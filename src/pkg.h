@@ -109,11 +109,10 @@ extern Obj HTValue;
 extern Obj HTAdd;
 extern Obj Pinfinity;
 extern Obj Ninfinity;
+extern Obj IsInfinity;
+extern Obj IsNegInfinity;
 extern Obj IsBooleanMat;
 extern Obj BooleanMatType;
-extern Obj IsMatrixOverSemiring;
-extern Obj DimensionOfMatrixOverSemiring;
-extern Obj IsTropicalMatrix;
 extern Obj MaxPlusMatrixType;
 extern Obj IsMaxPlusMatrix;
 extern Obj MinPlusMatrixType;
@@ -135,11 +134,13 @@ extern Obj TYPE_PBR;
 
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
-extern Obj FROPIN;
 extern Obj GeneratorsOfMagma;
+extern Obj LARGEST_MOVED_PT_TRANS;
 
 extern Obj IsSemigroup;
 extern Obj IsSemigroupIdeal;
 extern Obj IsActingSemigroup;
+
+extern Obj PositionCanonical;
 
 #endif  // SEMIGROUPS_SRC_PKG_H_

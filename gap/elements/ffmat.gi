@@ -534,7 +534,7 @@ function(filt, sample, mat)
 end);
 
 InstallMethod(BaseDomain, "for a matrix over finite field collection",
-[IsMatrixOverFiniteFieldCollection],
+[IsMatrixOverFiniteFieldCollection], 2,  # to beat IsRowVector
 function(coll)
   local base;
   base := BaseDomain(coll[1]);

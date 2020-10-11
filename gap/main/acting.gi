@@ -71,9 +71,10 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif Position(S, x) <> fail then  # check if x is already known to be in S
+  elif HasFroidurePin(S) and Position(S, x) <> fail then
+    # check if x is already known to be in S
     return true;
-  elif IsFullyEnumerated(S) then
+  elif HasFroidurePin(S) and IsEnumerated(S) then
     return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);

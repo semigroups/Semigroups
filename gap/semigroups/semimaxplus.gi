@@ -727,11 +727,11 @@ end);
 
 InstallMethod(IsFinite,
 "for a min-plus matrix semigroup",
-[IsMinPlusMatrixSemigroup],
+[IsMinPlusMatrixSemigroup], SUM_FLAGS + 1,
 function(S)
   local gens, id, mat, row, val;
 
-  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
+  if IsEnumerated(Enumerate(S, 8192)) then
     return true;
   fi;
 
@@ -772,9 +772,9 @@ end);
 
 InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
-[IsMaxPlusMatrixSemigroup],
+[IsMaxPlusMatrixSemigroup], SUM_FLAGS + 1,
 function(S)
-  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
+  if IsEnumerated(Enumerate(S, 8192)) then
     return true;
   fi;
   return IsTorsion(S);

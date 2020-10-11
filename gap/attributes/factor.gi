@@ -11,27 +11,25 @@
 # This file contains methods relating to factorising elements of a semigroup
 # over its generators.
 
-# same method for ideals
-
 # this is declared in the library, but there is no method for semigroups in the
 # library.
 
 InstallMethod(Factorization,
-"for an enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+"for semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
 function(S, x)
   return MinimalFactorization(S, x);
 end);
 
 InstallMethod(NonTrivialFactorization,
-"for an enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+"for semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local gens, pos, gr, verts, i, j;
+  local gens, pos, gr, verts, i, j, y;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
-                  "the element <x> must belong to the semigroup <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   elif HasIndecomposableElements(S)
       and x in IndecomposableElements(S) then
     return fail;
@@ -54,19 +52,19 @@ function(S, x)
   fi;
   i := verts[1];
   j := Position(OutNeighboursOfVertex(gr, i), pos);
-  return Concatenation(EN_SEMI_FACTORIZATION(S, i), [j]);
+  y := EnumeratorCanonical(S)[i];
+  return Concatenation(MinimalFactorization(S, y), [j]);
 end);
 
 InstallMethod(NonTrivialFactorization,
 "for an acting semigroup with generators and multiplicative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
-  local factorization, gens, o, l, m, id, scc, word, tree, k, p, data,
-  pos, graph, j, i;
+  local factorization, id, gens, data, pos, graph, j, i;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
-                  "the element <x> must belong to the semigroup <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   elif HasIndecomposableElements(S)
       and x in IndecomposableElements(S) then
     return fail;
@@ -76,40 +74,20 @@ function(S, x)
   if not IsTrivial(factorization) then
     return factorization;
   fi;
-  gens   := GeneratorsOfSemigroup(S);
 
-  # Attempt to use LambdaOrb to find a right identity for <x>.
-  o := LambdaOrb(S);
-  l := Position(o, LambdaFunc(S)(x));
-  m := OrbSCCLookup(o)[l];
-  # Note that <x> is its R-class rep, and LambdaFunc(S)(x) is first in its SCC.
-  id := Factorization(o, m, LambdaIdentity(S)(true));
+  # Attempt to find a right identity for x.
+  id := RightIdentity(S, x);
   if id <> fail then
-    return Concatenation(factorization, id);
+    return Concatenation(factorization, Factorization(S, id));
   fi;
 
   # {x} is a non-reg trivial R-class.
   Assert(1, IsTrivial(RClass(S, x)) and not IsRegularGreensClass(RClass(S, x)));
 
-  # Attempt to use RhoOrb to obtain a decomposition of <x>.
-  o := RhoOrb(S);
-  l := Position(o, RhoFunc(S)(x));
-  m := OrbSCCLookup(o)[l];
-  scc := OrbSCC(o)[m];
-  if scc[1] <> l then
-    word := Reversed(TraceSchreierTreeOfSCCForward(o, m, l));
-    return Concatenation(word, Factorization(S, RhoOrbMult(o, m, l)[2] * x));
-  fi;
-  # Attempt to find a left identity for <x>. RhoFunc(S)(x) is first in <scc>.
-  tree := ReverseSchreierTreeOfSCC(o, m);
-  k := First(scc, k -> tree[2][k] = l);
-  if k <> fail then
-    word := [tree[1][k]];
-    Append(word, Reversed(TraceSchreierTreeOfSCCForward(o, m, k)));
-    p := SmallestIdempotentPower(EvaluateWord(gens, word));
-    # x = (word ^ p) * x.
-    word := Concatenation(ListWithIdenticalEntries(p, word));
-    return Concatenation(word, factorization);
+  # Attempt to find a left identity for x.
+  id := LeftIdentity(S, x);
+  if id <> fail then
+    return Concatenation(Factorization(S, id), factorization);
   fi;
 
   # {x} is a non-reg trivial D-class. Either {x} is maximal or <x> is redundant.
@@ -117,6 +95,7 @@ function(S, x)
 
   # If <x> is redundant, we can decompose <x> as a left multiple of some other
   # R-class rep of the semigroup
+  gens := GeneratorsOfSemigroup(S);
   data := SemigroupData(S);
   Enumerate(data);
   pos := Position(data, x);
@@ -142,8 +121,8 @@ function(S, x)
   local pos;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
-                  "the element <x> must belong to the semigroup <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   fi;
   pos := Position(GeneratorsOfSemigroup(S), x);
   if pos = fail then
@@ -209,14 +188,13 @@ function(o, m, p)
     o!.factors[m]      := factors;
     o!.factorgroups[m] := G;
   else
-    factors      := o!.factors[m];
-    G            := o!.factorgroups[m];
+    factors := o!.factors[m];
+    G       := o!.factorgroups[m];
   fi;
 
   if not p in G then
-    ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                  "the third argument <p> does not belong to the ",
-                  "Schutzenberger group,");
+    ErrorNoReturn("the third argument <p> does not belong to the ",
+                  "Schutzenberger group");
   elif IsEmpty(factors) then
     # No elt of the semigroup stabilizes the relevant lambda value.  Therefore
     # the Schutzenberger group is trivial, and corresponds to the action of an
@@ -312,18 +290,16 @@ function(S, x)
   local pos, o, l, m, scc, data, rep, word1, word2, p;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                  "the second argument <x> is not an element ",
-                  "of the first argument <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
-      # avoid re-hashing x
-      return EN_SEMI_FACTORIZATION(S, pos);
+      return MinimalFactorization(S, x);
     fi;
   fi;
 
-  o := LambdaOrb(S);
+  o := Enumerate(LambdaOrb(S));
   l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
@@ -360,19 +336,19 @@ end);
 
 InstallMethod(Factorization,
 "for an acting inverse semigroup rep with generators and element",
+IsCollsElms,
 [IsInverseActingSemigroupRep and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
   local pos, o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                  "the second argument <x> is not an element ",
-                  "of the first argument <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
-      return EN_SEMI_FACTORIZATION(S, pos);
+      return MinimalFactorization(S, x);
     fi;
   fi;
 
@@ -425,13 +401,12 @@ function(S, x)
   local pos, o, gens, l, word1, rep, m, scc, k, word2, p;
 
   if not x in S then
-    ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                  "the second argument <x> is not an element ",
-                  "of the first argument <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+                  "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
     if pos <> fail then
-      return EN_SEMI_FACTORIZATION(S, pos);
+      return MinimalFactorization(S, x);
     fi;
   fi;
 

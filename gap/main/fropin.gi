@@ -17,140 +17,70 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-InstallTrueMethod(IsEnumerableSemigroupRep,
-IsSemigroup and IsGeneratorsOfEnumerableSemigroup);
+InstallMethod(CanComputeFroidurePin, "for a semigroup",
+[IsSemigroup], S -> CanComputeGapFroidurePin(S) or
+                    CanComputeCppFroidurePin(S));
 
-# This is optional, but it is useful in several places, for example, to be able
-# to use MinimalFactorization with a perm group.
-# InstallTrueMethod(IsEnumerableSemigroupRep, IsGroup and IsFinite);
+InstallMethod(HasFroidurePin, "for a semigroup",
+[IsSemigroup], S -> HasGapFroidurePin(S) or
+                    HasCppFroidurePin(S));
 
-# This should be removed ultimately, but is included now because there are too
-# few methods for fp semigroup and monoids at present.
-InstallTrueMethod(IsEnumerableSemigroupRep, IsFpSemigroup and IsFinite);
-InstallTrueMethod(IsEnumerableSemigroupRep, IsFpMonoid and IsFinite);
+InstallTrueMethod(CanComputeFroidurePin, CanComputeGapFroidurePin);
 
-InstallTrueMethod(IsEnumerableSemigroupRep,
-IsReesMatrixSubsemigroup and IsGeneratorsOfEnumerableSemigroup);
+for x in [IsFpSemigroup and IsFinite,
+          IsFpMonoid and IsFinite,
+          IsMatrixOverFiniteFieldSemigroup,
+          IsGraphInverseSemigroup and IsFinite,
+          IsMcAlisterTripleSubsemigroup,
+          IsSemigroup and IsFreeBandElementCollection,
+          IsPermGroup,
+          IsFreeInverseSemigroupCategory] do
+          # TODO PermGroups shuold be in CanComputeCppFroidurePin
+  InstallTrueMethod(CanComputeGapFroidurePin, x);
+od;
 
-InstallTrueMethod(IsEnumerableSemigroupRep,
-IsReesZeroMatrixSubsemigroup and IsGeneratorsOfEnumerableSemigroup);
+InstallMethod(CanComputeGapFroidurePin, "for a semigroup",
+[IsSemigroup], ReturnFalse);
 
-InstallTrueMethod(IsEnumerableSemigroupRep,
-                  IsQuotientSemigroup and IsGeneratorsOfEnumerableSemigroup);
+InstallTrueMethod(CanComputeGapFroidurePin,
+IsSemigroup and HasMultiplicationTable and HasGeneratorsOfSemigroup);
 
-# Methods for IsGeneratorsOfEnumerableSemigroup
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsGeneratorsOfActingSemigroup);
-
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsBipartitionCollection);
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsTransformationCollection);
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsPartialPermCollection);
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsMatrixOverFiniteFieldCollection);
-
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsPBRCollection);
-
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsGraphInverseSubsemigroup and IsFinite);
-
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsMcAlisterTripleSemigroupElementCollection);
-
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsSSSECollection);
-
-InstallMethod(IsGeneratorsOfEnumerableSemigroup,
-"for a matrix over semiring collection", [IsMatrixOverSemiringCollection],
-IsGeneratorsOfSemigroup);
-
-# The HasRows and HasColumns is currently essential due to some problems in the
-# Rees(Zero)MatrixSemigroup code.
-
-InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
+InstallImmediateMethod(CanComputeGapFroidurePin,
 IsReesZeroMatrixSubsemigroup and HasRowsOfReesZeroMatrixSemigroup
     and HasColumnsOfReesZeroMatrixSemigroup, 0,
 function(R)
-  return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
-end);
-
-InstallMethod(IsGeneratorsOfEnumerableSemigroup,
-"for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection],
-function(coll)
-  local R;
-  R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
   return IsPermGroup(UnderlyingSemigroup(R))
-    or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
+    or CanComputeFroidurePin(UnderlyingSemigroup(R));
 end);
 
-# The HasRows and HasColumns is currently essential due to some problems in the
-# Rees(Zero)MatrixSemigroup code.
+InstallTrueMethod(CanComputeGapFroidurePin,
+IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup);
 
-InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
+InstallImmediateMethod(CanComputeGapFroidurePin,
 IsReesMatrixSubsemigroup and HasRowsOfReesMatrixSemigroup
     and HasColumnsOfReesMatrixSemigroup, 0,
 function(R)
-  return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
-end);
-
-InstallMethod(IsGeneratorsOfEnumerableSemigroup,
-"for a Rees matrix semigroup element collection",
-[IsReesMatrixSemigroupElementCollection],
-function(coll)
-  local R;
-  R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
   return IsPermGroup(UnderlyingSemigroup(R))
-    or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
+    or CanComputeFroidurePin(UnderlyingSemigroup(R));
 end);
 
-InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
+InstallTrueMethod(CanComputeGapFroidurePin,
+IsReesMatrixSubsemigroup and HasGeneratorsOfSemigroup);
+
+InstallImmediateMethod(CanComputeGapFroidurePin,
 IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
-function(S)
-  return IsGeneratorsOfEnumerableSemigroup(QuotientSemigroupPreimage(S));
-end);
+S -> CanComputeFroidurePin(QuotientSemigroupPreimage(S)));
 
-# The value 4 in the next method could be 5, but then the Iterator method for
-# FreeBand(4) is very slow because it involves running the Froidure-Pin
-# algorithm on FreeBand(4) to determine the data structure for
-# GreensDRelation(FreeBand(4)) because the D-classes of a free band are used in
-# the Iterator method, and IsEnumerableSemigroupRep's enumerate the semigroup
-# fully in the method for GreensDRelation, but the fully enumerated semigroup
-# is not required for the Iterator method (it does something completely
-# different), and so this is a waste of effort. Basically the only reason to
-# include free bands in IsEnumerableSemigroupRep is that they do not have
-# enough methods installed, and so we just use this for now.
+InstallTrueMethod(CanComputeGapFroidurePin,
+IsSemigroupIdeal and IsReesMatrixSubsemigroup);
 
-# FIXME Remove this in the future.
+InstallTrueMethod(CanComputeGapFroidurePin,
+IsSemigroupIdeal and IsReesZeroMatrixSubsemigroup);
 
-InstallMethod(IsGeneratorsOfEnumerableSemigroup,
-"for a free band element collection",
-[IsFreeBandElementCollection],
-function(coll)
-  return Length(ContentOfFreeBandElementCollection(coll)) < 4;
-end);
-
-InstallMethod(IsGeneratorsOfEnumerableSemigroup,
-"for a multiplicative element collection",
-[IsMultiplicativeElementCollection], ReturnFalse);
-
-# This function is used to initialise the data record for an enumerable
-# semigroup which does not have a C++ implementation.
-
-BindGlobal("FROPIN",
+InstallMethod(GapFroidurePin, "for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
   local data, hashlen, nrgens, nr, val, i;
-  if (not IsEnumerableSemigroupRep(S))
-      or Length(GeneratorsOfSemigroup(S)) = 0 then
-    ErrorNoReturn("Semigroups: FROPIN: usage,\n",
-                  "the argument must be a semigroup with at least 1 ",
-                  "generator,");
-  elif IsBound(S!.__en_semi_fropin) then
-    return S!.__en_semi_fropin;
-  fi;
 
   data := rec(elts := [],
               final := [],
@@ -212,7 +142,6 @@ function(S)
   od;
 
   data.nr := nr;
-  S!.__en_semi_fropin := data;
   return data;
 end);
 
@@ -222,126 +151,62 @@ end);
 
 # This is a fallback method in case we don't know any better way to check this
 
-InstallMethod(IsFinite, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(IsFinite,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  return EN_SEMI_SIZE(S) < infinity;
+  return Size(S) < infinity;
 end);
 
-InstallMethod(AsSet, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(AsSet,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: AsSet: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_AS_SET(S);
+  return SortedList(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
 
-InstallMethod(EnumeratorSorted,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-function(S)
-  local enum;
-
-  if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: EnumeratorSorted: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
-  elif Length(GeneratorsOfSemigroup(S)) = 0
-      or not (IsTransformationSemigroup(S)
-              or IsPartialPermSemigroup(S)
-              or IsBipartitionSemigroup(S)
-              or IsBooleanMatSemigroup(S)
-              or IsPBRSemigroup(S)
-              or IsMatrixOverSemiringSemigroup(S)) then
-     # This method only works for semigroups to which the libsemigroups
-     # code applies
-    TryNextMethod();
-  fi;
-
-  enum := rec();
-
-  enum.NumberElement := function(enum, x)
-    # Don't call EN_SEMI_POSITION_SORTED directly because then we pass elements
-    # of too high degree which causes an exception in Libsemigroups
-    return PositionSortedOp(S, x);
-  end;
-
-  enum.ElementNumber := function(enum, nr)
-    return EN_SEMI_ELEMENT_NUMBER_SORTED(S, nr);
-  end;
-
-  enum.Length := enum -> Size(S);
-
-  enum.Membership := function(x, enum)
-    return PositionCanonical(S, x) <> fail;
-  end;
-
-  enum.IsBound\[\] := function(enum, nr)
-    return nr <= Size(S);
-  end;
-
-  enum := EnumeratorByFunctions(S, enum);
-  SetIsSemigroupEnumerator(enum, true);
-  SetIsSSortedList(enum, true);
-
-  return enum;
-end);
-
-InstallMethod(IteratorSorted,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 8,
-# to beat the method for transformation semigroups, FIXME
-function(S)
-  local iter;
-  if HasAsSSortedList(S) then
-    return IteratorList(AsSSortedList(S));
-  fi;
-
-  iter        := rec();
-  iter.pos    := 0;
-  iter.parent := S;
-
-  iter.NextIterator   := EN_SEMI_NEXT_ITERATOR_SORTED;
-  iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0, parent := iter!.parent);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
-InstallMethod(AsList, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], AsListCanonical);
+InstallMethod(AsList,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+AsListCanonical);
 
 InstallMethod(AsListCanonical,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: AsListCanonical: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_AS_LIST(S);
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts;
 end);
 
-# For ideals and other generatorless enumerable semigroups
+# For ideals and other generatorless semigroups
 
-InstallMethod(AsListCanonical, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(AsListCanonical, "for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
   GeneratorsOfSemigroup(S);
   return AsListCanonical(S);
 end);
 
-InstallMethod(Enumerator, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
-EnumeratorCanonical);
+InstallMethod(Enumerator,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+function(S)
+  if (IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S))
+      and HasIsWholeFamily(S) and IsWholeFamily(S) then
+    TryNextMethod();
+  fi;
+  return EnumeratorCanonical(S);
+end);
 
 InstallMethod(EnumeratorCanonical,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
+# RankFilter(IsActingSemigroup) + 6,
 # to beat the method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
@@ -353,13 +218,22 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
-    # Don't call EN_SEMI_POSITION directly since we may then pass too large
-    # degree pperms or transformations which cause a libsemigroups exception.
     return PositionCanonical(S, x);
   end;
 
   enum.ElementNumber := function(enum, nr)
-    return EN_SEMI_ELEMENT_NUMBER(S, nr);
+    local fp;
+    fp := GapFroidurePin(S);
+    if not (IsBound(fp.elts) and nr < Length(fp.elts) and IsBound(fp.elts[nr]))
+        then
+      fp := RUN_FROIDURE_PIN(fp, nr);
+    fi;
+
+    if nr <= Length(fp.elts) and IsBound(fp.elts[nr]) then
+      return fp.elts[nr];
+    else
+      return fail;
+    fi;
   end;
 
   # FIXME this should be Size(S) hack around RZMS
@@ -367,7 +241,7 @@ function(S)
     if not IsFinite(S) then
       return infinity;
     else
-      return EN_SEMI_SIZE(S);
+      return Size(S);
     fi;
   end;
 
@@ -388,76 +262,35 @@ function(S)
   return enum;
 end);
 
-InstallMethod(EnumeratorCanonical,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep],
-function(S)
-  GeneratorsOfSemigroup(S);
-  return EnumeratorCanonical(S);
-end);
+InstallMethod(IteratorCanonical,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
+S -> IteratorList(EnumeratorCanonical(S)));
 
-# The next method is necessary since it does not necessarily involve
-# enumerating the entire semigroup in the case that the semigroup is partially
-# enumerated and <list> only contains indices that are within the so far
-# enumerated range. The default methods in the library do, because they require
-# the length of the enumerator to check that the list of positions is valid.
+InstallMethod(Iterator,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
+S -> IteratorList(Enumerator(S)));
 
-InstallMethod(ELMS_LIST, "for a semigroup enumerator and a list",
-[IsSemigroupEnumerator, IsList],
-function(enum, list)
-  return EN_SEMI_ELMS_LIST(UnderlyingCollection(enum), list);
-end);
+InstallMethod(IteratorSorted,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
+S -> IteratorList(EnumeratorSorted(S)));
 
 InstallMethod(Iterator, "for semigroup enumerator sorted",
 [IsSemigroupEnumerator and IsSSortedList],
-function(enum)
-  return IteratorSorted(UnderlyingCollection(enum));
-end);
-
-InstallMethod(Iterator, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-2,  # to beat the method for a Rees matrix semigroup, FIXME!!
-IteratorCanonical);
-
-InstallMethod(IteratorCanonical,
-"for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-function(S)
-  local iter;
-
-  if HasAsListCanonical(S) then
-    return IteratorList(AsListCanonical(S));
-  fi;
-
-  iter        := rec();
-  iter.pos    := 0;
-  iter.parent := S;
-
-  iter.NextIterator   := EN_SEMI_NEXT_ITERATOR;
-  iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0, parent := S);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
-InstallMethod(Iterator, "for semigroup enumerator",
-[IsSemigroupEnumerator],
-function(enum)
-  return Iterator(UnderlyingCollection(enum));
-end);
+enum -> IteratorSorted(UnderlyingCollection(enum)));
 
 # different method for ideals
 
-InstallMethod(Size, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(Size,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
     return infinity;
   fi;
-  return EN_SEMI_SIZE(S);
+  return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
 
 # different method for ideals
@@ -465,49 +298,85 @@ end);
 InstallMethod(\in,
 "for multiplicative element and an enumerable semigroup with known generators",
 [IsMultiplicativeElement,
- IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+ IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(x, S)
   return PositionCanonical(S, x) <> fail;
 end);
 
 # different method for ideals
 
-InstallMethod(Idempotents, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(Idempotents,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
+  local fp, left, final, prefix, elts, N, out, i, j, pos;
+
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return EN_SEMI_IDEMPOTENTS(S);
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), -1);
+  left   := fp.left;
+  final := fp.final;
+  prefix := fp.prefix;
+  elts := fp.elts;
+
+  N := Size(left);
+  out := [];
+  for pos in [1 .. N] do
+    i := pos;
+    j := pos;
+    repeat
+      j := left[j][final[i]];
+      i := prefix[i];
+    until i = 0;
+    if j = pos then
+      Add(out, elts[pos]);
+    fi;
+  od;
+  return out;
 end);
 
 InstallMethod(PositionCanonical,
-"for an enumerable semigroup with known generators and multiplicative element",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup,
+"for a semigroup with CanComputeGapFroidurePin, generators, and mult. elt",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(S))
-      or (IsTransformation(x)
-          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
-      or (IsPartialPerm(x)
-          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
-          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
+  local fp, ht, nr, val, limit, pos;
+
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
 
-  return EN_SEMI_POSITION(S, x);
+  fp := GapFroidurePin(S);
+  ht := fp.ht;
+  nr := fp.nr;
+  repeat
+    val := HTValue(ht, x);
+    if val <> fail then
+      return val;
+    fi;
+    limit := nr + 1;
+    fp := RUN_FROIDURE_PIN(fp, limit);
+    pos := fp.pos;
+    nr := fp.nr;
+  until pos > nr;
+
+  return HTValue(ht, x);
 end);
 
-InstallMethod(PositionCanonical,
-"for a perm group with known generators and multiplicative element",
-[IsPermGroup and HasGeneratorsOfGroup and IsEnumerableSemigroupRep,
- IsMultiplicativeElement],
-function(G, x)
-  if (not IsPerm(x)) or LargestMovedPointPerm(x) > LargestMovedPoint(G) then
-    return fail;
-  fi;
-  return EN_SEMI_POSITION(G, x);
-end);
+# TODO(now) is the next method necessary?
+# InstallMethod(PositionCanonical,
+# "for a perm group with known generators and multiplicative element",
+# [IsPermGroup and HasGeneratorsOfGroup and IsSemigroup and
+# CanComputeGapFroidurePin,
+#  IsMultiplicativeElement],
+# function(G, x)
+#   if (not IsPerm(x)) or LargestMovedPointPerm(x) > LargestMovedPoint(G) then
+#     return fail;
+#   fi;
+#   return EN_SEMI_POSITION(G, x);
+# end);
 
 # Position exists so that we can call it on objects with an uninitialised data
 # structure, without first having to initialise the data structure to realise
@@ -517,165 +386,205 @@ end);
 # S.
 
 InstallMethod(Position,
-"for an enumerable semigroup, mult. element, zero cyc",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc],
+"for a semigroup with CanComputeGapFroidurePin, mult. element, zero cyc",
+[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
   return PositionOp(S, x, n);
 end);
 
 InstallMethod(PositionOp,
-"for an enumerable semigroup, multi. element, zero cyc",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc],
+"for a semigroup with CanComputeGapFroidurePin, multi. element, zero cyc",
+[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
 
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(S))
-      or (IsTransformation(x)
-          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
-      or (IsPartialPerm(x)
-          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
-          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
-
-  return EN_SEMI_CURRENT_POSITION(S, x);
+  return HTValue(GapFroidurePin(S).ht, x);
 end);
 
 InstallMethod(PositionSortedOp,
-"for an enumerable semigroup with known generators and multiplicative element",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup,
+"for a semigroup with CanComputeGapFroidurePin, generators and mult. elt.",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(S))
-      or (IsTransformation(x)
-          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
-      or (IsPartialPerm(x)
-          and (DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)
-          or CodegreeOfPartialPerm(x) > CodegreeOfPartialPermSemigroup(S))) then
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   elif not IsFinite(S) then
-    ErrorNoReturn("Semigroups: PositionSortedOp: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_POSITION_SORTED(S, x);
+  return Position(AsSet(S), x);
 end);
 
-InstallMethod(IsFullyEnumerated, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], EN_SEMI_IS_DONE);
-
-InstallMethod(Display, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(IsEnumerated, "for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
-
-  Print("<");
-  if EN_SEMI_IS_DONE(S) then
-    Print("fully ");
-  else
-    Print("partially ");
+  local fp;
+  if HasGapFroidurePin(S) then
+    fp := GapFroidurePin(S);
+    return fp.pos > fp.nr;
   fi;
-
-  Print("enumerated semigroup with ", EN_SEMI_CURRENT_SIZE(S));
-  Print(" elements, ", EN_SEMI_CURRENT_NR_RULES(S), " rules, ");
-  Print("max word length ", EN_SEMI_CURRENT_MAX_WORD_LENGTH(S), ">");
-  return;
+  return false;
 end);
 
 # the main algorithm
 
 InstallMethod(Enumerate,
-"for an enumerable semigroup with known generators and pos int",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup, IsInt],
-EN_SEMI_ENUMERATE);
+"for a semigroup with CanComputeGapFroidurePin and known generators and pos int",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup, IsInt],
+function(S, limit)
+  RUN_FROIDURE_PIN(GapFroidurePin(S), limit);
+  return S;
+end);
 
-InstallMethod(Enumerate, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+InstallMethod(Enumerate,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   return Enumerate(S, -1);
 end);
 
 # same method for ideals
 
-InstallMethod(RightCayleyGraphSemigroup, "for an enumerable semigroup rep",
-[IsEnumerableSemigroupRep], 3,
+InstallMethod(RightCayleyGraphSemigroup,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin], 3,
 function(S)
-  return OutNeighbours(RightCayleyDigraph(S));
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).right;
 end);
 
 InstallMethod(RightCayleyDigraph,
-"for an enumerable semigroup rep",
-[IsEnumerableSemigroupRep],
+"for a semigroup with CanComputeGapFroidurePin rep",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
-  local digraph;
+  local D;
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: RightCayleyDigraph: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
   fi;
-  digraph := DigraphNC(MakeImmutable(EN_SEMI_RIGHT_CAYLEY_GRAPH(S)));
-  SetFilterObj(digraph, IsCayleyDigraph);
-  SetSemigroupOfCayleyDigraph(digraph, S);
-  SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
-  return digraph;
+
+  D := DigraphNC(MakeImmutable(RightCayleyGraphSemigroup(S)));
+  SetFilterObj(D, IsCayleyDigraph);
+  SetSemigroupOfCayleyDigraph(D, S);
+  SetGeneratorsOfCayleyDigraph(D, GeneratorsOfSemigroup(S));
+  return D;
 end);
 
 # same method for ideals
 
 InstallMethod(LeftCayleyGraphSemigroup,
-"for an enumerable semigroup rep",
-[IsEnumerableSemigroupRep], 3,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin], 3,
 function(S)
-  return OutNeighbours(LeftCayleyDigraph(S));
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).left;
 end);
 
 InstallMethod(LeftCayleyDigraph,
-"for an enumerable semigroup rep",
-[IsEnumerableSemigroupRep],
+"for a semigroup with CanComputeGapFroidurePin rep",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
-  local digraph;
+  local D;
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: LeftCayleyDigraph: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
   fi;
-  digraph := DigraphNC(MakeImmutable(EN_SEMI_LEFT_CAYLEY_GRAPH(S)));
-  SetFilterObj(digraph, IsCayleyDigraph);
-  SetSemigroupOfCayleyDigraph(digraph, S);
-  SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
-  return digraph;
+  D := DigraphNC(MakeImmutable(LeftCayleyGraphSemigroup(S)));
+  SetFilterObj(D, IsCayleyDigraph);
+  SetSemigroupOfCayleyDigraph(D, S);
+  SetGeneratorsOfCayleyDigraph(D, GeneratorsOfSemigroup(S));
+  return D;
 end);
 
-InstallMethod(MultiplicationTable, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
-function(S)
-  local tab;
-  if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: MultiplicationTable: usage,\n",
-                  "the first argument (a semigroup) must be finite,");
-  fi;
-  tab := EN_SEMI_CAYLEY_TABLE(S);
-  if tab <> fail then
-    return tab;
-  fi;
-  TryNextMethod();
-end);
-
-InstallMethod(NrIdempotents, "for an enumerable semigroup rep",
-[IsEnumerableSemigroupRep],
+InstallMethod(NrIdempotents, "for a semigroup with CanComputeGapFroidurePin rep",
+[IsSemigroup and CanComputeGapFroidurePin],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
-  elif HasIdempotents(S) then
+  else
     return Length(Idempotents(S));
   fi;
+end);
 
-  return EN_SEMI_NR_IDEMPOTENTS(S);
+InstallMethod(Factorization,
+"for a semigroup with CanComputeGapFroidurePin and a positive integer",
+[IsSemigroup and CanComputeGapFroidurePin, IsPosInt],
+function(S, i)
+  local words;
+
+  if i > Size(S) then
+    ErrorNoReturn("the 2nd argument (a positive integer) is greater ",
+                  "than the size of the 1st argument (a semigroup)");
+  fi;
+
+  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
+  return ShallowCopy(words[i]);
 end);
 
 InstallMethod(MinimalFactorization,
-"for an enumerable semigroup and a multiplicative element",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+"for a semigroup with CanComputeGapFroidurePin and a multiplicative element",
+[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement],
 function(S, x)
+  local words;
+
   if not x in S then
-    ErrorNoReturn("Semigroups: MinimalFactorization:\n",
-                  "the second argument <x> is not an element ",
-                  "of the first argument <S>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+                  "of the 1st argument (a semigroup)");
   fi;
-  return ShallowCopy(EN_SEMI_FACTORIZATION(S, PositionCanonical(S, x)));
+
+  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
+  return ShallowCopy(words[PositionCanonical(S, x)]);
+end);
+
+InstallMethod(MinimalFactorization,
+"for a semigroup with CanComputeGapFroidurePin and a pos. int.",
+[IsSemigroup and CanComputeGapFroidurePin, IsPosInt],
+function(S, i)
+  local words;
+
+  if i > Size(S) then
+    ErrorNoReturn("expected a value in [1, ", Size(S), "] for ",
+                  "the 2nd argument, but found ", i);
+  fi;
+
+  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
+  return ShallowCopy(words[i]);
+end);
+
+InstallMethod(RulesOfSemigroup,
+"for a semigroup with CanComputeGapFroidurePin",
+[IsSemigroup and CanComputeGapFroidurePin],
+function(S)
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).rules;
+end);
+
+# TODO(now) Idempotents should just call this
+
+InstallMethod(IdempotentsSubset,
+"for a semigroup with CanComputeGapFroidurePin + known generators, hom. list",
+[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
+ IsHomogeneousList],
+function(S, list)
+  local fp, left, final, prefix, elts, out, i, j, pos;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), -1);
+  left   := fp.left;
+  final := fp.final;
+  prefix := fp.prefix;
+  elts := fp.elts;
+
+  out := [];
+  for pos in list do
+    i := pos;
+    j := pos;
+    repeat
+      j := left[j][final[i]];
+      i := prefix[i];
+    until i = 0;
+    if j = pos then
+      Add(out, pos);
+    fi;
+  od;
+  return out;
 end);

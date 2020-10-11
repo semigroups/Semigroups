@@ -212,8 +212,7 @@ gap> S := Semigroup([
 > Transformation([1, 2, 3, 3, 3]),
 > Transformation([1, 1, 3, 3, 3])]);
 <transformation semigroup of degree 5 with 2 generators>
-gap> D := DirectProduct(S, S);
-<transformation semigroup of degree 10 with 3 generators>
+gap> D := DirectProduct(S, S);;
 gap> ProductCheck(D, [S, S], true);
 true
 
@@ -250,8 +249,7 @@ gap> list := [
 >  Semigroup([Transformation([1, 2, 3, 3, 3])]),
 >  Semigroup([Transformation([2, 1])]),
 >  Semigroup([Transformation([1, 1, 2, 3, 4])])];;
-gap> D := DirectProduct(list);
-<commutative transformation semigroup of degree 12 with 2 generators>
+gap> D := DirectProduct(list);;
 gap> ProductCheck(D, list, true);
 true
 gap> Size(D);
@@ -494,14 +492,14 @@ gap> D := DirectProduct(S);;
 gap> IsRegularSemigroup(D);
 true
 gap> D;
-<regular pbr monoid of degree 1 with 4 generators>
+<regular pbr monoid of size 16, degree 1 with 4 generators>
 gap> ProductCheck(D, [S], true);
 true
 gap> D := DirectProduct(S, S);;
 gap> IsRegularSemigroup(D);
 true
 gap> D;
-<regular pbr monoid of degree 2 with 8 generators>
+<regular pbr monoid of size 256, degree 2 with 8 generators>
 gap> ProductCheck(D, [S, S], false);
 true
 gap> Size(D);
@@ -593,9 +591,9 @@ Error, Semigroups: Embedding: usage,
 the index <i> must be in the range [1 .. 3], since the direct product <D>
 consists of only 3 factors,
 gap> Embedding(D, 1);
-MappingByFunction( <transformation semigroup of degree 4 with 3 generators>, 
-<transformation semigroup of degree 12 with 27 generators>
- , function( x ) ... end )
+MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
+ generators>, <transformation semigroup of size 27, degree 12 with 27 
+ generators>, function( x ) ... end )
 gap> Embedding(D, 1) = last;
 true
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[1]);
@@ -606,9 +604,9 @@ the direct product information for <D> has become corrupted,
 please re-create the object,
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Embedding(D, 3);
-MappingByFunction( <transformation semigroup of degree 4 with 3 generators>, 
-<transformation semigroup of degree 12 with 27 generators>
- , function( x ) ... end )
+MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
+ generators>, <transformation semigroup of size 27, degree 12 with 27 
+ generators>, function( x ) ... end )
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).embedding);
 gap> Embedding(D, 3);
@@ -632,34 +630,15 @@ gap> list := [
 [ <transformation semigroup of degree 5 with 3 generators>, 
   <transformation semigroup of degree 7 with 2 generators>, 
   <transformation semigroup of degree 3 with 3 generators> ]
-gap> D := DirectProduct(list);
-<transformation semigroup of degree 15 with 625 generators>
+gap> D := DirectProduct(list);;
 gap> e := [];;
-gap> e[1] := Embedding(D, 1);
-MappingByFunction( <transformation semigroup of size 55, degree 5 with 3 
- generators>, <transformation semigroup of degree 15 with 625 generators>
- , function( x ) ... end )
-gap> e[2] := Embedding(D, 2);
-MappingByFunction( <transformation semigroup of degree 7 with 2 generators>, 
-<transformation semigroup of degree 15 with 625 generators>
- , function( x ) ... end )
-gap> e[3] := Embedding(D, 3);
-MappingByFunction( <transformation semigroup of size 11, degree 3 with 3 
- generators>, <transformation semigroup of degree 15 with 625 generators>
- , function( x ) ... end )
+gap> e[1] := Embedding(D, 1);;
+gap> e[2] := Embedding(D, 2);;
+gap> e[3] := Embedding(D, 3);;
 gap> p := [];;
-gap> p[1] := Projection(D, 1);
-MappingByFunction( <transformation semigroup of degree 15 with 625 generators>
- , <transformation semigroup of size 55, degree 5 with 3 generators>
- , function( x ) ... end )
-gap> p[2] := Projection(D, 2);
-MappingByFunction( <transformation semigroup of degree 15 with 625 generators>
- , <transformation semigroup of degree 7 with 2 generators>
- , function( x ) ... end )
-gap> p[3] := Projection(D, 3);
-MappingByFunction( <transformation semigroup of degree 15 with 625 generators>
- , <transformation semigroup of size 11, degree 3 with 3 generators>
- , function( x ) ... end )
+gap> p[1] := Projection(D, 1);;
+gap> p[2] := Projection(D, 2);;
+gap> p[3] := Projection(D, 3);;
 gap> ProductCheck(D, list, false);
 true
 gap> gens := List([1 .. 3],
@@ -688,8 +667,8 @@ Error, Semigroups: Projection: usage,
 the index <i> must be in the range [1 .. 3], since the direct product <D>
 consists of only 3 factors,
 gap> Projection(D, 1);
-MappingByFunction( <transformation semigroup of degree 9 with 27 generators>, 
-<transformation semigroup of degree 3 with 3 generators>
+MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
+ generators>, <transformation semigroup of size 3, degree 3 with 3 generators>
  , function( x ) ... end )
 gap> Projection(D, 1) = last;
 true
@@ -701,8 +680,8 @@ the direct product information for <D> has become corrupted,
 please re-create the object,
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Projection(D, 3);
-MappingByFunction( <transformation semigroup of degree 9 with 27 generators>, 
-<transformation semigroup of degree 3 with 3 generators>
+MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
+ generators>, <transformation semigroup of size 3, degree 3 with 3 generators>
  , function( x ) ... end )
 gap> Unbind(SemigroupDirectProductInfo(D).projections[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).projection);

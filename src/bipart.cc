@@ -30,11 +30,12 @@
 
 #include "compiled.h"
 
+#include "libsemigroups/bipart.hpp"
 #include "libsemigroups/blocks.hpp"
-#include "libsemigroups/froidure-pin.hpp"
+#include "libsemigroups/report.hpp"
+#include "libsemigroups/timer.hpp"
 
 using libsemigroups::Blocks;
-using libsemigroups::Element;
 using libsemigroups::REPORTER;
 using libsemigroups::detail::Timer;
 
@@ -264,8 +265,8 @@ Obj BIPART_PROD(Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  Element* z = new Bipartition(xx->degree());
-  z->redefine(xx, yy);
+  Bipartition* z = new Bipartition(xx->degree());
+  z->product_inplace(*xx, *yy);
 
   return bipart_new_obj(static_cast<Bipartition*>(z));
 }

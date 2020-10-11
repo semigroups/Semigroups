@@ -605,7 +605,7 @@ end);
 InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup) -
+RankFilter(IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup) -
 RankFilter(IsReesZeroMatrixSubsemigroup) + 1,
 function(R)
   local G, group, iso, inv, mat, out, k, i, j;
@@ -623,7 +623,7 @@ function(R)
   fi;
 
   mat := Matrix(R);
-  out := EmptyPlist(NrIdempotents(R));
+  out := [];
   out[1] := MultiplicativeZero(R);
   k := 1;
   for i in Rows(R) do
@@ -935,11 +935,11 @@ end);
 
 # The next two methods are just copies of the methods in the library but with
 # the rank increased so they are used in favour of the method for
-# IsEnumerableSemigroupRep
+# IsSemigroup and CanComputeFroidurePin
 
 InstallMethod(Size, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
+RankFilter(IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
   # if Size(UnderlyingSemigroup(R)) = infinity then
@@ -950,7 +950,6 @@ end);
 
 InstallMethod(Size, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
   # if Size(UnderlyingSemigroup(R)) = infinity then

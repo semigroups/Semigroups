@@ -22,9 +22,7 @@
 ## user as the list of out-neighbours of that digraph.
 ##
 
-InstallMethod(ViewObj,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(ViewObj, "for a congruence poset", [IsCongruencePoset],
 function(poset)
   if DigraphNrVertices(poset) = 0 then
     Print("<empty congruence poset>");
@@ -35,16 +33,12 @@ function(poset)
   fi;
 end);
 
-InstallMethod(PrintObj,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(PrintObj, "for a congruence poset", [IsCongruencePoset],
 function(poset)
   Print("PosetOfCongruences( ", CongruencesOfPoset(poset), " )");
 end);
 
-InstallMethod(Size,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(Size, "for a congruence poset", [IsCongruencePoset],
 DigraphNrVertices);
 
 SEMIGROUPS.PrincipalXCongruencePosetNC :=
@@ -376,12 +370,12 @@ InstallMethod(PosetOfPrincipalLeftCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanComputeFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup),");
   fi;
   genpairs := GeneratingPairsOfLeftSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -395,12 +389,12 @@ InstallMethod(PosetOfPrincipalRightCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanComputeFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup),");
   fi;
   genpairs := GeneratingPairsOfRightSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -414,12 +408,12 @@ InstallMethod(PosetOfPrincipalCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanComputeFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup),");
   fi;
   genpairs := GeneratingPairsOfSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,

@@ -13,22 +13,22 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-# Test idempotents work with ClosureSemigroupDestructive
+# Test idempotents work with ClosureSemigroup
 gap> NrIdempotents(FullTransformationMonoid(6));
 1057
 gap> S := FullTransformationSemigroup(6);
 <full transformation monoid of degree 6>
 gap> T := Semigroup(S.1, rec(acting := false));
 <commutative transformation semigroup of degree 6 with 1 generator>
-gap> EN_SEMI_IDEMPOTENTS(T);
+gap> Idempotents(T);
 [ IdentityTransformation ]
-gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.2], T!.opts);
+gap> T := ClosureSemigroup(T, [S.2], T!.opts);
 <transformation semigroup of degree 6 with 2 generators>
-gap> EN_SEMI_IDEMPOTENTS(T);
+gap> Idempotents(T);
 [ IdentityTransformation ]
-gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3], T!.opts);
+gap> T := ClosureSemigroup(T, [S.3], T!.opts);
 <transformation semigroup of degree 6 with 3 generators>
-gap> EN_SEMI_IDEMPOTENTS(T);;
+gap> Idempotents(T);;
 gap> Length(last);
 1057
 gap> D := DClass(T, S.3);;
@@ -53,63 +53,38 @@ gap> ID := Idempotents(D);
 gap> ForAll(ID, x -> IsIdempotent(x) and x in D);
 true
 
-# IsGeneratorsOfEnumerableSemigroup for RZMS
+# CanComputeFroidurePin for RZMS
 gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), (), ()], [0, (), 0],
 >  [(), 0, ()]]);;
-gap> HasIsGeneratorsOfEnumerableSemigroup(S);
-true
-gap> IsGeneratorsOfEnumerableSemigroup(S);
+gap> CanComputeFroidurePin(S);
 true
 
-# IsGeneratorsOfEnumerableSemigroup for RZMS element coll
-gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), (), ()], [0, (), 0],
->  [(), 0, ()]]);;
-gap> coll := AsSet(S){[1 .. 10]};;
-gap> IsGeneratorsOfEnumerableSemigroup(coll);
-true
-
-# IsGeneratorsOfEnumerableSemigroup for a quotient semigroup
+# CanComputeFroidurePin for a quotient semigroup
 gap> S := FullTransformationMonoid(4);;
 gap> cong := SemigroupCongruence(S, [S.2, S.3]);;
-gap> IsGeneratorsOfEnumerableSemigroup(S / cong);
+gap> CanComputeFroidurePin(S / cong);
 true
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> cong := SemigroupCongruence(S, [[S.1, S.1]]);;
-gap> IsGeneratorsOfEnumerableSemigroup(S / cong);
+gap> CanComputeFroidurePin(S / cong);
 false
 
-# IsGeneratorsOfEnumerableSemigroup for a free band
-gap> IsGeneratorsOfEnumerableSemigroup(FreeBand(4));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
-gap> IsGeneratorsOfEnumerableSemigroup(FreeBand(5));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `[]' on 2 arguments
+# CanComputeFroidurePin for a free band
+gap> CanComputeFroidurePin(FreeBand(4));
+true
+gap> CanComputeFroidurePin(FreeBand(5));
+true
 
-# Test FROPIN
+# Test GapFroidurePin
 gap> S := FreeBand(5);;
-gap> FROPIN(S);
-Error, Semigroups: FROPIN: usage,
-the argument must be a semigroup with at least 1 generator,
-gap> S := RegularBooleanMatMonoid(3);;
-gap> FROPIN(S);
-rec( elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ], 
-  final := [ 1, 2, 3, 4, 5 ], first := [ 1, 2, 3, 4, 5 ], found := false, 
-  gens := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ], 
+gap> GapFroidurePin(S);
+rec( elts := [ x1, x2, x3, x4, x5 ], final := [ 1, 2, 3, 4, 5 ], 
+  first := [ 1, 2, 3, 4, 5 ], found := false, gens := [ x1, x2, x3, x4, x5 ], 
   genslookup := [ 1, 2, 3, 4, 5 ], genstoapply := [ 1 .. 5 ], 
   ht := <tree hash table len=12517 used=5 colls=0 accs=10>, 
   left := [ [  ], [  ], [  ], [  ], [  ] ], len := 1, lenindex := [ 1 ], 
-  nr := 5, nrrules := 0, one := 1, 
-  parent := <monoid of 3x3 boolean matrices with 4 generators>, pos := 1, 
-  prefix := [ 0, 0, 0, 0, 0 ], 
+  nr := 5, nrrules := 0, one := false, parent := <free band on the generators 
+    [ x1, x2, x3, x4, x5 ]>, pos := 1, prefix := [ 0, 0, 0, 0, 0 ], 
   reduced := [ [ false, false, false, false, false ], 
       [ false, false, false, false, false ], 
       [ false, false, false, false, false ], 
@@ -118,36 +93,19 @@ rec( elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]),
   right := [ [  ], [  ], [  ], [  ], [  ] ], rules := [  ], stopper := false, 
   suffix := [ 0, 0, 0, 0, 0 ], words := [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] 
  )
+gap> S := RegularBooleanMatMonoid(3);;
+gap> GapFroidurePin(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `GapFroidurePin' on 1 arguments
 gap> Size(S);
 506
-gap> FROPIN(S);
-rec( elts := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ], 
-  final := [ 1, 2, 3, 4, 5 ], first := [ 1, 2, 3, 4, 5 ], found := false, 
-  gens := [ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 1]]), 
-      Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 1]]), 
-      Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 0]]) ], 
-  genslookup := [ 1, 2, 3, 4, 5 ], genstoapply := [ 1 .. 5 ], 
-  ht := <tree hash table len=12517 used=5 colls=0 accs=10>, 
-  left := [ [  ], [  ], [  ], [  ], [  ] ], len := 1, lenindex := [ 1 ], 
-  nr := 5, nrrules := 0, one := 1, 
-  parent := <monoid of size 506, 3x3 boolean matrices with 4 generators>, 
-  pos := 1, prefix := [ 0, 0, 0, 0, 0 ], 
-  reduced := [ [ false, false, false, false, false ], 
-      [ false, false, false, false, false ], 
-      [ false, false, false, false, false ], 
-      [ false, false, false, false, false ], 
-      [ false, false, false, false, false ] ], report := false, 
-  right := [ [  ], [  ], [  ], [  ], [  ] ], rules := [  ], stopper := false, 
-  suffix := [ 0, 0, 0, 0, 0 ], words := [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] 
- )
+gap> GapFroidurePin(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `GapFroidurePin' on 1 arguments
 gap> S := Semigroup(Generators(S), Generators(S));;
-gap> FROPIN(S);;
+gap> GapFroidurePin(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `GapFroidurePin' on 1 arguments
 
 # EnumeratorSorted
 gap> S := HallMonoid(3);;
@@ -187,8 +145,7 @@ gap> EnumeratorSorted(FreeBand(2));
 [ x1, x2x1x2, x2x1, x2, x1x2, x1x2x1 ]
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> EnumeratorSorted(S);
-Error, Semigroups: EnumeratorSorted: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
 # IteratorSorted
 gap> S := HallMonoid(3);;
@@ -207,10 +164,11 @@ true
 gap> IsDoneIterator(it);
 true
 gap> NextIterator(it);
-fail
+Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
+ed value in range [0, 247), got 247
 gap> it := ShallowCopy(it);;
 gap> IsDoneIterator(it);
-false
+true
 gap> valid := true;;
 > for x in it do 
 >   if not x in S then 
@@ -222,12 +180,13 @@ true
 gap> IsDoneIterator(it);
 true
 gap> NextIterator(it);
-fail
+Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
+ed value in range [0, 247), got 248
 gap> ListIterator(it) = AsSet(S);  # it's done
 false
 gap> it := ShallowCopy(it);;
 gap> ListIterator(it) = AsSet(S);
-true
+false
 gap> S := HallMonoid(3);;
 gap> AsSSortedList(S);;
 gap> it := IteratorSorted(S);;
@@ -246,7 +205,7 @@ true
 gap> NextIterator(it);
 Error, List Element: <list>[248] must have an assigned value
 
-# AsListCanonical for IsEnumerableSemigroupRep (without known generators)
+# AsListCanonical for CanComputeFroidurePin (without known generators)
 gap> S := TriangularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 6 generators>
 gap> I := SemigroupIdeal(S, S.6);;
@@ -254,15 +213,14 @@ gap> ForAll(AsListCanonical(I), x -> x in I);
 true
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> AsListCanonical(S);
-Error, Semigroups: AsListCanonical: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
-# Enumerator for IsEnumerableSemigroupRep 
+# Enumerator for CanComputeFroidurePin 
 gap> S := TriangularBooleanMatMonoid(3);;
 gap> Enumerator(S);
 <enumerator of <monoid of 3x3 boolean matrices with 6 generators>>
 
-# EnumeratorCanonical for IsEnumerableSemigroupRep 
+# EnumeratorCanonical for CanComputeFroidurePin 
 gap> S := TriangularBooleanMatMonoid(3);;
 gap> AsListCanonical(S);;
 gap> EnumeratorCanonical(S);;
@@ -303,11 +261,11 @@ infinity
 gap> IsFinite(S);
 false
 
-# EnumeratorCanonical for IsEnumerableSemigroupRep without generators
+# EnumeratorCanonical for CanComputeFroidurePin without generators
 gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
 gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 true
 gap> HasGeneratorsOfSemigroup(S);
 false
@@ -339,7 +297,7 @@ gap> it := Iterator(S);
 gap> IsDoneIterator(it);
 false
 gap> valid := true;;
-> for x in it do 
+gap> for x in it do 
 >   if not x in S then 
 >     valid := false;
 >   fi;
@@ -350,11 +308,12 @@ gap> IsDoneIterator(it);
 true
 gap> NextIterator(it);
 fail
-gap> it := ShallowCopy(it);;
+gap> it := Iterator(S);
+<iterator>
 gap> IsDoneIterator(it);
 false
 gap> valid := true;;
-> for x in it do 
+gap> for x in it do 
 >   if not x in S then 
 >     valid := false;
 >   fi;
@@ -367,7 +326,8 @@ gap> NextIterator(it);
 fail
 gap> ListIterator(it) = AsListCanonical(S);  # it's done
 false
-gap> it := ShallowCopy(it);;
+gap> it := Iterator(S); 
+<iterator>
 gap> ListIterator(it) = AsListCanonical(S);
 true
 gap> S := HallMonoid(3);;
@@ -400,13 +360,12 @@ gap> Idempotents(S);
   Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 1], [0, 0, 1]]) ]
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> Idempotents(S);
-Error, Semigroups: AsListCanonical: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
 # PositionCanonical, for wrong family, wrong degree
 gap> S := UnitriangularBooleanMatMonoid(3);;
 gap> PositionCanonical(S, IdentityTransformation);
-fail
+Error, expected boolean matrix but got transformation (small)!
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
 gap> PositionCanonical(S, Transformation([1, 1, 1, 1]));
 fail
@@ -414,12 +373,12 @@ fail
 # Position 
 gap> S := UnitriangularBooleanMatMonoid(3);;
 gap> Position(S, Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
-fail
+1
 gap> Enumerate(S);;
 gap> Position(S, Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
 1
 gap> Position(S, IdentityTransformation);
-fail
+Error, expected boolean matrix but got transformation (small)!
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
 gap> Position(S, Transformation([1, 1, 1, 1]));
 fail
@@ -434,23 +393,20 @@ gap> PositionSorted(S, Matrix(IsBooleanMat,
 >                             [[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
 1
 gap> PositionSorted(S, IdentityTransformation);
-fail
+Error, expected boolean matrix but got transformation (small)!
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
 gap> PositionSorted(S, Transformation([1, 1, 1, 1]));
 fail
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> PositionSorted(S, S.1);
-Error, Semigroups: PositionSortedOp: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
 # Left/RightCayleyDigraph, for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> RightCayleyDigraph(S);
-Error, Semigroups: RightCayleyDigraph: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 gap> LeftCayleyDigraph(S);
-Error, Semigroups: LeftCayleyDigraph: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
 # Left/RightCayleyGraphSemigroup
 gap> S := Semigroup(FullTransformationMonoid(3));;
@@ -476,8 +432,7 @@ gap> RightCayleyGraphSemigroup(S);
 # AsSet, for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> AsSet(S);
-Error, Semigroups: AsSet: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 
 # Size, for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
@@ -487,8 +442,7 @@ infinity
 # MultiplicationTable
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> MultiplicationTable(S);
-Error, Semigroups: MultiplicationTable: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 gap> S := RegularBooleanMatMonoid(1);
 <commutative monoid of 1x1 boolean matrices with 1 generator>
 gap> MultiplicationTable(S);
@@ -497,8 +451,7 @@ gap> MultiplicationTable(S);
 # NrIdempotents
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> NrIdempotents(S);
-Error, Semigroups: AsListCanonical: usage,
-the first argument (a semigroup) must be finite,
+Error, the first argument (a semigroup) must be finite,
 gap> S := RegularBooleanMatMonoid(1);;
 gap> NrIdempotents(S);
 2
@@ -518,14 +471,7 @@ gap> S := FullTransformationMonoid(3);;
 gap> MinimalFactorization(S, Transformation([1, 1, 1]));
 [ 4, 2, 2, 4 ]
 gap> MinimalFactorization(S, Transformation([1, 1, 1, 1]));
-Error, Semigroups: MinimalFactorization:
-the second argument <x> is not an element of the first argument <S>,
-
-# Display
-gap> Display(Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]))); "";
-<partially enumerated semigroup with 0 elements, 0 rules, max word length 0>""
-gap> Display(S); "";
-<fully enumerated semigroup with 27 elements, 20 rules, max word length 6>""
+Error, the second argument <x> is not an element of the first argument <S>,
 
 # IsFinite
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
@@ -545,7 +491,7 @@ gap> MultiplicationTable(S);
 
 # PositionCanonical (for a group)
 gap> G := Group((1, 2, 3), (1, 2));;
-gap> IsEnumerableSemigroupRep(G);
+gap> CanComputeCppFroidurePin(G);
 false
 
 #

@@ -87,8 +87,8 @@ gap> cong := SemigroupCongruenceByGeneratingPairs(I,
 <semigroup congruence over <inverse partial perm semigroup of rank 3 
  with 2 generators> with 2 generating pairs>
 gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
-<semigroup congruence over <inverse partial perm semigroup of rank 3 
- with 2 generators> with congruence pair (19,1)>]]></Example>
+<semigroup congruence over <inverse partial perm semigroup 
+ of size 19, rank 3 with 2 generators> with congruence pair (19,1)>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -154,39 +154,37 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])], rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, Semigroups: Factorization: usage,
-the second argument <x> is not an element of the first argument <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: Factorization, error, 2/5
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])]);;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> MinimalFactorization(S, x);
-Error, Semigroups: MinimalFactorization:
-the second argument <x> is not an element of the first argument <S>,
+Error, the second argument <x> is not an element of the first argument <S>,
 
 # factor: Factorization, error, 3/5
 gap> S := DualSymmetricInverseMonoid(3);;
 gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, Semigroups: Factorization: usage,
-the second argument <x> is not an element of the first argument <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: Factorization, error, 4/5
 gap> S := Semigroup(OrderEndomorphisms(3),
 >                   rec(acting := true, regular := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, Semigroups: Factorization: usage,
-the second argument <x> is not an element of the first argument <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: Factorization, error, 5/5
 gap> S := Semigroup(OrderEndomorphisms(3), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
-Error, Semigroups: Factorization: usage,
-the third argument <p> does not belong to the Schutzenberger group,
+Error, the third argument <p> does not belong to the Schutzenberger group
 
 # factor: Factorization, () in SchutzenbergerGroup, fail, 1
 gap> S := Semigroup(Transformation([1, 1, 2, 3]), rec(acting := true));;
@@ -252,8 +250,8 @@ Error, no 1st choice method found for `NonTrivialFactorization' on 2 arguments
 # factor: NonTrivialFactorization, for an enumerable semigroup, error, 1
 gap> S := FullPBRMonoid(1);;
 gap> NonTrivialFactorization(S, EmptyPartialPerm());
-Error, Semigroups: NonTrivialFactorization: usage,
-the element <x> must belong to the semigroup <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: NonTrivialFactorization, for an enumerable semigroup, 1
 
@@ -305,8 +303,8 @@ true
 gap> S := Semigroup(IdentityTransformation, rec(acting := true));
 <trivial transformation group of degree 0 with 1 generator>
 gap> NonTrivialFactorization(S, EmptyPBR(1));
-Error, Semigroups: NonTrivialFactorization: usage,
-the element <x> must belong to the semigroup <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: NonTrivialFactorization, for an acting semigroup, 1
 gap> gens := [
@@ -319,7 +317,7 @@ gap> S := Semigroup(gens, rec(acting := true));
 <transformation semigroup of degree 6 with 5 generators>
 gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 [ [ 1, 5, 1, 5, 1, 5, 1, 5, 1 ], 
-  [ 2, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4 ], [ 3, 1, 1 ], 
+  [ 2, 1, 5, 2, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4 ], [ 3, 1, 1 ], 
   [ 5, 1, 5, 1, 5, 1, 5, 1, 4 ], [ 5, 1, 5, 1, 5, 1, 5, 1, 5 ] ]
 gap> ForAll([1 .. 5], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
@@ -330,7 +328,7 @@ gap> S := Semigroup(gens, rec(acting := true));
 <transformation semigroup of degree 6 with 5 generators>
 gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 [ [ 4, 2, 4, 2, 4, 2, 4, 2, 1 ], [ 2, 4, 2, 4, 2, 4, 2, 4, 2 ], 
-  [ 3, 2, 4, 3 ], [ 4, 2, 4, 2, 4, 2, 4, 2, 4 ], 
+  [ 3, 2, 4, 2, 4, 2, 4, 2, 4 ], [ 4, 2, 4, 2, 4, 2, 4, 2, 4 ], 
   [ 5, 1, 2, 1, 2, 1, 2, 4, 2, 2 ] ]
 gap> ForAll([1 .. 5], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
@@ -391,7 +389,7 @@ gap> gens := [
 gap> S := Semigroup(gens, rec(acting := true));
 <transformation semigroup of degree 10 with 5 generators>
 gap> x := List(gens, g -> NonTrivialFactorization(S, g));
-[ fail, fail, [ 3, 3 ], [ 3, 1 ], [ 5, 3 ] ]
+[ fail, fail, [ 3, 3 ], [ 3, 4 ], [ 5, 3 ] ]
 gap> ForAll([1 .. Length(gens)],
 >           i -> x[i] = fail or EvaluateWord(gens, x[i]) = gens[i]);
 true
@@ -445,7 +443,7 @@ gap> S := Monoid([
 <transformation monoid of degree 11 with 4 generators>
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> x := List(GeneratorsOfSemigroup(S), g -> NonTrivialFactorization(S, g));
-[ [ 1, 3, 3 ], [ 1, 2 ], [ 1, 3 ], [ 4, 3, 3 ], [ 5, 3, 3 ] ]
+[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 4, 1 ], [ 5, 1 ] ]
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
@@ -534,16 +532,16 @@ gap> S := Semigroup(S, rec(acting := true));
 <bipartition semigroup of degree 226 with 9 generators>
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> x := List(gens, x -> NonTrivialFactorization(S, x));
-[ [ 3, 9, 8 ], [ 2, 1, 2 ], [ 3, 9, 9 ], [ 4, 9, 9 ], [ 5, 9, 9 ], 
-  [ 6, 1, 6 ], [ 7, 9 ], [ 9, 9, 8 ], [ 9, 9, 9 ] ]
+[ [ 3, 9, 8 ], [ 2, 2 ], [ 3, 9, 9 ], [ 4, 9, 9 ], [ 5, 9, 9 ], [ 6, 6 ], 
+  [ 7, 9 ], [ 9, 9, 8 ], [ 9, 9, 9 ] ]
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
 # factor: NonTrivialFactorization, for an inverse acting semigroup, error, 1
 gap> S := SymmetricInverseMonoid(1);;
 gap> NonTrivialFactorization(S, IdentityTransformation);
-Error, Semigroups: NonTrivialFactorization: usage,
-the element <x> must belong to the semigroup <S>,
+Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
+p)
 
 # factor: NonTrivialFactorization, for an inverse acting semigroup, 1
 gap> S := SymmetricInverseMonoid(4);
@@ -554,7 +552,7 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> S := Semigroup(gens, rec(acting := true));
 <partial perm monoid of rank 4 with 4 generators>
 gap> x := List(gens, x -> NonTrivialFactorization(S, x));
-[ [ 1, 3, 3 ], [ 1, 2 ], [ 1, 3 ], [ 4, 3, 3 ], [ 5, 4, 2 ] ]
+[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 4, 1 ], [ 5, 1 ] ]
 gap> ForAll([1 .. Length(gens)], i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 

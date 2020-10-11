@@ -16,3 +16,7 @@ DeclareAttribute("SemigroupIdealOfReesCongruence", IsReesCongruence);
 DeclareCategory("IsReesCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsMultiplicativeElement);
+
+DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
+                 [IsSemigroupCongruence]);
+

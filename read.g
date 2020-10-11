@@ -22,6 +22,10 @@ ReadPackage("semigroups", "gap/elements/trans.gi");
 ReadPackage("semigroups", "gap/elements/elements.gi");
 ReadPackage("semigroups", "gap/elements/pperm.gi");
 
+ReadPackage("semigroups", "gap/libsemigroups/cong.gi");
+ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gi");
+ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gi");
+
 ReadPackage("semigroups", "gap/main/fropin.gi");
 ReadPackage("semigroups", "gap/main/setup.gi");
 ReadPackage("semigroups", "gap/main/acting.gi");
@@ -53,7 +57,7 @@ ReadPackage("semigroups", "gap/semigroups/semidp.gi");
 ReadPackage("semigroups", "gap/ideals/ideals.gi");
 ReadPackage("semigroups", "gap/ideals/idealact.gi");
 ReadPackage("semigroups", "gap/ideals/ideallam.gi");
-ReadPackage("semigroups", "gap/ideals/idealenum.gi");
+ReadPackage("semigroups", "gap/ideals/ideals-froidure-pin.gi");
 
 ReadPackage("semigroups", "gap/greens/gree.gi");
 ReadPackage("semigroups", "gap/greens/gren.gi");

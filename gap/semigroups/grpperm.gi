@@ -146,7 +146,6 @@ end;
 InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
 function(S)
   local cay, deg, G, gen1, gen2, next, pos, iso, inv, i;
-
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsGroupAsSemigroup(S) then

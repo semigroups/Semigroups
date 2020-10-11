@@ -153,7 +153,7 @@ gap> NonTrivialFactorization(S, x);
 gap> Factorization(S, y);
 [ 2 ]
 gap> NonTrivialFactorization(S, y);
-[ 2, 1, 1, 2, 1, 1, 2, 1, 1, 2 ]
+[ 2, 1, 1, 1, 1, 1 ]
 gap> z := PartialPerm([2]);;
 gap> S := Semigroup(z);
 <commutative partial perm semigroup of rank 1 with 1 generator>

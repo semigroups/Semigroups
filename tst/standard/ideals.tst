@@ -64,14 +64,16 @@ gap> I := SemigroupIdeal(S, x);
 gap> IsZeroSimpleSemigroup(I);
 true
 gap> I;
-<0-simple regular semigroup ideal of 3x3 boolean matrices with 1 generator>
+<0-simple regular semigroup ideal of size 50, 3x3 boolean matrices with
+  1 generator>
 gap> x := Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 1], [1, 1, 0]]);;
 gap> I := SemigroupIdeal(S, x);
 <semigroup ideal of 3x3 boolean matrices with 1 generator>
 gap> IsRegularSemigroup(I);
 false
 gap> I;
-<non-regular semigroup ideal of 3x3 boolean matrices with 1 generator>
+<non-regular semigroup ideal of size 428, 3x3 boolean matrices with
+  1 generator>
 gap> S := SymmetricInverseMonoid(3);;
 gap> x := PartialPerm([1, 2]);;
 gap> I := SemigroupIdeal(S, x);

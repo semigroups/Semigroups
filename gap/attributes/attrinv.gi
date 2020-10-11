@@ -702,8 +702,8 @@ function(S)
   iso := function(x)
     local dom;
     dom := Set(elts * (x ^ -1));
-    return PartialPermNC(List(dom, y -> Position(elts, y)),
-                         List(List(dom, y -> y * x), y -> Position(elts, y)));
+    return PartialPerm(List(dom, y -> Position(elts, y)),
+                       List(List(dom, y -> y * x), y -> Position(elts, y)));
   end;
 
   for i in [1 .. Length(gens)] do

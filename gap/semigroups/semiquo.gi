@@ -56,7 +56,8 @@ function(S, I)
 end);
 
 InstallMethod(Size, "for a quotient semigroup",
-[IsQuotientSemigroup and IsFinite],
+[IsQuotientSemigroup and IsFinite], 3,
+# to beat the CanComputeGapFroidurePin method
 function(q)
   local cong;
   cong := QuotientSemigroupCongruence(q);

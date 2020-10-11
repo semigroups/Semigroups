@@ -121,16 +121,13 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 true
 gap> [Transformation([1, 3, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> [3, 4] in uni;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> [Transformation([1, 4, 2, 4])] in uni;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 
 # Classes
 gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),
@@ -172,30 +169,20 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 gap> T := Semigroup([Transformation([1, 2, 4, 1]),
 >                    Transformation([3, 3, 1, 3])]);;
 gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 1, 1]),
->                                    Transformation([1, 3, 4, 1])]);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
-gap> uni := UniversalSemigroupCongruence(S);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(uni, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(cong, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(uni, cong);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> MeetSemigroupCongruences(uni, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> MeetSemigroupCongruences(cong, uni);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
-gap> MeetSemigroupCongruences(uni, cong);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
+>                                    Transformation([1, 3, 4, 1])]);;
+gap> uni := UniversalSemigroupCongruence(S);;
+gap> uni = JoinSemigroupCongruences(uni, uni);
+true
+gap> uni = JoinSemigroupCongruences(cong, uni);
+true
+gap> uni = JoinSemigroupCongruences(uni, cong);
+true
+gap> uni = MeetSemigroupCongruences(uni, uni);
+true
+gap> cong = MeetSemigroupCongruences(cong, uni);
+true
+gap> cong = MeetSemigroupCongruences(uni, cong);
+true
 gap> badcong := SemigroupCongruence(T, [Transformation([1, 2, 4, 1]),
 >                                       Transformation([1, 1, 1, 1])]);;
 gap> JoinSemigroupCongruences(uni, badcong);

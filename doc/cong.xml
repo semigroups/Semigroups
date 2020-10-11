@@ -631,8 +631,8 @@ gap> cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),
 >                                         Transformation([2, 1, 2])]);;
 gap> classes := NonTrivialRightCongruenceClasses(cong);;
 gap> Set(classes);
-[ <right congruence class of Transformation( [ 2, 1, 2 ] )>, 
-  <right congruence class of Transformation( [ 3, 1, 3 ] )> ]
+[ <right congruence class of Transformation( [ 3, 1, 3 ] )>, 
+  <right congruence class of Transformation( [ 2, 1, 2 ] )> ]
 ]]></Example>
     </Description>
   </ManSection>

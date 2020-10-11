@@ -17,34 +17,29 @@ gap> SEMIGROUPS.StartTest();
 gap> F := FreeMonoid(2);;
 gap> M := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
-Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
-Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <M>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 gap> cong := LeftSemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
-Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> cong := LeftSemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
-Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <M>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 gap> cong := RightSemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
-Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> cong := RightSemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
-Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <M>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, M.2]]);;
 gap> [M.1, M.2, M.2 ^ 2] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [F.1, F.2] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-<elm> must be an element of the range of <cong>,
+Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
+,
 
 # A 2-sided example
 gap> F := FreeMonoid(2);;
@@ -63,8 +58,6 @@ gap> pair := [M.1 ^ 2 * M.2 * M.1, M.1 * M.2 * M.1];;
 gap> cong := SemigroupCongruence(M, pair);
 <semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
 1 generating pairs>
-gap> IsFpMonoidCongruence(cong);
-true
 gap> NrEquivalenceClasses(cong);
 3
 gap> [M.2, M.2 * M.1] in cong;
@@ -121,8 +114,6 @@ gap> Size(M);
 gap> cong := LeftSemigroupCongruence(M, [M.1, M.2 ^ 3]);
 <left semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
 1 generating pairs>
-gap> IsFpMonoidCongruence(cong);
-true
 gap> IsLeftSemigroupCongruence(cong);
 true
 gap> HasIsSemigroupCongruence(cong);
@@ -184,8 +175,6 @@ gap> Size(M);
 gap> cong := RightSemigroupCongruence(M, [M.1, M.2 ^ 3]);
 <right semigroup congruence over <fp monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
-gap> IsFpMonoidCongruence(cong);
-true
 gap> IsRightSemigroupCongruence(cong);
 true
 gap> HasIsSemigroupCongruence(cong);
@@ -264,8 +253,7 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinSemigroupCongruences(cong1, cong3);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, cannot form the join of congruences over different semigroups,
 
 # Joining two left congs together
 gap> F := FreeMonoid(2);;
@@ -293,8 +281,7 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinLeftSemigroupCongruences(cong1, cong3);
-Error, Semigroups: JoinLeftSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, cannot form the join of congruences over different semigroups,
 
 # Joining two right congs together
 gap> F := FreeMonoid(2);;
@@ -322,8 +309,7 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinRightSemigroupCongruences(cong1, cong3);
-Error, Semigroups: JoinRightSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, cannot form the join of congruences over different semigroups,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);

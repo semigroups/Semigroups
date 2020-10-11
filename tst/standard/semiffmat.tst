@@ -511,8 +511,6 @@ true
 gap> S := Semigroup(Transformation([1, 2, 2, 2, 2]),
 >                Transformation([2, 1, 1, 1, 1]));
 <transformation semigroup of degree 5 with 2 generators>
-gap> AsMonoid(S);
-<commutative transformation monoid of degree 2 with 1 generator>
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, S);
 <commutative monoid of 2x2 matrices over GF(2) with 1 generator>
 gap> map := IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S);;

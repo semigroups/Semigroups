@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  standard/idealenum.tst
-#Y  Copyright (C) 2016                                  James D. Mitchell
+#W  standard/ideals-froidure-pin.tst
+#Y  Copyright (C) 2016-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -102,28 +102,31 @@ gap> Idempotents(I);
   Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 1], [0, 0, 1]]), 
   Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]]), 
   Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [0, 1, 1]]) ]
+gap> ForAll(Idempotents(I), x -> x ^ 2 = x and x in I);
+true
 gap> GeneratorsOfSemigroup(I);
 [ Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 0], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 0], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 0], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 1], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 1], [1, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 0], [0, 1, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 0], [0, 1, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [0, 0, 1], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 0], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 0], [0, 1, 0], [0, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 1], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 1, 1], [0, 1, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 1, 1], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 0, 1], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 1, 0], [0, 1, 0], [0, 1, 0]]), 
+  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 0], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 0], [1, 1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 0], [1, 1, 0]]), 
+  Matrix(IsBooleanMat, [[1, 1, 0], [1, 1, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 0, 1], [0, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 0], [1, 1, 1]]), 
   Matrix(IsBooleanMat, [[0, 1, 0], [1, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [0, 0, 0], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [0, 0, 1], [0, 1, 1]]) ]
+  Matrix(IsBooleanMat, [[1, 1, 1], [0, 0, 0], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 1, 0], [1, 1, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 1], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 1], [0, 0, 1], [1, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 0], [0, 0, 0]]) ]
 gap> S.1 in I;
 false
 gap> ForAll(GeneratorsOfSemigroup(I), x -> x in I);

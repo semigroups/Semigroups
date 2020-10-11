@@ -13,12 +13,6 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-# TestInstall0: Validate the package info file
-# This doesn't play well with drone.
-#gap> ValidatePackageInfo(Filename(DirectoriesPackageLibrary("semigroups", ""),
-#> "PackageInfo.g"));
-#true
-
 # TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;
 gap> IsMonoidAsSemigroup(S);
@@ -26,8 +20,10 @@ true
 gap> IsMonoid(S);
 false
 gap> iso := IsomorphismTransformationMonoid(S);;
-gap> Range(iso);
-<commutative transformation monoid of degree 4 with 1 generator>
+gap> IsCommutativeSemigroup(Range(iso));
+true
+gap> IsMonogenicSemigroup(Range(iso));
+true
 gap> RespectsMultiplication(iso);
 true
 gap> ForAll(S, x -> (x ^ iso) ^ InverseGeneralMapping(iso) = x);
@@ -808,18 +804,18 @@ gap> for i in [1 .. 100] do
 >      NextIterator(iter);
 >    od;
 gap> x := NextIterator(iter);
-bcabaca
+ece
 gap> for i in [1 .. 10] do
 >      NextIterator(iter);
 >    od;
 gap> y := NextIterator(iter);
-cbcacbab
+abce
 gap> x * y;
-bcacbab
+eceaceababce
 gap> x ^ 2;
-bcabaca
+ece
 gap> y ^ 2;
-cbcacbab
+abce
 
 # TestInstall55: Issue 110 (MaximalSubsemigroups for an non-regular RZMS)
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);;
@@ -1561,18 +1557,19 @@ gap> s := f / rel;;
 gap> sgns := GeneratorsOfSemigroup(s);;
 gap> c := SemigroupCongruenceByGeneratingPairs(s, [[sgns[1], sgns[2]]]);;
 gap> EquivalenceRelationPartition(c);;
+Error, the argument (a congruence) must have finite range
 gap> ##
 gap> ## Check to see if elements are in the partition
 gap> ##     true and false
 gap> ##
 gap> ec := EquivalenceClassOfElement(c, sgns[n]);;
 gap> Size(ec);
-1
+Error, the argument (a congruence) must have finite range
 gap> ec := EquivalenceClassOfElement(c, sgns[n - 1]);;
 gap> sgns[n] in ec;
 false
 gap> Size(ec);
-5
+Error, the argument (a congruence) must have finite range
 
 # Infinite congruence classes: part 2 of semicong.tst (fp semigroups)
 gap> f := FreeSemigroup(2);;
@@ -1611,7 +1608,7 @@ gap> cong := SemigroupCongruence(F, pair);
 gap> pair in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, <equiv> must be over a finite semigroup,
+Error, the argument (a congruence) must have finite range
 gap> EquivalenceClasses(cong);
 [ <congruence class of s1>, <congruence class of s1^2>, 
   <congruence class of s1^3> ]
@@ -1757,14 +1754,15 @@ gap> F := FreeSemigroup(2);;
 gap> s1 := F.1;; s2 := F.2;;
 gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
-gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
-gap> Size(S);
+gap> cong := SemigroupCongruence(F, rels);
+<semigroup congruence over <free semigroup on the generators [ s1, s2 ]> with 
+1 generating pairs>
+gap> NrEquivalenceClasses(cong);
 infinity
-gap> CongruenceByGeneratingPairsPartition(S!.cong);
-Error, the argument <cong> has infinitely many classes,
-gap> EquivalenceRelationLookup(S!.cong);
-Error, <equiv> must be over a finite semigroup,
+gap> EquivalenceRelationPartition(cong);
+Error, the argument (a congruence) must have finite range
+gap> EquivalenceRelationLookup(cong);
+Error, the argument (a congruence) must have finite range
 
 # Issue 788
 gap> S := GLM(2, 2);;

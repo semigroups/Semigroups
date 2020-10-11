@@ -1,46 +1,32 @@
 #############################################################################
 ##
 ##  semifp.gi
-##  Copyright (C) 2015                                  James D. Mitchell
+##  Copyright (C) 2015-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-SEMIGROUPS.InitFpSemigroup := function(S)
-  local semi, rels, F;
+# All methods for fp semigroups and monoids go via the underlying congruence on
+# the free semigroup and free monoid.
 
-  Assert(1, IsFpSemigroup(S) or IsFpMonoid(S));
-
-  if IsBound(S!.cong) then
-    return;
-  fi;
-
-  if IsFpMonoid(S) then
-    S!.iso := IsomorphismSemigroup(IsFpSemigroup, S);
-    semi := Range(S!.iso);
-    rels := RelationsOfFpSemigroup(semi);
-    F := FreeSemigroupOfFpSemigroup(semi);
-  else
-    rels := RelationsOfFpSemigroup(S);
-    F := FreeSemigroupOfFpSemigroup(S);
-  fi;
-
-  S!.cong := SemigroupCongruenceByGeneratingPairs(F, rels);
-  S!.report := SEMIGROUPS.DefaultOptionsRec.report;
-end;
-
-InstallMethod(ExtRepOfObj, "for an element of an fp semigroup",
-[IsElementOfFpSemigroup],
-function(x)
-  return ExtRepOfObj(UnderlyingElement(x));
+InstallMethod(UnderlyingCongruence, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  local F, R;
+  F := FreeSemigroupOfFpSemigroup(S);
+  R := RelationsOfFpSemigroup(S);
+  return SemigroupCongruenceByGeneratingPairs(F, R);
 end);
 
-InstallMethod(ExtRepOfObj, "for an element of an fp monoid",
-[IsElementOfFpMonoid],
-function(x)
-  return ExtRepOfObj(UnderlyingElement(x));
+InstallMethod(UnderlyingCongruence, "for an fp monoid",
+[IsFpMonoid],
+function(S)
+  local F, R;
+  F := FreeMonoidOfFpMonoid(S);
+  R := RelationsOfFpMonoid(S);
+  return SemigroupCongruenceByGeneratingPairs(F, R);
 end);
 
 InstallMethod(ElementOfFpSemigroup,
@@ -54,53 +40,56 @@ InstallMethod(ElementOfFpMonoid,
 {m, w} -> ElementOfFpMonoid(FamilyObj(Representative(m)), w));
 
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup],
-function(S)
-  SEMIGROUPS.InitFpSemigroup(S);
-  return NrEquivalenceClasses(S!.cong);
-end);
+S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
 
 InstallMethod(Size, "for an fp monoid", [IsFpMonoid],
-function(S)
-  SEMIGROUPS.InitFpSemigroup(S);
-  return NrEquivalenceClasses(S!.cong);
-end);
+S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
 
-InstallMethod(\=, "for two elements of an f.p. semigroup",
+InstallMethod(\=, "for elements of an f.p. semigroup",
 IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
-function(x1, x2)
-  local S;
-  S := FpSemigroupOfElementOfFpSemigroup(x1);
-  SEMIGROUPS.InitFpSemigroup(S);
-  return [UnderlyingElement(x1), UnderlyingElement(x2)] in S!.cong;
+function(x, y)
+  local C;
+  C := UnderlyingCongruence(FpSemigroupOfElementOfFpSemigroup(x));
+  return CongruenceTestMembershipNC(C,
+                                    UnderlyingElement(x),
+                                    UnderlyingElement(y));
 end);
 
 InstallMethod(\=, "for two elements of an f.p. monoid",
 IsIdenticalObj, [IsElementOfFpMonoid, IsElementOfFpMonoid],
-function(x1, x2)
-  local M;
-  M := FpMonoidOfElementOfFpMonoid(x1);
-  SEMIGROUPS.InitFpSemigroup(M);
-  return x1 ^ M!.iso = x2 ^ M!.iso;
+function(x, y)
+  local C;
+  C := UnderlyingCongruence(FpMonoidOfElementOfFpMonoid(x));
+  return CongruenceTestMembershipNC(C,
+                                    UnderlyingElement(x),
+                                    UnderlyingElement(y));
 end);
 
-InstallMethod(\<, "for two elements of a f.p. semigroup",
+InstallMethod(\<, "for elements of an f.p. semigroup",
 IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
-function(x1, x2)
-  local S, class1, class2;
-  S := FpSemigroupOfElementOfFpSemigroup(x1);
-  SEMIGROUPS.InitFpSemigroup(S);
-  class1 := EquivalenceClassOfElement(S!.cong, UnderlyingElement(x1));
-  class2 := EquivalenceClassOfElement(S!.cong, UnderlyingElement(x2));
-  return class1 < class2;
+function(x, y)
+  local C;
+  C := UnderlyingCongruence(FpSemigroupOfElementOfFpSemigroup(x));
+  return CongruenceLessNC(C, UnderlyingElement(x), UnderlyingElement(y));
 end);
 
-InstallMethod(\<, "for two elements of a f.p. monoid",
+InstallMethod(\<, "for two elements of an f.p. monoid",
 IsIdenticalObj, [IsElementOfFpMonoid, IsElementOfFpMonoid],
-function(x1, x2)
-  local map;
-  map := IsomorphismFpSemigroup(FpMonoidOfElementOfFpMonoid(x1));
-  return x1 ^ map < x2 ^ map;
+function(x, y)
+  local C;
+  C := UnderlyingCongruence(FpMonoidOfElementOfFpMonoid(x));
+  return CongruenceLessNC(C, UnderlyingElement(x), UnderlyingElement(y));
 end);
+
+#############################################################################
+# Methods not using the underlying congruence directly
+#############################################################################
+
+InstallMethod(ExtRepOfObj, "for an element of an fp semigroup",
+[IsElementOfFpSemigroup], x -> ExtRepOfObj(UnderlyingElement(x)));
+
+InstallMethod(ExtRepOfObj, "for an element of an fp monoid",
+[IsElementOfFpMonoid], x -> ExtRepOfObj(UnderlyingElement(x)));
 
 # TODO AsSSortedList, RightCayleyDigraph, any more?
 
@@ -264,7 +253,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  rules := EN_SEMI_RELATIONS(S);
+  rules := RulesOfSemigroup(S);
 
   F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A := GeneratorsOfSemigroup(F);
@@ -288,8 +277,7 @@ function(S)
   convert, word, is_redundant, Q, map, inv, i, rule;
 
   if not IsMonoidAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n",
-                  "the first argument (a semigroup) must ",
+    ErrorNoReturn("the 1st argument (a semigroup) must ",
                   "satisfy `IsMonoidAsSemigroup`,");
   elif not IsFinite(S) then
     TryNextMethod();
@@ -315,7 +303,7 @@ function(S)
 
   pos := Position(lookup, fail);
 
-  rules := EN_SEMI_RELATIONS(S);
+  rules := RulesOfSemigroup(S);
   rels := [];
 
   # convert a word in GeneratorsOfSemigroup to a word in GeneratorsOfMonoid
@@ -538,31 +526,6 @@ SEMIGROUPS.WordToString := function(word)
   return out;
 end;
 
-# The following method could disappear if there are methods for Green's
-# relations etc so that the other method in attr.gi can be used.
-#
-# InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
-# [IsFpSemigroup],
-# function(S)
-#   local e;
-#
-#   if not IsFinite(S) then
-#     TryNextMethod();
-#   fi;
-#   for e in Idempotents(S) do
-#     if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
-#       return e;
-#     fi;
-#   od;
-#   return fail;
-# end);
-
-InstallMethod(Factorization, "for an fp semigroup and element",
-IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
-function(S, x)
-  return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
-end);
-
 # This method is based on the following paper
 # Presentations of Factorizable Inverse Monoids
 # David Easdown, James East, and D. G. FitzGerald
@@ -650,7 +613,6 @@ function(M)
   MF := F / rels;  # FpSemigroup which is isomorphic to M, with different gens.
   fam := ElementsFamily(FamilyObj(MF));
   T := Semigroup(Concatenation(SS, GG));  # M with isomorphic generators to MF
-
   map := x -> ElementOfFpSemigroup(fam, EvaluateWord(GeneratorsOfSemigroup(F),
                                                      Factorization(T, x)));
   inv := x -> EvaluateWord(GeneratorsOfSemigroup(T),
@@ -668,10 +630,10 @@ function(gens, inputstring)
     for g in gens do
       if not (Size(String(g)) = 1 and String(g)[1]
          in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") then
-        ErrorNoReturn(Concatenation(
+        ErrorNoReturn(
         "expected the first argument to be a list of a free semigroup ",
         "generators represented by single English letter but found ",
-        "the generator ", String(g)));
+        "the generator ", String(g));
       fi;
     od;
 
@@ -684,39 +646,39 @@ function(gens, inputstring)
     RemoveBrackets := function(word)
         local i, product, lbracket, rbracket, nestcount, index, p, chartoel;
         if word = "" then
-            ErrorNoReturn(Concatenation("expected the second argument to be",
+            ErrorNoReturn("expected the second argument to be",
                           " a string listing the relations of a semigroup",
                           " but found an = symbol which isn't pairing two",
-                          " words"));
+                          " words");
         fi;
 
         # if the number of left brackets is different from the number of right
         # brackets they can't possibly pair up
         if Number(word, x -> x = '(') <> Number(word, x -> x = ')') then
-            ErrorNoReturn(Concatenation("expected the number of open brackets",
-                          " to match the number of closed brackets"));
+            ErrorNoReturn("expected the number of open brackets",
+                          " to match the number of closed brackets");
         fi;
 
         # if the ^ is at the end of the string there is no exponent.
         # if the ^ is at the start of the string there is no base.
         if word[1] = '^' then
-            ErrorNoReturn(Concatenation("expected ^ to be preceded by a ) or",
-                          " a generator but found beginning of string"));
+            ErrorNoReturn("expected ^ to be preceded by a ) or",
+                          " a generator but found beginning of string");
         elif word[Size(word)] = '^' then
-            ErrorNoReturn(Concatenation("expected ^ to be followed by a ",
-                          "positive integer but found end of string"));
+            ErrorNoReturn("expected ^ to be followed by a ",
+                          "positive integer but found end of string");
         fi;
         # checks that all ^s have an exponent.
         for index in [1 .. Size(word)] do
             if word[index] = '^' then
                 if not word[index + 1] in "0123456789" then
-                  ErrorNoReturn(Concatenation("expected ^ to be followed by",
-                  " a positive integer but found ", [word[index + 1]]));
+                  ErrorNoReturn("expected ^ to be followed by",
+                  " a positive integer but found ", [word[index + 1]]);
                 fi;
                 if word[index - 1] in "0123456789^(" then
-                  ErrorNoReturn(Concatenation(
+                  ErrorNoReturn(
                   "expected ^ to be preceded by a ) or a generator",
-                  " but found ", [word[index - 1]]));
+                  " but found ", [word[index - 1]]);
                 fi;
             fi;
         od;
@@ -729,8 +691,8 @@ function(gens, inputstring)
                     return gens[i];
                 fi;
             od;
-            ErrorNoReturn(Concatenation("expected a free semigroup generator",
-                          " but found ", [char]));
+            ErrorNoReturn("expected a free semigroup generator",
+                          " but found ", [char]);
         end;
 
         # i acts as a pointer to positions in the string.
@@ -790,8 +752,8 @@ function(gens, inputstring)
 
                     p := Int(word{[rbracket + 2 .. i - 1]});
                     if p = 0 then
-                      ErrorNoReturn(Concatenation("expected ^ to be followed",
-                      " by a positive integer but found 0"));
+                      ErrorNoReturn("expected ^ to be followed",
+                                    " by a positive integer but found 0");
                     fi;
                     if product = "" then
                        product := RemoveBrackets(word{[lbracket + 1 ..
@@ -812,10 +774,10 @@ function(gens, inputstring)
     ParseRelation := x -> List(SplitString(x, "="), RemoveBrackets);
     output := List(SplitString(newinputstring, ","), ParseRelation);
     if ForAny(output, x -> Size(x) = 1) then
-      ErrorNoReturn(Concatenation("expected the second argument to be",
+      ErrorNoReturn("expected the second argument to be",
                     " a string listing the relations of a semigroup",
                     " but found an = symbol which isn't pairing two",
-                    " words"));
+                    " words");
     fi;
     output := Filtered(output, x -> Size(x) >= 2);
     output := List(output,
@@ -823,3 +785,36 @@ function(gens, inputstring)
     return Concatenation(output);
 end);
 
+InstallMethod(Factorization, "for an fp semigroup and element",
+IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
+{S, x} -> SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
+
+# Returns a factorization of the semigroup generators of S, not the monoid
+# generators !!!
+InstallMethod(Factorization, "for an fp monoid and element",
+IsCollsElms, [IsFpMonoid, IsElementOfFpMonoid],
+function(S, x)
+  local y;
+  y := ExtRepOfObj(x);
+  if IsEmpty(y) then
+    return [1];
+  else
+    return SEMIGROUPS.ExtRepObjToWord(y) + 1;
+  fi;
+end);
+
+InstallMethod(Factorization, "for a free semigroup and word",
+[IsFreeSemigroup, IsWord],
+{S, x} -> SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
+
+# Returns a factorization of the semigroup generators of S, not the monoid
+# generators !!!
+InstallMethod(Factorization, "for a free monoid and word",
+[IsFreeMonoid, IsWord],
+function(S, x)
+  if IsOne(x) then
+    return [1];
+  else
+    return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)) + 1;
+  fi;
+end);

@@ -16,8 +16,7 @@ DeclareAttribute("DualSemigroup", IsSemigroup);
 # Every semigroup is mathematically a dual semigroup
 # What we care about is whether it is represented as one
 DeclareRepresentation("IsDualSemigroupRep",
-                      IsEnumerableSemigroupRep and
-                        IsDualSemigroupElementCollection,
+                      IsDualSemigroupElementCollection and IsSemigroup,
                       []);
 
 DeclareAttribute("DualSemigroupOfFamily", IsFamily);

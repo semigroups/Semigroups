@@ -128,10 +128,6 @@ function(arg)
   filts := IsFreeBandCategory and IsAttributeStoringRep and IsWholeFamily and
            IsFreeBand;
 
-  if IsGeneratorsOfEnumerableSemigroup(gens) then
-    filts := filts and IsEnumerableSemigroupRep;
-  fi;
-
   S := Objectify(NewType(FamilyObj(gens), filts),
                  rec(opts := SEMIGROUPS.DefaultOptionsRec));
 
@@ -315,81 +311,23 @@ function(dclass)
   return IteratorByNextIterator(record);
 end);
 
-# A free band iterator has component: content, dclass_iter.
-
-InstallMethod(Iterator, "for a free band",
-[IsFreeBandCategory],
-function(s)
-  local NextIterator_FreeBand, ShallowCopyLocal, record ;
-
-  NextIterator_FreeBand := function(iter)
-    local next_dclass_value, content, i, rep, dclass;
-
-    next_dclass_value := NextIterator(iter!.dclass_iter);
-    content := iter!.content;
-
-    if next_dclass_value <> fail then
-      # The current content is not done yet
-      return next_dclass_value;
-    elif ForAll(content, x -> x) then
-      # Last content finished
-      return fail;
-    else
-      # Change content
-      for i in [1 .. Length(content)] do
-        if content[i] then
-          content[i] := false;
-        else
-          content[i] := true;
-          break;
-        fi;
-      od;
-      # Create the corresponding D-class, without actualy enumerating it.
-      i := Position(content, true);
-      rep := SEMIGROUPS.UniversalFakeOne;
-      while i <> fail do
-        rep := rep * GeneratorsOfSemigroup(s)[i];
-        i := Position(content, true, i);
-      od;
-      dclass := GreensDClassOfElement(s, rep);
-      iter!.dclass_iter := Iterator(dclass);
-      return NextIterator(iter!.dclass_iter);
-    fi;
-  end;
-
-  ShallowCopyLocal := record ->
-    rec(last_called_by_is_done := record!.last_called_by_is_done,
-        next_value := record!.next_value,
-        IsDoneIterator := record!.IsDoneIterator,
-        NextIterator := record!.NextIterator);
-
-  record := rec(content :=
-                BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
-                dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
-  record!.NextIterator := NextIterator_FreeBand;
-  record!.ShallowCopy := ShallowCopyLocal;
-  return IteratorByNextIterator(record);
-end);
-
-# The method below does not apply to S when it is in IsEnumerableSemigroupRep
-# since the rank of IsEnumerableSemigroupRep is highter than that of
-# IsFreeBandCategory.
-
 InstallMethod(GreensDClassOfElement, "for a free band and element",
 [IsFreeBandCategory, IsFreeBandElement],
 function(S, x)
-  local type, D;
-  # FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
-  # remove the next two lines
-  if IsEnumerableSemigroupRep(S) then
-    TryNextMethod();
-  elif not x in S then
+  local filt, type, D;
+  if not x in S then
     ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
                   "the element does not belong to the semigroup,");
   fi;
 
-  type := NewType(FamilyObj(S), IsEquivalenceClass and
-                  IsEquivalenceClassDefaultRep and IsGreensDClass);
+  filt := IsEquivalenceClass and IsEquivalenceClassDefaultRep
+          and IsGreensDClass;
+
+  if Length(GeneratorsOfSemigroup(S)) < 4 then
+    filt := filt and IsEnumerableSemigroupGreensClassRep;
+  fi;
+
+  type := NewType(FamilyObj(S), filt);
   D := Objectify(type, rec());
   SetParent(D, S);
   SetRepresentative(D, x);

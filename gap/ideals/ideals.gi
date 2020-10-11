@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for ideals of semigroups, which do not depend on
-# the representation as IsActingSemigroup or IsEnumerableSemigroupRep.
+# the representation as IsActingSemigroup or CanComputeFroidurePin.
 
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
@@ -289,9 +289,6 @@ function(S, gens, opts)
     if opts.regular then
       filts := filts and IsRegularActingSemigroupRep;
     fi;
-  elif IsEnumerableSemigroupRep(S)
-      and IsGeneratorsOfEnumerableSemigroup(gens) then
-    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -345,7 +342,6 @@ function(S, gens, opts)
   return I;
 end);
 
-# JDM HERE!!
 InstallMethod(MinimalIdealGeneratingSet,
 "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

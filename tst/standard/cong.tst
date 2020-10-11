@@ -52,20 +52,16 @@ elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 gap> cong := RightSemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> cong := SemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 
 # SemigroupCongruence: Infinite semigroup
 gap> S := FreeSemigroup(2);;
@@ -79,9 +75,7 @@ gap> IsSimpleSemigroup(S);
 true
 gap> pairs := [
 > [Transformation([1, 1, 1, 1, 1]), Transformation([3, 3, 3, 3, 3])]];;
-gap> cong := SemigroupCongruence(S, pairs);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 5 generators> with linked triple (1,1,4)>
+gap> cong := SemigroupCongruence(S, pairs);;
 gap> EquivalenceRelationCanonicalPartition(cong);
 [ [ Transformation( [ 1, 1, 1, 1, 1 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) 
      ] ]
@@ -92,9 +86,8 @@ gap> IsZeroSimpleSemigroup(S);
 true
 gap> IsRegularSemigroup(S);
 true
-gap> SemigroupCongruence(S, [S.1, S.1]);
-<semigroup congruence over <commutative 0-simple inverse transformation 
- monoid of degree 2 with 1 generator> with linked triple (1,1,1)>
+gap> IsSimpleSemigroupCongruence(SemigroupCongruence(S, [S.1, S.1]));
+true
 
 # SemigroupCongruence: Inverse semigroup
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
@@ -156,9 +149,8 @@ gap> R := Range(iso);;
 gap> pairs := [ReesMatrixSemigroupElement(R, 1, (), 1),
 >              ReesMatrixSemigroupElement(R, 1, (), 3)];;
 gap> rmscong := SemigroupCongruence(R, pairs);;
-gap> SemigroupCongruence(S, iso, rmscong);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 5 generators> with linked triple (1,1,4)>
+gap> IsSimpleSemigroupCongruence(SemigroupCongruence(S, iso, rmscong));
+true
 
 # SemigroupCongruence: Giving an RZMS cong
 gap> S := Semigroup(Transformation([1, 2]), Transformation([1, 1]));;
@@ -168,9 +160,8 @@ gap> R := Range(iso);;
 gap> pairs := [ReesZeroMatrixSemigroupElement(R, 1, (), 1),
 >              ReesZeroMatrixSemigroupElement(R, 1, (), 1)];;
 gap> rmscong := SemigroupCongruence(R, pairs);;
-gap> SemigroupCongruence(S, iso, rmscong);
-<semigroup congruence over <commutative 0-simple inverse transformation 
- monoid of degree 2 with 1 generator> with linked triple (1,1,1)>
+gap> IsSimpleSemigroupCongruence(SemigroupCongruence(S, iso, rmscong));
+true
 
 # SemigroupCongruence: Bad R(Z)MS Input
 gap> S := Semigroup(MinimalIdeal(FullTransformationMonoid(5)));;
@@ -465,10 +456,10 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 Error, <equiv> must be over a finite semigroup,
 gap> cong := LeftSemigroupCongruence(F, [F.1, F.2]);;
 gap> EquivalenceRelationLookup(cong);
-Error, <equiv> must be over a finite semigroup,
+Error, the argument (a congruence) must have finite range
 gap> cong := RightSemigroupCongruence(F, [F.1, F.2]);;
 gap> EquivalenceRelationLookup(cong);
-Error, <equiv> must be over a finite semigroup,
+Error, the argument (a congruence) must have finite range
 
 # Equality for congruences over different semigroups (false)
 gap> S := Semigroup([Transformation([3, 2, 3]), Transformation([3, 1, 1])]);;
