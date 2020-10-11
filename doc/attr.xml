@@ -337,6 +337,8 @@ gap> Length(SmallGeneratingSet(S));
 <ManSection>
   <Attr Name="MinimalSemigroupGeneratingSet" Arg="S"/>
   <Attr Name="MinimalMonoidGeneratingSet" Arg="S"/>
+  <Attr Name="MinimalInverseSemigroupGeneratingSet" Arg="S"/>
+  <Attr Name="MinimalInverseMonoidGeneratingSet" Arg="S"/>
   <Returns>A minimal generating set for a semigroup.</Returns>
   <Description>
     The attribute <C>MinimalXGeneratingSet</C> returns a minimal generating set
@@ -346,12 +348,14 @@ gap> Length(SmallGeneratingSet(S));
     <Log>
       X(MinimalXGeneratingSet(S)) = S;
     </Log>
-    where <C>X</C> is either
-    <Ref Func="Semigroup" BookName="ref"/>, or
-    <Ref Func="Monoid" BookName="ref"/>.<P/>
+    where <C>X</C> is one of 
+    <Ref Func="Semigroup" BookName="ref"/>, 
+    <Ref Func="Monoid" BookName="ref"/>,
+    <Ref Func="InverseSemigroup" BookName="ref"/>, or
+    <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
 
     For many types of semigroup, it is not currently possible to find a
-    <C>MinimalXGeneratingSet</C> with the &Semigroups; package. <P/>
+    <C>MinimalXGeneratingSet</C> with the &SEMIGROUPS; package. <P/>
 
     See also <Ref Attr="SmallGeneratingSet"/> and <Ref
       Oper="IrredundantGeneratingSubset"/>.
@@ -451,7 +455,7 @@ gap> D := DClass(S, x);;
 gap> ForAll(GreensDClasses(S), x -> IsGreensLessThanOrEqual(D, x));
 true
 gap> MinimalIdeal(POI(10));
-<partial perm group of rank 10>
+<partial perm group of rank 0>
 gap> MinimalIdeal(BrauerMonoid(6));
 <simple bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
     </Description>
@@ -533,9 +537,9 @@ gap> RepresentativeOfMinimalIdeal(B);
 gap> S := Semigroup(Transformation([5, 1, 6, 2, 2, 4]),
 >                   Transformation([3, 5, 5, 1, 6, 2]));;
 gap> RepresentativeOfMinimalDClass(S);
-Transformation( [ 1, 2, 2, 5, 5, 1 ] )
+Transformation( [ 5, 6, 6, 3, 3, 5 ] )
 gap> MinimalDClass(S);
-<Green's D-class: Transformation( [ 1, 2, 2, 5, 5, 1 ] )>]]></Example>
+<Green's D-class: Transformation( [ 5, 6, 6, 3, 3, 5 ] )>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -1155,7 +1159,7 @@ fail]]>
     Two semigroups have the same set of elements if and only if
     their smallest generating sets are equal. However, due to the complexity of
     determining the <C>GeneratorsSmallest</C>, this is not the method used by
-    the &Semigroups; package when comparing semigroups.
+    the &SEMIGROUPS; package when comparing semigroups.
 
     <Example><![CDATA[
 gap> S := Monoid([

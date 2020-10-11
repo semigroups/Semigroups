@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semiquo.gi
-##  Copyright (C) 2014-16                                James D. Mitchell
+##  semigroups/semiquo.gi
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -56,9 +56,10 @@ function(S, I)
 end);
 
 InstallMethod(Size, "for a quotient semigroup",
-[IsQuotientSemigroup and IsFinite],
+[IsQuotientSemigroup and IsFinite], 3,
+# to beat the CanUseGapFroidurePin method
 function(q)
   local cong;
   cong := QuotientSemigroupCongruence(q);
-  return NrCongruenceClasses(cong);
+  return NrEquivalenceClasses(cong);
 end);

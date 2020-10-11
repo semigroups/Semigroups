@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  reesmat.gi
-##  Copyright (C) 2014-16                                James D. Mitchell
+##  semigroups/semirms.gi
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -23,24 +23,24 @@ function(filt, params)
   if Length(params) < 1 then  # rows I
     params[1] := Random(1, 100);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of rows) must be a pos int,";
+    return "the 2nd argument (number of rows) must be a positive integer";
   fi;
   if Length(params) < 2 then  # cols J
     params[2] := Random(1, 100);
   elif not IsPosInt(params[2]) then
-    return "the third argument (number of columns) must be a pos int,";
+    return "the 3rd argument (number of columns) must be a positive integer";
   fi;
   if Length(params) < 3 then  # group
     order := Random(1, 2047);
     i := Random(1, NumberSmallGroups(order));
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
   elif not IsPermGroup(params[3]) then
-    return "the fourth argument must be a perm group,";
+    return "the 4th argument must be a permutation group";
   fi;
   if Length(params) > 3 then
-    return "there must be at most four arguments,";
+    return Concatenation("expected at most 3 arguments, found ",
+                         String(Length(params)));
   fi;
-
   return params;
 end);
 
@@ -175,10 +175,10 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                  "the argument must be a simple semigroup,");
-    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
+    ErrorNoReturn("the argument (a semigroup) is not simple");
+    # TODO(later) is there another method? I.e. can we turn
+    # non-simple/non-0-simple semigroups into Rees (0-)matrix semigroups over
+    # non-groups?
   fi;
 
   D := GreensDClasses(S)[1];
@@ -200,10 +200,10 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
-                  "the argument must be a 0-simple semigroup,");
-    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
+    ErrorNoReturn("the argument (a semigroup) is not a 0-simple semigroup");
+    # TODO(later) is there another method? I.e. can we turn
+    # non-simple/non-0-simple semigroups into Rees (0-)matrix semigroups over
+    # non-groups?
   fi;
 
   D := First(GreensDClasses(S),
@@ -272,9 +272,9 @@ function(S)
   local r, mat, G, iso;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-                  "semigroup satisfying IsGroupAsSemigroup,");
+    ErrorNoReturn("the underlying semigroup of the argument (a ",
+                  " subsemigroup of a Rees 0-matrix ",
+                  "semigroup) does not satisfy IsGroupAsSemigroup");
   fi;
 
   r := Representative(S);
@@ -361,7 +361,7 @@ function(R)
                     Random(Columns(R)), Matrix(ParentAttr(R))]);
 end);
 
-# TODO a proper method here
+# TODO(later) a proper method here
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a collection of Rees 0-matrix semigroup elements",
@@ -377,16 +377,11 @@ function(I)
 
   str := "\><";
 
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "\>commutative\< ");
-    fi;
+  if HasIsCommutative(I) and IsCommutative(I) then
+    Append(str, "\>commutative\< ");
   fi;
 
-  if HasIsTrivial(I) and IsTrivial(I) then
-  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+  if HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
     Append(str, "\>0-simple\< ");
   elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
     Append(str, "\>simple\< ");
@@ -605,8 +600,8 @@ end);
 InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup) -
-RankFilter(IsReesZeroMatrixSubsemigroup) + 1,
+RankFilter(IsSemigroup and CanUseFroidurePin and HasGeneratorsOfSemigroup) -
+RankFilter(IsReesZeroMatrixSubsemigroup) + 2,
 function(R)
   local G, group, iso, inv, mat, out, k, i, j;
 
@@ -623,7 +618,7 @@ function(R)
   fi;
 
   mat := Matrix(R);
-  out := EmptyPlist(NrIdempotents(R));
+  out := [];
   out[1] := MultiplicativeZero(R);
   k := 1;
   for i in Rows(R) do
@@ -657,6 +652,8 @@ end);
 InstallMethod(NrIdempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
+RankFilter(IsSemigroup and CanUseFroidurePin and HasGeneratorsOfSemigroup) -
+RankFilter(IsReesZeroMatrixSubsemigroup) + 2,
 function(R)
   local count, mat, i, j;
 
@@ -856,9 +853,9 @@ function(R)
 
   G := UnderlyingSemigroup(R);
   if not IsGroupAsSemigroup(G) then
-    ErrorNoReturn("Semigroups: RMSNormalization: usage,\n",
-                  "the underlying semigroup <G> of the Rees matrix semigroup ",
-                  "<R> must be a group,");
+    ErrorNoReturn("the underlying semigroup of the argument (a ",
+                  " subsemigroup of a Rees matrix ",
+                  "semigroup) does not satisfy IsGroupAsSemigroup");
   fi;
 
   if IsGroup(G) then
@@ -933,29 +930,17 @@ function(R)
   return Semigroup(MatrixEntries(N)) = U;
 end);
 
-# The next two methods are just copies of the methods in the library but with
-# the rank increased so they are used in favour of the method for
-# IsEnumerableSemigroupRep
-
 InstallMethod(Size, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
+[IsReesMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
+ HasColumns],
 function(R)
-  # This is unreachable
-  # if Size(UnderlyingSemigroup(R)) = infinity then
-  #   return infinity;
-  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
 InstallMethod(Size, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
-RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
+[IsReesZeroMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
+ HasColumns],
 function(R)
-  # This is unreachable
-  # if Size(UnderlyingSemigroup(R)) = infinity then
-  #   return infinity;
-  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
          + 1;
 end);
@@ -967,10 +952,8 @@ end);
 InstallMethod(IO_Pickle, "for a Rees matrix semigroup",
 [IsFile, IsReesMatrixSemigroup],
 function(file, x)
-  if IO_Write(file, "RMSX") = fail then
-    return IO_Error;
-  fi;
-  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  if IO_Write(file, "RMSX") = fail
+      or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
@@ -988,10 +971,8 @@ end;
 InstallMethod(IO_Pickle, "for a Rees 0-matrix semigroup",
 [IsFile, IsReesZeroMatrixSemigroup],
 function(file, x)
-  if IO_Write(file, "RZMS") = fail then
-    return IO_Error;
-  fi;
-  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  if IO_Write(file, "RZMS") = fail
+      or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;

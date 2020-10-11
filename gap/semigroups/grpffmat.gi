@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  grpffmat.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  semigroups/grpffmat.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##                                                       Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-# TODO special cases for 0 dimensional matrices over finite fields
+# TODO(later) special cases for 0 dimensional matrices over finite fields
 
 InstallMethod(IsomorphismPermGroup, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup],
@@ -25,7 +25,7 @@ function(G)
                                           InverseGeneralMapping(iso1));
 end);
 
-# TODO ViewString
+# TODO(later) ViewString
 
 InstallMethod(ViewObj,
 "for a matrix over finite field group with generators",
@@ -72,16 +72,11 @@ function(G)
   local H, gens;
 
   if not IsGroupAsSemigroup(G) then
-    ErrorNoReturn("Semigroups: IsomorphismMatrixGroup: usage,\n",
-                  "the argument must be a group (as semigroup),");
-  fi;
-
-  if DimensionOfMatrixOverSemiringCollection(G) = 0 then
+    ErrorNoReturn("the argument must be a group (as semigroup)");
+  elif DimensionOfMatrixOverSemiringCollection(G) = 0 then
     H := TrivialGroup();
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
-  fi;
-
-  if HasGeneratorsOfGroup(G) then
+  elif HasGeneratorsOfGroup(G) then
     gens := GeneratorsOfGroup(G);
   else
     gens := GeneratorsOfSemigroup(G);
@@ -163,10 +158,8 @@ function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
       or DimensionOfMatrixOverSemiringCollection(G)
          <> DimensionOfMatrixOverSemiring(x) then
-    ErrorNoReturn("Semigroups: \\^ (for matrix over finite field ",
-                  "group and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " the 2nd argument must be invertible");
   elif IsOne(x) or DimensionOfMatrixOverSemiring(x) = 0 then
     return G;
   fi;
@@ -182,10 +175,8 @@ function(G, x)
       or DimensionOfMatrixOverSemiringCollection(G)
          <> DimensionOfMatrixOverSemiring(x)
       or Inverse(x) = fail then
-    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over finite",
-                  " field group and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " the 2nd argument must be invertible");
   fi;
   return ClosureGroup(G, [x]);
 end);
@@ -198,11 +189,8 @@ function(G, coll)
       or DimensionOfMatrixOverSemiringCollection(G) <>
          DimensionOfMatrixOverSemiringCollection(coll)
       or ForAny(coll, x -> Inverse(x) = fail) then
-    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over ",
-                  "finite field group",
-                  " and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " every matrix in the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " every matrix in the 2nd argument must be invertible");
   elif DimensionOfMatrixOverSemiringCollection(G) = 0 then
     return G;
   fi;

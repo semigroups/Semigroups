@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  graded.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  main/graded.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -55,16 +55,13 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# TODO negate the global option so that it corresponds to NC
-
 InstallGlobalFunction(GradedLambdaOrb,
 function(arg)
   local S, x, global, obj, lambda, graded, pos, gradingfunc, onlygrades,
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                  "there must be at least 3 arguments,");
+    ErrorNoReturn("there must be at least 3 arguments");
   fi;
 
   S := arg[1];
@@ -76,14 +73,11 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                  "the first argument <S> must be an acting semigroup,");
+    ErrorNoReturn("the first argument <S> must be an acting semigroup");
   elif not IsMultiplicativeElement(x) then
-    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                  "the second argument <x> must be a multiplicative element,");
+    ErrorNoReturn("the second argument <x> must be a multiplicative element");
   elif not IsBool(global) then
-    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                  "the third argument <global> must be a boolean,");
+    ErrorNoReturn("the third argument <global> must be a boolean");
   fi;
 
   lambda := LambdaFunc(S)(x);
@@ -121,7 +115,8 @@ function(arg)
   fi;
 
   orb := ShallowCopy(LambdaOrbOpts(S));
-  # TODO include as much of the following as appropriate in LambdaOrbOpts
+  # TODO(later) include as much of the following as appropriate in
+  # LambdaOrbOpts
   orb.parent := S;
   orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   orb.schreier := true;
@@ -151,7 +146,7 @@ function(arg)
     for l in [1 .. Length(o)] do
       HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
-    # remove this it is only used in one place in this file TODO
+    # remove this it is only used in one place in this file TODO(later)
     o!.position_in_graded := [j, k];
     graded!.lens[j] := k;
   fi;
@@ -161,16 +156,13 @@ function(arg)
   return o;
 end);
 
-# TODO negate the global option so that it corresponds to NC
-
 InstallGlobalFunction(GradedRhoOrb,
 function(arg)
   local S, x, global, obj, rho, graded, pos, gradingfunc, onlygrades,
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                  "there must be at least 3 arguments,");
+    ErrorNoReturn("there must be at least 3 arguments");
   fi;
 
   S := arg[1];
@@ -182,14 +174,11 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                  "the first argument <S> must be an acting semigroup,");
+    ErrorNoReturn("the first argument <S> must be an acting semigroup");
   elif not IsMultiplicativeElement(x) then
-    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                  "the second argument <f> must be a multiplicative element,");
+    ErrorNoReturn("the second argument <f> must be a multiplicative element");
   elif not IsBool(global) then
-    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                  "the third argument <opt> must be a boolean,");
+    ErrorNoReturn("the third argument <opt> must be a boolean");
   fi;
 
   rho := RhoFunc(S)(x);

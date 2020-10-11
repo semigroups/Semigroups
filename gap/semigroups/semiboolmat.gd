@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  semiboolmat.gd
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semiboolmat.gd
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -18,11 +18,3 @@ DeclareSynonym("IsBooleanMatMonoid",
 
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 
-DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
-DeclareOperation("GossipMonoid", [IsPosInt]);
-DeclareOperation("UnitriangularBooleanMatMonoid", [IsPosInt]);
-DeclareOperation("TriangularBooleanMatMonoid", [IsPosInt]);
-
-DeclareOperation("ReflexiveBooleanMatMonoid", [IsPosInt]);
-DeclareOperation("HallMonoid", [IsPosInt]);
-DeclareOperation("FullBooleanMatMonoid", [IsPosInt]);

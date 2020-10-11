@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semieunit.gd
-##  Copyright (C) 2016                                    Christopher Russell
+##  semigroups/semieunit.gd
+##  Copyright (C) 2016-2022                            Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -36,6 +36,8 @@ DeclareSynonymAttr("IsMcAlisterTripleSemigroup",
 DeclareSynonymAttr("IsMTS", IsMcAlisterTripleSemigroup);
 DeclareSynonym("IsMcAlisterTripleSubsemigroup",
 IsMcAlisterTripleSemigroupElementCollection and IsSemigroup);
+
+InstallTrueMethod(IsFinite, IsMcAlisterTripleSubsemigroup);
 
 # This is a representation for McAlister triple semigroup, which are
 # created via the function McAlisterTripleSemigroup.
@@ -90,25 +92,21 @@ DeclareSynonymAttr("MTSActionHomomorphism",
 DeclareAttribute("McAlisterTripleSemigroupUnderlyingAction",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSUnderlyingAction",
-                 McAlisterTripleSemigroupUnderlyingAction);
+                   McAlisterTripleSemigroupUnderlyingAction);
 DeclareAttribute("McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSSemilatticeVertexLabelInverseMap",
-                 McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap);
+                   McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap);
 DeclareAttribute("OneImmutable",
-                 IsMcAlisterTripleSemigroup and IsWholeFamily and IsMonoid);
+                 IsMcAlisterTripleSemigroupElementCollection);
 DeclareAttribute("McAlisterTripleSemigroupComponents",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSComponents",
-                 McAlisterTripleSemigroupComponents);
+                   McAlisterTripleSemigroupComponents);
 DeclareAttribute("McAlisterTripleSemigroupQuotientDigraph",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSQuotientDigraph",
-                 McAlisterTripleSemigroupQuotientDigraph);
-
-# Operations for relating to McAlister triple semigroups
-DeclareAttribute("IsomorphismMcAlisterTripleSemigroup",
-                IsSemigroup);
+                   McAlisterTripleSemigroupQuotientDigraph);
 
 # Operations for creating McAlister triple semigroup elements
 DeclareOperation("McAlisterTripleSemigroupElement",

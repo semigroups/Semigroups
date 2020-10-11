@@ -32,7 +32,7 @@ gap> Sort(sizes);;
 gap> sizes;
 [ 1, 1, 3, 3 ]
 gap> PartialOrderOfDClasses(s);
-[ [ 1, 4 ], [ 1, 2, 3 ], [ 3, 4 ], [ 4 ] ]
+<immutable digraph with 4 vertices, 4 edges>
 gap> IsRegularSemigroup(s);
 true
 gap> ForAll(s, x -> x in s);
@@ -81,9 +81,9 @@ gap> gens := [Transformation([3, 5, 3, 3, 5, 6]),
 > Transformation([6, 2, 4, 2, 2, 6])];;
 gap> S := Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
-<Green's H-class: Transformation( [ 2, 2, 2, 2, 2 ] )>
+<Green's H-class: Transformation( [ 6, 2, 2, 2, 2, 6 ] )>
 gap> IsomorphismPermGroup(last);
-MappingByFunction( <Green's H-class: Transformation( [ 2, 2, 2, 2, 2 ] )>
+MappingByFunction( <Green's H-class: Transformation( [ 6, 2, 2, 2, 2, 6 ] )>
  , Group(()), function( x ) ... end, function( x ) ... end )
 
 # MonoidPkgTest5
@@ -812,7 +812,7 @@ gap> f := FreeSemigroup(3);;
 gap> a := f.1;; b := f.2;; c := f.3;;
 gap> s := f / [[a ^ 2, a], [b ^ 2, b], [c ^ 2, c], [a * b, a],
 > [b * a, b], [a * c, a], [c * a, c], [b * c, b], [c * b, c]];
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 9 relations>
 gap> Size(s);
 3
 gap> GreensLClassOfElement(s, s.1);

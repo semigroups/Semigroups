@@ -6,8 +6,7 @@ dnl otherwise use the included version
 dnl
 AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
   AC_ARG_WITH([external-libsemigroups],
-	      [AC_HELP_STRING([--with-external-libsemigroups],
-			      [use the external libsemigroups])])
+	      [AS_HELP_STRING([--with-external-libsemigroups],[use the external libsemigroups])])
   REQUI_LIBSEMIGROUPS_VERSION="$(cat .LIBSEMIGROUPS_VERSION)"
   need_included_libsemigroups=yes
   if test "$with_external_libsemigroups" = yes;  then
@@ -48,7 +47,7 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                    [],
                    [AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])]
                   )
-	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include'])
+	AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include -I./bin/include/libsemigroups'])
 	AC_SUBST(LIBSEMIGROUPS_LIBS, ['bin/lib/libsemigroups.la'])
         AC_CONFIG_SUBDIRS([libsemigroups])
   fi

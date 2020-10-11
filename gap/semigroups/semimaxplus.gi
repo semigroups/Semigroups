@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  semimaxplus.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semimaxplus.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -100,20 +100,23 @@ _ProcessArgs1 := function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) must be a pos int";
   fi;
+
   if Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
-  elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
   fi;
-  if Length(params) < 3 then  # threshold
+
+  if not IsPosInt(params[2]) then
+    return "the 3rd argument (matrix dimension) must be a pos int";
+  elif Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
-  elif not IsPosInt(params[3]) then
-    return "the fourth argument (semiring threshold) must be a pos int,";
   fi;
-  if Length(params) > 3 then
-    return "there must be at most four arguments,";
+
+  if not IsPosInt(params[3]) then
+    return "the 4th argument (semiring threshold) must be a pos int";
+  elif Length(params) > 3 then
+    return "there must be at most four arguments";
   fi;
   return params;
 end;
@@ -170,25 +173,25 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) must be a pos int";
   fi;
   if Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
+    return "the 3rd argument (matrix dimension) must be a pos int";
   fi;
   if Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
   elif not IsPosInt(params[3]) then
-    return "the fourth argument (semiring threshold) must be a pos int,";
+    return "the 4th argument (semiring threshold) must be a pos int";
   fi;
   if Length(params) < 4 then  # period
     params[4] := Random(1, 20);
   elif not IsPosInt(params[4]) then
-    return "the fifth argument (semiring period) must be a pos int,";
+    return "the 5th argument (semiring period) must be a pos int";
   fi;
   if Length(params) > 4 then
-    return "there must be at most five arguments,";
+    return "there must be at most 5 arguments";
   fi;
 
   return params;
@@ -432,15 +435,6 @@ _InstallIsomorphism1 := function(filter)
   end);
 
   InstallMethod(IsomorphismMonoid,
-  Concatenation("for ", IsXMonoid, ", and a semigroup in", IsXSemigroup),
-  [ValueGlobal(IsXMonoid), ValueGlobal(IsXSemigroup)],
-  function(filter, S)
-    return IsomorphismMonoid(filter,
-                             ThresholdTropicalMatrix(Representative(S)),
-                             S);
-  end);
-
-  InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", pos int, and a semigroup"),
   [ValueGlobal(IsXMonoid), IsPosInt, IsSemigroup],
   function(filter, threshold, S)
@@ -462,6 +456,15 @@ _InstallIsomorphism1 := function(filter)
   [ValueGlobal(IsXMonoid), IsSemigroup],
   function(filter, S)
     return IsomorphismMonoid(filter, 1, S);
+  end);
+
+  InstallMethod(IsomorphismMonoid,
+  Concatenation("for ", IsXMonoid, ", and a semigroup in ", IsXSemigroup),
+  [ValueGlobal(IsXMonoid), ValueGlobal(IsXSemigroup)],
+  function(filter, S)
+    return IsomorphismMonoid(filter,
+                             ThresholdTropicalMatrix(Representative(S)),
+                             S);
   end);
 
   InstallMethod(IsomorphismMonoid,
@@ -523,16 +526,6 @@ function(S)
 end);
 
 InstallMethod(IsomorphismMonoid,
-"for IsNTPMatrixMonoid and a ntp matrix semigroup",
-[IsNTPMatrixMonoid, IsNTPMatrixSemigroup],
-function(filter, S)
-  return IsomorphismMonoid(filter,
-                           ThresholdNTPMatrix(Representative(S)),
-                           PeriodNTPMatrix(Representative(S)),
-                           S);
-end);
-
-InstallMethod(IsomorphismMonoid,
 "for IsNTPMatrixMonoid, pos int, pos int, and a semigroup",
 [IsNTPMatrixMonoid, IsPosInt, IsPosInt, IsSemigroup],
 function(filter, threshold, period, S)
@@ -554,6 +547,16 @@ InstallMethod(IsomorphismMonoid,
 [IsNTPMatrixMonoid, IsSemigroup],
 function(filter, S)
   return IsomorphismMonoid(filter, 1, 1, S);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsNTPMatrixMonoid and a ntp matrix semigroup",
+[IsNTPMatrixMonoid, IsNTPMatrixSemigroup],
+function(filter, S)
+  return IsomorphismMonoid(filter,
+                           ThresholdNTPMatrix(Representative(S)),
+                           PeriodNTPMatrix(Representative(S)),
+                           S);
 end);
 
 InstallMethod(IsomorphismMonoid,
@@ -586,136 +589,6 @@ function(filt, threshold, period, S)
 end);
 
 #############################################################################
-## Standard examples.
-#############################################################################
-
-InstallMethod(FullTropicalMaxPlusMonoid, "for pos int and pos int",
-[IsPosInt, IsPosInt],
-function(dim, threshold)
-  local gens, i, j;
-
-  if dim <> 2 then
-    ErrorNoReturn("Semigroups: FullTropicalMaxPlusMonoid: usage,\n",
-                  "the dimension must be 2,");
-  fi;
-
-  gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
-                                            [-infinity, -infinity]],
-                                            threshold),
-           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
-                                            [0, -infinity]],
-                                            threshold),
-           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
-                                            [0, 0]],
-                                            threshold),
-           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 1],
-                                            [0, -infinity]],
-                                            threshold)];
-
-  for i in [1 .. threshold] do
-    Add(gens, Matrix(IsTropicalMaxPlusMatrix,
-                     [[-infinity, 0], [0, i]],
-                     threshold));
-    for j in [1 .. i] do
-      Add(gens, Matrix(IsTropicalMaxPlusMatrix,
-                       [[0, j], [i, 0]],
-                       threshold));
-    od;
-  od;
-
-  return Monoid(gens);
-end);
-
-InstallMethod(FullTropicalMinPlusMonoid, "for pos int and pos int",
-[IsPosInt, IsPosInt],
-function(dim, threshold)
-  local gens, i, j, k;
-
-  if dim = 2  then
-    gens := [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [0, infinity]],
-                                              threshold),
-             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [1, infinity]],
-                                              threshold),
-             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [infinity, infinity]],
-                                              threshold)];
-    for i in [0 .. threshold] do
-      Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                       [[infinity, 0], [0, i]],
-                       threshold));
-    od;
-  elif dim = 3 then
-    gens := [Matrix(IsTropicalMinPlusMatrix,
-                    [[infinity, infinity, 0],
-                     [0, infinity, infinity],
-                     [infinity, 0, infinity]],
-                    threshold),
-             Matrix(IsTropicalMinPlusMatrix,
-                    [[infinity, infinity, 0],
-                     [infinity, 0, infinity],
-                     [0, infinity, infinity]],
-                    threshold),
-             Matrix(IsTropicalMinPlusMatrix,
-                    [[infinity, infinity, 0],
-                     [infinity, 0, infinity],
-                     [infinity, infinity, infinity]],
-                    threshold),
-             Matrix(IsTropicalMinPlusMatrix,
-                    [[infinity, infinity, 0],
-                     [infinity, 0, infinity],
-                     [1, infinity, infinity]],
-                    threshold)];
-
-    for i in [0 .. threshold] do
-      Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                       [[infinity, infinity, 0],
-                        [infinity, 0, infinity],
-                        [0, i, infinity]],
-                       threshold));
-      Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                       [[infinity, 0, i],
-                        [i, infinity, 0],
-                        [0, i, infinity]],
-                        threshold));
-      for j in [1 .. i] do
-        Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                         [[infinity, 0, 0],
-                          [0, infinity, i],
-                          [0, j, infinity]],
-                         threshold));
-      od;
-
-      for j in [1 .. threshold] do
-        Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                         [[infinity, 0, 0],
-                          [0, infinity, i],
-                          [j, 0, infinity]],
-                         threshold));
-      od;
-    od;
-
-    for i in [1 .. threshold] do
-      for j in [i .. threshold] do
-        for k in [1 .. j - 1] do
-          Add(gens, Matrix(IsTropicalMinPlusMatrix,
-                           [[infinity, 0, i],
-                            [j, infinity, 0],
-                            [0, k, infinity]],
-                           threshold));
-        od;
-      od;
-    od;
-  else
-    ErrorNoReturn("Semigroups: FullTropicalMinPlusMonoid: usage,\n",
-                  "the dimension must be 2 or 3,");
-  fi;
-
-  return Monoid(gens);
-end);
-
-#############################################################################
 ## IsFinite and required methods for max-plus and min-plus matrix semigroups.
 #############################################################################
 
@@ -727,11 +600,11 @@ end);
 
 InstallMethod(IsFinite,
 "for a min-plus matrix semigroup",
-[IsMinPlusMatrixSemigroup],
+[IsMinPlusMatrixSemigroup], SUM_FLAGS,
 function(S)
   local gens, id, mat, row, val;
 
-  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
+  if IsEnumerated(Enumerate(S, 8192)) then
     return true;
   fi;
 
@@ -772,9 +645,9 @@ end);
 
 InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
-[IsMaxPlusMatrixSemigroup],
+[IsMaxPlusMatrixSemigroup], SUM_FLAGS,
 function(S)
-  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
+  if IsEnumerated(Enumerate(S, 8192)) then
     return true;
   fi;
   return IsTorsion(S);
@@ -846,6 +719,7 @@ end);
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
 [IsIntegerMatrixSemigroup],
+3,  # to beat the method for semigroups with CanUseLibsemigroupsFroidurePin
 function(S)
   local gens, ET, mat, row, val;
 

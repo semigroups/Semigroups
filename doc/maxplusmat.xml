@@ -24,7 +24,7 @@
     <Filt Name = "IsIntegerMatrix"           Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      Every matrix over a semiring in &Semigroups; is a member of one of these
+      Every matrix over a semiring in &SEMIGROUPS; is a member of one of these
       categories, which are subcategory of <Ref Filt = "IsMatrixOverSemiring"/>.
       <P/>
 
@@ -97,13 +97,13 @@
       <K>true</K> or <K>false</K>.
     </Returns>
     <Description>
-       Every collection of matrices over the same semiring in &Semigroups;
+       Every collection of matrices over the same semiring in &SEMIGROUPS;
        belongs to one of the categories above. For example, semigroups of
        boolean matrices belong to <C>IsBooleanMatCollection</C>.
        <P/>
 
        Similarly, every collection of collections of matrices over the same
-       semiring in &Semigroups; belongs to one of the categories above.
+       semiring in &SEMIGROUPS; belongs to one of the categories above.
     </Description>
   </ManSection>
 <#/GAPDoc>

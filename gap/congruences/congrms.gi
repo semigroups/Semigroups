@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/congrms.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,6 +13,18 @@
 ## and MSc thesis "Computing with Semigroup Congruences" chapter 3.
 ##
 
+InstallMethod(IsUniversalSemigroupCongruence,
+"for a semigroup congruence",
+[IsRMSCongruenceByLinkedTriple],
+function(C)
+  return Length(C!.colBlocks) = 1 and
+         Length(C!.rowBlocks) = 1 and
+         C!.n = UnderlyingSemigroup(Range(C));
+end);
+
+InstallImmediateMethod(IsUniversalSemigroupCongruence,
+IsRZMSCongruenceByLinkedTriple, 0, ReturnFalse);
+
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, g;
@@ -21,33 +33,27 @@ function(S, n, colBlocks, rowBlocks)
 
   # Basic checks
   if not IsNormal(g, n) then
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                  "the second arg <n> must be a normal subgroup,");
-  fi;
-  if not ForAll(colBlocks, IsList) then
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                  "the third arg <colBlocks> must be a list of lists,");
-  fi;
-  if not ForAll(rowBlocks, IsList) then
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                  "the fourth arg <rowBlocks> must be a list of lists,");
-  fi;
-  if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                  "the third arg <colBlocks> must partition ",
-                  "the columns of the matrix of <S>,");
-  fi;
-  if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                  "the fourth arg <rowBlocks> must partition ",
-                  "the rows of the matrix of <S>,");
+    ErrorNoReturn("the 2nd argument (a group) is not a normal ",
+                  "subgroup of the underlying semigroup of the 1st ",
+                  "argument (a Rees matrix semigroup)");
+  elif not IsList(colBlocks) or not ForAll(colBlocks, IsList) then
+    ErrorNoReturn("the 3rd argument must be a list of lists");
+  elif not IsList(rowBlocks) or not ForAll(rowBlocks, IsList) then
+    ErrorNoReturn("the 4th argument must be a list of lists");
+  elif SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
+    ErrorNoReturn("the 3rd argument (a list of lists) does not partition ",
+                  "the columns of the matrix of the 1st argument (a Rees",
+                  " matrix semigroup)");
+  elif SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
+    ErrorNoReturn("the 4th argument (a list of lists) does not partition ",
+                  "the columns of the matrix of the 1st argument (a Rees",
+                  " matrix semigroup)");
   fi;
 
   if IsLinkedTriple(S, n, colBlocks, rowBlocks) then
     return RMSCongruenceByLinkedTripleNC(S, n, colBlocks, rowBlocks);
   else
-    ErrorNoReturn("Semigroups: RMSCongruenceByLinkedTriple:\n",
-                  "invalid triple,");
+    ErrorNoReturn("invalid triple");
   fi;
 end);
 
@@ -59,45 +65,36 @@ function(S, n, colBlocks, rowBlocks)
 
   # Basic checks
   if not (IsGroup(g) and IsGroup(n)) then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the first arg <S> must be a Rees 0-matrix semigroup over ",
-                  "a group,");
-  fi;
-
-  if not IsNormal(g, n) then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the second arg <n> must be a normal subgroup,");
-  fi;
-  if not ForAll(colBlocks, IsList) then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the third arg <colBlocks> must be a list of lists,");
-  fi;
-  if not ForAll(rowBlocks, IsList) then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the fourth arg <rowBlocks> must be a list of lists,");
-  fi;
-  if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the third arg <colBlocks> must partition ",
-                  "the columns of the matrix of <S>,");
-  fi;
-  if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                  "the fourth arg <rowBlocks> must partition ",
-                  "the rows of the matrix of <S>,");
+    ErrorNoReturn("the underlying semigroup of the 1st argument ",
+                  "(a Rees 0-matrix semigroup) is not a group");
+  elif not IsNormal(g, n) then
+    ErrorNoReturn("the 2nd argument (a group) is not a normal ",
+                  "subgroup of the underlying semigroup of the 1st ",
+                  "argument (a Rees 0-matrix semigroup)");
+  elif not IsList(colBlocks) or not ForAll(colBlocks, IsList) then
+    ErrorNoReturn("the 3rd argument is not a list of lists");
+  elif not IsList(rowBlocks) or not ForAll(rowBlocks, IsList) then
+    ErrorNoReturn("the 4th argument is not a list of lists");
+  elif SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
+    ErrorNoReturn("the 3rd argument (a list of lists) does not partition ",
+                  "the columns of the matrix of the 1st argument (a Rees",
+                  " 0-matrix semigroup)");
+  elif SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
+    ErrorNoReturn("the 4th argument (a list of lists) does not partition ",
+                  "the columns of the matrix of the 1st argument (a Rees",
+                  " 0-matrix semigroup)");
   fi;
 
   if IsLinkedTriple(S, n, colBlocks, rowBlocks) then
     return RZMSCongruenceByLinkedTripleNC(S, n, colBlocks, rowBlocks);
   else
-    ErrorNoReturn("Semigroups: RZMSCongruenceByLinkedTriple:\n",
-                  "invalid triple,");
+    ErrorNoReturn("invalid triple");
   fi;
 end);
 
 InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
 function(S, n, colBlocks, rowBlocks)
-  local fam, cong, colLookup, rowLookup, i, j;
+  local fam, C, colLookup, rowLookup, i, j;
   # Sort the blocks
   colBlocks := SSortedList(colBlocks);
   rowBlocks := SSortedList(rowBlocks);
@@ -117,20 +114,20 @@ function(S, n, colBlocks, rowBlocks)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, IsRMSCongruenceByLinkedTriple),
+  C := Objectify(NewType(fam, IsRMSCongruenceByLinkedTriple),
                     rec(n := n,
                         colBlocks := colBlocks,
                         colLookup := colLookup,
                         rowBlocks := rowBlocks,
                         rowLookup := rowLookup));
-  SetSource(cong, S);
-  SetRange(cong, S);
-  return cong;
+  SetSource(C, S);
+  SetRange(C, S);
+  return C;
 end);
 
 InstallGlobalFunction(RZMSCongruenceByLinkedTripleNC,
 function(S, n, colBlocks, rowBlocks)
-  local fam, cong, colLookup, rowLookup, i, j;
+  local fam, C, colLookup, rowLookup, i, j;
   # Sort the blocks
   colBlocks := SSortedList(colBlocks);
   rowBlocks := SSortedList(rowBlocks);
@@ -150,39 +147,39 @@ function(S, n, colBlocks, rowBlocks)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, IsRZMSCongruenceByLinkedTriple),
+  C := Objectify(NewType(fam, IsRZMSCongruenceByLinkedTriple),
                     rec(n := n,
                         colBlocks := colBlocks,
                         colLookup := colLookup,
                         rowBlocks := rowBlocks,
                         rowLookup := rowLookup));
-  SetSource(cong, S);
-  SetRange(cong, S);
-  return cong;
+  SetSource(C, S);
+  SetRange(C, S);
+  return C;
 end);
 
 InstallMethod(ViewObj,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
+  ViewObj(Range(C));
   Print(" with linked triple (",
-        StructureDescription(cong!.n:short), ",",
-        Size(cong!.colBlocks), ",",
-        Size(cong!.rowBlocks), ")>");
+        StructureDescription(C!.n:short), ",",
+        Size(C!.colBlocks), ",",
+        Size(C!.rowBlocks), ")>");
 end);
 
 InstallMethod(ViewObj,
 "for Rees zero-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
+  ViewObj(Range(C));
   Print(" with linked triple (",
-        StructureDescription(cong!.n:short), ",",
-        Size(cong!.colBlocks), ",",
-        Size(cong!.rowBlocks), ")>");
+        StructureDescription(C!.n:short), ",",
+        Size(C!.colBlocks), ",",
+        Size(C!.rowBlocks), ")>");
 end);
 
 InstallMethod(CongruencesOfSemigroup,
@@ -202,8 +199,7 @@ function(S)
     # Concatenate these lists to produce complete partitions of the set
     l := List(l, Concatenation);
     # Finally sort each of these into the canonical order of its new classes
-    l := List(l, SSortedList);
-    return l;
+    return List(l, SSortedList);
   end;
 
   congs := [];
@@ -249,8 +245,7 @@ function(S)
     # Concatenate these lists to produce complete partitions of the set
     l := List(l, Concatenation);
     # Finally sort each of these into the canonical order of its new classes
-    l := List(l, SSortedList);
-    return l;
+    return List(l, SSortedList);
   end;
 
   congs := [];
@@ -319,10 +314,10 @@ InstallMethod(IsLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, block, bi, bj, i, j, u, v, bu, bv;
   # Check the semigroup is valid
-  if not (IsFinite(S) and IsSimpleSemigroup(S)) then
-    ErrorNoReturn("Semigroups: IsLinkedTriple: usage,\n",
-                  "the first arg <S> must be a finite simple Rees matrix ",
-                  "semigroup,");
+  if not IsFinite(S) then
+    ErrorNoReturn("the 1st argument (a Rees matrix semigroup) is not finite");
+  elif not IsSimpleSemigroup(S) then
+    ErrorNoReturn("the 1st argument (a Rees matrix semigroup) is not simple");
   fi;
   mat := Matrix(S);
   # Check axiom (L2) from Howie p.86, then call NC function
@@ -375,10 +370,11 @@ InstallMethod(IsLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, block, i, j, u, v, bi, bj, bu, bv;
   # Check the semigroup is valid
-  if not (IsFinite(S) and IsZeroSimpleSemigroup(S)) then
-    ErrorNoReturn("Semigroups: IsLinkedTriple: usage,\n",
-                  "the first arg <S> must be a finite 0-simple Rees 0-matrix ",
-                  "semigroup,");
+  if not IsFinite(S) then
+    ErrorNoReturn("the 1st argument (a Rees 0-matrix semigroup) is not finite");
+  elif not IsZeroSimpleSemigroup(S) then
+    ErrorNoReturn("the 1st argument (a Rees 0-matrix semigroup) is ",
+                  "not 0-simple");
   fi;
   mat := Matrix(S);
   # Check axioms (L1) and (L2) from Howie p.86, then call NC function
@@ -453,14 +449,14 @@ function(S, n, colBlocks, rowBlocks)
 end);
 
 BindGlobal("LinkedElement",
-function(elm)
+function(x)
   local mat, i, u, v, j;
-  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(elm)));
-  i := elm[1];  # Column no
-  u := elm[3];  # Row no
-  if IsReesMatrixSemigroupElement(elm) then
+  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(x)));
+  i := x[1];  # Column no
+  u := x[3];  # Row no
+  if IsReesMatrixSemigroupElement(x) then
     # RMS case
-    return mat[1][i] * elm[2] * mat[u][1];
+    return mat[1][i] * x[2] * mat[u][1];
   else
     # RZMS case
     for v in [1 .. Size(mat)] do
@@ -473,114 +469,114 @@ function(elm)
         break;
       fi;
     od;
-    return mat[v][i] * elm[2] * mat[u][j];
+    return mat[v][i] * x[2] * mat[u][j];
   fi;
 end);
 
 InstallMethod(\=,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(c1, c2)
-  return(Range(c1) = Range(c2) and
-         c1!.n = c2!.n and
-         c1!.colBlocks = c2!.colBlocks and
-         c1!.rowBlocks = c2!.rowBlocks);
+function(lhop, rhop)
+  return(Range(lhop) = Range(rhop) and
+         lhop!.n = rhop!.n and
+         lhop!.colBlocks = rhop!.colBlocks and
+         lhop!.rowBlocks = rhop!.rowBlocks);
 end);
 
 InstallMethod(\=,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
-function(c1, c2)
-  return(Range(c1) = Range(c2) and
-         c1!.n = c2!.n and
-         c1!.colBlocks = c2!.colBlocks and
-         c1!.rowBlocks = c2!.rowBlocks);
+function(lhop, rhop)
+  return(Range(lhop) = Range(rhop) and
+         lhop!.n = rhop!.n and
+         lhop!.colBlocks = rhop!.colBlocks and
+         lhop!.rowBlocks = rhop!.rowBlocks);
 end);
 
 InstallMethod(IsSubrelation,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(cong1, cong2)
-  # Tests whether cong2 is a subcongruence of cong1
-  if Range(cong1) <> Range(cong2) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+function(lhop, rhop)
+  # Tests whether rhop is a subcongruence of lhop
+  if Range(lhop) <> Range(rhop) then
+    Error("the 1st and 2nd arguments are congruences over different",
+          " semigroups");
   fi;
-  return IsSubgroup(cong1!.n, cong2!.n)
-         and ForAll(cong2!.colBlocks,
-                    b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
-         and ForAll(cong2!.rowBlocks,
-                    b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
+  return IsSubgroup(lhop!.n, rhop!.n)
+         and ForAll(rhop!.colBlocks,
+                    b2 -> ForAny(lhop!.colBlocks, b1 -> IsSubset(b1, b2)))
+         and ForAll(rhop!.rowBlocks,
+                    b2 -> ForAny(lhop!.rowBlocks, b1 -> IsSubset(b1, b2)));
 end);
 
 InstallMethod(IsSubrelation,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
-function(cong1, cong2)
-  # Tests whether cong2 is a subcongruence of cong1
-  if Range(cong1) <> Range(cong2) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+function(lhop, rhop)
+  # Tests whether rhop is a subcongruence of lhop
+  if Range(lhop) <> Range(rhop) then
+    Error("the 1st and 2nd arguments are congruences over different",
+          " semigroups");
   fi;
-  return IsSubgroup(cong1!.n, cong2!.n)
-         and ForAll(cong2!.colBlocks,
-                    b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
-         and ForAll(cong2!.rowBlocks,
-                    b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
+  return IsSubgroup(lhop!.n, rhop!.n)
+         and ForAll(rhop!.colBlocks,
+                    b2 -> ForAny(lhop!.colBlocks, b1 -> IsSubset(b1, b2)))
+         and ForAll(rhop!.rowBlocks,
+                    b2 -> ForAny(lhop!.rowBlocks, b1 -> IsSubset(b1, b2)));
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
 "for RMS congruence by linked triple and two RMS elements",
 [IsRMSCongruenceByLinkedTriple,
  IsReesMatrixSemigroupElement, IsReesMatrixSemigroupElement],
-function(cong, elm1, elm2)
+function(C, lhop, rhop)
   local i, a, u, j, b, v, mat, gpElm;
   # Read the elements as (i,a,u) and (j,b,v)
-  i := elm1[1];
-  a := elm1[2];
-  u := elm1[3];
-  j := elm2[1];
-  b := elm2[2];
-  v := elm2[3];
+  i := lhop[1];
+  a := lhop[2];
+  u := lhop[3];
+  j := rhop[1];
+  b := rhop[2];
+  v := rhop[3];
 
   # First, the columns and rows must be related
-  if not (cong!.colLookup[i] = cong!.colLookup[j] and
-          cong!.rowLookup[u] = cong!.rowLookup[v]) then
+  if not (C!.colLookup[i] = C!.colLookup[j] and
+          C!.rowLookup[u] = C!.rowLookup[v]) then
     return false;
   fi;
 
   # Finally, check Lemma 3.5.6(2) in Howie, with row 1 and column 1
-  mat := Matrix(Range(cong));
+  mat := Matrix(Range(C));
   gpElm := mat[1][i] * a * mat[u][1] * Inverse(mat[1][j] * b * mat[v][1]);
-  return gpElm in cong!.n;
+  return gpElm in C!.n;
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
 "for RZMS congruence by linked triple and two RZMS elements",
 [IsRZMSCongruenceByLinkedTriple,
  IsReesZeroMatrixSemigroupElement, IsReesZeroMatrixSemigroupElement],
-function(cong, elm1, elm2)
+function(C, lhop, rhop)
   local S, i, a, u, j, b, v, mat, rows, cols, col, row, gpElm;
-  S := Range(cong);
+  S := Range(C);
 
   # Handling the case when one or more of the pair are zero
-  if elm1 = elm2 then
+  if lhop = rhop then
     return true;
-  elif elm1 = MultiplicativeZero(S) or elm2 = MultiplicativeZero(S) then
+  elif lhop = MultiplicativeZero(S) or rhop = MultiplicativeZero(S) then
     return false;
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
-  i := elm1[1];
-  a := elm1[2];
-  u := elm1[3];
-  j := elm2[1];
-  b := elm2[2];
-  v := elm2[3];
+  i := lhop[1];
+  a := lhop[2];
+  u := lhop[3];
+  j := rhop[1];
+  b := rhop[2];
+  v := rhop[3];
 
   # First, the columns and rows must be related
-  if not (cong!.colLookup[i] = cong!.colLookup[j] and
-          cong!.rowLookup[u] = cong!.rowLookup[v]) then
+  if not (C!.colLookup[i] = C!.colLookup[j] and
+          C!.rowLookup[u] = C!.rowLookup[v]) then
     return false;
   fi;
 
@@ -593,31 +589,31 @@ function(cong, elm1, elm2)
   row := PositionProperty(cols[i], x -> x <> 0);
   gpElm := mat[row][i] * a * mat[u][col] *
            Inverse(mat[row][j] * b * mat[v][col]);
-  return gpElm in cong!.n;
+  return gpElm in C!.n;
 end);
 
 InstallMethod(ImagesElm,
 "for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
-function(cong, elm)
+function(C, x)
   local S, mat, images, i, a, u, j, v, nElm, b;
-  S := Range(cong);
+  S := Range(C);
   mat := Matrix(S);
-  if not elm in S then
-    ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                  "the args <cong> and <elm> must refer to the same ",
-                  "semigroup,");
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (an element of a Rees matrix ",
+                  "semigroup) does not belong to the range of the ",
+                  "1st argument (a congruence)");
   fi;
-  # List of all elements congruent to elm under cong
+  # List of all elements congruent to x under C
   images := [];
   # Read the element as (i,a,u)
-  i := elm[1];
-  a := elm[2];
-  u := elm[3];
+  i := x[1];
+  a := x[2];
+  u := x[3];
   # Construct congruent elements as (j,b,v)
-  for j in cong!.colBlocks[cong!.colLookup[i]] do
-    for v in cong!.rowBlocks[cong!.rowLookup[u]] do
-      for nElm in cong!.n do
+  for j in C!.colBlocks[C!.colLookup[i]] do
+    for v in C!.rowBlocks[C!.rowLookup[u]] do
+      for nElm in C!.n do
         # Might be better to use congruence classes after all
         b := mat[1][j] ^ -1 * nElm * mat[1][i] * a * mat[u][1]
              * mat[v][1] ^ -1;
@@ -631,25 +627,25 @@ end);
 InstallMethod(ImagesElm,
 "for Rees 0-matrix semigroup congruence by linked triple and element",
 [IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
-function(cong, elm)
+function(C, x)
   local S, mat, images, i, a, u, row, col, j, b, v, nElm;
-  S := Range(cong);
+  S := Range(C);
   mat := Matrix(S);
-  if not elm in S then
-    ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                  "the args <cong> and <elm> must refer to the same ",
-                  "semigroup,");
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (an element of a Rees 0-matrix ",
+                  "semigroup) does not belong to the range of the ",
+                  "1st argument (a congruence)");
   fi;
   # Special case for 0
-  if elm = MultiplicativeZero(S) then
-    return [elm];
+  if x = MultiplicativeZero(S) then
+    return [x];
   fi;
-  # List of all elements congruent to elm under cong
+  # List of all elements congruent to x under C
   images := [];
   # Read the element as (i,a,u)
-  i := elm[1];
-  a := elm[2];
-  u := elm[3];
+  i := x[1];
+  a := x[2];
+  u := x[3];
   # Find a non-zero row for this class of columns
   for row in [1 .. Size(mat)] do
     if mat[row][i] <> 0 then
@@ -664,9 +660,9 @@ function(cong, elm)
   od;
 
   # Construct congruent elements as (j,b,v)
-  for j in cong!.colBlocks[cong!.colLookup[i]] do
-    for v in cong!.rowBlocks[cong!.rowLookup[u]] do
-      for nElm in cong!.n do
+  for j in C!.colBlocks[C!.colLookup[i]] do
+    for v in C!.rowBlocks[C!.rowLookup[u]] do
+      for nElm in C!.n do
         # Might be better to use congruence classes after all
         b := mat[row][j] ^ -1
              * nElm
@@ -684,22 +680,22 @@ end);
 InstallMethod(EquivalenceClasses,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-function(cong)
-  local list, S, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, elm;
+function(C)
+  local list, S, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, x;
   list := [];
-  S := Range(cong);
+  S := Range(C);
   g := UnderlyingSemigroup(S);
-  n := cong!.n;
-  colBlocks := cong!.colBlocks;
-  rowBlocks := cong!.rowBlocks;
+  n := C!.n;
+  colBlocks := C!.colBlocks;
+  rowBlocks := C!.rowBlocks;
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g, n), Representative) do
-        elm := RMSElement(S,
+        x := RMSElement(S,
                           colBlocks[colClass][1],
                           rep,
                           rowBlocks[rowClass][1]);
-        Add(list, EquivalenceClassOfElement(cong, elm));
+        Add(list, EquivalenceClassOfElement(C, x));
       od;
     od;
   od;
@@ -709,53 +705,53 @@ end);
 InstallMethod(EquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-function(cong)
-  local list, S, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, elm;
+function(C)
+  local list, S, g, n, colBlocks, rowBlocks, colClass, rowClass, rep, x;
   list := [];
-  S := Range(cong);
+  S := Range(C);
   g := UnderlyingSemigroup(S);
-  n := cong!.n;
-  colBlocks := cong!.colBlocks;
-  rowBlocks := cong!.rowBlocks;
+  n := C!.n;
+  colBlocks := C!.colBlocks;
+  rowBlocks := C!.rowBlocks;
   for colClass in [1 .. Size(colBlocks)] do
     for rowClass in [1 .. Size(rowBlocks)] do
       for rep in List(RightCosets(g, n), Representative) do
-        elm := RMSElement(S,
+        x := RMSElement(S,
                           colBlocks[colClass][1],
                           rep,
                           rowBlocks[rowClass][1]);
-        Add(list, EquivalenceClassOfElement(cong, elm));
+        Add(list, EquivalenceClassOfElement(C, x));
       od;
     od;
   od;
   # Add the zero class
-  Add(list, EquivalenceClassOfElement(cong, MultiplicativeZero(S)));
+  Add(list, EquivalenceClassOfElement(C, MultiplicativeZero(S)));
   return list;
 end);
 
 InstallMethod(NrEquivalenceClasses,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   local S, g;
-  S := Range(cong);
+  S := Range(C);
   g := UnderlyingSemigroup(S);
-  return(Index(g, cong!.n)             # Number of cosets of n
-         * Size(cong!.colBlocks)       # Number of column blocks
-         * Size(cong!.rowBlocks));     # Number of row blocks
+  return(Index(g, C!.n)             # Number of cosets of n
+         * Size(C!.colBlocks)       # Number of column blocks
+         * Size(C!.rowBlocks));     # Number of row blocks
 end);
 
 InstallMethod(NrEquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   local S, g;
-  S := Range(cong);
+  S := Range(C);
   g := UnderlyingSemigroup(S);
-  return(Index(g, cong!.n)             # Number of cosets of n
-         * Size(cong!.colBlocks)       # Number of column blocks
-         * Size(cong!.rowBlocks)       # Number of row blocks
-         + 1);                         # Class containing zero
+  return(Index(g, C!.n)             # Number of cosets of n
+         * Size(C!.colBlocks)       # Number of column blocks
+         * Size(C!.rowBlocks)       # Number of row blocks
+         + 1);                      # Class containing zero
 end);
 
 InstallMethod(Enumerator,
@@ -775,19 +771,19 @@ end);
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(c1, c2)
+function(lhop, rhop)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
-  if Range(c1) <> Range(c2) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+  if Range(lhop) <> Range(rhop) then
+    ErrorNoReturn("cannot form the join of congruences over different",
+                  " semigroups");
   fi;
   # n is the product of the normal subgroups
-  gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
-  n := Subgroup(UnderlyingSemigroup(Range(c1)), gens);
+  gens := Concatenation(GeneratorsOfGroup(lhop!.n), GeneratorsOfGroup(rhop!.n));
+  n := Subgroup(UnderlyingSemigroup(Range(lhop)), gens);
   # Calculate the join of the column and row relations
-  colBlocks := StructuralCopy(c1!.colBlocks);
-  rowBlocks := StructuralCopy(c1!.rowBlocks);
-  for block in c2!.colBlocks do
+  colBlocks := List(lhop!.colBlocks, ShallowCopy);
+  rowBlocks := List(lhop!.rowBlocks, ShallowCopy);
+  for block in rhop!.colBlocks do
     b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
     for j in [2 .. Size(block)] do
       if not block[j] in colBlocks[b1] then
@@ -799,7 +795,7 @@ function(c1, c2)
     od;
     colBlocks := Compacted(colBlocks);
   od;
-  for block in c2!.rowBlocks do
+  for block in rhop!.rowBlocks do
     b1 := PositionProperty(rowBlocks, rb -> block[1] in rb);
     for j in [2 .. Size(block)] do
       if not block[j] in rowBlocks[b1] then
@@ -814,25 +810,25 @@ function(c1, c2)
   colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
   rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
   # Make the congruence and return it
-  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+  return RMSCongruenceByLinkedTripleNC(Range(lhop), n, colBlocks, rowBlocks);
 end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
-function(c1, c2)
+function(lhop, rhop)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
-  if Range(c1) <> Range(c2) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+  if Range(lhop) <> Range(rhop) then
+    ErrorNoReturn("cannot form the join of congruences over different",
+                  " semigroups");
   fi;
   # n is the product of the normal subgroups
-  gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
-  n := Subgroup(UnderlyingSemigroup(Range(c1)), gens);
+  gens := Concatenation(GeneratorsOfGroup(lhop!.n), GeneratorsOfGroup(rhop!.n));
+  n := Subgroup(UnderlyingSemigroup(Range(lhop)), gens);
   # Calculate the join of the column and row relations
-  colBlocks := StructuralCopy(c1!.colBlocks);
-  rowBlocks := StructuralCopy(c1!.rowBlocks);
-  for block in c2!.colBlocks do
+  colBlocks := List(lhop!.colBlocks, ShallowCopy);
+  rowBlocks := List(lhop!.rowBlocks, ShallowCopy);
+  for block in rhop!.colBlocks do
     b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
     for j in [2 .. Size(block)] do
       if not block[j] in colBlocks[b1] then
@@ -844,7 +840,7 @@ function(c1, c2)
     od;
     colBlocks := Compacted(colBlocks);
   od;
-  for block in c2!.rowBlocks do
+  for block in rhop!.rowBlocks do
     b1 := PositionProperty(rowBlocks, rb -> block[1] in rb);
     for j in [2 .. Size(block)] do
       if not block[j] in rowBlocks[b1] then
@@ -859,31 +855,31 @@ function(c1, c2)
   colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
   rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
   # Make the congruence and return it
-  return RZMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
+  return RZMSCongruenceByLinkedTriple(Range(lhop), n, colBlocks, rowBlocks);
 end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(c1, c2)
+function(lhop, rhop)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
-  if Range(c1) <> Range(c2) then
-    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+  if Range(lhop) <> Range(rhop) then
+    ErrorNoReturn("cannot form the meet of congruences over different",
+                  " semigroups");
   fi;
   # n is the intersection of the two normal subgroups
-  n := Intersection(c1!.n, c2!.n);
+  n := Intersection(lhop!.n, rhop!.n);
   # Calculate the intersection of the column and row relations
   colBlocks := [];
-  cols := [1 .. Size(c1!.colLookup)];
+  cols := [1 .. Size(lhop!.colLookup)];
   rowBlocks := [];
-  rows := [1 .. Size(c1!.rowLookup)];
+  rows := [1 .. Size(lhop!.rowLookup)];
   for i in [1 .. Size(cols)] do
     if cols[i] = 0 then
       continue;
     fi;
-    block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
-                          c2!.colBlocks[c2!.colLookup[i]]);
+    block := Intersection(lhop!.colBlocks[lhop!.colLookup[i]],
+                          rhop!.colBlocks[rhop!.colLookup[i]]);
     for j in block do
       cols[j] := 0;
     od;
@@ -893,39 +889,39 @@ function(c1, c2)
     if rows[u] = 0 then
       continue;
     fi;
-    block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
-                          c2!.rowBlocks[c2!.rowLookup[u]]);
+    block := Intersection(lhop!.rowBlocks[lhop!.rowLookup[u]],
+                          rhop!.rowBlocks[rhop!.rowLookup[u]]);
     for v in block do
       rows[v] := 0;
     od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
-  return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+  return RMSCongruenceByLinkedTripleNC(Range(lhop), n, colBlocks, rowBlocks);
 end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
-function(c1, c2)
+function(lhop, rhop)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
-  if Range(c1) <> Range(c2) then
-    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+  if Range(lhop) <> Range(rhop) then
+    ErrorNoReturn("cannot form the meet of congruences over different",
+                  " semigroups");
   fi;
   # n is the intersection of the two normal subgroups
-  n := Intersection(c1!.n, c2!.n);
+  n := Intersection(lhop!.n, rhop!.n);
   # Calculate the intersection of the column and row relations
   colBlocks := [];
-  cols := [1 .. Size(c1!.colLookup)];
+  cols := [1 .. Size(lhop!.colLookup)];
   rowBlocks := [];
-  rows := [1 .. Size(c1!.rowLookup)];
+  rows := [1 .. Size(lhop!.rowLookup)];
   for i in [1 .. Size(cols)] do
     if cols[i] = 0 then
       continue;
     fi;
-    block := Intersection(c1!.colBlocks[c1!.colLookup[i]],
-                          c2!.colBlocks[c2!.colLookup[i]]);
+    block := Intersection(lhop!.colBlocks[lhop!.colLookup[i]],
+                          rhop!.colBlocks[rhop!.colLookup[i]]);
     for j in block do
       cols[j] := 0;
     od;
@@ -935,309 +931,243 @@ function(c1, c2)
     if rows[u] = 0 then
       continue;
     fi;
-    block := Intersection(c1!.rowBlocks[c1!.rowLookup[u]],
-                          c2!.rowBlocks[c2!.rowLookup[u]]);
+    block := Intersection(lhop!.rowBlocks[lhop!.rowLookup[u]],
+                          rhop!.rowBlocks[rhop!.rowLookup[u]]);
     for v in block do
       rows[v] := 0;
     od;
     Add(rowBlocks, block);
   od;
   # Make the congruence and return it
-  return RZMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
+  return RZMSCongruenceByLinkedTripleNC(Range(lhop), n, colBlocks, rowBlocks);
 end);
 
 InstallMethod(RMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
-function(cong, nCoset, colClass, rowClass)
+[IsRMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
+function(C, nCoset, colClass, rowClass)
   local g;
-  g := UnderlyingSemigroup(Range(cong));
-  if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    ErrorNoReturn("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the second arg <nCoset> must be a right coset of <cong>'s\n",
-                  "normal subgroup <n> inside the semigroup's underlying ",
-                  "group <g>,");
+  g := UnderlyingSemigroup(Range(C));
+  if not (ActingDomain(nCoset) = C!.n and IsSubset(g, nCoset)) then
+    ErrorNoReturn("the 2nd argument (a right coset) is not a coset of the",
+                  " normal subgroup of defining the 1st argument (a ",
+                  "congruence)");
+  elif not colClass in [1 .. Size(C!.colBlocks)] then
+    ErrorNoReturn("the 3rd argument (a pos. int.) is out of range");
+  elif not rowClass in [1 .. Size(C!.rowBlocks)] then
+    ErrorNoReturn("the 4th argument (a pos. int.) is out of range");
   fi;
-  if not colClass in [1 .. Size(cong!.colBlocks)] then
-    ErrorNoReturn("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the third arg <colClass> is out of range,");
-  fi;
-  if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    ErrorNoReturn("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the fourth arg <rowClass> is out of range,");
-  fi;
-  return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
+  return RMSCongruenceClassByLinkedTripleNC(C, nCoset, colClass, rowClass);
 end);
 
 InstallMethod(RZMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRZMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
-function(cong, nCoset, colClass, rowClass)
+[IsRZMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
+function(C, nCoset, colClass, rowClass)
   local g;
-  g := UnderlyingSemigroup(Range(cong));
-  if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
-    ErrorNoReturn("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the second arg <nCoset> must be a right coset of <cong>'s\n",
-                  "normal subgroup <n> inside the semigroup's underlying ",
-                  "group <g>,");
+  g := UnderlyingSemigroup(Range(C));
+  if not (ActingDomain(nCoset) = C!.n and IsSubset(g, nCoset)) then
+    ErrorNoReturn("the 2nd argument (a right coset) is not a coset of the",
+                  " normal subgroup of defining the 1st argument (a ",
+                  "congruence)");
+  elif not colClass in [1 .. Size(C!.colBlocks)] then
+    ErrorNoReturn("the 3rd argument (a pos. int.) is out of range");
+  elif not rowClass in [1 .. Size(C!.rowBlocks)] then
+    ErrorNoReturn("the 4th argument (a pos. int.) is out of range");
   fi;
-  if not colClass in [1 .. Size(cong!.colBlocks)] then
-    ErrorNoReturn("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the third arg <colClass> is out of range,");
-  fi;
-  if not rowClass in [1 .. Size(cong!.rowBlocks)] then
-    ErrorNoReturn("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-                  "the fourth arg <rowClass> is out of range,");
-  fi;
-  return RZMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
+  return RZMSCongruenceClassByLinkedTripleNC(C, nCoset, colClass, rowClass);
 end);
 
 InstallMethod(RMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
-function(cong, nCoset, colClass, rowClass)
+[IsRMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
+function(C, nCoset, colClass, rowClass)
   local fam, class;
-  fam := FamilyObj(Range(cong));
+  fam := FamilyObj(Range(C));
   class := Objectify(NewType(fam, IsRMSCongruenceClassByLinkedTriple),
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, CanonicalRepresentative(class));
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
   return class;
 end);
 
 InstallMethod(RZMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRZMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
-function(cong, nCoset, colClass, rowClass)
+[IsRZMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
+function(C, nCoset, colClass, rowClass)
   local fam, class;
-  fam := FamilyObj(Range(cong));
+  fam := FamilyObj(Range(C));
   class := Objectify(NewType(fam, IsRZMSCongruenceClassByLinkedTriple),
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, CanonicalRepresentative(class));
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
   return class;
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for Rees matrix semigroup congruence by linked triple and element",
-[IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
-function(cong, elm)
-  # Check that the args make sense
-  if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                  "the second arg <elm> must be in the semigroup of ",
-                  "first arg <cong>,");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for Rees 0-matrix semigroup congruence by linked triple and an element",
-[IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
-function(cong, elm)
-  # Check that the args make sense
-  if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                  "the second arg <elm> must be ",
-                  "in the semigroup of first arg <cong>,");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
-function(cong, elm)
+function(C, x)
   local fam, nCoset, colClass, rowClass, class;
-  fam := CollectionsFamily(FamilyObj(elm));
-  nCoset := RightCoset(cong!.n, LinkedElement(elm));
-  colClass := cong!.colLookup[elm[1]];
-  rowClass := cong!.rowLookup[elm[3]];
+  fam := CollectionsFamily(FamilyObj(x));
+  nCoset := RightCoset(C!.n, LinkedElement(x));
+  colClass := C!.colLookup[x[1]];
+  rowClass := C!.rowLookup[x[3]];
   class := Objectify(NewType(fam, IsRMSCongruenceClassByLinkedTriple),
                      rec(nCoset := nCoset,
                          colClass := colClass,
                          rowClass := rowClass));
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, elm);
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
+  SetRepresentative(class, x);
   return class;
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for Rees 0-matrix semigroup congruence by linked triple and element",
 [IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
-function(cong, elm)
+function(C, x)
   local fam, class, nCoset, colClass, rowClass;
-  fam := CollectionsFamily(FamilyObj(elm));
-  if elm = MultiplicativeZero(Range(cong)) then
+  fam := CollectionsFamily(FamilyObj(x));
+  if x = MultiplicativeZero(Range(C)) then
     class := Objectify(NewType(fam, IsRZMSCongruenceClassByLinkedTriple),
                        rec(nCoset := 0));
   else
-    nCoset := RightCoset(cong!.n, LinkedElement(elm));
-    colClass := cong!.colLookup[elm[1]];
-    rowClass := cong!.rowLookup[elm[3]];
+    nCoset := RightCoset(C!.n, LinkedElement(x));
+    colClass := C!.colLookup[x[1]];
+    rowClass := C!.rowLookup[x[3]];
     class := Objectify(NewType(fam, IsRZMSCongruenceClassByLinkedTriple),
                        rec(nCoset := nCoset,
                            colClass := colClass,
                            rowClass := rowClass));
   fi;
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, elm);
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
+  SetRepresentative(class, x);
   return class;
 end);
 
 InstallMethod(\in,
 "for Rees matrix semigroup element and a congruence class by linked triple",
 [IsReesMatrixSemigroupElement, IsRMSCongruenceClassByLinkedTriple],
-function(elm, class)
-  local S, cong;
-  cong := EquivalenceClassRelation(class);
-  S := Range(cong);
-  return(elm in S and
-         cong!.colLookup[elm[1]] = class!.colClass and
-         cong!.rowLookup[elm[3]] = class!.rowClass and
-         LinkedElement(elm) in class!.nCoset);
+function(x, class)
+  local S, C;
+  C := EquivalenceClassRelation(class);
+  S := Range(C);
+  return(x in S and
+         C!.colLookup[x[1]] = class!.colClass and
+         C!.rowLookup[x[3]] = class!.rowClass and
+         LinkedElement(x) in class!.nCoset);
 end);
 
 InstallMethod(\in,
 "for Rees 0-matrix semigroup element and a congruence class by linked triple",
 [IsReesZeroMatrixSemigroupElement, IsRZMSCongruenceClassByLinkedTriple],
-function(elm, class)
-  local S, cong;
-  cong := EquivalenceClassRelation(class);
-  S := Range(cong);
+function(x, class)
+  local S, C;
+  C := EquivalenceClassRelation(class);
+  S := Range(C);
   # Special case for 0 and {0}
   if class!.nCoset = 0 then
-    return elm = MultiplicativeZero(S);
+    return x = MultiplicativeZero(S);
   fi;
   # Otherwise
-  return(elm in S and
-         cong!.colLookup[elm[1]] = class!.colClass and
-         cong!.rowLookup[elm[3]] = class!.rowClass and
-         LinkedElement(elm) in class!.nCoset);
-end);
-
-InstallMethod(\*,
-"for two RMS congruence classes by linked triple",
-[IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
-function(c1, c2)
-  local elm;
-  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the args <c1> and <c2> must be classes of the same ",
-                  "congruence,");
-  fi;
-  elm := Representative(c1) * Representative(c2);
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
-end);
-
-InstallMethod(\*,
-"for two RZMS congruence classes by linked triple",
-[IsRZMSCongruenceClassByLinkedTriple, IsRZMSCongruenceClassByLinkedTriple],
-function(c1, c2)
-  local elm;
-  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the args <c1> and <c2> must be classes of the same ",
-                  "congruence,");
-  fi;
-  elm := Representative(c1) * Representative(c2);
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
+  return(x in S and
+         C!.colLookup[x[1]] = class!.colClass and
+         C!.rowLookup[x[3]] = class!.rowClass and
+         LinkedElement(x) in class!.nCoset);
 end);
 
 InstallMethod(Size,
 "for RMS congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
-  local cong;
-  cong := EquivalenceClassRelation(class);
-  return(Size(cong!.n) *
-         Size(cong!.colBlocks[class!.colClass]) *
-         Size(cong!.rowBlocks[class!.rowClass]));
+  local C;
+  C := EquivalenceClassRelation(class);
+  return(Size(C!.n) *
+         Size(C!.colBlocks[class!.colClass]) *
+         Size(C!.rowBlocks[class!.rowClass]));
 end);
 
 InstallMethod(Size,
 "for RZMS congruence class by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)
-  local cong;
+  local C;
   # Special case for {0}
   if class!.nCoset = 0 then
     return 1;
   fi;
   # Otherwise
-  cong := EquivalenceClassRelation(class);
-  return(Size(cong!.n) *
-         Size(cong!.colBlocks[class!.colClass]) *
-         Size(cong!.rowBlocks[class!.rowClass]));
+  C := EquivalenceClassRelation(class);
+  return(Size(C!.n) *
+         Size(C!.colBlocks[class!.colClass]) *
+         Size(C!.rowBlocks[class!.rowClass]));
 end);
 
 InstallMethod(\=,
 "for two congruence classes by linked triple",
 [IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
-function(c1, c2)
-  return(c1!.nCoset = c2!.nCoset and
-         c1!.colClass = c2!.colClass and
-         c1!.rowClass = c2!.rowClass);
+function(lhop, rhop)
+  return(lhop!.nCoset = rhop!.nCoset and
+         lhop!.colClass = rhop!.colClass and
+         lhop!.rowClass = rhop!.rowClass);
 end);
 
 InstallMethod(\=,
 "for two congruence classes by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple, IsRZMSCongruenceClassByLinkedTriple],
-function(c1, c2)
+function(lhop, rhop)
   # Special case for {0}
-  if c1!.nCoset = 0 and c2!.nCoset = 0 then
+  if lhop!.nCoset = 0 and rhop!.nCoset = 0 then
     return true;
   fi;
   # Otherwise
-  return(c1!.nCoset = c2!.nCoset and
-         c1!.colClass = c2!.colClass and
-         c1!.rowClass = c2!.rowClass);
+  return(lhop!.nCoset = rhop!.nCoset and
+         lhop!.colClass = rhop!.colClass and
+         lhop!.rowClass = rhop!.rowClass);
 end);
 
-InstallMethod(CanonicalRepresentative,
+InstallMethod(Representative,
 "for Rees matrix semigroup congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
-  local cong, S, i, u, mat, a;
-  cong := EquivalenceClassRelation(class);
-  S := Range(cong);
+  local C, S, i, u, mat, a;
+  C := EquivalenceClassRelation(class);
+  S := Range(C);
   # Pick the first row and column from the classes
-  i := cong!.colBlocks[class!.colClass][1];
-  u := cong!.rowBlocks[class!.rowClass][1];
+  i := C!.colBlocks[class!.colClass][1];
+  u := C!.rowBlocks[class!.rowClass][1];
   # Pick another row and column
   mat := Matrix(S);
   a := mat[1][i] ^ -1
-       * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
+       * CanonicalRightCosetElement(C!.n, Representative(class!.nCoset))
        * mat[u][1] ^ -1;
   return RMSElement(S, i, a, u);
 end);
 
-InstallMethod(CanonicalRepresentative,
+InstallMethod(Representative,
 "for Rees 0-matrix semigroup congruence class by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)
-  local cong, S, mat, i, u, v, j, a;
-  cong := EquivalenceClassRelation(class);
-  S := Range(cong);
-  # Special case for {0}
-  if class!.nCoset = 0 then
-    return MultiplicativeZero(S);
-  fi;
+  local C, S, mat, i, u, v, j, a;
+  C := EquivalenceClassRelation(class);
+  S := Range(C);
+  # Seems to be impossible that a class does not know its Representative at
+  # creation when nCoset is 0
+  Assert(0, class!.nCoset <> 0);
+  # Old code retained in case the assertion above is not correct!
+  # if class!.nCoset = 0 then
+  #   return MultiplicativeZero(S);
+  # fi;
+
   # Pick the first row and column from the classes
-  i := cong!.colBlocks[class!.colClass][1];
-  u := cong!.rowBlocks[class!.rowClass][1];
+  i := C!.colBlocks[class!.colClass][1];
+  u := C!.rowBlocks[class!.rowClass][1];
   # Pick another row and column with appropriate non-zero entries
   mat := Matrix(S);
   for v in [1 .. Size(mat)] do
@@ -1251,7 +1181,7 @@ function(class)
     fi;
   od;
   a := mat[v][i] ^ -1
-       * CanonicalRightCosetElement(cong!.n, Representative(class!.nCoset))
+       * CanonicalRightCosetElement(C!.n, Representative(class!.nCoset))
        * mat[u][j] ^ -1;
   return RMSElement(S, i, a, u);
 end);
@@ -1259,20 +1189,20 @@ end);
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   local S, G, m, pairs, n_gens, col_pairs, bl, j, row_pairs, max, n, cp, rp,
         pair_no, r, c;
-  S := Range(cong);
+  S := Range(C);
   G := UnderlyingSemigroup(S);
   m := Matrix(S);
   pairs := [];
 
   # Normal subgroup elements to identify with id
-  n_gens := GeneratorsOfSemigroup(cong!.n);
+  n_gens := GeneratorsOfSemigroup(C!.n);
 
   # Pairs that generate the columns relation
   col_pairs := [];
-  for bl in cong!.colBlocks do
+  for bl in C!.colBlocks do
     for j in [2 .. Size(bl)] do
       Add(col_pairs, [bl[1], bl[j]]);
     od;
@@ -1280,7 +1210,7 @@ function(cong)
 
   # Pairs that generate the rows relation
   row_pairs := [];
-  for bl in cong!.rowBlocks do
+  for bl in C!.rowBlocks do
     for j in [2 .. Size(bl)] do
       Add(row_pairs, [bl[1], bl[j]]);
     od;
@@ -1320,20 +1250,20 @@ end);
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-function(cong)
+function(C)
   local S, G, m, pairs, n_gens, col_pairs, bl, j, row_pairs, max, n, cp, rp,
         pair_no, r, c;
-  S := Range(cong);
+  S := Range(C);
   G := UnderlyingSemigroup(S);
   m := Matrix(S);
   pairs := [];
 
   # Normal subgroup elements to identify with id
-  n_gens := GeneratorsOfSemigroup(cong!.n);
+  n_gens := GeneratorsOfSemigroup(C!.n);
 
   # Pairs that generate the columns relation
   col_pairs := [];
-  for bl in cong!.colBlocks do
+  for bl in C!.colBlocks do
     for j in [2 .. Size(bl)] do
       Add(col_pairs, [bl[1], bl[j]]);
     od;
@@ -1341,7 +1271,7 @@ function(cong)
 
   # Pairs that generate the rows relation
   row_pairs := [];
-  for bl in cong!.rowBlocks do
+  for bl in C!.rowBlocks do
     for j in [2 .. Size(bl)] do
       Add(row_pairs, [bl[1], bl[j]]);
     od;
@@ -1377,52 +1307,28 @@ function(cong)
   return pairs;
 end);
 
-InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
-"for semigroup congruence",
-[IsSemigroupCongruence],
-function(cong)
-  local S, pairs;
-  S := Range(cong);
-  pairs := GeneratingPairsOfMagmaCongruence(cong);
-  return SemigroupCongruenceByGeneratingPairs(S, pairs);
-end);
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for Rees matrix semigroup and list of pairs",
+[IsReesMatrixSemigroup, IsHomogeneousList],
+ToBeat([IsReesMatrixSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanUseLibsemigroupsCongruences, IsList and IsEmpty],
+       [IsSimpleSemigroup, IsHomogeneousList])
++
+ToBeat([IsSimpleSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanUseLibsemigroupsCongruences,
+        IsList and IsEmpty]),
+function(S, pairs)
+  local g, mat, colLookup, rowLookup, n, C, pair, v, j;
 
-InstallMethod(AsRMSCongruenceByLinkedTriple,
-"for semigroup congruence by generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  local pairs, S, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
-        j, normalise, colBlocks, rowBlocks;
-  # Extract some information
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  S := Range(cong);
-  g := UnderlyingSemigroup(S);
+  g   := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
-  # Lookup tables for the column and row equivalences
-  colLookup := [1 .. Size(mat[1])];
-  rowLookup := [1 .. Size(mat)];
+  # Union-Find data structure for the column and row equivalences
+  colLookup := PartitionDS(IsPartitionDS, Size(mat[1]));
+  rowLookup := PartitionDS(IsPartitionDS, Size(mat));
 
   # Normal subgroup
   n := Subgroup(g, []);
-
-  # Functions for union-find
-  find := function(table, n)
-    while table[n] <> n do
-      n := table[n];
-    od;
-    return n;
-  end;
-
-  union := function(table, x, y)
-    x := find(table, x);
-    y := find(table, y);
-    if x < y then
-      table[y] := x;
-    elif y < x then
-      table[x] := y;
-    fi;
-  end;
 
   for pair in pairs do
     # If this pair adds no information, ignore it
@@ -1431,8 +1337,8 @@ function(cong)
     fi;
 
     # Associate the columns and rows
-    union(colLookup, pair[1][1], pair[2][1]);
-    union(rowLookup, pair[1][3], pair[2][3]);
+    Unite(colLookup, pair[1][1], pair[2][1]);
+    Unite(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
     n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ -1);
@@ -1452,87 +1358,38 @@ function(cong)
     od;
   od;
 
-  # Normalise lookup tables
-  normalise := function(table)
-    local ht, next, newtab, i, ii;
-    ht := HTCreate(1);
-    next := 1;
-    newtab := [];
-    for i in [1 .. Size(table)] do
-      ii := find(table, i);
-      newtab[i] := HTValue(ht, ii);
-      if newtab[i] = fail then
-        newtab[i] := next;
-        HTAdd(ht, ii, next);
-        next := next + 1;
-      fi;
-    od;
-    return newtab;
-  end;
-  colLookup := normalise(colLookup);
-  rowLookup := normalise(rowLookup);
-
-  # Make blocks
-  colBlocks := List([1 .. Maximum(colLookup)], x -> []);
-  rowBlocks := List([1 .. Maximum(rowLookup)], x -> []);
-  for i in [1 .. Size(colLookup)] do
-    Add(colBlocks[colLookup[i]], i);
-  od;
-  for u in [1 .. Size(rowLookup)] do
-    Add(rowBlocks[rowLookup[u]], u);
-  od;
-
   # Make n normal
   n := NormalClosure(g, n);
-
-  cong := RMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
-  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
-  return cong;
+  C := RMSCongruenceByLinkedTriple(S,
+                                   n,
+                                   PartsOfPartitionDS(colLookup),
+                                   PartsOfPartitionDS(rowLookup));
+  SetGeneratingPairsOfMagmaCongruence(C, pairs);
+  return C;
 end);
 
-InstallMethod(AsRZMSCongruenceByLinkedTriple,
-"for semigroup congruence by generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  local pairs, S, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
-        j, normalise, colBlocks, rowBlocks;
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a Rees 0-matrix semigroup and list of pairs",
+[IsReesZeroMatrixSemigroup, IsHomogeneousList],
+ToBeat([IsReesZeroMatrixSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanUseLibsemigroupsCongruences, IsList and IsEmpty],
+       [IsZeroSimpleSemigroup, IsHomogeneousList])
++
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanUseLibsemigroupsCongruences,
+        IsList and IsEmpty]),
+function(S, pairs)
+  local g, mat, colLookup, rowLookup, n, u, i, C, pair, v, j;
 
-  # Extract some information
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  S := Range(cong);
-  # FIXME shouldn't this work for 0-simple semigroups too? JDM
-  if not IsReesZeroMatrixSemigroup(S) then
-    ErrorNoReturn("Semigroups: AsRZMSCongruenceByLinkedTriple: usage,\n",
-                  "the argument must be a congruence over a Rees 0-matrix\n",
-                  "semigroup,");
-  fi;
   g := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
-  # Lookup tables for the column and row equivalences
-  colLookup := [1 .. Size(mat[1])];
-  rowLookup := [1 .. Size(mat)];
+  # Union-Find data structure for the column and row equivalences
+  colLookup := PartitionDS(IsPartitionDS, Size(mat[1]));
+  rowLookup := PartitionDS(IsPartitionDS, Size(mat));
 
   # Normal subgroup
   n := Subgroup(g, []);
-
-  # Functions for union-find
-  find := function(table, n)
-    while table[n] <> n do
-      n := table[n];
-    od;
-    return n;
-  end;
-
-  union := function(table, x, y)
-    x := find(table, x);
-    y := find(table, y);
-    if x < y then
-      table[y] := x;
-    elif y < x then
-      table[x] := y;
-    fi;
-  end;
 
   for pair in pairs do
     # If this pair adds no information, ignore it
@@ -1553,8 +1410,8 @@ function(cong)
     fi;
 
     # Associate the columns and rows
-    union(colLookup, pair[1][1], pair[2][1]);
-    union(rowLookup, pair[1][3], pair[2][3]);
+    Unite(colLookup, pair[1][1], pair[2][1]);
+    Unite(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
     n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ -1);
@@ -1582,71 +1439,45 @@ function(cong)
     od;
   od;
 
-  # Normalise lookup tables
-  normalise := function(table)
-    local ht, next, newtab, i, ii;
-    ht := HTCreate(1);
-    next := 1;
-    newtab := [];
-    for i in [1 .. Size(table)] do
-      ii := find(table, i);
-      newtab[i] := HTValue(ht, ii);
-      if newtab[i] = fail then
-        newtab[i] := next;
-        HTAdd(ht, ii, next);
-        next := next + 1;
-      fi;
-    od;
-    return newtab;
-  end;
-  colLookup := normalise(colLookup);
-  rowLookup := normalise(rowLookup);
-
-  # Make blocks
-  colBlocks := List([1 .. Maximum(colLookup)], x -> []);
-  rowBlocks := List([1 .. Maximum(rowLookup)], x -> []);
-  for i in [1 .. Size(colLookup)] do
-    Add(colBlocks[colLookup[i]], i);
-  od;
-  for u in [1 .. Size(rowLookup)] do
-    Add(rowBlocks[rowLookup[u]], u);
-  od;
-
-  # Make n normal
   n := NormalClosure(g, n);
-
-  cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
-  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
-  return cong;
+  C := RZMSCongruenceByLinkedTriple(S,
+                                    n,
+                                    PartsOfPartitionDS(colLookup),
+                                    PartsOfPartitionDS(rowLookup));
+  SetGeneratingPairsOfMagmaCongruence(C, pairs);
+  return C;
 end);
 
-_EquivalenceRelationCanonicalLookupRMS := function(cong)
-  local S, n, elms, table, next, i, x;
-
-  S := Range(cong);
-  n := Size(S);
-  elms := AsListCanonical(S);
+_EquivalenceRelationPartition := function(C)
+  local S, n, elms, table, next, part, i, x;
+  S     := Range(C);
+  n     := Size(S);
+  elms  := EnumeratorCanonical(S);
   table := EmptyPlist(n);
-  next := 1;
+  next  := 1;
+  part  := [];
   for i in [1 .. n] do
     if not IsBound(table[i]) then
-      for x in ImagesElm(cong, elms[i]) do
+      Add(part, ImagesElm(C, elms[i]));
+      for x in part[Length(part)] do
         table[PositionCanonical(S, x)] := next;
       od;
       next := next + 1;
     fi;
   od;
-  return table;
+  SetEquivalenceRelationCanonicalLookup(C, table);
+  SetEquivalenceRelationCanonicalPartition(C, part);
+  return part;
 end;
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
+InstallMethod(EquivalenceRelationPartition,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-_EquivalenceRelationCanonicalLookupRMS);
+_EquivalenceRelationPartition);
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
+InstallMethod(EquivalenceRelationPartition,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-_EquivalenceRelationCanonicalLookupRMS);
+_EquivalenceRelationPartition);
 
-Unbind(_EquivalenceRelationCanonicalLookupRMS);
+Unbind(_EquivalenceRelationPartition);

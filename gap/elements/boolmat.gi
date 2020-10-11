@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  boolean.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  elements/boolmat.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -76,9 +76,8 @@ function(mat)
 
   if (not IsList(mat)) or IsEmpty(mat)
       or not ForAll(mat, IsHomogeneousList) then
-    ErrorNoReturn("Semigroups: BooleanMat: usage,\n",
-                  "the argmuent must be a non-empty list ",
-                  "of homogeneous lists,");
+    ErrorNoReturn("the argument is not a non-empty list ",
+                  "of homogeneous lists");
   elif IsRectangularTable(mat) then  # 0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
@@ -110,8 +109,7 @@ function(mat)
   x := EmptyPlist(n);
   for i in [1 .. n] do
     if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
-      ErrorNoReturn("Semigroups: BooleanMat:\n",
-                    "the entries of each list must not exceed ", n, ",");
+      ErrorNoReturn("the entries of each list must not exceed ", n, "");
     fi;
     Add(x, BlistList([1 .. n], mat[i]));
   od;
@@ -204,9 +202,8 @@ function(x, y)
   n := Length(x![1]);
 
   if n <> Length(y![1]) then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the arguments <x> and <y> must be boolean matrices ",
-                  "of equal dimensions,");
+    ErrorNoReturn("the arguments (boolean matrices) do not have ",
+                  "equal dimensions");
   fi;
 
   for i in [1 .. n] do
@@ -464,9 +461,8 @@ InstallMethod(AsBooleanMat, "for a transformation and pos int",
 function(x, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ x > n) then
-    ErrorNoReturn("Semigroups: AsBooleanMat: usage,\n",
-                  "the transformation in the first argument must map ",
-                  "[1 .. ", String(n), "] to itself,");
+    ErrorNoReturn("the transformation in the 1st argument does not map ",
+                  "[1 .. ", String(n), "] to itself");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -490,17 +486,14 @@ InstallMethod(AsBooleanMat, "for a partial perm",
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
                              CodegreeOfPartialPerm(x))));
 
-# TODO this could be more elaborate, i.e. it could take a set, then just take
-# the restriction of <x> to that set as a Boolean matrix
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
   local out, j, i;
 
   if ForAny([1 .. n], i -> i ^ x > n) then
-    ErrorNoReturn("Semigroups: AsBooleanMat: usage,\n",
-                  "the partial perm in the first argument must map ",
-                  "[1 .. ", String(n), "] into itself,");
+    ErrorNoReturn("the partial perm in the 1st argument does not map ",
+                  "[1 .. ", String(n), "] into itself");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -510,7 +503,7 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
-  # TODO: OK? Is out in BlistRep?
+  Perform(out, ConvertToBlistRep);
   return MatrixNC(BooleanMatType, out);
 end);
 
@@ -524,19 +517,18 @@ function(mat, m)
     return MatrixNC(BooleanMatType,
                     List([1 .. m], i -> mat![i]{[1 .. m]}));
   fi;
-  # TODO use AsList
-  out := List([1 .. n], i -> ShallowCopy(mat![i]));
+  out := AsMutableList(mat);
   for i in [1 .. n] do
     Append(out[i], BlistList([n + 1 .. m], []));
   od;
   for i in [n + 1 .. m] do
     Add(out, BlistList([1 .. m], []));
   od;
-  # TODO: OK? Is out in BlistRep?
+  Perform(out, ConvertToBlistRep);
   return MatrixNC(BooleanMatType, out);
 end);
 
-# TODO AsBooleanMat for a BooleanMat
+# TODO(later) AsBooleanMat for a BooleanMat
 
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
@@ -614,9 +606,9 @@ function(G, H, x)
   local n;
   n := Length(x![1]);
   if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
-    ErrorNoReturn("Semigroups: CanonicalBooleanMat: usage,\n",
-                  "the largest moved point of the first argument must not",
-                  " exceed the dimension\nof the Boolean matrix,");
+    ErrorNoReturn("the largest moved point of the 1st argument ",
+                  "(a perm group) exceeds the dimension of the ",
+                  "3rd argument (a boolean matrix)");
   elif G = H and IsNaturalSymmetricGroup(G)
       and MovedPoints(G) = [1 .. n] then
     return CanonicalBooleanMat(x);

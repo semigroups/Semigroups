@@ -1,14 +1,18 @@
 #############################################################################
 ##
 ##  read.g
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-ReadPackage("semigroups", "gap/doc.g");
+ReadPackage("semigroups", "gap/tools/display.gi");
+ReadPackage("semigroups", "gap/tools/io.gi");
+ReadPackage("semigroups", "gap/tools/utils.gi");
+ReadPackage("semigroups", "gap/tools/enums.gi");
+ReadPackage("semigroups", "gap/tools/iterators.gi");
 
 ReadPackage("semigroups", "gap/elements/star.gi");
 ReadPackage("semigroups", "gap/elements/pbr.gi");
@@ -22,7 +26,11 @@ ReadPackage("semigroups", "gap/elements/trans.gi");
 ReadPackage("semigroups", "gap/elements/elements.gi");
 ReadPackage("semigroups", "gap/elements/pperm.gi");
 
-ReadPackage("semigroups", "gap/main/fropin.gi");
+ReadPackage("semigroups", "gap/libsemigroups/cong.gi");
+ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gi");
+ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gi");
+
+ReadPackage("semigroups", "gap/main/froidure-pin.gi");
 ReadPackage("semigroups", "gap/main/setup.gi");
 ReadPackage("semigroups", "gap/main/acting.gi");
 ReadPackage("semigroups", "gap/main/lambda-rho.gi");
@@ -51,33 +59,26 @@ ReadPackage("semigroups", "gap/semigroups/semieunit.gi");
 ReadPackage("semigroups", "gap/semigroups/semidp.gi");
 
 ReadPackage("semigroups", "gap/ideals/ideals.gi");
-ReadPackage("semigroups", "gap/ideals/idealact.gi");
-ReadPackage("semigroups", "gap/ideals/ideallam.gi");
-ReadPackage("semigroups", "gap/ideals/idealenum.gi");
+ReadPackage("semigroups", "gap/ideals/acting.gi");
+ReadPackage("semigroups", "gap/ideals/lambda-rho.gi");
+ReadPackage("semigroups", "gap/ideals/froidure-pin.gi");
 
-ReadPackage("semigroups", "gap/greens/gree.gi");
-ReadPackage("semigroups", "gap/greens/gren.gi");
-ReadPackage("semigroups", "gap/greens/grac.gi");
-ReadPackage("semigroups", "gap/greens/gracreg.gi");
-ReadPackage("semigroups", "gap/greens/gracinv.gi");
+ReadPackage("semigroups", "gap/greens/acting.gi");
+ReadPackage("semigroups", "gap/greens/acting-inverse.gi");
+ReadPackage("semigroups", "gap/greens/acting-regular.gi");
+ReadPackage("semigroups", "gap/greens/froidure-pin.gi");
+ReadPackage("semigroups", "gap/greens/generic.gi");
 
-ReadPackage("semigroups", "gap/tools/display.gi");
-ReadPackage("semigroups", "gap/tools/io.gi");
-ReadPackage("semigroups", "gap/tools/utils.gi");
-ReadPackage("semigroups", "gap/tools/enums.gi");
-ReadPackage("semigroups", "gap/tools/iterators.gi");
-
+ReadPackage("semigroups", "gap/attributes/acting.gi");
 ReadPackage("semigroups", "gap/attributes/attr.gi");
-ReadPackage("semigroups", "gap/attributes/attract.gi");
-ReadPackage("semigroups", "gap/attributes/attrfp.gi");
-ReadPackage("semigroups", "gap/attributes/attrinv.gi");
 ReadPackage("semigroups", "gap/attributes/dual.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
+ReadPackage("semigroups", "gap/attributes/inverse.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");
 ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/maximal.gi");
-ReadPackage("semigroups", "gap/attributes/normalizer.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
+ReadPackage("semigroups", "gap/attributes/semifp.gi");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");
 ReadPackage("semigroups", "gap/congruences/congrms.gi");
@@ -87,7 +88,6 @@ ReadPackage("semigroups", "gap/congruences/congsimple.gi");
 ReadPackage("semigroups", "gap/congruences/congrees.gi");
 ReadPackage("semigroups", "gap/congruences/cong.gi");
 ReadPackage("semigroups", "gap/congruences/conglatt.gi");
-ReadPackage("semigroups", "gap/congruences/congfpmon.gi");
 
 ReadPackage("semigroups", "gap/fp/freeinverse.gi");
 ReadPackage("semigroups", "gap/fp/freeband.gi");

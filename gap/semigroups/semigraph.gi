@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semigraph.gi
-##  Copyright (C) 2014-15                 Zak Mesyan and James D. Mitchell
+##  semigroups/semigraph.gi
+##  Copyright (C) 2014-2022               Zak Mesyan and James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,33 +15,35 @@ InstallMethod(ViewString, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 RankFilter(IsGroupAsSemigroup),  # to beat library method for groups as semigrps
 function(S)
-  local n, str;
+  local D, finiteness, vert_suffix, edge_suffix;
 
-  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
-  str := "\><";
-  if IsAcyclicDigraph(GraphOfGraphInverseSemigroup(S)) then
-    Append(str, "\>finite \<");
+  D := GraphOfGraphInverseSemigroup(S);
+
+  if IsAcyclicDigraph(D) then
+    finiteness := "finite";
   else
-    Append(str, "\>infinite \<");
+    finiteness := "infinite";
   fi;
 
-  Append(str, "\>graph \<\>inverse \<\>semigroup\< \>with\< \>");
-  Append(str, String(n));
-  Append(str, "\< \>vert");
-  if n = 1 then
-    Append(str, "ex");
+  if DigraphNrVertices(D) = 1 then
+    vert_suffix := "ex";
   else
-    Append(str, "ices");
+    vert_suffix := "ices";
   fi;
-  Append(str, ",\< ");
-  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
-  Append(str, String(n));
-  Append(str, "\< \>edge");
-  if not n = 1 then
-    Append(str, "s");
+
+  if DigraphNrEdges(D) = 1 then
+    edge_suffix := "";
+  else
+    edge_suffix := "s";
   fi;
-  Append(str, "\<>\<");
-  return str;
+
+  return PRINT_STRINGIFY(
+    StringFormatted("<{} graph inverse semigroup with {} vert{}, {} edge{}>",
+    finiteness,
+    DigraphNrVertices(D),
+    vert_suffix,
+    DigraphNrEdges(D),
+    edge_suffix));
 end);
 
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",
@@ -96,7 +98,7 @@ function(x)
   return Length(x![1]) = 1 and AbsInt(x![1][1]) > Length(DigraphSource(x![2]));
 end);
 
-InstallOtherMethod(MultiplicativeZero, "for a graph inverse semigroup",
+InstallMethod(MultiplicativeZero, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 function(S)
   return Objectify(ElementsFamily(FamilyObj(S))!.type,
@@ -129,8 +131,8 @@ function(x)
                      [[DigraphRange(x![2])[-x![1][1]] + DigraphNrEdges(x![2])],
                       x![2]]);
   fi;
-  ErrorNoReturn("Semigroups: Source: usage,\n",
-                "the argument <x> must not be the zero,");
+  ErrorNoReturn("the argument (a graph inverse semigroup element) ",
+                "must not be the zero element");
 end);
 
 InstallMethod(Range, "for a graph inverse semigroup element",
@@ -149,8 +151,8 @@ function(x)
                        DigraphNrEdges(x![2])],
                       x![2]]);
   fi;
-  ErrorNoReturn("Semigroups: Range: usage,\n",
-                "the argument <x> must not be the zero,");
+  ErrorNoReturn("the argument (a graph inverse semigroup element) ",
+                "must not be the zero element");
 end);
 
 InstallMethod(String, "for a graph inverse semigroup element",
@@ -231,20 +233,16 @@ function(x, y)
 
   if IsZero(x) or IsZero(y) then
     return Zero(x);
-  fi;
-
-  if IsVertex(x) then
+  elif IsVertex(x) then
     if Source(y) = x then
       return y;
-    else
-      return Zero(x);
     fi;
+    return Zero(x);
   elif IsVertex(y) then
     if Range(x) = y then
       return x;
-    else
-      return Zero(x);
     fi;
+    return Zero(x);
   fi;
 
   xobj := x;

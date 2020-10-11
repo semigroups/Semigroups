@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  ffmat.gi
-##  Copyright (C) 2016                                   James D. Mitchell
+##  elements/ffmat.gi
+##  Copyright (C) 2016-2022                              James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -30,9 +30,8 @@ InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
 function(mat, pos)
   if not IsBound(mat[pos]) then
-    ErrorNoReturn("Semigroups: ELM_LIST (for a plist matrix over finite ",
-                  "field):\nthe position is greater than the dimension ",
-                  "of the matrix,");
+    ErrorNoReturn("the position is greater than the dimension ",
+                  "of the matrix");
   fi;
   return mat!.mat[pos];
 end);
@@ -109,8 +108,7 @@ function(R, n, ranks)
   local z, rk, mat, zv, conj, j;
 
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
-    ErrorNoReturn("Semigroups: RandomMatrixOp: usage,\n",
-                  "the list of ranks has to consist of numbers > 0 and < n,");
+    ErrorNoReturn("the list of ranks has to consist of numbers > 0 and < n");
   fi;
 
   z := Zero(R);
@@ -149,9 +147,8 @@ InstallMethod(RandomMatrixOp,
 [IsField and IsFinite, IsZeroCyc, IsList],
 function(R, n, ranks)
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
-    ErrorNoReturn("Semigroups: RandomMatrixOp: usage,\n",
-                  "the list of ranks has to consist of numbers >= 0 and <= ",
-                  n, ",");
+    ErrorNoReturn("the list of ranks has to consist of numbers >= 0 and <= ",
+                  n, "");
   fi;
   return Matrix(R, []);
 end);
@@ -234,9 +231,8 @@ function(filter, field, list)
   local mat, filter2;
 
   if not ForAll(list, v -> ForAll(v, x -> x in field)) then
-    ErrorNoReturn("Semigroups: NewMatrixOverFiniteField: usage,\n",
-                  "the entries of the matrix are not all in ",
-                  field, ",");
+    ErrorNoReturn("the entries of the matrix are not all in ",
+                  field, "");
   fi;
 
   filter2 := filter and IsMatrixOverFiniteField;
@@ -305,7 +301,7 @@ function(filter, basedomain, deg)
                                   NullMat(deg, deg, basedomain));
 end);
 
-# TODO known information can be copied!
+# TODO(later) known information can be copied!
 
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],
@@ -408,9 +404,8 @@ function(m)
   local deg, bd, bas, tr, tri, inv, sinv, rsp, zv, heads, tm, i;
 
   if not IsPlistMatrixOverFiniteFieldRep(m) then
-    ErrorNoReturn("Semigroups: ComputeRowSpaceAndTransformation: usage,\n",
-                  "the argument must belong to",
-                  "`IsPlistMatrixOverFiniteFieldRep`,");
+    ErrorNoReturn("the argument must belong to ",
+                  "`IsPlistMatrixOverFiniteFieldRep`");
   fi;
 
   deg := DimensionOfMatrixOverSemiring(m);
@@ -534,14 +529,13 @@ function(filt, sample, mat)
 end);
 
 InstallMethod(BaseDomain, "for a matrix over finite field collection",
-[IsMatrixOverFiniteFieldCollection],
+[IsMatrixOverFiniteFieldCollection], 2,  # to beat IsRowVector
 function(coll)
   local base;
   base := BaseDomain(coll[1]);
   if not ForAll(coll, x -> BaseDomain(x) = base) then
-    ErrorNoReturn("Semigroups: BaseDomain: usage,\n",
-                  "the argument <coll> must be a collection of matrices over ",
-                  "the same finite field,");
+    ErrorNoReturn("the argument <coll> must be a collection of matrices over ",
+                  "the same finite field");
   fi;
 
   return base;
@@ -582,12 +576,8 @@ InstallMethod(\*, "for matrices over finite field",
 function(x, y)
   if DimensionOfMatrixOverSemiring(x) <> DimensionOfMatrixOverSemiring(y)
       or BaseDomain(x) <> BaseDomain(y) then
-    ErrorNoReturn("Semigroups: \\* (for matrices over a finite field): ",
-                  "usage,\nthe degree or domain of the arguments do not ",
-                  "match,");
-  fi;
-
-  if DimensionOfMatrixOverSemiring(x) = 0 then
+    ErrorNoReturn("the degree or domain of the arguments do not match");
+  elif DimensionOfMatrixOverSemiring(x) = 0 then
     return x;
   fi;
 

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  utils.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  tools/utils.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -18,6 +18,21 @@
 #
 # 2. Documentation - functions relating to compiling and verifying the
 #    documentation.
+
+InstallGlobalFunction(ToBeat,
+function(list, arg...)
+  local rank, rank_to_beat;
+  Assert(1, IsList(list));
+
+  rank         := Sum(list, RankFilter);
+  rank_to_beat := Maximum(List(arg, x -> Sum(x, RankFilter)));
+
+  if rank > rank_to_beat then
+    return 0;
+  else
+    return rank_to_beat - rank + 1;
+  fi;
+end);
 
 #############################################################################
 # 1. Tests - internal stuff . . .
@@ -52,14 +67,18 @@ SEMIGROUPS.StartTest := function()
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
 
   # store current user preferences
-  record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
-  record.TransformationDisplayLimit
-   := UserPreference("TransformationDisplayLimit");
-  record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");
+  record.PartialPermDisplayLimit :=
+    UserPreference("PartialPermDisplayLimit");
+  record.TransformationDisplayLimit :=
+    UserPreference("TransformationDisplayLimit");
+  record.NotationForPartialPerms :=
+    UserPreference("NotationForPartialPerms");
   record.NotationForTransformations :=
-   UserPreference("NotationForTransformations");
+    UserPreference("NotationForTransformations");
   record.FreeInverseSemigroupElementDisplay :=
     UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
+  record.FpSemigroupView :=
+    UserPreference("semigroups", "FpSemigroupView");
 
   # store current default options
   record.SEMIGROUPS_DefaultOptionsRec :=
@@ -73,15 +92,23 @@ SEMIGROUPS.StartTest := function()
   SetInfoLevel(InfoPackageLoading, 0);
 
   # set user preferences
-  SetUserPreference("PartialPermDisplayLimit", 100);
-  SetUserPreference("TransformationDisplayLimit", 100);
-  SetUserPreference("NotationForPartialPerms", "component");
-  SetUserPreference("NotationForTransformations", "input");
-  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+  SetUserPreference("PartialPermDisplayLimit",
+                    100);
+  SetUserPreference("TransformationDisplayLimit",
+                    100);
+  SetUserPreference("NotationForPartialPerms",
+                    "component");
+  SetUserPreference("NotationForTransformations",
+                    "input");
+  SetUserPreference("semigroups",
+                    "FreeInverseSemigroupElementDisplay",
                     "minimal");
+  SetUserPreference("semigroups",
+                    "FpSemigroupView",
+                    "semigroups-pkg");
 
   # set default options
-  SEMIGROUPS.DefaultOptionsRec.report := false;
+  libsemigroups.set_report(false);
   return;
 end;
 
@@ -106,8 +133,12 @@ SEMIGROUPS.StopTest := function()
                     record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
                     record.NotationForTransformations);
-  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+  SetUserPreference("semigroups",
+                    "FreeInverseSemigroupElementDisplay",
                     record.FreeInverseSemigroupElementDisplay);
+  SetUserPreference("semigroups",
+                    "FpSemigroupView",
+                    record.FpSemigroupView);
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
@@ -118,30 +149,30 @@ end;
 SEMIGROUPS.RunTest := function(func)
   local acting, passed;
   if not (IsFunction(func) and NumberArgumentsFunction(func) = 0) then
-    ErrorNoReturn("the argument must be a 0-parameter function,");
+    ErrorNoReturn("the argument must be a 0-parameter function");
   fi;
 
   # Store global option
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
 
   # Run tests with acting := true
-  Print("\033[40;38;5;82m");
-  Info(InfoWarning, 1, "Running tests with acting methods enabled . . .");
+  Print("\033[1m");
+  Info(InfoWarning, 1, "Running tests with acting methods enabled");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   passed := func();
 
   if not (IsBool(passed) and passed in [true, false]) then
     ErrorNoReturn("the argument must be a function returning 'true'",
-                  " or 'false',");
+                  " or 'false'");
   elif not passed then
     SEMIGROUPS.DefaultOptionsRec.acting := acting;
     return passed;
   fi;
 
   # Run tests with acting := false
-  Print("\033[40;38;5;82m");
-  Info(InfoWarning, 1, "Running tests with acting methods disabled . . .");
+  Print("\033[1m");
+  Info(InfoWarning, 1, "Running tests with acting methods disabled");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := false;
   passed := func();
@@ -153,6 +184,7 @@ end;
 
 SEMIGROUPS.TestDir := function(dir, arg)
   local opts, name;
+
   opts := rec(earlyStop   := true,
               testOptions := ShallowCopy(SEMIGROUPS.TestRec));
   opts.testOptions.showProgress := false;
@@ -187,7 +219,7 @@ function(arg)
     od;
   elif Length(arg) <> 0 then
     ErrorNoReturn("there must be no arguments, or the argument ",
-                  "must be a opts");
+                  "must be a record");
   fi;
   return SEMIGROUPS.RunTest(function()
       return Test(Filename(DirectoriesPackageLibrary("semigroups",
@@ -199,7 +231,7 @@ end);
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
-                                                      "tst/standard/"),
+                                                      "tst/standard/")[1]![1],
                             arg);
 end);
 
@@ -233,15 +265,33 @@ end);
 # 2. Documentation - internal stuff
 ################################################################################
 
+BindGlobal("SEMIGROUPS_DocXMLFiles",
+function()
+  local dir;
+  dir := DirectoriesPackageLibrary("Semigroups", "doc")[1];
+  return Filtered(DirectoryContents(dir),
+                  x -> (not StartsWith(x, "."))
+                        and (not StartsWith(x, "z-"))
+                        and EndsWith(x, ".xml"));
+end);
+
 InstallGlobalFunction(SemigroupsMakeDoc,
 function()
-  # Compile the documentation of the currently-loaded version of Semigroups
-  SEMIGROUPS_MakeDoc(DirectoriesPackageLibrary("Semigroups", ""));
+  local fname;
+  fname := Filename(DirectoriesPackageLibrary("Semigroups", ""), "makedoc.g");
+  Read(fname);
 end);
 
 SEMIGROUPS.ManualExamples := function()
+  if Filename(DirectoriesPackageLibrary("semigroups", "doc"),
+              "main.xml") = fail then
+    # The file main.xml only exists if AutoDoc has been run.
+    SemigroupsMakeDoc();
+  fi;
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
-                         "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
+                         "main.xml",
+                         SEMIGROUPS_DocXMLFiles(),
+                         "Single");
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
@@ -333,7 +383,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
     elif IsString(arg[1]) then
       doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                                "main.xml",
-                               SEMIGROUPS_DocXMLFiles,
+                               SEMIGROUPS_DocXMLFiles(),
                                true);
       tree := ParseTreeXMLString(doc[1]);
       CheckAndCleanGapDocTree(tree);
@@ -344,17 +394,14 @@ SEMIGROUPS.TestManualExamples := function(arg)
       end;
       ex := First(ex, tester);
       if ex = fail then
-        ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                      "did not find a man section named ", arg[1]);
+        ErrorNoReturn("did not find a man section named ", arg[1]);
       fi;
       ex := ExtractExamplesXMLTree(ex, "Single");
     else
-      ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                    "the argument must be a pos int or list of pos ints,");
+      ErrorNoReturn("the argument must be a pos int or list of pos ints");
     fi;
   elif Length(arg) > 1 then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                  "there should be 0 or 1 argument,");
+    ErrorNoReturn("there should be 0 or 1 arguments");
   fi;
 
   omit := SEMIGROUPS.OmitFromTests;
@@ -522,8 +569,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         matches := Filtered(matches, t -> t.attributes.Label =
                                           elt.attributes.Label);
         if Length(matches) > 1 then
-          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
-                        "Multiple labels - this should not happen!");
+          ErrorNoReturn("Multiple labels - this should not happen!");
         fi;
         match := matches[1];
       else
@@ -543,8 +589,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
           referrcount := referrcount + 1;
           continue;
         elif Length(matches2) > 1 then
-          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
-                        "Multiple labels - this should not happen!");
+          ErrorNoReturn("Multiple labels - this should not happen!");
         else
           match := matches[1];
         fi;
@@ -626,7 +671,7 @@ SEMIGROUPS.CheckManualConsistency := function()
 
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS_DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles(),
                            true);
   SEMIGROUPS.CheckDocCoverage(doc);
   return SEMIGROUPS.CheckManSectionTypes(doc, true);
@@ -636,7 +681,7 @@ SEMIGROUPS.DocumentedPackageVariables := function()
   local doc, r, x, out, mansect, record;
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS_DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles(),
                            true);
   r := ParseTreeXMLString(doc[1]);
   CheckAndCleanGapDocTree(r);
@@ -661,18 +706,7 @@ SEMIGROUPS.UndocumentedPackageVariables := function(info)
   suppressions := ["*", ".", "/", "<", "=", "[]", "^", "in", "{}",
                    "HTAdd_TreeHash_C", "HTValue_TreeHash_C"];
 
-  obsoletes := ["RandomTransformationSemigroup", "RandomTransformationMonoid",
-                "RandomPartialPermSemigroup", "RandomPartialPermMonoid",
-                "RandomMatrixSemigroup", "RandomMatrixMonoid", "DotDClasses",
-                "DotDClasses", "PartialTransformationSemigroup",
-                "AsPartialPermSemigroup", "AsTransformationSemigroup",
-                "AsBipartitionSemigroup", "AsBlockBijectionSemigroup",
-                "AsMatrixSemigroup", "IsomorphismBipartitionSemigroup",
-                "IsomorphismBlockBijectionSemigroup",
-                "IsomorphismMatrixSemigroup",
-                "FactorisableDualSymmetricInverseSemigroup",
-                "SingularFactorisableDualSymmetricInverseSemigroup",
-                "IsSynchronizingTransformationCollection"];
+  obsoletes := [];
   documented := SEMIGROUPS.DocumentedPackageVariables();
 
   for part in info do

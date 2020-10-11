@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  cong.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  congruences/cong.gi
+##  Copyright (C) 2015-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -21,142 +21,43 @@
 ## cong.gd contains declarations for many of these.
 ##
 
-# Fallback method
+# Where possible, we only provide methods in this file for
+# IsAnyCongruenceCategory and IsAnyCongruenceClass, and not arbitrary
+# congruences.
 
-InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
-[IsSemigroupCongruence],
-function(cong)
-  local classes;
-  classes := EquivalenceClasses(cong);
-  # Note: EquivalenceClasses may exclude all singletons due to a bug in GAP.
-  # This is a workaround which adds any missing singletons.
-  return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
-end);
+########################################################################
+# 0. Categories
+########################################################################
 
-InstallMethod(\in,
-"for dense list and left semigroup congruence",
-[IsDenseList, IsLeftSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "elements of the first arg <pair> must be\n",
-                  "in the range of the second arg <cong>,");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
-end);
+InstallMethod(AnyCongruenceCategory, "for a right congruence category",
+[IsRightCongruenceCategory], C -> IsRightCongruenceCategory);
 
-InstallMethod(\in,
-"for dense list and right semigroup congruence",
-[IsDenseList, IsRightSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "elements of the first arg <pair> must be\n",
-                  "in the range of the second arg <cong>,");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
-end);
+InstallMethod(AnyCongruenceCategory, "for a left congruence category",
+[IsLeftCongruenceCategory], C -> IsLeftCongruenceCategory);
 
-BindGlobal("_GenericCongEquality",
-function(cong1, cong2)
-  local S;
-  S := Range(cong1);
-  if S <> Range(cong2) then
-    return false;
-  fi;
-  if HasIsFinite(S) and IsFinite(S) then
-    return EquivalenceRelationCanonicalLookup(cong1) =
-           EquivalenceRelationCanonicalLookup(cong2);
-  fi;
-  return EquivalenceRelationCanonicalPartition(cong1) =
-         EquivalenceRelationCanonicalPartition(cong2);
-end);
+InstallMethod(AnyCongruenceCategory, "for a 2-sided congruence category",
+[IsCongruenceCategory], C -> IsCongruenceCategory);
 
-InstallMethod(\=, "for two left semigroup congruences",
-[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
+InstallMethod(AnyCongruenceString, "for a right congruence category",
+[IsRightCongruenceCategory], C -> "right");
 
-InstallMethod(\=, "for a left and a right semigroup congruence",
-[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
+InstallMethod(AnyCongruenceString, "for a left congruence category",
+[IsLeftCongruenceCategory], C -> "left");
 
-InstallMethod(\=, "for a right and a left semigroup congruence",
-[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
+InstallMethod(AnyCongruenceString, "for a 2-sided congruence category",
+[IsCongruenceCategory], C -> "2-sided");
 
-InstallMethod(\=, "for two right semigroup congruences",
-[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
-
-# Since two-sided congs are both left and right, this covers all cases
-
-MakeReadWriteGlobal("_GenericCongEquality");
-Unbind(_GenericCongEquality);
-
-InstallMethod(\=, "for two semigroup congruences with generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(c1, c2)
-  return Range(c1) = Range(c2)
-         and ForAll(GeneratingPairsOfSemigroupCongruence(c1), p -> p in c2)
-         and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
-end);
-
-# Multiplication for congruence classes: only makes sense for 2-sided
-
-InstallMethod(\*,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the args must be classes of the same congruence,");
-  fi;
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
-                                     Representative(class1) *
-                                     Representative(class2));
-end);
-
-InstallMethod(\=,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-         and Representative(class1) in class2;
-end);
-
-InstallMethod(\<,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-    and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
-end);
+########################################################################
+# Flexible functions for creating congruences
+########################################################################
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
   local S, opts, s_opts, x, pairs, cong;
   if not Length(arg) >= 2 then
-    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                  "at least 2 arguments are required,");
-  fi;
-  if not IsSemigroup(arg[1]) then
-    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                  "1st argument <S> must be a semigroup,");
+    ErrorNoReturn("at least 2 arguments are required");
+  elif not IsSemigroup(arg[1]) then
+    ErrorNoReturn("the 1st argument is not a semigroup");
   fi;
   S := arg[1];
 
@@ -185,28 +86,25 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                    "<pairs> should be a list of lists of size 2,");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                    "each pair should contain ",
-                    "elements from the semigroup <S>,");
+      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
+                    "of size not equal to 2");
+    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
+                    "that do not belong to the 1st argument (a semigroup)");
     fi;
 
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
 
     # Decide which representation to use
-    if not IsFinite(S) then
-      return SemigroupCongruenceByGeneratingPairs(S, pairs);
-    elif ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
+    if not IsFinite(S)
+        or ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
            or HasSize(S) or IsReesMatrixSemigroup(S))
           and IsSimpleSemigroup(S)) or
          ((HasIsZeroSimpleSemigroup(S) or IsActingSemigroup(S)
            or HasSize(S) or IsReesZeroMatrixSemigroup(S))
           and IsZeroSimpleSemigroup(S)) then
-      return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
+      return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S) and
          Size(S) >= opts.cong_by_ker_trace_threshold then
       cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
@@ -222,11 +120,11 @@ function(arg)
       then
     # We should have a congruence of an isomorphic RMS/RZMS
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
-      return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
+      return CongruenceByIsomorphism(arg[2], arg[3]);
     else
-      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                    "<cong> should be over a Rees (0-)matrix semigroup ",
-                    "isomorphic to <S> via <iso>,");
+      ErrorNoReturn("the range of the 3rd argument (a congruence) is ",
+                    "not a Rees (0-)matrix semigroup isomorphic to the ",
+                    "1st argument");
     fi;
   elif HasIsSemigroupIdeal(arg[2])
       and IsSemigroupIdeal(arg[2])
@@ -241,274 +139,108 @@ function(arg)
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);
+  fi;
+  ErrorNoReturn("the arguments are not valid for this function");
+end);
+
+BindGlobal("_LeftOrRightCong",
+function(CongruenceConstructor, arg)
+  local S, pairs;
+  if not Length(arg) >= 2 then
+    ErrorNoReturn("at least 2 arguments are required");
+  elif not IsSemigroup(arg[1]) then
+    ErrorNoReturn("the 1st argument is not a semigroup");
+  fi;
+  S := arg[1];
+
+  if IsHomogeneousList(arg[2]) then
+    # We should have a list of generating pairs
+    if Length(arg) = 2 then
+      pairs := arg[2];
+      if not IsEmpty(pairs) and not IsList(pairs[1]) then
+        pairs := [pairs];
+      fi;
+    elif Length(arg) > 2 then
+      pairs := arg{[2 .. Length(arg)]};
+    fi;
+    if not ForAll(pairs, p -> Size(p) = 2) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
+                    "of size not equal to 2");
+    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
+                    "that do not belong to the 1st argument (a semigroup)");
+    fi;
+    # Remove any reflexive pairs
+    pairs := Filtered(pairs, p -> p[1] <> p[2]);
+    return CongruenceConstructor(S, pairs);
   else
-    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                  "the arguments are not valid for this function,");
+    ErrorNoReturn("the arguments are not valid for this function");
   fi;
 end);
 
 InstallGlobalFunction(LeftSemigroupCongruence,
 function(arg)
-  local S, pairs;
-  if not Length(arg) >= 2 then
-    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                  "at least 2 arguments are required,");
-  fi;
-  if not IsSemigroup(arg[1]) then
-    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                  "1st argument <S> must be a semigroup,");
-  fi;
-  S := arg[1];
-
-  if IsHomogeneousList(arg[2]) then
-    # We should have a list of generating pairs
-    if Length(arg) = 2 then
-      pairs := arg[2];
-      if not IsEmpty(pairs) and not IsList(pairs[1]) then
-        pairs := [pairs];
-      fi;
-    elif Length(arg) > 2 then
-      pairs := arg{[2 .. Length(arg)]};
-    fi;
-    if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                    "<pairs> should be a list of lists of size 2,");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                    "each pair should contain elements from the semigroup ",
-                    "<S>,");
-    fi;
-    # Remove any reflexive pairs
-    pairs := Filtered(pairs, p -> p[1] <> p[2]);
-    return LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
-  else
-    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                  "the arguments are not valid for this function,");
-  fi;
+  return _LeftOrRightCong(LeftSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
 InstallGlobalFunction(RightSemigroupCongruence,
 function(arg)
-  local S, pairs;
-  if not Length(arg) >= 2 then
-    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                  "at least 2 arguments are required,");
-  fi;
-  if not IsSemigroup(arg[1]) then
-    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                  "1st argument <S> must be a semigroup,");
-  fi;
-  S := arg[1];
-
-  if IsHomogeneousList(arg[2]) then
-    # We should have a list of generating pairs
-    if Length(arg) = 2 then
-      pairs := arg[2];
-      if not IsEmpty(pairs) and not IsList(pairs[1]) then
-        pairs := [pairs];
-      fi;
-    elif Length(arg) > 2 then
-      pairs := arg{[2 .. Length(arg)]};
-    fi;
-    if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                    "<pairs> should be a list of lists of size 2,");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                    "each pair should contain elements from the semigroup ",
-                    "<S>,");
-    fi;
-    # Remove any reflexive pairs
-    pairs := Filtered(pairs, p -> p[1] <> p[2]);
-    return RightSemigroupCongruenceByGeneratingPairs(S, pairs);
-  else
-    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                  "the arguments are not valid for this function,");
-  fi;
+  return _LeftOrRightCong(RightSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
-InstallMethod(ViewObj,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-function(cong)
-  Print("<left semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfLeftSemigroupCongruence(cong)),
-        " generating pairs>");
+########################################################################
+# Congruence attributes
+########################################################################
+
+InstallMethod(NonTrivialEquivalenceClasses, "for IsAnyCongruenceCategory",
+[IsAnyCongruenceCategory],
+function(C)
+  local part, nr_classes, classes, i;
+  part := EquivalenceRelationPartition(C);
+  nr_classes := Length(part);
+  classes := EmptyPlist(nr_classes);
+  for i in [1 .. nr_classes] do
+    classes[i] := EquivalenceClassOfElementNC(C, part[i][1]);
+    SetAsList(classes[i], part[i]);
+  od;
+  return classes;
 end);
 
-InstallMethod(ViewObj,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong)
-  Print("<right semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
-
-InstallMethod(ViewObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
-
-InstallMethod(ViewObj,
-"for a congruence class",
-[IsCongruenceClass],
-function(class)
-  Print("<congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
-InstallMethod(ViewObj,
-"for a left congruence class",
-[IsLeftCongruenceClass],
-function(class)
-  Print("<left congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
-InstallMethod(ViewObj,
-"for a right congruence class",
-[IsRightCongruenceClass],
-function(class)
-  Print("<right congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
-InstallMethod(CongruenceClasses,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-EquivalenceClasses);
-
-InstallMethod(LeftCongruenceClasses,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-EquivalenceClasses);
-
-InstallMethod(RightCongruenceClasses,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-EquivalenceClasses);
-
-InstallMethod(NrCongruenceClasses,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-NrEquivalenceClasses);
-
-InstallMethod(NrLeftCongruenceClasses,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-NrEquivalenceClasses);
-
-InstallMethod(NrRightCongruenceClasses,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-NrEquivalenceClasses);
-
-InstallMethod(NonTrivialCongruenceClasses,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-NonTrivialEquivalenceClasses);
-
-InstallMethod(NonTrivialLeftCongruenceClasses,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-NonTrivialEquivalenceClasses);
-
-InstallMethod(NonTrivialRightCongruenceClasses,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-NonTrivialEquivalenceClasses);
-
-InstallMethod(CongruenceClassOfElement,
-"for a semigroup congruence and multiplicative element",
-[IsSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
-
-InstallMethod(LeftCongruenceClassOfElement,
-"for a left semigroup congruence and multiplicative element",
-[IsLeftSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
-
-InstallMethod(RightCongruenceClassOfElement,
-"for a right semigroup congruence and multiplicative element",
-[IsRightSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
-
-InstallMethod(IsSuperrelation,
-"for two semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
-function(cong1, cong2)
-  return IsSubrelation(cong2, cong1);
-end);
-
-InstallMethod(OnLeftCongruenceClasses,
-"for a left congruence class and a multiplicative element",
-[IsLeftCongruenceClass, IsMultiplicativeElement],
-function(class, elm)
-  local cong;
-  cong := EquivalenceClassRelation(class);
-  return EquivalenceClassOfElementNC(cong, elm * Representative(class));
-end);
-
-InstallMethod(OnRightCongruenceClasses,
-"for a right congruence class and a multiplicative element",
-[IsRightCongruenceClass, IsMultiplicativeElement],
-function(class, elm)
-  local cong;
-  cong := EquivalenceClassRelation(class);
-  return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
-end);
-
-SEMIGROUPS._GenericEquivLookup := function(equiv)
+InstallMethod(EquivalenceRelationLookup, "for IsAnyCongruenceCategory",
+[IsAnyCongruenceCategory],
+function(C)
   local S, lookup, class, nr, elm;
+  S := Range(C);
+  if not (IsSemigroup(S) and IsFinite(S)) then
+    ErrorNoReturn("the range of the argument (an equivalence relation) ",
+                  "is not a finite semigroup");
+  fi;
+  Assert(1, CanUseFroidurePin(S));
 
-  S := Range(equiv);
   lookup := [1 .. Size(S)];
-  for class in NonTrivialEquivalenceClasses(equiv) do
+  for class in NonTrivialEquivalenceClasses(C) do
     nr := PositionCanonical(S, Representative(class));
     for elm in class do
       lookup[PositionCanonical(S, elm)] := nr;
     od;
   od;
   return lookup;
-end;
-
-InstallMethod(EquivalenceRelationLookup,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-function(equiv)
-  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
-    ErrorNoReturn("<equiv> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericEquivLookup(equiv);
 end);
 
-SEMIGROUPS._GenericEquivCanonicalLookup := function(equiv)
-  local lookup, max, dictionary, next, out, i, new_nr;
-  lookup := EquivalenceRelationLookup(equiv);
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
+function(C)
+  local S, lookup, max, dictionary, next, out, new_nr, i;
+  S := Range(C);
+  if not (IsSemigroup(S) and IsFinite(S)) then
+    ErrorNoReturn("the range of the argument (an equivalence relation) ",
+                  "is not a finite semigroup");
+  fi;
+  Assert(1, CanUseFroidurePin(S));
+
+  lookup := EquivalenceRelationLookup(C);
   max := Maximum(lookup);
-  # We do not know whether the maximum is NrEquivalenceClasses(equiv)
+  # We do not know whether the maximum is NrEquivalenceClasses(C)
   dictionary := ListWithIdenticalEntries(max, 0);
   next := 1;
   out := EmptyPlist(max);
@@ -522,29 +254,232 @@ SEMIGROUPS._GenericEquivCanonicalLookup := function(equiv)
     out[i] := new_nr;
   od;
   return out;
-end;
-
-InstallMethod(EquivalenceRelationCanonicalLookup,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-function(equiv)
-  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
-    ErrorNoReturn("<equiv> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericEquivCanonicalLookup(equiv);
 end);
 
 InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-cong -> Set(EquivalenceRelationPartition(cong), Set));
+"for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
+function(C)
+  return Filtered(EquivalenceRelationPartitionWithSingletons(C),
+                  x -> Size(x) <> 1);
+end);
 
-InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-cong -> Set(EquivalenceRelationPartition(cong), Set));
+InstallMethod(EquivalenceRelationPartitionWithSingletons,
+"for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
+function(C)
+  local en, partition, lookup, i;
+  if not IsFinite(Range(C)) then
+    Error("the argument (a congruence) must have finite range");
+  fi;
+  # CanUseFroidurePin is required because EnumeratorCanonical is not a
+  # thing for other types of congruences. There isn't a way of constructing an
+  # object in IsAnyCongruenceCategory where the range does not have
+  # CanUseFroidurePin, so we just assert this for safety.
+  Assert(1, CanUseFroidurePin(Range(C)));
+  en        := EnumeratorCanonical(Range(C));
+  partition := List([1 .. NrEquivalenceClasses(C)], x -> []);
+  lookup    := EquivalenceRelationCanonicalLookup(C);
+  for i in [1 .. Length(lookup)] do
+    Add(partition[lookup[i]], en[i]);
+  od;
 
-InstallMethod(NonTrivialEquivalenceClasses,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
+  return partition;
+end);
+
+########################################################################
+# Congruence operators
+########################################################################
+
+InstallMethod(\in,
+"for homog. list and IsAnyCongruenceCategory",
+[IsHomogeneousList, IsAnyCongruenceCategory],
+function(pair, C)
+  local S, string;
+
+  if Size(pair) <> 2 then
+    ErrorNoReturn("the 1st argument (a list) does not have length 2");
+  fi;
+
+  S      := Range(C);
+  string := AnyCongruenceString(C);
+  if not (pair[1] in S and pair[2] in S) then
+    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
+                  "the range of the 2nd argument (a ", string, " semigroup ",
+                  "congruence)");
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
+    return true;
+  fi;
+  return CongruenceTestMembershipNC(C, pair[1], pair[2]);
+end);
+
+InstallMethod(\=, "for IsAnyCongruenceCategory",
+[IsAnyCongruenceCategory, IsAnyCongruenceCategory],
+function(lhop, rhop)
+  local S;
+  S := Range(lhop);
+  if S <> Range(rhop) then
+    return false;
+  elif HasIsFinite(S) and IsFinite(S) then
+    return EquivalenceRelationCanonicalLookup(lhop) =
+           EquivalenceRelationCanonicalLookup(rhop);
+  fi;
+  return EquivalenceRelationCanonicalPartition(lhop) =
+         EquivalenceRelationCanonicalPartition(rhop);
+end);
+
+InstallMethod(IsSuperrelation, "for semigroup congruences",
+[IsAnyCongruenceCategory, IsAnyCongruenceCategory],
+{lhop, rhop} -> IsSubrelation(rhop, lhop));
+
+# TODO what about MeetLeftSemigroupCongruences, MeetRightSemigroupCongruences?
+InstallMethod(MeetSemigroupCongruences, "for semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+function(lhop, rhop)
+  if Range(lhop) <> Range(rhop) then
+    Error("cannot form the meet of congruences over different semigroups");
+  elif lhop = rhop then
+    return lhop;
+  elif IsSubrelation(lhop, rhop) then
+    return rhop;
+  elif IsSubrelation(rhop, lhop) then
+    return lhop;
+  fi;
+  # lhop_lookup := EquivalenceRelationCanonicalLookup(lhop);
+  # rhop_lookup := EquivalenceRelationCanonicalLookup(rhop);
+  # N           := Length(lhop);
+
+  # hash := HashMap();
+  # next := 1;
+  # for i in [1 .. N] do
+  # The problem is how to represent the meet of the congruences
+  # od;
+  # TODO actually implement a method
+  TryNextMethod();
+end);
+
+########################################################################
+# Congruence classes
+########################################################################
+
+InstallMethod(EquivalenceClassOfElement,
+"for IsAnyCongruenceCategory and multiplicative element",
+[IsAnyCongruenceCategory, IsMultiplicativeElement],
+function(C, x)
+  if not x in Range(C) then
+    Error("the 2nd argument (a mult. elt.) does not belong to the range ",
+          "of the 1st argument (a congruence)");
+  fi;
+  return EquivalenceClassOfElementNC(C, x);
+end);
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for IsAnyCongruenceCategory and multiplicative element",
+[IsAnyCongruenceCategory, IsMultiplicativeElement],
+function(C, x)
+  local filt, class;
+
+  filt := IsAnyCongruenceClass;
+
+  if IsCongruenceCategory(C) then
+    filt := filt and IsCongruenceClass;
+  elif IsLeftCongruenceCategory(C) then
+    filt := filt and IsLeftCongruenceClass;
+  else
+    Assert(1, IsRightCongruenceCategory(C));
+    filt := filt and IsRightCongruenceClass;
+  fi;
+
+  class := Objectify(NewType(FamilyObj(Range(C)), filt), rec());
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
+  SetRepresentative(class, x);
+  if HasIsFinite(Range(C)) and IsFinite(Range(C)) then
+    SetIsFinite(class, true);
+  fi;
+
+  return class;
+end);
+
+########################################################################
+# Congruence class attributes
+########################################################################
+
+InstallMethod(AsList, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+C -> ImagesElm(EquivalenceClassRelation(C), Representative(C)));
+
+InstallMethod(Enumerator, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+AsList);
+
+InstallMethod(Size, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+C -> Size(AsList(C)));
+
+########################################################################
+# Congruence class operators
+########################################################################
+
+# Multiplication for congruence classes: only makes sense for 2-sided
+InstallMethod(\*, "for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(lhop, rhop)
+  if EquivalenceClassRelation(lhop) <> EquivalenceClassRelation(rhop) then
+    ErrorNoReturn("the arguments (cong. classes) are not classes of the same ",
+                  "congruence");
+  fi;
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(lhop),
+                                     Representative(lhop) *
+                                     Representative(rhop));
+end);
+
+InstallMethod(\=,
+"for IsAnyCongruenceClass and IsAnyCongruenceClass",
+IsIdenticalObj,
+[IsAnyCongruenceClass, IsAnyCongruenceClass],
+function(lhop, rhop)
+  return EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop)
+    and [Representative(lhop), Representative(rhop)]
+    in EquivalenceClassRelation(lhop);
+end);
+
+InstallMethod(\in,
+"for a mult. elt. and IsAnyCongruenceClass",
+[IsMultiplicativeElement, IsAnyCongruenceClass],
+function(x, class)
+  local C;
+  C := EquivalenceClassRelation(class);
+  return x in Range(C) and [x, Representative(class)] in C;
+end);
+
+InstallMethod(ViewObj, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+function(C)
+  local string;
+  if IsCongruenceCategory(EquivalenceClassRelation(C)) then
+    string := "";
+  else
+    string := Concatenation(AnyCongruenceString(EquivalenceClassRelation(C)),
+                            " ");
+  fi;
+  Print("<", string, "congruence class of ");
+  ViewObj(Representative(C));
+  Print(">");
+end);
+
+########################################################################
+# Congruence class actions
+########################################################################
+
+InstallMethod(OnLeftCongruenceClasses,
+"for a left congruence class and a multiplicative element",
+[IsLeftCongruenceClass, IsMultiplicativeElement],
+function(class, x)
+  local C;
+  C := EquivalenceClassRelation(class);
+  return EquivalenceClassOfElementNC(C, x * Representative(class));
+end);
+
+InstallMethod(OnRightCongruenceClasses,
+"for a right congruence class and a multiplicative element",
+[IsRightCongruenceClass, IsMultiplicativeElement],
+function(class, x)
+  local C;
+  C := EquivalenceClassRelation(class);
+  return EquivalenceClassOfElementNC(C, Representative(class) * x);
+end);

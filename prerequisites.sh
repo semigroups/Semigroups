@@ -7,7 +7,7 @@ notice_it() {
 }
 
 error() {
-    printf '\033[31mERROR: %s\033[0m\n' "$*"
+    printf '\033[31m%s\033[0m\n' "$*"
     exit 1
 }
 

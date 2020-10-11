@@ -1,15 +1,15 @@
 ###############################################################################
 ##
-##  freeband.gi
-##  Copyright (C) 2013-15                                  Julius Jonusas
+##  fp/freeband.gi
+##  Copyright (C) 2013-2022                                Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
 ###############################################################################
 
-# TODO: this is not really finished.
+# TODO(later): this is not really finished.
 
-# TODO
+# TODO(later)
 # InstallMethod(FreeBandOfFreeBandElement,
 
 InstallMethod(ContentOfFreeBandElement, "for a free band element",
@@ -103,8 +103,7 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    ErrorNoReturn("Semigroups: FreeBand: usage,\n",
-                  "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
+    ErrorNoReturn("FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
   fi;
 
   MakeImmutable(names);
@@ -128,10 +127,6 @@ function(arg)
   filts := IsFreeBandCategory and IsAttributeStoringRep and IsWholeFamily and
            IsFreeBand;
 
-  if IsGeneratorsOfEnumerableSemigroup(gens) then
-    filts := filts and IsEnumerableSemigroupRep;
-  fi;
-
   S := Objectify(NewType(FamilyObj(gens), filts),
                  rec(opts := SEMIGROUPS.DefaultOptionsRec));
 
@@ -143,16 +138,13 @@ function(arg)
   return S;
 end);
 
-InstallMethod(IsFreeBand, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IsFreeBand, "for a semigroup", [IsSemigroup],
 function(S)
   local used, occurred, gens, max_d, g;
 
   if not IsBand(S) then
     return false;
-  fi;
-
-  if IsFreeBandSubsemigroup(S) then
+  elif IsFreeBandSubsemigroup(S) then
     gens := Generators(S);
     used := BlistList([1 .. Length(gens[1]!.cont)], []);
     occurred := BlistList([1 .. Length(gens[1]!.cont)], []);
@@ -251,8 +243,6 @@ function(dclass)
     return output;
   end;
 
-  #
-
   NextIterator_FreeBandDClassWithPrint := function(iter)
     local next_value;
 
@@ -265,8 +255,6 @@ function(dclass)
                      x -> GeneratorsOfSemigroup(iter!.semigroup)[x]));
     fi;
   end;
-
-  #
 
   NewIterator_FreeBandDClass := function(s, content)
     local record, first, tempcont, elem;
@@ -301,95 +289,37 @@ function(dclass)
     return record;
   end;
 
-  #
-
-  ShallowCopyLocal := record ->
-    rec(last_called_by_is_done := record!.last_called_by_is_done,
-        next_value := record!.next_value,
-        IsDoneIterator := record!.IsDoneIterator,
-        NextIterator := record!.NextIterator);
-
-  record := NewIterator_FreeBandDClass(s, content);
-  record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
-  record!.ShallowCopy := ShallowCopyLocal;
-  return IteratorByNextIterator(record);
-end);
-
-# A free band iterator has component: content, dclass_iter.
-
-InstallMethod(Iterator, "for a free band",
-[IsFreeBandCategory],
-function(s)
-  local NextIterator_FreeBand, ShallowCopyLocal, record ;
-
-  NextIterator_FreeBand := function(iter)
-    local next_dclass_value, content, i, rep, dclass;
-
-    next_dclass_value := NextIterator(iter!.dclass_iter);
-    content := iter!.content;
-
-    if next_dclass_value <> fail then
-      # The current content is not done yet
-      return next_dclass_value;
-    elif ForAll(content, x -> x) then
-      # Last content finished
-      return fail;
-    else
-      # Change content
-      for i in [1 .. Length(content)] do
-        if content[i] then
-          content[i] := false;
-        else
-          content[i] := true;
-          break;
-        fi;
-      od;
-      # Create the corresponding D-class, without actualy enumerating it.
-      i := Position(content, true);
-      rep := SEMIGROUPS.UniversalFakeOne;
-      while i <> fail do
-        rep := rep * GeneratorsOfSemigroup(s)[i];
-        i := Position(content, true, i);
-      od;
-      dclass := GreensDClassOfElement(s, rep);
-      iter!.dclass_iter := Iterator(dclass);
-      return NextIterator(iter!.dclass_iter);
-    fi;
+  ShallowCopyLocal := function(it)
+    local record;
+    record := NewIterator_FreeBandDClass(s, content);
+    record.NextIterator := it!.NextIterator;
+    record.ShallowCopy := it!.ShallowCopy;
+    return record;
   end;
 
-  ShallowCopyLocal := record ->
-    rec(last_called_by_is_done := record!.last_called_by_is_done,
-        next_value := record!.next_value,
-        IsDoneIterator := record!.IsDoneIterator,
-        NextIterator := record!.NextIterator);
-
-  record := rec(content :=
-                BlistList([1 .. Length(GeneratorsOfSemigroup(s))], [1]),
-                dclass_iter := Iterator(GreensDClassOfElement(s, s.1)));
-  record!.NextIterator := NextIterator_FreeBand;
-  record!.ShallowCopy := ShallowCopyLocal;
+  record := NewIterator_FreeBandDClass(s, content);
+  record.NextIterator := NextIterator_FreeBandDClassWithPrint;
+  record.ShallowCopy := ShallowCopyLocal;
   return IteratorByNextIterator(record);
 end);
-
-# The method below does not apply to S when it is in IsEnumerableSemigroupRep
-# since the rank of IsEnumerableSemigroupRep is highter than that of
-# IsFreeBandCategory.
 
 InstallMethod(GreensDClassOfElement, "for a free band and element",
 [IsFreeBandCategory, IsFreeBandElement],
 function(S, x)
-  local type, D;
-  # FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
-  # remove the next two lines
-  if IsEnumerableSemigroupRep(S) then
-    TryNextMethod();
-  elif not x in S then
-    ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
-                  "the element does not belong to the semigroup,");
+  local filt, type, D;
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (a free band element) does not ",
+                  "belong to 1st argument (a free band category)");
   fi;
 
-  type := NewType(FamilyObj(S), IsEquivalenceClass and
-                  IsEquivalenceClassDefaultRep and IsGreensDClass);
+  filt := IsEquivalenceClass and IsEquivalenceClassDefaultRep
+          and IsGreensDClass;
+
+  if Length(GeneratorsOfSemigroup(S)) < 4 then
+    filt := filt and IsGreensClassOfSemigroupThatCanUseFroidurePinRep;
+  fi;
+
+  type := NewType(FamilyObj(S), filt);
   D := Objectify(type, rec());
   SetParent(D, S);
   SetRepresentative(D, x);
@@ -579,10 +509,10 @@ function(w1_in, w2_in)
 
   StripFreeBandString := function(w)
     local last, out, i;
-    if not IsList(w) then
-      ErrorNoReturn("expected a list, got ", w);
-    fi;
-    if Length(w) = 0 or Length(w) = 1 then
+    # Empty lists are checked below
+    if not IsPosInt(w[1]) then
+      ErrorNoReturn("expected a list of pos. int.s, got ", TNAM_OBJ(w[1]));
+    elif Length(w) = 1 then
       return w;
     fi;
 
@@ -616,7 +546,7 @@ function(w1_in, w2_in)
   w := StandardiseWord(w);
 
   c     := w[l1 + 1];
-  check := ListWithIdenticalEntries(c, false);
+  check := BlistList([1 .. c], []);
   for i in [l1 + 2 .. l1 + 1 + l2] do
     if w[i] >= c then
       return false;
@@ -626,9 +556,7 @@ function(w1_in, w2_in)
   od;
   if SizeBlist(check) <> c - 1 then
     return false;
-  fi;
-
-  if c = 2 then
+  elif c = 2 then
     return true;
   fi;
 
@@ -651,7 +579,7 @@ function(w1_in, w2_in)
   return edgecodes[1] = edgecodes[l1 + 2];
 end);
 
-# TODO Is there a more efficient way to compare elements? JJ
+# TODO(later) Is there a more efficient way to compare elements? JJ
 
 InstallMethod(\=, "for elements of a free band",
 IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],
@@ -669,7 +597,8 @@ function(x, y)
   return true;
 end);
 
-# TODO Is it possible to find a non recursive way to compare elements? JJ
+# TODO(later) Is it possible to find a non recursive way to compare elements?
+# JJ
 
 InstallMethod(\<, "for elements of a free band",
 IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],

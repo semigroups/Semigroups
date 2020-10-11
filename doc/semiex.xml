@@ -303,7 +303,7 @@ gap> Difference(S, T);
       planar uniform block bijection monoid consisting of the non-invertible
       elements (i.e. those not in the group of units), when <A>n</A> is
       at least 2. <P/>
-      <!-- TODO reference -->
+      <!-- TODO(later) reference -->
  
       <C>PartialUniformBlockBijectionMonoid</C> returns the submonoid of the
       uniform block bijection monoid of degree <C><A>n</A> + 1</C> consisting
@@ -407,7 +407,7 @@ gap> Size(S);
       <C>SingularCrossedApsisMonoid</C> returns the ideal of the
       crossed apsis monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when <A>m &lt;= n</A>.
-      <!-- TODO reference and/or definition -->
+      <!-- TODO(later) reference and/or definition -->
 
       <Example><![CDATA[
 gap> S := ApsisMonoid(3, 7);
@@ -435,7 +435,7 @@ gap> SingularCrossedApsisMonoid(4, 6);
       semigroup of transformations on <C><A>n</A> + 1</C> points which is
       isomorphic to the semigroup consisting of all partial transformation on
       <A>n</A> points. This monoid has <C>(<A>n</A> + 1) ^ <A>n</A></C> elements.
-      <!--TODO add generators-->
+      <!--TODO(later) add generators-->
       <Example><![CDATA[
 gap> S := PartialTransformationMonoid(5);
 <regular transformation monoid of degree 6 with 4 generators>
@@ -473,7 +473,7 @@ gap> Size(S);
       planar modular partition monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when either
       <A>m = n = 1</A> or <A>m, n &gt; 1</A>.
-      <!-- TODO reference -->
+      <!-- TODO(later) reference -->
 
       <Example><![CDATA[
 gap> S := ModularPartitionMonoid(3, 6);

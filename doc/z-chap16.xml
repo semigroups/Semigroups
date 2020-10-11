@@ -1,75 +1,75 @@
-<Chapter Label = "Properties and attributes specific to inverse semigroups">
+<Chapter Label = "Visualising semigroups and elements">
   <Heading>
-    Properties and attributes specific to inverse semigroups
+    Visualising semigroups and elements
   </Heading>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 
-  In this chapter we describe the attributes which are specific
-  to inverse semigroups that can be determined using &Semigroups;.<P/>
-
-  The functions
-  <List>
-    <Item><Ref Oper = "IsJoinIrreducible"/></Item>
-    <Item><Ref Oper = "IsMajorantlyClosed"/></Item>
-    <Item><Ref Attr = "JoinIrreducibleDClasses"/></Item>
-    <Item><Ref Oper = "MajorantClosure"/></Item>
-    <Item><Ref Oper = "Minorants"/></Item>
-    <Item><Ref Oper = "RightCosetsOfInverseSemigroup"/></Item>
-    <Item><Ref Attr = "SmallerDegreePartialPermRepresentation"/></Item>
-    <Item><Ref Attr = "VagnerPrestonRepresentation"/></Item>
-  </List>
-  were written by Wilf A. Wilson and Robert Hancock. <P/>
-
-  The function <Ref Attr = "CharacterTableOfInverseSemigroup"/> was written by
-  Jhevon Smith and Ben Steinberg.
+  There are two operations <Ref Oper = "TikzString"/> and <Ref Oper =
+    "DotString"/> in &SEMIGROUPS; for creating &LaTeX; and <C>dot</C> (also
+  known as GraphViz) format pictures of the Green's class structure of a
+  semigroup and for visualising certain types of elements of a semigroup. There
+  is also a function <Ref Func = "Splash" BookName = "Digraphs"/> for
+  automatically processing the output of <Ref Oper = "TikzString"/> and <Ref
+    Oper = "DotString"/> and opening the resulting pdf file.
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
- 
+
     <Heading>
-      Attributes specific to inverse semigroups
+      <C>dot</C> pictures
     </Heading>
+
+    In this section, we describe the operations in &SEMIGROUPS; for creating
+    pictures in <C>dot</C> format.
+    <P/>
  
-    <#Include Label = "NaturalLeqInverseSemigroup">
-    <#Include Label = "JoinIrreducibleDClasses">
-    <#Include Label = "MajorantClosure">
-    <#Include Label = "Minorants">
-    <#Include Label = "PrimitiveIdempotents">
-    <#Include Label = "RightCosetsOfInverseSemigroup">
-    <#Include Label = "SameMinorantsSubgroup">
-    <#Include Label = "SmallerDegreePartialPermRepresentation">
-    <#Include Label = "VagnerPrestonRepresentation">
-    <#Include Label = "CharacterTableOfInverseSemigroup">
-    <#Include Label = "EUnitaryInverseCover">
+    The operations described in this section return strings, which
+    can be written to a file using the function <Ref Func = "FileString"
+      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash" BookName =
+      "Digraphs"/>.
+
+    <#Include Label = "DotString"/>
+    <#Include Label = "DotStringDigraph"/>
+    <#Include Label = "DotSemilatticeOfIdempotents"/>
+    <#Include Label = "DotLeftCayleyDigraph">
 
   </Section>
-
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
     <Heading>
-      Properties of inverse semigroups
+      <C>tex</C> output
     </Heading>
- 
-    <#Include Label = "IsCliffordSemigroup">
-    <#Include Label = "IsBrandtSemigroup">
-    <#Include Label = "IsEUnitaryInverseSemigroup">
-    <#Include Label = "IsFInverseSemigroup">
-    <#Include Label = "IsFInverseMonoid">        
-    <#Include Label = "IsFactorisableInverseMonoid">
-    <#Include Label = "IsJoinIrreducible">
-    <#Include Label = "IsMajorantlyClosed">
-    <#Include Label = "IsMonogenicInverseSemigroup">
-    <#Include Label = "IsMonogenicInverseMonoid">
+    In this section, we describe the operations in &SEMIGROUPS; for creating
+    &LaTeX; representations of &GAP; objects. For pictures of &GAP; objects
+    please see Section <Ref Sect="tikz pictures"/>. 
 
+    <#Include Label = "TexString">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
+
+  <Section Label="tikz pictures">
+    <Heading>
+      <C>tikz</C> pictures
+    </Heading>
+
+    In this section, we describe the operations in &SEMIGROUPS; for creating
+    pictures in <C>tikz</C> format.
+    <P/>
+
+    The functions described in this section return a string, which can be
+    written to a file using the function <Ref Func = "FileString"
+      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash" BookName =
+      "Digraph"/>.
+
+    <#Include Label = "TikzString">
+    <#Include Label = "TikzLeftCayleyDigraph">
+
+  </Section>
 
 </Chapter>

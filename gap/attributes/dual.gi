@@ -1,40 +1,46 @@
 #############################################################################
 ##
-##  dual.gi
-##  Copyright (C) 2018                                      James D. Mitchell
-##                                                          Finn Smith
+##  attributes/dual.gi
+##  Copyright (C) 2018-2022                              James D. Mitchell
+##                                                              Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## This file contains an implementation of dual semigroups. We only provide
-## enough functionality to allow dual semigroups to work as enumerable
-## semigroups. This is to avoid having to install versions of every function
-## in Semigroups specially for dual semigroup representations. In some cases
-## special functions would be faster.
+
+# This file contains an implementation of dual semigroups. We only provide
+# enough functionality to allow dual semigroups to work as semigroups. This is
+# to avoid having to install versions of every function in Semigroups specially
+# for dual semigroup representations. In some cases special functions would be
+# faster.
 
 InstallMethod(DualSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local dual, fam, filts, map, type;
+  local fam, dual, filts, type, map;
 
   if IsDualSemigroupRep(S) then
     if HasGeneratorsOfSemigroup(S) then
       return Semigroup(List(GeneratorsOfSemigroup(S),
                             x -> UnderlyingElementOfDualSemigroupElement(x)));
     fi;
-    ErrorNoReturn("Semigroups: DualSemigroup: \n",
-                  "this dual semigroup cannot be constructed ",
-                  "without knowing generators,");
+    ErrorNoReturn("this dual semigroup cannot be constructed ",
+                  "without knowing generators");
   fi;
 
-  fam   := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
-  dual  := Objectify(NewType(CollectionsFamily(fam),
-                            IsWholeFamily and
-                            IsDualSemigroupRep and
-                            IsAttributeStoringRep),
-                    rec());
+  fam  := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
+  dual := rec();
+  ObjectifyWithAttributes(dual,
+                          NewType(CollectionsFamily(fam),
+                                  IsSemigroup and
+                                  IsWholeFamily and
+                                  IsDualSemigroupRep and
+                                  IsAttributeStoringRep),
+                          DualSemigroup,
+                          S,
+                          CanUseGapFroidurePin,
+                          CanUseFroidurePin(S));
 
   filts := IsDualSemigroupElement;
   if IsMultiplicativeElementWithOne(Representative(S)) then
@@ -45,9 +51,7 @@ function(S)
   fam!.type  := type;
 
   SetDualSemigroupOfFamily(fam, dual);
-
   SetElementsFamily(FamilyObj(dual), fam);
-  SetDualSemigroup(dual, S);
 
   if HasIsFinite(S) then
     SetIsFinite(dual, IsFinite(S));
@@ -100,9 +104,8 @@ end);
 InstallGlobalFunction(UnderlyingElementOfDualSemigroupElement,
 function(s)
   if not IsDualSemigroupElement(s) then
-    ErrorNoReturn("Semigroups: UnderlyingElementOfDualSemigroupElement: \n",
-                  "the argument must be an element represented as a dual ",
-                  "semigroup element,");
+    ErrorNoReturn("the argument is not an element represented as a dual ",
+                  "semigroup element");
   fi;
   return s![1];
 end);
@@ -195,6 +198,24 @@ function(S)
         ViewString(DualSemigroup(S)),
         ">");
 end);
+
+# InstallMethod(ViewString, "for dual semigroup elements",
+# [IsDualSemigroupElement], PrintString);
+#
+# InstallMethod(PrintString, "for dual semigroup elements",
+# [IsDualSemigroupElement],
+# function(x)
+#   return StringFormatted("<{!v} in the dual semigroup>", x![1]);
+# end);
+#
+# InstallMethod(ViewString, "for a dual semigroup",
+# [IsDualSemigroupRep], PrintString);
+#
+# InstallMethod(PrintString, "for a dual semigroup",
+# [IsDualSemigroupRep],
+# function(S)
+#   return StringFormatted("<dual semigroup of {!v}>", DualSemigroup(S));
+# end);
 
 InstallMethod(ChooseHashFunction, "for a dual semigroup element and int",
 [IsDualSemigroupElement, IsInt],

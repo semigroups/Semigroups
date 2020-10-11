@@ -1,6 +1,6 @@
 ## Contributing to the Semigroups package for GAP
 
-#### Copyright (C) 2011-18 James D. Mitchell
+#### Copyright (C) 2011-2022 James D. Mitchell
 #### Licensing information is available in the LICENSE file.   
 
 We invite everyone to contribute by submitting patches, pull requests, and bug

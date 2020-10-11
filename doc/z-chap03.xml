@@ -3,28 +3,28 @@
     Bipartitions and blocks
   </Heading>
 
-  In this chapter we describe the functions in &Semigroups; for creating and
+  In this chapter we describe the functions in &SEMIGROUPS; for creating and
   manipulating bipartitions and semigroups of bipartitions. We begin by
   describing what these objects are.
   <P/>
 
-  A <E>partition</E> of a set &setX; is a set of pairwise disjoint non-empty
-  subsets of &setX; whose union is &setX;. A partition of &setX; is the
-  collection of equivalence classes of an equivalence relation on &setX;, and
+  A <E>partition</E> of a set &X; is a set of pairwise disjoint non-empty
+  subsets of &X; whose union is &X;. A partition of &X; is the
+  collection of equivalence classes of an equivalence relation on &X;, and
   vice versa.
   <P/>
 
   Let <M>n\in</M>&bbN;, let &bfn;<M> = \{1, 2, \ldots, n\}</M>, and let
   <M>-</M>&bfn;<M> = \{-1, -2, \ldots, -n\}</M>.
   <P/>
- 
+
   The <E>partition monoid</E> of degree &n; is the set of all partitions of
   &bfn;<M>\cup</M>-&bfn; with a multiplication we describe below. To avoid
   conflict with other uses of the word "partition" in &GAP;, and to reflect
   their definition, we have opted to refer to the elements of the partition
   monoid as <E>bipartitions</E> of degree &n;; we will do so from this point on.
   <P/>
- 
+
   Let &x; be any bipartition of degree &n;. Then &x; is a set of pairwise
   disjoint non-empty subsets of &bfn;<M>\cup</M>-&bfn; whose union is
   &bfn;<M>\cup</M>-&bfn;; these subsets are called the <E>blocks</E> of &x;.  A
@@ -45,7 +45,7 @@
   defined by the restriction of the equivalence relation &p; to the set
   &bfn;<M>\cup</M>-&bfn;.
   <P/>
-  
+
   Equivalently, the product &x;&y; is defined to be the bipartition where
   &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; (we assume without loss of generality
   that &i;<M>\geq</M>&j;) belong to the same block of &x;&y; if either:
@@ -70,7 +70,7 @@
   </Alt>,
   and one of the following holds:
   <List>
-    <Item> 
+    <Item>
       <Alt Not = "Text">
         <M>r=2s-1</M> for some <M>s\geq 1</M>
       </Alt>
@@ -81,7 +81,7 @@
       <Alt Not = "Text">
         <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\
           \ldots,\qquad</Display>
-        <Display>\qquad\ldots,\ (-k(2s-2),-k(2s-1))\in x,\ 
+        <Display>\qquad\ldots,\ (-k(2s-2),-k(2s-1))\in x,\
           (k(2s-1),j)\in y;</Display>
       </Alt>
       <Alt Only = "Text">
@@ -153,7 +153,7 @@
     <C>(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.</C>
     <P/>
   </Alt>
- 
+
   In this way, the partition monoid is a <E>regular *-semigroup</E>. <P/>
 
   A bipartition &x; of degree &n; is called <E>planar</E> if there do not exist
@@ -193,11 +193,11 @@
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
- 
+
   <Section Label = "creating-bipartitions">
     <Heading>Creating bipartitions</Heading>
   There are several ways of creating bipartitions in &GAP;, which are
-  described in this section. The maximum degree of a bipartition is set as 
+  described in this section. The maximum degree of a bipartition is set as
   2 ^ 29 - 1. In reality, it is unlikely to be possible to create bipartitions
   of degrees as small as 2 ^ 24 because they require too much memory.
     <#Include Label = "Bipartition">
@@ -216,10 +216,10 @@
     <Heading>Changing the representation of a bipartition</Heading>
    It  is  possible that a bipartition can be represented as another
   type  of object, or that another type of &GAP; object can be represented as a
-  bipartition. In this section, we describe the functions in the &Semigroups;
+  bipartition. In this section, we describe the functions in the &SEMIGROUPS;
   package for changing the representation of bipartition, or for changing the
   representation of another type of object to that of a bipartition.<P/>
- 
+
   The  operations
   <Ref Attr = "AsPermutation" Label = "for a bipartition"/>,
   <Ref Oper = "AsPartialPerm" Label = "for a bipartition"/>,
@@ -232,7 +232,7 @@
     <#Include Label = "AsPartialPerm"/>
     <#Include Label = "AsPermutation"/>
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -259,7 +259,7 @@
       bipartition <A>g</A> and returns <K>false</K> if it does not.
     </Item>
    </List>
- 
+
    <#Include Label = "PartialPermLeqBipartition">
    <#Include Label = "NaturalLeqPartialPermBipartition">
    <#Include Label = "NaturalLeqBlockBijection">
@@ -306,11 +306,11 @@
     right.
     <P/>
 
-    In this section, we describe the functions in the &Semigroups; package for
+    In this section, we describe the functions in the &SEMIGROUPS; package for
     creating and manipulating the left or right blocks of a bipartition.
 
     <#Include Label = "IsBlocks">
-    <#Include Label = "BlocksNC">
+    <#Include Label = "BLOCKS_NC">
     <#Include Label = "ExtRepOfObjBlocks">
     <#Include Label = "RankOfBlocks">
     <#Include Label = "DegreeOfBlocks">
@@ -328,23 +328,24 @@
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
+
   <Section>
     <Heading>
       Semigroups of bipartitions
     </Heading>
- 
+
     Semigroups and monoids of bipartitions can be created in the usual way in
     &GAP; using the functions <Ref Func = "Semigroup" BookName = "ref"/> and
     <Ref Func = "Monoid" BookName = "ref"/>; see Chapter
-    <Ref Chap = "Creating semigroups and monoids"/> for more details.  <P/>
- 
+    <Ref Chap = "Semigroups and monoids defined by generating sets"/> for more details.  <P/>
+
     It is possible to create inverse semigroups and monoids of bipartitions
     using <Ref Func = "InverseSemigroup" BookName = "ref"/> and <Ref Func =
       "InverseMonoid" BookName = "ref"/> when the argument is a collection of
     block bijections or partial perm bipartions; see <Ref Prop =
       "IsBlockBijection"/> and <Ref Prop = "IsPartialPermBipartition"/>.
 
-    Note that every bipartition semigroup in &Semigroups; is finite.
+    Note that every bipartition semigroup in &SEMIGROUPS; is finite.
 
     <#Include Label = "IsBipartitionSemigroup">
     <#Include Label = "IsBlockBijectionSemigroup">
@@ -353,7 +354,7 @@
     <#Include Label = "DegreeOfBipartitionSemigroup">
 
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

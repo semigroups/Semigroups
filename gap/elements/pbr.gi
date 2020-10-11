@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  pbr.gi
-##  Copyright (C) 2015                                   Attila Egri-Nagy
+##  elements/pbr.gi
+##  Copyright (C) 2015-2022                              Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -35,8 +35,7 @@ BindGlobal("TYPE_PBR",
 function(n)
 
   if not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: TYPE_PBR: usage,\n",
-                  "the argument must be a non-negative integer,");
+    ErrorNoReturn("the argument is not a non-negative integer");
   fi;
 
   n := n + 1;  # since the degree can be 0
@@ -63,10 +62,7 @@ function(file, x)
   if IO_Write(file, "PABR") = fail then
     return IO_Error;
   fi;
-  if IO_Pickle(file, List([1 .. 2 * x![1] + 1], i -> x![i])) = IO_Error then
-    return IO_Error;
-  fi;
-  return IO_OK;
+  return IO_Pickle(file, List([1 .. 2 * x![1] + 1], i -> x![i]));
 end);
 
 IO_Unpicklers.PABR := function(file)
@@ -79,7 +75,8 @@ IO_Unpicklers.PABR := function(file)
 end;
 
 #############################################################################
-# TODO the embeddings from the paper, AsPBR for a pbr (extend or restrict),
+# TODO(later) the embeddings from the paper, AsPBR for a pbr (extend or
+# restrict),
 #############################################################################
 
 InstallMethod(EmptyPBR, "for a pos int", [IsPosInt],
@@ -95,7 +92,7 @@ function(n)
   return PBRNC(List([1 .. n], y -> x), List([1 .. n], y -> x));
 end);
 
-# FIXME the following is temporary, with the current definition of
+# The following is temporary, with the current definition of
 # IsGeneratorsOfInverseSemigroup for a pbr collection, the One of any element
 # in the collection does not satisfy IsGeneratorsOfInverseSemigroup, and so it
 # cannot be inverted.
@@ -103,15 +100,14 @@ end);
 InstallMethod(InverseMonoidByGenerators,
 [IsPBRCollection],
 function(coll)
-  ErrorNoReturn("Semigroups: InverseMonoidByGenerators",
-                "(for a pbr collection):\nnot yet implemented,");
+  ErrorNoReturn("not yet implemented");
 end);
 
-# FIXME see the comment above, this is not really correct.
+# See the comment above, this is not really correct.
 
 InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
 function(x)
-  # TODO change IsBlockBijection(AsBipartition(x)) to
+  # TODO(later) change IsBlockBijection(AsBipartition(x)) to
   # IsBlockBijectionPBR.
   if IsPartialPermPBR(x) or
       (IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x))) then
@@ -120,7 +116,7 @@ function(x)
   return fail;
 end);
 
-# FIXME see the comment above, this is not really correct.
+# See the comment above, this is not really correct.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
@@ -315,8 +311,8 @@ function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
 
-# TODO The following doesn't define a monoid embedding of P_n into PBR_n. What
-# is a monoid embedding from P_n to PBR_n?
+# TODO(later) The following doesn't define a monoid embedding of P_n into
+# PBR_n. What is a monoid embedding from P_n to PBR_n?
 
 InstallMethod(AsPBR, "for a bipartition",
 [IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));
@@ -350,15 +346,14 @@ function(x, n)
   return PBRNC(out[1], out[2]);
 end);
 
-InstallMethod(AsPBR, "for a boolean matrix",
-[IsBooleanMat],
+InstallMethod(AsPBR, "for a boolean matrix", [IsBooleanMat],
 function(x)
   local dim, succ;
 
   dim := DimensionOfMatrixOverSemiring(x);
   if not IsEvenInt(dim) then
-    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                  "the boolean matrix <x> must be of even dimension,");
+    ErrorNoReturn("the 1st argument (a boolean matrix)is not of ",
+                  "even dimension");
   fi;
   succ := Successors(x);
   return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
@@ -370,15 +365,14 @@ function(mat, n)
   local m, nbs, k, i, j;
 
   if not IsEvenInt(n) then
-    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                  "the second argument <n> must be even,");
+    ErrorNoReturn("the 2nd argument (a pos. int) is not even");
   fi;
 
   m := DimensionOfMatrixOverSemiring(mat);
 
   if not IsEvenInt(m) then
-    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                  "the boolean matrix <x> must be of even dimension,");
+    ErrorNoReturn("the 1st argument (a boolean matrix) ",
+                  "does not have even dimension");
   fi;
 
   nbs := [List([1 .. n / 2], x -> []),
@@ -431,16 +425,14 @@ function(mat, n)
   return PBRNC(nbs[1], nbs[2]);
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsTransformation, "for a pbr",
-[IsPBR],
+InstallMethod(AsTransformation, "for a pbr", [IsPBR],
 function(x)
   local out, n, i;
 
   if not IsTransformationPBR(x) then
-    ErrorNoReturn("Semigroups: AsTransformation: usage,\n",
-                  "the argument <x> must be a transformation PBR,");
+    ErrorNoReturn("the argument (a pbr) does not define a transformation");
   fi;
 
   out := [];
@@ -453,26 +445,22 @@ function(x)
   return Transformation(out);
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsPartialPerm, "for a pbr",
-[IsPBR],
+InstallMethod(AsPartialPerm, "for a pbr", [IsPBR],
 function(x)
   if not IsPartialPermPBR(x) then
-    ErrorNoReturn("Semigroups: AsPartialPerm: usage,\n",
-                  "the argument <x> must be a partial perm PBR,");
+    ErrorNoReturn("the argument (a pbr) does not define a partial perm");
   fi;
   return AsPartialPerm(AsBipartition(x));
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsPermutation, "for a pbr",
-[IsPBR],
+InstallMethod(AsPermutation, "for a pbr", [IsPBR],
 function(x)
   if not IsPermPBR(x) then
-    ErrorNoReturn("Semigroups: AsPermutation: usage,\n",
-                  "the argument <x> must be a permutation PBR,");
+    ErrorNoReturn("the argument (a pbr) does not define a permutation");
   fi;
   return AsPermutation(AsBipartition(x));
 end);
@@ -499,23 +487,25 @@ function(left, right)
   local deg, i;
 
   if Length(left) <> Length(right) then
-    ErrorNoReturn("Semigroups: PBR: usage,\n",
-                  "the arguments must have equal lengths,");
+    ErrorNoReturn("the arguments (dense lists) do not have equal length");
   fi;
 
   deg := Length(left);
 
   for i in [1 .. deg] do
-    if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
-      ErrorNoReturn("Semigroups: PBR: usage,\n",
-                    "the entries in the arguments must be homogeneous lists,");
+    if not IsHomogeneousList(left[i]) then
+      ErrorNoReturn("expected a homogeneous list in position ", i,
+                    " of the 1st argument (a dense list)");
+    elif not IsHomogeneousList(right[i]) then
+      ErrorNoReturn("expected a homogeneous list in position ", i,
+                    " of the 2nd argument (a dense list)");
     elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0
                                      and j <= deg and j >= -deg) then
-      ErrorNoReturn("Semigroups: PBR: usage,\n",
-                    "the entries in the first argument must be integers ",
-                    "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
+      # TODO(later) more informative
+      ErrorNoReturn("the entries in the arguments are not integers ",
+                    "in [", -deg, " .. -1] or [1 .. ", deg, "]");
     fi;
   od;
   return PBRNC(left, right);

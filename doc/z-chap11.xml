@@ -1,26 +1,283 @@
-<Chapter Label = "GraphInverseSemigroups">
+<Chapter Label = "Attributes and operations for semigroups">
   <Heading>
-    Graph inverse semigroups
+    Attributes and operations for semigroups
   </Heading>
 
-  In this chapter we describe a class of semigroups arising from directed
-  graphs. <P/>
+  In this chapter we decribe the methods that are available in &SEMIGROUPS; for
+  determining the attributes of a semigroup, and the operations which can be
+  applied to a semigroup.
 
-  The functionality in &Semigroups; for graph inverse semigroups was written
-  jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews).
-  <P/>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
   <Section>
     <Heading>
-      Creating graph inverse semigroups
+       Accessing the elements of a semigroup
+     </Heading>
+     <#Include Label = "AsListCanonical">
+     <#Include Label = "PositionCanonical">
+     <#Include Label = "Enumerate">
+     <#Include Label = "IsEnumerated">
+   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+   <Section>
+    <Heading>
+       Cayley graphs
+     </Heading>
+     <#Include Label = "RightCayleyDigraph">
+   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Random elements of a semigroup
     </Heading>
 
-    <#Include Label = "GraphInverseSemigroup">
-    <#Include Label = "RangeSourceGraphInverseSemigroupElement">
-    <#Include Label = "IsVertex">
-    <#Include Label = "IsGraphInverseSemigroup">
-    <#Include Label = "GraphOfGraphInverseSemigroup">
-    <#Include Label = "IsGraphInverseSemigroupElementCollection">
-    <#Include Label = "IsGraphInverseSubsemigroup">
+    <#Include Label = "Random">
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+       Properties of elements in a semigroup
+    </Heading>
+
+    <#Include Label = "IndexPeriodOfSemigroupElement">
+    <#Include Label = "SmallestIdempotentPower">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Expressing semigroup elements as words in generators
+    </Heading>
+
+    It is possible to express an element of a semigroup as a word in the
+    generators of that semigroup. This section describes how to accomplish this
+    in &SEMIGROUPS;.<P/>
+
+    <#Include Label = "EvaluateWord">
+    <#Include Label = "Factorization">
+    <#Include Label = "MinimalFactorization">
+    <#Include Label = "NonTrivialFactorization">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Generating sets
+    </Heading>
+
+    <#Include Label = "Generators">
+    <#Include Label = "SmallGeneratingSet">
+    <#Include Label = "IrredundantGeneratingSubset">
+    <#Include Label = "MinimalGeneratingSet">
+    <#Include Label = "GeneratorsSmallest">
+    <#Include Label = "IndecomposableElements">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Minimal ideals and multiplicative zeros
+    </Heading>
+
+    In this section we describe the attributes of a semigroup that can be found
+    using the &SEMIGROUPS; package.
+    <P/>
+
+    <#Include Label = "MinimalIdeal">
+    <#Include Label = "RepresentativeOfMinimalIdeal">
+    <#Include Label = "MultiplicativeZero">
+    <#Include Label = "UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Group of units and identity elements
+    </Heading>
+
+    <#Include Label = "GroupOfUnits">
+    <!--TODO(later) add man entry for MultiplicativeNeutralElement-->
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Idempotents
+    </Heading>
+
+    <#Include Label = "Idempotents">
+    <#Include Label = "NrIdempotents">
+    <#Include Label = "IdempotentGeneratedSubsemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Computing maximal subsemigroups">
+
+    <Heading>
+      Maximal subsemigroups
+    </Heading>
+
+    The &SEMIGROUPS; package provides methods to calculate the maximal
+    subsemigroups of a finite semigroup, subject to various conditions.  A
+    <E>maximal subsemigroup</E> of a semigroup is a proper subsemigroup
+    that is contained in no other proper subsemigroup of the semigroup.
+
+    <P/>
+
+    When computing the maximal subsemigroups of a regular Rees (0-)matrix
+    semigroup over a group, additional functionality is available. As described
+    in <Cite Key="Graham1968aa"/>, a maximal subsemigroup of a finite regular
+    Rees (0-)matrix semigroup over a group is one of 6 possible types. Using the
+    &SEMIGROUPS; package, it is possible to search for only those maximal
+    subsemigroups of certain types.
+
+    <P/>
+
+    A maximal subsemigroup of such a Rees (0-)matrix semigroup <C>R</C> over a
+    group <C>G</C> is either:
+
+    <Enum>
+      <Item><C>{0};</C></Item>
+      <Item>formed by removing <C>0</C>;</Item>
+      <Item>formed by removing a column (a non-zero &L;-class);</Item>
+      <Item>formed by removing a row (a non-zero &R;-class);</Item>
+      <Item>formed by removing a set of both rows and columns;</Item>
+      <Item>isomorphic to a Rees (0-)matrix semigroup of the same dimensions over
+        a maximal subgroup of <C>G</C> (in particular, the maximal subsemigroup
+        intersects every &H;-class of <C>R</C>).</Item>
+    </Enum>
+
+    Note that if <C>R</C> is a Rees matrix semigroup then it has no
+    maximal subsemigroups of types 1, 2, or 5. Only types 3, 4, and 6
+    are relevant to a Rees matrix semigroup.
+
+    <#Include Label = "MaximalSubsemigroups">
+    <#Include Label = "NrMaximalSubsemigroups">
+    <#Include Label = "IsMaximalSubsemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Attributes of transformations and transformation semigroups
+    </Heading>
+
+    <#Include Label = "ComponentRepsOfTransformationSemigroup">
+    <#Include Label = "ComponentsOfTransformationSemigroup">
+    <#Include Label = "CyclesOfTransformationSemigroup">
+    <#Include Label = "DigraphOfAction">
+    <#Include Label = "DigraphOfActionOnPoints">
+    <#Include Label = "FixedPointsOfTransformationSemigroup">
+    <#Include Label = "IsTransitive">
+    <#Include Label = "SmallestElementSemigroup">
+    <#Include Label = "CanonicalTransformation">
+    <#Include Label = "IsConnectedTransformationSemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Attributes of partial perm semigroups
+    </Heading>
+
+    <#Include Label = "ComponentRepsOfPartialPermSemigroup">
+    <#Include Label = "ComponentsOfPartialPermSemigroup">
+    <#Include Label = "CyclesOfPartialPerm">
+    <#Include Label = "CyclesOfPartialPermSemigroup">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Attributes of Rees (0-)matrix semigroups
+    </Heading>
+
+    <#Include Label = "RZMSDigraph">
+    <#Include Label = "RZMSConnectedComponents">
+
+  </Section>
+
+  <Section>
+
+    <Heading>
+      Attributes of inverse semigroups
+    </Heading>
+
+    <#Include Label = "NaturalLeqInverseSemigroup">
+    <#Include Label = "JoinIrreducibleDClasses">
+    <#Include Label = "MajorantClosure">
+    <#Include Label = "Minorants">
+    <#Include Label = "PrimitiveIdempotents">
+    <#Include Label = "RightCosetsOfInverseSemigroup">
+    <#Include Label = "SameMinorantsSubgroup">
+    <#Include Label = "SmallerDegreePartialPermRepresentation">
+    <#Include Label = "VagnerPrestonRepresentation">
+    <#Include Label = "CharacterTableOfInverseSemigroup">
+    <#Include Label = "EUnitaryInverseCover">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Nambooripad partial order
+    </Heading>
+
+    <#Include Label = "NambooripadLeqRegularSemigroup">
+    <#Include Label = "NambooripadPartialOrder">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semigrp.gd
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  semigroups/semigrp.gd
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -124,10 +124,8 @@ DeclareConstructor("IsomorphismMonoid",
 DeclareConstructor("IsomorphismMonoid",
                    [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
 
-# TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);
 
-# TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
 DeclareConstructor("RandomSemigroupCons", [IsSemigroup, IsList]);
 DeclareGlobalFunction("RandomMonoid");

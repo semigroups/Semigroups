@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  properties.gd
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  attributes/properties.gd
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,9 +11,6 @@
 # This file contains methods for determining properties of arbitrary
 # semigroups. There are not very many specialised methods for acting semigroups
 # and so we only have a single file.
-
-# DeclareProperty("IsAbundantSemigroup", IsSemigroup);
-# DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 
 DeclareProperty("IsBlockGroup", IsSemigroup);
 DeclareProperty("IsRTrivial", IsSemigroup);
@@ -40,6 +37,11 @@ DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsSemigroup);
 DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
+DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
+DeclareOperation("IsFullInverseSubsemigroup",
+                 [IsInverseSemigroup, IsInverseSemigroup]);
+DeclareOperation("IsNormalInverseSubsemigroup",
+                 [IsInverseSemigroup, IsInverseSemigroup]);
 
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
@@ -98,7 +100,6 @@ InstallTrueMethod(IsFinite, IsMonogenicSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup,
                   IsMonogenicSemigroup and IsRegularSemigroup);
 
-DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsMonoidAsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsIdempotentGenerated);

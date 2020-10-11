@@ -1,11 +1,11 @@
 ############################################################################
 ##
-##  cong.gd
-##  Copyright (C) 2015                                   Michael C. Young
+##  congruences/cong.gd
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
-#############################################################################
+############################################################################
 ##
 ## This file contains declarations for functions, operations and attributes of
 ## semigroup congruences.  Methods for most of these are implemented for
@@ -21,105 +21,95 @@
 ## Some general functions are also implemented in cong.gi
 ##
 
-# These are equivalence relations
-InstallTrueMethod(IsEquivalenceRelation, IsLeftSemigroupCongruence);
-InstallTrueMethod(IsEquivalenceRelation, IsRightSemigroupCongruence);
+########################################################################
+# Categories
+#
+# IsLeft/Right/SemigroupCongruence is a property, and so we introduce a
+# category for each type of congruence. Many operations are agnostic to the
+# "handedness" of the congruence, and so we also introduce the category
+# IsAnyCongruenceCategory (meaning a left, right or 2-sided congruence).
+#
+########################################################################
+
+DeclareCategory("IsAnyCongruenceCategory",
+                IsEquivalenceRelation,
+                Maximum(RankFilter(IsSemigroupCongruence),
+                        RankFilter(IsLeftMagmaCongruence),
+                        RankFilter(IsRightMagmaCongruence)) -
+                RankFilter(IsEquivalenceRelation) + 1);
+DeclareCategory("IsCongruenceCategory",
+                IsAnyCongruenceCategory and IsSemigroupCongruence and
+                IsMagmaCongruence);
+DeclareCategory("IsLeftCongruenceCategory",
+                IsAnyCongruenceCategory and IsLeftSemigroupCongruence and
+                IsLeftMagmaCongruence);
+DeclareCategory("IsRightCongruenceCategory",
+                IsAnyCongruenceCategory and IsRightSemigroupCongruence and
+                IsRightMagmaCongruence);
+
+DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
+DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
+DeclareCategory("IsAnyCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep,
+                3);  # to beat IsCongruenceClass
+
+Assert(1, RankFilter(IsAnyCongruenceClass) > RankFilter(IsCongruenceClass));
+
+########################################################################
+# Congruences
+########################################################################
 
 # Flexible functions for creating congruences
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
 DeclareGlobalFunction("RightSemigroupCongruence");
 
-# Separate categories for the classes of left, right, and 2-sided congruences
-DeclareCategory("IsLeftCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep);
-DeclareCategory("IsRightCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep);
-
-DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareOperation("MinimalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("MinimalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("MinimalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-
-DeclareAttribute("PrincipalCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("PrincipalLeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("PrincipalRightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareOperation("PrincipalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("PrincipalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-
-DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
-               GeneratingPairsOfLeftMagmaCongruence);
-DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
-               GeneratingPairsOfRightMagmaCongruence);
-
-DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
-
-DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
-DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
-DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
-
-DeclareAttribute("EquivalenceRelationCanonicalPartition",
-                 IsEquivalenceRelation);
-
-DeclareOperation("JoinLeftSemigroupCongruences",
-                 [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
-DeclareOperation("JoinRightSemigroupCongruences",
-                 [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
-
-DeclareOperation("IsSubrelation",
-                 [IsEquivalenceRelation, IsEquivalenceRelation]);
-DeclareOperation("IsSuperrelation",
-                 [IsEquivalenceRelation, IsEquivalenceRelation]);
-
+# Properties of congruences
 DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
 
-DeclareOperation("OnLeftCongruenceClasses",
-                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
-DeclareOperation("OnRightCongruenceClasses",
-                 [IsRightCongruenceClass, IsMultiplicativeElement]);
-
-# Helper functions to EquivalenceClasses for specific categories
-DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
-DeclareOperation("LeftCongruenceClasses", [IsLeftSemigroupCongruence]);
-DeclareOperation("RightCongruenceClasses", [IsRightSemigroupCongruence]);
-
-DeclareOperation("NonTrivialCongruenceClasses",
-                 [IsSemigroupCongruence]);
-DeclareOperation("NonTrivialLeftCongruenceClasses",
-                 [IsLeftSemigroupCongruence]);
-DeclareOperation("NonTrivialRightCongruenceClasses",
-                 [IsRightSemigroupCongruence]);
-
-DeclareOperation("NrCongruenceClasses", [IsSemigroupCongruence]);
-DeclareOperation("NrLeftCongruenceClasses", [IsLeftSemigroupCongruence]);
-DeclareOperation("NrRightCongruenceClasses", [IsRightSemigroupCongruence]);
-
-DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
-                                              IsMultiplicativeElement]);
-DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
-                                                  IsMultiplicativeElement]);
-DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,
-                                                   IsMultiplicativeElement]);
+# Attributes of congruences
+# EquivalenceRelationPartition is implemented in libsemigroups/cong.gi
+DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
+DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationCanonicalPartition",
+                 IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationPartitionWithSingletons",
+                 IsEquivalenceRelation);
 
 # No-checks version of the "\in" operation
 DeclareOperation("CongruenceTestMembershipNC", [IsEquivalenceRelation,
                                                 IsMultiplicativeElement,
                                                 IsMultiplicativeElement]);
+
+# Algebraic operators
+DeclareOperation("JoinLeftSemigroupCongruences",
+                 [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
+DeclareOperation("JoinRightSemigroupCongruences",
+                 [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
+
+# Comparison operators
+DeclareOperation("IsSubrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
+DeclareOperation("IsSuperrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
+
+########################################################################
+# Congruence classes
+########################################################################
+
+# IsCongruenceClass is declared in gap/lib/mgmcong.gd:140
+DeclareCategory("IsLeftCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep);
+DeclareCategory("IsRightCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep);
+
+# Actions
+DeclareOperation("OnLeftCongruenceClasses",
+                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
+DeclareOperation("OnRightCongruenceClasses",
+                 [IsRightCongruenceClass, IsMultiplicativeElement]);

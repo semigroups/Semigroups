@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  maxplusmat.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  elements/maxplusmat.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -153,9 +153,7 @@ end);
 ## K.G. Farlow, Max-plus Algebra, Thesis.
 ## https://tinyurl.com/zzs38s4
 
-InstallMethod(InverseOp,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(InverseOp, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(mat)
   local dim, seen_rows, seen_cols, out, row, col;
   dim := DimensionOfMatrixOverSemiring(mat);
@@ -182,9 +180,7 @@ end);
 ## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
 ## https://tinyurl.com/znhk52m
 
-InstallMethod(SpectralRadius,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(SpectralRadius, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(mat)
   local dim, cm, mk, k, max;
   # Check for -infinity case
@@ -205,8 +201,7 @@ function(mat)
   return Maximum(cm);
 end);
 
-InstallMethod(UnweightedPrecedenceDigraph,
-"for a max-plus matrix",
+InstallMethod(UnweightedPrecedenceDigraph, "for a max-plus matrix",
 [IsMaxPlusMatrix],
 function(mat)
   local adj;
@@ -227,9 +222,7 @@ end);
 ## K.G. Farlow, Max-plus Algebra, Thesis.
 ## https://tinyurl.com/zzs38s4
 
-InstallMethod(RadialEigenvector,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(RadialEigenvector, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(m)
   local dim, pows, crit, out, n, i, k;
 
@@ -379,8 +372,8 @@ function(x, y)
   n := Minimum(Length(x![1]), Length(y![1]));
   threshold := ThresholdTropicalMatrix(x);
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorNoReturn("Semigroups: \\* (for tropical max-plus matrices): usage,\n",
-                  "the arguments do not have the same threshold,");
+    ErrorNoReturn("the arguments (tropical max-plus matrices)",
+                  "do not have the same threshold");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   PlusMinMax := SEMIGROUPS.PlusMinMax;
@@ -487,10 +480,9 @@ function(x, y)
 
   n := Minimum(Length(x![1]), Length(y![1]));
   threshold := ThresholdTropicalMatrix(x);
-
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorNoReturn("Semigroups: \\* (for tropical min-plus matrices): usage,\n",
-                  "the arguments do not have the same threshold,");
+    ErrorNoReturn("the arguments (tropical min-plus matrices) ",
+                  "do not have the same threshold");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));
@@ -679,9 +671,10 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsInt, IsInt],
 function(filter, threshold, period)
-  if threshold < 0 or period <= 0 then
-    ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons:",
-                  " usage,\n the threshold must be >=0 and the period > 0,");
+  if threshold < 0  then
+    ErrorNoReturn("the 2nd argument (a pos. int.) is not >= 0");
+  elif period <= 0 then
+    ErrorNoReturn("the 3rd argument (a pos. int.) is not > 0");
   fi;
   return x -> (IsInt(x) and x >= 0 and x <= threshold + period - 1);
 end);
@@ -696,8 +689,8 @@ function(x, y)
   threshold := ThresholdNTPMatrix(x);
 
   if period <> PeriodNTPMatrix(y) or threshold <> ThresholdNTPMatrix(y) then
-    ErrorNoReturn("Semigroups: \\* (for ntp matrices): usage,\n",
-                  "the arguments must be matrices over the same semiring,");
+    ErrorNoReturn("the arguments (ntp matrices) are not over the same ",
+                  "semiring");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));

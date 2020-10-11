@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semitrans.gd
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  semigroups/semitrans.gd
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,12 +11,13 @@
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPointsOfTransformationSemigroup",
                  IsTransformationSemigroup);
-DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
+
+DeclareOperation("DigraphOfAction",
+                 [IsTransformationCollection, IsList, IsFunction]);
+DeclareAttribute("DigraphOfActionOnPoints",
+                 IsTransformationCollection);
 DeclareOperation("DigraphOfActionOnPoints",
-                 [IsTransformationSemigroup, IsInt]);
-DeclareAttribute("DigraphOfActionOnPairs", IsTransformationSemigroup);
-DeclareOperation("DigraphOfActionOnPairs",
-                 [IsTransformationSemigroup, IsInt]);
+                 [IsTransformationCollection, IsInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
@@ -43,3 +44,6 @@ DeclareAttribute("DigraphCore", IsDigraph);
 DeclareOperation("WreathProduct",
                  [IsMultiplicativeElementCollection,
                   IsMultiplicativeElementCollection]);
+
+DeclareAttribute("SmallestElementRClass", IsGreensRClass);
+DeclareAttribute("LargestElementRClass", IsGreensRClass);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  maximal.gi
-##  Copyright (C) 2013-16                                James D. Mitchell
+##  attributes/maximal.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -60,14 +60,13 @@ S -> MaximalSubsemigroupsNC(S, rec(number := false)));
 #                  (true) include all generators, which may include 0 (default).
 #                  (false) remove 0 from each generating set, if present.
 
-InstallMethod(MaximalSubsemigroups,
-"for a semigroup and a record",
+InstallMethod(MaximalSubsemigroups, "for a semigroup and a record",
 [IsSemigroup, IsRecord],
 function(S, r)
   local opts, x;
 
   if not IsFinite(S) then
-    Info(InfoSemigroups, 1, "This method only works for finite semigroups,");
+    Info(InfoSemigroups, 1, "This method only works for finite semigroups");
     TryNextMethod();
   fi;
 
@@ -76,9 +75,8 @@ function(S, r)
   # <rec.number> should be a boolean
   if IsBound(r.number) then
     if not IsBool(r.number) then
-      ErrorNoReturn("Semigroups: MaximalSubsemigroups: usage,\n",
-                    "the record component <number> of the optional second ",
-                    "argument <r> should be\ntrue or false,");
+      ErrorNoReturn("the record component <number> of the optional 2nd ",
+                    "argument <r> should be true or false");
     fi;
     opts.number := r.number;
   else
@@ -90,10 +88,9 @@ function(S, r)
     if not IsHomogeneousList(r.contain)
         or not IsDuplicateFreeList(r.contain)
         or not ForAll(r.contain, x -> x in S) then
-      ErrorNoReturn("Semigroups: MaximalSubsemigroups: usage,\n",
-                    "the record component <contain> of the optional second ",
-                    "argument <r> should be a\nduplicate-free list of ",
-                    "elements of the semigroup in the first argument, <S>,");
+      ErrorNoReturn("the record component <contain> of the optional 2nd ",
+                    "argument <r> should be a duplicate-free list of ",
+                    "elements of the semigroup in the 1st argument, <S>");
     fi;
     opts.contain := r.contain;
   else
@@ -103,10 +100,9 @@ function(S, r)
   # <rec.D> should be a D-class of <S>
   if IsBound(r.D) then
     if not IsGreensDClass(r.D) or not Parent(r.D) = S then
-      ErrorNoReturn("Semigroups: MaximalSubsemigroups: usage,\n",
-                    "the record component <D> of the optional second ",
-                    "argument <r> should be a\nD-class of the semigroup in ",
-                    "the first argument, <S>,");
+      ErrorNoReturn("the record component <D> of the optional 2nd ",
+                    "argument <r> should be a D-class of the semigroup in ",
+                    "the 1st argument, <S>");
     fi;
     opts.D := r.D;
   fi;
@@ -117,14 +113,13 @@ function(S, r)
         or not IsGroupAsSemigroup(UnderlyingSemigroup(S))
         or not IsRegularSemigroup(S) then
       Info(InfoSemigroups, 2, "the option 'types' is relevant only if <S> is ",
-           "a regular Rees (0-)matrix\nsemigroup over a group,");
+           "a regular Rees (0-)matrix semigroup over a group");
     else
       if not IsHomogeneousList(r.types)
           or not IsDuplicateFreeList(r.types)
           or not IsSubset([1 .. 6], r.types) then
-        ErrorNoReturn("Semigroups: MaximalSubsemigroups: usage,\n",
-                      "the record component <types> of the optional second ",
-                      "argument <r> should be a\nsubset of [ 1 .. 6 ],");
+        ErrorNoReturn("the record component <types> of the optional 2nd ",
+                      "argument <r> should be a subset of [ 1 .. 6 ]");
       fi;
 
       if IsReesMatrixSemigroup(S) then
@@ -132,7 +127,7 @@ function(S, r)
         x := Intersection([1, 2, 5], r.types);
         if not IsEmpty(x) then
           Info(InfoSemigroups, 2, "a Rees matrix semigroup has no maximal ",
-                                  "subsemigroups of types ", x, ",");
+                                  "subsemigroups of types ", x, "");
         fi;
       fi;
       opts.types := r.types;
@@ -144,9 +139,8 @@ function(S, r)
   # <rec.gens> should be <true> or <false>
   if IsBound(r.gens) then
     if not IsBool(r.gens) then
-      ErrorNoReturn("Semigroups: MaximalSubsemigroups: usage,\n",
-                    "the record component <gens> of the optional second ",
-                    "argument <r> should be true\nor false,");
+      ErrorNoReturn("the record component <gens> of the optional 2nd ",
+                    "argument <r> should be true or false");
     fi;
     opts.gens := r.gens;
   else
@@ -959,7 +953,7 @@ function(R, opts)
           r := comp[1];  # <r> is the least cc of the super-component
           len := Length(comp);
 
-          Assert(0, j <> 1 or r = 1, "1st elt of 1st super-comp must be 1,");
+          Assert(0, j <> 1 or r = 1, "1st elt of 1st super-comp must be 1");
 
           T := [];
           if normal and IsSubset(V, P[r]) then
@@ -1175,14 +1169,20 @@ function(S, opts)
     Info(InfoSemigroups, 1, "computing the partial order of D-classes...");
     po := PartialOrderOfDClasses(S);
     Info(InfoSemigroups, 1, "processing the partial order of D-classes...");
-    po := DigraphNC(po);
-    po := DigraphRemoveLoops(po);
+
+    po := DigraphMutableCopy(po);
+    DigraphRemoveLoops(po);
+    MakeImmutable(po);
     SetIsAcyclicDigraph(po, true);
+
     below := DigraphReflexiveTransitiveReduction(po);
-    above := DigraphReverse(below);
+
+    above := DigraphReverse(DigraphMutableCopy(below));
+    DigraphRemoveLoops(DigraphTransitiveClosure(above));
+    ClearDigraphVertexLabels(above);
+    InducedSubdigraph(above, try);
+    MakeImmutable(above);
     SetIsAcyclicDigraph(above, true);
-    above := DigraphRemoveLoops(DigraphTransitiveClosure(above));
-    above := InducedSubdigraph(above, try);
 
     # <vertex_class[i]> is the vertex number of <above> corresponding to <D[i]>
     # <DigraphVertexLabel(above, vertex_class[i])> is the list of gens in <D[i]>
@@ -1220,10 +1220,10 @@ function(S, opts)
     fi;
   end;
 
-  # TODO: sort <try> optimally such that any D-classes which have the same ideal
-  # directly below occur together, so that that ideal needs to be computed only
-  # once. And then check to actually see if it is necessary to re-compute ideal
-  # Can possibly use <below> to help do this?
+  # TODO(later) sort <try> optimally such that any D-classes which have the
+  # same ideal directly below occur together, so that that ideal needs to be
+  # computed only once. And then check to actually see if it is necessary to
+  # re-compute ideal Can possibly use <below> to help do this?
 
   for i in try do  # The D-classes to contain are those indexed by <try>
     Unbind(ideal);
@@ -1846,7 +1846,7 @@ function(S, opts)
       fi;
     fi;
 
-    # TODO check for maximal subsemigroups formed by removing D[i]
+    # TODO(later) check for maximal subsemigroups formed by removing D[i]
     # if tot is what it started as, then if we have reached here,
     # that means there ARE maximal subsemigroups arising from D[i]
     # but none of the types so far have been found. Therefore S\D[i]

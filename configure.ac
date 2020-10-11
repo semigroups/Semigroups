@@ -10,8 +10,8 @@ dnl ## Setup autoconf
 dnl ##
 AC_PREREQ([2.68])
 AC_INIT([semigroups], m4_esyscmd([tr -d '\n' < .VERSION]))
-AC_CONFIG_SRCDIR([src/pkg.cc])
-AC_CONFIG_HEADER([src/_pkgconfig.h:cnf/pkgconfig.h.in])
+AC_CONFIG_SRCDIR([src/pkg.cpp])
+AC_CONFIG_HEADERS([src/_pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([cnf])
 
@@ -19,6 +19,7 @@ dnl ##
 dnl ## Get canonical host info
 dnl ##
 AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
 
 dnl ##
 dnl ## Setup automake
@@ -27,11 +28,10 @@ AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects nostdinc])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
 
-AX_PREFIX_CONFIG_H([src/semigroups-config.h],[],[src/_pkgconfig.h])
+AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[],[src/_pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
 dnl ## libsemigroups which is why this contains ../ 
-dnl ## FIXME figure out how to do this properly
 AC_PREFIX_DEFAULT('${abs_top_builddir}/../bin/')
 
 dnl ##
@@ -85,13 +85,6 @@ AC_ARG_ENABLE([debug],
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
 
-## TODO check that the compiler supports these flags
-AS_IF([test "x$enable_debug" = xyes],
-    [AC_SUBST(CXXFLAGS, '-g3 -O0 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -Wno-c++11-extensions -Wshadow -Wint-conversion')])
-
-AS_IF([test "x$enable_debug" = xyes],
-    [AC_SUBST(CFLAGS, '-g3 -O0 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -Wshadow -Wint-conversion')])
-
 AM_CONDITIONAL([KERNEL_DEBUG], [test "x$enable_debug" = xyes])
 
 AC_ARG_WITH([march-native],
@@ -104,6 +97,9 @@ AS_IF([test "x$with_march_native" == "xno" ],
 
 AS_IF([test "x$with_march_native" != "xno"],
       [AX_CHECK_COMPILE_FLAG(-march=native, AX_APPEND_FLAG(-march=native))])
+
+# Check if HPCombi is enable, and available
+AX_CHECK_HPCOMBI()
 
 dnl ##
 dnl ## Output everything

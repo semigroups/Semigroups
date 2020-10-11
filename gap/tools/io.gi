@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  io.gi
-##  Copyright (C) 2013-17                                James D. Mitchell
+##  tools/io.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -14,7 +14,7 @@
 
 # This function sets the component <decoder> of the IO file object <f> to a
 # function that can be called on the file object to decode its contents. This
-# must be called before anything is read from <f>.
+# is not called before anything is read from <f>.
 SEMIGROUPS.FileDecoder := function(f)
   local char;
 
@@ -144,27 +144,23 @@ function(arg)
     name    := arg[1];
     line_nr := arg[2];
   else
-    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                  "there should be 1 or 2 arguments,");
+    ErrorNoReturn("there should be 1 or 2 arguments");
   fi;
 
   if IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                    "could not open the file ", name, ",");
+      ErrorNoReturn("could not open the file ", name);
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                  "the first argument must be a string or a file,");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
-    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                  "the second argument must be a positive integer,");
+    ErrorNoReturn("the 2nd argument is not a positive integer");
   fi;
 
   decoder := SEMIGROUPS.FileDecoder(file);
@@ -184,8 +180,7 @@ function(arg)
       IO_Close(file);
     fi;
     if obj = IO_Nothing then
-      ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                    "the file only has ", i - 1, " further entries,");
+      ErrorNoReturn("the file only has ", i - 1, " further entries");
     fi;
     return obj;
   else
@@ -226,8 +221,7 @@ function(arg)
       mode     := "w";
       encoder  := arg[3];
     else
-      ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                    "the third argument must be a string or a function,");
+      ErrorNoReturn("the 3rd argument is not a string or a function");
     fi;
   elif Length(arg) = 4 then
     name     := arg[1];
@@ -235,36 +229,29 @@ function(arg)
     mode     := arg[3];
     encoder  := arg[4];
   else
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "there should be 2, 3, or 4 arguments,");
+    ErrorNoReturn("there should be 2, 3, or 4 arguments");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "the third argument must be \"a\" or \"w\",");
-  fi;
-
-  if IsString(name) then
+    ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
+  elif IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn("Semigroups: WriteGenerators:\n",
-                    "couldn't open the file ", name, ",");
+      ErrorNoReturn("couldn't open the file ", name, "");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "the first argument must be a string or a file,");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   if not IsList(collcoll) or IsEmpty(collcoll) then
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "the second argument must be a non-empty list,");
+    ErrorNoReturn("the 2nd argument is not a non-empty list");
   fi;
 
   if encoder = fail then
@@ -273,8 +260,7 @@ function(arg)
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "the third or fourth argument must be a function,");
+    ErrorNoReturn("the 3rd or 4th argument is not a function");
   fi;
 
   # Check encoder is consistent with <coll>
@@ -285,8 +271,7 @@ function(arg)
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                  "the second argument is incompatible with the file format,");
+    ErrorNoReturn("the 2nd argument is incompatible with the file format");
   fi;
 
   for coll in collcoll do
@@ -370,25 +355,21 @@ function(arg)
     name    := arg[1];
     line_nr := arg[2];
   else
-    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
-                  "there should be 1 or 2 arguments,");
+    ErrorNoReturn("there should be 1 or 2 arguments");
   fi;
   if IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      ErrorNoReturn("Semigroups: ReadMultiplicationTable:\n",
-                    "could not open the file \"", name, "\",");
+      ErrorNoReturn("could not open the file \"", name, "\"");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
-                  "the first argument must be a string or a file,");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
   if not (IsInt(line_nr) and line_nr >= 0) then
-    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
-                  "the second argument must be a positive integer,");
+    ErrorNoReturn("the 2nd argument is not a positive integer");
   fi;
   ReadMultiplicationTableLine := SEMIGROUPS.ReadMultiplicationTableLine;
 
@@ -401,8 +382,7 @@ function(arg)
     if IsString(arg[1]) then
       IO_Close(file);
     elif line = "" then
-      ErrorNoReturn("Semigroups: ReadMultiplicationTable:\n",
-                    "the file only has ", i - 1, " lines,");
+      ErrorNoReturn("the file only has ", i - 1, " lines");
     fi;
     return ReadMultiplicationTableLine(Chomp(line), RootInt(Length(line)));
   else
@@ -448,28 +428,22 @@ function(arg)
     coll := arg[2];
     mode := arg[3];
   else
-    ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
-                  "there should be 2 or 3 arguments,");
+    ErrorNoReturn("there must be 2 or 3 arguments");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    ErrorNoReturn("Semigroups: WriteMultiplcationTable: usage,\n",
-                  "the third argument must be \"a\" or \"w\",");
-  fi;
-
-  if IsString(name) then
+    ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
+  elif IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn("Semigroups: WriteMultiplcationTable:\n",
-                    "couldn't open the file ", name, ",");
+      ErrorNoReturn("couldn't open the file ", name, "");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
-                  "the first argument must be a string or a file,");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   for i in [1 .. Length(coll)] do
@@ -478,16 +452,14 @@ function(arg)
       if IsString(name) then
         IO_Close(file);
       fi;
-      ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
-                    "the second argument must be a collection of rectangular ",
-                    "tables containing only integers,");
+      ErrorNoReturn("the 2nd argument is not a collection of rectangular ",
+                    "tables containing only integers");
     elif not n < 256 then
       if IsString(name) then
         IO_Close(file);
       fi;
-      ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
-                    "the second argument must be a collection of rectangular ",
-                    "tables with at most 255 rows,");
+      ErrorNoReturn("the 2nd argument is not a collection of rectangular ",
+                    "tables with at most 255 rows");
     fi;
 
     str := EmptyString(n ^ 2 + 1);  # + 1 for newline character
@@ -497,11 +469,10 @@ function(arg)
           if IsString(name) then
             IO_Close(file);
           fi;
-          ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
-                        "the second argument must be a collection of ",
+          ErrorNoReturn("the 2nd argument is not a collection of ",
                         "rectangular tables with integer entries from [1, 2, ",
                         "..., n] (where n equals the number of rows of the ",
-                        "table),");
+                        "table)");
         elif coll[i][j][k] = 10 then
           Add(str, '\000');  # We use CharInt(0) since CharInt(10) is newline.
         else

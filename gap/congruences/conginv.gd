@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/conginv.gd
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,7 +13,7 @@
 
 # Inverse Congruences By Kernel and Trace
 DeclareCategory("IsInverseSemigroupCongruenceByKernelTrace",
-                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsCongruenceCategory and IsAttributeStoringRep and IsFinite);
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTrace");
 DeclareGlobalFunction("InverseSemigroupCongruenceByKernelTraceNC");
 
@@ -26,8 +26,8 @@ DeclareAttribute("InverseSemigroupCongruenceClassByKernelTraceType",
 
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
-                IsCongruenceClass and IsAttributeStoringRep and
-                IsMultiplicativeElement);
+                IsAnyCongruenceClass and IsCongruenceClass and
+                IsAttributeStoringRep and IsMultiplicativeElement);
 
 # Special congruences
 DeclareAttribute("MinimumGroupCongruence",

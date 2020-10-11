@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semiex.gi
-##  Copyright (C) 2013-15                                 James D. Mitchell
+##  semigroups/semiex.gi
+##  Copyright (C) 2013-2022                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -53,16 +53,13 @@ function(partition)
   m, y, w, p, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
-    ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
-                  "the argument <partition> must be a list of positive ",
-                  "integers,");
+    ErrorNoReturn("the argument (a cyclo. coll.) does not consist of ",
+                  "positive integers");
   elif ForAll(partition, x -> x = 1) then
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
     return FullTransformationMonoid(partition[1]);
-  fi;
-
-  if not IsSortedList(partition) then
+  elif not IsSortedList(partition) then
     partition := ShallowCopy(partition);
     Sort(partition);
   fi;
@@ -343,11 +340,10 @@ function(S)
   local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k;
 
   if not IsSemilattice(S) then
-    ErrorNoReturn("Semigroups: GeneratorsOfMunnSemigroup: usage,\n",
-                  "the argument must be a semilattice,");
+    ErrorNoReturn("the argument (a semigroup) is not a semilattice");
   fi;
 
-  po := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
+  po := DigraphReflexiveTransitiveClosure(PartialOrderOfDClasses(S));
   au := [];  # automorphism groups partitions by size
   id := [];  # ideals (as sets of indices) partitioned by size
   su := [];  # induced subdigraphs corresponding to ideals
@@ -366,7 +362,6 @@ function(S)
     Add(su[Length(x)], gr);
   od;
 
-  # Error();
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do
@@ -509,14 +504,12 @@ function(n)
   return Monoid(gens, rec(acting := false));
 end);
 
-InstallMethod(PartitionMonoid, "for an integer",
-[IsInt],
+InstallMethod(PartitionMonoid, "for an integer", [IsInt],
 function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartitionMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -540,8 +533,7 @@ function(n)
   local gens;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: DualSymmetricInverseMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -564,8 +556,7 @@ function(n)
   local gens;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialDualSymmetricInverseMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 or n = 2 then
@@ -586,8 +577,7 @@ function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: BrauerMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -609,8 +599,7 @@ function(n)
   local S;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialBrauerMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   fi;
 
   S := Semigroup(BrauerMonoid(n),
@@ -627,8 +616,7 @@ function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: JonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -658,8 +646,7 @@ function(n)
   local p, x, M, j;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: AnnularJonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 or n = 1 then
     return JonesMonoid(n);
   fi;
@@ -684,8 +671,7 @@ function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialJonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -717,8 +703,7 @@ function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: MotzkinMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   fi;
@@ -741,9 +726,6 @@ function(n)
 
   out := EmptyPlist(n);
   out[1] := PartialPermNC([0 .. n - 1]);
-  if n = 1 then
-    Add(out, PartialPermNC([1]));
-  fi;
   for i in [0 .. n - 2] do
     out[i + 2] := [1 .. n];
     out[i + 2][(n - i) - 1] := n - i;
@@ -1063,8 +1045,7 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularTransformationSemigroup: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := FullTransformationSemigroup(n);
@@ -1076,8 +1057,7 @@ InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularOrderEndomorphisms: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := OrderEndomorphisms(n);
@@ -1090,8 +1070,7 @@ function(n)
   local blocks, x, S, i;
 
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularBrauerMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -1108,8 +1087,7 @@ InstallMethod(SingularJonesMonoid, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularJonesMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -1126,8 +1104,7 @@ InstallMethod(SingularDualSymmetricInverseMonoid, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularDualSymmetricInverseMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1144,8 +1121,7 @@ InstallMethod(SingularPlanarUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularPlanarUniformBlockBijectionMonoid:",
-                  " usage,\nthe argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1163,8 +1139,7 @@ InstallMethod(SingularUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularUniformBlockBijectionMonoid:",
-                  " usage,\nthe argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1183,9 +1158,8 @@ InstallMethod(SingularApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    ErrorNoReturn("Semigroups: SingularApsisMonoid: usage,\n",
-                  "the first argument must be less than or equal to the ",
-                  "second argument,");
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1204,9 +1178,8 @@ InstallMethod(SingularCrossedApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    ErrorNoReturn("Semigroups: SingularCrossedApsisMonoid: usage,\n",
-                  "the first argument must be less than or equal to ",
-                  "the second argument,");
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1229,9 +1202,8 @@ function(m, n)
       return SemigroupIdeal(PlanarModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      ErrorNoReturn("Semigroups: SingularPlanarModularPartitionMonoid:",
-                    " usage,\nthe second argument must be greater than 1",
-                    " when the first argument is also greater than 1,");
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
     fi;
   fi;
 
@@ -1273,9 +1245,8 @@ function(m, n)
       return SemigroupIdeal(ModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      ErrorNoReturn("Semigroups: SingularModularPartitionMonoid:",
-                    " usage,\nthe second argument must be greater than 1",
-                    " when the first argument is also greater than 1,");
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
     fi;
   fi;
 
@@ -1287,4 +1258,321 @@ function(m, n)
   x := Bipartition(blocks);
   S := ModularPartitionMonoid(m, n);
   return SemigroupIdeal(S, x);
+end);
+
+#############################################################################
+## 2. Standard examples - known generators
+#############################################################################
+
+InstallMethod(RegularBooleanMatMonoid, "for a pos int",
+[IsPosInt],
+function(n)
+  local gens, i, j;
+
+  if n = 1 then
+    return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
+  elif n = 2 then
+    return Monoid(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [1, 1]]));
+  fi;
+
+  gens := [];
+
+  gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
+  for j in [1 .. n - 1] do
+    gens[2][j][j + 1] := true;
+  od;
+  gens[2][n][1] := true;
+
+  for i in [3, 4] do
+    gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
+    for j in [1 .. n - 1] do
+      gens[i][j][j] := true;
+    od;
+  od;
+  gens[3][n][1] := true;
+  gens[3][n][n] := true;
+
+  Apply(gens, BooleanMat);
+
+  gens[1] := AsBooleanMat((1, 2), n);
+
+  return Monoid(gens);
+end);
+
+InstallMethod(GossipMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, i, j, x, m;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      x[j][i] := true;
+      Add(gens, BooleanMat(x));
+    od;
+  od;
+
+  m := Monoid(gens);
+  SetNrIdempotents(m, Bell(n));
+  return m;
+end);
+
+InstallMethod(UnitriangularBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i, j;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      Add(gens, BooleanMat(x));
+    od;
+  od;
+
+  return Monoid(gens);
+end);
+
+InstallMethod(TriangularBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n] do
+    x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+    x[i][i] := false;
+    Add(gens, BooleanMat(x));
+  od;
+
+  return Monoid(UnitriangularBooleanMatMonoid(n), gens);
+end);
+
+#############################################################################
+## 3. Standard examples - calculated generators
+#############################################################################
+
+InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex) then
+    SEMIGROUPS.GENERATORS.Reflex :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/reflex.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Reflex)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
+end);
+
+InstallMethod(HallMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall) then
+    SEMIGROUPS.GENERATORS.Hall :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/hall.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Hall)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
+end);
+
+InstallMethod(FullBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool) then
+    SEMIGROUPS.GENERATORS.FullBool :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/fullbool.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.FullBool)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);
+end);
+
+#############################################################################
+## Tropical matrix monoids
+#############################################################################
+
+InstallMethod(FullTropicalMaxPlusMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(dim, threshold)
+  local gens, i, j;
+
+  if dim <> 2 then
+    ErrorNoReturn("the 1st argument (dimension) must be 2");
+  fi;
+
+  gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [-infinity, -infinity]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [0, -infinity]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [0, 0]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 1],
+                                            [0, -infinity]],
+                                            threshold)];
+
+  for i in [1 .. threshold] do
+    Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                     [[-infinity, 0], [0, i]],
+                     threshold));
+    for j in [1 .. i] do
+      Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                       [[0, j], [i, 0]],
+                       threshold));
+    od;
+  od;
+
+  return Monoid(gens);
+end);
+
+InstallMethod(FullTropicalMinPlusMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(dim, threshold)
+  local gens, i, j, k;
+
+  if dim = 2  then
+    gens := [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [0, infinity]],
+                                              threshold),
+             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [1, infinity]],
+                                              threshold),
+             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [infinity, infinity]],
+                                              threshold)];
+    for i in [0 .. threshold] do
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, 0], [0, i]],
+                       threshold));
+    od;
+  elif dim = 3 then
+    gens := [Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [0, infinity, infinity],
+                     [infinity, 0, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [0, infinity, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [infinity, infinity, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [1, infinity, infinity]],
+                    threshold)];
+
+    for i in [0 .. threshold] do
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, infinity, 0],
+                        [infinity, 0, infinity],
+                        [0, i, infinity]],
+                       threshold));
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, 0, i],
+                        [i, infinity, 0],
+                        [0, i, infinity]],
+                        threshold));
+      for j in [1 .. i] do
+        Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                         [[infinity, 0, 0],
+                          [0, infinity, i],
+                          [0, j, infinity]],
+                         threshold));
+      od;
+
+      for j in [1 .. threshold] do
+        Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                         [[infinity, 0, 0],
+                          [0, infinity, i],
+                          [j, 0, infinity]],
+                         threshold));
+      od;
+    od;
+
+    for i in [1 .. threshold] do
+      for j in [i .. threshold] do
+        for k in [1 .. j - 1] do
+          Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                           [[infinity, 0, i],
+                            [j, infinity, 0],
+                            [0, k, infinity]],
+                           threshold));
+        od;
+      od;
+    od;
+  else
+    ErrorNoReturn("the 1st argument (dimension) must be 2 or 3");
+  fi;
+
+  return Monoid(gens);
+end);
+
+########################################################################
+# PBR monoids
+########################################################################
+
+InstallMethod(FullPBRMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+
+  gens := [[PBR([[]], [[1]]), PBR([[-1, 1]], [[1]]),
+            PBR([[-1]], [[]]), PBR([[-1]], [[1]]),
+            PBR([[-1]], [[-1, 1]])],
+
+           [PBR([[], [-1]], [[2], [-2, 1]]),
+            PBR([[-2, 1], [-1]], [[2], []]),
+            PBR([[-1, 2], [-2]], [[1], [2]]),
+            PBR([[-1], [-2]], [[1], [-2, 2]]),
+            PBR([[-2], [2]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [1, 2]]),
+            PBR([[-2], [-1]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [-2]]),
+            PBR([[-2], [-1]], [[2], [1]]),
+            PBR([[-2], [-2, -1]], [[1], [2]])]];
+
+  if n > 2 then
+    ErrorNoReturn("the argument (a pos. int.) must be at most 2");
+  fi;
+  return Monoid(gens[n]);
 end);

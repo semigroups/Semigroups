@@ -1,47 +1,375 @@
-<Chapter Label = "Ideals">
+<Chapter Label = "Standard examples">
   <Heading>
-    Ideals
+    Standard examples
   </Heading>
 
-  In this chapter we describe the various ways that an ideal of a semigroup
-  can be created and manipulated in &Semigroups;.
+  In this chapter we describe some standard families of examples of semigroups
+  and monoids which are available in the &SEMIGROUPS; package.
   <P/>
 
-  We write <E>ideal</E> to mean two-sided ideal everywhere in this chapter.
-  <P/>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
-  The methods in the &Semigroups; package apply to any ideal of a semigroup
-  that is created using the function <Ref Func = "SemigroupIdeal"/> or
-  <C>SemigroupIdealByGenerators</C>. Anything that can be calculated for a
-  semigroup defined by a generating set can also be found for an ideal. This
-  works particularly well for regular ideals, since such an ideal can be
-  represented using a similar data structure to that used to represent a
-  semigroup defined by a generating set but without the necessity to find a
-  generating set for the ideal. Many methods for non-regular ideals rely on
-  first finding a generating set for the ideal, which can be costly (but not
-  nearly as costly as an exhaustive enumeration of the elements of the ideal).
-  We plan to improve the functionality of &Semigroups; for non-regular ideals
-  in the future.
-
-  <Section Label = "Creating ideals">
+  <Section Label = "Transformation semigroups">
     <Heading>
-      Creating ideals
+      Transformation semigroups
     </Heading>
 
-    <#Include Label = "SemigroupIdeal">
-    <#Include Label = "Ideals">
- 
+    In this section, we describe the operations in &SEMIGROUPS; that can be
+    used to create transformation semigroups belonging to several standard
+    classes of example. See <Ref Chap = "Transformations" BookName = "ref" />
+    for more information about transformations.
+    <#Include Label = "CatalanMonoid">
+    <#Include Label = "EndomorphismsPartition">
+    <#Include Label = "PartialTransformationMonoid">
+    <#Include Label = "SingularTransformationSemigroup">
+    <#Include Label = "OrderPreserving">
+    <#Include Label = "EndomorphismMonoid">
+
   </Section>
- 
-  <Section Label = "Attributes of ideals">
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of partial permutations">
     <Heading>
-      Attributes of ideals
+      Semigroups of partial permutations
     </Heading>
 
-    <#Include Label = "GeneratorsOfSemigroupIdeal">
-    <#Include Label = "MinimalIdealGeneratingSet">
-    <#Include Label = "SupersemigroupOfIdeal">
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
+    to create semigroups of partial permutations belonging to several standard
+    classes of example. See <Ref Chap = "Partial permutations" BookName = "ref"
+      /> for more information about partial permutations.
+    <#Include Label = "MunnSemigroup">
+    <#Include Label = "RookMonoid">
+    <#Include Label = "POIPODIPOPIPORI">
+  </Section>
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of bipartitions">
+    <Heading>
+      Semigroups of bipartitions
+    </Heading>
+
+    In this section, we describe the operations in &SEMIGROUPS; that can be
+    used to create bipartition semigroups belonging to several standard
+    classes of example. See Chapter <Ref Chap = "Bipartitions and blocks"/> for
+    more information about bipartitions.
+    <#Include Label = "PartitionMonoid">
+    <#Include Label = "BrauerMonoid">
+    <#Include Label = "JonesMonoid">
+    <#Include Label = "PartialJonesMonoid">
+    <#Include Label = "AnnularJonesMonoid">
+    <#Include Label = "MotzkinMonoid">
+    <#Include Label = "DualSymmetricInverseSemigroup">
+    <#Include Label = "UniformBlockBijectionMonoid">
+    <#Include Label = "PlanarPartitionMonoid">
+    <#Include Label = "ModularPartitionMonoid">
+    <#Include Label = "ApsisMonoid">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Standard PBR semigroups">
+    <Heading>
+      Standard PBR semigroups
+    </Heading>
+
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
+    to create standard examples of semigroups of partitioned binary relations
+    (PBRs).  See Chapter <Ref Chap = "Partitioned binary relations (PBRs)"/> for
+    more information about PBRs.
+    <#Include Label = "FullPBRMonoid">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of matrices of a finite field">
+    <Heading>
+      Semigroups of matrices over a finite field
+    </Heading>
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
+    to create semigroups of matrices over a finite field that belonging to
+    several standard classes of example. See the section
+    <Ref Sect = "Matrices over finite fields" Style="Text" /> for more
+    information about matrices over a finite field.
+    <#Include Label = "GeneralLinearMonoid">
+    <#Include Label = "SpecialLinearMonoid">
+    <!-- TODO(later) move to a more appropriate place -->
+    <#Include Label = "IsFullMatrixMonoid">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of boolean matrices">
+    <Heading>
+      Semigroups of boolean matrices
+    </Heading>
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
+    to create semigroups of boolean matrices belonging to several standard
+    classes of example. See the section <Ref Sect = "Boolean matrices"
+      Style="Text" /> for more information about boolean matrices.
+    <#Include Label = "FullBooleanMatMonoid">
+    <#Include Label = "RegularBooleanMatMonoid">
+    <#Include Label = "ReflexiveBooleanMatMonoid">
+    <#Include Label = "HallMonoid">
+    <#Include Label = "GossipMonoid">
+    <#Include Label = "TriangularBooleanMatMonoid">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of matrices over a semiring">
+    <Heading>
+      Semigroups of matrices over a semiring
+    </Heading>
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
+    to create semigroups of matices over a semiring that belong to several
+    standard classes of example.  See Chapter
+    <Ref Chap = "Matrices over semirings" /> for more information about matrices
+    over a semiring.
+    <#Include Label = "FullTropicalMaxPlusMonoid"/>
+    <#Include Label = "FullTropicalMinPlusMonoid"/>
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Examples in various representations">
+    <Heading>
+      Examples in various representations
+    </Heading>
+
+    In this section, we describe the functions in &SEMIGROUPS; that can be used
+    to create standard semigroups in various representations.  For all of these
+    examples, the default representation is as a semigroup of transformations.
+    In general, these functions do not return a representation of minimal
+    degree.
+
+    <#Include Label = "TrivialSemigroup">
+    <#Include Label = "MonogenicSemigroup">
+    <#Include Label = "RectangularBand">
+    <#Include Label = "ZeroSemigroup">
+    <#Include Label = "LeftZeroSemigroup">
+    <#Include Label = "BrandtSemigroup">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Free bands">
+    <Heading>
+      Free bands
+    </Heading>
+
+    This chapter describes the functions in &SEMIGROUPS; for dealing with free
+    bands. This part of the manual and the functions described herein were
+    originally written by Julius Jonu&#353;as, with later additions by Reinis
+    Cirpons, Tom Conti-Leslie, and Murray Whyte<P/>
+
+    A semigroup <M>B</M> is a <E>free band</E> on a non-empty set <M>X</M> if
+    <M>B</M> is a band with a map <M> f </M> from <M> B </M> to <M>X</M> such that
+    for every band <M> S </M> and every map <M> g </M> from <M>X</M> to <M> B </M>
+    there exists a unique homomorphism <M> g'</M> from <M>B</M> to <M>S</M> such
+    that <M>fg' = g</M>. The free band on a set <M>X</M> is unique up to
+    isomorphism.  Moreover, by the universal property, every band can be expressed
+    as a quotient of a free band.<P/>
+
+    For an alternative description of a free band. Suppose that <M> X </M> is a
+    non-empty set and <M> X ^ + </M> a free semigroup on <M> X </M>. Also suppose
+    that <M> b </M> is the smallest congurance on <M> X ^ + </M> containing the set
+    <Display> \{(w ^ 2, w) : w \in X ^ + \}. </Display> Then the free band on
+    <M> X </M> is isomorphic to the quotient of <M> X ^ + </M> by <M> b </M>.
+    See Section 4.5 of <Cite Key = "Howie1995aa" /> for more information on
+    free bands.
+
+    <#Include Label = "FreeBand">
+    <#Include Label = "IsFreeBandCategory">
+    <#Include Label = "IsFreeBand">
+    <#Include Label = "IsFreeBandElement">
+    <#Include Label = "IsFreeBandElementCollection">
+    <#Include Label = "IsFreeBandSubsemigroup">
+    <#Include Label = "ContentOfFreeBandElement">
+    <#Include Label = "EqualInFreeBand">
+    <#Include Label = "GreensDClassOfElement" >
+
+    <Subsection>
+      <Heading>Operators</Heading>
+      The following operators are also included for free band elements:
+      <List>
+        <Mark><C><A>u</A> * <A>v</A></C></Mark>
+        <Item>
+          returns the product of two free band elements <A>u</A> and
+          <A>v</A>.
+        </Item>
+        <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+        <Item>
+          checks if two free band elements are equal.
+        </Item>
+        <Mark><C><A>u</A> &lt; <A>v</A> </C></Mark>
+        <Item>
+          compares the sizes of the internal representations of two free
+          band elements.
+        </Item>
+      </List>
+    </Subsection>
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Graph inverse semigroups">
+    <Heading>
+      Graph inverse semigroups
+    </Heading>
+
+    In this chapter we describe a class of semigroups arising from directed
+    graphs. <P/>
+
+    The functionality in &SEMIGROUPS; for graph inverse semigroups was written
+    jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews).
+    <P/>
+
+    <#Include Label = "GraphInverseSemigroup">
+    <#Include Label = "RangeSourceGraphInverseSemigroupElement">
+    <#Include Label = "IsVertex">
+    <#Include Label = "IsGraphInverseSemigroup">
+    <#Include Label = "GraphOfGraphInverseSemigroup">
+    <#Include Label = "IsGraphInverseSemigroupElementCollection">
+    <#Include Label = "IsGraphInverseSubsemigroup">
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="Free inverse semigroups">
+    <Heading>
+      Free inverse semigroups
+    </Heading>
+
+    This chapter describes the functions in &SEMIGROUPS; for dealing with free
+    inverse semigroups. This part of the manual and the functions described
+    herein were written by Julius Jonu&#353;as.<P/>
+
+    An inverse semigroup <M>F</M> is said to be <E>free</E> on a non-empty set
+    <M>X</M> if there is a map <M>f</M> from <M>F</M> to <M>X</M> such that for
+    every inverse semigroup <M>S</M> and a map <M>g</M> from <M>X</M> to
+    <M>S</M> there exists a unique homomorphism <M>g'</M> from <M>F</M> to
+    <M>S</M> such that <M>fg' = g</M>. Moreover, by this universal property,
+    every inverse semigroup can be expressed as a quotient of a free inverse
+    semigroup.
+    <P/>
+
+    The internal representation of an element of a free inverse semigroup
+    uses a Munn tree. A <E>Munn tree</E> is a directed tree with distinguished
+    start and terminal vertices and where the edges are labeled by generators so
+    that two edges labeled by the same generator are only incident to the same
+    vertex if one of the edges is coming in and the other is leaving the vertex.
+    For more information regarding free inverse semigroups and the Munn
+    representations see Section 5.10 of <Cite Key = "Howie1995aa"/>.
+    <P/>
+
+    See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,
+    <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
+      Groups, Monoids and Semigroups" BookName = "ref" />.
+    <P/>
+
+    An element of a free inverse semigroup in &SEMIGROUPS; is displayed, by
+    default, as a shortest word corresponding to the element.  However, there
+    might be more than one word of the minimum length. For example, if <M>x</M>
+    and <M>y</M> are generators of a free inverse semigroups, then <Display>xyy
+      ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.</Display> See <Ref
+      Attr = "MinimalWord" Label = "for free inverse semigroup element"/>.
+    Therefore we provide a another method for printing elements of a free
+    inverse semigroup: a unique canonical form.  Suppose an element of a free
+    inverse semigroup is given as a Munn tree. Let <M>L</M> be the set of words
+    corresponding to the shortest paths from the start vertex to the leaves of
+    the tree. Also let <M>w</M> be the word corresponding to the shortest path
+    from the start vertex to the terminal vertex. The word <M>vv ^ {-1}</M> is an
+    idempotent for every <M>v</M> in <M>L</M>.
+    The canonical form is given by multiplying
+    these idempotents, in shortlex order, and then postmultiplying by <M>w</M>.
+    For example, consider the word <M>xyy ^ {-1}xx ^ {-1}x ^ {-1}</M> again.
+    The words corresponding to the paths to the leaves are in this case
+    <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and
+    terminal vertices are the same. Therefore, the canonical form is
+    <Display>xxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.</Display> See <Ref Oper =
+      "CanonicalForm" Label = "for a free inverse semigroup element"/>.
+
+    <#Include Label = "FreeInverseSemigroup">
+    <#Include Label = "IsFreeInverseSemigroupCategory">
+    <#Include Label = "IsFreeInverseSemigroup">
+    <#Include Label = "IsFreeInverseSemigroupElement">
+    <#Include Label = "IsFreeInverseSemigroupElementCollection">
+    <#Include Label = "CanonicalForm">
+    <#Include Label = "MinimalWord">
+    <Subsection>
+      <Heading>Displaying free inverse semigroup elements </Heading>
+    <Heading>Displaying free inverse semigroup elements</Heading>
+    There is a way to change how &GAP; displays free inverse semigroup
+    elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
+    See <Ref Func = "UserPreference" BookName = "ref"/> for more information
+    about user preferences.<P/>
+
+    There are two possible values for <C>FreeInverseSemigroupElementDisplay</C>:
+    <List>
+      <Mark>minimal </Mark>
+      <Item> With this option selected, &GAP; will display a shortest word
+        corresponding to the free inverse semigroup element. However,
+        this shortest word is not unique. This is a default setting.
+      </Item>
+
+      <Mark>canonical</Mark>
+      <Item> With this option selected, &GAP; will display a free inverse
+        semigroup element in the canonical form.
+      </Item>
+    </List>
+
+    <Example><![CDATA[
+gap> SetUserPreference("semigroups",
+>                      "FreeInverseSemigroupElementDisplay",
+>                      "minimal");
+gap> S := FreeInverseSemigroup(2);
+<free inverse semigroup on the generators [ x1, x2 ]>
+gap> S.1 * S.2;
+x1*x2
+gap> SetUserPreference("semigroups",
+>                      "FreeInverseSemigroupElementDisplay",
+>                      "canonical");
+gap> S.1 * S.2;
+x1x2x2^-1x1^-1x1x2]]></Example>
+    </Subsection>
+
+    <Subsection
+     Label="Operators and operations for free inverse semigroup elements">
+      <Heading>Operators for free inverse semigroup elements
+      </Heading>
+      <List>
+        <Mark><C><A>w</A> ^ -1</C></Mark>
+        <Item>
+          returns the semigroup inverse of the free inverse semigroup element
+          <A>w</A>.
+        </Item>
+
+        <Mark><C><A>u</A> * <A>v</A></C></Mark>
+        <Item>
+          returns the product of two free inverse semigroup elements <A>u</A>
+          and <A>v</A>.
+        </Item>
+        <Mark><C><A>u</A> = <A>v</A> </C></Mark>
+        <Item>
+          checks if two free inverse semigroup elements are equal, by comparing
+          their canonical forms.
+        </Item>
+      </List>
+
+    </Subsection>
   </Section>
 
 </Chapter>

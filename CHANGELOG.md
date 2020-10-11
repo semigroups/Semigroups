@@ -1,7 +1,14 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-21 [James D. Mitchell][] et al.
+Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 4.0.0 (released 27/02/2022)
+
+This is a major release which simplifies and improves many aspects of the
+package. The kernel module has been simplified signficantly, to make it easier
+to incorporate future changes in  [libsemigroups][], and some superfluous
+functionality was withdrawn.
 
 ### Version 3.4.2 (released 07/02/2021)
 

@@ -39,18 +39,16 @@ true
 false
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 gap> [x, Transformation([1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
-gap> classes := CongruenceClasses(cong);;
-gap> Size(classes) = NrCongruenceClasses(cong);
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a 2-sided semigroup congruence)
+gap> classes := EquivalenceClasses(cong);;
+gap> Size(classes) = NrEquivalenceClasses(cong);
 true
-gap> classx := CongruenceClassOfElement(cong, x);;
-gap> classy := CongruenceClassOfElement(cong, y);;
-gap> classz := CongruenceClassOfElement(cong, z);
+gap> classx := EquivalenceClassOfElement(cong, x);;
+gap> classy := EquivalenceClassOfElement(cong, y);;
+gap> classz := EquivalenceClassOfElement(cong, z);
 <congruence class of Transformation( [ 2, 4, 6, 1, 6, 5 ] )>
 gap> classx = classy;
 true
@@ -96,10 +94,10 @@ gap> t := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(s);
 <universal semigroup congruence over <trivial transformation group of 
  degree 0 with 1 generator>>
-gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
-<semigroup congruence over <commutative non-regular transformation monoid of 
- degree 10 with 1 generator> with 0 generating pairs>
-gap> NrCongruenceClasses(v);
+gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);;
+gap> v = SemigroupCongruence(t, []);
+true
+gap> NrEquivalenceClasses(v);
 6
 gap> Size(t);
 6
@@ -116,35 +114,37 @@ gap> v := SemigroupCongruence(t, gens);
  of size 6, degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
-gap> NrCongruenceClasses(u);
+gap> NrEquivalenceClasses(u);
 1
 
 # PairsCongTest4: \* for two semigroups congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> s := Semigroup(gens);;
+gap> Size(s);
+5
+gap> IsRegularSemigroup(s);
+false
 gap> gens := List(s, x -> [gens[1], x]);;
 gap> u := SemigroupCongruence(s, gens);  # universal congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 4 generating pairs>
+ of size 5, degree 10 with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(s);
 true
 gap> v := SemigroupCongruence(s, [gens[1], gens[1]]);  # trivial congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 0 generating pairs>
-gap> classes := Set(CongruenceClasses(v));
-[ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
-  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
-  <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
+ of size 5, degree 10 with 1 generator> with 0 generating pairs>
+gap> classes := Set(EquivalenceClasses(v));
+[ <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
   <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
-  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
-gap> ForAny(CongruenceClasses(u), x -> x in classes);
+  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>, 
+  <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )> ]
+gap> ForAny(EquivalenceClasses(u), x -> x in classes);
 false
-gap> classes[1] * CongruenceClasses(u)[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
-gap> CongruenceClasses(u)[1] * classes[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+gap> classes[1] * EquivalenceClasses(u)[1];
+Error, the arguments (cong. classes) are not classes of the same congruence
+gap> EquivalenceClasses(u)[1] * classes[1];
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
@@ -171,9 +171,11 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
   [ 52, 11 ], [ 51, 48 ], [ 38, 13, 49 ], [ 52, 19 ], [ 47, 41, 34 ] ]
 gap> S := Semigroup([
 > Transformation([1, 4, 3, 1, 4, 2]), Transformation([1, 6, 6, 3, 6, 6])]);;
+gap> IsRegularSemigroup(S);
+false
 gap> l := LatticeOfCongruences(S);
-<poset of 5 congruences over <transformation semigroup of size 48, degree 6 
- with 2 generators>>
+<poset of 5 congruences over <non-regular transformation semigroup 
+ of size 48, degree 6 with 2 generators>>
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
 [ [ 2 ], [ 4 ], [ 5 ], [ 3 ], [  ] ]
 gap> S := Semigroup([
@@ -407,7 +409,7 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
   [ 11, 12 ], [ 5, 10 ], [ 6 ], [ 13 ], [ 13 ], [ 7 ] ]
 
 # Check robustness against non-free infinite semigroups
-#TODO!
+# TODO(later)!
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(P);

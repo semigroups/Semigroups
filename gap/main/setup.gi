@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-##  setup.gi
-##  Copyright (C) 2013-17                                James D. Mitchell
+##  main/setup.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -53,30 +53,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 function(coll)
   return
   IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(Representative(coll))));
-    # and McAlisterTripleSemigroupAction(MTSEParent(coll[1])) = OnPoints;
 end);
-
-# FIXME with the below uncommented many tests fail
-## The HasRows and HasColumns could be removed if it was possible to apply
-## immediate methods to Rees 0-matrix semigroups
-#
-# InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
-# IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
-# function(R)
-#   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
-# end);
-#
-# InstallTrueMethod(IsActingSemigroup,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
-#
-# InstallImmediateMethod(GeneratorsOfMagma,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
-# function(R)
-#   return GeneratorsOfReesMatrixSemigroupNC(R,
-#                                            Rows(R),
-#                                            UnderlyingSemigroup(R),
-#                                            Columns(R));
-# end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a matrix over finite field collection",
@@ -925,7 +902,7 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
 function(x, y)
-  return ();  # FIXME is this right???? This is not right!!
+  return ();  # FIXME(later) is this right???? This is not right!!
 end);
 
 InstallMethod(LambdaConjugator, "for a McAlister triple subsemigroup",
@@ -1159,7 +1136,7 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 
 # missing hash functions
 
-SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
+SEMIGROUPS.HashFunctionRZMSE := function(x, data, func)
   if x![1] = 0 then
     return 1;
   fi;
@@ -1167,11 +1144,8 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   if IsNBitsPcWordRep(x![2]) then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
       mod data[2] + 1;
-  elif dataishashlen then
-    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,\n",
-                  "this shouldn't happen,");
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   fi;
 end;
 
@@ -1179,7 +1153,7 @@ InstallMethod(ChooseHashFunction,
 "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)
-  local R, data, under, func, dataishashlen;
+  local R, data, under, func;
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
@@ -1192,19 +1166,14 @@ function(x, hashlen)
   else
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
-    if not data = hashlen then
-      ErrorNoReturn("Semigroups: ChooseHashFunction: error,\n",
-                    "cannot hash RZMS elements over this ",
-                    "underlying semigroup,");
-    fi;
   fi;
-  dataishashlen := data = hashlen;
-  func := function(x, hashlen)
-    return SEMIGROUPS.HashFunctionRZMSE(x, data, under, dataishashlen);
-  end;
+  if data = fail then
+    data := hashlen;
+  fi;
 
-  return rec(func := func,
-             data := data);
+  func := {x, hashlen} -> SEMIGROUPS.HashFunctionRZMSE(x, data, under);
+
+  return rec(func := func, data := data);
 end);
 
 # fallback method for hashing
@@ -1213,8 +1182,5 @@ InstallMethod(ChooseHashFunction, "for an object and an int",
 [IsObject, IsInt],
 1,
 function(p, hashlen)
-  return rec(func := function(v, data)
-                       return 1;
-                    end,
-              data := fail);
+  return rec(func := {v, data} -> 1, data := fail);
 end);

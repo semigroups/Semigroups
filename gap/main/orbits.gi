@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  orbits.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  main/orbits.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -22,8 +22,6 @@ function(o, x)
     return fail;
   fi;
 end);
-
-# FIXME this should work for the RhoOrb too!
 
 InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
@@ -194,11 +192,9 @@ InstallMethod(EvaluateExtRepObjWord,
 function(gens, w)
   local res, i;
   if Length(w) = 0 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a non-empty list");
+    ErrorNoReturn("the second argument must be a non-empty list");
   elif Length(w) mod 2 = 1 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a list of even length");
+    ErrorNoReturn("the second argument must be a list of even length");
   fi;
   res := gens[AbsInt(w[1])] ^ w[2];
   for i in [3, 5 .. Length(w) - 1] do
@@ -215,8 +211,7 @@ function(gens, w)
   if Length(w) = 0 then
     return One(gens);
   elif Length(w) mod 2 = 1 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a list of even length");
+    ErrorNoReturn("the second argument must be a list of even length");
   fi;
   res := gens[AbsInt(w[1])] ^ w[2];
   for i in [3, 5 .. Length(w) - 1] do
@@ -268,7 +263,7 @@ InstallGlobalFunction(LookForInOrb,
 function(o, func, start)
   local pos, i;
 
-  # FIXME not including the following line means that when considering
+  # FIXME(later) not including the following line means that when considering
   # LambdaOrb(S) the first point is considered which it shouldn't be. Whatever
   # is broken when this line is not included should be fixed as at present this
   # is not consistent.
@@ -304,9 +299,7 @@ function(o)
 
   if IsBound(o!.scc) then
     return o!.scc;
-  fi;
-
-  if not IsClosedOrbit(o) or not IsClosedData(o) then
+  elif not IsClosedOrbit(o) or not IsClosedData(o) then
     Enumerate(o, infinity);
   fi;
 
@@ -336,19 +329,14 @@ function(o, i)
   r := Length(OrbSCC(o));
 
   if i > r then
-    ErrorNoReturn("Semigroups: ReverseSchreierTreeOfSCC:\n",
-                  "the orbit only has ", r, " strongly connected components,");
-  fi;
-
-  if not IsBound(o!.reverse) then
+    ErrorNoReturn("the orbit only has ", r, " strongly connected components");
+  elif not IsBound(o!.reverse) then
     o!.reverse := EmptyPlist(r);
   fi;
 
   if IsBound(o!.reverse[i]) then
     return o!.reverse[i];
-  fi;
-
-  if not IsBound(o!.rev) then
+  elif not IsBound(o!.rev) then
     o!.rev := [];
   fi;
 
@@ -430,9 +418,7 @@ function(o, i)
 
   if IsBound(o!.trees[i]) then
     return o!.trees[i];
-  fi;
-
-  if i = 1 then
+  elif i = 1 then
     o!.trees[i] := [o!.schreiergen, o!.schreierpos];
     return o!.trees[i];
   fi;

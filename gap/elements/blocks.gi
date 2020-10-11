@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  blocks.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  elements/blocks.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -28,8 +28,6 @@ BIPART_LEFT_BLOCKS);
 InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
 BIPART_RIGHT_BLOCKS);
 
-# for backwards compatibility
-InstallGlobalFunction(BlocksNC, BLOCKS_NC);
 InstallMethod(ExtRepOfObj, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
 
 InstallMethod(ChooseHashFunction, "for blocks",
@@ -103,7 +101,7 @@ InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
 # Printing, viewing etc . . .
 
 InstallMethod(String, "for blocks", [IsBlocks],
-x -> Concatenation("BlocksNC(", String(ExtRepOfObj(x)), ")"));
+x -> Concatenation("BLOCKS_NC(", String(ExtRepOfObj(x)), ")"));
 
 InstallMethod(ViewObj, "for blocks", [IsBlocks],
 function(blocks)
@@ -131,11 +129,9 @@ function(blocks)
   fi;
 
   Print(">");
-  return;
 end);
 
 InstallMethod(PrintObj, "for blocks", [IsBlocks], 10,
 function(blocks)
   Print(PrintString(blocks));
-  return;
 end);

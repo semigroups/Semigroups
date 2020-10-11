@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  congruences/congrees.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  congruences/congrees.gd
+##  Copyright (C) 2015-2022                              Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,3 +16,5 @@ DeclareAttribute("SemigroupIdealOfReesCongruence", IsReesCongruence);
 DeclareCategory("IsReesCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsMultiplicativeElement);
+
+DeclareProperty("IsReesCongruence", IsAnyCongruenceCategory);

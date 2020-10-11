@@ -247,7 +247,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
-# ClosureSemigroup: testing for enumerable algorithm performance, 1/?
+# ClosureSemigroup: testing for Froidure-Pin algorithm performance, 1/?
 gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [2, 3, 4, 5, 6, 7, 1, 8]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 7, 8, 6]),
@@ -260,14 +260,10 @@ gap> T := ClosureSemigroup(S, AsPartialPerm((1, 2), 8));
 <partial perm semigroup of rank 8 with 7 generators>
 gap> Size(T);
 1441729
-gap> EN_SEMI_IS_DONE(T);
+gap> IsEnumerated(T);
 true
-gap> EN_SEMI_CURRENT_NR_RULES(T);
-1241401
-gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(T);
-17
 
-# ClosureSemigroup: testing for enumerable algorithm performance, 2/?
+# ClosureSemigroup: testing for Froidure-Pin algorithm performance, 2/?
 gap> gens :=
 > [PBR([[], [-1]], [[2], [-2, 1]]),
 >   PBR([[-2, 1], [-1]], [[2], []]),
@@ -285,12 +281,8 @@ gap> for i in [1 .. 10] do
 > od;
 gap> Size(S);
 65536
-gap> EN_SEMI_IS_DONE(S);
+gap> IsEnumerated(S);
 true
-gap> EN_SEMI_CURRENT_NR_RULES(S);
-45409
-gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(S);
-15
 
 # Adding redundant generators in ClosureSemigroups 
 gap> gens := [Transformation([10, 10, 6, 9, 3, 6, 6, 8, 3, 4]),
@@ -343,7 +335,7 @@ gap> a;
 [ 7, 498, 743, 3977, 11229, 11817, 11817, 11915, 13679, 13826, 14414, 15002, 
   15198, 16766, 17354 ]
 
-# testing enumerable closure semigroup for bipartitions 
+# testing Froidure-Pin closure semigroup for bipartitions 
 gap> gens := [Bipartition([[1, 4, -1], [2, -3], [3, 6, -5],
 >   [5, -2, -4, -6]]),
 > Bipartition([[1, -1], [2, 5, 6, -2], [3, -4], [4, -3, -6],

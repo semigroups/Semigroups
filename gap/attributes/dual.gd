@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##  dual.gd
-##  Copyright (C) 2018                                      James D. Mitchell
-##                                                          Finn Smith
+##  attributes/dual.gd
+##  Copyright (C) 2018-2022                              James D. Mitchell
+##                                                              Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,8 +16,7 @@ DeclareAttribute("DualSemigroup", IsSemigroup);
 # Every semigroup is mathematically a dual semigroup
 # What we care about is whether it is represented as one
 DeclareRepresentation("IsDualSemigroupRep",
-                      IsEnumerableSemigroupRep and
-                        IsDualSemigroupElementCollection,
+                      IsDualSemigroupElementCollection and IsSemigroup,
                       []);
 
 DeclareAttribute("DualSemigroupOfFamily", IsFamily);

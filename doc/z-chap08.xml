@@ -1,138 +1,179 @@
-<Chapter Label = "Standard examples">
+
+<Chapter Label = "Standard constructions">
   <Heading>
-    Standard examples
+    Standard constructions
   </Heading>
 
-  In this chapter we describe some standard examples of semigroups which are
-  available in the &Semigroups; package.
+  In this chapter we describe some standard ways of constructing semigroups and
+  monoids from other semigroups that are available in the &SEMIGROUPS; package.
   <P/>
 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section Label = "Transformation semigroups">
+  <Section Label="Products of semigroups">
     <Heading>
-      Transformation semigroups
+     Products of semigroups
     </Heading>
+    In this section, we describe the functions in &SEMIGROUPS; that can be used
+    to create various products of semigroups.
 
-    In this section, we describe the operations in &Semigroups; that can be
-    used to create transformation semigroups belonging to several standard
-    classes of example. See <Ref Chap = "Transformations" BookName = "ref" />
-    for more information about transformations. 
-    <#Include Label = "CatalanMonoid">
-    <#Include Label = "EndomorphismsPartition">
-    <#Include Label = "PartialTransformationMonoid">
-    <#Include Label = "SingularTransformationSemigroup">
-    <#Include Label = "OrderPreserving">
+    <#Include Label = "DirectProduct">
+    <#Include Label = "WreathProduct">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label = "Semigroups of partial permutations">
-    <Heading>
-      Semigroups of partial permutations
-    </Heading>
-
-    In this section, we describe the operations in &Semigroups; that can be used
-    to create semigroups of partial permutations belonging to several standard
-    classes of example. See <Ref Chap = "Partial permutations" BookName = "ref"
-      /> for more information about partial permutations.
-    <#Include Label = "MunnSemigroup">
-    <#Include Label = "RookMonoid">
-    <#Include Label = "POIPODIPOPIPORI">
+  <Section>
+    <Heading> Dual semigroups </Heading>
+    The <E>dual semigroup</E> of a semigroup <C>S</C> is the semigroup with the
+    same underlying set of elements but with reversed multiplication; this is
+    anti-isomorphic to <C>S</C>. In &SEMIGROUPS; a semigroup and its dual
+    are represented with disjoint sets of elements.
+    <#Include Label = "DualSemigroup">
+    <#Include Label = "IsDualSemigroupRep">
+    <#Include Label = "IsDualSemigroupElement">
+    <#Include Label = "AntiIsomorphismDualSemigroup">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label = "Semigroups of bipartitions">
+  <Section Label = "Strong semilattices of semigroups">
     <Heading>
-      Semigroups of bipartitions
+      Strong semilattices of semigroups
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be
-    used to create bipartition semigroups belonging to several standard
-    classes of example. See Chapter <Ref Chap = "Bipartitions and blocks"/> for
-    more information about bipartitions.
-    <#Include Label = "PartitionMonoid">
-    <#Include Label = "BrauerMonoid">
-    <#Include Label = "JonesMonoid">
-    <#Include Label = "PartialJonesMonoid">
-    <#Include Label = "AnnularJonesMonoid">
-    <#Include Label = "MotzkinMonoid">
-    <#Include Label = "DualSymmetricInverseSemigroup">
-    <#Include Label = "UniformBlockBijectionMonoid">
-    <#Include Label = "PlanarPartitionMonoid">
-    <#Include Label = "ModularPartitionMonoid">
-    <#Include Label = "ApsisMonoid">
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
+    In this section, we describe how &SEMIGROUPS; can be used to create and
+    manipulate strong semilattices of semigroups (SSSs).
+    Strong semilattices of semigroups are described, for example, in Section
+    4.1 of <Cite Key = "Howie1995aa"/>.
+    They consist of a meet-semilattice <M>Y</M> along with a collection of
+    semigroups <M>S_a</M> for each <M>a</M> in <M>Y</M>, and a collection of
+    homomorphisms <M>f_{ab} : S_a \rightarrow S_b</M> for each <M>a</M> and
+    <M>b</M> in <M>Y</M> such that <M>a \geq b</M>.
+    <P/>
 
-  <Section Label = "Standard PBR semigroups">
-    <Heading>
-      Standard PBR semigroups
-    </Heading>
+    The product of two elements <M>x \in S_a, y \in S_b</M> is defined to lie
+    in the semigroup <M>S_c</M>, corresponding to the meet <M>c</M> of
+    <M>a, b \in Y</M>. The exact element of <M>S_c</M> equal to the product
+    is obtained using the homomorphisms of the SSS: <M>xy = (x f_{ac})
+    (y f_{bc})</M>.
 
-    In this section, we describe the operations in &Semigroups; that can be used
-    to create standard examples of semigroups of partitioned binary relations
-    (PBRs).  See Chapter <Ref Chap = "Partitioned binary relations (PBRs)"/> for
-    more information about PBRs.
-    <#Include Label = "FullPBRMonoid">
+    <#Include Label = "StrongSemilatticeOfSemigroups">
+    <#Include Label = "SSSE">
+    <#Include Label = "IsSSSE">
+    <#Include Label = "IsStrongSemilatticeOfSemigroups">
+    <#Include Label = "SemilatticeOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "SemigroupsOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "HomomorphismsOfStrongSemilatticeOfSemigroups">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
- 
-  <Section Label = "Semigroups of matrices of a finite field">
+
+  <Section Label = "McAlister triple semigroups">
     <Heading>
-      Semigroups of matrices over a finite field
+      McAlister triple semigroups
     </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
-    to create semigroups of matrices over a finite field that belonging to
-    several standard classes of example. See the section
-    <Ref Sect = "Matrices over finite fields" Style="Text" /> for more
-    information about matrices over a finite field.
-    <#Include Label = "GeneralLinearMonoid">
-    <#Include Label = "SpecialLinearMonoid">
-    <!-- FIXME move to a more appropriate place -->
-    <#Include Label = "IsFullMatrixMonoid">
+    In this section, we describe the functions in &GAP; for creating and
+    computing with McAlister triple semigroups and their subsemigroups.
+    This implementation is based on the section in Chapter 5 of
+    <Cite Key = "Howie1995aa"/> but differs from the treatment in Howie
+    by using right actions instead of left. Some definitions found in
+    the documentation are changed for this reason. <P/>
+
+    The importance of the McAlister triple semigroups lies in the fact that
+    they are exactly the E-unitary inverse semigroups, which are an important
+    class in the study of inverse semigroups. <P/>
+
+    First we define E-unitary inverse semigroups. It is standard to
+    denote the subsemigroup of a semigroup consisting of its idempotents by
+    <C>E</C>. A semigroup <C>S</C> is said to be <E>E-unitary</E> if for all
+    <C>e</C> in <C>E</C> and for all <C>s</C> in <C>S</C>:
+
+    <List>
+      <Item>
+        <C>es</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>,
+      </Item>
+      <Item>
+        <C>se</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>.
+      </Item>
+    </List>
+
+    For inverse semigroups these two conditions are equivalent. We are only
+    interested in <E>E-unitary inverse semigroups</E>.
+    Before defining McAlister triple semigroups we define a McAlister triple.
+    A <E>McAlister triple</E> is a triple <C>(G,X,Y)</C> which consists of:
+
+    <List>
+      <Item>
+          a partial order <C>X</C>,
+        </Item>
+        <Item>
+            a subset <C>Y</C> of <C>X</C>,
+          </Item>
+          <Item>
+            a group <C>G</C> which acts on <C>X</C>, on the right, by order
+            automorphisms. That means for all <C>A,B</C> <M>\in</M> <C>X</C> and
+            for all <C>g</C> <M>\in</M> <C>G</C>: <C>A</C> <M>\leq</M> <C>B</C> if
+              and only if <C>Ag</C> <M>\leq</M> <C>Bg</C>.
+            </Item>
+          </List>
+
+          Furthermore, <C>(G,X,Y)</C> must satisfy the following four properties to
+          be a McAlister triple:
+
+          <List>
+            <Mark> M1 </Mark>
+            <Item>
+              <C>Y</C> is a subset of <C>X</C> which is a join-semilattice together
+                with the restriction of the order relation of <C>X</C> to <C>Y</C>.
+              </Item>
+              <Mark> M2 </Mark>
+              <Item>
+                <C>Y</C> is an order ideal of <C>X</C>. That is to say, for all <C>A</C>
+                <M>\in</M> <C>X</C> and for all <C>B</C> <M>\in</M>
+                <C>Y</C>: if <C>A</C> <M>\leq</M> <C>B</C>, then <C>A</C> <M>\in</M>
+                <C>Y</C>.
+              </Item>
+              <Mark> M3 </Mark>
+              <Item>
+                Every element of <C>X</C> is the image of some element in <C>Y</C> moved
+                  by an element of <C>G</C>. That is to say, for every <C>A</C> <M>\in</M>
+                  <C>X</C>, there exists some <C>B</C> <M>\in</M> <C>Y</C> and there exists
+                  <C>g</C> <M>\in</M> <C>G</C> such that <C>A</C> = <C>Bg</C>.
+                </Item>
+                <Mark> M4 </Mark>
+                <Item>
+                  Finally, for all <C>g</C> <M>\in</M> <C>G</C>, the intersection
+                  <C>{yg : y </C><M>\in</M><C> Y}</C> <M>\cap</M> <C>Y</C> is non-empty.
+                </Item>
+              </List>
+
+              We may define an E-unitary inverse semigroup using a McAlister triple. Given
+              <C>(G,X,Y)</C> let <C>M(G,X,Y)</C> be the set of all pairs <C>(A,g)</C> in
+              <C>Y x G</C> such that <C>A</C> acted on by the inverse of <C>g</C> is in
+              <C>Y</C> together with multiplication defined by <P/>
+
+              <C>(A,g)*(B,h) = (Join(A,Bg^-1),hg)</C> <P/>
+
+              where <C>Join</C> is the natural join operation of the semilattice and
+              <C>Bg^-1</C> is <C>B</C> acted on by the inverse of <C>g</C>. With this
+              operation, <C>M(G,X,Y)</C> is a semigroup which we call a <E>McAlister
+              triple semigroup</E> over <C>(G,X,Y)</C>. In fact every McAlister triple
+              semigroup is an E-unitary inverse semigroup and every E-unitary inverse
+              semigroup is isomorphic to some McAlister triple semigroup. Note that there
+              need not be a unqiue McAlister triple semigroup for a particular McAlister
+              triple because in general there is more than one way for a group to act on
+              a partial order.
+
+    <#Include Label = "IsMcAlisterTripleSemigroup">
+    <#Include Label = "McAlisterTripleSemigroup">
+    <#Include Label = "McAlisterTripleSemigroupGroup">
+    <#Include Label = "McAlisterTripleSemigroupPartialOrder">
+    <#Include Label = "McAlisterTripleSemigroupSemilattice">
+    <#Include Label = "McAlisterTripleSemigroupAction">
+    <#Include Label = "IsMcAlisterTripleSemigroupElement">
+    <#Include Label = "McAlisterTripleSemigroupElement">
   </Section>
 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Semigroups of boolean matrices">
-    <Heading>
-      Semigroups of boolean matrices
-    </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
-    to create semigroups of boolean matrices belonging to several standard
-    classes of example. See the section <Ref Sect = "Boolean matrices"
-      Style="Text" /> for more information about boolean matrices.
-    <#Include Label = "FullBooleanMatMonoid">
-    <#Include Label = "RegularBooleanMatMonoid">
-    <#Include Label = "ReflexiveBooleanMatMonoid">
-    <#Include Label = "HallMonoid">
-    <#Include Label = "GossipMonoid">
-    <#Include Label = "TriangularBooleanMatMonoid">
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Semigroups of matrices over a semiring">
-    <Heading>
-      Semigroups of matrices over a semiring
-    </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
-    to create semigroups of matices over a semiring that belong to several
-    standard classes of example.  See Chapter
-    <Ref Chap = "Matrices over semirings" /> for more information about matrices
-    over a semiring.
-    <#Include Label = "FullTropicalMaxPlusMonoid"/>
-    <#Include Label = "FullTropicalMinPlusMonoid"/>
-  </Section>
 </Chapter>

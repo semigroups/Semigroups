@@ -1,25 +1,12 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-21                                James D. Mitchell
+##  Copyright (C) 2011-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.4.2">
-##  <!ENTITY GAPVERS "4.10.0">
-##  <!ENTITY ARCHIVENAME "semigroups-3.4.2">
-##  <!ENTITY COPYRIGHTYEARS "2011-21">
-##  <!ENTITY DATASTRUCTURESVERS "0.2.5">
-##  <!ENTITY DIGRAPHSVERS "1.2.0">
-##  <!ENTITY GENSSVERS "1.6.5">
-##  <!ENTITY IMAGESVERS "1.3.0">
-##  <!ENTITY IOVERS "4.5.1">
-##  <!ENTITY ORBVERS "4.8.2">
-##  <#/GAPDoc>
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
 function(st)
@@ -49,8 +36,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.4.2",
-Date := "07/02/2021",  # dd/mm/yyyy format
+Version := "4.0.0",
+Date := "27/02/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -242,6 +229,13 @@ Persons := [
     WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
+    LastName      := "Tsalakou",
+    FirstNames    := "Maria",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    WWWHome       := "https://mariatsalakou.github.io/"),
+
+  rec(
     LastName      := "Whyte",
     FirstNames    := "Murray",
     IsAuthor      := false,
@@ -272,30 +266,6 @@ Persons := [
 
 Status := "deposited",
 
-AbstractHTML := Concatenation(
-  "<p>The Semigroups package is a GAP package containing ",
-  "methods for semigroups, monoids, and inverse semigroups.  There are ",
-  "particularly efficient methods for semigroups or ideals consisting of ",
-  "transformations, partial permutations, bipartitions, partitioned binary ",
-  "relations, subsemigroups of regular Rees 0-matrix semigroups, and matrices ",
-  "of various semirings including boolean matrices, matrices over finite ",
-  "fields, and certain tropical matrices.</p><p>",
-  "Semigroups contains efficient methods for creating semigroups, ",
-  "monoids, and inverse semigroup, calculating their Green's structure, ",
-  "ideals, size, elements, group of units, small generating sets, testing ",
-  "membership, finding the inverses of a regular element, factorizing ",
-  "elements over the generators, and so on. It is possible to test if a ",
-  "semigroup satisfies a particular property, such as if it is regular, ",
-  "simple, inverse, completely regular, and a variety of further ",
-  "properties.</p><p>",
-  "There are methods for finding presentations for a semigroup, the ",
-  "congruences of a semigroup, the normalizer of a semigroup in a permutation ",
-  "group, the maximal subsemigroups of a finite semigroup, smaller degree ",
-  "partial permutation representations, and the character tables of inverse ",
-  "semigroups. There are functions for producing pictures of the Green's ",
-  "structure of a semigroup, and for drawing graphical representations of ",
-  "certain types of elements.</p>"),
-
 PackageDoc := rec(
   BookName  := "Semigroups",
   ArchiveURLSubset := ["doc"],
@@ -308,13 +278,14 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.10.0",
-  NeededOtherPackages := [["orb", ">=4.8.2"],
-                          ["io", ">=4.5.1"],
-                          ["datastructures", ">=0.2.5"],
-                          ["digraphs", ">=1.2.0"],
+  NeededOtherPackages := [["datastructures", ">=0.2.5"],
+                          ["digraphs", ">=1.5.0"],
                           ["genss", ">=1.6.5"],
-                          ["images", ">=1.3.0"]],
-  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"]],
+                          ["images", ">=1.3.0"],
+                          ["IO", ">=4.5.1"],
+                          ["orb", ">=4.8.2"]],
+  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
+                             ["AutoDoc", ">=2020.08.11"]],
 
   ExternalConditions := []),
 
@@ -354,8 +325,123 @@ TestFile := "tst/teststandard.g",
 Keywords := ["transformation semigroups", "partial permutations",
              "inverse semigroups", "Green's relations",
              "free inverse semigroup", "partition monoid", "bipartitions",
-             "Rees matrix semigroups"]
-));
+             "Rees matrix semigroups"],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """&copyright; by J. D. Mitchell et al.<P/>
+        &Semigroups; is free software; you can redistribute it and/or modify
+        it, under the terms of the GNU General Public License, version 3 of
+        the License, or (at your option) any later, version.""",
+        Abstract := """
+          The Semigroups package is a GAP package for semigroups, and monoids.
+          There are particularly efficient methods for finitely presented
+          semigroups and monoids, and for semigroups and monoids consisting of
+          transformations, partial permutations, bipartitions, partitioned
+          binary relations, subsemigroups of regular Rees 0-matrix semigroups,
+          and matrices of various semirings including boolean matrices,
+          matrices over finite fields, and certain tropical matrices.
+
+          Semigroups contains efficient methods for creating semigroups,
+          monoids, and inverse semigroups and monoids, calculating their
+          Green's structure, ideals, size, elements, group of units, small
+          generating sets, testing membership, finding the inverses of a
+          regular element, factorizing elements over the generators, and so on.
+          It is possible to test if a semigroup satisfies a particular
+          property, such as if it is regular, simple, inverse, completely
+          regular, and a large number of further properties.
+
+          There are methods for finding presentations for a semigroup, the
+          congruences of a semigroup, the maximal subsemigroups of a finite
+          semigroup, smaller degree partial permutation representations, and
+          the character tables of inverse semigroups. There are functions for
+          producing pictures of the Green's structure of a semigroup, and for
+          drawing graphical representations of certain types of elements.""",
+
+        Acknowledgements := """
+        I would like to thank:
+
+        <List>
+          <Mark>
+            Stuart Burrell
+          </Mark>
+          <Item>
+            who contributed methods for checking finiteness of semigroups of
+            matrices of the max-plus and min-plus semirings.
+          </Item>
+          <Mark>
+            Manuel Delgado and Attila Egri-Nagy
+          </Mark>
+          <Item>
+            who contributed to the function <Ref Oper = "DotString"/>.
+          </Item>
+          <Mark>
+            James East, Attila Egri-Nagy, and Markus Pfeiffer
+          </Mark>
+          <Item>
+            who contributed to the part of the package relating to
+            bipartitions. I would like to thank the University of Western
+            Sydney for their support of the development of this part of the
+            package.
+          </Item>
+          <Mark>
+            Nick Ham
+          </Mark>
+          <Item>
+            who contributed many of the standard examples of bipartition
+            semigroups.
+          </Item>
+        </List>
+
+        Max Horn contributed many patches and fixes, in particular, to the
+        kernel module.
+        <P/>
+
+        Chris Jefferson contributed several patches and fixes to the build
+        system.  <P/>
+
+        Julius Jonu&#353;as contributed the part of the package relating to
+        free inverse semigroups, free bands, and contributed to the code for
+        ideals.
+        <P/>
+
+        Zak Mesyan contributed to the code for graph inverse semigroups; see
+        Section <Ref Sect="Graph inverse semigroups"/>.<P/>
+
+        Dima Pasechnik contributed to the build system of the kernel module.
+        <P/>
+
+        Markus Pfeiffer contributed the majority of the code relating to
+        semigroups of matrices over finite fields.
+        <P/>
+
+        Yann P&#233;resse and Yanhui Wang contributed to the attribute
+        <Ref Attr = "MunnSemigroup"/>.<P/>
+
+        Jhevon Smith and Ben Steinberg contributed the function
+        <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
+
+        Michael Young contributed the part of the package relating to
+        congruences.  <P/>
+
+        Murray Whyte was kind enough to update the bibliography in 2019.
+        <P/>
+
+        Wilf A. Wilson contributed to the part of the package relating maximal
+        subsemigroups and smaller degree partial permutation representations of
+        inverse semigroups. We are also grateful to C. Donoven and R. Hancock
+        for their contribution to the development of the algorithms for maximal
+          subsemigroups and smaller degree partial permutation representations.
+        <P/>
+
+        We would also like to acknowledge the support of: EPSRC grant number
+        GR/S/56085/01; the Carnegie Trust for the Universities of Scotland
+        for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A.
+        Wilson when they worked on this project; the Engineering and Physical
+        Sciences Research Council (EPSRC) for funding the PhD scholarship of
+        M. Young when he worked on this project (EP/M506631/1).""")),
+
+        AbstractHTML := ~.AutoDoc.TitlePage.Abstract));
 
 MakeReadWriteGlobal("_RecogsFunnyWWWURLFunction");
 MakeReadWriteGlobal("_RecogsFunnyNameFormatterFunction");

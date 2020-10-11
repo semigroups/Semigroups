@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  display.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  tools/display.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,24 +9,44 @@
 ##
 
 #############################################################################
+
 SEMIGROUPS.GetTikzInit := function(opts)
-  local s;
-  s := Concatenation("%latex\n",
-                     "\\documentclass{minimal}\n",
-                     "\\usepackage{tikz}\n");
+  local extra;
   if IsBound(opts.extraInit) then
-    Append(s, opts.extraInit);
+    extra := opts.extraInit;
+  else
+    extra := "";
   fi;
-  Append(s, "\\begin{document}\n");
-  return s;
+
+  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n",
+                         "%latex",
+                         "\\documentclass{minimal}",
+                         "\\usepackage{tikz}",
+                         extra,
+                         "\\begin{document}");
 end;
 
 SEMIGROUPS.TikzEnd := "\\end{document}";
 
-SEMIGROUPS.TikzColors := ["red", "green", "blue", "cyan", "magenta", "yellow",
-                          "black", "gray", "darkgray", "lightgray", "brown",
-                          "lime", "olive", "orange", "pink", "purple", "teal",
-                          "violet", "white"];
+SEMIGROUPS.TikzColors := ["red",
+                          "green",
+                          "blue",
+                          "cyan",
+                          "magenta",
+                          "yellow",
+                          "black",
+                          "gray",
+                          "darkgray",
+                          "lightgray",
+                          "brown",
+                          "lime",
+                          "olive",
+                          "orange",
+                          "pink",
+                          "purple",
+                          "teal",
+                          "violet",
+                          "white"];
 
 SEMIGROUPS.TikzPBRInit := Concatenation("\\usetikzlibrary{arrows}\n",
                                         "\\usetikzlibrary{arrows.meta}\n",
@@ -398,8 +418,8 @@ end);
 InstallMethod(DotString, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, rel, ii,
-  di, j, dk, k, d, l, row, col;
+  local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, D, rel, ii,
+  di, j, dk, k, d, l, col, row;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -536,10 +556,8 @@ function(S, opts)
     od;
     Append(str, "</TABLE>>];\n");
   od;
-
-  # TODO make PartialOrderOfDClasses return a digraph
-  rel := OutNeighbours(DigraphReflexiveTransitiveReduction(
-                       Digraph(PartialOrderOfDClasses(S))));
+  D := PartialOrderOfDClasses(S);
+  rel := OutNeighbours(DigraphReflexiveTransitiveReduction(D));
   for i in [1 .. Length(rel)] do
     ii := String(i);
     for k in rel[i] do
@@ -616,10 +634,9 @@ function(f, deg)
   local str, i;
 
   if deg < DegreeOfTransformation(f) then
-    ErrorNoReturn("Semigroups: TexString: usage,\n",
-                  "the second argument (the degree) should be at ",
-                  "least the degree of the first argument (a ",
-                  "transformation),");
+    ErrorNoReturn("the 2nd argument (a pos. int.) is less than ",
+                  "the degree of the 1st argument (a ",
+                  "transformation)");
   fi;
   str := "\\begin{pmatrix}\n  ";
   for i in [1 .. deg] do
@@ -668,7 +685,7 @@ function(digraph)
   local S, vertex, edge, str, nbs, x, from, gen;
 
   S := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanUseFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
 
@@ -729,7 +746,7 @@ InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
 function(digraph)
   local S, li, label, i;
   S  := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanUseFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
   li := AsListCanonical(S);

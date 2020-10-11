@@ -67,7 +67,7 @@ gap> NrIdempotents(U);
 gap> xx := U.1 * U.2 * U.3 ^ 5 * U.2 * U.3;
 Transformation( [ 2, 2, 4, 4 ] )
 gap> Factorization(U, xx);
-[ 1, 2, 4 ]
+[ 4 ]
 gap> DD := DClass(U, xx);;
 gap> idd := Idempotents(DD);
 [ Transformation( [ 1, 1, 4, 4 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
@@ -121,7 +121,7 @@ gap> IsPartialPermBipartition(y);
 false
 
 # Blocks
-gap> b := BlocksNC([[1, 3], [-2, -4, -7], [5, 6, 8, 9], [10]]);
+gap> b := BLOCKS_NC([[1, 3], [-2, -4, -7], [5, 6, 8, 9], [10]]);
 <blocks: [ 1*, 3* ], [ 2, 4, 7 ], [ 5*, 6*, 8*, 9* ], [ 10* ]>
 gap> ProjectionFromBlocks(b);
 <bipartition: [ 1, 3, -1, -3 ], [ 2, 4, 7 ], [ 5, 6, 8, 9, -5, -6, -8, -9 ], 

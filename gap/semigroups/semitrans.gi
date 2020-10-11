@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semitrans.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  semigroups/semitrans.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -51,47 +51,18 @@ InstallMethod(RandomInverseMonoidCons,
 SEMIGROUPS.DefaultRandomInverseMonoid);
 
 #############################################################################
-## Constructions
+## Operators
 #############################################################################
 
-InstallMethod(IsConnectedTransformationSemigroup,
-"for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  return IsConnectedDigraph(DigraphOfActionOnPoints(S));
-end);
-
-InstallMethod(FixedPointsOfTransformationSemigroup,
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local n, gens, out, fixed, i, x;
-
-  n    := DegreeOfTransformationSemigroup(S);
-  gens := GeneratorsOfSemigroup(S);
-  out  := [];
-
-  for i in [1 .. n] do
-    fixed := true;
-    for x in gens do
-      if i ^ x <> i then
-        fixed := false;
-        break;
-      fi;
-    od;
-    if fixed then
-      Add(out, i);
-    fi;
-  od;
-
-  return out;
-end);
-
-InstallMethod(MovedPoints, "for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return Difference([1 .. DegreeOfTransformationSemigroup(S)],
-                    FixedPointsOfTransformationSemigroup(S));
+InstallMethod(\<, "for transformation semigroups",
+[IsTransformationSemigroup, IsTransformationSemigroup],
+function(S, T)
+  if DegreeOfTransformationSemigroup(S)
+      <> DegreeOfTransformationSemigroup(T) then
+    return DegreeOfTransformationSemigroup(S)
+      < DegreeOfTransformationSemigroup(T);
+  fi;
+  TryNextMethod();
 end);
 
 InstallMethod(\^, "for a transformation semigroup with generators and perm",
@@ -106,593 +77,8 @@ function(S, p)
   return Semigroup(GeneratorsOfSemigroup(S) ^ p);
 end);
 
-InstallMethod(DigraphOfActionOnPoints,
-"for a transformation semigroup with known generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-S -> DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S)));
-
-InstallMethod(DigraphOfActionOnPoints,
-"for a transformation semigroup with known generators and int",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsInt],
-function(S, n)
-  local gens, out, range, i, j;
-
-  if n < 0 then
-    ErrorNoReturn("Semigroups: DigraphOfActionOnPoints: usage,\n",
-                  "the second argument <n> must be non-negative,");
-  elif n = 0 then
-    return EmptyDigraph(0);
-  elif HasDigraphOfActionOnPoints(S)
-      and n = DegreeOfTransformationSemigroup(S) then
-    return DigraphOfActionOnPoints(S);
-  fi;
-
-  gens := GeneratorsOfSemigroup(S);
-  out := List([1 .. n], x -> []);
-  for i in [1 .. n] do
-    for j in [1 .. Length(gens)] do
-      range := i ^ gens[j];
-      if range > n then
-        return fail;
-      fi;
-      AddSet(out[i], range);
-    od;
-  od;
-  return DigraphNC(out);
-end);
-
-SEMIGROUPS.ElementRClass := function(R, largest)
-  local o, m, rep, n, base1, S, GroupFunc, out, scc, y, base2, p, x, i;
-
-  if Size(R) = 1 then
-    return Representative(R);
-  fi;
-
-  o := LambdaOrb(R);
-  m := LambdaOrbSCCIndex(R);
-  rep := Representative(R);
-
-  n := DegreeOfTransformationSemigroup(Parent(R));
-  base1 := DuplicateFreeList(ImageListOfTransformation(rep, n));
-
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base1));
-  if largest then
-    GroupFunc := SEMIGROUPS.LargestElementConjugateStabChain;
-    out := rep * LargestElementStabChain(S, ());
-  else
-    GroupFunc := SEMIGROUPS.SmallestElementConjugateStabChain;
-    out := rep * GroupFunc(S, (), ());
-  fi;
-
-  scc := OrbSCC(o)[m];
-
-  for i in [2 .. Length(scc)] do
-    y := rep * EvaluateWord(o!.gens,
-                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    base2 := DuplicateFreeList(ImageListOfTransformation(y, n));
-    p := MappingPermListList(base1, base2);
-
-    if largest then
-      x := y * GroupFunc(S, (), p);
-      if x > out then
-        out := x;
-      fi;
-    else
-      x := y * GroupFunc(S, (), p);
-      if x < out then
-        out := x;
-      fi;
-    fi;
-  od;
-
-  return out;
-end;
-
-SEMIGROUPS.SmallestElementRClass := function(R)
-  return SEMIGROUPS.ElementRClass(R, false);
-end;
-
-SEMIGROUPS.LargestElementRClass := function(R)
-  return SEMIGROUPS.ElementRClass(R, true);
-end;
-
-InstallMethod(DigraphOfActionOnPairs,
-"for a transformation semigroup",
-[IsTransformationSemigroup],
-S -> DigraphOfActionOnPairs(S, DegreeOfTransformationSemigroup(S)));
-
-InstallMethod(DigraphOfActionOnPairs,
-"for a transformation semigroup and int",
-[IsTransformationSemigroup, IsInt],
-function(S, n)
-  local gens, PairNumber, NumberPair, nr, nrpairs, out_nbs, inn_nbs, label,
-  pair, range, gr, i, j;
-
-  if n < 0 then
-    ErrorNoReturn("Semigroups: DigraphOfActionOnPairs: usage,\n",
-                  "the second argument <n> must be non-negative,");
-  fi;
-
-  gens := GeneratorsOfSemigroup(S);
-
-  if ForAny(gens, x -> ForAny([1 .. n], i -> i ^ x > n)) then
-    return fail;
-  elif n <= 1 then
-    return EmptyDigraph(n);
-  elif HasDigraphOfActionOnPairs(S)
-      and DegreeOfTransformationSemigroup(S) = n then
-    return DigraphOfActionOnPairs(S);
-  fi;
-
-  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
-  NumberPair := function(n, x)
-    # This function assumes that <x> is a sorted subset of [1 .. n]
-    if Length(x) = 1 then
-      return x[1];
-    fi;
-    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
-  end;
-
-  nr := Length(gens);
-  nrpairs := Binomial(n, 2);
-  out_nbs := List([1 .. n + nrpairs], x -> []);
-  inn_nbs := List([1 .. n + nrpairs], x -> []);
-  label   := List([1 .. n + nrpairs], x -> []);
-
-  for i in [n + 1 .. n + nrpairs] do
-    pair := PairNumber[i];
-    for j in [1 .. nr] do
-      range := NumberPair(n, OnSets(pair, gens[j]));
-      if not i in inn_nbs[range] then
-        Add(inn_nbs[range], i);
-        Add(out_nbs[i], range);
-        Add(label[i], j);
-      fi;
-    od;
-  od;
-
-  gr := DigraphNC(out_nbs);
-  SetInNeighbours(gr, inn_nbs);
-  SetDigraphEdgeLabels(gr, label);
-  SetDigraphVertexLabels(gr, PairNumber);
-  return gr;
-end);
-
-# FIXME can probably do better than this
-
-InstallMethod(Idempotents, "for a transformation semigroup and pos int",
-[IsTransformationSemigroup, IsPosInt],
-function(S, rank)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  if rank > deg then
-    return [];
-  fi;
-  return Filtered(Idempotents(S),
-                              x -> RankOfTransformation(x, deg) = rank);
-end);
-
-InstallMethod(IteratorSorted, "for an acting transformation semigroup",
-[IsTransformationSemigroup and IsActingSemigroup],
-function(S)
-  if HasAsSSortedList(S) then
-    return IteratorList(AsSSortedList(S));
-  fi;
-  return CallFuncList(IteratorSortedOp, List(RClasses(S), IteratorSorted));
-end);
-
-InstallMethod(IteratorSorted, "for an R-class",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(R)
-  local IterFunc, o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
-
-  IterFunc := SEMIGROUPS.IteratorSortedConjugateStabChain;
-
-  o := LambdaOrb(R);
-  m := LambdaOrbSCCIndex(R);
-  rep := Representative(R);
-  n := DegreeOfTransformationSemigroup(Parent(R));
-
-  scc := OrbSCC(o)[m];
-  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  out := [IteratorByIterator(IterFunc(S, ()),
-                             p -> rep * p, [IsIteratorSorted])];
-
-  for i in [2 .. Length(scc)] do
-    x := rep * EvaluateWord(o!.gens,
-                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    image := ImageListOfTransformation(x, n);
-    basei := DuplicateFreeList(image);
-    iter := IterFunc(S, MappingPermListList(base, basei));
-    out[i] := IteratorByIterator(iter,
-                                 function(iter, p)
-                                   return iter!.rep * p;
-                                 end,
-                                 [IsIteratorSorted], ReturnTrue,
-                                 rec(rep := Transformation(image)));
-  od;
-  return CallFuncList(IteratorSortedOp, out);
-end);
-
-InstallMethod(\<, "for transformation semigroups",
-[IsTransformationSemigroup, IsTransformationSemigroup],
-function(S, T)
-  if DegreeOfTransformationSemigroup(S)
-      <> DegreeOfTransformationSemigroup(T) then
-    return DegreeOfTransformationSemigroup(S)
-      < DegreeOfTransformationSemigroup(T);
-  fi;
-  TryNextMethod();
-end);
-
-InstallMethod(SmallestElementSemigroup,
-"for an acting transformation semigroup",
-[IsTransformationSemigroup and IsActingSemigroup],
-function(S)
-  local n;
-
-  n := DegreeOfTransformationSemigroup(S);
-
-  if n = 0 then
-    return IdentityTransformation;
-  elif ConstantTransformation(n, 1) in MinimalIdeal(S) then
-    return ConstantTransformation(n, 1);
-  fi;
-
-  return Minimum(List(RClasses(S), SEMIGROUPS.SmallestElementRClass));
-end);
-
-InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
-[IsTransformationSemigroup and IsActingSemigroup],
-function(S)
-  local n;
-
-  n := DegreeOfTransformationSemigroup(S);
-
-  if n = 0 then
-    return IdentityTransformation;
-  elif ConstantTransformation(n, n) in MinimalIdeal(S) then
-    return ConstantTransformation(n, n);
-  fi;
-
-  return Maximum(List(RClasses(S), SEMIGROUPS.LargestElementRClass));
-end);
-
-# different method required (but not yet given!! JDM FIXME) for ideals
-
-InstallMethod(IsTransitive,
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return IsStronglyConnectedDigraph(DigraphOfActionOnPoints(S));
-end);
-
-InstallMethod(IsTransitive,
-"for a transformation semigroup with generators and a positive int",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
-function(S, n)
-  return IsTransitive(GeneratorsOfSemigroup(S), n);
-end);
-
-InstallMethod(IsTransitive,
-"for a transformation semigroup with generators and a set of pos ints",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList],
-function(S, set)
-  return IsTransitive(GeneratorsOfSemigroup(S), set);
-end);
-
-InstallMethod(IsTransitive,
-"for a transformation collection and a positive int",
-[IsTransformationCollection, IsPosInt],
-function(coll, n)
-  local graph, i, x;
-
-  graph := EmptyPlist(n);
-
-  for i in [1 .. n] do
-    graph[i] := [];
-    for x in coll do
-      if i ^ x <= n then
-        AddSet(graph[i], i ^ x);
-      fi;
-    od;
-  od;
-
-  return IsStronglyConnectedDigraph(Digraph(graph));
-end);
-
-InstallMethod(IsTransitive,
-"for a transformation collection and set of positive integers",
-[IsTransformationCollection, IsList],
-function(coll, set)
-  local n, nrgens, graph, lookup, j, i, x;
-
-  if not (IsSSortedList(set) and IsHomogeneousList(set)
-          and IsPosInt(set[1])) then
-    ErrorNoReturn("Semigroups: IsTransitive: usage,\n",
-                  "the second argument <set> must be a set of positive ",
-                  "integers");
-  fi;
-
-  n := Length(set);
-  nrgens := Length(coll);
-  graph := EmptyPlist(n);
-  lookup := [];
-
-  for i in [1 .. n] do
-    lookup[set[i]] := i;
-  od;
-
-  for i in [1 .. n] do
-    graph[i] := EmptyPlist(nrgens);
-    for x in coll do
-      j := set[i] ^ x;
-      if IsBound(lookup[j]) then  # <j> is in <set>!
-        Add(graph[i], lookup[set[i] ^ x]);
-      fi;
-    od;
-  od;
-
-  return IsStronglyConnectedDigraph(Digraph(graph));
-end);
-
-# same method for ideals
-
-InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  local deg;
-
-  deg := DegreeOfTransformationSemigroup(S);
-  if deg = 0 then
-    return false;
-  fi;
-
-  if HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
-    return RankOfTransformation(MultiplicativeZero(S), deg) = 1;
-  fi;
-
-  if HasRepresentativeOfMinimalIdeal(S) then
-    return RankOfTransformation(RepresentativeOfMinimalIdeal(S), deg) = 1;
-  fi;
-
-  return IsSynchronizingSemigroup(S, deg);
-end);
-
-# this method comes from PJC's slides from the Lisbon Workshop in July 2014
-
-# same method for ideals
-
-InstallMethod(IsSynchronizingSemigroup,
-"for a transformation semigroup and positive integer",
-[IsTransformationSemigroup, IsPosInt],
-function(S, n)
-  local deg, gens, all_perms, r, gr, verts, offset, inn, marked, squashed, x, i,
-  j;
-
-  deg := DegreeOfTransformationSemigroup(S);
-  if n = 1 then
-    return true;
-  elif HasIsSynchronizingSemigroup(S) and n <= deg then
-    return IsSynchronizingSemigroup(S);
-  fi;
-
-  if HasGeneratorsOfSemigroup(S) then
-    gens := GeneratorsOfSemigroup(S);
-  else
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  fi;
-
-  all_perms := true;
-  for x in gens do
-    r := RankOfTransformation(x, n);
-    if r = 1 then
-      return true;
-    elif r < deg then
-      all_perms := false;
-    fi;
-  od;
-  if all_perms then
-    return false;  # S = <gens> is a group of transformations
-  fi;
-
-  gr := DigraphOfActionOnPairs(S);
-  # Create <verts> = vertices corresponding to pairs in [1 .. n]
-  # These are the vertices that we still need to be collapsible in <gr>
-  if n = deg then
-    verts := BlistList(DigraphVertices(gr), [n + 1 .. DigraphNrVertices(gr)]);
-  else
-    verts := BlistList(DigraphVertices(gr), []);
-    offset := 0;
-    for i in [1 .. n - 1] do
-      offset := offset + deg - i + 1;
-      for j in [1 .. n - i] do
-        verts[offset + j] := true;
-      od;
-    od;
-  fi;
-
-  # Check if any pairs are isolated
-  if ForAny([deg + 1 .. DigraphNrVertices(gr)],
-            v -> verts[v] and OutNeighboursOfVertex(gr, v) = [v]) then
-    return false;
-  fi;
-
-  inn := InNeighbours(gr);
-
-  marked := BlistList(DigraphVertices(gr), []);
-  # <marked[i]> iff <i> has been visited in the search of <gr>
-  squashed := [1 .. n];
-  for i in squashed do
-    for j in inn[i] do
-      if not marked[j] then
-        marked[j] := true;
-        verts[j] := false;
-        Add(squashed, j);
-      fi;
-    od;
-  od;
-
-  return SizeBlist(verts) = 0;
-end);
-
-InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
-[IsTransformationSemigroup], RankFilter(IsActingSemigroup),
-# to beat the default method for acting semigroups
-function(S)
-  local n, gens, nrgens, min_rank, rank, min_rank_index, gr, inn, elts, marked,
-  squashed, j, t, im, NumberPair, reduced, y, i, k, x;
-
-  n := DegreeOfTransformationSemigroup(S);  # Smallest n such that S <= T_n
-                                            # We must have n >= 2.
-  gens := GeneratorsOfSemigroup(S);
-  nrgens := Length(gens);
-  # Find the minimum rank of a generator
-  min_rank := n;
-  for i in [1 .. nrgens] do
-    rank := RankOfTransformation(gens[i], n);
-    if rank = 1 then
-      return gens[i];
-    elif rank < min_rank then
-      min_rank := rank;
-      min_rank_index := i;
-    fi;
-  od;
-
-  if min_rank = n then
-    SetIsGroupAsSemigroup(S, true);
-    return gens[1];
-  fi;
-
-  if (HasSize(S) and Size(S) < Binomial(n, 2))
-      or n > 10000 then
-    TryNextMethod();
-  fi;
-
-  gr := DigraphOfActionOnPairs(S);
-  inn := InNeighbours(gr);
-
-  # find a word describing a path from each collapsible pair to a singleton
-  elts := EmptyPlist(DigraphNrVertices(gr));
-  marked := BlistList(DigraphVertices(gr), []);
-  squashed := [1 .. n];
-  for i in squashed do
-    for k in [1 .. Length(inn[i])] do
-      j := inn[i][k];
-      if not marked[j] then
-        marked[j] := true;
-        if i <= n then
-          elts[j] := [DigraphEdgeLabel(gr, j, i)];
-        else
-          elts[j] := Concatenation([DigraphEdgeLabel(gr, j, i)], elts[i]);
-        fi;
-        Add(squashed, j);
-      fi;
-    od;
-  od;
-
-  t := gens[min_rank_index];
-  im := ImageSetOfTransformation(t, n);
-
-  NumberPair := function(n, x)
-    # This function assumes that <x> is a sorted 2-subset of [1 .. n]
-    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
-  end;
-
-  # find a word in S of minimal rank by repeatedly collapsing pairs in im(t)
-  while true do
-    reduced := false;
-    for x in IteratorOfCombinations(im, 2) do
-      y := NumberPair(n, x);
-      if marked[y] then
-        t := t * EvaluateWord(gens, elts[y]);
-        im := ImageSetOfTransformation(t, n);
-        reduced := true;
-        break;
-      fi;
-    od;
-    if not reduced then
-      break;
-    fi;
-  od;
-
-  return t;
-end);
-
-InstallMethod(WreathProduct,
-"for a transformation monoid and a permutation group",
-[IsTransformationMonoid, IsPermGroup],
-function(M, G)
-  return WreathProduct(M, AsMonoid(IsTransformationMonoid, G));
-end);
-
-InstallMethod(WreathProduct,
-"for a permutation group and a transformation semigroup",
-[IsPermGroup, IsTransformationSemigroup],
-function(G, S)
-  return WreathProduct(AsMonoid(IsTransformationMonoid, G), S);
-end);
-
-InstallMethod(WreathProduct,
-"for a transformation monoid and a transformation semigroup",
-[IsTransformationMonoid, IsTransformationSemigroup],
-function(M, S)
-  local m, gensM, gensS, orbs, n, rimage, maps, next, gen1, newmap, x, y, s, i;
-
-  if not IsMonoidAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                  "the second argument <S> should be a monoid (as semigroup),");
-  fi;
-
-  m := DegreeOfTransformationCollection(M);
-
-  gensM := List(GeneratorsOfMonoid(M), x -> ImageListOfTransformation(x, m));
-  gensS := GeneratorsOfSemigroup(S);
-
-  orbs := List(ComponentsOfTransformationSemigroup(S), Minimum);
-  n := DegreeOfTransformationCollection(S);
-  rimage := [1 .. n];
-
-  for x in orbs do
-    for y in gensS do
-      RemoveSet(rimage, x ^ y);
-    od;
-  od;
-
-  maps := [];  # final generating set for the wreath product
-
-  # move copies of M as by the action induced by S
-  next := [1 .. m * n];
-  for s in gensS do
-    for i in [1 .. n] do
-      next{[1 .. m] + (i - 1) * m} := [1 .. m] + (i ^ s - 1) * m;
-    od;
-    Add(maps, Transformation(next));
-  od;
-
-  gen1 := gensS[1];
-  for i in orbs do
-    newmap := ShallowCopy(ImageListOfTransformation(maps[1], m * n));
-    for x in gensM do
-      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
-      Add(maps, Transformation(newmap));
-    od;
-  od;
-
-  for i in rimage do
-    newmap := OnTuples([1 .. m * n], maps[1]);
-    for x in gensM do
-      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
-      Add(maps, Transformation(newmap));
-    od;
-  od;
-
-  return Semigroup(maps);
-end);
-
 #############################################################################
-# ?. Isomorphisms
+## Isomorphisms
 #############################################################################
 
 InstallMethod(IsomorphismSemigroup,
@@ -709,19 +95,18 @@ function(filt, S)
   return IsomorphismTransformationMonoid(S);
 end);
 
-# there could be an even faster C/C++ version of this
-# TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
+# TODO(later) AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
 InstallMethod(IsomorphismTransformationSemigroup,
-"for an enumerable semigroup",
-[IsEnumerableSemigroupRep], 2,
-# to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
+"for a semigroup with CanUseFroidurePin",
+[CanUseFroidurePin],
+ToBeat([CanUseFroidurePin], [IsFpMonoid]),
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;
-
   if not IsFinite(S) then
-    # This is unreachable in tests, since there is no other method that
-    # terminates
+    ErrorNoReturn("the argument (a semigroup) is not finite");
+  elif IsPartialPermSemigroup(S) or IsTransformationSemigroup(S) then
+    # Apparently this clause is required in GAP 4.10
     TryNextMethod();
   fi;
 
@@ -748,49 +133,14 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
-end);
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for an fp monoid",
-[IsFpMonoid],
-function(S)
-  local cay, deg, gen, i, next, T, iso, inv;
-
-  if not IsFinite(S) then
-    # This is unreachable in tests, since there is not other method that
-    # terminates
-    TryNextMethod();
-  fi;
-
-  cay := OutNeighbours(RightCayleyDigraph(S));
-  deg := Size(S);
-  gen := EmptyPlist(Length(cay[1]));
-
-  for i in [1 .. Length(cay[1])] do
-    next := List([1 .. deg], j -> cay[j][i]);
-    gen[i] := Transformation(next);
-  od;
-
-  T := Semigroup(gen);
-  UseIsomorphismRelation(S, T);
-
-  iso := function(x)
-    return EvaluateWord(gen, MinimalFactorization(S, x));
-  end;
-
-  inv := function(x)
-    return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
-  end;
-
-  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup with generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+SUM_FLAGS,
 function(S)
   local T, map, inv, n, pts, o, pos, i;
   n := Length(Representative(S)![1]);
@@ -864,22 +214,8 @@ function(S)
                                                             pts[pos[i] ^ x])));
 end);
 
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local iso, inv, J;
-
-  iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-  UseIsomorphismRelation(I, J);
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
-end);
-
 #############################################################################
-# ?. Attributes
+## Algebraic attributes
 #############################################################################
 
 # same method for ideals
@@ -909,6 +245,24 @@ function(S)
   return U;
 end);
 
+# can probably do better than this
+
+InstallMethod(Idempotents, "for a transformation semigroup and pos int",
+[IsTransformationSemigroup, IsPosInt],
+function(S, rank)
+  local deg;
+  deg := DegreeOfTransformationSemigroup(S);
+  if rank > deg then
+    return [];
+  fi;
+  return Filtered(Idempotents(S),
+                              x -> RankOfTransformation(x, deg) = rank);
+end);
+
+#############################################################################
+## Degree
+#############################################################################
+
 InstallMethod(DegreeOfTransformationCollection,
 "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
@@ -920,48 +274,186 @@ function(I)
   return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
 end);
 
-# TODO replace this method with one using Digraphs
+#############################################################################
+## Action on points and pairs
+#############################################################################
+
+InstallMethod(DigraphOfAction,
+"for a transformation collection, list, and action",
+[IsTransformationCollection, IsList, IsFunction],
+function(coll, list, act)
+  local n, map, out, in_, labels, genstoapply, i, y, index, D, j;
+
+  # TODO arg checks
+
+  n := Length(list);
+  if n = 0 then
+    return EmptyDigraph(n);
+  fi;
+
+  map := HashMap(Length(list));
+  for i in [1 .. Length(list)] do
+    map[list[i]] := i;
+  od;
+
+  # We track the out-neighbours and in-neighbours because at least one
+  # application (finding the representative of the minimal ideal) requires
+  # this.
+  out         := List([1 .. n], x -> []);
+  in_         := List([1 .. n], x -> []);
+  labels      := List([1 .. n], x -> []);
+  genstoapply := [1 .. Length(coll)];
+
+  i := 1;
+  repeat
+    for j in genstoapply do
+      y := act(list[i], coll[j]);
+      if y <> fail then
+        index := map[y];
+        if index = fail then
+          n := n + 1;
+          list[n] := y;
+          map[y] := n;
+          Add(out, []);
+          Add(in_, []);
+          Add(labels, []);
+          index := n;
+        fi;
+        if not i in in_[index] then
+          Add(out[i], index);
+          Add(in_[index], i);
+          Add(labels[i], j);
+        fi;
+      fi;
+    od;
+    i := i + 1;
+  until i > n;
+
+  D := DigraphNC(out);
+  SetDigraphVertexLabels(D, list);
+  SetDigraphEdgeLabelsNC(D, labels);
+  SetInNeighbours(D, in_);
+  return D;
+end);
+
+InstallMethod(DigraphOfAction,
+"for a transformation semigroup with generators, list, and action",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList, IsFunction],
+function(S, list, act)
+  return DigraphOfAction(GeneratorsOfSemigroup(S), list, act);
+end);
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation collection and int",
+[IsTransformationCollection, IsInt],
+function(coll, n)
+  local act;
+
+  if n < 0 then
+    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
+  fi;
+
+  act := function(pt, x)
+    local y;
+    y := OnPoints(pt, x);
+    if y >= 1 and y <= n then
+      return y;
+    fi;
+    return fail;
+  end;
+
+  return DigraphOfAction(coll, [1 .. n], act);
+end);
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation semigroup with known generators and int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsInt],
+function(S, n)
+  return DigraphOfActionOnPoints(GeneratorsOfSemigroup(S), n);
+end);
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation semigroup with known generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+S -> DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S)));
+
+InstallMethod(FixedPointsOfTransformationSemigroup,
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, gens;
+  n    := DegreeOfTransformationSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  return Filtered([1 .. n], i -> ForAll(gens, x -> i ^ x = i));
+end);
+
+InstallMethod(MovedPoints, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return Difference([1 .. DegreeOfTransformationSemigroup(S)],
+                    FixedPointsOfTransformationSemigroup(S));
+end);
+
+InstallMethod(IsConnectedTransformationSemigroup,
+"for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  return IsConnectedDigraph(DigraphOfActionOnPoints(S));
+end);
+
+InstallMethod(IsTransitive,
+"for a transformation collection and a positive int",
+[IsTransformationCollection, IsPosInt],
+function(coll, n)
+  return IsStronglyConnectedDigraph(DigraphOfActionOnPoints(coll, n));
+end);
+
+InstallMethod(IsTransitive,
+"for a transformation collection and homog. list",
+[IsTransformationCollection, IsHomogeneousList],
+function(coll, set)
+  local n, p;
+  # The check for IsSSortedList is here because <set> might be strictly sorted
+  # but not know it.
+  if not (IsPosInt(set[1]) and IsSSortedList(set)) then
+    ErrorNoReturn("the 2nd argument (a list) must be a set of positive ",
+                  "integers");
+  fi;
+
+  n := Length(set);
+  p := MappingPermListList(set, [1 .. n]);
+  return IsTransitive(coll ^ p, n);
+end);
+
+InstallMethod(IsTransitive,
+"for a transformation semigroup with generators and a pos. int.",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(S, n)
+  return IsTransitive(GeneratorsOfSemigroup(S), n);
+end);
+
+InstallMethod(IsTransitive,
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return IsTransitive(S, DegreeOfTransformationSemigroup(S));
+end);
+
+InstallMethod(IsTransitive,
+"for a transformation semigroup with generators and a list",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList],
+function(S, set)
+  return IsTransitive(GeneratorsOfSemigroup(S), set);
+end);
 
 InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, reps, next, opts, gens, o, out, i;
-
-  pts := [1 .. DegreeOfTransformationSemigroup(S)];
-  reps := BlistList(pts, []);
-  # true=its a rep, false=not seen it, fail=its not a rep
-  next := 1;
-  opts := rec(lookingfor := function(o, x)
-                              return reps[x] = true or reps[x] = fail;
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    o := Orb(gens, next, OnPoints, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false and reps[o[PositionOfFound(o)]] = true then
-      reps[o[PositionOfFound(o)]] := fail;
-    fi;
-    reps[next] := true;
-    for i in [2 .. Length(o)] do
-      reps[o[i]] := fail;
-    od;
-    next := Position(reps, false, next);
-  until next = fail;
-
-  out := [];
-  for i in pts do
-    if reps[i] = true then
-      Add(out, i);
-    fi;
-  od;
-
-  return out;
+  local D, C;
+  D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
+  C := DigraphStronglyConnectedComponents(D).comps;
+  DigraphRemoveLoops(QuotientDigraph(D, C));
+  return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
 end);
 
 InstallMethod(ComponentsOfTransformationSemigroup,
@@ -973,11 +465,314 @@ end);
 InstallMethod(CyclesOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  return DigraphAllSimpleCircuits(DigraphOfActionOnPoints(S));
+  return DigraphStronglyConnectedComponents(DigraphOfActionOnPoints(S)).comps;
 end);
 
-InstallMethod(EndomorphismMonoid, "for a digraph",
-[IsDigraph],
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for a transformation semigroup with known generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+RankFilter(IsActingSemigroup),
+# to beat the default method for acting semigroups
+function(S)
+  local n, result, rank, image, labels, D, squashable, paths, seen, neighbours,
+  map, nothing_squashed, pos, x, y, i, pair;
+
+  n      := DegreeOfTransformationSemigroup(S);
+  result := Product(GeneratorsOfSemigroup(S));
+  rank   := RankOfTransformation(result, n);
+
+  # Take the product of the generators is an arbitrary choice, the aim is to
+  # try to find a smallish set to use to generate the nodes in the digraph
+  # below, and also we might get lucky and find that the product of the
+  # generators is of rank 1 or n, in which case we can stop right away.
+
+  if rank = n then
+    SetIsGroupAsSemigroup(S, true);
+    return result;
+  elif rank = 1 then
+    return result;
+  elif HasSize(S) and Size(S) < Binomial(n, 2) then
+    TryNextMethod();
+  elif HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
+    TryNextMethod();
+  fi;
+
+  # Form the digraph of action on points and pairs of points inside the image
+  # set of the product of the generators. If n is very large, then it isn't
+  # feasible to create a digraph with O(n ^ 2) vertices, so we use the image
+  # set of the product of the generators in the hope that this is smaller.
+  image := ImageSetOfTransformation(result, n);
+  labels := List(ImageSetOfTransformation(result, n), x -> [x]);
+  Append(labels, Combinations(ImageSetOfTransformation(result, n), 2));
+  D := DigraphOfAction(S, labels, OnSets);
+
+  # Perform a bfs through the reverse of the digraph D to find all those "pair"
+  # nodes from which a "point" node is reachable, and to find the edge labels
+  # of the path from the "pair" node to the "point" node. When such paths are
+  # known we can squash all possible pairs of points in the image of <result>
+  # into single points.
+
+  # Sets of size 1 are squashable!
+  squashable        := PositionsProperty(DigraphVertexLabels(D),
+                                         x -> Size(x) = 1);
+  paths             := [];
+  paths{squashable} := List([1 .. Length(squashable)], x -> []);
+  seen              := BlistList(DigraphVertices(D), squashable);
+
+  for x in squashable do
+    neighbours := InNeighboursOfVertex(D, x);
+    for y in neighbours do
+      if not seen[y] then
+        seen[y] := true;
+        Add(squashable, y);
+        paths[y] := Concatenation([DigraphEdgeLabel(D, y, x)], paths[x]);
+      fi;
+    od;
+  od;
+
+  # The labels may have changed because ActionDigraph may generate additional
+  # nodes, so we must renew the labels.
+  labels := Filtered(DigraphVertices(D),
+                     i -> Size(DigraphVertexLabel(D, i)) = 2
+                          and IsBound(paths[i]));
+  if IsEmpty(labels) then
+    # This means there are no paths from any pair of points in the image of
+    # result that can be collapsed.
+    return result;
+  fi;
+  paths  := paths{labels};
+  labels := DigraphVertexLabels(D){labels};
+  map    := HashMap(Length(labels));
+  for i in [1 .. Length(labels)] do
+    map[labels[i]] := i;
+  od;
+
+  # Form an element of the semigroup that squashes every possible pair of
+  # points in the image of <result>.
+  repeat
+    nothing_squashed := true;
+    for pair in IteratorOfCombinations(image, 2) do
+      # To ensure that every pair is eventually squashed, we have to see where
+      # the pair has ended up under result.
+      pair := OnSets(pair, result);
+      if Size(pair) = 1 then
+        result := result * result;
+        image := ImageSetOfTransformation(result, n);
+        nothing_squashed := false;
+        break;
+      fi;
+      pos := map[pair];
+      if pos <> fail then
+        result := result * EvaluateWord(GeneratorsOfSemigroup(S), paths[pos]);
+        image := ImageSetOfTransformation(result, n);
+        nothing_squashed := false;
+        break;
+      fi;
+    od;
+  until nothing_squashed or Size(image) = 1;
+  return result;
+end);
+
+# same method for ideals
+
+InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local N;
+  N := DegreeOfTransformationSemigroup(S);
+  if N = 0 then
+    return false;
+  elif HasMultiplicativeZero(S) and MultiplicativeZero(S) <> fail then
+    return RankOfTransformation(MultiplicativeZero(S), N) = 1;
+  else
+    return RankOfTransformation(RepresentativeOfMinimalIdeal(S), N) = 1;
+  fi;
+end);
+
+#############################################################################
+## Smallest, largest element
+#############################################################################
+
+BindGlobal("SEMIGROUPS_SmallestLargestElementRClass",
+function(R, BaseModifier, Cmp)
+  local o, m, rep, n, base1, S, out, scc, gens, y, base2, p, x, i;
+
+  if Size(R) = 1 then
+    return Representative(R);
+  fi;
+
+  o     := LambdaOrb(R);
+  m     := LambdaOrbSCCIndex(R);
+  rep   := Representative(R);
+  n     := DegreeOfTransformationSemigroup(Parent(R));
+  base1 := BaseModifier(DuplicateFreeList(ImageListOfTransformation(rep, n)));
+  S     := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base1));
+  out   := rep * LargestElementStabChain(S, ());
+  scc   := OrbSCC(o)[m];
+  gens  := o!.gens;
+
+  for i in [2 .. Length(scc)] do
+    y     := rep * EvaluateWord(gens,
+                                TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    base2 := BaseModifier(DuplicateFreeList(ImageListOfTransformation(y, n)));
+    p     := MappingPermListList(base1, base2);
+
+    x := y * LargestElementConjugateStabChain(S, p);
+    if Cmp(x, out) then
+      out := x;
+    fi;
+  od;
+
+  return out;
+end);
+
+InstallMethod(LargestElementRClass, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(R)
+  if not IsTransformationSemigroup(Parent(R)) then
+    TryNextMethod();
+  fi;
+  return SEMIGROUPS_SmallestLargestElementRClass(R, IdFunc, {x, y} -> x > y);
+end);
+
+InstallMethod(SmallestElementRClass, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(R)
+  if not IsTransformationSemigroup(Parent(R)) then
+    TryNextMethod();
+  fi;
+  return SEMIGROUPS_SmallestLargestElementRClass(R, Reversed, LT);
+end);
+
+InstallMethod(SmallestElementSemigroup,
+"for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
+function(S)
+  local n, min;
+
+  n := DegreeOfTransformationSemigroup(S);
+  if n = 0 then
+    return IdentityTransformation;
+  elif HasAsSSortedList(S) then
+    return AsSSortedList(S)[1];
+  elif HasEnumeratorSorted(S) then
+    return EnumeratorSorted(S)[1];
+  fi;
+
+  min := Minimum(Union(List(GeneratorsOfSemigroup(S),
+                            x -> ImageSetOfTransformation(x, n))));
+
+  if ConstantTransformation(n, min) in MinimalIdeal(S) then
+    return ConstantTransformation(n, min);
+  fi;
+
+  return Minimum(List(RClasses(S), SmallestElementRClass));
+end);
+
+InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
+function(S)
+  local n, max;
+
+  n := DegreeOfTransformationSemigroup(S);
+  if n = 0 then
+    return IdentityTransformation;
+  elif HasAsSSortedList(S) then
+    return AsSSortedList(S)[Size(S)];
+  elif HasEnumeratorSorted(S) then
+    return EnumeratorSorted(S)[Size(S)];
+  fi;
+
+  max := Maximum(Union(List(GeneratorsOfSemigroup(S),
+                            x -> ImageSetOfTransformation(x, n))));
+
+  if ConstantTransformation(n, max) in MinimalIdeal(S) then
+    return ConstantTransformation(n, max);
+  fi;
+
+  return Maximum(List(RClasses(S), LargestElementRClass));
+end);
+
+#############################################################################
+# Constructions (e.g. wreath product)
+#############################################################################
+
+InstallMethod(WreathProduct,
+"for a transformation monoid and a permutation group",
+[IsTransformationMonoid, IsPermGroup],
+function(M, G)
+  return WreathProduct(M, AsMonoid(IsTransformationMonoid, G));
+end);
+
+InstallMethod(WreathProduct,
+"for a permutation group and a transformation semigroup",
+[IsPermGroup, IsTransformationSemigroup],
+function(G, S)
+  return WreathProduct(AsMonoid(IsTransformationMonoid, G), S);
+end);
+
+InstallMethod(WreathProduct,
+"for a transformation monoid and a transformation semigroup",
+[IsTransformationMonoid, IsTransformationSemigroup],
+function(M, S)
+  local m, gensM, gensS, orbs, n, rimage, maps, next, gen1, newmap, x, y, s, i;
+
+  if not IsMonoidAsSemigroup(S) then
+    ErrorNoReturn("the 2nd argument (a transformation semigroup) ",
+                  "should be a monoid (as semigroup)");
+  fi;
+
+  m := DegreeOfTransformationCollection(M);
+
+  gensM := List(GeneratorsOfMonoid(M), x -> ImageListOfTransformation(x, m));
+  gensS := GeneratorsOfSemigroup(S);
+
+  orbs := List(ComponentsOfTransformationSemigroup(S), Minimum);
+  n := DegreeOfTransformationCollection(S);
+  rimage := [1 .. n];
+
+  for x in orbs do
+    for y in gensS do
+      RemoveSet(rimage, x ^ y);
+    od;
+  od;
+
+  maps := [];  # final generating set for the wreath product
+
+  # move copies of M as by the action induced by S
+  next := [1 .. m * n];
+  for s in gensS do
+    for i in [1 .. n] do
+      next{[1 .. m] + (i - 1) * m} := [1 .. m] + (i ^ s - 1) * m;
+    od;
+    Add(maps, Transformation(next));
+  od;
+
+  gen1 := gensS[1];
+  for i in orbs do
+    newmap := ShallowCopy(ImageListOfTransformation(maps[1], m * n));
+    for x in gensM do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+
+  for i in rimage do
+    newmap := OnTuples([1 .. m * n], maps[1]);
+    for x in gensM do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+
+  return Semigroup(maps);
+end);
+
+#############################################################################
+# Endomorphisms of digraphs
+#############################################################################
+
+InstallMethod(EndomorphismMonoid, "for a digraph", [IsDigraph],
 function(digraph)
   local hook, S;
 
@@ -993,9 +788,17 @@ function(digraph)
     S[1] := ClosureMonoid(S[1], f);
   end;
 
-  return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), [],
-                                    fail, fail)[1];
+  return HomomorphismDigraphsFinder(digraph,
+                                    digraph,
+                                    hook,
+                                    S,
+                                    infinity,
+                                    fail,
+                                    false,
+                                    DigraphVertices(digraph),
+                                    [],
+                                    fail,
+                                    fail)[1];
 end);
 
 InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",
@@ -1023,4 +826,43 @@ function(D)
   local x;
   x := RepresentativeOfMinimalIdeal(EndomorphismMonoid(D));
   return ImageSetOfTransformation(x, DigraphNrVertices(D));
+end);
+
+#############################################################################
+# Iterators
+#############################################################################
+
+# This is faster than using the iterator method for LibsemigroupsFroidurePin
+# for n = 7 or so onwards
+
+InstallMethod(Iterator, "for a full transformation semigroup",
+[IsTransformationSemigroup and IsFullTransformationSemigroup and
+ HasGeneratorsOfSemigroup],
+function(S)
+  local iter;
+
+  if HasAsSSortedList(S) or HasAsListCanonical(S) then
+    # This is much faster
+    TryNextMethod();
+  fi;
+
+  iter := IteratorByFunctions(rec(
+    tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
+                             DegreeOfTransformationSemigroup(S)),
+    parent := S,
+
+    NextIterator := iter -> TransformationNC(NextIterator(iter!.tups)),
+
+    IsDoneIterator := iter -> IsDoneIterator(iter!.tups),
+
+    ShallowCopy := iter ->
+      rec(parent := S,
+          tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
+                                   DegreeOfTransformationSemigroup(S))),
+
+    PrintObj := function(iter)
+                  Print("<iterator of semigroup>");
+                  return;
+                end));
+  return iter;
 end);

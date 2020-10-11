@@ -438,7 +438,7 @@ gap> Display(AsBooleanMat(x));
       independently, on its columns. In other words, <C>CanonicalBooleanMat</C>
       returns a canonical boolean matrix equivalent to <A>mat</A> up to
       rearranging rows and columns. This version of <C>CanonicalBooleanMat</C>
-      uses &Digraphs; and its interface with the &bliss; library for computing
+      uses &DIGRAPHS; and its interface with the &BLISS; library for computing
       automorphism groups and canonical forms of graphs <Cite
         Key="JunttilaKaski"/>. As a consequence, <C>CanonicalBooleanMat</C>
       with a single argument is significantly faster than the versions with 2

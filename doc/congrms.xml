@@ -70,7 +70,7 @@ gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
 gap> rowBlocks := [[1], [2], [3]];;
 gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> IsRZMSCongruenceClassByLinkedTriple(classes[1]);
 true]]></Example>
     </Description>
@@ -180,56 +180,6 @@ gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
 gap> rowBlocks := [[1], [2], [3]];;
 gap> IsLinkedTriple(S, N, colBlocks, rowBlocks);
 true]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="CanonicalRepresentative">
-  <ManSection>
-    <Attr Name = "CanonicalRepresentative" Arg = "class"/>
-    <Returns>A congruence class.</Returns>
-    <Description>
-      This attribute gives a canonical representative for the semigroup
-      congruence class <A>class</A>.  This representative can be used to
-      identify a class uniquely. <P/>
-
-      At present this only works for simple and 0-simple semigroups.
-      <Example><![CDATA[
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
-> [[(), (1, 3, 2)], [(1, 2), 0]]);;
-gap> cong := CongruencesOfSemigroup(S)[3];;
-gap> class := CongruenceClasses(cong)[3];;
-gap> CanonicalRepresentative(class);
-(1,(1,2,3),2)]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="AsRZMSCongruenceByLinkedTriple">
-  <ManSection>
-    <Oper Name = "AsRMSCongruenceByLinkedTriple" Arg = "cong"/>
-    <Oper Name = "AsRZMSCongruenceByLinkedTriple" Arg = "cong"/>
-    <Returns>
-      A Rees matrix or 0-matrix semigroup congruence by linked
-      triple.
-    </Returns>
-    <Description>
-      This operation takes a semigroup congruence <A>cong</A> over a finite
-      simple or 0-simple Rees 0-matrix semigroup, and returns that congruence
-      relation in a new form: as either a congruence by linked triple, or a
-      universal congruence.<P/>
-
-      If the congruence is not defined over an appropriate type of semigroup,
-      then this function returns an error.
-      <Example><![CDATA[
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
-> [[(), (1, 3, 2)], [(1, 2), 0]]);;
-gap> x := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;
-gap> y := ReesZeroMatrixSemigroupElement(S, 1, (), 1);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;
-gap> AsRZMSCongruenceByLinkedTriple(cong);
-<semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
-  Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

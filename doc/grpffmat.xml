@@ -14,7 +14,7 @@
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     A <E>matrix group</E> is simply a group of invertible matrices over a
-    finite field. An object in &Semigroups; is a matrix group if
+    finite field. An object in &SEMIGROUPS; is a matrix group if
     it satisfies <Ref Prop="IsGroup" BookName="ref"/> and
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>.
     <Example><![CDATA[

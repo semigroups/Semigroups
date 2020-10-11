@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semibipart.gi
-##  Copyright (C) 2013-15                                 James D. Mitchell
+##  semigroups/semibipart.gi
+##  Copyright (C) 2013-2022                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -120,8 +120,8 @@ function(S)
   if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
-  # TODO A block bijection *-semigroup is necessarily inverse, install a true
-  # method for this
+  # TODO(later) A block bijection *-semigroup is necessarily inverse, install a
+  # true method for this
   return "\>block bijection\< *-";
 end);
 
@@ -186,8 +186,8 @@ function(S)
     return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
-  # TODO this could be better only have to check the generators of the ideal
-  # times the generators of the semigroup on the left and right.
+  # TODO(later) this could be better only have to check the generators of the
+  # ideal times the generators of the semigroup on the left and right.
 end);
 
 InstallMethod(IsPartialPermBipartitionSemigroup,
@@ -213,8 +213,7 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                  "the argument is not an inverse semigroup,");
+    ErrorNoReturn("the argument is not an inverse semigroup");
   elif IsBlockBijectionSemigroup(S) then
     return NaturalLeqBlockBijection;
   elif IsPartialPermBipartitionSemigroup(S) then
@@ -377,8 +376,7 @@ function(filter, S)
   local iso1, inv1, iso2, inv2;
 
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the second arg must be an inverse semigroup,");
+    ErrorNoReturn("the 2nd argument must be an inverse semigroup");
   fi;
 
   iso1 := IsomorphismPartialPermSemigroup(S);
@@ -529,7 +527,7 @@ function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
-# TODO could have a method for IsomorphismSemigroup for
+# TODO(later) could have a method for IsomorphismSemigroup for
 # IsPartialPermBipartitions and IsBlockBijectionSemigroup too... or just for
 # general inverse semigroups, via composing IsomorphismPartialPermSemigroup and
 # the isomorphism to a block bijection semigroup.

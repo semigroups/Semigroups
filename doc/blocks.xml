@@ -53,9 +53,9 @@ gap> RightProjection(x);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="BlocksNC">
+<#GAPDoc Label="BLOCKS_NC">
   <ManSection>
-    <Func Name = "BlocksNC" Arg = "classes"/>
+    <Func Name = "BLOCKS_NC" Arg = "classes"/>
     <Returns>A blocks.</Returns>
     <Description>
       This function makes it possible to create a &GAP; object corresponding
@@ -63,7 +63,7 @@ gap> RightProjection(x);
       bipartitions.
       <P/>
 
-      <C>BlocksNC</C> returns the blocks with equivalence
+      <C>BLOCKS_NC</C> returns the blocks with equivalence
       classes <A>classes</A>, which should be a list of duplicate-free lists
       consisting solely of positive or negative integers, where the union of the
       absolute values of the lists is <C>[1 .. n]</C> for some <C>n</C>. The
@@ -74,7 +74,7 @@ gap> RightProjection(x);
       should be used with caution.
 
       <Example><![CDATA[
-gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
+gap> BLOCKS_NC([[1], [2], [-3, -6], [-4, -5]]);
 <blocks: [ 1* ], [ 2* ], [ 3, 6 ], [ 4, 5 ]>]]></Example>
     </Description>
   </ManSection>
@@ -131,7 +131,7 @@ gap> OnLeftBlocks(LeftBlocks(y), x);
        <A>blocks</A>, then <C>ExtRepOfObj</C> returns the partition
        corresponding to <A>blocks</A> as a sorted list of duplicate-free lists. 
       <Example><![CDATA[
-gap> blocks := BlocksNC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;
+gap> blocks := BLOCKS_NC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;
 gap> ExtRepOfObj(blocks);
 [ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]]]></Example>
     </Description>
@@ -152,7 +152,7 @@ gap> ExtRepOfObj(blocks);
       <C>NrTransverseBlocks</C> is a synonym of <C>RankOfBlocks</C> in this
       context. 
       <Example><![CDATA[
-gap> blocks := BlocksNC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],
+gap> blocks := BLOCKS_NC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],
 >                        [8], [9], [-11]]);;
 gap> RankOfBlocks(blocks);
 4]]></Example>
@@ -169,7 +169,7 @@ gap> RankOfBlocks(blocks);
       it is defined, i.e. the union of the blocks in <A>blocks</A> will be
       <C>[1 .. n]</C> after taking the absolute value of every element. 
       <Example><![CDATA[
-gap> blocks := BlocksNC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],
+gap> blocks := BLOCKS_NC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],
 >                        [12]]);;
 gap> DegreeOfBlocks(blocks);
 12]]></Example>
@@ -195,7 +195,7 @@ gap> DegreeOfBlocks(blocks);
       canonical representative of a class <C>C(n)</C> containing <A>blocks</A>
       where <C>n</C> is the degree of <A>blocks</A>.
       <Example><![CDATA[
-gap> B := BlocksNC([[-1, -3], [2, 4, 7], [5, 6]]);
+gap> B := BLOCKS_NC([[-1, -3], [2, 4, 7], [5, 6]]);
 <blocks: [ 1, 3 ], [ 2*, 4*, 7* ], [ 5*, 6* ]>
 gap> CanonicalBlocks(B);
 <blocks: [ 1*, 2* ], [ 3*, 4*, 5* ], [ 6, 7 ]>]]></Example>

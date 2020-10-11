@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/congrms.gd
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -15,9 +15,9 @@
 
 # Congruences by linked triple
 DeclareCategory("IsRMSCongruenceByLinkedTriple",
-                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsCongruenceCategory and IsAttributeStoringRep and IsFinite);
 DeclareCategory("IsRZMSCongruenceByLinkedTriple",
-                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsCongruenceCategory and IsAttributeStoringRep and IsFinite);
 DeclareOperation("IsLinkedTriple",
                  [IsSemigroup, IsGroup, IsDenseList, IsDenseList]);
 DeclareGlobalFunction("RMSCongruenceByLinkedTriple");
@@ -27,11 +27,11 @@ DeclareGlobalFunction("RZMSCongruenceByLinkedTripleNC");
 
 # Congruence Classes
 DeclareCategory("IsRMSCongruenceClassByLinkedTriple",
-                IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsAnyCongruenceClass and IsCongruenceClass and
+                IsAttributeStoringRep and IsAssociativeElement);
 DeclareCategory("IsRZMSCongruenceClassByLinkedTriple",
-                IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsAnyCongruenceClass and IsCongruenceClass and
+                IsAttributeStoringRep and IsAssociativeElement);
 DeclareOperation("RMSCongruenceClassByLinkedTriple",
                  [IsRMSCongruenceByLinkedTriple,
                   IsRightCoset, IsPosInt, IsPosInt]);
@@ -44,8 +44,3 @@ DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
 DeclareOperation("RZMSCongruenceClassByLinkedTripleNC",
                  [IsRZMSCongruenceByLinkedTriple,
                   IsRightCoset, IsPosInt, IsPosInt]);
-DeclareAttribute("CanonicalRepresentative", IsEquivalenceClass);
-
-# Conversion with semigroup congruences by generating pairs
-DeclareOperation("AsRMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);
-DeclareOperation("AsRZMSCongruenceByLinkedTriple", [IsSemigroupCongruence]);

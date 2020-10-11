@@ -1,15 +1,12 @@
 ############################################################################
 ##
-##  isorms.gi
-##  Copyright (C) 2014-17                                James D. Mitchell
+##  attributes/isorms.gi
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-# TODO SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
-# their own type)
 
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees
@@ -40,22 +37,6 @@
 # 1. Internal functions
 #############################################################################
 
-# Same as <Info> but without a line break at the end if the boolean <linebreak>
-# is false.
-
-SEMIGROUPS.InfoStatement := function(level, linebreak, arg...)
-  if InfoLevel(InfoSemigroups) >= level then
-    Apply(arg, String);
-    if not linebreak then
-      Print("#I  ");
-    fi;
-    Print(Concatenation(arg));
-    if linebreak then
-      Print("\n");
-    fi;
-  fi;
-end;
-
 # Find the stabiliser of the matrix of a Rees (0-)matrix semigroup under the
 # action of the automorphism group of the R(Z)MSGraph via rearranging rows and
 # columns
@@ -75,9 +56,8 @@ SEMIGROUPS.StabOfRMSMatrix := function(G, R)
 
     return List(Permuted(mat, rows), y -> Permuted(y, x));
   end;
-  SEMIGROUPS.InfoStatement(2, false, "finding the stabilizer of matrix . . . ");
-  H := Stab(G, Matrix(R), OnMatrix).stab;
-  SEMIGROUPS.InfoStatement(2, true, Size(H));
+  H := Stabilizer(G, Matrix(R), OnMatrix);
+  Info(InfoSemigroups, 2, "the size of stabilizer of the matrix is ", Size(H));
   return H;
 end;
 
@@ -87,8 +67,6 @@ end;
 
 SEMIGROUPS.StabOfRMSEntries := function(G, R)
   local H, entries, i;
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the stabilizer of matrix entries . . . ");
   H := G;
   entries := MatrixEntries(R);
   i := PositionProperty(entries, x -> x <> 0 and x <> ());
@@ -98,32 +76,11 @@ SEMIGROUPS.StabOfRMSEntries := function(G, R)
     i := i + 1;
   od;
 
-  SEMIGROUPS.InfoStatement(2, true, Size(H));
+  Info(InfoSemigroups,
+       2,
+       "the size of the stabilizer of the matrix entries is ",
+       Size(H));
   return H;
-end;
-
-# An elementary pruner for the backtrack search in the direct product V (to
-# find the subgroup U).
-
-SEMIGROUPS.RMSIsoPruner := function(U, V)
-  local blist, right;
-
-  if IsTrivial(U) then
-    return false;
-  fi;
-  blist := BlistList([1 .. Index(V, U)], [1]);
-  right := RightTransversal(V, U);
-  return
-    function(chain, j, x, y, word)
-      local pos;
-      pos := PositionCanonical(right, x);
-      if blist[pos] then  # we visited this coset before. . .
-        return false;     # don't continue searching in this subtree. . .
-      else
-        blist[pos] := true;
-        return true;
-      fi;
-    end;
 end;
 
 # Theorem 3.4.1 in Howie's book, Fundamentals of Semigroup Theory. This
@@ -207,7 +164,7 @@ SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
   return out;
 end;
 
-# TODO the next function should be combined with the previous one.
+# TODO(later) the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   local mat1, mat2, m, rmsgraph, components, reps, imagelist, edges,
@@ -219,10 +176,9 @@ SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   rmsgraph := RZMSDigraph(rms1);
   components := DigraphConnectedComponents(rmsgraph).comps;
 
-  if not Length(groupelts) = Length(components) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
-                  "usage,\nthe 5th argument must be a list of length ",
-                  Length(components), ",");
+  if Length(groupelts) <> Length(components) then
+    ErrorNoReturn("the 5th argument (a list) must have length ",
+                  Length(components), ", but found ", Length(groupelts));
   fi;
 
   reps := List(components, Minimum);
@@ -294,24 +250,17 @@ function(R)
 
   if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
           and IsZeroSimpleSemigroup(R)) then
-    TryNextMethod();  # TODO write such a method
+    TryNextMethod();  # There is no such method at present
   fi;
 
   m := Length(Rows(R));
   n := Length(Columns(R));
 
   # automorphism group of the graph . . .
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding automorphisms of the graph . . . ");
 
   aut_graph := AutomorphismGroup(RZMSDigraph(R), [[1 .. m], [m + 1 .. n + m]]);
 
-  if Length(GeneratorsOfGroup(aut_graph)) = 0 then
-    aut_graph := Group(());
-  fi;
-
-  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph);  # for genss
+  Info(InfoSemigroups, 2, "the graph has ", Size(aut_graph), " automorphisms");
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -322,11 +271,12 @@ function(R)
   fi;
 
   # automorphism group of the underlying group
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the automorphism group of the group",
-                            " . . . ");
   aut_group := AutomorphismGroup(G);
-  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  Info(InfoSemigroups,
+       2,
+       "the underlying group has ",
+       Size(aut_group),
+       " automorphisms");
 
   # pointwise stabiliser of the entries in the matrix of R under the
   # automorphism group of the group
@@ -413,13 +363,17 @@ function(R)
   if U <> V then  # some search required
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
          Size(V), " . . . ");
-    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                           tester,
-                                           ReturnTrue);
-                                           # FIXME the pruner prunes too much!
-                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+    # This appears to do nothing, but the subgroup is computed when we call
+    # Size, and the resulting isomorphisms-by-triple are stored in A by the
+    # function tester
+    U := BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                                tester,
+                                                ReturnTrue);
+    Info(InfoSemigroups, 2, "found subgroup of size ", Size(U));
   else
     # U = V
+    # This appears to do nothing, but the the resulting isomorphisms-by-triple
+    # are stored in A by the function tester
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -473,16 +427,13 @@ function(R)
   G := UnderlyingSemigroup(R);
   if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
           and IsSimpleSemigroup(R)) then
-    TryNextMethod();  # TODO write such a method
+    TryNextMethod();  # TODO(never) write such a method
   fi;
 
   m := Length(Rows(R));
   n := Length(Columns(R));
 
-  # automorphism group of the graph . . .
   # this is easy since the graph is complete bipartite
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding automorphisms of the graph . . . ");
 
   if n = 1 and m = 1 then
     gens := GeneratorsOfGroup(AutomorphismGroup(G));
@@ -505,8 +456,7 @@ function(R)
     aut_graph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
   fi;
 
-  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph);  # for genss
+  Info(InfoSemigroups, 2, "the graph has ", Size(aut_graph), " automorphisms");
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -517,11 +467,10 @@ function(R)
   fi;
 
   # automorphism group of the underlying group
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the automorphism group of the group",
-                           " . . . ");
   aut_group := AutomorphismGroup(G);
-  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  Info(InfoSemigroups,
+       2,
+       StringFormatted("there are {} group automorphisms", Size(aut_group)));
 
   # pointwise stabiliser of the entries in the matrix of R under the
   # automorphism group of the group
@@ -583,13 +532,14 @@ function(R)
 
   if U <> V then
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
-         Size(V), ". . .");
-    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                           tester,
-                                           ReturnTrue);
-                                           # FIXME the pruner prunes too much!
-                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+         Size(V), " . . . ");
+    # See the comments in the AutomorphismGroup(Rees 0-matrix semigroup) method
+    U := BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                                tester,
+                                                ReturnTrue);
+    Info(InfoSemigroups, 2, "found subgroup of size ", Size(U));
   else  # U = V
+    # See the comments in the AutomorphismGroup(Rees 0-matrix semigroup) method
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -627,6 +577,24 @@ function(G)
   fi;
   Print(">");
 end);
+
+# InstallMethod(ViewString,
+# "for the automorphism group of a Rees (0-)matrix semigroup",
+# [IsAutomorphismGroupOfRMSOrRZMS],
+# function(G)
+#   local plural;
+#
+#   plural := "";
+#   if Length(GeneratorsOfGroup(G)) > 1 then
+#     plural := "s";
+#   fi;
+#
+#   return StringFormatted(
+#     "<automorphism group of {!v} with {!v} generator{}>",
+#     Source(G.1),
+#     Length(GeneratorsOfGroup(G)),
+#     plural);
+# end);
 
 InstallMethod(IsomorphismPermGroup,
 "for the automorphism group of a Rees (0-)matrix semigroup",
@@ -700,9 +668,7 @@ function(S, T)
       or Length(Columns(S)) <> Length(Columns(T))
       or Length(Rows(T)) <> Length(Rows(T)) then
     return fail;
-  fi;
-
-  if not (IsPermGroup(G) and IsPermGroup(H)) then
+  elif not (IsPermGroup(G) and IsPermGroup(H)) then
     TryNextMethod();
   fi;
 
@@ -804,7 +770,7 @@ function(S, T)
   for l in graphiso do
     for g in groupiso do
       for tup in tuples do
-        # TODO it should be possible to cut this down
+        # TODO(never) it should be possible to cut this down
         map := RZMStoRZMSInducedFunction(S, T, l, g, tup);
         if map <> fail then
           return RZMSIsoByTripleNC(S, T, [l, g, map]);
@@ -832,21 +798,21 @@ function(R1, R2, triple)
   nrcols := Length(Rows(R1));  # rows of R1 are cols of the matrix
   nrrows := Length(Columns(R1));
   if nrcols <> Length(Rows(R2)) or nrrows <> Length(Columns(R2)) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple:\n",
-                  "<R1> and <R2> are not isomorphic,");
+    ErrorNoReturn("the 1st and 2nd arguments (Rees matrix semigroups) ",
+                  "have different numbers of rows and columns");
   fi;
 
   # Check graph isomorphism
   if not IsPerm(graph_iso) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation,");
+    ErrorNoReturn("the 1st entry in the 3rd argument (a triple) is ",
+                  "not a permutation");
   elif LargestMovedPoint(graph_iso) > nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation on [1 .. ",
-                  nrrows + nrcols, "],");
+    ErrorNoReturn("the 1st entry (a permutation) in the 3rd argument ",
+                  "(a triple) is not a permutation on [1 .. ",
+                  nrrows + nrcols, "]");
   elif ForAny([1 .. nrcols], x -> x ^ graph_iso > nrcols) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should not map columns to rows,");
+    ErrorNoReturn("the 1st entry (a permutation) in the 3rd argument ",
+                  "(a triple) maps rows to columns");
   fi;
 
   # Check group isomorphism
@@ -856,25 +822,24 @@ function(R1, R2, triple)
           IsBijective(group_iso) and
           Source(group_iso) = G1 and
           Range(group_iso) = G2) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[2] should be an isomorphism from\n",
-                  "the underlying group of <R1> to that of <R2>,");
+    ErrorNoReturn("the 2nd entry in the 3rd argument (a triple)",
+                  " is not an isomorphism between the underlying groups",
+                  " of the 1st and 2nd arguments (Rees matrix semigroups)");
   fi;
 
   # Check map from rows and cols to H
   if Length(g2_elms_list) <> nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] should have length equal to\n",
-                  "the number of rows and columns of <R1>,");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  "does not have length equal to the number of rows and ",
+                  "columns of the 1st argument (a Rees matrix semigroup)");
   elif not ForAll(g2_elms_list, x -> x in G2) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] should only contain elements from ",
-                  "the underlying group of <R2>,");
-  fi;
-  if SEMIGROUPS.RMSInducedFunction(R1, R2, graph_iso, group_iso,
-                                   g2_elms_list[1]) <> g2_elms_list then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] does not define an isomorphism,");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not consist of elements of the underlying group",
+                  " of the 2nd argument (a Rees matrix semigroup)");
+  elif SEMIGROUPS.RMSInducedFunction(R1, R2, graph_iso, group_iso,
+                                     g2_elms_list[1]) <> g2_elms_list then
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not define an isomorphism");
   fi;
 
   return RMSIsoByTripleNC(R1, R2, triple);
@@ -894,20 +859,21 @@ function(R1, R2, triple)
   nrrows := Length(Rows(R1));
   nrcols := Length(Columns(R1));
   if nrrows <> Length(Rows(R2)) or nrcols <> Length(Columns(R2)) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple:\n",
-                  "<R1> and <R2> are not isomorphic,");
+    ErrorNoReturn("the 1st and 2nd arguments (Rees 0-matrix semigroups) ",
+                  "have different numbers of rows and columns");
   fi;
 
   # Check graph isomorphism
   graph1 := RZMSDigraph(R1);
   graph2 := RZMSDigraph(R2);
   if not IsPerm(graph_iso) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation,");
+    ErrorNoReturn("the 1st entry in the 3rd argument (a triple) is ",
+                  "not a permutation");
   elif not OnDigraphs(graph1, graph_iso) = graph2 then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[1] should act as an isomorphism from\n",
-                  "the graph of <R1> to the graph of <R2>,");
+    ErrorNoReturn("the 1st entry in the 3rd argument (a triple) is ",
+                  "not an isomorphism from the graph of the 1st argument (a",
+                  " Rees 0-matrix semigroup) and the graph of the 2nd ",
+                  "argument (a Rees 0-matrix semigroup)");
   fi;
 
   # Check group isomorphism
@@ -917,20 +883,20 @@ function(R1, R2, triple)
           IsBijective(group_iso) and
           Source(group_iso) = G1 and
           Range(group_iso) = G2) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[2] should be an isomorphism from\n",
-                  "the underlying group of <R1> to that of <R2>,");
+    ErrorNoReturn("the 2nd entry in the 3rd argument (a triple)",
+                  " is not an isomorphism between the underlying groups",
+                  " of the 1st and 2nd arguments (Rees 0-matrix semigroups)");
   fi;
 
   # Check map from rows and cols to H
   if Length(g2_elms_list) <> nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] should have length equal to\n",
-                  "the number of rows and columns of <R1>,");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  "does not have length equal to the number of rows and ",
+                  "columns of the 1st argument (a Rees 0-matrix semigroup)");
   elif not ForAll(g2_elms_list, x -> x in G2) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] should only contain elements from ",
-                  "the underlying group of <R2>,");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not consist of elements of the underlying group",
+                  " of the 2nd argument (a Rees 0-matrix semigroup)");
   fi;
   reps := List(DigraphConnectedComponents(graph1).comps, Representative);
   map := EmptyPlist(Length(reps));
@@ -939,8 +905,8 @@ function(R1, R2, triple)
   od;
   if SEMIGROUPS.RZMStoRZMSInducedFunction(R1, R2, graph_iso, group_iso, map)
       <> g2_elms_list then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] does not define an isomorphism,");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not define an isomorphism");
   fi;
 
   return RZMSIsoByTripleNC(R1, R2, triple);
@@ -990,9 +956,7 @@ function(x, y)
 
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
-  fi;
-
-  if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
+  elif x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
 
@@ -1006,9 +970,7 @@ function(x, y)
 
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
-  fi;
-
-  if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
+  elif x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
 
@@ -1017,23 +979,17 @@ function(x, y)
 end);
 
 InstallMethod(\<, "for objects in `IsRMSIsoByTriple'",
+IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y)
-      or Source(x) = Source(y) and Range(x) < Range(y);
-  fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
          < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
 
 InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'",
+IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y)
-      or Source(x) = Source(y) and Range(x) < Range(y);
-  fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
          < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
@@ -1181,6 +1137,28 @@ function(map)
   return;
 end);
 
+# InstallMethod(PrintString, "for an object in `IsRMSIsoByTriple'",
+# [IsRMSIsoByTriple],
+# function(map)
+#   return StringFormatted("RMSIsoByTriple({}, {}, [{}, {}, {}])",
+#                          Source(map),
+#                          Range(map),
+#                          map[1],
+#                          map[2],
+#                          map[3]);
+# end);
+#
+# InstallMethod(PrintString, "for an object in `IsRZMSIsoByTriple'",
+# [IsRZMSIsoByTriple],
+# function(map)
+#   return StringFormatted("RZMSIsoByTriple({}, {}, [{}, {}, {}])",
+#                          Source(map),
+#                          Range(map),
+#                          map[1],
+#                          map[2],
+#                          map[3]);
+# end);
+
 InstallMethod(ViewObj, "for an object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
 function(map)
@@ -1193,6 +1171,18 @@ function(map)
   Print("(", map[1], ", ", map[2], ", ", map[3], ")");
 end);
 
+# InstallMethod(ViewString, "for an object in `IsRMSIsoByTriple'",
+# [IsRMSIsoByTriple],
+# function(map)
+#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
+# end);
+#
+# InstallMethod(ViewString, "for object in `IsRZMSIsoByTriple'",
+# [IsRZMSIsoByTriple],
+# function(map)
+#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
+# end);
+
 InstallMethod(IsomorphismReesMatrixSemigroupOverPermGroup,
 "for a semigroup",
 [IsSemigroup],
@@ -1200,9 +1190,7 @@ function(S)
   local iso, T, G, isoG, invG, s;
 
   if not IsFinite(S) or not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroupOverPermGroup: ",
-                  "usage,\n",
-                  "the argument must be a finite simple semigroup,");
+    ErrorNoReturn("the argument is not a finite simple semigroup");
   elif not IsReesMatrixSemigroup(S) then
     return IsomorphismReesMatrixSemigroup(S);
   elif not IsWholeFamily(S) then
@@ -1232,9 +1220,7 @@ function(S)
   local iso, T, G, isoG, invG, s, func;
 
   if not IsFinite(S) or not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroupOverPermGro",
-                  "up: usage,\n",
-                  "the argument must be a finite 0-simple semigroup,");
+    ErrorNoReturn("the argument is not a finite 0-simple semigroup");
   elif not IsReesZeroMatrixSemigroup(S) then
     return IsomorphismReesZeroMatrixSemigroup(S);
   elif not IsWholeFamily(S) then
@@ -1409,10 +1395,8 @@ function(S)
   M    := Matrix(S);
   G    := UnderlyingSemigroup(S);
   if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: CanonicalReesZeroMatrixSemigroup: ",
-                  "usage,\n",
-                  "the argument must be a Rees zero matrix semigroup with ",
-                  "underlying semigroup which is a group,");
+    ErrorNoReturn("the underlying semigroup of the argument ",
+                  "(a Rees 0-matrix semigroup) is not a group");
   fi;
   m    := Length(M);
   n    := Length(M[1]);
@@ -1423,15 +1407,14 @@ function(S)
 end);
 
 InstallMethod(CanonicalReesMatrixSemigroup,
-"for a Rees zero matrix semigroup",
+"for a Rees 0-matrix semigroup",
 [IsReesMatrixSemigroup],
 function(S)
   local G, mat;
   G   := UnderlyingSemigroup(S);
   if not IsGroup(G) then
-    ErrorNoReturn("Semigroups: CanonicalReesMatrixSemigroup: usage,\n",
-                  "the argument must be a Rees matrix semigroup with ",
-                  "underlying semigroup which is a group,");
+    ErrorNoReturn("the underlying semigroup of the argument ",
+                  "(a Rees 0-matrix semigroup) is not a group");
   fi;
   mat := Matrix(CanonicalReesZeroMatrixSemigroup(
            ReesZeroMatrixSemigroup(G, Matrix(S))));

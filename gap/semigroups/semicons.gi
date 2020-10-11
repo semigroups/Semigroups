@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  semicons.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semicons.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -25,9 +25,8 @@ function(arg)
       and arg[2] >= 0 then
     S := TrivialSemigroupCons(arg[1], arg[2]);
   else
-    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
-                  "the arguments must be a non-negative integer or ",
-                  "a filter and a non-negative\ninteger,");
+    ErrorNoReturn("the arguments must be a non-negative integer or ",
+                  "a filter and a non-negative integer");
   fi;
   SetIsTrivial(S, true);
   return S;
@@ -91,16 +90,16 @@ end);
 # Trivial semigroup: other constructors
 
 for _IsXSemigroup in ["IsFpSemigroup",
-                     "IsFpMonoid",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup",
-                     "IsReesMatrixSemigroup",
-                     "IsReesZeroMatrixSemigroup"] do
+                      "IsFpMonoid",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup",
+                      "IsReesMatrixSemigroup",
+                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(TrivialSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and an integer"),
   [ValueGlobal(_IsXSemigroup), IsInt],
@@ -130,9 +129,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
-                  "the arguments must be two positive integers or a filter ",
-                  "and a two positive\nintegers,");
+    ErrorNoReturn("the arguments must be 2 positive integers or a filter ",
+                  "and a 2 positive integers");
   fi;
 
   S := MonogenicSemigroupCons(filter, m, r);
@@ -178,9 +176,7 @@ function(filter, m, r)
 
   if m = 1 and r = 1 then
     return Semigroup(PartialPerm([], []));
-  fi;
-
-  if r = 1 then
+  elif r = 1 then
     cyclic_group := [];
     nilpotent_offset := 0;
   else
@@ -235,16 +231,16 @@ end);
 # Monogenic semigroup: other constructors
 
 for _IsXSemigroup in ["IsPBRSemigroup",
-                     "IsBooleanMatSemigroup",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup",
-                     "IsReesMatrixSemigroup",
-                     "IsReesZeroMatrixSemigroup"] do
+                      "IsBooleanMatSemigroup",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup",
+                      "IsReesMatrixSemigroup",
+                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(MonogenicSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and two positive integers"),
   [ValueGlobal(_IsXSemigroup), IsPosInt, IsPosInt],
@@ -273,9 +269,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
-                  "the arguments must be two positive integers or a filter ",
-                  "and a two positive\nintegers,");
+    ErrorNoReturn("the arguments must be 2 positive integers or a filter ",
+                  "and a 2 positive integers");
   fi;
 
   S := RectangularBandCons(filter, m, n);
@@ -398,13 +393,13 @@ end);
 # Rectangular band: other constructors
 
 for _IsXSemigroup in ["IsBooleanMatSemigroup",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup"] do
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(RectangularBandCons,
   Concatenation("for ", _IsXSemigroup, ", pos int, and pos int"),
   [ValueGlobal(_IsXSemigroup), IsPosInt, IsPosInt],
@@ -430,9 +425,8 @@ function(arg)
   fi;
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or a filter ",
-                  "and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or a filter ",
+                  "and a positive integer");
   fi;
 
   S := ZeroSemigroupCons(filter, n);
@@ -561,8 +555,7 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    ErrorNoReturn("Semigroups: ZeroSemigroupCons: usage:\n",
-                  "there is no Rees 0-matrix semigroup of order 1,");
+    ErrorNoReturn("there is no Rees 0-matrix semigroup of order 1");
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);
@@ -604,9 +597,8 @@ function(arg)
   fi;
 
   if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
-    ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or ",
-                  "a filter and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or ",
+                  "a filter and a positive integer");
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
@@ -657,9 +649,8 @@ function(arg)
   fi;
 
   if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
-    ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or ",
-                  "a filter and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or ",
+                  "a filter and a positive integer");
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
@@ -726,11 +717,10 @@ function(arg)
       and IsPosInt(arg[3]) then
     S := BrandtSemigroupCons(arg[1], arg[2], arg[3]);
   else
-    ErrorNoReturn("Semigroups: BrandtSemigroup: usage,\n",
-                   "the arguments must be a positive integer or a filter and",
-                   " a positive integer, or\n a perm group and positive ",
-                   "integer, or a filter, perm group, and positive\n ",
-                   "integer,");
+    ErrorNoReturn("the arguments must be a positive integer or a filter and",
+                   " a positive integer, or  a perm group and positive ",
+                   "integer, or a filter, perm group, and positive ",
+                   "integer");
   fi;
   SetIsZeroSimpleSemigroup(S, true);
   SetIsBrandtSemigroup(S, true);
@@ -832,8 +822,7 @@ function(D, semigroups, homomorphisms)
   for i in [1 .. DigraphNrVertices(D)] do
     if not IsList(homomorphisms[i]) then
       ErrorNoReturn("expected a list of lists as third argument");
-    fi;
-    if Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
+    elif Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
       ErrorNoReturn("where D and homomorphisms are the 1st and 3rd arguments ",
                     "respectively, the length of homomorphisms[i] must be ",
                     "equal to OutNeighbours(D)[i]");
@@ -911,12 +900,12 @@ function(D, semigroups, homomorphisms)
         od;
         # If no errors so far, then all paths commute and we can add the comp.
         Add(maps[i], firsthom);
-        # FIXME for larger digraphs, the current method will compute some
-        # compositions of homomorphisms several times.
-        # For example, take Digraph([[], [1], [1], [2, 3], [4]]). It defines a
-        # meet-semilattice and the SSS initialisation will check that composing
-        # the homomorphisms 1->3->4 and 1->2->4 give the same result. Later on
-        # in the initialisation, it will also check equivalence of the paths
+        # TODO(later) for larger digraphs, the current method will compute some
+        # compositions of homomorphisms several times.  For example, take
+        # Digraph([[], [1], [1], [2, 3], [4]]). It defines a meet-semilattice
+        # and the SSS initialisation will check that composing the
+        # homomorphisms 1->3->4 and 1->2->4 give the same result. Later on in
+        # the initialisation, it will also check equivalence of the paths
         # 1->2->4->5 and 1->3->4->5, but will not be re-using previously
         # computed information on what the composition 1->3->4 equals, say.
         # Saving the homomorphsisms already computed using some sort of dynamic
@@ -971,7 +960,7 @@ InstallMethod(SSSE,
 [IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
 function(S, n, x)
   if n > Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)) then
-    ErrorNoReturn("expected second argument to be an integer between 1 and ",
+    ErrorNoReturn("expected 2nd argument to be an integer between 1 and ",
                   "the size of the semilattice, i.e. ",
                   Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
   elif not x in SemigroupsOfStrongSemilatticeOfSemigroups(S)[n] then

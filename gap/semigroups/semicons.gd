@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  constructors.gd
-##  Copyright (C) 2015                                      Wilf A. Wilson
+##  semigroups/semicons.gd
+##  Copyright (C) 2015-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

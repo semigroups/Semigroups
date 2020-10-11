@@ -72,8 +72,9 @@ MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2
  generators>, function( x ) ... end, function( x ) ... end )
 gap> IsomorphismSemigroup(IsFpSemigroup, S);
 MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
- generators>, <fp semigroup on the generators 
-[ s1, s2 ]>, function( x ) ... end, function( x ) ... end )
+ generators>
+ , <fp semigroup with 2 generators and 5 relations>, function( x ) ...\
+ end, function( x ) ... end )
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 6, 8, 10],
 >             [2, 6, 7, 9, 1, 5]),
@@ -214,8 +215,9 @@ MappingByFunction( <transformation semigroup of degree 10 with 2
  , function( x ) ... end, function( x ) ... end )
 gap> IsomorphismMonoid(IsFpMonoid, S);
 MappingByFunction( <transformation semigroup of degree 10 with 2 
- generators>, <fp monoid on the generators 
-[ m1, m2 ]>, function( x ) ... end, function( x ) ... end )]]></Example>
+ generators>
+ , <fp monoid with 2 generators and 17 relations>, function( x ) ... e\
+nd, function( x ) ... end )]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -299,7 +301,6 @@ gap> AsMonoid(S);
     For <C>RandomMonoid</C> and <C>RandomInverseMonoid</C> the argument
     <A>filter</A>  must be of the form <C>IsXMonoid</C>; such as <Ref Prop =
       "IsBipartitionMonoid"/> or <Ref Filt = "IsBooleanMatMonoid"/>.
-    <!-- FIXME the reference to IsBooleanMatMonoid does not work -->
     <P/>
 
     Suppose that the first argument <A>filter</A> is <Ref Prop="IsFpSemigroup"

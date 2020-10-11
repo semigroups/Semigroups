@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  acting.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  main/acting.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -43,7 +43,6 @@ function(S)
               repslens := [],
               repslookup := [],
               rholookup := [1],
-              rhoranks := [],
               schreiergen := [fail],
               schreiermult := [fail],
               schreierpos := [fail],
@@ -61,38 +60,30 @@ InstallMethod(\in,
 "for a multiplicative element and acting semigroup",
 [IsMultiplicativeElement, IsActingSemigroup],
 function(x, S)
-  local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
-  lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
-  LookAhead, new, lookfunc, schutz, ind, reps, repslens, bound, max,
-  membership, lambdaperm, n, found, i;
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup,
+  new, lookfunc, schutz, ind, reps, repslens, bound, max, membership,
+  lambdaperm, n, found, i;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(S)
           and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif Position(S, x) <> fail then  # check if x is already known to be in S
+  elif HasFroidurePin(S) and Position(S, x) <> fail then
+    # check if x is already known to be in S
     return true;
-  elif IsFullyEnumerated(S) then
+  elif HasFroidurePin(S) and IsEnumerated(S) then
     return false;
-  elif HasAsSSortedList(S) then
-    return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
-      # Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-      #      "semigroup.");
       return false;
     fi;
   fi;
 
   if HasMinimalIdeal(S) then
     if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
-      # Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-      #      "semigroup.");
       return false;
     fi;
   fi;
@@ -103,7 +94,6 @@ function(x, S)
   # look for lambda!
   lambda := LambdaFunc(S)(x);
   lambdao := LambdaOrb(S);
-  # TODO(later) lookahead here too
   if not IsClosedOrbit(lambdao) then
     Enumerate(lambdao, infinity);
   fi;
@@ -128,53 +118,21 @@ function(x, S)
   fi;
 
   # check if rho is already known
-  rhoranker := RhoRank(S);
   rho := RhoFunc(S)(x);
-  rank := rhoranker(rho);
   rhoo := RhoOrb(S);
   l := Position(rhoo, rho);
   lambdarhoht := data!.lambdarhoht;
   rholookup := data!.rholookup;
 
-  # for the lookahead
-  rhoranks := data!.rhoranks;
-  lookahead_last := 64;
-  lookahead_fail := false;
-  nrgens := Length(data!.gens);
-
-  LookAhead := function()
-    local i, start;
-    start := Maximum(data!.pos, 1);
-    if start < nrgens then
-      return true;
-    fi;
-    for i in [start .. Length(data!.orbit)] do
-      if not IsBound(rhoranks[rholookup[i]]) then
-        rhoranks[rholookup[i]] := rhoranker(rhoo[rholookup[i]]);
-      fi;
-      if rhoranks[rholookup[i]] >= rank then
-        lookahead_last := i + 64;
-        return true;
-      fi;
-    od;
-    lookahead_last := Length(data!.orbit) + 64;
-    return Length(data!.orbit) = 1;
-    # we can't obtain any further elements with high enough rank
-  end;
-
   new := false;
 
   if l = fail then
     # rho is not already known, so we look for it
-    if IsClosedOrbit(rhoo) or not LookAhead() then
+    if IsClosedOrbit(rhoo) then
       return false;
     fi;
 
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then
-        lookahead_fail := true;
-        return true;
-      fi;
       return rhoo[rholookup[x[6]]] = rho;
     end;
 
@@ -182,7 +140,7 @@ function(x, S)
     l := PositionOfFound(data);
 
     # rho is not found, so x not in S
-    if l = false or lookahead_fail then
+    if l = false then
       return false;
     fi;
     l := rholookup[l];
@@ -192,17 +150,11 @@ function(x, S)
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
     new := true;
     # lambda-rho-combination not yet seen
-    if IsClosedData(data) or not LookAhead() then
+    if IsClosedData(data) then
       return false;
     fi;
 
-    lookahead_fail := false;
-
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then
-        lookahead_fail := true;
-        return true;
-      fi;
       return IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
     end;
 
@@ -240,7 +192,6 @@ function(x, S)
 
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz <> false then
-
     # check if x already corresponds to an element of reps[m][ind]
     lambdaperm := LambdaPerm(S);
     for n in [1 .. repslens[m][ind]] do
@@ -254,17 +205,10 @@ function(x, S)
 
   if IsClosedData(data) then
     return false;
-  fi;
-
-  # enumerate until we find f or finish
-  if repslens[m][ind] < max then
+  elif repslens[m][ind] < max then
+    # enumerate until we find f or finish
     n := repslens[m][ind];
-    lookahead_fail := false;
     lookfunc := function(data, x)
-      if data!.pos > lookahead_last and not LookAhead() then
-        lookahead_fail := true;
-        return true;
-      fi;
       return repslens[m][ind] > n;
     end;
     if schutz = false then
@@ -272,9 +216,7 @@ function(x, S)
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
         found := data!.found;
-        if lookahead_fail = true then
-          found := false;
-        elif found <> false then
+        if found <> false then
           if repslens[m][ind] = max or x = data[found][4] then
             return true;
           fi;
@@ -285,9 +227,7 @@ function(x, S)
         # look for more R-reps with same lambda-rho value
         data := Enumerate(data, infinity, lookfunc);
         found := data!.found;
-        if lookahead_fail = true then
-          found := false;
-        elif found <> false then
+        if found <> false then
           if repslens[m][ind] = max then
             return true;
           fi;
@@ -769,8 +709,7 @@ InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
 function(data)
   if not(data!.looking) then
-    ErrorNoReturn("Semigroups: PositionOfFound: usage,\n",
-                  "not looking for anything,");
+    ErrorNoReturn("not looking for anything");
   fi;
   return data!.found;
 end);
@@ -782,11 +721,8 @@ function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
 
   if not IsSemigroupData(data) then
-    ErrorNoReturn("Semigroups: SizeOfSemigroupData: usage,\n",
-                  "the arg <data> must be semigroup data,");
-  fi;
-
-  if not data!.init then
+    ErrorNoReturn("the argument must be a semigroup data object");
+  elif not data!.init then
     return 0;
   fi;
 

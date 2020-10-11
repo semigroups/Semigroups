@@ -1179,7 +1179,7 @@ gap> IsSurjectiveSemigroup(S);
 true
 gap> F := FreeSemigroup(3);;
 gap> P := F / [[F.1, F.2 * F.1], [F.3 ^ 3, F.3]];
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> IsSurjectiveSemigroup(P);
 false
 gap> I := SingularTransformationMonoid(5);

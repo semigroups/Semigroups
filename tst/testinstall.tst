@@ -13,12 +13,6 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-# TestInstall0: Validate the package info file
-# This doesn't play well with drone.
-#gap> ValidatePackageInfo(Filename(DirectoriesPackageLibrary("semigroups", ""),
-#> "PackageInfo.g"));
-#true
-
 # TestInstall3
 gap> S := Semigroup(Transformation([2, 3, 4, 1, 1, 1]));;
 gap> IsMonoidAsSemigroup(S);
@@ -26,8 +20,10 @@ true
 gap> IsMonoid(S);
 false
 gap> iso := IsomorphismTransformationMonoid(S);;
-gap> Range(iso);
-<commutative transformation monoid of degree 4 with 1 generator>
+gap> IsCommutativeSemigroup(Range(iso));
+true
+gap> IsMonogenicSemigroup(Range(iso));
+true
 gap> RespectsMultiplication(iso);
 true
 gap> ForAll(S, x -> (x ^ iso) ^ InverseGeneralMapping(iso) = x);
@@ -735,13 +731,6 @@ true
 gap> SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
 true
 
-# TestInstall45: Issue 97
-# (bug in normalizer and the kernel function POW_KER_TRANS)
-gap> G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
->                                                 rec(acting := true)));;
-gap> G = SymmetricGroup(3);
-true
-
 # TestInstall46: Issue 98
 # (incorrect definition of partition monoid on 1 point)
 gap> GeneratorsOfSemigroup(PartitionMonoid(1));
@@ -773,7 +762,7 @@ gap> Size(I);
 # TestInstall50: Issue 105 (CyclesOfPartialPerm returned nonsense)
 gap> x := PartialPerm([1, 2, 3, 4, 5, 8, 10], [3, 1, 4, 2, 5, 6, 7]);;
 gap> CyclesOfPartialPerm(x);
-[ [ 3, 4, 2, 1 ], [ 5 ] ]
+[ [ 5 ], [ 1, 3, 4, 2 ] ]
 
 # TestInstall51: Issue 107
 # (problems with Green's classes of ideals, and inverse semigroups)
@@ -808,18 +797,18 @@ gap> for i in [1 .. 100] do
 >      NextIterator(iter);
 >    od;
 gap> x := NextIterator(iter);
-bcabaca
+ece
 gap> for i in [1 .. 10] do
 >      NextIterator(iter);
 >    od;
 gap> y := NextIterator(iter);
-cbcacbab
+abce
 gap> x * y;
-bcacbab
+eceaceababce
 gap> x ^ 2;
-bcabaca
+ece
 gap> y ^ 2;
-cbcacbab
+abce
 
 # TestInstall55: Issue 110 (MaximalSubsemigroups for an non-regular RZMS)
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);;
@@ -912,7 +901,7 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <congruence class of 0>, <congruence class of (1,(1,3),1)>, 
+[ <congruence class of 0>, <congruence class of (1,(),1)>, 
   <congruence class of (1,(),2)>, <congruence class of (1,(),3)>, 
   <congruence class of (1,(),4)>, <congruence class of (1,(),5)>, 
   <congruence class of (1,(),6)>, <congruence class of (2,(),1)>, 
@@ -938,14 +927,14 @@ gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
 
 # TestInstall62: Issue 119:
-# Bug in NrCongruenceClasses for Rees congruences
+# Bug in NrEquivalenceClasses for Rees congruences
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1, 2, 2, 2])]);
 <regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 4 with
   1 generator> over <full transformation monoid of degree 4>>
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 169
 
 # TestInstall65: Issue 126:
@@ -1006,14 +995,15 @@ gap> Size(I);
 21
 
 # TestInstall64: Bug fixed by changeset 949553d 
-# FIXME what was this bug? Add a brief explanation
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
 5
-gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
+gap> C := SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
+gap> IsUniversalSemigroupCongruence(C);
+true
 
 # TestInstall65: Fixed bug where the GeneratorsOfMonoid were incorrectly set
 #   for partial perm monoids/inverse monoids, due to removal of the One.
@@ -1260,7 +1250,7 @@ Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
 >                   Bipartition([[1, 2], [3, 4], [-1, -4], [-2, -3]]));;
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ] ]
+<immutable empty digraph with 1 vertex>
 
 # Test for Issue 144
 gap> S := Semigroup(Bipartition([[1, 2], [-1], [-2]]),
@@ -1560,7 +1550,8 @@ gap> for x in [1 .. Length(gns) - 1] do
 gap> s := f / rel;;
 gap> sgns := GeneratorsOfSemigroup(s);;
 gap> c := SemigroupCongruenceByGeneratingPairs(s, [[sgns[1], sgns[2]]]);;
-gap> EquivalenceRelationPartition(c);;
+gap> EquivalenceRelationPartition(c);
+[ [ s1, s2, s1*s2, s2^2, s1*s2^2 ] ]
 gap> ##
 gap> ## Check to see if elements are in the partition
 gap> ##     true and false
@@ -1594,11 +1585,7 @@ false
 # Issue 286: Bug in IsSynchronizingSemigroup
 gap> S := FullTransformationMonoid(10);
 <full transformation monoid of degree 10>
-gap> IsSynchronizingSemigroup(S, 9);
-true
 gap> IsSynchronizingSemigroup(S);
-true
-gap> IsSynchronizingSemigroup(S, 9);
 true
 
 # Free semigroup congruence test from extreme/cong.tst
@@ -1611,11 +1598,11 @@ gap> cong := SemigroupCongruence(F, pair);
 gap> pair in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, <equiv> must be over a finite semigroup,
+Error, the argument (a congruence) must have finite range
 gap> EquivalenceClasses(cong);
 [ <congruence class of s1>, <congruence class of s1^2>, 
   <congruence class of s1^3> ]
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 3
 
 # Issue 300: problem with InverseOfSemigroupElement for an acting monoid
@@ -1733,13 +1720,13 @@ false
 gap> Size(M0);
 0
 
-# Issue 461: NrCongruenceClasses gives incorrect answer
+# Issue 461: NrEquivalenceClasses gives incorrect answer
 gap> tab := [[1, 2, 3, 3], [2, 3, 1, 1], [3, 1, 2, 2], [3, 1, 2, 2]];;
 gap> S := SemigroupByMultiplicationTable(tab);;
 gap> cong := SemigroupCongruence(S, [[S.3, S.4]]);;
 gap> S.1 in EquivalenceClassOfElement(cong, S.3);
 false
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 3
 gap> S.1 in EquivalenceClassOfElement(cong, S.3);
 false
@@ -1749,7 +1736,7 @@ false
 # Issues 676-677
 gap> S := FreeBand(2);;
 gap> cong := SemigroupCongruence(S, []);;
-gap> NonTrivialCongruenceClasses(cong);
+gap> NonTrivialEquivalenceClasses(cong);
 [  ]
 
 # Issue 680
@@ -1757,14 +1744,15 @@ gap> F := FreeSemigroup(2);;
 gap> s1 := F.1;; s2 := F.2;;
 gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
-gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
-gap> Size(S);
+gap> cong := SemigroupCongruence(F, rels);
+<semigroup congruence over <free semigroup on the generators [ s1, s2 ]> with 
+1 generating pairs>
+gap> NrEquivalenceClasses(cong);
 infinity
-gap> CongruenceByGeneratingPairsPartition(S!.cong);
-Error, the argument <cong> has infinitely many classes,
-gap> EquivalenceRelationLookup(S!.cong);
-Error, <equiv> must be over a finite semigroup,
+gap> EquivalenceRelationPartitionWithSingletons(cong);
+Error, the argument (a congruence) must have finite range
+gap> EquivalenceRelationLookup(cong);
+Error, the argument (a congruence) must have finite range
 
 # Issue 788
 gap> S := GLM(2, 2);;

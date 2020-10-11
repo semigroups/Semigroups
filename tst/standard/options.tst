@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/options.tst
-#Y  Copyright (C) 2016                                   James D. Mitchell
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -17,18 +17,15 @@ gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 # SEMIGROUPS.ProcessOptionsRec
 gap> SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, rec(hashlen := 103));
 rec( acting := true, batch_size := 8192, cong_by_ker_trace_threshold := 100000
-    , hashlen := 103, nr_threads := 4, regular := false, report := false, 
-  small := false )
+    , hashlen := 103, nr_threads := 4, regular := false, small := false )
 
 # SEMIGROUPS.OptionsRec
 gap> SEMIGROUPS.OptionsRec(TrivialSemigroup());
 rec( acting := true, batch_size := 8192, cong_by_ker_trace_threshold := 100000
-    , hashlen := 12517, nr_threads := 4, regular := false, report := false, 
-  small := false )
+    , hashlen := 12517, nr_threads := 4, regular := false, small := false )
 gap> SEMIGROUPS.OptionsRec(Group(()));
 rec( acting := true, batch_size := 8192, cong_by_ker_trace_threshold := 100000
-    , hashlen := 12517, nr_threads := 4, regular := false, report := false, 
-  small := false )
+    , hashlen := 12517, nr_threads := 4, regular := false, small := false )
 
 # 
 gap> SEMIGROUPS.DefaultOptionsRec.acting := false;;
@@ -37,17 +34,17 @@ gap> SEMIGROUPS.DefaultOptionsRec.acting := false;;
 gap> SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, rec(hashlen := 103));
 rec( acting := false, batch_size := 8192, 
   cong_by_ker_trace_threshold := 100000, hashlen := 103, nr_threads := 4, 
-  regular := false, report := false, small := false )
+  regular := false, small := false )
 
 # SEMIGROUPS.OptionsRec
 gap> SEMIGROUPS.OptionsRec(TrivialSemigroup());
 rec( acting := false, batch_size := 8192, 
   cong_by_ker_trace_threshold := 100000, hashlen := 12517, nr_threads := 4, 
-  regular := false, report := false, small := false )
+  regular := false, small := false )
 gap> SEMIGROUPS.OptionsRec(Group(()));
 rec( acting := false, batch_size := 8192, 
   cong_by_ker_trace_threshold := 100000, hashlen := 12517, nr_threads := 4, 
-  regular := false, report := false, small := false )
+  regular := false, small := false )
 
 #
 gap> SEMIGROUPS.StopTest();

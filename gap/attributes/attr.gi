@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  attr.gi
-##  Copyright (C) 2013-16                                James D. Mitchell
+##  attributes/attr.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,7 +9,8 @@
 ##
 
 # This file contains methods for finding various attributes of finite
-# semigroups, where no better method is known.
+# semigroups, which satisfy CanUseFroidurePin or where no better method is
+# known.
 
 # Note about the difference between One and MultiplicativeNeutralElement
 # (the same goes for Zero and MultplicativeZero):
@@ -108,19 +109,26 @@ end;
 # Don't use ClosureSemigroup here since the order of the generators matters
 # and ClosureSemigroup shuffles the generators.
 
-BindGlobal("_GeneratorsSmallest",
+InstallMethod(GeneratorsSmallest,
+"for a semigroup with CanUseFroidurePin",
+[CanUseFroidurePin],
 function(S)
-  local iter, gens, T, x;
+  local iter, gens, T, closure, x;
 
   iter := IteratorSorted(S);
   gens := [NextIterator(iter)];
   T    := Semigroup(gens);
 
+  if CanUseLibsemigroupsFroidurePin(S) then
+    closure := {S, coll, opts} ->
+               ClosureSemigroupOrMonoidNC(Semigroup, S, coll, opts);
+  else
+    closure := ClosureSemigroup;
+  fi;
+
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.ClosureSemigroupDestructive(T,
-                                                  [x],
-                                                  SEMIGROUPS.OptionsRec(T));
+      T := closure(T, [x], SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
       if T = S then
         break;
@@ -129,15 +137,6 @@ function(S)
   od;
   return gens;
 end);
-
-InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
-[IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
-
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsEnumerableSemigroupRep], _GeneratorsSmallest);
-
-MakeReadWriteGlobal("_GeneratorsSmallest");
-Unbind(_GeneratorsSmallest);
 
 InstallMethod(SmallestElementSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -157,22 +156,18 @@ function(S)
   return EnumeratorSorted(S)[Size(S)];
 end);
 
-InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup],
+InstallMethod(NrIdempotents, "for a semigroup", [IsSemigroup],
 function(S)
   return Length(Idempotents(S));
 end);
 
-InstallMethod(GroupOfUnits, "for a semigroup",
-[IsSemigroup],
+InstallMethod(GroupOfUnits, "for a semigroup", [IsSemigroup],
 function(S)
   local H, map, U, iso;
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if MultiplicativeNeutralElement(S) = fail then
+  elif MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
@@ -198,8 +193,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                  "the D-class is not a subsemigroup,");
+    ErrorNoReturn("the argument (a Green's D-class) is not a semigroup");
   fi;
 
   return InjectionPrincipalFactor(D);
@@ -229,9 +223,7 @@ function(coll)
 
   if nrgens = 1 then
     return gens;
-  fi;
-
-  if IsGeneratorsOfActingSemigroup(coll) then
+  elif IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
     Shuffle(coll);
     Sort(coll, function(x, y)
@@ -247,8 +239,12 @@ function(coll)
     i := i + 1;
     x := coll[i];
     if InfoLevel(InfoSemigroups) >= 3 then
-      Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund),
-            " redundant, \t", Length(out), " non-redundant\n");
+      PrintFormatted(
+        "at \t{} of \t{} with \t{} redundant, \t{} non-redundant\n",
+        i,
+        Length(coll),
+        Length(redund),
+        Length(out));
     fi;
 
     if not x in redund and not x in out then
@@ -277,7 +273,8 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
+  I := SemigroupIdealByGeneratorsNC(S,
+                                    [RepresentativeOfMinimalIdeal(S)],
                                     SEMIGROUPS.OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
   return I;
@@ -311,7 +308,7 @@ InstallMethod(SmallMonoidGeneratingSet,
 "for a multiplicative element with one collection",
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if Length(coll) = 1 then
+  if Length(coll) < 2 then
     return coll;
   fi;
   return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
@@ -322,8 +319,8 @@ end);
 InstallMethod(SmallMonoidGeneratingSet, "for a finite monoid",
 [IsFinite and IsMonoid],
 function(S)
-  if IsEmpty(GeneratorsOfMonoid(S)) then
-    return [];
+  if Length(GeneratorsOfMonoid(S)) < 2 then
+    return GeneratorsOfMonoid(S);
   fi;
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
 end);
@@ -333,8 +330,8 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) does not ",
+                  "satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -353,9 +350,11 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) do not satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   fi;
+  # The empty list does not satisfy IsGeneratorsOfInverseSemigroup
+  Assert(1, not IsEmpty(coll));
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
       return [];
@@ -396,7 +395,6 @@ InstallMethod(StructureDescription, "for a Brandt semigroup",
 [IsBrandtSemigroup],
 function(S)
   local D;
-
   D := MaximalDClasses(S)[1];
   return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",
                        String(NrRClasses(D)), ")");
@@ -418,7 +416,7 @@ end);
 InstallMethod(MultiplicativeZero, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local D, rep, gens;
+  local gens, D, zero, rep;
 
   if IsSemigroupIdeal(S)
       and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
@@ -434,6 +432,25 @@ function(S)
   elif IsSemigroupIdeal(S) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
   elif not IsFinite(S) then
+    # TODO the next clause can be removed when we require libsemigroups >=
+    # 2.1.4, because after this version it will be possible to use the default
+    # method for magmas in the GAP library that is called by TryNextMethod()
+    # below.
+    gens := GeneratorsOfSemigroup(S);
+    if IsFpSemigroup(S) or IsFpMonoid(S) then
+      zero := First(gens,
+                    zero -> ForAll(gens,
+                                   x -> x * zero = zero and zero * x = zero));
+      if zero <> fail then
+        return zero;
+      fi;
+    fi;
+    # Remove to here
+    Info(InfoWarning,
+         1,
+         "may not be able to find the multiplicative zero, ",
+         "the semigroup is infinite");
+    # Cannot currently test this line, because the next method runs forever
     TryNextMethod();
   fi;
 
@@ -456,22 +473,20 @@ InstallMethod(MultiplicativeZero, "for a free inverse semigroup",
 InstallMethod(LengthOfLongestDClassChain, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gr, nbs, po, minimal_dclass;
+  local D, min;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  nbs := OutNeighbours(gr);
-  po := Digraph(InNeighbours(gr));
-  minimal_dclass := First(DigraphVertices(po), x -> IsEmpty(nbs[x]));
-
-  SetMinimalDClass(S, GreensDClasses(S)[minimal_dclass]);
+  D := DigraphReverse(PartialOrderOfDClasses(S));
+  Assert(1, Length(DigraphSources(D)) = 1);
+  min := DigraphSources(D)[1];  # minimal D-class
+  SetMinimalDClass(S, GreensDClasses(S)[min]);
   SetRepresentativeOfMinimalIdeal(S, Representative(
-                                     GreensDClasses(S)[minimal_dclass]));
+                                     GreensDClasses(S)[min]));
 
-  return DigraphLongestDistanceFromVertex(po, minimal_dclass);
+  return DigraphLongestDistanceFromVertex(D, min);
 end);
 
 InstallMethod(NilpotencyDegree, "for a finite semigroup",
@@ -491,17 +506,17 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDGreaterThanFunc, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(IsGreensDGreaterThanFunc,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
 function(S)
-  local gr, id;
+  local D, id;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  gr := Digraph(PartialOrderOfDClasses(S));
-  gr := DigraphReflexiveTransitiveClosure(gr);
+  D := PartialOrderOfDClasses(S);
   id := GreensDRelation(S)!.data.id;
 
   return function(x, y)
@@ -511,21 +526,20 @@ function(S)
     fi;
     u := id[PositionCanonical(S, x)];
     v := id[PositionCanonical(S, y)];
-    return u <> v and IsReachable(gr, u, v);
+    return u <> v and IsReachable(D, u, v);
   end;
 end);
 
-InstallMethod(MaximalDClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(MaximalDClasses,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
 function(S)
-  local gr;
-
+  local D;
   if NrDClasses(S) = 1 then
     return DClasses(S);
   fi;
-
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  return DClasses(S){DigraphSources(gr)};
+  D := PartialOrderOfDClasses(S);
+  return DClasses(S){DigraphSources(D)};
 end);
 
 InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
@@ -644,10 +658,8 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
-  fi;
-  if NrHClasses(D) = NrIdempotents(D) then
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
+  elif NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
   return SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
@@ -660,10 +672,8 @@ function(D)
   local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
 
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
-  fi;
-  if NrHClasses(D) = NrIdempotents(D) then
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
+  elif NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
     iso2 := RMSNormalization(Range(iso1));
   else
@@ -683,8 +693,8 @@ function(D)
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for an enumerable semigroup with generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+"for a semigroup with CanUseFroidurePin + generators",
+[IsSemigroup and CanUseFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
 
@@ -732,26 +742,13 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
-function(S)
-  local comps;
-
-  # The first component (i.e. the inner most) of the strongly connected
-  # components of the right Cayley graph corresponds the minimal ideal.
-
-  comps := GreensRRelation(S)!.data.comps;
-  return EnumeratorCanonical(S)[comps[1][1]];
-end);
-
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local gr, pos;
-  gr  := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  pos := DigraphSinks(gr)[1];
-
-  Assert(1, Length(DigraphSinks(gr)) = 1);
+  local D, pos;
+  D   := PartialOrderOfDClasses(S);
+  pos := DigraphSinks(D)[1];
+  Assert(1, Length(DigraphSinks(D)) = 1);
   return Representative(DClasses(S)[pos]);
 end);
 
@@ -778,7 +775,7 @@ function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return Filtered(AsSet(S), y -> x * y * x = x and y * x * y = y);
+  return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
 end);
 
 InstallMethod(InversesOfSemigroupElement,
@@ -788,9 +785,8 @@ function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   elif not x in S then
-    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n",
-                  "the second arg (a mult. element) must belong to the first ",
-                  "arg (a semigroup),");
+    ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
+                  "argument (a semigroup)");
   fi;
   return InversesOfSemigroupElementNC(S, x);
 end);
@@ -814,8 +810,7 @@ function(S)
   gens := GeneratorsOfSemigroup(S);
   if Length(gens) = 1 then
     return fail;
-  fi;
-  if not zero in gens then
+  elif not zero in gens then
     return fail;
   fi;
 
@@ -868,83 +863,7 @@ _SemigroupSizeByIndexPeriod);
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
 Unbind(_SemigroupSizeByIndexPeriod);
 
-BindGlobal("_MonoidSizeByIndexPeriod",
-function(S)
-  local gen, ind;
-  gen := MinimalMonoidGeneratingSet(S)[1];
-  ind := IndexPeriodOfSemigroupElement(gen);
-  if ind[1] = 1 and One(S) in HClass(S, gen) then
-    # <gen> generates the One of S, so the One is not an additional element
-    # Note that this implies that S is a cyclic group
-    SetIsGroupAsSemigroup(S, true);
-    return ind[2];
-  fi;
-  return Sum(ind);
-end);
-
-InstallMethod(Size,
-"for a monogenic transformation monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsTransformationSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic partial perm monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsPartialPermSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic bipartition monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsBipartitionSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic monoid of matrices over finite field with minimal gen set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsMatrixOverFiniteFieldCollection],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
-Unbind(_MonoidSizeByIndexPeriod);
-
-InstallMethod(MultiplicativeZero,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local gens, z;
-  # Does a generator act as a zero on all the other generators?
-  gens := GeneratorsOfSemigroup(S);
-  for z in gens do
-    if ForAll(gens, g -> z * g = z and g * z = z) then
-      return z;
-    fi;
-  od;
-  TryNextMethod();
-end);
-
-InstallMethod(MultiplicativeZero,
-"for a monoid with generators",
-[IsMonoid and HasGeneratorsOfMonoid],
-function(S)
-  local gens, z;
-  # Does a generator act as a zero on all the other generators?
-  gens := GeneratorsOfMonoid(S);
-  for z in gens do
-    if ForAll(gens, g -> z * g = z and g * z = z) then
-      return z;
-    fi;
-  od;
-  TryNextMethod();
-end);
-
-InstallMethod(IndecomposableElements, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IndecomposableElements, "for a semigroup", [IsSemigroup],
 function(S)
   local out, D;
 
@@ -961,8 +880,7 @@ function(S)
 end);
 
 InstallMethod(MinimalSemigroupGeneratingSet, "for a free semigroup",
-[IsFreeSemigroup],
-GeneratorsOfSemigroup);
+[IsFreeSemigroup], GeneratorsOfSemigroup);
 
 InstallMethod(MinimalSemigroupGeneratingSet, "for a semigroup",
 [IsSemigroup],
@@ -1023,7 +941,7 @@ function(S)
     non_unit_gens := Filtered(gens, x -> not x in D);
     classes := List(non_unit_gens, x -> Position(DClasses(S), DClass(S, x)));
     if IsDuplicateFreeList(classes) then
-      po := Digraph(PartialOrderOfDClasses(S));
+      po := PartialOrderOfDClasses(S);
       po := DigraphReflexiveTransitiveReduction(po);
       nbs := OutNeighboursOfVertex(po, Position(DClasses(S), D));
       if ForAll(classes, x -> x in nbs) then
@@ -1043,14 +961,12 @@ function(S)
     return gens;
   fi;
 
-  ErrorNoReturn("Semigroups: MinimalSemigroupGeneratingSet: error,\n",
-                "no further methods for computing minimal generating sets ",
-                "are implemented,");
+  ErrorNoReturn("no further methods for computing minimal generating sets ",
+                "are implemented");
 end);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a free monoid",
-[IsFreeMonoid],
-GeneratorsOfMonoid);
+[IsFreeMonoid], GeneratorsOfMonoid);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a monoid",
 [IsMonoid],
@@ -1086,11 +1002,9 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalPartialOrder(S);
   fi;
@@ -1116,13 +1030,10 @@ end);
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalLeqInverseSemigroup(S);
   fi;
@@ -1134,4 +1045,54 @@ function(S)
       return IsGreensLessThanOrEqual(R, RClass(S, y))
         and ForAny(Idempotents(R), e -> e * y = x);
     end;
+end);
+
+InstallMethod(LeftIdentity,
+"for semigroup with CanUseFroidurePin and mult. elt.",
+[IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  i := PositionCanonical(S, x);
+  p := DigraphPath(LeftCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), Reversed(p[2]));
+  return result ^ SmallestIdempotentPower(result);
+end);
+
+InstallMethod(RightIdentity,
+"for semgroup with CanUseFroidurePin and mult. elt.",
+[IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  i := PositionCanonical(S, x);
+  p := DigraphPath(RightCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), p[2]);
+  return result ^ SmallestIdempotentPower(result);
 end);

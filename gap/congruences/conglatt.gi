@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  conglatt.gi
-##  Copyright (C) 2016                                   Michael C. Young
+##  congruences/conglatt.gi
+##  Copyright (C) 2016-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -22,9 +22,7 @@
 ## user as the list of out-neighbours of that digraph.
 ##
 
-InstallMethod(ViewObj,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(ViewObj, "for a congruence poset", [IsCongruencePoset],
 function(poset)
   if DigraphNrVertices(poset) = 0 then
     Print("<empty congruence poset>");
@@ -35,16 +33,12 @@ function(poset)
   fi;
 end);
 
-InstallMethod(PrintObj,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(PrintObj, "for a congruence poset", [IsCongruencePoset],
 function(poset)
   Print("PosetOfCongruences( ", CongruencesOfPoset(poset), " )");
 end);
 
-InstallMethod(Size,
-"for a congruence poset",
-[IsCongruencePoset],
+InstallMethod(Size, "for a congruence poset", [IsCongruencePoset],
 DigraphNrVertices);
 
 SEMIGROUPS.PrincipalXCongruencePosetNC :=
@@ -52,13 +46,9 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
            restriction,
            SemigroupXCongruence,
            GeneratingPairsOfXSemigroupCongruence)
-  local report, pairs, total, congs, nrcongs, children, parents, last_collected,
+  local pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p,
         poset;
-
-  # Suppress reporting
-  report := SEMIGROUPS.OptionsRec(S).report;
-  SEMIGROUPS.OptionsRec(S).report := false;
 
   # Only try pairs from <restriction>
   pairs := IteratorOfCombinations(AsList(restriction), 2);
@@ -114,8 +104,6 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
     fi;
   od;
 
-  SEMIGROUPS.OptionsRec(S).report := report;
-
   # We are done: make the object and return
   poset := Digraph(parents);
   SetInNeighbours(poset, children);
@@ -140,7 +128,7 @@ InstallMethod(JoinSemilatticeOfCongruences,
 "for a congruence poset and a function",
 [IsCongruencePoset, IsFunction],
 function(poset, join_func)
-  local children, parents, congs, princ_congs, nrcongs, S, report, length,
+  local children, parents, congs, princ_congs, nrcongs, S, length,
         found, ignore, start, i, j, newcong, badcong, newchildren, newparents,
         k, c, p;
 
@@ -156,10 +144,6 @@ function(poset, join_func)
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
   S := UnderlyingSemigroupOfCongruencePoset(poset);
-
-  # Suppress reporting
-  report := SEMIGROUPS.OptionsRec(S).report;
-  SEMIGROUPS.OptionsRec(S).report := false;
 
   # Take all the joins
   Info(InfoSemigroups, 1, "Finding joins of congruences . . .");
@@ -213,8 +197,6 @@ function(poset, join_func)
            " (", Length(congs) - i, " remaining)");
     od;
   od;
-
-  SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
   poset := Digraph(parents);
@@ -321,8 +303,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalLeftCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinLeftSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfRightCongruences,
@@ -332,8 +313,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalRightCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinRightSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfCongruences,
@@ -343,8 +323,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
 end);
 
 InstallMethod(LeftCongruencesOfSemigroup,
@@ -376,12 +355,12 @@ InstallMethod(PosetOfPrincipalLeftCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanUseFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanUseFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfLeftSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -395,12 +374,12 @@ InstallMethod(PosetOfPrincipalRightCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanUseFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanUseFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfRightSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -414,12 +393,12 @@ InstallMethod(PosetOfPrincipalCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local genpairs;
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
+  if not (IsFinite(S) and CanUseFroidurePin(S)) then
+    ErrorNoReturn("the 1st argument (a semigroup) must be finite and have ",
+                  "CanUseFroidurePin");
   elif not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
-                  "<restriction> must be a subset of <S>,");
+    ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,

@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  semimaxplus.gd
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semimaxplus.gd
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -73,9 +73,6 @@ InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixMonoid);
 InstallTrueMethod(IsFinite, IsNTPMatrixMonoid);
 
 # examples
-
-DeclareOperation("FullTropicalMaxPlusMonoid", [IsPosInt, IsPosInt]);
-DeclareOperation("FullTropicalMinPlusMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("NormalizeSemigroup", [IsMaxPlusMatrixSemigroup]);
 DeclareProperty("IsTorsion", IsMaxPlusMatrixSemigroup);

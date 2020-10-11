@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semiffmat.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semiffmat.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -243,27 +243,27 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) is not a pos int";
   fi;
   if Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
+    return "the 3rd argument (matrix dimension) is not a pos int";
   fi;
   if Length(params) < 3 then  # field
     params[3] := GF(Random(Primes), Random(1, 9));
   elif not IsField(params[3]) or not IsFinite(params[3]) then
-    return "the fourth argument must be a finite field,";
+    return "the 4th argument is not a finite field";
   fi;
   if Length(params) < 4 then  # ranks
     params[4] := [1 .. params[2]];
   elif not IsList(params[4])
       or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then
-    return "the fifth argument (matrix ranks) must be a list of pos ints,";
+    return "the 5th argument (matrix ranks) is not a list of pos ints";
   fi;
 
   if Length(params) > 4 then
-    return "there must be at most five arguments,";
+    return "there must be at most 5 arguments";
   fi;
 
   return params;
@@ -314,30 +314,6 @@ function(filt, params)
                     RandomInverseMonoid(IsPartialPermMonoid,
                                         params[1],
                                         params[2]));
-end);
-
-InstallMethod(GroupOfUnits, "for a matrix over finite field semigroup",
-[IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  local r, g, e, U;
-
-  e := MultiplicativeNeutralElement(S);
-
-  if e = fail then
-    return fail;
-  fi;
-
-  r := GreensRClassOfElementNC(S, e);
-  g := SchutzenbergerGroup(r);
-
-  U := Monoid(GeneratorsOfGroup(g));
-
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
-  UseIsomorphismRelation(U, g);
-
-  return U;
 end);
 
 InstallMethod(BaseDomain, "for a matrix semigroup",
@@ -396,9 +372,8 @@ function(S, V, mat)
   k := Rank(V);
 
   if n = 0 or k = 0 then
-    # FIXME improve this
-    ErrorNoReturn("Semigroups: MatrixOverFiniteFieldLocalRightInverse: ",
-                  "usage,\n nullspace");
+    # FIXME(later) improve this
+    ErrorNoReturn("nullspace");
   fi;
 
   W := AsMutableList(V!.rows * mat);
@@ -409,7 +384,7 @@ function(S, V, mat)
   se := SemiEchelonMat(W);
   # If the matrix does not act injectively on V,
   # then there is no right inverse
-  # FIXME: I think we can now simplify things below
+  # TODO(later) I think we can now simplify things below
   if Number(se.heads{[1 .. n]}, IsZero) > n - k then
     return fail;
   fi;
@@ -439,8 +414,8 @@ function(S, V, mat)
 end);
 
 # Returns an invertible matrix.
-# TODO: make pretty and efficient (in that order).  In particular the setup for
-# the matrix should be much more efficient.
+# TODO(later): make pretty and efficient (in that order).  In particular the
+# setup for the matrix should be much more efficient.
 InstallGlobalFunction(MatrixOverFiniteFieldSchutzGrpElement,
 function(S, x, y)
   local deg, n, eqs, idx, col, row, res;
@@ -477,8 +452,7 @@ function(S, x, y)
                                     eqs{[1 .. n]}{idx + deg});
 
     if res ^ (-1) = fail then
-      ErrorNoReturn("Semigroups: MatrixOverFiniteFieldSchutzGrpElement: ",
-                    "error,\nthe found element is not invertible,");
+      ErrorNoReturn("the found element is not invertible");
     fi;
   fi;
 
@@ -595,7 +569,7 @@ function(coll)
   return true;
 end);
 
-# FIXME this method is not correct (although it works as documented)
+# FIXME(later) this method is not correct (although it works as documented)
 # This should check whether <S> = GLM of the right dimensions/field
 
 InstallMethod(IsFullMatrixMonoid, "for a semigroup",

@@ -4,5 +4,8 @@
 set -e
 set -o pipefail
 
-$GAP_HOME/pkg/semigroups/ci/docker-install-deps.sh
-$GAP_HOME/pkg/semigroups/ci/docker-test.sh
+# This file only exists because it seems not possible to run both the scripts
+# below directly in launch-docker-container.sh
+
+$GAP_HOME/pkg/semigroups/ci/install-in-docker-container.sh
+$GAP_HOME/pkg/semigroups/ci/run-tests.sh

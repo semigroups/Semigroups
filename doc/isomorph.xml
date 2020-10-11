@@ -55,7 +55,7 @@ gap> OnMultiplicationTable(table, p);
     See <Ref Attr="CanonicalMultiplicationTable"/> for more details.<P/>
     
     <C>CanonicalMultiplicationTablePerm</C> uses the machinery for canonical
-      labelling of vertex coloured digraphs in &bliss; via 
+      labelling of vertex coloured digraphs in &BLISS; via 
     <Ref Oper="BlissCanonicalLabelling" Label="for a digraph and a list"
       BookName="digraphs"/>.<P/>
 
@@ -87,7 +87,7 @@ gap> CanonicalMultiplicationTablePerm(S);
       of <C>CanonicalMultiplicationTable</C> are equal. <P/>
 
       <C>CanonicalMultiplicationTable</C> uses the machinery for canonical
-        labelling of vertex coloured digraphs in &bliss; via 
+        labelling of vertex coloured digraphs in &BLISS; via 
       <Ref Oper="BlissCanonicalLabelling" Label="for a digraph and a list"
         BookName="digraphs"/>.<P/>
 
@@ -138,9 +138,9 @@ gap> CanonicalMultiplicationTable(S);
       <Ref Attr = "IdSmallSemigroup" BookName = "Smallsemi"/> by Andreas
         Distler.<P/>
 
-      From Version 3.3.0 of &Semigroups; this attribute is computed using
+      From Version 3.3.0 of &SEMIGROUPS; this attribute is computed using
         <Ref Func="MinimalImage" BookName = "images"/> from the
-        the &images; package.
+        the &IMAGES; package.
 
       See also: <Ref Attr= "CanonicalMultiplicationTable"/>.
 
@@ -207,7 +207,7 @@ false]]></Example>
       not, then <K>fail</K> is returned. <P/>
 
       <C>IsomorphismSemigroups</C> uses the machinery for finding isomorphisms
-        between vertex coloured digraphs in &bliss; via 
+        between vertex coloured digraphs in &BLISS; via 
       <Ref Oper="IsomorphismDigraphs" 
            Label="for digraphs and homogeneous lists"
            BookName="digraphs"/> using digraphs constructed from the
@@ -266,7 +266,7 @@ true]]></Example>
     <Description>
       This operation returns the group of automorphisms of the semigroup <A>S</A>. 
 
-      <C>AutomorphismGroup</C> uses &bliss; via  
+      <C>AutomorphismGroup</C> uses &BLISS; via  
       <Ref Oper="AutomorphismGroup" 
            Label="for a digraph and a homogeneous list"
            BookName="digraphs"/> using a vertex coloured digraph constructed

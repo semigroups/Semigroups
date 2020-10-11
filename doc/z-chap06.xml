@@ -1,106 +1,108 @@
-<Chapter Label = "Creating semigroups and monoids">
+<Chapter Label = "Semigroups and monoids defined by generating sets">
   <Heading>
-    Creating semigroups and monoids
+    Semigroups and monoids defined by generating sets
   </Heading>
 
-  In this chapter we describe the various ways that semigroups and monoids can
-  be created in &Semigroups;, and the options that are available at the time of
-  creation.
- 
-  <Section Label = "Underlying algorithms and related representations">
-    <Heading>Underlying algorithms and related representations</Heading>
-    Computing the Green's structure of a semigroup is fundamental to almost
-    every other algorithm for semigroups.  There are two fundamental
-    algorithms in the &Semigroups; package for computing the Green's structure
-    of a semigroup, which are described in the next two subsections.
+  In this chapter we describe the various ways that semigroups and monoids
+  defined by generating sets can be created in &SEMIGROUPS;; where the
+  generators are, for example, those elements described in earlier chapters of
+  this manual.
+
+  <Section Label = "Underlying algorithms">
+    <Heading>Underlying algorithms</Heading>
+    Computing the Green's structure of a semigroup or monoid is a fundamental
+    step in almost every algorithm for semigroups.  There are two fundamental
+    algorithms in the &SEMIGROUPS; package for computing the Green's structure
+    of a semigroup defined by a set of generators. In the next two subsections
+    we briefly describe these two algorithms.
 
     <Subsection Label = "Acting semigroups">
       <Heading>
         Acting semigroups
       </Heading>
-      The first type of fundamental algorithms are those described in <Cite Key
-        = "Mitchell2019aa"/>, which when applied to a semigroup with relatively
-      large subgroups are the most efficient methods in the &Semigroups;
-      package. For example, the complexity of computing, say, the size of a
+      The first of the fundamental algorithms for computing a semigroup defined
+      by a generating set is described in <Cite Key = "Mitchell2019aa"/>. When
+      applied to a semigroup or monoid with relatively large subgroups, or
+      &D;-classes, these are the most efficient methods in the &SEMIGROUPS;
+      package.  For example, the complexity of computing, say, the size of a
       transformation semigroup that happens to be a group, is the same as the
       complexity of the Schreier-Sims Algorithm (polynomial in the number of
       points acted on by the transformations) for a permutation group.
       <P/>
-      
+
       In theory, these algorithms can be applied to
       compute any subsemigroup of a regular semigroup; but so far in the
-      &Semigroups; package they are only implemented for semigroups of:
+      &SEMIGROUPS; package they are only implemented for semigroups of:
       transformations (see <Ref Chap="Transformations" BookName="ref"/>),
-      partial permutations 
+      partial permutations
       (see <Ref Chap="Partial permutations" BookName="ref"/>),
-      bipartitions (see Chapter <Ref Chap="Bipartitions and blocks"/>), 
-      subsemigroups of regular Rees 0-matrix semigroups over permutation groups 
-      (see Chapter <Ref Chap="Rees matrix semigroups" BookName="ref"/>), 
-      and matrices over a finite field 
-      (see Section <Ref Sect="Matrices over finite fields"/>).
+      bipartitions (see Chapter <Ref Chap="Bipartitions and blocks"/>),
+      matrices over a finite field
+      (see Section <Ref Sect="Matrices over finite fields"/>);
+      subsemigroups of regular Rees 0-matrix semigroups over permutation groups
+      (see Chapter <Ref Chap="Rees matrix semigroups" BookName="ref"/>),
+      and subsemigroups of McAlister triples (see Section <Ref Sect="McAlister
+        triple semigroups"/>).
       <P/>
-      
-      We refer to semigroups to which the algorithms in 
+
+      We refer to semigroups to which the algorithms in
       <Cite Key = "Mitchell2019aa"/> can be applied as <E>acting semigroups</E>,
-      and such semigroups belong to the category 
+      and such semigroups belong to the category
       <Ref Filt="IsActingSemigroup"/>.<P/>
 
       If you know <E>a priori</E> that the semigroup you want to compute is
       large and &J;-trivial, then you can disable the special methods for
       acting semigroups when you create the semigroups; see Section <Ref Sect
         = "Options when creating semigroups"/> for more details.<P/>
-      
+
       It is harder for the acting semigroup algorithms to compute Green's
       &L;- and &H;-classes of a transformation semigroup and the methods used
       to compute with Green's &R;- and &D;-classes are the most efficient in
-      &Semigroups;.
+      &SEMIGROUPS;.
       Thus, if you are computing with a transformation semigroup, wherever
       possible, it is advisable to use the commands relating to Green's &R;-
       or &D;-classes rather than those relating to Green's &L;-  or
       &H;-classes. No such difficulties are present when computing with the
-      other types of acting semigroups in &Semigroups;.<P/>
+      other types of acting semigroups in &SEMIGROUPS;.<P/>
 
-      There are methods in &Semigroups; for computing individual Green's
+      There are methods in &SEMIGROUPS; for computing individual Green's
       classes of an acting semigroup without computing the entire data
       structure of the underlying
       semigroup; see <Ref Oper = "GreensRClassOfElementNC"/>.  It is also
       possible to compute the &R;-classes, the number of elements and test
       membership in a semigroup without computing all the elements; see, for
       example, <Ref Meth = "GreensRClasses"/>, <Ref Attr = "RClassReps"/>, <Ref
-        Oper = "IteratorOfRClassReps"/>, <Ref Oper = "IteratorOfRClasses"/>, or
+        Oper = "IteratorOfRClasses"/>, or
       <Ref Attr = "NrRClasses"/>.  This may be useful if you want to study a very
       large semigroup where computing all the elements of the semigroup is not
       feasible.<P/>
-      <!--For details of how to
-      extend &Semigroups; see <Ref Chap = "Extending the package"/>.-->  
     </Subsection>
 
-    <Subsection Label="Enumerable semigroups">
-      <Heading>Enumerable semigroups</Heading>
-      The second fundamental algorithm is the Froidure-Pin Algorithm <Cite Key
-        = "Froidure1997aa"/>. The &Semigroups; package contains two
-      implementations of the Froidure-Pin Algorithm: one in the 
-      &libsemigroups; C++ library and the other within the &Semigroups; package
-      kernel module.<P/>
-      
-      Both implementations outperform the
-      algorithms for acting semigroups when applied to semigroups with small
-      (trivial) subgroups.  This method is also used to determine the structure of
-      a semigroup when the algorithms described in <Cite Key = "Mitchell2019aa"/>
-      do not apply. It is possible to specify which methods should be applied
-      to a given semigroup; see Section 
-      <Ref Sect = "Options when creating semigroups"/>.<P/>
+    <#Include Label = "IsActingSemigroup">
 
-      We refer to semigroups to which the Froidure-Pin Algorithm can be
-      applied in &GAP; as <E>enumerable semigroups</E>, and such semigroups
-      should belong to the representation <Ref
-        Filt="IsEnumerableSemigroupRep"/>. Every acting semigroup in
-      &Semigroups; is an enumerable semigroup since the acting semigroup data
-      structure does not readily admit computation of certain properties or
-      attributes. 
+    <Subsection Label="FroidurePin">
+      <Heading>The Froidure-Pin Algorithm</Heading>
+      The second fundamental algorithm for computing finite semigroups is the
+      Froidure-Pin Algorithm <Cite Key = "Froidure1997aa"/>. The &SEMIGROUPS;
+      package contains two implementations of the Froidure-Pin Algorithm: one
+      in the &LIBSEMIGROUPS; C++ library and the other within the
+      &SEMIGROUPS; package kernel module.<P/>
+
+      Both implementations outperform the algorithms for acting semigroups when
+      applied to semigroups with small (trivial) subgroups.  This method is
+      also used to determine the structure of a semigroup when the algorithms
+      described in <Cite Key = "Mitchell2019aa"/> do not apply. It is possible
+      to specify which methods should be applied to a given semigroup; see
+      Section <Ref Sect = "Options when creating semigroups"/>.<P/>
+
+      A semigroup to which the Froidure-Pin Algorithm can be applied in
+      &SEMIGROUPS; satisfy <Ref Prop="CanUseFroidurePin"/>.  Every acting
+      semigroup in &SEMIGROUPS; satisfies <Ref Prop="CanUseFroidurePin"/>
+      and the Froidure-Pin Algorithm is used to compute certain properties or
+      attributes.
       <P/>
 
-      Currently, the &libsemigroups; implementation of the Froidure-Pin
+      Currently, the &LIBSEMIGROUPS; implementation of the Froidure-Pin
       Algorithm can be applied to semigroups consisting of the following types
       of elements: transformations (see <Ref Chap="Transformations"
         BookName="ref"/>), partial permutations (see <Ref Chap="Partial
@@ -138,7 +140,7 @@
           operations min and plus;
         </Item>
         <!-- <Item>
-          the <E>projective max-plus semiring</E> ... TODO
+          the <E>projective max-plus semiring</E> ... TODO(later)
         </Item> -->
         <Item>
           the semiring <M>\mathbb{N}_{t, p} = \{0, 1,
@@ -148,36 +150,34 @@
         </Item>
       </List>
       (see Chapter <Ref Chap="Matrices over semirings"/>).<P/>
-      
+
       The version of the Froidure-Pin Algorithm <Cite Key =
-        "Froidure1997aa"/> written in C within the &Semigroups; package
-      kernel module can be used to compute any other semigroup in &GAP; with
-      representation <Ref Filt="IsEnumerableSemigroupRep"/>. In theory, any
+        "Froidure1997aa"/> written in C within the &SEMIGROUPS; package
+      kernel module can be used to compute any other semigroup in &GAP; which
+      satisfies <Ref Prop="CanUseGapFroidurePin"/>. In theory, any
       finite semigroup can be computed using this algorithm. However, the
-      condition that the semigroup has representation  <Ref
-        Filt="IsEnumerableSemigroupRep"/> is imposed to avoid this method
-      being used when it is inappropriate (such as for finitely presented
-      semigroups which happen to be finite). If implementing a new type of
+      condition that the semigroup has satisfies <Ref
+        Filt="CanUseGapFroidurePin"/> is imposed to avoid this method
+      being used when it is inappropriate. If implementing a new type of
       semigroup in &GAP;, then simply do
-<Log>InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                       MyNewSemigroupType);</Log> 
+<Log>InstallTrueMethod(CanUseGapFroidurePin,
+                       MyNewSemigroupType);</Log>
       to make your new semigroup type <C>MyNewSemigroupType</C> use this
-      version of the Froidure-Pin Algorithm. <P/>
+      version of the Froidure-Pin Algorithm.  To make this work efficiently it
+      is necessary that a hash function is implemented for the elements of
+      <C>MyNewSemigroupType</C>; more details will be included in a future
+      edition of this manual.
+      <P/>
 
       Mostly due to the way that &GAP; handles memory, this implementation is
       approximately 4 times slower than the implementation in
-      &libsemigroups;.  This version of the Froidure-Pin Algorithm is
+      &LIBSEMIGROUPS;.  This version of the Froidure-Pin Algorithm is
       included because it applies to a wider class of semigroups than those
-      currently implemented in &libsemigroups; and it is more straightforward
+      currently implemented in &LIBSEMIGROUPS; and it is more straightforward
       to extend the classes of semigroup to which it applies.
-      
-      From a usage perspective there is no difference between those enumerable
-      semigroups that are representable in &libsemigroups; and those that are
-      not, except that the latter has superior performance.
     </Subsection>
 
-    <#Include Label = "IsActingSemigroup">
-    <#Include Label = "IsEnumerableSemigroupRep">
+    <#Include Label = "CanUseFroidurePin">
   </Section>
 
   <Section Label = "Semigroups represented by generators">
@@ -210,19 +210,19 @@
     Assume that <A>S</A> is the semigroup created by one of the functions given
     above and that either: <A>S</A> is generated by a collection <A>gens</A>; or
     <A>S</A> is an ideal of such a semigroup.
- 
+
     <List>
       <Mark><C>acting</C></Mark>
       <Item>
         this component should be <K>true</K> or <K>false</K>.
- 
-        Roughly speaking, there are two types of methods in the &Semigroups;
+
+        Roughly speaking, there are two types of methods in the &SEMIGROUPS;
         package: those for semigroups which have to be fully enumerated, and
         those for semigroups that do not; see Section <Ref Sect =
           "Introduction"/>.
         In order for a semigroup to use the latter methods in
         <!-- the reference to IsActingSemigroup does not work -->
-        &Semigroups; it must satisfy <Ref Filt="IsActingSemigroup"/>.  By
+        &SEMIGROUPS; it must satisfy <Ref Filt="IsActingSemigroup"/>.  By
         default any semigroup or monoid of transformations, partial
         permutations, Rees 0-matrix elements, or bipartitions satisfies
         <C>IsActingSemigroup</C>.<P/>
@@ -243,7 +243,7 @@
         <E>a priori</E> that the semigroup <C>S</C> being created is a regular
         semigroup, then this component can be set to <K>true</K>. In this case,
         <C>S</C> knows it is a regular semigroup and can take advantage of the
-        methods for regular semigroups in &Semigroups;. It is usually much more
+        methods for regular semigroups in &SEMIGROUPS;. It is usually much more
         efficient to compute with a regular semigroup that to compute with a
         non-regular semigroup.<P/>
 
@@ -252,22 +252,22 @@
 
         The default value for this option is <K>false</K>.
       </Item>
- 
+
       <Mark><C>hashlen</C></Mark>
       <Item>
         this component should be a positive integer, which roughly specifies the
-        lengths of the hash tables used internally by &Semigroups;.  &Semigroups;
+        lengths of the hash tables used internally by &SEMIGROUPS;.  &SEMIGROUPS;
         uses hash tables in several fundamental methods.  The lengths of these
         tables are a compromise between performance and memory usage; larger
         tables provide better performance for large computations but use more
         memory.  Note that it is unlikely that you will need to specify this
         option unless you find that &GAP; runs out of memory unexpectedly or that
-        the performance of &Semigroups; is poorer than expected. If you find that
+        the performance of &SEMIGROUPS; is poorer than expected. If you find that
         &GAP; runs out of memory unexpectedly, or you plan to do a large number
         of computations with relatively small semigroups (say with tens of
         thousands of elements), then you might consider setting <C>hashlen</C> to
         be less than the default value of <C>12517</C> for each of these
-        semigroups.  If you find that the performance of &Semigroups; is
+        semigroups.  If you find that the performance of &SEMIGROUPS; is
         unexpectedly poor, or you plan to do a computation with a very large
         semigroup (say, more than 10 million elements), then you might consider
         setting <C>hashlen</C> to be greater than the default value of
@@ -275,17 +275,17 @@
 
         You might find it useful to set the info level of the info class
         <C>InfoOrb</C> to 2 or higher since this will indicate when hash tables
-        used by &Semigroups; are being grown; see <Ref Oper = "SetInfoLevel"
+        used by &SEMIGROUPS; are being grown; see <Ref Oper = "SetInfoLevel"
         BookName = "ref"/>.
       </Item>
- 
+
       <Mark><C>small</C></Mark> <Item>if this component is set to <K>true</K>,
-        then &Semigroups; will compute a small subset of <A>gens</A> that
+        then &SEMIGROUPS; will compute a small subset of <A>gens</A> that
         generates <A>S</A> at the time that <A>S</A> is created. This will
         increase the amount of time required to create <A>S</A> substantially,
         but may decrease the amount of time required for subsequent
         calculations with <A>S</A>. If this component is set to <K>false</K>,
-        then &Semigroups; will return the semigroup generated by <A>gens</A>
+        then &SEMIGROUPS; will return the semigroup generated by <A>gens</A>
         without modifying <A>gens</A>. The default value for this component is
         <K>false</K>.<P/>
 
@@ -306,27 +306,6 @@
         for more information about the "kernel and trace" method.
     </Item>
 
-    <Mark><C>report</C></Mark>
-    <Item>this component should be either <K>true</K> or <K>false</K>. If this
-      component is set to <K>true</K>, then some additional information will be
-      provided during computations performed by the &libsemigroups; C++ library.
-    </Item>
-
-    <Mark><C>batch_size</C></Mark>
-    <Item>this component should be a positive integer. If <A>S</A> is a
-      semigroup with representation <Ref Filt="IsEnumerableSemigroupRep" />,
-      then when certain computations are performed with <A>S</A> using the
-      &libsemigroups; C++ library, then the computations will be executed in
-      batches of size at least <C>batch_size</C>.  This value of this component
-      changes the performance of the &libsemigroups; C++ library &#8212; you may
-      wish to tweak this parameter if you experience sub-optimal performance.
-    </Item>
-
-    <Mark><C>nr_threads</C></Mark>
-    <Item>this component should be a positive integer. This number sets the
-      maximum number of threads that can be used by computations in the
-      &libsemigroups; C++ library.
-    </Item>
 </List>
 
     <Example><![CDATA[
@@ -346,39 +325,25 @@ true]]></Log>
 
     If you want to change the default values of the options stored in <Ref
       Var = "SEMIGROUPS.DefaultOptionsRec"/> for all &GAP; sessions, then you can
-    edit these values in the file <C>semigroups/gap/options.g</C>. <P/>
+    edit these values in the file <F>semigroups-&VERSION;/gap/options.g</F>. <P/>
 
     <#Include Label = "SEMIGROUPS.DefaultOptionsRec">
 
    </Section>
- 
+
   <Section>
-    <Heading>New semigroups from old</Heading>
+    <Heading>Subsemigroups and supersemigroups</Heading>
 
     <#Include Label = "ClosureSemigroup">
     <#Include Label = "SubsemigroupByProperty">
     <#Include Label = "InverseSubsemigroupByProperty">
-    <#Include Label = "DirectProduct">
-    <#Include Label = "WreathProduct">
 
   </Section>
 
-  <Section>
-    <Heading> Dual semigroups </Heading>
-    The <E>dual semigroup</E> of a semigroup <C>S</C> is the semigroup with the
-    same underlying set of elements but with reversed multiplication; this is
-    anti-isomorphic to <C>S</C>. In &Semigroups; a semigroup and its dual
-    are represented with disjoint sets of elements.
-    <#Include Label = "DualSemigroup">
-    <#Include Label = "IsDualSemigroupRep">
-    <#Include Label = "IsDualSemigroupElement">
-    <#Include Label = "AntiIsomorphismDualSemigroup">
-  </Section>
- 
    <Section Label = "Changing the representation of a semigroup">
      <Heading>Changing the representation of a semigroup</Heading>
- 
-     The &Semigroups; package provides two convenient constructors
+
+     The &SEMIGROUPS; package provides two convenient constructors
      <Ref Oper = "IsomorphismSemigroup"/> and
      <Ref Oper = "IsomorphismMonoid"/> for changing the representation of a given
      semigroup or monoid. These methods can be used to
@@ -424,7 +389,7 @@ true]]></Log>
      can be used to change the representation of a monoid, but only the latter
      is guaranteed to return an object in the category of monoids.
      <P/>
- 
+
      <Example><![CDATA[
 gap> S := Monoid(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 >                Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
@@ -450,7 +415,7 @@ gap> AsMonoid(IsPBRMonoid, M);
 gap> AsSemigroup(IsPBRSemigroup, M);
 <pbr semigroup of size 163, degree 8 with 4 generators>]]></Example>
 
-     There are some further methods in &Semigroups; for obtaining an isomorphism
+     There are some further methods in &SEMIGROUPS; for obtaining an isomorphism
      from a Rees matrix, or 0-matrix, semigroup to another such semigroup with
      particular properties; <Ref Attr = "RMSNormalization"/> and
      <Ref Attr = "RZMSNormalization"/>.
@@ -462,24 +427,20 @@ gap> AsSemigroup(IsPBRSemigroup, M);
      <#Include Label = "IsomorphismPermGroup">
      <#Include Label = "RZMSNormalization">
      <#Include Label = "RMSNormalization">
-  </Section>
-  
+     <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
+
+   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section>
     <Heading>Random semigroups</Heading>
 
     <#Include Label = "RandomSemigroup">
   </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Endomorphism monoid of a digraph">
 
-    <Heading>
-      Endomorphism monoid of a digraph
-    </Heading>
-  
-    <#Include Label = "EndomorphismMonoid">
-  </Section>
- 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>

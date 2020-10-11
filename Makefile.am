@@ -21,18 +21,39 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 
 lib_LTLIBRARIES = semigroups.la
 
-semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc 
-semigroups_la_SOURCES += src/fropin.cc src/congpairs.cc
-semigroups_la_SOURCES += src/semigrp.cc
+semigroups_la_SOURCES =  src/bipart.cpp
+semigroups_la_SOURCES += src/cong.cpp
+semigroups_la_SOURCES += src/froidure-pin-base.cpp
+semigroups_la_SOURCES += src/froidure-pin-bipart.cpp
+semigroups_la_SOURCES += src/froidure-pin-bmat.cpp
+semigroups_la_SOURCES += src/froidure-pin-fallback.cpp
+semigroups_la_SOURCES += src/froidure-pin-matrix.cpp
+semigroups_la_SOURCES += src/froidure-pin-max-plus-mat.cpp
+semigroups_la_SOURCES += src/froidure-pin-min-plus-mat.cpp
+semigroups_la_SOURCES += src/froidure-pin-pbr.cpp
+semigroups_la_SOURCES += src/froidure-pin-pperm.cpp
+semigroups_la_SOURCES += src/froidure-pin-transf.cpp
+semigroups_la_SOURCES += src/pkg.cpp
+semigroups_la_SOURCES += src/to_gap.cpp
+semigroups_la_SOURCES += gapbind14/src/gapbind14.cpp
 
-semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
-semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
+semigroups_la_CXXFLAGS = $(GAP_CFLAGS)   @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
+semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) @LIBSEMIGROUPS_CFLAGS@
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/gapbind14/include
+if HPCOMBI_CONSTEXPR_FUN_ARGS
+semigroups_la_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern
+endif
+
+semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
 if WITH_INCLUDED_LIBSEMIGROUPS
+# FIXME(now) all the include paths should point into bin/include/ and not to
+# the sources, or otherwise we should stop make installing into bin
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-5.3.0/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-8.0.1/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
 endif
 semigroups_la_CPPFLAGS += -DFMT_HEADER_ONLY
@@ -66,7 +87,7 @@ endif
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif
-	
+
 if KERNEL_DEBUG
 	@echo "SUCCESS (debug mode enabled)!"
 else
@@ -81,12 +102,12 @@ doc: doc/manual.six
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
-lint: 
+lint:
 	etc/gaplint.sh
 	etc/cpplint.sh
 
-format: 
-	clang-format -i src/*.h src/*.cc
+format:
+	clang-format -i src/*.hpp src/*.cpp
 
 superclean: distclean
 	git clean -xdf --exclude *.swp --exclude *.swo

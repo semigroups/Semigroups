@@ -1,14 +1,12 @@
 #############################################################################
 ##
-##  star.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  elements/star.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-# star
 
 InstallMethod(Star, "for an associative element with star",
 [IsAssociativeElementWithStar],

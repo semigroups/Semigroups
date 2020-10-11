@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  isomorph.gi
-##  Copyright (C) 2014-20                                James D. Mitchell
+##  attributes/isomorph.gi
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -213,8 +213,8 @@ function(S, T)
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
-# TODO when/if Digraphs has vertex coloured digraphs, make this a user facing
-# function
+# TODO(later) when/if Digraphs has vertex coloured digraphs, make this a user
+# facing function
 SEMIGROUPS.CanonicalDigraph := function(S)
   local M, n, Color1Node, Color2Node, Widget, out, colors, x, y, z;
 
@@ -261,7 +261,7 @@ InstallMethod(IsomorphismSemigroups, "for semigroups",
 function(S, T)
   local invariants, map, DS, DT, p, inv;
 
-  # TODO more invariants
+  # TODO(later) more invariants
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
                  NrLClasses, NrDClasses, NrRClasses, NrHClasses, NrIdempotents];
   if S = T then
@@ -301,13 +301,6 @@ InstallMethod(AutomorphismGroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, G, X, map, Y, H;
-  # JDM: I'm not sure I trust the AutomorphismGroup methods for Rees 0-matrix
-  # semigroups, and so this method doesn't try to use them in the case that S
-  # is 0-simple, or simple. Note that the first test in tst/standard/isorms.tst
-  # is much much faster using the R(Z)MS specific method.
-
-  # TODO use the R(Z)MS specific method if we have a (0-)simple semigroup.
-
   if not IsFinite(S) then
     TryNextMethod();
   fi;

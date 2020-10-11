@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semiact.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  main/semiact.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -73,8 +73,8 @@ function(Constructor, S, coll, opts)
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
 
-  # TODO split this into two methods, one for collections and the other for
-  # single elements
+  # TODO(later) split this into two methods, one for collections and the other
+  # for single elements
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
@@ -127,7 +127,6 @@ function(Constructor, S, coll, opts)
   Unbind(o!.schutz);
   Unbind(o!.reverse);
   Unbind(o!.rev);
-  Unbind(o!.truth);
   Unbind(o!.schutzstab);
   Unbind(o!.factorgroups);
   Unbind(o!.factors);
@@ -161,7 +160,6 @@ function(Constructor, S, coll, opts)
   Unbind(rho_o!.schutz);
   Unbind(rho_o!.reverse);
   Unbind(rho_o!.rev);
-  Unbind(rho_o!.truth);
   Unbind(rho_o!.schutzstab);
 
   rho_o!.parent := t;
@@ -414,7 +412,7 @@ function(Constructor, S, coll, opts)
     TryNextMethod();
   fi;
 
-  # TODO split this into two methods
+  # TODO(later) split this into two methods
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
@@ -425,11 +423,8 @@ function(Constructor, S, coll, opts)
     for x in coll do
       S := ClosureInverseSemigroupOrMonoidNC(Constructor, S, [x], opts);
     od;
-
     return S;
-  fi;
-
-  if coll[1] in S then
+  elif coll[1] in S then
     return S;
   fi;
 
@@ -455,7 +450,6 @@ function(Constructor, S, coll, opts)
   Unbind(o!.schutz);
   Unbind(o!.reverse);
   Unbind(o!.rev);
-  Unbind(o!.truth);
   Unbind(o!.schutzstab);
   Unbind(o!.factorgroups);
   Unbind(o!.factors);
@@ -608,14 +602,12 @@ function(x, S)
     return false;
   elif Position(S, x) <> fail then  # check if x is already known to be in S
     return true;
-  elif IsFullyEnumerated(S) then
+  elif IsEnumerated(S) then
     return false;
   elif HasAsSSortedList(S) then
     # This is currently unreachable
     return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
@@ -670,6 +662,7 @@ function(x, S)
   pos_rho := Position(RhoOrb(S), RhoFunc(S)(rep));
 
   if OrbSCCLookup(RhoOrb(S))[pos_rho] <> n then
+    # Cannot currently find an example that enters here.
     return false;
   elif pos_rho <> OrbSCC(RhoOrb(S))[n][1] then
     rep := RhoOrbMult(RhoOrb(S), n, pos_rho)[2] * rep;
@@ -685,7 +678,7 @@ function(x, S)
 end);
 
 # same method for inverse ideals
-# TODO clean this up
+# TODO(later) clean this up
 
 InstallMethod(\in,
 "for a multiplicative element and inverse acting semigroup rep",
@@ -698,15 +691,14 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  elif Position(S, x) <> fail then  # check if x is already known to be in S
+  elif HasFroidurePin(S) and Position(S, x) <> fail then
+    # check if x is already known to be in S
     return true;
-  elif IsFullyEnumerated(S) then
+  elif HasFroidurePin(S) and IsEnumerated(S) then
     return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), x -> ActionRank(S)(x))) then

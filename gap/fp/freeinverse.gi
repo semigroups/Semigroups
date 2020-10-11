@@ -1,7 +1,7 @@
 ###############################################################################
 ##
-##  freeinverse.gi
-##  Copyright (C) 2013-15                                  Julius Jonusas
+##  fp/freeinverse.gi
+##  Copyright (C) 2013-2022                                Julius Jonusas
 ##
 ##  Licensing information can be foundin the README file of this package.
 ##
@@ -28,109 +28,8 @@
 
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsFreeInverseSemigroupElementCollection);
-InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
-                  IsFreeInverseSemigroupElementCollection);
 
 InstallImmediateMethod(IsFinite, IsFreeInverseSemigroup, 0, ReturnFalse);
-
-# This method only exists for the iter.IsDoneIterator := ReturnFalse; part.
-InstallMethod(IteratorCanonical,
-"for a free inverse semigroup category",
-[IsFreeInverseSemigroupCategory],
-function(S)
-  local iter;
-  iter        := rec();
-  iter.pos    := 0;
-  iter.parent := S;
-
-  iter.NextIterator   := EN_SEMI_NEXT_ITERATOR;
-  iter.IsDoneIterator := ReturnFalse;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0, parent := S);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
-###############################################################################
-##
-##  Iterator( <S> )
-##
-# BindGlobal("NextIterator_FreeInverseSemigroup",
-# function(iter)
-#   local FG_NextIterator, gens, nrgen, seq, words, iter_list, n, i, output;
-#
-#   FG_NextIterator := function(iter)
-#     local w;
-#     w := ExtRepOfObj(NextIterator(iter));
-#     if IsEmpty(w) then
-#       w := ExtRepOfObj(NextIterator(iter));
-#     fi;
-#     return EvaluateExtRepObjWord(gens, w);
-#   end;
-#
-#   gens  := GeneratorsOfInverseSemigroup(iter!.semigroup);
-#   nrgen := Length(gens);
-#
-#   seq       := iter!.seq;
-#   words     := iter!.words;
-#   iter_list := iter!.iter_list;
-#
-#   if seq = [1 .. Length(seq)] or seq = [0] then
-#     n               := Length(seq);
-#     iter!.seq       := [seq[n] + 1];
-#     iter!.words     := [FG_NextIterator(iter_list[n])];
-#     iter!.iter_list := [iter_list[n]];
-#   elif iter!.seq[1] <> 1 then
-#     iter!.seq       := Concatenation([1], seq);
-#     iter!.iter_list := Concatenation([Iterator(FreeGroup(nrgen))], iter_list);
-#     iter!.words     := Concatenation([FG_NextIterator(iter!.iter_list[1])],
-#                                      words);
-#   else
-#     i := 1;
-#     while seq[i + 1] = seq[i] + 1 do
-#       i := i + 1;
-#     od;
-#     iter!.seq    := seq{[i .. Length(seq)]};
-#     iter!.seq[1] := iter!.seq[1] + 1;
-#     iter!.words  := Concatenation([FG_NextIterator(iter_list[i])],
-#                                   words{[i + 1 .. Length(words)]});
-#     iter!.iter_list := iter_list{[i .. Length(iter_list)]};
-#   fi;
-#   words := iter!.words;
-#   output := words[1];
-#   for i in [Length(words), Length(words) - 1 .. 2] do
-#     output := words[i] * words[i] ^ -1 * output;
-#   od;
-#   return output;
-# end);
-#
-# BindGlobal("ShallowCopy_FreeInverseSemigroup",
-# function(iter)
-#   local gens, iter_list;
-#   gens := GeneratorsOfInverseSemigroup(iter!.semigroup);
-#   iter_list := [Iterator(FreeGroup(Length(gens)))];
-#   return rec(semigroup := iter!.semigroup,
-#              seq       := iter!.seq,
-#              words     := iter!.words,
-#              iter_list := iter_list);
-# end);
-#
-# InstallMethod(Iterator, "for a free inverse semigroup",
-# [IsFreeInverseSemigroupCategory],
-# function(S)
-#   local iter, record;
-#   iter := [Iterator(FreeGroup(Length(GeneratorsOfInverseSemigroup(S))))];
-#   record := rec(IsDoneIterator := ReturnFalse,
-#                 NextIterator   := NextIterator_FreeInverseSemigroup,
-#                 ShallowCopy    := ShallowCopy_FreeInverseSemigroup,
-#                 semigroup      := S,
-#                 seq            := [0],
-#                 words          := [],
-#                 iter_list      := iter);
-#   return IteratorByFunctions(record);
-# end);
 
 ############################################################################
 ##
@@ -161,19 +60,13 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-                  "FreeInverseSemigroup(<name1>,<name2>..) or ",
+    ErrorNoReturn("FreeInverseSemigroup(<name1>,<name2>..) or ",
                   "FreeInverseSemigroup(<rank> [, name]),");
   fi;
 
   if IsEmpty(names) then
-    ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-                  "the number of generators of a free inverse semigroup must ",
-                  "be non-zero,");
-    # elif not IsFinite(names) then
-    #   ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-    #                 "the number of generators of a free inverse semigroup ",
-    #                 "must be finite,");
+    ErrorNoReturn("the number of generators of a free inverse semigroup must ",
+                  "be non-zero");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",
@@ -199,8 +92,7 @@ function(arg)
   S := Objectify(NewType(FamilyObj(gens),
                          IsFreeInverseSemigroupCategory
                           and IsInverseSemigroup
-                          and IsAttributeStoringRep
-                          and IsEnumerableSemigroupRep),
+                          and IsAttributeStoringRep),
                  rec(opts := opts));
   SetGeneratorsOfInverseSemigroup(S, gens);
   SetIsFreeInverseSemigroup(S, true);
@@ -581,6 +473,5 @@ function(s)
     fi;
   fi;
 
-  ErrorNoReturn("Semigroups: IsFreeInverseSemigroup:\n",
-                "cannot determine the answer");
+  ErrorNoReturn("cannot determine the answer");
 end);

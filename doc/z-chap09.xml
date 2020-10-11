@@ -1,68 +1,45 @@
-<Chapter Label = "Standard constructions">
+<Chapter Label = "Ideals">
   <Heading>
-    Standard constructions
+    Ideals
   </Heading>
 
-  In this chapter we describe some standard semigroup constructions which
-  are available in the &Semigroups; package.
+  In this chapter we describe the various ways that an ideal of a semigroup
+  can be created and manipulated in &SEMIGROUPS;.
   <P/>
 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
+  We write <E>ideal</E> to mean two-sided ideal everywhere in this chapter.
+  <P/>
 
-  <Section Label = "Standard constructions section">
+  The methods in the &SEMIGROUPS; package apply to any ideal of a semigroup
+  that is created using the function <Ref Func = "SemigroupIdeal"/> or
+  <C>SemigroupIdealByGenerators</C>. Anything that can be calculated for a
+  semigroup defined by a generating set can also be found for an ideal. This
+  works particularly well for regular ideals, since such an ideal can be
+  represented using a similar data structure to that used to represent a
+  semigroup defined by a generating set but without the necessity to find a
+  generating set for the ideal. Many methods for non-regular ideals rely on
+  first finding a generating set for the ideal, which can be costly (but not
+  nearly as costly as an exhaustive enumeration of the elements of the ideal).
+  We plan to improve the functionality of &SEMIGROUPS; for non-regular ideals
+  in the future.
+
+  <Section Label = "Creating ideals">
     <Heading>
-      Standard constructions
+      Creating ideals
     </Heading>
 
-    In this section, we describe the functions in &Semigroups; that can be used
-    to create standard semigroup constructions in various representations.
-    For all of the constructions, the default representation is as a semigroup
-    of transformations. In general, these functions do not return
-    a representation of minimal degree.
-
-    <#Include Label = "TrivialSemigroup">
-    <#Include Label = "MonogenicSemigroup">
-    <#Include Label = "RectangularBand">
-    <#Include Label = "ZeroSemigroup">
-    <#Include Label = "LeftZeroSemigroup">
-    <#Include Label = "BrandtSemigroup">
+    <#Include Label = "SemigroupIdeal">
+    <#Include Label = "Ideals">
   </Section>
 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section Label = "Strong semilattices of semigroups">
+  <Section Label = "Attributes of ideals">
     <Heading>
-      Strong semilattices of semigroups
+      Attributes of ideals
     </Heading>
 
-    In this section, we describe how &Semigroups; can be used to create and
-    manipulate strong semilattices of semigroups (SSSs).
-    Strong semilattices of semigroups are described, for example, in Section
-    4.1 of <Cite Key = "Howie1995aa"/>.
-    They consist of a meet-semilattice <M>Y</M> along with a collection of
-    semigroups <M>S_a</M> for each <M>a</M> in <M>Y</M>, and a collection of
-    homomorphisms <M>f_{ab} : S_a \rightarrow S_b</M> for each <M>a</M> and
-    <M>b</M> in <M>Y</M> such that <M>a \geq b</M>.
-    <P/>
-
-    The product of two elements <M>x \in S_a, y \in S_b</M> is defined to lie
-    in the semigroup <M>S_c</M>, corresponding to the meet <M>c</M> of
-    <M>a, b \in Y</M>. The exact element of <M>S_c</M> equal to the product
-    is obtained using the homomorphisms of the SSS: <M>xy = (x f_{ac})
-    (y f_{bc})</M>.
-
-    <#Include Label = "StrongSemilatticeOfSemigroups">
-    <#Include Label = "SSSE">
-    <#Include Label = "IsSSSE">
-    <#Include Label = "IsStrongSemilatticeOfSemigroups">
-    <#Include Label = "SemilatticeOfStrongSemilatticeOfSemigroups">
-    <#Include Label = "SemigroupsOfStrongSemilatticeOfSemigroups">
-    <#Include Label = "HomomorphismsOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "GeneratorsOfSemigroupIdeal">
+    <#Include Label = "MinimalIdealGeneratingSet">
+    <#Include Label = "SupersemigroupOfIdeal">
   </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 
 </Chapter>

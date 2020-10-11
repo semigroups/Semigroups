@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  tietze.gi
-##  Copyright (C) 2021                                    Tom Conti-Leslie
+##  fp/tietze.gi
+##  Copyright (C) 2021-2022                               Tom Conti-Leslie
 ##                                                              Ben Spiers
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -56,50 +56,32 @@ function(stz, arg)
   if not ForAll(arg, IsList) or
       not ForAll(arg, x -> Length(x) = 2 and ForAll(x, IsList)) or
       not ForAll(arg, x -> ForAll(x, y -> ForAll(y, IsPosInt))) then
-        ErrorNoReturn("SetRelationsOfStzPresentation:\n",
-                      "parameter <arg> must be a list of pairs of words in\n",
+        ErrorNoReturn("parameter <arg> must be a list of pairs of words in ",
                       "LetterRep format");
   fi;
   stz!.RelationsOfStzPresentation := arg;
 end);
 
-InstallMethod(RelationsOfStzPresentation,
-[IsStzPresentation],
-function(stz)
-    return stz!.RelationsOfStzPresentation;
-end);
+InstallMethod(RelationsOfStzPresentation, [IsStzPresentation],
+stz -> stz!.RelationsOfStzPresentation);
 
-InstallMethod(UnreducedFpSemigroup,
-[IsStzPresentation],
-function(stz)
-    return stz!.UnreducedFpSemigroup;
-end);
+InstallMethod(UnreducedFpSemigroup, [IsStzPresentation],
+stz -> stz!.UnreducedFpSemigroup);
 
-InstallMethod(TietzeForwardMap,
-[IsStzPresentation],
-function(stz)
-    return stz!.TietzeForwardMap;
-end);
+InstallMethod(TietzeForwardMap, [IsStzPresentation],
+stz -> stz!.TietzeForwardMap);
 
-InstallMethod(TietzeBackwardMap,
-[IsStzPresentation],
-function(stz)
-    return stz!.TietzeBackwardMap;
-end);
+InstallMethod(TietzeBackwardMap, [IsStzPresentation],
+stz -> stz!.TietzeBackwardMap);
 
-InstallMethod(GeneratorsOfStzPresentation,
-[IsStzPresentation],
-function(stz)
-    return stz!.GeneratorsOfStzPresentation;
-end);
+InstallMethod(GeneratorsOfStzPresentation, [IsStzPresentation],
+stz -> stz!.GeneratorsOfStzPresentation);
 
-InstallMethod(SetGeneratorsOfStzPresentation,
-[IsStzPresentation, IsList],
+InstallMethod(SetGeneratorsOfStzPresentation, [IsStzPresentation, IsList],
 function(stz, newGens)
-    stz!.GeneratorsOfStzPresentation := newGens;
+  stz!.GeneratorsOfStzPresentation := newGens;
 end);
 
-# TODO: TCL: maybe better to call this StzIsomorphism?
 InstallMethod(StzIsomorphism,
 [IsStzPresentation],
 function(stz)
@@ -125,35 +107,37 @@ function(stz)
     return Product(new_word, x -> GeneratorsOfSemigroup(source)[x]);
   end;
 
-  # TODO: are we okay to assume this is necessarily an isomorphism?
+  # TODO(later) are we okay to assume this is necessarily an isomorphism?
   return MagmaIsomorphismByFunctionsNC(source,
                                        range,
                                        forward_map,
                                        backward_map);
-
 end);
 
 InstallMethod(SetTietzeForwardMap,
+"for an stz presentation and list",
 [IsStzPresentation, IsList],
 function(stz, newMaps)
     if not ForAll(newMaps, x -> IsList(x) and ForAll(x, IsPosInt)) then
-      ErrorNoReturn("SetTietzeForwardMap: second argument <newMaps> must\n",
+      ErrorNoReturn("the 2nd argument <newMaps> must ",
                     "be a list of lists of positive integers");
     fi;
     stz!.TietzeForwardMap := newMaps;
 end);
 
 InstallMethod(SetTietzeBackwardMap,
+"for an stz presentation and list",
 [IsStzPresentation, IsList],
 function(stz, newMaps)
     if not ForAll(newMaps, x -> IsList(x) and ForAll(x, IsPosInt)) then
-      ErrorNoReturn("SetTietzeBackwardMap: second argument <newMaps> must\n",
+      ErrorNoReturn("the 2nd argument <newMaps> must ",
                     "be a list of lists of positive integers");
     fi;
     stz!.TietzeBackwardMap := newMaps;
 end);
 
 InstallMethod(TietzeForwardMapReplaceSubword,
+"for an stz presentation, list, and list",
 [IsStzPresentation, IsList, IsList],
 function(stz, subWord, newSubWord)
     local newMaps;
@@ -166,23 +150,19 @@ end);
 
 # Length of an StzPresentation is defined as the number of generators plus the
 # length of every word in the defining relations
-InstallMethod(Length,
-[IsStzPresentation],
+InstallMethod(Length, "for an stz presentation", [IsStzPresentation],
 function(stz)
-    local out, rels, rel;
-    out := Length(stz!.GeneratorsOfStzPresentation);
-    rels := RelationsOfStzPresentation(stz);
-    for rel in rels do
-        out := out + Length(rel[1]) + Length(rel[2]);
-    od;
-    return out;
+  local out, rel;
+  out := Length(stz!.GeneratorsOfStzPresentation);
+  for rel in RelationsOfStzPresentation(stz) do
+    out := out + Length(rel[1]) + Length(rel[2]);
+  od;
+  return out;
 end);
 
-InstallMethod(\<,
+InstallMethod(\<, "for stz presentations",
 [IsStzPresentation, IsStzPresentation],
-function(stz1, stz2)
-    return Length(stz1) < Length(stz2);
-end);
+{stz1, stz2} -> Length(stz1) < Length(stz2));
 
 ########################################################################
 # 2. Viewing methods for IsStzPresentation objects
@@ -191,27 +171,27 @@ end);
 InstallMethod(ViewString,
 [IsStzPresentation],
 function(stz)
-    local str;
-    str := "<fp semigroup presentation with ";
-    Append(str, String(Length(stz!.GeneratorsOfStzPresentation)));
-    Append(str, " generator");
-    if Length(stz!.GeneratorsOfStzPresentation) > 1 then
-        Append(str, "s");
-    fi;
-    Append(str, " and ");
-    Append(str, String(Length(stz!.RelationsOfStzPresentation)));
-    Append(str, " relation");
-    if Length(stz!.RelationsOfStzPresentation) <> 1 then
-        Append(str, "s");
-    fi;
-    Append(str, "\< with length ");
-    Append(str, String(Length(stz)));
-    Append(str, ">");
-    return str;
+  local str;
+  str := "<fp semigroup presentation with ";
+  Append(str, String(Length(stz!.GeneratorsOfStzPresentation)));
+  Append(str, " generator");
+  if Length(stz!.GeneratorsOfStzPresentation) > 1 then
+    Append(str, "s");
+  fi;
+  Append(str, " and ");
+  Append(str, String(Length(stz!.RelationsOfStzPresentation)));
+  Append(str, " relation");
+  if Length(stz!.RelationsOfStzPresentation) <> 1 then
+    Append(str, "s");
+  fi;
+  Append(str, "\< with length ");
+  Append(str, String(Length(stz)));
+  Append(str, ">");
+  return str;
 end);
 
 SEMIGROUPS.StzRelationDisplayString := function(stz, i)
-  local rels, f, gens, w1, w2, out;
+  local rels, f, gens, w1, w2;
   rels := RelationsOfStzPresentation(stz);
   if i > Length(rels) then
     return fail;
@@ -222,17 +202,16 @@ SEMIGROUPS.StzRelationDisplayString := function(stz, i)
     gens := GeneratorsOfSemigroup(f);
     w1   := Product(rels[i][1], x -> gens[x]);
     w2   := Product(rels[i][2], x -> gens[x]);
-    out  := Concatenation(PrintString(i),
-                          ". ",
-                          PrintString(w1),
-                          " = ",
-                          PrintString(w2));
-    return out;
+    return Concatenation(PrintString(i),
+                         ". ",
+                         PrintString(w1),
+                         " = ",
+                         PrintString(w2));
   fi;
 end;
 
 InstallMethod(StzPrintRelations,
-"For an stz presentation and a list of pos ints",
+"for an stz presentation and a list of pos ints",
 [IsStzPresentation, IsList],
 function(stz, list)
   local i;
@@ -251,20 +230,20 @@ function(stz, list)
   od;
 end);
 
-InstallMethod(StzPrintRelations, "For an stz presentation",
+InstallMethod(StzPrintRelations, "for an stz presentation",
 [IsStzPresentation],
 function(stz)
   StzPrintRelations(stz, [1 .. Length(RelationsOfStzPresentation(stz))]);
 end);
 
-InstallMethod(StzPrintRelation, "For an stz presentation and a pos int",
+InstallMethod(StzPrintRelation, "for an stz presentation and a pos int",
 [IsStzPresentation, IsPosInt],
 function(stz, int)
   StzPrintRelations(stz, [int]);
 end);
 
 InstallMethod(StzPrintGenerators,
-"For an stz presentation and a list of pos ints",
+"for an stz presentation and a list of pos ints",
 [IsStzPresentation, IsList],
 function(stz, list)
   local flat, gens, out, rel, i;
@@ -300,13 +279,13 @@ function(stz, list)
   od;
 end);
 
-InstallMethod(StzPrintGenerators, "For an stz presentation",
+InstallMethod(StzPrintGenerators, "for an stz presentation",
 [IsStzPresentation],
 function(stz)
   StzPrintGenerators(stz, [1 .. Length(GeneratorsOfStzPresentation(stz))]);
 end);
 
-InstallMethod(StzPrintPresentation, "For an stz presentation",
+InstallMethod(StzPrintPresentation, "for an stz presentation",
 [IsStzPresentation],
 function(stz)
   local status, oldgens, oldfree, oldelms, newgens, newfree, newelms, w, i;
@@ -551,7 +530,7 @@ SEMIGROUPS.TietzeTransformation4 := function(stz, gen, index)
   end;
 
   # update forward mapping component
-  # TODO: do we really need TietzeForwardMapReplaceSubword?
+  # TODO(later) do we really need TietzeForwardMapReplaceSubword?
   TietzeForwardMapReplaceSubword(stz, [gen], expr);
   tempMaps := ShallowCopy(TietzeForwardMap(stz));
   Apply(tempMaps, x -> List(x, decrement));
@@ -580,7 +559,7 @@ end;
 ########################################################################
 
 # Tietze Transformation 1: Add relation
-InstallMethod(StzAddRelation, "For an stz presentation and a pair of words",
+InstallMethod(StzAddRelation, "for an stz presentation and a pair of words",
 [IsStzPresentation, IsList],
 1,  # bump ahead of next implementation and do the list size arg check here
 function(stz, pair)
@@ -638,7 +617,7 @@ function(stz, pair)
 end);
 
 InstallMethod(StzAddRelation,
-"For an stz presentation and a pair of semigroup elements",
+"for an stz presentation and a pair of semigroup elements",
 [IsStzPresentation, IsList],
 function(stz, pair)
   local s, pairwords, word;
@@ -662,7 +641,7 @@ function(stz, pair)
 end);
 
 # Tietze Transformation 1: Add relation (NO REDUNDANCY CHECK)
-InstallMethod(StzAddRelationNC, "For an stz presentation and a pair of words",
+InstallMethod(StzAddRelationNC, "for an stz presentation and a pair of words",
 [IsStzPresentation, IsList],
 1,  # bump priority, do list size check here
 function(stz, pair)
@@ -701,7 +680,7 @@ function(stz, pair)
 end);
 
 InstallMethod(StzAddRelationNC,
-"For an stz presentation and a pair of semigroup elements",
+"for an stz presentation and a pair of semigroup elements",
 [IsStzPresentation, IsList],
 function(stz, pair)
   local s, pairwords, word;
@@ -729,7 +708,7 @@ end);
 
 # Tietze Transformation 2: Remove relation
 InstallMethod(StzRemoveRelation,
-"For an stz presentation and a pos int",
+"for an stz presentation and a pos int",
 [IsStzPresentation, IsPosInt],
 function(stz, index)
   local rels, pair, new_f, new_gens, new_s, free_fam, w1, w2, fp_fam, p1, p2;
@@ -777,7 +756,7 @@ end);
 
 # Tietze Transformation 2: Remove relation (NO REDUNDANCY CHECK)
 InstallMethod(StzRemoveRelationNC,
-"For an stz presentation and a pos int",
+"for an stz presentation and a pos int",
 [IsStzPresentation, IsPosInt],
 function(stz, index)
   if index > Length(RelationsOfStzPresentation(stz)) then
@@ -795,7 +774,7 @@ end);
 
 # Tietze Transformation 3: Add generator
 InstallMethod(StzAddGenerator,
-"For an stz presentation and a LetterRep word",
+"for an stz presentation and a LetterRep word",
 [IsStzPresentation, IsList],
 function(stz, word)
   local n, letter;
@@ -822,7 +801,7 @@ function(stz, word)
 end);
 
 InstallMethod(StzAddGenerator,
-"For an stz presentation and a fp semigroup element",
+"for an stz presentation and a fp semigroup element",
 [IsStzPresentation, IsElementOfFpSemigroup],
 function(stz, word)
   local letterrepword;
@@ -842,7 +821,7 @@ end);
 
 # Tietze Transformation 3: Add generator (with specified new generator name)
 InstallMethod(StzAddGenerator,
-"For an stz presentation, a LetterRep word and a string",
+"for an stz presentation, a LetterRep word and a string",
 [IsStzPresentation, IsList, IsString],
 function(stz, word, name)
   local n, letter;
@@ -875,7 +854,7 @@ function(stz, word, name)
 end);
 
 InstallMethod(StzAddGenerator,
-"For an stz presentation, a fp semigroup element and a string",
+"for an stz presentation, a fp semigroup element and a string",
 [IsStzPresentation, IsElementOfFpSemigroup, IsString],
 function(stz, word, name)
   local letterrepword;
@@ -895,7 +874,7 @@ end);
 
 # Tietze Transformation 4: Remove generator
 InstallMethod(StzRemoveGenerator,
-"For an stz presentation and a positive integer",
+"for an stz presentation and a positive integer",
 [IsStzPresentation, IsPosInt],
 function(stz, gen)
   local found, index, i, rels;
@@ -936,7 +915,7 @@ function(stz, gen)
 end);
 
 InstallMethod(StzRemoveGenerator,
-"For an stz presentation and a generator name",
+"for an stz presentation and a generator name",
 [IsStzPresentation, IsString],
 function(stz, genname)
   local gen;
@@ -954,7 +933,7 @@ end);
 # relations allowing the generator to be removed and the user wants a specific
 # one)
 InstallMethod(StzRemoveGenerator,
-"For an stz presentation and two pos ints",
+"for an stz presentation and two pos ints",
 [IsStzPresentation, IsPosInt, IsPosInt],
 function(stz, gen, index)
   # first argument check: requested generator exists
@@ -990,7 +969,7 @@ function(stz, gen, index)
 end);
 
 InstallMethod(StzRemoveGenerator,
-"For an stz presentation, a generator name and a pos int",
+"for an stz presentation, a generator name and a pos int",
 [IsStzPresentation, IsString, IsPosInt],
 function(stz, genname, index)
   local gen;
@@ -1006,7 +985,7 @@ end);
 
 # Tietze Transformation 1/2: substitute relation
 InstallMethod(StzSubstituteRelation,
-"For an stz presentation and two positive integers",
+"for an stz presentation and two positive integers",
 [IsStzPresentation, IsPosInt, IsPosInt],
 function(stz, index, side)
   local oldword, newword, new_rel, i;
@@ -1201,12 +1180,11 @@ end;
 
 # Converts an Stz presentation into an fp semigroup.
 SEMIGROUPS.StzConvertObjToFpSemigroup := function(stz)
-  local out, F, rels, gens;
+  local F, rels, gens;
   F    := FreeSemigroup(stz!.GeneratorsOfStzPresentation);
   rels := RelationsOfStzPresentation(stz);
   gens := GeneratorsOfSemigroup(F);
-  out  := F / List(rels, x -> List(x, y -> Product(List(y, z -> gens[z]))));
-  return out;
+  return F / List(rels, x -> List(x, y -> Product(List(y, z -> gens[z]))));
 end;
 
 ########################################################################
@@ -1237,7 +1215,7 @@ SEMIGROUPS.StzFrequentSubwordCheck := function(stz)
   # flat list of words (don't care about which one is related to which)
   flat := [];
   for pair in stz!.RelationsOfStzPresentation do
-    Append(flat, ShallowCopy(pair));  # TODO might not need shallow copy
+    Append(flat, ShallowCopy(pair));  # TODO(later) might not need shallow copy
   od;
 
   # function to count occurrences of subword in list of lists
@@ -1502,9 +1480,9 @@ SEMIGROUPS.StzRelsSubApply := function(stz, args)
   rels := RelationsOfStzPresentation(stz);
   rel := ShallowCopy(rels[relIndex]);
   SortBy(rel, Length);
-  # TODO line above: potential edge cases where we are not substituting the
-  # longer for the shorter, but rather two words of equal length? I guess not,
-  # since the checker function would only suggest this applier function if
+  # TODO(later) line above: potential edge cases where we are not substituting
+  # the longer for the shorter, but rather two words of equal length? I guess
+  # not, since the checker function would only suggest this applier function if
   # there was an actual reduction? In that case, careful to use correctly
 
   # record words to sub out (one we are searching for) and to replace with
@@ -1598,36 +1576,10 @@ function(S)
   return T;
 end);
 
-InstallMethod(SimplifyFpSemigroup,
-[IsFpSemigroup],
+InstallMethod(SimplifyFpSemigroup, "for an f.p. semigroup", [IsFpSemigroup],
 function(S)
   local stz;
   stz := StzPresentation(S);
   StzSimplifyPresentation(stz);
   return StzIsomorphism(stz);
 end);
-
-########################################################################
-# 8. Other
-########################################################################
-
-#### TODO
-# For testing purposes, remove before merge (also possibly a duplicate of an
-# existing function)
-# SEMIGROUPS.RandomFpSemigroup := function(maxgen, maxrel, maxwordlen)
-#   local ngens, nrels, F, gens, rels, nwordlen, lside, rside, i;
-#   ngens := Random([1 .. maxgen]);
-#   nrels := Random([1 .. maxrel]);
-#   F     := FreeSemigroup(ngens);
-#   gens  := GeneratorsOfSemigroup(F);
-#   rels  := [];
-#   for i in [1 .. nrels] do
-#     nwordlen := Random([1 .. maxwordlen]);
-#     lside    := Product(List([1 .. nwordlen],
-#                         x -> gens[Random([1 .. ngens])]));
-#     rside    := Product(List([1 .. nwordlen],
-#                               x -> gens[Random([1 .. ngens])]));
-#     Append(rels, [[lside, rside]]);
-#   od;
-#   return F / rels;
-# end;
