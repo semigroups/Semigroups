@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+MakeReadWriteGlobal("IsDoneIterator_List");
+UnbindGlobal("IsDoneIterator_List");
+BindGlobal("IsDoneIterator_List",
+           iter -> (iter!.pos >= iter!.len));
+
 # No attempt has been made to get good test coverage for this file, since it
 # will hopefully be binned in the near future.
 
@@ -368,8 +373,7 @@ function(arg)
 
   if IsBound(arg[2]) then
     if not IsPosInt(arg[2]) then
-      ErrorNoReturn("Semigroups: ListIterator: usage,\n",
-                    "the second argument must be a positive integer,");
+      ErrorNoReturn("the 2nd argument must be a positive integer");
     fi;
     out := EmptyPlist(arg[2]);
   else

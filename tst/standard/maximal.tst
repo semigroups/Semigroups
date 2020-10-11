@@ -461,9 +461,7 @@ gap> MaximalSubsemigroups(R, rec(types := [5]));
 
 # maximal: MaximalSubsemigroups, for a Rees 0-matrix semigroup, 9
 gap> S := Semigroup([Transformation([2, 1])]);;
-gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);
-<Rees 0-matrix semigroup 1x1 over <commutative transformation semigroup of 
-  degree 2 with 1 generator>>
+gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);;
 gap> MaximalSubsemigroups(R);
 [ <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>, 
   <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators> ]

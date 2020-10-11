@@ -1319,7 +1319,7 @@ gap> NrRClasses(D);
 
 # Test NrXClasses for a non-enumerable semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 gap> NrDClasses(S);
 1
@@ -1332,7 +1332,7 @@ gap> NrHClasses(S);
 
 # Test NrXClassReps for a non-enumerable semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 gap> DClassReps(S);
 [ <universal fake one> ]
@@ -1345,7 +1345,7 @@ gap> HClassReps(S);
 
 # Test NrXClassReps for a D-class of a non-enumerable semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 gap> D := DClasses(S)[1];;
 gap> RClassReps(D);
@@ -1361,7 +1361,7 @@ gap> Idempotents(D);
 
 # Test IteratorOfXClasses for a non-enumerable semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 gap> IsFinite(S);
 true
@@ -1386,7 +1386,7 @@ true
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> IsFinite(S);
 true
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 gap> GreensRClassOfElementNC(S, S.1);
 <Green's R-class: <object>>
@@ -1420,8 +1420,8 @@ gap> S := SemigroupByMultiplicationTable([[1, 1, 1, 1, 1],
 >                                         [1, 1, 1, 2, 1]]);;
 gap> IsActingSemigroup(S);
 false
-gap> IsEnumerableSemigroupRep(S);
-false
+gap> CanComputeFroidurePin(S);
+true
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ], [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2 ] ]
 

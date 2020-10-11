@@ -413,8 +413,6 @@ Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 # IsomorphismPermGroup, for a block bijection semigroup
 gap> S := Semigroup(Bipartition([[1, 2, -3, -4], [3, 4, -1, -2]]));;
 gap> map := IsomorphismPermGroup(S);;
-gap> Source(map);
-<block bijection group of degree 4 with 1 generator>
 gap> Range(map);
 Group([ (1,2) ])
 gap> BruteForceIsoCheck(map);

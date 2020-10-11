@@ -8,11 +8,13 @@
 #############################################################################
 ##
 
+
 <#GAPDoc Label="IsEnumerableSemigroupRep">
   <ManSection>
-    <Filt Name = "IsEnumerableSemigroupRep" Arg = "obj" Type="Representation"/>
+    <Filt Name = "IsEnumerableSemigroupRep" Arg = "obj"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
+      TODO revise
       Every semigroup with this representation can have the 
       Froidure-Pin algorithm
       applied to it; see Section <Ref Subsect="Enumerable semigroups"/> for
@@ -24,14 +26,14 @@
       <Ref Oper="IteratorCanonical"/>,
       <Ref Oper="PositionCanonical"/>,
       <Ref Oper="Enumerate"/>, and
-      <Ref Oper="IsFullyEnumerated"/>.
+      <Ref Oper="IsEnumerated"/>.
 
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 2]));;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 true
 gap> S := FreeSemigroup(3);;
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 false
 ]]></Example>
     </Description>
@@ -89,8 +91,8 @@ gap> it := IteratorCanonical(S);
 gap> NextIterator(it);
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 gap> en := EnumeratorCanonical(S);
-<enumerator of <commutative monoid of 3x3 boolean matrices with 1 
- generator>>
+<enumerator of <commutative monoid of size 2, 3x3 boolean matrices 
+ with 1 generator>>
 gap> en[1];
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 gap> Position(en, en[1]);
@@ -131,9 +133,9 @@ gap> Display(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFullyEnumerated">
+<#GAPDoc Label="IsEnumerated">
   <ManSection>
-    <Oper Name="IsFullyEnumerated" Arg="S"/> 
+    <Oper Name="IsEnumerated" Arg="S"/> 
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       If <A>S</A> is a semigroup with representation 
@@ -141,17 +143,6 @@ gap> Display(S);
       <K>true</K> if the Froidure-Pin Algorithm has been run to completion
       (i.e. all of the elements of <A>S</A> have been found) and <K>false</K>
       if <A>S</A> has not been fully enumerated.
-      <Example><![CDATA[
-gap> S := FullBooleanMatMonoid(4);
-<monoid of 4x4 boolean matrices with 7 generators>
-gap> Enumerate(S, 1000);
-<monoid of 4x4 boolean matrices with 7 generators>
-gap> IsFullyEnumerated(S);
-false
-gap> Size(S);
-65536
-gap> IsFullyEnumerated(S);
-true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -2569,8 +2569,7 @@ gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> AsMonoid(S);
 <trivial transformation group of degree 0 with 1 generator>
-gap> T := AsSemigroup(IsBipartitionSemigroup, S);
-<commutative bipartition semigroup of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);;
 gap> IsMonoid(T);
 false
 gap> IsMonoidAsSemigroup(T);

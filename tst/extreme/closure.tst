@@ -260,12 +260,8 @@ gap> T := ClosureSemigroup(S, AsPartialPerm((1, 2), 8));
 <partial perm semigroup of rank 8 with 7 generators>
 gap> Size(T);
 1441729
-gap> EN_SEMI_IS_DONE(T);
+gap> IsEnumerated(T);
 true
-gap> EN_SEMI_CURRENT_NR_RULES(T);
-1241401
-gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(T);
-17
 
 # ClosureSemigroup: testing for enumerable algorithm performance, 2/?
 gap> gens :=
@@ -285,12 +281,8 @@ gap> for i in [1 .. 10] do
 > od;
 gap> Size(S);
 65536
-gap> EN_SEMI_IS_DONE(S);
+gap> IsEnumerated(S);
 true
-gap> EN_SEMI_CURRENT_NR_RULES(S);
-45409
-gap> EN_SEMI_CURRENT_MAX_WORD_LENGTH(S);
-15
 
 # Adding redundant generators in ClosureSemigroups 
 gap> gens := [Transformation([10, 10, 6, 9, 3, 6, 6, 8, 3, 4]),

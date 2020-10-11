@@ -72,13 +72,13 @@ x1
 gap> NextIterator(iter);
 x2
 gap> NextIterator(iter);
-x2x1x2
+x3
 gap> NextIterator(iter);
-x1x2
+x4
 gap> NextIterator(iter);
-x2x1
+x5
 gap> NextIterator(iter);
-x1x2x1
+x6
 
 # FreeBandTest4: Size
 gap> Size(FreeBand(1));
@@ -173,7 +173,7 @@ gap> iter := Iterator(FreeBand(4, "b"));;
 gap> x := NextIterator(iter);;
 gap> for i in [1 .. 1000] do NextIterator(iter); od;
 gap> y := NextIterator(iter);
-b2b4b1b4b1b2b3b1b4b3b4b2b4b3b4
+b4b2b1b3b4b2b1b3b1b3b2b3
 gap> T := Semigroup(x, y);;
 gap> IsFreeBandSubsemigroup(T);
 true
@@ -191,7 +191,7 @@ gap> for i in [1 .. 10] do
 > HTAdd(ht, NextIterator(iter), true);
 > od;
 gap> new := NextIterator(iter);
-x1x3x1
+x1x2x3
 gap> HTValue(ht, new);
 fail
 gap> z := HTAdd(ht, new, true);;

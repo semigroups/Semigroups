@@ -17,14 +17,14 @@ gap> SEMIGROUPS.StartTest();
 # Robustness against infinite semigroups
 gap> S := FreeSemigroup(2);;
 gap> congs := CongruencesOfSemigroup(S);
-Error, Semigroups: PosetOfPrincipalCongruences: usage,
-first argument <S> must be an enumerable finite semigroup,
+Error, the 1st argument (a semigroup) must be finite and have CanComputeFroidu\
+rePin
 gap> poset := PosetOfPrincipalLeftCongruences(S);
-Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
-first argument <S> must be an enumerable finite semigroup,
+Error, the 1st argument (a semigroup) must be finite and have CanComputeFroidu\
+rePin
 gap> poset := PosetOfPrincipalRightCongruences(S);
-Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
-first argument <S> must be an enumerable finite semigroup,
+Error, the 1st argument (a semigroup) must be finite and have CanComputeFroidu\
+rePin
 
 # LatticeOfCongruences
 gap> S := PartitionMonoid(2);;
@@ -68,9 +68,7 @@ gap> DotString(l);
 "//dot\ngraph graphname {\n     node [shape=circle]\n2 -- 3\n3 -- 1\n }"
 gap> S := Semigroup([Transformation([1, 4, 3, 1, 4, 2]),
 >                    Transformation([1, 6, 6, 3, 6, 6])]);;
-gap> l := LatticeOfCongruences(S);
-<poset of 5 congruences over <transformation semigroup of size 48, degree 6 
- with 2 generators>>
+gap> l := LatticeOfCongruences(S);;
 gap> InNeighbours(l);
 [ [ 1 ], [ 1, 2 ], [ 1, 2, 3, 4 ], [ 1, 2, 4 ], [ 1, 2, 3, 4, 5 ] ]
 gap> OutNeighbours(l);
@@ -168,8 +166,8 @@ gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 >                                    Transformation([2, 2, 2]),
 >                                    Transformation([3, 3, 3])]);;
 gap> latt := LatticeOfLeftCongruences(S, restriction);
-<poset of 5 congruences over <transformation semigroup of degree 3 with 2 
- generators>>
+<poset of 5 congruences over <transformation semigroup of size 11, degree 3 
+ with 2 generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 2, 3, 4, 5 ] ]
 gap> OutNeighbours(latt);
@@ -178,8 +176,8 @@ gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
 gap> latt := LatticeOfRightCongruences(S, restriction);
-<poset of 4 congruences over <transformation semigroup of degree 3 with 2 
- generators>>
+<poset of 4 congruences over <transformation semigroup of size 11, degree 3 
+ with 2 generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 1, 4 ] ]
 gap> congs := CongruencesOfPoset(latt);;
@@ -189,14 +187,14 @@ gap> IsDuplicateFreeList(congs);
 true
 gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
-<poset of 2 congruences over <transformation semigroup of degree 3 with 2 
- generators>>
+<poset of 2 congruences over <transformation semigroup of size 11, degree 3 
+ with 2 generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
-<poset of 1 congruences over <transformation semigroup of degree 3 with 2 
- generators>>
+<poset of 1 congruences over <transformation semigroup of size 11, degree 3 
+ with 2 generators>>
 gap> InNeighbours(latt);
 [ [ 1 ] ]
 
@@ -204,14 +202,14 @@ gap> InNeighbours(latt);
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> LatticeOfCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 gap> LatticeOfLeftCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 gap> LatticeOfRightCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 
 # Left/RightCongruences (as a list)
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -282,9 +280,7 @@ gap> CongruencesOfPoset(latt);
     1 generating pairs>, <right semigroup congruence over <transformation 
      semigroup of degree 3 with 2 generators> with 1 generating pairs> ]
 gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
-gap> latt := PosetOfPrincipalCongruences(S, restriction);
-<poset of 1 congruences over <transformation semigroup of degree 3 with 2 
- generators>>
+gap> latt := PosetOfPrincipalCongruences(S, restriction);;
 gap> InNeighbours(latt);
 [ [ 1 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
@@ -299,14 +295,14 @@ true
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> PosetOfPrincipalCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 gap> PosetOfPrincipalLeftCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 gap> PosetOfPrincipalRightCongruences(S, restriction);
-Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
-<restriction> must be a subset of <S>,
+Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
+oup),
 
 # PrincipalCongruencesOfSemigroup
 gap> S := Semigroup(Transformation([1, 3, 2]),

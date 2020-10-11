@@ -26,7 +26,8 @@
 #include "pkg.h"
 #include "semigroups-debug.h"
 
-#include "libsemigroups/element.hpp"
+// libsemigroups headers
+#include "libsemigroups/bipart.hpp"
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;

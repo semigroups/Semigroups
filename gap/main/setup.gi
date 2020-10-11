@@ -1203,8 +1203,7 @@ function(x, hashlen)
     return SEMIGROUPS.HashFunctionRZMSE(x, data, under, dataishashlen);
   end;
 
-  return rec(func := func,
-             data := data);
+  return rec(func := func, data := data);
 end);
 
 # fallback method for hashing

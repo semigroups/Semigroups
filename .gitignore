@@ -68,7 +68,8 @@ src/.dirstamp
 src/.libs
 src/_pkgconfig.h
 src/semigroups-config.h
-libsemigroups
+./libsemigroups
+./gapbind14
 src/stamp-h1
 tags
 tst/workspaces/test-output.w

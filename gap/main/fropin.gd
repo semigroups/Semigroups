@@ -17,37 +17,43 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-DeclareRepresentation("IsEnumerableSemigroupRep",
-                      IsSemigroup and IsComponentObjectRep,
-                      ["__en_semi_fropin", "__en_semi_cpp_semi"]);
+# Things to keep
+# TODO move to semigrp.gd
 
-DeclareProperty("IsGeneratorsOfEnumerableSemigroup",
-                IsMultiplicativeElementCollection);
+DeclareAttribute("AsListCanonical", IsSemigroup);
+DeclareOperation("PositionCanonical",
+                 [IsSemigroup, IsMultiplicativeElement]);
 
 DeclareOperation("PositionSortedOp",
-                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("PositionOp",
-                 [IsEnumerableSemigroupRep,
+                 [IsSemigroup,
                   IsMultiplicativeElement,
                   IsZeroCyc]);
 DeclareOperation("Position",
-                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("Position",
-                 [IsEnumerableSemigroupRep, IsMultiplicativeElement,
+                 [IsSemigroup, IsMultiplicativeElement,
                   IsZeroCyc]);
 
-DeclareAttribute("AsListCanonical", IsEnumerableSemigroupRep);
-DeclareAttribute("EnumeratorCanonical", IsEnumerableSemigroupRep);
-DeclareOperation("IteratorCanonical", [IsEnumerableSemigroupRep]);
-DeclareOperation("PositionCanonical",
-                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
+DeclareOperation("Enumerate", [IsSemigroup, IsInt]);
+DeclareOperation("Enumerate", [IsSemigroup]);
 
-DeclareOperation("Enumerate", [IsEnumerableSemigroupRep, IsInt]);
-DeclareOperation("Enumerate", [IsEnumerableSemigroupRep]);
+DeclareAttribute("LeftCayleyDigraph", IsSemigroup);
+DeclareAttribute("RightCayleyDigraph", IsSemigroup);
 
-DeclareOperation("IsFullyEnumerated", [IsEnumerableSemigroupRep]);
+DeclareAttribute("EnumeratorCanonical", IsSemigroup);
+DeclareOperation("IteratorCanonical", [IsSemigroup]);
 
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
-DeclareAttribute("LeftCayleyDigraph", IsEnumerableSemigroupRep);
-DeclareAttribute("RightCayleyDigraph", IsEnumerableSemigroupRep);
+DeclareAttribute("RulesOfSemigroup", IsSemigroup);
+
+DeclareAttribute("GapFroidurePin", IsSemigroup, "mutable");
+DeclareProperty("CanComputeGapFroidurePin", IsSemigroup);
+
+DeclareProperty("CanComputeFroidurePin", IsSemigroup);
+DeclareOperation("HasFroidurePin", [IsSemigroup]);
+
+DeclareOperation("IdempotentsSubset",
+                 [IsSemigroup and CanComputeFroidurePin, IsHomogeneousList]);

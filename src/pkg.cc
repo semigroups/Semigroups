@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2016-2021 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,18 +25,252 @@
 #include <iostream>
 
 #include "bipart.h"
-#include "congpairs.h"
-#include "converter.h"
 #include "fropin.h"
 #include "semigroups-debug.h"
-#include "semigrp.h"
+#include "to_gap.hpp"
 
 #include "libsemigroups/blocks.hpp"
 #include "libsemigroups/cong.hpp"
-#include "libsemigroups/element-adapters.hpp"
+#include "libsemigroups/fastest-bmat.hpp"
+#include "libsemigroups/fpsemi.hpp"
 #include "libsemigroups/froidure-pin.hpp"
+#include "libsemigroups/matrix.hpp"
+#include "libsemigroups/transf.hpp"
+
+#include "gapbind14/gapbind14.hpp"
+
+namespace {
+  void set_report(bool const val) {
+    libsemigroups::REPORTER.report(val);
+  }
+}  // namespace
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+GAPBIND14_MODULE(libsemigroups, m);
+
+GAPBIND14_FUNCTION(m, set_report, set_report);
+
+////////////////////////////////////////////////////////////////////////
+// FroidurePin
+////////////////////////////////////////////////////////////////////////
+
+#define BindFroidurePin(variable, element_type)                               \
+  auto GAPBIND14_TOKENPASTE(variable, Copy)                                   \
+      = gapbind14::init<variable, variable const&>;                           \
+  GAPBIND14_CLASS(m, variable);                                               \
+  GAPBIND14_CONSTRUCTOR(m, variable, create, gapbind14::init<variable>);      \
+  GAPBIND14_CONSTRUCTOR(                                                      \
+      m, variable, copy, GAPBIND14_TOKENPASTE(variable, Copy));               \
+  GAPBIND14_MEM_FN(m, variable, add_generator, add_generator);                \
+  GAPBIND14_MEM_FN(m, variable, generator, generator);                        \
+  GAPBIND14_MEM_FN(m, variable, closure<std::vector<element_type>>, closure); \
+  GAPBIND14_MEM_FN(m, variable, nr_generators, nr_generators);                \
+  GAPBIND14_MEM_FN(m, variable, size, size);                                  \
+  GAPBIND14_MEM_FN(m, variable, at, at);                                      \
+  GAPBIND14_MEM_FN(m, variable, sorted_at, sorted_at);                        \
+  GAPBIND14_MEM_FN(m, variable, position, position);                          \
+  GAPBIND14_MEM_FN(m, variable, current_position, current_position);          \
+  GAPBIND14_MEM_FN(m, variable, sorted_position, sorted_position);            \
+  GAPBIND14_MEM_FN(m, variable, nr_idempotents, nr_idempotents);              \
+  GAPBIND14_MEM_FN(m, variable, enumerate, enumerate);                        \
+  GAPBIND14_MEM_FN(m, variable, left_cayley_graph, left_cayley_graph);        \
+  GAPBIND14_MEM_FN(m, variable, right_cayley_graph, right_cayley_graph);      \
+  GAPBIND14_MEM_FN(m,                                                         \
+                   variable,                                                  \
+                   factorisation,                                             \
+                   factorisation,                                             \
+                   gapbind14::overload_cast<size_t>);                         \
+  GAPBIND14_ITERATOR(                                                         \
+      m, variable, cbegin_idempotents(), cend_idempotents(), idempotents);    \
+  GAPBIND14_ITERATOR(m, variable, cbegin_rules(), cend_rules(), rules);       \
+  GAPBIND14_MEM_FN(                                                           \
+      m, variable, position_to_sorted_position, position_to_sorted_position); \
+  GAPBIND14_MEM_FN(m, variable, fast_product, fast_product);                  \
+  GAPBIND14_MEM_FN(m, variable, is_idempotent, is_idempotent);                \
+  GAPBIND14_MEM_FN(m, variable, finished, finished);
+
+////////////////////////////////////////////////////////////////////////
+
+// TODO must implement to_gap/to_cpp for BMat8 + HPCombi::BMat8
+// using FroidurePinBMat8
+//     = libsemigroups::FroidurePin<libsemigroups::FastestBMat<8>>;
+// BindFroidurePin(FroidurePinBMat8);
+
+namespace {
+  using FroidurePinBMat   = libsemigroups::FroidurePin<libsemigroups::BMat<>>;
+  using FroidurePinIntMat = libsemigroups::FroidurePin<libsemigroups::IntMat<>>;
+  using FroidurePinMaxPlusMat
+      = libsemigroups::FroidurePin<libsemigroups::MaxPlusMat<>>;
+  using FroidurePinMinPlusMat
+      = libsemigroups::FroidurePin<libsemigroups::MinPlusMat<>>;
+  using FroidurePinMaxPlusTruncMat
+      = libsemigroups::FroidurePin<libsemigroups::MaxPlusTruncMat<>>;
+  using FroidurePinMinPlusTruncMat
+      = libsemigroups::FroidurePin<libsemigroups::MinPlusTruncMat<>>;
+  using FroidurePinNTPMat = libsemigroups::FroidurePin<libsemigroups::NTPMat<>>;
+  using FroidurePinProjMaxPlusMat
+      = libsemigroups::FroidurePin<libsemigroups::ProjMaxPlusMat<>>;
+  using FroidurePinTransf16
+      = libsemigroups::FroidurePin<libsemigroups::LeastTransf<16>>;
+  using TransfUInt2            = libsemigroups::Transf<0, UInt2>;
+  using FroidurePinTransfUInt2 = libsemigroups::FroidurePin<TransfUInt2>;
+  using TransfUInt4            = libsemigroups::Transf<0, UInt4>;
+  using FroidurePinTransfUInt4 = libsemigroups::FroidurePin<TransfUInt4>;
+  using FroidurePinPPerm16
+      = libsemigroups::FroidurePin<libsemigroups::LeastPPerm<16>>;
+  using PPermUInt2            = libsemigroups::PPerm<0, UInt2>;
+  using FroidurePinPPermUInt2 = libsemigroups::FroidurePin<PPermUInt2>;
+  using PPermUInt4            = libsemigroups::PPerm<0, UInt4>;
+  using FroidurePinPPermUInt4 = libsemigroups::FroidurePin<PPermUInt4>;
+  using FroidurePinBipart     = libsemigroups::FroidurePin<Bipartition>;
+  using FroidurePinPBR        = libsemigroups::FroidurePin<libsemigroups::PBR>;
+}  // namespace
+
+BindFroidurePin(FroidurePinBipart, Bipartition);
+BindFroidurePin(FroidurePinBMat, libsemigroups::BMat<>);
+// GAPBIND14_CONSTRUCTOR(m, FroidurePinBMat, copy, FroidurePinBMatCopy);
+BindFroidurePin(FroidurePinIntMat, libsemigroups::IntMat<>);
+BindFroidurePin(FroidurePinMaxPlusMat, libsemigroups::MaxPlusMat<>);
+BindFroidurePin(FroidurePinMaxPlusTruncMat, libsemigroups::MaxPlusTruncMat<>);
+BindFroidurePin(FroidurePinMinPlusMat, libsemigroups::MinPlusMat<>);
+BindFroidurePin(FroidurePinMinPlusTruncMat, libsemigroups::MinPlusTruncMat<>);
+BindFroidurePin(FroidurePinNTPMat, libsemigroups::NTPMat<>);
+BindFroidurePin(FroidurePinProjMaxPlusMat, libsemigroups::ProjMaxPlusMat<>);
+BindFroidurePin(FroidurePinPBR, libsemigroups::PBR);
+BindFroidurePin(FroidurePinPPerm16, libsemigroups::LeastPPerm<16>);
+BindFroidurePin(FroidurePinPPermUInt2, PPermUInt2);
+BindFroidurePin(FroidurePinPPermUInt4, PPermUInt4);
+BindFroidurePin(FroidurePinTransf16, libsemigroups::LeastTransf<16>);
+BindFroidurePin(FroidurePinTransfUInt2, TransfUInt2);
+BindFroidurePin(FroidurePinTransfUInt4, TransfUInt4);
+
+////////////////////////////////////////////////////////////////////////
+// FpSemigroup
+////////////////////////////////////////////////////////////////////////
+
+using libsemigroups::FpSemigroup;
+using libsemigroups::word_type;
+
+GAPBIND14_CLASS(m, FpSemigroup);
+GAPBIND14_CONSTRUCTOR(m, FpSemigroup, create, gapbind14::init<FpSemigroup>);
+GAPBIND14_MEM_FN(m,
+                 FpSemigroup,
+                 set_alphabet,
+                 set_alphabet,
+                 (gapbind14::overload_cast<size_t>) );
+GAPBIND14_MEM_FN(
+    m,
+    FpSemigroup,
+    add_rule,
+    add_rule,
+    (gapbind14::overload_cast<word_type const&, word_type const&>) );
+GAPBIND14_MEM_FN(m,
+                 FpSemigroup,
+                 set_identity,
+                 set_identity,
+                 (gapbind14::overload_cast<libsemigroups::letter_type>) );
+
+////////////////////////////////////////////////////////////////////////
+// ToddCoxeter
+////////////////////////////////////////////////////////////////////////
+
+using libsemigroups::congruence_type;
+using libsemigroups::congruence::ToddCoxeter;
+using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
+
+namespace {
+  auto init_todd_coxeter = gapbind14::init<ToddCoxeter, congruence_type>;
+}
+
+GAPBIND14_CLASS(m, ToddCoxeter);
+GAPBIND14_CONSTRUCTOR(m, ToddCoxeter, create, init_todd_coxeter);
+GAPBIND14_MEM_FN(m, ToddCoxeter, set_nr_generators, set_nr_generators);
+GAPBIND14_MEM_FN(m,
+                 ToddCoxeter,
+                 prefill,
+                 prefill,
+                 (gapbind14::overload_cast<table_type const&>) );
+
+////////////////////////////////////////////////////////////////////////
+// Congruence
+////////////////////////////////////////////////////////////////////////
 
 using libsemigroups::Congruence;
+using libsemigroups::FroidurePinBase;
+
+namespace {
+  auto init_congruence_bipart
+      = gapbind14::init<Congruence, congruence_type, FroidurePinBipart const&>;
+  auto init_congruence_bmat
+      = gapbind14::init<Congruence, congruence_type, FroidurePinBMat const&>;
+  auto init_congruence_pbr
+      = gapbind14::init<Congruence, congruence_type, FroidurePinPBR const&>;
+  auto init_congruence_pperm16
+      = gapbind14::init<Congruence, congruence_type, FroidurePinPPerm16 const&>;
+  auto init_congruence_ppermuint2 = gapbind14::
+      init<Congruence, congruence_type, FroidurePinPPermUInt2 const&>;
+  auto init_congruence_ppermuint4 = gapbind14::
+      init<Congruence, congruence_type, FroidurePinPPermUInt4 const&>;
+  auto init_congruence_transf16 = gapbind14::
+      init<Congruence, congruence_type, FroidurePinTransf16 const&>;
+  auto init_congruence_transfuint2 = gapbind14::
+      init<Congruence, congruence_type, FroidurePinTransfUInt2 const&>;
+  auto init_congruence_transfuint4 = gapbind14::
+      init<Congruence, congruence_type, FroidurePinTransfUInt4 const&>;
+  auto init_congruence_fpsemigroup
+      = gapbind14::init<Congruence, congruence_type, FpSemigroup&>;
+  auto init_congruence_table = gapbind14::
+      init<Congruence, congruence_type, Congruence::policy::runners>;
+}  // namespace
+
+GAPBIND14_CLASS(m, Congruence);
+GAPBIND14_CONSTRUCTOR(m,
+                      Congruence,
+                      create_fpsemigroup,
+                      init_congruence_fpsemigroup);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_bipart, init_congruence_bipart);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_bmat, init_congruence_bmat);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_pbr, init_congruence_pbr);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_pperm16, init_congruence_pperm16);
+GAPBIND14_CONSTRUCTOR(m,
+                      Congruence,
+                      create_ppermuint2,
+                      init_congruence_ppermuint2);
+GAPBIND14_CONSTRUCTOR(m,
+                      Congruence,
+                      create_ppermuint4,
+                      init_congruence_ppermuint4);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_transf16, init_congruence_transf16);
+GAPBIND14_CONSTRUCTOR(m,
+                      Congruence,
+                      create_transfuint2,
+                      init_congruence_transfuint2);
+GAPBIND14_CONSTRUCTOR(m,
+                      Congruence,
+                      create_transfuint4,
+                      init_congruence_transfuint4);
+GAPBIND14_CONSTRUCTOR(m, Congruence, create_table, init_congruence_table);
+
+GAPBIND14_MEM_FN(m, Congruence, set_nr_generators, set_nr_generators);
+GAPBIND14_MEM_FN(m, Congruence, nr_generating_pairs, nr_generating_pairs);
+GAPBIND14_MEM_FN(
+    m,
+    Congruence,
+    add_pair,
+    add_pair,
+    (gapbind14::overload_cast<word_type const&, word_type const&>) );
+GAPBIND14_MEM_FN(m, Congruence, nr_classes, nr_classes);
+GAPBIND14_MEM_FN(m, Congruence, word_to_class_index, word_to_class_index);
+GAPBIND14_MEM_FN(m, Congruence, class_index_to_word, class_index_to_word);
+GAPBIND14_MEM_FN(m, Congruence, contains, contains);
+GAPBIND14_MEM_FN(m, Congruence, less, less);
+GAPBIND14_MEM_FN(m, Congruence, add_runner<ToddCoxeter>, add_runner);
+GAPBIND14_ITERATOR(m, Congruence, cbegin_ntc(), cend_ntc(), ntc);
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -64,10 +298,6 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
     }
-    case T_SEMI_SUBTYPE_ENSEMI: {
-      Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
-      break;
-    }
     default: {
       SEMIGROUPS_ASSERT(false);
     }
@@ -81,8 +311,8 @@ Obj TBipartObjCopyFunc(Obj o, Int mut) {
 }
 
 Obj TBlocksObjCopyFunc(Obj o, Int mut) {
-  // Blocks objects are mathematically immutable, so
-  // we don't need to do anything,
+  // Blocks objects are mathematically immutable, so we don't need to do
+  // anything,
   return o;
 }
 
@@ -97,15 +327,6 @@ void TSemiObjFreeFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_CONG: {
       delete CLASS_OBJ<Congruence*>(o);
-      break;
-    }
-    case T_SEMI_SUBTYPE_ENSEMI: {
-      if (en_semi_get_type(o) != UNKNOWN) {
-        // don't use functions to access these since they have too many
-        // side effects
-        delete CLASS_OBJ<Converter*>(o, 4);
-        delete CLASS_OBJ<FroidurePin<Element const*>*>(o, 5);
-      }
       break;
     }
     default: {
@@ -142,26 +363,7 @@ Obj TBlocksObjTypeFunc(Obj o) {
 
 void TSemiObjSaveFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-
   SaveUInt4(SUBTYPE_OF_T_SEMI(o));
-
-  switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_ENSEMI: {
-      // [t_semi_subtype_t, en_semi_t, gap_semigroup_t, size_t degree]
-      // only store gap_semigroup_t and degree if en_semi_get_semi_obj !=
-      // UNKNOWN.
-      SaveUInt4(en_semi_get_type(o));
-      if (en_semi_get_type(o) != UNKNOWN) {
-        SaveSubObj(en_semi_get_semi_obj(o));
-        SaveUInt4(en_semi_get_degree(o));
-      }
-      break;
-    }
-    default: {  // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
-                // do nothing further
-      break;
-    }
-  }
 }
 
 void TSemiObjLoadFunc(Obj o) {
@@ -173,19 +375,6 @@ void TSemiObjLoadFunc(Obj o) {
   switch (type) {
     case T_SEMI_SUBTYPE_CONG: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
-      break;
-    }
-    case T_SEMI_SUBTYPE_ENSEMI: {
-      en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
-      ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
-      if (s_type != UNKNOWN) {
-        SEMIGROUPS_ASSERT(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
-        ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
-        ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
-        ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
-        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // FroidurePin*
-        CHANGED_BAG(o);
-      }
       break;
     }
     default: {
@@ -267,11 +456,9 @@ void TBlocksObjLoadFunc(Obj o) {
 
 void TBipartObjMarkSubBags(Obj o) {
   if (ADDR_OBJ(o)[1] != NULL) {
-    // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[1]) == T_BLOCKS);
     MarkBag(ADDR_OBJ(o)[1]);
   }
   if (ADDR_OBJ(o)[2] != NULL) {
-    // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[2]) == T_BLOCKS);
     MarkBag(ADDR_OBJ(o)[2]);
   }
 }
@@ -308,15 +495,14 @@ Obj HTValue;
 Obj HTAdd;
 Obj Pinfinity;
 Obj Ninfinity;
-Obj DimensionOfMatrixOverSemiring;
+Obj IsInfinity;
+Obj IsNegInfinity;
 Obj IsBooleanMat;
 Obj BooleanMatType;
-Obj IsMatrixOverSemiring;
 Obj IsMaxPlusMatrix;
 Obj MaxPlusMatrixType;
 Obj IsMinPlusMatrix;
 Obj MinPlusMatrixType;
-Obj IsTropicalMatrix;
 Obj IsTropicalMinPlusMatrix;
 Obj TropicalMinPlusMatrixType;
 Obj IsTropicalMaxPlusMatrix;
@@ -331,12 +517,14 @@ Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
-Obj FROPIN;
 Obj GeneratorsOfMagma;
+Obj LARGEST_MOVED_PT_TRANS;
 
 Obj IsSemigroup;
 Obj IsSemigroupIdeal;
 Obj IsActingSemigroup;
+
+Obj PositionCanonical;
 
 /*****************************************************************************
  *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -374,48 +562,14 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_MAX_WORD_LENGTH, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_NR_RULES, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_POSITION, 2, "S, x"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_SIZE, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE_DEST, 2, "S, coll"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELMS_LIST, 2, "S, list"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMPOTENTS, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMS_SUBSET, 2, "S, list"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_SORTED, 2, "S, x"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_ENUMERATE, 2, "S, limit"),
-
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR, 1, "iter"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR_SORTED, 1, "iter"),
-
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 3, "cong, elm1, elm2"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LESS_THAN, 3, "cong, rep1, rep2"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_ELM_COSET_ID, 2, "cong, elm"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NONTRIVIAL_CLASSES, 1, "cong"),
 
     GVAR_ENTRY("fropin.cc",
                SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
                2,
                "scc1, scc2"),
+
     GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
+    GVAR_ENTRY("fropin.cc", RUN_FROIDURE_PIN, 2, "obj, limit"),
 
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
@@ -459,7 +613,9 @@ static StructGVarFunc GVarFuncs[] = {
  *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
  */
 static Int InitKernel(StructInitInfo* module) {
-  /* init filters and functions                                          */
+  gapbind14::init_kernel(m);
+
+  /* init filters and functions */
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
 
@@ -525,6 +681,9 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("infinity", &Pinfinity);
   ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
+  ImportGVarFromLibrary("IsInfinity", &IsInfinity);
+  ImportGVarFromLibrary("IsNegInfinity", &IsNegInfinity);
+
   ImportGVarFromLibrary("TYPES_PBR", &TYPES_PBR);
   ImportGVarFromLibrary("TYPE_PBR", &TYPE_PBR);
 
@@ -534,17 +693,11 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat);
   ImportGVarFromLibrary("BooleanMatType", &BooleanMatType);
 
-  ImportGVarFromLibrary("IsMatrixOverSemiring", &IsMatrixOverSemiring);
-  ImportGVarFromLibrary("DimensionOfMatrixOverSemiring",
-                        &DimensionOfMatrixOverSemiring);
-
   ImportGVarFromLibrary("IsMaxPlusMatrix", &IsMaxPlusMatrix);
   ImportGVarFromLibrary("MaxPlusMatrixType", &MaxPlusMatrixType);
 
   ImportGVarFromLibrary("IsMinPlusMatrix", &IsMinPlusMatrix);
   ImportGVarFromLibrary("MinPlusMatrixType", &MinPlusMatrixType);
-
-  ImportGVarFromLibrary("IsTropicalMatrix", &IsTropicalMatrix);
 
   ImportGVarFromLibrary("IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix);
   ImportGVarFromLibrary("TropicalMaxPlusMatrixType",
@@ -565,27 +718,24 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-  ImportGVarFromLibrary("FROPIN", &FROPIN);
-
   ImportGVarFromLibrary("GeneratorsOfMagma", &GeneratorsOfMagma);
+  ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
 
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
   ImportGVarFromLibrary("IsSemigroupIdeal", &IsSemigroupIdeal);
   ImportGVarFromLibrary("IsActingSemigroup", &IsActingSemigroup);
 
-  /* return success                                                      */
+  ImportGVarFromLibrary("PositionCanonical", &PositionCanonical);
+
   return 0;
 }
 
-/******************************************************************************
- *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
- */
 static Int InitLibrary(StructInitInfo* module) {
-  /* init filters and functions */
+  gapbind14::init_library(m);
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
+  libsemigroups::REPORTER.report(false);
 
-  /* return success                                                      */
   return 0;
 }
 

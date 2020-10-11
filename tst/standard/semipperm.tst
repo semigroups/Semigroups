@@ -2012,10 +2012,8 @@ gap> S := Semigroup([
 gap> IsGroupAsSemigroup(S);
 true
 gap> map := IsomorphismPartialPermSemigroup(S);;
-gap> Source(map);
-<partial perm group of rank 5 with 2 generators>
-gap> Range(map);
-<partial perm group of rank 5 with 2 generators>
+gap> Source(map) = Range(map);
+true
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -2129,8 +2127,8 @@ gap> S := Range(VagnerPrestonRepresentation(DualSymmetricInverseMonoid(3)));;
 gap> S := Semigroup(S, rec(acting := false));
 <partial perm monoid of rank 25 with 3 generators>
 gap> SmallerDegreePartialPermRepresentation(S);
-MappingByFunction( <inverse partial perm monoid of rank 25 with 3 generators>
- , <inverse partial perm semigroup of rank 6 with 3 generators>
+MappingByFunction( <inverse partial perm monoid of size 25, rank 25 with 3 
+ generators>, <inverse partial perm semigroup of rank 6 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 
 # Iterator, for a symmetric inverse monoid

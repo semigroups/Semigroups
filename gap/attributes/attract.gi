@@ -314,3 +314,65 @@ function(S)
 
   return EvaluateWord(o, TraceSchreierTreeForward(o, pos));
 end);
+
+InstallMethod(RightIdentity,
+"for an acting semigroup with generators + mult. elt.",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+function(S, x)
+  local o, l, m, scc, f, p;
+
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  o := Enumerate(LambdaOrb(S));
+  l := Position(o, LambdaFunc(S)(x));
+  m := OrbSCCLookup(o)[l];
+  scc := OrbSCC(o)[m];
+
+  if l <> scc[1] then
+    f := LambdaOrbMult(o, m, l);
+    return f[2] * f[1];
+  else
+    p := Factorization(o, m, LambdaIdentity(S)(true));
+    if p = fail then
+      return fail;
+    else
+      return EvaluateWord(o!.gens, p);
+    fi;
+  fi;
+end);
+
+InstallMethod(LeftIdentity,
+"for an acting semigroup with generators + mult. elt.",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+function(S, x)
+  local l, D, p, result;
+
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  l := Position(Enumerate(RhoOrb(S)), RhoFunc(S)(x));
+  D := Digraph(OrbitGraph(RhoOrb(S)));
+  p := DigraphPath(D, l, l);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(RhoOrb(S)!.gens, Reversed(p[2]));
+  return result ^ SmallestIdempotentPower(result);
+end);

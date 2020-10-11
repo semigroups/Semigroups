@@ -356,7 +356,7 @@ true
 # attr: RightCayleyDigraph, infinite
 gap> RightCayleyDigraph(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `RightCayleyDigraph' on 1 arguments
+Error, no 2nd choice method found for `RightCayleyDigraph' on 1 arguments
 
 # attr: LeftCayleyDigraph
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
@@ -381,8 +381,7 @@ true
 
 # attr: RightCayleyDigraph, infinite
 gap> LeftCayleyDigraph(FreeInverseSemigroup(2));
-Error, Semigroups: LeftCayleyDigraph: usage,
-the first argument (a semigroup) must be finite,
+Error, the 1st argument (a semigroup) must be finite,
 
 # attr: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(
@@ -1886,8 +1885,7 @@ gap> S := SymmetricInverseMonoid(2);
 <symmetric inverse monoid of degree 2>
 gap> MinimalMonoidGeneratingSet(S);
 [ <identity partial perm on [ 1 ]>, (1,2) ]
-gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
-<inverse block bijection monoid of degree 3 with 2 generators>
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);;
 gap> MinimalMonoidGeneratingSet(S);
 [ <block bijection: [ 1, -1 ], [ 2, 3, -2, -3 ]>, 
   <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]> ]
@@ -1965,6 +1963,38 @@ the argument is not a regular semigroup,
 gap> NambooripadLeqRegularSemigroup(S);
 Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
 the argument is not a regular semigroup,
+
+# Left/RightIdentity
+gap> S := Semigroup(Transformation([2, 4, 3, 4]), 
+>                   Transformation([3, 3, 2, 3, 3]),
+>                   Transformation([5, 5, 5, 4, 4]), 
+>                   Transformation([5, 1, 4, 1, 1]),
+>                   Transformation([5, 3, 3, 4, 5]));;
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or x * RightIdentity(S, x) = x);
+true
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or RightIdentity(S, x) in S);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) * x = x);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) in S);
+true
+gap> L := Filtered(S, x -> LeftIdentity(S, x) = fail);
+[ Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 5, 5, 5, 4, 4 ] ), 
+  Transformation( [ 5, 1, 4, 1, 1 ] ), Transformation( [ 5, 2, 4, 2, 2 ] ), 
+  Transformation( [ 5, 4, 4, 4, 4 ] ), Transformation( [ 5, 3, 4, 3, 3 ] ) ]
+gap> Length(L) = 6;
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> R := Filtered(S, x -> RightIdentity(S, x) = fail);
+[ Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 5, 1, 4, 1, 1 ] ), 
+  Transformation( [ 5, 2, 4, 2, 2 ] ) ]
+gap> Length(R) = 3;
+true
+gap> ForAll(R, y -> ForAll(S, x -> y * x <> y));
+true
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

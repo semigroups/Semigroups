@@ -1,7 +1,7 @@
 ###########################################################################
 ##
-##  idealenum.gi
-##  Copyright (C) 2014                                   James D. Mitchell
+##  ideals-froidure-pin.gi
+##  Copyright (C) 2014-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -57,7 +57,7 @@ fi;
 InstallMethod(PositionsInSupersemigroup,
 "for a semigroup ideal with known generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and
- IsEnumerableSemigroupRep],
+ CanComputeFroidurePin],
 function(I)
   local S, L, R, D, result, pos, x;
   S := SupersemigroupOfIdeal(I);
@@ -86,12 +86,12 @@ function(I)
   return GeneratorsOfSemigroup(I);
 end);
 
-InstallMethod(Enumerator, "for an enumerable semigroup ideal with generators",
-[IsEnumerableSemigroupRep and IsSemigroupIdeal
- and HasGeneratorsOfSemigroupIdeal],
+InstallMethod(Enumerator,
+"semigroup ideal with generators and CanComputeFroidurePin",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and CanComputeFroidurePin],
+100,  # TODO(now) remove 100
 function(I)
   local en, record;
-
   en := EnumeratorCanonical(SupersemigroupOfIdeal(I));
 
   record := rec();
@@ -121,7 +121,7 @@ end);
 InstallMethod(\in,
 "for a multiplicative element and semigroup ideal with generators",
 [IsMultiplicativeElement,
- IsEnumerableSemigroupRep and IsSemigroupIdeal
+ IsSemigroup and CanComputeFroidurePin and IsSemigroupIdeal
  and HasGeneratorsOfSemigroupIdeal],
 function(x, I)
   return Position(Enumerator(I), x) <> fail;
@@ -145,10 +145,10 @@ function(I)
 end);
 
 InstallMethod(Idempotents, "for a semigroup ideal with generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and CanComputeFroidurePin],
 function(I)
   local S, en;
   S := SupersemigroupOfIdeal(I);
   en := EnumeratorCanonical(S);
-  return en{EN_SEMI_IDEMS_SUBSET(S, PositionsInSupersemigroup(I))};
+  return en{IdempotentsSubset(S, PositionsInSupersemigroup(I))};
 end);

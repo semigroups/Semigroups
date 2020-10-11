@@ -117,15 +117,12 @@ false
 gap> [y, z] in cong;
 false
 gap> [x] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [t, t] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> ims := ImagesElm(cong, t);
 Error, Semigroups: ImagesElm: usage,
 the args <cong> and <elm> must refer to the same semigroup,
@@ -413,15 +410,12 @@ gap> y := ReesZeroMatrixSemigroupElement(S, 6, (1, 3, 5), 1);;
 gap> [x, y] in cong;
 true
 gap> [x] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument <pair> must be a list of length 2
 gap> [t, t] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, elements of the 1st argument <pair> must be in the range of the second \
+argument <cong>,
 gap> [x, x] in cong;
 true
 gap> [zero, zero] in cong;

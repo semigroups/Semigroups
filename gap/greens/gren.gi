@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for Green's relations and classes of semigroups
-# that satisfy IsEnumerableSemigroupRep.
+# that satisfy IsSemigroup and CanComputeFroidurePin.
 
 #############################################################################
 ##
@@ -185,7 +185,7 @@ function(x, C)
 end);
 
 InstallMethod(DClassType, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
                                and IsEquivalenceClassDefaultRep
@@ -193,7 +193,7 @@ function(S)
 end);
 
 InstallMethod(HClassType, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
                                and IsEquivalenceClassDefaultRep
@@ -201,7 +201,7 @@ function(S)
 end);
 
 InstallMethod(LClassType, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
                                and IsEquivalenceClassDefaultRep
@@ -209,7 +209,7 @@ function(S)
 end);
 
 InstallMethod(RClassType, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
                                and IsEquivalenceClassDefaultRep
@@ -223,7 +223,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensRRelation, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
@@ -248,7 +248,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensLRelation, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
@@ -272,11 +272,12 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensDRelation, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(GreensDRelation, "for semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
-  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
+  if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S))
+      or (IsFreeBandCategory(S) and Size(GeneratorsOfSemigroup(S)) > 4) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -299,7 +300,7 @@ end);
 # same method for ideals
 
 InstallMethod(GreensHRelation, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
@@ -378,23 +379,23 @@ end);
 # semigroup.
 
 InstallMethod(GreensRClassOfElementNC,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+"for a finite semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin and IsFinite, IsMultiplicativeElement],
 GreensRClassOfElement);
 
 InstallMethod(GreensLClassOfElementNC,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+"for a finite semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin and IsFinite, IsMultiplicativeElement],
 GreensLClassOfElement);
 
 InstallMethod(GreensHClassOfElementNC,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+"for a finite semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin and IsFinite, IsMultiplicativeElement],
 GreensHClassOfElement);
 
 InstallMethod(GreensDClassOfElementNC,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+"for a finite semigroup with CanComputeFroidurePin and multiplicative element",
+[IsSemigroup and CanComputeFroidurePin and IsFinite, IsMultiplicativeElement],
 GreensDClassOfElement);
 
 #############################################################################
@@ -404,21 +405,26 @@ GreensDClassOfElement);
 ## numbers of classes
 
 InstallMethod(NrDClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> Length(GreensDRelation(S)!.data.comps));
+[IsSemigroup and CanComputeFroidurePin],
+S -> Length(GreensDRelation(S)!.data.comps));
 
 InstallMethod(NrLClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> Length(GreensLRelation(S)!.data.comps));
+[IsSemigroup and CanComputeFroidurePin],
+S -> Length(GreensLRelation(S)!.data.comps));
 
 InstallMethod(NrRClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> Length(GreensRRelation(S)!.data.comps));
+[IsSemigroup and CanComputeFroidurePin],
+S -> Length(GreensRRelation(S)!.data.comps));
 
 InstallMethod(NrHClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> Length(GreensHRelation(S)!.data.comps));
+[IsSemigroup and CanComputeFroidurePin],
+S -> Length(GreensHRelation(S)!.data.comps));
 
 # same method for ideals
 
-InstallMethod(GreensLClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(GreensLClasses,
+"for a finite semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
@@ -428,8 +434,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensRClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(GreensRClasses,
+"for a finite semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
@@ -439,8 +446,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensHClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(GreensHClasses,
+"for a finite semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
@@ -450,8 +458,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensDClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(GreensDClasses,
+"for a finite semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
@@ -491,16 +500,20 @@ end);
 ## Representatives
 
 InstallMethod(DClassReps, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> SEMIGROUPS.XClassReps(S, GreensDRelation));
+[IsSemigroup and CanComputeFroidurePin],
+S -> SEMIGROUPS.XClassReps(S, GreensDRelation));
 
 InstallMethod(RClassReps, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> SEMIGROUPS.XClassReps(S, GreensRRelation));
+[IsSemigroup and CanComputeFroidurePin],
+S -> SEMIGROUPS.XClassReps(S, GreensRRelation));
 
 InstallMethod(LClassReps, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> SEMIGROUPS.XClassReps(S, GreensLRelation));
+[IsSemigroup and CanComputeFroidurePin],
+S -> SEMIGROUPS.XClassReps(S, GreensLRelation));
 
 InstallMethod(HClassReps, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
+[IsSemigroup and CanComputeFroidurePin],
+S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
 
 InstallMethod(RClassReps, "for a Green's D-class of an enumerable semigroup",
 [IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
@@ -520,8 +533,9 @@ C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 # the value of GreensDRelation(S)!.data.comps is not the same as the output of
 # DigraphStronglyConnectedComponents.
 
-InstallMethod(PartialOrderOfDClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+InstallMethod(PartialOrderOfDClasses,
+"for a finite semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin and IsFinite],
 function(S)
   local l, r, gr;
   l  := LeftCayleyDigraph(S);
@@ -540,8 +554,8 @@ InstallMethod(NrIdempotents, "for an enumerable semigroup Green's class",
 function(C)
   local rel, pos;
   rel := EquivalenceClassRelation(C);
-  pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
-                              rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
+  pos := IdempotentsSubset(Range(rel),
+                           rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
   return Length(pos);
 end);
 
@@ -549,9 +563,8 @@ InstallMethod(Idempotents, "for an enumerable semigroup Green's class",
 [IsEnumerableSemigroupGreensClassRep],
 function(C)
   local rel, pos;
-
   rel := EquivalenceClassRelation(C);
-  pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
-                              rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
+  pos := IdempotentsSubset(Range(rel),
+                           rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
   return EnumeratorCanonical(Range(rel)){pos};
 end);

@@ -714,7 +714,7 @@ end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], 2,
+[CanComputeFroidurePin], 2,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;

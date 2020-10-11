@@ -31,6 +31,7 @@ function(S)
 
   fam   := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
   dual  := Objectify(NewType(CollectionsFamily(fam),
+                            IsSemigroup and
                             IsWholeFamily and
                             IsDualSemigroupRep and
                             IsAttributeStoringRep),
@@ -120,7 +121,8 @@ function(s)
   return SEMIGROUPS.DualSemigroupElementNC(S, OneMutable(x));
 end);
 
-InstallMethod(MultiplicativeNeutralElement, "for a dual semigroup",
+# TODO(now): remove Other
+InstallOtherMethod(MultiplicativeNeutralElement, "for a dual semigroup",
 [IsDualSemigroupRep],
 10,  # add rank to beat enumeration methods
 function(S)

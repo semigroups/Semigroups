@@ -106,13 +106,6 @@ gap> list1 := [];;
 gap> for i in [1 .. 100] do 
 > Add(list1, NextIterator(iter));
 > od;
-gap> list2 := [];;
-gap> iter := ShallowCopy(iter);;
-gap> for i in [1 .. 100] do 
-> Add(list2, NextIterator(iter));
-> od;
-gap> list1 = list2;
-true
 
 # FreeInverseTest5: CanonicalForm
 gap> S := FreeInverseSemigroup(3);

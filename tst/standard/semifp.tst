@@ -29,14 +29,8 @@ MappingByFunction( <fp monoid on the generators [ m1, m2, m3, m4, m5 ]>,
  , function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
-gap> map := IsomorphismFpSemigroup(S);
-MappingByFunction( <transformation monoid of degree 5 with 5 generators>
- , <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
- ]>, function( x ) ... end, function( x ) ... end )
-gap> inv := InverseGeneralMapping(map);
-MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6 
- ]>, <transformation monoid of degree 5 with 5 generators>
- , function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismFpSemigroup(S);;
+gap> inv := InverseGeneralMapping(map);;
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
@@ -1982,8 +1976,7 @@ gap> AsMonoid(S);
 gap> S := SingularTransformationMonoid(3);
 <regular transformation semigroup ideal of degree 3 with 1 generator>
 gap> IsomorphismFpMonoid(S);
-Error, Semigroups: IsomorphismFpMonoid: usage,
-the first argument (a semigroup) must satisfy `IsMonoidAsSemigroup`,
+Error, the 1st argument (a semigroup) must satisfy `IsMonoidAsSemigroup`,
 
 # Test MultiplicativeZero
 gap> F := FreeSemigroup(2);;

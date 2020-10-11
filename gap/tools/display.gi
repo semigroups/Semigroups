@@ -668,7 +668,7 @@ function(digraph)
   local S, vertex, edge, str, nbs, x, from, gen;
 
   S := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanComputeFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
 
@@ -729,7 +729,7 @@ InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
 function(digraph)
   local S, li, label, i;
   S  := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanComputeFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
   li := AsListCanonical(S);

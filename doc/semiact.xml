@@ -20,7 +20,7 @@
 gap> S := Semigroup(Transformation([1, 3, 2]));;
 gap> IsActingSemigroup(S);
 true
-gap> IsEnumerableSemigroupRep(S);
+gap> CanComputeFroidurePin(S);
 true
 gap> S := FreeSemigroup(3);;
 gap> IsActingSemigroup(S);

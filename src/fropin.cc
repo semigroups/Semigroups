@@ -23,7 +23,9 @@
 
 #include "rnams.h"
 #include "semigroups-debug.h"
-#include "semigrp.h"
+
+#include "libsemigroups/report.hpp"
+#include "libsemigroups/timer.hpp"
 
 using libsemigroups::detail::Timer;
 
@@ -31,6 +33,17 @@ using libsemigroups::detail::Timer;
 
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
+#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
+
+#ifdef SEMIGROUPS_KERNEL_DEBUG
+
+#define CHECK_SEMI_OBJ(obj)                         \
+  if (CALL_1ARGS(IsSemigroup, obj) != True) {       \
+    ERROR(obj, "the argument must be a semigroup"); \
+  }
+#else
+#define CHECK_SEMI_OBJ(so)
+#endif
 
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
@@ -38,69 +51,48 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   CHANGED_BAG(plist);
 }
 
-// Fast product using left and right Cayley graphs
+// Semigroups
 
-size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
-  fropin(fp, INTOBJ_INT(-1), 0, False);
+static Obj get_default_value(Int rnam) {
+  gap_rec_t opts = ElmPRec(SEMIGROUPS, RNam_DefaultOptionsRec);
+  return ElmPRec(opts, rnam);
+}
 
-  gap_list_t words = ElmPRec(fp, RNam_words);
-
-  if (LEN_PLIST(ELM_PLIST(words, i)) <= LEN_PLIST(ELM_PLIST(words, j))) {
-    gap_list_t left   = ElmPRec(fp, RNamName("left"));
-    gap_list_t last   = ElmPRec(fp, RNamName("final"));
-    gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
-    while (i != 0) {
-      j = INT_INTOBJ(ELM_PLIST2(left, j, INT_INTOBJ(ELM_PLIST(last, i))));
-      i = INT_INTOBJ(ELM_PLIST(prefix, i));
+static inline size_t semi_obj_get_batch_size(gap_semigroup_t so) {
+  initRNams();
+  UInt i;
+  if (FindPRec(so, RNam_opts, &i, 1)) {
+    gap_rec_t opts = GET_ELM_PREC(so, i);
+    if (FindPRec(opts, RNam_batch_size, &i, 1)) {
+      return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
-    return j;
-  } else {
-    gap_list_t right  = ElmPRec(fp, RNamName("right"));
-    gap_list_t first  = ElmPRec(fp, RNamName("first"));
-    gap_list_t suffix = ElmPRec(fp, RNamName("suffix"));
-    while (j != 0) {
-      i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, j))));
-      j = INT_INTOBJ(ELM_PLIST(suffix, j));
-    }
-    return i;
   }
+  return INT_INTOBJ(get_default_value(RNam_batch_size));
 }
 
 // GAP kernel version of the algorithm for other types of semigroups.
 //
 // Assumes the length of data!.elts is at most 2 ^ 28.
 
-Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
+Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
       empty, oldword, x, data, parent, stopper;
   UInt i, nr, len, stopper_int, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
-  bool   report;
-  size_t batch_size;
+
+  if (!IS_PREC(obj)) {
+    ErrorQuit("expected a plain record as first argument, found %s",
+              (Int) TNAM_OBJ(obj),
+              0L);
+  }  // TODO other checks
+
   initRNams();
 
-  if (CALL_1ARGS(IsSemigroup, obj) == True) {
-    parent     = obj;
-    report     = semi_obj_get_report(obj);
-    batch_size = semi_obj_get_batch_size(obj);
-    data       = semi_obj_get_fropin(obj);
-  } else {
-    parent = ElmPRec(obj, RNamName("parent"));
-    SEMIGROUPS_ASSERT(CALL_1ARGS(IsSemigroup, parent) == True);
-    data       = obj;
-    report     = semi_obj_get_report(parent);
-    batch_size = semi_obj_get_batch_size(parent);
-  }
-  SEMIGROUPS_ASSERT(semi_obj_get_type(parent) == UNKNOWN);
-
-  // TODO(JDM) if looking check that something in elts doesn't already satisfy
-  // the lookfunc
-
-  // remove nrrules
-  if (looking == True) {
-    AssPRec(data, RNamName("found"), False);
-  }
+  parent = ElmPRec(obj, RNamName("parent"));
+  SEMIGROUPS_ASSERT(CALL_1ARGS(IsSemigroup, parent) == True);
+  data              = obj;
+  size_t batch_size = semi_obj_get_batch_size(parent);
 
   i  = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
@@ -109,9 +101,8 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     CHANGED_BAG(parent);
     return data;
   }
-  int_limit = std::max(static_cast<size_t>(INT_INTOBJ(limit)),
-                       static_cast<size_t>((nr + batch_size)));
-  if (report) {
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
+  if (libsemigroups::REPORTER.report()) {
     std::cout << "limit = " << int_limit << "\n";
   }
 
@@ -275,14 +266,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
 
             SET_ELM_PLIST2(reduced, i, j, True);
             SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
-            if (looking == True && found == False
-                && CALL_2ARGS(lookfunc, data, INTOBJ_INT(nr)) == True) {
-              found = True;
-              stop  = 1;
-              AssPRec(data, RNamName("found"), INTOBJ_INT(nr));
-            } else {
-              stop = (nr >= int_limit);
-            }
+            stop = (nr >= int_limit);
           }
         }
       }  // finished applying gens to <elts[i]>
@@ -313,7 +297,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
-    if (report) {
+    if (libsemigroups::REPORTER.report()) {
       if (i <= nr) {
         std::cout << "found " << nr << " elements, " << nrrules
                   << " rules, max word length " << len + 1 << ", so far,\n";
@@ -337,9 +321,9 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   return data;
 }
 
-// Using the output of DigraphStronglyConnectedComponents on the right and left
-// Cayley graphs of a semigroup, the following function calculates the strongly
-// connected components of the union of these two graphs.
+// Using the output of DigraphStronglyConnectedComponents on the right and
+// left Cayley graphs of a semigroup, the following function calculates the
+// strongly connected components of the union of these two graphs.
 
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   UInt* ptr;

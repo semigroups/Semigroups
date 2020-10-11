@@ -110,17 +110,22 @@ end;
 
 BindGlobal("_GeneratorsSmallest",
 function(S)
-  local iter, gens, T, x;
+  local iter, gens, T, closure, x;
 
   iter := IteratorSorted(S);
   gens := [NextIterator(iter)];
   T    := Semigroup(gens);
 
+  if CanComputeCppFroidurePin(S) then
+    closure := {S, coll, opts} ->
+               ClosureSemigroupOrMonoidNC(Semigroup, S, coll, opts);
+  else
+    closure := ClosureSemigroup;
+  fi;
+
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.ClosureSemigroupDestructive(T,
-                                                  [x],
-                                                  SEMIGROUPS.OptionsRec(T));
+      T := closure(T, [x], SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
       if T = S then
         break;
@@ -133,8 +138,9 @@ end);
 InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 [IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
 
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsEnumerableSemigroupRep], _GeneratorsSmallest);
+InstallMethod(GeneratorsSmallest,
+"for a semigroup with CanComputeCppFroidurePin",
+[CanComputeFroidurePin], _GeneratorsSmallest);
 
 MakeReadWriteGlobal("_GeneratorsSmallest");
 Unbind(_GeneratorsSmallest);
@@ -492,7 +498,7 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 #############################################################################
 
 InstallMethod(IsGreensDGreaterThanFunc, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr, id;
 
@@ -516,7 +522,7 @@ function(S)
 end);
 
 InstallMethod(MaximalDClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr;
 
@@ -684,7 +690,7 @@ end);
 
 InstallMethod(MultiplicativeNeutralElement,
 "for an enumerable semigroup with generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+[IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
 
@@ -733,7 +739,7 @@ function(S)
 end);
 
 InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local comps;
 
@@ -868,50 +874,50 @@ _SemigroupSizeByIndexPeriod);
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
 Unbind(_SemigroupSizeByIndexPeriod);
 
-BindGlobal("_MonoidSizeByIndexPeriod",
-function(S)
-  local gen, ind;
-  gen := MinimalMonoidGeneratingSet(S)[1];
-  ind := IndexPeriodOfSemigroupElement(gen);
-  if ind[1] = 1 and One(S) in HClass(S, gen) then
-    # <gen> generates the One of S, so the One is not an additional element
-    # Note that this implies that S is a cyclic group
-    SetIsGroupAsSemigroup(S, true);
-    return ind[2];
-  fi;
-  return Sum(ind);
-end);
-
-InstallMethod(Size,
-"for a monogenic transformation monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsTransformationSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic partial perm monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsPartialPermSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic bipartition monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsBipartitionSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic monoid of matrices over finite field with minimal gen set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsMatrixOverFiniteFieldCollection],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
-Unbind(_MonoidSizeByIndexPeriod);
+# BindGlobal("_MonoidSizeByIndexPeriod",
+# function(S)
+#   local gen, ind;
+#   gen := MinimalMonoidGeneratingSet(S)[1];
+#   ind := IndexPeriodOfSemigroupElement(gen);
+#   if ind[1] = 1 and One(S) in HClass(S, gen) then
+#     # <gen> generates the One of S, so the One is not an additional element
+#     # Note that this implies that S is a cyclic group
+#     SetIsGroupAsSemigroup(S, true);
+#     return ind[2];
+#   fi;
+#   return Sum(ind);
+# end);
+#
+# InstallMethod(Size,
+# "for a monogenic transformation monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsTransformationSemigroup and IsActingSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic partial perm monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsPartialPermSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic bipartition monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsBipartitionSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic monoid of matrices over finite field with minimal gen set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsMatrixOverFiniteFieldCollection],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
+# Unbind(_MonoidSizeByIndexPeriod);
 
 InstallMethod(MultiplicativeZero,
 "for a semigroup with generators",
@@ -1135,3 +1141,11 @@ function(S)
         and ForAny(Idempotents(R), e -> e * y = x);
     end;
 end);
+
+# TODO(now) check if x in S
+InstallMethod(LeftIdentity, "for a monoid", [IsMonoid, IsMultiplicativeElement],
+{S, x} -> One(S));
+
+# TODO(now) check if x in S
+InstallMethod(RightIdentity, "for a monoid", [IsMonoid, IsMultiplicativeElement],
+{S, x} -> One(S));

@@ -59,12 +59,10 @@ function(pair, cong)
   local S;
   S := Range(cong);
   if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
+    ErrorNoReturn("the 1st argument <pair> must be a list of length 2");
   elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
-                  "elements of the first arg <pair> must be\n",
-                  "in the range of the second arg <cong>,");
+    ErrorNoReturn("elements of the 1st argument <pair> must be ",
+                  "in the range of the second argument <cong>,");
   elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
     return true;
   fi;
