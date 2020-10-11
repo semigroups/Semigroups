@@ -36,10 +36,10 @@
 #include "libsemigroups/cong.hpp"
 #include "libsemigroups/element-adapters.hpp"
 #include "libsemigroups/froidure-pin.hpp"
-#include "libsemigroups/uf.hpp"
+#include "libsemigroups/uf-old.hpp"
 
 using libsemigroups::Congruence;
-using libsemigroups::detail::UF;
+using UF = libsemigroups::detail::UFOld;
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined

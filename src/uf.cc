@@ -22,13 +22,13 @@
 
 #include "uf.h"
 
+#include "compiled.h"
 #include "pkg.h"
 #include "semigroups-debug.h"
-#include "compiled.h"
 
-#include "libsemigroups/uf.hpp"
+#include "libsemigroups/uf-old.hpp"
 
-using libsemigroups::detail::UF;
+using UF = libsemigroups::detail::UFOld;
 
 // GAP level functions
 
