@@ -43,3 +43,8 @@ DeclareAttribute("DigraphCore", IsDigraph);
 DeclareOperation("WreathProduct",
                  [IsMultiplicativeElementCollection,
                   IsMultiplicativeElementCollection]);
+
+DeclareOperation("SingularClosureTransformationSemigroup",
+ [IsGroup, IsPosInt]);
+DeclareOperation("SingularClosurePartialTransformationSemigroup",
+ [IsGroup, IsPosInt]);
