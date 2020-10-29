@@ -1385,7 +1385,7 @@ class IdempotentCounter {
 
   std::vector<size_t> count() {
     libsemigroups::THREAD_ID_MANAGER.reset();
-    auto rg = libsemigroups::ReportGuard(_report);
+    auto rg = libsemigroups::ReportGuard(true);
     REPORT_DEFAULT("using %llu / %llu additional threads",
                    _nr_threads,
                    std::thread::hardware_concurrency());
