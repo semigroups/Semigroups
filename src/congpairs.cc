@@ -109,7 +109,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
       = cstring_to_congruence_t(CSTR_STRING(ElmPRec(o, RNam_type)));
   Congruence* cong   = nullptr;
   bool        report = semi_obj_get_report(range_obj);
-  auto        rg     = ReportGuard(true);
+  auto        rg     = ReportGuard(report);
 
   if (cong_obj_is_fp_cong(o)) {
     size_t nrgens = INT_INTOBJ(ElmPRec(o, RNam_fp_nrgens));
@@ -328,7 +328,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     FroidurePin<Element const*>* range = cong_obj_get_range(o);
-    auto                         rg    = ReportGuard(true);
+    auto                         rg    = ReportGuard(report);
 
     lookup = NEW_PLIST_IMM(T_PLIST_CYC, range->size());
     SET_LEN_PLIST(lookup, range->size());
@@ -403,7 +403,7 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
     Congruence*                  cong  = cong_obj_get_cpp(cong_obj);
     FroidurePin<Element const*>* range = cong_obj_get_range(cong_obj);
-    auto                         rg    = ReportGuard(true);
+    auto                         rg    = ReportGuard(report);
     word_type                    word;
     range->factorisation(
         word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)) - 1);

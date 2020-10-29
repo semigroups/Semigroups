@@ -24,11 +24,11 @@
 #include <vector>
 
 #include "bipart.h"
-#include "compiled.h"
 #include "converter.h"
 #include "fropin.h"
 #include "libsemigroups/froidure-pin-base.hpp"
 #include "pkg.h"
+#include "compiled.h"
 
 using libsemigroups::Integers;
 using libsemigroups::LIMIT_MAX;
@@ -545,7 +545,7 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so) {
 
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->run();
     return iterator_to_plist(
         en_semi_get_converter(es), semi_cpp->cbegin(), semi_cpp->cend());
@@ -559,9 +559,9 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
   if (en_semi_get_type(es) != UNKNOWN) {
-    FroidurePin<Element const*>* semi_cpp  = en_semi_get_semi_cpp(es);
-    auto                         rg        = libsemigroups::ReportGuard(true);
-    Converter*                   converter = en_semi_get_converter(es);
+    FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
+    auto       rg        = libsemigroups::ReportGuard(semi_obj_get_report(so));
+    Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
     gap_list_t out = NEW_PLIST_IMM(T_PLIST_HOM_SSORT, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
@@ -586,8 +586,8 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
-    size_t                       n        = semi_cpp->size();
+    auto   rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
+    size_t n  = semi_cpp->size();
     SEMIGROUPS_ASSERT(n != 0);
     gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, n);
     // this is intentionally not IMMUTABLE
@@ -672,7 +672,7 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   }
   SEMIGROUPS_ASSERT(valid);
 #endif
-  auto                         rg           = libsemigroups::ReportGuard(true);
+  auto rg = libsemigroups::ReportGuard(semi_obj_get_report(new_so));
   FroidurePin<Element const*>* new_semi_cpp = old_semi_cpp->copy_closure(*coll);
   delete_vec(coll);
 
@@ -721,7 +721,7 @@ gap_semigroup_t EN_SEMI_CLOSURE_DEST(Obj             self,
   Converter*                   converter = en_semi_get_converter(es);
 
   auto coll = plist_to_vec(converter, plist, deg);
-  auto rg   = libsemigroups::ReportGuard(true);
+  auto rg   = libsemigroups::ReportGuard(semi_obj_get_report(so));
   semi_cpp->closure(*coll);
   delete_vec(coll);
 
@@ -808,7 +808,7 @@ gap_element_t EN_SEMI_ELEMENT_NUMBER(Obj             self,
   if (en_semi_get_type(es) != UNKNOWN) {
     nr--;
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     try {
       return en_semi_get_converter(es)->unconvert(semi_cpp->at(nr));
     } catch (std::out_of_range& e) {
@@ -849,7 +849,7 @@ gap_element_t EN_SEMI_ELEMENT_NUMBER_SORTED(Obj             self,
   if (en_semi_get_type(es) != UNKNOWN) {
     size_t                       nr       = INT_INTOBJ(pos) - 1;
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     try {
       return en_semi_get_converter(es)->unconvert(semi_cpp->sorted_at(nr));
     } catch (std::out_of_range& e) {
@@ -888,7 +888,7 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
                   (Int) i,
                   0L);
       }
-      auto rg = libsemigroups::ReportGuard(true);
+      auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
       try {
         SET_ELM_PLIST(out,
                       i,
@@ -939,7 +939,7 @@ gap_semigroup_t EN_SEMI_ENUMERATE(Obj             self,
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->enumerate(c_limit);
   } else {
     fropin(so, limit, 0, False);
@@ -973,7 +973,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
     if (!IsbPRec(fp, RNam_words)) {
       // TODO(JDM) Use FindPRec instead
       word_type w;  // changed in place by the next line
-      auto      rg = libsemigroups::ReportGuard(true);
+      auto      rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
       semi_cpp->factorisation(w, pos_c - 1);
       words = NEW_PLIST_IMM(T_PLIST, pos_c);
       // IMMUTABLE since it should not be altered on the GAP level
@@ -1021,7 +1021,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           CHANGED_BAG(so);
         } else {
           word_type w;  // changed in place by the next line
-          auto      rg = libsemigroups::ReportGuard(true);
+          auto      rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
           semi_cpp->factorisation(w, pos_c - 1);
           AssPlist(words, pos_c, word_type_to_plist(w));
           CHANGED_BAG(fp);
@@ -1046,7 +1046,7 @@ gap_list_t EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto       rg  = libsemigroups::ReportGuard(semi_obj_get_report(so));
     gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, semi_cpp->size());
     // this is intentionally not IMMUTABLE
     SET_LEN_PLIST(out, semi_cpp->size());
@@ -1073,7 +1073,7 @@ gap_int_t EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     return INTOBJ_INT(semi_cpp->length_non_const(INT_INTOBJ(pos) - 1));
   } else {
     return INTOBJ_INT(LEN_PLIST(EN_SEMI_FACTORIZATION(self, so, pos)));
@@ -1087,7 +1087,7 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     FroidurePin<Element const*>* semi_cpp  = en_semi_get_semi_cpp(es);
     Converter*                   converter = en_semi_get_converter(es);
 
-    auto rg = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->max_threads(semi_obj_get_nr_threads(so));
     return iterator_to_plist(converter,
                              semi_cpp->cbegin_idempotents(),
@@ -1133,7 +1133,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->max_threads(semi_obj_get_nr_threads(so));
 
     for (size_t pos = 1; pos <= (size_t) LEN_LIST(list); pos++) {
@@ -1193,7 +1193,7 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->max_threads(semi_obj_get_nr_threads(so));
 
     return INTOBJ_INT(semi_cpp->nr_idempotents());
@@ -1229,8 +1229,8 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
     size_t   deg = en_semi_get_degree(es);
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
-    size_t                       pos      = semi_cpp->position(xx);
+    auto   rg  = libsemigroups::ReportGuard(semi_obj_get_report(so));
+    size_t pos = semi_cpp->position(xx);
     delete xx;
     return (pos == UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
@@ -1285,7 +1285,7 @@ gap_int_t EN_SEMI_POSITION_SORTED(Obj             self,
   } else {
     size_t                       deg      = en_semi_get_degree(es);
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto     rg  = libsemigroups::ReportGuard(semi_obj_get_report(so));
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
     size_t   pos = semi_cpp->sorted_position(xx);
     delete xx;
@@ -1302,7 +1302,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {
       FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-      auto                         rg       = libsemigroups::ReportGuard(true);
+      auto       rg    = libsemigroups::ReportGuard(semi_obj_get_report(so));
       gap_list_t rules = NEW_PLIST_IMM(T_PLIST_TAB_RECT, semi_cpp->nr_rules());
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(rules, semi_cpp->nr_rules());
@@ -1373,7 +1373,7 @@ gap_list_t EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so) {
 
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
 
     gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, semi_cpp->size());
     // this is intentionally not IMMUTABLE
@@ -1402,7 +1402,7 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so) {
 
   if (en_semi_get_type(es) != UNKNOWN) {
     FroidurePin<Element const*>* semi_cpp = en_semi_get_semi_cpp(es);
-    auto                         rg       = libsemigroups::ReportGuard(true);
+    auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     return INTOBJ_INT(semi_cpp->size());
   } else {
     gap_rec_t fp = fropin(so, INTOBJ_INT(-1), 0, False);
