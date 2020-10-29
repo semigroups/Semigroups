@@ -12,6 +12,7 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.report := true;;
 
 # Test IsomorphismFpMonoid, 
 gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
@@ -2174,6 +2175,7 @@ Error, expected the second argument to be a string listing the relations of a \
 semigroup but found an = symbol which isn't pairing two words
 
 # SEMIGROUPS_UnbindVariables
+gap> SEMIGROUPS.DefaultOptionsRec.report := false;;
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
