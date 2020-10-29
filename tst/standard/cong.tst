@@ -12,6 +12,7 @@ gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.report := true;;
 
 # SemigroupCongruence: Bad input
 gap> S := FullTransformationSemigroup(5);;
@@ -583,6 +584,7 @@ gap> IsReesCongruence(c);
 false
 
 # SEMIGROUPS_UnbindVariables
+gap> SEMIGROUPS.DefaultOptionsRec.report := false;;
 gap> Unbind(F);
 gap> Unbind(I);
 gap> Unbind(M);
