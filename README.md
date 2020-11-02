@@ -3,7 +3,7 @@
 #### Copyright (C) 2011-20 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)
-[![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.1)](https://travis-ci.org/gap-packages/Semigroups)
+[![Build Status](https://travis-ci.com/gap-packages/Semigroups.svg?branch=stable-3.4)](https://travis-ci.com/gap-packages/Semigroups)
 
 ## Getting Semigroups
 
