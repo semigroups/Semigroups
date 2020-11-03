@@ -691,6 +691,133 @@ function(M, S)
   return Semigroup(maps);
 end);
 
+InstallMethod(SingularClosurePartitionSemigroup,
+ " for permutation group and degree", [IsGroup, IsPosInt],
+function(G, n)
+  local D, id, f, o, O, d, I, J, K, L, N, e, q, i,
+  Digo, nlc, v, E, j, k, M, gcount, g;
+
+  # Digraph with nodes {1, .., n} and an edge from x to y if there exists g in
+  # G such that g(x) = y.
+  D := Digraph([1 .. n], {x, y} -> ForAny(G, g -> x ^ g = y));
+  # List such that if v is vertex in digraph D, then id[v] is the index of the
+  # strongly connected component of D containing v
+  id := DigraphStronglyConnectedComponents(D).id;
+  # Takes a pair [i, j] and returns the pair consisting of the index of the scc
+  # of D containing i and the index of the scc of D containing j.
+  f := pair -> [id[pair[1]], id[pair[2]]];
+  # Compute the orbits of G on pairs
+  o := Orbits(G, Combinations([1 .. n], 2), OnSets);
+  # List(o, x -> f(x[1])) apply the function f (above) to one representative
+  # from every orbit of o, and create the digraph with these edges.
+  O := DigraphByEdges(List(o, x -> f(x[1])));
+  # removes loops to count number of non loops
+  d := DigraphNrEdges(DigraphRemoveLoops(O));
+  # calculate number of digraph vertices
+  v := DigraphNrVertices(O);
+  g := Size(Generators(G));
+  # special case for if quoteient is a point
+  e := DigraphNrEdges(O);
+  N := [1 .. (2 * e) + g];
+  if v = 1 then
+    for i in [1 .. DigraphNrEdges(O)] do
+      K := o[i][1][1];
+      L := o[i][1][2];
+      N[2 * i] := AsBipartition(Transformation([K], [L]), n);
+    od;
+    # cases are if only 1 non loop and otherweise
+  elif d = 1 then
+    e := DigraphNrEdges(O);
+    N := [1 .. (2 * e) + 2 + g];
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+        N[2 * i] := AsBipartition(Transformation([K], [L]), n);
+      else
+         q := i;
+      fi;
+    od;
+    I := o[q][1][1];
+    J := o[q][1][2];
+    K := o[q][2][2];
+    N[2 * (q)] := AsBipartition(Transformation([J], [I]), n);
+    N[2 * e + 2] := AsBipartition(Transformation([I, J], [J, K]), n);
+    # second case as StrongOrientation function
+    # only works on graphs with more vertex than 2
+  elif d = 2 then
+    e := DigraphNrEdges(O);
+    N := [1 .. (2 * e) + g];
+    nlc := 0;
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      elif nlc < 1 then
+        K := (o)[i][1][1];
+        L := (o)[i][1][2];
+        nlc := nlc + 1;
+      else
+        K := (o)[i][1][2];
+        L := (o)[i][1][1];
+      fi;
+      N[2 * i] := AsBipartition(Transformation([K], [L]), n);
+    od;
+  else
+    e := DigraphNrEdges(O);
+    N := [1 .. (2 * e) + g];
+    Digo := StrongOrientation(DigraphSymmetricClosure(O));
+    for i in [1 .. DigraphNrEdges(O)] do
+      if DigraphEdges(O)[i][1] = DigraphEdges(O)[i][2] then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      elif DigraphEdges(O)[i][1] in DigraphEdges(Digo) then
+        K := o[i][1][1];
+        L := o[i][1][2];
+      else
+        K := o[i][1][2];
+        L := o[i][1][1];
+      fi;
+         # using these start and end point values construct
+         # a transfomarion which is constant on that edge
+      N[2 * i] := AsBipartition(Transformation([K], [L]), n);
+    od;
+  fi;
+  if d = 1 then
+    for i in [1 .. DigraphNrEdges(O) + 1] do
+      E := ExtRepOfObj(N[2 * i]);
+      M := [1 .. Size(E)];
+      for j in [1 .. Size(E)] do
+        M[j] := ShallowCopy(E[j]);
+      od;
+      for j in [1 .. Size(E)] do
+        for k in [1 .. Size(E[j])] do
+          M[j][k] := - E[j][k];
+        od;
+      od;
+      N[(2 * i) - 1] := Bipartition(M);
+    od;
+  else
+    for i in [1 .. DigraphNrEdges(O)] do
+      E := ExtRepOfObj(N[2 * i]);
+      M := [1 .. Size(E)];
+      for j in [1 .. Size(E)] do
+        M[j] := ShallowCopy(E[j]);
+      od;
+      for j in [1 .. Size(E)] do
+        for k in [1 .. Size(E[j])] do
+          M[j][k] := - E[j][k];
+        od;
+      od;
+      N[(2 * i) - 1] := Bipartition(M);
+    od;
+  fi;
+  for gcount in [1 .. Size(Generators(G))] do
+    N[Size(N) - gcount + 1] := AsBipartition(Generators(G)[gcount], n);
+  od;
+  return Semigroup(N);
+  end);
+
 #############################################################################
 # ?. Isomorphisms
 #############################################################################
