@@ -351,6 +351,7 @@
     <#Include Label = "IsPartialPermBipartitionSemigroup">
     <#Include Label = "IsPermBipartitionGroup">
     <#Include Label = "DegreeOfBipartitionSemigroup">
+    <#Include Label = "PartitionMonoidSmallGeneratingSet">
 
   </Section>
  
