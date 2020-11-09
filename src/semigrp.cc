@@ -1126,7 +1126,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
-  gap_list_t out = NEW_PLIST_IMM(T_PLIST_CYC, 0);
+  gap_list_t out = NEW_PLIST(T_PLIST_CYC, 0);
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, 0);
   size_t len = 0;
@@ -1166,8 +1166,9 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
   }
   SEMIGROUPS_ASSERT(len == (size_t) LEN_PLIST(out));
   if (len == 0) {
-    RetypeBag(out, T_PLIST_EMPTY + IMMUTABLE);
+    RetypeBag(out, T_PLIST_EMPTY);
   }
+  MakeImmutable(out);
   return out;
 }
 

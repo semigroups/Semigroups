@@ -64,7 +64,7 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
   SET_LEN_PLIST(o, n);
 
   for (size_t i = 0; i < n; i++) {
-    Obj blist = NewBag(T_BLIST + IMMUTABLE, SIZE_PLEN_BLIST(n));
+    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
     SET_LEN_BLIST(blist, n);
     for (size_t j = 0; j < n; j++) {
       if ((*xx)[i * n + j]) {
@@ -75,6 +75,7 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
 #endif
       }
     }
+    MakeImmutable(blist);
     SET_ELM_PLIST(o, i + 1, blist);
     CHANGED_BAG(o);
   }
