@@ -1,0 +1,19 @@
+pr:
+- master
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: quick
+  variables:
+    SUITE: test
+    ABI: 64
+    GAP_VERSION: 4.10.2
+    PACKAGES: latest
+  steps:
+  - script: ci/azure-gap.sh
+    displayName: 'Running the Digraphs package for GAP tests in docker container. . .'

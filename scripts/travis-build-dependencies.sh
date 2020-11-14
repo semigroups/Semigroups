@@ -94,11 +94,3 @@ for PKG in "${PKGS[@]}"; do
     fi
   fi
 done
-
-################################################################################
-# Install required GAP packages
-cd $GAPROOT/pkg
-echo -e "\nGetting the required GAP packages (smallgrp, transgrp, primgrp)..."
-$CURL -O "https://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz"
-tar xf packages-required-master.tar.gz
-rm packages-required-master.tar.gz
