@@ -81,13 +81,8 @@ doc: doc/manual.six
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
-gaplint: 
-	gaplint *.g gap/options.g gap/*.gi gap/*.gd gap/*/* doc/*.xml tst/*.tst tst/*/*.tst
-
-cpplint:
-	cpplint src/*.h src/*.cc
-
-lint: gaplint cpplint
+lint: 
+	etc/lint.sh
 
 format: 
 	clang-format -i src/*.h src/*.cc
