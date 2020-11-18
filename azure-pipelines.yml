@@ -1,8 +1,10 @@
 pr:
 - master
+- stable-*.*
 
 trigger:
 - master
+- stable-*.*
 
 pool:
   vmImage: 'ubuntu-latest'
