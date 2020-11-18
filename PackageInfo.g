@@ -263,16 +263,12 @@ Persons := [
 
   rec(
     LastName      := "Wilson",
-    FirstNames    := "Wilf",
+    FirstNames    := "Wilf A.",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "gap@wilf-wilson.net",
-    WWWHome       := "http://wilf.me",
-    PostalAddress := Concatenation(["Theodor-Lieser-Straße 5, ",
-                                    "06120 Halle (Saale), ",
-                                    "Germany"]),
-    Place         := "Halle (Saale), Germany",
-    Institution   := "University of Halle-Wittenberg")],
+    WWWHome       := "https://wilf.me",
+  )],
 
 Status := "deposited",
 
