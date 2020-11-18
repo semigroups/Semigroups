@@ -267,8 +267,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "gap@wilf-wilson.net",
-    WWWHome       := "https://wilf.me",
-  )],
+    WWWHome       := "https://wilf.me")],
 
 Status := "deposited",
 
