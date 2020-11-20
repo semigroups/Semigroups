@@ -18,3 +18,6 @@ DeclareGlobalFunction("FreeBand");
 DeclareAttribute("ContentOfFreeBandElement", IsFreeBandElement);
 DeclareAttribute("ContentOfFreeBandElementCollection",
                  IsFreeBandElementCollection);
+
+DeclareCategory("IsFreeBandElementByGraph", IsAssociativeElement);
+DeclareCategoryCollections("IsFreeBandElementByGraph");

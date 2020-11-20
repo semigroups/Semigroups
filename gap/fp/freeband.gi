@@ -550,3 +550,286 @@ function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForFreeBandElements,
              data := hashlen);
 end);
+
+SEMIGROUPS.FreeBandElementByGraphInsertNode := function(x, tuple)
+  local u, i;
+
+  if tuple in x!.lookup then
+    return x!.lookup[tuple];
+  fi;
+
+  x!.cont[tuple[1]] := true;
+  x!.cont[tuple[3]] := true;
+
+  for i in [2, 4] do
+    if tuple[i] <> 0 then
+      x!.indeg[tuple[i]] := x!.indeg[tuple[i]] + 1;
+    fi;
+  od;
+
+  if Length(x!.graveyard) <> 0 then
+    u := Remove(x!.graveyard);
+    for i in [2, 4] do
+      if x!.graph[u][i] <> 0 then
+        x!.indeg[x!.graph[u][i]] := x!.indeg[x!.graph[u][i]] - 1;
+        if x!.indeg[x!.graph[u][i]] = 0 then
+          Add(x!.graveyard, x!.graph[u][i]);
+          Unbind(x!.lookup[x!.graph[x!.graph[u][i]]]);
+        fi;
+      fi;
+    od;
+    x!.graph[u] := tuple;
+  else
+    u := Length(x!.graph) + 1;
+    Add(x!.graph, tuple);
+    Add(x!.indeg, 0);
+  fi;
+
+  x!.lookup[tuple] := u;
+
+  if x!.root = tuple[2] or x!.root = tuple[4] then
+    x!.root := u;
+  fi;
+
+  return u;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter := function(x, a)
+  local que, u, v, w;
+
+  if x!.graph[x!.root][1] = 0 then
+    x!.root := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, x!.root, a, x!.root]);
+    return;
+  fi;
+
+  u   := x!.root;
+  que := [];
+  while x!.graph[u][1] <> 0 do
+    Add(que, u);
+    u := x!.graph[u][4];
+  od;
+  u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+       [a, u, a, u]);
+  v := Remove(que);
+  if u = v then
+    return;
+  fi;
+  while Length(que) > 0 do
+    w := v;
+    v := Remove(que);
+    if x!.graph[v][3] = a then
+      break;
+    fi;
+    u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+         [a, w, x!.graph[w][3], u]);
+  od;
+
+  if x!.graph[v][3] <> a then
+    x!.root := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+               [a, v, x!.graph[v][3], u]);
+    return;
+  fi;
+
+  u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+       [x!.graph[v][1], x!.graph[v][2], x!.graph[w][3], u]);
+
+  while Length(que) > 0 do
+    v := Remove(que);
+    u := SEMIGROUPS.FreeBandElementByGraphInsertNode(x,
+         [x!.graph[v][1], x!.graph[v][2], x!.graph[v][3], u]);
+  od;
+
+  if u <> v then
+    Add(x!.graveyard, v);
+    Unbind(x!.lookup[x!.graph[v]]);
+  fi;
+
+  x!.root := u;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices := function(x)
+  local l, r, i, j, n, u, v, is_dead, new_pos;
+  i := 1;
+  n := Length(x!.graveyard);
+  while i <= n do
+    u := x!.graveyard[i];
+    for j in [2, 4] do
+      v := x!.graph[u][j];
+      x!.indeg[v] := x!.indeg[v] - 1;
+      if x!.indeg[v] = 0 then
+        Add(x!.graveyard, v);
+        Unbind(x!.lookup[x!.graph[v]]);
+        n := n + 1;
+      fi;
+    od;
+    i := i + 1;
+  od;
+  is_dead := BlistList([1 .. Length(x!.graph)], x!.graveyard);
+  new_pos := ListWithIdenticalEntries(Length(x!.graph), 0);
+  i := 1;
+  for u in [1 .. Length(x!.graph)] do
+    if not is_dead[u] then
+      new_pos[u] := i;
+      i := i + 1;
+    fi;
+  od;
+  x!.root := new_pos[x!.root];
+  x!.lookup := HashMap();
+  for u in [1 .. Length(x!.graph)] do
+    if not is_dead[u] then
+      l := 0;
+      if x!.graph[u][2] <> 0 then
+        l := new_pos[x!.graph[u][2]];
+      fi;
+      r := 0;
+      if x!.graph[u][4] <> 0 then
+        r := new_pos[x!.graph[u][4]];
+      fi;
+      x!.graph[new_pos[u]] := [x!.graph[u][1], l, x!.graph[u][3], r];
+      x!.indeg[new_pos[u]] := x!.indeg[u];
+      x!.lookup[x!.graph[new_pos[u]]] := new_pos[u];
+    fi;
+  od;
+  x!.graph := x!.graph{[1 .. i - 1]};
+  x!.indeg := x!.indeg{[1 .. i - 1]};
+  x!.graveyard := [];
+  return x!.root;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphDotString := function(x)
+  local S, i;
+  S := "//dot\ndigraph {\nedge [colorscheme=set19]\n";
+  S := Concatenation(S, "node [shape=circle style=filled colorscheme=set19]\n");
+  x!.graveyard := Set(x!.graveyard);
+  for i in [1 .. Length(x!.graph)] do
+    if i in x!.graveyard then
+      S := Concatenation(S, String(i), " [fillcolor=white]\n");
+    else
+      S := Concatenation(S, String(i), "\n");
+    fi;
+  od;
+  for i in [1 .. Length(x!.graph)] do
+    if x!.graph[i][2] <> 0 then
+      S := Concatenation(S, String(i), "->",
+                         String(x!.graph[i][2]),
+                         " [arrowhead=empty color=",
+                         String(x!.graph[i][1]),
+                         "]\n");
+    fi;
+    if x!.graph[i][4] <> 0 then
+      S := Concatenation(S, String(i), "->",
+                         String(x!.graph[i][4]),
+                         " [arrowhead=normal color=",
+                         String(x!.graph[i][3]),
+                         "]\n");
+    fi;
+  od;
+  S := Concatenation(S, "}");
+  return S;
+end;
+
+SEMIGROUPS.FreeBandElementByGraph := function(S)
+  local F, type, x, s;
+  F    := NewFamily("FreeBandElementsByGraphFamily", IsFreeBandElementByGraph);
+  type := NewType(F, IsFreeBandElementByGraph and IsPositionalObjectRep);
+  x    := Objectify(type, rec(root := 1,
+                              graph := [[0, 0, 0, 0]],
+                              cont := BlistList([1 .. Maximum(S)], []),
+                              graveyard := [],
+                              indeg := [0],
+                              lookup := HashMap()));
+  x!.lookup[[0, 0, 0, 0]] := 1;
+  for s in S do
+    SEMIGROUPS.FreeBandElementByGraphRightMultiplyByLetter(x, s);
+  od;
+  # SEMIGROUPS.FreeBandElementByGraphRemoveDeadVertices(x);
+  return x;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphIsEqual := function(x, y)
+  local que, u, v, seen_x, seen_y, i;
+  if x!.cont <> y!.cont then
+    return false;
+  fi;
+  que := [[x!.root, y!.root]];
+  seen_x := BlistList([1 .. Length(x!.graph)], []);
+  seen_x[x!.root] := true;
+  seen_y := BlistList([1 .. Length(y!.graph)], []);
+  seen_y[y!.root] := true;
+  while Length(que) <> 0 do
+    u := Remove(que);
+    v := u[2];
+    u := u[1];
+    if x!.graph[u][1] <> y!.graph[v][1] or x!.graph[u][3] <> y!.graph[v][3] then
+      return false;
+    fi;
+    for i in [2, 4] do
+      if (x!.graph[u][i] = 0 and y!.graph[v][i] <> 0) or
+          (x!.graph[u][i] <> 0 and y!.graph[v][i] = 0) then
+        return false;
+      fi;
+      if x!.graph[u][i] <> 0 then
+        if (seen_x[x!.graph[u][i]] and not seen_y[y!.graph[v][i]]) or
+            (not seen_x[x!.graph[u][i]] and seen_y[y!.graph[v][i]]) then
+          return false;
+        fi;
+        if not seen_x[x!.graph[u][i]] then
+          Add(que, [x!.graph[u][i], y!.graph[v][i]]);
+          seen_x[x!.graph[u][i]] := true;
+          seen_y[y!.graph[v][i]] := true;
+        fi;
+      fi;
+    od;
+  od;
+  return true;
+end;
+
+SEMIGROUPS.FreeBandElementByGraphCopy := function(x)
+  local lookup, key;
+  lookup := HashMap();
+  for key in Keys(x!.lookup) do
+    lookup[key] := x!.lookup[key];
+  od;
+  return Objectify(TypeObj(x),
+                   rec(root := x!.root,
+                      graph := ShallowCopy(x!.graph),
+                       cont := ShallowCopy(x!.cont),
+                  graveyard := ShallowCopy(x!.graveyard),
+                      indeg := ShallowCopy(x!.indeg),
+                     lookup := lookup));
+end;
+
+SEMIGROUPS.FreeBandElementByGraphCanonicalWord := function(x)
+  local S, que, u, v, w;
+  S   := [];
+  que := [];
+  u   := x!.root;
+  while x!.graph[u][1] <> 0 do
+    Add(que, u);
+    u := x!.graph[u][2];
+  od;
+  while Length(que) <> 0 do
+    u := Remove(que);
+    Add(S, x!.graph[u][1]);
+    v := x!.graph[u][2];
+    w := x!.graph[u][4];
+    while x!.graph[w][1] <> 0 do
+      if x!.graph[w][1] = x!.graph[u][1] and
+          x!.graph[v][3] = x!.graph[u][3] and
+          x!.graph[w][2] = x!.graph[v][4] then
+        u := w;
+        v := x!.graph[u][2];
+        w := x!.graph[u][4];
+      else
+        Add(que, w);
+        w := x!.graph[w][2];
+        v := x!.graph[v][4];
+      fi;
+    od;
+    if x!.graph[u][1] <> x!.graph[u][3] then
+      Add(S, x!.graph[u][3]);
+    fi;
+  od;
+  return S;
+end;
