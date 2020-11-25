@@ -438,7 +438,7 @@ end);
 # in a Free Idempotent Semigroup⋆'
 
 InstallMethod(EqualInFreeBand, "for two lists of positive integers",
-[IsList, IsList],
+[IsHomogeneousList, IsHomogeneousList],
 function(w1_in, w2_in)
   local Right, Left, LevelEdges, RadixSort, StripFreeBandString, w1, w2, dollar,
   l1, l2, w, c, check, rightk, leftk, edgecodes, rightm, leftm, i, k;
