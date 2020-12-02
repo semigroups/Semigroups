@@ -587,11 +587,11 @@ SEMIGROUPS.BitranslationsOfNormalRMS := function(H)
   local S, P, m, n, G, triples, nronly, count, extendf, extendg, nextf, nextg,
   partialcheckrow, partialcheckcol, reject, bt, k, f, g, a;
 
-  S       := UnderlyingSemigroup(H);
+  S := UnderlyingSemigroup(H);
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.BitranslationsOfNormalRMS: \n",
-                  "the argument must be the translational hull of a normalised RMS ",
-                  "over a group,");
+                  "the argument must be the translational hull of a ",
+                  "normalised RMS over a group,");
   fi;
   P       := Matrix(S);
   m       := Size(P);
