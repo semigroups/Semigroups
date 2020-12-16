@@ -498,14 +498,13 @@ InstallMethod(EquivalenceRelationLookup,
 "for an equivalence relation",
 [IsEquivalenceRelation],
 function(equiv)
-  if not IsFinite(Range(equiv)) then
+  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
     ErrorNoReturn("<equiv> must be over a finite semigroup,");
   fi;
   return SEMIGROUPS._GenericEquivLookup(equiv);
 end);
 
-BindGlobal("_GenericEquivCanonicalLookup",
-function(equiv)
+SEMIGROUPS._GenericEquivCanonicalLookup := function(equiv)
   local lookup, max, dictionary, next, out, i, new_nr;
   lookup := EquivalenceRelationLookup(equiv);
   max := Maximum(lookup);
@@ -523,15 +522,17 @@ function(equiv)
     out[i] := new_nr;
   od;
   return out;
-end);
+end;
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for an equivalence relation",
 [IsEquivalenceRelation],
-_GenericEquivCanonicalLookup);
-
-MakeReadWriteGlobal("_GenericCongCanonicalLookup");
-Unbind(_GenericCongCanonicalLookup);
+function(equiv)
+  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
+    ErrorNoReturn("<equiv> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericEquivCanonicalLookup(equiv);
+end);
 
 InstallMethod(EquivalenceRelationCanonicalPartition,
 "for a left semigroup congruence",
