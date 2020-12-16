@@ -1677,6 +1677,7 @@ function(t)
   fi;
 end);
 
+# TODO: why is this a global function?
 InstallGlobalFunction(LeftPartOfBitranslation, "for a bitranslation",
 function(h)
   if not IsBitranslation(h) then
