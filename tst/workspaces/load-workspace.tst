@@ -24,18 +24,6 @@ gap> SEMIGROUPS.StartTest();
 ##  file.
 #############################################################################
 
-#  Union-find structures
-gap> UF_TABLE(uftable1);
-[ 1, 2, 3, 2, 5, 6, 7, 8, 2, 10 ]
-gap> UF_TABLE(uftable2);
-[ 1 ]
-gap> UF_FIND(uftable3, 17);
-17
-gap> UF_FIND(uftable3, 20222);
-234
-gap> UF_FIND(uftable3, 234);
-234
-
 #  Congruences from libsemigroups
 gap> NrEquivalenceClasses(cong);
 4
@@ -153,10 +141,7 @@ gap> CanonicalBlocks(b);
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(cong);
-gap> Unbind(uftable1);
-gap> Unbind(uftable2);
-gap> Unbind(uftable3);
 
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: workspaces/load-workspace.tst");

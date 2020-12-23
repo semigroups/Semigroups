@@ -76,11 +76,7 @@ extern UInt T_BLOCKS;
 
 // Subtypes of objects that can be stored in a GAP Obj of type T_SEMI
 
-enum t_semi_subtype_t {
-  T_SEMI_SUBTYPE_UF     = 0,
-  T_SEMI_SUBTYPE_CONG   = 1,
-  T_SEMI_SUBTYPE_ENSEMI = 2
-};
+enum t_semi_subtype_t { T_SEMI_SUBTYPE_CONG = 0, T_SEMI_SUBTYPE_ENSEMI = 1 };
 
 // Get a new GAP Obj containing a pointer to a C++ class of type Class
 

@@ -25,6 +25,12 @@
         ensure that the &Orb; package version &ORBVERS; or higher is available.
         &Orb; and &Semigroups; both perform better if &Orb; is compiled.
       </Item>
+      
+      <Item>
+        ensure that the &datastructures; package version &DATASTRUCTURESVERS;
+        or higher is available.  &datastructures; must be compiled before
+          &Semigroups; can be loaded.
+      </Item>
 
       <Item>
         ensure that the &Digraphs; package version &DIGRAPHSVERS; or higher is

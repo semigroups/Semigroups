@@ -22,7 +22,7 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc 
-semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
+semigroups_la_SOURCES += src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3
