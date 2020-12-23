@@ -45,12 +45,9 @@ CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-m
 
 ################################################################################
 # Install digraphs, genss, io, orb, images, and profiling
-PKGS=( "digraphs" "genss" "io" "orb" "images")
+PKGS=( "digraphs" "genss" "io" "orb" "images" "datastructures")
 if [ "$SUITE"  == "coverage" ]; then
   PKGS+=( "profiling" )
-fi
-if [ "$PACKAGES" == "latest" ]; then 
-  PKGS+=( "datastructures" )
 fi
 
 for PKG in "${PKGS[@]}"; do
