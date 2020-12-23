@@ -22,8 +22,8 @@ GAP_HOME=$(docker exec $ID bash -c 'echo "$GAP_HOME"')
 # Copy the digraphs directory into the container
 docker cp . $ID:$GAP_HOME/pkg/semigroups
 
-# Run the ci/docker-test.sh script in the running container
-docker exec -i $ID "$GAP_HOME/pkg/semigroups/ci/docker-test.sh" ; exit
+# Run the ci/docker-install-deps.sh + docker-test.sh in the running container
+docker exec -i $ID "$GAP_HOME/pkg/semigroups/ci/docker.sh" ; exit
 
 # Attach to the container
 docker attach $ID
