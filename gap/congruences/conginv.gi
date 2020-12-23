@@ -455,8 +455,8 @@ function(c1, c2)
 end);
 
 SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
-  local idsmgp, idslist, slist, kernelgenstoapply, gen, nrk, nr,
-        traceUF, i, pos1, j, pos, hashlen, ht, right, genstoapply,
+  local canonical_lookup, idsmgp, idslist, slist, kernelgenstoapply, gen, nrk,
+        nr, traceUF, i, pos1, j, pos, hashlen, ht, right, genstoapply,
         NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
         compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
@@ -466,6 +466,14 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # "traceBlocks" in its trace, and containing all the given pairs
   # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
   # better?
+
+  canonical_lookup := function(uf)
+    local N;
+    N := SizeUnderlyingSetDS(traceUF);
+    return FlatKernelOfTransformation(Transformation([1 .. N],
+                                                     x -> Representative(uf, x)),
+                                      N);
+  end;
 
   idsmgp  := IdempotentGeneratedSubsemigroup(S);
   idslist := AsListCanonical(idsmgp);
@@ -486,14 +494,13 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   nr := Length(pairstoapply);
 
   # Calculate traceUF from traceBlocks
-  traceUF := UF_NEW(Length(idslist));
+  traceUF := PartitionDS(IsPartitionDS, Length(idslist));
   for i in [1 .. Length(traceBlocks)] do
     pos1 := PositionCanonical(idsmgp, traceBlocks[i][1]);
     for j in [2 .. Length(traceBlocks[i])] do
-      UF_UNION(traceUF, [pos1, PositionCanonical(idsmgp, traceBlocks[i][j])]);
+      Unite(traceUF, pos1, PositionCanonical(idsmgp, traceBlocks[i][j]));
     od;
   od;
-  UF_FLATTEN(traceUF);
 
   # Setup some useful information
   pos := 0;
@@ -537,7 +544,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
       for x in pairstoapply do
         if x[1] <> x[2] and HTValue(ht, x) = fail then
           HTAdd(ht, x, true);
-          UF_UNION(traceUF, x);
+          Unite(traceUF, x[1], x[2]);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
             z := [PositionCanonical(idsmgp, a ^ -1 * idslist[x[1]] * a),
@@ -546,7 +553,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
               HTAdd(ht, z, true);
               nr := nr + 1;
               pairstoapply[nr] := z;
-              UF_UNION(traceUF, z);
+              Unite(traceUF, z[1], z[2]);
             fi;
           od;
         fi;
@@ -563,7 +570,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           HTAdd(ht, y, true);
           nr := nr + 1;
           pairstoapply[nr] := y;
-          UF_UNION(traceUF, y);
+          Unite(traceUF, y[1], y[2]);
           # Add the pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
             z := [PositionCanonical(idsmgp, a ^ -1 * idslist[x[1]] * a),
@@ -572,19 +579,23 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
               HTAdd(ht, z, true);
               nr := nr + 1;
               pairstoapply[nr] := z;
-              UF_UNION(traceUF, z);
+              Unite(traceUF, z[1], z[2]);
             fi;
           od;
         fi;
       od;
     od;
-    UF_FLATTEN(traceUF);
   end;
 
   enforce_conditions := function()
-    local traceTable, traceBlocks, a, e, f, classno;
-    traceTable := UF_TABLE(traceUF);
-    traceBlocks := UF_BLOCKS(traceUF);
+    local traceTable, traceBlocks, a, e, f, classno, blocks, bl, N;
+    blocks := PartsOfPartitionDS(traceUF);
+    traceBlocks := [];
+    for bl in blocks do
+      traceBlocks[Representative(traceUF, bl[1])] := bl;
+    od;
+    N := SizeUnderlyingSetDS(traceUF);
+    traceTable := List([1 .. N], x -> Representative(traceUF, x));
     for a in slist do
       if a in kernel then
         e := PositionCanonical(idsmgp, LeftOne(a));
@@ -621,12 +632,12 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
 
   # Keep applying the method until no new info is found
   repeat
-    oldLookup := StructuralCopy(UF_TABLE(traceUF));
+    oldLookup := canonical_lookup(traceUF);
     oldKernel := kernel;
     compute_kernel();
     enforce_conditions();
     enumerate_trace();
-    trace_unchanged := (oldLookup = UF_TABLE(traceUF));
+    trace_unchanged := (oldLookup = canonical_lookup(traceUF));
     kernel_unchanged := (oldKernel = kernel);
     Info(InfoSemigroups, 3, "lookup: ", trace_unchanged);
     Info(InfoSemigroups, 3, "kernel: ", kernel_unchanged);
@@ -634,7 +645,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   until trace_unchanged and kernel_unchanged and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
-  traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
+  traceBlocks := List(Compacted(PartsOfPartitionDS(traceUF)),
                       b -> List(b, i -> idslist[i]));
 
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);

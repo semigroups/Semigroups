@@ -30,16 +30,13 @@
 #include "fropin.h"
 #include "semigroups-debug.h"
 #include "semigrp.h"
-#include "uf.h"
 
 #include "libsemigroups/blocks.hpp"
 #include "libsemigroups/cong.hpp"
 #include "libsemigroups/element-adapters.hpp"
 #include "libsemigroups/froidure-pin.hpp"
-#include "libsemigroups/uf.hpp"
 
 using libsemigroups::Congruence;
-using libsemigroups::detail::UF;
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -63,10 +60,6 @@ UInt T_BLOCKS = 0;
 
 void TSemiObjPrintFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UF: {
-      Pr("<wrapper for instance of C++ UF class>", 0L, 0L);
-      break;
-    }
     case T_SEMI_SUBTYPE_CONG: {
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
@@ -102,10 +95,6 @@ void TBlocksObjCleanFunc(Obj o) {}
 void TSemiObjFreeFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UF: {
-      delete CLASS_OBJ<UF*>(o);
-      break;
-    }
     case T_SEMI_SUBTYPE_CONG: {
       delete CLASS_OBJ<Congruence*>(o);
       break;
@@ -157,14 +146,6 @@ void TSemiObjSaveFunc(Obj o) {
   SaveUInt4(SUBTYPE_OF_T_SEMI(o));
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UF: {
-      UF* uf = CLASS_OBJ<UF*>(o);
-      SaveUInt(uf->get_size());
-      for (size_t i = 0; i < uf->get_size(); i++) {
-        SaveUInt(uf->find(i));
-      }
-      break;
-    }
     case T_SEMI_SUBTYPE_ENSEMI: {
       // [t_semi_subtype_t, en_semi_t, gap_semigroup_t, size_t degree]
       // only store gap_semigroup_t and degree if en_semi_get_semi_obj !=
@@ -190,16 +171,6 @@ void TSemiObjLoadFunc(Obj o) {
   ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
 
   switch (type) {
-    case T_SEMI_SUBTYPE_UF: {
-      size_t               size  = LoadUInt();
-      std::vector<size_t>* table = new std::vector<size_t>();
-      table->reserve(size);
-      for (size_t i = 0; i < size; i++) {
-        table->push_back(LoadUInt());
-      }
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UF(*table));
-      break;
-    }
     case T_SEMI_SUBTYPE_CONG: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
@@ -225,26 +196,12 @@ void TSemiObjLoadFunc(Obj o) {
 
 Obj TSemiObjCopyFunc(Obj o, Int mut) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UF: {
-      return UF_COPY(0L, o);
-    }
-    default: {
-      return o;
-    }
-  }
+  return o;
 }
 
 Int TSemiObjIsMutableObjFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UF: {
-      return 1L;
-    }
-    default: {
-      return 0L;
-    }
-  }
+  return 0L;
 }
 
 void TSemiObjCleanFunc(Obj o) {}
@@ -459,18 +416,6 @@ static StructGVarFunc GVarFuncs[] = {
                2,
                "scc1, scc2"),
     GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
-
-    GVAR_ENTRY("uf.cc", UF_NEW, 1, "size"),
-    GVAR_ENTRY("uf.cc", UF_COPY, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_SIZE, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_FIND, 2, "uf, i"),
-    GVAR_ENTRY("uf.cc", UF_UNION, 2, "uf, pair"),
-    GVAR_ENTRY("uf.cc", UF_FLATTEN, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_TABLE, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_BLOCKS, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_NR_BLOCKS, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_BLOCK_REPS, 1, "uf"),
-    GVAR_ENTRY("uf.cc", UF_JOIN, 2, "uf1, uf2"),
 
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
