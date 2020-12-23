@@ -57,11 +57,11 @@ ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
     Type := "git",
-    URL := Concatenation("https://github.com/gap-packages/", ~.PackageName),
+    URL := Concatenation("https://github.com/semigroups/", ~.PackageName),
 ),
 
 IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
-PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
+PackageWWWHome  := Concatenation("https://semigroups.github.io/",
                                  ~.PackageName),
 README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
 PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
