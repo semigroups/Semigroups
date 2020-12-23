@@ -3,8 +3,11 @@
    <!ENTITY Smallsemi "<Alt Not='Text'><URL
    Text='Smallsemi'>https://gap-packages.github.io/smallsemi/</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
      <!ENTITY Digraphs "<Alt Not='Text'><URL
-     Text='Digraphs'>https://gap-packages.github.io/Digraphs</URL></Alt><Alt
+     Text='Digraphs'>https://digraphs.github.io/Digraphs</URL></Alt><Alt
      Only='Text'><Package>Digraphs</Package></Alt>">
+     <!ENTITY datastructures "<Alt Not='Text'><URL
+     Text='Digraphs'>https://gap-packages.github.io/datastructures</URL></Alt><Alt
+     Only='Text'><Package>datastructures</Package></Alt>">
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 </URL></Alt><Alt Only='Text'><Package>Orb</Package></Alt>">

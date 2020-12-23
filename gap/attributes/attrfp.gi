@@ -19,7 +19,7 @@ function(S)
   gens := GeneratorsOfSemigroup(FreeSemigroupOfFpSemigroup(S));
   rels := RelationsOfFpSemigroup(S);
   decomposable := BlistList(gens, []);
-  uf := UF_NEW(Length(gens));
+  uf := PartitionDS(IsPartitionDS, Length(gens));
 
   for rel in rels do
     lens := List(rel, Length);
@@ -28,17 +28,17 @@ function(S)
       # a generator is repeated, so record this information using UF.
       pos1 := Position(gens, rel[1]);
       pos2 := Position(gens, rel[2]);
-      t1 := UF_FIND(uf, pos1);
-      t2 := UF_FIND(uf, pos2);
-      UF_UNION(uf, [pos1, pos2]);
-      x := UF_FIND(uf, pos1);
+      t1 := Representative(uf, pos1);
+      t2 := Representative(uf, pos2);
+      Unite(uf, pos1, pos2);
+      x := Representative(uf, pos1);
       decomposable[x] := decomposable[t1] or decomposable[t2];
     elif (lens[1] = 1 or lens[2] = 1) and rel[1] <> rel[2] then
       # Relation gives non-trivial decomposition of some generator x[i]
       pos1 := Position(gens, rel[Position(lens, 1)]);
-      decomposable[UF_FIND(uf, pos1)] := true;
+      decomposable[Representative(uf, pos1)] := true;
     fi;
   od;
-  return Set(Filtered(UF_BLOCKS(uf), x -> not decomposable[x[1]]),
+  return Set(Filtered(PartsOfPartitionDS(uf), x -> not decomposable[x[1]]),
              x -> GeneratorsOfSemigroup(S)[x[1]]);
 end);
