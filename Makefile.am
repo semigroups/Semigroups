@@ -25,7 +25,7 @@ semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc
 semigroups_la_SOURCES += src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
-semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3
+semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
