@@ -18,3 +18,5 @@ DeclareGlobalFunction("FreeBand");
 DeclareAttribute("ContentOfFreeBandElement", IsFreeBandElement);
 DeclareAttribute("ContentOfFreeBandElementCollection",
                  IsFreeBandElementCollection);
+
+DeclareOperation("ToddCoxeterBand", [IsPosInt, IsList]);
