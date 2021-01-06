@@ -220,6 +220,193 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   return translist;
 end;
 
+SEMIGROUPS.LeftTranslationsBacktrackNew := function(L)
+  local S, n, slist, sortedlist, gens, m, genspos, possiblefgenvals, t, tinv, M,
+  multtable, multsets, r_classes_below, max_R_intersects, intersect, maximals,
+  right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s, V,
+  W, U, i, j, a, u, r;
+
+  S           := UnderlyingSemigroup(L);
+  n           := Size(S);
+  slist       := AsListCanonical(S);
+  sortedlist  := AsSortedList(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+
+  t    := Transformation(List([1 .. n],
+                         i -> PositionCanonical(S, sortedlist[i])));
+  tinv := InverseOfTransformation(t);
+  M    := MultiplicationTable(S);
+
+  multtable := List([1 .. n], i -> List([1 .. n],
+                                        j -> M[i ^ tinv][j ^ tinv] ^ t));
+  multsets := List(multtable, Set);
+
+  r_classes_below := List([1 .. m],
+                          i -> Set(List(multsets[i],
+                                        j -> RClass(S, slist[j]))));
+
+  max_R_intersects := List([1 .. m], x -> []);
+  #TODO: double check m = 1
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      intersect := Intersection(r_classes_below[i], r_classes_below[j]);
+      maximals := Filtered(intersect, 
+                           x -> not ForAny(intersect, 
+                                           y -> x <> y and 
+                                           IsGreensLessThanOrEqual(x, y)));
+
+      max_R_intersects[i][j] := List(maximals, 
+                                     x -> PositionCanonical(S, Representative(x)));
+    od;
+  od;
+
+  # compute the right multipliers to the intersects from the gens
+  right_intersect_multipliers := List([1 .. m], x -> []);
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for a in max_R_intersects[i][j] do
+        if not IsBound(right_intersect_multipliers[i][a]) then
+          right_intersect_multipliers[i][a] := Positions(multtable[genspos[i]], a);
+        fi;
+        if not IsBound(right_intersect_multipliers[j][a]) then
+          right_intersect_multipliers[j][a] := Positions(multtable[genspos[j]], a);
+        fi;
+      od;
+    od;
+  od;
+
+  # for all s in S, store the elements t such that gens[i] * t = s for each i
+  left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
+  for i in [1 .. m] do
+    for t in [1 .. n] do
+      Add(left_inverses_by_gen[multtable[genspos[i]][t]][i], t);
+    od;
+  od;
+
+  # for each t in the left inverses of some a in max_R_intersects[i][j] by 
+  # gens[j], compute the right inverses of each s in S under t
+  right_inverses := List([1 .. n], x -> List([1 .. n], y -> []));
+  seen := List([1 .. n], x -> false);
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for a in max_R_intersects[i][j] do
+        for t in left_inverses_by_gen[a][j] do
+          # don't repeat the calculation if we've already done it for t!
+          if not seen[t] then
+            seen[t] := true;
+            for u in [1 .. n] do
+              s := multtable[u][t];
+              Add(right_inverses[s][t], u);
+            od;
+          fi;
+        od;
+      od;
+    od;
+  od;
+
+  # compute the sets V_{j, a, s} from paper
+  # again leave the unused ones unbound for fast failure
+  V := List([1 .. m], x -> List([1 .. n], y -> []));
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for a in max_R_intersects[i][j] do
+        for s in [1 .. n] do
+          intersect := [1 .. n];
+          for t in left_inverses_by_gen[a][j] do
+            intersect := Intersection(intersect, right_inverses[s][t]);
+          od;
+          V[j][a][s] := intersect;
+        od;
+      od;
+    od;
+  od;
+ 
+  # compute the sets W_{i, j, s} from paper
+  W := List([1 .. m], x -> List([1 .. m], y -> []));
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for s in [1 .. n] do
+        intersect := [1 .. n];
+        for a in max_R_intersects[i][j] do
+          for r in right_intersect_multipliers[i][a] do
+            intersect := Intersection(intersect, V[j][a][multtable[s][r]]);
+          od;
+        od;
+        W[i][j][s] := intersect;
+      od;
+    od;
+  od;
+
+  # enforce arc consistency with the W_{i, j, s}
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for s in [1 .. n] do
+        if IsEmpty(W[i][j][s]) then
+          SubtractSet(possiblefgenvals[i], [s]);
+        fi;
+      od;
+    od;
+  od;
+
+  # compute the sets U_{i, a} from the paper
+  U := List([1 .. m], x -> []);
+  for i in [1 .. m] do
+    for a in multsets[genspos[i]] do
+      U[i][a] := [];
+      for u in [1 .. n] do
+# TODO: optimise
+        if Size(Set(List(left_inverses_by_gen[a][i], 
+                         t -> multtable[u][t])))
+              = 1 then
+          AddSet(U[i][a], u);
+        fi;
+      od;
+    od;
+  od;
+
+  # restrict the values using the U_{i,a}s
+  for i in [1 .. m] do
+    intersect := [1 .. n];
+    for a in multsets[genspos[i]] do
+      intersect := Intersection(intersect, U[i][a]);
+    od;
+    possiblefgenvals[i] := Intersection(possiblefgenvals[i], intersect);
+  od;
+
+#  # just manually do the intersection of possiblefgenvals with the U_{i,a}s
+#  for i in [1 .. m] do
+#    for a in multsets[genspos[i]] do
+#      for u in possiblefgenvals[i] do
+#        mults := List(left_inverses_by_gen[a][i], t -> multtable[u][t]);
+#        if Size(Set(mults)) <> 1 then
+#          Remove(possiblefgenvals[i], u);
+#        fi;
+#      od;
+#    od;
+#  od;
+
+
+
+  return [possiblefgenvals, V, W];
+
+#
+#  whenbound           := List([1 .. n], i -> 0);
+#  translist           := [];
+#  f                   := [];
+#  posinfgenvals       := List([1 .. m], i -> 0);
+#
+#  extend(0);
+#  k := bt(1);
+#  while k = m + 1 do
+#    Add(translist, LeftTranslationNC(L, Transformation(ShallowCopy(f))));
+#    k := bt(reject(k));
+#  od;
+#  return translist;
+end;
+
 SEMIGROUPS.RightTranslationsByDual := function(R)
   local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
 
