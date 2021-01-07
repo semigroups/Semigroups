@@ -224,7 +224,7 @@ SEMIGROUPS.LeftTranslationsBacktrackNew := function(L)
   local S, n, slist, sortedlist, gens, m, genspos, possiblefgenvals, t, tinv, M,
   multtable, multsets, r_classes_below, max_R_intersects, intersect, maximals,
   right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s, V,
-  W, U, i, j, a, u, r;
+  W, U, u, bt, omega_stack, lambda, i, j, a, r, Lu;
 
   S           := UnderlyingSemigroup(L);
   n           := Size(S);
@@ -352,45 +352,52 @@ SEMIGROUPS.LeftTranslationsBacktrackNew := function(L)
   od;
 
   # compute the sets U_{i, a} from the paper
-  U := List([1 .. m], x -> []);
   for i in [1 .. m] do
     for a in multsets[genspos[i]] do
-      U[i][a] := [];
-      for u in [1 .. n] do
+      U := [];
 # TODO: optimise
+      for Lu in LClasses(S) do
+        u := PositionCanonical(S, Representative(Lu));
         if Size(Set(List(left_inverses_by_gen[a][i], 
-                         t -> multtable[u][t])))
-              = 1 then
-          AddSet(U[i][a], u);
+                         t -> multtable[u][t]))) = 1 then
+            UniteSet(U, List(Lu, y -> PositionCanonical(S, y)));
         fi;
       od;
+      IntersectSet(possiblefgenvals[i], U);
     od;
   od;
 
-  # restrict the values using the U_{i,a}s
-  for i in [1 .. m] do
-    intersect := [1 .. n];
-    for a in multsets[genspos[i]] do
-      intersect := Intersection(intersect, U[i][a]);
+#  return [possiblefgenvals, V, W];
+
+  bt := function(i) 
+    local consistent, s, j;
+    for s in omega_stack[i][i] do
+      lambda[i] := s;
+      if i = m then
+        Add(L, ShallowCopy(lambda));
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W[i][j][s]);
+          if IsEmpty(omega_stack[i + 1][j]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          bt(i + 1);
+        fi;
+      fi;
     od;
-    possiblefgenvals[i] := Intersection(possiblefgenvals[i], intersect);
-  od;
+  end;
+  
 
-#  # just manually do the intersection of possiblefgenvals with the U_{i,a}s
-#  for i in [1 .. m] do
-#    for a in multsets[genspos[i]] do
-#      for u in possiblefgenvals[i] do
-#        mults := List(left_inverses_by_gen[a][i], t -> multtable[u][t]);
-#        if Size(Set(mults)) <> 1 then
-#          Remove(possiblefgenvals[i], u);
-#        fi;
-#      od;
-#    od;
-#  od;
-
-
-
-  return [possiblefgenvals, V, W];
+  omega_stack := [possiblefgenvals];
+  lambda := [];
+  L := [];
+  bt(1);
+  return L;
 
 #
 #  whenbound           := List([1 .. n], i -> 0);
