@@ -695,6 +695,7 @@ SEMIGROUPS.BitranslationsBacktrackNew := function(H)
     # backtrack
     # k represents the generator number we are defining the value of l or r for
     # now
+
     if (i mod 2 = 1) then 
       # we are dealing with the left translation
       k := (i + 1)/2;
@@ -727,12 +728,12 @@ SEMIGROUPS.BitranslationsBacktrackNew := function(H)
       # we are dealing with the right translation
       k := i/2;
       for s in r_omega_stack[i][k] do
+        rho[k] := s;
         if (k = m) then
           Add(H, [ShallowCopy(lambda), ShallowCopy(rho)]);
           continue;
         fi;
         consistent := true;
-        rho[k] := s;
         l_omega_stack[i + 1] := [];
         r_omega_stack[i + 1] := [];
         for j in [k + 1 .. m] do
@@ -759,8 +760,6 @@ SEMIGROUPS.BitranslationsBacktrackNew := function(H)
   bt(1);
   return H;
 end;
-
-
 
 SEMIGROUPS.RightTranslationsByDual := function(R)
   local S, Sl, D, Dl, map, dual_trans, map_list, inv_list, j, i;
