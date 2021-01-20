@@ -1316,6 +1316,9 @@ function(S)
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
 
+  # TODO: is this really the correct thing to do?
+  SetUnderlyingGenerators(L, GeneratorsOfSemigroup(L));
+
   return L;
 end);
 
@@ -1354,6 +1357,9 @@ function(S)
   SetUnderlyingSemigroup(R, S);
   SetRightTranslations(S, R);
 
+  # TODO: is this really the correct thing to do?
+  SetUnderlyingGenerators(R, GeneratorsOfSemigroup(R));
+
   return R;
 end);
 
@@ -1385,6 +1391,9 @@ function(S)
   SetTranslationalHullOfFamily(fam, H);
   SetUnderlyingSemigroup(H, S);
   SetTranslationalHull(S, H);
+
+  # TODO: is this really the correct thing to do?
+  SetUnderlyingGenerators(H, GeneratorsOfSemigroup(H));
 
   return H;
 end);
@@ -1460,7 +1469,7 @@ end);
 # a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
-  local R, S, reps, semiList;
+  local R, S, reps, semi_list;
   S     := UnderlyingSemigroup(L);
   reps  := [];
 
@@ -1469,13 +1478,7 @@ function(L, x)
           "the first argument must be a semigroup of left translations,");
   fi;
 
-  if HasGeneratorsOfSemigroup(S) then
-    reps := GeneratorsOfSemigroup(S);
-  else
-    for R in RClasses(S) do
-      Add(reps, Representative(R));
-    od;
-  fi;
+  gens := GeneratorsOfSemigroup(S);
 
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
@@ -1483,21 +1486,21 @@ function(L, x)
             "the domain and range of the second argument must be ",
             "the underlying semigroup of the first,");
     fi;
-    if ForAny(reps, s -> ForAny(S, t -> (s ^ x) * t <> (s * t) ^ x)) then
+    if ForAny(gens, s -> ForAny(S, t -> (s ^ x) * t <> (s * t) ^ x)) then
       ErrorNoReturn("Semigroups: LeftTranslation: \n",
              "the mapping given must define a left translation,");
     fi;
-  elif IsTransformation(x) then
-    if not DegreeOfTransformation(x) <= Size(S) then
+  elif IsDenseList(x) then
+    if not Size(x) = Size(gens) then
       ErrorNoReturn("Semigroups: LeftTranslation (from transformation): \n",
-            "the second argument must act on the indices of the underlying ",
-            "semigroup of the first argument,");
+            "the second argument must map indices of generators to ",
+            "indices of elements of the semigroup of the first argument,");
     fi;
-    semiList := AsListCanonical(S);
-    if ForAny(reps,
+    semi_list := AsListCanonical(S);
+    if ForAny(gens,
               s -> ForAny(S,
-                          t -> semiList[PositionCanonical(S, s) ^ x] * t <>
-                          semiList[PositionCanonical(S, s * t) ^ x])) then
+                          t -> semi_list[x[Position(gens, s)]] * t <>
+                          semi_list[PositionCanonical(S, s * t) ^ x])) then
       ErrorNoReturn("Semigroups: LeftTranslation: \n",
             "the transformation given must define a left translation,");
     fi;
