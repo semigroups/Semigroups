@@ -1469,7 +1469,7 @@ end);
 # a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
-  local R, S, reps, semi_list;
+  local S, reps, gens, semi_list, full_lambda, g, lg, y, i, s;
   S     := UnderlyingSemigroup(L);
   reps  := [];
 
@@ -1478,8 +1478,9 @@ function(L, x)
           "the first argument must be a semigroup of left translations,");
   fi;
 
-  gens := GeneratorsOfSemigroup(S);
+  gens := UnderlyingGenerators(L);
 
+  # TODO allow general mapping from gens to S
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
       ErrorNoReturn("Semigroups: LeftTranslation (from Mapping): \n",
@@ -1496,14 +1497,26 @@ function(L, x)
             "the second argument must map indices of generators to ",
             "indices of elements of the semigroup of the first argument,");
     fi;
+    # TODO store and use CanonicalMultiplicationTable and
+    # LeftTranslationsBacktrackData
     semi_list := AsListCanonical(S);
-    if ForAny(gens,
-              s -> ForAny(S,
-                          t -> semi_list[x[Position(gens, s)]] * t <>
-                          semi_list[PositionCanonical(S, s * t) ^ x])) then
-      ErrorNoReturn("Semigroups: LeftTranslation: \n",
-            "the transformation given must define a left translation,");
-    fi;
+    full_lambda := [];
+    for i in [1 .. Size(gens)] do
+      g := gens[i];
+      lg := x[i];
+      for s in S do
+        x := PositionCanonical(S, g * s);
+        y := PositionCanonical(S, semi_list[lg] * s);
+        if not IsBound(full_lambda[x]) then
+          full_lambda[x] := y;
+        fi;
+        if full_lambda[x] <> y then
+          ErrorNoReturn("Semigroups: LeftTranslation: \n",
+                        "the transformation given must define a left",
+                        "translation,");
+        fi;
+      od;
+    od;
   else
     ErrorNoReturn("Semigroups: LeftTranslation: \n",
           "the first argument should be a left translations semigroup, and ",
@@ -1516,72 +1529,76 @@ end);
 
 InstallGlobalFunction(LeftTranslationNC,
 function(L, x)
-  local S, tup, semiList, mapAsTransList, i;
+  local S, tup, gens, map_as_list, i;
   S := UnderlyingSemigroup(L);
   if IsLeftTranslationOfNormalRMSSemigroup(L) then
     tup := SEMIGROUPS.LeftTransToNormalRMSTuple(S, x);
     return LeftTranslationOfNormalRMSNC(L, tup[1], tup[2]);
   fi;
-  if IsTransformation(x) then
+  if IsDenseList(x) then
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsListCanonical(S);
-  mapAsTransList  := [];
-  for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := PositionCanonical(S, semiList[i] ^ x);
+  gens := UnderlyingGenerators(L);
+  map_as_list  := [];
+  for i in [1 .. Length(gens)] do
+    map_as_list[i] := PositionCanonical(S, gens[i] ^ x);
   od;
 
-  return Objectify(TypeLeftTranslationsSemigroupElements(L),
-                   [Transformation(mapAsTransList)]);
+  return Objectify(TypeLeftTranslationsSemigroupElements(L), [map_as_list]);
 end);
 
 # Same for right translations.
 InstallGlobalFunction(RightTranslation,
 function(R, x)
-  local S, semiList, reps, L;
-
+  local S, reps, gens, semi_list, full_lambda, g, lg, y, i, s;
   S     := UnderlyingSemigroup(R);
   reps  := [];
 
   if not (IsRightTranslationsSemigroup(R)) then
     ErrorNoReturn("Semigroups: RightTranslation: \n",
           "the first argument must be a semigroup of right translations,");
-    return;
   fi;
 
-  if HasGeneratorsOfSemigroup(S) then
-    reps := GeneratorsOfSemigroup(S);
-  else
-    for L in LClasses(S) do
-      Add(reps, Representative(L));
-    od;
-  fi;
+  gens := UnderlyingGenerators(R);
 
+  # TODO allow general mapping from gens to S
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
       ErrorNoReturn("Semigroups: RightTranslation (from Mapping): \n",
             "the domain and range of the second argument must be ",
             "the underlying semigroup of the first,");
     fi;
-    if ForAny(reps, s -> ForAny(S, t -> t * (s ^ x) <> (t * s) ^ x)) then
+    if ForAny(gens, s -> ForAny(S, t -> (s ^ x) * t <> (s * t) ^ x)) then
       ErrorNoReturn("Semigroups: RightTranslation: \n",
              "the mapping given must define a right translation,");
     fi;
-  elif IsTransformation(x) then
-    if not DegreeOfTransformation(x) <= Size(S) then
+  elif IsDenseList(x) then
+    if not Size(x) = Size(gens) then
       ErrorNoReturn("Semigroups: RightTranslation (from transformation): \n",
-            "the second argument must act on the indices of the underlying ",
-            "semigroup of the first argument,");
+            "the second argument must map indices of generators to ",
+            "indices of elements of the semigroup of the first argument,");
     fi;
-    semiList := AsListCanonical(S);
-    if ForAny(reps,
-              s -> ForAny(S, t ->
-                            t * semiList[PositionCanonical(S, s) ^ x]
-                              <> semiList[PositionCanonical(S, t * s) ^ x])) then
-      ErrorNoReturn("Semigroups: RightTranslation: \n",
-            "the transformation given must define a right translation,");
-    fi;
+    # TODO store and use CanonicalMultiplicationTable and
+    # RightTranslationsBacktrackData
+    semi_list := AsListCanonical(S);
+    full_lambda := [];
+    for i in [1 .. Size(gens)] do
+      g := gens[i];
+      lg := x[i];
+      for s in S do
+        x := PositionCanonical(S, g * s);
+        y := PositionCanonical(S, semi_list[lg] * s);
+        if not IsBound(full_lambda[x]) then
+          full_lambda[x] := y;
+        fi;
+        if full_lambda[x] <> y then
+          ErrorNoReturn("Semigroups: RightTranslation: \n",
+                        "the transformation given must define a right",
+                        "translation,");
+        fi;
+      od;
+    od;
   else
     ErrorNoReturn("Semigroups: RightTranslation: \n",
           "the first argument should be a right translations semigroup, and ",
@@ -1594,24 +1611,23 @@ end);
 
 InstallGlobalFunction(RightTranslationNC,
 function(R, x)
-  local S, tup, semiList, mapAsTransList, i;
+  local S, tup, gens, map_as_list, i;
   S := UnderlyingSemigroup(R);
   if IsRightTranslationOfNormalRMSSemigroup(R) then
     tup := SEMIGROUPS.RightTransToNormalRMSTuple(S, x);
     return RightTranslationOfNormalRMSNC(R, tup[1], tup[2]);
   fi;
-  if IsTransformation(x) then
+  if IsDenseList(x) then
     return Objectify(TypeRightTranslationsSemigroupElements(R), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList        := AsListCanonical(S);
-  mapAsTransList  := [];
-  for i in [1 .. Length(semiList)] do
-    mapAsTransList[i] := PositionCanonical(S, semiList[i] ^ x);
+  gens := UnderlyingGenerators(R);
+  map_as_list  := [];
+  for i in [1 .. Length(gens)] do
+    map_as_list[i] := PositionCanonical(S, gens[i] ^ x);
   od;
 
-  return Objectify(TypeRightTranslationsSemigroupElements(R),
-                   [Transformation(mapAsTransList)]);
+  return Objectify(TypeRightTranslationsSemigroupElements(R), [map_as_list]);
 end);
 
 # Creates and calculates the elements of the translational hull.
@@ -1681,44 +1697,14 @@ function(H, l, r)
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(l));
   R := RightTranslationsSemigroupOfFamily(FamilyObj(r));
 
-  if HasGeneratorsOfSemigroup(S) then
-    reps := GeneratorsOfSemigroup(S);
-  else
-    dclasses  := DClasses(S);
-    reps      := [];
-    for d in dclasses do
-      lclasses := ShallowCopy(LClasses(d));
-      rclasses := ShallowCopy(RClasses(d));
-      for i in [1 .. Minimum(Size(lclasses), Size(rclasses)) - 1] do
-        z := Representative(Intersection(lclasses[1], rclasses[1]));
-        Add(reps, z);
-        Remove(lclasses, 1);
-        Remove(rclasses, 1);
-      od;
-      if Size(lclasses) > Size(rclasses) then
-        # Size(rclasses) = 1
-        for j in [1 .. Size(lclasses)] do
-          z := Representative(Intersection(lclasses[1], rclasses[1]));
-          Add(reps, z);
-          Remove(lclasses, 1);
-        od;
-      else
-        # Size(lclasses) = 1
-        for j in [1 .. Size(rclasses)] do
-          z := Representative(Intersection(lclasses[1], rclasses[1]));
-          Add(reps, z);
-          Remove(rclasses, 1);
-        od;
-      fi;
-    od;
-  fi;
+  gens := GeneratorsOfSemigroup(S);
 
   if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
       ErrorNoReturn("Semigroups: Bitranslation: \n",
             "each argument must have the same underlying semigroup,");
   fi;
 
-  if ForAny(reps, t -> ForAny(reps, s -> s * (t ^ l) <> (s ^ r) * t)) then
+  if ForAny(gens, t -> ForAny(gens, s -> s * (t ^ l) <> (s ^ r) * t)) then
      ErrorNoReturn("Semigroups: Bitranslation: \n",
            "the translations given must form a linked pair,");
   fi;
@@ -2079,6 +2065,12 @@ InstallMethod(\*, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y)
+  L := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
+  gens := UnderlyingGenerators(L);
+  prod := [];
+  for i in [1 .. Size(L)] do
+    a := x![1][i];
+  od;
   return Objectify(FamilyObj(x)!.type, [y![1] * x![1]]);
 end);
 

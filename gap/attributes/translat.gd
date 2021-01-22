@@ -76,4 +76,4 @@ DeclareAttribute("TranslationalElements",
                   IsTranslationalHull and IsWholeFamily);
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
-DeclareAttribute("UnderlyingGenerators", IsBitranslationsSemigroup);
+DeclareAttribute("UnderlyingGenerators", IsTranslationalHull);
