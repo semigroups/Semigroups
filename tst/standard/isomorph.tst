@@ -379,8 +379,7 @@ true
 # AutomorphismGroup
 gap> S := JonesMonoid(5);
 <regular bipartition *-monoid of degree 5 with 4 generators>
-gap> G := AutomorphismGroup(S);
-<group with 1 generators>
+gap> G := AutomorphismGroup(S);;
 gap> StructureDescription(G);
 "C2"
 gap> S := FullTransformationMonoid(3);
