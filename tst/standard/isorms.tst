@@ -128,8 +128,9 @@ false
 gap> S := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
 >                                 [[IdentityTransformation]]);
 <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 2>>
-gap> AutomorphismGroup(S);
-<group with 1 generators>
+gap> G := AutomorphismGroup(S);;
+gap> IsCyclic(G);
+true
 
 # AutomorphismGroup: for a RZMSDigraph with 0 generators
 gap> func := function(n, i)
@@ -150,8 +151,9 @@ gap> AutomorphismGroup(R);
 gap> R := ReesMatrixSemigroup(SymmetricInverseMonoid(2), [[PartialPerm([1])]]);
 <Rees matrix semigroup 1x1 over <symmetric inverse monoid of degree 2>>
 gap> GeneratorsOfSemigroup(R);;
-gap> AutomorphismGroup(R);
-<group with 1 generators>
+gap> G := AutomorphismGroup(R);;
+gap> IsCyclic(G);
+true
 
 # AutomorphismGroup: 1x1 RMS
 gap> R := ReesMatrixSemigroup(Group(()), [[()]]);
