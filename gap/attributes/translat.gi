@@ -61,7 +61,9 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
   if IsZeroSimpleSemigroup(S) or
       IsRectangularBand(S) or
       IsSimpleSemigroup(S) or
-      SEMIGROUPS.IsNormalRMSOverGroup(S) then
+      SEMIGROUPS.IsNormalRMSOverGroup(S) or
+      IsMonogenicSemigroup(S) or
+      IsMonoid(S) then
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
@@ -110,7 +112,6 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S, multtable)
                                                     EnumeratorCanonical(S)[j]))));
 
   max_R_intersects := List([1 .. m], x -> []);
-  #TODO: double check m = 1
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
       intersect := Intersection(r_classes_below[i], r_classes_below[j]);
@@ -246,7 +247,6 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S, multtable)
                                                     EnumeratorCanonical(S)[j]))));
 
   max_L_intersects := List([1 .. m], x -> []);
-  #TODO: double check m = 1
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
       intersect := Intersection(L_classes_below[i], L_classes_below[j]);
@@ -1197,7 +1197,7 @@ function(S)
   fi;
 
   # create the translational hull
-  H := Objectify(NewType(CollectionsFamily(fam), IsTranslationalHull and
+  H := Objectify(NewType(CollectionsFamily(fam), IsBitranslationsSemigroup and
     IsWholeFamily and IsAttributeStoringRep), rec());
 
   # store the type of the elements in the semigroup
@@ -1508,7 +1508,7 @@ InstallGlobalFunction(Bitranslation,
 function(H, l, r)
   local S, L, R, gens;
 
-  if not IsTranslationalHull(H) then
+  if not IsBitranslationsSemigroup(H) then
     ErrorNoReturn("Semigroups: Bitranslation: \n",
           "the first argument must be a translational hull,");
   fi;
@@ -1612,7 +1612,7 @@ end);
 # The translational hull of a rectangular band is the direct product of the
 # left translations and right translations
 InstallMethod(Size, "for the translational hull of a rectangular band",
-[IsTranslationalHull and IsWholeFamily],
+[IsBitranslationsSemigroup and IsWholeFamily],
 1,
 function(H)
   local S, L, R;
@@ -1673,7 +1673,7 @@ end);
 # since they are monoids
 InstallMethod(GeneratorsOfSemigroup,
 "for the translational hull of a rectangular band",
-[IsTranslationalHull],
+[IsBitranslationsSemigroup],
 2,
 function(H)
   local S, leftGens, rightGens, l, r, gens;
@@ -1700,45 +1700,38 @@ end);
 # 4. Methods for monoids
 #############################################################################
 
-# Translations of a monoid are all inner translations
-InstallMethod(LeftTranslations, "for a monoid",
-[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
-function(S)
-  local L;
-  L := LeftTranslationsSemigroup(S);
-  if not HasGeneratorsOfSemigroup(L) then
-    SetGeneratorsOfSemigroup(L,
-                            GeneratorsOfSemigroup(InnerLeftTranslations(S)));
+InstallMethod(GeneratorsOfSemigroup,
+"for the left translations of a finite monogenic semigroup",
+[IsLeftTranslationsSemigroup and IsWholeFamily],
+function(L)
+  if not IsMonoid(UnderlyingSemigroup(L)) then
+    TryNextMethod();
   fi;
-  return L;
+  return GeneratorsOfSemigroup(InnerLeftTranslations(UnderlyingSemigroup(L)));
 end);
 
-InstallMethod(RightTranslations, "for a monoid",
-[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
-function(S)
-  local R;
-  R := RightTranslationsSemigroup(S);
-  if not HasGeneratorsOfSemigroup(R) then
-    SetGeneratorsOfSemigroup(R,
-                            GeneratorsOfSemigroup(InnerRightTranslations(S)));
+InstallMethod(GeneratorsOfSemigroup,
+"for the right translations of a finite monogenic semigroup",
+[IsRightTranslationsSemigroup and IsWholeFamily],
+function(R)
+  if not IsMonoid(UnderlyingSemigroup(R)) then
+    TryNextMethod();
   fi;
-  return R;
+  return GeneratorsOfSemigroup(InnerRightTranslations(UnderlyingSemigroup(R)));
 end);
 
-# Translational hull of a monoid is inner translational hull
-InstallMethod(TranslationalHull, "for a monoid",
-[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
-function(S)
-  local H;
-  H := TranslationalHullSemigroup(S);
-  if not HasGeneratorsOfSemigroup(H) then
-    SetGeneratorsOfSemigroup(H,
-                            GeneratorsOfSemigroup(InnerTranslationalHull(S)));
+InstallMethod(GeneratorsOfSemigroup,
+"for the right translations of a finite monogenic semigroup",
+[IsBitranslationsSemigroup and IsWholeFamily],
+function(H)
+  if not IsMonoid(UnderlyingSemigroup(H)) then
+    TryNextMethod();
   fi;
-  return H;
+  return GeneratorsOfSemigroup(InnerTranslationalHull(UnderlyingSemigroup(H)));
 end);
 
-InstallMethod(Size, "for a semigroup of left/right translations of a monoid",
+InstallMethod(Size,
+"for a semigroup of left/right translations of a monogenic semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
 1,
 function(T)
@@ -1748,8 +1741,8 @@ function(T)
   return Size(UnderlyingSemigroup(T));
 end);
 
-InstallMethod(Size, "for a translational hull of a monoid",
-[IsTranslationalHull and IsWholeFamily],
+InstallMethod(Size, "for a translational hull of a monogenic semigroup",
+[IsBitranslationsSemigroup and IsWholeFamily],
 1,
 function(H)
   if not IsMonoid(UnderlyingSemigroup(H)) then
@@ -1759,7 +1752,65 @@ function(H)
 end);
 
 #############################################################################
-# 5. Technical methods
+# 5. Methods for monogenic semigroups
+#############################################################################
+
+InstallMethod(GeneratorsOfSemigroup,
+"for the left translations of a finite monogenic semigroup",
+[IsLeftTranslationsSemigroup and IsWholeFamily],
+function(L)
+  if not IsMonogenicSemigroup(UnderlyingSemigroup(L)) then
+    TryNextMethod();
+  fi;
+  return Union([One(L)],
+     GeneratorsOfSemigroup(InnerLeftTranslations(UnderlyingSemigroup(L))));
+end);
+
+InstallMethod(GeneratorsOfSemigroup,
+"for the right translations of a finite monogenic semigroup",
+[IsRightTranslationsSemigroup and IsWholeFamily],
+function(R)
+  if not IsMonogenicSemigroup(UnderlyingSemigroup(R)) then
+    TryNextMethod();
+  fi;
+  return Union([One(R)],
+     GeneratorsOfSemigroup(InnerRightTranslations(UnderlyingSemigroup(R))));
+end);
+
+InstallMethod(GeneratorsOfSemigroup,
+"for the right translations of a finite monogenic semigroup",
+[IsBitranslationsSemigroup and IsWholeFamily],
+function(H)
+  if not IsMonogenicSemigroup(UnderlyingSemigroup(H)) then
+    TryNextMethod();
+  fi;
+  return Union([One(H)],
+     GeneratorsOfSemigroup(InnerTranslationalHull(UnderlyingSemigroup(H))));
+end);
+
+InstallMethod(Size,
+"for a semigroup of left/right translations of a monogenic semigroup",
+[IsTranslationsSemigroup and IsWholeFamily],
+1,
+function(T)
+  if not IsMonogenicSemigroup(UnderlyingSemigroup(T)) then
+    TryNextMethod();
+  fi;
+  return Size(UnderlyingSemigroup(T));
+end);
+
+InstallMethod(Size, "for a translational hull of a monogenic semigroup",
+[IsBitranslationsSemigroup and IsWholeFamily],
+1,
+function(H)
+  if not IsMonogenicSemigroup(UnderlyingSemigroup(H)) then
+    TryNextMethod();
+  fi;
+  return Size(UnderlyingSemigroup(H));
+end);
+
+#############################################################################
+# 6. Technical methods
 #############################################################################
 
 InstallMethod(AsList, "for a semigroup of left or right translations",
@@ -1772,7 +1823,7 @@ function(T)
 end);
 
 InstallMethod(AsList, "for a translational hull",
-[IsTranslationalHull and IsWholeFamily],
+[IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   return Immutable(AsList(SEMIGROUPS.Bitranslations(H)));
 end);
@@ -1784,7 +1835,7 @@ function(T)
 end);
 
 InstallMethod(Size, "for a translational hull",
-[IsTranslationalHull and IsWholeFamily],
+[IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   return Size(AsList(H));
 end);
@@ -1802,7 +1853,7 @@ function(T)
 end);
 
 InstallMethod(Representative, "for a translational hull",
-[IsTranslationalHull and IsWholeFamily],
+[IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   local L, R, S;
   S := UnderlyingSemigroup(H);
@@ -1861,16 +1912,16 @@ function(t)
 end);
 
 InstallMethod(ViewObj, "for a translational hull",
-[IsTranslationalHull], PrintObj);
+[IsBitranslationsSemigroup], PrintObj);
 
 InstallMethod(PrintObj, "for a translational hull",
-[IsTranslationalHull and IsWholeFamily],
+[IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   Print("<translational hull over ", ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
 InstallMethod(PrintObj, "for a subsemigroup of a translational hull",
-[IsTranslationalHull],
+[IsBitranslationsSemigroup],
 function(H)
   Print("<semigroups of translational hull elements over ",
         ViewString(UnderlyingSemigroup(H)), ">");
@@ -1992,7 +2043,7 @@ function(x, t)
   fi;
 end);
 
-InstallMethod(\*, "for translational hull elements (linked pairs)",
+InstallMethod(\*, "for bitranslations",
 IsIdenticalObj,
 [IsBitranslation, IsBitranslation],
 function(x, y)
@@ -2030,7 +2081,7 @@ end);
 
 InstallMethod(UnderlyingSemigroup,
 "for a subsemigroup of the translational hull",
-[IsTranslationalHull],
+[IsBitranslationsSemigroup],
 function(H)
     return UnderlyingSemigroup(TranslationalHullOfFamily(ElementsFamily(
                                                         FamilyObj(H))));

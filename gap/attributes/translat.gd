@@ -40,11 +40,11 @@ DeclareSynonym("IsRightTranslationsSemigroup", IsSemigroup and
                   IsRightTranslationsSemigroupElementCollection);
 DeclareSynonym("IsTranslationsSemigroup", IsSemigroup and
                   IsTranslationsSemigroupElementCollection);
-DeclareSynonym("IsTranslationalHull", IsSemigroup and
+DeclareSynonym("IsBitranslationsSemigroup", IsSemigroup and
                   IsBitranslationCollection);
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
-DeclareAttribute("UnderlyingSemigroup", IsTranslationalHull);
+DeclareAttribute("UnderlyingSemigroup", IsBitranslationsSemigroup);
 
 DeclareAttribute("LeftTranslationsSemigroupOfFamily", IsFamily);
 DeclareAttribute("RightTranslationsSemigroupOfFamily", IsFamily);
@@ -54,7 +54,7 @@ DeclareAttribute("TypeLeftTranslationsSemigroupElements",
                  IsLeftTranslationsSemigroup);
 DeclareAttribute("TypeRightTranslationsSemigroupElements",
                  IsRightTranslationsSemigroup);
-DeclareAttribute("TypeBitranslations", IsTranslationalHull);
+DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 
 DeclareAttribute("LeftTranslations",
                   IsEnumerableSemigroupRep and IsFinite);
@@ -73,7 +73,7 @@ DeclareAttribute("NrBitranslations",
 DeclareAttribute("TranslationalElements",
                   IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements",
-                  IsTranslationalHull and IsWholeFamily);
+                  IsBitranslationsSemigroup and IsWholeFamily);
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
-DeclareAttribute("UnderlyingGenerators", IsTranslationalHull);
+DeclareAttribute("UnderlyingGenerators", IsBitranslationsSemigroup);
