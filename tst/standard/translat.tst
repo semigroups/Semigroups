@@ -27,28 +27,22 @@ gap> Size(L);
 gap> Size(R);
 256
 
-#T# Creation of translations semigroups it can't calclate
-gap> S := SingularTransformationSemigroup(10);;
-gap> LeftTranslationsSemigroup(S);
-<the semigroup of left translations of <regular transformation semigroup 
- ideal of degree 10 with 1 generator>>
-gap> RightTranslationsSemigroup(S);
-<the semigroup of right translations of <regular transformation semigroup 
- ideal of degree 10 with 1 generator>>
-gap> TranslationalHullSemigroup(S);
-<translational hull over <regular transformation semigroup ideal of 
- degree 10 with 1 generator>>
-
-#T# Creation of translations without having generators of the semigroup
-gap> S := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(4));;
-gap> L := LeftTranslationsSemigroup(S);;
-gap> l := LeftTranslation(L, IdentityTransformation);
-<left translation on <transformation group of size 24, degree 4 with
-  2 generators>>
-gap> R := RightTranslationsSemigroup(S);;
-gap> r := RightTranslation(R, IdentityTransformation);
-<right translation on <transformation group of size 24, degree 4 with
-  2 generators>>
+#T# Creation of translations semigroups we can't calculate
+gap> S := InverseSemigroup([
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 10, 11, 13], [4, 6, 7, 3, 8, 2, 9, 5, 1, 12]),
+> PartialPerm([1, 2, 4, 8, 11, 12], [3, 5, 1, 10, 11, 7]),
+> PartialPerm([1, 2, 7, 9, 12], [5, 6, 4, 3, 10])]);;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> M := MunnSemigroup(T);;
+gap> LeftTranslationsSemigroup(M);                              
+<the semigroup of left translations of <inverse partial perm semigroup of 
+ rank 200 with 19 generators>>
+gap> RightTranslationsSemigroup(M);
+<the semigroup of right translations of <inverse partial perm semigroup of 
+ rank 200 with 19 generators>>
+gap> TranslationalHullSemigroup(M);
+<translational hull over <inverse partial perm semigroup of rank 200 with 19 
+ generators>>
 
 #T# With calculation - rectangular bands
 gap> S := RectangularBand(3, 3);
@@ -118,13 +112,14 @@ gap> Size(R);
 81
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);
-<the semigroup of left translations of <0-simple regular semigroup with 4 
- generators>>
+<the semigroup of left translations of <0-simple regular semigroup 
+ of size 17, with 4 generators>>
 gap> R := RightTranslations(S);
-<the semigroup of right translations of <0-simple regular semigroup with 4 
- generators>>
+<the semigroup of right translations of <0-simple regular semigroup 
+ of size 17, with 4 generators>>
 gap> H := TranslationalHull(S);
-<translational hull over <0-simple regular semigroup with 4 generators>>
+<translational hull over <0-simple regular semigroup of size 17, with 4 
+ generators>>
 gap> Size(H);
 21
 gap> Size(L);
@@ -132,30 +127,23 @@ gap> Size(L);
 gap> Size(R);
 81
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <0-simple regular semigroup with 4 generators>>, 
-  <left translation on <0-simple regular semigroup with 4 generators>>, 
-  <left translation on <0-simple regular semigroup with 4 generators>>, 
-  <left translation on <0-simple regular semigroup with 4 generators>>, 
-  <left translation on <0-simple regular semigroup with 4 generators>> ]
+[ <left translation on <0-simple regular semigroup of size 17, with 4 
+     generators>>, <left translation on <0-simple regular semigroup 
+     of size 17, with 4 generators>>, 
+  <left translation on <0-simple regular semigroup of size 17, with 4 
+     generators>>, <left translation on <0-simple regular semigroup 
+     of size 17, with 4 generators>>, 
+  <left translation on <0-simple regular semigroup of size 17, with 4 
+     generators>> ]
 gap> GeneratorsOfSemigroup(R);
-[ <right translation on <0-simple regular semigroup with 4 generators>>, 
-  <right translation on <0-simple regular semigroup with 4 generators>>, 
-  <right translation on <0-simple regular semigroup with 4 generators>>, 
-  <right translation on <0-simple regular semigroup with 4 generators>>, 
-  <right translation on <0-simple regular semigroup with 4 generators>> ]
-
-#T# Test translations generation by digraph endomorphisms
-gap> S := ZeroSemigroup(4);;
-gap> L := SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(
-> LeftTranslations(S));
-<semigroup of left translations of <commutative non-regular transformation 
- semigroup of size 4, degree 4 with 3 generators> with 17 generators>
-gap> Size(L);
-64
-gap> R := SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(
-> RightTranslations(S));
-<semigroup of right translations of <commutative non-regular transformation 
- semigroup of size 4, degree 4 with 3 generators> with 17 generators>
+[ <right translation on <0-simple regular semigroup of size 17, with 4 
+     generators>>, <right translation on <0-simple regular semigroup 
+     of size 17, with 4 generators>>, 
+  <right translation on <0-simple regular semigroup of size 17, with 4 
+     generators>>, <right translation on <0-simple regular semigroup 
+     of size 17, with 4 generators>>, 
+  <right translation on <0-simple regular semigroup of size 17, with 4 
+     generators>> ]
 
 #T# Further test translations generation
 gap> S := Semigroup([Transformation([2, 4, 4, 1]), Transformation([2, 3, 2, 1]), 
@@ -336,9 +324,7 @@ true
 gap> OneOp(Representative(H)) = Bitranslation(
 > H, OneOp(L.1), OneOp(R.1));
 true
-
-#T# Make sure the generic method and special methods agree for hulls
-gap> Semigroup(SEMIGROUPS.BitranslationsByGenerators(H)) = H;
+gap> Semigroup(SEMIGROUPS.BitranslationsBacktrack(H)) = H;
 true
 
 #T# TranslationalHull for semigroups which are not IsEnumerableSemigroupRep
@@ -472,8 +458,8 @@ gap> IsWholeFamily(Semigroup(r));
 false
 
 #T# Error Testing - Left Translations
-gap> S := Semigroup([Transformation([1, 4, 3, 3]),
-> Transformation([3, 4, 1, 1])]);;
+gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
+> Transformation([3, 4, 1, 1, 4, 2])]);;
 gap> T := Semigroup([Transformation([5, 2, 3, 2, 1]),
 > Transformation([2, 3, 1, 1, 2])]);;
 gap> L := LeftTranslationsSemigroup(S);;
@@ -490,26 +476,23 @@ gap> LeftTranslation(L, (1, 4)(2, 3));
 Error, Semigroups: LeftTranslation: 
 the first argument should be a left translations semigroup, and the second arg\
 ument should be a mapping on the underlying semigroup of the first argument, o\
-r a transformation on the indices of its elements,
+r a list of indices of values of the generators under the translation,
 gap> LeftTranslation(L, g);
 Error, Semigroups: LeftTranslation (from Mapping): 
 the domain and range of the second argument must be the underlying semigroup o\
 f the first,
-gap> x := [2 .. Size(S) + 1];;
-gap> Add(x, 1);;
-gap> LeftTranslation(L, Transformation(x));
-Error, Semigroups: LeftTranslation (from transformation): 
-the second argument must act on the indices of the underlying semigroup of the\
- first argument,
-gap> S := RectangularBand(2, 3);;
-gap> L := LeftTranslationsSemigroup(S);;
-gap> l := LeftTranslation(L, Transformation([1, 1, 1, 1, 1, 1]));
+gap> x := [1, Size(S) + 1];;
+gap> LeftTranslation(L, x);
+Error, Semigroups: LeftTranslation: 
+the second argument must map indices of generators to indices of elements of t\
+he semigroup of the first argument,
+gap> l := LeftTranslation(L, [4, 6]);
 Error, Semigroups: LeftTranslation: 
 the transformation given must define a left translation,
 
 #T# Error Testing - Right Translations
-gap> S := Semigroup([Transformation([1, 4, 3, 3]),
-> Transformation([3, 4, 1, 1])]);;
+gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
+> Transformation([3, 4, 1, 1, 4, 2])]);;
 gap> T := Semigroup([Transformation([5, 2, 3, 2, 1]),
 > Transformation([2, 3, 1, 1, 2])]);;
 gap> L := LeftTranslationsSemigroup(S);;
@@ -526,34 +509,17 @@ gap> RightTranslation(R, (1, 4)(2, 3));
 Error, Semigroups: RightTranslation: 
 the first argument should be a right translations semigroup, and the second ar\
 gument should be a mapping on the underlying semigroup of the first argument, \
-or a transformation on the indices of its elements,
+or a list of indices of values of the generators under the translation,
 gap> RightTranslation(R, g);
 Error, Semigroups: RightTranslation (from Mapping): 
 the domain and range of the second argument must be the underlying semigroup o\
 f the first,
-gap> x := [2 .. Size(S) + 1];;
-gap> Add(x, 1);;
-gap> RightTranslation(R, Transformation(x));
-Error, Semigroups: RightTranslation (from transformation): 
-the second argument must act on the indices of the underlying semigroup of the\
- first argument,
-gap> S := RectangularBand(2, 3);;
-gap> R := RightTranslationsSemigroup(S);;
-gap> r := RightTranslation(R, Transformation([1, 1, 1, 1, 1, 1]));
+gap> x := [1, Size(S) + 1];;
+gap> RightTranslation(R, x);
 Error, Semigroups: RightTranslation: 
-the transformation given must define a right translation,
-
-#T# Error Testing - Left Translations Without Generators
-gap> S := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(4));;
-gap> L := LeftTranslationsSemigroup(S);;
-gap> LeftTranslation(L, Transformation([1, 1, 1, 1, 1, 1]));
-Error, Semigroups: LeftTranslation: 
-the transformation given must define a left translation,
-
-#T# Error Testing - Right Translations Without Generators
-gap> S := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(4));;
-gap> R := RightTranslationsSemigroup(S);;
-gap> RightTranslation(R, Transformation([1, 1, 1, 1, 1, 1]));
+the second argument must map indices of generators to indices of elements of t\
+he semigroup of the first argument,
+gap> r := RightTranslation(R, [6, 3]);
 Error, Semigroups: RightTranslation: 
 the transformation given must define a right translation,
 
@@ -582,17 +548,6 @@ gap> r := Representative(RT);;
 gap> Bitranslation(H, l, r);
 Error, Semigroups: Bitranslation: 
 each argument must have the same underlying semigroup,
-
-#T# Error Testing - Translational Hull Elements Without Generators
-gap> S := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(3));;
-gap> L := LeftTranslationsSemigroup(S);;
-gap> R := RightTranslationsSemigroup(S);;
-gap> H := TranslationalHullSemigroup(S);;
-gap> l := LeftTranslationNC(L, IdentityTransformation);;
-gap> r := RightTranslationNC(R, Transformation([2, 1, 4, 3, 6, 5]));;
-gap> Bitranslation(H, l, r);
-Error, Semigroups: Bitranslation: 
-the translations given must form a linked pair,
 
 #T# Error Testing - left translations over normalised RMS
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
