@@ -87,7 +87,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "sb235@st-andrews.ac.uk ",
-    WWWHome       := "http://sburrell.nfshost.com",
+    WWWHome       := "https://stuartburrell.github.io",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -222,7 +222,7 @@ Persons := [
     FirstNames    := "Benjamin",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/"),
+    WWWHome       := "https://bsteinberg.ccny.cuny.edu/Webpage/"),
 
   rec(
     LastName      := "Smith",
@@ -239,7 +239,7 @@ Persons := [
     FirstNames    := "Jhevon",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith"),
+    WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
     LastName      := "Torpey",
