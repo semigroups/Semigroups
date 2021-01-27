@@ -385,6 +385,14 @@ function(S)
   return enum;
 end);
 
+InstallMethod(EnumeratorCanonical,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep],
+function(S)
+  GeneratorsOfSemigroup(S);
+  return EnumeratorCanonical(S);
+end);
+
 # The next method is necessary since it does not necessarily involve
 # enumerating the entire semigroup in the case that the semigroup is partially
 # enumerated and <list> only contains indices that are within the so far

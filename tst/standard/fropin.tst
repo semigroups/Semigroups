@@ -303,6 +303,35 @@ infinity
 gap> IsFinite(S);
 false
 
+# EnumeratorCanonical for IsEnumerableSemigroupRep without generators
+gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
+gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> IsEnumerableSemigroupRep(S);
+true
+gap> HasGeneratorsOfSemigroup(S);
+false
+gap> en := EnumeratorCanonical(S);;
+gap> en[1];
+(1,(),1)
+gap> en[2];
+(1,(1,6)(2,5)(3,4),1)
+gap> en[15];
+(2,(1,2)(3,6)(4,5),2)
+gap> en[36];
+(2,(1,2)(3,6)(4,5),3)
+gap> Length(en);
+36
+gap> IsBound(en[37]);
+false
+gap> for x in it do od;
+gap> ForAll(en, x -> en[Position(en, x)] = x);
+true
+gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
+true
+gap> ForAll(S, x -> x in en);
+true
+
 # IteratorCanonical
 gap> S := UnitriangularBooleanMatMonoid(3);;
 gap> it := Iterator(S);
