@@ -1294,8 +1294,8 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [D. V. Pasechnik]: http://users.ox.ac.uk/~coml0531
 [James D. Mitchell]: https://jdbm.me
 [Julius Jonusas]: http://julius.jonusas.work
-[Markus Pfeiffer]: http://morphism.de/~markusp
-[Max Horn]: http://www.quendi.de/math
+[Markus Pfeiffer]: https://markusp.morphism.de
+[Max Horn]: https://www.quendi.de/en/math
 [Michael Torpey]: https://mtorpey.github.io
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: http://wilf.me
