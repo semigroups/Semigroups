@@ -141,7 +141,7 @@ ent}"]]></Log>
       diagram of each &D;-class. The output is in <C>dot</C> format (also known
       as <C>GraphViz</C>) format. For details about this file format, and
       information about how to display or edit this format see
-      <URL>http://www.graphviz.org</URL>.
+      <URL>https://www.graphviz.org</URL>.
       <P/>
 
       The string returned by <C>DotString</C> can be written to a file using
@@ -233,7 +233,7 @@ gap> FileString("t3.dot", DotString(S));
       The output is in <C>dot</C> format (also known
       as <C>GraphViz</C>) format. For details about this file format, and
       information about how to display or edit this format see
-      <URL>http://www.graphviz.org</URL>.
+      <URL>https://www.graphviz.org</URL>.
       <P/>
 
       The string returned by <C>DotString</C> can be written to a file using
@@ -259,7 +259,7 @@ gap> FileString("t3.dot", DotString(S));
 
       The output is in <C>dot</C> format (also known as <C>GraphViz</C>) format.
       For details about this file format, and information about how to display
-      or edit this format see <URL>http://www.graphviz.org</URL>. <P/>
+      or edit this format see <URL>https://www.graphviz.org</URL>. <P/>
 
       <Example><![CDATA[
 gap> S := DualSymmetricInverseMonoid(4);

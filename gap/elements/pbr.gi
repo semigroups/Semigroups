@@ -12,7 +12,7 @@
 # relations (PBRs) as defined in:
 #
 # Paul Martin and Volodymyr Mazorchuk, Partitioned binary relations,
-# Mathematica Scandinavica, v113, n1, p. 30-52, http://arxiv.org/abs/1102.0862
+# Mathematica Scandinavica, v113, n1, p. 30-52, https://arxiv.org/abs/1102.0862
 
 # Internally a PBR is stored as the adjacency list of digraph with
 # vertices [1 .. 2 * n] for some n. More precisely if <x> is a PBR, then:
