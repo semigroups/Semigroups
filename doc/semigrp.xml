@@ -378,7 +378,7 @@ gap> last.1;
 Matrix(IsNTPMatrix, [[2]], 3, 4)
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over
-  <permutation group of size 659 with 1 generators>>
+  <permutation group of size 659 with 1 generator>>
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group((1, 2), (3, 4)));
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>
 gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2);
