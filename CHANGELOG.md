@@ -1012,7 +1012,7 @@ Issue numbers refer to those on the [Bitbucket issue tracker][].
 
 * to reduce the size of the package archive, the examples directory has been
   removed. The content of the examples directory is available on
-  [this webpage](http://tinyurl.com/jdmitchell/data.php).
+  [this webpage](https://tinyurl.com/jdmitchell/data.php).
 
 * several bugs in the setup for subsemigroups of Rees 0-matrix semigroups were
   resolved. These issues would have caused [GAP][] to give an error in certain
@@ -1298,7 +1298,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Max Horn]: https://www.quendi.de/en/math
 [Michael Torpey]: https://mtorpey.github.io
 [Nick Ham]: https://n-ham.github.io
-[Wilf A. Wilson]: http://wilf.me
+[Wilf A. Wilson]: https://wilf.me
 [Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
 [Finn Smith]: https://flsmith.github.io
 [Luke Elliott]: https://le27.github.io/Luke-Elliott/
@@ -1313,6 +1313,6 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [orb package]: https://gap-packages.github.io/orb
 [orb]: https://gap-packages.github.io/orb
-[Bitbucket issue tracker]: http://bitbucket.org/james-d-mitchell/semigroups/issues
+[Bitbucket issue tracker]: https://bitbucket.org/james-d-mitchell/semigroups/issues
 [images package]: https://gap-packages.github.io/images
 

@@ -98,7 +98,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
-    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    WWWHome       := "https://cmup.fc.up.pt/cmup/mdelgado/",
     Place         := "Porto",
     Institution   := "Universidade do Porto"),
 
@@ -108,7 +108,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
-    WWWHome       := "http://goo.gl/MuiJu5",
+    WWWHome       := "https://goo.gl/MuiJu5",
     Place         := "Sydney",
     Institution   := "Western Sydney University"),
 
@@ -165,7 +165,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "caj21@st-andrews.ac.uk",
-    WWWHome       := "http://caj.host.cs.st-andrews.ac.uk/",
+    WWWHome       := "https://caj.host.cs.st-andrews.ac.uk/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 

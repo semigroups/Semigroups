@@ -24,23 +24,23 @@ For questions, remarks, suggestions, and issues please use the
 
 It is assumed that you have a working copy of GAP with version number 4.10.0 or
 higher.  The most up-to-date version of GAP and instructions on how to install it
-can be obtained from the main [GAP](http://www.gap-system.org) page.
+can be obtained from the main [GAP](https://www.gap-system.org) page.
 
 The following is a summary of the steps that should lead to a successful
 installation of [Semigroups]:
 
-* get the [datastructures](http://gap-packages.github.io/datastructures)
+* get the [datastructures](https://gap-packages.github.io/datastructures)
   package version 0.2.5 or higher 
 
 * ensure that the [Digraphs] package version 1.2.0 or higher is available.
   [Digraphs] must be compiled before [Semigroups] can be loaded.
 
-* get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or
+* get the [genss](https://gap-packages.github.io/genss) package version 1.6.5 or
   higher 
 
-* get the [images](http://gap-packages.github.io/images) package version 1.3.0 or
+* get the [images](https://gap-packages.github.io/images) package version 1.3.0 or
 
-* get the [IO](http://gap-packages.github.io/io) package version 4.5.1 or higher
+* get the [IO](https://gap-packages.github.io/io) package version 4.5.1 or higher
 
 * get the [orb] package version 4.8.2 or higher
 
@@ -98,5 +98,5 @@ Enjoy!
 [Semigroups]: https://semigroups.github.io/Semigroups
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
-[orb]: http://gap-packages.github.io/orb
-[Digraphs]: http://digraphs.github.io/Digraphs
+[orb]: https://gap-packages.github.io/orb
+[Digraphs]: https://digraphs.github.io/Digraphs

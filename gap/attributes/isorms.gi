@@ -19,7 +19,7 @@
 ##   J. Araújo, P. von Bünau, J. D. Mitchell, and M. Neunhoeffer,
 ##   ‘Computing automorphisms of semigroups’,
 ##   J. Symbolic Comput. 45 (2010) 373-392;
-##   http://dx.doi.org/10.1016/j.jsc.2009.10.001.
+##   https://dx.doi.org/10.1016/j.jsc.2009.10.001.
 ##
 ## This file is organized as follows:
 ##

@@ -415,7 +415,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
 // Cayley graphs of a semigroup, as produced by
 // DigraphStronglyConnectedComponents. This function find the H-classes of the
 // semigroup from <right> and <left>. The method used is that described in:
-// http://www.liafa.jussieu.fr/~jep/PDF/Exposes/StAndrews.pdf
+// https://www.irif.fr/~jep//PDF/Exposes/StAndrews.pdf
 
 Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   UInt *nextpos, *sorted, *lookup, init;
