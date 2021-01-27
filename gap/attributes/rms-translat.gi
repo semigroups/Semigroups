@@ -482,8 +482,8 @@ SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
   nrrows      := Length(Matrix(reesmatsemi));
   nrcols      := Length(Matrix(reesmatsemi)[1]);
   zero        := MultiplicativeZero(reesmatsemi);
-  L           := LeftTranslationsSemigroup(S);
-  R           := RightTranslationsSemigroup(S);
+  L           := LeftTranslations(S);
+  R           := RightTranslations(S);
   tt          := SEMIGROUPS.FindTranslationTransformations(S);
   linkedpairs := [];
   nronly      := ValueOption("SEMIGROUPS_bitranslat_nr_only") = true;
@@ -819,8 +819,8 @@ SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, a, transI, transJ)
   local S, L, R, P, I, J, leftgpfunc, rightgpfunc, l, r;
 
   S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   P := Matrix(S);
   I := Size(P[1]);
   J := Size(P);
@@ -837,58 +837,6 @@ end;
 #############################################################################
 # 2. Methods for (zero) simple semigroups
 #############################################################################
-
-# For zero simple, don't calculate AsList when LeftTranslations is called
-# Just get generators
-InstallMethod(LeftTranslations, "for a zero simple semigroup",
-[IsEnumerableSemigroupRep and IsFinite and IsZeroSimpleSemigroup],
-function(S)
-  local L;
-
-  L := LeftTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(L);
-
-  return L;
-end);
-
-# For zero simple, don't calculate AsList when RightTranslations is called
-# Just get generators
-InstallMethod(RightTranslations, "for a zero simple semigroup",
-[IsEnumerableSemigroupRep and IsFinite and IsZeroSimpleSemigroup],
-function(S)
-  local R;
-
-  R := RightTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(R);
-
-  return R;
-end);
-
-# For simple semigroups, don't calculate AsList when LeftTranslations is called
-# Just get generators
-InstallMethod(LeftTranslations, "for a RMS semigroup",
-[IsEnumerableSemigroupRep and IsFinite and IsSimpleSemigroup],
-function(S)
-  local L;
-
-  L := LeftTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(L);
-
-  return L;
-end);
-
-# For simple semigroups, don't calculate AsList when RightTranslations is called
-# Just get generators
-InstallMethod(RightTranslations, "for a RMS semigroup",
-[IsEnumerableSemigroupRep and IsFinite and IsSimpleSemigroup],
-function(S)
-  local R;
-
-  R := RightTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(R);
-
-  return R;
-end);
 
 # The generators are generators of partial transformation monoid to act on the
 # index sets, together with functions to the generators of the group.
@@ -1286,8 +1234,8 @@ function(H)
   local L, R, S;
 
   S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
 
   return BitranslationOfNormalRMS(H, Representative(L), Representative(R));
 end);

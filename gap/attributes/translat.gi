@@ -14,7 +14,7 @@
 ## When one of these semigroups is created, the attribute AsList
 ## is calculated.
 ## To avoid this calculation at the time of creation, you can call
-## XTranslationsSemigroup or TranslationalHullSemigroup
+## XTranslationsSemigroup or TranslationalHull
 ##
 ## Left/Right translations are stored internally as transformations on the
 ## indices of the underlying semigroup (determined by AsListCanonical). Hence,
@@ -618,8 +618,8 @@ SEMIGROUPS.BitranslationsBacktrack := function(H)
     return Length(out);
   fi;
 
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   Apply(out, x -> Bitranslation(H,
                                 LeftTranslationNC(L, x[1]),
                                 RightTranslationNC(R, x[2])));
@@ -692,8 +692,8 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   nronly            := ValueOption("SEMIGROUPS_bitranslat_nr_only") = true;
   slist             := AsListCanonical(S);
   sortedlist        := AsSSortedList(S);
-  L                 := LeftTranslationsSemigroup(S);
-  R                 := RightTranslationsSemigroup(S);
+  L                 := LeftTranslations(S);
+  R                 := RightTranslations(S);
   multtable         := MultiplicationTable(S);
 
   t := Transformation(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
@@ -1095,13 +1095,13 @@ end;
 # 2. Creation of translations semigroups, translational hull, and elements
 #############################################################################
 
-# Create the left translations semigroup without calculating the elements
-InstallGlobalFunction(LeftTranslationsSemigroup,
+InstallMethod(LeftTranslations, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local fam, L, type;
 
   if not IsEnumerableSemigroupRep(S) then
-    ErrorNoReturn("Semigroups: LeftTranslationsSemigroup: \n",
+    ErrorNoReturn("Semigroups: LeftTranslations: \n",
                   "the semigroup must have representation ",
                   "IsEnumerableSemigroupRep,");
   fi;
@@ -1130,19 +1130,18 @@ function(S)
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
 
-  # TODO: is this really the correct thing to do?
   SetUnderlyingGenerators(L, GeneratorsOfSemigroup(S));
 
   return L;
 end);
 
-# Create the right translations semigroup without calculating the elements
-InstallGlobalFunction(RightTranslationsSemigroup,
+InstallMethod(RightTranslations, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local fam, type, R;
 
   if not IsEnumerableSemigroupRep(S) then
-    ErrorNoReturn("Semigroups: RightTranslationsSemigroup: \n",
+    ErrorNoReturn("Semigroups: RightTranslations: \n",
                   "the semigroup must have representation ",
                   "IsEnumerableSemigroupRep,");
   fi;
@@ -1171,14 +1170,13 @@ function(S)
   SetUnderlyingSemigroup(R, S);
   SetRightTranslations(S, R);
 
-  # TODO: is this really the correct thing to do?
   SetUnderlyingGenerators(R, GeneratorsOfSemigroup(S));
 
   return R;
 end);
 
-# Create the translational hull without calculating the elements
-InstallGlobalFunction(TranslationalHullSemigroup,
+InstallMethod(TranslationalHull, "for a finite enumerable semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local fam, type, H;
 
@@ -1206,22 +1204,7 @@ function(S)
   SetUnderlyingSemigroup(H, S);
   SetTranslationalHull(S, H);
 
-  # TODO: is this really the correct thing to do?
-  SetUnderlyingGenerators(H, GeneratorsOfSemigroup(S));
-
   return H;
-end);
-
-# Create and calculate the semigroup of left translations
-InstallMethod(LeftTranslations, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
-function(S)
-  local L;
-
-  L := LeftTranslationsSemigroup(S);
-  AsList(L);
-
-  return L;
 end);
 
 # Create and calculate the semigroup of inner left translations
@@ -1231,7 +1214,7 @@ function(S)
   local A, I, L, l, s;
 
   I := [];
-  L := LeftTranslationsSemigroup(S);
+  L := LeftTranslations(S);
 
   if HasGeneratorsOfSemigroup(S) then
     A := GeneratorsOfSemigroup(S);
@@ -1245,18 +1228,6 @@ function(S)
   return Semigroup(I);
 end);
 
-# Create and calculate the semigroup of right translations
-InstallMethod(RightTranslations, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
-function(S)
-  local R;
-
-  R := RightTranslationsSemigroup(S);
-  AsList(R);
-
-  return R;
-end);
-
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
@@ -1264,7 +1235,7 @@ function(S)
   local A, I, R, r, s;
 
   I := [];
-  R := RightTranslationsSemigroup(S);
+  R := RightTranslations(S);
 
   if HasGeneratorsOfSemigroup(S) then
     A := GeneratorsOfSemigroup(S);
@@ -1458,18 +1429,6 @@ function(R, r)
   return Objectify(TypeRightTranslationsSemigroupElements(R), [map_as_list]);
 end);
 
-# Creates and calculates the elements of the translational hull.
-InstallMethod(TranslationalHull, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
-function(S)
-  local H;
-
-  H := TranslationalHullSemigroup(S);
-  AsList(H);
-
-  return H;
-end);
-
 # Creates the ideal of the translational hull consisting of
 # all inner bitranslations
 InstallMethod(InnerTranslationalHull, "for a semigroup",
@@ -1478,9 +1437,9 @@ function(S)
   local A, I, H, L, R, l, r, s;
 
   I := [];
-  H := TranslationalHullSemigroup(S);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  H := TranslationalHull(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   if HasGeneratorsOfSemigroup(S) then
     A := GeneratorsOfSemigroup(S);
   else
@@ -1498,7 +1457,7 @@ end);
 InstallMethod(NrBitranslations, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
-  return SEMIGROUPS.BitranslationsBacktrack(TranslationalHullSemigroup(S) :
+  return SEMIGROUPS.BitranslationsBacktrack(TranslationalHull(S) :
                                             SEMIGROUPS_bitranslat_nr_only);
 end);
 
@@ -1549,45 +1508,6 @@ end);
 # 3. Methods for rectangular bands
 #############################################################################
 
-# For rectangular bands, don't calculate AsList for LeftTranslations
-# Just get generators
-InstallMethod(LeftTranslations, "for a rectangular band",
-[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
-function(S)
-  local L;
-
-  L := LeftTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(L);
-
-  return L;
-end);
-
-# For rectangular bands, don't calculate AsList for RightTranslations
-# Just get generators
-InstallMethod(RightTranslations, "for a rectangular band",
-[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
-function(S)
-  local R;
-
-  R := RightTranslationsSemigroup(S);
-  GeneratorsOfSemigroup(R);
-
-  return R;
-end);
-
-# For rectangular bands, don't calculate AsList for TranslationalHull
-# Just get generators
-InstallMethod(TranslationalHull, "for a rectangular band",
-[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
-function(S)
-  local H;
-
-  H := TranslationalHullSemigroup(S);
-  GeneratorsOfSemigroup(H);
-
-  return H;
-end);
-
 # Every transformation on the relevant index set corresponds to a translation.
 # The R classes of an I x J rectangular band correspond to (i, J) for i in I.
 # Dually for L classes.
@@ -1620,8 +1540,8 @@ function(H)
   if not IsRectangularBand(S) then
     TryNextMethod();
   fi;
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   return Size(L) * Size(R);
 end);
 
@@ -1683,8 +1603,8 @@ function(H)
     TryNextMethod();
   fi;
 
-  leftGens  := GeneratorsOfSemigroup(LeftTranslationsSemigroup(S));
-  rightGens := GeneratorsOfSemigroup(RightTranslationsSemigroup(S));
+  leftGens  := GeneratorsOfSemigroup(LeftTranslations(S));
+  rightGens := GeneratorsOfSemigroup(RightTranslations(S));
   gens      := [];
 
   for l in leftGens do
@@ -1857,8 +1777,8 @@ InstallMethod(Representative, "for a translational hull",
 function(H)
   local L, R, S;
   S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   return Bitranslation(H, Representative(L), Representative(R));
 end);
 
@@ -2107,8 +2027,8 @@ function(h)
   local H, L, R, S, l, r;
   H := TranslationalHullOfFamily(FamilyObj(h));
   S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   l := LeftTranslation(L, MappingByFunction(S, S, x -> x));
   r := RightTranslation(R, MappingByFunction(S, S, x -> x));
   return Bitranslation(H, l, r);
