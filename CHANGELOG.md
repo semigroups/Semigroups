@@ -1,7 +1,16 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-20 [James D. Mitchell][] et al.
+Copyright © 2011-21 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 3.4.1 (released 28/01/2021)
+
+This is a minor release including some bugfixes and improvements. The required
+minimum version of `libsemigroups` is increased from v1.1.0 to v1.3.2. The
+required version of `Digraphs` is increased to v1.2.0. The `datastructures`
+package was implicitly required (via `Digraphs`), and now at least version
+v0.2.5 is required explicitly. The version of GAP required was implicitly at
+least v4.10.0, but was explicity v4.9.0, it is now explicitly v4.10.0. 
 
 ### Version 3.4.0 (released 28/08/2020)
 
