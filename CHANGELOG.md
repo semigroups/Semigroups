@@ -60,7 +60,7 @@ Semigroups package requires the [images package][] version 1.3.0 or higher.
 
 This is a minor release to fixing some build issues for windows [Chris Jefferson][]
 and fixing an issue in `IsRowTrimBooleanMat`, `IsColTrimBooleanMat`, and
-`IsTrimBooleanMat` [Finn Smith] see
+`IsTrimBooleanMat` [Finn Smith][] see
 [Issue #654](https://github.com/gap-packages/Semigroups/issues/654) for more details.
 
 ### Version 3.2.4 (released 28/02/2020)
@@ -413,7 +413,7 @@ The following issues are resolved:
 * [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test
   `tst/testinstall/semigrp.tst` failed because of a missing method for
   `NrEquivalenceClasses` for a generic semigroup congruence.
-    [[James D. Mitchell][]] and [[Wilf A. Wilson][]]
+    [[James D. Mitchell][] and [Wilf A. Wilson][]]
 
 ### Version 3.0.6 (released 27/09/2017)
 
