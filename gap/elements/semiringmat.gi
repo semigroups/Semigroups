@@ -319,11 +319,9 @@ InstallMethod(Matrix, "for a semiring and homogenous list",
 [IsSemiring, IsHomogeneousList],
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
-if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
-  InstallMethod(Matrix, "for a semiring and a matrix obj",
-  [IsSemiring, IsMatrixObj],
-  SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
-fi;
+InstallMethod(Matrix, "for a semiring and a matrix obj",
+[IsSemiring, IsMatrixObj],
+SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 Unbind(SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 

@@ -153,11 +153,7 @@ Error, Semigroups: Matrix: usage,
 the 2nd argument <mat> does not give a rectangular table,
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 2/3
-gap> if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
->   View(Matrix(Rationals, [[1, 1], [2, 2]])); Print("\n");
-> else
->   Print("<2x2-matrix over Rationals>\n");
-> fi;
+gap> Matrix(Rationals, [[1, 1], [2, 2]]);
 <2x2-matrix over Rationals>
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 3/3
@@ -608,11 +604,7 @@ gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) <
 false
 
 # Test Matrix for a finite field and list consisting of an empty list
-gap> if CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
->   View(Matrix(GF(3), [[]])); Print("\n");
-> else
->   Print("[ [  ] ]\n");
-> fi;
+gap> Matrix(GF(3), [[]]);
 [ [  ] ]
 
 # SEMIGROUPS_UnbindVariables
