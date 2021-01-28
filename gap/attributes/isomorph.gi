@@ -261,7 +261,7 @@ InstallMethod(IsomorphismSemigroups, "for semigroups",
 function(S, T)
   local invariants, map, DS, DT, p, inv;
 
-  # TODO more invariants
+  # TODO more invariants
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
                  NrLClasses, NrDClasses, NrRClasses, NrHClasses, NrIdempotents];
   if S = T then
