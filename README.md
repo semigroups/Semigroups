@@ -7,7 +7,7 @@
 ## Getting Semigroups
 
 To get the latest version of the package download the archive file
-`semigroups-x.x.x.tar.gz` from the [Semigroups] webpage, and inside the `pkg`
+`semigroups-x.x.x.tar.gz` from the [Semigroups][] webpage, and inside the `pkg`
 subdirectory of your GAP installation unpack `semigroups-x.x.x.tar.gz`, by, for
 example, doing:
 
@@ -27,13 +27,13 @@ higher.  The most up-to-date version of GAP and instructions on how to install i
 can be obtained from the main [GAP](https://www.gap-system.org) page.
 
 The following is a summary of the steps that should lead to a successful
-installation of [Semigroups]:
+installation of [Semigroups][]:
 
 * get the [datastructures](https://gap-packages.github.io/datastructures)
   package version 0.2.5 or higher 
 
-* ensure that the [Digraphs] package version 1.2.0 or higher is available.
-  [Digraphs] must be compiled before [Semigroups] can be loaded.
+* ensure that the [Digraphs][] package version 1.2.0 or higher is available.
+  [Digraphs][] must be compiled before [Semigroups][] can be loaded.
 
 * get the [genss](https://gap-packages.github.io/genss) package version 1.6.5 or
   higher 
@@ -42,13 +42,13 @@ installation of [Semigroups]:
 
 * get the [IO](https://gap-packages.github.io/io) package version 4.5.1 or higher
 
-* get the [orb] package version 4.8.2 or higher
+* get the [orb][] package version 4.8.2 or higher
 
-Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
-[orb]!
+Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so compile
+[orb][]!
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the
-  [Semigroups] webpage.
+  [Semigroups][] webpage.
 
 * unzip and untar the file `semigroups-x.x.x.tar.gz`, for example, using
 
@@ -62,29 +62,30 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
   directories `lib`, `doc`, and so on. Move the directory `semigroups-x.x.x`
   into the `pkg` directory.
 
-* from version 3.0.0, it is necessary to compile the [Semigroups] package.
-  [Semigroups] uses the [libsemigroups] C++ library, which requires a compiler
+* from version 3.0.0, it is necessary to compile the [Semigroups][] package.
+  [Semigroups][] uses the [libsemigroups][] C++ library, which requires a compiler
+
   implementing the C++11 standard.
 
-  You may either build [libsemigroups] along with [Semigroups], or have it
+  You may either build [libsemigroups][] along with [Semigroups][], or have it
   installed at a custom or standard location, as explained in its
   documentation.  To compile in the former case, inside the
   `pkg/semigroups-x.x.x` directory, type
     * `./configure`
     * `make`
 
-  For the latter case, you need a working [pkg-config] tool; assuming
-  [libsemigroups] was installed at location `/foo/bar`, type
+  For the latter case, you need a working [pkg-config][] tool; assuming
+  [libsemigroups][] was installed at location `/foo/bar`, type
     
     * `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig ./configure --with-external-libsemigroups`
     * `make`
 
-  If [pkg-config] has `/foo/bar` among its default locations, then
+  If [pkg-config][] has `/foo/bar` among its default locations, then
   `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig` part above may be omitted).
 
-  If you are using GCC to compile [Semigroups], then version 5.0 or higher is
-  required. Trying to compile [Semigroups] with an earlier version of GCC will
-  result in an error at compile time.  [Semigroups] supports GCC version 5.0 or
+  If you are using GCC to compile [Semigroups][], then version 5.0 or higher is
+  required. Trying to compile [Semigroups][] with an earlier version of GCC will
+  result in an error at compile time.  [Semigroups][] supports GCC version 5.0 or
   higher, and clang version 5.0 or higher.
 
   Further information about this step can be found in manual section entitled
