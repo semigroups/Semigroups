@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 16: 
     Properties and attributes specific to inverse semigroups
@@ -170,7 +170,7 @@ true
 
 <p><code class="code">MajorantClosure</code> returns a majorantly closed subset of an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions, <var class="Arg">S</var>, as a list. See <code class="func">IsMajorantlyClosed</code> (<a href="chap16_mj.html#X81E6D24F852A7937"><span class="RefLink">16.2-8</span></a>).</p>
 
-<p>The result contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var> (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<a href="../../../doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>)). In particular, the result is a superset of <var class="Arg">T</var>.</p>
+<p>The result contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var> (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<span class="RefLink">???</span>)). In particular, the result is a superset of <var class="Arg">T</var>.</p>
 
 <p>Note that <var class="Arg">T</var> can be a subset of <var class="Arg">S</var> or a subsemigroup of <var class="Arg">S</var>.</p>
 
@@ -215,7 +215,7 @@ true
 
 <p><code class="code">Minorants</code> takes an element <var class="Arg">f</var> from an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var>, and returns a list of the minorants of <var class="Arg">f</var> in <var class="Arg">S</var>.</p>
 
-<p>A <em>minorant</em> of <var class="Arg">f</var> is an element of <var class="Arg">S</var> which is strictly less than <var class="Arg">f</var> in the natural partial order of <var class="Arg">S</var>. See <code class="func">NaturalLeqPartialPerm</code> (<a href="../../../doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>).</p>
+<p>A <em>minorant</em> of <var class="Arg">f</var> is an element of <var class="Arg">S</var> which is strictly less than <var class="Arg">f</var> in the natural partial order of <var class="Arg">S</var>. See <code class="func">NaturalLeqPartialPerm</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -239,7 +239,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of elements.</p>
 
-<p>An idempotent in an inverse semigroup <var class="Arg">S</var> is <em>primitive</em> if it is non-zero and minimal with respect to the <code class="func">NaturalPartialOrder</code> (<a href="../../../doc/ref/chap54_mj.html#X7EA51F087CF7621F"><span class="RefLink">Reference: NaturalPartialOrder</span></a>) on <var class="Arg">S</var>. <code class="code">PrimitiveIdempotents</code> returns the list of primitive idempotents in the inverse semigroup <var class="Arg">S</var>.</p>
+<p>An idempotent in an inverse semigroup <var class="Arg">S</var> is <em>primitive</em> if it is non-zero and minimal with respect to the <code class="func">NaturalPartialOrder</code> (<span class="RefLink">???</span>) on <var class="Arg">S</var>. <code class="code">PrimitiveIdempotents</code> returns the list of primitive idempotents in the inverse semigroup <var class="Arg">S</var>.</p>
 
 
 <div class="example"><pre>
@@ -369,11 +369,11 @@ MappingByFunction( &lt;inverse partial perm monoid of size 6721,
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VagnerPrestonRepresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism to an inverse semigroup of partial permutations.</p>
 
-<p><code class="code">VagnerPrestonRepresentation</code> returns an isomorphism from an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="../../../doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>), to the inverse semigroup of partial permutations <var class="Arg">T</var> of degree equal to the size of <var class="Arg">S</var>, which is obtained using the Vagner-Preston Representation Theorem.</p>
+<p><code class="code">VagnerPrestonRepresentation</code> returns an isomorphism from an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<span class="RefLink">???</span>), to the inverse semigroup of partial permutations <var class="Arg">T</var> of degree equal to the size of <var class="Arg">S</var>, which is obtained using the Vagner-Preston Representation Theorem.</p>
 
 <p>More precisely, if <span class="SimpleMath">\(f:S\to T\)</span> is the isomorphism returned by <code class="code">VagnerPrestonRepresentation(<var class="Arg">S</var>)</code> and <span class="SimpleMath">\(x\)</span> is in <var class="Arg">S</var>, then <span class="SimpleMath">\(f(x)\)</span> is the partial permutation with domain <span class="SimpleMath">\(Sx^{-1}\)</span> and range <span class="SimpleMath">\(Sx^{-1}x\)</span> defined by <span class="SimpleMath">\(f(x): sx^{-1}\mapsto sx^{-1}x\)</span>.</p>
 
-<p>In many cases, it is possible to find a smaller degree representation than that provided by <code class="code">VagnerPrestonRepresentation</code> using <code class="func">IsomorphismPartialPermSemigroup</code> (<a href="../../../doc/ref/chap54_mj.html#X7FE18EBE79B9C17C"><span class="RefLink">Reference: IsomorphismPartialPermSemigroup</span></a>) or <code class="func">SmallerDegreePartialPermRepresentation</code> (<a href="chap16_mj.html#X786D4E397EA4445D"><span class="RefLink">16.1-8</span></a>).</p>
+<p>In many cases, it is possible to find a smaller degree representation than that provided by <code class="code">VagnerPrestonRepresentation</code> using <code class="func">IsomorphismPartialPermSemigroup</code> (<span class="RefLink">???</span>) or <code class="func">SmallerDegreePartialPermRepresentation</code> (<a href="chap16_mj.html#X786D4E397EA4445D"><span class="RefLink">16.1-8</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -513,7 +513,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBrandtSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p><code class="code">IsBrandtSemigroup</code> return <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a finite 0-simple inverse semigroup, and <code class="keyw">false</code> if it is not. See also <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap15_mj.html#X8193A60F839C064E"><span class="RefLink">15.1-28</span></a>) and <code class="func">IsInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseSemigroup</span></a>).</p>
+<p><code class="code">IsBrandtSemigroup</code> return <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a finite 0-simple inverse semigroup, and <code class="keyw">false</code> if it is not. See also <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap15_mj.html#X8193A60F839C064E"><span class="RefLink">15.1-28</span></a>) and <code class="func">IsInverseSemigroup</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -618,7 +618,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This function determines whether a given semigroup is an F-inverse monoid. A semigroup is an F-inverse monoid when it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsFInverseSemigroup</code> (<a href="chap16_mj.html#X86F942F48158DAC3"><span class="RefLink">16.2-4</span></a>).</p>
+<p>This function determines whether a given semigroup is an F-inverse monoid. A semigroup is an F-inverse monoid when it satisfies <code class="func">IsMonoid</code> (<span class="RefLink">???</span>) and <code class="func">IsFInverseSemigroup</code> (<a href="chap16_mj.html#X86F942F48158DAC3"><span class="RefLink">16.2-4</span></a>).</p>
 
 <p><a id="X8440E22681BD1EE6" name="X8440E22681BD1EE6"></a></p>
 
@@ -653,7 +653,7 @@ true</pre></div>
 
 <p><code class="code">IsJoinIrreducible</code> determines whether an element <var class="Arg">x</var> of an inverse semigroup <var class="Arg">S</var> of partial permutations, block bijections or partial permutation bipartitions is join irreducible.</p>
 
-<p>An element <var class="Arg">x</var> is <em>join irreducible</em> when it is not the least upper bound (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<a href="../../../doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>)) of any subset of <var class="Arg">S</var> not containing <var class="Arg">x</var>.</p>
+<p>An element <var class="Arg">x</var> is <em>join irreducible</em> when it is not the least upper bound (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<span class="RefLink">???</span>)) of any subset of <var class="Arg">S</var> not containing <var class="Arg">x</var>.</p>
 
 
 <div class="example"><pre>
@@ -700,7 +700,7 @@ false</pre></div>
 
 <p><code class="code">IsMajorantlyClosed</code> determines whether the subset <var class="Arg">T</var> of the inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var> is majorantly closed in <var class="Arg">S</var>. See also <code class="func">MajorantClosure</code> (<a href="chap16_mj.html#X801CC67E80898608"><span class="RefLink">16.1-3</span></a>).</p>
 
-<p>We say that <var class="Arg">T</var> is <em>majorantly closed</em> in <var class="Arg">S</var> if it contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var>, with respect to the natural partial order. See <code class="func">NaturalLeqPartialPerm</code> (<a href="../../../doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>).</p>
+<p>We say that <var class="Arg">T</var> is <em>majorantly closed</em> in <var class="Arg">S</var> if it contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var>, with respect to the natural partial order. See <code class="func">NaturalLeqPartialPerm</code> (<span class="RefLink">???</span>).</p>
 
 <p>Note that <var class="Arg">T</var> can be a subset of <var class="Arg">S</var> or a subsemigroup of <var class="Arg">S</var>.</p>
 

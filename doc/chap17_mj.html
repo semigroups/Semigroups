@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 17: Congruences</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -591,7 +591,7 @@ true</pre></div>
 
 <p>Note that the order in which numbers appear in the list is non-deterministic, and two congruence objects which describe the same equivalence relation might therefore have different lookups. Note also that the maximum value of the list may not be the number of classes of <var class="Arg">cong</var>, and that any integer might not be included. However, see <code class="func">EquivalenceRelationCanonicalLookup</code> (<a href="chap17_mj.html#X846AAC317D39C72A"><span class="RefLink">17.3-11</span></a>).</p>
 
-<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -618,7 +618,7 @@ false</pre></div>
 
 <p>Two elements of the semigroup on which the congruence is defined are related in the congruence if and only if they have the same number at their respective positions in the lookup.</p>
 
-<p>See also <code class="func">EquivalenceRelationLookup</code> (<a href="chap17_mj.html#X867772F37B2A5EB2"><span class="RefLink">17.3-10</span></a>) and <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+<p>See also <code class="func">EquivalenceRelationLookup</code> (<a href="chap17_mj.html#X867772F37B2A5EB2"><span class="RefLink">17.3-10</span></a>) and <code class="func">EquivalenceRelationPartition</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -638,7 +638,7 @@ false</pre></div>
 
 <p>This attribute returns a list of lists of elements of the underlying set of the semigroup congruence <var class="Arg">cong</var>. These lists are precisely the nontrivial equivalence classes of <var class="Arg">cong</var>. The order in which the classes appear is deterministic, and the order of the elements inside each class is also deterministic. Hence, two congruence objects have the same <code class="code">EquivalenceRelationCanonicalPartition</code> if and only if they describe the same relation.</p>
 
-<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>), a similar attribute which does not have canonical ordering, but which is likely to be faster.</p>
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<span class="RefLink">???</span>), a similar attribute which does not have canonical ordering, but which is likely to be faster.</p>
 
 
 <div class="example"><pre>
@@ -1182,7 +1182,7 @@ true</pre></div>
 
 <p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Torpey. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
 
-<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">\(S\)</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="../../../doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
+<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">\(S\)</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <span class="RefLink">???</span>) over a group, with a regular sandwich matrix. That is,</p>
 
 <p class="center">\[S \cong \mathcal{M} ^ 0[G; I, \Lambda; P], \]</p>
 
@@ -1233,7 +1233,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
+<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<span class="RefLink">???</span>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
 
 <p>An object of this type may be constructed with <code class="code">RMSCongruenceByLinkedTriple</code> or <code class="code">RZMSCongruenceByLinkedTriple</code>, or this representation may be selected automatically by <code class="func">SemigroupCongruence</code> (<a href="chap17_mj.html#X85CE56AC84FA5D33"><span class="RefLink">17.2-1</span></a>).</p>
 
@@ -1634,7 +1634,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupIdealOfReesCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup ideal.</p>
 
-<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
+<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<span class="RefLink">???</span>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
 
 
 <div class="example"><pre>
@@ -1656,7 +1656,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This category describes a congruence class of a Rees congruence. A congruence class of a Rees congruence either contains all the elements of an ideal, or is a singleton (see <code class="func">IsReesCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)).</p>
+<p>This category describes a congruence class of a Rees congruence. A congruence class of a Rees congruence either contains all the elements of an ideal, or is a singleton (see <code class="func">IsReesCongruence</code> (<span class="RefLink">???</span>)).</p>
 
 <p>An object of this type may be used in the same way as any other congruence class object.</p>
 
@@ -1688,7 +1688,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This property describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">\(S \times S\)</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
+<p>This property describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">\(S \times S\)</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<span class="RefLink">???</span>).</p>
 
 <p>An object of this type may be constructed with <code class="code">UniversalSemigroupCongruence</code> or this representation may be selected automatically as an alternative to an <code class="code">IsRZMSCongruenceByLinkedTriple</code> object (since the universal congruence cannot be represented by a linked triple).</p>
 

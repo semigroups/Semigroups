@@ -96,8 +96,8 @@
   
   [33X[0;0YThe result contains all elements of [3XS[103X which are greater than or equal to any
   element    of    [3XT[103X    (with   respect   to   the   natural   partial   order
-  [2XNaturalLeqPartialPerm[102X  ([14XReference:  NaturalLeqPartialPerm[114X)).  In particular,
-  the result is a superset of [3XT[103X.[133X
+  [2XNaturalLeqPartialPerm[102X ([14XNaturalLeqPartialPerm???[114X)). In particular, the result
+  is a superset of [3XT[103X.[133X
   
   [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
   
@@ -142,8 +142,8 @@
   returns a list of the minorants of [3Xf[103X in [3XS[103X.[133X
   
   [33X[0;0YA  [13Xminorant[113X  of  [3Xf[103X  is  an element of [3XS[103X which is strictly less than [3Xf[103X in the
-  natural   partial   order   of   [3XS[103X.  See  [2XNaturalLeqPartialPerm[102X  ([14XReference:
-  NaturalLeqPartialPerm[114X).[133X
+  natural     partial     order     of     [3XS[103X.     See    [2XNaturalLeqPartialPerm[102X
+  ([14XNaturalLeqPartialPerm???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
@@ -166,9 +166,9 @@
   [6XReturns:[106X  [33X[0;10YA list of elements.[133X
   
   [33X[0;0YAn  idempotent  in an inverse semigroup [3XS[103X is [13Xprimitive[113X if it is non-zero and
-  minimal    with    respect    to    the    [2XNaturalPartialOrder[102X   ([14XReference:
-  NaturalPartialOrder[114X)   on   [3XS[103X.  [10XPrimitiveIdempotents[110X  returns  the  list  of
-  primitive idempotents in the inverse semigroup [3XS[103X.[133X
+  minimal  with respect to the [2XNaturalPartialOrder[102X ([14XNaturalPartialOrder???[114X) on
+  [3XS[103X.  [10XPrimitiveIdempotents[110X  returns  the  list of primitive idempotents in the
+  inverse semigroup [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := InverseMonoid([127X[104X
@@ -307,9 +307,9 @@
   
   [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
   [3XS[103X  where  the  elements  of [3XS[103X have a unique semigroup inverse accessible via
-  [2XInverse[102X   ([14XReference:   Inverse[114X),   to  the  inverse  semigroup  of  partial
-  permutations [3XT[103X of degree equal to the size of [3XS[103X, which is obtained using the
-  Vagner-Preston Representation Theorem.[133X
+  [2XInverse[102X  ([14XInverse???[114X), to the inverse semigroup of partial permutations [3XT[103X of
+  degree  equal  to  the size of [3XS[103X, which is obtained using the Vagner-Preston
+  Representation Theorem.[133X
   
   [33X[0;0YMore    precisely,   if   [22Xf:S->   T[122X   is   the   isomorphism   returned   by
   [10XVagnerPrestonRepresentation([3XS[103X[10X)[110X  and  [22Xx[122X  is  in  [3XS[103X,  then [22Xf(x)[122X is the partial
@@ -318,8 +318,8 @@
   
   [33X[0;0YIn  many  cases, it is possible to find a smaller degree representation than
   that        provided        by       [10XVagnerPrestonRepresentation[110X       using
-  [2XIsomorphismPartialPermSemigroup[102X ([14XReference: IsomorphismPartialPermSemigroup[114X)
-  or [2XSmallerDegreePartialPermRepresentation[102X ([14X16.1-8[114X).[133X
+  [2XIsomorphismPartialPermSemigroup[102X    ([14XIsomorphismPartialPermSemigroup???[114X)   or
+  [2XSmallerDegreePartialPermRepresentation[102X ([14X16.1-8[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
@@ -463,7 +463,7 @@
   
   [33X[0;0Y[10XIsBrandtSemigroup[110X  return  [9Xtrue[109X  if  the  semigroup  [3XS[103X  is a finite 0-simple
   inverse  semigroup,  and  [9Xfalse[109X if it is not. See also [2XIsZeroSimpleSemigroup[102X
-  ([14X15.1-28[114X) and [2XIsInverseSemigroup[102X ([14XReference: IsInverseSemigroup[114X).[133X
+  ([14X15.1-28[114X) and [2XIsInverseSemigroup[102X ([14XIsInverseSemigroup???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
@@ -571,8 +571,8 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis function determines whether a given semigroup is an F-inverse monoid. A
-  semigroup  is  an  F-inverse  monoid  when it satisfies [2XIsMonoid[102X ([14XReference:
-  IsMonoid[114X) and [2XIsFInverseSemigroup[102X ([14X16.2-4[114X).[133X
+  semigroup  is  an  F-inverse monoid when it satisfies [2XIsMonoid[102X ([14XIsMonoid???[114X)
+  and [2XIsFInverseSemigroup[102X ([14X16.2-4[114X).[133X
   
   [1X16.2-6 IsFactorisableInverseMonoid[101X
   
@@ -610,8 +610,8 @@
   bipartitions is join irreducible.[133X
   
   [33X[0;0YAn  element [3Xx[103X is [13Xjoin irreducible[113X when it is not the least upper bound (with
-  respect  to  the  natural  partial  order  [2XNaturalLeqPartialPerm[102X ([14XReference:
-  NaturalLeqPartialPerm[114X)) of any subset of [3XS[103X not containing [3Xx[103X.[133X
+  respect    to    the    natural    partial    order    [2XNaturalLeqPartialPerm[102X
+  ([14XNaturalLeqPartialPerm???[114X)) of any subset of [3XS[103X not containing [3Xx[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
@@ -660,8 +660,7 @@
   
   [33X[0;0YWe  say  that  [3XT[103X  is [13Xmajorantly closed[113X in [3XS[103X if it contains all elements of [3XS[103X
   which  are  greater  than  or equal to any element of [3XT[103X, with respect to the
-  natural     partial    order.    See    [2XNaturalLeqPartialPerm[102X    ([14XReference:
-  NaturalLeqPartialPerm[114X).[133X
+  natural partial order. See [2XNaturalLeqPartialPerm[102X ([14XNaturalLeqPartialPerm???[114X).[133X
   
   [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
   

@@ -48,8 +48,7 @@
   
   [33X[0;0YIf any element of [3Xlist[103X is a semigroup, then the generators of that semigroup
   are   written   to   [3Xfilename[103X.  More  specifically,  the  list  returned  by
-  [2XGeneratorsOfSemigroup[102X  ([14XReference:  GeneratorsOfSemigroup[114X) is written to the
-  file.[133X
+  [2XGeneratorsOfSemigroup[102X ([14XGeneratorsOfSemigroup???[114X) is written to the file.[133X
   
   [33X[0;0YThis  function returns [2XIO_OK[102X ([14XIO: IO_OK[114X) if everything went well or [2XIO_ERROR[102X
   ([14XIO: IO_Error[114X) if something went wrong.[133X

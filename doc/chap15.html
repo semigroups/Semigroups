@@ -161,7 +161,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCommutativeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p><code class="code">IsCommutativeSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is commutative and <code class="keyw">false</code> if it is not. The function <code class="func">IsCommutative</code> (<a href="../../../doc/ref/chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">Reference: IsCommutative</span></a>) can also be used to test if a semigroup is commutative.</p>
+<p><code class="code">IsCommutativeSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is commutative and <code class="keyw">false</code> if it is not. The function <code class="func">IsCommutative</code> (<span class="RefLink">???</span>) can also be used to test if a semigroup is commutative.</p>
 
 <p>A semigroup <var class="Arg">S</var> is <em>commutative</em> if <code class="code">x * y = y * x</code> for all <code class="code">x, y</code> in <var class="Arg">S</var>.</p>
 
@@ -462,11 +462,11 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoidAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p><code class="code">IsMonoidAsSemigroup</code> returns <code class="keyw">true</code> if and only if the semigroup <var class="Arg">S</var> is mathematically a monoid, i.e. if and only if it contains a <code class="func">MultiplicativeNeutralElement</code> (<a href="../../../doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>).</p>
+<p><code class="code">IsMonoidAsSemigroup</code> returns <code class="keyw">true</code> if and only if the semigroup <var class="Arg">S</var> is mathematically a monoid, i.e. if and only if it contains a <code class="func">MultiplicativeNeutralElement</code> (<span class="RefLink">???</span>).</p>
 
-<p>It is possible that a semigroup which satisfies <code class="code">IsMonoidAsSemigroup</code> is not in the <strong class="pkg">GAP</strong> category <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>). This is possible if the <code class="func">MultiplicativeNeutralElement</code> (<a href="../../../doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>) of <var class="Arg">S</var> is not equal to the <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of any element in <var class="Arg">S</var>. Therefore a semigroup satisfying <code class="code">IsMonoidAsSemigroup</code> may not possess the attributes of a monoid (such as, <code class="func">GeneratorsOfMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>)).</p>
+<p>It is possible that a semigroup which satisfies <code class="code">IsMonoidAsSemigroup</code> is not in the <strong class="pkg">GAP</strong> category <code class="func">IsMonoid</code> (<span class="RefLink">???</span>). This is possible if the <code class="func">MultiplicativeNeutralElement</code> (<span class="RefLink">???</span>) of <var class="Arg">S</var> is not equal to the <code class="func">One</code> (<span class="RefLink">???</span>) of any element in <var class="Arg">S</var>. Therefore a semigroup satisfying <code class="code">IsMonoidAsSemigroup</code> may not possess the attributes of a monoid (such as, <code class="func">GeneratorsOfMonoid</code> (<span class="RefLink">???</span>)).</p>
 
-<p>See also <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>), <code class="func">IsInverseMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseMonoid</span></a>) and <code class="func">IsomorphismTransformationMonoid</code> (<a href="../../../doc/ref/chap53_mj.html#X78F29C817CF6827F"><span class="RefLink">Reference: IsomorphismTransformationMonoid</span></a>).</p>
+<p>See also <code class="func">One</code> (<span class="RefLink">???</span>), <code class="func">IsInverseMonoid</code> (<span class="RefLink">???</span>) and <code class="func">IsomorphismTransformationMonoid</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -501,7 +501,7 @@ true</pre></div>
 
 <p>A semigroup is <em>orthodox</em> if it is regular and its idempotent elements form a subsemigroup. Every inverse semigroup is also an orthodox semigroup.</p>
 
-<p>See also <code class="func">IsRegularSemigroup</code> (<a href="chap15.html#X7C4663827C5ACEF1"><span class="RefLink">15.1-17</span></a>) and <code class="func">IsRegularSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7C4663827C5ACEF1"><span class="RefLink">Reference: IsRegularSemigroup</span></a>).</p>
+<p>See also <code class="func">IsRegularSemigroup</code> (<a href="chap15.html#X7C4663827C5ACEF1"><span class="RefLink">15.1-17</span></a>) and <code class="func">IsRegularSemigroup</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -581,7 +581,7 @@ false</pre></div>
 
 <p>A semigroup <code class="code">S</code> is <em>regular</em> if for all <code class="code">x</code> in <code class="code">S</code> there exists <code class="code">y</code> in <code class="code">S</code> such that <code class="code">x * y * x = x</code>. Every inverse semigroup is regular, and a semigroup of partial permutations is regular if and only if it is an inverse semigroup.</p>
 
-<p>See also <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>), and <code class="func">IsRegularSemigroupElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87532A76854347E0"><span class="RefLink">Reference: IsRegularSemigroupElement</span></a>).</p>
+<p>See also <code class="func">IsRegularDClass</code> (<span class="RefLink">???</span>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>), and <code class="func">IsRegularSemigroupElement</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -736,9 +736,9 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSynchronizingSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>For a positive integer <var class="Arg">n</var>, <code class="code">IsSynchronizingSemigroup</code> returns <code class="keyw">true</code> if the semigroup of transformations <var class="Arg">S</var> contains a transformation with constant value on <code class="code">[1 .. <var class="Arg">n</var>]</code>. Note that this function will return true whenever <code class="code"><var class="Arg">n</var> = 1</code>. See also <code class="func">ConstantTransformation</code> (<a href="../../../doc/ref/chap53_mj.html#X7F1E4B5184210D2B"><span class="RefLink">Reference: ConstantTransformation</span></a>).</p>
+<p>For a positive integer <var class="Arg">n</var>, <code class="code">IsSynchronizingSemigroup</code> returns <code class="keyw">true</code> if the semigroup of transformations <var class="Arg">S</var> contains a transformation with constant value on <code class="code">[1 .. <var class="Arg">n</var>]</code>. Note that this function will return true whenever <code class="code"><var class="Arg">n</var> = 1</code>. See also <code class="func">ConstantTransformation</code> (<span class="RefLink">???</span>).</p>
 
-<p>If the optional second argument is not specified, then <var class="Arg">n</var> will be taken to be the value of <code class="func">DegreeOfTransformationSemigroup</code> (<a href="../../../doc/ref/chap53_mj.html#X7EA699C687952544"><span class="RefLink">Reference: DegreeOfTransformationSemigroup</span></a>) for <var class="Arg">S</var>.</p>
+<p>If the optional second argument is not specified, then <var class="Arg">n</var> will be taken to be the value of <code class="func">DegreeOfTransformationSemigroup</code> (<span class="RefLink">???</span>) for <var class="Arg">S</var>.</p>
 
 <p>Note that the semigroup consisting of the identity transformation is the unique transformation semigroup with degree <code class="code">0</code>. In this special case, the function <code class="code">IsSynchronizingSemigroup</code> will return <code class="keyw">false</code>.</p>
 

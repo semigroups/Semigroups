@@ -1,9 +1,8 @@
 # README - Semigroups package for GAP
 
-#### Copyright (C) 2011-20 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
+#### Copyright (C) 2011-21 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)
-[![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.1)](https://travis-ci.org/gap-packages/Semigroups)
 
 ## Getting Semigroups
 
@@ -23,12 +22,23 @@ For questions, remarks, suggestions, and issues please use the
 
 ## Installation
 
-It is assumed that you have a working copy of GAP with version number 4.9.0 or
+It is assumed that you have a working copy of GAP with version number 4.10.0 or
 higher.  The most up-to-date version of GAP and instructions on how to install it
 can be obtained from the main [GAP](http://www.gap-system.org) page.
 
 The following is a summary of the steps that should lead to a successful
 installation of [Semigroups]:
+
+* get the [datastructures](http://gap-packages.github.io/datastructures)
+  package version 0.2.5 or higher 
+
+* ensure that the [Digraphs] package version 1.2.0 or higher is available.
+  [Digraphs] must be compiled before [Semigroups] can be loaded.
+
+* get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or
+  higher 
+
+* get the [images](http://gap-packages.github.io/images) package version 1.3.0 or
 
 * get the [IO](http://gap-packages.github.io/io) package version 4.5.1 or higher
 
@@ -36,15 +46,6 @@ installation of [Semigroups]:
 
 Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 [orb]!
-
-* ensure that the [Digraphs] package version 1.0.0 or higher is available.
-  [Digraphs] must be compiled before [Semigroups] can be loaded.
-
-* get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or
-  higher 
-
-* get the [images](http://gap-packages.github.io/images) package version 1.3.0 or
-  higher 
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the
   [Semigroups] webpage.
@@ -94,8 +95,8 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 
 Enjoy!
 
-[Semigroups]: https://gap-packages.github.io/Semigroups
+[Semigroups]: https://semigroups.github.io/Semigroups
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
 [orb]: http://gap-packages.github.io/orb
-[Digraphs]: http://gap-packages.github.io/Digraphs
+[Digraphs]: http://digraphs.github.io/Digraphs

@@ -673,9 +673,9 @@ true
       Semigroups of PBRs
     </span></h4>
 
-<p>Semigroups and monoids of PBRs can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) and <code class="func">Monoid</code> (<a href="../../../doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>); see Chapter <a href="chap6.html#X79A4C070831D989D"><span class="RefLink">6</span></a> for more details.</p>
+<p>Semigroups and monoids of PBRs can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<span class="RefLink">???</span>) and <code class="func">Monoid</code> (<span class="RefLink">???</span>); see Chapter <a href="chap6.html#X79A4C070831D989D"><span class="RefLink">6</span></a> for more details.</p>
 
-<p>It is possible to create inverse semigroups and monoids of PBRs using <code class="func">InverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of PBRs satisfying <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and when considered as bipartitions, the collection satisfies <code class="code">IsGeneratorsOfInverseSemigroup</code>.</p>
+<p>It is possible to create inverse semigroups and monoids of PBRs using <code class="func">InverseSemigroup</code> (<span class="RefLink">???</span>) and <code class="func">InverseMonoid</code> (<span class="RefLink">???</span>) when the argument is a collection of PBRs satisfying <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and when considered as bipartitions, the collection satisfies <code class="code">IsGeneratorsOfInverseSemigroup</code>.</p>
 
 <p>Note that every PBR semigroup in <strong class="pkg">Semigroups</strong> is finite.</p>
 
@@ -687,9 +687,9 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPBRMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A <em>PBR semigroup</em> is simply a semigroup consisting of PBRs. An object <var class="Arg">obj</var> is a PBR semigroup in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="func">IsPBRCollection</code> (<a href="chap4.html#X854A9CEA7AC14C0A"><span class="RefLink">4.1-2</span></a>).</p>
+<p>A <em>PBR semigroup</em> is simply a semigroup consisting of PBRs. An object <var class="Arg">obj</var> is a PBR semigroup in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsSemigroup</code> (<span class="RefLink">???</span>) and <code class="func">IsPBRCollection</code> (<a href="chap4.html#X854A9CEA7AC14C0A"><span class="RefLink">4.1-2</span></a>).</p>
 
-<p>A <em>PBR monoid</em> is a monoid consisting of PBRs. An object <var class="Arg">obj</var> is a PBR monoid in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsPBRCollection</code> (<a href="chap4.html#X854A9CEA7AC14C0A"><span class="RefLink">4.1-2</span></a>).</p>
+<p>A <em>PBR monoid</em> is a monoid consisting of PBRs. An object <var class="Arg">obj</var> is a PBR monoid in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsMonoid</code> (<span class="RefLink">???</span>) and <code class="func">IsPBRCollection</code> (<a href="chap4.html#X854A9CEA7AC14C0A"><span class="RefLink">4.1-2</span></a>).</p>
 
 <p>Note that it is possible for a PBR semigroup to have a multiplicative neutral element (i.e. an identity element) but not to satisfy <code class="code">IsPBRMonoid</code>. For example,</p>
 
@@ -719,9 +719,9 @@ PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPBRMonoid(S);</span>
 false</pre></div>
 
-<p>In this example <code class="code">S</code> cannot be converted into a monoid using <code class="func">AsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X7B22038F832B9C0F"><span class="RefLink">Reference: AsMonoid</span></a>) since the <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of any element in <code class="code">S</code> differs from the multiplicative neutral element.</p>
+<p>In this example <code class="code">S</code> cannot be converted into a monoid using <code class="func">AsMonoid</code> (<span class="RefLink">???</span>) since the <code class="func">One</code> (<span class="RefLink">???</span>) of any element in <code class="code">S</code> differs from the multiplicative neutral element.</p>
 
-<p>For more details see <code class="func">IsMagmaWithOne</code> (<a href="../../../doc/ref/chap35_mj.html#X86071DE7835F1C7C"><span class="RefLink">Reference: IsMagmaWithOne</span></a>).</p>
+<p>For more details see <code class="func">IsMagmaWithOne</code> (<span class="RefLink">???</span>).</p>
 
 <p><a id="X80FC004C7B65B4C0" name="X80FC004C7B65B4C0"></a></p>
 

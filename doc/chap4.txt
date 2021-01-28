@@ -614,14 +614,14 @@
   [1X4.6 [33X[0;0YSemigroups of PBRs[133X[101X
   
   [33X[0;0YSemigroups  and monoids of PBRs can be created in the usual way in [5XGAP[105X using
-  the  functions  [2XSemigroup[102X  ([14XReference:  Semigroup[114X)  and  [2XMonoid[102X  ([14XReference:
-  Monoid[114X); see Chapter [14X6[114X for more details.[133X
+  the functions [2XSemigroup[102X ([14XSemigroup???[114X) and [2XMonoid[102X ([14XMonoid???[114X); see Chapter [14X6[114X
+  for more details.[133X
   
   [33X[0;0YIt  is  possible  to  create  inverse  semigroups  and monoids of PBRs using
-  [2XInverseSemigroup[102X ([14XReference: InverseSemigroup[114X) and [2XInverseMonoid[102X ([14XReference:
-  InverseMonoid[114X)  when  the  argument  is  a  collection  of  PBRs  satisfying
-  [2XIsBipartitionPBR[102X ([14X4.5-8[114X) and when considered as bipartitions, the collection
-  satisfies [10XIsGeneratorsOfInverseSemigroup[110X.[133X
+  [2XInverseSemigroup[102X  ([14XInverseSemigroup???[114X) and [2XInverseMonoid[102X ([14XInverseMonoid???[114X)
+  when  the  argument  is  a  collection  of  PBRs satisfying [2XIsBipartitionPBR[102X
+  ([14X4.5-8[114X)  and  when  considered  as  bipartitions,  the  collection satisfies
+  [10XIsGeneratorsOfInverseSemigroup[110X.[133X
   
   [33X[0;0YNote that every PBR semigroup in [5XSemigroups[105X is finite.[133X
   
@@ -632,12 +632,11 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA [13XPBR semigroup[113X is simply a semigroup consisting of PBRs. An object [3Xobj[103X is a
-  PBR  semigroup  in  [5XGAP[105X if it satisfies [2XIsSemigroup[102X ([14XReference: IsSemigroup[114X)
-  and [2XIsPBRCollection[102X ([14X4.1-2[114X).[133X
+  PBR  semigroup  in  [5XGAP[105X  if  it  satisfies  [2XIsSemigroup[102X ([14XIsSemigroup???[114X) and
+  [2XIsPBRCollection[102X ([14X4.1-2[114X).[133X
   
   [33X[0;0YA  [13XPBR  monoid[113X is a monoid consisting of PBRs. An object [3Xobj[103X is a PBR monoid
-  in  [5XGAP[105X  if  it satisfies [2XIsMonoid[102X ([14XReference: IsMonoid[114X) and [2XIsPBRCollection[102X
-  ([14X4.1-2[114X).[133X
+  in [5XGAP[105X if it satisfies [2XIsMonoid[102X ([14XIsMonoid???[114X) and [2XIsPBRCollection[102X ([14X4.1-2[114X).[133X
   
   [33X[0;0YNote  that  it  is  possible  for  a  PBR semigroup to have a multiplicative
   neutral  element  (i.e. an identity element) but not to satisfy [10XIsPBRMonoid[110X.
@@ -670,10 +669,10 @@
   [4X[32X[104X
   
   [33X[0;0YIn  this  example  [10XS[110X  cannot  be  converted  into  a  monoid  using [2XAsMonoid[102X
-  ([14XReference:  AsMonoid[114X)  since  the  [2XOne[102X ([14XReference: One[114X) of any element in [10XS[110X
-  differs from the multiplicative neutral element.[133X
+  ([14XAsMonoid???[114X)  since  the  [2XOne[102X ([14XOne???[114X) of any element in [10XS[110X differs from the
+  multiplicative neutral element.[133X
   
-  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XReference: IsMagmaWithOne[114X).[133X
+  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XIsMagmaWithOne???[114X).[133X
   
   [1X4.6-2 DegreeOfPBRSemigroup[101X
   

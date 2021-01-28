@@ -251,8 +251,8 @@
   
   [1X18.2-1 IsRMSIsoByTriple[101X
   
-  [33X[1;0Y[29X[2XIsRMSIsoByTriple[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsRZMSIsoByTriple[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsRMSIsoByTriple[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsRZMSIsoByTriple[102X [32X Category[133X
   
   [33X[0;0YThe  isomorphisms  between finite Rees matrix or 0-matrix semigroups [10XS[110X and [10XT[110X
   over groups [10XG[110X and [10XH[110X, respectively, specified by a triple consisting of:[133X
@@ -266,11 +266,11 @@
   
   [33X[0;0Ybelong  to  the  categories  [10XIsRMSIsoByTriple[110X  and  [10XIsRZMSIsoByTriple[110X. Basic
   operators  for  such  isomorphism  are given in [14X18.2-7[114X, and basic operations
-  are:   [2XRange[102X   ([14XReference:  range[114X),  [2XSource[102X  ([14XReference:  Source[114X),  [2XELM_LIST[102X
-  ([14X18.2-3[114X),   [2XCompositionMapping[102X  ([14XReference:  CompositionMapping[114X),  [2XImagesElm[102X
-  ([14X18.2-5[114X),  [2XImagesRepresentative[102X  ([14X18.2-5[114X), [2XInverseGeneralMapping[102X ([14XReference:
-  InverseGeneralMapping[114X),          [2XPreImagesRepresentative[102X         ([14XReference:
-  PreImagesRepresentative[114X), [2XIsOne[102X ([14XReference: IsOne[114X).[133X
+  are:    [2XRange[102X    ([14XRange???[114X),    [2XSource[102X   ([14XSource???[114X),   [2XELM_LIST[102X   ([14X18.2-3[114X),
+  [2XCompositionMapping[102X      ([14XCompositionMapping???[114X),     [2XImagesElm[102X     ([14X18.2-5[114X),
+  [2XImagesRepresentative[102X             ([14X18.2-5[114X),             [2XInverseGeneralMapping[102X
+  ([14XInverseGeneralMapping???[114X),                          [2XPreImagesRepresentative[102X
+  ([14XPreImagesRepresentative???[114X), [2XIsOne[102X ([14XIsOne???[114X).[133X
   
   [1X18.2-2 RMSIsoByTriple[101X
   
@@ -288,16 +288,16 @@
         [10XOnDigraphs(RZMSDigraph([3XR1[103X[10X), [3Xtriple[103X[10X[1]) = RZMSDigraph([3XR2[103X[10X)[110X.[133X
   
   [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[2][110X  should be an isomorphism from the underlying group of [3XR1[103X to
-        the  underlying  group  of  [3XR2[103X  (see  [2XUnderlyingSemigroup[102X  ([14XReference:
-        UnderlyingSemigroup for a rees 0-matrix semigroup[114X)).[133X
+        the     underlying    group    of    [3XR2[103X    (see    [2XUnderlyingSemigroup[102X
+        ([14XUnderlyingSemigroup, for a Rees 0-matrix semigroup???[114X)).[133X
   
   [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[3][110X  should  be  a list of elements from the underlying group of
-        [3XR2[103X.  If the [2XMatrix[102X ([14XReference: Matrix[114X) of [3XR1[103X has [22Xm[122X columns and [22Xn[122X rows,
-        then  the  list  should  have  length [22Xm + n[122X, where the first [22Xm[122X entries
-        should  correspond  to  the  columns  of  [3XR1[103X's  matrix, and the last [22Xn[122X
-        entries  should  correspond  to the rows. These column and row entries
-        should  correspond  to  the  [22Xu_i[122X  and [22Xv_λ[122X elements in Theorem 3.4.1 of
-        [How95].[133X
+        [3XR2[103X.  If the [2XMatrix[102X ([14XMatrix, for Rees matrix semigroups???[114X) of [3XR1[103X has [22Xm[122X
+        columns  and [22Xn[122X rows, then the list should have length [22Xm + n[122X, where the
+        first  [22Xm[122X  entries should correspond to the columns of [3XR1[103X's matrix, and
+        the last [22Xn[122X entries should correspond to the rows. These column and row
+        entries should correspond to the [22Xu_i[122X and [22Xv_λ[122X elements in Theorem 3.4.1
+        of [How95].[133X
   
   [33X[0;0YIf  [3Xtriple[103X describes a valid isomorphism from [3XR1[103X to [3XR2[103X then this will return
   an  object  in  the  category [2XIsRZMSIsoByTriple[102X ([14X18.2-1[114X); otherwise an error
@@ -429,10 +429,11 @@
   
   [33X[0;0YIf  [3XS[103X  is  a  Rees  0-matrix semigroup then [10XCanonicalReesZeroMatrixSemigroup[110X
   returns   an   isomorphic   Rees   0-matrix   semigroup   [10XT[110X  with  the  same
-  [2XIsUnderlyingSemigroup[102X  ([14X???IsUnderlyingSemigroup???[114X)  as  [3XS[103X  but  the [2XMatrix[102X
-  ([14X???Matrix???[114X) of [10XT[110X has been canonicalized. The output [10XT[110X is canonical in the
-  sense  that  for  any  two  inputs  which  are  isomorphic  Rees zero matrix
-  semigroups the output of this function is the same.[133X
+  [2XUnderlyingSemigroup[102X  ([14XUnderlyingSemigroup, for a Rees 0-matrix semigroup???[114X)
+  as  [3XS[103X  but  the [2XMatrix[102X ([14XMatrix, for Rees matrix semigroups???[114X) of [10XT[110X has been
+  canonicalized.  The  output  [10XT[110X  is  canonical  in the sense that for any two
+  inputs  which  are isomorphic Rees zero matrix semigroups the output of this
+  function is the same.[133X
   
   [33X[0;0Y[10XCanonicalReesMatrixSemigroup[110X works the same but for Rees matrix semigroups.[133X
   

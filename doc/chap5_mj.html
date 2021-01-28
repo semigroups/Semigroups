@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 5: 
     Matrices over semirings
@@ -187,11 +187,11 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiring</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of the category <code class="code">IsMatrixOverSemiring</code>, which is a subcategory of <code class="func">IsMultiplicativeElementWithOne</code> (<a href="../../../doc/ref/chap31_mj.html#X82BC294F7D388AE8"><span class="RefLink">Reference: IsMultiplicativeElementWithOne</span></a>), <code class="func">IsAssociativeElement</code> (<a href="../../../doc/ref/chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>), and <code class="code">IsPositionalObjectRep</code>; see <a href="../../../doc/ref/chap13_mj.html#X8698205F8648EB33"><span class="RefLink">Reference: Representation</span></a>.</p>
+<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of the category <code class="code">IsMatrixOverSemiring</code>, which is a subcategory of <code class="func">IsMultiplicativeElementWithOne</code> (<span class="RefLink">???</span>), <code class="func">IsAssociativeElement</code> (<span class="RefLink">???</span>), and <code class="code">IsPositionalObjectRep</code>; see <span class="RefLink">???</span>.</p>
 
 <p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a square matrix.</p>
 
-<p>Basic operations for matrices over semirings are: <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">TransposedMat</code> (<a href="../../../doc/ref/chap24_mj.html#X7C52A38C79C36C35"><span class="RefLink">Reference: TransposedMat</span></a>), and <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>).</p>
+<p>Basic operations for matrices over semirings are: <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">TransposedMat</code> (<span class="RefLink">???</span>), and <code class="func">One</code> (<span class="RefLink">???</span>).</p>
 
 <p><a id="X86F696B883677D6B" name="X86F696B883677D6B"></a></p>
 
@@ -280,7 +280,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 
 </dd>
 </dl>
-<p>In its second form, the arguments should be a semiring <var class="Arg">semiring</var> and matrix <var class="Arg">mat</var> with entries in <var class="Arg">semiring</var>. Currently, the only supported semirings are finite fields of prime order, and the integers <code class="func">Integers</code> (<a href="../../../doc/ref/chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">Reference: Integers</span></a>).</p>
+<p>In its second form, the arguments should be a semiring <var class="Arg">semiring</var> and matrix <var class="Arg">mat</var> with entries in <var class="Arg">semiring</var>. Currently, the only supported semirings are finite fields of prime order, and the integers <code class="func">Integers</code> (<span class="RefLink">???</span>).</p>
 
 <p>The function <code class="func">BooleanMat</code> (<a href="chap5_mj.html#X84A16D4D7D015885"><span class="RefLink">5.3-1</span></a>) is provided for specifically creating boolean matrices.</p>
 
@@ -447,7 +447,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)</pre></div>
 
 </dd>
 </dl>
-<p>In its second form, the arguments should be a semiring <var class="Arg">semiring</var> and dimension <var class="Arg">dim</var>. Currently, the only supported semirings are finite fields of prime order and the integers <code class="func">Integers</code> (<a href="../../../doc/ref/chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">Reference: Integers</span></a>).</p>
+<p>In its second form, the arguments should be a semiring <var class="Arg">semiring</var> and dimension <var class="Arg">dim</var>. Currently, the only supported semirings are finite fields of prime order and the integers <code class="func">Integers</code> (<span class="RefLink">???</span>).</p>
 
 
 <div class="example"><pre>
@@ -491,7 +491,7 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
 <p><code class="code">IsTropicalMatrix</code> is a supercategory of <code class="code">IsTropicalMaxPlusMatrix</code> and <code class="code">IsTropicalMinPlusMatrix</code>.</p>
 
-<p>Basic operations for matrices over semirings include: multiplication via \*, <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>), the underlying list of lists used to create the matrix can be accessed using <code class="func">AsList</code> (<a href="chap5_mj.html#X8289FCCC8274C89D"><span class="RefLink">5.1-10</span></a>), the rows of <code class="code">mat</code> can be accessed using <code class="code">mat[i]</code> where <code class="code">i</code> is between <code class="code">1</code> and the dimension of the matrix, it also possible to loop over the rows of a matrix; for tropical matrices <code class="func">ThresholdTropicalMatrix</code> (<a href="chap5_mj.html#X7D21408E845E4648"><span class="RefLink">5.1-11</span></a>); for ntp matrices <code class="func">ThresholdNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>) and <code class="func">PeriodNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>).</p>
+<p>Basic operations for matrices over semirings include: multiplication via \*, <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">One</code> (<span class="RefLink">???</span>), the underlying list of lists used to create the matrix can be accessed using <code class="func">AsList</code> (<a href="chap5_mj.html#X8289FCCC8274C89D"><span class="RefLink">5.1-10</span></a>), the rows of <code class="code">mat</code> can be accessed using <code class="code">mat[i]</code> where <code class="code">i</code> is between <code class="code">1</code> and the dimension of the matrix, it also possible to loop over the rows of a matrix; for tropical matrices <code class="func">ThresholdTropicalMatrix</code> (<a href="chap5_mj.html#X7D21408E845E4648"><span class="RefLink">5.1-11</span></a>); for ntp matrices <code class="func">ThresholdNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>) and <code class="func">PeriodNTPMatrix</code> (<a href="chap5_mj.html#X7874559881FE8779"><span class="RefLink">5.1-12</span></a>).</p>
 
 <p>For matrices over finite fields see Section <a href="chap5_mj.html#X873822B6830CE367"><span class="RefLink">5.4</span></a>; for Boolean matrices more details can be found in Section <a href="chap5_mj.html#X844A32A184E5EB75"><span class="RefLink">5.3</span></a>.</p>
 
@@ -746,7 +746,7 @@ true
 <dt><strong class="Mark">permutations</strong></dt>
 <dd><p>If <var class="Arg">x</var> is a permutation and <var class="Arg">n</var> is a positive integer, then <code class="code">AsBooleanMat(<var class="Arg">x</var>, <var class="Arg">n</var>)</code> returns the boolean matrix <code class="code">mat</code> of dimension <var class="Arg">n</var> such that <code class="code">mat[i][j] = true</code> if and only if <code class="code">j = i ^ x</code>.</p>
 
-<p>If no positive integer <var class="Arg">n</var> is specified, then the largest moved point of <var class="Arg">x</var> is used as the value for <var class="Arg">n</var>; see <code class="func">LargestMovedPoint</code> (<a href="../../../doc/ref/chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">Reference: LargestMovedPoint for a permutation</span></a>).</p>
+<p>If no positive integer <var class="Arg">n</var> is specified, then the largest moved point of <var class="Arg">x</var> is used as the value for <var class="Arg">n</var>; see <code class="func">LargestMovedPoint</code> (<span class="RefLink">???</span>).</p>
 
 </dd>
 <dt><strong class="Mark">transformations</strong></dt>
@@ -1000,7 +1000,7 @@ true</pre></div>
 
 <p>In its second form, when only a single permutation group <var class="Arg">G</var> is specified, <var class="Arg">G</var> acts on the rows and columns of <var class="Arg">mat</var> independently.</p>
 
-<p>In its third form, when only a boolean matrix is specified, <code class="code">CanonicalBooleanMat</code> returns a fixed representative of the orbit of <var class="Arg">mat</var> under the action of the symmetric group on its rows, and, independently, on its columns. In other words, <code class="code">CanonicalBooleanMat</code> returns a canonical boolean matrix equivalent to <var class="Arg">mat</var> up to rearranging rows and columns. This version of <code class="code">CanonicalBooleanMat</code> uses <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> and its interface with the <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> library for computing automorphism groups and canonical forms of graphs <a href="chapBib_mj.html#biBJunttilaKaski">[JK07]</a>. As a consequence, <code class="code">CanonicalBooleanMat</code> with a single argument is significantly faster than the versions with 2 or 3 arguments.</p>
+<p>In its third form, when only a boolean matrix is specified, <code class="code">CanonicalBooleanMat</code> returns a fixed representative of the orbit of <var class="Arg">mat</var> under the action of the symmetric group on its rows, and, independently, on its columns. In other words, <code class="code">CanonicalBooleanMat</code> returns a canonical boolean matrix equivalent to <var class="Arg">mat</var> up to rearranging rows and columns. This version of <code class="code">CanonicalBooleanMat</code> uses <span class="URL"><a href="https://digraphs.github.io/Digraphs">Digraphs</a></span> and its interface with the <span class="URL"><a href="http://www.tcs.tkk.fi/Software/bliss/">bliss</a></span> library for computing automorphism groups and canonical forms of graphs <a href="chapBib_mj.html#biBJunttilaKaski">[JK07]</a>. As a consequence, <code class="code">CanonicalBooleanMat</code> with a single argument is significantly faster than the versions with 2 or 3 arguments.</p>
 
 
 <div class="example"><pre>
@@ -1755,7 +1755,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="../../../doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5_mj.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
+<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<span class="RefLink">???</span>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5_mj.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
 
 
 <div class="example"><pre>

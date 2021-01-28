@@ -63,15 +63,15 @@
   
   [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of the category
   [10XIsMatrixOverSemiring[110X,       which       is       a       subcategory      of
-  [2XIsMultiplicativeElementWithOne[102X  ([14XReference: IsMultiplicativeElementWithOne[114X),
-  [2XIsAssociativeElement[102X       ([14XReference:       IsAssociativeElement[114X),      and
-  [10XIsPositionalObjectRep[110X; see [14X'Reference: Representation'[114X.[133X
+  [2XIsMultiplicativeElementWithOne[102X          ([14XIsMultiplicativeElementWithOne???[114X),
+  [2XIsAssociativeElement[102X  ([14XIsAssociativeElement???[114X),  and [10XIsPositionalObjectRep[110X;
+  see [14XRepresentation???[114X.[133X
   
   [33X[0;0YEvery matrix over a semiring in [5XSemigroups[105X is a square matrix.[133X
   
   [33X[0;0YBasic      operations      for      matrices     over     semirings     are:
-  [2XDimensionOfMatrixOverSemiring[102X     ([14X5.1-3[114X),     [2XTransposedMat[102X     ([14XReference:
-  TransposedMat[114X), and [2XOne[102X ([14XReference: One[114X).[133X
+  [2XDimensionOfMatrixOverSemiring[102X ([14X5.1-3[114X), [2XTransposedMat[102X ([14XTransposedMat???[114X), and
+  [2XOne[102X ([14XOne???[114X).[133X
   
   [1X5.1-2 IsMatrixOverSemiringCollection[101X
   
@@ -170,8 +170,7 @@
   
   [33X[0;0YIn  its  second form, the arguments should be a semiring [3Xsemiring[103X and matrix
   [3Xmat[103X  with  entries  in [3Xsemiring[103X. Currently, the only supported semirings are
-  finite  fields  of  prime  order,  and  the  integers  [2XIntegers[102X  ([14XReference:
-  Integers[114X).[133X
+  finite fields of prime order, and the integers [2XIntegers[102X ([14XIntegers???[114X).[133X
   
   [33X[0;0YThe  function  [2XBooleanMat[102X  ([14X5.3-1[114X)  is  provided  for  specifically creating
   boolean matrices.[133X
@@ -338,7 +337,7 @@
   
   [33X[0;0YIn  its  second  form,  the  arguments  should  be  a  semiring [3Xsemiring[103X and
   dimension  [3Xdim[103X. Currently, the only supported semirings are finite fields of
-  prime order and the integers [2XIntegers[102X ([14XReference: Integers[114X).[133X
+  prime order and the integers [2XIntegers[102X ([14XIntegers???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XRandomMatrix(IsBooleanMat, 3);[127X[104X
@@ -384,12 +383,12 @@
   [10XIsTropicalMinPlusMatrix[110X.[133X
   
   [33X[0;0YBasic operations for matrices over semirings include: multiplication via \*,
-  [2XDimensionOfMatrixOverSemiring[102X  ([14X5.1-3[114X), [2XOne[102X ([14XReference: One[114X), the underlying
-  list  of  lists  used  to  create  the  matrix  can be accessed using [2XAsList[102X
-  ([14X5.1-10[114X),  the rows of [10Xmat[110X can be accessed using [10Xmat[i][110X where [10Xi[110X is between [10X1[110X
-  and the dimension of the matrix, it also possible to loop over the rows of a
-  matrix;  for  tropical  matrices  [2XThresholdTropicalMatrix[102X  ([14X5.1-11[114X); for ntp
-  matrices [2XThresholdNTPMatrix[102X ([14X5.1-12[114X) and [2XPeriodNTPMatrix[102X ([14X5.1-12[114X).[133X
+  [2XDimensionOfMatrixOverSemiring[102X  ([14X5.1-3[114X), [2XOne[102X ([14XOne???[114X), the underlying list of
+  lists  used  to create the matrix can be accessed using [2XAsList[102X ([14X5.1-10[114X), the
+  rows  of  [10Xmat[110X  can  be  accessed  using  [10Xmat[i][110X where [10Xi[110X is between [10X1[110X and the
+  dimension of the matrix, it also possible to loop over the rows of a matrix;
+  for  tropical  matrices  [2XThresholdTropicalMatrix[102X  ([14X5.1-11[114X); for ntp matrices
+  [2XThresholdNTPMatrix[102X ([14X5.1-12[114X) and [2XPeriodNTPMatrix[102X ([14X5.1-12[114X).[133X
   
   [33X[0;0YFor  matrices  over finite fields see Section [14X5.4[114X; for Boolean matrices more
   details can be found in Section [14X5.3[114X.[133X
@@ -633,8 +632,8 @@
         that [10Xmat[i][j] = true[110X if and only if [10Xj = i ^ x[110X.[133X
   
         [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
-        [3Xx[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
-        LargestMovedPoint for a permutation[114X).[133X
+        [3Xx[103X    is   used   as   the   value   for   [3Xn[103X;   see   [2XLargestMovedPoint[102X
+        ([14XLargestMovedPoint, for a permutation???[114X).[133X
   
   [8Xtransformations[108X
         [33X[0;6YIf  [3Xx[103X is a transformation and [3Xn[103X is a positive integer such that [3Xx[103X is a
@@ -1652,7 +1651,7 @@
   
   [33X[0;0YA [13Xmatrix group[113X is simply a group of invertible matrices over a finite field.
   An  object  in  [5XSemigroups[105X  is  a  matrix  group  if  it  satisfies  [2XIsGroup[102X
-  ([14XReference: IsGroup[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X5.1-9[114X).[133X
+  ([14XIsGroup???[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X5.1-9[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X

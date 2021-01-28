@@ -42,8 +42,8 @@
   
   [33X[0;0Y[10XDClass[110X can also be used as a synonym for [10XDClassOfHClass[110X, [10XDClassOfLClass[110X, and
   [10XDClassOfRClass[110X;  [10XLClass[110X  as  a  synonym  for [10XLClassOfHClass[110X; and [10XRClass[110X as a
-  synonym  for  [10XRClassOfHClass[110X.  See  also  [2XGreensDClassOfElement[102X  ([14XReference:
-  GreensDClassOfElement[114X) and [2XGreensDClassOfElementNC[102X ([14X13.1-3[114X).[133X
+  synonym     for     [10XRClassOfHClass[110X.     See    also    [2XGreensDClassOfElement[102X
+  ([14XGreensDClassOfElement???[114X) and [2XGreensDClassOfElementNC[102X ([14X13.1-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
@@ -91,9 +91,9 @@
   [6XReturns:[106X  [33X[0;10YA Green's class.[133X
   
   [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
-  functions   with  the  same  names;  see  [2XGreensDClassOfElement[102X  ([14XReference:
-  GreensDClassOfElement[114X).  The  main difference is that these functions can be
-  applied to a wider class of objects:[133X
+  functions     with     the    same    names;    see    [2XGreensDClassOfElement[102X
+  ([14XGreensDClassOfElement???[114X).  The main difference is that these functions can
+  be applied to a wider class of objects:[133X
   
   [8X[10XGreensDClassOfElement[110X[8X and [10XDClass[110X[8X[108X
         [33X[0;6Y[3XX[103X must be a semigroup.[133X
@@ -162,8 +162,8 @@
   
   [33X[0;0Ycan take a signficant amount of time to return a value.[133X
   
-  [33X[0;0YSee   also   [2XGreensRClassOfElement[102X  ([14XReference:  GreensRClassOfElement[114X)  and
-  [2XRClassOfHClass[102X ([14X13.1-1[114X).[133X
+  [33X[0;0YSee also [2XGreensRClassOfElement[102X ([14XGreensRClassOfElement???[114X) and [2XRClassOfHClass[102X
+  ([14X13.1-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;[127X[104X
@@ -198,9 +198,9 @@
   [6XReturns:[106X  [33X[0;10YA list of Green's classes.[133X
   
   [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
-  functions    with   the   same   names;   see   [2XGreensDClasses[102X   ([14XReference:
-  GreensDClasses[114X).  The main difference is that these functions can be applied
-  to a wider class of objects:[133X
+  functions  with  the same names; see [2XGreensDClasses[102X ([14XGreensDClasses???[114X). The
+  main  difference  is that these functions can be applied to a wider class of
+  objects:[133X
   
   [8X[10XGreensDClasses[110X[8X and [10XDClasses[110X[8X[108X
         [33X[0;6Y[3XX[103X should be a semigroup.[133X
@@ -351,7 +351,7 @@
   to find its [13XD[113X-classes.[133X
   
   [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X13.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
-  ([14XReference:     IsGreensLessThanOrEqual[114X),    [2XMinimalIdeal[102X    ([14X14.7-1[114X)    and
+  ([14XIsGreensLessThanOrEqual???[114X),        [2XMinimalIdeal[102X        ([14X14.7-1[114X)        and
   [2XRepresentativeOfMinimalIdeal[102X ([14X14.7-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -374,7 +374,7 @@
   order of [13XD[113X-classes.[133X
   
   [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X13.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
-  ([14XReference: IsGreensLessThanOrEqual[114X), and [2XMinimalDClass[102X ([14X13.1-6[114X).[133X
+  ([14XIsGreensLessThanOrEqual???[114X), and [2XMinimalDClass[102X ([14X13.1-6[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMaximalDClasses(BrauerMonoid(8));[127X[104X
@@ -404,8 +404,8 @@
   
   [33X[0;0Y[10XRegularDClasses[110X returns a list of the regular [13XD[113X-classes of the semigroup [3XS[103X.[133X
   
-  [33X[0;0YSee  also  [2XIsRegularGreensClass[102X  ([14X13.3-2[114X)  and  [2XIsRegularDClass[102X  ([14XReference:
-  IsRegularDClass[114X).[133X
+  [33X[0;0YSee     also     [2XIsRegularGreensClass[102X     ([14X13.3-2[114X)    and    [2XIsRegularDClass[102X
+  ([14XIsRegularDClass???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 4, 1, 3, 5]),[127X[104X
@@ -446,9 +446,8 @@
   [33X[0;0Ysince  the  Green's  classes  themselves  are not created when [10XNrXClasses[110X is
   called.[133X
   
-  [33X[0;0YSee     also    [2XGreensRClasses[102X    ([14X13.1-4[114X),    [2XGreensRClasses[102X    ([14XReference:
-  GreensRClasses[114X),   [2XIteratorOfRClasses[102X   ([14X13.2-2[114X),  and  [2XIteratorOfRClassReps[102X
-  ([14X13.2-1[114X).[133X
+  [33X[0;0YSee   also   [2XGreensRClasses[102X  ([14X13.1-4[114X),  [2XGreensRClasses[102X  ([14XGreensRClasses???[114X),
+  [2XIteratorOfRClasses[102X ([14X13.2-2[114X), and [2XIteratorOfRClassReps[102X ([14X13.2-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
@@ -516,9 +515,8 @@
   [33X[0;0YThe partial order on the [13XD[113X-classes is defined by [22Xx≤ y[122X if and only if [22XS ^ 1xS
   ^ 1[122X is a subset of [22XS ^ 1yS ^ 1[122X.[133X
   
-  [33X[0;0YSee     also    [2XGreensDClasses[102X    ([14X13.1-4[114X),    [2XGreensDClasses[102X    ([14XReference:
-  GreensDClasses[114X),             [2XIsGreensLessThanOrEqual[102X             ([14XReference:
-  IsGreensLessThanOrEqual[114X), and [2X\<[102X ([14X13.3-1[114X).[133X
+  [33X[0;0YSee   also   [2XGreensDClasses[102X  ([14X13.1-4[114X),  [2XGreensDClasses[102X  ([14XGreensDClasses???[114X),
+  [2XIsGreensLessThanOrEqual[102X ([14XIsGreensLessThanOrEqual???[114X), and [2X\<[102X ([14X13.3-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 4, 1, 2]),[127X[104X
@@ -643,11 +641,10 @@
   [6XReturns:[106X  [33X[0;10YAn iterator.[133X
   
   [33X[0;0YReturns  an iterator of the representatives of the Green's classes contained
-  in  the  semigroup  [3XS[103X.  See  [14X'Reference:  Iterators'[114X for more information on
-  iterators.[133X
+  in the semigroup [3XS[103X. See [14XIterators???[114X for more information on iterators.[133X
   
-  [33X[0;0YSee   also   [2XGreensRClasses[102X   ([14XReference:   GreensRClasses[114X),  [2XGreensRClasses[102X
-  ([14X13.1-4[114X), and [2XIteratorOfRClasses[102X ([14X13.2-2[114X).[133X
+  [33X[0;0YSee  also  [2XGreensRClasses[102X  ([14XGreensRClasses???[114X), [2XGreensRClasses[102X ([14X13.1-4[114X), and
+  [2XIteratorOfRClasses[102X ([14X13.2-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 2, 1, 5, 4]),[127X[104X
@@ -685,14 +682,14 @@
   [6XReturns:[106X  [33X[0;10YAn iterator.[133X
   
   [33X[0;0YReturns  an  iterator  of  the  Green's  classes  in  the  semigroup  [3XS[103X. See
-  [14X'Reference: Iterators'[114X for more information on iterators.[133X
+  [14XIterators???[114X for more information on iterators.[133X
   
   [33X[0;0YThis function is useful if you are, for example, looking for an [13XR[113X-class of a
   semigroup  with a particular property but do not necessarily want to compute
   all of the [13XR[113X-classes.[133X
   
-  [33X[0;0YSee     also    [2XGreensRClasses[102X    ([14X13.1-4[114X),    [2XGreensRClasses[102X    ([14XReference:
-  GreensRClasses[114X), [2XNrRClasses[102X ([14X13.1-9[114X), and [2XIteratorOfRClassReps[102X ([14X13.2-1[114X).[133X
+  [33X[0;0YSee   also   [2XGreensRClasses[102X  ([14X13.1-4[114X),  [2XGreensRClasses[102X  ([14XGreensRClasses???[114X),
+  [2XNrRClasses[102X ([14X13.1-9[114X), and [2XIteratorOfRClassReps[102X ([14X13.2-1[114X).[133X
   
   [33X[0;0YThe  transformation semigroup in the example below has 25147892 elements but
   it  only  takes  a  fraction  of a second to find a non-trivial [13XR[113X-class. The
@@ -770,11 +767,11 @@
   [33X[0;0YThe  Green's  class  [3Xleft-expr[103X  is  less than or equal to [3Xright-expr[103X if they
   belong  to  the  same  semigroup and the representative of [3Xleft-expr[103X is less
   than  the  representative  of  [3Xright-expr[103X  under  [10X<[110X; see also [2XRepresentative[102X
-  ([14XReference: Representative[114X).[133X
+  ([14XRepresentative???[114X).[133X
   
   [33X[0;0YPlease  note  that  this  is not the usual order on the Green's classes of a
-  semigroup   as   defined   in   [14X'Reference:  Green's  Relations'[114X.  See  also
-  [2XIsGreensLessThanOrEqual[102X ([14XReference: IsGreensLessThanOrEqual[114X).[133X
+  semigroup     as    defined    in    [14XGreen's    Relations???[114X.    See    also
+  [2XIsGreensLessThanOrEqual[102X ([14XIsGreensLessThanOrEqual???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(4);;[127X[104X
@@ -809,15 +806,14 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  function returns [9Xtrue[109X if [3Xclass[103X is a regular Green's class and [9Xfalse[109X if
-  it   is   not.   See   also  [2XIsRegularDClass[102X  ([14XReference:  IsRegularDClass[114X),
-  [2XIsGroupHClass[102X    ([14XReference:    IsGroupHClass[114X),    [2XGroupHClassOfGreensDClass[102X
-  ([14XReference:  GroupHClassOfGreensDClass[114X), [2XGroupHClass[102X ([14X13.4-1[114X), [2XNrIdempotents[102X
-  ([14X14.9-2[114X),  [2XIdempotents[102X  ([14X14.9-1[114X),  and [2XIsRegularSemigroupElement[102X ([14XReference:
-  IsRegularSemigroupElement[114X).[133X
+  it  is  not.  See  also  [2XIsRegularDClass[102X ([14XIsRegularDClass???[114X), [2XIsGroupHClass[102X
+  ([14XIsGroupHClass???[114X),                                [2XGroupHClassOfGreensDClass[102X
+  ([14XGroupHClassOfGreensDClass???[114X),    [2XGroupHClass[102X    ([14X13.4-1[114X),    [2XNrIdempotents[102X
+  ([14X14.9-2[114X),     [2XIdempotents[102X     ([14X14.9-1[114X),     and    [2XIsRegularSemigroupElement[102X
+  ([14XIsRegularSemigroupElement???[114X).[133X
   
   [33X[0;0YThe  function  [10XIsRegularDClass[110X  produces  the same output as the [5XGAP[105X library
-  functions    with   the   same   name;   see   [2XIsRegularDClass[102X   ([14XReference:
-  IsRegularDClass[114X).[133X
+  functions with the same name; see [2XIsRegularDClass[102X ([14XIsRegularDClass???[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Monoid(Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),[127X[104X
@@ -878,12 +874,12 @@
   [6XReturns:[106X  [33X[0;10YA  group [13XH[113X-class of the [13XD[113X-class [3Xclass[103X if it is regular and [9Xfail[109X if
             it is not.[133X
   
-  [33X[0;0Y[10XGroupHClass[110X   is   a   synonym   for  [2XGroupHClassOfGreensDClass[102X  ([14XReference:
-  GroupHClassOfGreensDClass[114X).[133X
+  [33X[0;0Y[10XGroupHClass[110X      is      a     synonym     for     [2XGroupHClassOfGreensDClass[102X
+  ([14XGroupHClassOfGreensDClass???[114X).[133X
   
-  [33X[0;0YSee   also   [2XIsGroupHClass[102X   ([14XReference:   IsGroupHClass[114X),   [2XIsRegularDClass[102X
-  ([14XReference:    IsRegularDClass[114X),    [2XIsRegularGreensClass[102X    ([14X13.3-2[114X),    and
-  [2XIsRegularSemigroup[102X ([14X15.1-17[114X).[133X
+  [33X[0;0YSee      also      [2XIsGroupHClass[102X     ([14XIsGroupHClass???[114X),     [2XIsRegularDClass[102X
+  ([14XIsRegularDClass???[114X),  [2XIsRegularGreensClass[102X ([14X13.3-2[114X), and [2XIsRegularSemigroup[102X
+  ([14X15.1-17[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),[127X[104X
@@ -991,8 +987,8 @@
             semigroup.[133X
   
   [33X[0;0Y[10XStructureDescriptionSchutzenbergerGroups[110X  returns  the  distinct  values  of
-  [2XStructureDescription[102X ([14XReference: StructureDescription[114X) when it is applied to
-  the Schutzenberger groups of the [13XR[113X-classes of the semigroup [3XS[103X.[133X
+  [2XStructureDescription[102X  ([14XStructureDescription???[114X)  when  it  is applied to the
+  Schutzenberger groups of the [13XR[113X-classes of the semigroup [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
@@ -1023,8 +1019,8 @@
             semigroup.[133X
   
   [33X[0;0Y[10XStructureDescriptionMaximalSubgroups[110X   returns   the   distinct   values  of
-  [2XStructureDescription[102X ([14XReference: StructureDescription[114X) when it is applied to
-  the maximal subgroups of the semigroup [3XS[103X.[133X
+  [2XStructureDescription[102X  ([14XStructureDescription???[114X)  when  it  is applied to the
+  maximal subgroups of the semigroup [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := DualSymmetricInverseSemigroup(6);[127X[104X
@@ -1071,9 +1067,9 @@
   [33X[1;0Y[29X[2XStructureDescription[102X( [3Xclass[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA string or [9Xfail[109X.[133X
   
-  [33X[0;0Y[10XStructureDescription[110X  returns  the value of [2XStructureDescription[102X ([14XReference:
-  StructureDescription[114X)  when it is applied to a group isomorphic to the group
-  [13XH[113X-class [3Xclass[103X. If [3Xclass[103X is not a group [13XH[113X-class, then [9Xfail[109X is returned.[133X
+  [33X[0;0Y[10XStructureDescription[110X    returns    the    value    of   [2XStructureDescription[102X
+  ([14XStructureDescription???[114X)  when  it  is applied to a group isomorphic to the
+  group [13XH[113X-class [3Xclass[103X. If [3Xclass[103X is not a group [13XH[113X-class, then [9Xfail[109X is returned.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
@@ -1108,12 +1104,12 @@
   [33X[0;0YIf  [3XD[103X  is a subsemigroup of its parent semigroup, then the function returned
   by   [10XInjectionPrincipalFactor[110X   or   [10XIsomorphismReesMatrixSemigroup[110X   is  an
   isomorphism  from  [3XD[103X  to  a  Rees  matrix semigroup; see [2XReesMatrixSemigroup[102X
-  ([14XReference: ReesMatrixSemigroup[114X).[133X
+  ([14XReesMatrixSemigroup???[114X).[133X
   
   [33X[0;0YIf    [3XD[103X    is   not   a   semigroup,   then   the   function   returned   by
   [10XInjectionPrincipalFactor[110X  is an injective function from [3XD[103X to a Rees 0-matrix
   semigroup    isomorphic    to    the    principal    factor    of   [3XD[103X;   see
-  [2XReesZeroMatrixSemigroup[102X  ([14XReference: ReesZeroMatrixSemigroup[114X). In this case,
+  [2XReesZeroMatrixSemigroup[102X    ([14XReesZeroMatrixSemigroup???[114X).   In   this   case,
   [10XIsomorphismReesMatrixSemigroup[110X     and    [10XIsomorphismReesZeroMatrixSemigroup[110X
   returns an error.[133X
   
