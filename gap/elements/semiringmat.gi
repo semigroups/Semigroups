@@ -17,6 +17,13 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+# TEMPORARY
+InstallMethod(IsOne, "for a matrix over finite field",
+[IsMatrixOverFiniteField],
+mat -> mat = One(mat));
+# TODO Experiment with ListOp for our matrix objects
+# TODO Experiment with Unpack for our matrix objects
+
 #############################################################################
 # Internal
 #############################################################################
@@ -464,7 +471,7 @@ function(mat)
   return IteratorByFunctions(iter);
 end);
 
-InstallMethod(\[\], "for a matrix over semiring and a pos int",
+InstallOtherMethod(\[\], "for a matrix over semiring and a pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then

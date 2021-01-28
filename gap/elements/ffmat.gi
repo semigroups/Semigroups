@@ -26,7 +26,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 # It is not currently possible to create any type of matrix except
 # IsPlistMatrixOverFiniteFieldRep
 
-InstallMethod(\[\], "for a plist matrix over finite field and pos int",
+InstallOtherMethod(\[\], "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
 function(mat, pos)
   if not IsBound(mat[pos]) then
