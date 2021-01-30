@@ -1024,7 +1024,7 @@ function(S)
   fi;
 
   if not IsFinite(S) then
-    # WW I cannot find an example of an example of an infinite inverse monoid
+    # WW I cannot find an example of an infinite inverse monoid
     # with InverseOp - FreeGroup(1) should work, but it is not in the category
     TryNextMethod();
   fi;
