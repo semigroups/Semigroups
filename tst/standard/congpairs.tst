@@ -33,8 +33,7 @@ gap> cong := SemigroupCongruence(S, gens);
 gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 gap> NrCongruenceClasses(cong);
 3
 gap> class := CongruenceClassOfElement(cong, x);;

@@ -480,12 +480,12 @@ function(class, elm)
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
 
-SEMIGROUPS._GenericCongLookup := function(cong)
+SEMIGROUPS._GenericEquivLookup := function(equiv)
   local S, lookup, class, nr, elm;
 
-  S := Range(cong);
+  S := Range(equiv);
   lookup := [1 .. Size(S)];
-  for class in NonTrivialEquivalenceClasses(cong) do
+  for class in NonTrivialEquivalenceClasses(equiv) do
     nr := PositionCanonical(S, Representative(class));
     for elm in class do
       lookup[PositionCanonical(S, elm)] := nr;
@@ -495,44 +495,20 @@ SEMIGROUPS._GenericCongLookup := function(cong)
 end;
 
 InstallMethod(EquivalenceRelationLookup,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-function(cong)
-  if not IsFinite(Range(cong)) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
+"for an equivalence relation",
+[IsEquivalenceRelation],
+function(equiv)
+  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
+    ErrorNoReturn("<equiv> must be over a finite semigroup,");
   fi;
-  return SEMIGROUPS._GenericCongLookup(cong);
+  return SEMIGROUPS._GenericEquivLookup(equiv);
 end);
 
-InstallMethod(EquivalenceRelationLookup,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-function(cong)
-  if not IsFinite(Range(cong)) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericCongLookup(cong);
-end);
-
-InstallMethod(EquivalenceRelationLookup,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-function(cong)
-  if not IsFinite(Range(cong)) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericCongLookup(cong);
-end);
-
-BindGlobal("_GenericCongCanonicalLookup",
-function(cong)
+SEMIGROUPS._GenericEquivCanonicalLookup := function(equiv)
   local lookup, max, dictionary, next, out, i, new_nr;
-  lookup := EquivalenceRelationLookup(cong);
+  lookup := EquivalenceRelationLookup(equiv);
   max := Maximum(lookup);
-  # We do not know whether the maximum is NrEquivalenceClasses(cong)
+  # We do not know whether the maximum is NrEquivalenceClasses(equiv)
   dictionary := ListWithIdenticalEntries(max, 0);
   next := 1;
   out := EmptyPlist(max);
@@ -546,21 +522,18 @@ function(cong)
     out[i] := new_nr;
   od;
   return out;
+end;
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for an equivalence relation",
+[IsEquivalenceRelation],
+function(equiv)
+  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
+    ErrorNoReturn("<equiv> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericEquivCanonicalLookup(equiv);
 end);
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-_GenericCongCanonicalLookup);
-
-InstallMethod(EquivalenceRelationCanonicalLookup,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-_GenericCongCanonicalLookup);
-
-MakeReadWriteGlobal("_GenericCongCanonicalLookup");
-Unbind(_GenericCongCanonicalLookup);
-
 InstallMethod(EquivalenceRelationCanonicalPartition,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
@@ -570,3 +543,8 @@ InstallMethod(EquivalenceRelationCanonicalPartition,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
 cong -> Set(EquivalenceRelationPartition(cong), Set));
+
+InstallMethod(NonTrivialEquivalenceClasses,
+"for an equivalence relation",
+[IsEquivalenceRelation],
+x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
