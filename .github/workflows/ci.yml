@@ -19,20 +19,24 @@ jobs:
       - name: "Run gaplint + cpplint . . ."
         run: bash etc/lint.sh
   test:
-    name: "GAP ${{ matrix.gap-branch }} on ${{ matrix.os }}"
-    runs-on: ${{ matrix.os }}
+    name: "GAP ${{ matrix.gap-branch }}"
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         gap-branch:
           - master
           - stable-4.11
+
+        include:
+          - gap-branch: stable-4.10
+            pkgs-to-clone: 'datastructures images digraphs/digraphs'
 
     steps:
       - uses: actions/checkout@v2
       - uses: gap-actions/setup-gap-for-packages@v1
         with:
+          GAP_PKGS_TO_CLONE: "${{ matrix.pkgs-to-clone }}"
           GAP_PKGS_TO_BUILD: "digraphs genss io orb images datastructures profiling"
           GAPBRANCH: ${{ matrix.gap-branch }}
       - uses: gap-actions/run-test-for-packages@v1
