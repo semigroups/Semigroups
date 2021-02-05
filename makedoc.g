@@ -6,12 +6,11 @@
 ##      gap makedoc.g
 ##
 
-PACKAGE := "Semigroups";
 LoadPackage("GAPDoc");
 LoadPackage("semigroups");
 
 SemigroupsMakeDoc();
 CopyHTMLStyleFiles("doc");
-GAPDocManualLab(PACKAGE);
+GAPDocManualLab("Semigroups");
 
 QUIT;

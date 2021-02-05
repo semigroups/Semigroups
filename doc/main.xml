@@ -6,7 +6,7 @@
      Text='Digraphs'>https://digraphs.github.io/Digraphs</URL></Alt><Alt
      Only='Text'><Package>Digraphs</Package></Alt>">
      <!ENTITY datastructures "<Alt Not='Text'><URL
-     Text='Digraphs'>https://gap-packages.github.io/datastructures</URL></Alt><Alt
+     Text='datastructures'>https://gap-packages.github.io/datastructures</URL></Alt><Alt
      Only='Text'><Package>datastructures</Package></Alt>">
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      https://gap-packages.github.io/orb/
