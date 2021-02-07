@@ -282,7 +282,8 @@
         the length of [3Xw[103X.[133X
   
   [33X[0;0YNote  that  [10XEvaluateWord([3Xgens[103X[10X,  [])[110X returns [10XOne([3Xgens[103X[10X)[110X if [3Xgens[103X belongs to the
-  category [2XIsMultiplicativeElementWithOne[102X ([14XIsMultiplicativeElementWithOne???[114X).[133X
+  category              [2XIsMultiplicativeElementWithOne[102X             ([14XReference:
+  IsMultiplicativeElementWithOne[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgens := [[127X[104X
@@ -336,8 +337,8 @@
   [33X[0;0YNote that [10XFactorization[110X does not always return a word of minimum length; see
   [2XMinimalFactorization[102X ([14X14.5-3[114X).[133X
   
-  [33X[0;0YSee     also     [2XEvaluateWord[102X     ([14X14.5-1[114X)     and     [2XGeneratorsOfSemigroup[102X
-  ([14XGeneratorsOfSemigroup???[114X).[133X
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X14.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgens := [Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),[127X[104X
@@ -391,7 +392,7 @@
   
   [33X[0;0YUnlike  [2XFactorization[102X  ([14X14.5-2[114X)  this operation does not distinguish between
   semigroups  and  inverse  semigroups.  See  also  [2XEvaluateWord[102X  ([14X14.5-1[114X) and
-  [2XGeneratorsOfSemigroup[102X ([14XGeneratorsOfSemigroup???[114X).[133X
+  [2XGeneratorsOfSemigroup[102X ([14XReference: GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),[127X[104X
@@ -423,8 +424,8 @@
   is  non-trivial. In this case, [10XNonTrivialFactorization[110X returns the same word
   as [2XFactorization[102X ([14X14.5-2[114X).[133X
   
-  [33X[0;0YSee     also     [2XEvaluateWord[102X     ([14X14.5-1[114X)     and     [2XGeneratorsOfSemigroup[102X
-  ([14XGeneratorsOfSemigroup???[114X).[133X
+  [33X[0;0YSee   also   [2XEvaluateWord[102X  ([14X14.5-1[114X)  and  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+  GeneratorsOfSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Transformation([5, 4, 2, 1, 3]);;[127X[104X
@@ -464,27 +465,27 @@
   for [3XS[103X is known, then [10XGeneratorsOfSemigroup[110X is used by default.[133X
   
   [8Xfor a group[108X
-        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X      is      a     synonym     for     [2XGeneratorsOfGroup[102X
-        ([14XGeneratorsOfGroup???[114X).[133X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X   is   a   synonym   for  [2XGeneratorsOfGroup[102X  ([14XReference:
+        GeneratorsOfGroup[114X).[133X
   
   [8Xfor an ideal of semigroup[108X
         [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X is a synonym for [2XGeneratorsOfSemigroupIdeal[102X ([14X7.2-1[114X).[133X
   
   [8Xfor a semigroup[108X
-        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X     is     a     synonym    for    [2XGeneratorsOfSemigroup[102X
-        ([14XGeneratorsOfSemigroup???[114X).[133X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X  is  a  synonym  for  [2XGeneratorsOfSemigroup[102X  ([14XReference:
+        GeneratorsOfSemigroup[114X).[133X
   
   [8Xfor a monoid[108X
-        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X      is     a     synonym     for     [2XGeneratorsOfMonoid[102X
-        ([14XGeneratorsOfMonoid???[114X).[133X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X   is   a   synonym  for  [2XGeneratorsOfMonoid[102X  ([14XReference:
+        GeneratorsOfMonoid[114X).[133X
   
   [8Xfor an inverse semigroup[108X
         [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X    is   a   synonym   for   [2XGeneratorsOfInverseSemigroup[102X
-        ([14XGeneratorsOfInverseSemigroup???[114X).[133X
+        ([14XReference: GeneratorsOfInverseSemigroup[114X).[133X
   
   [8Xfor an inverse monoid[108X
-        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X    is    a    synonym    for   [2XGeneratorsOfInverseMonoid[102X
-        ([14XGeneratorsOfInverseMonoid???[114X).[133X
+        [33X[0;6Y[10XGenerators([3XS[103X[10X)[110X  is  a synonym for [2XGeneratorsOfInverseMonoid[102X ([14XReference:
+        GeneratorsOfInverseMonoid[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XM := Monoid([[127X[104X
@@ -527,8 +528,9 @@
     [4X[28X      X(SmallXGeneratingSet(coll)) = X(coll);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Ywhere   [10XX[110X   is   any   of   [2XSemigroup[102X  ([14XSemigroup???[114X),  [2XMonoid[102X  ([14XMonoid???[114X),
-  [2XInverseSemigroup[102X ([14XInverseSemigroup???[114X), or [2XInverseMonoid[102X ([14XInverseMonoid???[114X).[133X
+  [33X[0;0Ywhere  [10XX[110X  is  any  of  [2XSemigroup[102X  ([14XReference: Semigroup[114X), [2XMonoid[102X ([14XReference:
+  Monoid[114X),  [2XInverseSemigroup[102X  ([14XReference:  InverseSemigroup[114X), or [2XInverseMonoid[102X
+  ([14XReference: InverseMonoid[114X).[133X
   
   [33X[0;0YIf  the  number  of generators for [3XS[103X is already relatively small, then these
   functions will often return the original generating set. These functions may
@@ -661,7 +663,8 @@
     [4X[28X    [128X[104X
   [4X[32X[104X
   
-  [33X[0;0Ywhere [10XX[110X is either [2XSemigroup[102X ([14XSemigroup???[114X), or [2XMonoid[102X ([14XMonoid???[114X).[133X
+  [33X[0;0Ywhere  [10XX[110X  is  either [2XSemigroup[102X ([14XReference: Semigroup[114X), or [2XMonoid[102X ([14XReference:
+  Monoid[114X).[133X
   
   [33X[0;0YFor  many  types  of  semigroup,  it  is  not  currently  possible to find a
   [10XMinimalXGeneratingSet[110X with the [5XSemigroups[105X package.[133X
@@ -799,7 +802,7 @@
   to find its [13XD[113X-classes.[133X
   
   [33X[0;0YSee   also   [2XRepresentativeOfMinimalIdeal[102X  ([14X14.7-2[114X),  [2XPartialOrderOfDClasses[102X
-  ([14X13.1-10[114X),    [2XIsGreensLessThanOrEqual[102X    ([14XIsGreensLessThanOrEqual???[114X),   and
+  ([14X13.1-10[114X), [2XIsGreensLessThanOrEqual[102X ([14XReference: IsGreensLessThanOrEqual[114X), and
   [2XMinimalDClass[102X ([14X13.1-6[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -869,8 +872,8 @@
   [6XReturns:[106X  [33X[0;10YThe zero element of a semigroup.[133X
   
   [33X[0;0Y[10XMultiplicativeZero[110X  returns the zero element of the semigroup [3XS[103X if it exists
-  and    [9Xfail[109X    if    it    does    not.    See    also    [2XMultiplicativeZero[102X
-  ([14XMultiplicativeZero???[114X).[133X
+  and   [9Xfail[109X   if   it  does  not.  See  also  [2XMultiplicativeZero[102X  ([14XReference:
+  MultiplicativeZero[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 2, 6, 6, 5, 2]),[127X[104X
@@ -951,9 +954,9 @@
   of those [10Xs[110X in [3XS[103X such that there exists [10Xt[110X in [3XS[103X where [10Xs*t=t*s=e[110X. Equivalently,
   the group of units is the [13XH[113X-class of the identity of [3XS[103X.[133X
   
-  [33X[0;0YSee       also       [2XGreensHClassOfElement[102X       ([14XGreensHClassOfElement???[114X),
-  [2XIsMonoidAsSemigroup[102X      ([14X15.1-13[114X),     and     [2XMultiplicativeNeutralElement[102X
-  ([14XMultiplicativeNeutralElement???[114X).[133X
+  [33X[0;0YSee    also    [2XGreensHClassOfElement[102X   ([14XReference:   GreensHClassOfElement[114X),
+  [2XIsMonoidAsSemigroup[102X  ([14X15.1-13[114X), and [2XMultiplicativeNeutralElement[102X ([14XReference:
+  MultiplicativeNeutralElement[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
@@ -1006,13 +1009,13 @@
   function is called the computation must be repeated.[133X
   
   [33X[0;0YThis  functions  produce  essentially  the  same  output  as the [5XGAP[105X library
-  function  with  the  same  name;  see [2XIdempotents[102X ([14XIdempotents???[114X). The main
-  difference  is that this function can be applied to a wider class of objects
-  as described above.[133X
+  function  with  the same name; see [2XIdempotents[102X ([14XReference: Idempotents[114X). The
+  main  difference  is  that  this function can be applied to a wider class of
+  objects as described above.[133X
   
-  [33X[0;0YSee also [2XIsRegularDClass[102X ([14XIsRegularDClass???[114X), [2XIsRegularGreensClass[102X ([14X13.3-2[114X)
-  [2XIsGroupHClass[102X  ([14XIsGroupHClass???[114X),  [2XNrIdempotents[102X  ([14X14.9-2[114X), and [2XGroupHClass[102X
-  ([14X13.4-1[114X).[133X
+  [33X[0;0YSee  also [2XIsRegularDClass[102X ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X
+  ([14X13.3-2[114X)  [2XIsGroupHClass[102X  ([14XReference: IsGroupHClass[114X), [2XNrIdempotents[102X ([14X14.9-2[114X),
+  and [2XGroupHClass[102X ([14X13.4-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 3, 4, 1]),[127X[104X
@@ -1065,9 +1068,9 @@
   [10XLength(Idempotents(obj))[110X  since  the  idempotents themselves are not created
   when [10XNrIdempotents[110X is called.[133X
   
-  [33X[0;0YSee    also   [2XIdempotents[102X   ([14XIdempotents???[114X)   and   [2XIdempotents[102X   ([14X14.9-1[114X),
-  [2XIsRegularDClass[102X    ([14XIsRegularDClass???[114X),    [2XIsRegularGreensClass[102X    ([14X13.3-2[114X)
-  [2XIsGroupHClass[102X ([14XIsGroupHClass???[114X), and [2XGroupHClass[102X ([14X13.4-1[114X).[133X
+  [33X[0;0YSee  also  [2XIdempotents[102X  ([14XReference:  Idempotents[114X)  and [2XIdempotents[102X ([14X14.9-1[114X),
+  [2XIsRegularDClass[102X  ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X ([14X13.3-2[114X)
+  [2XIsGroupHClass[102X ([14XReference: IsGroupHClass[114X), and [2XGroupHClass[102X ([14X13.4-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 3, 4, 1]),[127X[104X
@@ -1491,13 +1494,13 @@
   
   [33X[0;0YIf [3XS[103X is a transformation semigroup and [3Xn[103X is a non-negative integer such that
   [3XS[103X  acts  on the points [10X[1 .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns a
-  digraph  representing  the  [2XOnSets[102X  ([14XOnSets???[114X)  action of [3XS[103X on the pairs of
-  points in [10X[1 .. [3Xn[103X[10X][110X.[133X
+  digraph representing the [2XOnSets[102X ([14XReference: OnSets[114X) action of [3XS[103X on the pairs
+  of points in [10X[1 .. [3Xn[103X[10X][110X.[133X
   
   [33X[0;0YIf the optional argument [3Xn[103X is not specified, then by default the degree of [3XS[103X
-  will     be    chosen    for    [3Xn[103X;    see    [2XDegreeOfTransformationSemigroup[102X
-  ([14XDegreeOfTransformationSemigroup???[114X).  If the semigroup [3XS[103X does not act on [10X[1
-  .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
+  will  be  chosen  for  [3Xn[103X;  see  [2XDegreeOfTransformationSemigroup[102X  ([14XReference:
+  DegreeOfTransformationSemigroup[114X).  If  the semigroup [3XS[103X does not act on [10X[1 ..
+  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPairs([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
   
   [33X[0;0YThe  digraph returned by [10XDigraphOfActionOnPairs[110X has [22X[3Xn[103X + n choose 2[122X vertices:
   the  vertices  [10X[1  ..  [3Xn[103X[10X][110X  correspond  to  the  points  in [10X[1 .. [3Xn[103X[10X][110X, and the
@@ -1513,8 +1516,8 @@
   the  case  that  [10Xi ^ f = j ^ f[110X). The label of an edge is the position of the
   first  transformation  within  [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X  that  maps the pair
   corresponding  to  the  source vertex to the pair/point corresponding to the
-  range   vertex.  See  [2XGeneratorsOfSemigroup[102X  ([14XGeneratorsOfSemigroup???[114X)  and
-  [2XDigraphEdgeLabels[102X ([14XDigraphs: DigraphEdgeLabels[114X) for further information.[133X
+  range  vertex.  See [2XGeneratorsOfSemigroup[102X ([14XReference: GeneratorsOfSemigroup[114X)
+  and [2XDigraphEdgeLabels[102X ([14XDigraphs: DigraphEdgeLabels[114X) for further information.[133X
   
   [33X[0;0YNote  that  the  digraph  returned by [10XDigraphOfActionOnPairs[110X has no multiple
   edges; see [2XIsMultiDigraph[102X ([14XDigraphs: IsMultiDigraph[114X).[133X
@@ -1551,19 +1554,19 @@
   
   [33X[0;0YIf [3XS[103X is a transformation semigroup and [3Xn[103X is a non-negative integer such that
   [3XS[103X  acts on the points [10X[1 .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPoints([3XS[103X[10X, [3Xn[103X[10X)[110X returns a
-  digraph representing the [2XOnPoints[102X ([14XOnPoints???[114X) action of [3XS[103X on the set [10X[1 ..
-  [3Xn[103X[10X][110X.[133X
+  digraph  representing  the [2XOnPoints[102X ([14XReference: OnPoints[114X) action of [3XS[103X on the
+  set [10X[1 .. [3Xn[103X[10X][110X.[133X
   
   [33X[0;0YIf the optional argument [3Xn[103X is not specified, then by default the degree of [3XS[103X
-  will     be    chosen    for    [3Xn[103X;    see    [2XDegreeOfTransformationSemigroup[102X
-  ([14XDegreeOfTransformationSemigroup???[114X).  If the semigroup [3XS[103X does not act on [10X[1
-  .. [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPoints([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
+  will  be  chosen  for  [3Xn[103X;  see  [2XDegreeOfTransformationSemigroup[102X  ([14XReference:
+  DegreeOfTransformationSemigroup[114X).  If  the semigroup [3XS[103X does not act on [10X[1 ..
+  [3Xn[103X[10X][110X, then [10XDigraphOfActionOnPoints([3XS[103X[10X, [3Xn[103X[10X)[110X returns [9Xfail[109X.[133X
   
   [33X[0;0YThe  digraph  returned  by [10XDigraphOfActionOnPoints[110X has [3Xn[103X vertices, where the
   vertex  [10Xi[110X  corresponds to the point [10Xi[110X. For each point [10Xi[110X in [10X[1 .. [3Xn[103X[10X][110X, and for
   each  generator  [10Xf[110X  in  [10XGeneratorsOfSemigroup([3XS[103X[10X)[110X,  there is an edge from the
-  vertex    [10Xi[110X    to    the   vertex   [10Xi   ^   f[110X.   See   [2XGeneratorsOfSemigroup[102X
-  ([14XGeneratorsOfSemigroup???[114X) for further information.[133X
+  vertex  [10Xi[110X  to  the  vertex  [10Xi  ^  f[110X.  See  [2XGeneratorsOfSemigroup[102X ([14XReference:
+  GeneratorsOfSemigroup[114X) for further information.[133X
   
   [33X[0;0YNote  that  the  digraph returned by [10XDigraphOfActionOnPoints[110X has no multiple
   edges; see [2XIsMultiDigraph[102X ([14XDigraphs: IsMultiDigraph[114X).[133X
@@ -1616,8 +1619,8 @@
   returns [9Xtrue[109X if [3XS[103X is transitive on [10X[1 .. [3Xn[103X[10X][110X, and [9Xfalse[109X if it is not.[133X
   
   [33X[0;0YIf  the  optional  second  argument is not provided, then the degree of [3XS[103X is
-  used       by       default;       see       [2XDegreeOfTransformationSemigroup[102X
-  ([14XDegreeOfTransformationSemigroup???[114X).[133X
+  used    by    default;   see   [2XDegreeOfTransformationSemigroup[102X   ([14XReference:
+  DegreeOfTransformationSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
@@ -1937,7 +1940,7 @@
   principal  right  ideal  of [10XS[110X generated by [10Xt[110X and there is an idempotent [10Xe[110X in
   the  [13XR[113X-class  of  [10Xs[110X  such that [10Xs[110X[22X=[122X[10Xet[110X. The Nambooripad partial order coincides
   with   the   natural  partial  order  when  considering  inverse  semigroups
-  [2XNaturalPartialOrder[102X ([14XNaturalPartialOrder???[114X).[133X
+  [2XNaturalPartialOrder[102X ([14XReference: NaturalPartialOrder[114X).[133X
   
   [33X[0;0Y[10XNambooripadPartialOrder[110X returns the Nambooripad partial order on the regular
   semigroup  [3XS[103X  as  a  list  of  sets  of  positive  integers where entry [10Xi[110X in

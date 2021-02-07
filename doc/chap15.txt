@@ -92,8 +92,8 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0Y[10XIsCommutativeSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is commutative and
-  [9Xfalse[109X  if  it is not. The function [2XIsCommutative[102X ([14XIsCommutative???[114X) can also
-  be used to test if a semigroup is commutative.[133X
+  [9Xfalse[109X  if  it  is not. The function [2XIsCommutative[102X ([14XReference: IsCommutative[114X)
+  can also be used to test if a semigroup is commutative.[133X
   
   [33X[0;0YA semigroup [3XS[103X is [13Xcommutative[113X if [10Xx * y = y * x[110X for all [10Xx, y[110X in [3XS[103X.[133X
   
@@ -402,17 +402,18 @@
   
   [33X[0;0Y[10XIsMonoidAsSemigroup[110X  returns  [9Xtrue[109X  if  and  only  if  the  semigroup  [3XS[103X  is
   mathematically   a   monoid,   i.e.   if   and   only   if   it  contains  a
-  [2XMultiplicativeNeutralElement[102X ([14XMultiplicativeNeutralElement???[114X).[133X
+  [2XMultiplicativeNeutralElement[102X ([14XReference: MultiplicativeNeutralElement[114X).[133X
   
   [33X[0;0YIt  is  possible that a semigroup which satisfies [10XIsMonoidAsSemigroup[110X is not
-  in  the  [5XGAP[105X  category  [2XIsMonoid[102X  ([14XIsMonoid???[114X).  This  is  possible  if the
-  [2XMultiplicativeNeutralElement[102X  ([14XMultiplicativeNeutralElement???[114X)  of [3XS[103X is not
-  equal  to  the  [2XOne[102X  ([14XOne???[114X)  of  any  element  in [3XS[103X. Therefore a semigroup
-  satisfying  [10XIsMonoidAsSemigroup[110X  may  not possess the attributes of a monoid
-  (such as, [2XGeneratorsOfMonoid[102X ([14XGeneratorsOfMonoid???[114X)).[133X
+  in  the [5XGAP[105X category [2XIsMonoid[102X ([14XReference: IsMonoid[114X). This is possible if the
+  [2XMultiplicativeNeutralElement[102X  ([14XReference: MultiplicativeNeutralElement[114X) of [3XS[103X
+  is  not  equal  to the [2XOne[102X ([14XReference: One[114X) of any element in [3XS[103X. Therefore a
+  semigroup satisfying [10XIsMonoidAsSemigroup[110X may not possess the attributes of a
+  monoid (such as, [2XGeneratorsOfMonoid[102X ([14XReference: GeneratorsOfMonoid[114X)).[133X
   
-  [33X[0;0YSee    also   [2XOne[102X   ([14XOne???[114X),   [2XIsInverseMonoid[102X   ([14XIsInverseMonoid???[114X)   and
-  [2XIsomorphismTransformationMonoid[102X ([14XIsomorphismTransformationMonoid???[114X).[133X
+  [33X[0;0YSee  also [2XOne[102X ([14XReference: One[114X), [2XIsInverseMonoid[102X ([14XReference: IsInverseMonoid[114X)
+  and                [2XIsomorphismTransformationMonoid[102X               ([14XReference:
+  IsomorphismTransformationMonoid[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),[127X[104X
@@ -447,8 +448,8 @@
   [33X[0;0YA  semigroup is [13Xorthodox[113X if it is regular and its idempotent elements form a
   subsemigroup. Every inverse semigroup is also an orthodox semigroup.[133X
   
-  [33X[0;0YSee     also    [2XIsRegularSemigroup[102X    ([14X15.1-17[114X)    and    [2XIsRegularSemigroup[102X
-  ([14XIsRegularSemigroup???[114X).[133X
+  [33X[0;0YSee  also  [2XIsRegularSemigroup[102X  ([14X15.1-17[114X)  and [2XIsRegularSemigroup[102X ([14XReference:
+  IsRegularSemigroup[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 1, 1, 4, 5, 4]),[127X[104X
@@ -530,8 +531,9 @@
   y  *  x  = x[110X. Every inverse semigroup is regular, and a semigroup of partial
   permutations is regular if and only if it is an inverse semigroup.[133X
   
-  [33X[0;0YSee    also   [2XIsRegularDClass[102X   ([14XIsRegularDClass???[114X),   [2XIsRegularGreensClass[102X
-  ([14X13.3-2[114X), and [2XIsRegularSemigroupElement[102X ([14XIsRegularSemigroupElement???[114X).[133X
+  [33X[0;0YSee  also [2XIsRegularDClass[102X ([14XReference: IsRegularDClass[114X), [2XIsRegularGreensClass[102X
+  ([14X13.3-2[114X),          and         [2XIsRegularSemigroupElement[102X         ([14XReference:
+  IsRegularSemigroupElement[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIsRegularSemigroup(FullTransformationSemigroup(5));[127X[104X
@@ -697,11 +699,11 @@
   [33X[0;0YFor  a  positive  integer  [3Xn[103X,  [10XIsSynchronizingSemigroup[110X  returns [9Xtrue[109X if the
   semigroup of transformations [3XS[103X contains a transformation with constant value
   on  [10X[1  ..  [3Xn[103X[10X][110X. Note that this function will return true whenever [10X[3Xn[103X[10X = 1[110X. See
-  also [2XConstantTransformation[102X ([14XConstantTransformation???[114X).[133X
+  also [2XConstantTransformation[102X ([14XReference: ConstantTransformation[114X).[133X
   
   [33X[0;0YIf the optional second argument is not specified, then [3Xn[103X will be taken to be
-  the            value            of           [2XDegreeOfTransformationSemigroup[102X
-  ([14XDegreeOfTransformationSemigroup???[114X) for [3XS[103X.[133X
+  the      value      of      [2XDegreeOfTransformationSemigroup[102X      ([14XReference:
+  DegreeOfTransformationSemigroup[114X) for [3XS[103X.[133X
   
   [33X[0;0YNote  that  the  semigroup  consisting of the identity transformation is the
   unique  transformation  semigroup  with  degree [10X0[110X. In this special case, the

@@ -488,7 +488,8 @@
   that    any    integer    might    not    be    included.    However,    see
   [2XEquivalenceRelationCanonicalLookup[102X ([14X17.3-11[114X).[133X
   
-  [33X[0;0YSee also [2XEquivalenceRelationPartition[102X ([14XEquivalenceRelationPartition???[114X).[133X
+  [33X[0;0YSee          also          [2XEquivalenceRelationPartition[102X          ([14XReference:
+  EquivalenceRelationPartition[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
@@ -525,7 +526,7 @@
   respective positions in the lookup.[133X
   
   [33X[0;0YSee        also        [2XEquivalenceRelationLookup[102X        ([14X17.3-10[114X)        and
-  [2XEquivalenceRelationPartition[102X ([14XEquivalenceRelationPartition???[114X).[133X
+  [2XEquivalenceRelationPartition[102X ([14XReference: EquivalenceRelationPartition[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Monoid([[127X[104X
@@ -549,9 +550,9 @@
   [10XEquivalenceRelationCanonicalPartition[110X  if and only if they describe the same
   relation.[133X
   
-  [33X[0;0YSee  also  [2XEquivalenceRelationPartition[102X ([14XEquivalenceRelationPartition???[114X), a
-  similar  attribute  which  does  not  have  canonical ordering, but which is
-  likely to be faster.[133X
+  [33X[0;0YSee          also          [2XEquivalenceRelationPartition[102X          ([14XReference:
+  EquivalenceRelationPartition[114X),  a  similar  attribute  which  does  not have
+  canonical ordering, but which is likely to be faster.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 4, 3, 3]),[127X[104X
@@ -1129,8 +1130,8 @@
   [How95].[133X
   
   [33X[0;0YBy  the  Rees  Theorem,  any  0-simple  semigroup  [22XS[122X is isomorphic to a [13XRees
-  0-matrix  semigroup[113X  (see  [14XRees  Matrix  Semigroups???[114X) over a group, with a
-  regular sandwich matrix.[133X
+  0-matrix  semigroup[113X  (see [14X'Reference: Rees Matrix Semigroups'[114X) over a group,
+  with a regular sandwich matrix.[133X
   
   [33X[0;0YThat  is,  [10XS[110X  is isomorphic to [10XM ^ 0[G; I, L; P][110X where [10XG[110X is a group, [10XL[110X and [10XI[110X
   are  non-empty  sets and the matrix [10XP[110X is regular in the sense that it has no
@@ -1187,9 +1188,9 @@
   [33X[0;0YThese  categories describe a type of semigroup congruence over a Rees matrix
   or 0-matrix semigroup. Externally, an object of this type may be used in the
   same   way  as  any  other  object  in  the  category  [2XIsSemigroupCongruence[102X
-  ([14XIsSemigroupCongruence???[114X)  but  it  is represented internally by its [13Xlinked
-  triple[113X,  and  certain  functions  may  take advantage of this information to
-  reduce computation times.[133X
+  ([14XReference:  IsSemigroupCongruence[114X)  but it is represented internally by its
+  [13Xlinked  triple[113X, and certain functions may take advantage of this information
+  to reduce computation times.[133X
   
   [33X[0;0YAn  object  of this type may be constructed with [10XRMSCongruenceByLinkedTriple[110X
   or  [10XRZMSCongruenceByLinkedTriple[110X,  or  this  representation  may be selected
@@ -1619,9 +1620,10 @@
   [33X[1;0Y[29X[2XSemigroupIdealOfReesCongruence[102X( [3Xcong[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup ideal.[133X
   
-  [33X[0;0YIf  [3Xcong[103X  is  a rees congruence (see [2XIsReesCongruence[102X ([14XIsReesCongruence???[114X))
-  then  this attribute returns the two-sided ideal that was used to define it,
-  i.e.~the ideal of elements in the only non-trivial congruence class of [3Xcong[103X.[133X
+  [33X[0;0YIf   [3Xcong[103X   is   a   rees   congruence   (see  [2XIsReesCongruence[102X  ([14XReference:
+  IsReesCongruence[114X))  then this attribute returns the two-sided ideal that was
+  used  to  define  it,  i.e.~the  ideal  of  elements in the only non-trivial
+  congruence class of [3Xcong[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
@@ -1643,7 +1645,8 @@
   
   [33X[0;0YThis  category  describes  a  congruence  class  of  a  Rees  congruence.  A
   congruence class of a Rees congruence either contains all the elements of an
-  ideal, or is a singleton (see [2XIsReesCongruence[102X ([14XIsReesCongruence???[114X)).[133X
+  ideal,    or    is    a    singleton   (see   [2XIsReesCongruence[102X   ([14XReference:
+  IsReesCongruence[114X)).[133X
   
   [33X[0;0YAn  object  of this type may be used in the same way as any other congruence
   class object.[133X
@@ -1684,7 +1687,7 @@
   [33X[0;0YThis  property describes a type of semigroup congruence, which must refer to
   the [13Xuniversal semigroup congruence[113X [22XS × S[122X. Externally, an object of this type
   may  be  used  in  the  same  way  as  any  other  object  in  the  category
-  [2XIsSemigroupCongruence[102X ([14XIsSemigroupCongruence???[114X).[133X
+  [2XIsSemigroupCongruence[102X ([14XReference: IsSemigroupCongruence[114X).[133X
   
   [33X[0;0YAn  object of this type may be constructed with [10XUniversalSemigroupCongruence[110X
   or this representation may be selected automatically as an alternative to an

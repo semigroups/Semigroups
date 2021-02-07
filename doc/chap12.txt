@@ -136,9 +136,9 @@
   
   [33X[0;0YFor     user     convienience,    there    are    multiple    versions    of
   [10XMcAlisterTripleSemigroup[110X. When the argument [3Xact[103X is ommitted it is assumed to
-  be  [2XOnPoints[102X  ([14XOnPoints???[114X). Additionally, the semilattice argument [3XY[103X may be
-  replaced  by  a  homogeneous  list [3Xsub_ver[103X of vertices of [3XX[103X. When [3Xsub_ver[103X is
-  provided,    [10XMcAlisterTripleSemigroup[110X    is    called   with   [3XY[103X   equalling
+  be  [2XOnPoints[102X ([14XReference: OnPoints[114X). Additionally, the semilattice argument [3XY[103X
+  may be replaced by a homogeneous list [3Xsub_ver[103X of vertices of [3XX[103X. When [3Xsub_ver[103X
+  is   provided,   [10XMcAlisterTripleSemigroup[110X   is   called   with  [3XY[103X  equalling
   [10XInducedSubdigraph([3XX[103X[10X, [3Xsub_ver[103X[10X)[110X with the appropriate labels.[133X
   
   [4X[32X  Example  [32X[104X

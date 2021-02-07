@@ -327,8 +327,8 @@
         [10X[i, i ^ [3Xx[103X[10X][110X for all [10Xi = 1 .. n[110X.[133X
   
         [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
-        [3Xx[103X    is   used   as   the   value   for   [3Xn[103X;   see   [2XLargestMovedPoint[102X
-        ([14XLargestMovedPoint, for a permutation???[114X).[133X
+        [3Xx[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
+        LargestMovedPoint for a permutation[114X).[133X
   
   [8Xtransformations[108X
         [33X[0;6YIf  [3Xx[103X is a transformation and [3Xn[103X is a positive integer such that [3Xx[103X is a
@@ -1207,13 +1207,13 @@
   [1X3.8 [33X[0;0YSemigroups of bipartitions[133X[101X
   
   [33X[0;0YSemigroups  and  monoids  of bipartitions can be created in the usual way in
-  [5XGAP[105X using the functions [2XSemigroup[102X ([14XSemigroup???[114X) and [2XMonoid[102X ([14XMonoid???[114X); see
-  Chapter [14X6[114X for more details.[133X
+  [5XGAP[105X   using  the  functions  [2XSemigroup[102X  ([14XReference:  Semigroup[114X)  and  [2XMonoid[102X
+  ([14XReference: Monoid[114X); see Chapter [14X6[114X for more details.[133X
   
   [33X[0;0YIt  is  possible  to  create  inverse semigroups and monoids of bipartitions
-  using     [2XInverseSemigroup[102X     ([14XInverseSemigroup???[114X)    and    [2XInverseMonoid[102X
-  ([14XInverseMonoid???[114X)  when the argument is a collection of block bijections or
-  partial    perm    bipartions;    see    [2XIsBlockBijection[102X    ([14X3.5-16[114X)    and
+  using   [2XInverseSemigroup[102X  ([14XReference:  InverseSemigroup[114X)  and  [2XInverseMonoid[102X
+  ([14XReference:  InverseMonoid[114X)  when  the  argument  is  a  collection of block
+  bijections  or  partial  perm  bipartions; see [2XIsBlockBijection[102X ([14X3.5-16[114X) and
   [2XIsPartialPermBipartition[102X  ([14X3.5-15[114X). Note that every bipartition semigroup in
   [5XSemigroups[105X is finite.[133X
   
@@ -1225,11 +1225,11 @@
   
   [33X[0;0YA [13Xbipartition semigroup[113X is simply a semigroup consisting of bipartitions. An
   object  [3Xobj[103X  is  a  bipartition semigroup in [5XGAP[105X if it satisfies [2XIsSemigroup[102X
-  ([14XIsSemigroup???[114X) and [2XIsBipartitionCollection[102X ([14X3.1-2[114X).[133X
+  ([14XReference: IsSemigroup[114X) and [2XIsBipartitionCollection[102X ([14X3.1-2[114X).[133X
   
   [33X[0;0YA  [13Xbipartition  monoid[113X is a monoid consisting of bipartitions. An object [3Xobj[103X
-  is  a  bipartition  monoid in [5XGAP[105X if it satisfies [2XIsMonoid[102X ([14XIsMonoid???[114X) and
-  [2XIsBipartitionCollection[102X ([14X3.1-2[114X).[133X
+  is  a  bipartition  monoid  in  [5XGAP[105X  if  it  satisfies  [2XIsMonoid[102X ([14XReference:
+  IsMonoid[114X) and [2XIsBipartitionCollection[102X ([14X3.1-2[114X).[133X
   
   [33X[0;0YNote   that   it   is  possible  for  a  bipartition  semigroup  to  have  a
   multiplicative neutral element (i.e. an identity element) but not to satisfy
@@ -1262,10 +1262,10 @@
   [4X[32X[104X
   
   [33X[0;0YIn  this  example  [10XS[110X  cannot  be  converted  into  a  monoid  using [2XAsMonoid[102X
-  ([14XAsMonoid???[114X)  since  the  [2XOne[102X ([14XOne???[114X) of any element in [10XS[110X differs from the
-  multiplicative neutral element.[133X
+  ([14XReference:  AsMonoid[114X)  since  the  [2XOne[102X ([14XReference: One[114X) of any element in [10XS[110X
+  differs from the multiplicative neutral element.[133X
   
-  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XIsMagmaWithOne???[114X).[133X
+  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XReference: IsMagmaWithOne[114X).[133X
   
   [1X3.8-2 IsBlockBijectionSemigroup[101X
   
@@ -1278,7 +1278,7 @@
   bijections.[133X
   
   [33X[0;0YAn  object  in  [5XGAP[105X  is  a  block  bijection monoid if it satisfies [2XIsMonoid[102X
-  ([14XIsMonoid???[114X) and [2XIsBlockBijectionSemigroup[102X.[133X
+  ([14XReference: IsMonoid[114X) and [2XIsBlockBijectionSemigroup[102X.[133X
   
   [33X[0;0YSee [2XIsBlockBijection[102X ([14X3.5-16[114X).[133X
   
@@ -1293,7 +1293,7 @@
   consisting of partial perm bipartitions.[133X
   
   [33X[0;0YAn  object  in  [5XGAP[105X  is  a  partial  perm bipartition monoid if it satisfies
-  [2XIsMonoid[102X ([14XIsMonoid???[114X) and [2XIsPartialPermBipartitionSemigroup[102X.[133X
+  [2XIsMonoid[102X ([14XReference: IsMonoid[114X) and [2XIsPartialPermBipartitionSemigroup[102X.[133X
   
   [33X[0;0YSee [2XIsPartialPermBipartition[102X ([14X3.5-15[114X).[133X
   

@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.4.1
+                                 Version 3.4.2
   
   
                                  J. D. Mitchell
@@ -79,11 +79,11 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2011-20 by J. D. Mitchell et al.[133X
+  [33X[0;0Y© 2011-21 by J. D. Mitchell et al.[133X
   
   [33X[0;0Y[5XSemigroups[105X  is free software; you can redistribute it and/or modify it under
   the      terms      of      the      GNU      General     Public     License
-  ([7Xhttp://www.fsf.org/licenses/gpl.html[107X)  as  published  by  the Free Software
+  ([7Xhttps://www.fsf.org/licenses/gpl.html[107X)  as  published  by the Free Software
   Foundation;  either  version 3 of the License, or (at your option) any later
   version.[133X
   

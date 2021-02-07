@@ -9,7 +9,8 @@
   
   [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
   to create transformation semigroups belonging to several standard classes of
-  example. See [14XTransformations???[114X for more information about transformations.[133X
+  example.   See  [14X'Reference:  Transformations'[114X  for  more  information  about
+  transformations.[133X
   
   [1X8.1-1 CatalanMonoid[101X
   
@@ -153,8 +154,8 @@
   
   [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
   to  create  semigroups of partial permutations belonging to several standard
-  classes  of  example. See [14XPartial permutations???[114X for more information about
-  partial permutations.[133X
+  classes   of   example.  See  [14X'Reference:  Partial  permutations'[114X  for  more
+  information about partial permutations.[133X
   
   [1X8.2-1 MunnSemigroup[101X
   
@@ -187,8 +188,8 @@
   [33X[1;0Y[29X[2XRookMonoid[102X( [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn inverse monoid of partial permutations.[133X
   
-  [33X[0;0Y[10XRookMonoid[110X       is      a      synonym      for      [2XSymmetricInverseMonoid[102X
-  ([14XSymmetricInverseMonoid???[114X).[133X
+  [33X[0;0Y[10XRookMonoid[110X    is    a   synonym   for   [2XSymmetricInverseMonoid[102X   ([14XReference:
+  SymmetricInverseMonoid[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := RookMonoid(4);[127X[104X

@@ -22,8 +22,8 @@
   information  regarding  free inverse semigroups and the Munn representations
   see Section 5.10 of [How95].[133X
   
-  [33X[0;0YSee also [14XInverse semigroups and monoids???[114X, [14XPartial permutations???[114X and [14XFree
-  Groups, Monoids and Semigroups???[114X.[133X
+  [33X[0;0YSee  also  [14X'Reference:  Inverse semigroups and monoids'[114X, [14X'Reference: Partial
+  permutations'[114X and [14X'Reference: Free Groups, Monoids and Semigroups'[114X.[133X
   
   [33X[0;0YAn  element  of  a  free  inverse  semigroup  in [5XSemigroups[105X is displayed, by
   default,  as  a  shortest  word corresponding to the element. However, there
@@ -90,10 +90,10 @@
   
   [33X[0;0YEvery free inverse semigroup in [5XGAP[105X created by [2XFreeInverseSemigroup[102X ([14X10.1-1[114X)
   belongs  to the category [10XIsFreeInverseSemigroup[110X. Basic operations for a free
-  inverse          semigroup         are:         [2XGeneratorsOfInverseSemigroup[102X
-  ([14XGeneratorsOfInverseSemigroup???[114X)          and         [2XGeneratorsOfSemigroup[102X
-  ([14XGeneratorsOfSemigroup???[114X).  Elements  of a free inverse semigroup belong to
-  the category [2XIsFreeInverseSemigroupElement[102X ([14X10.1-4[114X).[133X
+  inverse     semigroup    are:    [2XGeneratorsOfInverseSemigroup[102X    ([14XReference:
+  GeneratorsOfInverseSemigroup[114X)    and    [2XGeneratorsOfSemigroup[102X    ([14XReference:
+  GeneratorsOfSemigroup[114X).  Elements  of a free inverse semigroup belong to the
+  category [2XIsFreeInverseSemigroupElement[102X ([14X10.1-4[114X).[133X
   
   [1X10.1-3 IsFreeInverseSemigroup[101X
   
@@ -123,7 +123,7 @@
   
   [33X[0;0YThere  is  a  way to change how [5XGAP[105X displays free inverse semigroup elements
   using    the   user   preference   [10XFreeInverseSemigroupElementDisplay[110X.   See
-  [2XUserPreference[102X   ([14XUserPreference???[114X)   for   more   information  about  user
+  [2XUserPreference[102X  ([14XReference:  UserPreference[114X) for more information about user
   preferences.[133X
   
   [33X[0;0YThere are two possible values for [10XFreeInverseSemigroupElementDisplay[110X:[133X

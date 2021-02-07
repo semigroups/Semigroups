@@ -28,7 +28,7 @@
   partial  order  of the [13XD[113X-classes of the semigroup [3XS[103X together with the eggbox
   diagram  of  each  [13XD[113X-class.  The  output  is  in  [10Xdot[110X  format (also known as
   [10XGraphViz[110X)  format. For details about this file format, and information about
-  how to display or edit this format see [7Xhttp://www.graphviz.org[107X.[133X
+  how to display or edit this format see [7Xhttps://www.graphviz.org[107X.[133X
   
   [33X[0;0YThe  string returned by [10XDotString[110X can be written to a file using the command
   [2XFileString[102X ([14XGAPDoc: FileString[114X).[133X
@@ -53,10 +53,10 @@
   
   [8Xmaximal[108X
         [33X[0;6Yif  [10X[3Xoptions[103X[10X.maximal[110X  is  [9Xtrue[109X,  then  the structure description of the
-        group     [13XH[113X-classes    is    displayed;    see    [2XStructureDescription[102X
-        ([14XStructureDescription???[114X).   Setting   this   attribute  to  [9Xtrue[109X  can
-        adversely  affect  the performance of [10XDotString[110X. The default value for
-        this option is [9Xfalse[109X.[133X
+        group  [13XH[113X-classes  is  displayed;  see [2XStructureDescription[102X ([14XReference:
+        StructureDescription[114X).  Setting  this  attribute to [9Xtrue[109X can adversely
+        affect the performance of [10XDotString[110X. The default value for this option
+        is [9Xfalse[109X.[133X
   
   [8Xnormal[108X
         [33X[0;6Yif  [10X[3Xoptions[103X[10X.normal[110X  is  [9Xfalse[109X,  then  the [13XL[113X- and [13XR[113X-classes within each
@@ -101,7 +101,7 @@
   ([14XDigraphs:    IsCayleyDigraph[114X),   then   [10XDotString[110X   returns   a   graphical
   representation  of  [3Xdigraph[103X.  The  output  is  in  [10Xdot[110X format (also known as
   [10XGraphViz[110X)  format. For details about this file format, and information about
-  how to display or edit this format see [7Xhttp://www.graphviz.org[107X.[133X
+  how to display or edit this format see [7Xhttps://www.graphviz.org[107X.[133X
   
   [33X[0;0YThe  string returned by [10XDotString[110X can be written to a file using the command
   [2XFileString[102X ([14XGAPDoc: FileString[114X).[133X
@@ -115,12 +115,12 @@
   
   [33X[0;0YThis  function produces a graphical representation of the semilattice of the
   idempotents  of an inverse semigroup [3XS[103X where the elements of [3XS[103X have a unique
-  semigroup  inverse  accessible via [2XInverse[102X ([14XInverse???[114X). The idempotents are
-  grouped by the [13XD[113X-class they belong to.[133X
+  semigroup   inverse   accessible   via  [2XInverse[102X  ([14XReference:  Inverse[114X).  The
+  idempotents are grouped by the [13XD[113X-class they belong to.[133X
   
   [33X[0;0YThe  output  is  in  [10Xdot[110X format (also known as [10XGraphViz[110X) format. For details
   about  this  file  format, and information about how to display or edit this
-  format see [7Xhttp://www.graphviz.org[107X.[133X
+  format see [7Xhttps://www.graphviz.org[107X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);[127X[104X
@@ -175,8 +175,8 @@
   [33X[0;0YThis function produces a string containing LaTeX code for the transformation
   [3Xf[103X.  If the optional paramater [3Xn[103X is used, then this is taken to be the degree
   of   the   transformation   [3Xf[103X,  if  the  parameter  [3Xn[103X  is  not  given,  then
-  [2XDegreeOfTransformation[102X  ([14XDegreeOfTransformation???[114X) is used by default. If [3Xn[103X
-  is less than the degree of [3Xf[103X, then an error is given.[133X
+  [2XDegreeOfTransformation[102X   ([14XReference:   DegreeOfTransformation[114X)  is  used  by
+  default. If [3Xn[103X is less than the degree of [3Xf[103X, then an error is given.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTexString(Transformation([6, 2, 4, 3, 6, 4]));[127X[104X

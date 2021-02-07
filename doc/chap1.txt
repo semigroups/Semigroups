@@ -4,12 +4,12 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.4.1.
-  [5XSemigroups[105X  3.4.1  is  a  distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.4.2.
+  [5XSemigroups[105X  3.4.2  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   
-  [33X[0;0Y[5XSemigroups[105X   3.4.1  contains  efficient  methods  for  creating  semigroups,
+  [33X[0;0Y[5XSemigroups[105X   3.4.2  contains  efficient  methods  for  creating  semigroups,
   monoids,  inverse  semigroups  and  their  ideals, calculating their Green's
   structure,  size,  elements,  group  of  units,  minimal  ideal, and testing
   membership,  finding  the  inverses  of  a  regular element, and factorizing
@@ -39,7 +39,8 @@
   [33X[0;0Y[12XMinor  note  of  caution[112X: [5XSemigroups[105X contains different methods for some [5XGAP[105X
   library functions, and so you might notice that [5XGAP[105X behaves differently when
   [5XSemigroups[105X  is  loaded.  For more details about semigroups in [5XGAP[105X or Green's
-  relations in particular, see [14XSemigroups???[114X or [14XGreen's Relations???[114X.[133X
+  relations  in particular, see [14X'Reference: Semigroups'[114X or [14X'Reference: Green's
+  Relations'[114X.[133X
   
   [33X[0;0YIf  you  find  a  bug  or  an issue with the package, please visit the issue
   tracker ([7Xhttps://github.com/semigroups/Semigroups/issues[107X).[133X
@@ -53,9 +54,9 @@
         [33X[0;6Ythe  different  types  of generators that are introduced in [5XSemigroups[105X
         are  described  in  Chapters  [14X3[114X,  [14X4[114X,  and [14X5[114X. These include [2XBipartition[102X
         ([14X3.2-1[114X),  [2XPBR[102X  ([14X4.2-1[114X),  and  [2XMatrix[102X  ([14X5.1-5[114X),  which supplement those
-        already   defined   in   the   [5XGAP[105X  library,  such  as  [2XTransformation[102X
-        ([14XTransformation,  for  an  image list???[114X) or [2XPartialPerm[102X ([14XPartialPerm,
-        for a domain and image???[114X).[133X
+        already defined in the [5XGAP[105X library, such as [2XTransformation[102X ([14XReference:
+        Transformation   for   an   image  list[114X)  or  [2XPartialPerm[102X  ([14XReference:
+        PartialPerm for a domain and image[114X).[133X
   
   [8XPart II: semigroups and ideals[108X
         [33X[0;6Yfunctions  and  operations for creating semigroups, monoids, and their

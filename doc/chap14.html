@@ -310,9 +310,9 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A list of lists of positive integers.</p>
 
-<p>When the argument <var class="Arg">S</var> is a semigroup in the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graphs of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="../../../pkg/digraphs/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
+<p>When the argument <var class="Arg">S</var> is a semigroup in the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graphs of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
 
-<p>The digraph returned by this attribute belongs to the category <code class="func">IsCayleyDigraph</code> (<a href="../../../pkg/digraphs/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), the semigroup <var class="Arg">S</var> and the generators used to create the digraph can be recovered from the digraph using <code class="func">SemigroupOfCayleyDigraph</code> (<a href="../../../pkg/digraphs/doc/chap5_mj.html#X7A000B1D7CCF7093"><span class="RefLink">Digraphs: SemigroupOfCayleyDigraph</span></a>) and <code class="func">GeneratorsOfCayleyDigraph</code> (<a href="../../../pkg/digraphs/doc/chap5_mj.html#X8528455987D7D2BF"><span class="RefLink">Digraphs: GeneratorsOfCayleyDigraph</span></a>).</p>
+<p>The digraph returned by this attribute belongs to the category <code class="func">IsCayleyDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap5_mj.html#X8528455987D7D2BF"><span class="RefLink">Digraphs: GeneratorsOfCayleyDigraph</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -435,7 +435,7 @@ true</pre></div>
 
 </dd>
 </dl>
-<p>Note that <code class="code">EvaluateWord(<var class="Arg">gens</var>, [])</code> returns <code class="code">One(<var class="Arg">gens</var>)</code> if <var class="Arg">gens</var> belongs to the category <code class="func">IsMultiplicativeElementWithOne</code> (<span class="RefLink">???</span>).</p>
+<p>Note that <code class="code">EvaluateWord(<var class="Arg">gens</var>, [])</code> returns <code class="code">One(<var class="Arg">gens</var>)</code> if <var class="Arg">gens</var> belongs to the category <code class="func">IsMultiplicativeElementWithOne</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X82BC294F7D388AE8"><span class="RefLink">Reference: IsMultiplicativeElementWithOne</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -486,7 +486,7 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 </dl>
 <p>Note that <code class="code">Factorization</code> does not always return a word of minimum length; see <code class="func">MinimalFactorization</code> (<a href="chap14.html#X83A4D71382C5B6C3"><span class="RefLink">14.5-3</span></a>).</p>
 
-<p>See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>).</p>
+<p>See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -534,7 +534,7 @@ Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 
 <p><code class="code">MinimalFactorization</code> involves exhaustively enumerating <var class="Arg">S</var> until the element <var class="Arg">x</var> is found, and so <code class="code">MinimalFactorization</code> may be less efficient than <code class="func">Factorization</code> (<a href="chap14.html#X8357294D7B164106"><span class="RefLink">14.5-2</span></a>) for some semigroups.</p>
 
-<p>Unlike <code class="func">Factorization</code> (<a href="chap14.html#X8357294D7B164106"><span class="RefLink">14.5-2</span></a>) this operation does not distinguish between semigroups and inverse semigroups. See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>).</p>
+<p>Unlike <code class="func">Factorization</code> (<a href="chap14.html#X8357294D7B164106"><span class="RefLink">14.5-2</span></a>) this operation does not distinguish between semigroups and inverse semigroups. See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -561,7 +561,7 @@ Transformation( [ 8, 8, 2, 2, 9, 2, 8, 8, 9, 9 ] )
 
 <p>When <var class="Arg">x</var> does not belong to <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>, any factorization of <var class="Arg">x</var> is non-trivial. In this case, <code class="code">NonTrivialFactorization</code> returns the same word as <code class="func">Factorization</code> (<a href="chap14.html#X8357294D7B164106"><span class="RefLink">14.5-2</span></a>).</p>
 
-<p>See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>).</p>
+<p>See also <code class="func">EvaluateWord</code> (<a href="chap14.html#X799D2F3C866B9AED"><span class="RefLink">14.5-1</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -603,7 +603,7 @@ fail</pre></div>
 
 <dl>
 <dt><strong class="Mark">for a group</strong></dt>
-<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfGroup</code> (<span class="RefLink">???</span>).</p>
+<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfGroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X79C44528864044C5"><span class="RefLink">Reference: GeneratorsOfGroup</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">for an ideal of semigroup</strong></dt>
@@ -611,19 +611,19 @@ fail</pre></div>
 
 </dd>
 <dt><strong class="Mark">for a semigroup</strong></dt>
-<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>).</p>
+<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">for a monoid</strong></dt>
-<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfMonoid</code> (<span class="RefLink">???</span>).</p>
+<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">for an inverse semigroup</strong></dt>
-<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfInverseSemigroup</code> (<span class="RefLink">???</span>).</p>
+<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfInverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X87C373597F787250"><span class="RefLink">Reference: GeneratorsOfInverseSemigroup</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">for an inverse monoid</strong></dt>
-<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfInverseMonoid</code> (<span class="RefLink">???</span>).</p>
+<dd><p><code class="code">Generators(<var class="Arg">S</var>)</code> is a synonym for <code class="func">GeneratorsOfInverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7A3B262C85B6D475"><span class="RefLink">Reference: GeneratorsOfInverseMonoid</span></a>).</p>
 
 </dd>
 </dl>
@@ -667,7 +667,7 @@ fail</pre></div>
 <div class="example"><pre>
       X(SmallXGeneratingSet(coll)) = X(coll);</pre></div>
 
-<p>where <code class="code">X</code> is any of <code class="func">Semigroup</code> (<span class="RefLink">???</span>), <code class="func">Monoid</code> (<span class="RefLink">???</span>), <code class="func">InverseSemigroup</code> (<span class="RefLink">???</span>), or <code class="func">InverseMonoid</code> (<span class="RefLink">???</span>).</p>
+<p>where <code class="code">X</code> is any of <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>), <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>), <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>), or <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>).</p>
 
 <p>If the number of generators for <var class="Arg">S</var> is already relatively small, then these functions will often return the original generating set. These functions may return different results in different <strong class="pkg">GAP</strong> sessions.</p>
 
@@ -793,7 +793,7 @@ fail</pre></div>
       X(MinimalXGeneratingSet(S)) = S;
     </pre></div>
 
-<p>where <code class="code">X</code> is either <code class="func">Semigroup</code> (<span class="RefLink">???</span>), or <code class="func">Monoid</code> (<span class="RefLink">???</span>).</p>
+<p>where <code class="code">X</code> is either <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>), or <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>).</p>
 
 <p>For many types of semigroup, it is not currently possible to find a <code class="code">MinimalXGeneratingSet</code> with the <strong class="pkg">Semigroups</strong> package.</p>
 
@@ -923,7 +923,7 @@ true
 
 <p>It is significantly easier to find the minimal \(\mathscr{D}\)-class of a semigroup, than to find its \(\mathscr{D}\)-classes.</p>
 
-<p>See also <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap14.html#X7CA6744182D07C5B"><span class="RefLink">14.7-2</span></a>), <code class="func">PartialOrderOfDClasses</code> (<a href="chap13.html#X83F1C306846DF26B"><span class="RefLink">13.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<span class="RefLink">???</span>), and <code class="func">MinimalDClass</code> (<a href="chap13.html#X81E5A04F7DA3A1E1"><span class="RefLink">13.1-6</span></a>).</p>
+<p>See also <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap14.html#X7CA6744182D07C5B"><span class="RefLink">14.7-2</span></a>), <code class="func">PartialOrderOfDClasses</code> (<a href="chap13.html#X83F1C306846DF26B"><span class="RefLink">13.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap13.html#X81E5A04F7DA3A1E1"><span class="RefLink">13.1-6</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -989,7 +989,7 @@ Transformation( [ 1, 2, 2, 5, 5, 1 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeZero</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The zero element of a semigroup.</p>
 
-<p><code class="code">MultiplicativeZero</code> returns the zero element of the semigroup <var class="Arg">S</var> if it exists and <code class="keyw">fail</code> if it does not. See also <code class="func">MultiplicativeZero</code> (<span class="RefLink">???</span>).</p>
+<p><code class="code">MultiplicativeZero</code> returns the zero element of the semigroup <var class="Arg">S</var> if it exists and <code class="keyw">fail</code> if it does not. See also <code class="func">MultiplicativeZero</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap35_mj.html#X7B39F93C8136D642"><span class="RefLink">Reference: MultiplicativeZero</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1070,7 +1070,7 @@ fail
 
 <p>If a semigroup <var class="Arg">S</var> has an identity <code class="code">e</code>, then the <em>group of units</em> of <var class="Arg">S</var> is the set of those <code class="code">s</code> in <var class="Arg">S</var> such that there exists <code class="code">t</code> in <var class="Arg">S</var> where <code class="code">s*t=t*s=e</code>. Equivalently, the group of units is the \(\mathscr{H}\)-class of the identity of <var class="Arg">S</var>.</p>
 
-<p>See also <code class="func">GreensHClassOfElement</code> (<span class="RefLink">???</span>), <code class="func">IsMonoidAsSemigroup</code> (<a href="chap15.html#X7E4DEECD7CD9886D"><span class="RefLink">15.1-13</span></a>), and <code class="func">MultiplicativeNeutralElement</code> (<span class="RefLink">???</span>).</p>
+<p>See also <code class="func">GreensHClassOfElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensHClassOfElement</span></a>), <code class="func">IsMonoidAsSemigroup</code> (<a href="chap15.html#X7E4DEECD7CD9886D"><span class="RefLink">15.1-13</span></a>), and <code class="func">MultiplicativeNeutralElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1121,9 +1121,9 @@ fail
 
 <p>If the optional second argument <var class="Arg">n</var> is present and <var class="Arg">obj</var> is a semigroup, then a list of the idempotents in <var class="Arg">obj</var> of rank <var class="Arg">n</var> is returned. If you are only interested in the idempotents of a given rank, then the second version of the function will probably be faster. However, if the optional second argument is present, then nothing is stored in <var class="Arg">obj</var> and so every time the function is called the computation must be repeated.</p>
 
-<p>This functions produce essentially the same output as the <strong class="pkg">GAP</strong> library function with the same name; see <code class="func">Idempotents</code> (<span class="RefLink">???</span>). The main difference is that this function can be applied to a wider class of objects as described above.</p>
+<p>This functions produce essentially the same output as the <strong class="pkg">GAP</strong> library function with the same name; see <code class="func">Idempotents</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap35_mj.html#X7C651C9C78398FFF"><span class="RefLink">Reference: Idempotents</span></a>). The main difference is that this function can be applied to a wider class of objects as described above.</p>
 
-<p>See also <code class="func">IsRegularDClass</code> (<span class="RefLink">???</span>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>) <code class="func">IsGroupHClass</code> (<span class="RefLink">???</span>), <code class="func">NrIdempotents</code> (<a href="chap14.html#X7CFC4DB387452320"><span class="RefLink">14.9-2</span></a>), and <code class="func">GroupHClass</code> (<a href="chap13.html#X8723756387DD4C0F"><span class="RefLink">13.4-1</span></a>).</p>
+<p>See also <code class="func">IsRegularDClass</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>) <code class="func">IsGroupHClass</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), <code class="func">NrIdempotents</code> (<a href="chap14.html#X7CFC4DB387452320"><span class="RefLink">14.9-2</span></a>), and <code class="func">GroupHClass</code> (<a href="chap13.html#X8723756387DD4C0F"><span class="RefLink">13.4-1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1174,7 +1174,7 @@ fail
 
 <p>This function returns the number of idempotents in <var class="Arg">obj</var> where <var class="Arg">obj</var> can be a semigroup, \(\mathscr{D}\)-, \(\mathscr{L}\)-, \(\mathscr{H}\)-, or \(\mathscr{R}\)-class. If the actual idempotents are not required, then it is more efficient to use <code class="code">NrIdempotents(obj)</code> than <code class="code">Length(Idempotents(obj))</code> since the idempotents themselves are not created when <code class="code">NrIdempotents</code> is called.</p>
 
-<p>See also <code class="func">Idempotents</code> (<span class="RefLink">???</span>) and <code class="func">Idempotents</code> (<a href="chap14.html#X7C651C9C78398FFF"><span class="RefLink">14.9-1</span></a>), <code class="func">IsRegularDClass</code> (<span class="RefLink">???</span>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>) <code class="func">IsGroupHClass</code> (<span class="RefLink">???</span>), and <code class="func">GroupHClass</code> (<a href="chap13.html#X8723756387DD4C0F"><span class="RefLink">13.4-1</span></a>).</p>
+<p>See also <code class="func">Idempotents</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap35_mj.html#X7C651C9C78398FFF"><span class="RefLink">Reference: Idempotents</span></a>) and <code class="func">Idempotents</code> (<a href="chap14.html#X7C651C9C78398FFF"><span class="RefLink">14.9-1</span></a>), <code class="func">IsRegularDClass</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap13.html#X859DD1C079C80DCC"><span class="RefLink">13.3-2</span></a>) <code class="func">IsGroupHClass</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), and <code class="func">GroupHClass</code> (<a href="chap13.html#X8723756387DD4C0F"><span class="RefLink">13.4-1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1463,7 +1463,7 @@ false</pre></div>
 
 <dl>
 <dt><strong class="Mark">random</strong></dt>
-<dd><p>If this option has the value <code class="keyw">true</code>, then the non-deterministic algorithms in <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> are used in <code class="code">Normalizer</code>. So, there is some chance that <code class="code">Normalizer</code> will return an incorrect result in this case, but these methods can also be much faster than the deterministic algorithms which are used if this option is <code class="keyw">false</code>.</p>
+<dd><p>If this option has the value <code class="keyw">true</code>, then the non-deterministic algorithms in <span class="URL"><a href=" https://gap-packages.github.io/genss/ ">genss</a></span> are used in <code class="code">Normalizer</code>. So, there is some chance that <code class="code">Normalizer</code> will return an incorrect result in this case, but these methods can also be much faster than the deterministic algorithms which are used if this option is <code class="keyw">false</code>.</p>
 
 <p>The default value for this option is <code class="keyw">false</code>.</p>
 
@@ -1566,15 +1566,15 @@ Group(())</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPairs</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph, or <code class="keyw">fail</code>.</p>
 
-<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPairs(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnSets</code> (<span class="RefLink">???</span>) action of <var class="Arg">S</var> on the pairs of points in <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
+<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPairs(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnSets</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap41_mj.html#X85AA04347CD117F9"><span class="RefLink">Reference: OnSets</span></a>) action of <var class="Arg">S</var> on the pairs of points in <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
 
-<p>If the optional argument <var class="Arg">n</var> is not specified, then by default the degree of <var class="Arg">S</var> will be chosen for <var class="Arg">n</var>; see <code class="func">DegreeOfTransformationSemigroup</code> (<span class="RefLink">???</span>). If the semigroup <var class="Arg">S</var> does not act on <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPairs(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns <code class="keyw">fail</code>.</p>
+<p>If the optional argument <var class="Arg">n</var> is not specified, then by default the degree of <var class="Arg">S</var> will be chosen for <var class="Arg">n</var>; see <code class="func">DegreeOfTransformationSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EA699C687952544"><span class="RefLink">Reference: DegreeOfTransformationSemigroup</span></a>). If the semigroup <var class="Arg">S</var> does not act on <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPairs(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns <code class="keyw">fail</code>.</p>
 
-<p>The digraph returned by <code class="code">DigraphOfActionOnPairs</code> has <span class="SimpleMath"><var class="Arg">n</var> + n choose 2</span> vertices: the vertices <code class="code">[1 .. <var class="Arg">n</var>]</code> correspond to the points in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and the remaining vertices correspond to the pairs of points in <code class="code">[1 .. <var class="Arg">n</var>]</code>. This correspondence is stored in the vertex labels of the digraph; see <code class="func">DigraphVertexLabels</code> (<a href="../../../pkg/digraphs/doc/chap5_mj.html#X7E51F2FE87140B32"><span class="RefLink">Digraphs: DigraphVertexLabels</span></a>).</p>
+<p>The digraph returned by <code class="code">DigraphOfActionOnPairs</code> has <span class="SimpleMath"><var class="Arg">n</var> + n choose 2</span> vertices: the vertices <code class="code">[1 .. <var class="Arg">n</var>]</code> correspond to the points in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and the remaining vertices correspond to the pairs of points in <code class="code">[1 .. <var class="Arg">n</var>]</code>. This correspondence is stored in the vertex labels of the digraph; see <code class="func">DigraphVertexLabels</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap5_mj.html#X7E51F2FE87140B32"><span class="RefLink">Digraphs: DigraphVertexLabels</span></a>).</p>
 
-<p>The edges of the digraph are defined as follows. For each pair <code class="code">{i, j}</code> in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and for each generator <code class="code">f</code> in <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>, there is an edge from the vertex corresponding to <code class="code">{i, j}</code> to the vertex corresponding to <code class="code">{i ^ f, j ^ f}</code>. Since <code class="code">f</code> is a transformation, the set <code class="code">{i ^ f, j ^ f}</code> may correspond to a pair (in the case that <code class="code">i ^ f &lt;&gt; j ^ f</code>), or to a point (in the case that <code class="code">i ^ f = j ^ f</code>). The label of an edge is the position of the first transformation within <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code> that maps the pair corresponding to the source vertex to the pair/point corresponding to the range vertex. See <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>) and <code class="func">DigraphEdgeLabels</code> (<a href="../../../pkg/digraphs/doc/chap5_mj.html#X7C24851087D4A8FB"><span class="RefLink">Digraphs: DigraphEdgeLabels</span></a>) for further information.</p>
+<p>The edges of the digraph are defined as follows. For each pair <code class="code">{i, j}</code> in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and for each generator <code class="code">f</code> in <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>, there is an edge from the vertex corresponding to <code class="code">{i, j}</code> to the vertex corresponding to <code class="code">{i ^ f, j ^ f}</code>. Since <code class="code">f</code> is a transformation, the set <code class="code">{i ^ f, j ^ f}</code> may correspond to a pair (in the case that <code class="code">i ^ f &lt;&gt; j ^ f</code>), or to a point (in the case that <code class="code">i ^ f = j ^ f</code>). The label of an edge is the position of the first transformation within <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code> that maps the pair corresponding to the source vertex to the pair/point corresponding to the range vertex. See <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>) and <code class="func">DigraphEdgeLabels</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap5_mj.html#X7C24851087D4A8FB"><span class="RefLink">Digraphs: DigraphEdgeLabels</span></a>) for further information.</p>
 
-<p>Note that the digraph returned by <code class="code">DigraphOfActionOnPairs</code> has no multiple edges; see <code class="func">IsMultiDigraph</code> (<a href="../../../pkg/digraphs/doc/chap6_mj.html#X7BB84CFC7E8B2B26"><span class="RefLink">Digraphs: IsMultiDigraph</span></a>).</p>
+<p>Note that the digraph returned by <code class="code">DigraphOfActionOnPairs</code> has no multiple edges; see <code class="func">IsMultiDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap6_mj.html#X7BB84CFC7E8B2B26"><span class="RefLink">Digraphs: IsMultiDigraph</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1608,13 +1608,13 @@ fail</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DigraphOfActionOnPoints</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A digraph, or <code class="keyw">fail</code>.</p>
 
-<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPoints(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnPoints</code> (<span class="RefLink">???</span>) action of <var class="Arg">S</var> on the set <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
+<p>If <var class="Arg">S</var> is a transformation semigroup and <var class="Arg">n</var> is a non-negative integer such that <var class="Arg">S</var> acts on the points <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPoints(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns a digraph representing the <code class="func">OnPoints</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">Reference: OnPoints</span></a>) action of <var class="Arg">S</var> on the set <code class="code">[1 .. <var class="Arg">n</var>]</code>.</p>
 
-<p>If the optional argument <var class="Arg">n</var> is not specified, then by default the degree of <var class="Arg">S</var> will be chosen for <var class="Arg">n</var>; see <code class="func">DegreeOfTransformationSemigroup</code> (<span class="RefLink">???</span>). If the semigroup <var class="Arg">S</var> does not act on <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPoints(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns <code class="keyw">fail</code>.</p>
+<p>If the optional argument <var class="Arg">n</var> is not specified, then by default the degree of <var class="Arg">S</var> will be chosen for <var class="Arg">n</var>; see <code class="func">DegreeOfTransformationSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EA699C687952544"><span class="RefLink">Reference: DegreeOfTransformationSemigroup</span></a>). If the semigroup <var class="Arg">S</var> does not act on <code class="code">[1 .. <var class="Arg">n</var>]</code>, then <code class="code">DigraphOfActionOnPoints(<var class="Arg">S</var>, <var class="Arg">n</var>)</code> returns <code class="keyw">fail</code>.</p>
 
-<p>The digraph returned by <code class="code">DigraphOfActionOnPoints</code> has <var class="Arg">n</var> vertices, where the vertex <code class="code">i</code> corresponds to the point <code class="code">i</code>. For each point <code class="code">i</code> in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and for each generator <code class="code">f</code> in <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>, there is an edge from the vertex <code class="code">i</code> to the vertex <code class="code">i ^ f</code>. See <code class="func">GeneratorsOfSemigroup</code> (<span class="RefLink">???</span>) for further information.</p>
+<p>The digraph returned by <code class="code">DigraphOfActionOnPoints</code> has <var class="Arg">n</var> vertices, where the vertex <code class="code">i</code> corresponds to the point <code class="code">i</code>. For each point <code class="code">i</code> in <code class="code">[1 .. <var class="Arg">n</var>]</code>, and for each generator <code class="code">f</code> in <code class="code">GeneratorsOfSemigroup(<var class="Arg">S</var>)</code>, there is an edge from the vertex <code class="code">i</code> to the vertex <code class="code">i ^ f</code>. See <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>) for further information.</p>
 
-<p>Note that the digraph returned by <code class="code">DigraphOfActionOnPoints</code> has no multiple edges; see <code class="func">IsMultiDigraph</code> (<a href="../../../pkg/digraphs/doc/chap6_mj.html#X7BB84CFC7E8B2B26"><span class="RefLink">Digraphs: IsMultiDigraph</span></a>).</p>
+<p>Note that the digraph returned by <code class="code">DigraphOfActionOnPoints</code> has no multiple edges; see <code class="func">IsMultiDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap6_mj.html#X7BB84CFC7E8B2B26"><span class="RefLink">Digraphs: IsMultiDigraph</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1663,7 +1663,7 @@ Transformation( [ 1, 4, 2, 4, 3, 7, 7 ] )
 
 <p>If the optional second argument is a positive integer <var class="Arg">n</var>, then <code class="code">IsTransitive</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> is transitive on <code class="code">[1 .. <var class="Arg">n</var>]</code>, and <code class="keyw">false</code> if it is not.</p>
 
-<p>If the optional second argument is not provided, then the degree of <var class="Arg">S</var> is used by default; see <code class="func">DegreeOfTransformationSemigroup</code> (<span class="RefLink">???</span>).</p>
+<p>If the optional second argument is not provided, then the degree of <var class="Arg">S</var> is used by default; see <code class="func">DegreeOfTransformationSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EA699C687952544"><span class="RefLink">Reference: DegreeOfTransformationSemigroup</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1712,7 +1712,7 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )</pre></div>
 
 <p>If <var class="Arg">trans</var> is a transformation, and <var class="Arg">n</var> is a non-negative integer such that the restriction of <var class="Arg">trans</var> to <code class="keyw">[1 .. n]</code> defines a transformation of <code class="code">[1 .. n]</code>, then <code class="code">CanonicalTransformation</code> returns a canonical representative of the transformation <var class="Arg">trans</var> restricted to <code class="code">[1 .. n]</code>.</p>
 
-<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="../../../pkg/digraphs/doc/chap3_mj.html#X83CA27E67F685EB3"><span class="RefLink">Digraphs: AsDigraph</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
+<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap3_mj.html#X83CA27E67F685EB3"><span class="RefLink">Digraphs: AsDigraph</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
 
 
 <div class="example"><pre>
@@ -1732,7 +1732,7 @@ Transformation( [ 3, 5, 2, 2, 2 ] )</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConnectedTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A transformation semigroup <var class="Arg">S</var> is connected if the digraph returned by the function <code class="code">DigraphOfActionOnPoints</code> is connected. See <code class="func">IsConnectedDigraph</code> (<a href="../../../pkg/digraphs/doc/chap6_mj.html#X83C08C0B7EC1A91F"><span class="RefLink">Digraphs: IsConnectedDigraph</span></a>) and <code class="func">DigraphOfActionOnPoints</code> (<a href="chap14.html#X7B5ACD5C7E7612A2"><span class="RefLink">14.12-5</span></a>). The function <code class="code">IsConnectedTransformationSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is connected and <code class="keyw">false</code> otherwise.</p>
+<p>A transformation semigroup <var class="Arg">S</var> is connected if the digraph returned by the function <code class="code">DigraphOfActionOnPoints</code> is connected. See <code class="func">IsConnectedDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap6_mj.html#X83C08C0B7EC1A91F"><span class="RefLink">Digraphs: IsConnectedDigraph</span></a>) and <code class="func">DigraphOfActionOnPoints</code> (<a href="chap14.html#X7B5ACD5C7E7612A2"><span class="RefLink">14.12-5</span></a>). The function <code class="code">IsConnectedTransformationSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is connected and <code class="keyw">false</code> otherwise.</p>
 
 
 <div class="example"><pre>
@@ -1961,7 +1961,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NambooripadPartialOrder</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The Nambooripad partial order on a regular semigroup.</p>
 
-<p>The <em>Nambooripad partial order</em> <span class="SimpleMath">≤</span> on a regular semigroup <var class="Arg">S</var> is defined by <code class="code">s</code><span class="SimpleMath">≤</span><code class="code">t</code> if the principal right ideal of <code class="code">S</code> generated by <code class="code">s</code> is contained in the principal right ideal of <code class="code">S</code> generated by <code class="code">t</code> and there is an idempotent <code class="code">e</code> in the \(\mathscr{R}\)-class of <code class="code">s</code> such that <code class="code">s</code><span class="SimpleMath">=</span><code class="code">et</code>. The Nambooripad partial order coincides with the natural partial order when considering inverse semigroups <code class="func">NaturalPartialOrder</code> (<span class="RefLink">???</span>).</p>
+<p>The <em>Nambooripad partial order</em> <span class="SimpleMath">≤</span> on a regular semigroup <var class="Arg">S</var> is defined by <code class="code">s</code><span class="SimpleMath">≤</span><code class="code">t</code> if the principal right ideal of <code class="code">S</code> generated by <code class="code">s</code> is contained in the principal right ideal of <code class="code">S</code> generated by <code class="code">t</code> and there is an idempotent <code class="code">e</code> in the \(\mathscr{R}\)-class of <code class="code">s</code> such that <code class="code">s</code><span class="SimpleMath">=</span><code class="code">et</code>. The Nambooripad partial order coincides with the natural partial order when considering inverse semigroups <code class="func">NaturalPartialOrder</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7EA51F087CF7621F"><span class="RefLink">Reference: NaturalPartialOrder</span></a>).</p>
 
 <p><code class="code">NambooripadPartialOrder</code> returns the Nambooripad partial order on the regular semigroup <var class="Arg">S</var> as a list of sets of positive integers where entry <code class="code">i</code> in <code class="code">NaturalPartialOrder(<var class="Arg">S</var>)</code> is the set of positions in <code class="code">Elements(<var class="Arg">S</var>)</code> of elements which are less than <code class="code">Elements(<var class="Arg">S</var>)[i]</code>. See also <code class="func">NambooripadLeqRegularSemigroup</code> (<a href="chap14.html#X7A7EB0DA8398886E"><span class="RefLink">14.16-1</span></a>).</p>
 
