@@ -9,16 +9,16 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.4.1">
+##  <!ENTITY VERSION "3.4.2">
 ##  <!ENTITY GAPVERS "4.10.0">
+##  <!ENTITY ARCHIVENAME "semigroups-3.4.2">
+##  <!ENTITY COPYRIGHTYEARS "2011-21">
 ##  <!ENTITY DATASTRUCTURESVERS "0.2.5">
 ##  <!ENTITY DIGRAPHSVERS "1.2.0">
 ##  <!ENTITY GENSSVERS "1.6.5">
 ##  <!ENTITY IMAGESVERS "1.3.0">
 ##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY ORBVERS "4.8.2">
-##  <!ENTITY ARCHIVENAME "semigroups-3.4.1">
-##  <!ENTITY COPYRIGHTYEARS "2011-20">
 ##  <#/GAPDoc>
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
@@ -49,8 +49,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.4.1",
-Date := "28/01/2021",  # dd/mm/yyyy format
+Version := "3.4.2",
+Date := "07/02/2021",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -87,7 +87,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "sb235@st-andrews.ac.uk ",
-    WWWHome       := "http://sburrell.nfshost.com",
+    WWWHome       := "https://stuartburrell.github.io",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -98,7 +98,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
-    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    WWWHome       := "https://cmup.fc.up.pt/cmup/mdelgado/",
     Place         := "Porto",
     Institution   := "Universidade do Porto"),
 
@@ -108,7 +108,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
-    WWWHome       := "http://goo.gl/MuiJu5",
+    WWWHome       := "https://goo.gl/MuiJu5",
     Place         := "Sydney",
     Institution   := "Western Sydney University"),
 
@@ -165,7 +165,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "caj21@st-andrews.ac.uk",
-    WWWHome       := "http://caj.host.cs.st-andrews.ac.uk/",
+    WWWHome       := "https://caj.host.cs.st-andrews.ac.uk/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
@@ -222,7 +222,7 @@ Persons := [
     FirstNames    := "Benjamin",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/"),
+    WWWHome       := "https://bsteinberg.ccny.cuny.edu/Webpage/"),
 
   rec(
     LastName      := "Smith",
@@ -239,7 +239,7 @@ Persons := [
     FirstNames    := "Jhevon",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith"),
+    WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
     LastName      := "Torpey",

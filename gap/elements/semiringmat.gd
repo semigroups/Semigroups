@@ -38,9 +38,6 @@ DeclareOperation("MatrixNC", [IsMatrixOverSemiring,
 DeclareOperation("Matrix", [IsOperation, IsHomogeneousList]);
 DeclareOperation("Matrix", [IsOperation, IsHomogeneousList, IsPosInt]);
 DeclareOperation("Matrix", [IsOperation, IsHomogeneousList, IsInt, IsInt]);
-if not CompareVersionNumbers(GAPInfo.BuildVersion, "4.10") then
-  DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
-fi;
 DeclareOperation("Matrix", [IsSemiring, IsMatrixOverSemiring]);
 
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
