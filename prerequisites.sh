@@ -16,15 +16,14 @@ fi
 echo "libsemigroups v$VERS is required by this version of Semigroups"
 
 if [ -d "$LIBS_DIR" ] && [ "$(ls -A $LIBS_DIR)" ]; then
-  echo "the libsemigroups directory exists and is non-empty"
+  echo "The libsemigroups directory exists and is non-empty"
   if [ -f "$LIBS_DIR/.VERSION" ]; then
     echo "The file libsemigroups/.VERSION is present"
     INSTALLED=`tr -d '\n' < "$LIBS_DIR/.VERSION"`
   elif [ -f "$LIBS_DIR/etc/version-number.sh" ]; then
-    echo "The file libsemigroups/.VERSION is not present; recreating it..."
+    echo "Getting version number via etc/version-number.sh in libsemigroups"
     cd "$LIBS_DIR"
     INSTALLED=`etc/version-number.sh`
-    echo "$INSTALLED" > .VERSION
     cd "$SEMI_DIR"
   else
     echo "Error, it is not possible to determine the libsemigroups version"
