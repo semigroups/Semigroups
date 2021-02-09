@@ -70,7 +70,7 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
       return SEMIGROUPS.LeftTranslationsBacktrack(T);
     else
       # TODO: dual or backtrack?
-      return SEMIGROUPS.RightTranslationsByDual(T);
+      return SEMIGROUPS.RightTranslationsBacktrack(T);
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
@@ -260,7 +260,7 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S, multtable)
     od;
   od;
 
-  # compute the right multipliers to the intersects from the gens
+  # compute the left multipliers to the intersects from the gens
   left_intersect_multipliers := List([1 .. m], x -> []);
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
@@ -491,7 +491,7 @@ SEMIGROUPS.RightTranslationsBacktrack := function(L)
   rho := [];
   out := [];
   bt(1);
-  Apply(out, x -> LeftTranslationNC(L, x));
+  Apply(out, x -> RightTranslationNC(L, x));
   return out;
 end;
 
@@ -624,31 +624,6 @@ SEMIGROUPS.BitranslationsBacktrack := function(H)
                                 LeftTranslationNC(L, x[1]),
                                 RightTranslationNC(R, x[2])));
   return out;
-end;
-
-SEMIGROUPS.RightTranslationsByDual := function(R)
-  local S, Sl, D, Dl, map, inv, dual_trans, gens, translator;
-
-  S           := UnderlyingSemigroup(R);
-  Sl          := AsListCanonical(S);
-  D           := DualSemigroup(S);
-  Dl          := AsListCanonical(D);
-  map         := AntiIsomorphismDualSemigroup(S);
-  inv         := InverseGeneralMapping(map); 
-  dual_trans  := LeftTranslations(D);
-  gens        := UnderlyingGenerators(R);
-
-  translator := function(x)
-    local out, i;
-    out := [];
-    for i in [1 .. Length(gens)] do
-      out[i] := PositionCanonical(S, ((gens[i] ^ map) ^ x) ^ inv);
-    od;
-    # TODO: NC
-    return RightTranslation(R, out);
-  end;
-
-  return List(dual_trans, translator);
 end;
 
 # Choose how to calculate the elements of a translational hull
