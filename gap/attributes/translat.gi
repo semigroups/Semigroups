@@ -429,6 +429,125 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   return out;
 end;
 
+
+SEMIGROUPS.LeftAutoTranslations := function(mult_table, gens_pos)
+  local n, m, D, x, vertex_cols, edge_cols, auts, g, s;
+  n := Size(mult_table);
+  m := Size(gens_pos);
+  D := Digraph(IsMutableDigraph, []);
+  DigraphAddVertices(D, n);
+  for g in gens_pos do
+    for s in [1 .. Size(mult_table)] do
+      x := mult_table[s][g];
+      DigraphAddEdge(D, [s, x]);
+    od;
+  od;
+  vertex_cols := fail;
+  edge_cols := List([1 .. n], x -> [1 .. m]);
+  MakeImmutable(D);
+  if IsMultiDigraph(D) then
+    return Range(Projection(AutomorphismGroup(D, vertex_cols, edge_cols), 1));
+  else
+    return AutomorphismGroup(D, vertex_cols, edge_cols);
+  fi;
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackStabilised := function(L)
+  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs, orbs,
+  stab_thresh, multtable, data, U, W, aut, bt, lambda, out, i, j, s;
+
+
+  S           := UnderlyingSemigroup(L);
+  n           := Size(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+  stabs := [];
+  orbs := List([1 .. m], i -> []);
+  stab_thresh := 20;
+
+  multtable := SEMIGROUPS.CanonicalMultTable(S);
+
+  data := SEMIGROUPS.LeftTranslationsBacktrackData(S, multtable);
+  U := data.U;
+  W := data.W;
+
+  aut := SEMIGROUPS.LeftAutoTranslations(multtable, genspos);
+
+  # enforce arc consistency with the W_{i, j, s}
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for s in [1 .. n] do
+        if IsEmpty(W[i][j][s]) then
+          RemoveSet(possiblefgenvals[i], s);
+        fi;
+      od;
+    od;
+  od;
+  
+  # restrict via the U_{i}
+  for i in [1 .. m] do
+    IntersectSet(possiblefgenvals[i], U[i]);
+  od;
+
+  bt := function(i) 
+    local seen, stab, use_stab, reps, orb, consistent, s, j;
+    seen := BlistList([1 .. n], []);
+    if i > 1 then
+      stab := stabs[i - 1];
+    else
+      stab := aut;
+    fi;
+    # TODO: remove if not used again later
+    use_stab := Size(stab) > stab_thresh;
+    if use_stab then
+      reps := [];
+      for s in omega_stack[i][i] do
+        if not seen[s] then
+          Add(reps, s);
+          orb := Orbit(stab, s);
+          UniteBlistList([1 .. n], seen, orb);
+        fi;
+      od;
+    else
+      reps := omega_stack[i][i];
+    fi;
+    for s in reps do
+      lambda[i] := s;
+      if i = m then
+        Add(out, ShallowCopy(lambda));
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W[i][j][s]);
+          if IsEmpty(omega_stack[i + 1][j]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          if Size(stab)/2 > stab_thresh then
+            stabs[i] := Stabiliser(stab, s);
+          else
+            stabs[i] := [];
+          fi;
+          bt(i + 1);
+        fi;
+      fi;
+    od;
+  end;
+
+  omega_stack := [possiblefgenvals];
+  lambda := [];
+  out := [];
+  bt(1);
+  Apply(out, x -> LeftTranslationNC(L, x));
+  return out;
+end;
+
 SEMIGROUPS.RightTranslationsBacktrack := function(L)
   local S, n, gens, m, genspos, omega_stack, multtable, data, G, T,
   possiblegenvals, bt, rho, out, i, j, s;
