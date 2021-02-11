@@ -168,40 +168,7 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S, multtable)
       od;
     od;
   od;
-
-  # compute the sets V_{j, a, s} from paper
-  # again leave the unused ones unbound for fast failure
-  V := List([1 .. m], x -> List([1 .. n], y -> []));
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for a in max_R_intersects[i][j] do
-        for s in [1 .. n] do
-          intersect := [1 .. n];
-          for t in left_inverses_by_gen[a][j] do
-            intersect := Intersection(intersect, right_inverses[s][t]);
-          od;
-          V[j][a][s] := intersect;
-        od;
-      od;
-    od;
-  od;
  
-  # compute the sets W_{i, j, s} from paper
-  W := List([1 .. m], x -> List([1 .. m], y -> []));
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for s in [1 .. n] do
-        intersect := [1 .. n];
-        for a in max_R_intersects[i][j] do
-          for r in right_intersect_multipliers[i][a] do
-            intersect := Intersection(intersect, V[j][a][multtable[s][r]]);
-          od;
-        od;
-        W[i][j][s] := intersect;
-      od;
-    od;
-  od;
-
   # compute intersection over a of the sets U_{i, a} from the paper
   U := List([1 .. m], i -> [1 .. n]);
   for i in [1 .. m] do
@@ -221,9 +188,54 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S, multtable)
 
   r := rec();
   r.left_inverses_by_gen := left_inverses_by_gen;
-  r.W := W;
+  r.max_R_intersects := max_R_intersects;
+  r.multtable := multtable;
+  r.right_intersect_multipliers := right_intersect_multipliers;
+  r.right_inverses := right_inverses;
   r.U := U;
+  r.V := List([1 .. m], j -> List([1 .. n], a -> []));
+  r.W := List([1 .. m], i -> List([1 .. m], j -> []));
   return r;
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
+  local right_inverses, V, t;
+
+  if IsBound(data.V[j][a][s]) then
+    return data.V[j][a][s];
+  fi;
+
+  right_inverses := data.right_inverses;
+  V := [1 .. Size(data.multtable)];
+  for t in data.left_inverses_by_gen[a][j] do
+    V := Intersection(V, right_inverses[s][t]);
+  od;
+  data.V[j][a][s] := V;
+  return V;
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
+  local right_intersect_multipliers, multtable, W, x, a, r;
+
+  if IsBound(data.W[i][j][s]) then
+    return data.W[i][j][s];
+  fi;
+
+  right_intersect_multipliers := data.right_intersect_multipliers;
+  multtable := data.multtable;
+  W := [1 .. Size(data.multtable)];
+  for a in data.max_R_intersects[i][j] do
+    for r in right_intersect_multipliers[i][a] do
+      x := multtable[s][r];
+      W := Intersection(W, 
+                        SEMIGROUPS.LeftTranslationsBacktrackDataV(data,
+                                                                  j,
+                                                                  a,
+                                                                  x));
+    od;
+  od;
+  data.W[i][j][s] := W;
+  return W;
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackData := function(S, multtable)
@@ -380,18 +392,17 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
 
   data := SEMIGROUPS.LeftTranslationsBacktrackData(S, multtable);
   U := data.U;
-  W := data.W;
 
-  # enforce arc consistency with the W_{ i, j, s }
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for s in [1 .. n] do
-        if IsEmpty(W[i][j][s]) then
-          RemoveSet(possiblefgenvals[i], s);
-        fi;
-      od;
-    od;
-  od;
+#  # enforce arc consistency with the W_{ i, j, s }
+#  for i in [1 .. m - 1] do
+#    for j in [i + 1 .. m] do
+#      for s in [1 .. n] do
+#        if IsEmpty(W[i][j][s]) then
+#          RemoveSet(possiblefgenvals[i], s);
+#        fi;
+#      od;
+#    od;
+#  od;
   
   # restrict via the U_{i}
   for i in [1 .. m] do
@@ -408,7 +419,8 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
         consistent := true;
         omega_stack[i + 1] := [];
         for j in [i + 1 .. m] do
-          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W[i][j][s]);
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
           if IsEmpty(omega_stack[i + 1][j]) then
             consistent := false;
             break;
@@ -428,7 +440,6 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   Apply(out, x -> LeftTranslationNC(L, x));
   return out;
 end;
-
 
 SEMIGROUPS.LeftAutoTranslations := function(mult_table, gens_pos)
   local n, m, D, x, vertex_cols, edge_cols, auts, g, s;
@@ -454,7 +465,7 @@ end;
 
 SEMIGROUPS.LeftTranslationsBacktrackStabilised := function(L)
   local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs, orbs,
-  stab_thresh, multtable, data, U, W, aut, bt, lambda, out, i, j, s;
+  stab_thresh, multtable, data, U, aut, bt, lambda, out, i;
 
 
   S           := UnderlyingSemigroup(L);
@@ -472,20 +483,19 @@ SEMIGROUPS.LeftTranslationsBacktrackStabilised := function(L)
 
   data := SEMIGROUPS.LeftTranslationsBacktrackData(S, multtable);
   U := data.U;
-  W := data.W;
 
   aut := SEMIGROUPS.LeftAutoTranslations(multtable, genspos);
 
-  # enforce arc consistency with the W_{i, j, s}
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for s in [1 .. n] do
-        if IsEmpty(W[i][j][s]) then
-          RemoveSet(possiblefgenvals[i], s);
-        fi;
-      od;
-    od;
-  od;
+#  # enforce arc consistency with the W_{i, j, s}
+#  for i in [1 .. m - 1] do
+#    for j in [i + 1 .. m] do
+#      for s in [1 .. n] do
+#        if IsEmpty(W[i][j][s]) then
+#          RemoveSet(possiblefgenvals[i], s);
+#        fi;
+#      od;
+#    od;
+#  od;
   
   # restrict via the U_{i}
   for i in [1 .. m] do
@@ -493,7 +503,7 @@ SEMIGROUPS.LeftTranslationsBacktrackStabilised := function(L)
   od;
 
   bt := function(i) 
-    local seen, stab, use_stab, reps, orb, consistent, s, j;
+    local seen, stab, use_stab, reps, orb, consistent, W, s, j;
     seen := BlistList([1 .. n], []);
     if i > 1 then
       stab := stabs[i - 1];
@@ -522,7 +532,8 @@ SEMIGROUPS.LeftTranslationsBacktrackStabilised := function(L)
         consistent := true;
         omega_stack[i + 1] := [];
         for j in [i + 1 .. m] do
-          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W[i][j][s]);
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
           if IsEmpty(omega_stack[i + 1][j]) then
             consistent := false;
             break;
