@@ -60,6 +60,12 @@ InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
 InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
                   IsMcAlisterTripleSemigroupElementCollection);
 
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsTranslationsSemigroupElementCollection);
+
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsBitranslationCollection);
+
 InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 "for a matrix over semiring collection", [IsMatrixOverSemiringCollection],
 IsGeneratorsOfSemigroup);
@@ -675,4 +681,56 @@ function(S, x)
                   "of the first argument <S>,");
   fi;
   return ShallowCopy(EN_SEMI_FACTORIZATION(S, PositionCanonical(S, x)));
+end);
+
+InstallMethod(FirstLetter,
+"for an enumerable semigroup and a positive integer",
+[IsEnumerableSemigroupRep, IsInt],
+function(S, pos)
+  if Size(S) < pos then
+    ErrorNoReturn("Semigroups: FirstLetter:\n",
+                  "the second argument <pos> is larger than the ",
+                  "size of the first argument <S>,");
+  fi;
+
+  return EN_SEMI_FIRST_LETTER(S, pos);
+end);
+
+InstallMethod(FinalLetter,
+"for an enumerable semigroup and a positive integer",
+[IsEnumerableSemigroupRep, IsInt],
+function(S, pos)
+  if Size(S) < pos then
+    ErrorNoReturn("Semigroups: FinalLetter:\n",
+                  "the second argument <pos> is larger than the ",
+                  "size of the first argument <S>,");
+  fi;
+
+  return EN_SEMI_FINAL_LETTER(S, pos);
+end);
+
+InstallMethod(Prefix,
+"for an enumerable semigroup and a positive integer",
+[IsEnumerableSemigroupRep, IsInt],
+function(S, pos)
+  if Size(S) < pos then
+    ErrorNoReturn("Semigroups: Prefix:\n",
+                  "the second argument <pos> is larger than the ",
+                  "size of the first argument <S>,");
+  fi;
+
+  return EN_SEMI_PREFIX(S, pos);
+end);
+
+InstallMethod(Suffix,
+"for an enumerable semigroup and a positive integer",
+[IsEnumerableSemigroupRep, IsInt],
+function(S, pos)
+  if Size(S) < pos then
+    ErrorNoReturn("Semigroups: Suffix:\n",
+                  "the second argument <pos> is larger than the ",
+                  "size of the first argument <S>,");
+  fi;
+
+  return EN_SEMI_SUFFIX(S, pos);
 end);

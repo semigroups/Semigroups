@@ -120,6 +120,8 @@ gap_semigroup_t EN_SEMI_ENUMERATE(Obj             self,
                                   gap_semigroup_t so,
                                   gap_int_t       limit);
 gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos);
+gap_int_t  EN_SEMI_FINAL_LETTER(Obj self, gap_semigroup_t so, gap_int_t pos);
+gap_int_t  EN_SEMI_FIRST_LETTER(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
 gap_int_t  EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so);
@@ -130,9 +132,11 @@ gap_int_t  EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_int_t  EN_SEMI_POSITION_SORTED(Obj             self,
                                    gap_semigroup_t so,
                                    gap_element_t   x);
+gap_int_t  EN_SEMI_PREFIX(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
 gap_int_t  EN_SEMI_SIZE(Obj self, gap_semigroup_t so);
+gap_int_t  EN_SEMI_SUFFIX(Obj self, gap_semigroup_t so, gap_int_t pos);
 
 // Iterators
 

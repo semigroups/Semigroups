@@ -51,3 +51,8 @@ DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
 DeclareAttribute("LeftCayleyDigraph", IsEnumerableSemigroupRep);
 DeclareAttribute("RightCayleyDigraph", IsEnumerableSemigroupRep);
+
+DeclareOperation("FinalLetter", [IsEnumerableSemigroupRep, IsInt]);
+DeclareOperation("FirstLetter", [IsEnumerableSemigroupRep, IsInt]);
+DeclareOperation("Prefix", [IsEnumerableSemigroupRep, IsInt]);
+DeclareOperation("Suffix", [IsEnumerableSemigroupRep, IsInt]);
