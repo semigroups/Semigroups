@@ -69,7 +69,6 @@ src/.libs
 src/_pkgconfig.h
 src/semigroups-config.h
 ./libsemigroups
-./gapbind14
 src/stamp-h1
 tags
 tst/workspaces/test-output.w
@@ -83,4 +82,3 @@ ltoptions.m4
 ltsugar.m4
 ltversion.m4
 lt~obsolete.m4
-gapbind14
