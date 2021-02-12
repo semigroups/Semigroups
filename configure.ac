@@ -99,6 +99,9 @@ AS_IF([test "x$with_march_native" == "xno" ],
 AS_IF([test "x$with_march_native" != "xno"],
       [AX_CHECK_COMPILE_FLAG(-march=native, AX_APPEND_FLAG(-march=native))])
 
+# Check if HPCombi is enable, and available
+AX_CHECK_HPCOMBI()
+
 dnl ##
 dnl ## Output everything
 dnl ##
