@@ -16,6 +16,7 @@ echo -e "\nInstalling dependencies . . . "
 sudo apt-get --yes update
 sudo apt-get --yes upgrade
 sudo apt-get install libtool curl --yes
+sudo apt-get install libtool git --yes
 
 echo -e "\nFixing permissions . . . "
 sudo chown -R gap: $GAP_HOME/pkg/semigroups
