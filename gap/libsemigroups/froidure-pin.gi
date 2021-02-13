@@ -40,6 +40,8 @@ ReturnFalse);
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
 
+# TODO(now) if HPCombi isn't available don't do the PPerm16 nor Transf16
+# at least something goes wrong!
 BindGlobal("FroidurePinMemFnRec",
 function(S)
   local N;

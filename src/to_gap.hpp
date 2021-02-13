@@ -36,6 +36,7 @@
 #include "compiled.h"
 
 // Semigroups package headers
+#include "semigroups-config.h"
 #include "semigroups-debug.h"
 
 // gapbind14 headers

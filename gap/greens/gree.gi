@@ -184,7 +184,7 @@ InstallMethod(GreensJClassOfElementNC,
 
 # Green's class of a Green's class (finer from coarser)
 
-# FIXME Should these be for IsEnumerableSemigroupGreensClassRep??
+# FIXME Should these be for IsGreensClassOfSemigroupThatCanComputeFroidurePinRep??
 
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",

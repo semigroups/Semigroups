@@ -713,7 +713,7 @@ end);
 # TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
 InstallMethod(IsomorphismTransformationSemigroup,
-"for an enumerable semigroup",
+"for a semigroup with CanComputeFroidurePin",
 [CanComputeFroidurePin], 2,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
 function(S)

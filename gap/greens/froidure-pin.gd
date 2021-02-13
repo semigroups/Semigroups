@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gren.gd
-##  Copyright (C) 2015                                   James D. Mitchell
+##  froidure-pin.gd
+##  Copyright (C) 2015-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -16,11 +16,11 @@
 # table <t> such that the value of <t[i]> is the index of the class containing
 # EnumeratorCanonical(S)[i], where S is the semigroup.
 
-DeclareRepresentation("IsEnumerableSemigroupGreensClassRep",
+DeclareRepresentation("IsGreensClassOfSemigroupThatCanComputeFroidurePinRep",
                       IsComponentObjectRep and IsGreensClass,
                       ["data"]);
 
-DeclareRepresentation("IsEnumerableSemigroupGreensRelationRep",
+DeclareRepresentation("IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep",
                       IsComponentObjectRep and IsGreensRelation,
                       ["data"]);
 

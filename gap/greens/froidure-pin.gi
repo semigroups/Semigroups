@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gren.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  froidure-pin.gi
+##  Copyright (C) 2015-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -37,19 +37,19 @@
 ## Green's class only stores the index of the equivalence class corresponding
 ## to the Green's class, then looks everything up in the data contained in the
 ## Green's relation. The equivalence class data structures for R-, L-, H-,
-## D-classes of an enumerable semigroup <S> are stored in the !.data component
-## of the corresponding Green's relation.
+## D-classes of a semigroup <S> that can compute a Froidure-Pin are stored in
+## the !.data component of the corresponding Green's relation.
 #############################################################################
 
 #############################################################################
 ## 1. Helper functions for the creation of Green's classes/relations . . .
 #############################################################################
 
-# There are no methods for EquivalenceClassOfElementNC for enumerable semigroup
-# Green's classes because if we create a Green's class without knowing the
-# Green's relations and the related strongly connected components data, then
-# the Green's class won't have the correct type and won't have access to the
-# correct methods.
+# There are no methods for EquivalenceClassOfElementNC for Green's classes of
+# semigroups that can compute Froidure-Pin because if we create a Green's class
+# without knowing the Green's relations and the related strongly connected
+# components data, then the Green's class won't have the correct type and won't
+# have access to the correct methods.
 
 SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   local pos, out, S;
@@ -164,19 +164,21 @@ end;
 # should be used (it is identical)! FIXME
 
 InstallMethod(AsSSortedList, "for a Green's class",
-[IsEnumerableSemigroupGreensClassRep],
+[IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 C -> ConstantTimeAccessList(EnumeratorSorted(C)));
 
-InstallMethod(Size, "for an enumerable semigroup Green's class",
-[IsEnumerableSemigroupGreensClassRep],
+InstallMethod(Size,
+"for a Green's class of a semigroup that CanComputeFroidurePin",
+[IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   return Length(EquivalenceClassRelation(C)!.
                 data.comps[SEMIGROUPS.XClassIndex(C)]);
 end);
 
 InstallMethod(\in,
-"for a multiplicative element and an enumerable semigroup Green's class",
-[IsMultiplicativeElement, IsEnumerableSemigroupGreensClassRep],
+"for a mult. elt and a Green's class of a semigroup that CanComputeFroidurePin",
+[IsMultiplicativeElement,
+ IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(x, C)
   local pos;
   pos := PositionCanonical(Parent(C), x);
@@ -184,36 +186,40 @@ function(x, C)
     and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS.XClassIndex(C);
 end);
 
-InstallMethod(DClassType, "for an enumerable semigroup",
+InstallMethod(DClassType, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
-                               and IsEquivalenceClassDefaultRep
-                               and IsGreensDClass);
+  return NewType(FamilyObj(S),
+                 IsGreensClassOfSemigroupThatCanComputeFroidurePinRep
+                 and IsEquivalenceClassDefaultRep
+                 and IsGreensDClass);
 end);
 
-InstallMethod(HClassType, "for an enumerable semigroup",
+InstallMethod(HClassType, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
-                               and IsEquivalenceClassDefaultRep
-                               and IsGreensHClass);
+  return NewType(FamilyObj(S),
+                 IsGreensClassOfSemigroupThatCanComputeFroidurePinRep
+                 and IsEquivalenceClassDefaultRep
+                 and IsGreensHClass);
 end);
 
-InstallMethod(LClassType, "for an enumerable semigroup",
+InstallMethod(LClassType, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
-                               and IsEquivalenceClassDefaultRep
-                               and IsGreensLClass);
+  return NewType(FamilyObj(S),
+                 IsGreensClassOfSemigroupThatCanComputeFroidurePinRep
+                 and IsEquivalenceClassDefaultRep
+                 and IsGreensLClass);
 end);
 
-InstallMethod(RClassType, "for an enumerable semigroup",
+InstallMethod(RClassType, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  return NewType(FamilyObj(S), IsEnumerableSemigroupGreensClassRep
-                               and IsEquivalenceClassDefaultRep
-                               and IsGreensRClass);
+  return NewType(FamilyObj(S),
+                 IsGreensClassOfSemigroupThatCanComputeFroidurePinRep
+                 and IsEquivalenceClassDefaultRep
+                 and IsGreensLClass);
 end);
 
 #############################################################################
@@ -222,21 +228,22 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensRRelation, "for an enumerable semigroup",
+InstallMethod(GreensRRelation, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local fam, data, rel;
+  local fam, data, filt, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
   data := DigraphStronglyConnectedComponents(RightCayleyDigraph(S));
+  filt := IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep;
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensRRelation
-                             and IsEnumerableSemigroupGreensRelationRep),
+                             and filt),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -247,7 +254,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensLRelation, "for an enumerable semigroup",
+InstallMethod(GreensLRelation, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
@@ -261,7 +268,7 @@ function(S)
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensLRelation
-                             and IsEnumerableSemigroupGreensRelationRep),
+                             and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -289,7 +296,7 @@ function(S)
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensDRelation
-                             and IsEnumerableSemigroupGreensRelationRep),
+                             and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -299,7 +306,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(GreensHRelation, "for an enumerable semigroup",
+InstallMethod(GreensHRelation, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
   local fam, data, rel;
@@ -315,7 +322,7 @@ function(S)
   rel := Objectify(NewType(fam, IsEquivalenceRelation
                                 and IsEquivalenceRelationDefaultRep
                                 and IsGreensHRelation
-                                and IsEnumerableSemigroupGreensRelationRep),
+                                and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -327,8 +334,8 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
-InstallMethod(Enumerator, "for an enumerable semigroup Green's class",
-[IsEnumerableSemigroupGreensClassRep],
+InstallMethod(Enumerator, "for a Green's class of a semigroup that CanComputeFroidurePin",
+[IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, ind;
   rel := EquivalenceClassRelation(C);
@@ -337,32 +344,32 @@ function(C)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for an enumerable semigroup Green's R-relation and a multiplicative element",
-[IsGreensRRelation and IsEnumerableSemigroupGreensRelationRep,
+"for a semigroup with CanComputeFroidurePin Green's R-relation and a multiplicative element",
+[IsGreensRRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, RClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for an enumerable semigroup Green's L-relation and a multiplicative element",
-[IsGreensLRelation and IsEnumerableSemigroupGreensRelationRep,
+"for a semigroup with CanComputeFroidurePin Green's L-relation and a multiplicative element",
+[IsGreensLRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, LClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for an enumerable semigroup Green's H-relation and a multiplicative element",
-[IsGreensHRelation and IsEnumerableSemigroupGreensRelationRep,
+"for a semigroup with CanComputeFroidurePin Green's H-relation and a multiplicative element",
+[IsGreensHRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, HClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for an enumerable semigroup Green's D-relation and a multiplicative element",
-[IsGreensDRelation and IsEnumerableSemigroupGreensRelationRep,
+"for a semigroup with CanComputeFroidurePin Green's D-relation and a multiplicative element",
+[IsGreensDRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType);
@@ -371,12 +378,13 @@ end);
 # No check Green's classes of an element of a semigroup . . .
 
 # The methods for GreensXClassOfElementNC for arbitrary finite semigroup use
-# EquivalenceClassOfElementNC which only have a method in the library, and hence
-# the created classes could not be in IsEnumerableSemigroupGreensClassRep. In
-# any case, calling GreensXRelation(S) (as these methods do) on an
-# enumerable semigroup completely enumerates it, so the only thing we gain here
-# is one constant time check that the representative actually belongs to the
-# semigroup.
+# EquivalenceClassOfElementNC which only have a method in the library, and
+# hence the created classes could not be in
+# IsGreensClassOfSemigroupThatCanComputeFroidurePinRep. In any case, calling
+# GreensXRelation(S) (as these methods do) on a semigroup with
+# CanComputeFroidurePin completely enumerates it, so the only thing we gain
+# here is one constant time check that the representative actually belongs to
+# the semigroup.
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite semigroup with CanComputeFroidurePin and multiplicative element",
@@ -404,19 +412,19 @@ GreensDClassOfElement);
 
 ## numbers of classes
 
-InstallMethod(NrDClasses, "for an enumerable semigroup",
+InstallMethod(NrDClasses, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> Length(GreensDRelation(S)!.data.comps));
 
-InstallMethod(NrLClasses, "for an enumerable semigroup",
+InstallMethod(NrLClasses, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> Length(GreensLRelation(S)!.data.comps));
 
-InstallMethod(NrRClasses, "for an enumerable semigroup",
+InstallMethod(NrRClasses, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> Length(GreensRRelation(S)!.data.comps));
 
-InstallMethod(NrHClasses, "for an enumerable semigroup",
+InstallMethod(NrHClasses, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> Length(GreensHRelation(S)!.data.comps));
 
@@ -470,27 +478,27 @@ end);
 
 ## Green's classes of a Green's class
 
-InstallMethod(GreensLClasses, "for Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
+InstallMethod(GreensLClasses, "for Green's D-class of a semigroup with CanComputeFroidurePin",
+[IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensLRelation,
                                           GreensLClassOfElement);
 end);
 
 InstallMethod(GreensRClasses,
-"for a Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
+"for a Green's D-class of a semigroup with CanComputeFroidurePin",
+[IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensRRelation,
                                           GreensRClassOfElement);
 end);
 
-InstallMethod(GreensHClasses, "for a Green's class of an enumerable semigroup",
-[IsGreensClass and IsEnumerableSemigroupGreensClassRep],
+InstallMethod(GreensHClasses, "for a Green's class of a semigroup with CanComputeFroidurePin",
+[IsGreensClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
     ErrorNoReturn("Semigroups: GreensHClasses ",
-                  "(for an enumerable semigroup Green's class): usage,\n",
+                  "(for a Green's class of a semigroup that CanComputeFroidurePin): usage,\n",
                   "the argument should be a Green's R-, L-, or D-class,");
   fi;
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensHRelation,
@@ -499,32 +507,32 @@ end);
 
 ## Representatives
 
-InstallMethod(DClassReps, "for an enumerable semigroup",
+InstallMethod(DClassReps, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> SEMIGROUPS.XClassReps(S, GreensDRelation));
 
-InstallMethod(RClassReps, "for an enumerable semigroup",
+InstallMethod(RClassReps, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> SEMIGROUPS.XClassReps(S, GreensRRelation));
 
-InstallMethod(LClassReps, "for an enumerable semigroup",
+InstallMethod(LClassReps, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> SEMIGROUPS.XClassReps(S, GreensLRelation));
 
-InstallMethod(HClassReps, "for an enumerable semigroup",
+InstallMethod(HClassReps, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
 
-InstallMethod(RClassReps, "for a Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
+InstallMethod(RClassReps, "for a Green's D-class of a semigroup with CanComputeFroidurePin",
+[IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensRRelation));
 
-InstallMethod(LClassReps, "for a Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
+InstallMethod(LClassReps, "for a Green's D-class of a semigroup with CanComputeFroidurePin",
+[IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensLRelation));
 
-InstallMethod(HClassReps, "for a Green's class of an enumerable semigroup",
-[IsGreensClass and IsEnumerableSemigroupGreensClassRep],
+InstallMethod(HClassReps, "for a Green's class of a semigroup with CanComputeFroidurePin",
+[IsGreensClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
 # There is duplicate code in here and in maximal D-classes.
@@ -549,8 +557,8 @@ end);
 ## 6. Idempotents . . .
 #############################################################################
 
-InstallMethod(NrIdempotents, "for an enumerable semigroup Green's class",
-[IsEnumerableSemigroupGreensClassRep],
+InstallMethod(NrIdempotents, "for a Green's class of a semigroup that CanComputeFroidurePin",
+[IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, pos;
   rel := EquivalenceClassRelation(C);
@@ -559,8 +567,8 @@ function(C)
   return Length(pos);
 end);
 
-InstallMethod(Idempotents, "for an enumerable semigroup Green's class",
-[IsEnumerableSemigroupGreensClassRep],
+InstallMethod(Idempotents, "for a Green's class of a semigroup that CanComputeFroidurePin",
+[IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, pos;
   rel := EquivalenceClassRelation(C);

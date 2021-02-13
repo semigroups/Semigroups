@@ -325,7 +325,7 @@ InstallMethod(EquivalenceRelationPartition,
 function(C)
   local S, CC, ntc, gens, class, i, j;
   S := Range(C);
-  if CanComputeCppCongruence(C) then
+  if not IsFinite(S) or CanComputeCppFroidurePin(S) then
     CC := CppCongruence(C);
     ntc := libsemigroups.Congruence.ntc(CC) + 1;
     gens := GeneratorsOfSemigroup(S);
@@ -336,8 +336,6 @@ function(C)
       od;
     od;
     return ntc;
-  elif not IsFinite(S) then
-    Error("the argument (a congruence) must have finite range");
   elif CanComputeGapFroidurePin(S) then
     # in this case libsemigroups.Congruence.ntc doesn't work
     return Filtered(EquivalenceRelationPartitionIncludingSingletons(C),
@@ -353,7 +351,7 @@ InstallMethod(EquivalenceRelationPartitionIncludingSingletons,
 function(C)
   local en, partition, lookup, i;
   if not IsFinite(Range(C)) then
-    Error("the 1st argument (a congruence) must have finite range");
+    Error("the argument (a congruence) must have finite range");
   fi;
   en        := EnumeratorCanonical(Range(C));
   partition := List([1 .. NrEquivalenceClasses(C)], x -> []);
@@ -415,8 +413,8 @@ function(cong1, cong2)
   if Kind(cong1) <> Kind(cong2) and Kind(cong1) <> "twosided" then
     TryNextMethod();
   elif Range(cong1) <> Range(cong2) then
-    Error("the 1st and 2nd arguments are congruences over",
-                  " different semigroups");
+    Error("the 1st and 2nd arguments are congruences over different",
+          " semigroups");
   fi;
 
   # Test whether cong1 contains all the pairs in cong2
