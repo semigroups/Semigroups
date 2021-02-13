@@ -25,7 +25,7 @@
 # change from non-inverse-op to inverse-op.
 
 DeclareCategory("IsActingSemigroupGreensClass",
-                IsEnumerableSemigroupGreensClassRep);
+                IsGreensClassOfSemigroupThatCanComputeFroidurePinRep);
 
 DeclareCategory("IsRegularActingRepGreensClass", IsActingSemigroupGreensClass);
 DeclareCategory("IsInverseActingRepGreensClass", IsRegularActingRepGreensClass);

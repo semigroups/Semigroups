@@ -93,8 +93,8 @@ ReadPackage("semigroups", "gap/ideals/idealact.gd");
 ReadPackage("semigroups", "gap/ideals/ideallam.gd");
 ReadPackage("semigroups", "gap/ideals/ideals-froidure-pin.gd");
 
+ReadPackage("semigroups", "gap/greens/froidure-pin.gd");
 ReadPackage("semigroups", "gap/greens/gree.gd");
-ReadPackage("semigroups", "gap/greens/gren.gd");
 ReadPackage("semigroups", "gap/greens/grac.gd");
 
 ReadPackage("semigroups", "gap/tools/display.gd");

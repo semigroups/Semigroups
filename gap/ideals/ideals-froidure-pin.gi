@@ -127,7 +127,7 @@ function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);
 
-# The method for GeneratorsOfSemigroup for an enumerable semigroup ideal must
+# The method for GeneratorsOfSemigroup for a semigroup ideal must
 # not rely in any way on the output of the Froidure-Pin algorithm when run on
 # the ideal. In order to run the Froidure-Pin algorithm requires its input
 # semigroup (ideal) to have a generating set, and so if the method below

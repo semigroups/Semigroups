@@ -324,7 +324,7 @@ function(S, x)
           and IsGreensDClass;
 
   if Length(GeneratorsOfSemigroup(S)) < 4 then
-    filt := filt and IsEnumerableSemigroupGreensClassRep;
+    filt := filt and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep;
   fi;
 
   type := NewType(FamilyObj(S), filt);

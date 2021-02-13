@@ -1556,20 +1556,20 @@ gap> for x in [1 .. Length(gns) - 1] do
 gap> s := f / rel;;
 gap> sgns := GeneratorsOfSemigroup(s);;
 gap> c := SemigroupCongruenceByGeneratingPairs(s, [[sgns[1], sgns[2]]]);;
-gap> EquivalenceRelationPartition(c);;
-Error, the argument (a congruence) must have finite range
+gap> EquivalenceRelationPartition(c);
+[ [ s1, s2, s1*s2, s2^2, s1*s2^2 ] ]
 gap> ##
 gap> ## Check to see if elements are in the partition
 gap> ##     true and false
 gap> ##
 gap> ec := EquivalenceClassOfElement(c, sgns[n]);;
 gap> Size(ec);
-Error, the argument (a congruence) must have finite range
+1
 gap> ec := EquivalenceClassOfElement(c, sgns[n - 1]);;
 gap> sgns[n] in ec;
 false
 gap> Size(ec);
-Error, the argument (a congruence) must have finite range
+5
 
 # Infinite congruence classes: part 2 of semicong.tst (fp semigroups)
 gap> f := FreeSemigroup(2);;
@@ -1755,7 +1755,10 @@ gap> s1 := F.1;; s2 := F.2;;
 gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
 gap> cong := SemigroupCongruence(F, rels);
+<semigroup congruence over <free semigroup on the generators [ s1, s2 ]> with 
+1 generating pairs>
 gap> NrEquivalenceClasses(cong);
+infinity
 gap> EquivalenceRelationPartitionIncludingSingletons(cong);
 Error, the argument (a congruence) must have finite range
 gap> EquivalenceRelationLookup(cong);

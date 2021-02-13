@@ -33,6 +33,7 @@ semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/gapbind14-0.0.1/include
 if HPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern
 endif
 if LIBSEMIGROUPS_HPCOMBI_ENABLED
 semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
