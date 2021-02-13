@@ -389,10 +389,10 @@ true
 gap> IsOne(G.1 * G.2);
 false
 gap> Print(G.2); true;
-RMSIsoByTriple ( <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>
- , <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>, [
-(3,4), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [ () ], 
-[ () ] ), [ (), (), (), () ]])true
+RMSIsoByTriple ( ReesMatrixSemigroup( Group( [ () ] ), 
+[ [ (), () ], [ (), () ] ] ), ReesMatrixSemigroup( Group( [ () ] ), 
+[ [ (), () ], [ (), () ] ] ), [(3,4), GroupHomomorphismByImages( Group( 
+[ () ] ), Group( [ () ] ), [ () ], [ () ] ), [ (), (), (), () ]])true
 gap> PreImagesRepresentative(G.2, R.1);
 (1,(),2)
 gap> G.1 ^ -1;
@@ -420,8 +420,8 @@ true
 gap> IsOne(One(G.1 * G.2));
 true
 gap> Print(G.1); true;
-IdentityMapping( <subsemigroup of 2x2 Rees 0-matrix semigroup 
- with 3 generators> )true
+IdentityMapping( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
+[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ) )true
 
 # \=: RZMS and RZMS elements 2/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
@@ -447,8 +447,8 @@ true
 gap> IsOne(One(G.1 * G.2));
 true
 gap> Print(G.1); true;
-IdentityMapping( <subsemigroup of 2x2 Rees 0-matrix semigroup 
- with 3 generators> )true
+IdentityMapping( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
+[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ) )true
 gap> PreImagesRepresentative(G.2, R.1);
 (1,(),1)
 gap> ImagesElm(G.2, R.1);

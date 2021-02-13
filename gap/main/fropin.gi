@@ -53,8 +53,11 @@ function(R)
     or CanComputeFroidurePin(UnderlyingSemigroup(R));
 end);
 
-InstallTrueMethod(CanComputeGapFroidurePin,
-IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup);
+InstallImmediateMethod(CanComputeGapFroidurePin,
+IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup, 0,
+function(R)
+  return CanComputeFroidurePin(ParentAttr(R));
+end);
 
 InstallImmediateMethod(CanComputeGapFroidurePin,
 IsReesMatrixSubsemigroup and HasRowsOfReesMatrixSemigroup
@@ -64,8 +67,11 @@ function(R)
     or CanComputeFroidurePin(UnderlyingSemigroup(R));
 end);
 
-InstallTrueMethod(CanComputeGapFroidurePin,
-IsReesMatrixSubsemigroup and HasGeneratorsOfSemigroup);
+InstallImmediateMethod(CanComputeGapFroidurePin,
+IsReesMatrixSubsemigroup and HasGeneratorsOfSemigroup, 0,
+function(R)
+  return CanComputeFroidurePin(ParentAttr(R));
+end);
 
 InstallImmediateMethod(CanComputeGapFroidurePin,
 IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
@@ -287,7 +293,7 @@ InstallMethod(Size,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
 [IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  if not IsFinite(S) then
+  if HasIsFinite(S) and not IsFinite(S) then
     return infinity;
   fi;
   return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
