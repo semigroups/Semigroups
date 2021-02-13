@@ -562,7 +562,6 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
-
     GVAR_ENTRY("fropin.cc",
                SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
                2,
