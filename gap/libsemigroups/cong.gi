@@ -325,9 +325,7 @@ InstallMethod(EquivalenceRelationPartition,
 function(C)
   local S, CC, ntc, gens, class, i, j;
   S := Range(C);
-  if not IsFinite(S) then
-    Error("the argument (a congruence) must have finite range");
-  elif CanComputeCppFroidurePin(S) then
+  if CanComputeCppCongruence(C) then
     CC := CppCongruence(C);
     ntc := libsemigroups.Congruence.ntc(CC) + 1;
     gens := GeneratorsOfSemigroup(S);
@@ -338,6 +336,8 @@ function(C)
       od;
     od;
     return ntc;
+  elif not IsFinite(S) then
+    Error("the argument (a congruence) must have finite range");
   elif CanComputeGapFroidurePin(S) then
     # in this case libsemigroups.Congruence.ntc doesn't work
     return Filtered(EquivalenceRelationPartitionIncludingSingletons(C),
