@@ -1142,10 +1142,52 @@ function(S)
     end;
 end);
 
-# TODO(now) check if x in S
-InstallMethod(LeftIdentity, "for a monoid", [IsMonoid, IsMultiplicativeElement],
-{S, x} -> One(S));
+InstallMethod(LeftIdentity,
+"for semgroup with CanComputeFroidurePin and mult. elt.",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
 
-# TODO(now) check if x in S
-InstallMethod(RightIdentity, "for a monoid", [IsMonoid, IsMultiplicativeElement],
-{S, x} -> One(S));
+  i := PositionCanonical(S, x);
+  p := DigraphPath(LeftCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), Reversed(p[2]));
+  return result ^ SmallestIdempotentPower(result);
+end);
+
+InstallMethod(RightIdentity,
+"for semgroup with CanComputeFroidurePin and mult. elt.",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  i := PositionCanonical(S, x);
+  p := DigraphPath(RightCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), p[2]);
+  return result ^ SmallestIdempotentPower(result);
+end);
