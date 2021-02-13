@@ -548,8 +548,11 @@ namespace gapbind14 {
 
   template <typename T>
   struct to_gap<T const&,
-                std::enable_if_t<
-                    IsTransf<T> || std::is_same<T, HPCombi::Transf16>::value>> {
+                std::enable_if_t<IsTransf<T>
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+                                 || std::is_same<T, HPCombi::Transf16>::value
+#endif
+                                 >> {
     using cpp_type = T;
 
     Obj operator()(T const& x) {
@@ -568,11 +571,13 @@ namespace gapbind14 {
   };
 
   template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<
-          IsTransf<
-              T> || std::is_same<std::decay_t<T>, HPCombi::Transf16>::value>> {
+  struct to_cpp<T,
+                std::enable_if_t<
+                    IsTransf<T>
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+                    || std::is_same<std::decay_t<T>, HPCombi::Transf16>::value
+#endif
+                    >> {
     using cpp_type = std::decay_t<T>;
 
     std::decay_t<T> operator()(Obj t) {
@@ -675,6 +680,7 @@ namespace gapbind14 {
       }
     }
 
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
     template <typename T>
     auto construct_pperm(size_t n)
         -> std::enable_if_t<std::is_same<T, HPCombi::PPerm16>::value, T> {
@@ -687,15 +693,23 @@ namespace gapbind14 {
         -> std::enable_if_t<!std::is_same<T, HPCombi::PPerm16>::value, T> {
       return T(n);
     }
+#else
+    template <typename T>
+    T construct_pperm(size_t n) {
+      return T(n);
+    }
+#endif
 
   }  // namespace detail
 
   template <typename T>
   struct to_cpp<
       T,
-      std::enable_if_t<
-          IsPPerm<
-              T> || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value>> {
+      std::enable_if_t<IsPPerm<T>
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+                       || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
+#endif
+                       >> {
     using cpp_type = std::decay_t<T>;
 
     std::decay_t<T> operator()(Obj t) const {
@@ -761,9 +775,11 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<
       T,
-      std::enable_if_t<
-          IsPPerm<
-              T> || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value>> {
+      std::enable_if_t<IsPPerm<T>
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+                       || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
+#endif
+                       >> {
     using cpp_type = std::decay_t<T>;
 
     Obj operator()(T const& x) {
