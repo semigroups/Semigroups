@@ -81,18 +81,15 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-                  "FreeInverseSemigroup(<name1>,<name2>..) or ",
+    ErrorNoReturn("FreeInverseSemigroup(<name1>,<name2>..) or ",
                   "FreeInverseSemigroup(<rank> [, name]),");
   fi;
 
   if IsEmpty(names) then
-    ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-                  "the number of generators of a free inverse semigroup must ",
+    ErrorNoReturn("the number of generators of a free inverse semigroup must ",
                   "be non-zero,");
     # elif not IsFinite(names) then
-    #   ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-    #                 "the number of generators of a free inverse semigroup ",
+    #   ErrorNoReturn(#                 "the number of generators of a free inverse semigroup ",
     #                 "must be finite,");
   fi;
 
@@ -500,6 +497,5 @@ function(s)
     fi;
   fi;
 
-  ErrorNoReturn("Semigroups: IsFreeInverseSemigroup:\n",
-                "cannot determine the answer");
+  ErrorNoReturn("cannot determine the answer");
 end);

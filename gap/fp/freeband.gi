@@ -103,8 +103,7 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    ErrorNoReturn("Semigroups: FreeBand: usage,\n",
-                  "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
+    ErrorNoReturn("FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])");
   fi;
 
   MakeImmutable(names);
@@ -316,8 +315,7 @@ InstallMethod(GreensDClassOfElement, "for a free band and element",
 function(S, x)
   local filt, type, D;
   if not x in S then
-    ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
-                  "the element does not belong to the semigroup,");
+    ErrorNoReturn("the element does not belong to the semigroup");
   fi;
 
   filt := IsEquivalenceClass and IsEquivalenceClassDefaultRep

@@ -20,25 +20,21 @@ function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   # Check that the kernel is an inverse subsemigroup
   if not IsInverseSubsemigroup(S, kernel) then
-    ErrorNoReturn("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
-                  "usage,\nthe second arg <kernel> must be an inverse ",
-                  "subsemigroup of the\nfirst arg <S>,");
+    ErrorNoReturn("the 2nd argument <kernel> must be an inverse ",
+                  "subsemigroup of the 1st argument <S>");
   fi;
   # CHECK KERNEL IS NORMAL:
   # (1) Must contain all the idempotents of S
   if NrIdempotents(kernel) <> NrIdempotents(S) then
-    ErrorNoReturn("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
-                  "usage,\n",
-                  "the second arg <kernel> must contain all the\n",
-                  "idempotents of the first arg <S>,");
+    ErrorNoReturn("the 2nd argument <kernel> must contain all the ",
+                  "idempotents of the 1st argument <S>");
   fi;
   # (2) Must be self-conjugate
   for a in kernel do
     for x in GeneratorsOfSemigroup(S) do
       if not a ^ x in kernel then
-        ErrorNoReturn("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
-                      "usage,\nthe second arg <kernel> must be ",
-                      "self-conjugate,");
+        ErrorNoReturn("the 2nd argument <kernel> must be ",
+                      "self-conjugate");
       fi;
     od;
   od;
@@ -50,17 +46,13 @@ function(S, kernel, traceBlocks)
         if a in kernel then
           # Condition (C2): aa' related to a'a
           if not a * a ^ -1 in traceClass then
-            ErrorNoReturn("Semigroups: ",
-                          "InverseSemigroupCongruenceByKernelTrace:\n",
-                          "not a valid congruence pair (C2),");
+            ErrorNoReturn("not a valid congruence pair (C2)");
           fi;
         else
           # Condition (C1): (ae in kernel && e related to a'a) => a in kernel
           for e in traceClass do
             if a * e in kernel then
-              ErrorNoReturn("Semigroups: ",
-                            "InverseSemigroupCongruenceByKernelTrace:\n",
-                            "not a valid congruence pair (C1),");
+              ErrorNoReturn("not a valid congruence pair (C1)");
             fi;
           od;
         fi;
@@ -130,8 +122,8 @@ InstallMethod(IsSubrelation,
 function(cong1, cong2)
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) must be ",
+                  "the same");
   fi;
   return IsSubsemigroup(cong1!.kernel, cong2!.kernel)
          and ForAll(cong2!.traceBlocks,
@@ -145,9 +137,8 @@ function(cong, elm)
   local S, images, e, b;
   S := Range(cong);
   if not elm in S then
-    ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                  "the first arg <cong> is not defined over the semigroup of ",
-                  "the second\nargument <elm>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the range of the 1st argument (a congruence)");
   fi;
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
@@ -254,9 +245,9 @@ InstallMethod(EquivalenceClassOfElement,
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                  "the second arg <elm> must be in the\n",
-                  "semigroup of the first arg <cong>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong ",
+                  "to the range of the 1st argument (an inverse semigroup",
+                  " congruence by kernel + trace)");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -306,8 +297,7 @@ InstallMethod(\*,
  IsInverseSemigroupCongruenceClassByKernelTrace],
 function(c1, c2)
   if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the arguments must be classes of the same congruence,");
+    ErrorNoReturn("the arguments must be classes of the same congruence");
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
                                      c1!.rep * c2!.rep);
@@ -348,8 +338,8 @@ function(cong)
   local S, invcong;
   S := Range(cong);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
-    ErrorNoReturn("Semigroups: TraceOfSemigroupCongruence: usage,\n",
-                  "<cong> must be over an inverse semigroup with inverse op,");
+    ErrorNoReturn("the range of the argument (a congruence) must be an ",
+                  "inverse semigroup with inverse op");
   fi;
   invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   return invcong!.traceBlocks;
@@ -362,8 +352,8 @@ function(cong)
   local S, invcong;
   S := Range(cong);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
-    ErrorNoReturn("Semigroups: KernelOfSemigroupCongruence: usage,\n",
-                  "<cong> must be over an inverse semigroup with inverse op,");
+    ErrorNoReturn("the range of the argument (a congruence) must be an ",
+                  "inverse semigroup with inverse op");
   fi;
   invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   return invcong!.kernel;
@@ -376,9 +366,8 @@ function(cong)
   local S;
   S := Range(cong);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
-    ErrorNoReturn("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: ",
-                  "usage,\n",
-                  "<cong> must be over an inverse semigroup with inverse op,");
+    ErrorNoReturn("the range of the argument (a congruence) must be an ",
+                  "inverse semigroup with inverse op");
   fi;
   return
     SEMIGROUPS.KernelTraceClosure(S,
@@ -395,8 +384,7 @@ function(c1, c2)
   local S, gens1, gens2, kernel, traceBlocks, block, b1, j, pos;
   S := Range(c1);
   if S <> Range(c2) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) must coincide");
   fi;
 
   # kernel generated by union of c1's kernel and c2's kernel
@@ -431,8 +419,7 @@ function(c1, c2)
   local S, kernel, traceBlocks, ids, c2lookup, classnos, block, classno;
   S := Range(c1);
   if S <> Range(c2) then
-    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) must coincide");
   fi;
 
   # Calculate the intersection of the kernels

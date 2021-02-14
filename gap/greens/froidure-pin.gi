@@ -56,9 +56,8 @@ SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
 
   pos := PositionCanonical(Source(rel), rep);
   if pos = fail then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,\n",
-                  "the element in the 2nd argument does not belong to the ",
-                  "semigroup,");
+    ErrorNoReturn("the element in the 2nd argument does not belong to the ",
+                  "semigroup");
   fi;
 
   out := rec();
@@ -219,7 +218,7 @@ function(S)
   return NewType(FamilyObj(S),
                  IsGreensClassOfSemigroupThatCanComputeFroidurePinRep
                  and IsEquivalenceClassDefaultRep
-                 and IsGreensLClass);
+                 and IsGreensRClass);
 end);
 
 #############################################################################
@@ -478,7 +477,8 @@ end);
 
 ## Green's classes of a Green's class
 
-InstallMethod(GreensLClasses, "for Green's D-class of a semigroup with CanComputeFroidurePin",
+InstallMethod(GreensLClasses,
+"for Green's D-class of a semigroup with CanComputeFroidurePin",
 [IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensLRelation,
@@ -489,17 +489,17 @@ InstallMethod(GreensRClasses,
 "for a Green's D-class of a semigroup with CanComputeFroidurePin",
 [IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
-  return SEMIGROUPS.GreensXClassesOfClass(C, GreensRRelation,
+  return SEMIGROUPS.GreensXClassesOfClass(C,
+                                          GreensRRelation,
                                           GreensRClassOfElement);
 end);
 
-InstallMethod(GreensHClasses, "for a Green's class of a semigroup with CanComputeFroidurePin",
+InstallMethod(GreensHClasses,
+"for a Green's class of a semigroup with CanComputeFroidurePin",
 [IsGreensClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
-    ErrorNoReturn("Semigroups: GreensHClasses ",
-                  "(for a Green's class of a semigroup that CanComputeFroidurePin): usage,\n",
-                  "the argument should be a Green's R-, L-, or D-class,");
+    ErrorNoReturn("the argument should be a Green's R-, L-, or D-class");
   fi;
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensHRelation,
                                           GreensHClassOfElement);
@@ -523,11 +523,13 @@ InstallMethod(HClassReps, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
 
-InstallMethod(RClassReps, "for a Green's D-class of a semigroup with CanComputeFroidurePin",
+InstallMethod(RClassReps,
+"for a Green's D-class of a semigroup with CanComputeFroidurePin",
 [IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensRRelation));
 
-InstallMethod(LClassReps, "for a Green's D-class of a semigroup with CanComputeFroidurePin",
+InstallMethod(LClassReps,
+"for a Green's D-class of a semigroup with CanComputeFroidurePin",
 [IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensLRelation));
 

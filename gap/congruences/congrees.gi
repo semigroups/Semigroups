@@ -114,8 +114,8 @@ function(cong1, cong2)
   local i1, i2;
   # Tests whether cong2 is a subcongruence of cong1
   if Range(cong1) <> Range(cong2) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (Rees congruences) ",
+                  "do not coincide");
   fi;
   i1 := SemigroupIdealOfReesCongruence(cong1);
   i2 := SemigroupIdealOfReesCongruence(cong2);
@@ -136,11 +136,9 @@ InstallMethod(ImagesElm,
 [IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                  "the args <cong> and <elm> must ",
-                  "refer to the same semigroup,");
-  fi;
-  if elm in SemigroupIdealOfReesCongruence(cong) then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the range of the 1st argument (a Rees congruence)");
+  elif elm in SemigroupIdealOfReesCongruence(cong) then
     return Elements(SemigroupIdealOfReesCongruence(cong));
   else
     return [elm];
@@ -153,9 +151,8 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens1, gens2, I;
   if Range(c1) <> Range(c2) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "the args <c1> and <c2> must be congruences of the same ",
-                  "semigroup,");
+    ErrorNoReturn("the ranges of the arguments (Rees congruences) do not ",
+                  "coincide");
   fi;
   gens1 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c1));
   gens2 := GeneratorsOfSemigroupIdeal(SemigroupIdealOfReesCongruence(c2));
@@ -200,9 +197,8 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the args make sense
   if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                  "the second arg <elm> must be ",
-                  "in the semigroup of first arg <cong>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the range of the 1st argument (a Rees congruence)");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -248,9 +244,8 @@ InstallMethod(\*,
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
   if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the args <c1> and <c2> must be classes of the same ",
-                  "congruence,");
+    ErrorNoReturn("the arguments (classes of Rees congruences) do not ",
+                  "belong to the same congruence");
   fi;
   if c1!.is_ideal_class then
     return c1;

@@ -194,11 +194,9 @@ InstallMethod(EvaluateExtRepObjWord,
 function(gens, w)
   local res, i;
   if Length(w) = 0 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a non-empty list");
+    ErrorNoReturn("the second argument must be a non-empty list");
   elif Length(w) mod 2 = 1 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a list of even length");
+    ErrorNoReturn("the second argument must be a list of even length");
   fi;
   res := gens[AbsInt(w[1])] ^ w[2];
   for i in [3, 5 .. Length(w) - 1] do
@@ -215,8 +213,7 @@ function(gens, w)
   if Length(w) = 0 then
     return One(gens);
   elif Length(w) mod 2 = 1 then
-    ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
-    "must be a list of even length");
+    ErrorNoReturn("the second argument must be a list of even length");
   fi;
   res := gens[AbsInt(w[1])] ^ w[2];
   for i in [3, 5 .. Length(w) - 1] do
@@ -336,8 +333,7 @@ function(o, i)
   r := Length(OrbSCC(o));
 
   if i > r then
-    ErrorNoReturn("Semigroups: ReverseSchreierTreeOfSCC:\n",
-                  "the orbit only has ", r, " strongly connected components,");
+    ErrorNoReturn("the orbit only has ", r, " strongly connected components,");
   fi;
 
   if not IsBound(o!.reverse) then

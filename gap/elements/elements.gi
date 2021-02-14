@@ -75,8 +75,8 @@ function(x)
   local index, y, z, period, S;
 
   if not IsGeneratorsOfSemigroup([x]) then
-    ErrorNoReturn("Semigroups: IndexPeriodOfSemigroupElement: usage,\n",
-                  "the argument <x> must be the generator of a semigroup,");
+    ErrorNoReturn("the argument (a mult. elt.) is not the generator of a ",
+                  "semigroup");
   fi;
   index := NrDClasses(Semigroup(x));
   y := x ^ index;
@@ -99,8 +99,8 @@ function(x)
   local a, index, period, r;
 
   if not IsGeneratorsOfSemigroup([x]) then
-    ErrorNoReturn("Semigroups: SmallestIdempotentPower: usage,\n",
-                  "the argument <x> must be the generator of a semigroup,");
+    ErrorNoReturn("the argument (a mult. elt.) is not the generator of a ",
+                  "semigroup");
   fi;
   a := IndexPeriodOfSemigroupElement(x);
   index := a[1];

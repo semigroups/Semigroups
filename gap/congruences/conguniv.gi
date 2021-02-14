@@ -1,4 +1,4 @@
-############################################################################
+#############################################################################
 ##
 ##  congruences/conguniv.gi
 ##  Copyright (C) 2015                                   Michael C. Young
@@ -126,8 +126,7 @@ InstallMethod(IsSubrelation,
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(uni, cong)
   if Range(uni) <> Range(cong) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return true;
 end);
@@ -137,8 +136,7 @@ InstallMethod(IsSubrelation,
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, uni)
   if Range(uni) <> Range(cong) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return uni = cong;
 end);
@@ -148,8 +146,8 @@ InstallMethod(ImagesElm,
 [IsUniversalSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                  "the second argument <elm> must be in <cong>'s semigroup,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the range of the 1st argument (a congruence)");
   fi;
   return Elements(Range(cong));
 end);
@@ -166,8 +164,7 @@ InstallMethod(JoinSemigroupCongruences,
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return ucong;
 end);
@@ -177,8 +174,7 @@ InstallMethod(JoinSemigroupCongruences,
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return ucong;
 end);
@@ -188,8 +184,7 @@ InstallMethod(MeetSemigroupCongruences,
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return cong;
 end);
@@ -199,8 +194,7 @@ InstallMethod(MeetSemigroupCongruences,
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return cong;
 end);
@@ -218,9 +212,8 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   # Check that the arguments make sense
   if not elm in Range(cong) then
-    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                  "the second argument <elm> must be ",
-                  "in the semigroup of 1st argument <cong>,");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the range of the 1st argument (a congruence)");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -250,8 +243,7 @@ InstallMethod(\*,
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
-    ErrorNoReturn("Semigroups: \\*: usage,\n",
-                  "the args <c1> and <c2> must be over the same congruence,");
+    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
   fi;
   return c1;
 end);

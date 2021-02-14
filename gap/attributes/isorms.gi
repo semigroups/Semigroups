@@ -51,7 +51,7 @@ SEMIGROUPS.InfoStatement := function(level, linebreak, arg...)
     fi;
     Print(Concatenation(arg));
     if linebreak then
-      Print("\n");
+      Print("");
     fi;
   fi;
 end;
@@ -219,10 +219,9 @@ SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   rmsgraph := RZMSDigraph(rms1);
   components := DigraphConnectedComponents(rmsgraph).comps;
 
-  if not Length(groupelts) = Length(components) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
-                  "usage,\nthe 5th argument must be a list of length ",
-                  Length(components), ",");
+  if Length(groupelts) <> Length(components) then
+    ErrorNoReturn("the 5th argument (a list) must have length ",
+                  Length(components), ", but found ", Length(groupelts));
   fi;
 
   reps := List(components, Minimum);
@@ -832,21 +831,17 @@ function(R1, R2, triple)
   nrcols := Length(Rows(R1));  # rows of R1 are cols of the matrix
   nrrows := Length(Columns(R1));
   if nrcols <> Length(Rows(R2)) or nrrows <> Length(Columns(R2)) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple:\n",
-                  "<R1> and <R2> are not isomorphic,");
+    ErrorNoReturn("<R1> and <R2> are not isomorphic");
   fi;
 
   # Check graph isomorphism
   if not IsPerm(graph_iso) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation,");
+    ErrorNoReturn("<triple>[1] should be a permutation");
   elif LargestMovedPoint(graph_iso) > nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation on [1 .. ",
-                  nrrows + nrcols, "],");
+    ErrorNoReturn("<triple>[1] should be a permutation on [1 .. ",
+                  nrrows + nrcols, "]");
   elif ForAny([1 .. nrcols], x -> x ^ graph_iso > nrcols) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[1] should not map columns to rows,");
+    ErrorNoReturn("<triple>[1] should not map columns to rows");
   fi;
 
   # Check group isomorphism
@@ -856,25 +851,21 @@ function(R1, R2, triple)
           IsBijective(group_iso) and
           Source(group_iso) = G1 and
           Range(group_iso) = G2) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[2] should be an isomorphism from\n",
-                  "the underlying group of <R1> to that of <R2>,");
+    ErrorNoReturn("<triple>[2] should be an isomorphism from",
+                  "the underlying group of <R1> to that of <R2>");
   fi;
 
   # Check map from rows and cols to H
   if Length(g2_elms_list) <> nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] should have length equal to\n",
-                  "the number of rows and columns of <R1>,");
+    ErrorNoReturn("<triple>[3] should have length equal to",
+                  "the number of rows and columns of <R1>");
   elif not ForAll(g2_elms_list, x -> x in G2) then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] should only contain elements from ",
-                  "the underlying group of <R2>,");
+    ErrorNoReturn("<triple>[3] should only contain elements from ",
+                  "the underlying group of <R2>");
   fi;
   if SEMIGROUPS.RMSInducedFunction(R1, R2, graph_iso, group_iso,
                                    g2_elms_list[1]) <> g2_elms_list then
-    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
-                  "<triple>[3] does not define an isomorphism,");
+    ErrorNoReturn("<triple>[3] does not define an isomorphism");
   fi;
 
   return RMSIsoByTripleNC(R1, R2, triple);
@@ -894,20 +885,17 @@ function(R1, R2, triple)
   nrrows := Length(Rows(R1));
   nrcols := Length(Columns(R1));
   if nrrows <> Length(Rows(R2)) or nrcols <> Length(Columns(R2)) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple:\n",
-                  "<R1> and <R2> are not isomorphic,");
+    ErrorNoReturn("<R1> and <R2> are not isomorphic");
   fi;
 
   # Check graph isomorphism
   graph1 := RZMSDigraph(R1);
   graph2 := RZMSDigraph(R2);
   if not IsPerm(graph_iso) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[1] should be a permutation,");
+    ErrorNoReturn("<triple>[1] should be a permutation");
   elif not OnDigraphs(graph1, graph_iso) = graph2 then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[1] should act as an isomorphism from\n",
-                  "the graph of <R1> to the graph of <R2>,");
+    ErrorNoReturn("<triple>[1] should act as an isomorphism from",
+                  "the graph of <R1> to the graph of <R2>");
   fi;
 
   # Check group isomorphism
@@ -917,20 +905,17 @@ function(R1, R2, triple)
           IsBijective(group_iso) and
           Source(group_iso) = G1 and
           Range(group_iso) = G2) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[2] should be an isomorphism from\n",
-                  "the underlying group of <R1> to that of <R2>,");
+    ErrorNoReturn("<triple>[2] should be an isomorphism from",
+                  "the underlying group of <R1> to that of <R2>");
   fi;
 
   # Check map from rows and cols to H
   if Length(g2_elms_list) <> nrrows + nrcols then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] should have length equal to\n",
-                  "the number of rows and columns of <R1>,");
+    ErrorNoReturn("<triple>[3] should have length equal to",
+                  "the number of rows and columns of <R1>");
   elif not ForAll(g2_elms_list, x -> x in G2) then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] should only contain elements from ",
-                  "the underlying group of <R2>,");
+    ErrorNoReturn("<triple>[3] should only contain elements from ",
+                  "the underlying group of <R2>");
   fi;
   reps := List(DigraphConnectedComponents(graph1).comps, Representative);
   map := EmptyPlist(Length(reps));
@@ -939,8 +924,7 @@ function(R1, R2, triple)
   od;
   if SEMIGROUPS.RZMStoRZMSInducedFunction(R1, R2, graph_iso, group_iso, map)
       <> g2_elms_list then
-    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
-                  "<triple>[3] does not define an isomorphism,");
+    ErrorNoReturn("<triple>[3] does not define an isomorphism");
   fi;
 
   return RZMSIsoByTripleNC(R1, R2, triple);
@@ -1200,9 +1184,7 @@ function(S)
   local iso, T, G, isoG, invG, s;
 
   if not IsFinite(S) or not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroupOverPermGroup: ",
-                  "usage,\n",
-                  "the argument must be a finite simple semigroup,");
+    ErrorNoReturn("the argument must be a finite simple semigroup");
   elif not IsReesMatrixSemigroup(S) then
     return IsomorphismReesMatrixSemigroup(S);
   elif not IsWholeFamily(S) then
@@ -1232,9 +1214,7 @@ function(S)
   local iso, T, G, isoG, invG, s, func;
 
   if not IsFinite(S) or not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroupOverPermGro",
-                  "up: usage,\n",
-                  "the argument must be a finite 0-simple semigroup,");
+    ErrorNoReturn("the argument must be a finite 0-simple semigroup");
   elif not IsReesZeroMatrixSemigroup(S) then
     return IsomorphismReesZeroMatrixSemigroup(S);
   elif not IsWholeFamily(S) then
@@ -1409,10 +1389,8 @@ function(S)
   M    := Matrix(S);
   G    := UnderlyingSemigroup(S);
   if not IsGroup(UnderlyingSemigroup(S)) then
-    ErrorNoReturn("Semigroups: CanonicalReesZeroMatrixSemigroup: ",
-                  "usage,\n",
-                  "the argument must be a Rees zero matrix semigroup with ",
-                  "underlying semigroup which is a group,");
+    ErrorNoReturn("the argument must be a Rees zero matrix semigroup with ",
+                  "underlying semigroup which is a group");
   fi;
   m    := Length(M);
   n    := Length(M[1]);
@@ -1429,9 +1407,8 @@ function(S)
   local G, mat;
   G   := UnderlyingSemigroup(S);
   if not IsGroup(G) then
-    ErrorNoReturn("Semigroups: CanonicalReesMatrixSemigroup: usage,\n",
-                  "the argument must be a Rees matrix semigroup with ",
-                  "underlying semigroup which is a group,");
+    ErrorNoReturn("the argument must be a Rees matrix semigroup with ",
+                  "underlying semigroup which is a group");
   fi;
   mat := Matrix(CanonicalReesZeroMatrixSemigroup(
            ReesZeroMatrixSemigroup(G, Matrix(S))));

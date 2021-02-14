@@ -703,8 +703,7 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                  "the argument is not an inverse semigroup,");
+    ErrorNoReturn("the argument is not an inverse semigroup");
   fi;
   return NaturalLeqPartialPerm;
 end);

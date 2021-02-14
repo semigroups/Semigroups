@@ -72,8 +72,7 @@ function(G)
   local H, gens;
 
   if not IsGroupAsSemigroup(G) then
-    ErrorNoReturn("Semigroups: IsomorphismMatrixGroup: usage,\n",
-                  "the argument must be a group (as semigroup),");
+    ErrorNoReturn("the argument must be a group (as semigroup)");
   fi;
 
   if DimensionOfMatrixOverSemiringCollection(G) = 0 then
@@ -163,10 +162,8 @@ function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
       or DimensionOfMatrixOverSemiringCollection(G)
          <> DimensionOfMatrixOverSemiring(x) then
-    ErrorNoReturn("Semigroups: \\^ (for matrix over finite field ",
-                  "group and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " the 2nd argument must be invertible");
   elif IsOne(x) or DimensionOfMatrixOverSemiring(x) = 0 then
     return G;
   fi;
@@ -182,10 +179,8 @@ function(G, x)
       or DimensionOfMatrixOverSemiringCollection(G)
          <> DimensionOfMatrixOverSemiring(x)
       or Inverse(x) = fail then
-    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over finite",
-                  " field group and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " the 2nd argument must be invertible");
   fi;
   return ClosureGroup(G, [x]);
 end);
@@ -198,11 +193,8 @@ function(G, coll)
       or DimensionOfMatrixOverSemiringCollection(G) <>
          DimensionOfMatrixOverSemiringCollection(coll)
       or ForAny(coll, x -> Inverse(x) = fail) then
-    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over ",
-                  "finite field group",
-                  " and matrix over finite field): usage,\n",
-                  " the args must have the same base domain, degree, and\n",
-                  " every matrix in the second arg must be invertible,");
+    ErrorNoReturn("the arguments must have the same base domain, degree, and",
+                  " every matrix in the 2nd argument must be invertible");
   elif DimensionOfMatrixOverSemiringCollection(G) = 0 then
     return G;
   fi;

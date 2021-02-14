@@ -302,7 +302,7 @@ end);
 # different method for ideals
 
 InstallMethod(\in,
-"for multiplicative element and an enumerable semigroup with known generators",
+"for mult. elt. and a semigroup with CanComputeGapFroidurePin + generators",
 [IsMultiplicativeElement,
  IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(x, S)

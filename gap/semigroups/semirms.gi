@@ -23,22 +23,22 @@ function(filt, params)
   if Length(params) < 1 then  # rows I
     params[1] := Random(1, 100);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of rows) must be a pos int,";
+    return "the 2nd argument (number of rows) must be a pos int";
   fi;
   if Length(params) < 2 then  # cols J
     params[2] := Random(1, 100);
   elif not IsPosInt(params[2]) then
-    return "the third argument (number of columns) must be a pos int,";
+    return "the 3rd argument (number of columns) must be a pos int";
   fi;
   if Length(params) < 3 then  # group
     order := Random(1, 2047);
     i := Random(1, NumberSmallGroups(order));
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
   elif not IsPermGroup(params[3]) then
-    return "the fourth argument must be a perm group,";
+    return "the 4th argument must be a perm group";
   fi;
   if Length(params) > 3 then
-    return "there must be at most four arguments,";
+    return "there must be at most 4 arguments";
   fi;
 
   return params;
@@ -175,8 +175,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                  "the argument must be a simple semigroup,");
+    ErrorNoReturn("the argument must be a simple semigroup");
     # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
@@ -200,8 +199,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
-                  "the argument must be a 0-simple semigroup,");
+    ErrorNoReturn("the argument must be a 0-simple semigroup");
     # TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
@@ -272,9 +270,8 @@ function(S)
   local r, mat, G, iso;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-                  "semigroup satisfying IsGroupAsSemigroup,");
+    ErrorNoReturn("the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+                  "semigroup satisfying IsGroupAsSemigroup");
   fi;
 
   r := Representative(S);
@@ -856,9 +853,8 @@ function(R)
 
   G := UnderlyingSemigroup(R);
   if not IsGroupAsSemigroup(G) then
-    ErrorNoReturn("Semigroups: RMSNormalization: usage,\n",
-                  "the underlying semigroup <G> of the Rees matrix semigroup ",
-                  "<R> must be a group,");
+    ErrorNoReturn("the underlying semigroup <G> of the Rees matrix semigroup ",
+                  "<R> must be a group");
   fi;
 
   if IsGroup(G) then

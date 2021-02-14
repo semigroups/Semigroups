@@ -95,10 +95,10 @@ true
 gap> [x, z] in cong;
 false
 gap> [x, y, z] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 
 # SimpleCongTest5: Congruence classes
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
@@ -116,8 +116,8 @@ gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-<elm> must be an element of the range of <cong>,
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+congruence)
 gap> classx := CongruenceClassOfElement(cong, x);;
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);
@@ -262,11 +262,9 @@ gap> cong1 := SemigroupCongruence(T,
 >   Transformation([1, 2, 2, 1, 2])]]);;
 gap> cong2 := SemigroupCongruence(S, []);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-Error, Semigroups: MeetSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> JoinSemigroupCongruences(cong1, cong2);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 
 # not simple or 0-simple: try next method
 gap> S := OrderEndomorphisms(2);;

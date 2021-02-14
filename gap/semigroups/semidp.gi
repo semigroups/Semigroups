@@ -38,8 +38,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
   x, indecomp_out, D, embedding, projection, i, choice;
 
   if not IsList(S) or IsEmpty(S) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.DirectProductOp: usage,\n",
-                  "the first argument <S> must be a non-empty list,");
+    ErrorNoReturn("the first argument <S> must be a non-empty list");
   elif ForAll(S, HasGeneratorsOfInverseMonoid) then
     f := GeneratorsOfInverseMonoid;
     create := InverseMonoid;
@@ -230,12 +229,10 @@ function(list, S)
   local combine, convert, restrict;
 
   if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
+    ErrorNoReturn("the first argument must be a non-empty list");
   elif not ForAny(list, T -> IsIdenticalObj(S, T)) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the second argument must be one of the semigroups ",
-                  "contained in <list>,");
+    ErrorNoReturn("the second argument must be one of the semigroups ",
+                  "contained in <list>");
   elif not ForAll(list, IsTransformationSemigroup) then
     TryNextMethod();
   fi;
@@ -261,12 +258,10 @@ function(list, S)
   local degree, combine, convert, restrict;
 
   if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
+    ErrorNoReturn("the first argument must be a non-empty list");
   elif not ForAny(list, T -> IsIdenticalObj(S, T)) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the second argument must be one of the semigroups ",
-                  "contained in <list>,");
+    ErrorNoReturn("the second argument must be one of the semigroups ",
+                  "contained in <list>");
   elif not ForAll(list, IsPartialPermSemigroup) then
     TryNextMethod();
   fi;
@@ -302,12 +297,10 @@ function(list, S)
   local combine, convert, restrict;
 
   if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
+    ErrorNoReturn("the first argument must be a non-empty list");
   elif not ForAny(list, T -> IsIdenticalObj(S, T)) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the second argument must be one of the semigroups ",
-                  "contained in <list>,");
+    ErrorNoReturn("the second argument must be one of the semigroups ",
+                  "contained in <list>");
   elif not ForAll(list, IsBipartitionSemigroup) then
     TryNextMethod();
   fi;
@@ -357,12 +350,10 @@ function(list, S)
   local combine, convert, restrict;
 
   if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
+    ErrorNoReturn("the first argument must be a non-empty list");
   elif not ForAny(list, T -> IsIdenticalObj(S, T)) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the second argument must be one of the semigroups ",
-                  "contained in <list>,");
+    ErrorNoReturn("the second argument must be one of the semigroups ",
+                  "contained in <list>");
   elif not ForAll(list, IsPBRSemigroup) then
     TryNextMethod();
   fi;
@@ -414,12 +405,10 @@ function(list, S)
   local iso, prod, info;
 
   if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
+    ErrorNoReturn("the first argument must be a non-empty list");
   elif not ForAny(list, T -> IsIdenticalObj(S, T)) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the second argument must be one of the semigroups ",
-                  "contained in <list>,");
+    ErrorNoReturn("the second argument must be one of the semigroups ",
+                  "contained in <list>");
   elif not ForAll(list, IsSemigroup and IsFinite) then
     TryNextMethod();
   fi;
@@ -442,14 +431,12 @@ function(D, i)
   if IsBound(info.embeddings) and IsBound(info.embeddings[i]) then
     return info.embeddings[i];
   elif IsBound(info.nrfactors) and i > info.nrfactors then
-    ErrorNoReturn("Semigroups: Embedding: usage,\n",
-                  "the index <i> must be in the range [1 .. ", info.nrfactors,
-                  "], since the direct product <D>\nconsists of only ",
-                  info.nrfactors, " factors,");
+    ErrorNoReturn("the index <i> must be in the range [1 .. ", info.nrfactors,
+                  "], since the direct product <D> consists of only ",
+                  info.nrfactors, " factors");
   elif not IsBound(info.nrfactors) or not IsBound(info.embedding) then
-    ErrorNoReturn("Semigroups: Embedding: usage,\n",
-                  "the direct product information for <D> has become ",
-                  "corrupted,\nplease re-create the object,");
+    ErrorNoReturn("the direct product information for <D> has become ",
+                  "corrupted, please re-create the object");
   elif not IsBound(info.embeddings) then
     info.embeddings := [];
   fi;
@@ -474,14 +461,12 @@ function(D, i)
   if IsBound(info.projections) and IsBound(info.projections[i]) then
     return info.projections[i];
   elif IsBound(info.nrfactors) and i > info.nrfactors then
-    ErrorNoReturn("Semigroups: Projection: usage,\n",
-                  "the index <i> must be in the range [1 .. ", info.nrfactors,
-                  "], since the direct product <D>\nconsists of only ",
-                  info.nrfactors, " factors,");
+    ErrorNoReturn("the index <i> must be in the range [1 .. ", info.nrfactors,
+                  "], since the direct product <D> consists of only ",
+                  info.nrfactors, " factors");
   elif not IsBound(info.nrfactors) or not IsBound(info.projection) then
-    ErrorNoReturn("Semigroups: Projection: usage,\n",
-                  "the direct product information for <D> has become ",
-                  "corrupted,\nplease re-create the object,");
+    ErrorNoReturn("the direct product information for <D> has become ",
+                  "corrupted, please re-create the object");
   elif not IsBound(info.projections) then
     info.projections := [];
   fi;

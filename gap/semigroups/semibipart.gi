@@ -213,8 +213,7 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                  "the argument is not an inverse semigroup,");
+    ErrorNoReturn("the argument is not an inverse semigroup");
   elif IsBlockBijectionSemigroup(S) then
     return NaturalLeqBlockBijection;
   elif IsPartialPermBipartitionSemigroup(S) then
@@ -377,8 +376,7 @@ function(filter, S)
   local iso1, inv1, iso2, inv2;
 
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the second arg must be an inverse semigroup,");
+    ErrorNoReturn("the second arg must be an inverse semigroup");
   fi;
 
   iso1 := IsomorphismPartialPermSemigroup(S);

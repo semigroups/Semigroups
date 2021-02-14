@@ -18,8 +18,7 @@ function(G, X, Y, act)
   local anti_act, hom, out_nbrs, orbs, min, fam, filt, M, x, y;
 
   if not IsFinite(G) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the first argument must be a finite group,");
+    ErrorNoReturn("the 1st argument must be a finite group");
   fi;
 
   anti_act := function(pt, g)
@@ -30,24 +29,20 @@ function(G, X, Y, act)
 
   if ForAny(GeneratorsOfGroup(Image(hom)),
             g -> not IsDigraphAutomorphism(X, g)) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the first argument (a group) must act by order ",
-                  "automorphisms on the second argument (a partial order ",
-                  "digraph),");
+    ErrorNoReturn("the 1st argument (a group) must act by order ",
+                  "automorphisms on the 2nd argument (a partial order ",
+                  "digraph)");
   elif not IsPartialOrderDigraph(X) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the second argument must be a partial order digraph,");
+    ErrorNoReturn("the 2nd argument must be a partial order digraph");
   fi;
 
   # Check that Y is a semilattice and an induced subdigraph of X
   if not Y = InducedSubdigraph(X, DigraphVertexLabels(Y)) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the third argument <Y> must be an induced subdigraph of\n",
-                  "the second argument <X> with vertex labels corresponding\n",
-                  "to the vertices of <X> on which <Y> was induced,");
+    ErrorNoReturn("the 3rd argument <Y> must be an induced subdigraph of",
+                  "the 2nd argument <X> with vertex labels corresponding",
+                  "to the vertices of <X> on which <Y> was induced");
   elif not IsJoinSemilatticeDigraph(Y) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the third argument must be a join-semilattice digraph,");
+    ErrorNoReturn("the 3rd argument must be a join-semilattice digraph");
   fi;
 
   # Check condition M2 (check that Y is an order ideal of X.)
@@ -57,10 +52,9 @@ function(G, X, Y, act)
     if not x in DigraphVertexLabels(Y) then
       for y in DigraphSources(DigraphRemoveLoops(Y)) do
         if x in out_nbrs[DigraphVertexLabel(Y, y)] then
-          ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                        "the out-neighbours of each vertex of <X> which is ",
+          ErrorNoReturn("the out-neighbours of each vertex of <X> which is ",
                         "in <Y> must contain only vertices which are in <Y> ",
-                        "- see the documentation for more detail,");
+                        "- see the documentation for more details");
         fi;
       od;
     fi;
@@ -70,27 +64,24 @@ function(G, X, Y, act)
 
   # Check condition M3 (check that G.Y = X.)
   if not ForAll(orbs, o -> ForAny(DigraphVertexLabels(Y), v -> v in o)) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "every vertex of <X> must be in the orbit of some vertex ",
+    ErrorNoReturn("every vertex of <X> must be in the orbit of some vertex ",
                   "of <X> which is in <Y> - see the documentation ",
-                  "for more detail,");
+                  "for more detail");
   fi;
 
   for x in DigraphVertices(X) do
     if not x in Union(orbs) and not (x in DigraphVertexLabels(Y)) then
-      ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                    "every vertex of <X> must be in the orbit of some ",
+      ErrorNoReturn("every vertex of <X> must be in the orbit of some ",
                     "vertex of <X> which is in <Y> - see the documentation",
-                    " for more detail,");
+                    " for more detail");
     fi;
   od;
 
   # Check condition M4 (essentially, check that G.Y = X is connected.)
   min := DigraphVertexLabel(Y, DigraphSinks(DigraphRemoveLoops(Y))[1]);
   if ForAny(GeneratorsOfGroup(Image(hom)), g -> min ^ g <> min) then
-      ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: \n",
-                    "<act> must fix the vertex of <X> which is the minimal ",
-                    "vertex of <Y> - see the documentation for more detail,");
+      ErrorNoReturn("<act> must fix the vertex of <X> which is the minimal ",
+                    "vertex of <Y> - see the documentation for more detail");
   fi;
 
   fam := NewFamily("McAlisterTripleSemigroupFamily",
@@ -398,7 +389,7 @@ SEMIGROUPS.MTSSmallGen := function(S)
    gens := [];
    po   := MTSQuotientDigraph(S);  # Vertex i corresponds to comps[i].
    po   := DigraphReflexiveTransitiveReduction(po);
-   top  := Reversed(DigraphTopologicalSort(po));  # Order D-classes top first.
+   top  := Reversed(DigraphTopologicalSort(po));  # Order D-classes top 1st.
    sl   := DigraphReflexiveTransitiveReduction(Sl);
    SetDigraphVertexLabels(sl, DigraphVertexLabels(Sl));  # Preserve labelling.
    for i in [1 .. Length(top)] do
@@ -546,8 +537,7 @@ function(filt, S)
   act2, i;
 
   if not IsEUnitaryInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the semigroup is not E-unitary,");
+    ErrorNoReturn("the semigroup is not E-unitary");
   fi;
 
   Es := IdempotentGeneratedSubsemigroup(S);
@@ -645,18 +635,15 @@ InstallMethod(McAlisterTripleSemigroupElement,
 [IsMcAlisterTripleSemigroup, IsPosInt, IsMultiplicativeElementWithInverse],
 function(S, A, g)
   if not A in DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S)) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
-                  "second argument should be a vertex label of the ",
-                  "join-semilattice of the McAlister triple,");
+    ErrorNoReturn("2nd argument should be a vertex label of the ",
+                  "join-semilattice of the McAlister triple");
   elif not g in McAlisterTripleSemigroupGroup(S) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
-                  "third argument must an element of the group of the ",
-                  "McAlister triple,");
+    ErrorNoReturn("3rd argument must an element of the group of the ",
+                  "McAlister triple");
   elif not (McAlisterTripleSemigroupAction(S)(A, g ^ -1) in
       DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S))) then
-    ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
-                  "the arguments do not specify an element of the McAlister ",
-                  "triple semigroup,");
+    ErrorNoReturn("the arguments do not specify an element of the McAlister ",
+                  "triple semigroup");
   fi;
   return Objectify(S!.elementType, [A, g, S]);
 end);
@@ -668,8 +655,7 @@ function(x, i)
   if i <= 2 then
     return x![i];
   fi;
-  ErrorNoReturn("Semigroups: ELM_LIST (for a McAlisterTripleSemigroupElement)",
-                ": usage,\n", "the index must be at most 2,");
+  ErrorNoReturn("the index must be at most 2");
 end);
 
 InstallMethod(McAlisterTripleSemigroupElementParent,
@@ -710,9 +696,8 @@ function(x, y)
   local S;
   S := McAlisterTripleSemigroupElementParent(x);
   if not S = McAlisterTripleSemigroupElementParent(y) then
-    ErrorNoReturn("Semigroups: \* (for an McAlisterTripleSemigroupElement): ",
-                  "usage,\n", "the elements must be from the same McAlister ",
-                  "triple semigroup,");
+    ErrorNoReturn("the elements must be from the same McAlister ",
+                  "triple semigroup");
   fi;
   return MTSE(S, DigraphVertexLabel(McAlisterTripleSemigroupPartialOrder(S),
                PartialOrderDigraphJoinOfVertices(
@@ -887,8 +872,7 @@ InstallMethod(EUnitaryInverseCover,
 function(S)
   local cov, iso, T;
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("Semigroups: EUnitaryInverseCover: usage,\n",
-                  "the argument must be an inverse semigroup,");
+    ErrorNoReturn("the argument must be an inverse semigroup");
   fi;
   iso := IsomorphismPartialPermSemigroup(S);
   T   := Range(iso);

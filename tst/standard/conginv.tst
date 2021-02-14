@@ -129,26 +129,21 @@ gap> T := InverseSemigroup([PartialPerm([2, 4], [5, 7]),
 gap> utrace := [Idempotents(S)];;
 gap> ttrace := List(Idempotents(S), e -> [e]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,
-the second arg <kernel> must be an inverse subsemigroup of the
-first arg <S>,
+Error, the 2nd argument <kernel> must be an inverse subsemigroup of the 1st ar\
+gument <S>
 gap> T := InverseSemigroup([PartialPerm([2, 4], [5, 6])]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,
-the second arg <kernel> must contain all the
-idempotents of the first arg <S>,
+Error, the 2nd argument <kernel> must contain all the idempotents of the 1st a\
+rgument <S>
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> T := InverseSemigroup(T, PartialPerm([1, 2], [3, 4]));;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, Semigroups: InverseSemigroupCongruenceByKernelTrace: usage,
-the second arg <kernel> must be self-conjugate,
+Error, the 2nd argument <kernel> must be self-conjugate
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, Semigroups: InverseSemigroupCongruenceByKernelTrace:
-not a valid congruence pair (C1),
+Error, not a valid congruence pair (C1)
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, S, ttrace);
-Error, Semigroups: InverseSemigroupCongruenceByKernelTrace:
-not a valid congruence pair (C2),
+Error, not a valid congruence pair (C2)
 
 # ImagesElm: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2], [5, 2]),
@@ -157,9 +152,8 @@ gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> ttrace := List(Idempotents(S), e -> [e]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, ttrace);;
 gap> ImagesElm(cong, (1, 5, 2));
-Error, Semigroups: ImagesElm: usage,
-the first arg <cong> is not defined over the semigroup of the second
-argument <elm>,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 
 # \in, EquivalenceClassOfElement: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -169,14 +163,13 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 gap> cong := SemigroupCongruence(S,
 >  [PartialPerm([4], [4]), PartialPerm([2], [1])]);;
 gap> [2] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [PartialPerm([4], [4]), 42] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-the second arg <elm> must be in the
-semigroup of the first arg <cong>,
+Error, the 2nd argument (a mult. elt.) must belong to the range of the 1st arg\
+ument (an inverse semigroup congruence by kernel + trace)
 
 # Congruence Class Multiplication: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -191,8 +184,7 @@ gap> cong2 := SemigroupCongruence(S,
 gap> x := CongruenceClassOfElement(cong1, PartialPerm([1, 2, 3], [2, 5, 3]));;
 gap> y := CongruenceClassOfElement(cong2, PartialPerm([1, 2, 4], [3, 1, 5]));;
 gap> x * y;
-Error, Semigroups: \*: usage,
-the arguments must be classes of the same congruence,
+Error, the arguments must be classes of the same congruence
 
 # Non-inverse semigroups
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),
@@ -200,14 +192,14 @@ gap> S := Semigroup([Transformation([3, 4, 3, 2]),
 gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
 >                                    Transformation([4, 2, 4, 4])]);;
 gap> KernelOfSemigroupCongruence(cong);
-Error, Semigroups: KernelOfSemigroupCongruence: usage,
-<cong> must be over an inverse semigroup with inverse op,
+Error, the range of the argument (a congruence) must be an inverse semigroup w\
+ith inverse op
 gap> TraceOfSemigroupCongruence(cong);
-Error, Semigroups: TraceOfSemigroupCongruence: usage,
-<cong> must be over an inverse semigroup with inverse op,
+Error, the range of the argument (a congruence) must be an inverse semigroup w\
+ith inverse op
 gap> AsInverseSemigroupCongruenceByKernelTrace(cong);
-Error, Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,
-<cong> must be over an inverse semigroup with inverse op,
+Error, the range of the argument (a congruence) must be an inverse semigroup w\
+ith inverse op
 
 # AsInverseSemigroupCongruenceByKernelTrace: More tests
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
@@ -273,14 +265,11 @@ gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong1 := MinimumGroupCongruence(S);;
 gap> cong2 := SemigroupCongruence(T, pair);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-Error, Semigroups: MeetSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) must coincide
 gap> JoinSemigroupCongruences(cong1, cong2);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) must coincide
 gap> IsSubrelation(cong1, cong2);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) must be the same
 
 # EquivalenceRelationCanonicalLookup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),

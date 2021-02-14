@@ -149,9 +149,8 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument must be a semigroup satisfying ",
-                  "IsGroupAsSemigroup,");
+    ErrorNoReturn("the argument must be a semigroup satisfying ",
+                  "IsGroupAsSemigroup");
   fi;
 
   cay := OutNeighbours(RightCayleyDigraph(S));
@@ -202,9 +201,8 @@ function(S)
   local G, dom;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument <S> must be a partial perm semigroup ",
-                  "satisfying IsGroupAsSemigroup,");
+    ErrorNoReturn("the argument <S> must be a partial perm semigroup ",
+                  "satisfying IsGroupAsSemigroup");
   fi;
 
   G := Group(List(GeneratorsOfSemigroup(S), AsPermutation));
@@ -225,8 +223,7 @@ function(S)
   local G, id;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument <S> must satisfy IsGroupAsSemigroup,");
+    ErrorNoReturn("the argument <S> must satisfy IsGroupAsSemigroup");
   fi;
 
   G := Group(List(GeneratorsOfSemigroup(S), PermutationOfImage));
@@ -265,9 +262,8 @@ function(S)
   if not IsBlockBijectionSemigroup(S) then
     TryNextMethod();
   elif not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument must be a semigroup satisfying ",
-                  "IsGroupAsSemigroup,");
+    ErrorNoReturn("the argument must be a semigroup satisfying ",
+                  "IsGroupAsSemigroup");
   fi;
 
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));

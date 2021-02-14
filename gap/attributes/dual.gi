@@ -1,18 +1,19 @@
 #############################################################################
 ##
 ##  dual.gi
-##  Copyright (C) 2018                                      James D. Mitchell
+##  Copyright (C) 2018-2021                                 James D. Mitchell
 ##                                                          Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## This file contains an implementation of dual semigroups. We only provide
-## enough functionality to allow dual semigroups to work as enumerable
-## semigroups. This is to avoid having to install versions of every function
-## in Semigroups specially for dual semigroup representations. In some cases
-## special functions would be faster.
+
+# This file contains an implementation of dual semigroups. We only provide
+# enough functionality to allow dual semigroups to work as semigroups. This is
+# to avoid having to install versions of every function in Semigroups specially
+# for dual semigroup representations. In some cases special functions would be
+# faster.
 
 InstallMethod(DualSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -24,9 +25,8 @@ function(S)
       return Semigroup(List(GeneratorsOfSemigroup(S),
                             x -> UnderlyingElementOfDualSemigroupElement(x)));
     fi;
-    ErrorNoReturn("Semigroups: DualSemigroup: \n",
-                  "this dual semigroup cannot be constructed ",
-                  "without knowing generators,");
+    ErrorNoReturn("this dual semigroup cannot be constructed ",
+                  "without knowing generators");
   fi;
 
   fam   := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
@@ -101,9 +101,8 @@ end);
 InstallGlobalFunction(UnderlyingElementOfDualSemigroupElement,
 function(s)
   if not IsDualSemigroupElement(s) then
-    ErrorNoReturn("Semigroups: UnderlyingElementOfDualSemigroupElement: \n",
-                  "the argument must be an element represented as a dual ",
-                  "semigroup element,");
+    ErrorNoReturn("the argument is not an element represented as a dual ",
+                  "semigroup element");
   fi;
   return s![1];
 end);

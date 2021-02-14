@@ -259,9 +259,8 @@ function(gens, opts)
   local filts, S;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorNoReturn("Semigroups: InverseSemigroupByGenerators: usage,\n",
-                  "the first argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("the 1st argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup'");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
@@ -309,9 +308,8 @@ function(gens, opts)
   local pos, filts, S;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorNoReturn("Semigroups: InverseMonoidByGenerators: usage,\n",
-                  "the first argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("the 1st argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup'");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
@@ -439,10 +437,9 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
-                  "the first argument (a semigroup) and the second argument ",
-                  "(a multiplicative\nelement collection) cannot be used to ",
-                  "generate a semigroup,");
+    ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
+                  "(a multiplicative element collection) cannot be used to ",
+                  "generate a semigroup");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -480,10 +477,9 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureMonoid: usage,\n",
-                  "the first argument (a monoid) and the second argument ",
-                  "(a multiplicative\nelement with one collection) cannot be ",
-                  "used to generate a monoid,");
+    ErrorNoReturn("the 1st argument (a monoid) and the 2nd argument ",
+                  "(a multiplicative element with one collection) cannot be ",
+                  "used to generate a monoid");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -618,9 +614,8 @@ function(S, coll, opts)
   # ClosureSemigroupOrMonoidNC
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
-                  "the second argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("the 2nd argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup'");
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   elif not IsList(coll) then
@@ -635,10 +630,9 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
-                  "the first argument (a semigroup) and the second argument ",
-                  "(a multiplicative\nelement collection) cannot be used to ",
-                  "generate an inverse semigroup,");
+    ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
+                  "(a multiplicative element collection) cannot be used to ",
+                  "generate an inverse semigroup");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -663,9 +657,8 @@ function(S, coll, opts)
   # ClosureSemigroupOrMonoidNC
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: ClosureInverseMonoid: usage,\n",
-                  "the second argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("the 2nd argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup'");
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   elif not IsList(coll) then
@@ -680,10 +673,9 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureInverseMonoid: usage,\n",
-                  "the first argument (a semigroup) and the second argument ",
-                  "(a multiplicative\nelement collection) cannot be used to ",
-                  "generate an inverse monoid,");
+    ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
+                  "(a multiplicative element collection) cannot be used to ",
+                  "generate an inverse monoid");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -886,7 +878,7 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
@@ -925,8 +917,7 @@ SEMIGROUPS.DefaultRandomInverseSemigroup := function(filt, params)
                                               params[1],
                                               params[2]));
   fi;
-  ErrorNoReturn("Semigroups: SEMIGROUPS.DefaultRandomInverseSemigroup: ",
-                "usage,\nthe second arg must have length 2 to 4,");
+  ErrorNoReturn("the 2nd argument must have length 2, 3, or 4");
 end;
 
 SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
@@ -949,8 +940,7 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
                                         params[1],
                                         params[2]));
   fi;
-  ErrorNoReturn("Semigroups: SEMIGROUPS.DefaultRandomInverseMonoid: usage,\n",
-                "the second arg must have length 2 to 4,");
+  ErrorNoReturn("the 2nd argument must have length 2 to 4");
 end;
 
 # TODO RandomSource?
@@ -968,8 +958,7 @@ function(arg)
   if Length(arg) >= 1 and IsBound(arg[1]) then
     filt := arg[1];
     if not IsFilter(filt) then
-      ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n",
-                    "the first argument must be a filter,");
+      ErrorNoReturn("the 1st argument must be a filter");
     fi;
   else
     filt := Random([IsReesMatrixSemigroup,
@@ -993,7 +982,7 @@ function(arg)
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
   if IsString(params) then
-    ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n", params);
+    ErrorNoReturn(params);
   fi;
   return RandomSemigroupCons(filt, params);
 end);
@@ -1011,8 +1000,7 @@ function(arg)
   if Length(arg) >= 1 and IsBound(arg[1]) then
     filt := arg[1];
     if not IsFilter(filt) then
-      ErrorNoReturn("Semigroups: RandomMonoid: usage,\n",
-                    "the first argument must be a filter,");
+      ErrorNoReturn("the 1st argument must be a filter");
     fi;
   else
     filt := Random([IsFpMonoid,
@@ -1034,7 +1022,7 @@ function(arg)
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
   if IsString(params) then
-    ErrorNoReturn("Semigroups: RandomMonoid: usage,\n", params);
+    ErrorNoReturn(params);
   fi;
   return RandomMonoidCons(filt, params);
 end);
@@ -1052,8 +1040,7 @@ function(arg)
   if Length(arg) >= 1 and IsBound(arg[1]) then
     filt := arg[1];
     if not IsFilter(filt) then
-      ErrorNoReturn("Semigroups: RandomInverseSemigroup: usage,\n",
-                    "the first argument must be a filter,");
+      ErrorNoReturn("the 1st argument must be a filter");
     fi;
   else
     filt := Random([IsFpSemigroup,
@@ -1075,7 +1062,7 @@ function(arg)
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
   if IsString(params) then
-    ErrorNoReturn("Semigroups: RandomInverseSemigroup: usage,\n", params);
+    ErrorNoReturn(params);
   fi;
   return RandomInverseSemigroupCons(filt, params);
 end);
@@ -1093,8 +1080,7 @@ function(arg)
   if Length(arg) >= 1 and IsBound(arg[1]) then
     filt := arg[1];
     if not IsFilter(filt) then
-      ErrorNoReturn("Semigroups: RandomInverseMonoid: usage,\n",
-                    "the first argument must be a filter,");
+      ErrorNoReturn("the 1st argument must be a filter");
     fi;
   else
     filt := Random([IsFpMonoid,
@@ -1116,7 +1102,7 @@ function(arg)
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
   if IsString(params) then
-    ErrorNoReturn("Semigroups: RandomInverseMonoid: usage,\n", params);
+    ErrorNoReturn(params);
   fi;
   return RandomInverseMonoidCons(filt, params);
 end);

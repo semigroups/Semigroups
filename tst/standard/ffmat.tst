@@ -23,13 +23,11 @@ Matrix(GF(2), [[Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2)],
 # Test NewMatrixOverFiniteField failure
 gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
 > Z(3) * [[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 0, 0], [0, 0, 0, 1]]);
-Error, Semigroups: NewMatrixOverFiniteField: usage,
-the entries of the matrix are not all in GF(2),
+Error, the entries of the matrix are not all in GF(2)
 gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
 > [[Z(3), 0 * Z(3), Z(3), 0 * Z(3)], [0 * Z(3), Z(3), 0 * Z(3), Z(3)],
 >  [0 * Z(3), Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3), Z(4)]]);
-Error, Semigroups: NewMatrixOverFiniteField: usage,
-the entries of the matrix are not all in GF(2),
+Error, the entries of the matrix are not all in GF(2)
 
 # MatrixTest2: EvalPrintString
 gap> EvalString(String(M)) = M;
@@ -86,14 +84,12 @@ gap> SEMIGROUPS_TypeOfMatrixOverSemiringCons(IsPlistMatrixOverFiniteFieldRep);;
 # Test ELM_LIST and IsBound
 gap> mat := Matrix(GF(3), []);;
 gap> mat[1];
-Error, Semigroups: ELM_LIST (for a plist matrix over finite field):
-the position is greater than the dimension of the matrix,
+Error, the position is greater than the dimension of the matrix
 gap> mat := Matrix(GF(3), Z(3) * [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);;
 gap> mat[1];
 [ Z(3), 0*Z(3), 0*Z(3) ]
 gap> mat[4];
-Error, Semigroups: ELM_LIST (for a plist matrix over finite field):
-the position is greater than the dimension of the matrix,
+Error, the position is greater than the dimension of the matrix
 
 # Test MatrixNC for a sample
 gap> mat := Matrix(GF(3), Z(3) * [[1, 2], [1, 2]]);;
@@ -149,8 +145,7 @@ Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)],
   [0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)], 
   [0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)]])
 gap> x := RandomMatrix(GF(3), 5, [1, -2, 1314]);
-Error, Semigroups: RandomMatrixOp: usage,
-the list of ranks has to consist of numbers > 0 and < n,
+Error, the list of ranks has to consist of numbers > 0 and < n
 
 # Test \ = , \< for row basis
 gap> mat := Matrix(GF(3 ^ 2),
@@ -233,8 +228,7 @@ Matrix(GF(2^2), [[Z(2^2), 0*Z(2), Z(2^2)], [0*Z(2), Z(2)^0, Z(2)^0],
 
 # Test ComputeRowSpaceAndTransformation
 gap> ComputeRowSpaceAndTransformation(2);
-Error, Semigroups: ComputeRowSpaceAndTransformation: usage,
-the argument must belong to`IsPlistMatrixOverFiniteFieldRep`,
+Error, the argument must belong to`IsPlistMatrixOverFiniteFieldRep`
 gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
 >                                      GF(4), 2);;
 gap> ComputeRowSpaceAndTransformation(y);
@@ -278,8 +272,7 @@ Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(5), [[Z(5)]]);
 Matrix(GF(5), [[Z(5)]])
 gap> mat * mat2;
-Error, Semigroups: \* (for matrices over a finite field): usage,
-the degree or domain of the arguments do not match,
+Error, the degree or domain of the arguments do not match
 
 # Test \*, wrong base field, 3/3
 gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
@@ -287,8 +280,7 @@ Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(7), [[0 * Z(7), Z(7) ^ 3], [Z(7), 0 * Z(7)]]);
 Matrix(GF(7), [[0*Z(7), Z(7)^3], [Z(7), 0*Z(7)]])
 gap> mat * mat2;
-Error, Semigroups: \* (for matrices over a finite field): usage,
-the degree or domain of the arguments do not match,
+Error, the degree or domain of the arguments do not match
 
 # Test Display, 1/1
 gap> mat := Matrix(GF(11), [[Z(11) ^ 9, 0 * Z(11), Z(11), Z(11) ^ 9, 0 * Z(11)],
@@ -332,8 +324,7 @@ Matrix(GF(11), [])
 gap> RandomMatrix(GF(11), 0, [0]);
 Matrix(GF(11), [])
 gap> RandomMatrix(GF(11), 0, [1]);
-Error, Semigroups: RandomMatrixOp: usage,
-the list of ranks has to consist of numbers >= 0 and <= 0,
+Error, the list of ranks has to consist of numbers >= 0 and <= 0
 
 # Test AsList for IsPlistMatrixRep 
 gap> S := Semigroup(Transformation([2, 3, 1]));;
@@ -350,9 +341,8 @@ gap> coll := [Matrix(GF(3), [[Z(3), Z(3), 0 * Z(3)],
 >                              [Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0],
 >                              [0 * Z(2), 0 * Z(2), Z(2 ^ 2) ^ 2]])];;
 gap> BaseDomain(coll);
-Error, Semigroups: BaseDomain: usage,
-the argument <coll> must be a collection of matrices over the same finite fiel\
-d,
+Error, the argument <coll> must be a collection of matrices over the same fini\
+te field
 
 # Test OneMutable
 gap> x := Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3), Z(3)], [Z(3), 0 * Z(3), Z(3)],

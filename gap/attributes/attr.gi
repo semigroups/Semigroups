@@ -204,8 +204,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                  "the D-class is not a subsemigroup,");
+    ErrorNoReturn("the D-class is not a subsemigroup");
   fi;
 
   return InjectionPrincipalFactor(D);
@@ -339,8 +338,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -359,8 +357,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
@@ -497,7 +494,8 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDGreaterThanFunc, "for an enumerable semigroup",
+InstallMethod(IsGreensDGreaterThanFunc,
+"for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr, id;
@@ -521,7 +519,8 @@ function(S)
   end;
 end);
 
-InstallMethod(MaximalDClasses, "for an enumerable semigroup",
+InstallMethod(MaximalDClasses,
+"for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr;
@@ -650,8 +649,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
+    ErrorNoReturn("the argument <D> must be a regular D-class");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -666,8 +664,7 @@ function(D)
   local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
 
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
+    ErrorNoReturn("the argument <D> must be a regular D-class");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -689,7 +686,7 @@ function(D)
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for an enumerable semigroup with generators",
+"for a semigroup with CanComputeFroidurePin + generators",
 [IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
@@ -738,7 +735,8 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
   local comps;
@@ -794,9 +792,8 @@ function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   elif not x in S then
-    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n",
-                  "the second arg (a mult. element) must belong to the first ",
-                  "arg (a semigroup),");
+    ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
+                  "argument (a semigroup)");
   fi;
   return InversesOfSemigroupElementNC(S, x);
 end);
@@ -1049,9 +1046,8 @@ function(S)
     return gens;
   fi;
 
-  ErrorNoReturn("Semigroups: MinimalSemigroupGeneratingSet: error,\n",
-                "no further methods for computing minimal generating sets ",
-                "are implemented,");
+  ErrorNoReturn("no further methods for computing minimal generating sets ",
+                "are implemented");
 end);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a free monoid",
@@ -1092,11 +1088,9 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument is not a finite semigroup");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument is not a regular semigroup");
   elif IsInverseSemigroup(S) then
     return NaturalPartialOrder(S);
   fi;
@@ -1122,13 +1116,10 @@ end);
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument is not a finite semigroup");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument is not a regular semigroup");
   elif IsInverseSemigroup(S) then
     return NaturalLeqInverseSemigroup(S);
   fi;

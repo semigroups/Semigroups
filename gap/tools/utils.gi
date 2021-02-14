@@ -118,7 +118,7 @@ end;
 SEMIGROUPS.RunTest := function(func)
   local acting, passed;
   if not (IsFunction(func) and NumberArgumentsFunction(func) = 0) then
-    ErrorNoReturn("the argument must be a 0-parameter function,");
+    ErrorNoReturn("the argument must be a 0-parameter function");
   fi;
 
   # Store global option
@@ -133,7 +133,7 @@ SEMIGROUPS.RunTest := function(func)
 
   if not (IsBool(passed) and passed in [true, false]) then
     ErrorNoReturn("the argument must be a function returning 'true'",
-                  " or 'false',");
+                  " or 'false'");
   elif not passed then
     SEMIGROUPS.DefaultOptionsRec.acting := acting;
     return passed;
@@ -344,17 +344,14 @@ SEMIGROUPS.TestManualExamples := function(arg)
       end;
       ex := First(ex, tester);
       if ex = fail then
-        ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                      "did not find a man section named ", arg[1]);
+        ErrorNoReturn("did not find a man section named ", arg[1]);
       fi;
       ex := ExtractExamplesXMLTree(ex, "Single");
     else
-      ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                    "the argument must be a pos int or list of pos ints,");
+      ErrorNoReturn("the argument must be a pos int or list of pos ints");
     fi;
   elif Length(arg) > 1 then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                  "there should be 0 or 1 argument,");
+    ErrorNoReturn("there should be 0 or 1 arguments");
   fi;
 
   omit := SEMIGROUPS.OmitFromTests;
@@ -522,8 +519,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         matches := Filtered(matches, t -> t.attributes.Label =
                                           elt.attributes.Label);
         if Length(matches) > 1 then
-          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
-                        "Multiple labels - this should not happen!");
+          ErrorNoReturn("Multiple labels - this should not happen!");
         fi;
         match := matches[1];
       else
@@ -543,8 +539,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
           referrcount := referrcount + 1;
           continue;
         elif Length(matches2) > 1 then
-          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
-                        "Multiple labels - this should not happen!");
+          ErrorNoReturn("Multiple labels - this should not happen!");
         else
           match := matches[1];
         fi;

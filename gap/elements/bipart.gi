@@ -96,28 +96,24 @@ function(classes)
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
                               or not IsDuplicateFree(x)) then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the argument <classes> must consist of duplicate-free ",
-                  "homogeneous lists,");
+    ErrorNoReturn("the argument <classes> must consist of duplicate-free ",
+                  "homogeneous lists");
   fi;
 
   n := Sum(classes, Length) / 2;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the maximum degree of a bipartition ",
-                  "is 2 ^ 29 - 1,");
+    ErrorNoReturn("the maximum degree of a bipartition ",
+                  "is 2 ^ 29 - 1");
   elif not ForAll(classes, x -> ForAll(x,
                                        i -> (IsPosInt(i) or IsNegInt(i))
                                             and AbsInt(i) <= n)) then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the argument <classes> must consist of lists of ",
-                  "integers from [-", n, " .. -1, 1 .. ", n, "],");
+    ErrorNoReturn("the argument <classes> must consist of lists of ",
+                  "integers from [-", n, " .. -1, 1 .. ", n, "]");
   elif not IsEmpty(classes)
       and Union(classes) <> Concatenation([-n .. -1], [1 .. n]) then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the union of the argument <classes> must be ",
-                  "[-", n, " .. -1, 1 .. ", n, "],");
+    ErrorNoReturn("the union of the argument <classes> must be ",
+                  "[-", n, " .. -1, 1 .. ", n, "]");
   fi;
 
   copy := List(classes, ShallowCopy);
@@ -148,17 +144,14 @@ function(blocks)
 
   n := Length(blocks);
   if not IsEvenInt(n) then
-    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                  "the length of the argument <blocks> must be an even ",
-                  "integer,");
+    ErrorNoReturn("the length of the argument (a list) must be an even ",
+                  "integer");
   elif n >= 2 ^ 30 then
-    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                  "the length of the argument <blocks> must not exceed ",
-                  "2 ^ 30 - 1,");
+    ErrorNoReturn("the length of the argument (a list) must not exceed ",
+                  "2 ^ 30 - 1");
   elif not ForAll(blocks, i -> IsPosInt(i) and i <= n) then
-    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                  "the elements of the argument <blocks> must be positive ",
-                  "integers not exceeding ", n, ",");
+    ErrorNoReturn("the items in the argument (a list) must be positive ",
+                  "integers not exceeding ", n, "");
   fi;
 
   next := 0;
@@ -168,9 +161,8 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                      "expected ", next, " but found ", blocks[i],
-                      ", in position ", i, ",");
+        ErrorNoReturn("expected ", next, " but found ", blocks[i],
+                      ", in position ", i, " of the argument (a list)");
       fi;
       seen[blocks[i]] := true;
     fi;
@@ -188,8 +180,7 @@ function(n)
   local blocks, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: IdentityBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the argument <n> must not exceed 2 ^ 29 - 1");
   fi;
   blocks := EmptyPlist(2 * n);
 
@@ -207,8 +198,7 @@ function(rs, n)
   local out, nrblocks, vals, j, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: RandomBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the argument <n> must not exceed 2 ^ 29 - 1");
   fi;
   out := EmptyPlist(2 * n);
   nrblocks := 0;
@@ -237,8 +227,7 @@ function(rs, n)
   local out, nrblocks, j, free, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: RandomBlockBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the argument <n> must not exceed 2 ^ 29 - 1");
   fi;
 
   out := EmptyPlist(2 * n);
@@ -279,8 +268,7 @@ IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
 
   if LeftBlocks(x) <> LeftBlocks(y) or RightBlocks(x) <> RightBlocks(y) then
-    ErrorNoReturn("Semigroups: PermLeftQuoBipartition: usage,\n",
-                  "the arguments must have equal left and right blocks,");
+    ErrorNoReturn("the arguments must have equal left and right blocks");
   fi;
   return BIPART_PERM_LEFT_QUO(x, y);
 end);
@@ -413,9 +401,9 @@ function(x, p)
   if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
     return x * AsBipartition(p, DegreeOfBipartition(x));
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a bipartition and perm): usage,\n",
-                "the largest moved point of the perm must not be greater\n",
-                "than the degree of the bipartition,");
+  ErrorNoReturn("the largest moved point of the 2nd argument ",
+                "(a permutation) must not be greater",
+                " than the degree of the 1st argument (a bipartition)");
 end);
 
 InstallMethod(\*, "for a perm and a bipartition",
@@ -424,9 +412,9 @@ function(p, x)
   if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
     return AsBipartition(p, DegreeOfBipartition(x)) * x;
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a perm and bipartition): usage,\n",
-                "the largest moved point of the perm must not be greater\n",
-                "than the degree of the bipartition,");
+  ErrorNoReturn("the largest moved point of the 1st argument ",
+                "(a permutation) must not be greater",
+                " than the degree of the 2nd argument (a bipartition)");
 end);
 
 InstallMethod(\*, "for a bipartition and a transformation",
@@ -435,10 +423,9 @@ function(x, f)
   if DegreeOfTransformation(f) <= DegreeOfBipartition(x) then
     return x * AsBipartition(f, DegreeOfBipartition(x));
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a bipartition and transformation): ",
-                "usage,\n",
-                "the degree of the transformation must not be greater\n",
-                "than the degree of the bipartition,");
+  ErrorNoReturn("the degree of the 2nd argument (a transformation)",
+                " must not be greater than the degree of the 1st argument",
+                " (a bipartition)");
 end);
 
 InstallMethod(\*, "for a transformation and a bipartition",
@@ -447,10 +434,9 @@ function(f, g)
   if DegreeOfTransformation(f) <= DegreeOfBipartition(g) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a transformation and bipartition): ",
-                "usage,\n",
-                "the degree of the transformation must not be greater\n",
-                "than the degree of the bipartition,");
+  ErrorNoReturn("the degree of the 1st argument (a transformation)",
+                " must not be greater than the degree of the 2nd argument",
+                " (a bipartition)");
 end);
 
 InstallMethod(\*, "for a bipartition and a partial perm",
@@ -461,9 +447,8 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ g <= n) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a bipartition and partial perm): usage,",
-                "\nthe partial perm must map [1 .. ", String(n), "] into\n",
-                "[1 .. ", String(n), "],");
+  ErrorNoReturn("the 2nd argument (a partial perm) must map ",
+                "[1 .. ", String(n), "] into [1 .. ", String(n), "]");
 end);
 
 InstallMethod(\*, "for a partial perm and a bipartition",
@@ -474,10 +459,8 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ f <= n) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a partial perm and a bipartition): ",
-                "usage,\n",
-                "the partial perm must map [1 .. ", String(n), "] into\n",
-                "[1 .. ", String(n), "],");
+  ErrorNoReturn("the 1st argument (a partial perm) must map [1 .. ",
+                String(n), "] into [1 .. ", String(n), "]");
 end);
 
 InstallMethod(\^, "for a bipartition and permutation",
@@ -493,8 +476,8 @@ IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
 
   if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
-    ErrorNoReturn("Semigroups: PartialPermLeqBipartition: usage,\n",
-                  "the arguments must be partial perm bipartitions,");
+    ErrorNoReturn("the arguments (bipartitions) must satisfy ",
+                  "IsPartialPermBipartition");
   fi;
 
   return AsPartialPerm(x) < AsPartialPerm(y);
@@ -550,8 +533,8 @@ InstallMethod(AsBipartition, "for a pbr and pos int",
 [IsPBR, IsPosInt],
 function(x, deg)
   if not IsBipartitionPBR(x) then
-    ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
-                  "the argument does not satisfy 'IsBipartitionPBR',");
+    ErrorNoReturn("the 1st argument (a pbr) does not satisfy",
+                  " 'IsBipartitionPBR'");
   fi;
 
   return AsBipartition(AsBipartition(x), deg);
@@ -561,8 +544,7 @@ InstallMethod(AsBipartition, "for a pbr",
 [IsPBR],
 function(x)
   if not IsBipartitionPBR(x) then
-    ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
-                  "the argument does not satisfy 'IsBipartitionPBR',");
+    ErrorNoReturn("the argument (a pbr) does not satisfy 'IsBipartitionPBR'");
   fi;
   return Bipartition(Union(ExtRepOfObj(x)));
 end);
@@ -677,12 +659,10 @@ InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(x, n)
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1");
   elif OnSets([1 .. n], x) <> [1 .. n] then
-    ErrorNoReturn("Semigroups: AsBipartition (for a permutation and pos int):",
-                  "\nthe permutation <p> in the 1st argument must permute ",
-                  "[1 .. ", String(n), "],");
+    ErrorNoReturn("the 1st argument (a permutation) must permute ",
+                  "[1 .. ", String(n), "]");
   fi;
   return BIPART_NC(Concatenation([1 .. n], ListPerm(x ^ -1, n)));
 end);
@@ -692,8 +672,8 @@ function(x)
   local n, blocks, nrleft, im, out, i;
 
   if not IsPartialPermBipartition(x) then
-    ErrorNoReturn("Semigroups: AsPartialPerm (for a bipartition):\n",
-                  "the argument does not define a partial perm,");
+    ErrorNoReturn("the argument (a bipartition) does not define ",
+                  "a partial perm");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -719,8 +699,8 @@ function(x)
   local n, blocks, im, out, i;
 
   if not IsPermBipartition(x) then
-    ErrorNoReturn("Semigroups: AsPermutation (for a bipartition):\n",
-                  "the argument does not define a permutation,");
+    ErrorNoReturn("the argument (a bipartition) does not define a ",
+                  "permutation");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -743,8 +723,8 @@ function(x)
   local n, blocks, nr, im, out, i;
 
   if not IsTransBipartition(x) then
-    ErrorNoReturn("Semigroups: AsTransformation (for a bipartition):\n",
-                  "the argument does not define a transformation,");
+    ErrorNoReturn("the argument (a bipartition) does not define a ",
+                  "transformation");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -771,8 +751,7 @@ function(x, n)
   local r, out, y, j, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1");
   fi;
 
   r   := n;
@@ -798,17 +777,13 @@ function(f, n)
   local r, ker, out, g, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
-  fi;
-  if n < DegreeOfTransformation(f) then
+    ErrorNoReturn("the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1");
+  elif n < DegreeOfTransformation(f) then
     # Verify f is a transformation on [1 .. n].
     for i in [1 .. n] do
       if i ^ f > n then
-        ErrorNoReturn("Semigroups: AsBipartition (for a transformation and ",
-                      "pos int):\n",
-                      "the argument must map [1 .. ", String(n), "] to ",
-                      "itself,");
+        ErrorNoReturn("the 1st argument (a transformation) must map [1 .. ",
+                      String(n), "] to itself");
       fi;
     od;
   fi;
@@ -842,8 +817,7 @@ function(f, n)
   local deg, blocks, out, nrblocks, nrleft, lookup, j, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+    ErrorNoReturn("the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1");
   fi;
   deg := DegreeOfBipartition(f);
   if n = deg then
@@ -908,15 +882,11 @@ function(f, n)
   local bigblock, nr, out, i;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("Semigroups: AsBlockBijection: usage,\n",
-                  "the argument <n> must not exceed 2 ^ 29 - 1,");
-  fi;
-
-  if n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
-    ErrorNoReturn("Semigroups: AsBlockBijection (for a partial perm and pos ",
-                  "int):\n",
-                  "the 2nd argument must be strictly greater than the maximum ",
-                  "of the\ndegree and codegree of the 1st argument,");
+    ErrorNoReturn("the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1");
+  elif n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
+    ErrorNoReturn("the 2nd argument (a pos. int.) must exceed ",
+                  "the maximum of the degree and codegree of the ",
+                  "1st argument (a partial perm)");
   fi;
 
   nr := 0;
@@ -953,9 +923,8 @@ InstallMethod(AsBlockBijection, "for a bipartition and pos int",
 [IsBipartition, IsPosInt],
 function(x, n)
   if not IsPartialPermBipartition(x) then
-    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition and pos ",
-                  "int):\n",
-                  "the argument <x> must be a partial perm bipartition,");
+    ErrorNoReturn("the 1st argument (a bipartition) must be a ",
+                  "partial perm bipartition");
   fi;
   return AsBlockBijection(AsPartialPerm(x), n);
 end);
@@ -964,8 +933,8 @@ InstallMethod(AsBlockBijection, "for a bipartition",
 [IsBipartition],
 function(x)
   if not IsPartialPermBipartition(x) then
-    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition):\n",
-                  "the argument <x> must be a partial perm bipartition,");
+    ErrorNoReturn("the argument (a bipartion) must satisfy ",
+                  "IsPartialPermBipartition");
   fi;
   return AsBlockBijection(AsPartialPerm(x));
 end);
@@ -976,8 +945,7 @@ function(x, y)
   local xblocks, yblocks, n, lookup, i;
 
   if not IsBlockBijection(x) or not IsBlockBijection(y) then
-    ErrorNoReturn("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                  "the arguments must be block bijections,");
+    ErrorNoReturn("the arguments (bipartitions) must be block bijections");
   elif NrBlocks(x) > NrBlocks(y) then
     return false;
   fi;
@@ -1009,8 +977,8 @@ function(x, y)
   local n, xblocks, yblocks, val, i;
 
   if not IsPartialPermBipartition(x) or not IsPartialPermBipartition(y) then
-    ErrorNoReturn("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                  "the arguments must be partial perm bipartitions,");
+    ErrorNoReturn("the arguments (bipartitions) must be partial perm ",
+                  "bipartitions");
   fi;
 
   n := DegreeOfBipartition(x);
