@@ -33,10 +33,10 @@ Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
 rgument <S> (a semigroup)
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, M.2]]);;
 gap> [M.1, M.2, M.2 ^ 2] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [F.1, F.2] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
 Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
 ,

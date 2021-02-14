@@ -103,11 +103,9 @@ gap> classes := Set(CongruenceClasses(v));
 gap> CongruenceClasses(u)[1] in classes;
 false
 gap> classes[1] * CongruenceClasses(u)[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> CongruenceClasses(u)[1] * classes[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
@@ -310,10 +308,10 @@ gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> cong := SemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 
 # Classes
 gap> S := Semigroup([
@@ -353,8 +351,8 @@ gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
 gap> Transformation([6, 2, 3, 4, 1, 1]) in class;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 gap> Size(class);
 89
 
@@ -616,10 +614,10 @@ gap> S := F / [[F.2 ^ 2, F.2],
 gap> pair := [S.1 * S.2 * S.1, S.1];;
 gap> cong := RightSemigroupCongruence(S, pair);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 
 # comparing congruence classes over fp semigroups
 gap> F := FreeSemigroup(3);;

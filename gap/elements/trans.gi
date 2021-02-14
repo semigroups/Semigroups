@@ -18,9 +18,8 @@ InstallMethod(CanonicalTransformation, "for a transformation",
 function(f, n)
   local digraph;
   if n < DegreeOfTransformation(f) then
-    ErrorNoReturn("Semigroups: CanonicalTransformation: usage,\n",
-                  "the second argument (an integer) must be at least ",
-                  "the degree of the first argument (a transformation),");
+    ErrorNoReturn("the second argument (an integer) must be at least ",
+                  "the degree of the first argument (a transformation)");
   fi;
 
   digraph := AsDigraph(f, n);
@@ -34,16 +33,14 @@ function(im, ker)
   local flat, i;
 
   if not ForAll(ker, class -> ForAll(class, IsPosInt)) then
-    ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
-                  "the argument must be a list of lists of pos ints,");
+    ErrorNoReturn("the argument must be a list of lists of pos ints");
   fi;
 
   flat := Union(ker);
 
   if flat <> [1 .. Length(flat)] then
-    ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
-                  "the union of the second argument (a partition) must ",
-                  "be [1 .. ", Length(flat), "],");
+    ErrorNoReturn("the union of the second argument (a partition) must ",
+                  "be [1 .. ", Length(flat), "]");
   fi;
 
   for i in [1 .. Length(ker)] do

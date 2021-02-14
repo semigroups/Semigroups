@@ -103,8 +103,7 @@ function(H)
   local G, x, map, inv;
 
   if not IsGroupHClass(H) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the H-class is not a group,");
+    ErrorNoReturn("the H-class is not a group");
   fi;
 
   G := Group(());

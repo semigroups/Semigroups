@@ -398,8 +398,7 @@ gap> PrincipalFactor(D);
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClass(S, Transformation([1, 2, 1]));;
 gap> IsomorphismReesMatrixSemigroup(D);
-Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
-the D-class is not a subsemigroup,
+Error, the D-class is not a subsemigroup
 gap> D := MinimalDClass(S);;
 gap> IsomorphismReesMatrixSemigroup(D);
 MappingByFunction( <Green's D-class: Transformation( [ 1, 1, 1 ] )>, 
@@ -615,13 +614,11 @@ gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 4])]);
 
 # attr: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
 gap> SmallInverseSemigroupGeneratingSet([RandomTransformation(10)]);
-Error, Semigroups: SmallInverseSemigroupGeneratingSet: usage,
-the argument must satisfy IsGeneratorsOfInverseSemigroup
+Error, the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 # attr: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
 gap> SmallInverseMonoidGeneratingSet([RandomMatrix(IsBooleanMat, 10)]);
-Error, Semigroups: SmallInverseMonoidGeneratingSet: usage,
-the argument must satisfy IsGeneratorsOfInverseSemigroup
+Error, the argument must satisfy IsGeneratorsOfInverseSemigroup
 
 # attr: SmallInverseMonoidGeneratingSet: for One
 gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 3])]);
@@ -820,8 +817,7 @@ fail
 gap> D := First(DClasses(S), x -> not IsRegularGreensClass(x));
 <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 0], [0, 0, 1]])>
 gap> InjectionPrincipalFactor(D);
-Error, Semigroups: InjectionPrincipalFactor: usage,
-the argument <D> must be a regular D-class,
+Error, the argument <D> must be a regular D-class
 
 # attr: MultiplicativeNeutralElement
 gap> S := Semigroup([BooleanMat([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
@@ -1116,8 +1112,7 @@ gap> S := MonogenicSemigroup(4, 2);
 <commutative non-regular transformation semigroup of size 5, degree 6 with 1 
  generator>
 gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
-Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
-the argument <D> must be a regular D-class,
+Error, the argument <D> must be a regular D-class
 
 # attrTest6:
 # UnderlyingSemigroupOfSemigroupWithAdjoinedZero
@@ -1417,8 +1412,8 @@ gap> InversesOfSemigroupElement(S, (1, 3, 2));
 # FIXME This test fails due to the library method
 gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
 gap> InversesOfSemigroupElement(S, Transformation([1, 3, 2]));
-Error, Semigroups: InversesOfSemigroupElement: usage,
-the second arg (a mult. element) must belong to the first arg (a semigroup),
+Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\
+emigroup)
 gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
 gap> InversesOfSemigroupElement(S, S.1);
@@ -1862,8 +1857,8 @@ true
 gap> S := PartitionMonoid(4);
 <regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> x := MinimalSemigroupGeneratingSet(S);
-Error, Semigroups: MinimalSemigroupGeneratingSet: error,
-no further methods for computing minimal generating sets are implemented,
+Error, no further methods for computing minimal generating sets are implemente\
+d
 
 #  MinimalMonoidGeneratingSet: for a trivial monoid, 1
 gap> S := FreeMonoid(1);;
@@ -1951,18 +1946,14 @@ gap> NambooripadLeqRegularSemigroup(S) = NaturalLeqInverseSemigroup(S);
 true
 gap> S := FreeSemigroup(3);;
 gap> NambooripadPartialOrder(S);
-Error, Semigroups: NambooripadPartialOrder: usage,
-the argument is not a finite semigroup,
+Error, the argument is not a finite semigroup
 gap> NambooripadLeqRegularSemigroup(S);
-Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
-the argument is not a finite semigroup,
+Error, the argument is not a finite semigroup
 gap> S := ZeroSemigroup(5);;
 gap> NambooripadPartialOrder(S);
-Error, Semigroups: NambooripadPartialOrder: usage,
-the argument is not a regular semigroup,
+Error, the argument is not a regular semigroup
 gap> NambooripadLeqRegularSemigroup(S);
-Error, Semigroups: NambooripadLeqRegularSemigroup: usage,
-the argument is not a regular semigroup,
+Error, the argument is not a regular semigroup
 
 # Left/RightIdentity
 gap> S := Semigroup(Transformation([2, 4, 3, 4]), 

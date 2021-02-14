@@ -193,13 +193,11 @@ function(filter, mat, threshold, period)
   local checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 2nd argument must define a square matrix,");
+    ErrorNoReturn("the 2nd argument must define a square matrix");
   fi;
 
   if filter <> IsNTPMatrix then
-    ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given arguments,");
+    ErrorNoReturn("cannot create a matrix from the given arguments");
   fi;
 
   checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
@@ -207,9 +205,8 @@ function(filter, mat, threshold, period)
                                                            period);
   for row in mat do
     if not ForAll(row, checker) then
-      ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                    "the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(filter), ",");
+      ErrorNoReturn("the entries in the 2nd argument do not define a matrix ",
+                    "of type ", NameFunction(filter));
     fi;
   od;
 
@@ -225,23 +222,20 @@ function(filter, mat, threshold)
   local checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 2nd argument must define a square matrix,");
+    ErrorNoReturn("the 2nd argument must define a square matrix");
   fi;
 
   if filter <> IsTropicalMaxPlusMatrix
       and filter <> IsTropicalMinPlusMatrix then
-    ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given arguments,");
+    ErrorNoReturn("cannot create a matrix from the given arguments");
   fi;
 
   checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
                                                            threshold);
   for row in mat do
     if not ForAll(row, checker) then
-      ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                    "the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(filter), ",");
+      ErrorNoReturn("the entries in the 2nd argument do not define a matrix ",
+                    "of type ", NameFunction(filter));
     fi;
   od;
 
@@ -256,14 +250,12 @@ function(filter, mat)
   local row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 2nd argument must define a square matrix,");
+    ErrorNoReturn("the 2nd argument must define a square matrix");
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
                     IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
-    ErrorNoReturn("Semigroups: Matrix:\n",
-                  "cannot create a matrix from the given arguments,");
+    ErrorNoReturn("cannot create a matrix from the given arguments");
   fi;
 
   if filter = IsBooleanMat then
@@ -273,9 +265,8 @@ function(filter, mat)
   for row in mat do
     if not ForAll(row, SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter))
         then
-      ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                    "the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(filter), ",");
+      ErrorNoReturn("the entries in the 2nd argument do not define a matrix ",
+                    "of type ", NameFunction(filter));
     fi;
   od;
 
@@ -287,8 +278,7 @@ SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
 
   if not IsEmpty(mat)
       and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
-    ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 2nd argument <mat> does not give a rectangular table,");
+    ErrorNoReturn("the 2nd argument <mat> does not give a rectangular table");
   elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
     TryNextMethod();
   elif IsField(semiring) and IsFinite(semiring) then
@@ -306,9 +296,8 @@ SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
 
   for row in mat do
     if not ForAll(row, checker) then
-      ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                    "the entries in the 2nd argument do not define a matrix ",
-                    "of type ", NameFunction(IsIntegerMatrix), ",");
+      ErrorNoReturn("the entries in the 2nd argument do not define a matrix ",
+                    "of type ", NameFunction(IsIntegerMatrix));
     fi;
   od;
 
@@ -391,8 +380,7 @@ end);
 #     return RandomMatrixOp(arg[1], arg[2], arg[3]);
 #   fi;
 #
-#   ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
-#                 "the arguments must be: filter, pos int[, pos int[,",
+#   ErrorNoReturn(#                 "the arguments must be: filter, pos int[, pos int[",
 #                 " pos int]],");
 # end);
 
@@ -454,8 +442,7 @@ InstallMethod(ELM_LIST, "for a matrix over semiring",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then
-    ErrorNoReturn("Semigroups: ELM_LIST (for a matrix over semiring):\n",
-                  "the position is greater than the dimension of the matrix,");
+    ErrorNoReturn("the position is greater than the dimension of the matrix");
 
   fi;
   return mat![pos];
@@ -533,9 +520,8 @@ function(coll)
 
   dim := DimensionOfMatrixOverSemiring(Representative(coll));
   if not ForAll(coll, x -> DimensionOfMatrixOverSemiring(x) = dim) then
-    ErrorNoReturn("Semigroups: DimensionOfMatrixOverSemiringCollection: ",
-                  "usage,\nthe argument <coll> must be a collection of ",
-                  "matrices of equal dimension,");
+    ErrorNoReturn("the argument <coll> must be a collection of ",
+                  "matrices of equal dimension");
   fi;
   return dim;
 end);
@@ -766,8 +752,7 @@ function(x, y)
 
   if SEMIGROUPS_FilterOfMatrixOverSemiring(x) <>
       SEMIGROUPS_FilterOfMatrixOverSemiring(y) then
-    ErrorNoReturn("Semigroups: \\< (for matrices over a semiring):\n",
-                  "the matrices are not of the same type,");
+    ErrorNoReturn("the matrices are not of the same type");
   fi;
   n := Length(x![1]);
   if n < Length(y![1]) then

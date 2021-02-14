@@ -140,10 +140,10 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    ErrorNoReturn("Semigroups: \\.: usage,\n",
-                  "the second argument <n> should be a positive integer\n",
+    ErrorNoReturn(
+                  "the second argument <n> should be a positive integer",
                   "not greater than the number of generators of the semigroup ",
-                  "<S> in\nthe first argument,");
+                  "<S> inthe first argument");
   fi;
   return S[n];
 end);
@@ -198,16 +198,16 @@ function(arg)
 
   if Length(arg) = 0 then
     # no argument given, error
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
+    ErrorNoReturn(
                   "the second argument must be a combination ",
-                  "of generators,\nlists of generators, or semigroups,");
+                  "of generators,lists of generators, or semigroups");
   elif not IsSemigroup(arg[1]) then
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                  "the first argument must be a semigroup,");
+    ErrorNoReturn(
+                  "the first argument must be a semigroup");
   elif Length(arg) = 1 then
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                  "there must be a second argument, which specifies\n",
-                  "the generators of the ideal,");
+    ErrorNoReturn(
+                  "there must be a second argument, which specifies",
+                  "the generators of the ideal");
   elif Length(arg) = 2 and IsMatrix(arg[2]) then
     # special case for matrices, because they may look like lists
     return SemigroupIdealByGenerators(arg[1], [arg[2]]);
@@ -241,17 +241,17 @@ function(arg)
           Append(out, AsList(arg[i]));
         fi;
       else
-        ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
+        ErrorNoReturn(
                       "the second argument must be a ",
-                      "combination of generators,\n lists of generators, ",
-                      "or semigroups,");
+                      "combination of generators, lists of generators, ",
+                      "or semigroups");
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
   fi;
-  ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
+  ErrorNoReturn(
                 "the second argument must be a combination ",
-                "of generators,\nlists of generators, or semigroups,");
+                "of generators,lists of generators, or semigroups");
 end);
 
 InstallMethod(SemigroupIdealByGenerators,
@@ -266,9 +266,9 @@ InstallMethod(SemigroupIdealByGenerators,
 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
-    ErrorNoReturn("Semigroups: SemigroupIdealByGenerators: usage,\n",
+    ErrorNoReturn(
                   "the second argument <gens> do not all belong to the ",
-                  "semigroup,");
+                  "semigroup");
   fi;
   return SemigroupIdealByGeneratorsNC(S, gens, opts);
 end);

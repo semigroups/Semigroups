@@ -112,10 +112,10 @@ false
 gap> [x, x] in cong;
 true
 gap> [x, y, y] in cong;
-Error, the 1st argument <pair> must be a list of length 2
+Error, the 1st argument (a list) does not have length 2
 gap> [x, z] in cong;
-Error, elements of the 1st argument <pair> must be in the range of the second \
-argument <cong>,
+Error, the items in the 1st argument (a list) do not belong to the range of th\
+e 2nd argument (a right semigroup congruence)
 gap> t := Transformation([1, 3, 4, 1, 4]);;   # in i
 gap> [t, y] in cong;
 true
@@ -130,8 +130,8 @@ gap> im := ImagesElm(cong, x);;
 gap> Size(im);
 1
 gap> ImagesElm(cong, z);
-Error, Semigroups: ImagesElm: usage,
-the args <cong> and <elm> must refer to the same semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a Rees congruence)
 gap> yclass := CongruenceClassOfElement(cong, y);;
 gap> x in yclass;
 false
@@ -139,8 +139,8 @@ gap> tclass := CongruenceClassOfElement(cong, t);;
 gap> y in tclass;
 true
 gap> CongruenceClassOfElement(cong, z);
-Error, Semigroups: EquivalenceClassOfElement: usage,
-the second arg <elm> must be in the semigroup of first arg <cong>,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a Rees congruence)
 gap> xclass := CongruenceClassOfElement(cong, x);
 <congruence class of Transformation( [ 3, 4, 2, 4 ] )>
 gap> x in xclass;
@@ -165,8 +165,8 @@ gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
 gap> class1 := CongruenceClassOfElement(ci, Transformation([1, 1, 3, 1, 3]));;
 gap> class2 := CongruenceClassOfElement(cj, Transformation([1, 1, 3, 1, 3]));;
 gap> class1 * class2;
-Error, Semigroups: \*: usage,
-the args <c1> and <c2> must be classes of the same congruence,
+Error, the arguments (classes of Rees congruences) do not belong to the same c\
+ongruence
 gap> cc := JoinSemigroupCongruences(ci, cj);;
 gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
 16
@@ -182,8 +182,7 @@ gap> ck := ReesCongruenceOfSemigroupIdeal(K);
 <Rees congruence of <regular transformation semigroup ideal of degree 5 with
   1 generator> over <full transformation monoid of degree 5>>
 gap> JoinSemigroupCongruences(ci, ck);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-the args <c1> and <c2> must be congruences of the same semigroup,
+Error, the ranges of the arguments (Rees congruences) do not coincide
 
 # Generating pairs
 gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
@@ -250,8 +249,7 @@ gap> T := Semigroup([Transformation([2, 4, 1, 2])]);;
 gap> i4 := SemigroupIdeal(T, [Transformation([2, 4, 1, 2])]);;
 gap> c4 := ReesCongruenceOfSemigroupIdeal(i4);;
 gap> IsSubrelation(c4, c1);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (Rees congruences) do not coincide
 
 # EquivalenceRelation(Canonical)Lookup
 gap> S := FullTransformationMonoid(3);;

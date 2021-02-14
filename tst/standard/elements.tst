@@ -47,8 +47,7 @@ gap> IndexPeriodOfSemigroupElement(x);
 gap> IsIdempotent(x);
 false
 gap> IndexPeriodOfSemigroupElement(GeneratorsOfMagma(FreeMagma(1))[1]);
-Error, Semigroups: IndexPeriodOfSemigroupElement: usage,
-the argument <x> must be the generator of a semigroup,
+Error, the argument (a mult. elt.) is not the generator of a semigroup
 gap> x := Matrix(IsBooleanMat, [[0, 1], [1, 0]]);;
 gap> IndexPeriodOfSemigroupElement(x);
 [ 1, 2 ]
@@ -100,8 +99,7 @@ gap> SmallestIdempotentPower(x);
 gap> First([1 .. 100], i -> IsIdempotent(x ^ i)) = last;
 true
 gap> SmallestIdempotentPower(GeneratorsOfMagma(FreeMagma(1))[1]);
-Error, Semigroups: SmallestIdempotentPower: usage,
-the argument <x> must be the generator of a semigroup,
+Error, the argument (a mult. elt.) is not the generator of a semigroup
 
 # elements: IsMultiplicativeZero
 gap> S := SymmetricInverseMonoid(3);;

@@ -16,8 +16,7 @@ gap> SEMIGROUPS.StartTest();
 
 # boolmat: BooleanMat, error 1/7
 gap> BooleanMat([[true, false, 1], [0, 1, 0], [false, true, false]]);
-Error, Semigroups: BooleanMat: usage,
-the argmuent must be a non-empty list of homogeneous lists,
+Error, the argmuent must be a non-empty list of homogeneous lists
 
 # boolmat: BooleanMat, for 0s and 1s, 2/7
 gap> BooleanMat([[1, 0, 1], [0, 1, 0], [0, 1, 0]]);
@@ -42,8 +41,7 @@ Matrix(IsBooleanMat, [[1, 0], [0, 0]])
 
 # boolmat: BooleanMat, for successors, error, 7/7
 gap> BooleanMat([[1], [3, 4], [2], [5]]);
-Error, Semigroups: BooleanMat:
-the entries of each list must not exceed 4,
+Error, the entries of each list must not exceed 4
 
 # boolmat: AsBooleanMat, for transformation and pos int, 1/2
 gap> x := Transformation([1, 3, 4, 1, 3]);;
@@ -53,8 +51,7 @@ gap> Display(AsBooleanMat(x, 4));
 0 0 0 1
 1 0 0 0
 gap> AsBooleanMat(x, 3);
-Error, Semigroups: AsBooleanMat: usage,
-the transformation in the first argument must map [1 .. 3] to itself,
+Error, the transformation in the first argument must map [1 .. 3] to itself
 
 # boolmat: AsBooleanMat, for partial perm and pos int, 2/2
 gap> x := PartialPerm([1, 2, 3, 6, 8, 10],
@@ -72,8 +69,7 @@ gap> Display(AsBooleanMat(x));
 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 1 0 0 0 0 0
 gap> Display(AsBooleanMat(x, 3));
-Error, Semigroups: AsBooleanMat: usage,
-the partial perm in the first argument must map [1 .. 3] into itself,
+Error, the partial perm in the first argument must map [1 .. 3] into itself
 
 # boolmat: SEMIGROUPS_TypePrintStringOfMatrixOverSemiring, 1/1
 gap> x := BooleanMat([[1, 0, 0, 1],
@@ -193,11 +189,9 @@ gap> y := BooleanMat([[1, 0, 1],
 >                     [1, 0, 1],
 >                     [0, 1, 0]]);;
 gap> x in y;
-Error, Semigroups: \in: usage,
-the arguments <x> and <y> must be boolean matrices of equal dimensions,
+Error, the arguments <x> and <y> must be boolean matrices of equal dimensions
 gap> y in x;
-Error, Semigroups: \in: usage,
-the arguments <x> and <y> must be boolean matrices of equal dimensions,
+Error, the arguments <x> and <y> must be boolean matrices of equal dimensions
 
 # boolmat: OnBlist, for boolean mat and blist, 1/1
 gap> mat := BooleanMat([[1, 0, 0, 1],
@@ -451,9 +445,8 @@ gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0],
 >                       [0, 1, 1, 1, 1, 1],
 >                       [0, 1, 1, 0, 1, 0]]);;
 gap> CanonicalBooleanMat(SymmetricGroup(7), mat);
-Error, Semigroups: CanonicalBooleanMat: usage,
-the largest moved point of the first argument must not exceed the dimension
-of the Boolean matrix,
+Error, the largest moved point of the first argument must not exceed the dimen\
+sion of the Boolean matrix
 
 # boolmat: CanonicalBooleanMat (check that bliss is used in all 3 versions), 3/3
 gap> mat := Matrix(IsBooleanMat, [[1, 0, 1, 1, 0, 0, 0, 1],

@@ -397,8 +397,7 @@ function(S, V, mat)
 
   if n = 0 or k = 0 then
     # FIXME improve this
-    ErrorNoReturn("Semigroups: MatrixOverFiniteFieldLocalRightInverse: ",
-                  "usage,\n nullspace");
+    ErrorNoReturn("nullspace");
   fi;
 
   W := AsMutableList(V!.rows * mat);
@@ -477,8 +476,7 @@ function(S, x, y)
                                     eqs{[1 .. n]}{idx + deg});
 
     if res ^ (-1) = fail then
-      ErrorNoReturn("Semigroups: MatrixOverFiniteFieldSchutzGrpElement: ",
-                    "error,\nthe found element is not invertible,");
+      ErrorNoReturn("the found element is not invertible");
     fi;
   fi;
 

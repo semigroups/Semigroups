@@ -335,8 +335,7 @@ gap> OrbitGraphAsSets(SemigroupData(S));
 [ [ 2, 3, 4 ], [ 3, 5, 6 ], [ 3, 5, 7 ], [ 3, 5, 6 ], [ 3, 5, 6 ], 
   [ 3, 5, 6 ], [ 3, 5, 6 ] ]
 gap> PositionOfFound(SemigroupData(S));
-Error, Semigroups: PositionOfFound: usage,
-not looking for anything,
+Error, not looking for anything
 
 # acting: SizeOfSemigroupData
 gap> S := Semigroup([PartialPerm([1, 2, 4, 6, 8, 9],
@@ -347,8 +346,7 @@ gap> Enumerate(SemigroupData(S), 20);
 gap> SizeOfSemigroupData(SemigroupData(S));
 22
 gap> SizeOfSemigroupData(S);
-Error, Semigroups: SizeOfSemigroupData: usage,
-the arg <data> must be semigroup data,
+Error, the argument <data> must be a semigroup data object
 gap> Enumerate(SemigroupData(S));
 <closed semigroup data with 46 reps, 27 lambda-values, 28 rho-values>
 gap> S := Semigroup(S);;

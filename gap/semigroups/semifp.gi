@@ -165,8 +165,7 @@ function(filt, params)
     params[2] := Random(1, 8);
   fi;
   if not ForAll(params, IsPosInt) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS_ProcessRandomArgsCons: ",
-                  "usage,\nthe parameter must be pos ints,");
+    ErrorNoReturn("the arguments must be positive integers");
   fi;
   return params;
 end);
@@ -278,7 +277,7 @@ function(S)
 
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("the 1st argument (a semigroup) must ",
-                  "satisfy `IsMonoidAsSemigroup`,");
+                  "satisfy `IsMonoidAsSemigroup`");
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
@@ -499,9 +498,8 @@ SEMIGROUPS.ExtRepObjToString := function(ext_rep_obj)
   out := "";
   for i in [1, 3 .. Length(ext_rep_obj) - 1] do
     if ext_rep_obj[i] > Length(alphabet) then
-      ErrorNoReturn("SEMIGROUPS.ExtRepObjToString: the maximum value in an ",
-                    "odd position of the argument must be at most ",
-                    Length(alphabet), ",");
+      ErrorNoReturn("odd position of the argument must be at most ",
+                    Length(alphabet));
     fi;
     Add(out, alphabet[ext_rep_obj[i]]);
     if ext_rep_obj[i + 1] > 1 then
@@ -518,8 +516,7 @@ SEMIGROUPS.WordToString := function(word)
   out := "";
   for letter in word do
     if letter > Length(alphabet) then
-      ErrorNoReturn("SEMIGROUPS.WordToString: the maximum value in the",
-                    " argument be at most ", Length(alphabet), ",");
+      ErrorNoReturn("the argument be at most ", Length(alphabet));
     fi;
     Add(out, alphabet[letter]);
   od;

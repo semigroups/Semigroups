@@ -100,20 +100,20 @@ _ProcessArgs1 := function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) must be a pos int";
   fi;
   if Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
+    return "the 3rd argument (matrix dimension) must be a pos int";
   fi;
   if Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
   elif not IsPosInt(params[3]) then
-    return "the fourth argument (semiring threshold) must be a pos int,";
+    return "the 4th argument (semiring threshold) must be a pos int";
   fi;
   if Length(params) > 3 then
-    return "there must be at most four arguments,";
+    return "there must be at most four arguments";
   fi;
   return params;
 end;
@@ -170,25 +170,25 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) must be a pos int";
   fi;
   if Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
+    return "the 3rd argument (matrix dimension) must be a pos int";
   fi;
   if Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
   elif not IsPosInt(params[3]) then
-    return "the fourth argument (semiring threshold) must be a pos int,";
+    return "the 4th argument (semiring threshold) must be a pos int";
   fi;
   if Length(params) < 4 then  # period
     params[4] := Random(1, 20);
   elif not IsPosInt(params[4]) then
-    return "the fifth argument (semiring period) must be a pos int,";
+    return "the 5th argument (semiring period) must be a pos int";
   fi;
   if Length(params) > 4 then
-    return "there must be at most five arguments,";
+    return "there must be at most 5 arguments";
   fi;
 
   return params;
@@ -595,8 +595,7 @@ function(dim, threshold)
   local gens, i, j;
 
   if dim <> 2 then
-    ErrorNoReturn("Semigroups: FullTropicalMaxPlusMonoid: usage,\n",
-                  "the dimension must be 2,");
+    ErrorNoReturn("the dimension must be 2");
   fi;
 
   gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
@@ -708,8 +707,7 @@ function(dim, threshold)
       od;
     od;
   else
-    ErrorNoReturn("Semigroups: FullTropicalMinPlusMonoid: usage,\n",
-                  "the dimension must be 2 or 3,");
+    ErrorNoReturn("the dimension must be 2 or 3");
   fi;
 
   return Monoid(gens);

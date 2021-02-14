@@ -46,15 +46,14 @@ gap> S := FullTransformationMonoid(5);;
 gap> h := HClass(S, One(S));
 <Green's H-class: IdentityTransformation>
 gap> SameMinorantsSubgroup(h);
-Error, Semigroups: SameMinorantsSubgroup: usage,
-the parent semigroup of the group H-class <H> must be inverse,
+Error, the parent semigroup of the argument (a group H-class) must be inverse
 
 # attrinv: Minorants, error, 1
 gap> S := SymmetricInverseMonoid(3);;
 gap> f := PartialPerm([1, 2, 3, 4]);;
 gap> Minorants(S, f);
-Error, Semigroups: Minorants: usage,
-the second argument is not an element of the first,
+Error, the 2nd argument (a mult. elt.) is not an element of the 1st argument (\
+an inverse semigroup)
 gap> f := PartialPerm([1, 2, 3]);;
 gap> Set(Minorants(S, f));
 [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
@@ -650,13 +649,11 @@ gap> S := Semigroup(
 > 3)]);
 <commutative semigroup of 9x9 tropical min-plus matrices with 1 generator>
 gap> NaturalPartialOrder(S);
-Error, Semigroups: NaturalPartialOrder: usage,
-the argument is not an inverse semigroup,
+Error, the argument is not an inverse semigroup
 
 # attrinv: NaturalPartialOrder (for a semigroup), error, 2/2
 gap> NaturalPartialOrder(FreeInverseSemigroup(2));
-Error, Semigroups: NaturalPartialOrder: usage,
-the argument is not a finite semigroup,
+Error, the argument is not a finite semigroup
 
 # attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 1/2
 gap> S := Semigroup([
@@ -675,13 +672,11 @@ gap> S := Semigroup([
 >   [-6, -5, -4, -3, -2, 1, 2, 3, 5, 6], [-4, 2, 3, 4, 5, 6]])]);
 <pbr semigroup of degree 6 with 2 generators>
 gap> NaturalLeqInverseSemigroup(S);
-Error, Semigroups: NaturalLeqInverseSemigroup: usage,
-the argument is not an inverse semigroup,
+Error, the argument is not an inverse semigroup
 
 # attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 2/2
 gap> NaturalLeqInverseSemigroup(FreeInverseSemigroup(2));
-Error, Semigroups: NaturalLeqInverseSemigroup: usage,
-the argument is not a finite semigroup,
+Error, the argument is not a finite semigroup
 
 # attrinv: IsGreensDGreaterThanFunc (for an inverse op acting semigroup), 1/1
 gap> S := InverseSemigroup(
@@ -713,13 +708,11 @@ gap> PrimitiveIdempotents(S);
 
 # attrinv: PrimitiveIdempotents, semigroup, error, 1/2
 gap> PrimitiveIdempotents(FreeSemigroup(2));
-Error, Semigroups: PrimitiveIdempotents: usage,
-the argument is not a finite semigroup,
+Error, the argument is not a finite semigroup
 
 # attrinv: PrimitiveIdempotents, semigroup, error, 2/2
 gap> PrimitiveIdempotents(FreeBand(2));
-Error, Semigroups: PrimitiveIdempotents: usage,
-the argument is not an inverse semigroup,
+Error, the argument is not an inverse semigroup
 
 # attrinv: PrimitiveIdempotents, transformation semigroups
 gap> S := InverseSemigroup([
@@ -783,8 +776,8 @@ false
 gap> x in I;
 true
 gap> IsJoinIrreducible(S, RandomBipartition(1));
-Error, Semigroups: IsJoinIrreducible: usage,
-the second argument <x> is not an element of the first,
+Error, the 2nd argument (a mult. elt.) is not an element of the 1st argument (\
+an inverse semigroup)
 gap> IsJoinIrreducible(S, MultiplicativeZero(S));
 false
 
@@ -828,15 +821,15 @@ false
 gap> IsMajorantlyClosed(S, S);
 true
 gap> IsMajorantlyClosed(T, S);
-Error, Semigroups: IsMajorantlyClosed: usage,
-the second argument is not a subsemigroup of the first,
+Error, the 2nd argument (an inverse semigroup) is not a subsemigroup of the 1s\
+t argument (an inverse semigroup)
 gap> IsMajorantlyClosed(S, Elements(T));
 false
 gap> IsMajorantlyClosed(S, Elements(S));
 true
 gap> IsMajorantlyClosed(T, Elements(S));
-Error, Semigroups: IsMajorantlyClosed: usage,
-the second argument should be a subset of the first,
+Error, the 2nd argument (a mult. elt. coll) is not asubset of the 1st argument\
+ (an inverse semigroup)
 gap> IsMajorantlyClosed(S, [One(S)]);
 true
 
@@ -924,8 +917,8 @@ gap> MajorantClosure(S, T);
   <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>, 
   <block bijection: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ]> ]
 gap> MajorantClosure(T, S);
-Error, Semigroups: MajorantClosure: usage,
-the second argument is not a subset of the first,
+Error, the 2nd argument (a semigroup) is not a subset of the 1st argument (an \
+inverse semigroup)
 gap> MajorantClosure(S, Elements(T));
 [ <block bijection: [ 1, 2, 3, -1, -2, -3 ]>, 
   <block bijection: [ 1, 3, -1, -3 ], [ 2, -2 ]>, 
@@ -955,8 +948,8 @@ gap> MajorantClosure(S, Elements(T));
 gap> MajorantClosure(S, Elements(S)) = Elements(S);
 true
 gap> MajorantClosure(T, Elements(S));
-Error, Semigroups: MajorantClosure: usage,
-the second argument is not a subset of the first,
+Error, the 2nd argument (a mult. elt. coll.) is not a subset of the 1st argume\
+nt (an inverse semigroup)
 gap> MajorantClosure(S, [One(S)]);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]> ]
 
@@ -966,8 +959,7 @@ gap> S := InverseMonoid([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 gap> T := InverseSemigroup(
 > [PartialPerm([3], [4]), PartialPerm([1, 3, 5], [3, 5, 1])]);;
 gap> RightCosetsOfInverseSemigroup(S, T);
-Error, Semigroups: RightCosetsOfInverseSemigroup: usage,
-the second argument must be majorantly closed,
+Error, the 2nd argument (an inverse semigroup) must be majorantly closed
 gap> RightCosetsOfInverseSemigroup(S,
 > InverseSemigroup(MajorantClosure(S, T), rec(small := true)));
 [ [ <empty partial perm>, <identity partial perm on [ 1 ]>, [1,2], [1,3], 
@@ -997,8 +989,8 @@ gap> RightCosetsOfInverseSemigroup(S,
 gap> T := InverseSemigroup([PartialPerm([1, 2, 4, 6, 8], [2, 10, 3, 5, 7]),
 > PartialPerm([1, 3, 4, 5, 6, 7, 8], [4, 7, 6, 9, 10, 1, 3])]);;
 gap> RightCosetsOfInverseSemigroup(S, T);
-Error, Semigroups: RightCosetsOfInverseSemigroup: usage,
-the second argument should be a subsemigroup of the first,
+Error, the 2nd argument (an inverse semigroup) must be a subsemigroup of the 1\
+st argument (an inverse semigroup)
 
 # attrinv: RightCosetsOfInverseSemigroup, 2/2
 gap> S := InverseSemigroup([
@@ -1035,9 +1027,8 @@ gap> SupremumIdempotentsNC(Idempotents(DualSymmetricInverseMonoid(3)),
 > RandomBlockBijection(3));
 <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]>
 gap> SupremumIdempotentsNC(Transformation([1, 1]), 1);
-Error, Semigroups: SupremumIdempotentsNC: usage,
-the argument is not a collection of partial perms, block bijections,
-or partial perm bipartitions,
+Error, the argument is not a collection of partial perms, block bijections, or\
+ partial perm bipartitions
 
 # attrinv: InversesOfSemigroupElementNC, 1/1
 gap> S := InverseSemigroup(

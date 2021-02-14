@@ -88,15 +88,12 @@ function(n, m)
   local convert;
 
   if not IsPosInt(n) then
-    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
-                  "the first arg <n> must be a positive integer,");
+    ErrorNoReturn("the 1st argument <n> must be a positive integer");
   elif not (IsInt(m) and m >= 0) then
-    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
-                  "the second arg <m> must be a non-negative integer,");
+    ErrorNoReturn("the 2nd argument <m> must be a non-negative integer");
   elif m > n then
-    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
-                  "the second arg <m> must be no greater than the first arg ",
-                  "<n>,");
+    ErrorNoReturn("the 2nd argument <m> must be no greater than the ",
+                  "1st argument <n>");
   fi;
 
   convert := function(iter, x)
@@ -119,14 +116,12 @@ function(o, func, start)
   local func2, record;
 
   if not IsOrbit(o) then
-    ErrorNoReturn("Semigroups: IteratorByOrbFunc: usage,\n",
-                  "the first arg <o> must be an orbit,");
+    ErrorNoReturn("the 1st argument <o> must be an orbit");
   elif not IsFunction(func) then
-    ErrorNoReturn("Semigroups: IteratorByOrbFunc: usage,\n",
-                  "the second arg <func> must be a function,");
+    ErrorNoReturn("the 2nd argument <func> must be a function");
   fi;
 
-  # change 1 arg <func> to 2 arg
+  # change 1 argument <func> to 2 argument
   if NumberArgumentsFunction(func) = 1 then
     func2 := function(iter, x)
       return func(x);
@@ -173,16 +168,14 @@ function(record)
 
   if not (IsRecord(record) and IsBound(record.NextIterator)
                            and IsBound(record.ShallowCopy)) then
-    ErrorNoReturn("Semigroups: IteratorByNextIterator: usage,\n",
-                  "the arg <record> must be a record with components ",
-                  "`NextIterator'\nand `ShallowCopy',");
+    ErrorNoReturn("the argument <record> must be a record with components ",
+                  "`NextIterator' and `ShallowCopy'");
   elif IsRecord(record) and (IsBound(record.last_called_by_is_done)
                              or IsBound(record.next_value)
                              or IsBound(record.IsDoneIterator)) then
-    ErrorNoReturn("Semigroups: IteratorByNextIterator: usage,\n",
-                  "the arg <record> must be a record with no components named",
-                  "\n`last_called_by_is_done', `next_value', or ",
-                  "`IsDoneIterator',");
+    ErrorNoReturn("the argument <record> must be a record with no ",
+                  "components named `last_called_by_is_done', ",
+                  "`next_value', or `IsDoneIterator'");
   fi;
 
   iter := rec(last_called_by_is_done := false,
@@ -238,20 +231,15 @@ function(record, baseiter, convert, filts)
   if not IsRecord(record) or IsBound(record.baseiter)
       or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
       or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
-    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
-                  "the first arg <record> must be a record with no components",
-                  "named:\n",
-                  "`baseiter', `iterofiters', `IsDoneIterator', ",
-                  "`NextIterator', or\n`ShallowCopy'");
+    ErrorNoReturn("the 1st argument <record> must be a record with ",
+                  "no components named: `baseiter', `iterofiters',",
+                  "`IsDoneIterator', `NextIterator', or `ShallowCopy'");
   elif not IsIterator(baseiter) then
-    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
-                  "the second arg <baseiter> must be an iterator,");
+    ErrorNoReturn("the 2nd argument <baseiter> must be an iterator");
   elif not IsFunction(convert) then
-    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
-                  "the third arg <convert> must be a function,");
+    ErrorNoReturn("the 3rd argument <convert> must be a function");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
-                  "the fourth arg <filts> must be a list of filters,");
+    ErrorNoReturn("the 4th argument <filts> must be a list of filters");
   fi;
 
   record.baseiter := baseiter;
@@ -1035,8 +1023,8 @@ function(s)
       local rep;
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
-      # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
-      # this is no longer the case, and this is would be more complicated.
+      # GradedLambdaOrb(s, rep, false), if we use <true> as the last argument,
+      # then this is no longer the case, and this is would be more complicated.
 
       return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
     end;

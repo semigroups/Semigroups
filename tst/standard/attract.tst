@@ -106,8 +106,7 @@ gap> S := Semigroup(x, y);
 <subsemigroup of 10x5 Rees 0-matrix semigroup with 2 generators>
 gap> D := DClass(S, RMSElement(R, 6, (1, 3, 4, 2), 5));;
 gap> InjectionPrincipalFactor(D);
-Error, Semigroups: InjectionPrincipalFactor: usage,
-the argument <D> must be a regular D-class,
+Error, the argument <D> must be a regular D-class
 
 # attract: InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
@@ -177,8 +176,8 @@ gap> S := Semigroup([PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 > PartialPerm([1, 2, 3, 5], [4, 3, 5, 1])]);;
 gap> x := PartialPerm([1, 2, 3, 5], [5, 2, 6, 4]);;
 gap> InversesOfSemigroupElement(S, x);
-Error, Semigroups: InversesOfSemigroupElement: usage,
-the second arg (a mult. element) must belong to the first arg (a semigroup),
+Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\
+emigroup)
 
 # attract: InversesOfSemigroupElementNC, closed rho orb
 gap> S := Semigroup([

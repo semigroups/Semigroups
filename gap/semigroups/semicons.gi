@@ -25,9 +25,8 @@ function(arg)
       and arg[2] >= 0 then
     S := TrivialSemigroupCons(arg[1], arg[2]);
   else
-    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
-                  "the arguments must be a non-negative integer or ",
-                  "a filter and a non-negative\ninteger,");
+    ErrorNoReturn("the arguments must be a non-negative integer or ",
+                  "a filter and a non-negative integer");
   fi;
   SetIsTrivial(S, true);
   return S;
@@ -130,9 +129,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
-                  "the arguments must be two positive integers or a filter ",
-                  "and a two positive\nintegers,");
+    ErrorNoReturn("the arguments must be two positive integers or a filter ",
+                  "and a two positive integers");
   fi;
 
   S := MonogenicSemigroupCons(filter, m, r);
@@ -273,9 +271,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
-                  "the arguments must be two positive integers or a filter ",
-                  "and a two positive\nintegers,");
+    ErrorNoReturn("the arguments must be two positive integers or a filter ",
+                  "and a two positive integers");
   fi;
 
   S := RectangularBandCons(filter, m, n);
@@ -430,9 +427,8 @@ function(arg)
   fi;
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
-    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or a filter ",
-                  "and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or a filter ",
+                  "and a positive integer");
   fi;
 
   S := ZeroSemigroupCons(filter, n);
@@ -561,8 +557,7 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    ErrorNoReturn("Semigroups: ZeroSemigroupCons: usage:\n",
-                  "there is no Rees 0-matrix semigroup of order 1,");
+    ErrorNoReturn("there is no Rees 0-matrix semigroup of order 1");
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);
@@ -604,9 +599,8 @@ function(arg)
   fi;
 
   if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
-    ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or ",
-                  "a filter and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or ",
+                  "a filter and a positive integer");
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
@@ -657,9 +651,8 @@ function(arg)
   fi;
 
   if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
-    ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or ",
-                  "a filter and a positive integer,");
+    ErrorNoReturn("the arguments must be a positive integer or ",
+                  "a filter and a positive integer");
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
@@ -726,11 +719,10 @@ function(arg)
       and IsPosInt(arg[3]) then
     S := BrandtSemigroupCons(arg[1], arg[2], arg[3]);
   else
-    ErrorNoReturn("Semigroups: BrandtSemigroup: usage,\n",
-                   "the arguments must be a positive integer or a filter and",
-                   " a positive integer, or\n a perm group and positive ",
-                   "integer, or a filter, perm group, and positive\n ",
-                   "integer,");
+    ErrorNoReturn("the arguments must be a positive integer or a filter and",
+                   " a positive integer, or  a perm group and positive ",
+                   "integer, or a filter, perm group, and positive ",
+                   "integer");
   fi;
   SetIsZeroSimpleSemigroup(S, true);
   SetIsBrandtSemigroup(S, true);

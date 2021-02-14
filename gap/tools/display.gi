@@ -616,10 +616,9 @@ function(f, deg)
   local str, i;
 
   if deg < DegreeOfTransformation(f) then
-    ErrorNoReturn("Semigroups: TexString: usage,\n",
-                  "the second argument (the degree) should be at ",
-                  "least the degree of the first argument (a ",
-                  "transformation),");
+    ErrorNoReturn("the 2nd argument (a pos. int.) is less than ",
+                  "the degree of the 1st argument (a ",
+                  "transformation)");
   fi;
   str := "\\begin{pmatrix}\n  ";
   for i in [1 .. deg] do
