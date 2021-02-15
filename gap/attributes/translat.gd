@@ -77,3 +77,5 @@ DeclareAttribute("TranslationalElements",
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
 DeclareAttribute("UnderlyingGenerators", IsBitranslationsSemigroup);
+
+DeclareOperation("ImageOfTranslation", [IsTranslationsSemigroupElement]);
