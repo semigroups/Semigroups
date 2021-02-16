@@ -243,23 +243,23 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the second argument (number of generators) must be a pos int,";
+    return "the 2nd argument (number of generators) is not a pos int,";
   fi;
   if Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (matrix dimension) must be a pos int,";
+    return "the 3rd argument (matrix dimension) is not a pos int,";
   fi;
   if Length(params) < 3 then  # field
     params[3] := GF(Random(Primes), Random(1, 9));
   elif not IsField(params[3]) or not IsFinite(params[3]) then
-    return "the fourth argument must be a finite field,";
+    return "the 4th argument is not a finite field,";
   fi;
   if Length(params) < 4 then  # ranks
     params[4] := [1 .. params[2]];
   elif not IsList(params[4])
       or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then
-    return "the fifth argument (matrix ranks) must be a list of pos ints,";
+    return "the 5th argument (matrix ranks) is not a list of pos ints,";
   fi;
 
   if Length(params) > 4 then

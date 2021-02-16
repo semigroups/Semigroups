@@ -129,8 +129,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
-    ErrorNoReturn("the arguments must be two positive integers or a filter ",
-                  "and a two positive integers");
+    ErrorNoReturn("the arguments must be 2 positive integers or a filter ",
+                  "and a 2 positive integers");
   fi;
 
   S := MonogenicSemigroupCons(filter, m, r);
@@ -271,8 +271,8 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
-    ErrorNoReturn("the arguments must be two positive integers or a filter ",
-                  "and a two positive integers");
+    ErrorNoReturn("the arguments must be 2 positive integers or a filter ",
+                  "and a 2 positive integers");
   fi;
 
   S := RectangularBandCons(filter, m, n);

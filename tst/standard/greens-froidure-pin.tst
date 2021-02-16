@@ -1347,9 +1347,9 @@ true
 gap> Length(GeneratorsOfGroup(Range(x)));
 2
 gap> GeneratorsOfGroup(Range(x))[1];
-(1,2)(3,5)(4,6)(7,8)(9,11)(10,12)(13,19)(14,20)(15,21)(16,22)(17,23)(18,24)
+(1,2)(3,5)(4,7)(6,10)(8,13)(9,14)(11,12)(15,19)(16,20)(17,22)(18,23)(21,24)
 gap> GeneratorsOfGroup(Range(x))[2];
-(1,19,17,10)(2,20,18,9)(3,21,14,12)(4,22,13,11)(5,23,16,7)(6,24,15,8)
+(1,3,6,11)(2,4,8,14)(5,9,15,20)(7,12,17,23)(10,16,21,22)(13,18,24,19)
 gap> IsomorphismPermGroup(HClass(S, S.1));
 Error, the argument (a Green's H-class) is not a group
 

@@ -67,24 +67,20 @@ true
 gap> G1 := FreeGroup(1);;
 gap> act := function(x, g) return x; end;;
 gap> McAlisterTripleSemigroup(G1, Digraph([[1]]), [1], act);
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the first argument must be a finite group,
+Error, the 1st argument (a group) must be finite
 gap> x1 := Digraph([[1], [1], [3], [3], [1, 3, 5]]);;
 gap> G1 := AutomorphismGroup(x1);;
 gap> McAlisterTripleSemigroup(G1, x1, [1, 2, 5]);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the second argument must be a partial order digraph,
+Error, the 2nd argument (a digraph) must be a partial order digraph
 gap> x1 := Digraph([[1], [1, 2], [3], [3, 4], [1, 3, 5], [1, 3, 5, 6]]);;
 gap> McAlisterTripleSemigroup(G, x1, x1);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the first argument (a group) must act by order automorphisms on the second arg\
-ument (a partial order digraph),
+Error, the 1st argument (a group) must act by order automorphisms on the 2nd a\
+rgument (a partial order digraph)
 gap> y1 := Digraph([[1], [1, 2], [3], [3, 4], [1, 3, 5], [1, 3, 6]]);;
 gap> McAlisterTripleSemigroup(Group(()), x1, y1);
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the third argument <Y> must be an induced subdigraph of
-the second argument <X> with vertex labels corresponding
-to the vertices of <X> on which <Y> was induced,
+Error, the 3rd argument <X> (a digraph) must be an induced subdigraph of the 2\
+nd argument <Y> (a digraph) with vertex labels corresponding to the vertices o\
+f <X> on which <Y> was induced
 gap> G1 := SymmetricGroup([5 .. 11]);;
 gap> McAlisterTripleSemigroup(G1, x, y);;
 Error, Action not well-defined. See the manual section
@@ -92,28 +88,24 @@ Error, Action not well-defined. See the manual section
 gap> x2 := Digraph([[1], [2], [1, 2, 3], [1, 2, 4]]);;
 gap> G1 := AutomorphismGroup(x2);;
 gap> McAlisterTripleSemigroup (G1, x2, x2);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the third argument must be a join-semilattice digraph,
+Error, the 3rd argument (a digraph) must be a join-semilattice digraph
 gap> y2 := Digraph([[1]]);;
 gap> SetDigraphVertexLabel(y2, 1, 2);;
 gap> McAlisterTripleSemigroup(G, x, y2);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the out-neighbours of each vertex of <X> which is in <Y> must contain only ver\
-tices which are in <Y> - see the documentation for more detail,
+Error, the out-neighbours of each vertex of the 2nd argument (a digraph) which\
+ is in the 3rd argument <Y> (a digraph) must contain only vertices which are i\
+n <Y> - see the documentation for more details
 gap> McAlisterTripleSemigroup(TrivialSubgroup(G), x, y, OnPoints);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-every vertex of <X> must be in the orbit of some vertex of <X> which is in <Y>\
- - see the documentation for more detail,
+Error, every vertex of <X> must be in the orbit of some vertex of <X> which is\
+ in <Y> - see the documentation for more detail
 gap> y3 := Digraph([[1], [1, 2], [1, 3]]);;
 gap> McAlisterTripleSemigroup(Group([(2, 3), (4, 5)]), x, y3, OnPoints);
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-every vertex of <X> must be in the orbit of some vertex of <X> which is in <Y>\
- - see the documentation for more detail,
+Error, every vertex of <X> must be in the orbit of some vertex of <X> which is\
+ in <Y> - see the documentation for more detail
 gap> x3 := Digraph([[1], [2]]);;
 gap> McAlisterTripleSemigroup(AutomorphismGroup(x3), x3, y2);;
-Error, Semigroups: McAlisterTripleSemigroup: 
-<act> must fix the vertex of <X> which is the minimal vertex of <Y> - see the \
-documentation for more detail,
+Error, <act> must fix the vertex of <X> which is the minimal vertex of <Y> - s\
+ee the documentation for more detail
 
 #  IsomorphismSemigroup, AsSemigroup
 gap> ps := InverseSemigroup([PartialPerm([2, 3, 4, 5], [1, 3, 5, 4]),
@@ -178,8 +170,7 @@ true
 gap> T := Semigroup([PartialPerm([1], [3]),
 > PartialPerm([1, 2, 3], [2, 3, 1]), PartialPerm([1, 3], [2, 3])]);;
 gap> AsSemigroup(IsMcAlisterTripleSemigroup, T);
-Error, Semigroups: IsomorphismSemigroup: usage,
-the semigroup is not E-unitary,
+Error, the 2nd argument (a semigroup) is not E-unitary
 
 #  Other McAlisterTripleSemigroup tests
 gap> G := SymmetricGroup([2 .. 5]);;
@@ -217,22 +208,19 @@ true
 gap> RightOne(MTSE(M, 4, (2, 4)(3, 5))) = MTSE(M, 2, ());
 true
 gap> MTSE(M, 10, (2, 3, 4, 5));
-Error, Semigroups: McAlisterTripleSemigroupElement: usage,
-second argument should be a vertex label of the join-semilattice of the McAlis\
-ter triple,
+Error, the 2nd argument should be a vertex label of the join-semilattice of th\
+e McAlister triple
 gap> MTSE(M, 1, (5, 6));
-Error, Semigroups: McAlisterTripleSemigroupElement: usage,
-third argument must an element of the group of the McAlister triple,
+Error, the 3rd argument must an element of the group of the McAlister triple
 gap> MTSE(M, 3, (2, 4)(3, 5));
-Error, Semigroups: McAlisterTripleSemigroupElement: usage,
-the arguments do not specify an element of the McAlister triple semigroup,
+Error, the arguments do not specify an element of the McAlister triple semigro\
+up
 gap> MTSE(M, 1, ())[3];
-Error, Semigroups: ELM_LIST (for a McAlisterTripleSemigroupElement): usage,
-the index must be at most 2,
+Error, the 2nd argument (a pos. int.) must be at most 2
 gap> M1 := McAlisterTripleSemigroup(G, x, x);;
 gap> MTSE(M1, 4, (2, 4)(3, 5)) * MTSE(M, 4, (2, 5, 3, 4));
-Error, Semigroups: * (for an McAlisterTripleSemigroupElement): usage,
-the elements must be from the same McAlister triple semigroup,
+Error, the arguments (McAlister triple elements) do not belong to the same McA\
+lister triple semigroup
 
 #  IsomorphismSemigroups
 gap> x1 := Digraph([[1], [1, 2], [1, 3], [1, 2, 3, 4], [1, 2, 3, 5]]);;
@@ -358,8 +346,7 @@ gap> S := Semigroup([Bipartition([[1, 3, -1, -2, -3], [2]]),
 > Bipartition([[1, 3], [2], [-1, -2, -3]]),
 > Bipartition([[1, -2, -3], [2, 3, -1]])]);;
 gap> EUnitaryInverseCover(S);
-Error, Semigroups: EUnitaryInverseCover: usage,
-the argument must be an inverse semigroup,
+Error, the argument must be an inverse semigroup
 gap> S := InverseSemigroup([PartialPerm([1, 2, 4], [4, 3, 2]),
 > PartialPerm([1, 3], [3, 4])]);;
 gap> cov := EUnitaryInverseCover(S);;

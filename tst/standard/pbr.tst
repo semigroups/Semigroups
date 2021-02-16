@@ -21,19 +21,16 @@ PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
 
 # pbr: PBR, fails 1, 2/4
 gap> PBR([[]], [[], []]);
-Error, Semigroups: PBR: usage,
-the arguments must have equal lengths,
+Error, the arguments (dense lists) do not have equal length
 
 # pbr: PBR, fails 2, 3/4
 gap> PBR([["a", 1]], [[2]]);
-Error, Semigroups: PBR: usage,
-the entries in the arguments must be homogeneous lists,
+Error, expected a homogeneous list in position 
+1 of the 1st argument (a dense list) but found dense plain list
 
 # pbr: PBR, fails 3, 4/4
 gap> PBR([[0, 1], []], [[2, 1], []]);
-Error, Semigroups: PBR: usage,
-the entries in the first argument must be integers in [-2 .. -1]
- or [1 .. 2],
+Error, the entries in the arguments are not integers in [-2 .. -1] or [1 .. 2]
 
 # pbr: Star, 1/1
 gap> x := PBR([[3], [-4, 4], [-4, -2, 4], [4]],
@@ -76,8 +73,7 @@ true
 gap> InverseSemigroup(x);
 <inverse pbr semigroup of degree 4 with 1 generator>
 gap> InverseMonoid(x);
-Error, Semigroups: InverseMonoidByGenerators(for a pbr collection):
-not yet implemented,
+Error, not yet implemented
 
 # pbr: IsTransformationPBR, 1/1
 gap> x := PBR([[-3], [-1], [-3]],
@@ -196,20 +192,17 @@ PBR([ [ -3, 1, 2 ], [ -3, 1, 2 ], [ -2, 3 ] ],
 # pbr: AsPBR, for a boolean mat, fail, 1/1
 gap> x := Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]);;
 gap> AsPBR(x);
-Error, Semigroups: AsPBR: usage,
-the boolean matrix <x> must be of even dimension,
+Error, the 1st argument (a boolean matrix)is not of even dimension
 
 # pbr: AsPBR, for a boolean mat and pos int, fail, 1/5
 gap> x := Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]);;
 gap> AsPBR(x, 6);
-Error, Semigroups: AsPBR: usage,
-the boolean matrix <x> must be of even dimension,
+Error, the 1st argument (a boolean matrix) does not have even dimension
 
 # pbr: AsPBR, for a boolean mat and pos int, fail, 2/5
 gap> x := Matrix(IsBooleanMat, [[0, 0], [0, 1]]);;
 gap> AsPBR(x, 5);
-Error, Semigroups: AsPBR: usage,
-the second argument <n> must be even,
+Error, the 2nd argument (a pos. int) is not even
 
 # pbr: AsPBR, for a boolean mat and pos int, 3/5
 gap> x := Matrix(IsBooleanMat, [[0, 0], [0, 1]]);;
@@ -260,8 +253,7 @@ PBR([ [ -2, -1, 2 ], [ -2, 1, 2 ] ], [ [ -1, 1 ], [ -2 ] ])
 gap> IsTransformationPBR(x);
 false
 gap> AsTransformation(x);
-Error, Semigroups: AsTransformation: usage,
-the argument <x> must be a transformation PBR,
+Error, the argument (a pbr) does not define a transformation
 
 # pbr: AsPartialPerm, for a pbr, 1/1
 gap> x := PBR([[-1, 1], [-3, 2], [-4, 3], [4], [5]],
@@ -273,8 +265,7 @@ gap> AsPartialPerm(x);
 gap> x := PBR([[4], [-4, 2, 4], [-3], [4]],
 >  [[-3, -1], [-2, 3, 4], [-3, 4], []]);;
 gap> AsPartialPerm(x);
-Error, Semigroups: AsPartialPerm: usage,
-the argument <x> must be a partial perm PBR,
+Error, the argument (a pbr) does not define a partial perm
 
 # pbr: RandomPBR, for pos int, 1/1
 gap> RandomPBR(10);;
@@ -380,8 +371,7 @@ false
 # pbr, AsPermutation, for a pbr, 1
 gap> x := PBR([[-3, 1], [2], [-1, 3]], [[-1, 3], [-2], [-3, 1]]);;
 gap> AsPermutation(x);
-Error, Semigroups: AsPermutation: usage,
-the argument <x> must be a permutation PBR,
+Error, the argument (a pbr) does not define a permutation
 
 # pbr, AsPermutation, for a pbr, 2
 gap> x := PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);;
@@ -454,11 +444,9 @@ PBR([ [ 2, 3 ], [ -3, -2, -1, 2 ], [ -3, -2, 2 ] ],
 
 # Test TYPE_PBR errors
 gap> TYPE_PBR("a");
-Error, Semigroups: TYPE_PBR: usage,
-the argument must be a non-negative integer,
+Error, the argument is not a non-negative integer
 gap> TYPE_PBR(-1);
-Error, Semigroups: TYPE_PBR: usage,
-the argument must be a non-negative integer,
+Error, the argument is not a non-negative integer
 
 # Test String
 gap> x := PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);;

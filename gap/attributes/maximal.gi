@@ -60,8 +60,7 @@ S -> MaximalSubsemigroupsNC(S, rec(number := false)));
 #                  (true) include all generators, which may include 0 (default).
 #                  (false) remove 0 from each generating set, if present.
 
-InstallMethod(MaximalSubsemigroups,
-"for a semigroup and a record",
+InstallMethod(MaximalSubsemigroups, "for a semigroup and a record",
 [IsSemigroup, IsRecord],
 function(S, r)
   local opts, x;
@@ -76,7 +75,7 @@ function(S, r)
   # <rec.number> should be a boolean
   if IsBound(r.number) then
     if not IsBool(r.number) then
-      ErrorNoReturn("the record component <number> of the optional second ",
+      ErrorNoReturn("the record component <number> of the optional 2nd ",
                     "argument <r> should be true or false");
     fi;
     opts.number := r.number;
@@ -89,9 +88,9 @@ function(S, r)
     if not IsHomogeneousList(r.contain)
         or not IsDuplicateFreeList(r.contain)
         or not ForAll(r.contain, x -> x in S) then
-      ErrorNoReturn("the record component <contain> of the optional second ",
+      ErrorNoReturn("the record component <contain> of the optional 2nd ",
                     "argument <r> should be a duplicate-free list of ",
-                    "elements of the semigroup in the first argument, <S>");
+                    "elements of the semigroup in the 1st argument, <S>");
     fi;
     opts.contain := r.contain;
   else
@@ -101,9 +100,9 @@ function(S, r)
   # <rec.D> should be a D-class of <S>
   if IsBound(r.D) then
     if not IsGreensDClass(r.D) or not Parent(r.D) = S then
-      ErrorNoReturn("the record component <D> of the optional second ",
+      ErrorNoReturn("the record component <D> of the optional 2nd ",
                     "argument <r> should be a D-class of the semigroup in ",
-                    "the first argument, <S>");
+                    "the 1st argument, <S>");
     fi;
     opts.D := r.D;
   fi;
@@ -119,7 +118,7 @@ function(S, r)
       if not IsHomogeneousList(r.types)
           or not IsDuplicateFreeList(r.types)
           or not IsSubset([1 .. 6], r.types) then
-        ErrorNoReturn("the record component <types> of the optional second ",
+        ErrorNoReturn("the record component <types> of the optional 2nd ",
                       "argument <r> should be a subset of [ 1 .. 6 ]");
       fi;
 
@@ -140,7 +139,7 @@ function(S, r)
   # <rec.gens> should be <true> or <false>
   if IsBound(r.gens) then
     if not IsBool(r.gens) then
-      ErrorNoReturn("the record component <gens> of the optional second ",
+      ErrorNoReturn("the record component <gens> of the optional 2nd ",
                     "argument <r> should be true or false");
     fi;
     opts.gens := r.gens;

@@ -1939,8 +1939,7 @@ gap> S := ReflexiveBooleanMatMonoid(3);
 gap> S := ReflexiveBooleanMatMonoid(5);
 <monoid of 5x5 boolean matrices with 1414 generators>
 gap> S := ReflexiveBooleanMatMonoid(6);
-Error, Semigroups: ReflexiveBooleanMatMonoid:
-generators for this monoid are only known up to dimension 5,
+Error, generators for this monoid are only known up to dimension 5
 
 # Test HallBooleanMatMonoid
 gap> HallMonoid(1);
@@ -1952,8 +1951,7 @@ gap> Size(S);
 gap> S := HallMonoid(5);
 <monoid of 5x5 boolean matrices with 12 generators>
 gap> S := HallMonoid(6);
-Error, Semigroups: HallMonoid:
-generators for this monoid are only known up to dimension 5,
+Error, generators for this monoid are only known up to dimension 5
 
 # Test FullBooleanMatBooleanMatMonoid
 gap> FullBooleanMatMonoid(1);
@@ -1965,8 +1963,7 @@ true
 gap> S := FullBooleanMatMonoid(5);
 <monoid of 5x5 boolean matrices with 13 generators>
 gap> S := FullBooleanMatMonoid(6);
-Error, Semigroups: FullBooleanMatMonoid:
-generators for this monoid are only known up to dimension 5,
+Error, generators for this monoid are only known up to dimension 5
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

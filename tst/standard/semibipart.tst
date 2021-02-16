@@ -43,8 +43,7 @@ gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection group of size 2, degree 3 with 1 generator>
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup,
 > FullTransformationMonoid(2));
-Error, Semigroups: IsomorphismSemigroup: usage,
-the second arg must be an inverse semigroup,
+Error, the 2nd argument must be an inverse semigroup
 
 # AsSemigroup: 
 #   convert from IsPBRSemigroup to IsBipartitionSemigroup
@@ -2528,8 +2527,7 @@ gap> AsSemigroup(IsBipartitionSemigroup, last);
 gap> NaturalLeqInverseSemigroup(last);
 function( x, y ) ... end
 gap> NaturalLeqInverseSemigroup(PartitionMonoid(2));
-Error, Semigroups: NaturalLeqInverseSemigroup: usage,
-the argument is not an inverse semigroup,
+Error, the argument is not an inverse semigroup
 
 # Test NaturalPartialOrder
 gap> NaturalPartialOrder(DualSymmetricInverseMonoid(3));

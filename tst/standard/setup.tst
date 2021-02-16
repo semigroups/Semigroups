@@ -1073,7 +1073,8 @@ gap> SchutzGpMembership(R)(schutz, ());
 true
 
 # SchutzGpMembership, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), 
+> Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> M := Semigroup(MTSE(M, 2, (2, 3)), MTSE(M, 3, (2, 3)));;
 gap> o := LambdaOrb(M);; Enumerate(o);;
 gap> schutz := LambdaOrbStabChain(o, 3);;

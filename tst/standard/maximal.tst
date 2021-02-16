@@ -69,51 +69,41 @@ gap> T := FullTransformationMonoid(2);;
 gap> x := S.1;
 IdentityTransformation
 gap> MaximalSubsemigroups(S, rec(number := 1));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <number> of the optional second argument <r> should be
-true or false,
+Error, the record component <number> of the optional 2nd argument <r> should b\
+e true or false
 gap> MaximalSubsemigroups(S, rec(number := false));
 [  ]
 gap> MaximalSubsemigroups(S, rec(contain := 1));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <contain> of the optional second argument <r> should be a
-duplicate-free list of elements of the semigroup in the first argument, <S>,
+Error, the record component <contain> of the optional 2nd argument <r> should \
+be a duplicate-free list of elements of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(contain := [0, Group(())]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <contain> of the optional second argument <r> should be a
-duplicate-free list of elements of the semigroup in the first argument, <S>,
+Error, the record component <contain> of the optional 2nd argument <r> should \
+be a duplicate-free list of elements of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(contain := [0, 0]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <contain> of the optional second argument <r> should be a
-duplicate-free list of elements of the semigroup in the first argument, <S>,
+Error, the record component <contain> of the optional 2nd argument <r> should \
+be a duplicate-free list of elements of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(contain := [0]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <contain> of the optional second argument <r> should be a
-duplicate-free list of elements of the semigroup in the first argument, <S>,
+Error, the record component <contain> of the optional 2nd argument <r> should \
+be a duplicate-free list of elements of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(contain := [Transformation([2, 1])]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <contain> of the optional second argument <r> should be a
-duplicate-free list of elements of the semigroup in the first argument, <S>,
+Error, the record component <contain> of the optional 2nd argument <r> should \
+be a duplicate-free list of elements of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(contain := [x]));
 [  ]
 gap> MaximalSubsemigroups(S, rec(D := 0));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <D> of the optional second argument <r> should be a
-D-class of the semigroup in the first argument, <S>,
+Error, the record component <D> of the optional 2nd argument <r> should be a D\
+-class of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(D := HClass(S, x)));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <D> of the optional second argument <r> should be a
-D-class of the semigroup in the first argument, <S>,
+Error, the record component <D> of the optional 2nd argument <r> should be a D\
+-class of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(D := DClass(T, x)));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <D> of the optional second argument <r> should be a
-D-class of the semigroup in the first argument, <S>,
+Error, the record component <D> of the optional 2nd argument <r> should be a D\
+-class of the semigroup in the 1st argument, <S>
 gap> MaximalSubsemigroups(S, rec(D := DClass(S, x)));
 [  ]
 gap> MaximalSubsemigroups(S, rec(gens := 0));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <gens> of the optional second argument <r> should be true
-or false,
+Error, the record component <gens> of the optional 2nd argument <r> should be \
+true or false
 gap> MaximalSubsemigroups(S, rec(gens := true));
 [  ]
 gap> MaximalSubsemigroups(S, rec(types := 0));
@@ -128,21 +118,17 @@ gap> MaximalSubsemigroups(R, rec(types := 0));
 <subsemigroup of 2x1 Rees 0-matrix semigroup with 2 generators> ]
 gap> R := ReesMatrixSemigroup(S, [[x]]);;
 gap> MaximalSubsemigroups(R, rec(types := 0));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <types> of the optional second argument <r> should be a
-subset of [ 1 .. 6 ],
+Error, the record component <types> of the optional 2nd argument <r> should be\
+ a subset of [ 1 .. 6 ]
 gap> MaximalSubsemigroups(R, rec(types := [0, Group(())]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <types> of the optional second argument <r> should be a
-subset of [ 1 .. 6 ],
+Error, the record component <types> of the optional 2nd argument <r> should be\
+ a subset of [ 1 .. 6 ]
 gap> MaximalSubsemigroups(R, rec(types := [0, 0]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <types> of the optional second argument <r> should be a
-subset of [ 1 .. 6 ],
+Error, the record component <types> of the optional 2nd argument <r> should be\
+ a subset of [ 1 .. 6 ]
 gap> MaximalSubsemigroups(R, rec(types := [0]));
-Error, Semigroups: MaximalSubsemigroups: usage,
-the record component <types> of the optional second argument <r> should be a
-subset of [ 1 .. 6 ],
+Error, the record component <types> of the optional 2nd argument <r> should be\
+ a subset of [ 1 .. 6 ]
 gap> MaximalSubsemigroups(R, rec(types := [1]));
 [  ]
 gap> MaximalSubsemigroups(R, rec(types := [3, 4, 6]));

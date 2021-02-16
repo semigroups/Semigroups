@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  normalizer.gi
-##  Copyright (C) 2014-15                                James D. Mitchell
+##  Copyright (C) 2014-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -22,7 +22,7 @@ SEMIGROUPS.NormalizerOptsRec := function(S, opts)
   if not IsBound(opts.lambdastab) then
     opts.lambdastab := true;
   elif not IsBool(opts.lambdastab) then
-    ErrorNoReturn("the component `lambdastab' must be a boolean");
+    ErrorNoReturn("the component `lambdastab' is not a boolean");
   fi;
 
   if (IsPartialPermSemigroup(S) and IsInverseSemigroup(S)) then
@@ -30,7 +30,7 @@ SEMIGROUPS.NormalizerOptsRec := function(S, opts)
   elif not IsBound(opts.rhostab) then
     opts.rhostab := true;
   elif not IsBool(opts.rhostab) then
-    ErrorNoReturn("the component `rhostab' must be a boolean");
+    ErrorNoReturn("the component `rhostab' is not a boolean");
   fi;
 
   return opts;
@@ -73,17 +73,17 @@ SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
   local o, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
-    ErrorNoReturn("the first arg must be a permutation group");
+    ErrorNoReturn("the 1st argument is not a permutation group");
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)
           or IsBipartitionSemigroup(S)) then
-    ErrorNoReturn("the second arg must be a semigroup of transformations, ",
+    ErrorNoReturn("the 2nd argument is not a semigroup of transformations, ",
                   "partial perms or bipartitions");
   fi;
 
   if not IsRecord(opts) then
-    ErrorNoReturn("the third argument must be a record");
+    ErrorNoReturn("the 3rd argument is not a record");
   fi;
 
   if IsTrivial(G) then
@@ -95,7 +95,7 @@ SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
   # the example of the JonesMonoid(8), and the inverse semigroup example
   # immediately after it in normalizer.tst show that calculating the stabilizer
   # of lambda/rho values isn't always worth it. But then the test file is 2
-  # second quicker with this than without...
+  # 2nd quicker with this than without...
 
   if opts.lambdastab then
     o := SEMIGROUPS.LambdaOrbForNormalizer(G, S, LT);
@@ -177,17 +177,17 @@ SEMIGROUPS.NonDeterministicNormalizer := function(G, S, opts)
        "`random' set to <false> for a deterministic (but slower) answer.");
 
   if not IsPermGroup(G) then
-    ErrorNoReturn("the first arg must be a permutation group");
+    ErrorNoReturn("the 1st argument is not a permutation group");
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
           IsBipartitionSemigroup(S)) then
-    ErrorNoReturn("the second arg must be a semigroup of ",
+    ErrorNoReturn("the 2nd argument is not a semigroup of ",
                   "transformations, partial perms or bipartitions");
   fi;
 
   if not IsRecord(opts) then
-    ErrorNoReturn("the third arg must be a record");
+    ErrorNoReturn("the 3rd argument is not a record");
   fi;
 
   if IsTrivial(G) then
