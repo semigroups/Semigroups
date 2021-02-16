@@ -35,7 +35,7 @@ BindGlobal("TYPE_PBR",
 function(n)
 
   if not IsInt(n) or n < 0 then
-    ErrorNoReturn("the argument must be a non-negative integer");
+    ErrorNoReturn("the argument is not a non-negative integer");
   fi;
 
   n := n + 1;  # since the degree can be 0
@@ -102,7 +102,7 @@ end);
 InstallMethod(InverseMonoidByGenerators,
 [IsPBRCollection],
 function(coll)
-  ErrorNoReturn("(for a pbr collection):not yet implemented");
+  ErrorNoReturn("not yet implemented");
 end);
 
 # FIXME see the comment above, this is not really correct.
@@ -348,14 +348,14 @@ function(x, n)
   return PBRNC(out[1], out[2]);
 end);
 
-InstallMethod(AsPBR, "for a boolean matrix",
-[IsBooleanMat],
+InstallMethod(AsPBR, "for a boolean matrix", [IsBooleanMat],
 function(x)
   local dim, succ;
 
   dim := DimensionOfMatrixOverSemiring(x);
   if not IsEvenInt(dim) then
-    ErrorNoReturn("the boolean matrix <x> must be of even dimension");
+    ErrorNoReturn("the 1st argument (a boolean matrix)is not of ",
+                  "even dimension");
   fi;
   succ := Successors(x);
   return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
@@ -367,13 +367,14 @@ function(mat, n)
   local m, nbs, k, i, j;
 
   if not IsEvenInt(n) then
-    ErrorNoReturn("the second argument <n> must be even");
+    ErrorNoReturn("the 2nd argument (a pos. int) is not even");
   fi;
 
   m := DimensionOfMatrixOverSemiring(mat);
 
   if not IsEvenInt(m) then
-    ErrorNoReturn("the boolean matrix <x> must be of even dimension");
+    ErrorNoReturn("the 1st argument (a boolean matrix) ", 
+                  "does not have even dimension");
   fi;
 
   nbs := [List([1 .. n / 2], x -> []),
@@ -434,7 +435,7 @@ function(x)
   local out, n, i;
 
   if not IsTransformationPBR(x) then
-    ErrorNoReturn("the argument <x> must be a transformation PBR");
+    ErrorNoReturn("the argument (a pbr) does not define a transformation");
   fi;
 
   out := [];
@@ -453,7 +454,7 @@ InstallMethod(AsPartialPerm, "for a pbr",
 [IsPBR],
 function(x)
   if not IsPartialPermPBR(x) then
-    ErrorNoReturn("the argument <x> must be a partial perm PBR");
+    ErrorNoReturn("the argument (a pbr) does not define a partial perm");
   fi;
   return AsPartialPerm(AsBipartition(x));
 end);
@@ -464,7 +465,7 @@ InstallMethod(AsPermutation, "for a pbr",
 [IsPBR],
 function(x)
   if not IsPermPBR(x) then
-    ErrorNoReturn("the argument <x> must be a permutation PBR");
+    ErrorNoReturn("the argument (a pbr) does not define a permutation");
   fi;
   return AsPermutation(AsBipartition(x));
 end);
@@ -491,19 +492,26 @@ function(left, right)
   local deg, i;
 
   if Length(left) <> Length(right) then
-    ErrorNoReturn("the arguments must have equal lengths");
+    ErrorNoReturn("the arguments (dense lists) do not have equal length");
   fi;
 
   deg := Length(left);
 
   for i in [1 .. deg] do
-    if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
-      ErrorNoReturn("the entries in the arguments must be homogeneous lists");
+    if not IsHomogeneousList(left[i]) then
+      ErrorNoReturn("expected a homogeneous list in position ", i,
+                    " of the 1st argument (a dense list) but found ",
+                    TNAM_OBJ(left[i]));
+    elif not IsHomogeneousList(right[i]) then
+      ErrorNoReturn("expected a homogeneous list in position ", i,
+                    " of the 2nd argument (a dense list) but found ",
+                    TNAM_OBJ(left[i]));
     elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0
                                      and j <= deg and j >= -deg) then
-      ErrorNoReturn("the entries in the first argument must be integers ",
+      # TODO more informative
+      ErrorNoReturn("the entries in the arguments are not integers ",
                     "in [", -deg, " .. -1] or [1 .. ", deg, "]");
     fi;
   od;

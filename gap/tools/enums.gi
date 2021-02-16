@@ -23,31 +23,27 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    ErrorNoReturn(
-                  "the first argument <obj> must be a domain or a collections",
+    ErrorNoReturn("the 1st argument <obj> is not a domain or a collections",
                   "family");
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
     ErrorNoReturn(
-                  "the second argument <baseenum> must be an enumerator or a ",
+                  "the 2nd argument <baseenum> is not an enumerator or a ",
                   "list");
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
-    ErrorNoReturn(
-                  "the third and fourth arguments <convert_out> and ",
-                  "<convert_in>must be functions");
+    ErrorNoReturn("the 3rd and 4th arguments <convert_out> and ",
+                  "<convert_in> is not functions");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorNoReturn(
-                  "the fifth argument <filts> must be a list of filters");
+    ErrorNoReturn("the 5th argument <filts> is not a list of filters");
   elif not (IsRecord(record) and IsMutable(record))
       or IsBound(record.baseenum)
       or IsBound(record.convert_out)
       or IsBound(record.convert_in)
       or IsBound(record.NumberElement)
       or IsBound(record.ElementNumber) then
-    ErrorNoReturn(
-                  "the sixth argument <record> must be a mutable record",
-                  "with no components",
-                  "named:`baseenum', `convert_out', `convert_in',",
-                  "`ElementNumber', or `NumberElement'");
+    ErrorNoReturn("the 6th argument <record> is not a mutable record ",
+                  "with no components named: `baseenum', ",
+                  "`convert_out', `convert_in',`ElementNumber', ",
+                  "or `NumberElement'");
   fi;
 
   record.baseenum := baseenum;
@@ -106,26 +102,22 @@ function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    ErrorNoReturn(
-                  "the first argument <obj> must be a domain or a collections ",
+    ErrorNoReturn("the 1st argument is not a domain or a collections ",
                   "family");
   elif not IsRecord(record)
       or IsBound(record.ElementNumber)
       or IsBound(record.NumberElement)
       or IsBound(record.baseenum)
       or IsBound(record.enumofenums) then
-    ErrorNoReturn(
-                  "the second argument  <record> must be a record",
-                  "with no components named:",
+    ErrorNoReturn("the 2nd argument must be a record ",
+                  "with no components named: ",
                   "`NumberElement', `ElementNumber', `baseenum', or ",
                   "`enumofenums'");
-    # TODO add check for third arg
+    # TODO add check for 3rd arg
   elif not IsFunction(convert) then
-    ErrorNoReturn(
-                  "the fourth argument <convert> must be a function");
+    ErrorNoReturn("the 4th argument is not a function");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorNoReturn(
-                  "the fifth argument <filts> must be a list of filters");
+    ErrorNoReturn("the 5th argument is not a list of filters");
   fi;
 
   record.baseenum := baseenum;
@@ -704,16 +696,13 @@ InstallGlobalFunction(EnumeratorOfArrangements,
 function(m, n)
   local convert_out, convert_in, fam;
 
-  if not IsPosInt(n) then
-    ErrorNoReturn(
-                  "the second argument <n> must be a positive integer");
-  elif not (IsInt(m) and m >= 0) then
-    ErrorNoReturn(
-                  "the first argument <m> must be a non-negative integer");
+  if not (IsInt(m) and m >= 0) then
+    ErrorNoReturn( "the 1st argument is not a non-negative integer");
+  elif not IsPosInt(n) then
+    ErrorNoReturn("the 2nd argument is not a positive integer");
   elif m > n then
-    ErrorNoReturn(
-                  "the first argument <m> must be no greater than the",
-                  "second argument <n>");
+    ErrorNoReturn("the 1st argument (an int) is not less than or equal to",
+                  "the 2nd argument (a pos. int.)");
   fi;
 
   convert_out := function(enum, x)

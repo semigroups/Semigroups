@@ -1257,7 +1257,7 @@ gap> x := IsomorphismPermGroup(H);;
 gap> Source(x) = H;
 true
 gap> Range(x);
-Group([ (1,3)(2,4)(5,6), (1,4,5)(2,3,6) ])
+Group([ (1,2)(3,5)(4,6), (1,3,6)(2,4,5) ])
 gap> Representative(H) ^ x;
 ()
 gap> y := InverseGeneralMapping(x);;

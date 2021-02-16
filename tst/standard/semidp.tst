@@ -54,52 +54,45 @@ gap> ProductCheck := function(product, arguments, homom)
 
 #  semidp: SEMIGROUPS.DirectProductOp, errors, 1
 gap> SEMIGROUPS.DirectProductOp(fail, fail, fail, fail, fail);
-Error, Semigroups: SEMIGROUPS.DirectProductOp: usage,
-the first argument <S> must be a non-empty list,
+Error, the 1st argument is not a non-empty list
 gap> SEMIGROUPS.DirectProductOp([], fail, fail, fail, fail);
-Error, Semigroups: SEMIGROUPS.DirectProductOp: usage,
-the first argument <S> must be a non-empty list,
+Error, the 1st argument is not a non-empty list
 
 #  semidp: DirectProductOp, for transformation semigroups, errors, 1
 gap> DirectProductOp([], Monoid(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([], Semigroup(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
 > Monoid(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
 > Semigroup(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 
 #  semidp: DirectProductOp, for partial perm semigroups, errors, 1
 gap> DirectProductOp([], Semigroup(PartialPerm([1 .. 3])));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([Semigroup(IdentityTransformation)],
 > Semigroup(PartialPerm([1 .. 3])));
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 
 #  semidp: DirectProductOp, for bipartition semigroups, errors, 1
 gap> DirectProductOp([], PartitionMonoid(1));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([PartitionMonoid(1)], PartitionMonoid(2));
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 
 #  semidp: DirectProductOp, for PBR semigroups, errors, 1
 gap> DirectProductOp([], FullPBRMonoid(1));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([FullPBRMonoid(1)], FullPBRMonoid(2));
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 
 #  semidp: DirectProductOp, for a mix of semigroups, errors, 1
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [0, ()]]);
@@ -107,11 +100,10 @@ gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [0, ()]]);
 gap> T := ReesMatrixSemigroup(SymmetricGroup(4), [[(1, 4, 3)], [()]]);
 <Rees matrix semigroup 1x2 over Sym( [ 1 .. 4 ] )>
 gap> DirectProductOp([], S);
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
+Error, the 1st argument (a list) is not non-empty
 gap> DirectProductOp([T], S);
-Error, Semigroups: DirectProductOp: usage,
-the second argument must be one of the semigroups contained in <list>,
+Error, the 2nd argument is not one of the semigroups contained in the 1st argu\
+ment (a list)
 gap> DirectProductOp([S, T, FreeSemigroup(1)], S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `DirectProductOp' on 2 arguments
@@ -587,9 +579,7 @@ Error, no 1st choice method found for `Embedding' on 2 arguments
 gap> D := DirectProduct(S, S, S);;
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings);
 gap> Embedding(D, 4);
-Error, Semigroups: Embedding: usage,
-the index <i> must be in the range [1 .. 3], since the direct product <D>
-consists of only 3 factors,
+Error, the 2nd argument (a pos. int.) is not in the range [1 .. 3]
 gap> Embedding(D, 1);
 MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
  generators>, <transformation semigroup of size 27, degree 12 with 27 
@@ -599,9 +589,8 @@ true
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[1]);
 gap> Unbind(SemigroupDirectProductInfo(D).nrfactors);
 gap> Embedding(D, 1);
-Error, Semigroups: Embedding: usage,
-the direct product information for <D> has become corrupted,
-please re-create the object,
+Error, the direct product information for the 1st argument (a semigroup) is co\
+rrupted, please re-create the object
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Embedding(D, 3);
 MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
@@ -610,9 +599,8 @@ MappingByFunction( <transformation semigroup of size 3, degree 4 with 3
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).embedding);
 gap> Embedding(D, 3);
-Error, Semigroups: Embedding: usage,
-the direct product information for <D> has become corrupted,
-please re-create the object,
+Error, the direct product information for the 1st argument (a semigroup) is co\
+rrupted, please re-create the object
 
 #  semidp: Embedding and Projection, for a semigroup with direct product info
 gap> list := [
@@ -663,9 +651,7 @@ Error, no 1st choice method found for `Projection' on 2 arguments
 gap> D := DirectProduct(S, S, S);;
 gap> Unbind(SemigroupDirectProductInfo(D).projections);
 gap> Projection(D, 4);
-Error, Semigroups: Projection: usage,
-the index <i> must be in the range [1 .. 3], since the direct product <D>
-consists of only 3 factors,
+Error, the 2nd argument (a pos. int.) is not in the range [1 .. 3]
 gap> Projection(D, 1);
 MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
  generators>, <transformation semigroup of size 3, degree 3 with 3 generators>
@@ -675,9 +661,8 @@ true
 gap> Unbind(SemigroupDirectProductInfo(D).projections[1]);
 gap> Unbind(SemigroupDirectProductInfo(D).nrfactors);
 gap> Projection(D, 1);
-Error, Semigroups: Projection: usage,
-the direct product information for <D> has become corrupted,
-please re-create the object,
+Error, the direct product information for the 1st argument (a semigroup) is co\
+rrupted, please re-create the object
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Projection(D, 3);
 MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
@@ -686,9 +671,8 @@ MappingByFunction( <transformation semigroup of size 27, degree 9 with 27
 gap> Unbind(SemigroupDirectProductInfo(D).projections[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).projection);
 gap> Projection(D, 3);
-Error, Semigroups: Projection: usage,
-the direct product information for <D> has become corrupted,
-please re-create the object,
+Error, the direct product information for the 1st argument (a semigroup) is co\
+rrupted, please re-create the object
 
 # Size
 

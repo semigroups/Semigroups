@@ -376,7 +376,7 @@ function(filter, S)
   local iso1, inv1, iso2, inv2;
 
   if not IsInverseSemigroup(S) then
-    ErrorNoReturn("the second arg must be an inverse semigroup");
+    ErrorNoReturn("the 2nd argument must be an inverse semigroup");
   fi;
 
   iso1 := IsomorphismPartialPermSemigroup(S);
