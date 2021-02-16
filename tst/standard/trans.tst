@@ -27,21 +27,18 @@ IdentityTransformation
 gap> CanonicalTransformation(IdentityTransformation, 2);
 IdentityTransformation
 gap> CanonicalTransformation(Transformation([1, 3, 2]), 2);
-Error, Semigroups: CanonicalTransformation: usage,
-the second argument (an integer) must be at least the degree of the first argu\
-ment (a transformation),
+Error, the second argument (an integer) must be at least the degree of the fir\
+st argument (a transformation)
 
 # Test TransformationByImageAndKernel
 gap> TransformationByImageAndKernel([1 .. 4],
 >                                   [[1, 2, 3], [4, 5], [6, 8], [7]]);
 Transformation( [ 1, 1, 1, 2, 2, 3, 4, 3 ] )
 gap> TransformationByImageAndKernel([1 .. 4], [[1, 2], [4, 5], [6, 8], [7]]);
-Error, Semigroups: TransformationByImageAndKernel: usage,
-the union of the second argument (a partition) must be [1 .. 7],
+Error, the union of the second argument (a partition) must be [1 .. 7]
 gap> TransformationByImageAndKernel([1 .. 4],
 > [[1, 2], [4, 5], [6, -1], [7]]);
-Error, Semigroups: TransformationByImageAndKernel: usage,
-the argument must be a list of lists of pos ints,
+Error, the argument must be a list of lists of pos ints
 gap> TransformationByImageAndKernel([1 .. 4],
 > [[1, 2], [4, 5], "a", [7]]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound

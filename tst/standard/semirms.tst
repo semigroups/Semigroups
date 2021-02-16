@@ -1823,7 +1823,7 @@ true
 gap> S := DihedralGroup(IsPermGroup, 4);
 Group([ (1,2), (3,4) ])
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
-<Rees matrix semigroup 1x1 over Group([ (1,3)(2,4), (1,2)(3,4) ])>
+<Rees matrix semigroup 1x1 over Group([ (1,3)(2,4), (1,4)(2,3) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1987,8 +1987,8 @@ gap> Matrix(Range(iso));
 # error checking
 gap> G := FullTransformationMonoid(4);;
 gap> RMSNormalization(ReesMatrixSemigroup(G, [[IdentityTransformation]]));
-Error, Semigroups: RMSNormalization: usage,
-the underlying semigroup <G> of the Rees matrix semigroup <R> must be a group,
+Error, the underlying semigroup of the argument (a  subsemigroup of a Rees mat\
+rix semigroup) does not satisfy IsGroupAsSemigroup
 
 # RZMSNormalization 1:
 # for a Rees 0-matrix semigroup over a group without an inverse op
@@ -2400,8 +2400,7 @@ Error, the argument must be a finite 0-simple semigroup
 
 # IsomorphismReesZeroMatrixSemigroup, error, 1/1
 gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
-Error, Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,
-the argument must be a 0-simple semigroup,
+Error, the argument (a semigroup) is not a 0-simple semigroup
 
 # IsomorphismReesMatrixSemigroup: for a simple semigroup
 gap> S := SemigroupIdeal(
@@ -2432,15 +2431,13 @@ gap> IsomorphismReesZeroMatrixSemigroup(S);;
 # IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
 gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 2]));;
 gap> IsomorphismReesMatrixSemigroup(S);
-Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
-the argument must be a simple semigroup,
+Error, the argument (a semigroup) is not simple semigroup
 
 # IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
-Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
-the argument must be a simple semigroup,
+Error, the argument (a semigroup) is not simple semigroup
 gap> IsomorphismReesZeroMatrixSemigroup(S);;
 gap> Size(Range(last));
 2
@@ -2514,8 +2511,7 @@ gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> x := MultiplicativeZero(S);;
 gap> func := ChooseHashFunction(x, 25531).func;;
-Error, Semigroups: ChooseHashFunction: error,
-cannot hash RZMS elements over this underlying semigroup,
+Error, cannot hash RZMS elements over this underlying semigroup
 
 # RandomSemigroup
 gap> RandomSemigroup(IsReesMatrixSemigroup);;
@@ -2523,52 +2519,40 @@ gap> RandomSemigroup(IsReesMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, Group(()));;
 gap> RandomSemigroup(IsReesMatrixSemigroup, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of rows) must be a pos int,
+Error, the 2nd argument (number of rows) must be a positive integer
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (number of columns) must be a pos int,
+Error, the 3rd argument (number of columns) must be a positive integer
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument must be a perm group,
+Error, the 4th argument must be a permutation group
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, Group(()), 1);
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most four arguments,
+Error, expected at most 3 arguments, found 4
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group(()));;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of rows) must be a pos int,
+Error, the 2nd argument (number of rows) must be a positive integer
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (number of columns) must be a pos int,
+Error, the 3rd argument (number of columns) must be a positive integer
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument must be a perm group,
+Error, the 4th argument must be a permutation group
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group(()), 1);
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most four arguments,
+Error, expected at most 3 arguments, found 4
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
 > Group(()));;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of rows) must be a pos int,
+Error, the 2nd argument (number of rows) must be a positive integer
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (number of columns) must be a pos int,
+Error, the 3rd argument (number of columns) must be a positive integer
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
 > "a");
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument must be a perm group,
+Error, the 4th argument must be a permutation group
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
 > Group(()), 1);
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most four arguments,
+Error, expected at most 3 arguments, found 4
 
 # Test RMSElementNC
 gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
@@ -2644,9 +2628,8 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 >  [(), (2, 4, 3), (1, 2)]]);
 <Rees 0-matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
 gap> IsomorphismPermGroup(R);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument <S> must be a subsemigroup of a Rees 0-matrix semigroup satisfyin\
-g IsGroupAsSemigroup,
+Error, the underlying semigroup of the argument (a  subsemigroup of a Rees 0-m\
+atrix semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := Semigroup(MultiplicativeZero(R));;
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 

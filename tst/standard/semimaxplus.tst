@@ -457,17 +457,13 @@ gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 5);;
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, 2);;
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (matrix dimension) must be a pos int,
+Error, the 3rd argument (matrix dimension) must be a pos int
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument (semiring threshold) must be a pos int,
+Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, 2, 2);;
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most four arguments,
+Error, there must be at most four arguments
 gap> RandomMonoid(IsMaxPlusMatrixMonoid);;
 gap> RandomMonoid(IsMaxPlusMatrixMonoid, 2);;
 gap> RandomMonoid(IsMaxPlusMatrixMonoid, 2, 5);;
@@ -476,57 +472,43 @@ gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2);;
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 5);;
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, 2);;
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, "a");
-Error, Semigroups: RandomMonoid: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the third argument (matrix dimension) must be a pos int,
+Error, the 3rd argument (matrix dimension) must be a pos int
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the fourth argument (semiring threshold) must be a pos int,
+Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, 2, 2);;
-Error, Semigroups: RandomMonoid: usage,
-there must be at most four arguments,
+Error, there must be at most four arguments
 gap> RandomSemigroup(IsNTPMatrixSemigroup);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 5);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, 2);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (matrix dimension) must be a pos int,
+Error, the 3rd argument (matrix dimension) must be a pos int
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument (semiring threshold) must be a pos int,
+Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, 2, 2);;
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most five arguments,
+Error, there must be at most 5 arguments
 gap> RandomMonoid(IsNTPMatrixMonoid);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 5);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, 2);;
 gap> RandomMonoid(IsNTPMatrixMonoid, "a");
-Error, Semigroups: RandomMonoid: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the third argument (matrix dimension) must be a pos int,
+Error, the 3rd argument (matrix dimension) must be a pos int
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the fourth argument (semiring threshold) must be a pos int,
+Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, 2, 2);;
-Error, Semigroups: RandomMonoid: usage,
-there must be at most five arguments,
+Error, there must be at most 5 arguments
 
 # IsFinite, IsTorsion, NormalizeSemigroup
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]])));
@@ -610,8 +592,7 @@ gap> Range(map);
 
 # FullTropicalMaxPlusMonoid
 gap> FullTropicalMaxPlusMonoid(3, 1);
-Error, Semigroups: FullTropicalMaxPlusMonoid: usage,
-the dimension must be 2,
+Error, the 1st argument (dimension) must be 2
 gap> S := FullTropicalMaxPlusMonoid(2, 1);
 <monoid of 2x2 tropical max-plus matrices with 6 generators>
 gap> Size(S);
@@ -643,8 +624,7 @@ gap> S := FullTropicalMinPlusMonoid(3, 1);
 gap> Size(S);
 19683
 gap> S := FullTropicalMinPlusMonoid(4, 3);
-Error, Semigroups: FullTropicalMinPlusMonoid: usage,
-the dimension must be 2 or 3,
+Error, the 1st argument (dimension) must be 2 or 3
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

@@ -414,8 +414,7 @@ gap> x := Bipartition([[1, 5], [2, 4, 8, 10],
 >                      [3, 6, 7, -1, -2], [9, -4, -6, -9],
 >                      [-3, -5], [-7, -8], [-10]]);;
 gap> AsTransformation(x);
-Error, Semigroups: AsTransformation (for a bipartition):
-the argument does not define a transformation,]]></Example>
+Error, the argument (a bipartition) does not define a transformation]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -471,8 +470,7 @@ gap> x := Bipartition([[1, -2, -4], [2, 3, 4, -3], [-1]]);;
 gap> IsPartialPermBipartition(x);
 false
 gap> AsPartialPerm(x);
-Error, Semigroups: AsPartialPerm (for a bipartition):
-the argument does not define a partial perm,]]></Example>
+Error, the argument (a bipartition) does not define a partial perm]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -513,9 +511,8 @@ gap> AsBipartition(x, 11);
  [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]>
 gap> AsBlockBijection(x, 10);
-Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
-the 2nd argument must be strictly greater than the maximum of the
-degree and codegree of the 1st argument,
+Error, the 2nd argument (a pos. int.) is less than or equal to the max\
+imum of the degree and codegree of the 1st argument (a partial perm)
 gap> AsBlockBijection(x, 11);
 <block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
  [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 

@@ -606,8 +606,7 @@ gap> AsTransformation(x);
 Transformation( [ 3, 3, 2 ] )
 gap> x := PBR([[1], [1, 2]], [[-2, -1], [-2, -1]]);;
 gap> AsTransformation(x);
-Error, Semigroups: AsTransformation: usage,
-the argument <x> must be a transformation PBR,]]></Example>
+Error, the argument (a pbr) does not define a transformation]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

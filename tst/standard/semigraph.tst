@@ -104,11 +104,11 @@ gap> S := GraphInverseSemigroup(gr);
 gap> s := MultiplicativeZero(S);
 0
 gap> Source(s);
-Error, Semigroups: Source: usage,
-the argument <x> must not be the zero,
+Error, the argument (a graph inverse semigroup element) must not be the zero e\
+lement
 gap> Range(s);
-Error, Semigroups: Range: usage,
-the argument <x> must not be the zero,
+Error, the argument (a graph inverse semigroup element) must not be the zero e\
+lement
 
 # Test \*
 gap> gr := Digraph(rec(DigraphNrVertices := 5,
