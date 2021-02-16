@@ -46,7 +46,8 @@ gap> S := FullTransformationMonoid(5);;
 gap> h := HClass(S, One(S));
 <Green's H-class: IdentityTransformation>
 gap> SameMinorantsSubgroup(h);
-Error, the parent semigroup of the argument (a group H-class) must be inverse
+Error, the parent of the argument (a group H-class) must be an inverse semigro\
+up
 
 # attrinv: Minorants, error, 1
 gap> S := SymmetricInverseMonoid(3);;
@@ -649,11 +650,11 @@ gap> S := Semigroup(
 > 3)]);
 <commutative semigroup of 9x9 tropical min-plus matrices with 1 generator>
 gap> NaturalPartialOrder(S);
-Error, the argument is not an inverse semigroup
+Error, the argument (a semigroup) is not an inverse semigroup
 
 # attrinv: NaturalPartialOrder (for a semigroup), error, 2/2
 gap> NaturalPartialOrder(FreeInverseSemigroup(2));
-Error, the argument is not a finite semigroup
+Error, the argument (a semigroup) is not finite
 
 # attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 1/2
 gap> S := Semigroup([
@@ -672,11 +673,11 @@ gap> S := Semigroup([
 >   [-6, -5, -4, -3, -2, 1, 2, 3, 5, 6], [-4, 2, 3, 4, 5, 6]])]);
 <pbr semigroup of degree 6 with 2 generators>
 gap> NaturalLeqInverseSemigroup(S);
-Error, the argument is not an inverse semigroup
+Error, the argument (a semigroup) is not an inverse semigroup
 
 # attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 2/2
 gap> NaturalLeqInverseSemigroup(FreeInverseSemigroup(2));
-Error, the argument is not a finite semigroup
+Error, the argument (a semigroup) is not finite
 
 # attrinv: IsGreensDGreaterThanFunc (for an inverse op acting semigroup), 1/1
 gap> S := InverseSemigroup(
@@ -708,11 +709,11 @@ gap> PrimitiveIdempotents(S);
 
 # attrinv: PrimitiveIdempotents, semigroup, error, 1/2
 gap> PrimitiveIdempotents(FreeSemigroup(2));
-Error, the argument is not a finite semigroup
+Error, the argument (a semigroup) is not finite
 
 # attrinv: PrimitiveIdempotents, semigroup, error, 2/2
 gap> PrimitiveIdempotents(FreeBand(2));
-Error, the argument is not an inverse semigroup
+Error, the argument (a semigroup) is not an inverse semigroup
 
 # attrinv: PrimitiveIdempotents, transformation semigroups
 gap> S := InverseSemigroup([
@@ -776,8 +777,8 @@ false
 gap> x in I;
 true
 gap> IsJoinIrreducible(S, RandomBipartition(1));
-Error, the 2nd argument (a mult. elt.) is not an element of the 1st argument (\
-an inverse semigroup)
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (an\
+ inverse semigroup)
 gap> IsJoinIrreducible(S, MultiplicativeZero(S));
 false
 
@@ -828,8 +829,8 @@ false
 gap> IsMajorantlyClosed(S, Elements(S));
 true
 gap> IsMajorantlyClosed(T, Elements(S));
-Error, the 2nd argument (a mult. elt. coll) is not asubset of the 1st argument\
- (an inverse semigroup)
+Error, the 2nd argument (a mult. elt. coll) is not a subset of the 1st argumen\
+t (an inverse semigroup)
 gap> IsMajorantlyClosed(S, [One(S)]);
 true
 

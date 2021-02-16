@@ -76,7 +76,7 @@ function(mat)
 
   if (not IsList(mat)) or IsEmpty(mat)
       or not ForAll(mat, IsHomogeneousList) then
-    ErrorNoReturn("the argmuent must be a non-empty list ",
+    ErrorNoReturn("the argument is not a non-empty list ",
                   "of homogeneous lists");
   elif IsRectangularTable(mat) then  # 0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
@@ -202,8 +202,8 @@ function(x, y)
   n := Length(x![1]);
 
   if n <> Length(y![1]) then
-    ErrorNoReturn("the arguments <x> and <y> must be boolean matrices ",
-                  "of equal dimensions");
+    ErrorNoReturn("the arguments (boolean matrices) do not have ",
+                  "equal dimensions");
   fi;
 
   for i in [1 .. n] do
@@ -461,7 +461,7 @@ InstallMethod(AsBooleanMat, "for a transformation and pos int",
 function(x, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ x > n) then
-    ErrorNoReturn("the transformation in the first argument must map ",
+    ErrorNoReturn("the transformation in the 1st argument does not map ",
                   "[1 .. ", String(n), "] to itself");
   fi;
 
@@ -494,7 +494,7 @@ function(x, n)
   local out, j, i;
 
   if ForAny([1 .. n], i -> i ^ x > n) then
-    ErrorNoReturn("the partial perm in the first argument must map ",
+    ErrorNoReturn("the partial perm in the 1st argument does not map ",
                   "[1 .. ", String(n), "] into itself");
   fi;
 
@@ -609,8 +609,9 @@ function(G, H, x)
   local n;
   n := Length(x![1]);
   if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
-    ErrorNoReturn("the largest moved point of the first argument must not",
-                  " exceed the dimension of the Boolean matrix");
+    ErrorNoReturn("the largest moved point of the 1st argument ",
+                  "(a perm group) exceeds the dimension of the ",
+                  "3rd argument (a boolean matrix)");
   elif G = H and IsNaturalSymmetricGroup(G)
       and MovedPoints(G) = [1 .. n] then
     return CanonicalBooleanMat(x);

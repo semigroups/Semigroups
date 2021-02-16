@@ -129,16 +129,16 @@ gap> T := InverseSemigroup([PartialPerm([2, 4], [5, 7]),
 gap> utrace := [Idempotents(S)];;
 gap> ttrace := List(Idempotents(S), e -> [e]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, the 2nd argument <kernel> must be an inverse subsemigroup of the 1st ar\
-gument <S>
+Error, the 2nd argument is not an inverse subsemigroup of the 1st argument (an\
+ inverse semigroup)
 gap> T := InverseSemigroup([PartialPerm([2, 4], [5, 6])]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, the 2nd argument <kernel> must contain all the idempotents of the 1st a\
-rgument <S>
+Error, the 2nd argument (an inverse semigroup) does not contain all of the ide\
+mpotents of the 1st argument (an inverse semigroup)
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> T := InverseSemigroup(T, PartialPerm([1, 2], [3, 4]));;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
-Error, the 2nd argument <kernel> must be self-conjugate
+Error, the 2nd argument (an inverse semigroup) must be self-conjugate
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
 Error, not a valid congruence pair (C1)
@@ -165,8 +165,8 @@ gap> cong := SemigroupCongruence(S,
 gap> [2] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [PartialPerm([4], [4]), 42] in cong;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
 Error, the 2nd argument (a mult. elt.) must belong to the range of the 1st arg\
 ument (an inverse semigroup congruence by kernel + trace)

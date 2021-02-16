@@ -48,8 +48,8 @@ Group([ (1,3,4), (1,2) ])
 gap> S := Semigroup([Transformation([2, 1, 2]), Transformation([3, 3, 1])]);
 <transformation semigroup of degree 3 with 2 generators>
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument <S> must satisfy IsGroupAsSemigroup,
+Error, the argument (a transformation semigroup) does not satisfy IsGroupAsSem\
+igroup
 
 # IsomorphismPermGroup: for a Rees Matrix Semigroup
 gap> R := ReesMatrixSemigroup(Group((1, 3, 5), (2, 4)), [[()]]);;
@@ -61,8 +61,7 @@ true
 gap> R := ReesMatrixSemigroup(Group((1, 3, 5), (2, 4)), [[(1, 5, 3), ()]]);
 <Rees matrix semigroup 2x1 over Group([ (1,3,5), (2,4) ])>
 gap> iso := IsomorphismPermGroup(R);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a FP Semigroup
 gap> F := FreeSemigroup(2);
@@ -77,8 +76,7 @@ gap> S := F /
 > [F.2 ^ 3, F.2]];
 <fp semigroup on the generators [ s1, s2 ]>
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := F /
 > [[F.1 ^ 3, F.2 ^ 2],
 > [F.1 * F.2 ^ 2, F.1],
@@ -119,15 +117,13 @@ gap> GeneratorsOfGroup(G)[2];
 gap> S := Semigroup([PBR([[2], [2]], [[], []]),
 >                    PBR([[], [-2]], [[], [-2, 2]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Bipartition Semigroup
 gap> S := Semigroup([Bipartition([[1, 2, -2, -3], [3], [-1]]),
 >                    Bipartition([[1, 2, -2], [3, -3], [-1]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := Semigroup([PBR([[-2], [-3], [-1]], [[3], [1], [2]])]);
 <commutative pbr semigroup of degree 3 with 1 generator>
 gap> iso := IsomorphismPermGroup(S);;
@@ -148,8 +144,8 @@ gap> G := Range(iso);
 Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
 gap> S := Semigroup([Transformation([2, 1, 2]), Transformation([3, 3, 1])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument <S> must satisfy IsGroupAsSemigroup,
+Error, the argument (a transformation semigroup) does not satisfy IsGroupAsSem\
+igroup
 
 # IsomorphismPermGroup: for a Partial Perm Semigroup
 gap> S := Semigroup([PartialPerm([1, 2, 3, 5], [2, 1, 3, 5]),
@@ -171,9 +167,8 @@ Group([ (), (1,2), (3,5) ])
 gap> S := Semigroup([PartialPerm([1, 2], [2, 1]),
 >                    PartialPerm([1, 3], [3, 1])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument <S> must be a partial perm semigroup satisfying IsGroupAsSemigrou\
-p,
+Error, the argument (a partial perm semigroup) does not satisfy IsGroupAsSemig\
+roup
 
 # IsomorphismPermGroup: for a Boolean Mat Semigroup
 gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
@@ -186,8 +181,7 @@ Group([ (1,2,3) ])
 gap> S := Semigroup([Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 1], [0, 0, 0]]),
 >                    Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 0], [0, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Max Plus Matrix Semigroup
 gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
@@ -206,8 +200,7 @@ gap> S := Monoid([Matrix(IsMaxPlusMatrix,
 >  [-infinity, -infinity, -infinity, 0]])]);
 <commutative monoid of 4x4 max-plus matrices with 1 generator>
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Min Plus Matrix Semigroup
 gap> S := Semigroup([Matrix(IsMinPlusMatrix,
@@ -233,8 +226,7 @@ gap> S := Semigroup(
 > Matrix(IsMinPlusMatrix, [[infinity, infinity, 0], [infinity, infinity, 0],
 >     [0, infinity, infinity]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Tropical Max Plus Matrix Semigroup
 gap> S := Semigroup(
@@ -256,8 +248,7 @@ gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[3, 0], [2, 1]], 3),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [0, -infinity]], 3),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, -infinity], [1, 0]], 3)]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Tropical Min Plus Matrix Semigroup
 gap> S := Semigroup([
@@ -276,8 +267,7 @@ Group([ (1,2,3,4,5) ])
 gap> S := Monoid(
 > [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [infinity, 0]], 2)]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Projective Max Plus Matrix Semigroup
 gap> S := Semigroup([
@@ -307,8 +297,7 @@ gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 0],
 >     [-infinity, -infinity, 0], [0, -infinity, -infinity]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a NTP Matrix Semigroup
 gap> S := Semigroup([
@@ -328,8 +317,7 @@ gap> S := Semigroup([
 > Matrix(IsNTPMatrix, [[0, 0, 1, 0], [1, 0, 0, 2], [0, 4, 0, 2],
 >     [1, 3, 0, 5]], 88, 6)]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Block Bijection Semigroup
 gap> S := InverseSemigroup(
@@ -346,8 +334,8 @@ gap> S :=
 > Semigroup([Bipartition([[1, 4, -4], [2, -3], [3, -1, -2]]),
 >  Bipartition([[1, 2, -2, -3], [3, -1], [4, -4]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a bipartition semigroup) does not satisfy IsGroupAsSemigr\
+oup
 
 # IsomorphismPermGroup: for a block bijection monoid
 gap> S := InverseMonoid(
@@ -380,8 +368,7 @@ gap> S := Semigroup(
 >     [0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 0],
 >     [0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 1]])]);;
 gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 
 # IsomorphismPermGroup: for a Integer Matrix Semigroup
 gap> S := GraphInverseSemigroup(Digraph([[]]));
@@ -395,8 +382,7 @@ true
 gap> S := RegularBooleanMatMonoid(2);
 <monoid of 2x2 boolean matrices with 3 generators>
 gap> IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
+Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 > BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> map := IsomorphismPermGroup(S);;

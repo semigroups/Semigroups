@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gree.gi
-##  Copyright (C) 2016                                   James D. Mitchell
+##  greens/generic.gi
+##  Copyright (C) 2016-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -103,7 +103,7 @@ function(H)
   local G, x, map, inv;
 
   if not IsGroupHClass(H) then
-    ErrorNoReturn("the H-class is not a group");
+    ErrorNoReturn("the argument (a Green's H-class) is not a group");
   fi;
 
   G := Group(());
@@ -118,16 +118,17 @@ function(H)
   od;
   map := function(x)
     if not x in H then
-      ErrorNoReturn("argument does not belong to the domain of the ",
-                    "function,");
+      ErrorNoReturn("the argument does not belong to the domain of the ",
+                    "function");
     fi;
     return Permutation(x, AsSet(H), OnRight);
   end;
   inv := function(x)
     if not x in G then
-      ErrorNoReturn("argument does not belong to the domain of the ",
-                    "function,");
+      ErrorNoReturn("the argument does not belong to the domain of the ",
+                    "function");
     fi;
+    # TODO this currently sucks performancewise
     return First(H, h -> map(h) = x);
   end;
   return MappingByFunction(H, G, map, inv);

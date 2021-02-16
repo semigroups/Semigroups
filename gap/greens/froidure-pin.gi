@@ -29,6 +29,8 @@
 ##
 ##   6. Idempotents and NrIdempotents
 ##
+##   7. Mapping etc
+##
 #############################################################################
 
 #############################################################################
@@ -56,8 +58,8 @@ SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
 
   pos := PositionCanonical(Source(rel), rep);
   if pos = fail then
-    ErrorNoReturn("the element in the 2nd argument does not belong to the ",
-                  "semigroup");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to the ",
+                  "source of the 1st argument (a Green's relation)");
   fi;
 
   out := rec();
@@ -256,18 +258,19 @@ end);
 InstallMethod(GreensLRelation, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local fam, data, rel;
+  local fam, data, filt, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
   data := DigraphStronglyConnectedComponents(LeftCayleyDigraph(S));
+  filt := IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep;
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensLRelation
-                             and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
+                             and filt),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -281,7 +284,7 @@ end);
 InstallMethod(GreensDRelation, "for semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local fam, data, rel;
+  local fam, data, filt, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S))
       or (IsFreeBandCategory(S) and Size(GeneratorsOfSemigroup(S)) > 4) then
     TryNextMethod();
@@ -291,11 +294,12 @@ function(S)
 
   data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(GreensRRelation(S)!.data,
                                              GreensLRelation(S)!.data);
+  filt := IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep;
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensDRelation
-                             and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
+                             and filt),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -308,7 +312,7 @@ end);
 InstallMethod(GreensHRelation, "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local fam, data, rel;
+  local fam, data, filt, rel;
   if IsActingSemigroup(S) or (HasIsFinite(S) and not IsFinite(S)) then
     TryNextMethod();
   fi;
@@ -318,10 +322,11 @@ function(S)
   data := FIND_HCLASSES(GreensRRelation(S)!.data,
                         GreensLRelation(S)!.data);
 
+  filt := IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep;
   rel := Objectify(NewType(fam, IsEquivalenceRelation
                                 and IsEquivalenceRelationDefaultRep
                                 and IsGreensHRelation
-                                and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep),
+                                and filt),
                    rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
@@ -333,7 +338,8 @@ end);
 ## 4. Individual classes . . .
 #############################################################################
 
-InstallMethod(Enumerator, "for a Green's class of a semigroup that CanComputeFroidurePin",
+InstallMethod(Enumerator,
+"for a Green's class of a semigroup that CanComputeFroidurePin",
 [IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, ind;
@@ -343,7 +349,7 @@ function(C)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a semigroup with CanComputeFroidurePin Green's R-relation and a multiplicative element",
+"for a semigroup with CanComputeFroidurePin Green's R-relation + a mult. elt.",
 [IsGreensRRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
@@ -351,7 +357,7 @@ function(rel, rep)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a semigroup with CanComputeFroidurePin Green's L-relation and a multiplicative element",
+"for a semigroup with CanComputeFroidurePin Green's L-relation + a mult. elt.",
 [IsGreensLRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
@@ -359,7 +365,7 @@ function(rel, rep)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a semigroup with CanComputeFroidurePin Green's H-relation and a multiplicative element",
+"for a semigroup with CanComputeFroidurePin Green's H-relation + a mult. elt.",
 [IsGreensHRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
@@ -367,7 +373,7 @@ function(rel, rep)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a semigroup with CanComputeFroidurePin Green's D-relation and a multiplicative element",
+"for a semigroup with CanComputeFroidurePin Green's D-relation + a mult. elt.",
 [IsGreensDRelation and IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep,
  IsMultiplicativeElement],
 function(rel, rep)
@@ -499,7 +505,7 @@ InstallMethod(GreensHClasses,
 [IsGreensClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
-    ErrorNoReturn("the argument should be a Green's R-, L-, or D-class");
+    ErrorNoReturn("the argument is not a Green's R-, L-, or D-class");
   fi;
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensHRelation,
                                           GreensHClassOfElement);
@@ -533,7 +539,8 @@ InstallMethod(LClassReps,
 [IsGreensDClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensLRelation));
 
-InstallMethod(HClassReps, "for a Green's class of a semigroup with CanComputeFroidurePin",
+InstallMethod(HClassReps,
+"for a Green's class of a semigroup with CanComputeFroidurePin",
 [IsGreensClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
@@ -559,7 +566,8 @@ end);
 ## 6. Idempotents . . .
 #############################################################################
 
-InstallMethod(NrIdempotents, "for a Green's class of a semigroup that CanComputeFroidurePin",
+InstallMethod(NrIdempotents,
+"for a Green's class of a semigroup that CanComputeFroidurePin",
 [IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, pos;
@@ -569,7 +577,8 @@ function(C)
   return Length(pos);
 end);
 
-InstallMethod(Idempotents, "for a Green's class of a semigroup that CanComputeFroidurePin",
+InstallMethod(Idempotents,
+"for a Green's class of a semigroup that CanComputeFroidurePin",
 [IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
 function(C)
   local rel, pos;
@@ -577,4 +586,61 @@ function(C)
   pos := IdempotentsSubset(Range(rel),
                            rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
   return EnumeratorCanonical(Range(rel)){pos};
+end);
+
+#############################################################################
+## 7. Mappings etc . . .
+#############################################################################
+
+InstallMethod(IsomorphismPermGroup, "for H-class of a semigroup",
+[IsGreensHClass and IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],
+function(H)
+  local G, S, N, HH, lookup, pos, x, map, inverses, GG, inv, i;
+
+  if not IsGroupHClass(H) then
+    ErrorNoReturn("the argument (a Green's H-class) is not a group");
+  fi;
+
+  G := Group(());
+  S := EnumeratorCanonical(Parent(H));
+  N := Size(H);
+  HH := Enumerator(H);
+  # Position(S, x) -> Position(H, x)
+  lookup := ListWithIdenticalEntries(Length(S), fail);
+  for i in [1 .. N] do
+    pos := Position(S, HH[i]);
+    lookup[pos] := i;
+  od;
+
+  for x in H do
+    x := PermList(List([1 .. N], i -> lookup[Position(S, HH[i] * x)]));
+    if not x in G then
+      G := ClosureGroup(G, x);
+      if Size(G) = N then
+        break;
+      fi;
+    fi;
+  od;
+
+  GG := EnumeratorSorted(G);
+
+  map := function(x)
+    if not x in H then
+      ErrorNoReturn("the argument does not belong to the domain of the ",
+                    "function");
+    fi;
+    return GG[lookup[Position(S, HH[1] * x)]];
+  end;
+  inverses := [];
+  for i in [1 .. N] do
+    inverses[Position(GG, map(HH[i]))] := HH[i];
+  od;
+  inv := function(x)
+    if not x in G then
+      ErrorNoReturn("the argument does not belong to the domain of the ",
+                    "function");
+    fi;
+    return inverses[Position(GG, x)];
+  end;
+  return MappingByFunction(H, G, map, inv);
 end);

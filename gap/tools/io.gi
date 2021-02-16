@@ -14,7 +14,7 @@
 
 # This function sets the component <decoder> of the IO file object <f> to a
 # function that can be called on the file object to decode its contents. This
-# must be called before anything is read from <f>.
+# is not called before anything is read from <f>.
 SEMIGROUPS.FileDecoder := function(f)
   local char;
 
@@ -144,23 +144,23 @@ function(arg)
     name    := arg[1];
     line_nr := arg[2];
   else
-    ErrorNoReturn(                  "there should be 1 or 2 arguments");
+    ErrorNoReturn("there should be 1 or 2 arguments");
   fi;
 
   if IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      ErrorNoReturn(                    "could not open the file ", name, "");
+      ErrorNoReturn("could not open the file ", name);
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn(                  "the first argument must be a string or a file");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
-    ErrorNoReturn(                  "the second argument must be a positive integer");
+    ErrorNoReturn("the 2nd argument is not a positive integer");
   fi;
 
   decoder := SEMIGROUPS.FileDecoder(file);
@@ -180,7 +180,7 @@ function(arg)
       IO_Close(file);
     fi;
     if obj = IO_Nothing then
-      ErrorNoReturn(                    "the file only has ", i - 1, " further entries");
+      ErrorNoReturn("the file only has ", i - 1, " further entries");
     fi;
     return obj;
   else
@@ -221,7 +221,7 @@ function(arg)
       mode     := "w";
       encoder  := arg[3];
     else
-      ErrorNoReturn(                    "the third argument must be a string or a function");
+      ErrorNoReturn("the 3rd argument is not a string or a function");
     fi;
   elif Length(arg) = 4 then
     name     := arg[1];
@@ -229,11 +229,11 @@ function(arg)
     mode     := arg[3];
     encoder  := arg[4];
   else
-    ErrorNoReturn(                  "there should be 2, 3, or 4 arguments");
+    ErrorNoReturn("there should be 2, 3, or 4 arguments");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    ErrorNoReturn(                  "the third argument must be \"a\" or \"w\"");
+    ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
   fi;
 
   if IsString(name) then
@@ -241,19 +241,19 @@ function(arg)
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn(                    "couldn't open the file ", name, "");
+      ErrorNoReturn("couldn't open the file ", name, "");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn(                  "the first argument must be a string or a file");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   if not IsList(collcoll) or IsEmpty(collcoll) then
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn(                  "the second argument must be a non-empty list");
+    ErrorNoReturn("the 2nd argument is not a non-empty list");
   fi;
 
   if encoder = fail then
@@ -262,7 +262,7 @@ function(arg)
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn(                  "the third or fourth argument must be a function");
+    ErrorNoReturn("the 3rd or 4th argument is not a function");
   fi;
 
   # Check encoder is consistent with <coll>
@@ -273,7 +273,7 @@ function(arg)
     if IsString(name) then
       IO_Close(file);
     fi;
-    ErrorNoReturn(                  "the second argument is incompatible with the file format");
+    ErrorNoReturn("the 2nd argument is incompatible with the file format");
   fi;
 
   for coll in collcoll do
@@ -357,21 +357,21 @@ function(arg)
     name    := arg[1];
     line_nr := arg[2];
   else
-    ErrorNoReturn(                  "there should be 1 or 2 arguments");
+    ErrorNoReturn("there should be 1 or 2 arguments");
   fi;
   if IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      ErrorNoReturn(                    "could not open the file \"", name, "\"");
+      ErrorNoReturn("could not open the file \"", name, "\"");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn(                  "the first argument must be a string or a file");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
   if not (IsInt(line_nr) and line_nr >= 0) then
-    ErrorNoReturn(                  "the second argument must be a positive integer");
+    ErrorNoReturn("the 2nd argument is not a positive integer");
   fi;
   ReadMultiplicationTableLine := SEMIGROUPS.ReadMultiplicationTableLine;
 
@@ -384,7 +384,7 @@ function(arg)
     if IsString(arg[1]) then
       IO_Close(file);
     elif line = "" then
-      ErrorNoReturn(                    "the file only has ", i - 1, " lines");
+      ErrorNoReturn("the file only has ", i - 1, " lines");
     fi;
     return ReadMultiplicationTableLine(Chomp(line), RootInt(Length(line)));
   else
@@ -430,11 +430,11 @@ function(arg)
     coll := arg[2];
     mode := arg[3];
   else
-    ErrorNoReturn(                  "there should be 2 or 3 arguments");
+    ErrorNoReturn("there must be 2 or 3 arguments");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    ErrorNoReturn(                  "the third argument must be \"a\" or \"w\"");
+    ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
   fi;
 
   if IsString(name) then
@@ -442,12 +442,12 @@ function(arg)
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn(                    "couldn't open the file ", name, "");
+      ErrorNoReturn("couldn't open the file ", name, "");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorNoReturn(                  "the first argument must be a string or a file");
+    ErrorNoReturn("the 1st argument is not a string or a file");
   fi;
 
   for i in [1 .. Length(coll)] do
@@ -456,13 +456,13 @@ function(arg)
       if IsString(name) then
         IO_Close(file);
       fi;
-      ErrorNoReturn(                    "the second argument must be a collection of rectangular ",
+      ErrorNoReturn("the 2nd argument is not a collection of rectangular ",
                     "tables containing only integers");
     elif not n < 256 then
       if IsString(name) then
         IO_Close(file);
       fi;
-      ErrorNoReturn(                    "the second argument must be a collection of rectangular ",
+      ErrorNoReturn("the 2nd argument is not a collection of rectangular ",
                     "tables with at most 255 rows");
     fi;
 
@@ -473,7 +473,7 @@ function(arg)
           if IsString(name) then
             IO_Close(file);
           fi;
-          ErrorNoReturn("the second argument must be a collection of ",
+          ErrorNoReturn("the 2nd argument is not a collection of ",
                         "rectangular tables with integer entries from [1, 2, ",
                         "..., n] (where n equals the number of rows of the ",
                         "table)");

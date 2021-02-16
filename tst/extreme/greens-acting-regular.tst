@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  extreme/gracreg.tst
+#W  extreme/greens-acting-regular.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-gap> START_TEST("Semigroups package: extreme/gracreg.tst");
+gap> START_TEST("Semigroups package: extreme/greens-acting-regular.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -22,4 +22,4 @@ gap> NrIdempotents(S);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: extreme/gracreg.tst");
+gap> STOP_TEST("Semigroups package: extreme/greens-actnig-regular.tst");

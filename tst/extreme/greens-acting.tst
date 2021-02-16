@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  extreme/grac.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#W  extreme/greens-acting.tst
+#Y  Copyright (C) 2011-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,7 +9,7 @@
 ##
 
 # takes approx. 1 minute to run currently!
-gap> START_TEST("Semigroups package: extreme/grac.tst");
+gap> START_TEST("Semigroups package: extreme/greens-acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1885,4 +1885,4 @@ gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: extreme/grac.tst");
+gap> STOP_TEST("Semigroups package: extreme/greens-acting.tst");

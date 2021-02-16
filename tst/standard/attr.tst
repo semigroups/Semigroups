@@ -398,7 +398,7 @@ gap> PrincipalFactor(D);
 gap> S := FullTransformationMonoid(3);;
 gap> D := DClass(S, Transformation([1, 2, 1]));;
 gap> IsomorphismReesMatrixSemigroup(D);
-Error, the D-class is not a subsemigroup
+Error, the argument (a Green's D-class) is not a semigroup
 gap> D := MinimalDClass(S);;
 gap> IsomorphismReesMatrixSemigroup(D);
 MappingByFunction( <Green's D-class: Transformation( [ 1, 1, 1 ] )>, 
@@ -614,11 +614,13 @@ gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 4])]);
 
 # attr: SmallInverseSemigroupGeneratingSet: for non-inverse-op elements
 gap> SmallInverseSemigroupGeneratingSet([RandomTransformation(10)]);
-Error, the argument must satisfy IsGeneratorsOfInverseSemigroup
+Error, the argument (a mult. elt. coll.) does not satisfy IsGeneratorsOfInvers\
+eSemigroup
 
 # attr: SmallInverseMonoidGeneratingSet: for non-inverse-op elements
 gap> SmallInverseMonoidGeneratingSet([RandomMatrix(IsBooleanMat, 10)]);
-Error, the argument must satisfy IsGeneratorsOfInverseSemigroup
+Error, the argument (a mult. elt. coll.) do not satisfy IsGeneratorsOfInverseS\
+emigroup
 
 # attr: SmallInverseMonoidGeneratingSet: for One
 gap> SmallInverseMonoidGeneratingSet([PartialPerm([1, 2, 3])]);
@@ -817,7 +819,7 @@ fail
 gap> D := First(DClasses(S), x -> not IsRegularGreensClass(x));
 <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 0], [0, 0, 1]])>
 gap> InjectionPrincipalFactor(D);
-Error, the argument <D> must be a regular D-class
+Error, the argument (a Green's D-class) is not regular
 
 # attr: MultiplicativeNeutralElement
 gap> S := Semigroup([BooleanMat([[0, 0, 1], [0, 0, 1], [0, 1, 1]]),
@@ -1112,7 +1114,7 @@ gap> S := MonogenicSemigroup(4, 2);
 <commutative non-regular transformation semigroup of size 5, degree 6 with 1 
  generator>
 gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
-Error, the argument <D> must be a regular D-class
+Error, the argument (a Green's D-class) is not regular
 
 # attrTest6:
 # UnderlyingSemigroupOfSemigroupWithAdjoinedZero
@@ -1946,14 +1948,14 @@ gap> NambooripadLeqRegularSemigroup(S) = NaturalLeqInverseSemigroup(S);
 true
 gap> S := FreeSemigroup(3);;
 gap> NambooripadPartialOrder(S);
-Error, the argument is not a finite semigroup
+Error, the argument (a semigroup) is not finite
 gap> NambooripadLeqRegularSemigroup(S);
-Error, the argument is not a finite semigroup
+Error, the argument (a semigroup) is not finite
 gap> S := ZeroSemigroup(5);;
 gap> NambooripadPartialOrder(S);
-Error, the argument is not a regular semigroup
+Error, the argument (a semigroup) is not regular
 gap> NambooripadLeqRegularSemigroup(S);
-Error, the argument is not a regular semigroup
+Error, the argument (a semigroup) is not regular
 
 # Left/RightIdentity
 gap> S := Semigroup(Transformation([2, 4, 3, 4]), 

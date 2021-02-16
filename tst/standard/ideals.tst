@@ -95,10 +95,8 @@ true
 gap> I.2 = S.2;
 true
 gap> I.3;
-Error, Semigroups: \.: usage,
-the second argument <n> should be a positive integer
-not greater than the number of generators of the semigroup <S> in
-the first argument,
+Error, the 2nd argument (a positive integer) exceeds the number of generators \
+of the 1st argument (an ideal)
 
 # Test \= for semigroup ideals
 gap> S := RegularBooleanMatMonoid(3);;
@@ -135,13 +133,10 @@ false
 
 # Test SemigroupIdeal (the function)
 gap> SemigroupIdeal("a");
-Error, Semigroups: SemigroupIdeal: usage,
-the first argument must be a semigroup,
+Error, there must be 2 or more arguments
 gap> S := RegularBooleanMatMonoid(1);;
 gap> SemigroupIdeal(S);
-Error, Semigroups: SemigroupIdeal: usage,
-there must be a second argument, which specifies
-the generators of the ideal,
+Error, there must be 2 or more arguments
 gap> S := Semigroup([[Z(2)]]);
 <commutative semigroup with 1 generator>
 gap> SemigroupIdeal(S, S.1);
@@ -156,24 +151,19 @@ gap> I := SemigroupIdeal(S, [S.1, S.2], rec());
 gap> I := SemigroupIdeal(S, MaximalDClasses(S)[1]);
 <semigroup ideal of 2x2 boolean matrices with 2 generators>
 gap> I := SemigroupIdeal(S, []);
-Error, Semigroups: SemigroupIdeal: usage,
-the second argument must be a combination of generators,
- lists of generators, or semigroups,
+Error, the 2nd argument is not a combination of generators, lists of generator\
+s, nor semigroups
 gap> SemigroupIdeal();
-Error, Semigroups: SemigroupIdeal: usage,
-the second argument must be a combination of generators,
-lists of generators, or semigroups,
+Error, there must be 2 or more arguments
 gap> SemigroupIdeal(S, NullDigraph(2));
-Error, Semigroups: SemigroupIdeal: usage,
-the second argument must be a combination of generators,
-lists of generators, or semigroups,
+Error, invalid arguments
 
 # Test SemigroupIdealByGenerators
 gap> S := RegularBooleanMatMonoid(1);;
 gap> T := RegularBooleanMatMonoid(2);;
 gap> SemigroupIdeal(S, T.1);
-Error, Semigroups: SemigroupIdealByGenerators: usage,
-the second argument <gens> do not all belong to the semigroup,
+Error, the 2nd argument (a mult. elt. coll.) do not all belong to the semigrou\
+p
 
 # Test SemigroupIdealByGeneratorsNC
 gap> S := FullTransformationMonoid(3);;

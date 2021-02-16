@@ -228,7 +228,7 @@ Matrix(GF(2^2), [[Z(2^2), 0*Z(2), Z(2^2)], [0*Z(2), Z(2)^0, Z(2)^0],
 
 # Test ComputeRowSpaceAndTransformation
 gap> ComputeRowSpaceAndTransformation(2);
-Error, the argument must belong to`IsPlistMatrixOverFiniteFieldRep`
+Error, the argument must belong to `IsPlistMatrixOverFiniteFieldRep`
 gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
 >                                      GF(4), 2);;
 gap> ComputeRowSpaceAndTransformation(y);

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gracinv.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  greens/acting-inverse.gi
+##  Copyright (C) 2013-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,11 +11,11 @@
 # This file contains methods for Green's classes and relations for acting
 # semigroups in IsInverseActingSemigroupRep.
 
-# See the start of grac.gi for details of how to create Green's
+# See the start of greens/acting.gi for details of how to create Green's
 # classes of acting semigroups.
 
-# Methods here are similar to methods in gracreg.gi but without any use of
-# RhoAnything!
+# Methods here are similar to methods in acting-regular.gi but without any use
+# of RhoAnything!
 
 #############################################################################
 ## This file contains methods for Green's classes etc for acting semigroups.
@@ -387,7 +387,8 @@ function(C)
   local reps, out, setter, CreateHClass, CopyLambda, i;
 
   if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
-    ErrorNoReturn("an L-, R-, or D-class");
+    ErrorNoReturn("the argument is not a Green's L-, R-,",
+                  "or D-class");
   fi;
 
   reps := HClassReps(C);
@@ -520,7 +521,7 @@ function(S, n)
   local o, creator, out, rank, nr, i;
 
   if n < 0 then
-    ErrorNoReturn("the second argument <n> must be a non-negative integer");
+    ErrorNoReturn("the 2nd argument (an int) is not non-negative");
   elif HasIdempotents(S) then
     return Filtered(Idempotents(S), x -> ActionRank(S)(x) = n);
   fi;

@@ -34,9 +34,9 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorNoReturn("the argument is not a finite semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsInverseSemigroup(S) then
-    ErrorNoReturn("the argument is not an inverse semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not an inverse semigroup");
   elif IsPartialPermSemigroup(S) then
     # Use the library method for partial perm inverse semigroups.
     return NaturalPartialOrder(S);
@@ -70,11 +70,9 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a semigroup",
 function(S)
 
   if not IsFinite(S) then
-    ErrorNoReturn("the argument is not a finite semigroup");
-  fi;
-
-  if not IsInverseSemigroup(S) then
-    ErrorNoReturn("the argument is not an inverse semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
+  elif not IsInverseSemigroup(S) then
+    ErrorNoReturn("the argument (a semigroup) is not an inverse semigroup");
   fi;
 
   return
@@ -194,9 +192,9 @@ function(S)
   local T, i, gr, prims;
 
   if not IsFinite(S) then
-    ErrorNoReturn("the argument is not a finite semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsInverseSemigroup(S) then
-    ErrorNoReturn("the argument is not an inverse semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not an inverse semigroup");
   fi;
 
   if MultiplicativeZero(S) = fail then
@@ -252,7 +250,7 @@ function(S, x)
   local elts, leq, y, i, k, j, sup;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element of ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
                   "the 1st argument (an inverse semigroup)");
   fi;
 
@@ -312,7 +310,7 @@ InstallMethod(IsMajorantlyClosed,
  IsMultiplicativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    ErrorNoReturn("the 2nd argument (a mult. elt. coll) is not a",
+    ErrorNoReturn("the 2nd argument (a mult. elt. coll) is not a ",
                   "subset of the 1st argument (an inverse semigroup)");
   fi;
   return IsMajorantlyClosedNC(S, T);
@@ -616,8 +614,8 @@ function(H)
   S := Parent(H);
 
   if not IsGeneratorsOfInverseSemigroup(S) then
-    ErrorNoReturn("the parent semigroup of the argument (a group H-class)",
-                  " must be inverse");
+    ErrorNoReturn("the parent of the argument (a group H-class)",
+                  " must be an inverse semigroup");
   fi;
 
   e := Representative(H);

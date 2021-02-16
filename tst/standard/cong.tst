@@ -22,10 +22,12 @@ Error, at least 2 arguments are required
 gap> SemigroupCongruence(42, pairs);
 Error, the 1st argument is not a semigroup
 gap> SemigroupCongruence(S, pairs[1], [Transformation([2, 1])]);
-Error, <pairs> should be a list of lists of size 2
+Error, the 2nd argument (a list of lists) contains lists of size not equal to \
+2
 gap> SemigroupCongruence(S, [Transformation([2, 6, 3, 4, 5, 3]),
 >                            Transformation([2, 3, 1])]);
-Error, each pair should contain elements from the semigroup <S>
+Error, the 2nd argument (a list of lists) contains items that do not belong to\
+ the 1st argument (a semigroup)
 gap> S := FullTransformationSemigroup(6);;
 gap> SemigroupCongruence(S, 12, 13, 100);
 Error, the arguments are not valid for this function
@@ -41,20 +43,20 @@ gap> cong := LeftSemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, the items in the 1st argument (a list) does not belong to the range of \
-the 2nd argument (a left semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a left semigroup congruence)
 gap> cong := RightSemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> cong := SemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 
 # SemigroupCongruence: Infinite semigroup
 gap> S := FreeSemigroup(2);;
@@ -165,8 +167,8 @@ gap> pairs := [ReesMatrixSemigroupElement(R, 1, (), 1),
 gap> rmscong := SemigroupCongruence(R, pairs);;
 gap> S := Semigroup(Transformation([2, 2]), Transformation([1, 1]));;
 gap> SemigroupCongruence(S, iso, rmscong);
-Error, <cong> should be over a Rees (0-)matrix semigroup isomorphic to <S> via\
- <iso>
+Error, the range of the 3rd argument (a congruence) is not a Rees (0-)matrix s\
+emigroup isomorphic to the 1st argument
 
 # SemigroupCongruence: Rees congruence via ideal
 gap> S := Semigroup(FullTransformationMonoid(5));;
@@ -192,10 +194,12 @@ Error, at least 2 arguments are required
 gap> LeftSemigroupCongruence(42, pairs);
 Error, the 1st argument is not a semigroup
 gap> LeftSemigroupCongruence(S, pairs[1], [Transformation([2, 1])]);
-Error, <pairs> should be a list of lists of size 2
+Error, the 2nd argument (a list of lists) contains lists of size not equal to \
+2
 gap> LeftSemigroupCongruence(S,
 > [Transformation([2, 6, 3, 4, 5, 2]), Transformation([2, 3, 1])]);
-Error, each pair should contain elements from the semigroup <S>
+Error, the 2nd argument (a list of lists) contains items that do not belong to\
+ the 1st argument (a semigroup)
 gap> S := FullTransformationSemigroup(6);;
 gap> LeftSemigroupCongruence(S, 12, 13, 100);
 Error, the arguments are not valid for this function
@@ -209,10 +213,12 @@ Error, at least 2 arguments are required
 gap> RightSemigroupCongruence(42, pairs);
 Error, the 1st argument is not a semigroup
 gap> RightSemigroupCongruence(S, pairs[1], [Transformation([2, 2])]);
-Error, <pairs> should be a list of lists of size 2
+Error, the 2nd argument (a list of lists) contains lists of size not equal to \
+2
 gap> RightSemigroupCongruence(S,
 > [Transformation([2, 6, 3, 4, 5, 4]), Transformation([2, 3, 1])]);
-Error, each pair should contain elements from the semigroup <S>
+Error, the 2nd argument (a list of lists) contains items that do not belong to\
+ the 1st argument (a semigroup)
 gap> S := FullTransformationSemigroup(6);;
 gap> RightSemigroupCongruence(S, 12, 13, 100);
 Error, the arguments are not valid for this function
