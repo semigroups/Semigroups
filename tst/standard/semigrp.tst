@@ -151,14 +151,12 @@ gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 1, 0],
 gap> S := Semigroup(gens);
 <semigroup of 5x5 boolean matrices with 5 generators>
 gap> ClosureSemigroup(S, [x], SEMIGROUPS.OptionsRec(S));
-Error, Semigroups: ClosureSemigroup: usage,
-the first argument (a semigroup) and the second argument (a multiplicative
-element collection) cannot be used to generate a semigroup,
+Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
+) cannot be used to generate a semigroup
 gap> ClosureSemigroup(S, [IdentityTransformation],
 > SEMIGROUPS.OptionsRec(S));
-Error, Semigroups: ClosureSemigroup: usage,
-the first argument (a semigroup) and the second argument (a multiplicative
-element collection) cannot be used to generate a semigroup,
+Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
+) cannot be used to generate a semigroup
 
 # ClosureSemigroup 2
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
@@ -405,8 +403,8 @@ gap> S := Monoid(PartialPerm([1, 2]), PartialPerm([1]));
 
 # Test InverseSemigroupByGenerators 1
 gap> InverseSemigroupByGenerators([Transformation([1, 1, 2])], rec());
-Error, Semigroups: InverseSemigroupByGenerators: usage,
-the first argument must satisfy `IsGeneratorsOfInverseSemigroup',
+Error, the 1st argument (a finite mult. elt. coll.) must satisfy IsGeneratorsO\
+fInverseSemigroup
 
 # Test InverseSemigroupByGenerators 2
 gap> InverseSemigroup(PartialPerm([1, 2, 3]));
@@ -430,8 +428,8 @@ gap> SetInfoLevel(InfoSemigroups, 0);
 
 # Test InverseMonoidByGenerators 1
 gap> InverseMonoidByGenerators([Transformation([1, 1, 2])], rec());
-Error, Semigroups: InverseMonoidByGenerators: usage,
-the first argument must satisfy `IsGeneratorsOfInverseSemigroup',
+Error, the 1st argument (a finite mult. elt. coll.) must satisfy IsGeneratorsO\
+fInverseSemigroup
 
 # Test InverseMonoidByGenerators 2
 gap> InverseMonoid(PartialPerm([1, 2, 3]));
@@ -536,17 +534,16 @@ gap> Size(S);
 64
 gap> T := ClosureInverseSemigroup(S, 
 > [Bipartition([[1, 2, -2], [3, -1], [-3]])], rec());
-Error, Semigroups: ClosureInverseSemigroup: usage,
-the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
+Error, the 2nd argument (a finite mult. elt. coll.) must satisfy IsGeneratorsO\
+fInverseSemigroup
 gap> T := ClosureInverseSemigroup(S, 
 > [PartialPerm([])], rec());
-Error, Semigroups: ClosureInverseSemigroup: usage,
-the first argument (a semigroup) and the second argument (a multiplicative
-element collection) cannot be used to generate an inverse semigroup,
+Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
+) cannot be used to generate an inverse semigroup
 gap> T := ClosureInverseSemigroup(S, 
 > [Bipartition([[1, 2, -4], [3, 4, -2], [-1, -3]])], rec());
-Error, Semigroups: ClosureInverseSemigroup: usage,
-the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
+Error, the 2nd argument (a finite mult. elt. coll.) must satisfy IsGeneratorsO\
+fInverseSemigroup
 
 # Test ClosureInverseSemigroup 5
 gap> S := InverseSemigroup(Bipartition([[1, -4], [2, 3, -1], [4, -2, -3]]),
@@ -674,9 +671,8 @@ true
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
 >                   Bipartition([[1, -3], [2, 3, -1], [-2]]));;
 gap> T := ClosureSemigroup(S, IdentityBipartition(4));
-Error, Semigroups: ClosureSemigroup: usage,
-the first argument (a semigroup) and the second argument (a multiplicative
-element collection) cannot be used to generate a semigroup,
+Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
+) cannot be used to generate a semigroup
 
 # Test ClosureSemigroup 4
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
@@ -753,8 +749,7 @@ gap> IsInverseSemigroup(S) and IsNTPMatrixSemigroup(S);
 true
 gap> S := SEMIGROUPS.DefaultRandomInverseSemigroup(IsNTPMatrixMonoid, 
 > [2, 4, 5, 6, 10]);;
-Error, Semigroups: SEMIGROUPS.DefaultRandomInverseSemigroup: usage,
-the second arg must have length 2 to 4,
+Error, the 2nd argument must have length 2, 3, or 4
 
 # Test SEMIGROUPS.DefaultRandomInverseMonoid 1
 gap> S := SEMIGROUPS.DefaultRandomInverseMonoid(IsTransformationMonoid, 
@@ -771,93 +766,77 @@ gap> IsInverseMonoid(S) and IsNTPMatrixMonoid(S);
 true
 gap> S := SEMIGROUPS.DefaultRandomInverseMonoid(IsNTPMatrixMonoid, 
 > [2, 4, 5, 6, 10]);;
-Error, Semigroups: SEMIGROUPS.DefaultRandomInverseMonoid: usage,
-the second arg must have length 2 to 4,
+Error, the 2nd argument must have length 2, 3, or 4
 
 # Test RandomSemigroup 1
 gap> RandomSemigroup(2, 4);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2, 4);;
 gap> RandomSemigroup(fail, 2, 4);;
-Error, Semigroups: RandomSemigroup: usage,
-the first argument must be a filter,
+Error, the 1st argument must be a filter
 gap> RandomSemigroup(IsTransformationSemigroup);;
 gap> RandomSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 4, 1);;
 gap> RandomSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 4);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomSemigroup(IsTransformationSemigroup, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 gap> RandomSemigroup(IsReesMatrixSemigroup);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, SymmetricGroup(3));;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, SymmetricGroup(3), fail);;
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most four arguments,
+Error, expected at most 3 arguments, found 4
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, DihedralGroup(2));;
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument must be a perm group,
+Error, the 4th argument must be a permutation group
 gap> RandomSemigroup(IsReesMatrixSemigroup, fail, 3, DihedralGroup(2));;
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of rows) must be a pos int,
+Error, the 2nd argument (number of rows) must be a positive integer
 
 # Test RandomMonoid 1
 gap> RandomMonoid(2, 4);;
 gap> RandomMonoid(IsTransformationMonoid, 2, 4);;
 gap> RandomMonoid(fail, 2, 4);;
-Error, Semigroups: RandomMonoid: usage,
-the first argument must be a filter,
+Error, the 1st argument must be a filter
 gap> RandomMonoid(IsTransformationMonoid);;
 gap> RandomMonoid(IsTropicalMinPlusMatrixMonoid, 2, 4, 1);;
 gap> RandomMonoid(IsTropicalMinPlusMatrixMonoid, 2, 4);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomMonoid(IsTransformationMonoid, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 
 # Test RandomInverseSemigroup 1
 gap> RandomInverseSemigroup(2, 4);;
 gap> RandomInverseSemigroup(IsTransformationSemigroup, 2, 4);;
 gap> RandomInverseSemigroup(fail, 2, 4);;
-Error, Semigroups: RandomInverseSemigroup: usage,
-the first argument must be a filter,
+Error, the 1st argument must be a filter
 gap> RandomInverseSemigroup(IsTransformationSemigroup);;
 gap> RandomInverseSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 4, 1);;
 gap> RandomInverseSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 4);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
-Error, Semigroups: RandomInverseSemigroup: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomInverseSemigroup(IsTransformationSemigroup, "a");;
-Error, Semigroups: RandomInverseSemigroup: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 
 # Test RandomInverseMonoid 1
 gap> RandomInverseMonoid(2, 4);;
 gap> RandomInverseMonoid(IsTransformationMonoid, 2, 4);;
 gap> RandomInverseMonoid(fail, 2, 4);;
-Error, Semigroups: RandomInverseMonoid: usage,
-the first argument must be a filter,
+Error, the 1st argument must be a filter
 gap> RandomInverseMonoid(IsTransformationMonoid);;
 gap> RandomInverseMonoid(IsTropicalMinPlusMatrixMonoid, 2, 4, 1);;
 gap> RandomInverseMonoid(IsTropicalMinPlusMatrixMonoid, 2, 4);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
-Error, Semigroups: RandomInverseMonoid: usage,
-the fifth argument (semiring period) must be a pos int,
+Error, the 5th argument (semiring period) must be a pos int
 gap> RandomInverseMonoid(IsTransformationMonoid, "a");;
-Error, Semigroups: RandomInverseMonoid: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 
 # Test AsSemigroup 1
 gap> S := Monoid(Transformation([3, 4, 2, 4]), Transformation([2, 4, 1, 4]),
@@ -976,9 +955,8 @@ gap> M = SymmetricInverseMonoid(3);
 true
 gap> M := ClosureMonoid(OrderEndomorphisms(3),
 >                       DClass(M, PartialPerm([1 .. 3])));
-Error, Semigroups: ClosureMonoid: usage,
-the first argument (a monoid) and the second argument (a multiplicative
-element with one collection) cannot be used to generate a monoid,
+Error, the 1st argument (a monoid) and the 2nd argument (a mult. elt. with one\
+ coll.) cannot be used to generate a monoid
 
 # Test IsTrivial immediate method for monoids
 gap> S := Monoid(PartialPerm([1]));
@@ -1020,13 +998,12 @@ gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]),
 true
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > Bipartition([[1, 2, -2], [3, -1], [-3]]));
-Error, Semigroups: ClosureInverseMonoid: usage,
-the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
+Error, the 2nd argument (a finite mult. elt. coll.) must satisfy IsGeneratorsO\
+fInverseSemigroup
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > DualSymmetricInverseMonoid(4));
-Error, Semigroups: ClosureInverseMonoid: usage,
-the first argument (a semigroup) and the second argument (a multiplicative
-element collection) cannot be used to generate an inverse monoid,
+Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
+) cannot be used to generate an inverse monoid
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > DClass(DualSymmetricInverseMonoid(3), IdentityBipartition(3)));
 <inverse block bijection monoid of degree 3 with 3 generators>
@@ -1050,14 +1027,11 @@ true
 
 # Test RandomSemigroup
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 3, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the fourth argument (semiring threshold) must be a pos int,
+Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomSemigroup(IsSemigroup, 3, 3, "a");
-Error, Semigroups: RandomSemigroup: usage,
-there must be at most three arguments,
+Error, there must be at most three arguments,
 gap> RandomSemigroup(IsSemigroup, 3, "a");
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (degree or dimension) must be a pos int,
+Error, the third argument (degree or dimension) must be a pos int,
 gap> RandomMonoid(IsMonoid);;
 
 # Test AsSemigroup for a filter, ring, and semigroup

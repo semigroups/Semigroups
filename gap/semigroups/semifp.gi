@@ -498,8 +498,8 @@ SEMIGROUPS.ExtRepObjToString := function(ext_rep_obj)
   out := "";
   for i in [1, 3 .. Length(ext_rep_obj) - 1] do
     if ext_rep_obj[i] > Length(alphabet) then
-      ErrorNoReturn("odd position of the argument must be at most ",
-                    Length(alphabet));
+      ErrorNoReturn("the maximum value in an odd position of the ",
+                    "argument must be at most ", Length(alphabet));
     fi;
     Add(out, alphabet[ext_rep_obj[i]]);
     if ext_rep_obj[i + 1] > 1 then

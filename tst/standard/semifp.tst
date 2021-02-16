@@ -1931,32 +1931,28 @@ gap> RandomSemigroup(IsFpSemigroup);;
 gap> RandomSemigroup(IsFpSemigroup, 3);;
 gap> RandomSemigroup(IsFpSemigroup, 5, 5);;
 gap> RandomSemigroup(IsFpSemigroup, "a");
-Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
-the parameter must be pos ints,
+Error, the arguments must be positive integers
 
 # Test RandomMonoid
 gap> RandomMonoid(IsFpMonoid);;
 gap> RandomMonoid(IsFpMonoid, 3);;
 gap> RandomMonoid(IsFpMonoid, 5, 5);;
 gap> RandomMonoid(IsFpMonoid, "a");
-Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
-the parameter must be pos ints,
+Error, the arguments must be positive integers
 
 # Test RandomInverseSemigroup
 gap> RandomInverseSemigroup(IsFpSemigroup);;
 gap> RandomInverseSemigroup(IsFpSemigroup, 3);;
 gap> RandomInverseSemigroup(IsFpSemigroup, 5, 5);;
 gap> RandomInverseSemigroup(IsFpSemigroup, "a");
-Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
-the parameter must be pos ints,
+Error, the arguments must be positive integers
 
 # Test RandomInverseMonoid
 gap> RandomInverseMonoid(IsFpMonoid);;
 gap> RandomInverseMonoid(IsFpMonoid, 3);;
 gap> RandomInverseMonoid(IsFpMonoid, 5, 5);;
 gap> RandomInverseMonoid(IsFpMonoid, "a");
-Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
-the parameter must be pos ints,
+Error, the arguments must be positive integers
 
 # Test AsMonoid
 gap> S := SingularTransformationMonoid(3);
@@ -1976,7 +1972,7 @@ gap> AsMonoid(S);
 gap> S := SingularTransformationMonoid(3);
 <regular transformation semigroup ideal of degree 3 with 1 generator>
 gap> IsomorphismFpMonoid(S);
-Error, the 1st argument (a semigroup) must satisfy `IsMonoidAsSemigroup`,
+Error, the 1st argument (a semigroup) must satisfy `IsMonoidAsSemigroup`
 
 # Test MultiplicativeZero
 gap> F := FreeSemigroup(2);;
@@ -2039,15 +2035,13 @@ gap> SEMIGROUPS.WordToString(w);
 aaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcaaaa\
 aaaa"
 gap> SEMIGROUPS.WordToString([100]);
-Error, SEMIGROUPS.WordToString: the maximum value in the argument be at most 
-52,
+Error, the argument be at most 52
 
 # Test SEMIGROUPS.ExtRepObjToString
 gap> SEMIGROUPS.ExtRepObjToString(SEMIGROUPS.WordToExtRepObj(w));
 "a ^ 100b ^ 50ca ^ 8"
 gap> SEMIGROUPS.ExtRepObjToString([100, 1]);
-Error, SEMIGROUPS.ExtRepObjToString: the maximum value in an odd position of t\
-he argument must be at most 52,
+Error, the maximum value in an odd position of the argument must be at most 52
 
 # Test IsomorphismFpSemigroup (for factorizable inverse monoids)
 gap> S := SymmetricInverseMonoid(4);;
@@ -2117,8 +2111,7 @@ s1^4*s2^5*s3*s2
 gap> ExtRepOfObj(x) = [1, 4, 2, 5, 3, 1, 2, 1];
 true
 gap> EvaluateExtRepObjWord(Generators(F), []);
-Error, Semigroups: EvaluateExtRepObjWord, the second argument must be a non-em\
-pty list
+Error, the second argument must be a non-empty list
 gap> F := FreeMonoid(4);;
 gap> x := EvaluateExtRepObjWord(Generators(F), [1, 4, 2, 5, 3, 1, 2, 1]);
 m1^4*m2^5*m3*m2

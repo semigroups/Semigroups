@@ -129,7 +129,8 @@ function(x)
                      [[DigraphRange(x![2])[-x![1][1]] + DigraphNrEdges(x![2])],
                       x![2]]);
   fi;
-  ErrorNoReturn("the argument <x> must not be the zero");
+  ErrorNoReturn("the argument (a graph inverse semigroup element) ",
+                "must not be the zero element");
 end);
 
 InstallMethod(Range, "for a graph inverse semigroup element",
@@ -148,7 +149,8 @@ function(x)
                        DigraphNrEdges(x![2])],
                       x![2]]);
   fi;
-  ErrorNoReturn("the argument <x> must not be the zero");
+  ErrorNoReturn("the argument (a graph inverse semigroup element) ",
+                "must not be the zero element");
 end);
 
 InstallMethod(String, "for a graph inverse semigroup element",

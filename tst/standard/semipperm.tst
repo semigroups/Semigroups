@@ -2119,8 +2119,7 @@ gap> S := Semigroup([
 >  PartialPerm([1, 2, 3, 5, 6, 7, 8], [7, 3, 4, 5, 2, 11, 8]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7], [1, 10, 8, 6, 4, 9, 5])]);;
 gap> NaturalLeqInverseSemigroup(S);
-Error, Semigroups: NaturalLeqInverseSemigroup: usage,
-the argument is not an inverse semigroup,
+Error, the argument is not an inverse semigroup
 
 # Test SmallerDegreePartialPermRepresentation for enumerable semigroup
 gap> S := Range(VagnerPrestonRepresentation(DualSymmetricInverseMonoid(3)));;

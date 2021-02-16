@@ -259,8 +259,8 @@ function(gens, opts)
   local filts, S;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorNoReturn("the 1st argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup'");
+    ErrorNoReturn("the 1st argument (a finite mult. elt. coll.) must satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
@@ -308,8 +308,8 @@ function(gens, opts)
   local pos, filts, S;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorNoReturn("the 1st argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup'");
+    ErrorNoReturn("the 1st argument (a finite mult. elt. coll.) must satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
@@ -438,7 +438,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
-                  "(a multiplicative element collection) cannot be used to ",
+                  "(a mult. elt. coll.) cannot be used to ",
                   "generate a semigroup");
   fi;
 
@@ -478,7 +478,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a monoid) and the 2nd argument ",
-                  "(a multiplicative element with one collection) cannot be ",
+                  "(a mult. elt. with one coll.) cannot be ",
                   "used to generate a monoid");
   fi;
 
@@ -614,8 +614,8 @@ function(S, coll, opts)
   # ClosureSemigroupOrMonoidNC
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("the 2nd argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup'");
+    ErrorNoReturn("the 2nd argument (a finite mult. elt. coll.) must satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   elif not IsList(coll) then
@@ -631,7 +631,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
-                  "(a multiplicative element collection) cannot be used to ",
+                  "(a mult. elt. coll.) cannot be used to ",
                   "generate an inverse semigroup");
   fi;
 
@@ -657,8 +657,8 @@ function(S, coll, opts)
   # ClosureSemigroupOrMonoidNC
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("the 2nd argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup'");
+    ErrorNoReturn("the 2nd argument (a finite mult. elt. coll.) must satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
   elif not IsList(coll) then
@@ -674,7 +674,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
-                  "(a multiplicative element collection) cannot be used to ",
+                  "(a mult. elt. coll.) cannot be used to ",
                   "generate an inverse monoid");
   fi;
 
@@ -940,7 +940,7 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
                                         params[1],
                                         params[2]));
   fi;
-  ErrorNoReturn("the 2nd argument must have length 2 to 4");
+  ErrorNoReturn("the 2nd argument must have length 2, 3, or 4");
 end;
 
 # TODO RandomSource?

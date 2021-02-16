@@ -2078,8 +2078,7 @@ gap> FullPBRMonoid(1);
 gap> FullPBRMonoid(2);
 <pbr monoid of degree 2 with 10 generators>
 gap> FullPBRMonoid(3);
-Error, Semigroups: FullPBRMonoid: usage,
-the argument <n> must be at most 2,
+Error, the argument (a pos. int.) must be at most 2
 
 # AsMonoid, for a PBR semigroup
 gap> S := Semigroup([

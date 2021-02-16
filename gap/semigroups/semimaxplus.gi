@@ -595,7 +595,7 @@ function(dim, threshold)
   local gens, i, j;
 
   if dim <> 2 then
-    ErrorNoReturn("the dimension must be 2");
+    ErrorNoReturn("the 1st argument (dimension) must be 2");
   fi;
 
   gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
@@ -707,7 +707,7 @@ function(dim, threshold)
       od;
     od;
   else
-    ErrorNoReturn("the dimension must be 2 or 3");
+    ErrorNoReturn("the 1st argument (dimension) must be 2 or 3");
   fi;
 
   return Monoid(gens);
