@@ -59,11 +59,11 @@ ReadPackage("semigroups", "gap/ideals/idealact.gi");
 ReadPackage("semigroups", "gap/ideals/ideallam.gi");
 ReadPackage("semigroups", "gap/ideals/ideals-froidure-pin.gi");
 
+ReadPackage("semigroups", "gap/greens/acting.gi");
+ReadPackage("semigroups", "gap/greens/acting-inverse.gi");
+ReadPackage("semigroups", "gap/greens/acting-regular.gi");
 ReadPackage("semigroups", "gap/greens/froidure-pin.gi");
-ReadPackage("semigroups", "gap/greens/gree.gi");
-ReadPackage("semigroups", "gap/greens/grac.gi");
-ReadPackage("semigroups", "gap/greens/gracreg.gi");
-ReadPackage("semigroups", "gap/greens/gracinv.gi");
+ReadPackage("semigroups", "gap/greens/generic.gi");
 
 ReadPackage("semigroups", "gap/tools/display.gi");
 ReadPackage("semigroups", "gap/tools/io.gi");

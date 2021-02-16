@@ -117,8 +117,8 @@ Error, the 1st argument (a list) does not have length 2
 gap> [x, y, z] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [t, t] in cong;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> ims := ImagesElm(cong, t);
 Error, the 2nd argument (an element of a Rees matrix semigroup) does not belon\
 g to the range of the 1st argument (a congruence)
@@ -400,8 +400,8 @@ Error, the 1st argument (a list) does not have length 2
 gap> [x, y, z] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [t, t] in cong;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> [x, x] in cong;
 true
 gap> [zero, zero] in cong;

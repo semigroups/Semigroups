@@ -782,7 +782,7 @@ function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
 
   if not IsSemigroupData(data) then
-    ErrorNoReturn("the argument <data> must be a semigroup data object");
+    ErrorNoReturn("the argument must be a semigroup data object");
   fi;
 
   if not data!.init then

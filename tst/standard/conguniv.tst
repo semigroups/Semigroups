@@ -119,11 +119,11 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 true
 gap> [Transformation([1, 3, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> [3, 4] in uni;
-Error, the items in the 1st argument (a list) do not belong to the range of th\
-e 2nd argument (a right semigroup congruence)
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> [Transformation([1, 4, 2, 4])] in uni;
 Error, the 1st argument (a list) does not have length 2
 

@@ -204,7 +204,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorNoReturn("the D-class is not a subsemigroup");
+    ErrorNoReturn("the argument (a Green's D-class) is not a semigroup");
   fi;
 
   return InjectionPrincipalFactor(D);
@@ -338,7 +338,8 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) does not ",
+                  "satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -357,7 +358,8 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) do not satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
@@ -649,7 +651,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorNoReturn("the argument <D> must be a regular D-class");
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -664,7 +666,7 @@ function(D)
   local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
 
   if not IsRegularDClass(D) then
-    ErrorNoReturn("the argument <D> must be a regular D-class");
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -1088,9 +1090,9 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorNoReturn("the argument is not a finite semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("the argument is not a regular semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalPartialOrder(S);
   fi;
@@ -1117,9 +1119,9 @@ InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument is not a finite semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("the argument is not a regular semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalLeqInverseSemigroup(S);
   fi;

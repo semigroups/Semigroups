@@ -51,23 +51,18 @@ gap> Length(gens);
 gap> ReadGenerators(name, 2);
 [ <identity partial perm on [ 1, 3, 4 ]>, [1,2](3)(4) ]
 gap> ReadGenerators(name, 2, 3);
-Error, Semigroups: ReadGenerators: usage,
-there should be 1 or 2 arguments,
+Error, there should be 1 or 2 arguments
 gap> ReadGenerators("non-existant-file");
-Error, Semigroups: ReadGenerators:
-could not open the file non-existant-file,
+Error, could not open the file non-existant-file
 gap> file := IO_CompressedFile(name, "r");;
 gap> ReadGenerators(file, 2);
 [ <identity partial perm on [ 1, 3, 4 ]>, [1,2](3)(4) ]
 gap> ReadGenerators(file, -1);
-Error, Semigroups: ReadGenerators: usage,
-the second argument must be a positive integer,
+Error, the 2nd argument is not a positive integer
 gap> ReadGenerators(file, 2000);
-Error, Semigroups: ReadGenerators:
-the file only has 11 further entries,
+Error, the file only has 11 further entries
 gap> ReadGenerators(3);
-Error, Semigroups: ReadGenerators: usage,
-the first argument must be a string or a file,
+Error, the 1st argument is not a string or a file
 gap> IO_Close(file);
 true
 
@@ -79,19 +74,16 @@ IO_OK
 gap> WriteGenerators(name, gens, "w");
 IO_OK
 gap> WriteGenerators(name, gens, "w", 2);
-Error, Semigroups: WriteGenerators: usage,
-the third or fourth argument must be a function,
+Error, the 3rd or 4th argument is not a function
 gap> WriteGenerators(name, gens, "x");
-Error, Semigroups: WriteGenerators: usage,
-the third argument must be "a" or "w",
+Error, the 3rd argument is not "a" or "w"
 gap> file := IO_CompressedFile(name, "w");;
 gap> WriteGenerators(file, gens);
 IO_OK
 gap> IO_Close(file);
 true
 gap> WriteGenerators(3, gens);
-Error, Semigroups: WriteGenerators: usage,
-the first argument must be a string or a file,
+Error, the 1st argument is not a string or a file
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tmpfile");;
 gap> WriteGenerators(name, [FullTransformationMonoid(3)]);
 IO_OK
@@ -99,14 +91,11 @@ gap> Length(ReadGenerators(name)[1]);
 4
 gap> Exec("rm ", name);
 gap> WriteGenerators(name, gens, 1);
-Error, Semigroups: WriteGenerators: usage,
-the third argument must be a string or a function,
+Error, the 3rd argument is not a string or a function
 gap> WriteGenerators(1, 2, 3, 4, 5);
-Error, Semigroups: WriteGenerators: usage,
-there should be 2, 3, or 4 arguments,
+Error, there should be 2, 3, or 4 arguments
 gap> WriteGenerators(name, [], "w");
-Error, Semigroups: WriteGenerators: usage,
-the second argument must be a non-empty list,
+Error, the 2nd argument is not a non-empty list
 
 # Test ReadGenerators
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/trans3");;
@@ -118,25 +107,20 @@ gap> ReadGenerators(name);
 gap> ReadGenerators(name, 4);
 [ IdentityTransformation ]
 gap> ReadGenerators(name, 2, 3);
-Error, Semigroups: ReadGenerators: usage,
-there should be 1 or 2 arguments,
+Error, there should be 1 or 2 arguments
 gap> ReadGenerators("non-existant-file");
-Error, Semigroups: ReadGenerators:
-could not open the file non-existant-file,
+Error, could not open the file non-existant-file
 gap> file := IO_CompressedFile(name, "r");;
 gap> ReadGenerators(file, 2);
 [ Transformation( [ 1, 1, 2 ] ) ]
 gap> ReadGenerators(file, -1);
-Error, Semigroups: ReadGenerators: usage,
-the second argument must be a positive integer,
+Error, the 2nd argument is not a positive integer
 gap> ReadGenerators(file, 2000);
-Error, Semigroups: ReadGenerators:
-the file only has 5 further entries,
+Error, the file only has 5 further entries
 gap> IO_Close(file);
 true
 gap> ReadGenerators(3);
-Error, Semigroups: ReadGenerators: usage,
-the first argument must be a string or a file,
+Error, the 1st argument is not a string or a file
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/bipart4");;
 gap> ReadGenerators(name);
 [ [ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
@@ -202,11 +186,9 @@ gap> ReadMultiplicationTable(name, 3);
   [ 7, 7, 8, 9, 1, 3, 4, 5, 6, 7 ], [ 8, 8, 9, 1, 3, 4, 5, 6, 7, 8 ], 
   [ 9, 9, 1, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 10, 3, 4, 5, 6, 7, 8, 9, 2 ] ]
 gap> ReadMultiplicationTable(name, 3, 4);
-Error, Semigroups: ReadMultiplicationTable: usage,
-there should be 1 or 2 arguments,
+Error, there should be 1 or 2 arguments
 gap> ReadMultiplicationTable("non-existant-file");
-Error, Semigroups: ReadMultiplicationTable:
-could not open the file "non-existant-file",
+Error, could not open the file "non-existant-file"
 gap> file := IO_CompressedFile(name, "r");;
 gap> ReadMultiplicationTable(file, 2);
 [ [ 1, 1, 3, 4, 5, 6, 7, 8, 9, 10 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
@@ -215,17 +197,13 @@ gap> ReadMultiplicationTable(file, 2);
   [ 7, 7, 9, 10, 1, 4, 5, 3, 8, 6 ], [ 8, 8, 10, 1, 9, 5, 3, 4, 6, 7 ], 
   [ 9, 9, 4, 5, 3, 7, 8, 6, 10, 1 ], [ 10, 10, 5, 3, 4, 8, 6, 7, 1, 9 ] ]
 gap> ReadGenerators(file, -1);
-Error, Semigroups: ReadGenerators: usage,
-the second argument must be a positive integer,
+Error, the 2nd argument is not a positive integer
 gap> ReadMultiplicationTable(file, -2);
-Error, Semigroups: ReadMultiplicationTable: usage,
-the second argument must be a positive integer,
+Error, the 2nd argument is not a positive integer
 gap> ReadMultiplicationTable(file, 100);
-Error, Semigroups: ReadMultiplicationTable:
-the file only has 46 lines,
+Error, the file only has 46 lines
 gap> ReadMultiplicationTable(32);
-Error, Semigroups: ReadMultiplicationTable: usage,
-the first argument must be a string or a file,
+Error, the 1st argument is not a string or a file
 gap> IO_Close(file);
 true
 
@@ -238,30 +216,25 @@ IO_OK
 gap> WriteMultiplicationTable(name, tables, "w");
 IO_OK
 gap> WriteMultiplicationTable(name, tables, "w", 2);
-Error, Semigroups: WriteMultiplicationTable: usage,
-there should be 2 or 3 arguments,
+Error, there must be 2 or 3 arguments
 gap> WriteMultiplicationTable(name, tables, "x");
-Error, Semigroups: WriteMultiplcationTable: usage,
-the third argument must be "a" or "w",
+Error, the 3rd argument is not "a" or "w"
 gap> file := IO_CompressedFile(name, "w");;
 gap> WriteMultiplicationTable(file, tables);
 IO_OK
 gap> IO_Close(file);
 true
 gap> WriteMultiplicationTable(3, tables);
-Error, Semigroups: WriteMultiplicationTable: usage,
-the first argument must be a string or a file,
+Error, the 1st argument is not a string or a file
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tmptables");;
 gap> table := [[1, 2, 3, 4], [1, 2, 3, false], [2, 3, 4, 1], [4, 3, 2, 1]];;
 gap> WriteMultiplicationTable(name, [table]);
-Error, Semigroups: WriteMultiplicationTable: usage,
-the second argument must be a collection of rectangular tables containing only\
- integers,
+Error, the 2nd argument is not a collection of rectangular tables containing o\
+nly integers
 gap> table := [[1, 2, 3], [1, 2], [3, 2, 1]];;
 gap> WriteMultiplicationTable(name, [table]);
-Error, Semigroups: WriteMultiplicationTable: usage,
-the second argument must be a collection of rectangular tables containing only\
- integers,
+Error, the 2nd argument is not a collection of rectangular tables containing o\
+nly integers
 gap> table := [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 > [2, 4, 6, 7, 8, 9, 1, 11, 12, 13, 14, 3, 15, 5, 16, 10],
 > [3, 6, 5, 9, 10, 8, 12, 13, 11, 1, 15, 14, 2, 16, 4, 7],
@@ -281,14 +254,12 @@ gap> table := [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 gap> WriteMultiplicationTable(name, [table]);
 IO_OK
 gap> WriteMultiplicationTable(name, [table + 250]);
-Error, Semigroups: WriteMultiplicationTable: usage,
-the second argument must be a collection of rectangular tables with integer en\
-tries from [1, 2, ..., n] (where n equals the number of rows of the table),
+Error, the 2nd argument is not a collection of rectangular tables with integer\
+ entries from [1, 2, ..., n] (where n equals the number of rows of the table)
 gap> table := MultiplicationTable(SmallGroup(257, 1));;
 gap> WriteMultiplicationTable(name, [table]);
-Error, Semigroups: WriteMultiplicationTable: usage,
-the second argument must be a collection of rectangular tables with at most 25\
-5 rows,
+Error, the 2nd argument is not a collection of rectangular tables with at most\
+ 255 rows
 gap> Exec("rm ", name);
 
 # Test IteratorFromMultiplicationTableFile
@@ -376,8 +347,7 @@ gap> WriteGenerators(fname,
 >                    [[Matrix(IsIntegerMatrix, [[0]])]], 
 >                    "w",
 >                    SEMIGROUPS.WriteGeneratorsLine);
-Error, Semigroups: WriteGenerators: usage,
-the second argument is incompatible with the file format,
+Error, the 2nd argument is incompatible with the file format
 gap> Exec("rm ", fname);
 
 #

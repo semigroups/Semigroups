@@ -23,8 +23,7 @@ gap> FreeBand(3, "abc");
 gap> FreeBand("a", "b", "c");
 <free band on the generators [ a, b, c ]>
 gap> FreeBand(\<);
-Error, Semigroups: FreeBand: usage,
-FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
+Error, FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> Size(S);
@@ -36,11 +35,9 @@ gap> S := FreeBand(4);
 gap> Size(S);
 332380
 gap> FreeBand(1, 2);
-Error, Semigroups: FreeBand: usage,
-FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
+Error, FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])
 gap> FreeBand(1, 2, 3);
-Error, Semigroups: FreeBand: usage,
-FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),
+Error, FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name])
 
 # FreeBandTest2: Free band D-class iterator
 gap> S := FreeBand(5);
@@ -49,8 +46,8 @@ gap> x := S.3 * S.2 * S.1;
 x3x2x1
 gap> T := FreeBand(4, "t");;
 gap> D := GreensDClassOfElement(S, T.3 * T.2);
-Error, Semigroups: GreensDClassOfElement: usage,
-the element does not belong to the semigroup,
+Error, the 2nd argument (a free band element) does not belong to 1st argument \
+(a free band category)
 gap> D := GreensDClassOfElement(S, x);
 <Green's D-class: x3x2x1>
 gap> iter := Iterator(D);

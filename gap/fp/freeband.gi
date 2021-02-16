@@ -315,7 +315,8 @@ InstallMethod(GreensDClassOfElement, "for a free band and element",
 function(S, x)
   local filt, type, D;
   if not x in S then
-    ErrorNoReturn("the element does not belong to the semigroup");
+    ErrorNoReturn("the 2nd argument (a free band element) does not ",
+                  "belong to 1st argument (a free band category)");
   fi;
 
   filt := IsEquivalenceClass and IsEquivalenceClassDefaultRep

@@ -831,17 +831,21 @@ function(R1, R2, triple)
   nrcols := Length(Rows(R1));  # rows of R1 are cols of the matrix
   nrrows := Length(Columns(R1));
   if nrcols <> Length(Rows(R2)) or nrrows <> Length(Columns(R2)) then
-    ErrorNoReturn("<R1> and <R2> are not isomorphic");
+    ErrorNoReturn("the 1st and 2nd arguments (Rees matrix semigroups) ",
+                  "are not isomorphic");
   fi;
 
   # Check graph isomorphism
   if not IsPerm(graph_iso) then
-    ErrorNoReturn("<triple>[1] should be a permutation");
+    ErrorNoReturn("the 1st entry in the 3rd argument (a triple) is ",
+                  "not a permutation");
   elif LargestMovedPoint(graph_iso) > nrrows + nrcols then
-    ErrorNoReturn("<triple>[1] should be a permutation on [1 .. ",
+    ErrorNoReturn("the 1st entry (a permutation) in the 3rd argument ",
+                  "(a triple) is not a permutation on [1 .. ",
                   nrrows + nrcols, "]");
   elif ForAny([1 .. nrcols], x -> x ^ graph_iso > nrcols) then
-    ErrorNoReturn("<triple>[1] should not map columns to rows");
+    ErrorNoReturn("the 1st entry (a permutation) in the 3rd argument ",
+                  "(a triple) maps rows to columns");
   fi;
 
   # Check group isomorphism
@@ -851,21 +855,25 @@ function(R1, R2, triple)
           IsBijective(group_iso) and
           Source(group_iso) = G1 and
           Range(group_iso) = G2) then
-    ErrorNoReturn("<triple>[2] should be an isomorphism from",
-                  "the underlying group of <R1> to that of <R2>");
+    ErrorNoReturn("the 2nd entry in the 3rd argument (a triple)",
+                  " is not an isomorphism between the underlying groups",
+                  " of the 1st and 2nd arguments (Rees matrix semigroups)");
   fi;
 
   # Check map from rows and cols to H
   if Length(g2_elms_list) <> nrrows + nrcols then
-    ErrorNoReturn("<triple>[3] should have length equal to",
-                  "the number of rows and columns of <R1>");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  "does not have length equal to the number of rows and ",
+                  "columns of the 1st argument (a Rees matrix semigroup)");
   elif not ForAll(g2_elms_list, x -> x in G2) then
-    ErrorNoReturn("<triple>[3] should only contain elements from ",
-                  "the underlying group of <R2>");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not consist of elements of the underlying group",
+                  " of the 2nd argument (a Rees matrix semigroup)");
   fi;
   if SEMIGROUPS.RMSInducedFunction(R1, R2, graph_iso, group_iso,
                                    g2_elms_list[1]) <> g2_elms_list then
-    ErrorNoReturn("<triple>[3] does not define an isomorphism");
+    ErrorNoReturn("the 3rd entry (a list) in the 3rd argument (a triple)",
+                  " does not define an isomorphism");
   fi;
 
   return RMSIsoByTripleNC(R1, R2, triple);

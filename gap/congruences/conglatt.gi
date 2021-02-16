@@ -375,7 +375,7 @@ function(S, restriction)
                   "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
     ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
-                  "argument (a semigroup),");
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfLeftSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -394,7 +394,7 @@ function(S, restriction)
                   "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
     ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
-                  "argument (a semigroup),");
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfRightSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
@@ -413,7 +413,7 @@ function(S, restriction)
                   "CanComputeFroidurePin");
   elif not IsSubset(S, restriction) then
     ErrorNoReturn("the 2nd argument (a set) must be a subset of the 1st ",
-                  "argument (a semigroup),");
+                  "argument (a semigroup)");
   fi;
   genpairs := GeneratingPairsOfSemigroupCongruence;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S,

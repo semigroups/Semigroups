@@ -106,7 +106,7 @@ gap> S := Semigroup(x, y);
 <subsemigroup of 10x5 Rees 0-matrix semigroup with 2 generators>
 gap> D := DClass(S, RMSElement(R, 6, (1, 3, 4, 2), 5));;
 gap> InjectionPrincipalFactor(D);
-Error, the argument <D> must be a regular D-class
+Error, the argument (a Green's D-class) is not regular
 
 # attract: InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);

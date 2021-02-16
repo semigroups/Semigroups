@@ -281,7 +281,7 @@ gap> ForAll(S, y -> x ^ f * y ^ f = (x * y) ^ f);
 true
 
 # BipartitionTest26:
-# Tests of things in gree.xml in the order they appear in that file. 
+# Tests of things in greens-generic.xml in the order they appear in that file. 
 gap> S := Semigroup(
 > Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -8],
 >      [6, -9], [7, -10], [8, -11], [9, -12], [10, -13], [11, -5],

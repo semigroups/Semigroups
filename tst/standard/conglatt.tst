@@ -203,13 +203,13 @@ gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> LatticeOfCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 gap> LatticeOfLeftCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 gap> LatticeOfRightCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 
 # Left/RightCongruences (as a list)
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -296,13 +296,13 @@ gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> PosetOfPrincipalCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 gap> PosetOfPrincipalLeftCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 gap> PosetOfPrincipalRightCongruences(S, restriction);
 Error, the 2nd argument (a set) must be a subset of the 1st argument (a semigr\
-oup),
+oup)
 
 # PrincipalCongruencesOfSemigroup
 gap> S := Semigroup(Transformation([1, 3, 2]),

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  grac.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  greens/acting.gi
+##  Copyright (C) 2015-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -764,7 +764,8 @@ InstallMethod(GreensDClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not x in S then
-    ErrorNoReturn("the element does not belong to the semigroup");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a semigroup)");
   fi;
   return GreensDClassOfElementNC(S, x, false);
 end);
@@ -798,7 +799,8 @@ InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not x in S then
-    ErrorNoReturn("the element does not belong to the semigroup");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a semigroup)");
   fi;
   return GreensLClassOfElementNC(S, x, false);
 end);
@@ -831,7 +833,8 @@ InstallMethod(GreensLClassOfElement,
 [IsGreensDClass and IsActingSemigroupGreensClass, IsMultiplicativeElement],
 function(D, x)
   if not x in D then
-    ErrorNoReturn("the element does not belong to the D-class");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a Green's D-class)");
   fi;
   return GreensLClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -872,7 +875,8 @@ InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not x in S then
-    ErrorNoReturn("the element does not belong to the semigroup");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a semigroup)");
   fi;
   return GreensRClassOfElementNC(S, x, false);
 end);
@@ -905,7 +909,8 @@ InstallMethod(GreensRClassOfElement,
 [IsGreensDClass and IsActingSemigroupGreensClass, IsMultiplicativeElement],
 function(D, x)
   if not x in D then
-    ErrorNoReturn("the element does not belong to the D-class");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a Green's D-class)");
   fi;
   return GreensRClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -971,7 +976,8 @@ InstallMethod(GreensHClassOfElement, "for a D/H-class and element",
 [IsActingSemigroupGreensClass and IsGreensClass, IsMultiplicativeElement],
 function(C, x)
   if not x in C then
-    ErrorNoReturn("the element does not belong to the D-class");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
+                  "to the 1st argument (a Green's class)");
   fi;
   return GreensHClassOfElementNC(C, x, IsGreensClassNC(C));
 end);
@@ -1628,7 +1634,7 @@ function(H)
   local map, iso, inv;
 
   if not IsGroupHClass(H) then
-    ErrorNoReturn("the H-class is not a group");
+    ErrorNoReturn("the argument (a Green's H-class) is not a group");
   fi;
 
   if not IsPermGroup(SchutzenbergerGroup(H)) then
@@ -1639,15 +1645,15 @@ function(H)
 
   iso := function(x)
     if not x in H then
-      ErrorNoReturn("argument does not belong to the domain of the ",
+      ErrorNoReturn("the argument does not belong to the domain of the ",
                     "function");
     fi;
     return LambdaPerm(Parent(H))(MultiplicativeNeutralElement(H), x) ^ map;
   end;
   inv := function(x)
     if not x in Image(map) then
-      ErrorNoReturn("argument does not belong to the domain of the ",
-      "function");
+      ErrorNoReturn("the argument does not belong to the domain of the ",
+                    "function");
     fi;
     return StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
                                        x ^ InverseGeneralMapping(map));
@@ -1795,7 +1801,7 @@ function(S, n)
    rank, rep, rho, j, i, k;
 
   if n < 0 then
-    ErrorNoReturn("the 2nd argument <n> must be a non-negative integer");
+    ErrorNoReturn("the 2nd argument (an integer) is not non-negative");
   elif n > Maximum(List(GeneratorsOfSemigroup(S), x -> ActionRank(S)(x))) then
     return [];
   fi;

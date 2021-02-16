@@ -16,20 +16,16 @@ gap> SEMIGROUPS.StartTest();
 # FreeInverseTest1: Creating free inverse semigroups and basic methods
 # (with default generators)
 gap> FreeInverseSemigroup(\<);
-Error, Semigroups: FreeInverseSemigroup: usage,
-FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
-]),
+Error, FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> \
+[, name]),
 gap> FreeInverseSemigroup([]);
-Error, Semigroups: FreeInverseSemigroup: usage,
-the number of generators of a free inverse semigroup must be non-zero,
+Error, the number of generators of a free inverse semigroup must be non-zero,
 gap> FreeInverseSemigroup(1, 2);
-Error, Semigroups: FreeInverseSemigroup: usage,
-FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
-]),
+Error, FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> \
+[, name]),
 gap> FreeInverseSemigroup(1, 2, 3);
-Error, Semigroups: FreeInverseSemigroup: usage,
-FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name\
-]),
+Error, FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> \
+[, name]),
 gap> FreeInverseSemigroup(20, "r");
 <free inverse semigroup with 20 generators>
 gap> S := FreeInverseSemigroup(3);
@@ -80,8 +76,7 @@ true
 gap> IsFreeInverseSemigroup(InverseSemigroup(gens{[1, 2]}));
 true
 gap> IsFreeInverseSemigroup(SymmetricGroup(3));
-Error, Semigroups: IsFreeInverseSemigroup:
-cannot determine the answer
+Error, cannot determine the answer
 gap> IsFreeInverseSemigroup(MonogenicSemigroup(3, 2));
 false
 

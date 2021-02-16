@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gree.gd
-##  Copyright (C) 2016                                   James D. Mitchell
+##  greens/generic.gd
+##  Copyright (C) 2016-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

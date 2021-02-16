@@ -198,7 +198,8 @@ false
 gap> x := Bipartition([[1, 2, 4, 5, -2], [3, -1, -3], [-4], [-5]]);;
 gap> y := Bipartition([[1, 3, -2], [2, 4, -5], [5, -1, -4], [-3]]);;
 gap> PartialPermLeqBipartition(x, y);
-Error, the arguments (bipartitions) must satisfy IsPartialPermBipartition
+Error, the arguments (bipartitions) do not both satisfy IsPartialPermBipartiti\
+on
 
 # bipartition: PartialPermLeqBipartition 2/3
 gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2], [-3]]);;
@@ -221,7 +222,7 @@ ts
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> y := Bipartition([[1], [2], [3, -3], [-1, -2]]);;
 gap> NaturalLeqBlockBijection(x, y);
-Error, the arguments (bipartitions) must be block bijections
+Error, the arguments (bipartitions) are not block bijections
 
 # bipartition: NaturalLeqBlockBijection  2/3
 gap> x := Bipartition([[1, 2, -4], [3, 4, -1, -2, -3]]);;
@@ -240,7 +241,7 @@ true
 gap> x := Bipartition([[1, 2, 4, 5, -2], [3, -1, -3], [-4], [-5]]);;
 gap> y := Bipartition([[1, 3, -2], [2, 4, -5], [5, -1, -4], [-3]]);;
 gap> NaturalLeqPartialPermBipartition(x, y);
-Error, the arguments (bipartitions) must be partial perm bipartitions
+Error, the arguments (bipartitions) are not partial perm bipartitions
 
 # bipartition: NaturalLeqPartialPermBipartition 2/4
 gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2],
@@ -278,8 +279,8 @@ gap> Bipartition([[1], [2], [3, -3], [-1, -2]]) * (1, 3, 2);
 
 # bipartition: \*, for bipartition and perm 2/2
 gap> Bipartition([[1], [2], [3, -3], [-1, -2]]) * (1, 2)(4, 5);
-Error, the largest moved point of the 2nd argument (a permutation) must not be\
- greater than the degree of the 1st argument (a bipartition)
+Error, the largest moved point of the 2nd argument (a permutation) exceeds the\
+ degree of the 1st argument (a bipartition)
 
 # bipartition: \*, for perm and bipartition 1/2
 gap> (1, 2) * Bipartition([[1], [2], [3, -3], [-1, -2]]);
@@ -287,8 +288,8 @@ gap> (1, 2) * Bipartition([[1], [2], [3, -3], [-1, -2]]);
 
 # bipartition: \*, for perm and bipartition 2/2
 gap> (1, 2, 4) * Bipartition([[1], [2], [3, -3], [-1, -2]]);
-Error, the largest moved point of the 1st argument (a permutation) must not be\
- greater than the degree of the 2nd argument (a bipartition)
+Error, the largest moved point of the 1st argument (a permutation) exceeds the\
+ degree of the 2nd argument (a bipartition)
 
 # bipartition: \*, for bipartition and transformation 1/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
@@ -298,8 +299,8 @@ gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 # bipartition: \*, for bipartition and transformation 2/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 > Transformation([3, 4, 2, 4]);
-Error, the degree of the 2nd argument (a transformation) must not be greater t\
-han the degree of the 1st argument (a bipartition)
+Error, the degree of the 2nd argument (a transformation) exceeds the degree of\
+ the 1st argument (a bipartition)
 
 # bipartition: \*, for transformation and bipartition 1/2
 gap> Transformation([1, 3, 2])
@@ -309,8 +310,8 @@ gap> Transformation([1, 3, 2])
 # bipartition: \*, for transformation and bipartition 2/2
 gap> Transformation([1, 4, 4, 1]) *
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-Error, the degree of the 1st argument (a transformation) must not be greater t\
-han the degree of the 2nd argument (a bipartition)
+Error, the degree of the 1st argument (a transformation) exceeds the degree of\
+ the 2nd argument (a bipartition)
 
 # bipartition: \*, for bipartition and partial perm 1/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
@@ -320,7 +321,7 @@ gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 # bipartition: \*, for bipartition and partial perm 2/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 > PartialPerm([3, 2, 4]);
-Error, the 2nd argument (a partial perm) must map [1 .. 3] into [1 .. 3]
+Error, the 2nd argument (a partial perm) does not map [1 .. 3] into [1 .. 3]
 
 # bipartition: \*, for partial perm and bipartition 1/2
 gap> PartialPerm([1, 3, 2]) * Bipartition([[1, 3], [2, -1], [-2, -3]]);
@@ -328,7 +329,7 @@ gap> PartialPerm([1, 3, 2]) * Bipartition([[1, 3], [2, -1], [-2, -3]]);
 
 # bipartition: \*, for partial perm and bipartition 2/2
 gap> PartialPerm([1, 4]) * Bipartition([[1, 3], [2, -1], [-2, -3]]);
-Error, the 1st argument (a partial perm) must map [1 .. 3] into [1 .. 3]
+Error, the 1st argument (a partial perm) does not map [1 .. 3] into [1 .. 3]
 
 # bipartition: \^, for bipartition and perm 1/1
 gap> Bipartition([[1, -3], [2], [3, -2], [4, -1, -4]]) ^ (1, 2, 3, 4);
@@ -348,7 +349,7 @@ true
 gap> x := Bipartition([[1, 2], [-1, -2]]);;
 gap> y := Bipartition([[1, -1, -2], [2]]);;
 gap> PermLeftQuoBipartition(x, y);
-Error, the arguments must have equal left and right blocks
+Error, the arguments (bipartitions) do not have equal left and right blocks
 
 # bipartition: PermLeftQuoBipartition, result 2/2
 gap> x := Bipartition([[1, 2], [-1, -2]]);;
@@ -369,11 +370,11 @@ Error, the argument (a bipartition) does not define a transformation
 
 # bipartition: AsBipartition, for a perm and pos int, error 1/1
 gap> AsBipartition((1, 2, 3, 5), 4);
-Error, the 1st argument (a permutation) must permute [1 .. 4]
+Error, the 1st argument (a permutation) does not permute [1 .. 4]
 
 # bipartition: AsBipartition, for a transformation and pos int, error 1/1
 gap> AsBipartition(Transformation([4, 4, 4, 4]), 2);
-Error, the 1st argument (a transformation) must map [1 .. 2] to itself
+Error, the 1st argument (a transformation) does not map [1 .. 2] to itself
 
 # bipartition: AsBipartition, for a bipartition and 0 1/1
 gap> AsBipartition(Bipartition([[1, 2, -1, -2], [3, -3]]), 0);
@@ -386,8 +387,8 @@ Error, no 1st choice method found for `AsBlockBijection' on 2 arguments
 
 # bipartition: AsBlockBijection, for a partial perm and pos int, error 1/1
 gap> AsBlockBijection(PartialPerm([1, 3, 2, 4]), 1);
-Error, the 2nd argument (a pos. int.) must exceed the maximum of the degree an\
-d codegree of the 1st argument (a partial perm)
+Error, the 2nd argument (a pos. int.) is less than or equal to the maximum of \
+the degree and codegree of the 1st argument (a partial perm)
 
 # bipartition: IsUniformBlockBijection, for a bipartition 1/3
 gap> IsUniformBlockBijection(Bipartition([[1, 2, -1, -2], [3, -3]]));
@@ -466,22 +467,22 @@ gap> RightProjection(StarOp(x));
 
 # bipartition: Bipartition 1/3
 gap> Bipartition("test");
-Error, the argument <classes> must consist of duplicate-free homogeneous lists
+Error, the argument does not consist of duplicate-free homogeneous lists
 gap> Bipartition(["test"]);
-Error, the argument <classes> must consist of duplicate-free homogeneous lists
+Error, the argument does not consist of duplicate-free homogeneous lists
 gap> Bipartition([[1, 2], [3, "a"]]);
-Error, the argument <classes> must consist of duplicate-free homogeneous lists
+Error, the argument does not consist of duplicate-free homogeneous lists
 gap> Bipartition([[1, 2], [3, 3]]);
-Error, the argument <classes> must consist of duplicate-free homogeneous lists
+Error, the argument does not consist of duplicate-free homogeneous lists
 
 # bipartition: Bipartition 2/3
 gap> Bipartition([[1, 2], [3, E(3)]]);
-Error, the argument <classes> must consist of lists of integers from [-
+Error, the argument does not consist of lists of integers from [-
 2 .. -1, 1 .. 2]
 
 # bipartition: Bipartition 3/3
 gap> Bipartition([[1, 2], [3, 4]]);
-Error, the argument <classes> must consist of lists of integers from [-
+Error, the argument does not consist of lists of integers from [-
 2 .. -1, 1 .. 2]
 
 # bipartition: OneMutable, for a bipartition collection 1/1
@@ -490,7 +491,7 @@ gap> OneMutable([IdentityBipartition(2)]);
 
 # bipartition: BipartitionByIntRep 1/5
 gap> BipartitionByIntRep([1, 2, 3]);
-Error, the length of the argument (a list) must be an even integer
+Error, the length of the argument (a list) is not an even integer
 
 # bipartition: BipartitionByIntRep 2/5
 gap> BipartitionByIntRep([1, 2, 3, "a"]);
@@ -674,9 +675,9 @@ gap> PrintString(IdentityBipartition(0));
 # bipartition: AsBlockBijection, for a partial perm bipartition
 gap> x := Bipartition([[1, 3], [2, 4, -2], [5, -1, -3, -4], [-5]]);;
 gap> AsBlockBijection(x);
-Error, the argument (a bipartion) must satisfy IsPartialPermBipartition
+Error, the argument (a bipartion) does not satisfy IsPartialPermBipartition
 gap> AsBlockBijection(x, 3);
-Error, the 1st argument (a bipartition) must be a partial perm bipartition
+Error, the 1st argument (a bipartition) is not a partial perm bipartition
 gap> n := 4;;
 gap> S := SymmetricInverseMonoid(n);
 <symmetric inverse monoid of degree 4>
@@ -698,11 +699,11 @@ gap> AsBlockBijection(x, 0);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `AsBlockBijection' on 2 arguments
 gap> AsBlockBijection(x, 3);
-Error, the 2nd argument (a pos. int.) must exceed the maximum of the degree an\
-d codegree of the 1st argument (a partial perm)
+Error, the 2nd argument (a pos. int.) is less than or equal to the maximum of \
+the degree and codegree of the 1st argument (a partial perm)
 gap> AsBlockBijection(x, 4);
-Error, the 2nd argument (a pos. int.) must exceed the maximum of the degree an\
-d codegree of the 1st argument (a partial perm)
+Error, the 2nd argument (a pos. int.) is less than or equal to the maximum of \
+the degree and codegree of the 1st argument (a partial perm)
 gap> AsBlockBijection(x);
 <block bijection: [ 1, -4 ], [ 2, -1 ], [ 3, 4, 5, -2, -3, -5 ]>
 gap> AsBlockBijection(x, 6);
@@ -746,27 +747,27 @@ gap> enum := EnumeratorByFunctions(Integers,
 gap> Bipartition([enum]);
 Error, the maximum degree of a bipartition is 2 ^ 29 - 1
 gap> BipartitionByIntRep(enum);
-Error, the length of the argument (a list) must not exceed 2 ^ 30 - 1
+Error, the length of the argument (a list) exceeds 2 ^ 30 - 1
 gap> IdentityBipartition(2 ^ 31);
-Error, the argument <n> must not exceed 2 ^ 29 - 1
+Error, the argument (a pos. int) must not exceed 2 ^ 29 - 1
 gap> RandomBipartition(2 ^ 31);
-Error, the argument <n> must not exceed 2 ^ 29 - 1
+Error, the argument (a pos. int.) must not exceed 2 ^ 29 - 1
 gap> RandomBlockBijection(2 ^ 31);
-Error, the argument <n> must not exceed 2 ^ 29 - 1
+Error, the argument (a pos. int.) must not exceed 2 ^ 29 - 1
 gap> AsBipartition((), 2 ^ 31);
-Error, the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1
+Error, the 2nd argument (a pos. int.) exceeds 2 ^ 29 - 1
 gap> AsBipartition(PartialPerm([]), 2 ^ 31);
-Error, the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1
+Error, the 2nd argument (a pos. int.) exceeds 2 ^ 29 - 1
 gap> AsBipartition(Transformation([]), 2 ^ 31);
-Error, the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1
+Error, the 2nd argument (a pos. int.) exceeds 2 ^ 29 - 1
 gap> AsBipartition(Bipartition([]), 2 ^ 31);
-Error, the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1
+Error, the 2nd argument (a pos. int.) exceeds 2 ^ 29 - 1
 gap> AsBlockBijection(PartialPerm([]), 2 ^ 31);
-Error, the 2nd argument (a pos. int.) must not exceed 2 ^ 29 - 1
+Error, the 2nd argument (a pos. int.) exceeds 2 ^ 29 - 1
 
 # Bipartition
 gap> Bipartition([[1, 2], [-1, 1]]);
-Error, the union of the argument <classes> must be [-2 .. -1, 1 .. 2]
+Error, the union of the argument <classes> is not [-2 .. -1, 1 .. 2]
 
 # AsBipartition, for a partial perm
 gap> AsBipartition(PartialPermNC([1 .. 100000]));;

@@ -20,20 +20,21 @@ function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   # Check that the kernel is an inverse subsemigroup
   if not IsInverseSubsemigroup(S, kernel) then
-    ErrorNoReturn("the 2nd argument <kernel> must be an inverse ",
-                  "subsemigroup of the 1st argument <S>");
+    ErrorNoReturn("the 2nd argument is not an inverse ",
+                  "subsemigroup of the 1st argument (an inverse semigroup)");
   fi;
   # CHECK KERNEL IS NORMAL:
   # (1) Must contain all the idempotents of S
   if NrIdempotents(kernel) <> NrIdempotents(S) then
-    ErrorNoReturn("the 2nd argument <kernel> must contain all the ",
-                  "idempotents of the 1st argument <S>");
+    ErrorNoReturn("the 2nd argument (an inverse semigroup) does not contain ",
+                  "all of the idempotents of the 1st argument (an inverse",
+                  " semigroup)");
   fi;
   # (2) Must be self-conjugate
   for a in kernel do
     for x in GeneratorsOfSemigroup(S) do
       if not a ^ x in kernel then
-        ErrorNoReturn("the 2nd argument <kernel> must be ",
+        ErrorNoReturn("the 2nd argument (an inverse semigroup) must be ",
                       "self-conjugate");
       fi;
     od;

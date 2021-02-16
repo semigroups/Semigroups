@@ -261,8 +261,8 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> GreensDClassOfElement(S, PartialPerm([19]));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # GreensDClassOfElementNC, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
@@ -270,8 +270,8 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> D := GreensDClassOfElementNC(S, PartialPerm([19]));;
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # GreensJClassOfElement, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
@@ -288,14 +288,14 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
 >  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> RClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> LClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> HClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # GreensL/RClassOfElementNC, 1/1
 gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
@@ -341,19 +341,19 @@ gap> L := LClass(D, x);;
 gap> Size(L);
 1
 gap> LClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> RClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> x := Bipartition([[1, 4, -1, -2, -6], [2, 3, 5, -4],
 > [6, -3], [-5]]);;
 gap> LClassNC(D, x);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> RClassNC(D, x);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # GreensHClassOfElement, 1/1
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
@@ -390,8 +390,8 @@ gap> H := HClass(D, MultiplicativeZero(S));
 gap> H := HClassNC(D, MultiplicativeZero(S));
 <Green's H-class: 0>
 gap> H := HClass(D, IdentityTransformation);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # GreensHClassOfElement(L/R-class, x), 1/1
 gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
@@ -1313,9 +1313,7 @@ s
 gap> S := Semigroup(SymmetricInverseMonoid(3));;
 gap> H := HClass(S, S.2);;
 gap> GreensHClasses(H);
-Error, Semigroups: GreensHClasses (for an enumerable semigroup Green's class):\
- usage,
-the argument should be a Green's R-, L-, or D-class,
+Error, the argument is not a Green's R-, L-, or D-class
 
 # GroupHClass, IsGroupHClass, IsomorphismPermGroup, 1/1
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(4));;
@@ -1353,8 +1351,7 @@ gap> GeneratorsOfGroup(Range(x))[1];
 gap> GeneratorsOfGroup(Range(x))[2];
 (1,19,17,10)(2,20,18,9)(3,21,14,12)(4,22,13,11)(5,23,16,7)(6,24,15,8)
 gap> IsomorphismPermGroup(HClass(S, S.1));
-Error, Semigroups: IsomorphismPermGroup: usage,
-the H-class is not a group,
+Error, the argument (a Green's H-class) is not a group
 
 # PartialOrderOfDClasses, 1/2
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/gree.tst
-#Y  Copyright (C) 2016                                  James D. Mitchell
+#W  standard/greens-generic.tst
+#Y  Copyright (C) 2016-21                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/gree.tst");
+gap> START_TEST("Semigroups package: standard/greens-generic.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -299,8 +299,8 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> GreensDClassOfElement(S, PartialPerm([19]));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # Test GreensDClassOfElementNC, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
@@ -308,8 +308,8 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> D := GreensDClassOfElementNC(S, PartialPerm([19]));;
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # Test GreensJClassOfElement, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
@@ -326,14 +326,14 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
 >  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> RClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> LClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> HClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # Test GreensL/RClassOfElementNC, 1/1
 gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
@@ -379,19 +379,19 @@ gap> L := LClass(D, x);;
 gap> Size(L);
 1
 gap> LClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> RClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> x := Bipartition([[1, 4, -1, -2, -6], [2, 3, 5, -4],
 > [6, -3], [-5]]);;
 gap> LClassNC(D, x);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 gap> RClassNC(D, x);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # Test GreensHClassOfElement, 1/1
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
@@ -428,8 +428,8 @@ gap> H := HClass(D, MultiplicativeZero(S));
 gap> H := HClassNC(D, MultiplicativeZero(S));
 <Green's H-class: 0>
 gap> H := HClass(D, IdentityTransformation);
-Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
-the element in the 2nd argument does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the source of the 1s\
+t argument (a Green's relation)
 
 # Test GreensHClassOfElement(L/R-class, x), 1/1
 gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
@@ -929,9 +929,7 @@ s
 gap> S := Semigroup(SymmetricInverseMonoid(3));;
 gap> H := HClass(S, S.2);;
 gap> GreensHClasses(H);
-Error, Semigroups: GreensHClasses (for an enumerable semigroup Green's class):\
- usage,
-the argument should be a Green's R-, L-, or D-class,
+Error, the argument is not a Green's R-, L-, or D-class
 
 # Test PartialOrderOfDClasses, 1/2
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;
@@ -1278,9 +1276,9 @@ gap> Matrix(IsIntegerMatrix, [[0, 0, -1, -1, 3, 3, 1, -1],
 >                             [0, 2, 0, -1, -2, -2, 1, 2], 
 >                             [0, 0, 0, -2, -3, 0, 0, -1], 
 >                             [0, 0, 2, 0, 0, 0, 1, 2]]) ^ x;
-Error, argument does not belong to the domain of the function,
+Error, the argument does not belong to the domain of the function
 gap> (1, 10) ^ y;
-Error, argument does not belong to the domain of the function,
+Error, the argument does not belong to the domain of the function
 gap> H := HClass(S, Matrix(IsIntegerMatrix, 
 > [[1, 0, 0, 0, 0, 0, 0, 0], 
 >  [1, 0, 0, 0, 0, 0, 0, 0], 
@@ -1291,8 +1289,7 @@ gap> H := HClass(S, Matrix(IsIntegerMatrix,
 >  [0, 1, 0, 0, 0, 0, 0, 0], 
 >  [0, 0, 0, 0, 0, 0, 0, 1]]));;
 gap> IsomorphismPermGroup(H);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the H-class is not a group,
+Error, the argument (a Green's H-class) is not a group
 
 # Test GreensRClassOfElement for infinite semigroup
 gap> S := FreeInverseSemigroup(2);;
@@ -1427,4 +1424,4 @@ gap> PartialOrderOfDClasses(S);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/gree.tst");
+gap> STOP_TEST("Semigroups package: standard/greens-generic.tst");

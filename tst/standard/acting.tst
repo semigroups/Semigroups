@@ -346,7 +346,7 @@ gap> Enumerate(SemigroupData(S), 20);
 gap> SizeOfSemigroupData(SemigroupData(S));
 22
 gap> SizeOfSemigroupData(S);
-Error, the argument <data> must be a semigroup data object
+Error, the argument must be a semigroup data object
 gap> Enumerate(SemigroupData(S));
 <closed semigroup data with 46 reps, 27 lambda-values, 28 rho-values>
 gap> S := Semigroup(S);;

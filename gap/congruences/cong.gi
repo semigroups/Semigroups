@@ -42,7 +42,7 @@ function(pair, cong)
   if Size(pair) <> 2 then
     ErrorNoReturn("the 1st argument (a list) does not have length 2");
   elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("the items in the 1st argument (a list) does not belong to ",
+    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
                   "the range of the 2nd argument (a left semigroup ",
                   "congruence)");
   elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
@@ -60,7 +60,7 @@ function(pair, cong)
   if Size(pair) <> 2 then
     ErrorNoReturn("the 1st argument (a list) does not have length 2");
   elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("the items in the 1st argument (a list) do not belong to ",
+    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
                   "the range of the 2nd argument (a right semigroup ",
                   "congruence)");
   elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
@@ -149,8 +149,7 @@ function(arg)
   local S, opts, s_opts, x, pairs, cong;
   if not Length(arg) >= 2 then
     ErrorNoReturn("at least 2 arguments are required");
-  fi;
-  if not IsSemigroup(arg[1]) then
+  elif not IsSemigroup(arg[1]) then
     ErrorNoReturn("the 1st argument is not a semigroup");
   fi;
   S := arg[1];
@@ -180,11 +179,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("<pairs> should be a list of lists of size 2");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("each pair should contain ",
-                    "elements from the semigroup <S>");
+      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
+                    "of size not equal to 2");
+    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
+                    "that do not belong to the 1st argument (a semigroup)");
     fi;
 
     # Remove any reflexive pairs
@@ -217,8 +216,9 @@ function(arg)
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
       return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
-      ErrorNoReturn("<cong> should be over a Rees (0-)matrix semigroup ",
-                    "isomorphic to <S> via <iso>");
+      ErrorNoReturn("the range of the 3rd argument (a congruence) is ",
+                    "not a Rees (0-)matrix semigroup isomorphic to the ",
+                    "1st argument");
     fi;
   elif HasIsSemigroupIdeal(arg[2])
       and IsSemigroupIdeal(arg[2])
@@ -243,8 +243,7 @@ function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("at least 2 arguments are required");
-  fi;
-  if not IsSemigroup(arg[1]) then
+  elif not IsSemigroup(arg[1]) then
     ErrorNoReturn("the 1st argument is not a semigroup");
   fi;
   S := arg[1];
@@ -260,11 +259,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("<pairs> should be a list of lists of size 2");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("each pair should contain elements from the semigroup ",
-                    "<S>");
+      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
+                    "of size not equal to 2");
+    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
+                    "that do not belong to the 1st argument (a semigroup)");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
@@ -279,8 +278,7 @@ function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("at least 2 arguments are required");
-  fi;
-  if not IsSemigroup(arg[1]) then
+  elif not IsSemigroup(arg[1]) then
     ErrorNoReturn("the 1st argument is not a semigroup");
   fi;
   S := arg[1];
@@ -296,11 +294,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("<pairs> should be a list of lists of size 2");
-    fi;
-    if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("each pair should contain elements from the semigroup ",
-                    "<S>");
+      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
+                    "of size not equal to 2");
+    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
+      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
+                    "that do not belong to the 1st argument (a semigroup)");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);

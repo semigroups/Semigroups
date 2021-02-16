@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  gracreg.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  greens/acting-regular.gi
+##  Copyright (C) 2013-2021                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,8 +10,8 @@
 
 ## This file contains methods for Green's classes of regular acting semigroups.
 
-# See the start of grac.gi for details of how to create Green's classes of
-# acting semigroups.
+# See the start of greens/acting.gi for details of how to create Green's
+# classes of acting semigroups.
 
 # There are two types of methods here, those for IsRegularGreensClass (i.e.
 # those Green's classes containing an idempotent) and those for

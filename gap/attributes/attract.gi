@@ -322,8 +322,8 @@ function(S, x)
   local o, l, m, scc, f, p;
 
   if not x in S then
-    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
-          "argument (a semigroup)");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the 1st argument (a semigroup)");
   elif IsMonoid(S) then
     return One(S);
   elif IsMonoidAsSemigroup(S) then
@@ -357,8 +357,8 @@ function(S, x)
   local l, D, p, result;
 
   if not x in S then
-    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
-          "argument (a semigroup)");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the 1st argument (a semigroup)");
   elif IsMonoid(S) then
     return One(S);
   elif IsMonoidAsSemigroup(S) then

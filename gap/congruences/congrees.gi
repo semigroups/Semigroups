@@ -195,7 +195,6 @@ InstallMethod(EquivalenceClassOfElement,
 "for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
-  # Check that the args make sense
   if not elm in Range(cong) then
     ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
                   "to the range of the 1st argument (a Rees congruence)");
