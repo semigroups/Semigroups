@@ -67,7 +67,7 @@ gap> NrIdempotents(U);
 gap> xx := U.1 * U.2 * U.3 ^ 5 * U.2 * U.3;
 Transformation( [ 2, 2, 4, 4 ] )
 gap> Factorization(U, xx);
-[ 1, 2, 4 ]
+[ 4 ]
 gap> DD := DClass(U, xx);;
 gap> idd := Idempotents(DD);
 [ Transformation( [ 1, 1, 4, 4 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
