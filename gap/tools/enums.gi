@@ -697,7 +697,7 @@ function(m, n)
   local convert_out, convert_in, fam;
 
   if not (IsInt(m) and m >= 0) then
-    ErrorNoReturn( "the 1st argument is not a non-negative integer");
+    ErrorNoReturn("the 1st argument is not a non-negative integer");
   elif not IsPosInt(n) then
     ErrorNoReturn("the 2nd argument is not a positive integer");
   elif m > n then

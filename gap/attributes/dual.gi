@@ -53,7 +53,6 @@ function(S)
   SetDualSemigroupOfFamily(fam, dual);
   SetElementsFamily(FamilyObj(dual), fam);
 
-
   if HasIsFinite(S) then
     SetIsFinite(dual, IsFinite(S));
   fi;

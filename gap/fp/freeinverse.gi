@@ -89,7 +89,7 @@ function(arg)
     ErrorNoReturn("the number of generators of a free inverse semigroup must ",
                   "be non-zero,");
     # elif not IsFinite(names) then
-    #   ErrorNoReturn(#                 "the number of generators of a free inverse semigroup ",
+    #   ErrorNoReturn("the number of generators of a free inverse semigroup ",
     #                 "must be finite,");
   fi;
 

@@ -498,12 +498,10 @@ function(left, right)
   for i in [1 .. deg] do
     if not IsHomogeneousList(left[i]) then
       ErrorNoReturn("expected a homogeneous list in position ", i,
-                    " of the 1st argument (a dense list) but found ",
-                    TNAM_OBJ(left[i]));
+                    " of the 1st argument (a dense list)");
     elif not IsHomogeneousList(right[i]) then
       ErrorNoReturn("expected a homogeneous list in position ", i,
-                    " of the 2nd argument (a dense list) but found ",
-                    TNAM_OBJ(left[i]));
+                    " of the 2nd argument (a dense list)");
     elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0

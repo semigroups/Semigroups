@@ -63,7 +63,7 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    ErrorNoReturn(                  "there must be at least 3 arguments");
+    ErrorNoReturn("there must be at least 3 arguments");
   fi;
 
   S := arg[1];
@@ -75,11 +75,11 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    ErrorNoReturn(                  "the first argument <S> must be an acting semigroup");
+    ErrorNoReturn("the first argument <S> must be an acting semigroup");
   elif not IsMultiplicativeElement(x) then
-    ErrorNoReturn(                  "the second argument <x> must be a multiplicative element");
+    ErrorNoReturn("the second argument <x> must be a multiplicative element");
   elif not IsBool(global) then
-    ErrorNoReturn(                  "the third argument <global> must be a boolean");
+    ErrorNoReturn("the third argument <global> must be a boolean");
   fi;
 
   lambda := LambdaFunc(S)(x);

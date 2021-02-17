@@ -380,7 +380,7 @@ end);
 #     return RandomMatrixOp(arg[1], arg[2], arg[3]);
 #   fi;
 #
-#   ErrorNoReturn(#                 "the arguments must be: filter, pos int[, pos int[",
+#   ErrorNoReturn("the arguments must be: filter, pos int[, pos int[",
 #                 " pos int]],");
 # end);
 
