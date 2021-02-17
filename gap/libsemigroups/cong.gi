@@ -102,7 +102,8 @@ BindGlobal("CppCongruenceConstructor",
 function(S)
   local N;
   if IsTransformationSemigroup(S) then
-    if DegreeOfTransformationSemigroup(S) <= 16 then
+    if DegreeOfTransformationSemigroup(S) <= 16 and
+        IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
       return libsemigroups.Congruence.create_transf16;
     elif DegreeOfTransformationSemigroup(S) <= 65536 then
       return libsemigroups.Congruence.create_transfuint2;
@@ -114,7 +115,7 @@ function(S)
   elif IsPartialPermSemigroup(S) then
     N := Maximum(DegreeOfPartialPermSemigroup(S),
                  CodegreeOfPartialPermSemigroup(S));
-    if N <= 16 then
+    if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
       return libsemigroups.Congruence.create_pperm16;
     elif N <= 65536 then
       return libsemigroups.Congruence.create_ppermuint2;

@@ -40,13 +40,12 @@ ReturnFalse);
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
 
-# TODO(now) if HPCombi isn't available don't do the PPerm16 nor Transf16
-# at least something goes wrong!
 BindGlobal("FroidurePinMemFnRec",
 function(S)
   local N;
   if IsTransformationSemigroup(S) then
-    if DegreeOfTransformationSemigroup(S) <= 16 then
+    if DegreeOfTransformationSemigroup(S) <= 16
+        and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
       return libsemigroups.FroidurePinTransf16;
     elif DegreeOfTransformationSemigroup(S) <= 65536 then
       return libsemigroups.FroidurePinTransfUInt2;
@@ -58,7 +57,8 @@ function(S)
   elif IsPartialPermSemigroup(S) then
     N := Maximum(DegreeOfPartialPermSemigroup(S),
                  CodegreeOfPartialPermSemigroup(S));
-    if N <= 16 then
+    if N <= 16
+        and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
       return libsemigroups.FroidurePinPPerm16;
     elif N <= 65536 then
       return libsemigroups.FroidurePinPPermUInt2;
@@ -639,11 +639,16 @@ function(Constructor, S, coll, opts)
   R := FroidurePinMemFnRec(S);
 
   # Perform the closure
-  if IsPartialPermSemigroup(S) then
-    M := Maximum(DegreeOfPartialPermCollection(coll),
-                 CodegreeOfPartialPermCollection(coll));
-    N := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
+  if IsPartialPermSemigroup(S) or IsTransformationSemigroup(S) then
+    if IsPartialPermSemigroup(S) then
+      M := Maximum(DegreeOfPartialPermCollection(coll),
+                   CodegreeOfPartialPermCollection(coll));
+      N := Maximum(DegreeOfPartialPermSemigroup(S),
+                   CodegreeOfPartialPermSemigroup(S));
+    else
+      M := DegreeOfTransformationCollection(coll);
+      N := DegreeOfTransformationSemigroup(S);
+    fi;
     if M > N then
       # Can't use closure, TODO use copy_closure
       # FIXME if M goes larger than the type of R can support this will end
@@ -660,13 +665,7 @@ function(Constructor, S, coll, opts)
     fi;
   else
     CppT := R.copy([CppFroidurePin(S)]);
-    if IsTransformationSemigroup(S) then
-      # FIXME the same as partial perm semigroups
-      N := DegreeOfTransformationCollection(coll);
-      R.closure(CppT, List(coll, x -> [x, N]));
-    else
-      R.closure(CppT, coll);
-    fi;
+    R.closure(CppT, coll);
   fi;
 
   generator := R.generator;
