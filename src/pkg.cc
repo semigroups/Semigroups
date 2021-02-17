@@ -751,13 +751,16 @@ static Int InitKernel(StructInitInfo* module) {
   return 0;
 }
 
+static Int PostRestore(StructInitInfo* module) {
+  set_report(false);
+  return 0;
+}
+
 static Int InitLibrary(StructInitInfo* module) {
   gapbind14::init_library(m);
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
-  libsemigroups::REPORTER.report(false);
-
-  return 0;
+  return PostRestore(module);
 }
 
 /******************************************************************************
@@ -775,7 +778,7 @@ static StructInitInfo module = {
     /* checkInit   = */ 0,
     /* preSave     = */ 0,
     /* postSave    = */ 0,
-    /* postRestore = */ 0};
+    /* postRestore = */ PostRestore};
 
 extern "C" StructInitInfo* Init__Dynamic(void) {
   return &module;

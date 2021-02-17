@@ -26,7 +26,7 @@ Error, the arguments (dense lists) do not have equal length
 # pbr: PBR, fails 2, 3/4
 gap> PBR([["a", 1]], [[2]]);
 Error, expected a homogeneous list in position 
-1 of the 1st argument (a dense list) but found dense plain list
+1 of the 1st argument (a dense list)
 
 # pbr: PBR, fails 3, 4/4
 gap> PBR([[0, 1], []], [[2, 1], []]);
