@@ -18,7 +18,7 @@
 InstallMethod(DualSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local dual, fam, filts, map, type;
+  local fam, dual, filts, type, map;
 
   if IsDualSemigroupRep(S) then
     if HasGeneratorsOfSemigroup(S) then
@@ -29,13 +29,18 @@ function(S)
                   "without knowing generators");
   fi;
 
-  fam   := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
-  dual  := Objectify(NewType(CollectionsFamily(fam),
-                            IsSemigroup and
-                            IsWholeFamily and
-                            IsDualSemigroupRep and
-                            IsAttributeStoringRep),
-                    rec());
+  fam  := NewFamily("DualSemigroupElementsFamily", IsDualSemigroupElement);
+  dual := rec();
+  ObjectifyWithAttributes(dual,
+                          NewType(CollectionsFamily(fam),
+                                  IsSemigroup and
+                                  IsWholeFamily and
+                                  IsDualSemigroupRep and
+                                  IsAttributeStoringRep),
+                          DualSemigroup,
+                          S,
+                          CanComputeGapFroidurePin,
+                          CanComputeFroidurePin(S));
 
   filts := IsDualSemigroupElement;
   if IsMultiplicativeElementWithOne(Representative(S)) then
@@ -46,9 +51,8 @@ function(S)
   fam!.type  := type;
 
   SetDualSemigroupOfFamily(fam, dual);
-
   SetElementsFamily(FamilyObj(dual), fam);
-  SetDualSemigroup(dual, S);
+
 
   if HasIsFinite(S) then
     SetIsFinite(dual, IsFinite(S));

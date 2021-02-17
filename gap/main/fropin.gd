@@ -17,9 +17,6 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-# Things to keep
-# TODO move to semigrp.gd
-
 DeclareAttribute("AsListCanonical", IsSemigroup);
 DeclareOperation("PositionCanonical",
                  [IsSemigroup, IsMultiplicativeElement]);
