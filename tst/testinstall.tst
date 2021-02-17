@@ -1002,7 +1002,6 @@ gap> Size(I);
 21
 
 # TestInstall64: Bug fixed by changeset 949553d 
-# FIXME what was this bug? Add a brief explanation
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);

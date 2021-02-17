@@ -413,7 +413,6 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 
 #############################################################################
 ## 6. Iterators and enumerators . . .
-## FIXME move this whole section to another file
 #############################################################################
 
 # different method for inverse

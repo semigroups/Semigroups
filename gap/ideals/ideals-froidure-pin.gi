@@ -81,15 +81,12 @@ InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse semigroup ideal with inverse op and generators",
 [IsSemigroupIdeal and IsInverseSemigroup
  and IsGeneratorsOfInverseSemigroup and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  # TODO could remove inverses...
-  return GeneratorsOfSemigroup(I);
-end);
+GeneratorsOfSemigroup);
 
 InstallMethod(Enumerator,
 "semigroup ideal with generators and CanComputeFroidurePin",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and CanComputeFroidurePin],
-100,  # TODO(now) remove 100
+2,  # To beat the method for IsSemigroup and CanComputeFroidurePin
 function(I)
   local en, record;
   en := EnumeratorCanonical(SupersemigroupOfIdeal(I));

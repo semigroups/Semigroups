@@ -176,7 +176,7 @@ function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsFpSemigroup, params);
 end);
 
-# FIXME this doesn't work very well
+# this doesn't work very well
 
 InstallMethod(RandomSemigroupCons, "for IsFpSemigroup and a list",
 [IsFpSemigroup, IsList],
@@ -187,7 +187,7 @@ function(filt, params)
                                                  params)));
 end);
 
-# FIXME this doesn't work very well
+# this doesn't work very well
 
 InstallMethod(RandomMonoidCons, "for IsFpMonoid and a list",
 [IsFpMonoid, IsList],
@@ -198,7 +198,7 @@ function(filt, params)
                                               params)));
 end);
 
-# FIXME this doesn't work very well
+# this doesn't work very well
 
 InstallMethod(RandomInverseSemigroupCons, "for IsFpSemigroup and a list",
 [IsFpSemigroup, IsList],
@@ -209,7 +209,7 @@ function(filt, params)
                                                 params)));
 end);
 
-# FIXME this doesn't work very well
+# this doesn't work very well
 
 InstallMethod(RandomInverseMonoidCons, "for IsFpMonoid and a list",
 [IsFpMonoid, IsList],

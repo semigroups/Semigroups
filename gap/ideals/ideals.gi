@@ -332,7 +332,7 @@ InstallMethod(MinimalIdealGeneratingSet,
 "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local S, dclasses, gr, labels, x;
+  local S, dclasses, D, labels, x;
 
   if Length(GeneratorsOfSemigroupIdeal(I)) = 1 then
     return GeneratorsOfSemigroupIdeal(I);
@@ -345,12 +345,11 @@ function(I)
       Add(dclasses, DClass(S, x));
     fi;
   od;
-  # TODO improve the following
-  gr := InducedSubdigraph(Digraph(PartialOrderOfDClasses(S)),
-                          List(dclasses, x -> Position(DClasses(S), x)));
-  gr := DigraphRemoveLoops(gr);
-  labels := DigraphVertexLabels(gr);
-  return List(DigraphSources(gr), x -> Representative(DClasses(S)[labels[x]]));
+  D := Digraph(IsMutableDigraph, PartialOrderOfDClasses(S));
+  InducedSubdigraph(D, List(dclasses, x -> Position(DClasses(S), x)));
+  DigraphRemoveLoops(D);
+  labels := DigraphVertexLabels(D);
+  return List(DigraphSources(D), x -> Representative(DClasses(S)[labels[x]]));
 end);
 
 # JDM: is there a better method? Certainly for regular acting ideals

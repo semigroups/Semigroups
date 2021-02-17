@@ -53,30 +53,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 function(coll)
   return
   IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(Representative(coll))));
-    # and McAlisterTripleSemigroupAction(MTSEParent(coll[1])) = OnPoints;
 end);
-
-# FIXME with the below uncommented many tests fail
-## The HasRows and HasColumns could be removed if it was possible to apply
-## immediate methods to Rees 0-matrix semigroups
-#
-# InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
-# IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
-# function(R)
-#   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
-# end);
-#
-# InstallTrueMethod(IsActingSemigroup,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
-#
-# InstallImmediateMethod(GeneratorsOfMagma,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
-# function(R)
-#   return GeneratorsOfReesMatrixSemigroupNC(R,
-#                                            Rows(R),
-#                                            UnderlyingSemigroup(R),
-#                                            Columns(R));
-# end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a matrix over finite field collection",

@@ -383,7 +383,6 @@ end);
 # Notes: the previous inverse method used D-classes instead of R-classes.
 
 # same method for regular/inverse
-# FIXME move this!
 
 InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup], 5,  # to beat the method for semigroup ideals
@@ -648,11 +647,10 @@ end);
 
 # no method required for inverse/regular
 
-# FIXME move this!
 InstallMethod(Iterator, "for a full transformation semigroup",
 [IsTransformationSemigroup and IsFullTransformationSemigroup and
  HasGeneratorsOfSemigroup],
-7,  # to beat the method for acting semigroups TODO check this is necessary!!
+7,  # to beat the method for acting semigroups
 function(S)
   local iter;
 
