@@ -77,7 +77,6 @@ IsLeftSemigroupCongruence);
 # Printing and viewing of congruences
 #############################################################################
 
-# TODO(now): keep
 InstallMethod(PrintObj,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
@@ -89,7 +88,6 @@ function(cong)
   Print(" )");
 end);
 
-# TODO(now): keep
 InstallMethod(PrintObj,
 "for a right semigroup congruence with known generating pairs",
 [IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
@@ -101,7 +99,6 @@ function(cong)
   Print(" )");
 end);
 
-# TODO(now): keep
 InstallMethod(PrintObj,
 "for a semigroup congruence with known generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
@@ -111,4 +108,37 @@ function(cong)
   Print(", ");
   Print(GeneratingPairsOfSemigroupCongruence(cong));
   Print(" )");
+end);
+
+InstallMethod(ViewObj,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  Print("<left semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfLeftSemigroupCongruence(cong)),
+        " generating pairs>");
+end);
+
+InstallMethod(ViewObj,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  Print("<right semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
+        " generating pairs>");
+end);
+
+InstallMethod(ViewObj,
+"for a semigroup congruence",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfSemigroupCongruence(cong)),
+        " generating pairs>");
 end);
