@@ -418,7 +418,7 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
       consistent canonical order) and the integer at that position is a unique
       identifier for that element's equivalence class under <A>equiv</A>.  Two
       elements of the semigroup on which the equivalence is defined are related
-      in the equiavalence if and only if they have the same number at their
+      in the equivalence if and only if they have the same number at their
       respective positions in the lookup.<P/>
 
       Note that the order in which numbers appear in the list is

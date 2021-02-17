@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  cong.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2021                              Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -21,128 +21,9 @@
 ## cong.gd contains declarations for many of these.
 ##
 
-# Fallback method
-
-InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
-[IsSemigroupCongruence],
-function(cong)
-  local classes;
-  classes := EquivalenceClasses(cong);
-  # Note: EquivalenceClasses may exclude all singletons due to a bug in GAP.
-  # This is a workaround which adds any missing singletons.
-  return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
-end);
-
-InstallMethod(\in,
-"for dense list and left semigroup congruence",
-[IsDenseList, IsLeftSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("the 1st argument (a list) does not have length 2");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
-                  "the range of the 2nd argument (a left semigroup ",
-                  "congruence)");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
-end);
-
-InstallMethod(\in,
-"for dense list and right semigroup congruence",
-[IsDenseList, IsRightSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("the 1st argument (a list) does not have length 2");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
-                  "the range of the 2nd argument (a right semigroup ",
-                  "congruence)");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
-end);
-
-BindGlobal("_GenericCongEquality",
-function(cong1, cong2)
-  local S;
-  S := Range(cong1);
-  if S <> Range(cong2) then
-    return false;
-  fi;
-  if HasIsFinite(S) and IsFinite(S) then
-    return EquivalenceRelationCanonicalLookup(cong1) =
-           EquivalenceRelationCanonicalLookup(cong2);
-  fi;
-  return EquivalenceRelationCanonicalPartition(cong1) =
-         EquivalenceRelationCanonicalPartition(cong2);
-end);
-
-InstallMethod(\=, "for two left semigroup congruences",
-[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for a left and a right semigroup congruence",
-[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for a right and a left semigroup congruence",
-[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for two right semigroup congruences",
-[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
-
-# Since two-sided congs are both left and right, this covers all cases
-
-MakeReadWriteGlobal("_GenericCongEquality");
-Unbind(_GenericCongEquality);
-
-InstallMethod(\=, "for two semigroup congruences with generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(c1, c2)
-  return Range(c1) = Range(c2)
-         and ForAll(GeneratingPairsOfSemigroupCongruence(c1), p -> p in c2)
-         and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
-end);
-
-# Multiplication for congruence classes: only makes sense for 2-sided
-
-InstallMethod(\*,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorNoReturn("the arguments are not classes of the same congruence");
-  fi;
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
-                                     Representative(class1) *
-                                     Representative(class2));
-end);
-
-InstallMethod(\=,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-         and Representative(class1) in class2;
-end);
-
-InstallMethod(\<,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-    and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
-end);
+########################################################################
+# 1. Constructors
+########################################################################
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
@@ -238,8 +119,8 @@ function(arg)
   fi;
 end);
 
-InstallGlobalFunction(LeftSemigroupCongruence,
-function(arg)
+BindGlobal("_LeftOrRightCong",
+function(CongruenceConstructor, arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("at least 2 arguments are required");
@@ -267,161 +148,287 @@ function(arg)
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
-    return LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
+    return CongruenceConstructor(S, pairs);
   else
     ErrorNoReturn("the arguments are not valid for this function");
   fi;
+end);
+
+InstallGlobalFunction(LeftSemigroupCongruence,
+function(arg)
+  return _LeftOrRightCong(LeftSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
 InstallGlobalFunction(RightSemigroupCongruence,
 function(arg)
-  local S, pairs;
-  if not Length(arg) >= 2 then
-    ErrorNoReturn("at least 2 arguments are required");
-  elif not IsSemigroup(arg[1]) then
-    ErrorNoReturn("the 1st argument is not a semigroup");
-  fi;
-  S := arg[1];
-
-  if IsHomogeneousList(arg[2]) then
-    # We should have a list of generating pairs
-    if Length(arg) = 2 then
-      pairs := arg[2];
-      if not IsEmpty(pairs) and not IsList(pairs[1]) then
-        pairs := [pairs];
-      fi;
-    elif Length(arg) > 2 then
-      pairs := arg{[2 .. Length(arg)]};
-    fi;
-    if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorNoReturn("the 2nd argument (a list of lists) contains lists ",
-                    "of size not equal to 2");
-    elif not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorNoReturn("the 2nd argument (a list of lists) contains items ",
-                    "that do not belong to the 1st argument (a semigroup)");
-    fi;
-    # Remove any reflexive pairs
-    pairs := Filtered(pairs, p -> p[1] <> p[2]);
-    return RightSemigroupCongruenceByGeneratingPairs(S, pairs);
-  else
-    ErrorNoReturn("the arguments are not valid for this function");
-  fi;
+  return _LeftOrRightCong(RightSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
-InstallMethod(ViewObj,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+########################################################################
+# 2. Attributes
+########################################################################
+
+InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
+[IsSemigroupCongruence],
 function(cong)
-  Print("<left semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfLeftSemigroupCongruence(cong)),
-        " generating pairs>");
+  local classes;
+  classes := EquivalenceClasses(cong);
+  # Note: EquivalenceClasses may exclude all singletons due to a bug in GAP.
+  # This is a workaround which adds any missing singletons.
+  return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
 end);
 
-InstallMethod(ViewObj,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong)
-  Print("<right semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
+InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
+[IsEquivalenceRelation],
+x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
 
-InstallMethod(ViewObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
-
-InstallMethod(ViewObj,
-"for a congruence class",
-[IsCongruenceClass],
-function(class)
-  Print("<congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
-InstallMethod(ViewObj,
-"for a left congruence class",
-[IsLeftCongruenceClass],
-function(class)
-  Print("<left congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
-InstallMethod(ViewObj,
-"for a right congruence class",
-[IsRightCongruenceClass],
-function(class)
-  Print("<right congruence class of ");
-  ViewObj(Representative(class));
-  Print(">");
-end);
-
+# TODO(now) delete
 InstallMethod(CongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], EquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(LeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], EquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(RightCongruenceClasses, "for a right semigroup congruence",
 [IsRightSemigroupCongruence], EquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NrCongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], NrEquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NrLeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], NrEquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NrRightCongruenceClasses, "for a right semigroup congruence",
 [IsRightSemigroupCongruence], NrEquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NonTrivialCongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], NonTrivialEquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NonTrivialLeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], NonTrivialEquivalenceClasses);
 
+# TODO(now) delete
 InstallMethod(NonTrivialRightCongruenceClasses,
 "for a right semigroup congruence", [IsRightSemigroupCongruence],
 NonTrivialEquivalenceClasses);
 
+InstallMethod(EquivalenceRelationLookup, "for an equivalence relation",
+[IsEquivalenceRelation],
+function(equiv)
+  local S, lookup, class, nr, elm;
+  S := Range(equiv);
+  if not (IsSemigroup(S) and IsFinite(S)) then
+    ErrorNoReturn("the range of the argument (an equivalence relation) ",
+                  "is not a finite semigroup");
+  elif not CanComputeFroidurePin(S) then
+    TryNextMethod();
+  fi;
+
+  lookup := [1 .. Size(S)];
+  for class in NonTrivialEquivalenceClasses(equiv) do
+    nr := PositionCanonical(S, Representative(class));
+    for elm in class do
+      lookup[PositionCanonical(S, elm)] := nr;
+    od;
+  od;
+  return lookup;
+end);
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for an equivalence relation",
+[IsEquivalenceRelation],
+function(equiv)
+  local S, lookup, max, dictionary, next, out, new_nr, i;
+  S := Range(equiv);
+  if not (IsSemigroup(S) and IsFinite(S)) then
+    ErrorNoReturn("the range of the argument (an equivalence relation) ",
+                  "is not a finite semigroup");
+  elif not CanComputeFroidurePin(S) then
+    TryNextMethod();
+  fi;
+  lookup := EquivalenceRelationLookup(equiv);
+  max := Maximum(lookup);
+  # We do not know whether the maximum is NrEquivalenceClasses(equiv)
+  dictionary := ListWithIdenticalEntries(max, 0);
+  next := 1;
+  out := EmptyPlist(max);
+  for i in [1 .. Length(lookup)] do
+    new_nr := dictionary[lookup[i]];
+    if new_nr = 0 then
+      dictionary[lookup[i]] := next;
+      new_nr := next;
+      next := next + 1;
+    fi;
+    out[i] := new_nr;
+  od;
+  return out;
+end);
+
+InstallMethod(EquivalenceRelationCanonicalPartition,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+cong -> Set(EquivalenceRelationPartition(cong), Set));
+
+InstallMethod(EquivalenceRelationCanonicalPartition,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+cong -> Set(EquivalenceRelationPartition(cong), Set));
+
+########################################################################
+# 3. Operators
+########################################################################
+
+BindGlobal("_GenericCongIn",
+function(string, pair, cong)
+  local S;
+  Assert(1, IsString(string));
+  Assert(1, IsDenseList(pair));
+  Assert(1, IsLeftSemigroupCongruence(cong)
+            or IsRightSemigroupCongruence(cong));
+  S := Range(cong);
+  if Size(pair) <> 2 then
+    ErrorNoReturn("the 1st argument (a list) does not have length 2");
+  elif not (pair[1] in S and pair[2] in S) then
+    ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
+                  "the range of the 2nd argument (a ", string, " semigroup ",
+                  "congruence)");
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
+    return true;
+  fi;
+  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
+end);
+
+InstallMethod(\in,
+"for dense list and left semigroup congruence",
+[IsDenseList, IsLeftSemigroupCongruence],
+{pair, cong} -> _GenericCongIn("left", pair, cong));
+
+InstallMethod(\in,
+"for dense list and right semigroup congruence",
+[IsDenseList, IsRightSemigroupCongruence],
+{pair, cong} -> _GenericCongIn("right", pair, cong));
+
+BindGlobal("_GenericCongEquality",
+function(cong1, cong2)
+  local S;
+  S := Range(cong1);
+  if S <> Range(cong2) then
+    return false;
+  fi;
+  if HasIsFinite(S) and IsFinite(S) then
+    return EquivalenceRelationCanonicalLookup(cong1) =
+           EquivalenceRelationCanonicalLookup(cong2);
+  fi;
+  return EquivalenceRelationCanonicalPartition(cong1) =
+         EquivalenceRelationCanonicalPartition(cong2);
+end);
+
+InstallMethod(\=, "for two left semigroup congruences",
+[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for a left and a right semigroup congruence",
+[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for a right and a left semigroup congruence",
+[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for two right semigroup congruences",
+[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
+_GenericCongEquality);
+
+# Since two-sided congs are both left and right, this covers all cases
+
+MakeReadWriteGlobal("_GenericCongEquality");
+Unbind(_GenericCongEquality);
+
+InstallMethod(\=, "for two semigroup congruences with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+         and ForAll(GeneratingPairsOfSemigroupCongruence(c1), p -> p in c2)
+         and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
+end);
+
+# TODO(now) IsSuperrelation for left/right congruences
+InstallMethod(IsSuperrelation, "for two semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+{C1, C2} -> IsSubrelation(C2, C1));
+
+########################################################################
+# 4. Congruence classes
+########################################################################
+
+# Multiplication for congruence classes: only makes sense for 2-sided
+InstallMethod(\*, "for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    ErrorNoReturn("the arguments are not classes of the same congruence");
+  fi;
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
+                                     Representative(class1) *
+                                     Representative(class2));
+end);
+
+InstallMethod(\=, "for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+         and Representative(class1) in class2;
+end);
+
+InstallMethod(\<, "for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
+end);
+
+BindGlobal("_ViewCongObj",
+function(string, C)
+  Print("<", string, "congruence class of ");
+  ViewObj(Representative(C));
+  Print(">");
+  return fail;
+end);
+
+InstallMethod(ViewObj, "for a congruence class", [IsCongruenceClass],
+C -> _ViewCongObj("", C));
+
+InstallMethod(ViewObj, "for a left congruence class", [IsLeftCongruenceClass],
+C -> _ViewCongObj("left ", C));
+
+InstallMethod(ViewObj, "for a right congruence class",
+[IsRightCongruenceClass], C -> _ViewCongObj("right ", C));
+
+# TODO(now) delete
 InstallMethod(CongruenceClassOfElement,
 "for a semigroup congruence and multiplicative element",
 [IsSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
+EquivalenceClassOfElement);
 
+# TODO(now) delete
 InstallMethod(LeftCongruenceClassOfElement,
 "for a left semigroup congruence and multiplicative element",
 [IsLeftSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
+EquivalenceClassOfElement);
 
+# TODO(now) delete
 InstallMethod(RightCongruenceClassOfElement,
 "for a right semigroup congruence and multiplicative element",
 [IsRightSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return EquivalenceClassOfElement(cong, elm);
-end);
-
-InstallMethod(IsSuperrelation, "for two semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
-function(cong1, cong2)
-  return IsSubrelation(cong2, cong1);
-end);
+EquivalenceClassOfElement);
 
 InstallMethod(OnLeftCongruenceClasses,
 "for a left congruence class and a multiplicative element",
@@ -440,74 +447,3 @@ function(class, elm)
   cong := EquivalenceClassRelation(class);
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
-
-SEMIGROUPS._GenericEquivLookup := function(equiv)
-  local S, lookup, class, nr, elm;
-
-  S := Range(equiv);
-  lookup := [1 .. Size(S)];
-  for class in NonTrivialEquivalenceClasses(equiv) do
-    nr := PositionCanonical(S, Representative(class));
-    for elm in class do
-      lookup[PositionCanonical(S, elm)] := nr;
-    od;
-  od;
-  return lookup;
-end;
-
-InstallMethod(EquivalenceRelationLookup,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-function(equiv)
-  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
-    ErrorNoReturn("the range of the argument (an equivalence relation) ",
-                  "is not a finite semigroup");
-  fi;
-  return SEMIGROUPS._GenericEquivLookup(equiv);
-end);
-
-SEMIGROUPS._GenericEquivCanonicalLookup := function(equiv)
-  local lookup, max, dictionary, next, out, i, new_nr;
-  lookup := EquivalenceRelationLookup(equiv);
-  max := Maximum(lookup);
-  # We do not know whether the maximum is NrEquivalenceClasses(equiv)
-  dictionary := ListWithIdenticalEntries(max, 0);
-  next := 1;
-  out := EmptyPlist(max);
-  for i in [1 .. Length(lookup)] do
-    new_nr := dictionary[lookup[i]];
-    if new_nr = 0 then
-      dictionary[lookup[i]] := next;
-      new_nr := next;
-      next := next + 1;
-    fi;
-    out[i] := new_nr;
-  od;
-  return out;
-end;
-
-InstallMethod(EquivalenceRelationCanonicalLookup,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-function(equiv)
-  if not (IsSemigroup(Range(equiv)) and IsFinite(Range(equiv))) then
-    ErrorNoReturn("the range of the argument (an equivalence relation) ",
-                  "is not a finite semigroup");
-  fi;
-  return SEMIGROUPS._GenericEquivCanonicalLookup(equiv);
-end);
-
-InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-cong -> Set(EquivalenceRelationPartition(cong), Set));
-
-InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-cong -> Set(EquivalenceRelationPartition(cong), Set));
-
-InstallMethod(NonTrivialEquivalenceClasses,
-"for an equivalence relation",
-[IsEquivalenceRelation],
-x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
