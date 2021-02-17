@@ -936,8 +936,8 @@ end);
 # IsSemigroup and CanComputeFroidurePin
 
 InstallMethod(Size, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
-RankFilter(IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup),
+[IsReesMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
+ HasColumns],
 function(R)
   # This is unreachable
   # if Size(UnderlyingSemigroup(R)) = infinity then
@@ -947,10 +947,8 @@ function(R)
 end);
 
 InstallMethod(Size, "for a Rees 0-matrix semigroup",
-# TODO(now)
-#[IsReesZeroMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
-#HasColumns],
-[IsReesZeroMatrixSemigroup],
+[IsReesZeroMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
+ HasColumns],
 function(R)
   # This is unreachable
   # if Size(UnderlyingSemigroup(R)) = infinity then
