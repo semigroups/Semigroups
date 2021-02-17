@@ -78,7 +78,8 @@ IO_Unpicklers.PABR := function(file)
 end;
 
 #############################################################################
-# TODO the embeddings from the paper, AsPBR for a pbr (extend or restrict),
+# TODO(later) the embeddings from the paper, AsPBR for a pbr (extend or
+# restrict),
 #############################################################################
 
 InstallMethod(EmptyPBR, "for a pos int", [IsPosInt],
@@ -94,7 +95,7 @@ function(n)
   return PBRNC(List([1 .. n], y -> x), List([1 .. n], y -> x));
 end);
 
-# FIXME the following is temporary, with the current definition of
+# The following is temporary, with the current definition of
 # IsGeneratorsOfInverseSemigroup for a pbr collection, the One of any element
 # in the collection does not satisfy IsGeneratorsOfInverseSemigroup, and so it
 # cannot be inverted.
@@ -105,11 +106,11 @@ function(coll)
   ErrorNoReturn("not yet implemented");
 end);
 
-# FIXME see the comment above, this is not really correct.
+# See the comment above, this is not really correct.
 
 InstallOtherMethod(InverseMutable, "for a PBR", [IsPBR],
 function(x)
-  # TODO change IsBlockBijection(AsBipartition(x)) to
+  # TODO(later) change IsBlockBijection(AsBipartition(x)) to
   # IsBlockBijectionPBR.
   if IsPartialPermPBR(x) or
       (IsBipartitionPBR(x) and IsBlockBijection(AsBipartition(x))) then
@@ -118,7 +119,7 @@ function(x)
   return fail;
 end);
 
-# FIXME see the comment above, this is not really correct.
+# See the comment above, this is not really correct.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a pbr collection",
 [IsPBRCollection],
@@ -313,8 +314,8 @@ function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
 
-# TODO The following doesn't define a monoid embedding of P_n into PBR_n. What
-# is a monoid embedding from P_n to PBR_n?
+# TODO (later) The following doesn't define a monoid embedding of P_n into
+# PBR_n. What is a monoid embedding from P_n to PBR_n?
 
 InstallMethod(AsPBR, "for a bipartition",
 [IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));
@@ -373,7 +374,7 @@ function(mat, n)
   m := DimensionOfMatrixOverSemiring(mat);
 
   if not IsEvenInt(m) then
-    ErrorNoReturn("the 1st argument (a boolean matrix) ", 
+    ErrorNoReturn("the 1st argument (a boolean matrix) ",
                   "does not have even dimension");
   fi;
 
@@ -427,10 +428,9 @@ function(mat, n)
   return PBRNC(nbs[1], nbs[2]);
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsTransformation, "for a pbr",
-[IsPBR],
+InstallMethod(AsTransformation, "for a pbr", [IsPBR],
 function(x)
   local out, n, i;
 
@@ -448,10 +448,9 @@ function(x)
   return Transformation(out);
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsPartialPerm, "for a pbr",
-[IsPBR],
+InstallMethod(AsPartialPerm, "for a pbr", [IsPBR],
 function(x)
   if not IsPartialPermPBR(x) then
     ErrorNoReturn("the argument (a pbr) does not define a partial perm");
@@ -459,10 +458,9 @@ function(x)
   return AsPartialPerm(AsBipartition(x));
 end);
 
-# TODO 2 arg version of this
+# TODO(later) 2 arg version of this
 
-InstallMethod(AsPermutation, "for a pbr",
-[IsPBR],
+InstallMethod(AsPermutation, "for a pbr", [IsPBR],
 function(x)
   if not IsPermPBR(x) then
     ErrorNoReturn("the argument (a pbr) does not define a permutation");
@@ -510,7 +508,7 @@ function(left, right)
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0
                                      and j <= deg and j >= -deg) then
-      # TODO more informative
+      # TODO(later) more informative
       ErrorNoReturn("the entries in the arguments are not integers ",
                     "in [", -deg, " .. -1] or [1 .. ", deg, "]");
     fi;

@@ -113,7 +113,7 @@ function(obj, record, baseenum, convert, filts)
                   "with no components named: ",
                   "`NumberElement', `ElementNumber', `baseenum', or ",
                   "`enumofenums'");
-    # TODO add check for 3rd arg
+    # 3rd arg isn't currently checked
   elif not IsFunction(convert) then
     ErrorNoReturn("the 4th argument is not a function");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
@@ -203,7 +203,7 @@ end);
 # same method for regular/inverse,
 
 # also this has really awful performance
-# TODO write an improved version for enumerator sorted
+# Could write an improved version for enumerator sorted.
 
 InstallMethod(Enumerator, "for an acting semigroup",
 [IsActingSemigroup], 5,  # to beat the method for semigroup ideals
@@ -234,9 +234,9 @@ end);
 
 # same method for regular/inverse
 
-# FIXME this should be improved, using Iterator for a regular or inverse
-# semigroup, invokes IteratorOfRClassData which repeatedly recomputes the
-# graded lambda orbs of the R-class reps.
+# This should be improved, using Iterator for a regular or inverse semigroup,
+# invokes IteratorOfRClassData which repeatedly recomputes the graded lambda
+# orbs of the R-class reps.
 
 InstallMethod(EnumeratorSorted, "for an acting semigroup",
 [IsActingSemigroup], 5,  # to beat the method for semigroup ideals

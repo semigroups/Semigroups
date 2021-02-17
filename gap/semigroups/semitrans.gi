@@ -256,7 +256,7 @@ function(S, n)
   return gr;
 end);
 
-# FIXME can probably do better than this
+# can probably do better than this
 
 InstallMethod(Idempotents, "for a transformation semigroup and pos int",
 [IsTransformationSemigroup, IsPosInt],

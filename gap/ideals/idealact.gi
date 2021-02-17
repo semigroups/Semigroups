@@ -287,7 +287,6 @@ function(I)
   local U, i, partial, D, pos, inj, gens, j, C;
 
   if HasGeneratorsOfSemigroup(I) then
-    # TODO could remove inverses...
     return GeneratorsOfSemigroup(I);
   fi;
 
@@ -610,7 +609,6 @@ function(data, limit, record)
 
     nr_d := nr_d + 1;
     d[nr_d] := rec();
-    # FIXME: use SEMIGROUPS_CreateDClass here!
     ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
                             EquivalenceClassRelation, drel, IsGreensClassNC,
                             false, Representative, x, LambdaOrb, lambdao,
