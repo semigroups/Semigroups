@@ -35,10 +35,8 @@ if HPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern
 endif
-if LIBSEMIGROUPS_HPCOMBI_ENABLED
-semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
-endif
 
+semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
 if WITH_INCLUDED_LIBSEMIGROUPS

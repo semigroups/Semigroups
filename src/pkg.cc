@@ -34,6 +34,7 @@
 #include "libsemigroups/fastest-bmat.hpp"
 #include "libsemigroups/fpsemi.hpp"
 #include "libsemigroups/froidure-pin.hpp"
+#include "libsemigroups/libsemigroups-config.hpp"  // for LIBSEMIGROUP_HPCOMBI_ENABLED
 #include "libsemigroups/matrix.hpp"
 #include "libsemigroups/transf.hpp"
 
@@ -112,14 +113,18 @@ namespace {
   using FroidurePinNTPMat = libsemigroups::FroidurePin<libsemigroups::NTPMat<>>;
   using FroidurePinProjMaxPlusMat
       = libsemigroups::FroidurePin<libsemigroups::ProjMaxPlusMat<>>;
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   using FroidurePinTransf16
       = libsemigroups::FroidurePin<libsemigroups::LeastTransf<16>>;
+#endif
   using TransfUInt2            = libsemigroups::Transf<0, UInt2>;
   using FroidurePinTransfUInt2 = libsemigroups::FroidurePin<TransfUInt2>;
   using TransfUInt4            = libsemigroups::Transf<0, UInt4>;
   using FroidurePinTransfUInt4 = libsemigroups::FroidurePin<TransfUInt4>;
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   using FroidurePinPPerm16
       = libsemigroups::FroidurePin<libsemigroups::LeastPPerm<16>>;
+#endif
   using PPermUInt2            = libsemigroups::PPerm<0, UInt2>;
   using FroidurePinPPermUInt2 = libsemigroups::FroidurePin<PPermUInt2>;
   using PPermUInt4            = libsemigroups::PPerm<0, UInt4>;
@@ -139,10 +144,14 @@ BindFroidurePin(FroidurePinMinPlusTruncMat, libsemigroups::MinPlusTruncMat<>);
 BindFroidurePin(FroidurePinNTPMat, libsemigroups::NTPMat<>);
 BindFroidurePin(FroidurePinProjMaxPlusMat, libsemigroups::ProjMaxPlusMat<>);
 BindFroidurePin(FroidurePinPBR, libsemigroups::PBR);
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 BindFroidurePin(FroidurePinPPerm16, libsemigroups::LeastPPerm<16>);
+#endif
 BindFroidurePin(FroidurePinPPermUInt2, PPermUInt2);
 BindFroidurePin(FroidurePinPPermUInt4, PPermUInt4);
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 BindFroidurePin(FroidurePinTransf16, libsemigroups::LeastTransf<16>);
+#endif
 BindFroidurePin(FroidurePinTransfUInt2, TransfUInt2);
 BindFroidurePin(FroidurePinTransfUInt4, TransfUInt4);
 
@@ -207,14 +216,18 @@ namespace {
       = gapbind14::init<Congruence, congruence_type, FroidurePinBMat const&>;
   auto init_congruence_pbr
       = gapbind14::init<Congruence, congruence_type, FroidurePinPBR const&>;
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   auto init_congruence_pperm16
       = gapbind14::init<Congruence, congruence_type, FroidurePinPPerm16 const&>;
+#endif
   auto init_congruence_ppermuint2 = gapbind14::
       init<Congruence, congruence_type, FroidurePinPPermUInt2 const&>;
   auto init_congruence_ppermuint4 = gapbind14::
       init<Congruence, congruence_type, FroidurePinPPermUInt4 const&>;
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   auto init_congruence_transf16 = gapbind14::
       init<Congruence, congruence_type, FroidurePinTransf16 const&>;
+#endif
   auto init_congruence_transfuint2 = gapbind14::
       init<Congruence, congruence_type, FroidurePinTransfUInt2 const&>;
   auto init_congruence_transfuint4 = gapbind14::
@@ -233,7 +246,9 @@ GAPBIND14_CONSTRUCTOR(m,
 GAPBIND14_CONSTRUCTOR(m, Congruence, create_bipart, init_congruence_bipart);
 GAPBIND14_CONSTRUCTOR(m, Congruence, create_bmat, init_congruence_bmat);
 GAPBIND14_CONSTRUCTOR(m, Congruence, create_pbr, init_congruence_pbr);
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 GAPBIND14_CONSTRUCTOR(m, Congruence, create_pperm16, init_congruence_pperm16);
+#endif
 GAPBIND14_CONSTRUCTOR(m,
                       Congruence,
                       create_ppermuint2,
@@ -242,7 +257,9 @@ GAPBIND14_CONSTRUCTOR(m,
                       Congruence,
                       create_ppermuint4,
                       init_congruence_ppermuint4);
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 GAPBIND14_CONSTRUCTOR(m, Congruence, create_transf16, init_congruence_transf16);
+#endif
 GAPBIND14_CONSTRUCTOR(m,
                       Congruence,
                       create_transfuint2,
@@ -618,6 +635,10 @@ static Int InitKernel(StructInitInfo* module) {
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
 
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
+#endif
+
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
@@ -673,6 +694,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   InitCopyGVar("TheTypeTBlocksObj", &TheTypeTBlocksObj);
 
+  // TODO(now) check that all this stuff is actually needed
   // Import other stuff
   ImportGVarFromLibrary("HTValue", &HTValue);
   ImportGVarFromLibrary("HTAdd", &HTAdd);

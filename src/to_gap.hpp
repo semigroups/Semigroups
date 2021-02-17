@@ -45,6 +45,7 @@
 // libsemigroups headers
 #include "libsemigroups/bipart.hpp"
 #include "libsemigroups/cong.hpp"
+#include "libsemigroups/libsemigroups-config.hpp"  // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/matrix.hpp"
 #include "libsemigroups/pbr.hpp"
 #include "libsemigroups/transf.hpp"
@@ -535,7 +536,7 @@ namespace gapbind14 {
       static_assert(
           std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
           "the template parameter T must be the same as UInt2 or UInt4");
-      // Check that x and t are compatible
+      SEMIGROUPS_ASSERT(N <= libsemigroups::Degree<S>()(x));
       T i;
       for (i = 0; i < N; ++i) {
         x[i] = ptr[i];
@@ -613,9 +614,11 @@ namespace gapbind14 {
         result = std::decay_t<T>(N);
       }
       if (TNUM_OBJ(x) == T_TRANS2) {
-        detail::to_cpp_transf(result, ADDR_TRANS2(x), DEG_TRANS(x));
+        detail::to_cpp_transf(
+            result, ADDR_TRANS2(x), std::min(DEG_TRANS(x), N));
       } else if (TNUM_OBJ(x) == T_TRANS4) {
-        detail::to_cpp_transf(result, ADDR_TRANS4(x), DEG_TRANS(x));
+        detail::to_cpp_transf(
+            result, ADDR_TRANS4(x), std::min(DEG_TRANS(x), N));
       } else {
         // in case of future changes to transf in GAP
         ErrorQuit("transformation degree too high!", 0L, 0L);
@@ -634,6 +637,7 @@ namespace gapbind14 {
       static_assert(
           std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
           "the template parameter T must be the same as UInt2 or UInt4");
+      SEMIGROUPS_ASSERT(N <= libsemigroups::Degree<S>()(x));
       T i;
       T undef;
       if (IsPPerm<S>) {
