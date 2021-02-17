@@ -38,7 +38,7 @@ fi
 echo -e "\nCompiling the Semigroups package..."
 cd $GAP_HOME/pkg/semigroups
 ./autogen.sh
-./configure $PKG_FLAGS $EXTRA_PKG_FLAGS
+./configure $PKG_FLAGS $EXTRA_PKG_FLAGS --disable-hpcombi
 make -j4
 
 # Common curl settings
