@@ -17,7 +17,6 @@
 # Properties of congruences
 #############################################################################
 
-# TODO(now): keep
 InstallMethod(IsRightSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
@@ -39,7 +38,6 @@ function(congl)
   fi;
 end);
 
-# TODO(now): keep
 InstallMethod(IsLeftSemigroupCongruence,
 "for a right semigroup congruence with known generating pairs",
 [IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
@@ -61,13 +59,11 @@ function(congr)
   fi;
 end);
 
-# TODO(now): keep
 InstallMethod(IsSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
 IsRightSemigroupCongruence);
 
-# TODO(now): keep
 InstallMethod(IsSemigroupCongruence,
 "for a right semigroup congruence with known generating pairs",
 [IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
