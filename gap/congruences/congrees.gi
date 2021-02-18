@@ -179,8 +179,7 @@ function(cong)
   return classes;
 end);
 
-InstallMethod(NonTrivialEquivalenceClasses,
-"for a Rees congruence",
+InstallMethod(NonTrivialEquivalenceClasses, "for a Rees congruence",
 [IsReesCongruence],
 function(cong)
   local I;
@@ -205,23 +204,28 @@ end);
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
-function(cong, elm)
+function(cong, x)
   local is_ideal_class, fam, class;
   # Ensure consistency of representatives
-  if elm in SemigroupIdealOfReesCongruence(cong) then
+  if x in SemigroupIdealOfReesCongruence(cong) then
     is_ideal_class := true;
-    elm := SemigroupIdealOfReesCongruence(cong).1;
+    x := SemigroupIdealOfReesCongruence(cong).1;
   else
     is_ideal_class := false;
   fi;
 
   # Construct the object
-  fam := CollectionsFamily(FamilyObj(elm));
+  fam := CollectionsFamily(FamilyObj(x));
   class := Objectify(NewType(fam, IsReesCongruenceClass),
-                     rec(is_ideal_class := is_ideal_class));
+                     rec());
+  if is_ideal_class then
+    SetSize(class, Size(SemigroupIdealOfReesCongruence(cong)));
+  else
+    SetSize(class, 1);
+  fi;
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, elm);
+  SetRepresentative(class, x);
   return class;
 end);
 
@@ -230,7 +234,7 @@ InstallMethod(\in,
 [IsMultiplicativeElement, IsReesCongruenceClass],
 function(elm, class)
   local rel;
-  if class!.is_ideal_class then
+  if Size(class) > 1 then
     rel := EquivalenceClassRelation(class);
     return elm in SemigroupIdealOfReesCongruence(rel);
   else
@@ -238,42 +242,26 @@ function(elm, class)
   fi;
 end);
 
-InstallMethod(\*,
-"for two Rees congruence classes",
+InstallMethod(\*, "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
   if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorNoReturn("the arguments (classes of Rees congruences) do not ",
                   "belong to the same congruence");
-  fi;
-  if c1!.is_ideal_class then
+  elif Size(c1) > 1 then
     return c1;
-  fi;
-  if c2!.is_ideal_class then
+  elif Size(c2) > 1 then
     return c2;
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
                                      Representative(c1) * Representative(c2));
 end);
 
-InstallMethod(Size, "for a Rees congruence class",
-[IsReesCongruenceClass],
-function(class)
-  local rel;
-
-  if class!.is_ideal_class then
-    rel := EquivalenceClassRelation(class);
-    return Size(SemigroupIdealOfReesCongruence(rel));
-  fi;
-  return 1;
-end);
-
-InstallMethod(\=,
-"for two Rees congruence classes",
+InstallMethod(\=, "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
   return (Representative(c1) = Representative(c2))
-         or (c1!.is_ideal_class and c2!.is_ideal_class);
+         or (Size(c1) > 1 and Size(c2) > 1);
 end);
 
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
@@ -298,8 +286,7 @@ function(cong)
 end);
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
-"for a Rees congruence",
-[IsReesCongruence],
+"for a Rees congruence", [IsReesCongruence],
 function(cong)
   cong := AsSemigroupCongruenceByGeneratingPairs(cong);
   return GeneratingPairsOfSemigroupCongruence(cong);
@@ -310,14 +297,12 @@ InstallMethod(Enumerator,
 [IsReesCongruenceClass],
 function(class)
   local cong;
-  if class!.is_ideal_class then
+  if Size(class) > 1 then
     cong := EquivalenceClassRelation(class);
     return Enumerator(SemigroupIdealOfReesCongruence(cong));
   fi;
   return [Representative(class)];
 end);
 
-InstallMethod(EquivalenceRelationPartition,
-"for a Rees congruence",
-[IsReesCongruence],
-cong -> [AsList(SemigroupIdealOfReesCongruence(cong))]);
+InstallMethod(EquivalenceRelationPartition, "for a Rees congruence",
+[IsReesCongruence], cong -> [AsList(SemigroupIdealOfReesCongruence(cong))]);

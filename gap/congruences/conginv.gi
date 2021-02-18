@@ -304,12 +304,8 @@ function(c1, c2)
                                      c1!.rep * c2!.rep);
 end);
 
-InstallMethod(Enumerator,
-"for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClassByKernelTrace],
-function(class)
-  return AsList(class);
-end);
+InstallMethod(Enumerator, "for inverse semigroup congruence class",
+[IsInverseSemigroupCongruenceClassByKernelTrace], AsList);
 
 InstallMethod(AsList,
 "for inverse semigroup congruence class",

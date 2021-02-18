@@ -1397,6 +1397,7 @@ function(cong)
       continue;
     fi;
 
+    # TODO(now) use UF from datastructures
     # Associate the columns and rows
     union(colLookup, pair[1][1], pair[2][1]);
     union(rowLookup, pair[1][3], pair[2][3]);
@@ -1517,6 +1518,7 @@ function(cong)
       return UniversalSemigroupCongruence(S);
     fi;
 
+    # TODO(now) use UF from datastructures
     # Associate the columns and rows
     union(colLookup, pair[1][1], pair[2][1]);
     union(rowLookup, pair[1][3], pair[2][3]);
