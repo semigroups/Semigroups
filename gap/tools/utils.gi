@@ -656,18 +656,7 @@ SEMIGROUPS.UndocumentedPackageVariables := function(info)
   suppressions := ["*", ".", "/", "<", "=", "[]", "^", "in", "{}",
                    "HTAdd_TreeHash_C", "HTValue_TreeHash_C"];
 
-  obsoletes := ["RandomTransformationSemigroup", "RandomTransformationMonoid",
-                "RandomPartialPermSemigroup", "RandomPartialPermMonoid",
-                "RandomMatrixSemigroup", "RandomMatrixMonoid", "DotDClasses",
-                "DotDClasses", "PartialTransformationSemigroup",
-                "AsPartialPermSemigroup", "AsTransformationSemigroup",
-                "AsBipartitionSemigroup", "AsBlockBijectionSemigroup",
-                "AsMatrixSemigroup", "IsomorphismBipartitionSemigroup",
-                "IsomorphismBlockBijectionSemigroup",
-                "IsomorphismMatrixSemigroup",
-                "FactorisableDualSymmetricInverseSemigroup",
-                "SingularFactorisableDualSymmetricInverseSemigroup",
-                "IsSynchronizingTransformationCollection"];
+  obsoletes := [];
   documented := SEMIGROUPS.DocumentedPackageVariables();
 
   for part in info do
