@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups", "gap/hash.gi");
+ReadPackage("semigroups", "gap/doc.g");
 
 ReadPackage("semigroups", "gap/elements/star.gi");
 ReadPackage("semigroups", "gap/elements/pbr.gi");

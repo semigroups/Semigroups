@@ -6,11 +6,7 @@
 ##      gap makedoc.g
 ##
 
-LoadPackage("GAPDoc");
-LoadPackage("semigroups");
-
-SemigroupsMakeDoc();
-CopyHTMLStyleFiles("doc");
-GAPDocManualLab("Semigroups");
-
-QUIT;
+if not IsBoundGlobal("SemigroupsMakeDoc") then
+  Read(Filename(DirectoriesPackageLibrary("semigroups", "gap"), "doc.g"));
+fi;
+SemigroupsMakeDoc(true);
