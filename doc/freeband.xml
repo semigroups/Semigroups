@@ -207,8 +207,7 @@ gap> ContentOfFreeBandElementCollection([x, y]);
       <C>FreeBandElement</C> objects.<P/>
 
       This is an implementation of an algorithm described by Jakub Radoszewski
-      and Wojciech Rytter in 'Efficient Testing of Equivalence of Words in a
-      Free Idempotent Semigroup⋆'
+      and Wojciech Rytter in <Cite Key="Radoszewski2010aa"/>.
       <Example><![CDATA[
 gap> EqualInFreeBand("aa", "a");
 true
