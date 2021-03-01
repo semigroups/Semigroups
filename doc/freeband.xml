@@ -200,7 +200,7 @@ gap> ContentOfFreeBandElementCollection([x, y]);
 
       Where <C>F</C> is a free band over some alphabet containing the
       contents of <A>u</A> and <A>v</A>, this operation returns <E>true</E>
-      if <A>u</A> and <A>v</A> are equal in <C>F</C>, and <E>false</E>
+      if <A>u</A> and <A>v</A> are equal in <C>F</C>, and <K>false</K>
       otherwise.<P/>
 
       Note that this operation is for lists and strings, as opposed to
