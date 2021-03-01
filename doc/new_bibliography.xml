@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE file SYSTEM "bibxmlext.dtd">
 <file>
+
+<entry id="Radoszewski2010aa"><article>
+  <author>
+    <name><first>Jakub</first><last>Radoszewski</last></name>
+    <name><first>Wojciech</first><last>Rytter</last></name>
+  </author>  
+  <title>Efficient Testing of Equivalence of Words in a Free Idempotent Semigroup</title>
+  <booktitle>SOFSEM 2010: Theory and Practice of Computer Science</booktitle>
+  <year>2010</year>
+  <pages>663--671</pages>
+  <publisher>Springer Berlin Heidelberg</publisher>
+  <address>Berlin, Heidelberg</address>
+  <editor>
+    <name><first>Jan</first><last>van Leeuwen</last></name>
+    <name><first>Anca</first><last>Muscholl</last></name>
+    <name><first>David</first><last>Peleg</last></name>
+    <name><first>Jaroslav</first><last>Pokorný</last></name>
+    <name><first>Bernhard</first><last>Rumpe</last></name>
+  </editor>  
+  <other type="doi">doi.org/10.1007/978-3-642-11266-9_55</other>
+  <other type="isbn">978-3-642-11266-9</other>
+</article></entry>
+
+
 <entry id="Donoven2018aa"><article>
   <author>
     <name><first>C.</first><last>Donoven</last></name>

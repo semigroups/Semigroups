@@ -62,7 +62,8 @@ BindGlobal("SEMIGROUPS_DocXMLFiles",
             "semiringmat.xml",
             "semitrans.xml",
             "trans.xml",
-            "utils.xml"]);
+            "utils.xml",
+            "word.xml"]);
 
 BindGlobal("SemigroupsMakeDoc",
 function(arg)
