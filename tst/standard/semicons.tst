@@ -960,8 +960,8 @@ gap> D := Digraph([[2], []]);;
 gap> StrongSemilatticeOfSemigroups(D, [S1, 1], [[id], []]);
 Error, expected a list of semigroups as second argument
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1, S1], [[id], []]);
-Error, the number of vertices of the first argumement D must be equal to the l\
-ength of the second argument semigroups
+Error, the number of vertices of the first argument <D> must be equal to the l\
+ength of the second argument
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [[id], [], []]);
 Error, where D is the first argument, expected a list of length DigraphNrVerti\
 ces(D) as third argument
@@ -975,7 +975,7 @@ gap> m1 := MappingByFunction(S2, S2, function(x)
 >                                      return Transformation([2, 1]);
 >                                    end);;
 gap> StrongSemilatticeOfSemigroups(D, [S2, S2], [[m1], []]);
-Error, expected a list of lists of homomorphisms as third argument. homomorphi\
+Error, expected a list of lists of homomorphisms as third argument, homomorphi\
 sms[1][1] is not a homomorphism
 gap> StrongSemilatticeOfSemigroups(D, [S1, S2], [[id], []]);
 Error, expected homomorphism from 2 to 1 to have correct source and range

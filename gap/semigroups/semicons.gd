@@ -26,9 +26,9 @@ DeclareCategoryCollections("IsSSSE");
 
 # Objects in IsSSERep have 3 slots:
 # 1) the strong semilattice of semigroup of which this is an element;
-# 2) the node of the digraph;
+# 2) the node of the digraph;
 # 3) the underlying semigroup element itself.
-DeclareRepresentation("IsSSSERep", IsSSSE and IsPositionalObjectRep, 2);
+DeclareRepresentation("IsSSSERep", IsSSSE and IsPositionalObjectRep, 3);
 
 DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
 DeclareOperation("UnderlyingSemilatticeOfSemigroups", [IsSSSERep]);

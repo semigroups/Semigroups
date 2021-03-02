@@ -823,8 +823,8 @@ function(D, semigroups, homomorphisms)
     fi;
   od;
   if DigraphNrVertices(D) <> Length(semigroups) then
-    ErrorNoReturn("the number of vertices of the first argumement D must ",
-                  "be equal to the length of the second argument semigroups");
+    ErrorNoReturn("the number of vertices of the first argument <D> must ",
+                  "be equal to the length of the second argument");
   elif DigraphNrVertices(D) <> Length(homomorphisms) then
     ErrorNoReturn("where D is the first argument, expected a list of length ",
                   "DigraphNrVertices(D) as third argument");
@@ -841,7 +841,7 @@ function(D, semigroups, homomorphisms)
     for j in [1 .. Length(homomorphisms[i])] do
       if not RespectsMultiplication(homomorphisms[i][j]) then
         ErrorNoReturn("expected a list of lists of homomorphisms ",
-                      "as third argument. homomorphisms[", i,
+                      "as third argument, homomorphisms[", i,
                       "][", j, "] is not a homomorphism");
       fi;
       if  (not IsSubset(Source(homomorphisms[i][j]),

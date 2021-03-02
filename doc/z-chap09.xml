@@ -57,7 +57,6 @@
     <#Include Label = "SSSE">
     <#Include Label = "IsSSSE">
     <#Include Label = "IsStrongSemilatticeOfSemigroups">
-    <#Include Label = "StrongSemilatticeOfSemigroups">
     <#Include Label = "SemilatticeOfStrongSemilatticeOfSemigroups">
     <#Include Label = "SemigroupsOfStrongSemilatticeOfSemigroups">
     <#Include Label = "HomomorphismsOfStrongSemilatticeOfSemigroups">
