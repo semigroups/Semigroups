@@ -1048,7 +1048,7 @@ false
 gap> SSSE(S, 2, Transformation([2, 1])) * SSSE(S, 3, Transformation([1, 1]))
 >    = SSSE(S, 1, Transformation([2, 2]));
 true
-gap> S = StrongSemilatticeOfSemigroups(SSSE(S, 2, Transformation([2, 1])));
+gap> S = UnderlyingSemilatticeOfSemigroups(SSSE(S, 2, Transformation([2, 1])));
 true
 
 # constructions: strong semilattices of semigroups: full worked example (SLOW!)

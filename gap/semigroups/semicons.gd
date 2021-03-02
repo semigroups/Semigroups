@@ -31,7 +31,7 @@ DeclareCategoryCollections("IsSSSE");
 DeclareRepresentation("IsSSSERep", IsSSSE and IsPositionalObjectRep, 2);
 
 DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
-DeclareOperation("StrongSemilatticeOfSemigroups", [IsSSSERep]);
+DeclareOperation("UnderlyingSemilatticeOfSemigroups", [IsSSSERep]);
 
 DeclareCategory("IsStrongSemilatticeOfSemigroups",
                 IsSemigroup and IsSSSECollection);
