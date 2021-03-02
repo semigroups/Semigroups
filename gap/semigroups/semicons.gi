@@ -805,3 +805,213 @@ for _IsXSemigroup in ["IsTransformationSemigroup",
   end);
 od;
 Unbind(_IsXSemigroup);
+
+InstallMethod(StrongSemilatticeOfSemigroups,
+"for a digraph, a list, and a list",
+[IsDigraph, IsList, IsList],
+function(D, semigroups, homomorphisms)
+  local efam, etype, type, maps, n, rtclosure, path, len, tobecomposed, gens,
+  out, s, i, j, paths, firsthom;
+
+  #  TODO would it be advisable to ensure all the semigroups are distinct?
+  #  In the GAP sense of distinct, that is
+
+  if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
+    ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
+                  "is a meet semilattice digraph as first argument");
+  fi;
+  for s in semigroups do
+    if not IsSemigroup(s) then
+      ErrorNoReturn("expected a list of semigroups as second argument");
+    fi;
+  od;
+  if DigraphNrVertices(D) <> Length(semigroups) then
+    ErrorNoReturn("the number of vertices of the first argumement D must ",
+                  "be equal to the length of the second argument semigroups");
+  elif DigraphNrVertices(D) <> Length(homomorphisms) then
+    ErrorNoReturn("where D is the first argument, expected a list of length ",
+                  "DigraphNrVertices(D) as third argument");
+  fi;
+  for i in [1 .. DigraphNrVertices(D)] do
+    if not IsList(homomorphisms[i]) then
+      ErrorNoReturn("expected a list of lists as third argument");
+    fi;
+    if Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
+      ErrorNoReturn("where D and homomorphisms are the 1st and 3rd arguments ",
+                    "respectively, the length of homomorphisms[i] must be ",
+                    "equal to OutNeighbours(D)[i]");
+    fi;
+    for j in [1 .. Length(homomorphisms[i])] do
+      if not RespectsMultiplication(homomorphisms[i][j]) then
+        ErrorNoReturn("expected a list of lists of homomorphisms ",
+                      "as third argument. homomorphisms[", i,
+                      "][", j, "] is not a homomorphism");
+      fi;
+      if  (not IsSubset(Source(homomorphisms[i][j]),
+                        semigroups[OutNeighbours(D)[i][j]])) or
+          (not IsSubset(semigroups[i],
+                        Range(homomorphisms[i][j]))) then
+        ErrorNoReturn("expected homomorphism from ",
+                      OutNeighbours(D)[i][j],
+                      " to ",
+                      i,
+                      " to have correct source and range");
+      fi;
+    od;
+  od;
+
+  efam := NewFamily("StrongSemilatticeOfSemigroupsElementsFamily", IsSSSE);
+  etype := NewType(efam, IsSSSERep);
+
+  type := NewType(CollectionsFamily(efam),
+                  IsStrongSemilatticeOfSemigroups
+                    and IsComponentObjectRep
+                    and IsAttributeStoringRep);
+
+  # the next section converts the list of homomorphisms into a matrix,
+  # composing when necessary.
+  maps := [];
+  n := Length(semigroups);
+  rtclosure := DigraphReflexiveTransitiveClosure(D);
+  for i in [1 .. n] do
+    Add(maps, []);
+    for j in [1 .. n] do
+      if i = j then
+        # First check that if a homomorphism from i to i was defined, it
+        # is the identity
+        if IsDigraphEdge(D, [i, i]) then
+          if homomorphisms[i][Position(OutNeighboursOfVertex(D, i), i)]
+              <> IdentityMapping(semigroups[i]) then
+             ErrorNoReturn("Expected homomorphism from ",
+                           i, " to ", i,
+                           " to be the identity");
+           fi;
+        fi;
+        Add(maps[i], IdentityMapping(semigroups[i]));
+      elif IsDigraphEdge(rtclosure, [i, j]) then
+        paths        := IteratorOfPaths(D, i, j);
+        path         := NextIterator(paths);
+        len          := Length(path[2]);
+        tobecomposed := List([1 .. len],
+                              x -> homomorphisms[path[1][x]][path[2][x]]);
+        firsthom     := CompositionMapping(tobecomposed);
+
+        # now check the first composition is the same as the composition along
+        # all other paths from i to j
+        while not IsDoneIterator(paths) do
+          path         := NextIterator(paths);
+          len          := Length(path[2]);
+          tobecomposed := List([1 .. len],
+                                x -> homomorphisms[path[1][x]][path[2][x]]);
+          if CompositionMapping(tobecomposed) <> firsthom then
+            ErrorNoReturn("Composing homomorphisms along different paths from ",
+                          i,
+                          " to ",
+                          j,
+                          " does not produce the same result. The ",
+                          "homomorphisms must commute");
+          fi;
+        od;
+        # If no errors so far, then all paths commute and we can add the comp.
+        Add(maps[i], firsthom);
+        # NB. perhaps a dynamic programming approach would be more
+        # efficient here.
+        # for some larger digraphs, the current method might compute some
+        # compositions of homomorphisms several times.
+        # This should be a FIXME.
+      else
+        Add(maps[i], fail);
+        # is fail a reasonable thing to add here?
+      fi;
+    od;
+  od;
+
+  out := rec();
+
+  gens := [];
+  for i in [1 .. Length(semigroups)] do
+    Append(gens, List(GeneratorsOfSemigroup(semigroups[i]),
+                      x -> Objectify(etype, [out, i, x])));
+  od;
+
+  ObjectifyWithAttributes(out,
+                          type,
+                          SemilatticeOfStrongSemilatticeOfSemigroups,
+                          rtclosure,
+                          SemigroupsOfStrongSemilatticeOfSemigroups,
+                          semigroups,
+                          HomomorphismsOfStrongSemilatticeOfSemigroups,
+                          maps,
+                          ElementTypeOfStrongSemilatticeOfSemigroups,
+                          etype,
+                          GeneratorsOfMagma,
+                          gens);
+  return out;
+end);
+
+InstallMethod(Size, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  return Sum(SemigroupsOfStrongSemilatticeOfSemigroups(S), Size);
+end);
+
+InstallMethod(ViewString, "for a strong semilattice of semigroups",
+[IsStrongSemilatticeOfSemigroups],
+function(S)
+  local size;
+  size := Size(SemigroupsOfStrongSemilatticeOfSemigroups(S));
+  return Concatenation("<strong semilattice of ",
+                       String(size),
+                       " semigroups>");
+end);
+
+InstallMethod(SSSE,
+"for a strong semilattice of semigroups, a pos int, and an associative elt",
+[IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
+function(S, n, x)
+  if n > Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)) then
+    ErrorNoReturn("expected second argument to be an integer between 1 and ",
+                  "the size of the semilattice, i.e. ",
+                  Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
+  elif not x in SemigroupsOfStrongSemilatticeOfSemigroups(S)[n] then
+    ErrorNoReturn("where S, n and x are the 1st, 2nd and 3rd arguments ",
+                  "respectively, expected x to be an element of ",
+                  "SemigroupsOfStrongSemilatticeOfSemigroups(S)[n]");
+  fi;
+  return Objectify(ElementTypeOfStrongSemilatticeOfSemigroups(S), [S, n, x]);
+end);
+
+InstallMethod(\=, "for SSSEs", IsIdenticalObj,
+[IsSSSERep, IsSSSERep],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2] and x![3] = y![3];
+end);
+
+InstallMethod(\<, "for SSSEs", IsIdenticalObj, [IsSSSERep, IsSSSERep],
+function(x, y)
+  return (x![2] < y![2]) or (x![2] = y![2] and x![3] < y![3]);
+end);
+
+InstallMethod(\*, "for SSSEs", IsIdenticalObj,
+[IsSSSERep, IsSSSERep],
+function(x, y)
+  local D, meet, maps;
+  D    := SemilatticeOfStrongSemilatticeOfSemigroups(x![1]);
+  meet := PartialOrderDigraphMeetOfVertices(D, x![2], y![2]);
+  maps := HomomorphismsOfStrongSemilatticeOfSemigroups(x![1]);
+  return SSSE(x![1],
+              meet,
+              (x![3] ^ (maps[meet][x![2]])) * (y![3] ^ (maps[meet][y![2]])));
+end);
+
+InstallMethod(ViewString, "for a SSSE",
+[IsSSSERep],
+function(x)
+  return Concatenation("SSSE(", ViewString(x![2]), ", ", ViewString(x![3]), ")");
+end);
+
+InstallMethod(StrongSemilatticeOfSemigroups, "for a SSSE rep",
+[IsSSSERep],
+function(x)
+  return x![1];
+end);

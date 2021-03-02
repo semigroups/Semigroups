@@ -20,3 +20,31 @@ DeclareGlobalFunction("LeftZeroSemigroup");
 DeclareGlobalFunction("RightZeroSemigroup");
 DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
 DeclareGlobalFunction("BrandtSemigroup");
+
+DeclareCategory("IsSSSE", IsAssociativeElement);
+DeclareCategoryCollections("IsSSSE");
+
+# Objects in IsSSERep have 3 slots:
+# 1) the strong semilattice of semigroup of which this is an element;
+# 2) the node of the digraph;
+# 3) the underlying semigroup element itself.
+DeclareRepresentation("IsSSSERep", IsSSSE and IsPositionalObjectRep, 2);
+
+DeclareOperation("StrongSemilatticeOfSemigroups", [IsDigraph, IsList, IsList]);
+DeclareOperation("StrongSemilatticeOfSemigroups", [IsSSSERep]);
+
+DeclareCategory("IsStrongSemilatticeOfSemigroups",
+                IsSemigroup and IsSSSECollection);
+DeclareAttribute("SemilatticeOfStrongSemilatticeOfSemigroups",
+                 IsStrongSemilatticeOfSemigroups);
+DeclareAttribute("SemigroupsOfStrongSemilatticeOfSemigroups",
+                 IsStrongSemilatticeOfSemigroups);
+DeclareAttribute("HomomorphismsOfStrongSemilatticeOfSemigroups",
+                 IsStrongSemilatticeOfSemigroups);
+DeclareAttribute("ElementTypeOfStrongSemilatticeOfSemigroups",
+                 IsStrongSemilatticeOfSemigroups);
+
+DeclareOperation("SSSE",
+                 [IsStrongSemilatticeOfSemigroups,
+                  IsPosInt,
+                  IsAssociativeElement]);
