@@ -299,3 +299,184 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="StrongSemilatticeOfSemigroups">
+  <ManSection>
+    <Oper Name="StrongSemilatticeOfSemigroups" Arg="D, L, H"/>
+    <Returns>
+      A strong semilattice of semigroups.
+    </Returns>
+    <Description>
+      If <A>D</A> is a digraph, <A>L</A> is a list of semigroups, and <A>H</A>
+      is a list of lists of maps, then this function returns a corresponding
+      <C>IsStrongSemilatticeOfSemigroups</C> object. The format
+      of the arguments is not required to be exactly analogous to Howie's
+      description above, but consistency amongst the arguments is required:
+      <List>
+        <Item>
+          <A>D</A> must be a digraph whose
+          <Ref Oper="DigraphReflexiveTransitiveClosure" BookName="Digraphs"/>
+          is a meet-semilattice. For
+          example, <C>Digraph([2, 3], [4], [4], []])</C> is valid and produces
+          a semilattice where the meet of <C>2</C> and <C>3</C> is <C>1</C>.
+          See <Ref Prop="IsMeetSemilatticeDigraph" BookName="Digraphs"/>.
+        </Item>
+        <Item>
+          <A>L</A> must contain as many semigroups as there are vertices in
+          <A>D</A>.
+        </Item>
+        <Item>
+          <A>H</A> must be a list with as many elements as there are vertices
+          in <A>D</A>. Each element of <A>H</A> must itself be a (possibly
+          empty) list with as many entries as the corresponding vertex of
+          <A>D</A> has out-edges. The entries of each sublist must be the
+          corresponding homomorphisms: for example, if <A>D</A> is entered as
+          above, then <C>H[1][2]</C> must be the homomorphism <M>f_31</M>, i.e.
+          <C>H[1][2]</C> is an <C>IsMapping</C> object whose domain is a
+          superset of <C>L[3]</C> and whose range is a subset of <C>L[1]</C>.
+        </Item>
+      </List>
+      Note that in the example above, the edge <M>1 \rightarrow 4</M> is not
+      entered as part of the argument <A>D</A>, but it is still an edge in the
+      reflexive transitive closure of <A>D</A>. When creating the object, &GAP;
+      creates the homomorphism <M>f_{41}</M> by composing the mappings along
+      paths that lead from 4 to 1, and checks that composing along all possible
+      paths produces the same result.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsStrongSemilatticeOfSemigroups">
+  <ManSection>
+    <Filt Name="IsStrongSemilatticeOfSemigroups" Arg="obj"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
+    <Description>
+      Every Strong Semilattice of Semigroups in &GAP; belongs to the category
+      <C>IsStrongSemilatticeOfSemigroups</C>. Basic operations in this category
+      allow the user to recover the three essential elements of an SSS object:
+      <Ref Attr="SemilatticeOfStrongSemilatticeOfSemigroups"/>,
+      <Ref Attr="SemigroupsOfStrongSemilatticeOfSemigroups"/>, and
+      <Ref Attr="HomomorphismsOfStrongSemilatticeOfSemigroups"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemilatticeOfStrongSemilatticeOfSemigroups">
+  <ManSection>
+    <Attr Name="SemilatticeOfStrongSemilatticeOfSemigroups" Arg="SSS"/>
+    <Returns>
+      A meet-semilattice digraph.
+    </Returns>
+    <Description>
+      If <A>SSS</A> is a strong semilattice of semigroups, this function
+      returns the underlying semilattice structure as a digraph.
+      Note that this may not be equal to the digraph passed as input
+      when <A>SSS</A> was created: rather, it is the reflexive transitive
+      closure of the input digraph.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="UnderlyingSemilatticeOfSemigroups">
+  <ManSection>
+    <Oper Name="UnderlyingSemilatticeOfSemigroups" Arg="el"/>
+    <Returns>
+      A strong semilattice of semigroups.
+    </Returns>
+    <Description>
+      If <A>el</A> is an element of a strong semilattice of semigroups (i.e.
+      is in the category <Ref Filt="IsSSSE"/>), then this operation returns
+      the strong semilattice of semigroups object that <A>el</A> belongs to.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupsOfStrongSemilatticeOfSemigroups">
+  <ManSection>
+    <Attr Name="SemigroupsOfStrongSemilatticeOfSemigroups" Arg="SSS"/>
+    <Returns>
+      A list of semigroups.
+    </Returns>
+    <Description>
+      If <A>SSS</A> is a strong semilattice of semigroups, this function
+      returns the list of semigroups that make up <A>SSS</A>. The position of
+      a semigroup in the list corresponds to the node of the semilattice where
+      that semigroup lies.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="HomomorphismsOfStrongSemilatticeOfSemigroups">
+  <ManSection>
+    <Attr Name="HomomorphismsOfStrongSemilatticeOfSemigroups" Arg="SSS"/>
+    <Returns>
+      A list of lists of mappings.
+    </Returns>
+    <Description>
+      If <A>SSS</A> is a strong semilattice of <M>n</M> semigroups, this
+      function returns an <M>n \times n</M> list where the <M>(i, j)</M>th
+      entry of the list is the homomorphism <M>f_{ji}</M>, provided
+      <M>i \leq j</M> in the semilattice. If this last condition is not true,
+      then the entry is <K>fail</K>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSSSE">
+  <ManSection>
+    <Filt Name="IsSSSE" Arg="obj"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
+    <Description>
+      All elements of an SSS belong in the category <C>IsSSSE</C> (for "Strong
+      Semilattice of Semigroups Element").
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SSSE">
+  <ManSection>
+    <Oper Name="SSSE" Arg="SSS, n, x"/>
+    <Returns>
+      An element of a strong semilattice of semigroups.
+    </Returns>
+    <Description>
+      If <A>n</A> is a vertex of the underlying semilattice of the strong
+      semilattice of semigroups <A>SSS</A>, and if <A>x</A> is an
+      element of the <A>n</A>th semigroup of <A>SSS</A>, then this function
+      returns the element of <A>SSS</A> which lies in semigroup number <A>n</A>
+      and which corresponds to the element <A>x</A> in that semigroup.
+      <P/>
+      This function returns an <Ref Filt="IsSSSE"/> object. SSSEs from the
+      same strong semilattice of semigroups can be compared and multiplied.
+      <Example><![CDATA[
+gap> D := Digraph([[2, 3], [4], [4], []]);;
+gap> S4 := FullTransformationMonoid(2);;
+gap> S3 := FullTransformationMonoid(3);;
+gap> pairs := [[Transformation([1, 2]), Transformation([2, 1])]];;
+gap> cong := SemigroupCongruence(S4, pairs);;
+gap> S2 := S4 / cong;;
+gap> S1 := TrivialSemigroup();;
+gap> L := [S1, S2, S3, S4];;
+gap> idfn := function(t) return IdentityTransformation; end;;
+gap> f21 := MappingByFunction(S2, S1, idfn);;
+gap> f31 := MappingByFunction(S3, S1, idfn);;
+gap> f42 := HomomorphismQuotientSemigroup(cong);;
+gap> f43 := IdentityMapping(S4);;
+gap> H := [[f21, f31], [f42], [f43], []];;
+gap> SSS := StrongSemilatticeOfSemigroups(D, L, H);
+<strong semilattice of 4 semigroups>
+gap> Size(SSS);
+34
+gap> x := SSSE(SSS, 3, Elements(S3)[10]);
+SSSE(3, Transformation( [ 2, 1, 1 ] ))
+gap> y := SSSE(SSS, 4, Elements(S4)[1]);
+SSSE(4, Transformation( [ 1, 1 ] ))
+gap> x * y;
+SSSE(3, Transformation( [ 1, 1, 1 ] ))]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

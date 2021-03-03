@@ -32,4 +32,37 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section Label = "Strong semilattices of semigroups">
+    <Heading>
+      Strong semilattices of semigroups
+    </Heading>
+
+    In this section, we describe how &Semigroups; can be used to create and
+    manipulate strong semilattices of semigroups (SSSs).
+    Strong semilattices of semigroups are described, for example, in Section
+    4.1 of <Cite Key = "Howie1995aa"/>.
+    They consist of a meet-semilattice <M>Y</M> along with a collection of
+    semigroups <M>S_a</M> for each <M>a</M> in <M>Y</M>, and a collection of
+    homomorphisms <M>f_{ab} : S_a \rightarrow S_b</M> for each <M>a</M> and
+    <M>b</M> in <M>Y</M> such that <M>a \geq b</M>.
+    <P/>
+
+    The product of two elements <M>x \in S_a, y \in S_b</M> is defined to lie
+    in the semigroup <M>S_c</M>, corresponding to the meet <M>c</M> of
+    <M>a, b \in Y</M>. The exact element of <M>S_c</M> equal to the product
+    is obtained using the homomorphisms of the SSS: <M>xy = (x f_{ac})
+    (y f_{bc})</M>.
+
+    <#Include Label = "StrongSemilatticeOfSemigroups">
+    <#Include Label = "SSSE">
+    <#Include Label = "IsSSSE">
+    <#Include Label = "IsStrongSemilatticeOfSemigroups">
+    <#Include Label = "SemilatticeOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "SemigroupsOfStrongSemilatticeOfSemigroups">
+    <#Include Label = "HomomorphismsOfStrongSemilatticeOfSemigroups">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
 </Chapter>

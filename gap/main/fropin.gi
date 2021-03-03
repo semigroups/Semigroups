@@ -60,6 +60,9 @@ InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
 InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
                   IsMcAlisterTripleSemigroupElementCollection);
 
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsSSSECollection);
+
 InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 "for a matrix over semiring collection", [IsMatrixOverSemiringCollection],
 IsGeneratorsOfSemigroup);
