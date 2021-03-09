@@ -74,13 +74,52 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
     return t;
   end;
 
-  Benchmark := function(func, arg)
+  RunFunc := function(func, arg)
     local t;
     StartTimer();
     CallFuncList(func, arg);
     t := StopTimer();
     GASMAN("collect");
     return t;
+  end;
+
+  Benchmark := function(func, arg)
+    local t, max_time, nr_runs, extra_runs, times, i;
+    t := RunFunc(func, arg);
+    max_time := 100000000;
+    nr_runs := Int(max_time / t);
+    extra_runs := Minimum(nr_runs, 5);
+    times := [t];
+    for i in [1 .. extra_runs] do
+      Add(times, RunFunc(func, arg));
+    od;
+    return [Int(Sum(times)/Length(times)), Length(times)];
+  end;
+
+  BenchmarkLeftTranslations := function(arg)
+    local funcs, strs, res, i;
+    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrack,
+             SEMIGROUPS.LeftTranslationsBacktrackNoCache,
+             SEMIGROUPS.LeftTranslationsBacktrack,
+             SEMIGROUPS.LeftTranslationsStabilisedBacktrack,
+             SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack,
+             SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrack];
+    
+    strs := ["NaiveBacktrack",
+             "BacktrackNoCache",
+             "BacktrackWithCache",
+             "StabilisedBacktrack",
+             "StabilisedOrderedBacktrack",
+             "StabilisedReverseOrderedBacktrack"];
+
+    Print("Benchmarking:");
+    ViewObj(arg[1]);
+    Print("\n");
+    SEMIGROUPS.LeftTranslationsBacktrackData(UnderlyingSemigroup(arg[1]));
+    for i in [1 .. Length(funcs)] do
+      res := Benchmark(funcs[i], arg);
+      Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
+    od;
   end;
 fi;
 
