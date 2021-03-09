@@ -121,6 +121,24 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
       Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
     od;
   end;
+  
+  BenchmarkLeftIdealTranslations := function(arg)
+    local funcs, strs, res, i;
+    funcs := [SEMIGROUPS.LeftTranslationsIdealBacktrack,
+             SEMIGROUPS.LeftTranslationsIdealStabilisedBacktrack];
+    strs := ["IdealBacktrack", "StabilisedIdealBacktrack"];
+    Print("Benchmarking ideal left translations of ",
+          arg[1],
+          " in ",
+          arg[2],
+          "\n");
+    SEMIGROUPS.LeftTranslationsIdealBacktrackData(arg[1], arg[2], arg[3]);
+    for i in [1 .. Length(funcs)] do
+      res := Benchmark(funcs[i], arg);
+      Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
+    od;
+  end;
+
 fi;
 
 # Hash translations by their underlying transformations
