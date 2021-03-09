@@ -1102,6 +1102,106 @@ SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack := function(L)
   return out;
 end;
 
+SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrack := function(L)
+  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
+  stab_thresh, coset_reps, multtable, data, U, gens_map, aut,
+  add_stabilised_lambda, bt, lambda, out, i;
+
+  S           := UnderlyingSemigroup(L);
+  n           := Size(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+  stabs := [];
+  stabs[m] := [];
+  stab_thresh := 20;
+  coset_reps := [];
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+
+  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  U := data.U;
+  
+  # restrict via the U_{i}
+  for i in [1 .. m] do
+    IntersectSet(possiblefgenvals[i], U[i]);
+  od;
+
+  gens_map := [1 .. m];
+  Sort(gens_map, {x, y} -> Size(possiblefgenvals[x]) >
+                            Size(possiblefgenvals[y]));
+
+  Print(List(possiblefgenvals, Size), "\n");
+
+  aut := SEMIGROUPS.LeftAutoTranslations(multtable, genspos);
+
+  add_stabilised_lambda := function()
+    local stab_depth, it, mult;
+    stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
+    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
+    while not IsDoneIterator(it) do
+      mult := Product(NextIterator(it));
+      Add(out, OnTuples(lambda, mult));
+    od;
+  end;
+
+  bt := function(i) 
+    local stab, use_stab, orbs, reps, consistent, W, s, j;
+    if i > 1 then
+      stab := stabs[i - 1];
+    else
+      stab := aut;
+    fi;
+    use_stab := Size(stab) > stab_thresh;
+    if use_stab then
+      orbs := Orbits(stab, omega_stack[i][gens_map[i]]);
+      reps := List(orbs, x -> x[1]);
+    else
+      reps := omega_stack[i][gens_map[i]];
+    fi;
+    for s in reps do
+      lambda[gens_map[i]] := s;
+      if i = m then
+        add_stabilised_lambda();
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data,
+                                                         gens_map[i],
+                                                         gens_map[j], s);
+#          Error();
+          omega_stack[i + 1][gens_map[j]] :=
+            Intersection(omega_stack[i][gens_map[j]], W);
+          if IsEmpty(omega_stack[i + 1][gens_map[j]]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          if use_stab then
+            stabs[i] := Stabiliser(stab, s);
+            coset_reps[i] := List(RightCosets(stab, stabs[i]), Representative);
+          else
+            stabs[i] := [];
+            coset_reps[i] := [];
+          fi;
+          bt(i + 1);
+        fi;
+      fi;
+    od;
+  end;
+
+  omega_stack := [possiblefgenvals];
+  lambda := [];
+  out := [];
+  bt(1);
+#  Apply(out, x -> LeftTranslationNC(L, x));
+  return out;
+end;
+
 SEMIGROUPS.LeftTranslationsIdealStabilisedBacktrack := function(I, S, gens)
   local n, m, genspos, omega_stack, possiblefgenvals, stabs, orbs, stab_thresh,
   multtable, data, U, aut, bt, lambda, out, i;
