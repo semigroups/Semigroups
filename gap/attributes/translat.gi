@@ -42,6 +42,48 @@
 # 1. Internal Functions
 #############################################################################
 
+
+if IsPackageMarkedForLoading("io", "4.4.4") then 
+  __JDMS_GLOBAL_TIMINGS_RECORD := rec(running := false);
+  StartTimer := function()
+    if not __JDMS_GLOBAL_TIMINGS_RECORD.running then 
+      __JDMS_GLOBAL_TIMINGS_RECORD.timeofday := IO_gettimeofday();
+    fi;
+  end;
+  
+  # Time in microseconds!
+  ElapsedTimer := function()
+    local  timeofday, elapsed;
+    if IsBound(__JDMS_GLOBAL_TIMINGS_RECORD) and
+        IsBound(__JDMS_GLOBAL_TIMINGS_RECORD.timeofday) then 
+      timeofday := IO_gettimeofday();
+      elapsed := (timeofday.tv_sec - __JDMS_GLOBAL_TIMINGS_RECORD.timeofday.tv_sec)
+                  * 10 ^ 6 + Int((timeofday.tv_usec -
+                   __JDMS_GLOBAL_TIMINGS_RECORD.timeofday.tv_usec));
+      return elapsed;
+    else 
+      return 0;
+    fi;
+  end;
+
+  StopTimer := function()
+    local t;
+    t := ElapsedTimer();
+    __JDMS_GLOBAL_TIMINGS_RECORD.running := false;
+    Unbind(__JDMS_GLOBAL_TIMINGS_RECORD.timeofday);
+    return t;
+  end;
+
+  Benchmark := function(func, arg)
+    local t;
+    StartTimer();
+    CallFuncList(func, arg);
+    t := StopTimer();
+    GASMAN("collect");
+    return t;
+  end;
+fi;
+
 # Hash translations by their underlying transformations
   SEMIGROUPS.HashFunctionForTranslations := function(x, data)
     return ORB_HashFunctionForPlainFlatList(x![1], data);
