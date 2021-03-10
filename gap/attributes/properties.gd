@@ -44,6 +44,9 @@ DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
 
+DeclareProperty("SEMIGROUPS_IsOneRelationSemigroup", IsFpSemigroup);
+DeclareProperty("SEMIGROUPS_IsOneRelationMonoid", IsFpMonoid);
+
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsInverseSemigroup and IsPartialPermSemigroup);
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
@@ -102,3 +105,29 @@ DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsMonoidAsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsIdempotentGenerated);
+
+InstallTrueMethod(IsSimpleSemigroup,
+                  IsFpSemigroup and SEMIGROUPS_IsOneRelationSemigroup and
+                  IsSurjectiveSemigroup);
+
+DeclareProperty("IsEmbeddableInGroup", IsSemigroup);
+DeclareProperty("IsCancellativeSemigroup", IsSemigroup);
+DeclareProperty("IsLeftCancellative", IsSemigroup);
+DeclareProperty("IsRightCancellative", IsSemigroup);
+DeclareProperty("IsBisimpleSemigroup", IsSemigroup);
+DeclareProperty("IsProperFreeProductOfSemigroups", IsSemigroup);
+DeclareProperty("IsProperDirectProductOfSemigroups", IsSemigroup);
+#DeclareProperty("HasIdempotents", IsSemigroup);
+DeclareProperty("IsSemigroupWithMultiplicativeZero", IsSemigroup);
+DeclareProperty("IsMinRSemigroup", IsSemigroup);
+#DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
+DeclareProperty("IsSemigroupWithIdempotents", IsSemigroup);
+InstallTrueMethod(IsBisimpleSemigroup,
+                  IsFpSemigroup and SEMIGROUPS_IsOneRelationSemigroup and
+                  IsSurjectiveSemigroup);
+InstallTrueMethod(IsMinRSemigroup,
+                  IsFpMonoid and SEMIGROUPS_IsOneRelationMonoid and IsFinite);
+InstallTrueMethod(IsRegularSemigroup, IsFpSemigroup and IsGroupAsSemigroup);
+InstallTrueMethod(IsInverseSemigroup,
+                  IsFpSemigroup and SEMIGROUPS_IsOneRelationSemigroup and
+                  IsGroupAsSemigroup);

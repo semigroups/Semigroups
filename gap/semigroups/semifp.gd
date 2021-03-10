@@ -8,4 +8,3 @@
 #############################################################################
 ##
 DeclareOperation("ParseRelations", [IsDenseList, IsString]);
-

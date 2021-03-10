@@ -1770,10 +1770,31 @@ end);
 InstallMethod(IsFinite, "for a finitely presented semigroup",
 [IsFpSemigroup],
 function(S)
-  if IsEmpty(RelationsOfFpSemigroup(S)) or
-      ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
+  local rel;
+  rel := RelationsOfFpSemigroup(S);
+  if Length(rel) = 1 then
+    return Length(GeneratorsOfSemigroup(S)) = 1 and
+      (Length(rel[1][1]) <> Length(rel[1][2])) and
+      ForAll(rel[1], r -> Length(r) > 0);
+  fi;
+  if IsEmpty(rel) or
+      ForAll(rel, x -> IsIdenticalObj(x[1], x[2])) then
     # TODO add nr gens is higher than nr relations
     return false;
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsFinite, "for a finitely presented monoid",
+[IsFpMonoid],
+function(S)
+  local rel;
+  rel := RelationsOfFpMonoid(S);
+  if Length(rel) = 1 then
+    rel := rel[1];
+    return Length(GeneratorsOfMonoid(S)) = 1 and
+      (Length(rel[1]) <> Length(rel[2])) and
+      ForAll(rel, r -> Length(r) > 0);
   fi;
   TryNextMethod();
 end);
@@ -1784,3 +1805,306 @@ x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);
 InstallMethod(IsSurjectiveSemigroup, "for a semigroup",
 [IsSemigroup],
 S -> IsEmpty(IndecomposableElements(S)));
+
+InstallMethod(IsSurjectiveSemigroup, "for a one-relation semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    return IsGroupAsSemigroup(S);
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsGroupAsSemigroup,"for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, gens;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    gens := GeneratorsOfSemigroup(S);
+    if Length(gens) = 1 then
+      return (Length(rels[1]) = 1 and Length(rels[2]) > 1) or
+        (Length(rels[1]) > 1 and Length(rels[2]) = 1);
+    else
+      return false;
+    fi;
+  else
+    TryNextMethod();
+  fi;
+end);
+
+InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
+[IsFpMonoid],
+function(S)
+  local rels, gens;
+  rels := RelationsOfFpMonoid(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    gens := GeneratorsOfMonoid(S);
+    if Length(gens) = 1 then
+      return (Length(rels[1]) = 0 and Length(rels[2]) >= 1)
+              or (Length(rels[1]) >= 1 and rels[2] = 0);
+    else
+      return false;
+    fi;
+  else
+    TryNextMethod();
+  fi;
+
+end);
+
+InstallMethod(IsEmbeddableInGroup, "for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    if Length(GeneratorsOfSemigroup(S)) = 1 then
+      return (Length(rels[1]) = 1 and Length(rels[2]) >= 1) or
+        (Length(rels[1]) >= 1 and Length(rels[2]) = 1);
+    else
+      return IsCancellativeSemigroup(S);
+    fi;
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsEmbeddableInGroup, "for a finitely presented monoid",
+[IsFpMonoid],
+function(S)
+  local rels, F, M, extRel, gens, newRel;
+  rels := RelationsOfFpMonoid(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    if Length(rels[1]) = 0 or Length(rels[2]) = 0 then
+      extRel := LetterRepAssocWord(rels[PositionMaximum(rels,
+                                        x -> Length(x))]);
+      gens := Unique(extRel);
+      F := FreeMonoid(Length(gens));
+      gens := GeneratorsOfMonoid(F);
+      newRel := Product(List(extRel, x -> gens[x]));
+      M := F / [[Identity(F), newRel]];
+      return IsGroupAsSemigroup(M);
+    else
+      return false;
+    fi;
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsCancellativeSemigroup, "for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, gens;
+  rels := RelationsOfFpSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  if Length(rels) = 1 then
+    if Length(gens) = 1 then
+      return true;
+    else
+      return IsLeftCancellative(S) and IsRightCancellative(S);
+    fi;
+  else
+    TryNextMethod();
+  fi;
+end);
+
+InstallMethod(IsCancellativeSemigroup, "for a finitely presented one relator monoid",
+[IsFpMonoid],
+function(S)
+  local rels, gens, extRel, F, T, newRels;
+  rels := RelationsOfFpMonoid(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    if Length(rels[1]) = 0 or Length(rels[2]) = 0 then
+      return IsEmbeddableInGroup(S);
+    else
+      extRel := List(rels, x -> LetterRepAssocWord(x));
+      gens := Unique(Concatenation(extRel));
+      F := FreeSemigroup(Length(gens));
+      gens := GeneratorsOfSemigroup(F);
+      newRels := List(extRel, x -> Product(x, y -> gens[y]));
+      T := F / [newRels];
+      return IsCancellativeSemigroup(T);
+    fi;
+  fi;
+  TryNextMethod();
+end);
+
+# InstallMethod(IsMinRSemigroup, "for a one relator finitely presented monoid",
+# [IsFpMonoid],
+# function(S)
+#   local rels;
+#   rels := RelationsOfFpMonoid(S);
+#   if Length(rels) = 1 then
+#     return IsFinite(S);
+#   fi;
+#   TryNextMethod();
+# end);
+
+InstallMethod(IsMinRSemigroup, "for a one relator finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, extRel, gens, F, newRels, T;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    extRel := List(rels, x -> LetterRepAssocWord(x));
+    gens := GeneratorsOfSemigroup(S);
+    F := FreeMonoid(Length(gens));
+    gens := GeneratorsOfMonoid(F);
+    newRels := List(extRel, x -> Product(x, y -> gens[y]));
+    T := F / [newRels];
+    return IsMinRSemigroup(T);
+  fi;
+  TryNextMethod();
+end);
+
+# InstallMethod(IsSimpleSemigroup, "for a finitely presented one relator semigroup",
+# [IsFpSemigroup],
+# function(S)
+#   local rels;
+#   rels := RelationsOfFpSemigroup(S);
+#   if Length(rels) = 1 then
+#     return IsSurjectiveSemigroup(S);
+#   else
+#     TryNextMethod();
+#   fi;
+# end);
+
+# InstallMethod(IsBisimpleSemigroup, "for a finitely presented one relator semigroup",
+# [IsFpSemigroup],
+# function(S)
+#   local rels;
+#   rels := RelationsOfFpSemigroup(S);
+#   if Length(rels) = 1 then
+#     return IsSurjectiveSemigroup(S);
+#   else
+#     TryNextMethod();
+#   fi;
+# end);
+
+InstallMethod(IsProperDirectProductOfSemigroups, "for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, extRels, order;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    if IsSurjectiveSemigroup(S) then
+      rels := rels[1];
+      order := Length(rels[PositionMaximum(rels, x -> Length(x))]) - 1;
+      return not IsPrime(order);
+    else
+      return false;
+    fi;
+  else
+    TryNextMethod();
+  fi;
+end);
+
+InstallMethod(IsProperFreeProductOfSemigroups, "for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, gens, rel1, rel2, repGens, temp;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    gens := GeneratorsOfSemigroup(S);
+    repGens := [1 .. Length(gens)];
+    rel1 := LetterRepAssocWord(rels[1]);
+    rel2 := LetterRepAssocWord(rels[2]);
+    if Length(rel1) < Length(rel2) then
+      temp := rel1;
+      rel1 := rel2;
+      rel2 := temp;
+    fi;
+    if Length(Unique(Concatenation(rel1, rel2))) <> Length(gens) then
+      return true;
+    fi;
+    if Length(gens) > 2 and
+      ForAll(Unique(rel2),
+      rel -> rel in Difference(repGens, Unique(rel1))) then
+      return true;
+    fi;
+    if rels[1] = rels[2] and Length(gens) > 1 then
+      return true;
+    fi;
+    return false;
+  else
+    TryNextMethod();
+  fi;
+end);
+
+InstallMethod(HasIdempotents, "for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+   local rels, extRel1, extRel2;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    if Length(rels[1]) > Length(rels[2]) then
+      rels := [rels[2], rels[1]];
+    fi;
+    extRel1 := LetterRepAssocWord(rels[1]);
+    extRel2 := LetterRepAssocWord(rels[2]);
+    return IsGroupAsSemigroup(S) or (not IsLeftCancellative(S) and not
+            IsRightCancellative(S) and ForAll([1 .. Length(extRel1)],
+            x -> extRel1[x] = extRel2[x] and 
+            extRel1[x] = extRel2[Length(extRel2) - Length(extRel1) + x - 1]));
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsSemigroupWithMultiplicativeZero,
+"for a finitely presented one relator semigroup",
+[IsSemigroup],
+function(S)
+  return MultiplicativeZero(S) <> fail;
+end);
+
+InstallMethod(IsLeftCancellative,
+"for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    return LetterRepAssocWord(rels[1])[1] <> LetterRepAssocWord(rels[2])[1];
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsRightCancellative,
+"for a finitely presented one relator semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, rel1, rel2;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    rel1 := LetterRepAssocWord(rels[1]);
+    rel2 := LetterRepAssocWord(rels[2]);
+    return rel1[Length(rel1)] <> rel2[Length(rel2)];
+  fi;
+  TryNextMethod();
+end);
+
+# Perhaps not worth declaring as property, will likely never be used outside of
+# properties.gd, but makes installing several properties much cleaner
+InstallMethod(SEMIGROUPS_IsOneRelationSemigroup,
+"for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  return Length(RelationsOfFpSemigroup(S) = 1);
+end);
+
+InstallMethod(SEMIGROUPS_IsOneRelationMonoid,
+"for a finitely presented monoid",
+[IsFpMonoid],
+function(S)
+  return Length(RelationsOfFpMonoid(S) = 1);
+end);

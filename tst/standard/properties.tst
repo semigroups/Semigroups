@@ -1933,6 +1933,84 @@ gap> S := FullTransformationMonoid(3);;
 gap> IsSurjectiveSemigroup(S);
 true
 
+# properties: IsSurjectiveSemigroup, for a one-relation semigroup, 1
+gap> F := FreeSemigroup(1);
+gap> S := F / [[F.1, F.1 ^ 5]];
+gap> IsSurjectiveSemigroup(S);
+true
+gap> S := F / [[F.1 ^ 2, F.1 ^ 6]];
+gap> IsSurjectiveSemigroup(S);
+false
+
+# properties: IsFinite, for a one-relation semigroup, 1
+gap> F := FreeSemigroup(1);
+gap> S := F / [[F.1 ^ 3, F.1 ^ 6]];
+gap> IsFinite(S);
+true
+gap> S := F / [[F.1 ^ 2, F.1 ^ 2]];
+gap> IsFinite(S);
+false
+gap> F := FreeSemigroup(2);
+gap> S := F / [[F.1 ^ 2, F.1 * F.2 ^ 3]];
+gap> IsFinite(S);
+false
+
+# properties: IsFinite, for a one-relation monoid, 1
+gap> F := FreeMonoid(1);
+gap> S := F / [[F.1 ^ 3, F.1 ^ 6]];
+gap> IsFinite(S);
+true
+gap> S := F / [[F.1 ^ 2, F.1 ^ 2]];
+gap> IsFinite(S);
+false
+gap> F := FreeMonoid(2);
+gap> S := F / [[F.1 ^ 2, F.1 * F.2 ^ 3]];
+gap> IsFinite(S);
+false
+
+# properties: ISGroupAsSemigroup, for a one-relation semigroup, 1
+gap> F := FreeSemigroup(1);
+gap> S := F / [[F.1, F.1 ^ 4]];
+gap> IsGroupAsSemigroup(S);
+true
+gap> S := F / [[F.1 ^ 4, F.1]];
+gap> IsGroupAsSemigroup(S);
+true
+gap> S := F / [[F.1 ^ 2, F.1 ^ 7]];
+gap> IsGroupAsSemigroup(S);
+false
+gap> F := FreeSemigroup(3);
+gap> S := F / [[F.1, F.1 ^ 6]];
+gap> IsGroupAsSemigroup(S);
+false
+
+# properties: IsGroupAsSemigroup, for a one-relation monoid, 1
+gap> F := FreeMonoid(1);
+gap> S := F / [[MultiplicativeNeutralElement(F), F.1 ^ 3]];
+gap> IsGroupAsSemigroup(S);
+true
+gap> S := F / [[F.1 ^ 3, MultiplicativeNeutralElement(F)]];
+gap> IsGroupAsSemigroup(S);
+true
+gap> S := F / [[F.1, F.1 ^ 7]];
+gap> IsGroupAsSemigroup(S);
+false
+gap> F := FreeMonoid(3);
+gap> S := F / [[MultiplicativeNeutralElement(F), F.1 ^ 6]];
+gap> IsGroupAsSemigroup(S);
+false
+
+# properties: IsEmbeddableInGroup, for a one-relation semigroup, 1
+gap> F := FreeSemigroup(1);
+gap> S := F / [[F.1, F.1 ^ 6]];
+gap> IsEmbeddableInGroup(S);
+true
+gap> F := FreeSemigroup(3);
+gap> S := F / [[F.1 * F.2 ^ 2, F.3 * F.1]];
+
+
+
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);
@@ -1942,6 +2020,7 @@ gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(gens);
 gap> Unbind(x);
+gap> Unbind(F);
 
 #
 gap> SEMIGROUPS.StopTest();

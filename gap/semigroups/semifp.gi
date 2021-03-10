@@ -801,3 +801,35 @@ function(gens, inputstring)
     return Concatenation(output);
 end);
 
+InstallMethod(MultiplicativeZero,
+"for a one-relation finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, gens;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    rels := rels[1];
+    gens := GeneratorsOfSemigroup(S);
+    if Length(gens) = 1 and
+      ((Length(rels[1]) = Length(rels[1]) + 1) or
+      (Length(rels[2]) = Length(rels[1]) + 1)) then
+      return gens[1]^Minimum(rels, x -> Length(x));
+    fi;
+  fi;
+  return fail;
+end);
+
+InstallMethod(MultiplicativeNeutralElement,
+"for a one-relation finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  local rels, gen;
+  rels := RelationsOfFpSemigroup(S);
+  if Length(rels) = 1 then
+    if IsGroupAsSemigroup(S) then
+      gen := GeneratorsOfSemigroup(S)[1];
+      return gen ^ (Maximum(List(rels, x -> Length(x)) - 1));
+    fi;
+  fi;
+  return fail;
+end);
