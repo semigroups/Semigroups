@@ -1219,15 +1219,15 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   end;
 
   bt := function(i) 
-    local stab, use_stab, orbs, reps, consistent, W, s, j;
+    local stab, big_stab, big_reps, orbs, reps, consistent, W, s, j;
     if i > 1 then
       stab := stabs[i - 1];
     else
       stab := aut;
     fi;
-    use_stab := Size(stab) > stab_thresh and
-                Size(omega_stack[i][i]) > reps_thresh;
-    if use_stab then
+    big_stab := Size(stab) > stab_thresh;
+    big_reps := Size(omega_stack[i][i]) > reps_thresh;
+    if big_stab and big_reps then
       orbs := Orbits(stab, omega_stack[i][i]);
       reps := List(orbs, x -> x[1]);
 #      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
@@ -1254,10 +1254,15 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
           fi;
         od;
         if consistent then
-          if use_stab then
-            stabs[i] := Stabiliser(stab, s);
-#            Print("Stab size: ", Size(stabs[i]), "\n");
-            coset_reps[i] := RightTransversal(stab, stabs[i]);
+          if big_stab then
+            if Size(reps) = 1 then
+              stabs[i] := stab;
+              coset_reps[i] := [()];
+            else
+              stabs[i] := Stabiliser(stab, s);
+              coset_reps[i] := RightTransversal(stab, stabs[i]);
+            fi;
+#             Print("Stab size: ", Size(stabs[i]), "\n");
           else
             stabs[i] := [];
             coset_reps[i] := [];
