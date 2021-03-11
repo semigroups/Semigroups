@@ -1231,18 +1231,18 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
     if big_stab then
       orbs := Orbits(stab, omega_stack[i][i]);
       reps := List(orbs, x -> x[1]);
-#      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
-#            "\n");
-#      Print("orbits have size: ", List(orbs, Size));
     else
       reps := omega_stack[i][i];
     fi;
     for s in reps do
-#      considered[i][s] := true;
       lambda[i] := s;
       if i = m then
         if big_stab then
+          # this is necessary in theory
+          stabs[i] := Stabiliser(stab, s);
           coset_reps[i] := RightTransversal(stab, Stabiliser(stab, s));
+        else
+          stabs[i] := [];
         fi;
         add_stabilised_lambda();
       else
@@ -1265,7 +1265,6 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
               stabs[i] := Stabiliser(stab, s);
               coset_reps[i] := RightTransversal(stab, stabs[i]);
             fi;
-#             Print("Stab size: ", Size(stabs[i]), "\n");
           else
             stabs[i] := [];
             coset_reps[i] := [];
@@ -1274,7 +1273,6 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
         fi;
       fi;
     od;
-#    Print("backtracking \n");
   end;
 
   omega_stack := [possiblefgenvals];
@@ -1283,22 +1281,13 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   nr := 0;
   bt(1);
 #  Apply(out, x -> LeftTranslationNC(L, x));
-#  for i in [1 .. m] do
-#    Print("Considered ",
-#          Number(omega_stack[1][i], j -> considered[i][j]),
-#          "/",
-#          Size(omega_stack[1][i]),
-#          " values in U_",
-#          i,
-#          "\n");
-#  od;
   return [out, nr];
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
   local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
   stab_thresh, reps_thresh, coset_reps, multtable, data, U, aut,
-  add_stabilised_lambda, bt, lambda, out, considered, i;
+  add_stabilised_lambda, bt, lambda, out, nr, i;
 
   S           := UnderlyingSemigroup(L);
   n           := Size(S);
@@ -1308,7 +1297,7 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
   omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
   stabs := [];
-  stabs[m] := [];
+  stabs[m + 1] := [];
   stab_thresh := 10;
   reps_thresh := 10;
   coset_reps := [];
@@ -1322,28 +1311,26 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
   add_stabilised_lambda := function()
     local stab_depth, it, mult;
     stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
-    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
-    while not IsDoneIterator(it) do
-      mult := Product(NextIterator(it));
-      Add(out, OnTuples(lambda, mult));
-    od;
+    nr := nr + Product(List(coset_reps{[1 .. stab_depth]}, Length));
+    Add(out, ShallowCopy(lambda));
+#    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
+#    while not IsDoneIterator(it) do
+#      mult := Product(NextIterator(it));
+#      Add(out, OnTuples(lambda, mult));
+#    od;
   end;
 
   bt := function(i) 
-    local stab, use_stab, orbs, reps, consistent, W, s, j;
+    local stab, big_stab, big_reps, orbs, reps, consistent, W, s, j;
     if i > 1 then
       stab := stabs[i - 1];
     else
       stab := aut;
     fi;
-    use_stab := Size(stab) > stab_thresh and
-                Size(omega_stack[i][i]) > reps_thresh;
-    if use_stab then
+    big_stab := Size(stab) > stab_thresh;
+    if big_stab then
       orbs := Orbits(stab, omega_stack[i][i]);
       reps := List(orbs, x -> x[1]);
-#      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
-#            "\n");
-#      Print("orbits have size: ", List(orbs, Size));
     else
       reps := omega_stack[i][i];
     fi;
@@ -1354,11 +1341,16 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
         od;
         continue;
       fi;
-#      considered[i][s] := true;
       lambda[i] := s;
       if i = m then
-#        add_stabilised_lambda();
-        Add(out, ShallowCopy(lambda));
+        if big_stab then
+          # this is necessary in theory
+          stabs[i] := Stabiliser(stab, s);
+          coset_reps[i] := RightTransversal(stab, Stabiliser(stab, s));
+        else
+          stabs[i] := [];
+        fi;
+        add_stabilised_lambda();
       else
         consistent := true;
         omega_stack[i + 1] := [];
@@ -1371,10 +1363,14 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
           fi;
         od;
         if consistent then
-          if use_stab then
-            stabs[i] := Stabiliser(stab, s);
-#            Print("Stab size: ", Size(stabs[i]), "\n");
-            coset_reps[i] := RightTransversal(stab, stabs[i]);
+          if big_stab then
+            if Size(reps) = 1 then
+              stabs[i] := stab;
+              coset_reps[i] := [()];
+            else
+              stabs[i] := Stabiliser(stab, s);
+              coset_reps[i] := RightTransversal(stab, stabs[i]);
+            fi;
           else
             stabs[i] := [];
             coset_reps[i] := [];
@@ -1383,25 +1379,15 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
         fi;
       fi;
     od;
-#    Print("backtracking \n");
   end;
 
   omega_stack := [possiblefgenvals];
   lambda := [];
   out := [];
-#  considered := List([1 .. m], x -> BlistList([1 .. n], []));
+  nr := 0;
   bt(1);
 #  Apply(out, x -> LeftTranslationNC(L, x));
-#  for i in [1 .. m] do
-#    Print("Considered ",
-#          Number(omega_stack[1][i], j -> considered[i][j]),
-#          "/",
-#          Size(omega_stack[1][i]),
-#          " values in U_",
-#          i,
-#          "\n");
-#  od;
-  return out;
+  return [out, nr];
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack := function(L)
