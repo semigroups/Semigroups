@@ -1181,7 +1181,7 @@ end;
 SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
   stab_thresh, reps_thresh, coset_reps, multtable, data, U, aut,
-  add_stabilised_lambda, bt, lambda, out, considered, i;
+  add_stabilised_lambda, bt, lambda, out, nr, i;
 
   S           := UnderlyingSemigroup(L);
   n           := Size(S);
@@ -1211,11 +1211,13 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   add_stabilised_lambda := function()
     local stab_depth, it, mult;
     stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
-    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
-    while not IsDoneIterator(it) do
-      mult := Product(NextIterator(it));
-      Add(out, OnTuples(lambda, mult));
-    od;
+    nr := nr + Product(List(coset_reps{[1 .. stab_depth]}, Length));
+    Add(out, ShallowCopy(lambda));
+#    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
+#    while not IsDoneIterator(it) do
+#      mult := Product(NextIterator(it));
+#      Add(out, OnTuples(lambda, mult));
+#    od;
   end;
 
   bt := function(i) 
@@ -1240,8 +1242,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
 #      considered[i][s] := true;
       lambda[i] := s;
       if i = m then
-#        add_stabilised_lambda();
-        Add(out, ShallowCopy(lambda));
+        add_stabilised_lambda();
       else
         consistent := true;
         omega_stack[i + 1] := [];
@@ -1277,7 +1278,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   omega_stack := [possiblefgenvals];
   lambda := [];
   out := [];
-  considered := List([1 .. m], x -> BlistList([1 .. n], []));
+  nr := 0;
   bt(1);
 #  Apply(out, x -> LeftTranslationNC(L, x));
 #  for i in [1 .. m] do
@@ -1289,7 +1290,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
 #          i,
 #          "\n");
 #  od;
-  return out;
+  return nr;
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
