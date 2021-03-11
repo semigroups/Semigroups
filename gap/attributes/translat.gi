@@ -1213,6 +1213,8 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
     stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
     nr := nr + Product(List(coset_reps{[1 .. stab_depth]}, Length));
     Add(out, ShallowCopy(lambda));
+    Print("lambda: ", lambda, ", nr_mults: ",  Product(List(coset_reps{[1 ..
+    stab_depth]}, Length)), "\n");
 #    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
 #    while not IsDoneIterator(it) do
 #      mult := Product(NextIterator(it));
