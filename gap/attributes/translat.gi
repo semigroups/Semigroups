@@ -1228,8 +1228,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
       stab := aut;
     fi;
     big_stab := Size(stab) > stab_thresh;
-    big_reps := Size(omega_stack[i][i]) > reps_thresh;
-    if big_stab and big_reps then
+    if big_stab then
       orbs := Orbits(stab, omega_stack[i][i]);
       reps := List(orbs, x -> x[1]);
 #      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
@@ -1290,7 +1289,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
 #          i,
 #          "\n");
 #  od;
-  return nr;
+  return [out, nr];
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
