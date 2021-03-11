@@ -4,9 +4,12 @@
   </Heading>
 
   This chapter describes the functions in &Semigroups; for dealing with free
-  inverse semigroups and free bands. This part of the manual and the functions
-  described herein were written by Julius Jonu&#353;as.<P/>
-
+  inverse semigroups and free bands. Sections 10.1 to 10.5 in this chapter,
+  and the functions described therein, were written by Julius Jonu&#353;as.
+  Section 10.6 was written by Maria Tsalakou and Murray Whyte, and Section
+  10.7 was written by Luke Elliott.
+  <P/>
+  
   <Section>
     <Heading>
       Free inverse semigroups
@@ -192,5 +195,17 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     <#Include Label = "RandomWord" >
     <#Include Label = "StandardiseWord" >
     <#Include Label = "StringToWord" >
+  </Section>
+
+  <Section>
+    <Heading> Helper functions for creating semigroup and monoid presentations
+    </Heading>
+    This section describes operations implemented in &Semigroups; that are
+    designed to interact with standard &GAP; methods for creating finitely
+    presented semigroups and monoids (see <Ref
+    Chap="Finitely Presented Semigroups and Monoids"
+    BookName="ref"/>).
+
+    <#Include Label = "ParseRelations">
   </Section>
 </Chapter>

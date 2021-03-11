@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="ParseRelations">
 <ManSection>
-  <Oper Name = "ParseRelations" Arg = "gens, rels"/>
+  <Oper Name="ParseRelations" Arg="gens, rels"/>
   <Returns>A list of pairs of semigroup elements.</Returns>
   <Description>
     <C>ParseRelations</C> converts a string describing relations for a
@@ -21,10 +21,9 @@
     function.
     <P/>
 
-    <A/>gens<A/> must be a list of generators for a free semigroup, each being
-    a single English letter (in upper or lower case). <A/>rels<A/> must be
+    <A>gens</A> must be a list of generators for a free semigroup, each being
+    a single English letter (in upper or lower case). <A>rels</A> must be
     string that lists the equalities desired.
-    <P/>
 
     <Example><![CDATA[
 gap> f := FreeSemigroup("x", "y", "z");;                           
@@ -43,4 +42,3 @@ gap> f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");
   </Description>
 </ManSection>
 <#/GAPDoc>
-
