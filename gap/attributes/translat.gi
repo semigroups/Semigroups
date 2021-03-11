@@ -180,8 +180,8 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   local n, gens, m, genspos, multtable, multsets, r_classes, r_class_map,
   r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
   right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s,
-  transposed_multtable, transposed_multsets, U, Ui, keep, B, sb, r, i, j, a, t,
-  u;
+  transposed_multtable, transposed_multsets, U, Ui, bad, keep, B, sb, r, i, j,
+  a, t, u;
 
   n           := Size(S);
   gens        := GeneratorsOfSemigroup(S);
@@ -275,21 +275,29 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   # compute intersection over a of the sets U_{i, a} from the paper
   U := [];
   for i in [1 .. m] do
-    Ui := ListWithIdenticalEntries(n, true);
-    for a in multsets[genspos[i]] do
-      keep := ListWithIdenticalEntries(n, false);
-      seen := ListWithIdenticalEntries(n, false);
-      for s in [1 .. n] do
-        if keep[s] then
-          continue;
-        fi;
+    Ui := BlistList([1 .. n], []);
+    bad := [];
+    for s in [1 .. n] do
+      #if Ui[s] or ForAny(transposed_multsets[s], x -> x in bad) then
+      #  continue;
+      #fi;
+      if Ui[s] then 
+        continue;
+      fi;
+      keep := true;
+      for a in multsets[genspos[i]] do
         B := left_inverses_by_gen[a][i];
         sb := multtable[s][B[1]];
-        if ForAll(B, b -> multtable[s][b] = sb) then
-            UniteBlistList([1 .. n], keep, transposed_multsets[s]);
+        if multtable[s]{B} <> ListWithIdenticalEntries(Size(B), sb) then
+          keep := false;
+#          AddSet(bad, s);
+          break;
         fi;
       od;
-      IntersectBlist(Ui, keep);
+      if keep then
+        UniteBlistList([1 .. n], Ui, transposed_multsets[s]);
+      fi;
+#      Print("Computing U_", i, ", has size: ", SizeBlist(Ui), "\n");
     od;
     U[i] := ListBlist([1 .. n], Ui);
   od;
@@ -301,6 +309,118 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   r.right_intersect_multipliers := right_intersect_multipliers;
   r.right_inverses := right_inverses;
   r.U := U;
+  r.V := List([1 .. m], j -> List([1 .. n], a -> []));
+  r.W := List([1 .. m], i -> List([1 .. m], j -> []));
+  return r;
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackDataNoU := function(S)
+  local n, gens, m, genspos, multtable, multsets, r_classes, r_class_map,
+  r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
+  right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s,
+  transposed_multtable, transposed_multsets, U, Ui, bad, keep, B, sb, r, i, j,
+  a, t, u;
+
+  n           := Size(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+  multsets := List(multtable, Set);
+
+  r_classes := RClasses(S);
+  r_class_map := [];
+ 
+  for i in [1 .. Length(r_classes)] do
+    for s in r_classes[i] do
+      r_class_map[PositionCanonical(S, s)] := i;
+    od;
+  od;
+  
+  r_class_inv_map := List(r_classes,
+                          x -> PositionCanonical(S, Representative(x)));
+  r_classes_below := List([1 .. m], i -> Set(r_class_map{multsets[genspos[i]]}));
+  max_R_intersects := List([1 .. m], x -> []);
+  
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      intersect := Intersection(r_classes_below[i], r_classes_below[j]);
+      reps := r_class_inv_map{intersect};
+
+      max_R_intersects[i][j] := Filtered(reps,
+                                         x -> not ForAny(reps, 
+                                                         y -> x <> y and
+                                                           x in multsets[y]));
+
+      max_R_intersects[j][i] := max_R_intersects[i][j];
+    od;
+  od;
+
+  # compute the right multipliers to the intersects from the gens
+  right_intersect_multipliers := List([1 .. m], x -> []);
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for a in max_R_intersects[i][j] do
+        if not IsBound(right_intersect_multipliers[i][a]) then
+          right_intersect_multipliers[i][a] := Positions(multtable[genspos[i]], a);
+        fi;
+        if not IsBound(right_intersect_multipliers[j][a]) then
+          right_intersect_multipliers[j][a] := Positions(multtable[genspos[j]], a);
+        fi;
+      od;
+    od;
+  od;
+
+  # for all s in S, store the elements t such that gens[i] * t = s for each i
+  left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
+  for i in [1 .. m] do
+    for t in [1 .. n] do
+      Add(left_inverses_by_gen[multtable[genspos[i]][t]][i], t);
+    od;
+  od;
+
+  # for each t in the left inverses of some a in max_R_intersects[i][j] by 
+  # gens[j], compute the right inverses of each s in S under t
+  right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n, fail));
+  seen := List([1 .. n], x -> false);
+  for i in [1 .. m] do
+    for j in [1 .. m] do
+      if i = j then
+        continue;
+      fi;
+      for a in max_R_intersects[i][j] do
+        for t in left_inverses_by_gen[a][j] do
+          # don't repeat the calculation if we've already done it for t!
+          if not seen[t] then
+            seen[t] := true;
+            for u in [1 .. n] do
+              s := multtable[u][t];
+              if right_inverses[s][t] = fail then
+                right_inverses[s][t] := [];
+              fi;
+              Add(right_inverses[s][t], u);
+            od;
+          fi;
+        od;
+      od;
+    od;
+  od;
+
+  transposed_multtable := TransposedMat(multtable);
+  transposed_multsets  := List(transposed_multtable, Set);
+
+  r := rec();
+  r.genspos := genspos;
+  r.left_inverses_by_gen := left_inverses_by_gen;
+  r.max_R_intersects := max_R_intersects;
+  r.multsets := multsets;
+  r.multtable := multtable;
+  r.right_intersect_multipliers := right_intersect_multipliers;
+  r.right_inverses := right_inverses;
+  r.transposed_multsets := transposed_multsets;
+  r.U := List([1 .. m], i -> BlistList([1 .. n], []));
+  r.U_considered := List([1 .. m], i -> BlistList([1 .. n], []));
   r.V := List([1 .. m], j -> List([1 .. n], a -> []));
   r.W := List([1 .. m], i -> List([1 .. m], j -> []));
   return r;
@@ -493,9 +613,39 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
   r.multtableS := multtableS;
   r.right_inverses := right_inverses;
   r.U := U;
+  r.U_considered := List([1 .. m], i -> BlistList([1 .. n], []));
   r.V := List([1 .. m], j -> List([1 .. n], a -> []));
   r.W := List([1 .. m], i -> List([1 .. m], j -> []));
   return r;
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackUContains := function(data, i, s)
+  local Ui, Ui_considered, n, multtable, keep, B, sb, a;
+  Ui := data.U[i];
+  Ui_considered := data.U_considered[i];
+  n := Length(Ui);
+
+  if Ui_considered[s] then
+    return Ui[s];
+  fi;
+
+  multtable := data.multtable;
+
+  keep := true;
+  for a in data.multsets[data.genspos[i]] do
+    B := data.left_inverses_by_gen[a][i];
+    sb := multtable[s][B[1]];
+    if multtable[s]{B} <> ListWithIdenticalEntries(Size(B), sb) then
+      keep := false;
+      break;
+    fi;
+  od;
+  if keep then
+    UniteBlistList([1 .. n], Ui, data.transposed_multsets[s]);
+    UniteBlistList([1 .. n], Ui_considered, data.transposed_multsets[s]);
+  fi;
+  Ui_considered[s] := true;
+  return keep;
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
@@ -1030,8 +1180,8 @@ end;
 
 SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
-  stab_thresh, coset_reps, multtable, data, U, aut, add_stabilised_lambda, bt,
-  lambda, out, i;
+  stab_thresh, reps_thresh, coset_reps, multtable, data, U, aut,
+  add_stabilised_lambda, bt, lambda, out, considered, i;
 
   S           := UnderlyingSemigroup(L);
   n           := Size(S);
@@ -1042,7 +1192,8 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
   stabs := [];
   stabs[m] := [];
-  stab_thresh := 20;
+  stab_thresh := 10;
+  reps_thresh := 10;
   coset_reps := [];
 
   multtable := MultiplicationTableWithCanonicalPositions(S);
@@ -1056,7 +1207,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   for i in [1 .. m] do
     IntersectSet(possiblefgenvals[i], U[i]);
   od;
-  
+
   add_stabilised_lambda := function()
     local stab_depth, it, mult;
     stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
@@ -1068,30 +1219,29 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   end;
 
   bt := function(i) 
-    local seen, stab, use_stab, reps, orb, consistent, W, s, j;
+    local stab, use_stab, orbs, reps, consistent, W, s, j;
     if i > 1 then
       stab := stabs[i - 1];
     else
       stab := aut;
     fi;
-    use_stab := Size(stab) > stab_thresh;
+    use_stab := Size(stab) > stab_thresh and
+                Size(omega_stack[i][i]) > reps_thresh;
     if use_stab then
-      seen := BlistList([1 .. n], []);
-      reps := [];
-      for s in omega_stack[i][i] do
-        if not seen[s] then
-          Add(reps, s);
-          orb := Orbit(stab, s);
-          UniteBlistList([1 .. n], seen, orb);
-        fi;
-      od;
+      orbs := Orbits(stab, omega_stack[i][i]);
+      reps := List(orbs, x -> x[1]);
+#      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
+#            "\n");
+#      Print("orbits have size: ", List(orbs, Size));
     else
       reps := omega_stack[i][i];
     fi;
     for s in reps do
+#      considered[i][s] := true;
       lambda[i] := s;
       if i = m then
-        add_stabilised_lambda();
+#        add_stabilised_lambda();
+        Add(out, ShallowCopy(lambda));
       else
         consistent := true;
         omega_stack[i + 1] := [];
@@ -1106,7 +1256,8 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
         if consistent then
           if use_stab then
             stabs[i] := Stabiliser(stab, s);
-            coset_reps[i] := List(RightCosets(stab, stabs[i]), Representative);
+#            Print("Stab size: ", Size(stabs[i]), "\n");
+            coset_reps[i] := RightTransversal(stab, stabs[i]);
           else
             stabs[i] := [];
             coset_reps[i] := [];
@@ -1115,13 +1266,133 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
         fi;
       fi;
     od;
+#    Print("backtracking \n");
   end;
 
   omega_stack := [possiblefgenvals];
   lambda := [];
   out := [];
+  considered := List([1 .. m], x -> BlistList([1 .. n], []));
   bt(1);
 #  Apply(out, x -> LeftTranslationNC(L, x));
+#  for i in [1 .. m] do
+#    Print("Considered ",
+#          Number(omega_stack[1][i], j -> considered[i][j]),
+#          "/",
+#          Size(omega_stack[1][i]),
+#          " values in U_",
+#          i,
+#          "\n");
+#  od;
+  return out;
+end;
+
+SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
+  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
+  stab_thresh, reps_thresh, coset_reps, multtable, data, U, aut,
+  add_stabilised_lambda, bt, lambda, out, considered, i;
+
+  S           := UnderlyingSemigroup(L);
+  n           := Size(S);
+  gens        := GeneratorsOfSemigroup(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+  stabs := [];
+  stabs[m] := [];
+  stab_thresh := 10;
+  reps_thresh := 10;
+  coset_reps := [];
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+
+  data := SEMIGROUPS.LeftTranslationsBacktrackDataNoU(S);
+
+  aut := SEMIGROUPS.LeftAutoTranslations(multtable, genspos);
+
+  add_stabilised_lambda := function()
+    local stab_depth, it, mult;
+    stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
+    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
+    while not IsDoneIterator(it) do
+      mult := Product(NextIterator(it));
+      Add(out, OnTuples(lambda, mult));
+    od;
+  end;
+
+  bt := function(i) 
+    local stab, use_stab, orbs, reps, consistent, W, s, j;
+    if i > 1 then
+      stab := stabs[i - 1];
+    else
+      stab := aut;
+    fi;
+    use_stab := Size(stab) > stab_thresh and
+                Size(omega_stack[i][i]) > reps_thresh;
+    if use_stab then
+      orbs := Orbits(stab, omega_stack[i][i]);
+      reps := List(orbs, x -> x[1]);
+#      Print("omega_stack[", i, "][", i, "] has size: ", Size(omega_stack[i][i]),
+#            "\n");
+#      Print("orbits have size: ", List(orbs, Size));
+    else
+      reps := omega_stack[i][i];
+    fi;
+    for s in reps do
+      if not SEMIGROUPS.LeftTranslationsBacktrackUContains(data, i, s) then
+        for j in [1 .. i] do
+          RemoveSet(omega_stack[j][i], s);
+        od;
+        continue;
+      fi;
+#      considered[i][s] := true;
+      lambda[i] := s;
+      if i = m then
+#        add_stabilised_lambda();
+        Add(out, ShallowCopy(lambda));
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
+          if IsEmpty(omega_stack[i + 1][j]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          if use_stab then
+            stabs[i] := Stabiliser(stab, s);
+#            Print("Stab size: ", Size(stabs[i]), "\n");
+            coset_reps[i] := RightTransversal(stab, stabs[i]);
+          else
+            stabs[i] := [];
+            coset_reps[i] := [];
+          fi;
+          bt(i + 1);
+        fi;
+      fi;
+    od;
+#    Print("backtracking \n");
+  end;
+
+  omega_stack := [possiblefgenvals];
+  lambda := [];
+  out := [];
+#  considered := List([1 .. m], x -> BlistList([1 .. n], []));
+  bt(1);
+#  Apply(out, x -> LeftTranslationNC(L, x));
+#  for i in [1 .. m] do
+#    Print("Considered ",
+#          Number(omega_stack[1][i], j -> considered[i][j]),
+#          "/",
+#          Size(omega_stack[1][i]),
+#          " values in U_",
+#          i,
+#          "\n");
+#  od;
   return out;
 end;
 
