@@ -4,13 +4,21 @@
   </Heading>
 
   This chapter describes the functions in &Semigroups; for dealing with free
-  inverse semigroups and free bands. Sections 10.1 to 10.5 in this chapter,
+  inverse semigroups and free bands. Sections
+  <Ref Sect="Free inverse semigroups" Style="Number"/>,
+  <Ref Sect="Displaying free inverse semigroup elements" Style="Number"/>,
+  <Ref Sect="Operators and operations for free inverse semigroup elements"
+  Style="Number"/>,
+  <Ref Sect="Free bands" Style="Number"/>, and
+  <Ref Sect="Operators and operations for free band elements" Style="Number"/>,
   and the functions described therein, were written by Julius Jonu&#353;as.
-  Section 10.6 was written by Maria Tsalakou and Murray Whyte, and Section
-  10.7 was written by Luke Elliott.
+  Section <Ref Sect="Words and strings in finitely presented semigroups"
+  Style="Number"/> was written by Maria Tsalakou and Murray Whyte, and Section
+  <Ref Sect="Helper functions for creating semigroup and monoid presentations"
+  Style="Number"/> was written by Luke Elliott.
   <P/>
   
-  <Section>
+  <Section Label="Free inverse semigroups">
     <Heading>
       Free inverse semigroups
     </Heading>
@@ -67,7 +75,7 @@
     <#Include Label = "IsFreeInverseSemigroupElementCollection">
   </Section>
 
-  <Section>
+  <Section Label="Displaying free inverse semigroup elements">
     <Heading> Displaying free inverse semigroup elements </Heading>
     There is a way to change how &GAP; displays free inverse semigroup
     elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
@@ -103,7 +111,8 @@ gap> S.1 * S.2;
 x1x2x2^-1x1^-1x1x2]]></Example>
     </Section>
 
-    <Section>
+    <Section
+     Label="Operators and operations for free inverse semigroup elements">
       <Heading>Operators and operations for free inverse semigroup elements
       </Heading>
       <List>
@@ -129,7 +138,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
       <#Include Label = "MinimalWord">
     </Section>
 
-  <Section>
+  <Section Label="Free bands">
     <Heading>
       Free bands
     </Heading>
@@ -161,7 +170,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     
   </Section>
 
-  <Section>
+  <Section Label="Operators and operations for free band elements">
     <Heading>Operators and operations for free band elements
     </Heading>
     <List>
@@ -185,7 +194,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
   </Section>
 
 
-  <Section>
+  <Section Label="Words and strings in finitely presented semigroups">
     <Heading> Words and strings in finitely presented semigroups
     </Heading>
     This section contains various methods for dealing with words, which for
@@ -197,7 +206,8 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     <#Include Label = "StringToWord" >
   </Section>
 
-  <Section>
+  <Section
+   Label="Helper functions for creating semigroup and monoid presentations">
     <Heading> Helper functions for creating semigroup and monoid presentations
     </Heading>
     This section describes operations implemented in &Semigroups; that are
