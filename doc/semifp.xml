@@ -15,8 +15,8 @@
   <Description>
     <C>ParseRelations</C> converts a string describing relations for a
     semigroup to the list of pairs of semigroup elements it represents.
-    Any white space given is ignored. The output list is then compatable
-    with other GAP functions, in the below examples we see free semigroups
+    Any white space given is ignored. The output list is then compatible
+    with other GAP functions. In the below examples we see free semigroups
     being directly quotiented by the output of the <C>ParseRelations</C>
     function.
     <P/>
