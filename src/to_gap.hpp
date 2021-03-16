@@ -550,7 +550,7 @@ namespace gapbind14 {
 
   template <typename T>
   struct to_gap<T const&,
-                std::enable_if_t<IsTransf<T>
+                std::enable_if_t<IsTransf<std::decay_t<T>>
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
                                  || std::is_same<T, HPCombi::Transf16>::value
 #endif
@@ -575,7 +575,7 @@ namespace gapbind14 {
   template <typename T>
   struct to_cpp<T,
                 std::enable_if_t<
-                    IsTransf<T>
+                    IsTransf<std::decay_t<T>>
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
                     || std::is_same<std::decay_t<T>, HPCombi::Transf16>::value
 #endif
@@ -610,7 +610,7 @@ namespace gapbind14 {
       }
 
       std::decay_t<T> result;
-      if (IsTransf<T>) {
+      if (IsTransf<std::decay_t<T>>) {
         result = std::decay_t<T>(N);
       }
       if (TNUM_OBJ(x) == T_TRANS2) {
@@ -657,7 +657,7 @@ namespace gapbind14 {
       }
     }
 
-    // Initialise the GAP transformation "t" using the C++ transformation "x".
+    // Initialise the GAP partial perm "t" using the C++ partial perm "x".
     template <typename T, typename S>
     void to_gap_pperm(S const& x, Obj t, size_t const N) {
       static_assert(
@@ -710,7 +710,7 @@ namespace gapbind14 {
   template <typename T>
   struct to_cpp<
       T,
-      std::enable_if_t<IsPPerm<T>
+      std::enable_if_t<IsPPerm<std::decay_t<T>>
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
                        || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
 #endif
@@ -780,7 +780,7 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<
       T,
-      std::enable_if_t<IsPPerm<T>
+      std::enable_if_t<IsPPerm<std::decay_t<T>>
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
                        || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
 #endif
@@ -824,7 +824,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsBipartition<T>>> {
+  struct to_cpp<T, std::enable_if_t<IsBipartition<std::decay_t<T>>>> {
     Bipartition& operator()(Obj x) const {
       if (TNUM_OBJ(x) != T_BIPART) {
         ErrorQuit("expected a bipartition, got %s", (Int) TNAM_OBJ(x), 0L);
@@ -834,7 +834,7 @@ namespace gapbind14 {
   };
 
   template <typename T>
-  struct to_gap<T, std::enable_if_t<IsBipartition<T>>> {
+  struct to_gap<T, std::enable_if_t<IsBipartition<std::decay_t<T>>>> {
     Obj operator()(Bipartition const& x) const {
       return bipart_new_obj(new Bipartition(x));
     }
@@ -845,7 +845,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
-  struct to_cpp<T, std::enable_if_t<libsemigroups::IsPBR<T>>> {
+  struct to_cpp<T, std::enable_if_t<libsemigroups::IsPBR<std::decay_t<T>>>> {
     libsemigroups::PBR operator()(Obj x) const {
       if (CALL_1ARGS(IsPBR, x) != True) {
         ErrorQuit("expected a PBR, got %s", (Int) TNAM_OBJ(x), 0L);
@@ -873,7 +873,7 @@ namespace gapbind14 {
 
   // TODO(now) this is overcomplicated, we can just use to_gap<PBR, no?
   template <typename T>
-  struct to_gap<T, std::enable_if_t<libsemigroups::IsPBR<T>>> {
+  struct to_gap<T, std::enable_if_t<libsemigroups::IsPBR<std::decay_t<T>>>> {
     Obj operator()(libsemigroups::PBR const& x) const {
       Obj result = NEW_PLIST(T_PLIST, 2 * x.degree() + 1);
       // can't use T_PLIST_TAB/HOM here because some of the subplists might be

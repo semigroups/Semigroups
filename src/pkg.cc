@@ -29,7 +29,7 @@
 #include "semigroups-debug.h"
 #include "to_gap.hpp"
 
-#include "libsemigroups/blocks.hpp"
+#include "libsemigroups/bipart.hpp"
 #include "libsemigroups/cong.hpp"
 #include "libsemigroups/fastest-bmat.hpp"
 #include "libsemigroups/fpsemi.hpp"
@@ -415,7 +415,7 @@ void TSemiObjCleanFunc(Obj o) {}
 void TBipartObjSaveFunc(Obj o) {
   Bipartition* b = bipart_get_cpp(o);
   SaveUInt4(b->degree());
-  for (auto it = b->begin(); it < b->end(); it++) {
+  for (auto it = b->cbegin(); it < b->cend(); it++) {
     SaveUInt4(*it);
   }
 }
@@ -440,7 +440,7 @@ void TBlocksObjSaveFunc(Obj o) {
     for (auto it = b->cbegin(); it < b->cend(); it++) {
       SaveUInt4(*it);
     }
-    for (auto it = b->lookup()->begin(); it < b->lookup()->end(); it++) {
+    for (auto it = b->cbegin_lookup(); it < b->cend_lookup(); it++) {
       SaveUInt1(static_cast<UInt1>(*it));
     }
   }
@@ -454,21 +454,18 @@ void TBlocksObjLoadFunc(Obj o) {
   }
   UInt4 nr_blocks = LoadUInt4();
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->reserve(deg);
+  Blocks* blocks = new Blocks(deg);
 
   for (size_t i = 0; i < deg; i++) {
-    blocks->push_back(LoadUInt4());
+    blocks->set_block(i, LoadUInt4());
   }
-
-  std::vector<bool>* lookup = new std::vector<bool>();
-  lookup->reserve(nr_blocks);
-
   for (size_t i = 0; i < nr_blocks; i++) {
-    lookup->push_back(static_cast<bool>(LoadUInt1()));
+    blocks->set_is_transverse_block(i, static_cast<bool>(LoadUInt1()));
   }
-
-  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Blocks(blocks, lookup, nr_blocks));
+#ifdef SEMIGROUPS_KERNEL_DEBUG
+  libsemigroups::validate(*blocks);
+#endif
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(blocks);
 }
 
 void TBipartObjMarkSubBags(Obj o) {
