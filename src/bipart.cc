@@ -31,7 +31,6 @@
 #include "compiled.h"
 
 #include "libsemigroups/bipart.hpp"
-#include "libsemigroups/blocks.hpp"
 #include "libsemigroups/report.hpp"
 #include "libsemigroups/timer.hpp"
 
@@ -101,7 +100,7 @@ inline Obj blocks_new_obj(Blocks* x) {
 
 Obj BIPART_NC(Obj self, Obj gap_blocks) {
   SEMIGROUPS_ASSERT(IS_LIST(gap_blocks));
-  std::vector<u_int32_t> blocks;
+  std::vector<uint32_t> blocks;
 
   size_t degree         = 0;
   size_t nr_left_blocks = 0;
@@ -137,7 +136,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
            i++) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-        u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+        uint32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
         blocks.push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
       }
@@ -147,7 +146,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
            i++) {
         SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
                           && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-        u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+        uint32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
         blocks.push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
       }
@@ -350,7 +349,7 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
             -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
-  std::vector<u_int32_t> blocks(2 * deg, -1);
+  std::vector<uint32_t> blocks(2 * deg, -1);
 
   for (size_t i = 0; i < deg; i++) {
     blocks[i] = xx->at(i);
@@ -386,7 +385,7 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
   auto buf1 = _BUFFER_size_t.begin();
   auto buf2 = _BUFFER_size_t.begin() + 2 * deg;
 
-  std::vector<u_int32_t> blocks(2 * deg, -1);
+  std::vector<uint32_t> blocks(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
     if (buf2[xx->at(i)] == static_cast<size_t>(-1)) {
@@ -419,7 +418,7 @@ Obj BIPART_STAR(Obj self, Obj x) {
             -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
-  std::vector<u_int32_t> blocks(2 * deg, -1);
+  std::vector<uint32_t> blocks(2 * deg, -1);
 
   size_t next = 0;
 
@@ -563,7 +562,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   size_t deg       = xx->degree();
   size_t nr_blocks = xx->nr_blocks();
 
-  std::vector<u_int32_t> blocks(2 * deg);
+  std::vector<uint32_t> blocks(2 * deg);
 
   _BUFFER_size_t.clear();
   _BUFFER_size_t.resize(2 * nr_blocks + std::max(deg, pdeg), -1);
@@ -650,11 +649,11 @@ Obj BIPART_RIGHT_BLOCKS(Obj self, Obj x) {
 
 static inline size_t fuse_it(size_t);
 
-static void fuse(u_int32_t,
-                 typename std::vector<u_int32_t>::const_iterator,
-                 u_int32_t,
-                 typename std::vector<u_int32_t>::const_iterator,
-                 u_int32_t,
+static void fuse(uint32_t,
+                 typename std::vector<uint32_t>::const_iterator,
+                 uint32_t,
+                 typename std::vector<uint32_t>::const_iterator,
+                 uint32_t,
                  bool);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -687,11 +686,7 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
     degree += LEN_LIST(ELM_LIST(gap_blocks, i));
   }
 
-  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(degree);
-
-  std::vector<bool>* lookup = new std::vector<bool>();
-  lookup->resize(nr_blocks);
+  Blocks* blocks = new Blocks(degree);
 
   for (size_t i = 1; i <= nr_blocks; i++) {
     Obj block = ELM_LIST(gap_blocks, i);
@@ -699,15 +694,18 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
       SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
       int jj = INT_INTOBJ(ELM_LIST(block, j));
       if (jj < 0) {
-        (*blocks)[-jj - 1] = i - 1;
+        blocks->set_block(-jj - 1, i - 1);
+        blocks->set_is_transverse_block(i - 1, false);
       } else {
-        (*blocks)[jj - 1] = i - 1;
-        (*lookup)[i - 1]  = true;
+        blocks->set_block(jj - 1, i - 1);
+        blocks->set_is_transverse_block(i - 1, true);
       }
     }
   }
-
-  return blocks_new_obj(new Blocks(blocks, lookup, nr_blocks));
+#ifdef SEMIGROUPS_KERNEL_DEBUG
+  libsemigroups::validate(*blocks);
+#endif
+  return blocks_new_obj(blocks);
 }
 
 // Returns the external representation of a GAP blocks Obj, see the description
@@ -727,16 +725,16 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
 
   for (size_t i = 0; i < n; i++) {
     Obj block;
-    Obj entry = (xx->is_transverse_block(xx->block(i)) ? INTOBJ_INT(i + 1)
-                                                       : INTOBJ_INT(-i - 1));
-    if (ELM_PLIST(ext_rep, xx->block(i) + 1) == 0) {
+    Obj entry = (xx->is_transverse_block((*xx)[i]) ? INTOBJ_INT(i + 1)
+                                                   : INTOBJ_INT(-i - 1));
+    if (ELM_PLIST(ext_rep, (*xx)[i] + 1) == 0) {
       block = NEW_PLIST(T_PLIST_CYC, 1);
       SET_LEN_PLIST(block, 1);
       SET_ELM_PLIST(block, 1, entry);
-      SET_ELM_PLIST(ext_rep, xx->block(i) + 1, block);
+      SET_ELM_PLIST(ext_rep, (*xx)[i] + 1, block);
       CHANGED_BAG(ext_rep);
     } else {
-      block = ELM_PLIST(ext_rep, xx->block(i) + 1);
+      block = ELM_PLIST(ext_rep, (*xx)[i] + 1);
       AssPlist(block, LEN_PLIST(block) + 1, entry);
     }
   }
@@ -787,25 +785,25 @@ Obj BLOCKS_NR_BLOCKS(Obj self, Obj x) {
 Obj BLOCKS_PROJ(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
-  Blocks* blocks = blocks_get_cpp(x);
+  Blocks& blocks = *blocks_get_cpp(x);
 
   _BUFFER_size_t.clear();
-  _BUFFER_size_t.resize(blocks->nr_blocks(), -1);
+  _BUFFER_size_t.resize(blocks.nr_blocks(), -1);
 
-  std::vector<u_int32_t> out(2 * blocks->degree());
-  u_int32_t              nr_blocks = blocks->nr_blocks();
+  std::vector<uint32_t> out(2 * blocks.degree());
+  uint32_t              nr_blocks = blocks.nr_blocks();
 
-  for (u_int32_t i = 0; i < blocks->degree(); i++) {
-    u_int32_t index = blocks->block(i);
-    out[i]          = index;
-    if (blocks->is_transverse_block(index)) {
-      out[i + blocks->degree()] = index;
+  for (uint32_t i = 0; i < blocks.degree(); i++) {
+    uint32_t index = blocks[i];
+    out[i]         = index;
+    if (blocks.is_transverse_block(index)) {
+      out[i + blocks.degree()] = index;
     } else {
       if (_BUFFER_size_t[index] == static_cast<size_t>(-1)) {
         _BUFFER_size_t[index] = nr_blocks;
         nr_blocks++;
       }
-      out[i + blocks->degree()] = _BUFFER_size_t[index];
+      out[i + blocks.degree()] = _BUFFER_size_t[index];
     }
   }
   return bipart_new_obj(new Bipartition(out));
@@ -848,8 +846,8 @@ Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
   // prepare the _BUFFER_bool for detecting transverse fused blocks
   _BUFFER_bool.clear();
   _BUFFER_bool.resize(right->nr_blocks() + 2 * left->nr_blocks());
-  std::copy(right->lookup()->begin(),
-            right->lookup()->end(),
+  std::copy(right->cbegin_lookup(),
+            right->cend_lookup(),
             _BUFFER_bool.begin() + left->nr_blocks());
   auto seen = _BUFFER_bool.begin() + right->nr_blocks() + left->nr_blocks();
 
@@ -871,7 +869,7 @@ Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
   // check we are injective on transverse blocks of <left> and that the fused
   // blocks are also transverse.
 
-  for (u_int32_t i = 0; i < left->nr_blocks(); i++) {
+  for (uint32_t i = 0; i < left->nr_blocks(); i++) {
     if (left->is_transverse_block(i)) {
       size_t j = fuse_it(i);
       if (!_BUFFER_bool[j] || seen[j]) {
@@ -918,13 +916,13 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
     }
   }
 
-  std::vector<u_int32_t> blocks(2 * left->degree());
+  std::vector<uint32_t> blocks(2 * left->degree());
 
   size_t next = right->nr_blocks();
 
   for (size_t i = 0; i < left->degree(); i++) {
-    blocks[i] = right->block(i);
-    size_t j  = left->block(i);
+    blocks[i] = (*right)[i];
+    size_t j  = (*left)[i];
     if (left->is_transverse_block(j)) {
       blocks[i + left->degree()] = tab1[fuse_it(j)];
     } else {
@@ -963,12 +961,12 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   // prepare the _BUFFER_bool for detecting transverse fused blocks
   _BUFFER_bool.clear();
   _BUFFER_bool.resize(x->nr_blocks() + blocks->nr_blocks());
-  std::copy(blocks->lookup()->begin(),
-            blocks->lookup()->end(),
+  std::copy(blocks->cbegin_lookup(),
+            blocks->cend_lookup(),
             _BUFFER_bool.begin() + x->nr_blocks());
 
   fuse(x->degree(),
-       x->begin() + x->degree(),
+       x->cbegin() + x->degree(),
        x->nr_blocks(),
        blocks->cbegin(),
        blocks->nr_blocks(),
@@ -977,24 +975,24 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   _BUFFER_size_t.resize(2 * (x->nr_blocks() + blocks->nr_blocks()), -1);
   auto tab = _BUFFER_size_t.begin() + x->nr_blocks() + blocks->nr_blocks();
 
-  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
-  out_blocks->reserve(x->degree());
-  std::vector<bool>* out_lookup = new std::vector<bool>();
-  out_lookup->resize(x->degree());
+  Blocks* out_blocks = new Blocks(x->degree());
 
-  u_int32_t next = 0;
-
-  for (u_int32_t i = 0; i < x->degree(); i++) {
-    u_int32_t j = fuse_it(x->at(i));
+  uint32_t next = 0;
+  for (uint32_t i = 0; i < x->degree(); i++) {
+    uint32_t j = fuse_it(x->at(i));
     if (tab[j] == static_cast<size_t>(-1)) {
       tab[j] = next;
       next++;
     }
-    out_blocks->push_back(tab[j]);
-    (*out_lookup)[tab[j]] = _BUFFER_bool[j];
+    out_blocks->set_block(i, tab[j]);
+    out_blocks->set_is_transverse_block(tab[j], _BUFFER_bool[j]);
   }
-  out_lookup->resize(next);
-  return blocks_new_obj(new Blocks(out_blocks, out_lookup));
+
+#ifdef SEMIGROUPS_KERNEL_DEBUG
+  libsemigroups::validate(*out_blocks);
+#endif
+
+  return blocks_new_obj(out_blocks);
 }
 
 // Returns the right blocks of x_gap * BLOCKS_PROJ(blocks_gap) where the former
@@ -1018,36 +1016,34 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   _BUFFER_bool.clear();
   _BUFFER_bool.resize(x->nr_blocks() + blocks->nr_blocks());
   std::copy(
-      blocks->lookup()->begin(), blocks->lookup()->end(), _BUFFER_bool.begin());
+      blocks->cbegin_lookup(), blocks->cend_lookup(), _BUFFER_bool.begin());
 
   fuse(x->degree(),
        blocks->cbegin(),
        blocks->nr_blocks(),
-       x->begin(),
+       x->cbegin(),
        x->nr_blocks(),
        true);
 
   _BUFFER_size_t.resize(2 * (x->nr_blocks() + blocks->nr_blocks()), -1);
   auto tab = _BUFFER_size_t.begin() + x->nr_blocks() + blocks->nr_blocks();
 
-  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
-  out_blocks->reserve(x->degree());
-  std::vector<bool>* out_lookup = new std::vector<bool>();
-  out_lookup->resize(x->degree());
-
-  u_int32_t next = 0;
-
-  for (u_int32_t i = x->degree(); i < 2 * x->degree(); i++) {
-    u_int32_t j = fuse_it(x->at(i) + blocks->nr_blocks());
+  Blocks*        out_blocks = new Blocks(x->degree());
+  uint32_t       next       = 0;
+  uint32_t const n          = x->degree();
+  for (uint32_t i = n; i < 2 * n; i++) {
+    uint32_t j = fuse_it(x->at(i) + blocks->nr_blocks());
     if (tab[j] == static_cast<size_t>(-1)) {
       tab[j] = next;
       next++;
     }
-    out_blocks->push_back(tab[j]);
-    (*out_lookup)[tab[j]] = _BUFFER_bool[j];
+    out_blocks->set_block(i - n, tab[j]);
+    out_blocks->set_is_transverse_block(tab[j], _BUFFER_bool[j]);
   }
-  out_lookup->resize(next);
-  return blocks_new_obj(new Blocks(out_blocks, out_lookup));
+#ifdef SEMIGROUPS_KERNEL_DEBUG
+  libsemigroups::validate(*out_blocks);
+#endif
+  return blocks_new_obj(out_blocks);
 }
 
 // Returns a GAP bipartition y such that if BLOCKS_LEFT_ACT(blocks_gap, x_gap)
@@ -1064,13 +1060,13 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   fuse(x->degree(),
        blocks->cbegin(),
        blocks->nr_blocks(),
-       x->begin() + x->degree(),
+       x->cbegin() + x->degree(),
        x->nr_blocks(),
        false);
   SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
                     == blocks->nr_blocks() + x->nr_blocks());
 
-  std::vector<u_int32_t> out_blocks(2 * x->degree());
+  std::vector<uint32_t> out_blocks(2 * x->degree());
 
   _BUFFER_size_t.resize(2 * blocks->nr_blocks() + x->nr_blocks(), -1);
   SEMIGROUPS_ASSERT(_BUFFER_size_t.size()
@@ -1082,7 +1078,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   auto tab = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
   SEMIGROUPS_ASSERT(_BUFFER_size_t.end() - tab == blocks->nr_blocks());
 
-  for (u_int32_t i = 0; i < blocks->nr_blocks(); i++) {
+  for (uint32_t i = 0; i < blocks->nr_blocks(); i++) {
     if (blocks->is_transverse_block(i)) {
       SEMIGROUPS_ASSERT(fuse_it(i) < blocks->nr_blocks());
       SEMIGROUPS_ASSERT(tab + fuse_it(i) < _BUFFER_size_t.end());
@@ -1091,9 +1087,9 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   }
 
   // find the left blocks of the output
-  for (u_int32_t i = 0; i < blocks->degree(); i++) {
-    out_blocks[i] = blocks->block(i);
-    u_int32_t j   = fuse_it(x->at(i) + blocks->nr_blocks());
+  for (uint32_t i = 0; i < blocks->degree(); i++) {
+    out_blocks[i] = (*blocks)[i];
+    uint32_t j    = fuse_it(x->at(i) + blocks->nr_blocks());
     if (j >= blocks->nr_blocks() || tab[j] == static_cast<size_t>(-1)) {
       out_blocks[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
@@ -1159,19 +1155,19 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
   _BUFFER_bool.clear();
   _BUFFER_bool.resize(blocks->nr_blocks() + x->nr_blocks());
   std::copy(
-      blocks->lookup()->begin(), blocks->lookup()->end(), _BUFFER_bool.begin());
+      blocks->cbegin_lookup(), blocks->cend_lookup(), _BUFFER_bool.begin());
 
   fuse(x->degree(),
        blocks->cbegin(),
        blocks->nr_blocks(),
-       x->begin(),
+       x->cbegin(),
        x->nr_blocks(),
        true);
 
-  u_int32_t junk = -1;
-  u_int32_t next = 0;
+  uint32_t junk = -1;
+  uint32_t next = 0;
 
-  std::vector<u_int32_t> out_blocks(2 * x->degree());
+  std::vector<uint32_t> out_blocks(2 * x->degree());
 
   _BUFFER_size_t.resize(3 * blocks->nr_blocks() + 2 * x->nr_blocks(), -1);
   auto tab1 = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
@@ -1179,9 +1175,9 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
       = _BUFFER_size_t.begin() + 2 * (blocks->nr_blocks() + x->nr_blocks());
 
   // find the left blocks of the output
-  for (u_int32_t i = 0; i < blocks->degree(); i++) {
+  for (uint32_t i = 0; i < blocks->degree(); i++) {
     if (x->at(i + x->degree()) < x->nr_left_blocks()) {
-      u_int32_t j = fuse_it(x->at(i + x->degree()) + blocks->nr_blocks());
+      uint32_t j = fuse_it(x->at(i + x->degree()) + blocks->nr_blocks());
       if (_BUFFER_bool[j]) {
         if (tab1[j] == static_cast<size_t>(-1)) {
           tab1[j] = next;
@@ -1191,19 +1187,19 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
         continue;
       }
     }
-    if (junk == (u_int32_t) -1) {
+    if (junk == (uint32_t) -1) {
       junk = next;
       next++;
     }
     out_blocks[i] = junk;
   }
 
-  u_int32_t out_nr_left_blocks = next;
+  uint32_t out_nr_left_blocks = next;
 
   // find the right blocks of the output
 
-  for (u_int32_t i = blocks->degree(); i < 2 * blocks->degree(); i++) {
-    u_int32_t j = blocks->block(i - blocks->degree());
+  for (uint32_t i = blocks->degree(); i < 2 * blocks->degree(); i++) {
+    uint32_t j = (*blocks)[i - blocks->degree()];
     if (blocks->is_transverse_block(j)) {
       out_blocks[i] = tab1[fuse_it(j)];
     } else {
@@ -1267,12 +1263,12 @@ static inline size_t fuse_it(size_t i) {
 // Note that _BUFFER_bool has to be pre-assigned with the correct values, i.e.
 // it must be at least initialized (and have the appropriate length).
 
-static void fuse(u_int32_t                                       deg,
-                 typename std::vector<u_int32_t>::const_iterator left_begin,
-                 u_int32_t                                       left_nr_blocks,
-                 typename std::vector<u_int32_t>::const_iterator right_begin,
-                 u_int32_t right_nr_blocks,
-                 bool      sign) {
+static void fuse(uint32_t                                       deg,
+                 typename std::vector<uint32_t>::const_iterator left_begin,
+                 uint32_t                                       left_nr_blocks,
+                 typename std::vector<uint32_t>::const_iterator right_begin,
+                 uint32_t                                       right_nr_blocks,
+                 bool                                           sign) {
   _BUFFER_size_t.clear();
   _BUFFER_size_t.reserve(left_nr_blocks + right_nr_blocks);
 
@@ -1449,8 +1445,8 @@ class IdempotentCounter {
     // prepare the _lookup for detecting transverse fused blocks
     _lookup[thread_id].clear();
     _lookup[thread_id].resize(right->nr_blocks() + left->nr_blocks());
-    std::copy(right->lookup()->begin(),
-              right->lookup()->end(),
+    std::copy(right->cbegin_lookup(),
+              right->cend_lookup(),
               _lookup[thread_id].begin() + left->nr_blocks());
 
     _seen[thread_id].clear();
@@ -1485,7 +1481,7 @@ class IdempotentCounter {
       }
     }
 
-    for (u_int32_t k = 0; k < left->nr_blocks(); k++) {
+    for (uint32_t k = 0; k < left->nr_blocks(); k++) {
       if (left->is_transverse_block(k)) {
         size_t l = fuse_it(thread_id, k);
         if (!_lookup[thread_id][l] || _seen[thread_id][l]) {
