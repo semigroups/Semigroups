@@ -632,10 +632,6 @@ static Int InitKernel(StructInitInfo* module) {
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
 
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
-#endif
-
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
@@ -757,6 +753,9 @@ static Int InitLibrary(StructInitInfo* module) {
   gapbind14::init_library(m);
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
+#endif
   return PostRestore(module);
 }
 
