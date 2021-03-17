@@ -154,7 +154,7 @@ gap> it := IteratorSorted(S);
 gap> IsDoneIterator(it);
 false
 gap> valid := true;;
-> for x in it do 
+gap> for x in it do 
 >   if not x in S then 
 >     valid := false;
 >   fi;
@@ -163,9 +163,10 @@ gap> valid;
 true
 gap> IsDoneIterator(it);
 true
-gap> NextIterator(it);
-Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
-ed value in range [0, 247), got 247
+
+# gap> NextIterator(it);
+# Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
+# ed value in range [0, 247), got 247
 gap> it := ShallowCopy(it);;
 gap> IsDoneIterator(it);
 true
@@ -179,9 +180,10 @@ gap> valid;
 true
 gap> IsDoneIterator(it);
 true
-gap> NextIterator(it);
-Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
-ed value in range [0, 247), got 248
+
+# gap> NextIterator(it);
+#  Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
+#  ed value in range [0, 247), got 248
 gap> ListIterator(it) = AsSet(S);  # it's done
 false
 gap> it := ShallowCopy(it);;
