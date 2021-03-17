@@ -9,7 +9,7 @@
 ##
 
 # This file contains declarations for the interface with
-# libsemigroups::FroidurePin
+# libsemigroups::FroidurePin
 
 DeclareGlobalFunction("CppFroidurePin");
 
