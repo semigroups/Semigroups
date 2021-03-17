@@ -380,7 +380,7 @@ function(S, x)
   return HTValue(ht, x);
 end);
 
-# TODO(now) is the next method necessary?
+# TODO(now) is the next method necessary?
 # InstallMethod(PositionCanonical,
 # "for a perm group with known generators and multiplicative element",
 # [IsPermGroup and HasGeneratorsOfGroup and IsSemigroup and

@@ -622,7 +622,7 @@ function(Constructor, S, coll, opts)
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
   if ForAll(coll, x -> x in S) then
-    # To avoid copying unless necessary!
+    # To avoid copying unless necessary!
     return S;
   fi;
 
@@ -651,7 +651,7 @@ function(Constructor, S, coll, opts)
     fi;
     if M > N then
       # Can't use closure, TODO use copy_closure
-      # FIXME if M goes larger than the type of R can support this will end
+      # FIXME if M goes larger than the type of R can support this will end
       # badly
       CppT  := R.create([]);
       add_generator := R.add_generator;

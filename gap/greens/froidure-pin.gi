@@ -596,7 +596,7 @@ function(H)
   S := EnumeratorCanonical(Parent(H));
   N := Size(H);
   HH := Enumerator(H);
-  # Position(S, x) -> Position(H, x)
+  # Position(S, x) -> Position(H, x)
   lookup := ListWithIdenticalEntries(Length(S), fail);
   for i in [1 .. N] do
     pos := Position(S, HH[i]);
