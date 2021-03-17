@@ -1836,6 +1836,7 @@ function(S)
   fi;
 end);
 
+# This is wrong: fix it
 InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
 [IsFpMonoid],
 function(S)
@@ -1935,17 +1936,6 @@ function(S)
   TryNextMethod();
 end);
 
-# InstallMethod(IsMinRSemigroup, "for a one relator finitely presented monoid",
-# [IsFpMonoid],
-# function(S)
-#   local rels;
-#   rels := RelationsOfFpMonoid(S);
-#   if Length(rels) = 1 then
-#     return IsFinite(S);
-#   fi;
-#   TryNextMethod();
-# end);
-
 InstallMethod(IsMinRSemigroup, "for a one relator finitely presented semigroup",
 [IsFpSemigroup],
 function(S)
@@ -1962,30 +1952,6 @@ function(S)
   fi;
   TryNextMethod();
 end);
-
-# InstallMethod(IsSimpleSemigroup, "for a finitely presented one relator semigroup",
-# [IsFpSemigroup],
-# function(S)
-#   local rels;
-#   rels := RelationsOfFpSemigroup(S);
-#   if Length(rels) = 1 then
-#     return IsSurjectiveSemigroup(S);
-#   else
-#     TryNextMethod();
-#   fi;
-# end);
-
-# InstallMethod(IsBisimpleSemigroup, "for a finitely presented one relator semigroup",
-# [IsFpSemigroup],
-# function(S)
-#   local rels;
-#   rels := RelationsOfFpSemigroup(S);
-#   if Length(rels) = 1 then
-#     return IsSurjectiveSemigroup(S);
-#   else
-#     TryNextMethod();
-#   fi;
-# end);
 
 InstallMethod(IsProperDirectProductOfSemigroups, "for a finitely presented one relator semigroup",
 [IsFpSemigroup],
@@ -2038,6 +2004,8 @@ function(S)
   fi;
 end);
 
+# Technically correct but not very good: would be best to actually identify the
+# idempotents with Idempotents(S) and check for failure
 InstallMethod(HasIdempotents, "for a finitely presented one relator semigroup",
 [IsFpSemigroup],
 function(S)
@@ -2093,8 +2061,8 @@ function(S)
   TryNextMethod();
 end);
 
-# Perhaps not worth declaring as property, will likely never be used outside of
-# properties.gd, but makes installing several properties much cleaner
+# Will likely never be used outside of properties.gd, but makes installing
+# several properties much cleaner
 InstallMethod(SEMIGROUPS_IsOneRelationSemigroup,
 "for a finitely presented semigroup",
 [IsFpSemigroup],
