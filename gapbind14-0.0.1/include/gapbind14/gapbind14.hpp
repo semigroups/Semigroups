@@ -218,6 +218,8 @@ namespace gapbind14 {
   struct CppFunction<std::function<TReturnType(TArgs...)>>
       : CppFunctionBase<TReturnType, TArgs...> {};
 
+  // TODO Lambdas?
+
   // For convenience . . .
   template <typename TFunctionType>
   using returns_void
@@ -594,69 +596,6 @@ namespace gapbind14 {
   // New stuff
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TReturn, typename... TArgs>
-  auto& wild_function_pointers() {
-    static std::vector<TReturn (*)(TArgs...)> fs;
-    return fs;
-  }
-
-  template <typename TReturn, typename... TArgs>
-  auto wild_function(size_t i) {
-    return wild_function_pointers<TReturn, TArgs...>().at(i);
-  }
-
-  template <size_t N, typename TReturn>
-  Obj tame_args_0(Obj self) {
-    wild_function<TReturn>(N)();
-    return 0L;
-  }
-
-  template <size_t N,
-            typename TFunctionType,
-            typename TReturn,
-            typename... TArgs>
-  struct static_push_back0 {
-    void operator()(std::vector<TFunctionType>& v) {
-      v.push_back(&tame_args_0<N - 1, TReturn>);
-      static_push_back0<N - 1, TFunctionType, TReturn, TArgs...>{}(v);
-    }
-  };
-
-  template <typename TFunctionType, typename TReturn, typename... TArgs>
-  struct static_push_back0<0, TFunctionType, TReturn, TArgs...> {
-    void operator()(std::vector<TFunctionType>& v) {
-      std::reverse(v.begin(), v.end());
-    }
-  };
-
-  /* template <size_t N, typename TReturn, typename... TArgs>
-   Obj tame_args_1(Obj self) {
-     using to_cpp_0_type = typename gapbind14::CppFunction<
-         TFunctionType>::params_type::template get<0>;
-     GAPBIND14_TRY(gapbind14::CppFunction<TFunctionType>()(
-         c_func_var, gapbind14::to_cpp<to_cpp_0_type>()(arg1)));
-     wild_function<TReturn>(N)();
-     return 0L;
-   }
-
-     template <size_t N,
-               typename TFunctionType,
-               typename TReturn,
-               typename... TArgs>
-     struct static_push_back1 {
-       void operator()(std::vector<TFunctionType>& v) {
-         v.push_back(&tame_args_1<N - 1, TReturn>);
-         static_push_back<N - 1, TFunctionType, TReturn, TArgs...>{}(v);
-       }
-     };
-
-     template <typename TFunctionType, typename TReturn, typename... TArgs>
-     struct static_push_back1<0, TFunctionType, TReturn, TArgs...> {
-       void operator()(std::vector<TFunctionType>& v) {
-         std::reverse(v.begin(), v.end());
-       }
-     };*/
-
   template <size_t N>
   struct GapFuncSignature;
 
@@ -670,33 +609,66 @@ namespace gapbind14 {
     using type = Obj (*)(Obj, Obj);
   };
 
-  template <typename TReturn, typename... TArgs>
-  auto& tame_function_pointers() {
-    using GapFunction = typename GapFuncSignature<sizeof...(TArgs)>::type;
-    static std::vector<GapFunction> fs;
-    static_push_back0<32, GapFunction, TReturn>{}(fs);
+  template <typename Wild>
+  auto& wilds() {
+    static std::vector<Wild> fs;
     return fs;
   }
 
-  template <typename TReturn, typename... TArgs>
-  auto tame_function(size_t i) {
-    return tame_function_pointers<TReturn, TArgs...>().at(i);
+  template <typename Wild>
+  auto wild(size_t i) {
+    return wilds<Wild>().at(i);
   }
 
-  template <typename TReturn, typename... TArgs>
-  static void InstallGlobalFunction(Module&     m,
-                                    char const* name,
-                                    TReturn (*f)(TArgs...)) {
-    size_t const n = wild_function_pointers<TReturn, TArgs...>().size();
-    wild_function_pointers<TReturn, TArgs...>().push_back(f);
-    m.add_func(__FILE__, name, tame_function<TReturn, TArgs...>(n));
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame(Obj self) -> std::enable_if_t<returns_void<Wild>::value
+                                              && arg_count<Wild>::value == 0,
+                                          TSFINAE> {
+    GAPBIND14_TRY(wild<Wild>(N)());
+    return 0L;
   }
 
-  static void InstallGlobalFunction(Module& m, char const* name, void (*f)()) {
-    size_t const n = wild_function_pointers<void>().size();
-    wild_function_pointers<void>().push_back(f);
-    m.add_func(__FILE__, name, tame_function<void>(n));
+  template <size_t N, typename Tame, typename Wild>
+  struct static_push_back {
+    void operator()(std::vector<Tame>& v) {
+      v.push_back(&tame<N - 1, Wild>);
+      static_push_back<N - 1, Tame, Wild>{}(v);
+    }
+  };
+
+  template <typename Tame, typename Wild>
+  struct static_push_back<0, Tame, Wild> {
+    void operator()(std::vector<Tame>& v) {
+      std::reverse(v.begin(), v.end());
+    }
+  };
+
+  template <typename Tame, typename Wild>
+  auto& tames() {
+    static std::vector<Tame> fs;
+    // Should only do the following one time
+    static_push_back<32, Tame, Wild>{}(fs);
+    return fs;
   }
+
+  template <typename Tame, typename Wild>
+  auto get_tame(size_t i) {
+    return tames<Tame, Wild>().at(i);
+  }
+
+  template <typename Wild>
+  static void InstallGlobalFunction(Module& m, char const* name, Wild f) {
+    size_t const n = wilds<Wild>().size();
+    wilds<Wild>().push_back(f);
+    m.add_func(__FILE__, name, get_tame<decltype(&tame<0, Wild>), Wild>(n));
+  }
+
+  // static void InstallGlobalFunction(Module& m, char const* name, void (*f)())
+  // {
+  //   size_t const n = wild_function_pointers<void>().size();
+  //   wild_function_pointers<void>().push_back(f);
+  //   m.add_func(__FILE__, name, tame<void>(n));
+  // }
 
 }  // namespace gapbind14
 
