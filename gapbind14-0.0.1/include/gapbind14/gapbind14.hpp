@@ -52,39 +52,6 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
-  // New stuff
-  ////////////////////////////////////////////////////////////////////////
-
-  template <typename TReturn, typename... TArgs>
-  auto& xxxfuncs() {
-    static std::vector<TReturn (*)(TArgs...)> fs;
-    return fs;
-  }
-
-  template <typename TReturn, typename... TArgs>
-  auto get_function(size_t i) {
-    return xxxfuncs<TReturn, TArgs...>().at(i);
-  }
-
-  // The following functions should be auto-defined somewhere
-  template <typename TReturn, typename... TArgs>
-  Obj function_1_args_0(Obj self) {
-    // Convert args to and from C++
-    get_function<TReturn, TArgs...>(0)();
-    return 0L;
-  }
-
-  template <typename TReturn, typename... TArgs>
-  Obj function_2_args_0(Obj self) {
-    // Convert args to and from C++
-    get_function<TReturn, TArgs...>(1)();
-    return 0L;
-  }
-
-  static const std::array<Obj (*)(Obj), 2> internal_functions
-      = {&function_1_args_0<void>, &function_2_args_0<void>};
-
-  ////////////////////////////////////////////////////////////////////////
   // Typdefs
   ////////////////////////////////////////////////////////////////////////
 
@@ -523,19 +490,6 @@ namespace gapbind14 {
                       copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
     }
 
-    template <typename TReturn, typename... TArgs>
-    void InstallGlobalFunction(char const* name, TReturn (*f)(TArgs...)) {
-      xxxfuncs<TReturn, TArgs...>().push_back(f);
-      add_func(__FILE__,
-               name,
-               internal_functions[xxxfuncs<TReturn, TArgs...>().size() - 1]);
-    }
-
-    void InstallGlobalFunction(char const* name, void (*f)()) {
-      xxxfuncs<void>().push_back(f);
-      add_func(__FILE__, name, internal_functions[xxxfuncs<void>().size() - 1]);
-    }
-
     void finalize() {
       for (auto& x : _mem_funcs) {
         x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
@@ -635,6 +589,71 @@ namespace gapbind14 {
       to_cpp<TCppType,
              std::enable_if_t<IsGapBind14Type<TCppType>::value>>::gap_type
       = T_GAPBIND14_OBJ;
+
+  ////////////////////////////////////////////////////////////////////////
+  // New stuff
+  ////////////////////////////////////////////////////////////////////////
+
+  template <typename TReturn, typename... TArgs>
+  auto& wild_function_pointers() {
+    static std::vector<TReturn (*)(TArgs...)> fs;
+    return fs;
+  }
+
+  template <typename TReturn, typename... TArgs>
+  auto wild_function(size_t i) {
+    return wild_function_pointers<TReturn, TArgs...>().at(i);
+  }
+
+  // The following functions should be auto-defined somewhere
+  template <size_t N, typename TReturn>
+  Obj tame_args_0(Obj self) {
+    // Convert args to and from C++
+    wild_function<TReturn>(N)();
+    return 0L;
+  }
+
+  template <size_t N, typename TReturn>
+  struct static_push_back {
+    void operator()(std::vector<Obj (*)(Obj)>& v) {
+      v.push_back(&tame_args_0<N - 1, TReturn>);
+      static_push_back<N - 1, TReturn>{}(v);
+    }
+  };
+
+  template <typename TReturn>
+  struct static_push_back<0, TReturn> {
+    void operator()(std::vector<Obj (*)(Obj)>& v) {
+      std::reverse(v.begin(), v.end());
+    }
+  };
+
+  template <typename TReturn>
+  auto& tame_function_pointers() {
+    static std::vector<Obj (*)(Obj)> fs;
+    static_push_back<32, TReturn>{}(fs);
+    return fs;
+  }
+
+  template <typename TReturn, typename... TArgs>
+  auto tame_function(size_t i) {
+    return tame_function_pointers<TReturn, TArgs...>().at(i);
+  }
+
+  template <typename TReturn, typename... TArgs>
+  static void InstallGlobalFunction(Module&     m,
+                                    char const* name,
+                                    TReturn (*f)(TArgs...)) {
+    size_t const n = wild_function_pointers<TReturn, TArgs...>().size();
+    wild_function_pointers<TReturn, TArgs...>().push_back(f);
+    m.add_func(__FILE__, name, tame_function<TReturn, TArgs...>(n));
+  }
+
+  static void InstallGlobalFunction(Module& m, char const* name, void (*f)()) {
+    size_t const n = wild_function_pointers<void>().size();
+    wild_function_pointers<void>().push_back(f);
+    m.add_func(__FILE__, name, tame_function<void>(n));
+  }
 
 }  // namespace gapbind14
 

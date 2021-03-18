@@ -298,9 +298,9 @@ namespace testing {
   }
 
   void this_should_be_in_a_macro(gapbind14::Module& m) {
-    m.InstallGlobalFunction("JDMTesting1",
-                            []() { std::cout << "lambda function\n"; });
-    m.InstallGlobalFunction("JDMTesting2", &func_from_outside);
+    InstallGlobalFunction(
+        m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
+    InstallGlobalFunction(m, "JDMTesting2", &func_from_outside);
   }
 
   int x = gapbind14_push_back(&this_should_be_in_a_macro);
