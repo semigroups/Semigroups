@@ -292,61 +292,20 @@ GAPBIND14_ITERATOR(m, Congruence, cbegin_ntc(), cend_ntc(), ntc);
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 namespace testing {
-  typedef Obj (*GapFunc1Args)(Obj);
-  typedef void (*CppFunc0Args)();
-
-  template <typename TReturn, typename... TArgs>
-  std::vector<std::pair<std::string, TReturn (*)(TArgs...)>>& funcs() {
-    static std::vector<std::pair<std::string, TReturn (*)(TArgs...)>> fs;
-    return fs;
-  }
-
-  template <typename TReturn, typename... TArgs>
-  std::pair<std::string, TReturn (*)(TArgs...)>& get_function(size_t i) {
-    return funcs<TReturn, TArgs...>().at(i);
-  }
-
-  template <typename TReturn, typename... TArgs>
-  void InstallGlobalFunction(char const* name, TReturn (*f)(TArgs...)) {
-    std::string sname(name);
-    funcs<TReturn, TArgs...>().emplace_back(sname, f);
-  }
-
-  void InstallGlobalFunction(char const* name, void (*f)()) {
-    std::string sname(name);
-    funcs<void>().emplace_back(sname, f);
-  }
 
   void func_from_outside() {
     std::cout << "free function\n";
   }
 
-  template <typename TReturn, typename... TArgs>
-  Obj function_1_args_0(Obj self) {
-    // Convert args to and from C++
-    get_function<TReturn, TArgs...>(0).second();
-    return 0L;
+  void this_should_be_in_a_macro(gapbind14::Module& m) {
+    m.InstallGlobalFunction("JDMTesting1",
+                            []() { std::cout << "lambda function\n"; });
+    m.InstallGlobalFunction("JDMTesting2", &func_from_outside);
   }
 
-  template <typename TReturn, typename... TArgs>
-  Obj function_2_args_0(Obj self) {
-    // Convert args to and from C++
-    get_function<TReturn, TArgs...>(1).second();
-    return 0L;
-  }
-
-  int this_should_be_in_a_macro() {
-    InstallGlobalFunction("JDMTesting1",
-                          []() { std::cout << "lambda function\n"; });
-    InstallGlobalFunction("JDMTesting2", &func_from_outside);
-    return 0;
-  }
-
-  int x = this_should_be_in_a_macro();
-
-  // int y = register_function("JDMTesting", &func_from_outside);
-
+  int x = gapbind14_push_back(&this_should_be_in_a_macro);
 }  // namespace testing
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 // END TESTING
@@ -686,16 +645,6 @@ static StructGVarFunc GVarFuncs[] = {
                BIPART_NR_IDEMPOTENTS,
                5,
                "o, scc, lookup, nr_threads, report"),
-    GVAR_ENTRY2("pkg.cc",
-                function_1_args_0,
-                testing::function_1_args_0<void>,
-                0,
-                ""),
-    GVAR_ENTRY2("pkg.cc",
-                function_2_args_0,
-                testing::function_2_args_0<void>,
-                0,
-                ""),
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 
