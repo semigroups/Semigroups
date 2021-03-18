@@ -605,33 +605,76 @@ namespace gapbind14 {
     return wild_function_pointers<TReturn, TArgs...>().at(i);
   }
 
-  // The following functions should be auto-defined somewhere
   template <size_t N, typename TReturn>
   Obj tame_args_0(Obj self) {
-    // Convert args to and from C++
     wild_function<TReturn>(N)();
     return 0L;
   }
 
-  template <size_t N, typename TReturn>
-  struct static_push_back {
-    void operator()(std::vector<Obj (*)(Obj)>& v) {
+  template <size_t N,
+            typename TFunctionType,
+            typename TReturn,
+            typename... TArgs>
+  struct static_push_back0 {
+    void operator()(std::vector<TFunctionType>& v) {
       v.push_back(&tame_args_0<N - 1, TReturn>);
-      static_push_back<N - 1, TReturn>{}(v);
+      static_push_back0<N - 1, TFunctionType, TReturn, TArgs...>{}(v);
     }
   };
 
-  template <typename TReturn>
-  struct static_push_back<0, TReturn> {
-    void operator()(std::vector<Obj (*)(Obj)>& v) {
+  template <typename TFunctionType, typename TReturn, typename... TArgs>
+  struct static_push_back0<0, TFunctionType, TReturn, TArgs...> {
+    void operator()(std::vector<TFunctionType>& v) {
       std::reverse(v.begin(), v.end());
     }
   };
 
-  template <typename TReturn>
+  /* template <size_t N, typename TReturn, typename... TArgs>
+   Obj tame_args_1(Obj self) {
+     using to_cpp_0_type = typename gapbind14::CppFunction<
+         TFunctionType>::params_type::template get<0>;
+     GAPBIND14_TRY(gapbind14::CppFunction<TFunctionType>()(
+         c_func_var, gapbind14::to_cpp<to_cpp_0_type>()(arg1)));
+     wild_function<TReturn>(N)();
+     return 0L;
+   }
+
+     template <size_t N,
+               typename TFunctionType,
+               typename TReturn,
+               typename... TArgs>
+     struct static_push_back1 {
+       void operator()(std::vector<TFunctionType>& v) {
+         v.push_back(&tame_args_1<N - 1, TReturn>);
+         static_push_back<N - 1, TFunctionType, TReturn, TArgs...>{}(v);
+       }
+     };
+
+     template <typename TFunctionType, typename TReturn, typename... TArgs>
+     struct static_push_back1<0, TFunctionType, TReturn, TArgs...> {
+       void operator()(std::vector<TFunctionType>& v) {
+         std::reverse(v.begin(), v.end());
+       }
+     };*/
+
+  template <size_t N>
+  struct GapFuncSignature;
+
+  template <>
+  struct GapFuncSignature<0> {
+    using type = Obj (*)(Obj);
+  };
+
+  template <>
+  struct GapFuncSignature<1> {
+    using type = Obj (*)(Obj, Obj);
+  };
+
+  template <typename TReturn, typename... TArgs>
   auto& tame_function_pointers() {
-    static std::vector<Obj (*)(Obj)> fs;
-    static_push_back<32, TReturn>{}(fs);
+    using GapFunction = typename GapFuncSignature<sizeof...(TArgs)>::type;
+    static std::vector<GapFunction> fs;
+    static_push_back0<32, GapFunction, TReturn>{}(fs);
     return fs;
   }
 
