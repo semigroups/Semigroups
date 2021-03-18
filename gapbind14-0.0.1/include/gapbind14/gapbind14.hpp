@@ -28,6 +28,7 @@
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
 
+#include <array>          // for array
 #include <functional>     // for function
 #include <sstream>        // for ostringstream
 #include <string>         // for string
@@ -50,6 +51,39 @@
 typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
+  ////////////////////////////////////////////////////////////////////////
+  // New stuff
+  ////////////////////////////////////////////////////////////////////////
+
+  template <typename TReturn, typename... TArgs>
+  auto& xxxfuncs() {
+    static std::vector<TReturn (*)(TArgs...)> fs;
+    return fs;
+  }
+
+  template <typename TReturn, typename... TArgs>
+  auto get_function(size_t i) {
+    return xxxfuncs<TReturn, TArgs...>().at(i);
+  }
+
+  // The following functions should be auto-defined somewhere
+  template <typename TReturn, typename... TArgs>
+  Obj function_1_args_0(Obj self) {
+    // Convert args to and from C++
+    get_function<TReturn, TArgs...>(0)();
+    return 0L;
+  }
+
+  template <typename TReturn, typename... TArgs>
+  Obj function_2_args_0(Obj self) {
+    // Convert args to and from C++
+    get_function<TReturn, TArgs...>(1)();
+    return 0L;
+  }
+
+  static const std::array<Obj (*)(Obj), 2> internal_functions
+      = {&function_1_args_0<void>, &function_2_args_0<void>};
+
   ////////////////////////////////////////////////////////////////////////
   // Typdefs
   ////////////////////////////////////////////////////////////////////////
@@ -487,6 +521,19 @@ namespace gapbind14 {
                       params(sizeof...(TArgs) - 1),
                       (GVarFunc) func,
                       copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
+    }
+
+    template <typename TReturn, typename... TArgs>
+    void InstallGlobalFunction(char const* name, TReturn (*f)(TArgs...)) {
+      xxxfuncs<TReturn, TArgs...>().push_back(f);
+      add_func(__FILE__,
+               name,
+               internal_functions[xxxfuncs<TReturn, TArgs...>().size() - 1]);
+    }
+
+    void InstallGlobalFunction(char const* name, void (*f)()) {
+      xxxfuncs<void>().push_back(f);
+      add_func(__FILE__, name, internal_functions[xxxfuncs<void>().size() - 1]);
     }
 
     void finalize() {
