@@ -49,7 +49,7 @@ namespace {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-GAPBIND14_MODULE(libsemigroups, m);
+/*GAPBIND14_MODULE(libsemigroups, m);
 
 GAPBIND14_FUNCTION(m, set_report, set_report);
 
@@ -285,26 +285,23 @@ GAPBIND14_MEM_FN(m, Congruence, contains, contains);
 GAPBIND14_MEM_FN(m, Congruence, less, less);
 GAPBIND14_MEM_FN(m, Congruence, add_runner<ToddCoxeter>, add_runner);
 GAPBIND14_ITERATOR(m, Congruence, cbegin_ntc(), cend_ntc(), ntc);
-
+*/
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 // TESTING
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-namespace testing {
 
-  void func_from_outside() {
-    std::cout << "free function\n";
-  }
+void func_from_outside() {
+  std::cout << "free function\n";
+}
 
-  void this_should_be_in_a_macro(gapbind14::Module& m) {
-    InstallGlobalFunction(
-        m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
-    InstallGlobalFunction(m, "JDMTesting2", &func_from_outside);
-  }
-
-  int x = gapbind14_push_back(&this_should_be_in_a_macro);
-}  // namespace testing
+GAPBIND14_MODULE_NEW(xxx, m) {
+  InstallGlobalFunction(
+      m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
+  InstallGlobalFunction(m, "JDMTesting2", &func_from_outside);
+  //  InstallGlobalFunction(m, "set_report", &set_report);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -361,20 +358,6 @@ void TBipartObjCleanFunc(Obj o) {}
 void TBlocksObjCleanFunc(Obj o) {}
 
 // Function to free a T_SEMI Obj during garbage collection.
-
-void TSemiObjFreeFunc(Obj o) {
-  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_CONG: {
-      delete CLASS_OBJ<Congruence*>(o);
-      break;
-    }
-    default: {
-      SEMIGROUPS_ASSERT(false);
-    }
-  }
-}
-
 void TBipartObjFreeFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
   delete bipart_get_cpp(o);
@@ -671,7 +654,6 @@ static Int InitKernel(StructInitInfo* module) {
   IsMutableObjFuncs[T_SEMI] = &TSemiObjIsMutableObjFunc;
 
   InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
-  InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 

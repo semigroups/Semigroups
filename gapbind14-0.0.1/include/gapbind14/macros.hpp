@@ -94,6 +94,17 @@
     m.finalize();                                               \
   }
 
+#define GAPBIND14_MODULE_NEW(name, module)                                   \
+  ::gapbind14::Module module(GAPBIND14_TO_STRING(name));                     \
+  static void GAPBIND14_CONCAT(gapbind14_init_, name)(::gapbind14::Module&); \
+                                                                             \
+  void ::gapbind14::GAPBIND14_MODULE_IMPL(gapbind14::Module& m) {            \
+    GAPBIND14_CONCAT(gapbind14_init_, name)(m);                              \
+    m.finalize();                                                            \
+  }                                                                          \
+                                                                             \
+  void GAPBIND14_CONCAT(gapbind14_init_, name)(::gapbind14::Module & variable)
+
 ////////////////////////////////////////////////////////////////////////
 // Create function wrapper
 ////////////////////////////////////////////////////////////////////////
