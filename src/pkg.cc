@@ -292,14 +292,19 @@ GAPBIND14_ITERATOR(m, Congruence, cbegin_ntc(), cend_ntc(), ntc);
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-void func_from_outside() {
-  std::cout << "free function\n";
+void func_from_outside1() {
+  std::cout << "free function1\n";
+}
+
+void func_from_outside2() {
+  std::cout << "free function2\n";
 }
 
 GAPBIND14_MODULE_NEW(xxx, m) {
-  InstallGlobalFunction(
-      m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
-  InstallGlobalFunction(m, "JDMTesting2", &func_from_outside);
+  // InstallGlobalFunction(
+  //    m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
+  InstallGlobalFunction(m, "JDMTesting1", &func_from_outside1);
+  InstallGlobalFunction(m, "JDMTesting2", &func_from_outside2);
   //  InstallGlobalFunction(m, "set_report", &set_report);
 }
 
