@@ -131,6 +131,12 @@ function(S)
     return S!.CppFroidurePin;
   fi;
   Unbind(S!.CppFroidurePin);
+  # T := MakeFroidurePin(S);
+  # for x in GeneratorsOfSemigroup(S);
+  #  AddGenerator(T, x);
+  # od;
+
+
   fp := FroidurePinMemFnRec(S);
   T  := fp.create([]);
   add_generator := fp.add_generator;
@@ -142,6 +148,30 @@ function(S)
   return T;
 end);
 
+# InstallMethod(MakeFroidurePin, "for a transformation semigroup", 
+# [IsTransformationSemigroup], 
+# function(S)
+#   if DegreeOfTransformationSemigroup(S) <= 16
+#     and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+#     return MakeFroidurePinTransf16();
+#   elif DegreeOfTransformationSemigroup(S) <= 65536 then
+#     return MakeFroidurePinTransfUInt2();
+#   elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
+#     return MakeFroidurePinTransfUInt4();
+#   else
+#     Error("transformation degree is too high!");
+#   fi;
+# end);
+
+# In C++, 
+# InstallGlobalFunction(m, "MakeFroidurePinTransf16",
+# &libsemigroups::FroidurePin<HPCombi::Transf16>::FroidurePin);
+# 
+# DeclareGAPBind14Object(m, "IsFroidurePinTransf16", &IsFroidurePinTransf16);
+# DeclareOperation(m, "AddGenerator");
+# InstallMethod(m, AddGenerator, "for a FroidurePinTransf16", &libsemigroups::FroidurePin<HPCombi::Transf16>::add_generator);
+# 
+
 ###########################################################################
 ## Size/IsFinite
 ###########################################################################
@@ -152,6 +182,7 @@ function(S)
   if not IsFinite(S) then
     return infinity;
   fi;
+  # Size(CppFroidurePin(S));
   return FroidurePinMemFnRec(S).size(CppFroidurePin(S));
 end);
 

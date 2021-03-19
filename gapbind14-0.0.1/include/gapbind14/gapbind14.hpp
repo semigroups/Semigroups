@@ -62,6 +62,9 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   extern UInt T_GAPBIND14_OBJ;
+  extern Obj  IsObject;
+  extern Obj  DeclareOperation;
+  extern Obj  InstallMethod;
 
   template <typename T>
   struct IsGapBind14Type : std::false_type {};

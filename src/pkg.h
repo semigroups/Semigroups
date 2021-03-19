@@ -103,6 +103,7 @@ inline t_semi_subtype_t SUBTYPE_OF_T_SEMI(Obj o) {
 }
 
 // Imported types and functions from the library
+extern Obj JDMFoo;
 
 extern Obj SEMIGROUPS;
 extern Obj HTValue;

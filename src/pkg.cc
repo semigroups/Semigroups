@@ -40,6 +40,9 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+Obj JDM;
+Obj JDMFoo;
+
 namespace {
   void set_report(bool const val) {
     libsemigroups::REPORTER.report(val);
@@ -308,9 +311,8 @@ GAPBIND14_MODULE_NEW(xxx, m) {
   InstallGlobalFunction(m, "JDMTesting2", &func_from_outside2);
   InstallGlobalFunction(m, "set_report", &set_report);
   // Want to do things like:
-  // DeclareFilter(m, "IsLibsemigroupsCongruence", libsemigroups::Congruence);
   // DeclareOperation(m, "NrClasses", libsemigroups::Congruence);
-  // InstallOperation(m, "NrClasses", libsemigroups::Congruence,
+  // InstallMethod(m, "NrClasses", libsemigroups::Congruence,
   // &libsemigroups::Congruence::nr_classes);
 }
 
@@ -760,6 +762,9 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("PositionCanonical", &PositionCanonical);
 
+  ImportGVarFromLibrary("JDMFoo", &JDMFoo);
+  ImportGVarFromLibrary("JDM", &JDM);
+
   return 0;
 }
 
@@ -775,6 +780,20 @@ static Int InitLibrary(StructInitInfo* module) {
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
 #endif
+
+  Obj x = NEW_PLIST(T_PLIST, 1);
+  SET_LEN_PLIST(x, 1);
+  SET_ELM_PLIST(x, 1, gapbind14::IsObject);
+  CHANGED_BAG(x);
+
+  CALL_2ARGS(
+      gapbind14::DeclareOperation, gapbind14::to_gap<std::string>{}("JDM"), x);
+
+  CALL_4ARGS(gapbind14::InstallMethod,
+             JDM,
+             gapbind14::to_gap<std::string>{}("for an object"),
+             x,
+             JDMFoo);
 
   return PostRestore(module);
 }

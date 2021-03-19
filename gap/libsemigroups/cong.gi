@@ -173,7 +173,7 @@ function(C)
     factor := MinimalFactorization;
   else
     Error("Something has gone wrong, should not have ",
-                  "been able to reach here!");
+          "been able to reach here!");
   fi;
   add_pair := libsemigroups.Congruence.add_pair;
   for pair in GeneratingPairs(C) do
@@ -186,6 +186,7 @@ end);
 InstallMethod(CongruenceWordToClassIndex,
 "for CanComputeCppCongruence and hom. list",
 [CanComputeCppCongruence, IsHomogeneousList],
+# {C, word} -> WordToClassIndex(CppCongruence(C), word - 1) + 1);
 function(C, word)
   local CC;
   CC := CppCongruence(C);
