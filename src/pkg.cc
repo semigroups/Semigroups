@@ -301,11 +301,17 @@ void func_from_outside2() {
 }
 
 GAPBIND14_MODULE_NEW(xxx, m) {
+  // TODO lambda functions require extra cruft in gapbind
   // InstallGlobalFunction(
   //    m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
   InstallGlobalFunction(m, "JDMTesting1", &func_from_outside1);
   InstallGlobalFunction(m, "JDMTesting2", &func_from_outside2);
-  //  InstallGlobalFunction(m, "set_report", &set_report);
+  InstallGlobalFunction(m, "set_report", &set_report);
+  // Want to do things like:
+  // DeclareFilter(m, "IsLibsemigroupsCongruence", libsemigroups::Congruence);
+  // DeclareOperation(m, "NrClasses", libsemigroups::Congruence);
+  // InstallOperation(m, "NrClasses", libsemigroups::Congruence,
+  // &libsemigroups::Congruence::nr_classes);
 }
 
 ////////////////////////////////////////////////////////////////////////

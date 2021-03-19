@@ -628,6 +628,17 @@ namespace gapbind14 {
     return 0L;
   }
 
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame(Obj self, Obj arg1)
+      -> std::enable_if_t<returns_void<Wild>::value
+                              && arg_count<Wild>::value == 1,
+                          TSFINAE> {
+    using to_cpp_0_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg1)));
+    return 0L;
+  }
+
   template <size_t N, typename Tame, typename Wild>
   struct static_push_back {
     void operator()(std::vector<Tame>& v) {
