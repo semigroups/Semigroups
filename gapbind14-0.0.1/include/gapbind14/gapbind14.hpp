@@ -642,6 +642,8 @@ namespace gapbind14 {
     return 0L;
   }
 
+  // TODO more tame functions
+
   template <size_t N, typename Tame, typename Wild>
   struct static_push_back {
     void operator()(std::vector<Tame>& v) {
@@ -658,10 +660,16 @@ namespace gapbind14 {
   };
 
   template <typename Tame, typename Wild>
-  auto& tames() {
-    static std::vector<Tame> fs;
+  auto init_tames() {
+    std::vector<Tame> fs;
     // Should only do the following one time
     static_push_back<32, Tame, Wild>{}(fs);
+    return fs;
+  }
+
+  template <typename Tame, typename Wild>
+  auto& tames() {
+    static std::vector<Tame> fs = init_tames<Tame, Wild>();
     return fs;
   }
 
