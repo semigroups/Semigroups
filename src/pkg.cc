@@ -310,25 +310,6 @@ GAPBIND14_MODULE_NEW(xxx, m) {
   InstallGlobalFunction(m, "JDMTesting1", &func_from_outside1);
   InstallGlobalFunction(m, "JDMTesting2", &func_from_outside2);
   InstallGlobalFunction(m, "set_report", &set_report);
-  // TODO(next)
-  // 1) has to have a special name so that a GAP object is constructed,
-  // and returned.
-  // 2) or could we just use the to_gap idiom and install a default
-  // MakeGapBind14Object implementation, then we can just use
-  // InstallGlobalFunction (this is probably better if it can be made to work)
-  // 3) Will probably have to do something like:
-  //    gapbind14::init<FroidurePin<HPCombi::Transf16>>
-  //    i.e. construct a FroidurePin object from no arguments.
-  //
-  // InstallConstructor(
-  //      m,
-  //      "MakeFroidurePinTransf16",
-  //      &libsemigroups::FroidurePin<HPCombi::Transf16>::FroidurePin);
-
-  // Want to do things like:
-  // DeclareOperation(m, "NrClasses", libsemigroups::Congruence);
-  // InstallMethod(m, "NrClasses", libsemigroups::Congruence,
-  // &libsemigroups::Congruence::nr_classes);
 }
 
 ////////////////////////////////////////////////////////////////////////

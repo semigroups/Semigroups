@@ -599,19 +599,6 @@ namespace gapbind14 {
   // New stuff
   ////////////////////////////////////////////////////////////////////////
 
-  template <size_t N>
-  struct GapFuncSignature;
-
-  template <>
-  struct GapFuncSignature<0> {
-    using type = Obj (*)(Obj);
-  };
-
-  template <>
-  struct GapFuncSignature<1> {
-    using type = Obj (*)(Obj, Obj);
-  };
-
   template <typename Wild>
   auto& wilds() {
     static std::vector<Wild> fs;
