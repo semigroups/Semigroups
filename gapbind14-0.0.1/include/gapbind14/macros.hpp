@@ -66,35 +66,10 @@
   }
 
 ////////////////////////////////////////////////////////////////////////
-// Add function to list of function pointers to be initialised
-////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////
 // Create module
 ////////////////////////////////////////////////////////////////////////
 
-#define GAPBIND14_MODULE(name, module)                          \
-  gapbind14::Module module(GAPBIND14_TO_STRING(name));          \
-                                                                \
-  using gapbind14_init_func = void (*)(gapbind14::Module&);     \
-  std::vector<gapbind14_init_func> gapbind14_init_functions;    \
-                                                                \
-  int gapbind14_push_back(gapbind14_init_func func) {           \
-    gapbind14_init_functions.push_back(func);                   \
-    return 0;                                                   \
-  }                                                             \
-                                                                \
-  void gapbind14::GAPBIND14_MODULE_IMPL(gapbind14::Module& m) { \
-    try {                                                       \
-      for (auto init : gapbind14_init_functions) {              \
-        init(m);                                                \
-      }                                                         \
-    } catch (...) {                                             \
-    }                                                           \
-    m.finalize();                                               \
-  }
-
-#define GAPBIND14_MODULE_NEW(name, module)                                   \
+#define GAPBIND14_MODULE(name, module)                                       \
   ::gapbind14::Module module(GAPBIND14_TO_STRING(name));                     \
   static void GAPBIND14_CONCAT(gapbind14_init_, name)(::gapbind14::Module&); \
                                                                              \
@@ -106,132 +81,18 @@
   void GAPBIND14_CONCAT(gapbind14_init_, name)(::gapbind14::Module & variable)
 
 ////////////////////////////////////////////////////////////////////////
-// Create function wrapper
-////////////////////////////////////////////////////////////////////////
-
-#define GAPBIND14_FUNCTION_NON_OVERLOAD(module, c_func_var, gap_func_var)   \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self)                     \
-      ->std::enable_if_t<gapbind14::returns_void<TFunctionType>::value      \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 0,                                   \
-                         TSFINAE> {                                         \
-    GAPBIND14_TRY(gapbind14::CppFunction<TFunctionType>()(c_func_var));     \
-    return 0L;                                                              \
-  }                                                                         \
-                                                                            \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self)                     \
-      ->std::enable_if_t<!gapbind14::returns_void<TFunctionType>::value     \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 0,                                   \
-                         TSFINAE> {                                         \
-    using to_gap_type = gapbind14::to_gap<                                  \
-        typename gapbind14::CppFunction<TFunctionType>::return_type>;       \
-    GAPBIND14_TRY(return to_gap_type()(                                     \
-        gapbind14::CppFunction<TFunctionType>()(c_func_var)));              \
-  }                                                                         \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self, Obj arg1)           \
-      ->std::enable_if_t<gapbind14::returns_void<TFunctionType>::value      \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 1,                                   \
-                         TSFINAE> {                                         \
-    using to_cpp_0_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<0>;                       \
-    GAPBIND14_TRY(gapbind14::CppFunction<TFunctionType>()(                  \
-        c_func_var, gapbind14::to_cpp<to_cpp_0_type>()(arg1)));             \
-    return 0L;                                                              \
-  }                                                                         \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self, Obj arg1)           \
-      ->std::enable_if_t<!gapbind14::returns_void<TFunctionType>::value     \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 1,                                   \
-                         TSFINAE> {                                         \
-    using to_cpp_0_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<0>;                       \
-    using to_gap_type = gapbind14::to_gap<                                  \
-        typename gapbind14::CppFunction<TFunctionType>::return_type>;       \
-    GAPBIND14_TRY(                                                          \
-        return to_gap_type()(gapbind14::CppFunction<TFunctionType>()(       \
-            c_func_var, gapbind14::to_cpp<to_cpp_0_type>()(arg1))));        \
-  }                                                                         \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self, Obj arg1, Obj arg2) \
-      ->std::enable_if_t<gapbind14::returns_void<TFunctionType>::value      \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 2,                                   \
-                         TSFINAE> {                                         \
-    using to_cpp_0_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<0>;                       \
-    using to_cpp_1_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<1>;                       \
-    GAPBIND14_TRY(gapbind14::CppFunction<TFunctionType>()(                  \
-        c_func_var,                                                         \
-        gapbind14::to_cpp<to_cpp_0_type>()(arg1),                           \
-        gapbind14::to_cpp<to_cpp_1_type>()(arg2)));                         \
-    return 0L;                                                              \
-  }                                                                         \
-  template <typename TFunctionType = decltype(c_func_var),                  \
-            typename TSFINAE       = Obj>                                   \
-  auto GAPBIND14_CONCAT(c_func_var, _wrapper)(Obj self, Obj arg1, Obj arg2) \
-      ->std::enable_if_t<!gapbind14::returns_void<TFunctionType>::value     \
-                             && gapbind14::arg_count<TFunctionType>::value  \
-                                    == 2,                                   \
-                         TSFINAE> {                                         \
-    using to_cpp_0_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<0>;                       \
-    using to_cpp_1_type = typename gapbind14::CppFunction<                  \
-        TFunctionType>::params_type::template get<1>;                       \
-    using to_gap_type = gapbind14::to_gap<                                  \
-        typename gapbind14::CppFunction<TFunctionType>::return_type>;       \
-    GAPBIND14_TRY(                                                          \
-        return to_gap_type()(gapbind14::CppFunction<TFunctionType>()(       \
-            c_func_var,                                                     \
-            gapbind14::to_cpp<to_cpp_0_type>()(arg1),                       \
-            gapbind14::to_cpp<to_cpp_1_type>()(arg2))));                    \
-  }                                                                         \
-  void GAPBIND14_CONCAT3(gapbind14_init_, c_func_var, _wrapper)(            \
-      gapbind14::Module & gapbind14_module) {                               \
-    gapbind14_module.add_func(__FILE__,                                     \
-                              GAPBIND14_TO_STRING(gap_func_var),            \
-                              &GAPBIND14_CONCAT(c_func_var, _wrapper) < >); \
-  }                                                                         \
-  GAPBIND14_UNIQUE_ID gapbind14_push_back(                                  \
-      &GAPBIND14_CONCAT3(gapbind14_init_, c_func_var, _wrapper));
-
-#define GAPBIND14_FUNCTION_OVERLOAD(module, cfunc, gfunc, vrld) \
-  auto GAPBIND14_CONCAT(gfunc, _overload) = vrld(cfunc);        \
-  GAPBIND14_FUNCTION_NON_OVERLOAD(                              \
-      module, GAPBIND14_CONCAT(gfunc, _overload), gfunc)
-
-#define GAPBIND14_FUNCTION_GET(_1, _2, _3, _4, NAME, ...) NAME
-#define GAPBIND14_FUNCTION(...)                           \
-  GAPBIND14_FUNCTION_GET(__VA_ARGS__,                     \
-                         GAPBIND14_FUNCTION_OVERLOAD,     \
-                         GAPBIND14_FUNCTION_NON_OVERLOAD) \
-  (__VA_ARGS__)
-
-////////////////////////////////////////////////////////////////////////
 // Create class wrapper
 ////////////////////////////////////////////////////////////////////////
 
-#define GAPBIND14_CLASS(module, class_var)                            \
-  GAPBIND14_UNIQUE_ID module.add_subtype<class_var>(                  \
-      GAPBIND14_TO_STRING(class_var));                                \
-  template <>                                                         \
-  struct gapbind14::IsGapBind14Type<class_var> : std::true_type {};   \
-  template <>                                                         \
-  struct gapbind14::IsGapBind14Type<class_var&&> : std::true_type {}; \
-  template <>                                                         \
-  struct gapbind14::IsGapBind14Type<class_var&> : std::true_type {};  \
-  template <>                                                         \
+#define GAPBIND14_CLASS(module, class_var)                                \
+  module.template add_subtype<class_var>(GAPBIND14_TO_STRING(class_var)); \
+  template <>                                                             \
+  struct gapbind14::IsGapBind14Type<class_var> : std::true_type {};       \
+  template <>                                                             \
+  struct gapbind14::IsGapBind14Type<class_var&&> : std::true_type {};     \
+  template <>                                                             \
+  struct gapbind14::IsGapBind14Type<class_var&> : std::true_type {};      \
+  template <>                                                             \
   struct gapbind14::IsGapBind14Type<class_var const&> : std::true_type {};
 
 ////////////////////////////////////////////////////////////////////////

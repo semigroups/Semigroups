@@ -23,16 +23,13 @@
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
-  Obj  IsObject;
-  Obj  InstallMethod;
-  Obj  DeclareOperation;
+
+  Module &get_module() {
+    static Module MODULE;
+    return MODULE;
+  }
 
   namespace {
-
-    Module &get_module() {
-      static Module MODULE;
-      return MODULE;
-    }
 
     Obj TheTypeTGapBind14Obj;
 
@@ -184,9 +181,6 @@ namespace gapbind14 {
     InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
 
     InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
-    ImportGVarFromLibrary("InstallMethod", &InstallMethod);
-    ImportGVarFromLibrary("DeclareOperation", &DeclareOperation);
-    ImportGVarFromLibrary("IsObject", &IsObject);
   }
 
   void init_library(Module &m) {

@@ -40,9 +40,6 @@
 
 #include "gapbind14/gapbind14.hpp"
 
-Obj JDM;
-Obj JDMFoo;
-
 namespace {
   void set_report(bool const val) {
     libsemigroups::REPORTER.report(val);
@@ -183,28 +180,19 @@ GAPBIND14_MEM_FN(m,
                  set_identity,
                  set_identity,
                  (gapbind14::overload_cast<libsemigroups::letter_type>) );
-
+*/
 ////////////////////////////////////////////////////////////////////////
 // ToddCoxeter
 ////////////////////////////////////////////////////////////////////////
 
-using libsemigroups::congruence_type;
-using libsemigroups::congruence::ToddCoxeter;
-using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
-
-namespace {
-  auto init_todd_coxeter = gapbind14::init<ToddCoxeter, congruence_type>;
-}
-
-GAPBIND14_CLASS(m, ToddCoxeter);
-GAPBIND14_CONSTRUCTOR(m, ToddCoxeter, create, init_todd_coxeter);
-GAPBIND14_MEM_FN(m, ToddCoxeter, set_nr_generators, set_nr_generators);
-GAPBIND14_MEM_FN(m,
-                 ToddCoxeter,
-                 prefill,
-                 prefill,
-                 (gapbind14::overload_cast<table_type const&>) );
-
+// GAPBIND14_CONSTRUCTOR(m, ToddCoxeter, create, init_todd_coxeter);
+// GAPBIND14_MEM_FN(m, ToddCoxeter, set_nr_generators, set_nr_generators);
+// GAPBIND14_MEM_FN(m,
+//                  ToddCoxeter,
+//                  prefill,
+//                  prefill,
+//                  (gapbind14::overload_cast<table_type const&>) );
+/*
 ////////////////////////////////////////////////////////////////////////
 // Congruence
 ////////////////////////////////////////////////////////////////////////
@@ -303,12 +291,28 @@ void func_from_outside2() {
   std::cout << "free function2\n";
 }
 
-GAPBIND14_MODULE_NEW(xxx, m) {
+void func_from_outside2(bool value) {
+  std::cout << "free function2 overload \n";
+}
+
+GAPBIND14_MODULE(xxx, m) {
+  using libsemigroups::congruence_type;
+  using libsemigroups::congruence::ToddCoxeter;
+  using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
+
+  gapbind14::class_<ToddCoxeter>(m, "ToddCoxeter")
+      .def(gapbind14::init<congruence_type>{})
+      .def("set_nr_generators", &ToddCoxeter::set_nr_generators)
+      .def("nr_generators", &ToddCoxeter::nr_generators);
+
   // TODO lambda functions require extra cruft in gapbind
   // InstallGlobalFunction(
   //    m, "JDMTesting1", []() { std::cout << "lambda function\n"; });
   InstallGlobalFunction(m, "JDMTesting1", &func_from_outside1);
-  InstallGlobalFunction(m, "JDMTesting2", &func_from_outside2);
+  InstallGlobalFunction(
+      m, "JDMTesting2", gapbind14::overload_cast<>(&func_from_outside2));
+  InstallGlobalFunction(
+      m, "JDMTesting3", gapbind14::overload_cast<bool>(&func_from_outside2));
   InstallGlobalFunction(m, "set_report", &set_report);
 }
 
@@ -758,9 +762,6 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("PositionCanonical", &PositionCanonical);
 
-  ImportGVarFromLibrary("JDMFoo", &JDMFoo);
-  ImportGVarFromLibrary("JDM", &JDM);
-
   return 0;
 }
 
@@ -776,21 +777,6 @@ static Int InitLibrary(StructInitInfo* module) {
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
   ExportAsConstantGVar(LIBSEMIGROUPS_HPCOMBI_ENABLED);
 #endif
-
-  Obj x = NEW_PLIST(T_PLIST, 1);
-  SET_LEN_PLIST(x, 1);
-  SET_ELM_PLIST(x, 1, gapbind14::IsObject);
-  CHANGED_BAG(x);
-
-  CALL_2ARGS(
-      gapbind14::DeclareOperation, gapbind14::to_gap<std::string>{}("JDM"), x);
-
-  CALL_4ARGS(gapbind14::InstallMethod,
-             JDM,
-             gapbind14::to_gap<std::string>{}("for an object"),
-             x,
-             JDMFoo);
-
   return PostRestore(module);
 }
 
