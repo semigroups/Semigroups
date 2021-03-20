@@ -23,7 +23,8 @@
 // TODO
 // 1. Rename SubTypeSpec -> Subtype
 // 2. Rename Subtype -> SubtypeBase
-// 3. should be possible to use shared_ptr instead of raw ptrs
+// 3. should be possible to use shared_ptr instead of raw ptrs inside the
+//    objects
 
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
@@ -306,7 +307,7 @@ namespace gapbind14 {
         ErrorQuit("found nullptr expected pointer to C++ class! ", 0L, 0L);
       }
 
-      GAPBIND14_ASSERT(SIZE_OBJ(o) == 3);
+      GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
       return reinterpret_cast<TClass*>(ADDR_OBJ(o)[1]);
     }
 
@@ -325,16 +326,11 @@ namespace gapbind14 {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
     }
 
-    static size_t typeid_hash_code(Obj o) {
-      return reinterpret_cast<size_t>(ADDR_OBJ(o)[2]);
-    }
-
    private:
     Obj new_bag(Obj cpp_obj) {
-      Obj o          = NewBag(T_GAPBIND14_OBJ, 3 * sizeof(Obj));
+      Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(obj_subtype());
       ADDR_OBJ(o)[1] = cpp_obj;
-      ADDR_OBJ(o)[2] = reinterpret_cast<Obj>(typeid(TClass).hash_code());
       CHANGED_BAG(o);
       return o;
     }
