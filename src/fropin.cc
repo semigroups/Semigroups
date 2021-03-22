@@ -54,15 +54,15 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // Semigroups
 
 static Obj get_default_value(Int rnam) {
-  gap_rec_t opts = ElmPRec(SEMIGROUPS, RNam_DefaultOptionsRec);
+  Obj opts = ElmPRec(SEMIGROUPS, RNam_DefaultOptionsRec);
   return ElmPRec(opts, rnam);
 }
 
-static inline size_t semi_obj_get_batch_size(gap_semigroup_t so) {
+static inline size_t semi_obj_get_batch_size(Obj so) {
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
-    gap_rec_t opts = GET_ELM_PREC(so, i);
+    Obj opts = GET_ELM_PREC(so, i);
     if (FindPRec(opts, RNam_batch_size, &i, 1)) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
