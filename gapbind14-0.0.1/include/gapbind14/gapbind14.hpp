@@ -41,10 +41,13 @@
 #include <utility>        // for make_pair
 #include <vector>         // for vector
 
-#include "gap_include.hpp"  // for gmp
-#include "macros.hpp"       // for the macros
-#include "to_cpp.hpp"       // for to_cpp
-#include "to_gap.hpp"       // for to_gap
+#include "gap_include.hpp"   // for gmp
+#include "macros.hpp"        // for the macros
+#include "tame-free-fn.hpp"  // for tame free functions
+#include "tame-make.hpp"     // for tame member functions
+#include "tame-mem-fn.hpp"   // for tame constructors
+#include "to_cpp.hpp"        // for to_cpp
+#include "to_gap.hpp"        // for to_gap
 
 ////////////////////////////////////////////////////////////////////////
 // Typdefs for GAP
@@ -53,8 +56,6 @@
 typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
-
-  constexpr size_t MAX_FUNCTIONS = 32;
 
   ////////////////////////////////////////////////////////////////////////
   // Typdefs
@@ -82,158 +83,6 @@ namespace gapbind14 {
     stm << n;
     return stm.str();
   }
-
-  ////////////////////////////////////////////////////////////////////////
-  // Overloading
-  ////////////////////////////////////////////////////////////////////////
-
-  template <typename... TArgs>
-  struct overload_cast_impl {
-    constexpr overload_cast_impl() {}
-
-    template <typename TReturn>
-    constexpr auto operator()(TReturn (*pf)(TArgs...)) const noexcept
-        -> decltype(pf) {
-      return pf;
-    }
-
-    template <typename TReturn, typename TClass>
-    constexpr auto operator()(TReturn (TClass::*pmf)(TArgs...),
-                              std::false_type = {}) const noexcept
-        -> decltype(pmf) {
-      return pmf;
-    }
-
-    template <typename TReturn, typename TClass>
-    constexpr auto operator()(TReturn (TClass::*pmf)(TArgs...)
-                                  const) const noexcept -> decltype(pmf) {
-      return pmf;
-    }
-  };
-
-  static constexpr auto const_ = std::true_type{};
-
-  template <typename... TArgs>
-  static constexpr overload_cast_impl<TArgs...> overload_cast = {};
-
-  ////////////////////////////////////////////////////////////////////////
-  // Function return type and parameter type info
-  ////////////////////////////////////////////////////////////////////////
-
-  // For parameter packs . . .
-  template <typename... TArgs>
-  struct Pack {
-    template <size_t i>
-    using get = std::tuple_element_t<i, std::tuple<TArgs...>>;
-  };
-
-  template <typename TReturnType, typename... TArgs>
-  struct CppFunctionBase {
-    using arg_count   = std::integral_constant<unsigned, sizeof...(TArgs)>;
-    using return_type = TReturnType;
-    using params_type = Pack<TArgs...>;
-
-    // Function pointers . . .
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (*f)(), TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) == 0, SFINAE> {
-      return f();
-    }
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (*f)(TArgs...), TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) != 0, SFINAE> {
-      return f(args...);
-    }
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(std::function<TReturnType(TArgs...)> f, TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) == 0, SFINAE> {
-      return f();
-    }
-  };
-
-  // Member functions . . .
-  template <typename TClass, typename TReturnType, typename... TArgs>
-  struct CppMemFnBase {
-    using arg_count   = std::integral_constant<unsigned, sizeof...(TArgs)>;
-    using return_type = TReturnType;
-    using params_type = Pack<TArgs...>;
-    using class_type  = TClass;
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (TClass::*mem_fn)(TArgs...),
-                    TClass* ptr,
-                    TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) != 0, SFINAE> {
-      return (ptr->*mem_fn)(args...);
-    }
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (TClass::*mem_fn)(TArgs...),
-                    TClass* ptr,
-                    TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) == 0, SFINAE> {
-      return (ptr->*mem_fn)();
-    }
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (TClass::*mem_fn)(TArgs...) const,
-                    TClass* ptr,
-                    TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) != 0, SFINAE> {
-      return (ptr->*mem_fn)(args...);
-    }
-
-    template <typename SFINAE = TReturnType>
-    auto operator()(TReturnType (TClass::*mem_fn)(TArgs...) const,
-                    TClass* ptr,
-                    TArgs... args)
-        -> std::enable_if_t<sizeof...(TArgs) == 0, SFINAE> {
-      return (ptr->*mem_fn)();
-    }
-  };
-
-  // Base declaration . . .
-  template <typename TSignature>
-  struct CppFunction {};
-
-  // Free functions . . .
-  template <typename TReturnType, typename... TArgs>
-  struct CppFunction<TReturnType(TArgs...)>
-      : CppFunctionBase<TReturnType, TArgs...> {};
-
-  // Function pointers . . .
-  template <typename TReturnType, typename... TArgs>
-  struct CppFunction<TReturnType (*)(TArgs...)>
-      : CppFunctionBase<TReturnType, TArgs...> {};
-
-  // Member functions . . .
-  template <typename TClass, typename TReturnType, typename... TArgs>
-  struct CppFunction<TReturnType (TClass::*)(TArgs...)>
-      : CppMemFnBase<TClass, TReturnType, TArgs...> {};
-
-  // Const member functions
-  template <typename TClass, typename TReturnType, typename... TArgs>
-  struct CppFunction<TReturnType (TClass::*)(TArgs...) const>
-      : CppMemFnBase<TClass, TReturnType, TArgs...> {};
-
-  // std::function objects
-  template <typename TReturnType, typename... TArgs>
-  struct CppFunction<std::function<TReturnType(TArgs...)>>
-      : CppFunctionBase<TReturnType, TArgs...> {};
-
-  // TODO Lambdas?
-
-  // For convenience . . .
-  template <typename TFunctionType>
-  using returns_void
-      = std::is_void<typename CppFunction<TFunctionType>::return_type>;
-
-  template <typename TFunctionType>
-  using arg_count = typename CppFunction<TFunctionType>::arg_count;
-
-  void check_args(Obj args, size_t n);
 
   ////////////////////////////////////////////////////////////////////////
   // Subtype class - for polymorphism
@@ -323,6 +172,7 @@ namespace gapbind14 {
     void load(Obj o) override {
       GAPBIND14_ASSERT(obj_subtype(o) == obj_subtype());
       // ADDR_OBJ(o)[0] holds the subtype, and is loaded in the Module::load
+      // TODO move this into Subtype
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
     }
 
@@ -600,560 +450,43 @@ namespace gapbind14 {
       = T_GAPBIND14_OBJ;
 
   ////////////////////////////////////////////////////////////////////////
-  // New stuff
+  // Free functions
   ////////////////////////////////////////////////////////////////////////
-
-  template <typename Wild>
-  auto& wilds() {
-    static std::vector<Wild> fs;
-    return fs;
-  }
-
-  template <typename Wild>
-  auto wild(size_t i) {
-    return wilds<Wild>().at(i);
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // Tame functions returning void
-  ////////////////////////////////////////////////////////////////////////
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self) -> std::enable_if_t<returns_void<Wild>::value
-                                              && arg_count<Wild>::value == 0,
-                                          TSFINAE> {
-    GAPBIND14_TRY(wild<Wild>(N)());
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 1,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 2,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 3,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1),
-                                to_cpp<to_cpp_2_type>()(arg2)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 4,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1),
-                                to_cpp<to_cpp_2_type>()(arg2),
-                                to_cpp<to_cpp_3_type>()(arg3)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 5,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1),
-                                to_cpp<to_cpp_2_type>()(arg2),
-                                to_cpp<to_cpp_3_type>()(arg3),
-                                to_cpp<to_cpp_4_type>()(arg4)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto
-  tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 6,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    using to_cpp_5_type =
-        typename CppFunction<Wild>::params_type::template get<5>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1),
-                                to_cpp<to_cpp_2_type>()(arg2),
-                                to_cpp<to_cpp_3_type>()(arg3),
-                                to_cpp<to_cpp_4_type>()(arg4),
-                                to_cpp<to_cpp_5_type>()(arg5)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self,
-            Obj arg0,
-            Obj arg1,
-            Obj arg2,
-            Obj arg3,
-            Obj arg4,
-            Obj arg5,
-            Obj arg6) -> std::enable_if_t<returns_void<Wild>::value
-                                              && arg_count<Wild>::value == 7,
-                                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    using to_cpp_5_type =
-        typename CppFunction<Wild>::params_type::template get<5>;
-    using to_cpp_6_type =
-        typename CppFunction<Wild>::params_type::template get<6>;
-    GAPBIND14_TRY(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                to_cpp<to_cpp_1_type>()(arg1),
-                                to_cpp<to_cpp_2_type>()(arg2),
-                                to_cpp<to_cpp_3_type>()(arg3),
-                                to_cpp<to_cpp_4_type>()(arg4),
-                                to_cpp<to_cpp_5_type>()(arg5),
-                                to_cpp<to_cpp_6_type>()(arg6)));
-    return 0L;
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // Tame functions NOT returning void
-  ////////////////////////////////////////////////////////////////////////
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 1,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 2,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 3,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1),
-                                              to_cpp<to_cpp_2_type>()(arg2))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 4,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1),
-                                              to_cpp<to_cpp_2_type>()(arg2),
-                                              to_cpp<to_cpp_3_type>()(arg3))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 5,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1),
-                                              to_cpp<to_cpp_2_type>()(arg2),
-                                              to_cpp<to_cpp_3_type>()(arg3),
-                                              to_cpp<to_cpp_4_type>()(arg4))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto
-  tame(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 6,
-                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    using to_cpp_5_type =
-        typename CppFunction<Wild>::params_type::template get<5>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    // FIXME this should return the gaptype
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1),
-                                              to_cpp<to_cpp_2_type>()(arg2),
-                                              to_cpp<to_cpp_3_type>()(arg3),
-                                              to_cpp<to_cpp_4_type>()(arg4),
-                                              to_cpp<to_cpp_5_type>()(arg5))));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame(Obj self,
-            Obj arg0,
-            Obj arg1,
-            Obj arg2,
-            Obj arg3,
-            Obj arg4,
-            Obj arg5,
-            Obj arg6) -> std::enable_if_t<!returns_void<Wild>::value
-                                              && arg_count<Wild>::value == 7,
-                                          TSFINAE> {
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    using to_cpp_1_type =
-        typename CppFunction<Wild>::params_type::template get<1>;
-    using to_cpp_2_type =
-        typename CppFunction<Wild>::params_type::template get<2>;
-    using to_cpp_3_type =
-        typename CppFunction<Wild>::params_type::template get<3>;
-    using to_cpp_4_type =
-        typename CppFunction<Wild>::params_type::template get<4>;
-    using to_cpp_5_type =
-        typename CppFunction<Wild>::params_type::template get<5>;
-    using to_cpp_6_type =
-        typename CppFunction<Wild>::params_type::template get<6>;
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(to_gap_type()(wild<Wild>(N)(to_cpp<to_cpp_0_type>()(arg0),
-                                              to_cpp<to_cpp_1_type>()(arg1),
-                                              to_cpp<to_cpp_2_type>()(arg2),
-                                              to_cpp<to_cpp_3_type>()(arg3),
-                                              to_cpp<to_cpp_4_type>()(arg4),
-                                              to_cpp<to_cpp_5_type>()(arg5),
-                                              to_cpp<to_cpp_6_type>()(arg6))));
-    return 0L;
-  }
-
-  template <size_t N, typename Tame, typename Wild>
-  struct static_push_back {
-    void operator()(std::vector<Tame>& v) {
-      v.push_back(&tame<N - 1, Wild>);
-      static_push_back<N - 1, Tame, Wild>{}(v);
-    }
-  };
-
-  template <typename Tame, typename Wild>
-  struct static_push_back<0, Tame, Wild> {
-    void operator()(std::vector<Tame>& v) {
-      std::reverse(v.begin(), v.end());
-    }
-  };
-
-  template <typename Tame, typename Wild>
-  auto init_tames() {
-    std::vector<Tame> fs;
-    static_push_back<MAX_FUNCTIONS, Tame, Wild>{}(fs);
-    return fs;
-  }
-
-  template <typename Tame, typename Wild>
-  auto& tames() {
-    static std::vector<Tame> fs = init_tames<Tame, Wild>();
-    return fs;
-  }
-
-  template <typename Tame, typename Wild>
-  auto get_tame(size_t i) {
-    return tames<Tame, Wild>().at(i);
-  }
 
   template <typename Wild>
   static void InstallGlobalFunction(Module& m, char const* name, Wild f) {
-    size_t const n = wilds<Wild>().size();
-    wilds<Wild>().push_back(f);
+    size_t const n = all_wilds<Wild>().size();
+    all_wilds<Wild>().push_back(f);
     m.add_func(__FILE__, name, get_tame<decltype(&tame<0, Wild>), Wild>(n));
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // Tame constructor
+  ////////////////////////////////////////////////////////////////////////
+
+  template <size_t N, typename Class, typename Wild>
+  Obj tame_constructor(Obj self, Obj args) {
+    return get_module().create<Class, Wild>(get_module().subtype<Class>(),
+                                            args);
   }
 
   ////////////////////////////////////////////////////////////////////////
   // Classes
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename Wild>
-  auto& wild_mem_fns() {
-    static std::vector<Wild> fs;
-    return fs;
-  }
-
-  template <typename Wild>
-  auto wild_mem_fn(size_t i) {
-    return wild_mem_fns<Wild>().at(i);
-  }
-
-  template <typename Wild>
-  auto& wild_constructors() {
-    static std::vector<Wild> fs;
-    return fs;
-  }
-
-  template <typename Wild>
-  auto wild_constructors(size_t i) {
-    return wild_constructors<Wild>().at(i);
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame_mem_fn(Obj self, Obj arg0, Obj arg1)
-      -> std::enable_if_t<returns_void<Wild>::value
-                              && arg_count<Wild>::value == 1,
-                          TSFINAE> {
-    if (TNUM_OBJ(arg0) != gapbind14::T_GAPBIND14_OBJ) {
-      ErrorQuit(
-          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-    }
-
-    using class_type = typename CppFunction<Wild>::class_type;
-
-    // if (reinterpret_cast<size_t>(ADDR_OBJ(arg0)[2])
-    //     != typeid(class_type).hash_code()) {
-    //   ErrorQuit("expected %s but got %s!",
-    //             (Int) typeid(class_type).name(),
-    //             (Int) get_module().name(arg0));
-    // }
-
-    class_type* ptr = gapbind14::SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
-
-    using to_cpp_0_type =
-        typename CppFunction<Wild>::params_type::template get<0>;
-    GAPBIND14_TRY(gapbind14::CppFunction<Wild>()(
-        wild_mem_fn<Wild>(N), ptr, to_cpp<to_cpp_0_type>()(arg1)));
-    return 0L;
-  }
-
-  template <size_t N, typename Wild, typename TSFINAE = Obj>
-  auto tame_mem_fn(Obj self, Obj arg0)
-      -> std::enable_if_t<!returns_void<Wild>::value
-                              && arg_count<Wild>::value == 0,
-                          TSFINAE> {
-    if (TNUM_OBJ(arg0) != gapbind14::T_GAPBIND14_OBJ) {
-      ErrorQuit(
-          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-    }
-
-    using class_type = typename CppFunction<Wild>::class_type;
-
-    // if (reinterpret_cast<size_t>(ADDR_OBJ(arg0)[2])
-    //    != typeid(class_type).hash_code()) {
-    //  ErrorQuit("expected %s but got %s!",
-    //            (Int) typeid(class_type).name(),
-    //            (Int) get_module().name(arg0));
-    //}
-
-    class_type* ptr = gapbind14::SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
-
-    using to_gap_type
-        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
-    GAPBIND14_TRY(return to_gap_type()(
-        gapbind14::CppFunction<Wild>()(wild_mem_fn<Wild>(N), ptr)));
-  }
-
-  template <size_t N, typename TClass, typename TFunctionType>
-  Obj tame_constructor(Obj self, Obj args) {
-    return get_module().create<TClass, TFunctionType>(
-        get_module().subtype<TClass>(), args);
-  }
-
-  template <size_t N, typename Tame, typename Wild>
-  struct static_push_back_mem_fns {
-    void operator()(std::vector<Tame>& v) {
-      v.push_back(&tame_mem_fn<N - 1, Wild>);
-      static_push_back<N - 1, Tame, Wild>{}(v);
-    }
-  };
-
-  template <typename Tame, typename Wild>
-  struct static_push_back_mem_fns<0, Tame, Wild> {
-    void operator()(std::vector<Tame>& v) {
-      std::reverse(v.begin(), v.end());
-    }
-  };
-
-  template <size_t N, typename Class, typename Tame, typename Wild>
-  struct static_push_back_constructors {
-    void operator()(std::vector<Tame>& v) {
-      v.push_back(&tame_constructor<N - 1, Class, Wild>);
-      static_push_back<N - 1, Tame, Wild>{}(v);
-    }
-  };
-
-  template <typename Class, typename Tame, typename Wild>
-  struct static_push_back_constructors<0, Class, Tame, Wild> {
-    void operator()(std::vector<Tame>& v) {
-      std::reverse(v.begin(), v.end());
-    }
-  };
-
-  template <typename Tame, typename Wild>
-  auto init_tame_mem_fns() {
-    std::vector<Tame> fs;
-    static_push_back_mem_fns<1, Tame, Wild>{}(fs);
-    return fs;
-  }
-
-  template <typename Class, typename Tame, typename Wild>
-  auto init_tame_constructors() {
-    std::vector<Tame> fs;
-    static_push_back_constructors<1, Class, Tame, Wild>{}(fs);
-    return fs;
-  }
-
-  template <typename Tame, typename Wild>
-  auto& tame_mem_fns() {
-    static std::vector<Tame> fs = init_tame_mem_fns<Tame, Wild>();
-    return fs;
-  }
-
-  template <typename Tame, typename Wild>
-  auto get_tame_mem_fn(size_t i) {
-    return tame_mem_fns<Tame, Wild>().at(i);
-  }
-
-  template <typename Class, typename Tame, typename Wild>
-  auto& tame_constructors() {
-    static std::vector<Tame> fs = init_tame_constructors<Class, Tame, Wild>();
-    return fs;
-  }
-
-  template <typename Class, typename Tame, typename Wild>
-  auto get_tame_constructor(size_t i) {
-    return tame_constructors<Class, Tame, Wild>().at(i);
-  }
-
-  template <typename TClass, typename... TArgs>
-  TClass* make(TArgs&&... params) {
-    return new TClass(std::forward<TArgs>(params)...);
-  }
-
-  template <typename... TArgs>
+  template <typename... Args>
   struct init {};
 
-  template <typename TClass>
+  template <typename Class>
   class class_ {
    public:
     class_(Module& m, std::string name)
-        : _module(m),
-          _name(name),
-          _subtype(_module.add_subtype<TClass>(name)) {}
+        : _module(m), _name(name), _subtype(_module.add_subtype<Class>(name)) {}
 
     template <typename Wild>
     class_& def(char const* mem_fn_name, Wild f) {
-      size_t const n = wild_mem_fns<Wild>().size();
-      wild_mem_fns<Wild>().push_back(f);
+      size_t const n = all_wild_mem_fns<Wild>().size();
+      all_wild_mem_fns<Wild>().push_back(f);
       _module.add_mem_func(
           _name,
           __FILE__,
@@ -1162,18 +495,16 @@ namespace gapbind14 {
       return *this;
     }
 
-    template <typename... TArgs>
-    class_& def(init<TArgs...> x) {
-      using Wild     = decltype(&make<TClass, TArgs...>);
-      size_t const n = wild_constructors<Wild>().size();
-      wild_constructors<Wild>().push_back(&make<TClass, TArgs...>);
+    template <typename... Args>
+    class_& def(init<Args...> x) {
+      using Wild = decltype(&make<Class, Args...>);
       _module.add_mem_func(
           _name,
           __FILE__,
           "make",
-          get_tame_constructor<TClass,
-                               decltype(&tame_constructor<0, TClass, Wild>),
-                               Wild>(n));
+          get_tame_constructor<Class,
+                               decltype(&tame_constructor<0, Class, Wild>),
+                               Wild>(_subtype));
       return *this;
     }
 
