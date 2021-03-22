@@ -124,22 +124,16 @@ InstallMethod(HasCppFroidurePin, "for a semigroup", [IsSemigroup], ReturnFalse);
 
 InstallGlobalFunction(CppFroidurePin,
 function(S)
-  local fp, T, add_generator, coll, x;
+  local record, T, add_generator, coll, x;
   Assert(1, IsSemigroup(S));
   Assert(1, CanComputeCppFroidurePin(S));
   if HasCppFroidurePin(S) then
     return S!.CppFroidurePin;
   fi;
   Unbind(S!.CppFroidurePin);
-  # T := MakeFroidurePin(S);
-  # for x in GeneratorsOfSemigroup(S);
-  #  AddGenerator(T, x);
-  # od;
-
-
-  fp := FroidurePinMemFnRec(S);
-  T  := fp.create([]);
-  add_generator := fp.add_generator;
+  record := FroidurePinMemFnRec(S);
+  T  := record.make([]);
+  add_generator := record.add_generator;
   coll := GeneratorsOfSemigroup(S);
   for x in coll do
     add_generator(T, _GetElement(coll, x));
@@ -182,7 +176,6 @@ function(S)
   if not IsFinite(S) then
     return infinity;
   fi;
-  # Size(CppFroidurePin(S));
   return FroidurePinMemFnRec(S).size(CppFroidurePin(S));
 end);
 

@@ -20,6 +20,20 @@
 #ifndef INCLUDE_GAPBIND14_CPP_FN_HPP_
 #define INCLUDE_GAPBIND14_CPP_FN_HPP_
 
+#include <cstddef>      // for size_t
+#include <functional>   // for function
+#include <tuple>        // for tuple, tuple_element_t
+#include <type_traits>  // for true_type
+
+#include "gap_include.hpp"  // for UInt
+
+#define GAPBIND14_TRY(something)      \
+  try {                               \
+    something;                        \
+  } catch (std::exception const& e) { \
+    ErrorQuit(e.what(), 0L, 0L);      \
+  }
+
 namespace gapbind14 {
 
   constexpr size_t MAX_FUNCTIONS = 32;
@@ -57,6 +71,37 @@ namespace gapbind14 {
 
   template <typename... TArgs>
   static constexpr overload_cast_impl<TArgs...> overload_cast = {};
+
+  namespace detail {
+    template <typename T>
+    class is_lambda {
+     private:
+      using no_ref = std::remove_reference_t<T>;
+
+     public:
+      static constexpr bool value = !(std::is_pointer<no_ref>::value
+                                      || std::is_member_pointer<no_ref>::value
+                                      || std::is_function<no_ref>::value);
+    };
+
+    template <typename T>
+    struct remove_class {};
+
+    template <typename C, typename R, typename... A>
+    struct remove_class<R (C::*)(A...)> {
+      using type = R(A...);
+    };
+
+    template <typename C, typename R, typename... A>
+    struct remove_class<R (C::*)(A...) const> {
+      using type = R(A...);
+    };
+
+    template <typename F>
+    struct strip_function_object {
+      using type = typename remove_class<decltype(&F::operator())>::type;
+    };
+  }  // namespace detail
 
   ////////////////////////////////////////////////////////////////////////
   // Function return type and parameter type info
@@ -137,7 +182,7 @@ namespace gapbind14 {
   };
 
   // Base declaration . . .
-  template <typename TSignature>
+  template <typename TSignature, typename = void>
   struct CppFunction {};
 
   // Free functions . . .
@@ -165,7 +210,10 @@ namespace gapbind14 {
   struct CppFunction<std::function<TReturnType(TArgs...)>>
       : CppFunctionBase<TReturnType, TArgs...> {};
 
-  // TODO Lambdas?
+  // Lambdas?
+  template <typename Func>
+  struct CppFunction<Func, std::enable_if_t<detail::is_lambda<Func>::value>>
+      : CppFunction<typename detail::strip_function_object<Func>::type> {};
 
   // For convenience . . .
   template <typename TFunctionType>

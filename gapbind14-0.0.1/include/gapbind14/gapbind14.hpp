@@ -42,12 +42,39 @@
 #include <vector>         // for vector
 
 #include "gap_include.hpp"   // for gmp
-#include "macros.hpp"        // for the macros
 #include "tame-free-fn.hpp"  // for tame free functions
 #include "tame-make.hpp"     // for tame member functions
 #include "tame-mem-fn.hpp"   // for tame constructors
 #include "to_cpp.hpp"        // for to_cpp
 #include "to_gap.hpp"        // for to_gap
+
+////////////////////////////////////////////////////////////////////////
+// Assertions
+////////////////////////////////////////////////////////////////////////
+
+#ifdef GAPBIND14_DEBUG
+#define GAPBIND14_ASSERT(x) assert(x)
+#else
+#define GAPBIND14_ASSERT(x)
+#endif
+
+////////////////////////////////////////////////////////////////////////
+// Macros
+////////////////////////////////////////////////////////////////////////
+
+#define GAPBIND14_STRINGIFY(x) #x
+#define GAPBIND14_TO_STRING(x) GAPBIND14_STRINGIFY(x)
+
+#define GAPBIND14_MODULE(name, module)                             \
+  ::gapbind14::Module module(GAPBIND14_TO_STRING(name));           \
+  static void         gapbind14_init_##name(::gapbind14::Module&); \
+                                                                   \
+  void ::gapbind14::GAPBIND14_MODULE_IMPL(gapbind14::Module& m) {  \
+    gapbind14_init_##name(m);                                      \
+    m.finalize();                                                  \
+  }                                                                \
+                                                                   \
+  void gapbind14_init_##name(::gapbind14::Module& variable)
 
 ////////////////////////////////////////////////////////////////////////
 // Typdefs for GAP
@@ -411,20 +438,6 @@ namespace gapbind14 {
   void init_library(Module& m);
   void init_kernel(Module& m);
 
-  template <typename T>
-  Obj range_to_plist(T first, T last) {
-    size_t N      = std::distance(first, last);
-    Obj    result = NEW_PLIST((N == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), N);
-    SET_LEN_PLIST(result, N);
-    size_t i = 1;
-    for (auto it = first; it != last; ++it) {
-      AssPlist(result,
-               i++,
-               to_gap<typename std::iterator_traits<T>::reference>()(*it));
-    }
-    return result;
-  }
-
   ////////////////////////////////////////////////////////////////////////
   // to_cpp - for gapbind14 gap objects
   ////////////////////////////////////////////////////////////////////////
@@ -483,8 +496,23 @@ namespace gapbind14 {
     class_(Module& m, std::string name)
         : _module(m), _name(name), _subtype(_module.add_subtype<Class>(name)) {}
 
+    template <typename... Args>
+    class_& def(init<Args...> x, std::string name = "make") {
+      using Wild = decltype(&make<Class, Args...>);
+      _module.add_mem_func(
+          _name,
+          __FILE__,
+          name,
+          get_tame_constructor<Class,
+                               decltype(&tame_constructor<0, Class, Wild>),
+                               Wild>(_subtype));
+      return *this;
+    }
+
     template <typename Wild>
-    class_& def(char const* mem_fn_name, Wild f) {
+    auto def(char const* mem_fn_name, Wild f)
+        -> std::enable_if_t<std::is_member_function_pointer<Wild>::value,
+                            class_&> {
       size_t const n = all_wild_mem_fns<Wild>().size();
       all_wild_mem_fns<Wild>().push_back(f);
       _module.add_mem_func(
@@ -495,16 +523,16 @@ namespace gapbind14 {
       return *this;
     }
 
-    template <typename... Args>
-    class_& def(init<Args...> x) {
-      using Wild = decltype(&make<Class, Args...>);
-      _module.add_mem_func(
-          _name,
-          __FILE__,
-          "make",
-          get_tame_constructor<Class,
-                               decltype(&tame_constructor<0, Class, Wild>),
-                               Wild>(_subtype));
+    template <typename Wild>
+    auto def(char const* mem_fn_name, Wild f)
+        -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value,
+                            class_&> {
+      size_t const n = all_wilds<Wild>().size();
+      all_wilds<Wild>().push_back(f);
+      _module.add_mem_func(_name,
+                           __FILE__,
+                           mem_fn_name,
+                           get_tame<decltype(&tame<0, Wild>), Wild>(n));
       return *this;
     }
 
@@ -514,6 +542,19 @@ namespace gapbind14 {
     gapbind14_sub_type _subtype;
   };
 
+  template <typename T>
+  Obj make_iterator(T first, T last) {
+    size_t N      = std::distance(first, last);
+    Obj    result = NEW_PLIST((N == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), N);
+    SET_LEN_PLIST(result, N);
+    size_t i = 1;
+    for (auto it = first; it != last; ++it) {
+      AssPlist(result,
+               i++,
+               to_gap<typename std::iterator_traits<T>::reference>()(*it));
+    }
+    return result;
+  }
 }  // namespace gapbind14
 
 #endif  // INCLUDE_GAPBIND14_GAPBIND14_HPP_

@@ -20,11 +20,15 @@
 #ifndef INCLUDE_GAPBIND14_TAME_FREE_FN_HPP_
 #define INCLUDE_GAPBIND14_TAME_FREE_FN_HPP_
 
-#include <vector>
+#include <algorithm>    // for reverse
+#include <cstddef>      // for size_t
+#include <type_traits>  // for enable_if_t
+#include <vector>       // for vector
 
-#include "cpp-fn.hpp"
-#include "to_cpp.hpp"
-#include "to_gap.hpp"
+#include "cpp-fn.hpp"  // for CppFunction, GAPBIND14_TRY, arg_count, returns_void, MAX_FUNCTIONS
+#include "gap_include.hpp"  // for Obj
+#include "to_cpp.hpp"       // for to_cpp
+#include "to_gap.hpp"       // for to_gap
 
 namespace gapbind14 {
 

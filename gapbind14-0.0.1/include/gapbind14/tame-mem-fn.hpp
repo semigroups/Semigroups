@@ -20,11 +20,15 @@
 #ifndef INCLUDE_GAPBIND14_TAME_MEM_FN_HPP_
 #define INCLUDE_GAPBIND14_TAME_MEM_FN_HPP_
 
-#include <vector>
+#include <algorithm>    // for reverse
+#include <cstddef>      // for size_t
+#include <type_traits>  // for enable_if_t
+#include <vector>       // for vector
 
-#include "cpp-fn.hpp"
-#include "to_cpp.hpp"
-#include "to_gap.hpp"
+#include "cpp-fn.hpp"  // for CppFunction, GAPBIND14_TRY, T_GAPBIND14_OBJ, arg_count, returns_void
+#include "gap_include.hpp"  // for ErrorQuit, Obj, Int, TNAM_OBJ, TNUM_OBJ
+#include "to_cpp.hpp"       // for to_cpp
+#include "to_gap.hpp"       // for to_gap
 
 namespace gapbind14 {
 
@@ -335,20 +339,272 @@ namespace gapbind14 {
           "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
     }
 
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
     using class_type = typename CppFunction<Wild>::class_type;
-
-    // if (reinterpret_cast<size_t>(ADDR_OBJ(arg0)[2])
-    //    != typeid(class_type).hash_code()) {
-    //  ErrorQuit("expected %s but got %s!",
-    //            (Int) typeid(class_type).name(),
-    //            (Int) get_module().name(arg0));
-    //}
-
-    class_type* ptr = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
 
     using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
     GAPBIND14_TRY(
         return to_gap_type()(CppFunction<Wild>()(wild_mem_fn<Wild>(N), ptr)));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self, Obj arg0, Obj arg1)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 1,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(CppFunction<Wild>()(
+        wild_mem_fn<Wild>(N), ptr, to_cpp<to_cpp_1_type>()(arg1))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self, Obj arg0, Obj arg1, Obj arg2)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 2,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 3,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_cpp_3_type =
+        typename CppFunction<Wild>::params_type::template get<2>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2),
+                            to_cpp<to_cpp_3_type>()(arg3))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self, Obj arg0, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 4,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_cpp_3_type =
+        typename CppFunction<Wild>::params_type::template get<2>;
+    using to_cpp_4_type =
+        typename CppFunction<Wild>::params_type::template get<3>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2),
+                            to_cpp<to_cpp_3_type>()(arg3),
+                            to_cpp<to_cpp_4_type>()(arg4))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self,
+                   Obj arg0,
+                   Obj arg1,
+                   Obj arg2,
+                   Obj arg3,
+                   Obj arg4,
+                   Obj arg5)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 5,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_cpp_3_type =
+        typename CppFunction<Wild>::params_type::template get<2>;
+    using to_cpp_4_type =
+        typename CppFunction<Wild>::params_type::template get<3>;
+    using to_cpp_5_type =
+        typename CppFunction<Wild>::params_type::template get<4>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2),
+                            to_cpp<to_cpp_3_type>()(arg3),
+                            to_cpp<to_cpp_4_type>()(arg4),
+                            to_cpp<to_cpp_5_type>()(arg5))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self,
+                   Obj arg0,
+                   Obj arg1,
+                   Obj arg2,
+                   Obj arg3,
+                   Obj arg4,
+                   Obj arg5,
+                   Obj arg6)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 6,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_cpp_3_type =
+        typename CppFunction<Wild>::params_type::template get<2>;
+    using to_cpp_4_type =
+        typename CppFunction<Wild>::params_type::template get<3>;
+    using to_cpp_5_type =
+        typename CppFunction<Wild>::params_type::template get<4>;
+    using to_cpp_6_type =
+        typename CppFunction<Wild>::params_type::template get<5>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2),
+                            to_cpp<to_cpp_3_type>()(arg3),
+                            to_cpp<to_cpp_4_type>()(arg4),
+                            to_cpp<to_cpp_5_type>()(arg5),
+                            to_cpp<to_cpp_6_type>()(arg6))));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame_mem_fn(Obj self,
+                   Obj arg0,
+                   Obj arg1,
+                   Obj arg2,
+                   Obj arg3,
+                   Obj arg4,
+                   Obj arg5,
+                   Obj arg6,
+                   Obj arg7)
+      -> std::enable_if_t<!returns_void<Wild>::value
+                              && arg_count<Wild>::value == 7,
+                          TSFINAE> {
+    if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
+      ErrorQuit(
+          "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
+    }
+
+    // TODO figure out how to check that the subtype of arg0 is compatible with
+    // Wild
+
+    using class_type = typename CppFunction<Wild>::class_type;
+    class_type* ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    using to_cpp_1_type =
+        typename CppFunction<Wild>::params_type::template get<0>;
+    using to_cpp_2_type =
+        typename CppFunction<Wild>::params_type::template get<1>;
+    using to_cpp_3_type =
+        typename CppFunction<Wild>::params_type::template get<2>;
+    using to_cpp_4_type =
+        typename CppFunction<Wild>::params_type::template get<3>;
+    using to_cpp_5_type =
+        typename CppFunction<Wild>::params_type::template get<4>;
+    using to_cpp_6_type =
+        typename CppFunction<Wild>::params_type::template get<5>;
+    using to_cpp_7_type =
+        typename CppFunction<Wild>::params_type::template get<6>;
+    using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(
+        CppFunction<Wild>()(wild_mem_fn<Wild>(N),
+                            ptr,
+                            to_cpp<to_cpp_1_type>()(arg1),
+                            to_cpp<to_cpp_2_type>()(arg2),
+                            to_cpp<to_cpp_3_type>()(arg3),
+                            to_cpp<to_cpp_4_type>()(arg4),
+                            to_cpp<to_cpp_5_type>()(arg5),
+                            to_cpp<to_cpp_6_type>()(arg6),
+                            to_cpp<to_cpp_7_type>()(arg7))));
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -359,7 +615,7 @@ namespace gapbind14 {
   struct static_push_back_mem_fns {
     void operator()(std::vector<Tame>& v) {
       v.push_back(&tame_mem_fn<N - 1, Wild>);
-      static_push_back<N - 1, Tame, Wild>{}(v);
+      static_push_back_mem_fns<N - 1, Tame, Wild>{}(v);
     }
   };
 
@@ -373,7 +629,7 @@ namespace gapbind14 {
   template <typename Tame, typename Wild>
   auto init_tame_mem_fns() {
     std::vector<Tame> fs;
-    static_push_back_mem_fns<1, Tame, Wild>{}(fs);
+    static_push_back_mem_fns<MAX_FUNCTIONS, Tame, Wild>{}(fs);
     return fs;
   }
 
