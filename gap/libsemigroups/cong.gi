@@ -104,11 +104,11 @@ function(S)
   if IsTransformationSemigroup(S) then
     if DegreeOfTransformationSemigroup(S) <= 16 and
         IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.Congruence.create_transf16;
+      return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
     elif DegreeOfTransformationSemigroup(S) <= 65536 then
-      return libsemigroups.Congruence.create_transfuint2;
+      return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
     elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
-      return libsemigroups.Congruence.create_transfuint4;
+      return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
     else
       Error("transformation degree is too high!");
     fi;
@@ -116,20 +116,20 @@ function(S)
     N := Maximum(DegreeOfPartialPermSemigroup(S),
                  CodegreeOfPartialPermSemigroup(S));
     if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.Congruence.create_pperm16;
+      return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
     elif N <= 65536 then
-      return libsemigroups.Congruence.create_ppermuint2;
+      return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
     elif N <= 18446744073709551616 then
-      return libsemigroups.Congruence.create_ppermuint4;
+      return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
     else
       Error("partial perm degree is too high!");
     fi;
   elif IsMatrixOverSemiringSemigroup(S) then
-    return libsemigroups.Congruence.create_bmat;
+    return libsemigroups.Congruence.make_from_froidurepin_bmat;
   elif IsBipartitionSemigroup(S) then
-    return libsemigroups.Congruence.create_bipart;
+    return libsemigroups.Congruence.make_from_froidurepin_bipartition;
   elif IsPBRSemigroup(S) then
-    return libsemigroups.Congruence.create_pbr;
+    return libsemigroups.Congruence.make_from_froidurepin_pbr;
   else
     Error("Something has gone wrong, should not have ",
           "been able to reach here!");
@@ -154,12 +154,12 @@ function(C)
     factor := MinimalFactorization;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    CC := libsemigroups.Congruence.create_fpsemigroup([Kind(C),
+    CC := libsemigroups.Congruence.make_from_fpsemigroup([Kind(C),
                                                        CppFpSemigroup(S)]);
     factor := Factorization;
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.create([Kind(C)]);
+    tc := libsemigroups.ToddCoxeter.make([Kind(C)]);
     libsemigroups.ToddCoxeter.set_nr_generators(tc, N);
     if IsLeftCongruenceCategory(C) then
       table := LeftCayleyGraphSemigroup(Range(C)) - 1;
@@ -167,8 +167,8 @@ function(C)
       table := RightCayleyGraphSemigroup(Range(C)) - 1;
     fi;
     libsemigroups.ToddCoxeter.prefill(tc, table);
-    CC := libsemigroups.Congruence.create_table([Kind(C), "none"]);
-    libsemigroups.Congruence.set_nr_generators(CC, N);
+    CC := libsemigroups.Congruence.make_from_table([Kind(C), "none"]);
+    libsemigroups.Congruence.set_number_of_generators(CC, N);
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
   else
@@ -263,7 +263,7 @@ InstallMethod(NrEquivalenceClasses,
 [CanComputeCppCongruence], 100,
 function(C)
   local result;
-  result := libsemigroups.Congruence.nr_classes(CppCongruence(C));
+  result := libsemigroups.Congruence.number_of_classes(CppCongruence(C));
   if result = -2 then
     return infinity;
   fi;

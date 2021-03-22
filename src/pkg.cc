@@ -25,6 +25,8 @@
 #include <iostream>
 
 #include "bipart.h"
+#include "cong.hpp"
+#include "froidure-pin.hpp"
 #include "fropin.h"
 #include "semigroups-debug.h"
 #include "to_gap.hpp"
@@ -46,152 +48,19 @@ namespace {
   }
 }  // namespace
 
-/*
-////////////////////////////////////////////////////////////////////////
-// Congruence
-////////////////////////////////////////////////////////////////////////
-
-using libsemigroups::Congruence;
-using libsemigroups::FroidurePinBase;
-
-namespace {
-  auto init_congruence_bipart
-      = gapbind14::init<Congruence, congruence_type, FroidurePinBipart const&>;
-  auto init_congruence_bmat
-      = gapbind14::init<Congruence, congruence_type, FroidurePinBMat const&>;
-  auto init_congruence_pbr
-      = gapbind14::init<Congruence, congruence_type, FroidurePinPBR const&>;
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  auto init_congruence_pperm16
-      = gapbind14::init<Congruence, congruence_type, FroidurePinPPerm16 const&>;
-#endif
-  auto init_congruence_ppermuint2 = gapbind14::
-      init<Congruence, congruence_type, FroidurePinPPermUInt2 const&>;
-  auto init_congruence_ppermuint4 = gapbind14::
-      init<Congruence, congruence_type, FroidurePinPPermUInt4 const&>;
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  auto init_congruence_transf16 = gapbind14::
-      init<Congruence, congruence_type, FroidurePinTransf16 const&>;
-#endif
-  auto init_congruence_transfuint2 = gapbind14::
-      init<Congruence, congruence_type, FroidurePinTransfUInt2 const&>;
-  auto init_congruence_transfuint4 = gapbind14::
-      init<Congruence, congruence_type, FroidurePinTransfUInt4 const&>;
-  auto init_congruence_fpsemigroup
-      = gapbind14::init<Congruence, congruence_type, FpSemigroup&>;
-  auto init_congruence_table = gapbind14::
-      init<Congruence, congruence_type, Congruence::policy::runners>;
-}  // namespace
-
-GAPBIND14_CLASS(m, Congruence);
-GAPBIND14_CONSTRUCTOR(m,
-                      Congruence,
-                      create_fpsemigroup,
-                      init_congruence_fpsemigroup);
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_bipart, init_congruence_bipart);
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_bmat, init_congruence_bmat);
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_pbr, init_congruence_pbr);
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_pperm16, init_congruence_pperm16);
-#endif
-GAPBIND14_CONSTRUCTOR(m,
-                      Congruence,
-                      create_ppermuint2,
-                      init_congruence_ppermuint2);
-GAPBIND14_CONSTRUCTOR(m,
-                      Congruence,
-                      create_ppermuint4,
-                      init_congruence_ppermuint4);
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_transf16, init_congruence_transf16);
-#endif
-GAPBIND14_CONSTRUCTOR(m,
-                      Congruence,
-                      create_transfuint2,
-                      init_congruence_transfuint2);
-GAPBIND14_CONSTRUCTOR(m,
-                      Congruence,
-                      create_transfuint4,
-                      init_congruence_transfuint4);
-GAPBIND14_CONSTRUCTOR(m, Congruence, create_table, init_congruence_table);
-
-GAPBIND14_MEM_FN(m, Congruence, set_nr_generators, set_nr_generators);
-GAPBIND14_MEM_FN(m, Congruence, nr_generating_pairs, nr_generating_pairs);
-GAPBIND14_MEM_FN(
-    m,
-    Congruence,
-    add_pair,
-    add_pair,
-    (gapbind14::overload_cast<word_type const&, word_type const&>) );
-GAPBIND14_MEM_FN(m, Congruence, nr_classes, nr_classes);
-GAPBIND14_MEM_FN(m, Congruence, word_to_class_index, word_to_class_index);
-GAPBIND14_MEM_FN(m, Congruence, class_index_to_word, class_index_to_word);
-GAPBIND14_MEM_FN(m, Congruence, contains, contains);
-GAPBIND14_MEM_FN(m, Congruence, less, less);
-GAPBIND14_MEM_FN(m, Congruence, add_runner<ToddCoxeter>, add_runner);
-GAPBIND14_ITERATOR(m, Congruence, cbegin_ntc(), cend_ntc(), ntc);
-*/
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-// TESTING
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
-template <typename element_type>
-struct gapbind14::IsGapBind14Type<
-    libsemigroups::FroidurePin<element_type> const&> : std::true_type {};
-
-template <typename element_type>
-struct gapbind14::IsGapBind14Type<libsemigroups::FroidurePin<element_type>&>
-    : std::true_type {};
-
-namespace {
-  template <typename element_type>
-  void froidure_pin(gapbind14::Module& m, std::string name) {
-    using FroidurePin_ = libsemigroups::FroidurePin<element_type>;
-    gapbind14::class_<FroidurePin_>(m, name)
-        .def(gapbind14::init<>{}, "make")
-        .def(gapbind14::init<FroidurePin_ const&>{}, "copy")
-        .def("add_generator", &FroidurePin_::add_generator)
-        .def("generator", &FroidurePin_::generator)
-        .def("closure",
-             &FroidurePin_::template closure<std::vector<element_type>>)
-        .def("nr_generators", &FroidurePin_::nr_generators)
-        .def("size", &FroidurePin_::size)
-        .def("at", &FroidurePin_::at)
-        .def("sorted_at", &FroidurePin_::sorted_at)
-        .def("current_position", &FroidurePin_::current_position)
-        .def("sorted_position", &FroidurePin_::sorted_position)
-        .def("nr_idempotents", &FroidurePin_::nr_idempotents)
-        .def("enumerate", &FroidurePin_::enumerate)
-        .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
-        .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
-        .def("factorisation",
-             gapbind14::overload_cast<size_t>(&FroidurePin_::factorisation))
-        .def("position_to_sorted_position",
-             &FroidurePin_::position_to_sorted_position)
-        .def("fast_product", &FroidurePin_::fast_product)
-        .def("is_idempotent", &FroidurePin_::is_idempotent)
-        .def("finished", &FroidurePin_::finished)
-        .def("position", &FroidurePin_::position)
-        .def("rules",
-             [](FroidurePin_& S) {
-               return gapbind14::make_iterator(S.cbegin_rules(),
-                                               S.cend_rules());
-             })
-        .def("idempotents", [](FroidurePin_& S) {
-          return gapbind14::make_iterator(S.cbegin_idempotents(),
-                                          S.cend_idempotents());
-        });
-  }
-}  // namespace
-
 GAPBIND14_MODULE(libsemigroups, m) {
   ////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
   InstallGlobalFunction(m, "set_report", &set_report);
+
+  ////////////////////////////////////////////////////////////////////////
+  // Initialise from other cpp files
+  ////////////////////////////////////////////////////////////////////////
+
+  init_froidure_pin(m);
+  init_cong(m);
 
   ////////////////////////////////////////////////////////////////////////
   // FpSemigroup
@@ -210,34 +79,6 @@ GAPBIND14_MODULE(libsemigroups, m) {
       .def("set_identity",
            gapbind14::overload_cast<libsemigroups::letter_type>(
                &FpSemigroup::set_identity));
-
-  ////////////////////////////////////////////////////////////////////////
-  // FroidurePin
-  ////////////////////////////////////////////////////////////////////////
-
-  froidure_pin<libsemigroups::Bipartition>(m, "FroidurePinBipart");
-  froidure_pin<libsemigroups::BMat<>>(m, "FroidurePinBMat");
-  // TODO must implement to_gap/to_cpp for BMat8 + HPCombi::BMat8
-  froidure_pin<libsemigroups::IntMat<>>(m, "FroidurePinIntMat");
-  froidure_pin<libsemigroups::MaxPlusMat<>>(m, "FroidurePinMaxPlusMat");
-  froidure_pin<libsemigroups::MaxPlusTruncMat<>>(m,
-                                                 "FroidurePinMaxPlusTruncMat");
-  froidure_pin<libsemigroups::MinPlusMat<>>(m, "FroidurePinMinPlusMat");
-  froidure_pin<libsemigroups::MinPlusTruncMat<>>(m,
-                                                 "FroidurePinMinPlusTruncMat");
-  froidure_pin<libsemigroups::NTPMat<>>(m, "FroidurePinNTPMat");
-  froidure_pin<libsemigroups::PBR>(m, "FroidurePinPBR");
-  froidure_pin<libsemigroups::ProjMaxPlusMat<>>(m, "FroidurePinProjMaxPlusMat");
-  froidure_pin<libsemigroups::PPerm<0, UInt2>>(m, "FroidurePinPPermUInt2");
-  froidure_pin<libsemigroups::PPerm<0, UInt4>>(m, "FroidurePinPPermUInt4");
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  froidure_pin<libsemigroups::LeastPPerm<16>>(m, "FroidurePinPPerm16");
-#endif
-  froidure_pin<libsemigroups::Transf<0, UInt2>>(m, "FroidurePinTransfUInt2");
-  froidure_pin<libsemigroups::Transf<0, UInt4>>(m, "FroidurePinTransfUInt4");
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-  froidure_pin<libsemigroups::LeastTransf<16>>(m, "FroidurePinTransf16");
-#endif
 
   ////////////////////////////////////////////////////////////////////////
   // ToddCoxeter

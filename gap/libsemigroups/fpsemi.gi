@@ -29,7 +29,7 @@ function(S)
     F := S;
   fi;
 
-  SS := libsemigroups.FpSemigroup.create([]);
+  SS := libsemigroups.FpSemigroup.make([]);
   libsemigroups.FpSemigroup.set_alphabet(SS, Size(GeneratorsOfSemigroup(S)));
 
   if IsMonoid(S) then
