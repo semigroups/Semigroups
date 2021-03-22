@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include "cong.hpp"
+
 #include "froidure-pin.hpp"
-#include "pkg.h"
+#include "pkg.hpp"
 #include "to_gap.hpp"
 
 #include "gapbind14/gapbind14.hpp"

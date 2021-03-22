@@ -20,27 +20,36 @@
 // package that involves GAP directly, i.e. importing functions/variables from
 // GAP and declaring functions for GAP etc.
 
-#include "pkg.h"
+#include "pkg.hpp"
 
-#include <iostream>
+#include <cstddef>      // for size_t
+#include <exception>    // for exception
+#include <iostream>     // for string
+#include <type_traits>  // for conditional<>::type
+#include <vector>       // for vector
 
-#include "bipart.h"
-#include "cong.hpp"
-#include "froidure-pin.hpp"
-#include "fropin.h"
-#include "semigroups-debug.h"
-#include "to_gap.hpp"
+// GAP headers
+#include "compiled.h"
 
-#include "libsemigroups/bipart.hpp"
-#include "libsemigroups/cong.hpp"
-#include "libsemigroups/fastest-bmat.hpp"
-#include "libsemigroups/fpsemi.hpp"
-#include "libsemigroups/froidure-pin.hpp"
-#include "libsemigroups/libsemigroups-config.hpp"  // for LIBSEMIGROUP_HPCOMBI_ENABLED
-#include "libsemigroups/matrix.hpp"
-#include "libsemigroups/transf.hpp"
+// Semigroups package for GAP headers
+#include "bipart.h"            // for Blocks, Bipartition
+#include "cong.hpp"            // for init_cong
+#include "froidure-pin.hpp"    // for init_froidure_pin
+#include "fropin.h"            // for RUN_FROIDURE_PIN
+#include "semigroups-debug.h"  // for SEMIGROUPS_ASSERT
+#include "to_gap.hpp"          // for to_gap
 
-#include "gapbind14/gapbind14.hpp"
+// Gapbind14 headers
+#include "gapbind14/cpp-fn.hpp"     // for overload_cast
+#include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
+
+// libsemigroups headers
+#include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
+#include "libsemigroups/cong-intf.hpp"  // for congruence_type
+#include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
+#include "libsemigroups/report.hpp"     // for REPORTER, Reporter
+#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
+#include "libsemigroups/types.hpp"         // for word_type, letter_type
 
 namespace {
   void set_report(bool const val) {
@@ -161,8 +170,8 @@ void TBipartObjSaveFunc(Obj o) {
 }
 
 void TBipartObjLoadFunc(Obj o) {
-  UInt4                  deg = LoadUInt4();
-  std::vector<u_int32_t> blocks;
+  UInt4                 deg = LoadUInt4();
+  std::vector<uint32_t> blocks;
   blocks.reserve(2 * deg);
 
   for (size_t i = 0; i < 2 * deg; i++) {
@@ -290,13 +299,13 @@ static StructGVarFilt GVarFilts[] = {
      "obj",
      &IsBipartFilt,
      (GVarFilt) IsBipartHandler,
-     "pkg.cc:IS_BIPART"},
+     "pkg.cpp:IS_BIPART"},
 
     {"IS_BLOCKS",
      "obj",
      &IsBlocksFilt,
      (GVarFilt) IsBlocksHandler,
-     "pkg.cc:IS_BLOCKS"},
+     "pkg.cpp:IS_BLOCKS"},
 
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };

@@ -18,7 +18,7 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"
-#include "pkg.h"
+#include "pkg.hpp"
 #include "to_gap.hpp"
 
 // gapbind14 headers

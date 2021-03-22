@@ -19,21 +19,15 @@
 // This file contains declarations related to the kernel module for the
 // Semigroups package.
 
-#ifndef SEMIGROUPS_SRC_PKG_H_
-#define SEMIGROUPS_SRC_PKG_H_
+#ifndef SEMIGROUPS_SRC_PKG_HPP_
+#define SEMIGROUPS_SRC_PKG_HPP_
 
 #if (defined(__GNUC__) && __GNUC__ < 5 \
      && !(defined(__clang__) || defined(__INTEL_COMPILER)))
 #error "GCC version 5.0 or higher is required"
 #endif
 
-#include <iostream>
-#include <vector>
-
-#include "compiled.h"
-
-#include "rnams.h"
-#include "semigroups-debug.h"
+#include "compiled.h"  // for Obj, UInt
 
 extern UInt T_BIPART;
 extern UInt T_BLOCKS;
@@ -73,4 +67,4 @@ extern Obj LARGEST_MOVED_PT_TRANS;
 
 extern Obj IsSemigroup;
 
-#endif  // SEMIGROUPS_SRC_PKG_H_
+#endif  // SEMIGROUPS_SRC_PKG_HPP_

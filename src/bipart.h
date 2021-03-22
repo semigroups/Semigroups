@@ -23,7 +23,7 @@
 #include "compiled.h"
 
 // Semigroups pkg headers
-#include "pkg.h"
+#include "pkg.hpp"
 #include "semigroups-debug.h"
 
 // libsemigroups headers

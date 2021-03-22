@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2016-21 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@
 #ifndef SEMIGROUPS_SRC_FROPIN_H_
 #define SEMIGROUPS_SRC_FROPIN_H_
 
-#include "compiled.h"
-#include "pkg.h"
+#include "compiled.h"  // for Obj
 
 Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit);
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
