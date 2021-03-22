@@ -35,16 +35,6 @@ using libsemigroups::detail::Timer;
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 
-#ifdef SEMIGROUPS_KERNEL_DEBUG
-
-#define CHECK_SEMI_OBJ(obj)                         \
-  if (CALL_1ARGS(IsSemigroup, obj) != True) {       \
-    ERROR(obj, "the argument must be a semigroup"); \
-  }
-#else
-#define CHECK_SEMI_OBJ(so)
-#endif
-
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
   SET_LEN_PLIST(ELM_PLIST(plist, i), j);

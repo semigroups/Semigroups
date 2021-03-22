@@ -16,11 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Semigroups GAP package headers
+#include "froidure-pin.hpp"
 #include "pkg.h"
 #include "to_gap.hpp"
 
+// gapbind14 headers
 #include "gapbind14/gapbind14.hpp"
 
+// libsemigroups headers
 #include "libsemigroups/bipart.hpp"
 #include "libsemigroups/froidure-pin.hpp"
 #include "libsemigroups/matrix.hpp"
@@ -85,6 +89,7 @@ void init_froidure_pin(gapbind14::Module& m) {
   using libsemigroups::PPerm;
   using libsemigroups::ProjMaxPlusMat;
   using libsemigroups::Transf;
+
   froidure_pin<Bipartition>(m, "FroidurePinBipart");
   froidure_pin<BMat<>>(m, "FroidurePinBMat");
   // TODO must implement to_gap/to_cpp for BMat8 + HPCombi::BMat8
