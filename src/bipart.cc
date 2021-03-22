@@ -714,8 +714,6 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
 Obj BLOCKS_EXT_REP(Obj self, Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
-  initRNams();
-
   Blocks* xx = blocks_get_cpp(x);
   size_t  n  = xx->degree();
 

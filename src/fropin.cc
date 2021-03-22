@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2016-21 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,14 +18,21 @@
 
 #include "fropin.h"
 
-#include <algorithm>
-#include <iostream>
+#include <string.h>  // for size_t, memcpy
 
-#include "rnams.h"
-#include "semigroups-debug.h"
+#include <algorithm>  // for max
+#include <iostream>  // for operator<<, basic_ostream, char_traits, cout, ostream
 
-#include "libsemigroups/report.hpp"
-#include "libsemigroups/timer.hpp"
+// GAP headers
+#include "compiled.h"  // for RNamName
+
+// Semigroups package for GAP headers
+#include "pkg.hpp"             // for HTAdd, HTValue, IsSemigroup, SEMIGROUPS
+#include "semigroups-debug.h"  // for SEMIGROUPS_ASSERT
+
+// libsemigroups headers
+#include "libsemigroups/report.hpp"  // for REPORTER, Reporter
+#include "libsemigroups/timer.hpp"   // for Timer
 
 using libsemigroups::detail::Timer;
 
@@ -34,6 +41,18 @@ using libsemigroups::detail::Timer;
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
+
+static Int RNam_batch_size        = 0;
+static Int RNam_DefaultOptionsRec = 0;
+static Int RNam_opts              = 0;
+
+static inline void initRNams() {
+  if (!RNam_batch_size) {
+    RNam_batch_size        = RNamName("batch_size");
+    RNam_DefaultOptionsRec = RNamName("DefaultOptionsRec");
+    RNam_opts              = RNamName("opts");
+  }
+}
 
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
@@ -44,11 +63,12 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // Semigroups
 
 static Obj get_default_value(Int rnam) {
+  initRNams();
   Obj opts = ElmPRec(SEMIGROUPS, RNam_DefaultOptionsRec);
   return ElmPRec(opts, rnam);
 }
 
-static inline size_t semi_obj_get_batch_size(Obj so) {
+static inline size_t get_batch_size(Obj so) {
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
@@ -82,7 +102,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   parent = ElmPRec(obj, RNamName("parent"));
   SEMIGROUPS_ASSERT(CALL_1ARGS(IsSemigroup, parent) == True);
   data              = obj;
-  size_t batch_size = semi_obj_get_batch_size(parent);
+  size_t batch_size = get_batch_size(parent);
 
   i  = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
