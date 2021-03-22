@@ -32,12 +32,12 @@
 #include "compiled.h"
 
 // Semigroups package for GAP headers
-#include "bipart.h"            // for Blocks, Bipartition
-#include "cong.hpp"            // for init_cong
-#include "froidure-pin.hpp"    // for init_froidure_pin
-#include "fropin.h"            // for RUN_FROIDURE_PIN
-#include "semigroups-debug.h"  // for SEMIGROUPS_ASSERT
-#include "to_gap.hpp"          // for to_gap
+#include "bipart.h"                   // for Blocks, Bipartition
+#include "cong.hpp"                   // for init_cong
+#include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
+#include "froidure-pin.hpp"           // for init_froidure_pin
+#include "semigroups-debug.h"         // for SEMIGROUPS_ASSERT
+#include "to_gap.hpp"                 // for to_gap
 
 // Gapbind14 headers
 #include "gapbind14/cpp-fn.hpp"     // for overload_cast
@@ -323,13 +323,12 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_ENTRY("fropin.cc",
+    GVAR_ENTRY("froidure-pin-fallback.cpp",
                SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
                2,
                "scc1, scc2"),
-
-    GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
-    GVAR_ENTRY("fropin.cc", RUN_FROIDURE_PIN, 2, "obj, limit"),
+    GVAR_ENTRY("froidure-pin-fallback.cpp", FIND_HCLASSES, 2, "left, right"),
+    GVAR_ENTRY("froidure-pin-fallback.cpp", RUN_FROIDURE_PIN, 2, "obj, limit"),
 
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
