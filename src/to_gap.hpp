@@ -36,6 +36,7 @@
 #include "compiled.h"
 
 // Semigroups package headers
+#include "bipart.h"
 #include "semigroups-config.h"
 #include "semigroups-debug.h"
 
@@ -60,6 +61,7 @@ using libsemigroups::IsMinPlusTruncMat;
 using libsemigroups::IsNTPMat;
 using libsemigroups::IsProjMaxPlusMat;
 
+using libsemigroups::Bipartition;
 using libsemigroups::MaxPlusTruncSemiring;
 using libsemigroups::MinPlusTruncSemiring;
 using libsemigroups::NTPSemiring;
@@ -73,22 +75,7 @@ using libsemigroups::PositiveInfinity;
 using libsemigroups::UNDEFINED;
 
 namespace semigroups {
-  NTPSemiring<> const* semiring(size_t threshold, size_t period) {
-    static std::unordered_map<std::pair<size_t, size_t>,
-                              std::unique_ptr<NTPSemiring<> const>,
-                              libsemigroups::Hash<std::pair<size_t, size_t>>>
-        cache;
-
-    auto it = cache.find(std::make_pair(threshold, period));
-    if (it == cache.end()) {
-      it = cache
-               .emplace(
-                   std::make_pair(threshold, period),
-                   std::make_unique<NTPSemiring<> const>(threshold, period))
-               .first;
-    }
-    return it->second.get();
-  }
+  NTPSemiring<> const* semiring(size_t threshold, size_t period);
 
   template <typename T>
   T const* semiring(size_t threshold) {

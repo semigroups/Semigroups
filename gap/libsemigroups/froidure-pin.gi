@@ -677,7 +677,7 @@ function(Constructor, S, coll, opts)
       # Can't use closure, TODO use copy_closure
       # FIXME if M goes larger than the type of R can support this will end
       # badly
-      CppT  := R.create([]);
+      CppT  := R.make([]);
       add_generator := R.add_generator;
       for x in GeneratorsOfSemigroup(S) do
         add_generator(CppT, [x, M]);
