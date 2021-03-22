@@ -25,9 +25,10 @@ lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/bipart.cc 
 semigroups_la_SOURCES += src/cong.cpp
-semigroups_la_SOURCES += src/fropin.cc
+semigroups_la_SOURCES += src/froidure-pin-fallback.cpp
 semigroups_la_SOURCES += src/froidure-pin.cpp
 semigroups_la_SOURCES += src/pkg.cpp 
+# TODO(now) split to_gap into to_gap and to_cpp
 semigroups_la_SOURCES += src/to_gap.cpp
 semigroups_la_SOURCES += gapbind14-0.0.1/src/gapbind14.cpp
 
