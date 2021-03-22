@@ -110,29 +110,13 @@ GAPBIND14_MODULE(libsemigroups, m) {
 
 Obj SEMIGROUPS;
 
-Obj TheTypeTSemiObj;
 Obj TheTypeTBlocksObj;
 
 Obj TYPE_BIPART;   // function
 Obj TYPES_BIPART;  // plist
 
-UInt T_SEMI   = 0;
 UInt T_BIPART = 0;
 UInt T_BLOCKS = 0;
-
-// Function to print a T_SEMI Obj.
-
-void TSemiObjPrintFunc(Obj o) {
-  switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_CONG: {
-      Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
-      break;
-    }
-    default: {
-      SEMIGROUPS_ASSERT(false);
-    }
-  }
-}
 
 Obj TBipartObjCopyFunc(Obj o, Int mut) {
   // Bipartition objects are mathematically immutable, so
@@ -150,7 +134,6 @@ void TBipartObjCleanFunc(Obj o) {}
 
 void TBlocksObjCleanFunc(Obj o) {}
 
-// Function to free a T_SEMI Obj during garbage collection.
 void TBipartObjFreeFunc(Obj o) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
   delete bipart_get_cpp(o);
@@ -161,12 +144,6 @@ void TBlocksObjFreeFunc(Obj o) {
   delete blocks_get_cpp(o);
 }
 
-// Functions to return the GAP-level type of a T_SEMI Obj
-
-Obj TSemiObjTypeFunc(Obj o) {
-  return TheTypeTSemiObj;
-}
-
 Obj TBipartObjTypeFunc(Obj o) {
   return ELM_PLIST(TYPES_BIPART, bipart_get_cpp(o)->degree() + 1);
 }
@@ -174,42 +151,6 @@ Obj TBipartObjTypeFunc(Obj o) {
 Obj TBlocksObjTypeFunc(Obj o) {
   return TheTypeTBlocksObj;
 }
-
-// Functions to save/load T_SEMI, T_BIPART, T_BLOCKS
-
-void TSemiObjSaveFunc(Obj o) {
-  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  SaveUInt4(SUBTYPE_OF_T_SEMI(o));
-}
-
-void TSemiObjLoadFunc(Obj o) {
-  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-
-  t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
-  ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
-
-  switch (type) {
-    case T_SEMI_SUBTYPE_CONG: {
-      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
-      break;
-    }
-    default: {
-      SEMIGROUPS_ASSERT(false);
-    }
-  }
-}
-
-Obj TSemiObjCopyFunc(Obj o, Int mut) {
-  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  return o;
-}
-
-Int TSemiObjIsMutableObjFunc(Obj o) {
-  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
-  return 0L;
-}
-
-void TSemiObjCleanFunc(Obj o) {}
 
 void TBipartObjSaveFunc(Obj o) {
   Bipartition* b = bipart_get_cpp(o);
@@ -435,20 +376,6 @@ static Int InitKernel(StructInitInfo* module) {
   InitHdlrFuncsFromTable(GVarFuncs);
 
   ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
-
-  // T_SEMI
-  T_SEMI = RegisterPackageTNUM("Semigroups package C++ type", TSemiObjTypeFunc);
-
-  PrintObjFuncs[T_SEMI]     = TSemiObjPrintFunc;
-  SaveObjFuncs[T_SEMI]      = TSemiObjSaveFunc;
-  LoadObjFuncs[T_SEMI]      = TSemiObjLoadFunc;
-  CopyObjFuncs[T_SEMI]      = &TSemiObjCopyFunc;
-  CleanObjFuncs[T_SEMI]     = &TSemiObjCleanFunc;
-  IsMutableObjFuncs[T_SEMI] = &TSemiObjIsMutableObjFunc;
-
-  InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
-
-  InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
   // T_BIPART
   T_BIPART = RegisterPackageTNUM("bipartition", TBipartObjTypeFunc);

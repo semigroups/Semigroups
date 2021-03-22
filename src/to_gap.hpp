@@ -925,12 +925,12 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<T, std::enable_if_t<libsemigroups::IsDynamicArray2<T>>> {
     Obj operator()(std::decay_t<T> const& da) {
-      gap_list_t result = NEW_PLIST(T_PLIST_TAB_RECT, da.nr_rows());
+      Obj result = NEW_PLIST(T_PLIST_TAB_RECT, da.nr_rows());
       // this is intentionally not IMMUTABLE
       SET_LEN_PLIST(result, da.nr_rows());
 
       for (size_t i = 0; i < da.nr_rows(); ++i) {
-        gap_list_t next = NEW_PLIST(T_PLIST_CYC, da.nr_cols());
+        Obj next = NEW_PLIST(T_PLIST_CYC, da.nr_cols());
         // this is intentionally not IMMUTABLE
         SET_LEN_PLIST(next, da.nr_cols());
         for (size_t j = 0; j < da.nr_cols(); ++j) {
