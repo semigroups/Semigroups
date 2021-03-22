@@ -72,7 +72,6 @@ static inline void initRNams() {
     RNam_DefaultOptionsRec = RNamName("DefaultOptionsRec");
     RNam_genslookup        = RNamName("genslookup");
     RNam_genpairs          = RNamName("genpairs");
-    RNam_GeneratorsOfMagma = RNamName("GeneratorsOfMagma");
     RNam_ht                = RNamName("ht");
     RNam_left              = RNamName("left");
     RNam_nr                = RNamName("nr");

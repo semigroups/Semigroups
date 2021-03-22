@@ -271,14 +271,9 @@ Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
-Obj GeneratorsOfMagma;
 Obj LARGEST_MOVED_PT_TRANS;
 
 Obj IsSemigroup;
-Obj IsSemigroupIdeal;
-Obj IsActingSemigroup;
-
-Obj PositionCanonical;
 
 /*****************************************************************************
  *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -415,8 +410,8 @@ static Int InitKernel(StructInitInfo* module) {
 
   InitCopyGVar("TheTypeTBlocksObj", &TheTypeTBlocksObj);
 
-  // TODO(now) check that all this stuff is actually needed
-  // Import other stuff
+  // Import things from the library
+
   ImportGVarFromLibrary("HTValue", &HTValue);
   ImportGVarFromLibrary("HTAdd", &HTAdd);
 
@@ -460,14 +455,9 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-  ImportGVarFromLibrary("GeneratorsOfMagma", &GeneratorsOfMagma);
   ImportGVarFromLibrary("LARGEST_MOVED_PT_TRANS", &LARGEST_MOVED_PT_TRANS);
 
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
-  ImportGVarFromLibrary("IsSemigroupIdeal", &IsSemigroupIdeal);
-  ImportGVarFromLibrary("IsActingSemigroup", &IsActingSemigroup);
-
-  ImportGVarFromLibrary("PositionCanonical", &PositionCanonical);
 
   return 0;
 }

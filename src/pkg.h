@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016 James D. Mitchell
+// Copyright (C) 2016-21 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// This file contains everything in the kernel module for the Semigroups
-// package that involves GAP directly, i.e. importing functions/variables from
-// GAP and declaring functions for GAP etc.
+// This file contains declarations related to the kernel module for the
+// Semigroups package.
 
 #ifndef SEMIGROUPS_SRC_PKG_H_
 #define SEMIGROUPS_SRC_PKG_H_
@@ -27,18 +26,6 @@
      && !(defined(__clang__) || defined(__INTEL_COMPILER)))
 #error "GCC version 5.0 or higher is required"
 #endif
-
-// Inclusion of <cstdef> appears to be required to prevent travis from issuing
-// the warning:
-//
-//     /usr/include/c++/5/cstddef:51:11: error: ‘::max_align_t’ has not been
-//     declared
-//
-// according to:
-//
-// https://stackoverflow.com/questions/35110786/how-to-fix-the-error-max-align-t
-
-#include <cstddef>
 
 #include <iostream>
 #include <vector>
@@ -82,13 +69,8 @@ extern Obj TYPE_PBR;
 
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
-extern Obj GeneratorsOfMagma;
 extern Obj LARGEST_MOVED_PT_TRANS;
 
 extern Obj IsSemigroup;
-extern Obj IsSemigroupIdeal;
-extern Obj IsActingSemigroup;
-
-extern Obj PositionCanonical;
 
 #endif  // SEMIGROUPS_SRC_PKG_H_
