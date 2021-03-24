@@ -15,16 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-//
-
-// Current limitations:
-// 1. Only permits single constructor
 
 // TODO
-// 1. Rename SubTypeSpec -> Subtype
-// 2. Rename Subtype -> SubtypeBase
-// 3. should be possible to use shared_ptr instead of raw ptrs inside the
+// * Rename SubTypeSpec -> Subtype
+// * Rename Subtype -> SubtypeBase
+// * should be possible to use shared_ptr instead of raw ptrs inside the
 //    objects
+// * use unique_ptr instead of raw ptrs
+// * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
+// * Allow custom printing
 
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_

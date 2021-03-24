@@ -32,11 +32,11 @@
 #include "compiled.h"
 
 // Semigroups package for GAP headers
-#include "bipart.h"                   // for Blocks, Bipartition
+#include "bipart.hpp"                 // for Blocks, Bipartition
 #include "cong.hpp"                   // for init_cong
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
-#include "semigroups-debug.h"         // for SEMIGROUPS_ASSERT
+#include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "to_gap.hpp"                 // for to_gap
 
 // Gapbind14 headers
@@ -50,6 +50,9 @@
 #include "libsemigroups/report.hpp"     // for REPORTER, Reporter
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
 #include "libsemigroups/types.hpp"         // for word_type, letter_type
+
+using libsemigroups::Bipartition;
+using libsemigroups::Blocks;
 
 namespace {
   void set_report(bool const val) {
@@ -330,38 +333,38 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("froidure-pin-fallback.cpp", FIND_HCLASSES, 2, "left, right"),
     GVAR_ENTRY("froidure-pin-fallback.cpp", RUN_FROIDURE_PIN, 2, "obj, limit"),
 
-    GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
-    GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_INT_REP, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_HASH, 2, "x, data"),
-    GVAR_ENTRY("bipart.cc", BIPART_DEGREE, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_RANK, 2, "x, nothing"),
-    GVAR_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2, "x, y"),
-    GVAR_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_RIGHT_PROJ, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_STAR, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_LAMBDA_CONJ, 2, "x, y"),
-    GVAR_ENTRY("bipart.cc", BIPART_STAB_ACTION, 2, "x, p"),
-    GVAR_ENTRY("bipart.cc", BIPART_LEFT_BLOCKS, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BIPART_RIGHT_BLOCKS, 1, "x"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_NC, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_EXT_REP, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_DEGREE, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_RANK, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_NR_BLOCKS, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_HASH, 2, "blocks, data"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_PROJ, 1, "blocks"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_EQ, 2, "blocks1, blocks2"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_LT, 2, "blocks1, blocks2"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_E_TESTER, 2, "left, right"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2, "left, right"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_LEFT_ACT, 2, "blocks, x"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_RIGHT_ACT, 2, "blocks, x"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_INV_LEFT, 2, "blocks, x"),
-    GVAR_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2, "blocks, x"),
-    GVAR_ENTRY("bipart.cc",
+    GVAR_ENTRY("bipart.cpp", BIPART_NC, 1, "list"),
+    GVAR_ENTRY("bipart.cpp", BIPART_EXT_REP, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_INT_REP, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_HASH, 2, "x, data"),
+    GVAR_ENTRY("bipart.cpp", BIPART_DEGREE, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_RANK, 2, "x, nothing"),
+    GVAR_ENTRY("bipart.cpp", BIPART_NR_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_NR_LEFT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_PERM_LEFT_QUO, 2, "x, y"),
+    GVAR_ENTRY("bipart.cpp", BIPART_LEFT_PROJ, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_RIGHT_PROJ, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_STAR, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_LAMBDA_CONJ, 2, "x, y"),
+    GVAR_ENTRY("bipart.cpp", BIPART_STAB_ACTION, 2, "x, p"),
+    GVAR_ENTRY("bipart.cpp", BIPART_LEFT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BIPART_RIGHT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_NC, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_EXT_REP, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_DEGREE, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_RANK, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_NR_BLOCKS, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_HASH, 2, "blocks, data"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_PROJ, 1, "blocks"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_EQ, 2, "blocks1, blocks2"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_LT, 2, "blocks1, blocks2"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_E_TESTER, 2, "left, right"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_E_CREATOR, 2, "left, right"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_LEFT_ACT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_RIGHT_ACT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_INV_LEFT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cpp", BLOCKS_INV_RIGHT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cpp",
                BIPART_NR_IDEMPOTENTS,
                5,
                "o, scc, lookup, nr_threads, report"),

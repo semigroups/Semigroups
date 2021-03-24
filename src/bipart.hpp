@@ -16,35 +16,35 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_BIPART_H_
-#define SEMIGROUPS_SRC_BIPART_H_
+#ifndef SEMIGROUPS_SRC_BIPART_HPP_
+#define SEMIGROUPS_SRC_BIPART_HPP_
 
 // GAP headers
-#include "compiled.h"
+#include "compiled.h"  // ADDR_OBJ, TNUM_OBJ
 
 // Semigroups pkg headers
-#include "pkg.hpp"
-#include "semigroups-debug.h"
+#include "pkg.hpp"               // for T_BIPART, T_BLOCKS
+#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
-// libsemigroups headers
-#include "libsemigroups/bipart.hpp"
-
-using libsemigroups::Bipartition;
-using libsemigroups::Blocks;
+// Forward decl
+namespace libsemigroups {
+  class Bipartition;
+  class Blocks;
+}  // namespace libsemigroups
 
 // C functions
 
-inline Bipartition* bipart_get_cpp(Obj x) {
+inline libsemigroups::Bipartition* bipart_get_cpp(Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
-  return reinterpret_cast<Bipartition*>(ADDR_OBJ(x)[0]);
+  return reinterpret_cast<libsemigroups::Bipartition*>(ADDR_OBJ(x)[0]);
 }
 
-inline Blocks* blocks_get_cpp(Obj x) {
+inline libsemigroups::Blocks* blocks_get_cpp(Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
-  return reinterpret_cast<Blocks*>(ADDR_OBJ(x)[0]);
+  return reinterpret_cast<libsemigroups::Blocks*>(ADDR_OBJ(x)[0]);
 }
 
-Obj bipart_new_obj(Bipartition*);
+Obj bipart_new_obj(libsemigroups::Bipartition*);
 
 // GAP level functions
 
@@ -88,4 +88,4 @@ Obj BLOCKS_INV_RIGHT(Obj, Obj, Obj);
 
 Obj BIPART_NR_IDEMPOTENTS(Obj, Obj, Obj, Obj, Obj, Obj);
 
-#endif  // SEMIGROUPS_SRC_BIPART_H_
+#endif  // SEMIGROUPS_SRC_BIPART_HPP_

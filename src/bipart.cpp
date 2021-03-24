@@ -19,21 +19,29 @@
 // TODO(JDM) 1) if we use clear before resize maybe don't need fill
 //           2) in-place product
 
-#include "bipart.h"
+#include "bipart.hpp"
 
-#include <algorithm>
-#include <mutex>
-#include <string>
-#include <thread>
-#include <utility>
-#include <vector>
+#include <algorithm>    // for fill, min, max, all_of, max_element
+#include <cstddef>      // for size_t, NULL
+#include <cstdint>      // for uint32_t
+#include <string>       // for string
+#include <thread>       // for thread
+#include <type_traits>  // for conditional<>::type
+#include <utility>      // for pair, make_pair
+#include <vector>       // for vector
+
+// GAP headers
 
 #include "compiled.h"
 
-#include "libsemigroups/bipart.hpp"
-#include "libsemigroups/report.hpp"
-#include "libsemigroups/timer.hpp"
+// libsemigroups headers
 
+#include "libsemigroups/bipart.hpp"  // for Blocks, Bipartition, validate
+#include "libsemigroups/report.hpp"  // for Reporter, etc
+#include "libsemigroups/timer.hpp"   // for Timer
+#include "semigroups-config.hpp"     // for SEMIGROUPS_KERNEL_DEBUG
+
+using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
 using libsemigroups::REPORTER;
 using libsemigroups::detail::Timer;

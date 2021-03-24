@@ -27,7 +27,7 @@ AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects nostdinc])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
 
-AX_PREFIX_CONFIG_H([src/semigroups-config.h],[],[src/_pkgconfig.h])
+AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[],[src/_pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
 dnl ## libsemigroups which is why this contains ../ 

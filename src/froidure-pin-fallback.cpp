@@ -27,8 +27,8 @@
 #include "compiled.h"  // for RNamName
 
 // Semigroups package for GAP headers
-#include "pkg.hpp"             // for HTAdd, HTValue, IsSemigroup, SEMIGROUPS
-#include "semigroups-debug.h"  // for SEMIGROUPS_ASSERT
+#include "pkg.hpp"               // for HTAdd, HTValue, IsSemigroup, SEMIGROUPS
+#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // libsemigroups headers
 #include "libsemigroups/report.hpp"  // for REPORTER, Reporter
