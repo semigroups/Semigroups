@@ -23,7 +23,7 @@
 
 #include <assert.h>
 
-#include "semigroups-config.h"
+#include "semigroups-config.hpp"
 
 // SEMIGROUPS_ASSERT is a version of 'assert' which is enabled by the
 // configure option --enable-debug

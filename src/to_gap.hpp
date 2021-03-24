@@ -36,9 +36,9 @@
 #include "compiled.h"
 
 // Semigroups package headers
-#include "bipart.h"
-#include "semigroups-config.h"
-#include "semigroups-debug.h"
+#include "bipart.hpp"
+#include "semigroups-config.hpp"
+#include "semigroups-debug.hpp"
 
 // gapbind14 headers
 #include "gapbind14/gapbind14.hpp"
