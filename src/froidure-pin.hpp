@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_FROIDURE_PIN_H_
-#define SEMIGROUPS_SRC_FROIDURE_PIN_H_
+#ifndef SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
+#define SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
 
 #include <cstddef>      // for size_t
 #include <string>       // for string
@@ -89,4 +89,4 @@ void bind_froidure_pin(gapbind14::Module& m, std::string name) {
       });
 }
 
-#endif  // SEMIGROUPS_SRC_FROIDURE_PIN_H_
+#endif  // SEMIGROUPS_SRC_FROIDURE_PIN_HPP_

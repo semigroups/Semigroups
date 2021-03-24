@@ -18,6 +18,10 @@
 
 #include "to_gap.hpp"
 
+#include <memory>         // for unique_ptr, make_unique
+#include <unordered_map>  // for unordered_map
+#include <utility>        // for pair, make_pair
+
 namespace semigroups {
 
   NTPSemiring<> const* semiring(size_t threshold, size_t period) {

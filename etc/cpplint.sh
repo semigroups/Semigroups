@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-cpplint src/*.h src/*.cc
+cpplint src/*.hpp src/*.h src/*.cpp
