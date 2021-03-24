@@ -24,32 +24,33 @@
 #define SEMIGROUPS_SRC_TO_GAP_HPP_
 
 // Standard library
-#include <algorithm>      // for sort
-#include <limits>         // for numeric_limits
-#include <memory>         // for unique_ptr
-#include <string>         // for string
-#include <unordered_map>  // for unordered_map
-#include <utility>        // for pair
-#include <vector>         // for vector
+#include <algorithm>    // for sort
+#include <cstddef>      // for size_t
+#include <cstdint>      // for uint32_t
+#include <limits>       // for numeric_limits
+#include <type_traits>  // for enable_if_t, decay_t, is_same
+#include <vector>       // for vector
 
 // GAP headers
-#include "compiled.h"
+#include "compiled.h"  // for Obj etc
 
 // Semigroups package headers
-#include "bipart.hpp"
-#include "semigroups-config.hpp"
-#include "semigroups-debug.hpp"
+#include "bipart.hpp"            // for bipart_new_obj
+#include "pkg.hpp"               // for TYPES_PBR etc
+#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
-#include "gapbind14/gapbind14.hpp"
+#include "gapbind14/gapbind14.hpp"  // for gapbind14
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"
-#include "libsemigroups/cong.hpp"
-#include "libsemigroups/libsemigroups-config.hpp"  // for LIBSEMIGROUPS_HPCOMBI_ENABLED
-#include "libsemigroups/matrix.hpp"
-#include "libsemigroups/pbr.hpp"
-#include "libsemigroups/transf.hpp"
+#include "libsemigroups/adapters.hpp"   // for Degree
+#include "libsemigroups/bipart.hpp"     // for Bipartition, IsBipartition
+#include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
+// for LIBSEMIGROUPS_HPCOMBI_ENABLED
+#include "libsemigroups/libsemigroups-config.hpp"
+#include "libsemigroups/matrix.hpp"  // for matrix_threshold etc
+#include "libsemigroups/pbr.hpp"     // for PBR
+#include "libsemigroups/transf.hpp"  // for IsPPerm, IsTransf
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;

@@ -18,18 +18,37 @@
 
 #include "cong.hpp"
 
-#include "froidure-pin.hpp"
-#include "pkg.hpp"
-#include "to_cpp.hpp"
-#include "to_gap.hpp"
+#include <exception>    // for exception
+#include <type_traits>  // for true_type
+#include <vector>       // for vector
 
-#include "gapbind14/gapbind14.hpp"
+// Semigroups GAP package headers
+#include "froidure-pin.hpp"  // for to_cpp<FroidurePin<Bipartition>
+#include "to_cpp.hpp"        // for to_cpp
+#include "to_gap.hpp"        // for to_gap
 
-#include "libsemigroups/bipart.hpp"
-#include "libsemigroups/froidure-pin.hpp"
-#include "libsemigroups/matrix.hpp"
-#include "libsemigroups/pbr.hpp"
-#include "libsemigroups/transf.hpp"
+// GAP headers
+#include "compiled.h"  // for UInt2, UInt4
+
+// GapBind14 headers
+#include "gapbind14/gapbind14.hpp"  // for class_ etc
+
+// libsemigroups headers
+#include "libsemigroups/bipart.hpp"        // for Bipartition
+#include "libsemigroups/cong-intf.hpp"     // for congruence_type
+#include "libsemigroups/cong.hpp"          // for Congruence
+#include "libsemigroups/constants.hpp"     // for UNDEFINED etc
+#include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
+#include "libsemigroups/matrix.hpp"        // for BMat etc
+#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter
+#include "libsemigroups/transf.hpp"        // for PPerm etc
+#include "libsemigroups/types.hpp"         // for word_type
+
+// Forward decls
+namespace libsemigroups {
+  class FpSemigroup;
+  class PBR;
+}  // namespace libsemigroups
 
 namespace gapbind14 {
   template <>

@@ -72,7 +72,12 @@ GAPBIND14_MODULE(libsemigroups, m) {
   // Initialise from other cpp files
   ////////////////////////////////////////////////////////////////////////
 
-  init_froidure_pin(m);
+  init_froidure_pin_bipart(m);
+  init_froidure_pin_bmat(m);
+  init_froidure_pin_matrix(m);
+  init_froidure_pin_pperm(m);
+  init_froidure_pin_pbr(m);
+  init_froidure_pin_transf(m);
   init_cong(m);
 
   ////////////////////////////////////////////////////////////////////////

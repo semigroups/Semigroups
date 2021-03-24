@@ -31,11 +31,9 @@
 #include <vector>       // for vector
 
 // GAP headers
-
 #include "compiled.h"
 
 // libsemigroups headers
-
 #include "libsemigroups/bipart.hpp"  // for Blocks, Bipartition, validate
 #include "libsemigroups/report.hpp"  // for Reporter, etc
 #include "libsemigroups/timer.hpp"   // for Timer
