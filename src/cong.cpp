@@ -20,6 +20,7 @@
 
 #include "froidure-pin.hpp"
 #include "pkg.hpp"
+#include "to_cpp.hpp"
 #include "to_gap.hpp"
 
 #include "gapbind14/gapbind14.hpp"

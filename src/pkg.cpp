@@ -37,6 +37,7 @@
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
+#include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
 
 // Gapbind14 headers
