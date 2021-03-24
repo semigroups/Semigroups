@@ -21,10 +21,10 @@
 #include <string.h>  // for size_t, memcpy
 
 #include <algorithm>  // for max
-#include <iostream>  // for operator<<, basic_ostream, char_traits, cout, ostream
+#include <iostream>   // for operator<<, cout, ostream
 
 // GAP headers
-#include "compiled.h"  // for RNamName
+#include "compiled.h"  // for RNamName etc
 
 // Semigroups package for GAP headers
 #include "pkg.hpp"               // for HTAdd, HTValue, IsSemigroup, SEMIGROUPS

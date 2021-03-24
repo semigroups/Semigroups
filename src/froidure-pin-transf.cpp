@@ -16,14 +16,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SEMIGROUPS_SRC_CONG_H_
-#define SEMIGROUPS_SRC_CONG_H_
+// Semigroups GAP package headers
+#include "froidure-pin.hpp"  // for bind_froidure_pin
+#include "to_cpp.hpp"        // for to_cpp
+#include "to_gap.hpp"        // for to_gap
+
+// libsemigroups headers
+#include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
+#include "libsemigroups/transf.hpp"        // for Transf
 
 // Forward decl
 namespace gapbind14 {
   class Module;
 }
 
-void init_cong(gapbind14::Module&);
+void init_froidure_pin_transf(gapbind14::Module& m) {
+  using libsemigroups::Transf;
+  bind_froidure_pin<Transf<0, UInt2>>(m, "FroidurePinTransfUInt2");
+  bind_froidure_pin<Transf<0, UInt4>>(m, "FroidurePinTransfUInt4");
 
-#endif  // SEMIGROUPS_SRC_CONG_H_
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  using libsemigroups::LeastTransf;
+  bind_froidure_pin<LeastTransf<16>>(m, "FroidurePinTransf16");
+#endif
+}

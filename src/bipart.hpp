@@ -32,7 +32,7 @@ namespace libsemigroups {
   class Blocks;
 }  // namespace libsemigroups
 
-// C functions
+// Kernel functions
 
 inline libsemigroups::Bipartition* bipart_get_cpp(Obj x) {
   SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);

@@ -25,9 +25,9 @@
 
 // Standard library
 #include <algorithm>      // for sort
-#include <limits>         // for numeric_limits
 #include <memory>         // for unique_ptr
 #include <string>         // for string
+#include <type_traits>    // for decay_t, enable_if_t, is_same
 #include <unordered_map>  // for unordered_map
 #include <utility>        // for pair
 #include <vector>         // for vector
@@ -36,20 +36,23 @@
 #include "compiled.h"
 
 // Semigroups package headers
-#include "bipart.hpp"
-#include "semigroups-config.hpp"
-#include "semigroups-debug.hpp"
+#include "bipart.hpp"            // for bipart_get_cpp
+#include "pkg.hpp"               // for IsInfinity etc
+#include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
 #include "gapbind14/gapbind14.hpp"
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"
-#include "libsemigroups/cong.hpp"
-#include "libsemigroups/libsemigroups-config.hpp"  // for LIBSEMIGROUPS_HPCOMBI_ENABLED
-#include "libsemigroups/matrix.hpp"
-#include "libsemigroups/pbr.hpp"
-#include "libsemigroups/transf.hpp"
+#include "libsemigroups/adapters.hpp"             // for Degree
+#include "libsemigroups/bipart.hpp"               // for Bipartition
+#include "libsemigroups/cong-intf.hpp"            // for congruence_type
+#include "libsemigroups/cong.hpp"                 // for Congruence
+#include "libsemigroups/constants.hpp"            // for constants
+#include "libsemigroups/libsemigroups-debug.hpp"  // for LIBSEMIGROUPS_ASSERT
+#include "libsemigroups/matrix.hpp"               // for matrix_validate etc
+#include "libsemigroups/pbr.hpp"                  // for PBR
+#include "libsemigroups/transf.hpp"               // for IsPPerm, IsTransf
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;
