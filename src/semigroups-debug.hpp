@@ -18,8 +18,8 @@
 
 // This file declares kernel debugging functionality.
 
-#ifndef SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_H_
-#define SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_H_
+#ifndef SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_HPP_
+#define SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_HPP_
 
 #include <assert.h>
 
@@ -34,4 +34,4 @@
 #define SEMIGROUPS_ASSERT(x)
 #endif
 
-#endif  // SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_H_
+#endif  // SEMIGROUPS_SRC_SEMIGROUPS_DEBUG_HPP_

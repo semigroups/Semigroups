@@ -190,11 +190,12 @@ namespace gapbind14 {
   }  // namespace detail
 
   template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<
-          IsIntMat<
-              T> || IsMaxPlusMat<T> || IsMinPlusMat<T> || IsProjMaxPlusMat<T>>> {
+  struct
+      to_cpp<T,
+             std::
+                 enable_if_t<
+                     IsIntMat<
+                         T> || IsMaxPlusMat<T> || IsMinPlusMat<T> || IsProjMaxPlusMat<T>>> {  // NOLINT(whitespace/line_length)
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
