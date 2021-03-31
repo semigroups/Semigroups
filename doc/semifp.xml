@@ -41,3 +41,51 @@ gap> f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="ElementOfFpSemigroup">
+<ManSection>
+  <Oper Name="ElementOfFpSemigroup" Arg="S, word"/>
+  <Returns>An element of the fp semigroup <A>S</A>.</Returns>
+  <Description>
+    When <A>S</A> is a finitely presented semigroup and <A>word</A> is an
+    associative word in the associated free semigroup (see
+    <Ref Filt="IsAssocWord" BookName="ref"/>), this returns the
+    fp semigroup element with representative <A>word</A>.
+    <P/>
+
+    This function is just a short form of the &GAP; library implementation of
+    <Ref Oper="ElementOfFpSemigroup" BookName="ref"/> which does not require
+    retrieving an element family.
+
+    <Example><![CDATA[
+gap> f := FreeSemigroup("x", "y");;
+gap> AssignGeneratorVariables(f);
+gap> s := f / [[x * x, x], [y * y, y]];
+<fp semigroup on the generators [ x, y ]>
+gap> a := ElementOfFpSemigroup(s, x * y);
+x*y
+gap> b := ElementOfFpSemigroup(s, x * y * y);
+x*y^2
+gap> a in s;
+true
+gap> a = b;
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ElementOfFpMonoid">
+<ManSection>
+  <Oper Name="ElementOfFpSemigroup" Arg="M, word"/>
+  <Returns>An element of the fp monoid <A>M</A>.</Returns>
+  <Description>
+    When <A>M</A> is a finitely presented monoid and <A>word</A> is an
+    associative word in the associated free monoid (see
+    <Ref Filt="IsAssocWord" BookName="ref"/>), this returns the
+    fp monoid element with representative <A>word</A>.
+    <P/>
+
+    This is analogous to <Ref Oper="ElementOfFpSemigroup"/>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
