@@ -217,5 +217,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     BookName="ref"/>).
 
     <#Include Label = "ParseRelations">
+    <#Include Label = "ElementOfFpSemigroup">
+    <#Include Label = "ElementOfFpMonoid">
   </Section>
 </Chapter>
