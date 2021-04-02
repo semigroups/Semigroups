@@ -405,6 +405,18 @@ function(S)
   DoAssignGenVars(GeneratorsOfMonoid(S));
 end);
 
+InstallMethod(AssignGeneratorVariables, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  DoAssignGenVars(GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(AssignGeneratorVariables, "for an fp monoid",
+[IsFpMonoid],
+function(S)
+  DoAssignGenVars(GeneratorsOfMonoid(S));
+end);
+
 InstallMethod(IsomorphismFpSemigroup, "for a group",
 [IsGroup],
 function(G)

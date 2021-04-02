@@ -2134,6 +2134,20 @@ true
 gap> EvaluateExtRepObjWord(Generators(F), []);
 <identity ...>
 
+# TestAssignGeneratorVariables for fp semigroups
+gap> f := FreeSemigroup("x", "y");;
+gap> s := f / [[f.1 * f.2, f.2 * f.1]];;
+gap> AssignGeneratorVariables(s);;
+gap> x * y = y * x;
+true
+
+# TestAssignGeneratorVariables for fp monoids
+gap> f := FreeMonoid("x", "y");;
+gap> s := f / [[f.1 * f.2, f.2 * f.1]];;
+gap> AssignGeneratorVariables(s);;
+gap> x * y = y * x;
+true
+
 # Test ParseRelations
 gap> f := FreeSemigroup("x", "y", "e");                 
 <free semigroup on the generators [ x, y, e ]>
