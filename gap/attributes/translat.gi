@@ -1749,7 +1749,7 @@ SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens := function(S, gens)
         fi;
       else
         lambda[genspos[i]] := s;
-        Add(bound, i);
+        Add(bound, genspos[i]);
       fi;
       if consistent then
         for t in [1 .. n] do
