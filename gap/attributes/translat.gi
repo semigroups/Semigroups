@@ -96,14 +96,14 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
     return [Int(Sum(times)/Length(times)), Length(times)];
   end;
 
-  BenchmarkLeftTranslations := function(arg)
+  BenchmarkLeftTranslationsWithGens := function(arg)
     local funcs, strs, res, i;
-    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrack,
-             SEMIGROUPS.LeftTranslationsBacktrackNoCache,
-             SEMIGROUPS.LeftTranslationsBacktrack,
-             SEMIGROUPS.LeftTranslationsStabilisedBacktrack,
-             SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack,
-             SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrack];
+    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens,
+             SEMIGROUPS.LeftTranslationsBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrackWithGens];
     
     strs := ["NaiveBacktrack",
              "BacktrackNoCache",
@@ -115,14 +115,18 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
     Print("Benchmarking:");
     ViewObj(arg[1]);
     Print("\n");
-    SEMIGROUPS.LeftTranslationsBacktrackData(UnderlyingSemigroup(arg[1]));
+    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], arg[2]);
     for i in [1 .. Length(funcs)] do
       res := Benchmark(funcs[i], arg);
       Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
     od;
   end;
   
-  BenchmarkLeftIdealTranslations := function(arg)
+  BenchmarkLeftTranslations := function(arg)
+    BenchmarkLeftTranslationsWithGens(arg[1], GeneratorsOfSemigroup(arg[1]));  
+  end;
+  
+  BenchmarkLeftIdealTranslationsWithGens := function(arg)
     local funcs, strs, res, i;
     funcs := [SEMIGROUPS.LeftTranslationsIdealBacktrack,
              SEMIGROUPS.LeftTranslationsIdealStabilisedBacktrack];
@@ -177,18 +181,27 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
-  local n, gens, m, genspos, multtable, multsets, r_classes, r_class_map,
+  return SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S, GeneratorsOfSemigroup(S));
+end;
+
+SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
+  local n, m, id, genspos, multtable, multsets, r_classes, r_class_map,
   r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
-  right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s,
-  transposed_multtable, transposed_multsets, U, Ui, bad, keep, B, sb, r, i, j,
-  a, t, u;
+  left_inverses_by_gen, right_inverses, seen, s,
+  transposed_multtable, transposed_multsets, U, Ui, keep, B, sb, r, i, j, a, t,
+  u;
 
   n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
+  id          := n + 1;
   genspos     := List(gens, x -> PositionCanonical(S, x));
 
-  multtable := MultiplicationTableWithCanonicalPositions(S);
+  multtable := List(MultiplicationTableWithCanonicalPositions(S), ShallowCopy);
+  for i in [1 .. n] do
+    Add(multtable[i], i);
+  od;
+  Add(multtable, [1 .. id]);
+
   multsets := List(multtable, Set);
 
   r_classes := RClasses(S);
@@ -219,33 +232,18 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
     od;
   od;
 
-  # compute the right multipliers to the intersects from the gens
-  right_intersect_multipliers := List([1 .. m], x -> []);
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for a in max_R_intersects[i][j] do
-        if not IsBound(right_intersect_multipliers[i][a]) then
-          right_intersect_multipliers[i][a] := Positions(multtable[genspos[i]], a);
-        fi;
-        if not IsBound(right_intersect_multipliers[j][a]) then
-          right_intersect_multipliers[j][a] := Positions(multtable[genspos[j]], a);
-        fi;
-      od;
-    od;
-  od;
-
   # for all s in S, store the elements t such that gens[i] * t = s for each i
   left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
-    for t in [1 .. n] do
+    for t in [1 .. n + 1] do
       Add(left_inverses_by_gen[multtable[genspos[i]][t]][i], t);
     od;
   od;
 
   # for each t in the left inverses of some a in max_R_intersects[i][j] by 
   # gens[j], compute the right inverses of each s in S under t
-  right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n, fail));
-  seen := List([1 .. n], x -> false);
+  right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
+  seen := List([1 .. n + 1], x -> false);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -306,7 +304,7 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   r.left_inverses_by_gen := left_inverses_by_gen;
   r.max_R_intersects := max_R_intersects;
   r.multtable := multtable;
-  r.right_intersect_multipliers := right_intersect_multipliers;
+  r.n := n;
   r.right_inverses := right_inverses;
   r.U := U;
   r.V := List([1 .. m], j -> List([1 .. n], a -> []));
@@ -314,91 +312,90 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   return r;
 end;
 
-SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
-  local n, m, genspos, multtable, multsets, r_classes, r_class_map,
-  r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
-  right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s,
-  transposed_multtable, transposed_multsets, U, Ui, keep, B, sb, r, i, j, a, t,
-  u;
-
+SEMIGROUPS.RightTranslationsBacktrackData := function(S)
+  local n, gens, m, genspos, possiblefgenvals, transpose_mult_table,
+  transpose_mult_sets, l_classes, l_class_map, l_class_inv_map, l_classes_below,
+  max_L_intersects, intersect, reps, left_intersect_multipliers,
+  right_inverses_by_gen, left_inverses, seen, s, multsets, T, Ti, keep, B, sb,
+  r, i, j, a, t, u;
+  
   n           := Size(S);
+  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
   genspos     := List(gens, x -> PositionCanonical(S, x));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
 
-  multtable := MultiplicationTableWithCanonicalPositions(S);
-  multsets := List(multtable, Set);
+  transpose_mult_table := TransposedMultiplicationTableWithCanonicalPositions(S);
+  transpose_mult_sets := List(transpose_mult_table, Set);
 
-  r_classes := RClasses(S);
-  r_class_map := [];
+  l_classes := LClasses(S);
+  l_class_map := [];
  
-  for i in [1 .. Length(r_classes)] do
-    for s in r_classes[i] do
-      r_class_map[PositionCanonical(S, s)] := i;
+  for i in [1 .. Length(l_classes)] do
+    for s in l_classes[i] do
+      l_class_map[PositionCanonical(S, s)] := i;
     od;
   od;
   
-  r_class_inv_map := List(r_classes,
+  l_class_inv_map := List(l_classes,
                           x -> PositionCanonical(S, Representative(x)));
-  r_classes_below := List([1 .. m], i -> Set(r_class_map{multsets[genspos[i]]}));
-  max_R_intersects := List([1 .. m], x -> []);
+  l_classes_below := List([1 .. m],
+                          i -> Set(l_class_map{transpose_mult_sets[genspos[i]]}));
+  max_L_intersects := List([1 .. m], x -> []);
   
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
-      intersect := Intersection(r_classes_below[i], r_classes_below[j]);
-      reps := r_class_inv_map{intersect};
+      intersect := Intersection(l_classes_below[i], l_classes_below[j]);
+      reps := l_class_inv_map{intersect};
 
-      max_R_intersects[i][j] := Filtered(reps,
+      max_L_intersects[i][j] := Filtered(reps,
                                          x -> not ForAny(reps, 
                                                          y -> x <> y and
-                                                           x in multsets[y]));
+                                                           x in transpose_mult_sets[y]));
 
-      max_R_intersects[j][i] := max_R_intersects[i][j];
+      max_L_intersects[j][i] := max_L_intersects[i][j];
     od;
   od;
 
-  # compute the right multipliers to the intersects from the gens
-  right_intersect_multipliers := List([1 .. m], x -> []);
+  # compute the left multipliers to the intersects from the gens
+  left_intersect_multipliers := List([1 .. m], x -> []);
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
-      for a in max_R_intersects[i][j] do
-        if not IsBound(right_intersect_multipliers[i][a]) then
-          right_intersect_multipliers[i][a] := Positions(multtable[genspos[i]], a);
+      for a in max_L_intersects[i][j] do
+        if not IsBound(left_intersect_multipliers[i][a]) then
+          left_intersect_multipliers[i][a] := 
+              Positions(transpose_mult_table[genspos[i]], a);
         fi;
-        if not IsBound(right_intersect_multipliers[j][a]) then
-          right_intersect_multipliers[j][a] := Positions(multtable[genspos[j]], a);
+        if not IsBound(left_intersect_multipliers[j][a]) then
+          left_intersect_multipliers[j][a] := 
+            Positions(transpose_mult_table[genspos[j]], a);
         fi;
       od;
     od;
   od;
 
-  # for all s in S, store the elements t such that gens[i] * t = s for each i
-  left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
+  # for all s in S, store the elements t such that t * gens[i] = s for each i
+  right_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
     for t in [1 .. n] do
-      Add(left_inverses_by_gen[multtable[genspos[i]][t]][i], t);
+      Add(right_inverses_by_gen[transpose_mult_table[genspos[i]][t]][i], t);
     od;
   od;
 
-  # for each t in the left inverses of some a in max_R_intersects[i][j] by 
-  # gens[j], compute the right inverses of each s in S under t
-  right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n, fail));
+  # for each t in the right inverses of some a in max_L_intersects[i][j] by 
+  # gens[j], compute the left inverses of each s in S under t
+  left_inverses := List([1 .. n], x -> List([1 .. n], y -> []));
   seen := List([1 .. n], x -> false);
-  for i in [1 .. m] do
-    for j in [1 .. m] do
-      if i = j then
-        continue;
-      fi;
-      for a in max_R_intersects[i][j] do
-        for t in left_inverses_by_gen[a][j] do
+  for i in [1 .. m - 1] do
+    for j in [i + 1 .. m] do
+      for a in max_L_intersects[i][j] do
+        for t in right_inverses_by_gen[a][j] do
           # don't repeat the calculation if we've already done it for t!
           if not seen[t] then
             seen[t] := true;
             for u in [1 .. n] do
-              s := multtable[u][t];
-              if right_inverses[s][t] = fail then
-                right_inverses[s][t] := [];
-              fi;
-              Add(right_inverses[s][t], u);
+              s := transpose_mult_table[u][t];
+              Add(left_inverses[s][t], u);
             od;
           fi;
         od;
@@ -406,55 +403,48 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
     od;
   od;
 
-  transposed_multtable := TransposedMat(multtable);
-  transposed_multsets  := List(transposed_multtable, Set);
+  multsets := List(MultiplicationTableWithCanonicalPositions(S), Set);
 
-  # compute intersection over a of the sets U_{i, a} from the paper
-  U := [];
+  T := [];
   for i in [1 .. m] do
-    Ui := BlistList([1 .. n], []);
+    Ti := BlistList([1 .. n], []);
     for s in [1 .. n] do
-      #if Ui[s] or ForAny(transposed_multsets[s], x -> x in bad) then
-      #  continue;
-      #fi;
-      if Ui[s] then 
+      if Ti[s] then 
         continue;
       fi;
       keep := true;
-      for a in multsets[genspos[i]] do
-        B := left_inverses_by_gen[a][i];
-        sb := multtable[s][B[1]];
-        if multtable[s]{B} <> ListWithIdenticalEntries(Size(B), sb) then
+      for a in transpose_mult_sets[genspos[i]] do
+        B := right_inverses_by_gen[a][i];
+        sb := transpose_mult_table[s][B[1]];
+        if transpose_mult_table[s]{B} <> ListWithIdenticalEntries(Size(B), sb) then
           keep := false;
-#          AddSet(bad, s);
           break;
         fi;
       od;
       if keep then
-        UniteBlistList([1 .. n], Ui, transposed_multsets[s]);
-        Ui[s] := true;
+        UniteBlistList([1 .. n], Ti, multsets[s]);
+        Ti[s] := true;
       fi;
-#      Print("Computing U_", i, ", has size: ", SizeBlist(Ui), "\n");
     od;
-    U[i] := ListBlist([1 .. n], Ui);
+    T[i] := ListBlist([1 .. n], Ti);
   od;
 
   r := rec();
-  r.left_inverses_by_gen := left_inverses_by_gen;
-  r.max_R_intersects := max_R_intersects;
-  r.multtable := multtable;
-  r.right_intersect_multipliers := right_intersect_multipliers;
-  r.right_inverses := right_inverses;
-  r.U := U;
-  r.V := List([1 .. m], j -> List([1 .. n], a -> []));
-  r.W := List([1 .. m], i -> List([1 .. m], j -> []));
+  r.right_inverses_by_gen := right_inverses_by_gen;
+  r.max_L_intersects := max_L_intersects;
+  r.transpose_mult_table := transpose_mult_table;
+  r.left_intersect_multipliers := left_intersect_multipliers;
+  r.left_inverses := left_inverses;
+  r.T := T;
+  r.F := List([1 .. m], j -> List([1 .. n], a -> []));
+  r.G := List([1 .. m], i -> List([1 .. m], j -> []));
   return r;
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataNoU := function(S)
   local n, gens, m, genspos, multtable, multsets, r_classes, r_class_map,
   r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
-  right_intersect_multipliers, left_inverses_by_gen, right_inverses, seen, s,
+  left_inverses_by_gen, right_inverses, seen, s,
   transposed_multtable, transposed_multsets, U, Ui, bad, keep, B, sb, r, i, j,
   a, t, u;
 
@@ -491,21 +481,6 @@ SEMIGROUPS.LeftTranslationsBacktrackDataNoU := function(S)
                                                            x in multsets[y]));
 
       max_R_intersects[j][i] := max_R_intersects[i][j];
-    od;
-  od;
-
-  # compute the right multipliers to the intersects from the gens
-  right_intersect_multipliers := List([1 .. m], x -> []);
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for a in max_R_intersects[i][j] do
-        if not IsBound(right_intersect_multipliers[i][a]) then
-          right_intersect_multipliers[i][a] := Positions(multtable[genspos[i]], a);
-        fi;
-        if not IsBound(right_intersect_multipliers[j][a]) then
-          right_intersect_multipliers[j][a] := Positions(multtable[genspos[j]], a);
-        fi;
-      od;
     od;
   od;
 
@@ -553,7 +528,6 @@ SEMIGROUPS.LeftTranslationsBacktrackDataNoU := function(S)
   r.max_R_intersects := max_R_intersects;
   r.multsets := multsets;
   r.multtable := multtable;
-  r.right_intersect_multipliers := right_intersect_multipliers;
   r.right_inverses := right_inverses;
   r.transposed_multsets := transposed_multsets;
   r.U := List([1 .. m], i -> BlistList([1 .. n], []));
@@ -568,9 +542,9 @@ end;
 # gens  - subset of I s.t.
 #         ({decomposable in I gens} * S^1) U ({other gens} * I^1) = I
 SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
-  local n, m, genspos, gensposS, decomp, multtableI, multtableS, multsetsI,
-  multsetsS, enumI, enumS, id_map, ItoS, StoI, rI_classes, rS_classes,
-  rI_class_map, rS_class_map, rI_class_inv_map, rS_class_inv_map,
+  local n, m, idI, idS, genspos, gensposS, decomp, multtableI, multtableS,
+  multsetsI, multsetsS, enumI, enumS, id_map, ItoS, StoI, rI_classes,
+  rS_classes, rI_class_map, rS_class_map, rI_class_inv_map, rS_class_inv_map,
   rI_classes_below, rS_classes_below, max_R_intersects, intersect, reps,
   left_inverses_by_gen_in_I, left_inverses_by_gen_in_S, right_inverses, seen, C,
   k, map_away, map_to_I, tab, s, transposed_multtableI, transposed_multsetsI, U,
@@ -578,24 +552,38 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
 
   n         := Size(I);
   m         := Size(gens);
+  idI       := n + 1;
+  idS       := Size(S) + 1;
   genspos   := List(gens, x -> PositionCanonical(I, x));
   gensposS  := List(gens, x -> PositionCanonical(S, x));
   decomp    := List([1 .. m], i -> not gens[i] in IndecomposableElements(I));
 
-  multtableI := MultiplicationTableWithCanonicalPositions(I);
-  multtableS := MultiplicationTableWithCanonicalPositions(S);
+  multtableI := List(MultiplicationTableWithCanonicalPositions(I), ShallowCopy);
+  for i in [1 .. n] do
+    Add(multtableI[i], i);
+  od;
+  Add(multtableI, [1 .. idI]);
+
+  multtableS := List(MultiplicationTableWithCanonicalPositions(S), ShallowCopy);
+  for i in [1 .. Size(S)] do
+    Add(multtableS[i], i);
+  od;
+  Add(multtableS, [1 .. idS]);
+
   multsetsI   := List(multtableI, Set);
   multsetsS   := List(multtableS, Set);
 
   enumI := EnumeratorCanonical(I);
   enumS := EnumeratorCanonical(S);
 
-  id_map := [1 .. n];
+  id_map := [1 .. n + 1];
   ItoS := List([1 .. n], i -> PositionCanonical(S, enumI[i]));
   StoI := ListWithIdenticalEntries(Size(S), fail);
   for i in [1 .. n] do
     StoI[ItoS[i]] := i;
   od;
+  Add(ItoS, idS);
+  Add(StoI, idI);
 
   rI_classes := RClasses(I);
   rS_classes := RClasses(S);
@@ -618,7 +606,7 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
   rI_class_inv_map := List(rI_classes,
                            x -> PositionCanonical(I, Representative(x)));
   rS_class_inv_map := List(rS_classes,
-                           x -> PositionCanonical(I, Representative(x)));
+                           x -> PositionCanonical(S, Representative(x)));
 
   rI_classes_below := List([1 .. m], i -> Set(rI_class_map{multsetsI[genspos[i]]}));
   rS_classes_below := List([1 .. m], i -> Set(rS_class_map{multsetsS[gensposS[i]]}));
@@ -629,59 +617,54 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
       if decomp[i] and decomp[j] then
         intersect := Intersection(rS_classes_below[i], rS_classes_below[j]);
         reps := rS_class_inv_map{intersect};
+        max_R_intersects[i][j] := StoI{Filtered(reps,
+                                           x -> not ForAny(reps, 
+                                                           y -> x <> y and x in
+                                                                multsetsS[y]))};
       else
         intersect := Intersection(rI_classes_below[i], rI_classes_below[j]);
         reps := rI_class_inv_map{intersect};
+        max_R_intersects[i][j] := Filtered(reps,
+                                           x -> not ForAny(reps, 
+                                                           y -> x <> y and
+                                                                x in multsetsI[y]));
       fi;
-
-      max_R_intersects[i][j] := Filtered(reps,
-                                         x -> not ForAny(reps, 
-                                                         y -> x <> y and
-                                                           x in multsetsS[y]));
-
       max_R_intersects[j][i] := max_R_intersects[i][j];
     od;
   od;
 
   # for all s in I, store the elements t such that gens[i] * t = s for each i
   left_inverses_by_gen_in_I := List([1 .. n], x -> List([1 .. m], y -> []));
-  for i in [1 .. m] do
-    if decomp[i] then
-      continue;
-    fi;
-    for t in [1 .. n] do
-      Add(left_inverses_by_gen_in_I[multtableI[genspos[i]][t]][i], t);
-    od;
-  od;
-
   left_inverses_by_gen_in_S := List([1 .. Size(S)], x -> List([1 .. m],
                                                               y -> []));
   for i in [1 .. m] do
-    if not decomp[i] then
-      continue;
+    if decomp[i] then
+      for t in [1 .. Size(S) + 1] do
+        Add(left_inverses_by_gen_in_S[multtableS[gensposS[i]][t]][i], t);
+      od;
+    else
+      for t in [1 .. n + 1] do
+        Add(left_inverses_by_gen_in_I[multtableI[genspos[i]][t]][i], t);
+      od;
     fi;
-    for t in [1 .. Size(S)] do
-      Add(left_inverses_by_gen_in_S[multtableS[gensposS[i]][t]][i], t);
-    od;
   od;
 
   # for each t in the left inverses of some a in max_R_intersects[i][j] by 
   # gens[j], compute the right inverses of each s in S under t
   right_inverses := List([1 .. n],
-                         x -> ListWithIdenticalEntries(n + Size(S), fail));
-  seen := List([1 .. n + Size(S)], x -> false);
+                         x -> ListWithIdenticalEntries(idI + idS, fail));
+  seen := BlistList([1 .. idI + idS], []);
   for i in [1 .. m - 1] do
     for j in [i + 1 .. m] do
       for a in max_R_intersects[i][j] do
         if decomp[j] then
-          C := List(left_inverses_by_gen_in_S[ItoS[a]][j]);
+          C := left_inverses_by_gen_in_S[ItoS[a]][j];
         else
           C := left_inverses_by_gen_in_I[a][j];
         fi;
         for t in C do
-          # don't repeat the calculation if we've already done it for t!
           if decomp[j] then
-            k := n + t;
+            k := idI + t;
             map_away := ItoS;
             map_to_I := StoI;
             tab := multtableS;
@@ -691,6 +674,7 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
             map_to_I := id_map;
             tab := multtableI;
           fi;
+          # don't repeat the calculation if we've already done it for t!
           if not seen[k] then
             seen[k] := true;
             for u in [1 .. n] do
@@ -717,12 +701,12 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
     else
       A := multsetsI[genspos[i]];
     fi;
-    Ui := BlistList([1 .. n], [1 .. n]);
+    Ui := BlistList([1 .. n], []);
     for s in [1 .. n] do
       if Ui[s] then
         continue;
       fi;
-      keep := false;
+      keep := true;
       for a in A do
         if decomp[i] then
           B := left_inverses_by_gen_in_S[a][i];
@@ -745,7 +729,6 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
         UniteBlistList([1 .. n], Ui, transposed_multsetsI[s]);
         Ui[s] := true;
       fi;
-      IntersectBlist(Ui, keep);
     od;
     U[i] := ListBlist([1 .. n], Ui);
   od;
@@ -759,6 +742,7 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackData := function(I, S, gens)
   r.max_R_intersects := max_R_intersects;
   r.multtableI := multtableI;
   r.multtableS := multtableS;
+  r.n := n;
   r.right_inverses := right_inverses;
   r.U := U;
   r.V := List([1 .. m], j -> List([1 .. n], a -> []));
@@ -818,17 +802,17 @@ SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
-  local right_intersect_multipliers, multtable, W, x, a, r;
+  local left_inverses_by_gen, multtable, W, x, a, r;
 
   if IsBound(data.W[i][j][s]) then
     return data.W[i][j][s];
   fi;
 
-  right_intersect_multipliers := data.right_intersect_multipliers;
+  left_inverses_by_gen := data.left_inverses_by_gen;
   multtable := data.multtable;
-  W := [1 .. Size(data.multtable)];
+  W := [1 .. data.n];
   for a in data.max_R_intersects[i][j] do
-    for r in right_intersect_multipliers[i][a] do
+    for r in left_inverses_by_gen[a][i] do
       x := multtable[s][r];
       W := Intersection(W, 
                         SEMIGROUPS.LeftTranslationsBacktrackDataV(data,
@@ -845,7 +829,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataVNoCache := function(data, j, a, s)
   local right_inverses, V, C, t;
 
   right_inverses := data.right_inverses;
-  V := [1 .. Size(data.multtable)];
+  V := [1 .. data.n];
   for t in data.left_inverses_by_gen[a][j] do
     C := right_inverses[s][t];
     if C = fail then
@@ -859,13 +843,13 @@ SEMIGROUPS.LeftTranslationsBacktrackDataVNoCache := function(data, j, a, s)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache := function(data, i, j, s)
-  local right_intersect_multipliers, multtable, W, x, a, r;
+  local left_inverses_by_gen, multtable, W, x, a, r;
 
-  right_intersect_multipliers := data.right_intersect_multipliers;
+  left_inverses_by_gen := data.left_inverses_by_gen;
   multtable := data.multtable;
-  W := [1 .. Size(data.multtable)];
+  W := [1 .. data.n];
   for a in data.max_R_intersects[i][j] do
-    for r in right_intersect_multipliers[i][a] do
+    for r in left_inverses_by_gen[a][i] do
       x := multtable[s][r];
       W := Intersection(W, 
                         SEMIGROUPS.LeftTranslationsBacktrackDataVNoCache(data,
@@ -878,23 +862,23 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache := function(data, i, j, s)
 end;
 
 SEMIGROUPS.LeftTranslationsIdealBacktrackDataV := function(data, j, a, s)
-  local right_inverses, V, T, add_n, C, t;
+  local right_inverses, V, T, offset, C, t;
 
   if IsBound(data.V[j][a][s]) then
     return data.V[j][a][s];
   fi;
 
   right_inverses := data.right_inverses;
-  V := [1 .. Size(data.multtableI)];
+  V := [1 .. data.n];
   if data.decomp[j] then
     T := data.left_inverses_by_gen_in_S[data.ItoS[a]][j];
-    add_n := 1;
+    offset := Size(data.multtableI);
   else
     T := data.left_inverses_by_gen_in_I[a][j];
-    add_n := 0;
+    offset := 0;
   fi;
   for t in T do
-    C := right_inverses[s][t + Size(data.multtableI) * add_n];
+    C := right_inverses[s][t + offset];
     if C = fail then
       V := [];
       break;
@@ -925,7 +909,7 @@ SEMIGROUPS.LeftTranslationsIdealBacktrackDataW := function(data, i, j, s)
     tab := data.multtableI;
   fi;
 
-  W := [1 .. Size(data.multtableI)];
+  W := [1 .. data.n];
   for a in data.max_R_intersects[i][j] do
     for r in mults[fromI[a]][i] do
       x := toI[tab[fromI[s]][r]];
@@ -1011,114 +995,6 @@ SEMIGROUPS.AutoBitranslations := function(mult_table, gens_pos)
   fi;
 end;
 
-SEMIGROUPS.RightTranslationsBacktrackData := function(S)
-  local n, gens, m, genspos, possiblefgenvals, transpose_mult_table,
-  transpose_mult_sets, L_classes_below, max_L_intersects, intersect, maximals,
-  left_intersect_multipliers, right_inverses_by_gen, left_inverses, seen, s, F,
-  G, T, C, u, r, i, j, a, t, l, Ru;
-  
-  n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
-  m           := Size(gens);
-  genspos     := List(gens, x -> PositionCanonical(S, x));
-  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
-
-  transpose_mult_table := TransposedMultiplicationTableWithCanonicalPositions(S);
-  transpose_mult_sets := List(transpose_mult_table, Set);
-
-  L_classes_below := List([1 .. m],
-                          i -> Set(List(transpose_mult_sets[i],
-                                        j -> LClass(S,
-                                                    EnumeratorCanonical(S)[j]))));
-
-  max_L_intersects := List([1 .. m], x -> []);
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      intersect := Intersection(L_classes_below[i], L_classes_below[j]);
-      maximals := Filtered(intersect, 
-                           x -> not ForAny(intersect, 
-                                           y -> x <> y and 
-                                           IsGreensLessThanOrEqual(x, y)));
-
-      max_L_intersects[i][j] := List(maximals, 
-                                     x -> PositionCanonical(S, Representative(x)));
-    od;
-  od;
-
-  # compute the left multipliers to the intersects from the gens
-  left_intersect_multipliers := List([1 .. m], x -> []);
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for a in max_L_intersects[i][j] do
-        if not IsBound(left_intersect_multipliers[i][a]) then
-          left_intersect_multipliers[i][a] := 
-              Positions(transpose_mult_table[genspos[i]], a);
-        fi;
-        if not IsBound(left_intersect_multipliers[j][a]) then
-          left_intersect_multipliers[j][a] := 
-            Positions(transpose_mult_table[genspos[j]], a);
-        fi;
-      od;
-    od;
-  od;
-
-  # for all s in S, store the elements t such that t * gens[i] = s for each i
-  right_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
-  for i in [1 .. m] do
-    for t in [1 .. n] do
-      Add(right_inverses_by_gen[transpose_mult_table[genspos[i]][t]][i], t);
-    od;
-  od;
-
-  # for each t in the right inverses of some a in max_L_intersects[i][j] by 
-  # gens[j], compute the left inverses of each s in S under t
-  left_inverses := List([1 .. n], x -> List([1 .. n], y -> []));
-  seen := List([1 .. n], x -> false);
-  for i in [1 .. m - 1] do
-    for j in [i + 1 .. m] do
-      for a in max_L_intersects[i][j] do
-        for t in right_inverses_by_gen[a][j] do
-          # don't repeat the calculation if we've already done it for t!
-          if not seen[t] then
-            seen[t] := true;
-            for u in [1 .. n] do
-              s := transpose_mult_table[u][t];
-              Add(left_inverses[s][t], u);
-            od;
-          fi;
-        od;
-      od;
-    od;
-  od;
-
-  # compute intersection over a of the sets T_{i, a} from the paper
-  T := List([1 .. m], i -> [1 .. n]);
-  for i in [1 .. m] do
-    for a in transpose_mult_sets[genspos[i]] do
-# TODO: optimise
-      C := [];
-      for Ru in RClasses(S) do
-        u := PositionCanonical(S, Representative(Ru));
-        if Size(Set(List(right_inverses_by_gen[a][i], 
-                         t -> transpose_mult_table[u][t]))) = 1 then
-            UniteSet(C, List(Ru, y -> PositionCanonical(S, y)));
-        fi;
-      od;
-      IntersectSet(T[i], C);
-    od;
-  od;
-
-  r := rec();
-  r.right_inverses_by_gen := right_inverses_by_gen;
-  r.max_L_intersects := max_L_intersects;
-  r.transpose_mult_table := transpose_mult_table;
-  r.left_intersect_multipliers := left_intersect_multipliers;
-  r.left_inverses := left_inverses;
-  r.T := T;
-  r.F := List([1 .. m], j -> List([1 .. n], a -> []));
-  r.G := List([1 .. m], i -> List([1 .. m], j -> []));
-  return r;
-end;
 
 SEMIGROUPS.RightTranslationsBacktrackDataF := function(data, j, a, s)
   local left_inverses, F, t;
@@ -1219,57 +1095,8 @@ SEMIGROUPS.LeftTranslationsPermutabilityRestrictions := function(L, data)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrack := function(L)
-  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, multtable, data,
-  U, bt, lambda, out, i, j, s;
-
-  S           := UnderlyingSemigroup(L);
-  n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
-  m           := Size(gens);
-  genspos     := List(gens, x -> PositionCanonical(S, x));
-  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
-  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
-
-  multtable := MultiplicationTableWithCanonicalPositions(S);
-
-  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
-  U := data.U;
-  
-  # restrict via the U_{i}
-  for i in [1 .. m] do
-    IntersectSet(possiblefgenvals[i], U[i]);
-  od;
-
-  bt := function(i) 
-    local consistent, W, s, j;
-    for s in omega_stack[i][i] do
-      lambda[i] := s;
-      if i = m then
-        Add(out, ShallowCopy(lambda));
-      else
-        consistent := true;
-        omega_stack[i + 1] := [];
-        for j in [i + 1 .. m] do
-          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
-          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
-          if IsEmpty(omega_stack[i + 1][j]) then
-            consistent := false;
-            break;
-          fi;
-        od;
-        if consistent then
-          bt(i + 1);
-        fi;
-      fi;
-    od;
-  end;
-
-  omega_stack := [possiblefgenvals];
-  lambda := [];
-  out := [];
-  bt(1);
-#  Apply(out, x -> LeftTranslationNC(L, x));
-  return out;
+  return SEMIGROUPS.LeftTranslationsBacktrackWithGens(UnderlyingSemigroup(L),
+          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens)
@@ -1378,108 +1205,8 @@ SEMIGROUPS.LeftTranslationsIdealBacktrack := function(I, S, gens)
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
-  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
-  stab_thresh, coset_reps, multtable, data, U, aut, add_stabilised_lambda, bt,
-  lambda, out, nr, i;
-
-  S           := UnderlyingSemigroup(L);
-  n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
-  m           := Size(gens);
-  genspos     := List(gens, x -> PositionCanonical(S, x));
-  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
-  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
-  stabs := [];
-  stabs[m + 1] := [];
-  stab_thresh := 10;
-  coset_reps := [];
-
-  multtable := MultiplicationTableWithCanonicalPositions(S);
-
-  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
-  U := data.U;
-
-  aut := SEMIGROUPS.LeftAutoTranslations(multtable, genspos);
-
-  # restrict via the U_{i}
-  for i in [1 .. m] do
-    IntersectSet(possiblefgenvals[i], U[i]);
-  od;
-
-  add_stabilised_lambda := function()
-    local stab_depth, it, mult;
-    stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
-    nr := nr + Product(List(coset_reps{[1 .. stab_depth]}, Length));
-    Add(out, ShallowCopy(lambda));
-#    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
-#    while not IsDoneIterator(it) do
-#      mult := Product(NextIterator(it));
-#      Add(out, OnTuples(lambda, mult));
-#    od;
-  end;
-
-  bt := function(i) 
-    local stab, big_stab, big_reps, orbs, reps, consistent, W, s, j;
-    if i > 1 then
-      stab := stabs[i - 1];
-    else
-      stab := aut;
-    fi;
-    big_stab := Size(stab) > stab_thresh;
-    if big_stab then
-      orbs := Orbits(stab, omega_stack[i][i]);
-      reps := List(orbs, x -> x[1]);
-    else
-      reps := omega_stack[i][i];
-    fi;
-    for s in reps do
-      lambda[i] := s;
-      if i = m then
-        if big_stab then
-          # this is necessary in theory
-          stabs[i] := Stabiliser(stab, s);
-          coset_reps[i] := RightTransversal(stab, Stabiliser(stab, s));
-        else
-          stabs[i] := [];
-        fi;
-        add_stabilised_lambda();
-      else
-        consistent := true;
-        omega_stack[i + 1] := [];
-        for j in [i + 1 .. m] do
-          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
-          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
-          if IsEmpty(omega_stack[i + 1][j]) then
-            consistent := false;
-            break;
-          fi;
-        od;
-        if consistent then
-          if big_stab then
-            if Size(reps) = 1 then
-              stabs[i] := stab;
-              coset_reps[i] := [()];
-            else
-              stabs[i] := Stabiliser(stab, s);
-              coset_reps[i] := RightTransversal(stab, stabs[i]);
-            fi;
-          else
-            stabs[i] := [];
-            coset_reps[i] := [];
-          fi;
-          bt(i + 1);
-        fi;
-      fi;
-    od;
-  end;
-
-  omega_stack := [possiblefgenvals];
-  lambda := [];
-  out := [];
-  nr := 0;
-  bt(1);
-#  Apply(out, x -> LeftTranslationNC(L, x));
-  return [out, nr];
+  return SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens(UnderlyingSemigroup(L),
+          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
@@ -1693,26 +1420,29 @@ SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
   return [out, nr];
 end;
 
-SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack := function(L)
-  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
-  stab_thresh, coset_reps, multtable, data, U, gens_map, aut,
-  add_stabilised_lambda, bt, lambda, out, i;
+SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
+  return SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrackWithGens(UnderlyingSemigroup(L),
+          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
+end;
 
-  S           := UnderlyingSemigroup(L);
+SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrackWithGens := function(S, gens)
+  local n, m, genspos, omega_stack, possiblefgenvals, stabs, stab_thresh,
+  coset_reps, multtable, data, U, gens_map, aut, add_stabilised_lambda, bt,
+  lambda, out, i;
+
   n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
   genspos     := List(gens, x -> PositionCanonical(S, x));
   omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
   stabs := [];
   stabs[m] := [];
-  stab_thresh := 20;
+  stab_thresh := 10;
   coset_reps := [];
 
   multtable := MultiplicationTableWithCanonicalPositions(S);
 
-  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  data := SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S, gens);
   U := data.U;
   
   # restrict via the U_{i}
@@ -1793,15 +1523,13 @@ SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrack := function(L)
   return out;
 end;
 
-SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrack := function(L)
-  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, stabs,
-  stab_thresh, coset_reps, multtable, data, U, gens_map, aut,
-  add_stabilised_lambda, bt, lambda, out, i;
+SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrackWithGens := function(S, gens)
+  local m, n, genspos, omega_stack, possiblefgenvals, stabs, stab_thresh,
+  coset_reps, multtable, data, U, gens_map, aut, add_stabilised_lambda, bt,
+  lambda, out, i;
 
-  S           := UnderlyingSemigroup(L);
-  n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
+  n           := Size(S);
   genspos     := List(gens, x -> PositionCanonical(S, x));
   omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
@@ -1812,7 +1540,7 @@ SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrack := function(L)
 
   multtable := MultiplicationTableWithCanonicalPositions(S);
 
-  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  data := SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S, gens);
   U := data.U;
   
   # restrict via the U_{i}
@@ -1997,11 +1725,14 @@ SEMIGROUPS.LeftTranslationsStabilisedIdealBacktrack := function(I, S, gens)
 end;
 
 SEMIGROUPS.LeftTranslationsNaiveBacktrack := function(L)
-  local S, n, gens, m, genspos, multtable, bt, omega_stack, lambda, out;
+  return SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens(UnderlyingSemigroup(L),
+          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
+end;
 
-  S           := UnderlyingSemigroup(L);
+SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens := function(S, gens)
+  local n, m, genspos, multtable, bt, lambda, out;
+
   n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
   genspos     := List(gens, x -> PositionCanonical(S, x));
 
@@ -2056,12 +1787,15 @@ SEMIGROUPS.LeftTranslationsNaiveBacktrack := function(L)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackNoCache := function(L)
-  local S, n, gens, m, genspos, omega_stack, possiblefgenvals, multtable, data,
-  U, bt, lambda, out, i, j, s;
+  return SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens(UnderlyingSemigroup(L),
+          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
+end;
 
-  S           := UnderlyingSemigroup(L);
+SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens := function(S, gens)
+  local n, m, genspos, omega_stack, possiblefgenvals, multtable, data, U, bt,
+  lambda, out, i;
+
   n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
   genspos     := List(gens, x -> PositionCanonical(S, x));
   omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
@@ -2105,7 +1839,7 @@ SEMIGROUPS.LeftTranslationsBacktrackNoCache := function(L)
   lambda := [];
   out := [];
   bt(1);
-  Apply(out, x -> LeftTranslationNC(L, x));
+#  Apply(out, x -> LeftTranslationNC(L, x));
   return out;
 end;
 
