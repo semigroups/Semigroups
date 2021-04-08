@@ -1221,7 +1221,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
   possiblefgenvals := List([1 .. m], i -> [1 .. n]);
   stabs := [];
   stabs[m + 1] := [];
-  stab_thresh := 10;
+  stab_thresh := 20;
   coset_reps := [];
 
   multtable := MultiplicationTableWithCanonicalPositions(S);
@@ -3432,7 +3432,7 @@ function(t)
 end);
 
 # TODO: why is this a global function?
-InstallGlobalFunction(LeftPartOfBitranslation, "for a bitranslation",
+InstallGlobalFunction(LeftPartOfBitranslation,
 function(h)
   if not IsBitranslation(h) then
      ErrorNoReturn("Semigroups: LeftPartOfBitranslation: \n",
@@ -3441,7 +3441,7 @@ function(h)
   return h![1];
 end);
 
-InstallGlobalFunction(RightPartOfBitranslation, "for a bitranslation",
+InstallGlobalFunction(RightPartOfBitranslation,
 function(h)
   if not IsBitranslation(h) then
      ErrorNoReturn("Semigroups: RightPartOfBitranslation: \n",
