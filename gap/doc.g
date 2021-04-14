@@ -62,6 +62,7 @@ BindGlobal("SEMIGROUPS_DocXMLFiles",
             "semipperm.xml",
             "semiringmat.xml",
             "semitrans.xml",
+            "tietze.xml",
             "trans.xml",
             "utils.xml",
             "word.xml"]);
