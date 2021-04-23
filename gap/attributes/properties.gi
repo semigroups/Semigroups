@@ -1836,26 +1836,11 @@ function(S)
   fi;
 end);
 
-# This is wrong: fix it
-InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
-[IsFpMonoid],
-function(S)
-  local rels, gens;
-  rels := RelationsOfFpMonoid(S);
-  if Length(rels) = 1 then
-    rels := rels[1];
-    gens := GeneratorsOfMonoid(S);
-    if Length(gens) = 1 then
-      return (Length(rels[1]) = 0 and Length(rels[2]) >= 1)
-              or (Length(rels[1]) >= 1 and rels[2] = 0);
-    else
-      return false;
-    fi;
-  else
-    TryNextMethod();
-  fi;
-
-end);
+# Theoretically possible: need to return to
+#InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
+#[IsFpMonoid],
+#function(S)
+#end);
 
 InstallMethod(IsEmbeddableInGroup, "for a finitely presented semigroup",
 [IsFpSemigroup],

@@ -815,8 +815,9 @@ function(S)
       (Length(rels[2]) = Length(rels[1]) + 1)) then
       return gens[1]^Minimum(rels, x -> Length(x));
     fi;
+  else
+    TryNextMethod();
   fi;
-  return fail;
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
@@ -830,6 +831,7 @@ function(S)
       gen := GeneratorsOfSemigroup(S)[1];
       return gen ^ (Maximum(List(rels, x -> Length(x)) - 1));
     fi;
+  else
+    TryNextMethod();
   fi;
-  return fail;
 end);
