@@ -36,11 +36,11 @@ semigroups_la_SOURCES += src/froidure-pin-pperm.cpp
 semigroups_la_SOURCES += src/froidure-pin-transf.cpp
 semigroups_la_SOURCES += src/pkg.cpp 
 semigroups_la_SOURCES += src/to_gap.cpp
-semigroups_la_SOURCES += gapbind14-0.0.1/src/gapbind14.cpp
+semigroups_la_SOURCES += gapbind14/src/gapbind14.cpp
 
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS)   @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) @LIBSEMIGROUPS_CFLAGS@
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/gapbind14-0.0.1/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/gapbind14/include
 if HPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern
