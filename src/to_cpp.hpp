@@ -129,7 +129,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsBMat<T>>> {
+  struct to_cpp<T, std::enable_if_t<IsBMat<std::decay_t<T>>>> {
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
@@ -190,12 +190,11 @@ namespace gapbind14 {
   }  // namespace detail
 
   template <typename T>
-  struct
-      to_cpp<T,
-             std::
-                 enable_if_t<
-                     IsIntMat<
-                         T> || IsMaxPlusMat<T> || IsMinPlusMat<T> || IsProjMaxPlusMat<T>>> {  // NOLINT(whitespace/line_length)
+  struct to_cpp<T,
+                std::
+                    enable_if_t<
+                        IsIntMat<std::decay_t<
+                            T>> || IsMaxPlusMat<std::decay_t<T>> || IsMinPlusMat<std::decay_t<T>> || IsProjMaxPlusMat<std::decay_t<T>>>> {  // NOLINT(whitespace/line_length)
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
@@ -238,7 +237,8 @@ namespace gapbind14 {
   template <typename T>
   struct to_cpp<
       T,
-      std::enable_if_t<IsMaxPlusTruncMat<T> || IsMinPlusTruncMat<T>>> {
+      std::enable_if_t<IsMaxPlusTruncMat<std::decay_t<
+                           T>> || IsMinPlusTruncMat<std::decay_t<T>>>> {
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
     std::decay_t<T> operator()(Obj o) {
@@ -278,7 +278,7 @@ namespace gapbind14 {
   };
 
   template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsNTPMat<T>>> {
+  struct to_cpp<T, std::enable_if_t<IsNTPMat<std::decay_t<T>>>> {
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
     std::decay_t<T> operator()(Obj o) {

@@ -75,6 +75,8 @@ GAPBIND14_MODULE(libsemigroups, m) {
   init_froidure_pin_bipart(m);
   init_froidure_pin_bmat(m);
   init_froidure_pin_matrix(m);
+  init_froidure_pin_max_plus_mat(m);
+  init_froidure_pin_min_plus_mat(m);
   init_froidure_pin_pperm(m);
   init_froidure_pin_pbr(m);
   init_froidure_pin_transf(m);
