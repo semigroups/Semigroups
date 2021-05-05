@@ -727,18 +727,19 @@ gap> Size(EquivalenceRelationCanonicalPartition(cong)[1]);
 11
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ]
-gap> ImagesElm(cong, M.1);
+gap> ImagesElm(cong, GeneratorsOfMonoid(M)[1]);
 [ m1 ]
 gap> ImagesElm(cong, One(M));
 [ <identity ...> ]
 gap> classes := EquivalenceClasses(cong);;
 gap> SortedList(List(classes, Size));
 [ 1, 1, 11 ]
-gap> class1 := EquivalenceClassOfElement(cong, M.2 * M.1);;
-gap> class2 := EquivalenceClassOfElement(cong, M.1);;
-gap> M.1 ^ 2 in class1;
+gap> gens := GeneratorsOfMonoid(M);;
+gap> class1 := EquivalenceClassOfElement(cong, gens[2] * gens[1]);;
+gap> class2 := EquivalenceClassOfElement(cong, gens[1]);;
+gap> gens[1] ^ 2 in class1;
 true
-gap> M.1 in class1;
+gap> gens[1] in class1;
 false
 gap> class1 = class2;
 false
@@ -748,7 +749,7 @@ gap> AsSSortedList(enum);
   (m2*m1)^2, (m1*m2)^2*m1 ]
 gap> Size(enum);
 11
-gap> class1 * class2 = EquivalenceClassOfElement(cong, M.2 ^ 20 * M.1 ^ 42);
+gap> class1 * class2 = EquivalenceClassOfElement(cong, gens[2] ^ 20 * gens[1] ^ 42);
 true
 gap> class1 * class2 = EquivalenceClassOfElement(cong, One(M));
 false
