@@ -357,7 +357,7 @@ function(C)
   fi;
   en        := EnumeratorCanonical(Range(C));
   partition := List([1 .. NrEquivalenceClasses(C)], x -> []);
-  lookup := EquivalenceRelationLookup(C);
+  lookup := EquivalenceRelationCanonicalLookup(C);
   for i in [1 .. Length(lookup)] do
     Add(partition[lookup[i]], en[i]);
     # TODO could also just return numbers
