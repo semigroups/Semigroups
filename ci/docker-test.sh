@@ -49,7 +49,7 @@ else
   echo "Test(\"load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" | $GAPSH -L test-output.w -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning Semigroups package standard tests and manual examples..."
-  echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
+  echo "LoadPackage(\"semigroups\"); SemigroupsMakeDoc(); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
     $GAPSH -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   # Run GAP tests, but only in 64-bit, since they're far too slow in 32-bit
