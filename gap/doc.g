@@ -64,27 +64,33 @@ BindGlobal("SEMIGROUPS_DocXMLFiles",
             "trans.xml",
             "utils.xml"]);
 
-BindGlobal("SemigroupsMakeDoc",
-function(arg)
-  local doquit, PACKAGE;
-  if Length(arg) = 1 then
-    doquit := arg[1];
-  else
-    doquit := false;
+BindGlobal("SEMIGROUPS_MakeDoc",
+function(pkgdir)
+  local PKG, temp, version, args;
+
+  PKG := "Semigroups";
+
+  # Get the GAP version from PackageInfo.g and write it to .VERSION
+  temp := SplitString(StringFile(Filename(pkgdir, "PackageInfo.g")), "\n");
+  version := SplitString(First(temp, x -> StartsWith(x, "Version")), "\"")[2];
+  PrintTo(Filename(pkgdir, ".VERSION"), version, "\n");
+
+  args := [Filename(pkgdir, "doc"),
+           "main.xml",
+           SEMIGROUPS_DocXMLFiles,
+           PKG,
+           "MathJax",
+           "../../.."];
+  # If pdflatex is not available, but we call MakeGAPDocDoc implicitly asking
+  # for GAPDoc to compile a PDF version of the manual, then GAPDoc fails to
+  # create the doc/manual.six file, which we need later. This file however is
+  # still created if we explicitly say that we don't want a PDF
+  if Filename(DirectoriesSystemPrograms(), "pdflatex") = fail then
+    Add(args, "nopdf");
   fi;
-  PACKAGE := "Semigroups";
-  PrintTo(".VERSION", PackageInfo(PACKAGE)[1].Version, "\n");
   LoadPackage("GAPDoc");
-
   SetGapDocLaTeXOptions("utf8");
-  MakeGAPDocDoc(Concatenation(PackageInfo(PACKAGE)[1]!.
-                              InstallationPath, "/doc"),
-                "main.xml", SEMIGROUPS_DocXMLFiles, PACKAGE, "MathJax",
-                "../../..");
-
-  CopyHTMLStyleFiles("doc");
-  GAPDocManualLabFromSixFile(PACKAGE, "doc/manual.six");
-  if doquit then
-    FORCE_QUIT_GAP();
-  fi;
+  CallFuncList(MakeGAPDocDoc, args);
+  CopyHTMLStyleFiles(Filename(pkgdir, "doc"));
+  GAPDocManualLabFromSixFile(PKG, Filename(pkgdir, "doc/manual.six"));
 end);

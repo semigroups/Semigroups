@@ -233,6 +233,12 @@ end);
 # 2. Documentation - internal stuff
 ################################################################################
 
+InstallGlobalFunction(SemigroupsMakeDoc,
+function()
+  # Compile the documentation of the currently-loaded version of Semigroups
+  SEMIGROUPS_MakeDoc(DirectoriesPackageLibrary("Semigroups", ""));
+end);
+
 SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
                          "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
