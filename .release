@@ -69,15 +69,6 @@ notice_it  "Downloading libsemigroups v$VERS into $LIBS_DIR..."
 curl -L -O "https://github.com/libsemigroups/libsemigroups/releases/download/v$VERS/libsemigroups-$VERS.tar.gz"
 tar -xzf "libsemigroups-$VERS.tar.gz" && rm -f "libsemigroups-$VERS.tar.gz" && mv "libsemigroups-$VERS" "$LIBS_DIR"
 
-# Build the package because it must be loadable for the doc to be compiled (for
-# some reason)
-
-notice_it "Building the Semigroups package"
-
-./autogen.sh
-./configure --with-gaproot=/Users/jdm/gap CXX="ccache g++" CXXFLAGS="-fdiagnostics-color"
-make -j8
-    
 notice_it "Building Semigroups package documentation for archives (using makedoc.g)"
 
 run_gap <<GAPInput
@@ -93,7 +84,6 @@ rm -f doc/*.aux doc/*.bbl doc/*.blg doc/*.brf doc/*.idx doc/*.ilg doc/*.ind doc/
 
 ! grep -E "WARNING: non resolved reference" makedoc.log
 rm -f makedoc.log
-make distclean
 
 # The next line stop release-gap-package from trying to rebuild the doc 
 # Ideally the makedoc.g file would be included in the distro anyway
@@ -101,16 +91,16 @@ rm -f makedoc.g
 
 notice_it "Fixing the links in the documentation"
 for f in ./*/*.htm* ; do
-  sed 's;href="/.*digraphs-.*/doc;href="https://digraphs.github.io/Digraphs/doc/;g' "$f" > "$f.bak"
+  sed 's;href="[^"]*digraphs[^"]*/doc/;href="https://digraphs.github.io/Digraphs/doc/;gi' "$f" > "$f.bak"
   mv "$f.bak" "$f"
-  sed 's;href="/.*io-.*/doc;href="https://gap-packages.github.io/io/doc/;g' "$f" > "$f.bak"
+  sed 's;href="[^"]*io[^"]*/doc/;href="https://gap-packages.github.io/io/doc/;gi' "$f" > "$f.bak"
   mv "$f.bak" "$f"
-  sed 's;href="/.*smallsemi-.*/doc;href="https://gap-packages.github.io/smallsemi/doc/;g' "$f" > "$f.bak"
+  sed 's;href="[^"]*smallsemi[^"]*/doc/;href="https://gap-packages.github.io/smallsemi/doc/;gi' "$f" > "$f.bak"
   mv "$f.bak" "$f"
-  sed 's;href="/.*images-.*/doc;href="https://gap-packages.github.io/images/doc/;g' "$f" > "$f.bak"
+  sed 's;href="[^"]*images[^"]*/doc/;href="https://gap-packages.github.io/images/doc/;gi' "$f" > "$f.bak"
   mv "$f.bak" "$f"
-  sed 's;href="/.*GAPDoc-.*/doc;href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/;g' "$f" > "$f.bak"
+  sed 's;href="[^"]*GAPDoc[^"]*/doc/;href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/;gi' "$f" > "$f.bak"
   mv "$f.bak" "$f"
 done
 
-notice_it "Finished running Semigroup package .release script!!!"
+notice_it "Finished running Semigroups package .release script!!!"
