@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: "GAP ${{ matrix.gap-branch }}"
+    name: "${{ matrix.gap-branch }} / ${{ matrix.os }} / ${{ matrix.ABI }}-bit"
     runs-on: "${{ matrix.os }}-latest"
     # Don't run this twice for PRs from branches in the same repository
     if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
@@ -21,15 +21,27 @@ jobs:
         gap-branch:
           - master
           - stable-4.11
+        ABI:
+          - 64
+          - 32
 
         include:
           # GAP stable-4.10
           - gap-branch: stable-4.10
             pkgs-to-clone: "datastructures images digraphs/digraphs"
             os: ubuntu
+            ABI: 64
+          # macOS job
+          - gap-branch: master
+            pkgs-to-clone: "datastructures" # to ensure >= v0.2.6
+            os: macos
+            ABI: 64
 
     steps:
       - uses: actions/checkout@v2
+      - name: "Install dependencies"
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install automake
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         env:
@@ -40,8 +52,11 @@ jobs:
           GAP_PKGS_TO_CLONE: "${{ matrix.pkgs-to-clone }}"
           GAP_PKGS_TO_BUILD: "digraphs genss io orb images datastructures profiling"
           GAPBRANCH: ${{ matrix.gap-branch }}
+          ABI: ${{ matrix.ABI }}
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
+        with:
+          ABI: ${{ matrix.ABI }}
       - name: "Run tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
         with:
