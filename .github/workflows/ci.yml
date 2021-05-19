@@ -20,7 +20,7 @@ jobs:
         run: bash etc/gaplint.sh
   test:
     name: "GAP ${{ matrix.gap-branch }}"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
@@ -42,3 +42,6 @@ jobs:
       - uses: gap-actions/run-test-for-packages@v1
         with:
           GAP_TESTFILE: "tst/teststandard.g"
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
