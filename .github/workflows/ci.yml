@@ -11,16 +11,6 @@ env:
   LDFLAGS: "-pthread"
 
 jobs:
-  lint:
-    name: "lint"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: "Install dependencies . . ."
-        run: |
-          sudo pip install gaplint 
-      - name: "Run gaplint . . ."
-        run: bash etc/gaplint.sh
   test:
     name: "GAP ${{ matrix.gap-branch }}"
     runs-on: ubuntu-latest
