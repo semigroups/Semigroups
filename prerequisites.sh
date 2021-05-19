@@ -40,5 +40,7 @@ fi
 
 # Download libsemigroups
 echo  "Downloading libsemigroups v$VERS into $LIBS_DIR..."
-curl -L -O "https://github.com/libsemigroups/libsemigroups/releases/download/v$VERS/libsemigroups-$VERS.tar.gz"
-tar -xzf "libsemigroups-$VERS.tar.gz" && rm -f "libsemigroups-$VERS.tar.gz" && mv "libsemigroups-$VERS" "$LIBS_DIR"
+#curl -L -O "https://github.com/libsemigroups/libsemigroups/releases/download/v$VERS/libsemigroups-$VERS.tar.gz"
+#tar -xzf "libsemigroups-$VERS.tar.gz" && rm -f "libsemigroups-$VERS.tar.gz" && mv "libsemigroups-$VERS" "$LIBS_DIR"
+git clone https://github.com/james-d-mitchell/libsemigroups/ --branch pthread --depth=1 "$LIBS_DIR"
+echo "1.3.8" > "$LIBS_DIR/.VERSION"
