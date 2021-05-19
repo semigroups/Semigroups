@@ -252,11 +252,7 @@ gap> A := [DigraphFromDiSparse6String(".[{?`abcdefghijklmnopqrstuvwxyz"),
 > DigraphFromDiSparse6String(
 > ".[_bAdCfEhGjIlKnMpOrQtSvU{_bAdCfEhGjIlKnMpOrQtSvUwxyz"),
 > DigraphFromDiSparse6String(".[h?jAlCnE`gbidkfm{h?jAlCnE`gbidkfmwxyz"),
-> DigraphFromSparse6String(":[w?BGJORaDILQTcFKNSV`EHMPU")];
-[ <immutable digraph with 28 vertices, 28 edges>, 
-  <immutable digraph with 28 vertices, 28 edges>, 
-  <immutable digraph with 28 vertices, 28 edges>, 
-  <immutable digraph with 28 vertices, 48 edges> ]
+> DigraphFromSparse6String(":[w?BGJORaDILQTcFKNSV`EHMPU")];;
 gap> S := Semigroup(List(A, AsBooleanMat));
 <monoid of 28x28 boolean matrices with 3 generators>
 gap> Size(S);
