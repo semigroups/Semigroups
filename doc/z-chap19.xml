@@ -50,6 +50,8 @@
     BookName="ref"/>).
 
     <#Include Label = "ParseRelations">
+    <#Include Label = "ElementOfFpSemigroup">
+    <#Include Label = "ElementOfFpMonoid">
   </Section>
 
   <Section Label="Creating semigroup presentations">
