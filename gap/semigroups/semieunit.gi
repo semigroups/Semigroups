@@ -402,14 +402,14 @@ SEMIGROUPS.MTSSmallGen := function(S)
    sl   := DigraphReflexiveTransitiveReduction(Sl);
    SetDigraphVertexLabels(sl, DigraphVertexLabels(Sl));  # Preserve labelling.
    for i in [1 .. Length(top)] do
-     above := Filtered(top{[1 .. i - 1]}, j -> Y_X[j] in InNeighboursOfVertex(po,
-              top[i]));
+     above := Filtered(top{[1 .. i - 1]},
+                       j -> Y_X[j] in InNeighboursOfVertex(po, top[i]));
      c := comps[top[i]];
 
      if IsEmpty(above) then  # Add generating set for this D-class.
        stab := GeneratorsOfGroup(_Stab(c[1]));
        for g in stab do
-         Add(gens, MTSE(S, c[1], g));  # Add gens of maximal subgroup of R-class.
+         Add(gens, MTSE(S, c[1], g));  # Add gens of maximal subgroup of R-class
        od;
        if Length(c) > 1 then  # Add reps from H-classes of R-class.
          for j in [1 .. Length(c) - 1] do

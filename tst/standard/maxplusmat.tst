@@ -514,7 +514,8 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -3, 3, -1, -1],
 > [1, -1, 5, -infinity, -infinity]]);;
 
 # maxplusmat: SpectralRadius for a max-plus matrix
-gap> mat := Matrix(IsMaxPlusMatrix, [[0, -3, 0, -2, -1], [1, -1, 0, -infinity, 1],
+gap> mat := Matrix(IsMaxPlusMatrix, [
+>  [0, -3, 0, -2, -1], [1, -1, 0, -infinity, 1],
 >  [-infinity, 1, 0, -infinity, 2], [-infinity, 4, 0, -2, 1],
 >  [-3, 0, 5, -1, -4]]);;
 gap> SpectralRadius(mat);

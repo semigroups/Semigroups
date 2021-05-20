@@ -116,7 +116,8 @@ gap> BruteForceInverseCheck(map);
 true
 
 # AsSemigroup: 
-#   convert from IsMatrixOverFiniteFieldSemigroup to IsMatrixOverFiniteFieldSemigroup
+#   convert from IsMatrixOverFiniteFieldSemigroup
+#             to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(GF(2),
 >        [[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
@@ -325,7 +326,8 @@ gap> BruteForceInverseCheck(map);
 true
 
 # AsSemigroup: 
-#   convert from IsProjectiveMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
+#   convert from IsProjectiveMaxPlusMatrixSemigroup
+#             to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
 >        [[0, -infinity, -infinity, -infinity, -infinity],
@@ -393,7 +395,8 @@ gap> BruteForceInverseCheck(map);
 true
 
 # AsSemigroup: 
-#   convert from IsTropicalMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
+#   convert from IsTropicalMaxPlusMatrixSemigroup
+#             to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
 >        [[0, -infinity, -infinity, -infinity, -infinity],
@@ -427,7 +430,8 @@ gap> BruteForceInverseCheck(map);
 true
 
 # AsSemigroup: 
-#   convert from IsTropicalMinPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
+#   convert from IsTropicalMinPlusMatrixSemigroup
+#             to IsMatrixOverFiniteFieldSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
 >        [[0, infinity, infinity, infinity, infinity],
@@ -595,7 +599,8 @@ gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup);;
 gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2);;
 gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3);;
 gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7));;
-gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1, 3]);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7),
+> [1, 3]);;
 gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, "a");
 Error, Semigroups: RandomInverseSemigroup: usage,
 the second argument (number of generators) must be a pos int,
@@ -605,10 +610,11 @@ the third argument (matrix dimension) must be a pos int,
 gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 1, 2, Integers);
 Error, Semigroups: RandomInverseSemigroup: usage,
 the fourth argument must be a finite field,
-gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [0]);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [0]);
 Error, Semigroups: RandomInverseSemigroup: usage,
 the fifth argument (matrix ranks) must be a list of pos ints,
-gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1], 10);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1],
+> 10);;
 Error, Semigroups: RandomInverseSemigroup: usage,
 there must be at most five arguments,
 

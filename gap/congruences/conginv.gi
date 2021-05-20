@@ -467,11 +467,11 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
   # better?
 
-  canonical_lookup := function(uf)
+  canonical_lookup := function(u)
     local N;
     N := SizeUnderlyingSetDS(traceUF);
     return FlatKernelOfTransformation(Transformation([1 .. N],
-                                                     x -> Representative(uf, x)),
+                                                     x -> Representative(u, x)),
                                       N);
   end;
 

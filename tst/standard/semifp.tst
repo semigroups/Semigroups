@@ -2073,8 +2073,8 @@ gap> BruteForceIsoCheck(iso);
 true
 gap> BruteForceInverseCheck(iso);
 true
-gap> S := InverseSemigroup(
-> [PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [9, 10, 8, 2, 1, 7, 5, 4, 6, 3]),
+gap> S := InverseSemigroup([
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [9, 10, 8, 2, 1, 7, 5, 4, 6, 3]),
 > PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 9, 3, 6, 5, 2, 8, 1, 4, 7]),
 > PartialPerm([], [])]);;
 gap> iso := IsomorphismFpSemigroup(S);;
@@ -2114,7 +2114,8 @@ gap> ForAll(tst, IsFactorisableInverseMonoid);
 true
 gap> ForAll(tst, S -> BruteForceIsoCheck(IsomorphismFpSemigroup(S)));
 true
-gap> ForAll(tst{[1 .. 10]}, S -> BruteForceInverseCheck(IsomorphismFpSemigroup(S)));
+gap> ForAll(tst{[1 .. 10]},
+> S -> BruteForceInverseCheck(IsomorphismFpSemigroup(S)));
 true
 
 # Test EvaluateExtRepObjWord

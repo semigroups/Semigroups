@@ -131,7 +131,8 @@ function(obj, record, baseenum, convert, filts)
   record.baseenum := baseenum;
   record.enumofenums := EmptyPlist(Length(baseenum));
 
-  if not IsBound(record.Length) then  # maybe a better way is in record.Length...
+  # maybe a better way is in record.Length...
+  if not IsBound(record.Length) then
     record.Length := function(enum)
       local tot, enumofenums, baseenum, i;
       tot := 0;

@@ -29,7 +29,8 @@ gap> IsGeneratorsOfActingSemigroup(Elements(R));
 true
 gap> IsGeneratorsOfActingSemigroup(SLM(2, 2));
 true
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+>                                  Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> IsGeneratorsOfActingSemigroup(M);
 true
 
@@ -59,7 +60,8 @@ gap> Set(R, ActionDegree);
 [ 0, 1, 3, 4 ]
 
 # ActionDegree, for a MTS element
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+>                                  Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> ActionDegree(M.1);
 0
 
@@ -94,7 +96,8 @@ gap> ActionDegree([MultiplicativeZero(R)]);
 0
 
 # ActionDegree, for an MTS element collection
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+>                                  Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> ActionDegree(Generators(M));
 0
 
@@ -130,7 +133,8 @@ gap> ActionDegree(Semigroup(MultiplicativeZero(R)));
 0
 
 # ActionDegree, for an MTS subsemigroup
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+>                                  Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> ActionDegree(Semigroup(Representative(M)));
 0
 
@@ -190,7 +194,8 @@ gap> rank(MultiplicativeZero(R));
 0
 
 # ActionRank, for an MTS semigroup and subsemigroup
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+>                                  Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> rank := ActionRank(M);;
 gap> rank(Representative(M));
 0
@@ -232,7 +237,9 @@ gap> MinActionRank(R);
 0
 
 # MinActionRank, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> MinActionRank(M);
 1
 
@@ -269,7 +276,9 @@ gap> RhoOrbOpts(R);
 rec(  )
 
 # Rho/lambdaOrbOpts, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> LambdaOrbOpts(M);
 rec(  )
 gap> RhoOrbOpts(M);
@@ -346,7 +355,9 @@ gap> x(2, s);
 1
 
 # Rho/LambdaAct, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> r := MTSE(M, 1, (3, 4));;
 gap> s := MTSE(M, 3, (2, 3));;
 gap> x := LambdaAct(M);;
@@ -419,7 +430,9 @@ gap> RhoOrbSeed(R);
 -1
 
 # Rho/LambdaOrbSeed, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> LambdaOrbSeed(M);
 0
 gap> RhoOrbSeed(M);
@@ -478,7 +491,9 @@ gap> x(RMSElement(S, 1, (1, 3), 2));
 1
 
 # Rho/LambdaFunc, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaFunc(M);;
 gap> x(MTSE(M, 1, ()));
 1
@@ -546,7 +561,9 @@ gap> x(1);
 4
 
 # Rho/LambdaRank, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaRank(M);;
 gap> x(1);
 1
@@ -626,7 +643,9 @@ gap> x(2, S.1);
 (2,(),1)
 
 # Rho/LambdaInverse, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaInverse(M);;
 gap> x(2, MTSE(M, 1, ()));
 (1, ())
@@ -695,7 +714,9 @@ gap> RhoBound(S)(5);
 120
 
 # Rho/LambdaBound, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> LambdaBound(M)(5);
 6
 gap> LambdaBound(M)(10000);
@@ -751,7 +772,9 @@ gap> RhoIdentity(S)(2);
 ()
 
 # Rho/LambdaIdentity, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> LambdaIdentity(M)(2);
 ()
 gap> RhoIdentity(M)(2);
@@ -791,7 +814,9 @@ gap> x(MultiplicativeZero(R), MultiplicativeZero(R));
 ()
 
 # LambdaPerm, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaPerm(M);;
 gap> x(MTSE(M, 1, (2, 3, 4)), MTSE(M, 2, (2, 3)));
 (2,4)
@@ -829,7 +854,9 @@ gap> x(RMSElement(R, 1, (1, 3, 2), 1), RMSElement(R, 1, (1, 2, 3), 2));
 ()
 
 # LambdaConjugator, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := LambdaConjugator(M);;
 gap> x(MTSE(M, 1, (2, 3, 4)), MTSE(M, 2, (2, 3)));
 fail
@@ -915,7 +942,9 @@ gap> y(2, 2);
 (2,(1,2),2)
 
 # IdempotentTester and IdempotentCreator, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := IdempotentTester(M);;
 gap> y := IdempotentCreator(M);;
 gap> x(1, 1);
@@ -987,7 +1016,9 @@ gap> x(RMSElement(R, 1, (), 1), ());
 (1,(),1)
 
 # StabilizerAction, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> x := StabilizerAction(M);;
 gap> x(MTSE(M, 1, ()), ());
 (1, ())
@@ -1025,7 +1056,9 @@ gap> IsActingSemigroupWithFixedDegreeMultiplication(Semigroup(S));
 false
 
 # IsActingSemigroupWithFixedDegreeMultiplication, for a MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> IsActingSemigroupWithFixedDegreeMultiplication(Semigroup(M));
 false
 
@@ -1073,7 +1106,9 @@ gap> SchutzGpMembership(R)(schutz, ());
 true
 
 # SchutzGpMembership, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
+gap> M := McAlisterTripleSemigroup(
+>  SymmetricGroup([2, 3, 4]),
+>  Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> M := Semigroup(MTSE(M, 2, (2, 3)), MTSE(M, 3, (2, 3)));;
 gap> o := LambdaOrb(M);; Enumerate(o);;
 gap> schutz := LambdaOrbStabChain(o, 3);;
