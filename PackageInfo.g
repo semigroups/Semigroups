@@ -314,7 +314,7 @@ Dependencies := rec(
                           ["digraphs", ">=1.2.0"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.0"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
+  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"]],
 
   ExternalConditions := []),
 

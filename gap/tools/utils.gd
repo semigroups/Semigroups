@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("SemigroupsMakeDoc");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestStandard");
 DeclareGlobalFunction("SemigroupsTestExtreme");
