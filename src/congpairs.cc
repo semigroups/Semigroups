@@ -55,7 +55,7 @@ static inline congruence_type cstring_to_congruence_t(char const* type) {
 
 static inline word_type plist_to_word_type(gap_list_t plist) {
   word_type word;
-  for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
+  for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(plist)); i++) {
     Obj j = ELM_PLIST(plist, i);
     SEMIGROUPS_ASSERT(IS_INTOBJ(j));
     word.push_back(INT_INTOBJ(j) - 1);
@@ -119,7 +119,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
 
     // Get the fp semigroup's rels
     gap_list_t gap_rels = ElmPRec(o, RNam_fp_rels);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(gap_rels)); i++) {
       gap_list_t rel = ELM_PLIST(gap_rels, i);
       S.add_rule(plist_to_word_type(ELM_PLIST(rel, 1)),
                  plist_to_word_type(ELM_PLIST(rel, 2)));
@@ -129,7 +129,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
 
     // Get the extra pairs
     gap_list_t gap_extra = ElmPRec(o, RNam_fp_extra);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_extra); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(gap_extra)); i++) {
       gap_list_t pair = ELM_PLIST(gap_extra, i);
       cong->add_pair(plist_to_word_type(ELM_PLIST(pair, 1)),
                      plist_to_word_type(ELM_PLIST(pair, 2)));
@@ -138,7 +138,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     FroidurePin<Element const*>* range = cong_obj_get_range(o);
 
     cong = new Congruence(type, *range);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(genpairs)); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
       Obj rhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
       cong->add_pair(
@@ -160,7 +160,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
     tc.set_nr_generators(nrgens);
 
     // convert the generating pairs to relation_type's
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(genpairs)); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
       Obj rhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
 
@@ -185,7 +185,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
 
     DynamicArray2<size_t> table(nrgens, LEN_PLIST(graph));
 
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(graph); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(graph)); i++) {
       Obj next = ELM_PLIST(graph, i);
       for (size_t j = 1; j <= nrgens; j++) {
         table.set(i - 1, j - 1, INT_INTOBJ(ELM_PLIST(next, j)) - 1);
@@ -361,7 +361,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     lookup = NEW_PLIST_IMM(T_PLIST_CYC, LEN_PLIST(words));
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(words)); i++) {
       size_t class_index
           = cong->word_to_class_index(plist_to_word_type(ELM_PLIST(words, i)));
 

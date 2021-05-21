@@ -37,9 +37,9 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(IS_PLIST(o));
   SEMIGROUPS_ASSERT(LEN_PLIST(o) > 0);
 
-  Obj               row = ELM_PLIST(o, 1);
+  Obj row = ELM_PLIST(o, 1);
   SEMIGROUPS_ASSERT(IS_PLIST(row) || IS_BLIST_REP(row));
-  size_t            m   = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
+  size_t            m = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
   std::vector<bool> x(m * m, false);
 
   for (size_t i = 0; i < m; i++) {
@@ -105,7 +105,8 @@ Obj BipartConverter::unconvert(Element const* x) const {
 
 Obj PBRConverter::get_gap_type(size_t deg) const {
   deg++;
-  if (deg > (size_t) LEN_PLIST(TYPES_PBR) || ELM_PLIST(TYPES_PBR, deg) == 0) {
+  if (deg > static_cast<size_t>(LEN_PLIST(TYPES_PBR))
+      || ELM_PLIST(TYPES_PBR, deg) == 0) {
     CALL_1ARGS(TYPE_PBR, INTOBJ_INT(deg - 1));
   }
   return ELM_PLIST(TYPES_PBR, deg);
