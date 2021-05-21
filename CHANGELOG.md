@@ -5,8 +5,8 @@ Licensing information can be found in the `LICENSE` file.
 
 ### Version 3.4.2 (released 07/02/2021)
 
-This is a minor release resolving some issues in v3.4.1  [James D. Mitchell][],
-and with a number of improvements by [Wilf A. Wilson][].
+This is a minor release resolving some issues in v3.4.1  [[James D. Mitchell][]],
+with a number of improvements by [Wilf A. Wilson][].
 
 ### Version 3.4.1 (released 28/01/2021)
 

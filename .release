@@ -18,6 +18,7 @@ error() {
     exit 1
 }
 
+# TODO: This function can be deleted once the code to compile the manual is gone
 run_gap() {
   gap_output=$( \
     (echo 'OnBreak:=function() Print("FATAL ERROR"); FORCE_QUIT_GAP(1); end;;' ; cat - ; echo ; echo "FORCE_QUIT_GAP(0);") \
@@ -30,45 +31,25 @@ run_gap() {
   fi
 }
 
-notice_it "Running Semigroup package .release script"
+notice_it "Running Semigroups package .release script"
 
 # Delete unnecessary files
 
 notice_it "Deleting additional unnecessary files"
 
-rm -f  .covignore
-rm -f  .codecov.yml
-rm -f  .gaplint.yml
-rm -f  azure-pipelines.yml
-
-rm -rf ci
-rm -rf etc
-
+rm -f  .covignore .gaplint.yml
+rm -rf ci etc
 
 # download libsemigroups
-SEMI_DIR="$PWD"
-LIBS_DIR="$SEMI_DIR/libsemigroups"
-
-# Get libsemigroups version from file
-if [ -f "$SEMI_DIR/.LIBSEMIGROUPS_VERSION" ]; then
-  VERS=`tr -d '\n' < $SEMI_DIR/.LIBSEMIGROUPS_VERSION`
-else
- notice_it "Error, cannot find $SEMI_DIR/.LIBSEMIGROUPS_VERSION"
-  exit 1
+if [ -d "libsemigroups" ] && [ "$(ls -A libsemigroups)" ]; then
+  error "the libsemigroups directory exists and is non-empty"
 fi
+./prerequisites.sh
 
-notice_it "libsemigroups v$VERS is required by this version of Semigroups"
-
-if [ -d "$LIBS_DIR" ] && [ "$(ls -A $LIBS_DIR)" ]; then
-  notice_it "the libsemigroups directory exists and is non-empty"
-  exit 1
-fi
-
-# Download libsemigroups
-notice_it  "Downloading libsemigroups v$VERS into $LIBS_DIR..."
-curl -L -O "https://github.com/libsemigroups/libsemigroups/releases/download/v$VERS/libsemigroups-$VERS.tar.gz"
-tar -xzf "libsemigroups-$VERS.tar.gz" && rm -f "libsemigroups-$VERS.tar.gz" && mv "libsemigroups-$VERS" "$LIBS_DIR"
-
+# TODO: in the newest commits of ReleaseTools, the manual is now built by the
+# time that this script is called, and soon release-gap-package will also
+# perform the check for non resolved references. Once this is the case, we will
+# be able to get rid of the compilation of the manual in this script.
 notice_it "Building Semigroups package documentation for archives (using makedoc.g)"
 
 run_gap <<GAPInput
@@ -79,16 +60,13 @@ fi;
 PushOptions(rec(relativePath:="../../.."));
 Read("makedoc.g");
 GAPInput
-rm -f doc/*.lab doc/*.tex
+rm -f doc/*.tex
 rm -f doc/*.aux doc/*.bbl doc/*.blg doc/*.brf doc/*.idx doc/*.ilg doc/*.ind doc/*.log doc/*.out doc/*.pnr doc/*.tst
 
 ! grep -E "WARNING: non resolved reference" makedoc.log
 rm -f makedoc.log
 
-# The next line stop release-gap-package from trying to rebuild the doc 
-# Ideally the makedoc.g file would be included in the distro anyway
-rm -f makedoc.g 
-
+# Note: Long term, this functionality may become a standard part of ReleaseTools
 notice_it "Fixing the links in the documentation"
 for f in ./*/*.htm* ; do
   sed 's;href="[^"]*digraphs[^"]*/doc/;href="https://digraphs.github.io/Digraphs/doc/;gi' "$f" > "$f.bak"

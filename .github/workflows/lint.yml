@@ -25,5 +25,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
-      - run: pip install 'cpplint==1.5.4'
-      - run: cpplint src/*.h src/*.cc
+      - run: pip install cpplint
+      - run: bash etc/cpplint.sh
