@@ -105,11 +105,12 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   i  = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
 
-  if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
+  if (i > nr || static_cast<size_t>(INT_INTOBJ(limit)) <= nr) {
     CHANGED_BAG(parent);
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
+  int_limit = std::max(static_cast<size_t>(INT_INTOBJ(limit)),
+                       static_cast<size_t>((nr + batch_size)));
   if (report) {
     std::cout << "limit = " << int_limit << "\n";
   }
@@ -211,7 +212,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
 
           memcpy(ADDR_OBJ(newword) + 1,
                  CONST_ADDR_OBJ(oldword) + 1,
-                 (size_t)(len * sizeof(Obj)));
+                 static_cast<size_t>(len * sizeof(Obj)));
           SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len + 1);
 
