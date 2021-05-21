@@ -67,3 +67,22 @@ jobs:
           GAP_TESTFILE: "tst/teststandard.g"
       - uses: gap-actions/process-coverage@v2
       - uses: codecov/codecov-action@v1
+
+  test-cygwin:
+    name: "cygwin64 / GAP master"
+    runs-on: windows-latest
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    env:
+      CHERE_INVOKING: 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gap-actions/setup-cygwin@master
+      - uses: wilfwilson/setup-gap@cygwin
+        with:
+          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - uses: gap-actions/build-pkg@ww/cygwin
+      - uses: wilfwilson/run-pkg-tests@cygwin
+        with:
+          GAP_TESTFILE: "tst/teststandard.g"
+      #- uses: gap-actions/process-coverage@v2
+      #- uses: codecov/codecov-action@v1
