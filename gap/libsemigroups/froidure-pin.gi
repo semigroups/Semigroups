@@ -312,7 +312,7 @@ function(S)
   if not IsFinite(S) then
     Error("the first argument (a semigroup) must be finite,");
   fi;
-  return FroidurePinMemFnRec(S).nr_idempotents(CppFroidurePin(S));
+  return FroidurePinMemFnRec(S).number_of_idempotents(CppFroidurePin(S));
 end);
 
 InstallMethod(Idempotents,
@@ -672,8 +672,8 @@ function(Constructor, S, coll, opts)
   generator := R.generator;
 
   # Recover the new generating set from the closure
-  coll := EmptyPlist(R.nr_generators(CppT));
-  for i in [1 .. R.nr_generators(CppT)] do
+  coll := EmptyPlist(R.number_of_generators(CppT));
+  for i in [1 .. R.number_of_generators(CppT)] do
     Add(coll, generator(CppT, i - 1));
   od;
   # Construct new semigroup so as to reset all attributes

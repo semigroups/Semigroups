@@ -45,12 +45,11 @@
 // libsemigroups headers
 #include "libsemigroups/adapters.hpp"   // for Degree
 #include "libsemigroups/bipart.hpp"     // for Bipartition, IsBipartition
+#include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
-// for LIBSEMIGROUPS_HPCOMBI_ENABLED
-#include "libsemigroups/libsemigroups-config.hpp"
-#include "libsemigroups/matrix.hpp"  // for matrix_threshold etc
-#include "libsemigroups/pbr.hpp"     // for PBR
-#include "libsemigroups/transf.hpp"  // for IsPPerm, IsTransf
+#include "libsemigroups/matrix.hpp"     // for matrix_threshold etc
+#include "libsemigroups/pbr.hpp"        // for PBR
+#include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;
@@ -405,15 +404,15 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<T, std::enable_if_t<libsemigroups::IsDynamicArray2<T>>> {
     Obj operator()(std::decay_t<T> const& da) {
-      Obj result = NEW_PLIST(T_PLIST_TAB_RECT, da.nr_rows());
+      Obj result = NEW_PLIST(T_PLIST_TAB_RECT, da.number_of_rows());
       // this is intentionally not IMMUTABLE
-      SET_LEN_PLIST(result, da.nr_rows());
+      SET_LEN_PLIST(result, da.number_of_rows());
 
-      for (size_t i = 0; i < da.nr_rows(); ++i) {
-        Obj next = NEW_PLIST(T_PLIST_CYC, da.nr_cols());
+      for (size_t i = 0; i < da.number_of_rows(); ++i) {
+        Obj next = NEW_PLIST(T_PLIST_CYC, da.number_of_cols());
         // this is intentionally not IMMUTABLE
-        SET_LEN_PLIST(next, da.nr_cols());
-        for (size_t j = 0; j < da.nr_cols(); ++j) {
+        SET_LEN_PLIST(next, da.number_of_cols());
+        for (size_t j = 0; j < da.number_of_cols(); ++j) {
           SET_ELM_PLIST(
               next,
               j + 1,

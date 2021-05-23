@@ -160,7 +160,7 @@ function(C)
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
     tc := libsemigroups.ToddCoxeter.make([Kind(C)]);
-    libsemigroups.ToddCoxeter.set_nr_generators(tc, N);
+    libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
     if IsLeftCongruenceCategory(C) then
       table := LeftCayleyGraphSemigroup(Range(C)) - 1;
     else
