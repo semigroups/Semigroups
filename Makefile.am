@@ -106,7 +106,7 @@ lint:
 	etc/cpplint.sh
 
 format: 
-	clang-format -i src/*.h src/*.cc
+	clang-format -i src/*.hpp src/*.cpp
 
 superclean: distclean
 	git clean -xdf --exclude *.swp --exclude *.swo

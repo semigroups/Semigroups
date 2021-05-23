@@ -46,7 +46,7 @@
 
 // libsemigroups headers
 #include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
-#include "libsemigroups/cong-intf.hpp"  // for congruence_type
+#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
 #include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
 #include "libsemigroups/report.hpp"     // for REPORTER, Reporter
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
@@ -104,14 +104,14 @@ GAPBIND14_MODULE(libsemigroups, m) {
   // ToddCoxeter
   ////////////////////////////////////////////////////////////////////////
 
-  using libsemigroups::congruence_type;
+  using libsemigroups::congruence_kind;
   using libsemigroups::congruence::ToddCoxeter;
   using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
 
   gapbind14::class_<ToddCoxeter>(m, "ToddCoxeter")
-      .def(gapbind14::init<congruence_type>{})
-      .def("set_nr_generators", &ToddCoxeter::set_nr_generators)
-      .def("nr_generators", &ToddCoxeter::nr_generators)
+      .def(gapbind14::init<congruence_kind>{})
+      .def("set_number_of_generators", &ToddCoxeter::set_number_of_generators)
+      .def("number_of_generators", &ToddCoxeter::number_of_generators)
       .def("prefill",
            gapbind14::overload_cast<table_type const&>(&ToddCoxeter::prefill));
 }
@@ -196,7 +196,7 @@ void TBlocksObjSaveFunc(Obj o) {
   Blocks* b = blocks_get_cpp(o);
   SaveUInt4(b->degree());
   if (b->degree() != 0) {
-    SaveUInt4(b->nr_blocks());
+    SaveUInt4(b->number_of_blocks());
     for (auto it = b->cbegin(); it < b->cend(); it++) {
       SaveUInt4(*it);
     }

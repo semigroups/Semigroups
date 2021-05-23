@@ -44,15 +44,15 @@
 #include "gapbind14/gapbind14.hpp"
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"             // for Degree
-#include "libsemigroups/bipart.hpp"               // for Bipartition
-#include "libsemigroups/cong-intf.hpp"            // for congruence_type
-#include "libsemigroups/cong.hpp"                 // for Congruence
-#include "libsemigroups/constants.hpp"            // for constants
-#include "libsemigroups/libsemigroups-debug.hpp"  // for LIBSEMIGROUPS_ASSERT
-#include "libsemigroups/matrix.hpp"               // for matrix_validate etc
-#include "libsemigroups/pbr.hpp"                  // for PBR
-#include "libsemigroups/transf.hpp"               // for IsPPerm, IsTransf
+#include "libsemigroups/adapters.hpp"   // for Degree
+#include "libsemigroups/bipart.hpp"     // for Bipartition
+#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
+#include "libsemigroups/cong.hpp"       // for Congruence
+#include "libsemigroups/constants.hpp"  // for constants
+#include "libsemigroups/debug.hpp"      // for LIBSEMIGROUPS_ASSERT
+#include "libsemigroups/matrix.hpp"     // for validate etc
+#include "libsemigroups/pbr.hpp"        // for PBR
+#include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;
@@ -156,7 +156,7 @@ namespace gapbind14 {
           }
         }
       }
-      GAPBIND14_TRY(libsemigroups::matrix_validate(x));
+      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
@@ -185,7 +185,7 @@ namespace gapbind14 {
           x(i, j) = itm;
         }
       }
-      GAPBIND14_TRY(libsemigroups::matrix_validate(x));
+      GAPBIND14_TRY(libsemigroups::validate(x));
     }
   }  // namespace detail
 
@@ -299,20 +299,20 @@ namespace gapbind14 {
           x(i, j) = to_cpp<scalar_type>()(ELM_PLIST(row, j + 1));
         }
       }
-      GAPBIND14_TRY(libsemigroups::matrix_validate(x));
+      GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
     }
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // congruence_type
+  // congruence_kind
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
   struct to_cpp<
       T,
       std::enable_if_t<std::is_same<std::decay_t<T>,
-                                    libsemigroups::congruence_type>::value>> {
+                                    libsemigroups::congruence_kind>::value>> {
     using cpp_type                          = std::decay_t<T>;
     static gap_tnum_type constexpr gap_type = T_STRING;
 
@@ -320,14 +320,14 @@ namespace gapbind14 {
       if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      using libsemigroups::congruence_type;
+      using libsemigroups::congruence_kind;
       std::string stype = std::string(CSTR_STRING(o));
       if (stype == "left") {
-        return congruence_type::left;
+        return congruence_kind::left;
       } else if (stype == "right") {
-        return congruence_type::right;
+        return congruence_kind::right;
       } else if (stype == "twosided") {
-        return congruence_type::twosided;
+        return congruence_kind::twosided;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
       }
@@ -338,11 +338,11 @@ namespace gapbind14 {
   struct to_cpp<T,
                 std::enable_if_t<std::is_same<
                     std::decay_t<T>,
-                    libsemigroups::Congruence::policy::runners>::value>> {
+                    libsemigroups::Congruence::options::runners>::value>> {
     using cpp_type = std::decay_t<T>;
 
     std::decay_t<T> operator()(Obj o) {
-      using runners = libsemigroups::Congruence::policy::runners;
+      using runners = libsemigroups::Congruence::options::runners;
       if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }

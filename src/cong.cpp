@@ -35,7 +35,7 @@
 
 // libsemigroups headers
 #include "libsemigroups/bipart.hpp"        // for Bipartition
-#include "libsemigroups/cong-intf.hpp"     // for congruence_type
+#include "libsemigroups/cong-intf.hpp"     // for congruence_kind
 #include "libsemigroups/cong.hpp"          // for Congruence
 #include "libsemigroups/constants.hpp"     // for UNDEFINED etc
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
@@ -70,7 +70,7 @@ using gapbind14::overload_cast;
 
 void init_cong(gapbind14::Module& m) {
   using libsemigroups::Congruence;
-  using libsemigroups::congruence_type;
+  using libsemigroups::congruence_kind;
   using libsemigroups::FpSemigroup;
   using libsemigroups::FroidurePin;
   using libsemigroups::FroidurePinBase;
@@ -93,42 +93,42 @@ void init_cong(gapbind14::Module& m) {
 
   // TODO the other types of froidurepin
   gapbind14::class_<Congruence>(m, "Congruence")
-      .def(gapbind14::init<congruence_type, FroidurePin<Bipartition> const&>{},
+      .def(gapbind14::init<congruence_kind, FroidurePin<Bipartition> const&>{},
            "make_from_froidurepin_bipartition")
-      .def(gapbind14::init<congruence_type, FroidurePin<BMat<>> const&>{},
+      .def(gapbind14::init<congruence_kind, FroidurePin<BMat<>> const&>{},
            "make_from_froidurepin_bmat")
-      .def(gapbind14::init<congruence_type, FroidurePin<PBR> const&>{},
+      .def(gapbind14::init<congruence_kind, FroidurePin<PBR> const&>{},
            "make_from_froidurepin_pbr")
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<LeastPPerm<16>> const&>{},
            "make_from_froidurepin_leastpperm")
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<LeastTransf<16>> const&>{},
            "make_from_froidurepin_leasttransf")
 #endif
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<Transf<0, UInt2>> const&>{},
            "make_from_froidurepin_transfUInt2")
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<Transf<0, UInt4>> const&>{},
            "make_from_froidurepin_transfUInt4")
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<PPerm<0, UInt2>> const&>{},
            "make_from_froidurepin_ppermUInt2")
-      .def(gapbind14::init<congruence_type,
+      .def(gapbind14::init<congruence_kind,
                            FroidurePin<PPerm<0, UInt4>> const&>{},
            "make_from_froidurepin_ppermUInt4")
-      .def(gapbind14::init<congruence_type, FpSemigroup&>{},
+      .def(gapbind14::init<congruence_kind, FpSemigroup&>{},
            "make_from_fpsemigroup")
-      .def(gapbind14::init<congruence_type, Congruence::policy::runners>{},
+      .def(gapbind14::init<congruence_kind, Congruence::options::runners>{},
            "make_from_table")
-      .def("set_number_of_generators", &Congruence::set_nr_generators)
-      .def("number_of_pairs", &Congruence::nr_generating_pairs)
+      .def("set_number_of_generators", &Congruence::set_number_of_generators)
+      .def("number_of_pairs", &Congruence::number_of_generating_pairs)
       .def("add_pair",
            overload_cast<word_type const&, word_type const&>(
                &Congruence::add_pair))
-      .def("number_of_classes", &Congruence::nr_classes)
+      .def("number_of_classes", &Congruence::number_of_classes)
       .def("word_to_class_index", &Congruence::word_to_class_index)
       .def("class_index_to_word", &Congruence::class_index_to_word)
       .def("contains", &Congruence::contains)
