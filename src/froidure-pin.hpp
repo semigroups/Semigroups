@@ -53,7 +53,8 @@ void init_froidure_pin_transf(gapbind14::Module&);
 template <typename element_type>
 void bind_froidure_pin(gapbind14::Module& m, std::string name) {
   using libsemigroups::FroidurePin;
-  using FroidurePin_ = FroidurePin<element_type>;
+  using FroidurePin_    = FroidurePin<element_type>;
+  using const_reference = typename FroidurePin<element_type>::const_reference;
   gapbind14::class_<FroidurePin_>(m, name)
       .def(gapbind14::init<>{}, "make")
       .def(gapbind14::init<FroidurePin_ const&>{}, "copy")
@@ -65,7 +66,9 @@ void bind_froidure_pin(gapbind14::Module& m, std::string name) {
       .def("size", &FroidurePin_::size)
       .def("at", &FroidurePin_::at)
       .def("sorted_at", &FroidurePin_::sorted_at)
-      .def("current_position", &FroidurePin_::current_position)
+      .def("current_position",
+           gapbind14::overload_cast<const_reference>(
+               &FroidurePin_::current_position))
       .def("sorted_position", &FroidurePin_::sorted_position)
       .def("number_of_idempotents", &FroidurePin_::number_of_idempotents)
       .def("enumerate", &FroidurePin_::enumerate)
