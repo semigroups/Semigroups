@@ -282,6 +282,158 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
   return [translist{[1 .. Length(translist) - 1]}, linkedtranslist];
 end;
 
+# Finds the transformations on the indices of a finite 0-simple semigroup
+# which are candidates for translations, when combined with a function from
+# the index sets to the group.
+# TODO: swap rows/columns if more convenient.
+SEMIGROUPS.FindTranslationTransformationsNew := function(S)
+  local mat, I, M, Li, bt, tau, sigma, out;
+
+  mat := MatrixOfReesZeroMatrixSemigroup(S);
+  I := [1 .. Length(mat[1])];
+  M := [1 .. Length(mat)];
+
+  Li := List(I, i -> PositionsProperty(mat, row -> row[i] <> 0));
+
+  bt := function(k)
+    local failed, j, mu, s;
+    for j in Union([0], I) do
+      tau[k] := j;
+      sigma[k + 1] := [];
+      failed := false;
+      if j <> 0 then
+        for mu in Li[j] do
+          sigma[k + 1][mu] := Intersection(sigma[k][mu], Li[k]);
+          if Length(sigma[k][mu]) = 0 then
+            failed := true;
+            break;
+          fi;
+        od;
+        if not failed then
+          for mu in M do
+            if not IsBound(sigma[k + 1][mu]) then
+              sigma[k + 1][mu] := Difference(sigma[k][mu], Li[k]);
+            fi;
+            if Length(sigma[k + 1][mu]) = 0 then
+              failed := true;
+              break;
+            fi;
+          od;
+        fi;
+      else
+        for mu in M do
+          sigma[k + 1][mu] := Difference(sigma[k][mu], Li[k]);
+          if Length(sigma[k + 1][mu]) = 0 then
+            failed := true;
+            break;
+          fi;
+        od;
+      fi;
+      if failed then
+        continue;
+      fi;
+      if k = Length(I) then
+        Add(out, [ShallowCopy(tau), IteratorOfCartesianProduct(sigma[k + 1])]);
+      else
+        bt(k + 1);
+      fi;
+    od;
+  end;
+
+  tau := [];
+  sigma := [List(M, x -> Union([0], M))];
+  out := [];
+  bt(1);
+  return out;
+end;
+
+SEMIGROUPS.RZMSLinkingGraph := function(S, t1, t2)
+  local mat, D, i, mu;
+
+  mat := MatrixOfReesZeroMatrixSemigroup(S);
+  D := Digraph(IsMutableDigraph, Length(Rows(S)) + Length(Columns(S)));
+  
+  for i in Rows(S) do
+    if t1[i] <> 0 then
+      for mu in Columns(S) do
+        if t2[mu] <> 0 then
+          if mat[mu][t1[i]] <> 0 then
+            DigraphAddEdges([[i, mu], [mu, i]]);
+          fi;
+        fi;
+      od;
+    fi;
+  od;
+
+  return D;
+end;
+
+SEMIGROUPS.RZMSGroupLinkingConditions := function(S, t1, t2)
+  local D, sccs, reps, r, c, dive, mat, conditions, row_definitions,
+  column_definitions, cc, rep;
+  
+  D := SEMIGROUPS.RZMSLinkingGraph(S, t1, t2);
+  sccs := DigraphStronglyConnectedComponents(D);
+  reps := [];
+
+  r := Size(Rows(S));
+  c := Size(Columns(S));
+  
+  for cc in Filtered(sccs.comps, x -> Size(x) > 1) do
+    rep := cc[1];
+    if rep > r then 
+      rep := OutNeighboursOfVertex(D, rep)[1];
+    fi;
+    Add(reps, rep);
+  od;
+
+  dive := function(v)
+    local y, z, defns, x, w;
+    if v <= r then
+      y := row_definitions[v];
+    else
+      y := column_definitions[v - r];
+    fi;
+    for w in OutNeighboursOfVertex(D, v) do
+      if w <= r then
+        z := w;
+        defns := row_definitions;
+        x := [mat[v - r][t1[w]] ^ -1 * y[1], y[2] * mat[t2[v - r]][w]];
+      else
+        z := w - r;
+        defns := column_definitions;
+        x := [mat[z][t1[v]] * y[1], y[2] * mat[t2[z]][v] ^ -1];
+      fi;
+      if IsBound(defns[z]) then
+        Add(conditions, [defns[z], x]);
+      else
+        defns[z] := x;
+        dive(z);
+      fi;
+    od;
+  end;
+  
+  mat := MatrixOfReesZeroMatrixSemigroup(S);
+  conditions := List([1 .. r], x -> []);
+  row_definitions := [];
+  column_definitions := [];
+
+  for rep in reps do
+    dive(rep);
+  od;
+
+  return rec(reps := reps,
+             conditions := conditions,
+             row_definitions := row_definitions,
+             column_definitions := column_definitions);
+end;
+
+SEMIGROUPS.FindLinkedGroupFunctions := function(S, t1, t2)
+
+
+end;
+
+
 # For a pair of transformations on the indices of a completely 0-simple
 # semigroup, determine the functions to the group associated with the RMS
 # representation which will form translations when combined with the
