@@ -510,7 +510,7 @@ end;
 # S is finite!
 SEMIGROUPS.LeftTranslationsFPBacktrackData := function(S)
   local gens, rels, n, m, suff_rels, suff_rels_by_first_letter, suff_rel, i, j,
-  word, suffix, U, keep, right_inverses_by_suffix, suffs, r, rel, x, s;
+  word, suffix, U, keep, suffs, right_inverses_by_suffix, Slist, r, rel, x, s;
 
   gens := GeneratorsOfSemigroup(S);
   rels := RelationsOfFpSemigroup(S);
@@ -534,8 +534,11 @@ SEMIGROUPS.LeftTranslationsFPBacktrackData := function(S)
       Add(suff_rel, suffix);
     od;
     AddSet(suff_rels, suff_rel);
-    AddSet(suff_rels_by_first_letter[i][j], suff_rel);
-    AddSet(suff_rels_by_first_letter[j][i], Reversed(suff_rel));
+    if i <= j then 
+      AddSet(suff_rels_by_first_letter[i][j], suff_rel);
+    else
+      AddSet(suff_rels_by_first_letter[j][i], Reversed(suff_rel));
+    fi;
   od;
 
   U := List(gens, x -> []);
@@ -549,18 +552,20 @@ SEMIGROUPS.LeftTranslationsFPBacktrackData := function(S)
         fi;
       od;
     if keep then
-      Add(U[i], s);
+      Add(U[i], PositionCanonical(S, s));
     fi;
     od;
   od;
 
-
-  suffs := Set(Flat(suff_rels));
+  suffs := Set(List(suff_rels, x -> x[2]));
   right_inverses_by_suffix := List([1 .. n], x -> List([1 .. Length(suffs)], y -> []));
 
+  Slist := AsListCanonical(S);;
+
   for i in [1 .. Length(suffs)] do
-    for s in S do
-      Add(right_inverses_by_suffix[PositionCanonical(S, s * suffs[i])][i], s);
+    for s in [1 .. n] do
+      Add(right_inverses_by_suffix[PositionCanonical(S, Slist[s] * suffs[i])][i],
+          s);
     od;
   od;
 
@@ -746,23 +751,24 @@ SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
 end;
 
 SEMIGROUPS.LeftTranslationsFPBacktrackDataW := function(data, i, j, s)
-  local s_pos, W, u, suff_rel;
+  local S, W, u, suff_rel;
 
-  s_pos := PositionCanonical(data.S, s);
-
-  if IsBound(data.W[i][j][s_pos]) then
-    return data.W[i][j][s_pos];
+  if IsBound(data.W[i][j][s]) then
+    return data.W[i][j][s];
   fi;
 
-  W := ShallowCopy(AsList(data.S));
+  S := data.S;
+
+  W := [1 .. Size(S)];
   for suff_rel in data.suff_rels_by_first_letter[i][j] do
     u := Position(data.suffixes, suff_rel[2]);
     W := Intersection(W, 
-          data.right_inverses_by_suffix[PositionCanonical(data.S, s *
+          data.right_inverses_by_suffix[PositionCanonical(data.S,
+          EnumeratorCanonical(S)[s] *
           suff_rel[1])][u]);
   od;
   
-  data.W[i][j][s_pos] := W;
+  data.W[i][j][s] := W;
   return W;
 end;
 
@@ -876,7 +882,7 @@ SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens)
 
   data := SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S, gens);
   U := data.U;
-  
+
   # restrict via the U_{i}
   for i in [1 .. m] do
     IntersectSet(possiblefgenvals[i], U[i]);
@@ -963,9 +969,8 @@ end;
 
 SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
   local n, m, genspos, omega_stack, possiblefgenvals, stabs, stab_thresh,
-  coset_reps, multtable, data, U, aut, add_stabilised_lambda, invs,
-  nonempty_invs, bt, lambda, out, nr, discarded, failures, failures_generated,
-  failures_avoided, non_discarded_nodes, i, j;
+  coset_reps, multtable, data, U, aut, add_stabilised_lambda, bt, lambda, out,
+  nr, i;
 
   n           := Size(S);
   m           := Size(gens);
@@ -1002,15 +1007,6 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
 #      Add(out, OnTuples(lambda, mult));
 #    od;
   end;
-  
-  invs := List([1 .. n], x -> List([1 .. n], y -> []));
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      AddSet(invs[multtable[i][j]][i], j);
-    od;
-  od;
-  nonempty_invs := List([1 .. n],
-                        x -> Set(PositionsProperty(invs[x], y -> Length(y) > 0)));
 
   bt := function(i) 
     local factors, stab, big_stab, orbs, reps, consistent, W, cart, s, j,
@@ -1029,11 +1025,6 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
     fi;
     for s in reps do
       lambda[i] := s;
-      if lambda{[1 .. i]} in failures then
-        failures_avoided := failures_avoided + 1;
-        discarded := discarded + 1;
-        continue;
-      fi;
       if i = m then
         if big_stab then
           # this is necessary in theory
@@ -1051,23 +1042,10 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
           omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
           if IsEmpty(omega_stack[i + 1][j]) then
             consistent := false;
-            discarded := discarded + 1;
-            AddSet(failures, lambda{[1 .. i]});
-            intersect := [1 .. n];
-            for k in [1 .. i] do
-              IntersectSet(intersect, nonempty_invs[lambda[genspos[k]]]);
-            od;
-            for t in intersect do
-              factors := List(invs{lambda{genspos{[1 .. i]}}}, x -> x[t]);
-              cart := Cartesian(factors);
-              UniteSet(failures, cart);
-              failures_generated := failures_generated + Length(cart);
-            od;
             break;
           fi;
         od;
         if consistent then
-          non_discarded_nodes := non_discarded_nodes + 1;
           if big_stab then
             if Size(reps) = 1 then
               stabs[i] := stab;
@@ -1090,15 +1068,10 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
   lambda := [];
   out := [];
   nr := 0;
-  discarded := 0;
-  failures := [];
-  failures_generated := 0;
-  failures_avoided := 0;
-  non_discarded_nodes := 0;
   bt(1);
 #  Apply(out, x -> LeftTranslationNC(L, x));
   Error();
-  return [out, nr, aut, discarded];
+  return [out, nr, aut];
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedLazyBacktrack := function(L)
