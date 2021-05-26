@@ -128,6 +128,8 @@ namespace gapbind14 {
   // BMat <-> IsBooleanMat
   ////////////////////////////////////////////////////////////////////////
 
+  // TODO(now) everything in this file needs to be replaced with the analogue
+  // of to_cpp<BMat const&>.
   template <typename T>
   struct to_cpp<T, std::enable_if_t<IsBMat<std::decay_t<T>>>> {
     using cpp_type                          = std::decay_t<T>;

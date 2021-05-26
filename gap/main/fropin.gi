@@ -324,32 +324,7 @@ InstallMethod(Idempotents,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
 [IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  local fp, left, final, prefix, elts, N, out, i, j, pos;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), -1);
-  left   := fp.left;
-  final := fp.final;
-  prefix := fp.prefix;
-  elts := fp.elts;
-
-  N := Size(left);
-  out := [];
-  for pos in [1 .. N] do
-    i := pos;
-    j := pos;
-    repeat
-      j := left[j][final[i]];
-      i := prefix[i];
-    until i = 0;
-    if j = pos then
-      Add(out, elts[pos]);
-    fi;
-  od;
-  return out;
+  return EnumeratorCanonical(S){IdempotentsSubset(S, [1 .. Size(S)])};
 end);
 
 InstallMethod(PositionCanonical,
@@ -380,19 +355,6 @@ function(S, x)
   return HTValue(ht, x);
 end);
 
-# TODO(now) is the next method necessary?
-# InstallMethod(PositionCanonical,
-# "for a perm group with known generators and multiplicative element",
-# [IsPermGroup and HasGeneratorsOfGroup and IsSemigroup and
-# CanComputeGapFroidurePin,
-#  IsMultiplicativeElement],
-# function(G, x)
-#   if (not IsPerm(x)) or LargestMovedPointPerm(x) > LargestMovedPoint(G) then
-#     return fail;
-#   fi;
-#   return EN_SEMI_POSITION(G, x);
-# end);
-
 # Position exists so that we can call it on objects with an uninitialised data
 # structure, without first having to initialise the data structure to realise
 # that <x> is not in it.
@@ -403,15 +365,12 @@ end);
 InstallMethod(Position,
 "for a semigroup with CanComputeGapFroidurePin, mult. element, zero cyc",
 [IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
-function(S, x, n)
-  return PositionOp(S, x, n);
-end);
+PositionOp);
 
 InstallMethod(PositionOp,
 "for a semigroup with CanComputeGapFroidurePin, multi. element, zero cyc",
 [IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
-
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
@@ -569,8 +528,6 @@ InstallMethod(RulesOfSemigroup,
 function(S)
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).rules;
 end);
-
-# TODO(now) Idempotents should just call this
 
 InstallMethod(IdempotentsSubset,
 "for a semigroup with CanComputeGapFroidurePin + known generators, hom. list",

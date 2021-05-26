@@ -111,7 +111,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
     CHANGED_BAG(parent);
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
+  int_limit = std::max(static_cast<UInt>(INT_INTOBJ(limit)), nr + batch_size);
   if (libsemigroups::REPORTER.report()) {
     std::cout << "limit = " << int_limit << "\n";
   }

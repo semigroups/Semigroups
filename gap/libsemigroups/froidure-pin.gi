@@ -40,60 +40,74 @@ ReturnFalse);
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
 
-# TODO(now) make this an operation
-BindGlobal("FroidurePinMemFnRec",
+DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
+
+InstallMethod(FroidurePinMemFnRec, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function(S)
-  local N;
-  if IsTransformationSemigroup(S) then
-    if DegreeOfTransformationSemigroup(S) <= 16
-        and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.FroidurePinTransf16;
-    elif DegreeOfTransformationSemigroup(S) <= 65536 then
-      return libsemigroups.FroidurePinTransfUInt2;
-    elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
-      return libsemigroups.FroidurePinTransfUInt4;
-    else
-      Error("transformation degree is too high!");
-    fi;
-  elif IsPartialPermSemigroup(S) then
-    N := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
-    if N <= 16
-        and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.FroidurePinPPerm16;
-    elif N <= 65536 then
-      return libsemigroups.FroidurePinPPermUInt2;
-    elif N <= 18446744073709551616 then
-      return libsemigroups.FroidurePinPPermUInt4;
-    else
-      Error("partial perm degree is too high!");
-    fi;
-  elif IsBooleanMatSemigroup(S) then
-    # TODO(now) use BMat8
-    return libsemigroups.FroidurePinBMat;
-  elif IsBipartitionSemigroup(S) then
-    return libsemigroups.FroidurePinBipart;
-  elif IsIntegerMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinIntMat;
-  elif IsMaxPlusMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinMaxPlusMat;
-  elif IsMinPlusMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinMinPlusMat;
-  elif IsTropicalMaxPlusMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinMaxPlusTruncMat;
-  elif IsTropicalMinPlusMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinMinPlusTruncMat;
-  elif IsNTPMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinNTPMat;
-  elif IsProjectiveMaxPlusMatrixSemigroup(S) then
-    return libsemigroups.FroidurePinProjMaxPlusMat;
-  elif IsPBRSemigroup(S) then
-    return libsemigroups.FroidurePinPBR;
+  if DegreeOfTransformationSemigroup(S) <= 16
+      and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+    return libsemigroups.FroidurePinTransf16;
+  elif DegreeOfTransformationSemigroup(S) <= 65536 then
+    return libsemigroups.FroidurePinTransfUInt2;
+  elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
+    return libsemigroups.FroidurePinTransfUInt4;
   else
-    Error("Something has gone wrong, should not have ",
-                  "been able to reach here!");
+    Error("transformation degree is too high!");
   fi;
 end);
+
+InstallMethod(FroidurePinMemFnRec, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  local N;
+  N := Maximum(DegreeOfPartialPermSemigroup(S),
+               CodegreeOfPartialPermSemigroup(S));
+  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+    return libsemigroups.FroidurePinPPerm16;
+  elif N <= 65536 then
+    return libsemigroups.FroidurePinPPermUInt2;
+  elif N <= 18446744073709551616 then
+    return libsemigroups.FroidurePinPPermUInt4;
+  else
+    Error("partial perm degree is too high!");
+  fi;
+end);
+
+# TODO(now) use BMat8
+InstallMethod(FroidurePinMemFnRec, "for a boolean matrix semigroup",
+[IsBooleanMatSemigroup], S -> libsemigroups.FroidurePinBMat);
+
+InstallMethod(FroidurePinMemFnRec, "for a bipartition semigroup",
+[IsBipartitionSemigroup], S -> libsemigroups.FroidurePinBipart);
+
+InstallMethod(FroidurePinMemFnRec, "for an integer matrix semigroup",
+[IsIntegerMatrixSemigroup], S -> libsemigroups.FroidurePinIntMat);
+
+InstallMethod(FroidurePinMemFnRec, "for an max-plus matrix semigroup",
+[IsMaxPlusMatrixSemigroup], S -> libsemigroups.FroidurePinMaxPlusMat);
+
+InstallMethod(FroidurePinMemFnRec, "for an min-plus matrix semigroup",
+[IsMinPlusMatrixSemigroup], S -> libsemigroups.FroidurePinMinPlusMat);
+
+InstallMethod(FroidurePinMemFnRec, "for a tropical max-plus matrix semigroup",
+[IsTropicalMaxPlusMatrixSemigroup],
+S -> libsemigroups.FroidurePinMaxPlusTruncMat);
+
+InstallMethod(FroidurePinMemFnRec, "for a tropical min-plus matrix semigroup",
+[IsTropicalMinPlusMatrixSemigroup],
+S -> libsemigroups.FroidurePinMinPlusTruncMat);
+
+InstallMethod(FroidurePinMemFnRec, "for an ntp matrix semigroup",
+[IsNTPMatrixSemigroup], S -> libsemigroups.FroidurePinNTPMat);
+
+InstallMethod(FroidurePinMemFnRec,
+"for a projective max-plus matrix semigroup",
+[IsProjectiveMaxPlusMatrixSemigroup],
+S -> libsemigroups.FroidurePinProjMaxPlusMat);
+
+InstallMethod(FroidurePinMemFnRec, "for a pbr semigroup",
+[IsPBRSemigroup], S -> libsemigroups.FroidurePinPBR);
 
 BindGlobal("_GetElement",
 function(coll, x)
