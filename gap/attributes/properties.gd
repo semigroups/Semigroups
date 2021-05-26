@@ -104,4 +104,4 @@ InstallTrueMethod(IsSurjectiveSemigroup, IsMonoidAsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsIdempotentGenerated);
 
 DeclareProperty("IsOrthogroup", IsSemigroup);
-DeclareSynonym("IsOrthoGroup", IsOrthogroup);
+DeclareSynonymAttr("IsOrthoGroup", IsOrthogroup);

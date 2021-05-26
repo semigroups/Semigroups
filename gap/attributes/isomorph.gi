@@ -345,7 +345,7 @@ function(filt, S)
   n      := Size(idemps);
 
   # create semilattice
-  D := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(A)));
+  D := Digraph(NaturalPartialOrder(A));
   # currently wrong way round
   D := DigraphReverse(D);
   N := OutNeighbours(D);
