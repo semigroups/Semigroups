@@ -1,7 +1,21 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-20 [James D. Mitchell][] et al.
+Copyright © 2011-21 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 3.4.2 (released 07/02/2021)
+
+This is a minor release resolving some issues in v3.4.1  [[James D. Mitchell][]],
+with a number of improvements by [Wilf A. Wilson][].
+
+### Version 3.4.1 (released 28/01/2021)
+
+This is a minor release including some bugfixes and improvements. The required
+minimum version of `libsemigroups` is increased from v1.1.0 to v1.3.2. The
+required version of `Digraphs` is increased to v1.2.0. The `datastructures`
+package was implicitly required (via `Digraphs`), and now at least version
+v0.2.5 is required explicitly. The version of GAP required was implicitly at
+least v4.10.0, but was explicity v4.9.0, it is now explicitly v4.10.0. 
 
 ### Version 3.4.0 (released 28/08/2020)
 
@@ -51,7 +65,7 @@ Semigroups package requires the [images package][] version 1.3.0 or higher.
 
 This is a minor release to fixing some build issues for windows [Chris Jefferson][]
 and fixing an issue in `IsRowTrimBooleanMat`, `IsColTrimBooleanMat`, and
-`IsTrimBooleanMat` [Finn Smith] see
+`IsTrimBooleanMat` [Finn Smith][] see
 [Issue #654](https://github.com/gap-packages/Semigroups/issues/654) for more details.
 
 ### Version 3.2.4 (released 28/02/2020)
@@ -404,7 +418,7 @@ The following issues are resolved:
 * [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test
   `tst/testinstall/semigrp.tst` failed because of a missing method for
   `NrEquivalenceClasses` for a generic semigroup congruence.
-    [[James D. Mitchell][]] and [[Wilf A. Wilson][]]
+    [[James D. Mitchell][] and [Wilf A. Wilson][]]
 
 ### Version 3.0.6 (released 27/09/2017)
 
@@ -1003,7 +1017,7 @@ Issue numbers refer to those on the [Bitbucket issue tracker][].
 
 * to reduce the size of the package archive, the examples directory has been
   removed. The content of the examples directory is available on
-  [this webpage](http://tinyurl.com/jdmitchell/data.php).
+  [this webpage](https://tinyurl.com/jdmitchell/data.php).
 
 * several bugs in the setup for subsemigroups of Rees 0-matrix semigroups were
   resolved. These issues would have caused [GAP][] to give an error in certain
@@ -1285,11 +1299,11 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [D. V. Pasechnik]: http://users.ox.ac.uk/~coml0531
 [James D. Mitchell]: https://jdbm.me
 [Julius Jonusas]: http://julius.jonusas.work
-[Markus Pfeiffer]: http://morphism.de/~markusp
-[Max Horn]: http://www.quendi.de/math
+[Markus Pfeiffer]: https://markusp.morphism.de
+[Max Horn]: https://www.quendi.de/en/math
 [Michael Torpey]: https://mtorpey.github.io
 [Nick Ham]: https://n-ham.github.io
-[Wilf A. Wilson]: http://wilf.me
+[Wilf A. Wilson]: https://wilf.me
 [Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
 [Finn Smith]: https://flsmith.github.io
 [Luke Elliott]: https://le27.github.io/Luke-Elliott/
@@ -1304,6 +1318,6 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [orb package]: https://gap-packages.github.io/orb
 [orb]: https://gap-packages.github.io/orb
-[Bitbucket issue tracker]: http://bitbucket.org/james-d-mitchell/semigroups/issues
+[Bitbucket issue tracker]: https://bitbucket.org/james-d-mitchell/semigroups/issues
 [images package]: https://gap-packages.github.io/images
 

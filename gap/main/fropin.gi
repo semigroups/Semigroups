@@ -60,6 +60,9 @@ InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
 InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
                   IsMcAlisterTripleSemigroupElementCollection);
 
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsSSSECollection);
+
 InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 "for a matrix over semiring collection", [IsMatrixOverSemiringCollection],
 IsGeneratorsOfSemigroup);
@@ -383,6 +386,14 @@ function(S)
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
   return enum;
+end);
+
+InstallMethod(EnumeratorCanonical,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep],
+function(S)
+  GeneratorsOfSemigroup(S);
+  return EnumeratorCanonical(S);
 end);
 
 # The next method is necessary since it does not necessarily involve

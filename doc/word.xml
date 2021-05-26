@@ -1,0 +1,104 @@
+#############################################################################
+##
+#W  word.xml
+#Y  Copyright (C) 2020                                      Maria Tsalakou
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+<#GAPDoc Label="WordToString" >
+<ManSection>
+  <Oper Name = "WordToString" Arg = "A, w"
+    Label="for a string and a list"/>
+  <Returns>
+    A string.
+  </Returns>
+  <Description>
+    Returns the word <A>w</A>, in the form of a string of letters
+    of the alphabet <A>A</A>. The alphabet is given as a string containing
+    its members.
+ <Example><![CDATA[
+gap> WordToString("abcd", [4, 2, 3, 1, 1, 4, 2, 3]);
+"dbcaadbc"]]></Example>
+  </Description>
+ </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomWord" >
+<ManSection>
+  <Oper Name = "RandomWord" Arg = "l, n"
+    Label="for two integers"/>
+  <Returns>
+    A word.
+  </Returns>
+  <Description>
+    Returns a random word of length <A>l</A> over <A>n</A> letters.
+  <Example><![CDATA[
+gap> RandomWord(8, 5);
+[ 2, 4, 3, 4, 5, 3, 3, 2 ]
+gap> RandomWord(8, 5);
+[ 3, 3, 5, 5, 5, 4, 4, 5 ]
+gap> RandomWord(8, 4);
+[ 1, 4, 1, 1, 3, 3, 4, 4 ]]]></Example> 
+  </Description> 
+ </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StandardiseWord" >
+<ManSection>
+  <Oper Name = "StandardiseWord" Arg = "w"/>
+  <Oper Name = "StandardizeWord" Arg = "w"/>
+  <Returns>
+    A list of positive integers.
+  </Returns>
+  <Description>
+    This function takes a word <A>w</A>, consisting of <C>n</C> distinct
+    positive integers and returns a word <C>s</C> where the characters of
+    <C>s</C> correspond to those of <A>w</A> in order of first appearence.<P/>
+
+    The word <A>w</A> is changed in-place into word <C>s</C>.
+  <Example><![CDATA[
+gap> w := [3, 1, 2];
+[ 3, 1, 2 ]
+gap> StandardiseWord(w);
+[ 1, 2, 3 ]
+gap> w;
+[ 1, 2, 3 ]
+gap> w := [4, 2, 10, 2];
+[ 4, 2, 10, 2 ]
+gap> StandardiseWord(w);
+[ 1, 2, 3, 2 ]]]></Example> 
+  </Description> 
+ </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StringToWord" >
+<ManSection>
+  <Oper Name = "StringToWord" Arg = "s"
+    Label="for a string"/>
+  <Returns>
+    A list of positive integers.
+  </Returns>
+  <Description>
+    This function takes a string <A>s</A>, consisting of <C>n</C> distinct
+    positive integers and returns a word <C>w</C> (i.e. a list of positive
+    integers) over the alphabet <C>[1 .. n]</C>. The positive integers of
+    <C>w</C> correspond to the characters of <A>s</A>, in order of first
+    appearence.
+  <Example><![CDATA[
+gap> w := "abac";
+"abac"
+gap> StringToWord(w);
+[ 1, 2, 1, 3 ]
+gap> w := "ccala";
+"ccala"
+gap> StringToWord(w);
+[ 1, 1, 2, 3, 2 ]
+gap> w := "a1b5";
+"a1b5"
+gap> StringToWord(w);
+[ 1, 2, 3, 4 ]]]></Example> 
+  </Description> 
+ </ManSection>
+<#/GAPDoc>

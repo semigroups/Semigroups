@@ -406,25 +406,26 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
 
 <#GAPDoc Label="EquivalenceRelationLookup">
   <ManSection>
-    <Attr Name = "EquivalenceRelationLookup" Arg = "cong"/>
+    <Attr Name = "EquivalenceRelationLookup" Arg = "equiv" Label="for an
+      equivalence relation over a finite semigroup"/>
     <Returns>A list.</Returns>
     <Description>
-      This attribute describes the (left, right or two-sided) semigroup
-      congruence <A>cong</A> as a list of positive integers with length the size
-      of the finite semigroup over which <A>cong</A> is defined.<P/>
+      This attribute describes the equivalence relation <A>equiv</A>, defined
+      over a finite semigroup, as a list of positive integers of length the size
+      of the finite semigroup over which <A>equiv</A> is defined.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in a
       consistent canonical order) and the integer at that position is a unique
-      identifier for that element's congruence class under <A>cong</A>.  Two
-      elements of the semigroup on which the congruence is defined are related
-      in the congruence if and only if they have the same number at their
+      identifier for that element's equivalence class under <A>equiv</A>.  Two
+      elements of the semigroup on which the equivalence is defined are related
+      in the equiavalence if and only if they have the same number at their
       respective positions in the lookup.<P/>
 
       Note that the order in which numbers appear in the list is
-      non-deterministic, and two congruence objects which describe the same
-      equivalence relation might therefore have different lookups.  Note also
+      non-deterministic, and two equivalence relations describing the same
+      mathematical relation might therefore have different lookups.  Note also
       that the maximum value of the list may not be the number of classes of
-      <A>cong</A>, and that any integer might not be included.  However, see
+      <A>equiv</A>, and that any integer might not be included.  However, see
       <Ref Attr = "EquivalenceRelationCanonicalLookup"/>.<P/>
 
       See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
@@ -444,26 +445,28 @@ false]]></Example>
 
 <#GAPDoc Label="EquivalenceRelationCanonicalLookup">
   <ManSection>
-    <Attr Name = "EquivalenceRelationCanonicalLookup" Arg = "cong"/>
+    <Attr Name = "EquivalenceRelationCanonicalLookup" Arg = "equiv" Label="for
+      an equivalence relation over a finite semigroup"/>
     <Returns>A list.</Returns>
     <Description>
-      This attribute describes the semigroup congruence <A>cong</A> as a list of
-      positive integers with length the size of the finite semigroup over which
-      <A>cong</A> is defined.<P/>
+      This attribute describes the equivalence relation <A>equiv</A>, defined
+      over a finite semigroup, as a list of positive integers of length the size
+      of the finite semigroup over which <A>equiv</A> is defined.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in a
-      consistent canonical order) and the integer at that position is a unique
-      identifier for that element's congruence class under <A>cong</A>.  The
+      consistent canonical order as defined by <Ref Oper =
+        "PositionCanonical"/>) and the integer at that position is a unique
+      identifier for that element's equivalence class under <A>equiv</A>.  The
       value of <C>EquivalenceRelationCanonicalLookup</C> has the property that
       the first appearance of the value <C>i</C> is strictly later than the
       first appearance of <C>i-1</C>, and that all entries in the list will be
-      from the range <C>[1 .. NrEquivalenceClasses(<A>cong</A>)]</C>.  As such,
-      two congruences on a given semigroup are equal if and only if their
-      canonical lookups are equal.<P/>
+      from the range <C>[1 .. NrEquivalenceClasses(<A>equiv</A>)]</C>.  As such,
+      two equivalence relations on a given semigroup are equal if and only if
+      their canonical lookups are equal.<P/>
 
-      Two elements of the semigroup on which the congruence is defined
-      are related in the congruence if and only if they have
-      the same number at their respective positions in the lookup.
+      Two elements of the semigroup on which the equivalence relation is defined
+      are related in the equivalence relation if and only if they have the same
+      number at their respective positions in the lookup.
       <P/>
 
       See also <Ref Attr = "EquivalenceRelationLookup"/> and

@@ -1,14 +1,13 @@
 # README - Semigroups package for GAP
 
-#### Copyright (C) 2011-20 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
+#### Copyright (C) 2011-21 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)
-[![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.1)](https://travis-ci.org/gap-packages/Semigroups)
 
 ## Getting Semigroups
 
 To get the latest version of the package download the archive file
-`semigroups-x.x.x.tar.gz` from the [Semigroups] webpage, and inside the `pkg`
+`semigroups-x.x.x.tar.gz` from the [Semigroups][] webpage, and inside the `pkg`
 subdirectory of your GAP installation unpack `semigroups-x.x.x.tar.gz`, by, for
 example, doing:
 
@@ -23,31 +22,33 @@ For questions, remarks, suggestions, and issues please use the
 
 ## Installation
 
-It is assumed that you have a working copy of GAP with version number 4.9.0 or
+It is assumed that you have a working copy of GAP with version number 4.10.0 or
 higher.  The most up-to-date version of GAP and instructions on how to install it
-can be obtained from the main [GAP](http://www.gap-system.org) page.
+can be obtained from the main [GAP](https://www.gap-system.org) page.
 
 The following is a summary of the steps that should lead to a successful
-installation of [Semigroups]:
+installation of [Semigroups][]:
 
-* get the [IO](http://gap-packages.github.io/io) package version 4.5.1 or higher
+* get the [datastructures](https://gap-packages.github.io/datastructures)
+  package version 0.2.5 or higher 
 
-* get the [orb] package version 4.8.2 or higher
+* ensure that the [Digraphs][] package version 1.2.0 or higher is available.
+  [Digraphs][] must be compiled before [Semigroups][] can be loaded.
 
-Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
-[orb]!
-
-* ensure that the [Digraphs] package version 1.0.0 or higher is available.
-  [Digraphs] must be compiled before [Semigroups] can be loaded.
-
-* get the [genss](http://gap-packages.github.io/genss) package version 1.6.5 or
+* get the [genss](https://gap-packages.github.io/genss) package version 1.6.5 or
   higher 
 
-* get the [images](http://gap-packages.github.io/images) package version 1.3.0 or
-  higher 
+* get the [images](https://gap-packages.github.io/images) package version 1.3.0 or
+
+* get the [IO](https://gap-packages.github.io/io) package version 4.5.1 or higher
+
+* get the [orb][] package version 4.8.2 or higher
+
+Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so compile
+[orb][]!
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the
-  [Semigroups] webpage.
+  [Semigroups][] webpage.
 
 * unzip and untar the file `semigroups-x.x.x.tar.gz`, for example, using
 
@@ -61,29 +62,30 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
   directories `lib`, `doc`, and so on. Move the directory `semigroups-x.x.x`
   into the `pkg` directory.
 
-* from version 3.0.0, it is necessary to compile the [Semigroups] package.
-  [Semigroups] uses the [libsemigroups] C++ library, which requires a compiler
+* from version 3.0.0, it is necessary to compile the [Semigroups][] package.
+  [Semigroups][] uses the [libsemigroups][] C++ library, which requires a compiler
+
   implementing the C++11 standard.
 
-  You may either build [libsemigroups] along with [Semigroups], or have it
+  You may either build [libsemigroups][] along with [Semigroups][], or have it
   installed at a custom or standard location, as explained in its
   documentation.  To compile in the former case, inside the
   `pkg/semigroups-x.x.x` directory, type
     * `./configure`
     * `make`
 
-  For the latter case, you need a working [pkg-config] tool; assuming
-  [libsemigroups] was installed at location `/foo/bar`, type
+  For the latter case, you need a working [pkg-config][] tool; assuming
+  [libsemigroups][] was installed at location `/foo/bar`, type
     
     * `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig ./configure --with-external-libsemigroups`
     * `make`
 
-  If [pkg-config] has `/foo/bar` among its default locations, then
+  If [pkg-config][] has `/foo/bar` among its default locations, then
   `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig` part above may be omitted).
 
-  If you are using GCC to compile [Semigroups], then version 5.0 or higher is
-  required. Trying to compile [Semigroups] with an earlier version of GCC will
-  result in an error at compile time.  [Semigroups] supports GCC version 5.0 or
+  If you are using GCC to compile [Semigroups][], then version 5.0 or higher is
+  required. Trying to compile [Semigroups][] with an earlier version of GCC will
+  result in an error at compile time.  [Semigroups][] supports GCC version 5.0 or
   higher, and clang version 5.0 or higher.
 
   Further information about this step can be found in manual section entitled
@@ -94,8 +96,8 @@ Both [orb] and [Semigroups] perform better when [orb] is compiled, so compile
 
 Enjoy!
 
-[Semigroups]: https://gap-packages.github.io/Semigroups
+[Semigroups]: https://semigroups.github.io/Semigroups
 [libsemigroups]: https://libsemigroups.github.io/libsemigroups
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
-[orb]: http://gap-packages.github.io/orb
-[Digraphs]: http://gap-packages.github.io/Digraphs
+[orb]: https://gap-packages.github.io/orb
+[Digraphs]: https://digraphs.github.io/Digraphs

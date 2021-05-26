@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## This file contains utilies for use with the Semigroups package.
+## This file contains utilities for use with the Semigroups package.
 
 # No attempt has been made to get good test coverage for this file, since it
 # will hopefully be binned in the near future.
@@ -233,62 +233,15 @@ end);
 # 2. Documentation - internal stuff
 ################################################################################
 
-SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
-                           "attr.xml",
-                           "attract.xml",
-                           "attrinv.xml",
-                           "bipart.xml",
-                           "blocks.xml",
-                           "boolmat.xml",
-                           "cong.xml",
-                           "conginv.xml",
-                           "conglatt.xml",
-                           "congpairs.xml",
-                           "congrees.xml",
-                           "congrms.xml",
-                           "conguniv.xml",
-                           "dual.xml",
-                           "display.xml",
-                           "elements.xml",
-                           "factor.xml",
-                           "ffmat.xml",
-                           "freeband.xml",
-                           "freeinverse.xml",
-                           "fropin.xml",
-                           "gree.xml",
-                           "grpffmat.xml",
-                           "ideals.xml",
-                           "io.xml",
-                           "isomorph.xml",
-                           "isorms.xml",
-                           "maximal.xml",
-                           "maxplusmat.xml",
-                           "normalizer.xml",
-                           "orbits.xml",
-                           "pbr.xml",
-                           "properties.xml",
-                           "semiact.xml",
-                           "semibipart.xml",
-                           "semiboolmat.xml",
-                           "semicons.xml",
-                           "semidp.xml",
-                           "semieunit.xml",
-                           "semiex.xml",
-                           "semiffmat.xml",
-                           "semigraph.xml",
-                           "semigroups.xml",
-                           "semigrp.xml",
-                           "semimaxplus.xml",
-                           "semipbr.xml",
-                           "semipperm.xml",
-                           "semiringmat.xml",
-                           "semitrans.xml",
-                           "trans.xml",
-                           "utils.xml"];
+InstallGlobalFunction(SemigroupsMakeDoc,
+function()
+  # Compile the documentation of the currently-loaded version of Semigroups
+  SEMIGROUPS_MakeDoc(DirectoriesPackageLibrary("Semigroups", ""));
+end);
 
 SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
-                         "main.xml", SEMIGROUPS.DocXMLFiles, "Single");
+                         "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
@@ -380,7 +333,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
     elif IsString(arg[1]) then
       doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                                "main.xml",
-                               SEMIGROUPS.DocXMLFiles,
+                               SEMIGROUPS_DocXMLFiles,
                                true);
       tree := ParseTreeXMLString(doc[1]);
       CheckAndCleanGapDocTree(tree);
@@ -673,7 +626,7 @@ SEMIGROUPS.CheckManualConsistency := function()
 
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS.DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles,
                            true);
   SEMIGROUPS.CheckDocCoverage(doc);
   return SEMIGROUPS.CheckManSectionTypes(doc, true);
@@ -683,7 +636,7 @@ SEMIGROUPS.DocumentedPackageVariables := function()
   local doc, r, x, out, mansect, record;
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS.DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles,
                            true);
   r := ParseTreeXMLString(doc[1]);
   CheckAndCleanGapDocTree(r);
@@ -743,17 +696,3 @@ SEMIGROUPS.UndocumentedPackageVariables := function(info)
   od;
   return out;
 end;
-
-################################################################################
-# 2. Documentation - user/global functions
-################################################################################
-
-InstallGlobalFunction(SemigroupsMakeDoc,
-function()
-  SetGapDocLaTeXOptions("utf8");
-  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                              "/doc"),
-                "main.xml", SEMIGROUPS.DocXMLFiles, "semigroups", "MathJax",
-                "../../..");
-  return;
-end);

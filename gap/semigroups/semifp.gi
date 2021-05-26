@@ -43,6 +43,16 @@ function(x)
   return ExtRepOfObj(UnderlyingElement(x));
 end);
 
+InstallMethod(ElementOfFpSemigroup,
+"for an fp semigroup and an associative word",
+[IsFpSemigroup, IsAssocWord],
+{s, w} -> ElementOfFpSemigroup(FamilyObj(Representative(s)), w));
+
+InstallMethod(ElementOfFpMonoid,
+"for an fp monoid and an associative word",
+[IsFpMonoid, IsAssocWord],
+{m, w} -> ElementOfFpMonoid(FamilyObj(Representative(m)), w));
+
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup],
 function(S)
   SEMIGROUPS.InitFpSemigroup(S);
@@ -401,6 +411,18 @@ end);
 
 InstallMethod(AssignGeneratorVariables, "for an free monoid",
 [IsFreeMonoid],
+function(S)
+  DoAssignGenVars(GeneratorsOfMonoid(S));
+end);
+
+InstallMethod(AssignGeneratorVariables, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  DoAssignGenVars(GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(AssignGeneratorVariables, "for an fp monoid",
+[IsFpMonoid],
 function(S)
   DoAssignGenVars(GeneratorsOfMonoid(S));
 end);

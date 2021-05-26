@@ -37,9 +37,9 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
   SEMIGROUPS_ASSERT(IS_PLIST(o));
   SEMIGROUPS_ASSERT(LEN_PLIST(o) > 0);
 
-  Obj               row = ELM_PLIST(o, 1);
+  Obj row = ELM_PLIST(o, 1);
   SEMIGROUPS_ASSERT(IS_PLIST(row) || IS_BLIST_REP(row));
-  size_t            m   = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
+  size_t            m = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
   std::vector<bool> x(m * m, false);
 
   for (size_t i = 0; i < m; i++) {
@@ -64,17 +64,14 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
   SET_LEN_PLIST(o, n);
 
   for (size_t i = 0; i < n; i++) {
-    Obj blist = NewBag(T_BLIST + IMMUTABLE, SIZE_PLEN_BLIST(n));
+    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
     SET_LEN_BLIST(blist, n);
     for (size_t j = 0; j < n; j++) {
       if ((*xx)[i * n + j]) {
-#ifdef SET_ELM_BLIST
-        SET_ELM_BLIST(blist, j + 1, True);  // for GAP < 4.9
-#else
-        SET_BIT_BLIST(blist, j + 1);  // for GAP >= 4.9
-#endif
+        SET_BIT_BLIST(blist, j + 1);
       }
     }
+    MakeImmutable(blist);
     SET_ELM_PLIST(o, i + 1, blist);
     CHANGED_BAG(o);
   }
@@ -108,7 +105,8 @@ Obj BipartConverter::unconvert(Element const* x) const {
 
 Obj PBRConverter::get_gap_type(size_t deg) const {
   deg++;
-  if (deg > (size_t) LEN_PLIST(TYPES_PBR) || ELM_PLIST(TYPES_PBR, deg) == 0) {
+  if (deg > static_cast<size_t>(LEN_PLIST(TYPES_PBR))
+      || ELM_PLIST(TYPES_PBR, deg) == 0) {
     CALL_1ARGS(TYPE_PBR, INTOBJ_INT(deg - 1));
   }
   return ELM_PLIST(TYPES_PBR, deg);

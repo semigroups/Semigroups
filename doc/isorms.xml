@@ -83,7 +83,8 @@
         <Item>
           <C><A>triple</A>[3]</C> should be a list of elements from the
           underlying group of <A>R2</A>.  If the
-          <Ref Attr="Matrix" BookName="ref"/> of <A>R1</A> has <M>m</M> columns
+          <Ref Attr="Matrix" BookName="ref"/>
+          of <A>R1</A> has <M>m</M> columns
           and <M>n</M> rows, then the list should have length <M>m + n</M>,
           where the first <M>m</M> entries should correspond to the columns of
           <A>R1</A>'s matrix, and the last <M>n</M> entries should correspond to
@@ -280,8 +281,11 @@ gap> ImagesElm(map, RMSElement(R, 1, (2, 8), 2));
       If <A>S</A> is a Rees 0-matrix semigroup then 
       <C>CanonicalReesZeroMatrixSemigroup</C> returns an isomorphic Rees
       0-matrix semigroup <C>T</C> with the same
-      <Ref Attr="IsUnderlyingSemigroup"/> as <A>S</A> but the
-      <Ref Attr="Matrix"/> of <C>T</C> has been canonicalized. The output
+      <Ref Attr="UnderlyingSemigroup" Label="for a Rees 0-matrix semigroup"
+        BookName="ref"/>
+      as <A>S</A> but the
+      <Ref Attr="Matrix" BookName="ref"/>
+      of <C>T</C> has been canonicalized.  The output
       <C>T</C> is canonical in the sense that for any two inputs
       which are isomorphic Rees zero matrix semigroups the output of this
       function is the same.<P/>

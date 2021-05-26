@@ -22,10 +22,10 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc 
-semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
+semigroups_la_SOURCES += src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semigrp.cc
 
-semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++11 -O3
+semigroups_la_CXXFLAGS = $(GAP_CFLAGS) @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS)  @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
@@ -81,13 +81,9 @@ doc: doc/manual.six
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
-gaplint: 
-	gaplint *.g gap/options.g gap/*.gi gap/*.gd gap/*/* doc/*.xml tst/*.tst tst/*/*.tst
-
-cpplint:
-	cpplint src/*.h src/*.cc
-
-lint: gaplint cpplint
+lint: 
+	etc/gaplint.sh
+	etc/cpplint.sh
 
 format: 
 	clang-format -i src/*.h src/*.cc

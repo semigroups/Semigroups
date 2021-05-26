@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-20                                James D. Mitchell
+##  Copyright (C) 2011-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,15 +9,16 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.4.0">
-##  <!ENTITY GAPVERS "4.9.0">
-##  <!ENTITY DIGRAPHSVERS "1.0.0">
-##  <!ENTITY ORBVERS "4.8.2">
-##  <!ENTITY IOVERS "4.5.1">
+##  <!ENTITY VERSION "3.4.2">
+##  <!ENTITY GAPVERS "4.10.0">
+##  <!ENTITY ARCHIVENAME "semigroups-3.4.2">
+##  <!ENTITY COPYRIGHTYEARS "2011-21">
+##  <!ENTITY DATASTRUCTURESVERS "0.2.5">
+##  <!ENTITY DIGRAPHSVERS "1.2.0">
 ##  <!ENTITY GENSSVERS "1.6.5">
 ##  <!ENTITY IMAGESVERS "1.3.0">
-##  <!ENTITY ARCHIVENAME "semigroups-3.4.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-20">
+##  <!ENTITY IOVERS "4.5.1">
+##  <!ENTITY ORBVERS "4.8.2">
 ##  <#/GAPDoc>
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
@@ -48,19 +49,19 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.4.0",
-Date := "28/08/2020",  # dd/mm/yyyy format
+Version := "3.4.2",
+Date := "07/02/2021",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
     Type := "git",
-    URL := Concatenation("https://github.com/gap-packages/", ~.PackageName),
+    URL := Concatenation("https://github.com/semigroups/", ~.PackageName),
 ),
 
 IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
-PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
+PackageWWWHome  := Concatenation("https://semigroups.github.io/",
                                  ~.PackageName),
 README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
 PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
@@ -86,7 +87,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "sb235@st-andrews.ac.uk ",
-    WWWHome       := "http://sburrell.nfshost.com",
+    WWWHome       := "https://stuartburrell.github.io",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -97,7 +98,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
-    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    WWWHome       := "https://cmup.fc.up.pt/cmup/mdelgado/",
     Place         := "Porto",
     Institution   := "Universidade do Porto"),
 
@@ -107,7 +108,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
-    WWWHome       := "http://goo.gl/MuiJu5",
+    WWWHome       := "https://goo.gl/MuiJu5",
     Place         := "Sydney",
     Institution   := "Western Sydney University"),
 
@@ -164,7 +165,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "caj21@st-andrews.ac.uk",
-    WWWHome       := "http://caj.host.cs.st-andrews.ac.uk/",
+    WWWHome       := "https://caj.host.cs.st-andrews.ac.uk/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
@@ -221,7 +222,7 @@ Persons := [
     FirstNames    := "Benjamin",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/"),
+    WWWHome       := "https://bsteinberg.ccny.cuny.edu/Webpage/"),
 
   rec(
     LastName      := "Smith",
@@ -238,7 +239,7 @@ Persons := [
     FirstNames    := "Jhevon",
     IsAuthor      := false,
     IsMaintainer  := false,
-    WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith"),
+    WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
     LastName      := "Torpey",
@@ -263,16 +264,11 @@ Persons := [
 
   rec(
     LastName      := "Wilson",
-    FirstNames    := "Wilf",
+    FirstNames    := "Wilf A.",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "gap@wilf-wilson.net",
-    WWWHome       := "http://wilf.me",
-    PostalAddress := Concatenation(["Theodor-Lieser-Straße 5, ",
-                                    "06120 Halle (Saale), ",
-                                    "Germany"]),
-    Place         := "Halle (Saale), Germany",
-    Institution   := "University of Halle-Wittenberg")],
+    WWWHome       := "https://wilf.me")],
 
 Status := "deposited",
 
@@ -311,13 +307,14 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9.0",
+  GAP := ">=4.10.0",
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
-                          ["digraphs", ">=1.0.0"],
+                          ["datastructures", ">=0.2.5"],
+                          ["digraphs", ">=1.2.0"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.0"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
+  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"]],
 
   ExternalConditions := []),
 

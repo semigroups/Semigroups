@@ -9,7 +9,7 @@
     It is assumed that you have a working copy of &GAP; with version number
     &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
     on how to install it can be obtained from the main &GAP; webpage
-    <URL>http://www.gap-system.org</URL>.<P/>
+    <URL>https://www.gap-system.org</URL>.<P/>
 
     The following is a summary of the steps that should lead to a
     successful installation of &Semigroups;:
@@ -24,6 +24,12 @@
       <Item>
         ensure that the &Orb; package version &ORBVERS; or higher is available.
         &Orb; and &Semigroups; both perform better if &Orb; is compiled.
+      </Item>
+      
+      <Item>
+        ensure that the &datastructures; package version &DATASTRUCTURESVERS;
+        or higher is available.  &datastructures; must be compiled before
+          &Semigroups; can be loaded.
       </Item>
 
       <Item>
@@ -44,7 +50,7 @@
 
       <Item>
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
-        <URL Text = "the Semigroups package webpage">https://gap-packages.github.io/Semigroups</URL>.
+        <URL Text = "the Semigroups package webpage">https://semigroups.github.io/Semigroups</URL>.
       </Item>
 
       <Item>
@@ -188,7 +194,7 @@ make]]></Listing>
     <Ref Sect = "For those in a hurry"/> and ensure that &Semigroups; has been
     properly installed.  If you continue having problems, please use the 
     <URL Text = 
-      "issue tracker">https://github.com/gap-packages/Semigroups/issues</URL> 
+      "issue tracker">https://github.com/semigroups/Semigroups/issues</URL> 
     to report the issues you are having.
 
     <#Include Label = "SemigroupsTestInstall">

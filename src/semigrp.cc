@@ -24,11 +24,11 @@
 #include <vector>
 
 #include "bipart.h"
+#include "compiled.h"
 #include "converter.h"
 #include "fropin.h"
 #include "libsemigroups/froidure-pin-base.hpp"
 #include "pkg.h"
-#include "compiled.h"
 
 using libsemigroups::Integers;
 using libsemigroups::LIMIT_MAX;
@@ -94,7 +94,7 @@ std::vector<Element*>* plist_to_vec(Converter* converter,
 
   auto out = new std::vector<Element*>();
 
-  for (size_t i = 0; i < (size_t) LEN_PLIST(elements); i++) {
+  for (size_t i = 0; i < static_cast<size_t>(LEN_PLIST(elements)); i++) {
     out->push_back(converter->convert(ELM_LIST(elements, i + 1), degree));
   }
   return out;
@@ -392,7 +392,7 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so) {
   if (IS_TRANS(x)) {
     deg             = 0;
     gap_list_t gens = semi_obj_get_gens(so);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(gens)); i++) {
       size_t n = DEG_TRANS(ELM_PLIST(gens, i));
       if (n > deg) {
         deg = n;
@@ -406,7 +406,7 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so) {
   } else if (IS_PPERM(x)) {
     deg             = 0;
     gap_list_t gens = semi_obj_get_gens(so);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
+    for (size_t i = 1; i <= static_cast<size_t>(LEN_PLIST(gens)); i++) {
       size_t n = std::max(DEG_PPERM(ELM_PLIST(gens, i)),
                           CODEG_PPERM(ELM_PLIST(gens, i)));
       if (n > deg) {
@@ -824,13 +824,15 @@ gap_element_t EN_SEMI_ELEMENT_NUMBER(Obj             self,
     if (IsbPRec(fp, RNam_elts)) {
       // use the element cached in the data record if known
       gap_list_t elts = ElmPRec(fp, RNam_elts);
-      if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
+      if (nr <= static_cast<size_t>(LEN_PLIST(elts))
+          && ELM_PLIST(elts, nr) != 0) {
         return ELM_PLIST(elts, nr);
       }
     }
     fp              = fropin(so, pos, 0, False);
     gap_list_t elts = ElmPRec(fp, RNam_elts);
-    if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
+    if (nr <= static_cast<size_t>(LEN_PLIST(elts))
+        && ELM_PLIST(elts, nr) != 0) {
       return ELM_PLIST(elts, nr);
     } else {
       return Fail;
@@ -984,11 +986,12 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       CHANGED_BAG(so);
     } else {
       words = ElmPRec(fp, RNam_words);
-      if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0) {
+      if (pos_c > static_cast<size_t>(LEN_PLIST(words))
+          || ELM_PLIST(words, pos_c) == 0) {
         // avoid retracing the Schreier tree if possible
         size_t prefix = semi_cpp->prefix(pos_c - 1) + 1;
         size_t suffix = semi_cpp->suffix(pos_c - 1) + 1;
-        if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words)
+        if (prefix != 0 && prefix <= static_cast<size_t>(LEN_PLIST(words))
             && ELM_PLIST(words, prefix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, prefix);
           gap_list_t new_word
@@ -996,7 +999,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           // IMMUTABLE since it should not be altered on the GAP level
           memcpy(ADDR_OBJ(new_word) + 1,
                  CONST_ADDR_OBJ(old_word) + 1,
-                 (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+                 static_cast<size_t>(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(new_word,
                         LEN_PLIST(old_word) + 1,
                         INTOBJ_INT(semi_cpp->final_letter(pos_c - 1) + 1));
@@ -1004,7 +1007,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           AssPlist(words, pos_c, new_word);
           CHANGED_BAG(fp);
           CHANGED_BAG(so);
-        } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words)
+        } else if (suffix != 0
+                   && suffix <= static_cast<size_t>(LEN_PLIST(words))
                    && ELM_PLIST(words, suffix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, suffix);
           gap_list_t new_word
@@ -1012,7 +1016,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           // IMMUTABLE since it should not be altered on the GAP level
           memcpy(ADDR_OBJ(new_word) + 2,
                  CONST_ADDR_OBJ(old_word) + 1,
-                 (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+                 static_cast<size_t>(LEN_PLIST(old_word) * sizeof(Obj)));
           SET_ELM_PLIST(
               new_word, 1, INTOBJ_INT(semi_cpp->first_letter(pos_c - 1) + 1));
           SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
@@ -1032,7 +1036,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
     CHANGED_BAG(so);
     SEMIGROUPS_ASSERT(IsbPRec(fp, RNam_words));
     SEMIGROUPS_ASSERT(IS_PLIST(ElmPRec(fp, RNam_words)));
-    SEMIGROUPS_ASSERT(pos_c <= (size_t) LEN_PLIST(ElmPRec(fp, RNam_words)));
+    SEMIGROUPS_ASSERT(
+        pos_c <= static_cast<size_t>(LEN_PLIST(ElmPRec(fp, RNam_words))));
 
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   } else {
@@ -1126,7 +1131,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
-  gap_list_t out = NEW_PLIST_IMM(T_PLIST_CYC, 0);
+  gap_list_t out = NEW_PLIST(T_PLIST_CYC, 0);
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, 0);
   size_t len = 0;
@@ -1136,7 +1141,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
     auto rg = libsemigroups::ReportGuard(semi_obj_get_report(so));
     semi_cpp->max_threads(semi_obj_get_nr_threads(so));
 
-    for (size_t pos = 1; pos <= (size_t) LEN_LIST(list); pos++) {
+    for (size_t pos = 1; pos <= static_cast<size_t>(LEN_LIST(list)); pos++) {
       gap_int_t ent = ELM_LIST(list, pos);
       CHECK_POS_INTOBJ(ent);
       if (semi_cpp->is_idempotent(INT_INTOBJ(ent) - 1)) {
@@ -1149,7 +1154,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
     gap_list_t last   = ElmPRec(fp, RNamName("final"));
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
 
-    for (size_t pos = 1; pos <= (size_t) LEN_LIST(list); pos++) {
+    for (size_t pos = 1; pos <= static_cast<size_t>(LEN_LIST(list)); pos++) {
       gap_int_t ent = ELM_LIST(list, pos);
       CHECK_POS_INTOBJ(ent);
       size_t val = INT_INTOBJ(ent);
@@ -1164,10 +1169,11 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
       }
     }
   }
-  SEMIGROUPS_ASSERT(len == (size_t) LEN_PLIST(out));
+  SEMIGROUPS_ASSERT(len == static_cast<size_t>(LEN_PLIST(out)));
   if (len == 0) {
-    RetypeBag(out, T_PLIST_EMPTY + IMMUTABLE);
+    RetypeBag(out, T_PLIST_EMPTY);
   }
+  MakeImmutable(out);
   return out;
 }
 
@@ -1338,7 +1344,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
         // IMMUTABLE since it should not be altered on the GAP level
         memcpy(ADDR_OBJ(new_word) + 1,
                CONST_ADDR_OBJ(old_word) + 1,
-               (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+               static_cast<size_t>(LEN_PLIST(old_word) * sizeof(Obj)));
         SET_ELM_PLIST(
             new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation[1] + 1));
         SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);

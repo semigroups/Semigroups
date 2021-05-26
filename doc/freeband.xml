@@ -190,3 +190,34 @@ gap> ContentOfFreeBandElementCollection([x, y]);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="EqualInFreeBand">
+  <ManSection>
+    <Oper Name="EqualInFreeBand"  Arg="u, v"/>
+    <Description>
+      This operation takes a pair <A>u</A> and <A>v</A> of lists of
+      positive integers or strings, representing words in a free semigroup.<P/>
+
+      Where <C>F</C> is a free band over some alphabet containing the
+      letters occurring in <A>u</A> and <A>v</A>, this operation returns <K>true</K>
+      if <A>u</A> and <A>v</A> are equal in <C>F</C>, and <K>false</K>
+      otherwise.<P/>
+
+      Note that this operation is for lists and strings, as opposed to
+      <C>FreeBandElement</C> objects.<P/>
+
+      This is an implementation of an algorithm described by Jakub Radoszewski
+      and Wojciech Rytter in <Cite Key="Radoszewski2010aa"/>.
+      <Example><![CDATA[
+gap> EqualInFreeBand("aa", "a");
+true
+gap> EqualInFreeBand("abcacba", "abcba");
+true
+gap> EqualInFreeBand("aab", "aac");
+false
+gap> EqualInFreeBand([1, 3, 3], [2]);
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

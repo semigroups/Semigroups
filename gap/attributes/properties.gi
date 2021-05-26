@@ -1024,7 +1024,7 @@ function(S)
   fi;
 
   if not IsFinite(S) then
-    # WW I can not find an example of an example of an infinite inverse monoid
+    # WW I cannot find an example of an infinite inverse monoid
     # with InverseOp - FreeGroup(1) should work, but it is not in the category
     TryNextMethod();
   fi;
@@ -1069,7 +1069,7 @@ InstallMethod(IsOrthodoxSemigroup, "for a semigroup",
 [IsSemigroup], SUM_FLAGS,  # to beat the Smallsemi method
 function(S)
   if not IsFinite(S) then
-    # WW we can not test the following line, since the error message we
+    # WW we cannot test the following line, since the error message we
     # eventually get depends on whether or not Smallsemi is loaded
     TryNextMethod();
   elif not IsRegularSemigroup(S) then

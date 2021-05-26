@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE file SYSTEM "bibxmlext.dtd">
 <file>
+
+<entry id="Radoszewski2010aa"><article>
+  <author>
+    <name><first>Jakub</first><last>Radoszewski</last></name>
+    <name><first>Wojciech</first><last>Rytter</last></name>
+  </author>  
+  <title>Efficient Testing of Equivalence of Words in a Free Idempotent Semigroup</title>
+  <booktitle>SOFSEM 2010: Theory and Practice of Computer Science</booktitle>
+  <year>2010</year>
+  <pages>663--671</pages>
+  <publisher>Springer Berlin Heidelberg</publisher>
+  <address>Berlin, Heidelberg</address>
+  <editor>
+    <name><first>Jan</first><last>van Leeuwen</last></name>
+    <name><first>Anca</first><last>Muscholl</last></name>
+    <name><first>David</first><last>Peleg</last></name>
+    <name><first>Jaroslav</first><last>Pokorný</last></name>
+    <name><first>Bernhard</first><last>Rumpe</last></name>
+  </editor>  
+  <other type="doi">doi.org/10.1007/978-3-642-11266-9_55</other>
+  <other type="isbn">978-3-642-11266-9</other>
+</article></entry>
+
+
 <entry id="Donoven2018aa"><article>
   <author>
     <name><first>C.</first><last>Donoven</last></name>
@@ -43,7 +67,7 @@
   <number>2</number>
   <pages>325–351</pages>
   <issn>0097-3165</issn>
-  <url>http://dx.doi.org/10.1016/j.jcta.2005.03.006</url>
+  <url>https://dx.doi.org/10.1016/j.jcta.2005.03.006</url>
   <other type="doi">10.1016/j.jcta.2005.03.006</other>
 </article></entry>
 
@@ -60,7 +84,7 @@
   <number>4</number>
   <pages>1621–1639</pages>
   <issn>0092-7872</issn>
-  <url>http://dx.doi.org/10.1080/00927872.2013.876031</url>
+  <url>https://dx.doi.org/10.1080/00927872.2013.876031</url>
   <other type="doi">10.1080/00927872.2013.876031</other>
 </article></entry>
 
@@ -76,7 +100,7 @@
   <number>2</number>
   <pages>253–282</pages>
   <issn>0033-3883</issn>
-  <url>http://dx.doi.org/10.5486/PMD.2011.4375</url>
+  <url>https://dx.doi.org/10.5486/PMD.2011.4375</url>
   <other type="doi">10.5486/PMD.2011.4375</other>
 </article></entry>
 
@@ -169,8 +193,8 @@
   <pages>107 - 114</pages>
   <issn>0020-0190</issn>
   <keywords>Algorithms</keywords>
-  <url>http://www.sciencedirect.com/science/article/pii/S002001900000051X</url>
-  <other type="doi">http://dx.doi.org/10.1016/S0020-0190(00)00051-X</other>
+  <url>https://www.sciencedirect.com/science/article/pii/S002001900000051X</url>
+  <other type="doi">https://dx.doi.org/10.1016/S0020-0190(00)00051-X</other>
 </article></entry>
 
 <entry id="Araujo2015aa"><article>
@@ -466,7 +490,7 @@
   <pages>143–150</pages>
   <address>Washington, DC, USA</address>
   <publisher>IEEE Computer Society</publisher>
-  <url>http://dx.doi.org/10.1109/SFCS.1978.21</url>
+  <url>https://dx.doi.org/10.1109/SFCS.1978.21</url>
   <other type="doi">10.1109/SFCS.1978.21</other>
 </inproceedings></entry>
 
@@ -524,7 +548,7 @@
   <number>4</number>
   <pages>890–913</pages>
   <issn>1432-0444</issn>
-  <url>http://dx.doi.org/10.1007/s00454-015-9666-1</url>
+  <url>https://dx.doi.org/10.1007/s00454-015-9666-1</url>
   <other type="doi">10.1007/s00454-015-9666-1</other>
 </article></entry>
 

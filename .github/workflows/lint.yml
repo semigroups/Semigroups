@@ -1,0 +1,29 @@
+name: "Lint"
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+  schedule:
+    # Every day at 3:10 AM UTC
+    - cron: '10 3 * * *'
+
+jobs:
+  gaplint:
+    runs-on: ubuntu-latest
+    # Don't run this twice for PRs from branches in the same repository
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Install dependencies . . ."
+        run: sudo pip install gaplint
+      - name: "Run gaplint . . ."
+        run: bash etc/gaplint.sh
+
+  cpplint:
+    runs-on: ubuntu-latest
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+      - run: pip install cpplint
+      - run: bash etc/cpplint.sh

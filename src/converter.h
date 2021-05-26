@@ -82,12 +82,12 @@ class TransConverter : public Converter {
     size_t i = 0;
     if (TNUM_OBJ(o) == T_TRANS2) {
       UInt2* pto2 = ADDR_TRANS2(o);
-      for (i = 0; i < std::min((size_t) DEG_TRANS2(o), n); i++) {
+      for (i = 0; i < std::min(static_cast<size_t>(DEG_TRANS2(o)), n); i++) {
         x.push_back(pto2[i]);
       }
     } else if (TNUM_OBJ(o) == T_TRANS4) {
       UInt4* pto4 = ADDR_TRANS4(o);
-      for (i = 0; i < std::min((size_t) DEG_TRANS4(o), n); i++) {
+      for (i = 0; i < std::min(static_cast<size_t>(DEG_TRANS4(o)), n); i++) {
         x.push_back(pto4[i]);
       }
     } else {
@@ -129,7 +129,7 @@ class PPermConverter : public Converter {
     size_t i = 0;
     if (TNUM_OBJ(o) == T_PPERM2) {
       UInt2* pto2 = ADDR_PPERM<UInt2>(o);
-      for (i = 0; i < std::min((size_t) DEG_PPERM2(o), n); i++) {
+      for (i = 0; i < std::min(static_cast<size_t>(DEG_PPERM2(o)), n); i++) {
         if (pto2[i] == 0) {
           x.push_back(UNDEFINED);
         } else {
@@ -138,7 +138,7 @@ class PPermConverter : public Converter {
       }
     } else if (TNUM_OBJ(o) == T_PPERM4) {
       UInt4* pto4 = ADDR_PPERM<UInt4>(o);
-      for (i = 0; i < std::min((size_t) DEG_PPERM4(o), n); i++) {
+      for (i = 0; i < std::min(static_cast<size_t>(DEG_PPERM4(o)), n); i++) {
         if (pto4[i] == 0) {
           x.push_back(UNDEFINED);
         } else {

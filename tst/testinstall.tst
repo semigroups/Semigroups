@@ -1611,8 +1611,7 @@ gap> cong := SemigroupCongruence(F, pair);
 gap> pair in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 gap> EquivalenceClasses(cong);
 [ <congruence class of s1>, <congruence class of s1^2>, 
   <congruence class of s1^3> ]
@@ -1765,8 +1764,7 @@ infinity
 gap> CongruenceByGeneratingPairsPartition(S!.cong);
 Error, the argument <cong> has infinitely many classes,
 gap> EquivalenceRelationLookup(S!.cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

@@ -723,7 +723,7 @@ end);
 ## I. Simon, Limited subsets of the free monoid,
 ## Proc. of the 19th Annual Symposium on the Foundations of Computer Science,
 ## IEEE, 1978, pp. 143-150.
-## http://tinyurl.com/h8er92u
+## https://tinyurl.com/h8er92u
 
 InstallMethod(IsFinite,
 "for a min-plus matrix semigroup",
@@ -764,7 +764,7 @@ end);
 ## theorem 2.2 (decidability of torsion problem), page 2 et.al, from:
 ## S. Gaubert, On the burnside problem for semigroups of matrices in the
 ## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
-## http://tinyurl.com/znhk52m
+## https://tinyurl.com/znhk52m
 ## b)
 ## An unpublished result by J.D Mitchell & S. Burrell relating isomorphism of
 ## normalized max-plus matrix semigroups to min-plus matrix semigroups.
@@ -813,7 +813,7 @@ end);
 
 ## A method based on the original solution by S. Gaubert (On the burnside
 ## problem for semigroups of matrices in the (max, +) algebra), but
-## modified by S. Burrell (see thesis http://tinyurl.com/gr94xha).
+## modified by S. Burrell (see thesis https://tinyurl.com/gr94xha).
 
 InstallMethod(NormalizeSemigroup,
 "for a finitely generated semigroup of max-plus matrices",

@@ -1,20 +1,25 @@
+#!/usr/bin/env bash
+
 # If a command fails, exit this script with an error code
 set -e
 set -o pipefail
 
-touch $GAPROOT/testlog.txt
-TESTLOG="$GAPROOT/testlog.txt"
-GAPSH="$GAPROOT/bin/gap.sh"
-SEMI_DIR="$GAPROOT/pkg/semigroups"
+# This script is intended to be run inside the docker container
+# jamesdbmitchell/gap-docker:version-?.?.?
 
-if [ "$SUITE" == "lint" ]; then
+if [ "$SUITE" != "test" ] && [ "$SUITE" != "coverage" ]; then
+  echo -e "\nError, unrecognised Travis suite: $SUITE"
+  exit 1
+fi
 
-  echo -e "\nLinting with gaplint and cpplint..."
-  cd $SEMI_DIR
-  gaplint `grep "^\s\+gaplint" Makefile.am | cut -d " " -f2-`
-  cpplint --extensions=c,cc,h `grep "^\s\+cpplint" Makefile.am | cut -d " " -f2-`
+################################################################################
+# Start running the tests
+touch $GAP_HOME/testlog.txt
+TESTLOG="$GAP_HOME/testlog.txt"
+GAPSH="$GAP_HOME/bin/gap.sh"
+SEMI_DIR="$GAP_HOME/pkg/semigroups"
 
-elif [ "$SUITE" == "coverage" ]; then
+if [ "$SUITE" == "coverage" ]; then
 
   echo -e "\nPerforming code coverage tests..."
   for TEST in $SEMI_DIR/tst/standard/*.tst; do
@@ -41,28 +46,30 @@ else
     $GAPSH -A -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning LoadWorkspace tests..."
-  echo "Test(\"load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" |
-    $GAPSH -L test-output.w -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
+  echo "Test(\"load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" | $GAPSH -L test-output.w -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   echo -e "\nRunning Semigroups package standard tests and manual examples..."
-  echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
+  echo "LoadPackage(\"semigroups\"); SemigroupsMakeDoc(); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" |
     $GAPSH -A -x 80 -m 768m -o $MEM -T 2>&1 | tee -a $TESTLOG
 
   # Run GAP tests, but only in 64-bit, since they're far too slow in 32-bit
   if [ "$ABI" == "64" ]; then
     echo -e "\nRunning GAP's testinstall tests with Semigroups loaded..."
-    echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testinstall.g\");" |
+    # Delete some problematic tests
+    rm $GAP_HOME/tst/testinstall/strings.tst
+    rm -f $GAP_HOME/tst/testinstall/stringobj.tst
+    echo "LoadPackage(\"semigroups\"); Read(\"$GAP_HOME/tst/testinstall.g\");" |
       $GAPSH -A -x 80 -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
 
     # Run GAP testbugfix with Semigroups loaded; this only works with GAP master
     if [ "$GAP" == "master" ]; then
       echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
       # Delete some problematic or very long-running tests
-      rm $GAPROOT/tst/testbugfix/2016-03-03-t00332.tst
-      rm $GAPROOT/tst/testbugfix/2018-05-24-IntermediateSubgroups.tst
-      rm $GAPROOT/tst/testbugfix/2018-09-13-MTC.tst
-      rm $GAPROOT/tst/testbugfix/2018-12-06-GroupWithGenerators.tst
-      echo "LoadPackage(\"semigroups\"); Read(\"$GAPROOT/tst/testbugfix.g\");" |
+      rm $GAP_HOME/tst/testbugfix/2016-03-03-t00332.tst
+      rm $GAP_HOME/tst/testbugfix/2018-05-24-IntermediateSubgroups.tst
+      rm $GAP_HOME/tst/testbugfix/2018-09-13-MTC.tst
+      rm $GAP_HOME/tst/testbugfix/2018-12-06-GroupWithGenerators.tst
+      echo "LoadPackage(\"semigroups\"); Read(\"$GAP_HOME/tst/testbugfix.g\");" |
         $GAPSH -A -x 80 -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
     fi
   fi

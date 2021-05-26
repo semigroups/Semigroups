@@ -460,19 +460,15 @@ true
 gap> F := FreeSemigroup(2);;
 gap> cong := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 gap> EquivalenceRelationCanonicalLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 gap> cong := LeftSemigroupCongruence(F, [F.1, F.2]);;
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 gap> cong := RightSemigroupCongruence(F, [F.1, F.2]);;
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
+Error, <equiv> must be over a finite semigroup,
 
 # Equality for congruences over different semigroups (false)
 gap> S := Semigroup([Transformation([3, 2, 3]), Transformation([3, 1, 1])]);;

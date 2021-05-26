@@ -8,3 +8,6 @@
 #############################################################################
 ##
 DeclareOperation("ParseRelations", [IsDenseList, IsString]);
+
+DeclareOperation("ElementOfFpSemigroup", [IsFpSemigroup, IsAssocWord]);
+DeclareOperation("ElementOfFpMonoid", [IsFpMonoid, IsAssocWord]);

@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups", "gap/hash.gi");
+ReadPackage("semigroups", "gap/doc.g");
 
 ReadPackage("semigroups", "gap/elements/star.gi");
 ReadPackage("semigroups", "gap/elements/pbr.gi");
@@ -91,6 +91,7 @@ ReadPackage("semigroups", "gap/congruences/congfpmon.gi");
 
 ReadPackage("semigroups", "gap/fp/freeinverse.gi");
 ReadPackage("semigroups", "gap/fp/freeband.gi");
+ReadPackage("semigroups", "gap/fp/word.gi");
 
 ReadPackage("semigroups", "gap/obsolete.gi");
 

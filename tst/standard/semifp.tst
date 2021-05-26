@@ -2134,6 +2134,20 @@ true
 gap> EvaluateExtRepObjWord(Generators(F), []);
 <identity ...>
 
+# TestAssignGeneratorVariables for fp semigroups
+gap> f := FreeSemigroup("x", "y");;
+gap> s := f / [[f.1 * f.2, f.2 * f.1]];;
+gap> AssignGeneratorVariables(s);;
+gap> x * y = y * x;
+true
+
+# TestAssignGeneratorVariables for fp monoids
+gap> f := FreeMonoid("x", "y");;
+gap> s := f / [[f.1 * f.2, f.2 * f.1]];;
+gap> AssignGeneratorVariables(s);;
+gap> x * y = y * x;
+true
+
 # Test ParseRelations
 gap> f := FreeSemigroup("x", "y", "e");                 
 <free semigroup on the generators [ x, y, e ]>
@@ -2173,9 +2187,42 @@ gap> ParseRelations(GeneratorsOfSemigroup(f), "x=");
 Error, expected the second argument to be a string listing the relations of a \
 semigroup but found an = symbol which isn't pairing two words
 
+# Test ElementOfFpSemigroup
+gap> f := FreeSemigroup("x", "y");;
+gap> x := f.1;;
+gap> y := f.2;;
+gap> s := f / [[x * y, y * x]];
+<fp semigroup on the generators [ x, y ]>
+gap> a := ElementOfFpSemigroup(s, x * y);
+x*y
+gap> b := ElementOfFpSemigroup(s, y * x);
+y*x
+gap> x * y = y * x;
+false
+gap> a = b;
+true
+
+# Test ElementOfFpMonoid
+gap> f := FreeMonoid("x", "y");;
+gap> x := f.1;;
+gap> y := f.2;;
+gap> s := f / [[x * y, y * x]];
+<fp monoid on the generators [ x, y ]>
+gap> a := ElementOfFpMonoid(s, x * y);
+x*y
+gap> b := ElementOfFpMonoid(s, y * x);
+y*x
+gap> x * y = y * x;
+false
+gap> a = b;
+true
+
 # SEMIGROUPS_UnbindVariables
+gap> Unbind(a);
+gap> Unbind(b);
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(f);
 gap> Unbind(F);
 gap> Unbind(G);
 gap> Unbind(R);
