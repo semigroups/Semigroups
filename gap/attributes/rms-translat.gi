@@ -142,151 +142,7 @@ end;
 # which are candidates for translations, when combined with a function from
 # the index sets to the group.
 # TODO: swap rows/columns if more convenient.
-SEMIGROUPS.FindTranslationTransformations := function(S)
-  local iso, reesmatsemi, mat, simplerows, nrrows, nrcols, translist,
-  simplecols, ispartialsuccess, extend, reject, bt, v, partcols, x,
-  linkedtranslist, t, cols, col, possiblecols, i, j, k;
-
-  iso          := IsomorphismReesZeroMatrixSemigroup(S);
-  reesmatsemi  := Range(iso);
-  mat          := Matrix(reesmatsemi);
-  simplerows   := List(mat, ShallowCopy);
-  nrrows       := Length(simplerows);
-  nrcols       := Length(simplerows[1]);
-  translist    := [];
-  for i in [1 .. Length(simplerows)] do
-    for j in [1 .. Length(simplerows[i])] do
-      if simplerows[i][j] <> 0 then
-        simplerows[i][j] := 1;
-      fi;
-    od;
-  od;
-  simplecols := TransposedMat(simplerows);
-
-  ispartialsuccess := function(x)
-    local foundcol, noclash, pc;
-    for pc in partcols do
-      # Only check the columns which contain a 1 since
-      # all-zero column can be made by column not in domain of transformation.
-      # No ones in one partial matrix but not in the other...
-      if 1 in pc then
-        foundcol := false;
-        for col in simplecols do
-          noclash := true;
-          for i in [1 .. Length(pc)] do
-            if pc[i] + col[i] = 1 then
-              noclash := false;
-              break;
-            fi;
-          od;
-          if noclash then
-            foundcol := true;
-            break;
-          fi;
-        od;
-        if not foundcol then
-          return false;
-        fi;
-      fi;
-    od;
-    return true;
-  end;
-
-  extend := function(w)
-    Add(w, 1);
-    for i in [1 .. nrcols] do
-      partcols[i][Length(w)] := simplerows[1][i];
-    od;
-  end;
-
-  reject := function(q)
-    # return the next list to consider
-    k := Length(q);
-    if q[k] <= nrrows then
-      q[k] := q[k] + 1;
-      for i in [1 .. nrcols] do
-        if q[k] <= nrrows then
-          partcols[i][k] := simplerows[q[k]][i];
-        else
-          partcols[i][k] := 0;
-        fi;
-      od;
-    elif k > 1 then
-      for i in [1 .. nrcols] do
-        Remove(partcols[i]);
-      od;
-      q := reject(q{[1 .. k - 1]});
-    else return 0;
-    fi;
-    return q;
-  end;
-
-  bt := function(x)
-    if x = 0 then
-      return 0;
-    fi;
-    while not ispartialsuccess(x) do
-      x := reject(x);
-      if x = 0 then
-        return 0;
-      fi;
-    od;
-    if Length(x) = nrrows then
-      return x;
-    else
-      extend(x);
-    fi;
-    return bt(x);
-  end;
-
-  v         := 1;
-  partcols  := List([1 .. nrcols], i -> []);
-  x         := [];
-  translist := [bt(x)];
-  while translist[v] <> 0 do
-    v            := v + 1;
-    translist[v] := bt(reject(ShallowCopy(translist[v - 1])));
-  od;
-
-  linkedtranslist := [];
-  # Given each row transformation, look for matching column transformations.
-  # Last element of translist will be 0, ignore.
-  for k in [1 .. Length(translist) - 1] do
-    t     := translist[k];
-    cols  := [];
-    for i in [1 .. Length(simplerows[1])] do
-      col := [];
-      for j in [1 .. nrrows] do
-        if t[j] = nrrows + 1 then
-          col[j] := 0;
-        else
-          col[j] := simplerows[t[j]][i];
-        fi;
-      od;
-      Add(cols, col);
-    od;
-    possiblecols := [];
-    for i in [1 .. nrcols] do
-      possiblecols[i] := [];
-      for j in [1 .. nrcols] do
-        if not 1 in cols[i] + simplecols[j] then
-          Add(possiblecols[i], j);
-        fi;
-        if not 1 in cols[i] then
-          Add(possiblecols[i], nrcols + 1);
-        fi;
-      od;
-    od;
-    linkedtranslist[k] := IteratorOfCartesianProduct(possiblecols);
-  od;
-  return [translist{[1 .. Length(translist) - 1]}, linkedtranslist];
-end;
-
-# Finds the transformations on the indices of a finite 0-simple semigroup
-# which are candidates for translations, when combined with a function from
-# the index sets to the group.
-# TODO: swap rows/columns if more convenient.
-SEMIGROUPS.FindTranslationTransformationsNew := function(S)
+SEMIGROUPS.RZMSLinkedIndexFuncs := function(S)
   local mat, I, M, Li, bt, tau, sigma, out;
 
   mat := MatrixOfReesZeroMatrixSemigroup(S);
@@ -347,18 +203,19 @@ SEMIGROUPS.FindTranslationTransformationsNew := function(S)
   return out;
 end;
 
-SEMIGROUPS.RZMSLinkingGraph := function(S, t1, t2)
-  local mat, D, i, mu;
+SEMIGROUPS.RZMSLinkingGraph := function(S, tau, sigma)
+  local r, mat, D, i, mu;
 
+  r := Size(Rows(S));
   mat := MatrixOfReesZeroMatrixSemigroup(S);
-  D := Digraph(IsMutableDigraph, Length(Rows(S)) + Length(Columns(S)));
-  
+  D := NullDigraph(IsMutableDigraph, Length(Rows(S)) + Length(Columns(S)));
+
   for i in Rows(S) do
-    if t1[i] <> 0 then
+    if tau[i] <> 0 then
       for mu in Columns(S) do
-        if t2[mu] <> 0 then
-          if mat[mu][t1[i]] <> 0 then
-            DigraphAddEdges([[i, mu], [mu, i]]);
+        if sigma[mu] <> 0 then
+          if mat[mu][tau[i]] <> 0 then
+            DigraphAddEdges(D, [[i, mu + r], [mu + r, i]]);
           fi;
         fi;
       od;
@@ -368,17 +225,17 @@ SEMIGROUPS.RZMSLinkingGraph := function(S, t1, t2)
   return D;
 end;
 
-SEMIGROUPS.RZMSGroupLinkingConditions := function(S, t1, t2)
-  local D, sccs, reps, r, c, dive, mat, conditions, row_definitions,
-  column_definitions, cc, rep;
+SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
+  local D, sccs, reps, r, c, rep, dive, mat, conditions, row_definitions,
+  column_definitions, e, cc;
   
-  D := SEMIGROUPS.RZMSLinkingGraph(S, t1, t2);
+  D := SEMIGROUPS.RZMSLinkingGraph(S, tau, sigma);
   sccs := DigraphStronglyConnectedComponents(D);
   reps := [];
 
   r := Size(Rows(S));
   c := Size(Columns(S));
-  
+
   for cc in Filtered(sccs.comps, x -> Size(x) > 1) do
     rep := cc[1];
     if rep > r then 
@@ -398,17 +255,18 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, t1, t2)
       if w <= r then
         z := w;
         defns := row_definitions;
-        x := [mat[v - r][t1[w]] ^ -1 * y[1], y[2] * mat[t2[v - r]][w]];
+        x := [mat[v - r][tau[w]] ^ -1 * y[1], y[2] * mat[sigma[v - r]][w]];
       else
         z := w - r;
         defns := column_definitions;
-        x := [mat[z][t1[v]] * y[1], y[2] * mat[t2[z]][v] ^ -1];
+        x := [mat[z][tau[v]] * y[1], y[2] * mat[sigma[z]][v] ^ -1];
       fi;
       if IsBound(defns[z]) then
-        Add(conditions, [defns[z], x]);
+        # FIXME: slightly evil to use rep here
+        Add(conditions[rep], [defns[z], x]);
       else
         defns[z] := x;
-        dive(z);
+        dive(w);
       fi;
     od;
   end;
@@ -417,524 +275,192 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, t1, t2)
   conditions := List([1 .. r], x -> []);
   row_definitions := [];
   column_definitions := [];
+  e := One(UnderlyingSemigroup(S));
 
   for rep in reps do
+    row_definitions[rep] := [e, e];
     dive(rep);
   od;
 
   return rec(reps := reps,
+             sccs := sccs,
              conditions := conditions,
              row_definitions := row_definitions,
              column_definitions := column_definitions);
 end;
 
-SEMIGROUPS.FindLinkedGroupFunctions := function(S, t1, t2)
+SEMIGROUPS.RZMSLinkedGroupFunctions := function(S, tau, sigma)
+  local r, c, conds, conditions, allowed_vals, reps, vals, keep, sccs, comps,
+  ids, row_definitions, column_definitions, out, phi, psi, rep, z, cond, g, tup,
+  i, v;
 
+  r := Size(Rows(S));
+  c := Size(Columns(S));
 
-end;
-
-
-# For a pair of transformations on the indices of a completely 0-simple
-# semigroup, determine the functions to the group associated with the RMS
-# representation which will form translations when combined with the
-# transformations.  Connected components here means points in the domains which
-# are related through the linked pair condition given by Petrich.
-SEMIGROUPS.FindTranslationFunctionsToGroup :=
-function(S, t1, t2)
-  local reesmatsemi, mat, nrrows, nrcols, gplist, gpsize, invmat,
-  rowtransformedmat, zerorow, zerocol, rels, rowrels, edges, digraph, cc,
-  relpoints, fillin, relssatisfied, funcsfromrelpointvals, foundfuncs, iterator,
-  funcs, i, j, k;
-
-  reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
-  mat         := Matrix(reesmatsemi);
-  nrrows      := Length(mat);
-  nrcols      := Length(mat[1]);
-
-  if ValueOption("SEMIGROUPS_gp_is_trivial_perm_gp") = true then
-      return [[List([1 .. nrrows], x -> ()), List([1 .. nrcols], y -> ())]];
-  fi;
-
-  gplist := AsList(UnderlyingSemigroup(reesmatsemi));
-  gpsize := Size(gplist);
-  invmat := List(mat, ShallowCopy);
-  for i in [1 .. nrrows] do
-    for j in [1 .. nrcols] do
-      invmat[i][j] := Inverse(invmat[i][j]);
-    od;
-  od;
-  rowtransformedmat := [];
-  zerorow           := [];
-  zerocol           := [];
-  for i in [1 .. nrcols] do
-    zerorow[i] := 0;
-  od;
-  for i in [1 .. nrrows] do
-    zerocol[i] := 0;
-  od;
-  for i in [1 .. nrrows] do
-    if t1[i] <> nrrows + 1 then
-      rowtransformedmat[i] := mat[t1[i]];
-    else
-      rowtransformedmat[i] := zerorow;
-    fi;
-  od;
-
-  # for ease of checking the constraints, set up lists of linked indices
-  rels := [];
-  for i in [1 .. nrrows] do
-    for j in [1 .. nrcols] do
-      if rowtransformedmat[i][j] <> 0 then
-        Add(rels, [i, j]);
+  conds := SEMIGROUPS.RZMSGroupLinkingConditions(S, tau, sigma);
+  conditions := conds.conditions;
+  allowed_vals := [];
+  reps := conds.reps;
+  for rep in reps do
+    vals := AsList(UnderlyingSemigroup(S));
+    for cond in conditions[rep] do
+      keep := [];
+      for g in vals do
+        if cond[1][1] * g * cond[1][2] = cond[2][1] * g * cond[2][2] then
+          Add(keep, g);
+        fi;
+      od;
+      vals := keep;
+      if Length(vals) = 0 then
+        break;
       fi;
     od;
+    Add(allowed_vals, vals);
   od;
-  rowrels := [];
-  for i in [1 .. nrrows] do
-    rowrels[i] := [];
-    for j in [1 .. nrrows] do
-      for k in [1 .. nrcols] do
-        if i <> j and [i, k] in rels and [j, k] in rels then
-          rowrels[i][j] := k;
-          break;
+  if Length(allowed_vals) <> Length(reps) or ForAny(allowed_vals, IsEmpty) then
+    return [];
+  fi;
+
+  sccs := conds.sccs;
+  comps := sccs.comps;
+  ids := sccs.id;
+  row_definitions := conds.row_definitions;
+  column_definitions := conds.column_definitions;
+
+  out := [];
+  for tup in EnumeratorOfCartesianProduct(allowed_vals) do
+    phi := [];
+    psi := [];
+    for i in [1 .. Size(reps)] do
+      rep := reps[i];
+      for v in comps[ids[rep]] do
+        if v <= r then
+          phi[v] := row_definitions[v][1] * tup[i] * row_definitions[v][2];
+        else
+          z := v - r;
+          psi[z] := column_definitions[z][1] *
+                    tup[i] *
+                    column_definitions[z][2];
         fi;
       od;
     od;
+    Add(out, [phi, psi]);
   od;
-
-  # get connected components
-  edges   := List(rels, r -> [r[1], r[2] + nrrows]);
-  digraph := DigraphSymmetricClosure(DigraphByEdges(edges, nrrows + nrcols));
-  cc      := DigraphConnectedComponents(digraph);
-
-  # only deal with enough elements to hit each relation
-  relpoints := [];
-  for cc in cc.comps do
-    # if cc[1] is in the domain
-    if cc[1] <= nrrows and t1[cc[1]] <= nrrows then
-      Add(relpoints, cc[1]);
-    elif cc[1] > nrrows
-         and cc[1] <= nrrows + nrcols
-         and t2[cc[1] - nrrows] <= nrcols then
-      Add(relpoints, cc[1]);
-    fi;
-  od;
-
-  fillin := function(funcs)
-    local x, y, queue, n, q, j, r;
-    # given a choice of relpoints, fill in everything else possible
-    x := ShallowCopy(funcs[1]);
-    y := ShallowCopy(funcs[2]);
-    for r in relpoints do
-      queue := [r];
-      n     := 1;
-      repeat
-        q := queue[n];
-        # the digraph is bipartite
-        for j in OutNeighbours(digraph)[q] do
-          if j > nrrows then
-            j := j - nrrows;
-            if not IsBound(y[j]) then
-              y[j] := invmat[q][t2[j]] * x[q] * rowtransformedmat[q][j];
-              Add(queue, nrrows + j);
-            fi;
-          else
-            if not IsBound(x[j]) then
-              x[j] := mat[j][t2[q - nrrows]]
-                      * y[q - nrrows]
-                      * invmat[t1[j]][q - nrrows];
-              Add(queue, j);
-            fi;
-          fi;
-        od;
-        n := n + 1;
-      until n = Size(queue) + 1;
-    od;
-    return [x, y];
-  end;
-
-  relssatisfied := function(funcs)
-    local x, y, rel;
-    # check whether the relations are satisfied
-    x := funcs[1];
-    y := funcs[2];
-    for rel in rels do
-      i := rel[1];
-      j := rel[2];
-      if IsBound(x[i]) and IsBound(y[j]) and not
-          x[i] * rowtransformedmat[i][j] = mat[i][t2[j]] * y[j] then
-          return false;
-      fi;
-    od;
-    return true;
-  end;
-
-  funcsfromrelpointvals := function(relpointvals)
-    local x, y;
-    # given values for the representative points, create the functions
-    x := [1 .. nrrows];
-    y := [1 .. nrcols];
-
-    for i in [1 .. nrrows] do
-      Unbind(x[i]);
-    od;
-    for i in [1 .. nrcols] do
-      Unbind(y[i]);
-    od;
-    for i in [1 .. Length(relpoints)] do
-      x[relpoints[i]] := gplist[relpointvals[i]];
-    od;
-    return fillin([x, y]);
-  end;
-
-  foundfuncs := [];
-  iterator   := IteratorOfCartesianProduct(List(relpoints, i -> [1 .. gpsize]));
-
-  # If S is a commutative group and fails on one choice of relpointvals,
-  # it will fail on all of them.
-  if IsDoneIterator(iterator) then
-    return [];
-  else
-    funcs := funcsfromrelpointvals(NextIterator(iterator));
-    if not relssatisfied(funcs) then
-      if IsCommutative(S) then
-        return fail;
-      fi;
-    else
-      Add(foundfuncs, funcs);
-    fi;
-  fi;
-
-  while not IsDoneIterator(iterator) do
-    funcs := funcsfromrelpointvals(NextIterator(iterator));
-    if relssatisfied(funcs) then
-      Add(foundfuncs, funcs);
-    fi;
-  od;
-
-  return foundfuncs;
+  return out;
 end;
 
-# Combine the previous methods to form the translational hull
-# Performance suffers greatly as the size of the group increases.
-SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
-  local S, iso, inv, reesmatsemi, gplist, nrrows, nrcols, zero, L, R, tt,
-  linkedpairs, nronly, count, linkedpairfromfuncs, fr, l, r, t1, iterator, t2,
-  transfuncs, fx, fy, unboundpositions, c, partialfunciterator, funcvals, i,
-  funcs, j;
+SEMIGROUPS.BitranslationsOfRZMS := function(S)
+  local out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
 
-  S := UnderlyingSemigroup(H);
-  if not (IsFinite(S) and IsZeroSimpleSemigroup(S)) then
-    TryNextMethod();
-  fi;
-  iso         := IsomorphismReesZeroMatrixSemigroup(S);
-  inv         := InverseGeneralMapping(iso);
-  reesmatsemi := Range(iso);
-  gplist      := AsList(UnderlyingSemigroup(reesmatsemi));
-  nrrows      := Length(Matrix(reesmatsemi));
-  nrcols      := Length(Matrix(reesmatsemi)[1]);
-  zero        := MultiplicativeZero(reesmatsemi);
-  L           := LeftTranslations(S);
-  R           := RightTranslations(S);
-  tt          := SEMIGROUPS.FindTranslationTransformations(S);
-  linkedpairs := [];
-  nronly      := ValueOption("SEMIGROUPS_bitranslat_nr_only") = true;
-  count       := 0;
+  out := [];
+  idx_funcs := SEMIGROUPS.RZMSLinkedIndexFuncs(S);
+  for x in idx_funcs do
+    tau := x[1];
+    sigma_it := x[2];
+    while not IsDoneIterator(sigma_it) do
+      sigma := NextIterator(sigma_it);
+      gp_funcs := SEMIGROUPS.RZMSLinkedGroupFunctions(S, tau, sigma);
+      for y in gp_funcs do
+        Add(out, [[tau, y[1]], [sigma, y[2]]]);
+      od;
+    od;
+  od;
+  empty_bitrans := [[List(Rows(S), x -> 0), []],
+                    [List(Columns(S), x -> 0), []]];
+  Add(out, empty_bitrans);
+                  
+  return out;
+end;
 
-  linkedpairfromfuncs := function(t1, t2, fx, fy)
-    local fl, fr;
-    # given transformations on the indices and fns to the group,
-    # create a bitranslation
-    fl := function(x)
-      if x = zero then
-        return zero;
-      fi;
-      if t2[x[1]] <> nrcols + 1 then
-        return RMSElement(reesmatsemi, t2[x[1]], fy[x[1]] * x[2], x[3]);
-      else
-        return zero;
-      fi;
-    end;
+SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
+                                                       c, d_inv, a, x, y)
+  local I, M, tau, sigma, bt, out;
 
-    fr := function(x)
-      if x = zero then
-        return zero;
-      fi;
-      if t1[x[3]] <> nrrows + 1 then
-        return RMSElement(reesmatsemi, x[1], x[2] * fx[x[3]], t1[x[3]]);
-      else
-        return zero;
-      fi;
-    end;
+  I := Rows(S);
+  M := Columns(S);
+  
+  tau := [x];
+  sigma := List(I, i -> List(M, mu -> ShallowCopy(M)));
 
-    l := LeftTranslationNC(L, CompositionMapping(inv, MappingByFunction(
-      reesmatsemi, reesmatsemi, fl), iso));
-
-    r := RightTranslationNC(R, CompositionMapping(inv, MappingByFunction(
-      reesmatsemi, reesmatsemi, fr), iso));
-
-    return BitranslationNC(H, l, r);
-  end;
-
-  for i in [1 .. Length(tt[1])] do
-    t1        := tt[1][i];
-    iterator  := tt[2][i];
-    while not IsDoneIterator(iterator) do
-      t2 := NextIterator(iterator);
-      if Size(UnderlyingSemigroup(S)) = 1 then
-        transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S,
-                                                                 t1,
-                                                                 t2 :
-                                      SEMIGROUPS_gp_is_trivial_perm_gp);
-      else
-        transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S, t1, t2);
-      fi;
-      if not transfuncs = fail then
-        for funcs in transfuncs do
-          fx                := funcs[1];
-          fy                := funcs[2];
-          unboundpositions  := [];
-          for j in [1 .. nrcols] do
-            if not IsBound(fy[j]) then
-              Add(unboundpositions, j);
-            fi;
+  bt := function(k) 
+    local g_pos, consistent, j, mu, tup;
+    for j in I do
+      consistent := true;
+      tau[k] := j;
+      for mu in M do
+        g_pos := PositionCanonical(G, d_inv[mu] * mat[mu][j] * c[k]);
+        sigma[k][mu] := Intersection(sigma[k - 1][mu], 
+                                     mat_inv_rows[k][g_pos]);
+        if IsEmpty(sigma[k][mu]) then
+          consistent := false;
+          break;
+        fi;
+      od;
+      if consistent then
+        if k = Length(I) then
+          for tup in EnumeratorOfCartesianProduct(sigma[k]) do
+            Add(out, [ShallowCopy(tau), ShallowCopy(tup)]);
           od;
-          if Length(unboundpositions) > 0 then
-            c := List([1 .. Length(unboundpositions)],
-                      i -> [1 .. Length(gplist)]);
-            partialfunciterator := IteratorOfCartesianProduct(c);
-            while not IsDoneIterator(partialfunciterator) do
-              funcvals := NextIterator(partialfunciterator);
-              for j in [1 .. Length(unboundpositions)] do
-                fy[unboundpositions[j]] := gplist[funcvals[j]];
-              od;
-              if nronly then
-                count := count + 1;
-              else
-                Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
-              fi;
-            od;
-          else
-            if nronly then
-              count := count + 1;
-            else
-              Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
-            fi;
-          fi;
-        od;
+        else
+          bt(k + 1);
+        fi;
       fi;
     od;
-  od;
-  if nronly then
-    return count;
-  fi;
-  return Set(linkedpairs);
+  end;
+
+  out := [];
+  # TODO: deal with |I| = 1
+  bt(2);
+  return out;
 end;
 
-# Finds the bitranslations of a normalised RMS over a group
-# Uses the characterisation of Theorem 1 in
-# Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
-# Journal of Algebra 46, 1977
-SEMIGROUPS.BitranslationsOfNormalRMS := function(H)
-  local S, P, m, n, G, triples, nronly, count, extendf, extendg, nextf, nextg,
-  partialcheckrow, partialcheckcol, reject, bt, k, f, g, a;
+SEMIGROUPS.NormalRMSLinkedTriples := function(S)
+  local I, M, iso, inv, G, mat, mat_inv_rows, out, b, d_inv, c, triple, i, mu,
+  a, x, y, func_pair, func;
 
-  S := UnderlyingSemigroup(H);
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.BitranslationsOfNormalRMS: \n",
-                  "the argument must be the translational hull of a ",
-                  "normalised RMS over a group,");
+    ErrorNoReturn("Usage: the argument must be a normalised RMS over a group");
   fi;
-  P       := Matrix(S);
-  m       := Size(P);
-  n       := Size(P[1]);
-  G       := UnderlyingSemigroup(S);
-  triples := [];
-  nronly  := ValueOption("SEMIGROUPS_bitranslat_nr_only") = true;
-  count   := 0;
 
-  extendf := function(k)
-    f[k] := 1;
-  end;
+  I := Rows(S);
+  M := Columns(S);
 
-  extendg := function(k)
-    g[k] := 1;
-  end;
+  iso := IsomorphismPermGroup(UnderlyingSemigroup(S));
+  inv := InverseGeneralMapping(iso);
+  G := Semigroup(List(Generators(Range(iso)), AsTransformation));
 
-  nextf := function(k)
-    if f[k] = m then
-      return fail;
-    fi;
-    f[k] := f[k] + 1;
-    return k;
-  end;
+  mat := StructuralCopy(MatrixOfReesMatrixSemigroup(S));
+  mat := List(mat, row -> List(row, x -> AsTransformation(x ^ iso)));
 
-  nextg := function(k)
-    if g[k] = n then
-      return fail;
-    fi;
-    g[k] := g[k] + 1;
-    return k;
-  end;
-
-  partialcheckrow := function(k)
-    local j;
-    for j in [1 .. Minimum(k - 1, n)] do
-      if not P[k][g[j]] * a * P[f[1]][j] = P[k][g[1]] * a * P[f[k]][j] then
-        return false;
-      fi;
+  mat_inv_rows := List(I, x -> List(G, y -> []));
+  for i in I do
+    for mu in M do
+      Add(mat_inv_rows[i][PositionCanonical(G, mat[mu][i])], mu);
     od;
-    return true;
-  end;
-
-  partialcheckcol := function(k)
-    local i;
-    for i in [1 .. Minimum(k, m)] do
-      if not P[i][g[k]] * a * P[f[1]][k] = P[i][g[1]] * a * P[f[i]][k] then
-        return false;
-      fi;
-    od;
-    return true;
-  end;
-
-  reject := function(k)
-    while k > n do
-      if nextf(k) = fail then
-        Unbind(f[k]);
-        k := k - 1;
-      else
-        return k;
-      fi;
-    od;
-
-    while k > m do
-      if nextg(k) = fail then
-        Unbind(g[k]);
-        k := k - 1;
-      else
-        return k;
-      fi;
-    od;
-
-    if not IsBound(g[k]) then
-      if nextf(k) = fail then
-        Unbind(f[k]);
-        k := k - 1;
-      else
-        return k;
-      fi;
-    fi;
-
-    while k > 0 and nextg(k) = fail do
-      Unbind(g[k]);
-      if nextf(k) = fail then
-        Unbind(f[k]);
-        k := k - 1;
-      else
-        return k;
-      fi;
-    od;
-    return k;
-  end;
-
-  # TODO: add flag to not partial check row/col as appropriate
-  bt := function(k)
-    if k = 0 then
-      return 0;
-    fi;
-
-    if k > m then
-      if partialcheckcol(k) then
-        if k = n then
-          if nronly then
-            count := count + 1;
-          else
-            Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
-          fi;
-          k := reject(k);
-          return bt(k);
-        fi;
-        k := k + 1;
-        extendg(k);
-        return bt(k);
-      fi;
-      k := reject(k);
-      return bt(k);
-    fi;
-
-    if k > n then
-      if partialcheckrow(k) then
-        if k = m then
-          if nronly then
-            count := count + 1;
-          else
-            Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
-          fi;
-          k := reject(k);
-          return bt(k);
-        fi;
-        k := k + 1;
-        extendf(k);
-        return bt(k);
-      fi;
-      k := reject(k);
-      return bt(k);
-    fi;
-
-    if partialcheckrow(k) then
-
-      if not IsBound(g[k]) then
-        extendg(k);
-        return bt(k);
-      fi;
-
-      if partialcheckcol(k) then
-        if k = m and k = n then
-          if nronly then
-            count := count + 1;
-          else
-            Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
-          fi;
-          k := reject(k);
-          return bt(k);
-        fi;
-
-        if k = m then
-          k := k + 1;
-          extendg(k);
-          return bt(k);
-        fi;
-
-        k := k + 1;
-        extendf(k);
-        return bt(k);
-      fi;
-
-      k := reject(k);
-      return bt(k);
-    fi;
-
-    k := reject(k);
-    return bt(k);
-  end;
-
-  for a in G do
-    k := 1;
-    f := [1];
-    g := [];
-    bt(k);
   od;
 
-  if nronly then
-    return count;
-  fi;
-
-  # careful with the order!
-  Apply(triples, x -> SEMIGROUPS.BitranslationOfNormalRMSByTripleNC(H,
-                                                 x![1],
-                                                 Transformation(x![3]),
-                                                 Transformation(x![2])));
-  return triples;
+  out := [];
+  for a in G do
+    b := AsPermutation(a) ^ inv;
+    for x in I do
+      d_inv := List(M, mu -> (mat[mu][x] * a) ^ -1);
+      for y in M do
+        c := List(I, i -> a * mat[y][i]);
+        for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
+                                                                    G,
+                                                                    mat,
+                                                                    mat_inv_rows,
+                                                                    c,
+                                                                    d_inv,
+                                                                    a,
+                                                                    x,
+                                                                    y) do
+          Add(out, Concatenation([b], func_pair));
+        od;
+      od;
+    od;
+  od;
+  return out;
 end;
 
 SEMIGROUPS.FamOfRMSLeftTranslationsByTriple := function()
