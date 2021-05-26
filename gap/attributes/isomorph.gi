@@ -332,7 +332,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsStrongSemilatticeOfSemigroups and a Clifford semigroup",
 [IsStrongSemilatticeOfSemigroups, IsSemigroup and IsFinite],
 function(filt, S)
-  local A, idemps, n, D, N, L, classes, idemp, DC, H, map, SSS, i, j;
+  local A, idemps, n, D, N, L, classes, idemp, DC, H, SSS, i, j, addfunc;
   # decomposes a finite Clifford semigroup S into a strong semilattice of
   # groups and returns an SSS object.
   if not (IsCliffordSemigroup(S) and IsFinite(S)) then
@@ -366,12 +366,13 @@ function(filt, S)
   for i in [1 .. n] do
     idemp := idemps[i];
     Add(H, []);
+    addfunc := function(x, a, b, c)  # horrible namespace hack (credits JDM)
+      Add(x, [a, b, z -> c * z]);
+    end;
     for j in N[i] do
-      map := function(elm)
-        return idemp * elm;
-      end;
-      Add(H[i], MappingByFunction(L[j], L[i], map));
+      addfunc(H[i], L[j], L[i], idemps[i]);
     od;
+    Apply(H[i], x -> MappingByFunction(x[1], x[2], x[3]));
   od;
 
   SSS := StrongSemilatticeOfSemigroups(D, L, H);
