@@ -1817,7 +1817,7 @@ function(S)
   TryNextMethod();
 end);
 
-InstallMethod(IsGroupAsSemigroup,"for a finitely presented semigroup",
+InstallMethod(IsGroupAsSemigroup, "for a finitely presented semigroup",
 [IsFpSemigroup],
 function(S)
   local rels, gens;
@@ -1837,10 +1837,10 @@ function(S)
 end);
 
 # Theoretically possible: need to return to
-#InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
-#[IsFpMonoid],
-#function(S)
-#end);
+# InstallMethod(IsGroupAsSemigroup, "for a finitely presented monoid",
+# [IsFpMonoid],
+# function(S)
+# end);
 
 InstallMethod(IsEmbeddableInGroup, "for a finitely presented semigroup",
 [IsFpSemigroup],
@@ -1882,7 +1882,8 @@ function(S)
   TryNextMethod();
 end);
 
-InstallMethod(IsCancellativeSemigroup, "for a finitely presented one relator semigroup",
+InstallMethod(IsCancellativeSemigroup,
+"for a finitely presented one relator semigroup",
 [IsFpSemigroup],
 function(S)
   local rels, gens;
@@ -1899,7 +1900,8 @@ function(S)
   fi;
 end);
 
-InstallMethod(IsCancellativeSemigroup, "for a finitely presented one relator monoid",
+InstallMethod(IsCancellativeSemigroup,
+"for a finitely presented one relator monoid",
 [IsFpMonoid],
 function(S)
   local rels, gens, extRel, F, T, newRels;
@@ -1938,10 +1940,11 @@ function(S)
   TryNextMethod();
 end);
 
-InstallMethod(IsProperDirectProductOfSemigroups, "for a finitely presented one relator semigroup",
+InstallMethod(IsProperDirectProductOfSemigroups,
+"for a finitely presented one relator semigroup",
 [IsFpSemigroup],
 function(S)
-  local rels, extRels, order;
+  local rels, order;
   rels := RelationsOfFpSemigroup(S);
   if Length(rels) = 1 then
     if IsSurjectiveSemigroup(S) then
@@ -1956,7 +1959,8 @@ function(S)
   fi;
 end);
 
-InstallMethod(IsProperFreeProductOfSemigroups, "for a finitely presented one relator semigroup",
+InstallMethod(IsProperFreeProductOfSemigroups,
+"for a finitely presented one relator semigroup",
 [IsFpSemigroup],
 function(S)
   local rels, gens, rel1, rel2, repGens, temp;
@@ -1976,8 +1980,8 @@ function(S)
       return true;
     fi;
     if Length(gens) > 2 and
-      ForAll(Unique(rel2),
-      rel -> rel in Difference(repGens, Unique(rel1))) then
+        ForAll(Unique(rel2),
+        rel -> rel in Difference(repGens, Unique(rel1))) then
       return true;
     fi;
     if rels[1] = rels[2] and Length(gens) > 1 then
@@ -2005,7 +2009,7 @@ function(S)
     extRel2 := LetterRepAssocWord(rels[2]);
     return IsGroupAsSemigroup(S) or (not IsLeftCancellative(S) and not
             IsRightCancellative(S) and ForAll([1 .. Length(extRel1)],
-            x -> extRel1[x] = extRel2[x] and 
+            x -> extRel1[x] = extRel2[x] and
             extRel1[x] = extRel2[Length(extRel2) - Length(extRel1) + x - 1]));
   fi;
   TryNextMethod();

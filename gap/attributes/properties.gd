@@ -117,10 +117,10 @@ DeclareProperty("IsRightCancellative", IsSemigroup);
 DeclareProperty("IsBisimpleSemigroup", IsSemigroup);
 DeclareProperty("IsProperFreeProductOfSemigroups", IsSemigroup);
 DeclareProperty("IsProperDirectProductOfSemigroups", IsSemigroup);
-#DeclareProperty("HasIdempotents", IsSemigroup);
+# DeclareProperty("HasIdempotents", IsSemigroup);
 DeclareProperty("IsSemigroupWithMultiplicativeZero", IsSemigroup);
 DeclareProperty("IsMinRSemigroup", IsSemigroup);
-#DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
+# DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
 DeclareProperty("IsSemigroupWithIdempotents", IsSemigroup);
 InstallTrueMethod(IsBisimpleSemigroup,
                   IsFpSemigroup and SEMIGROUPS_IsOneRelationSemigroup and
