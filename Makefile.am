@@ -15,8 +15,6 @@ if WITH_INCLUDED_LIBSEMIGROUPS
 endif
 
 AM_CPPFLAGS = @LIBSEMIGROUPS_CFLAGS@
-# TODO(now) figure out how to do this properly
-AM_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
 
 BINARCHDIR = bin/$(GAPARCH)
 GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
