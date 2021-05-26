@@ -31,27 +31,6 @@ InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 
 InstallImmediateMethod(IsFinite, IsFreeInverseSemigroup, 0, ReturnFalse);
 
-# This method only exists for the iter.IsDoneIterator := ReturnFalse; part.
-InstallMethod(IteratorCanonical,
-"for a free inverse semigroup category",
-[IsFreeInverseSemigroupCategory],
-function(S)
-  local iter;
-  iter        := rec();
-  iter.pos    := 0;
-  iter.parent := S;
-
-  # TODO(now) what to do abou this??
-  iter.NextIterator   := ReturnFail;  # EN_SEMI_NEXT_ITERATOR;
-  iter.IsDoneIterator := ReturnFalse;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0, parent := S);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
 ############################################################################
 ##
 ## FreeInverseSemigroup( <rank>[, names] )
