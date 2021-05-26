@@ -11,7 +11,7 @@ dnl ##
 AC_PREREQ([2.68])
 AC_INIT([semigroups], m4_esyscmd([tr -d '\n' < .VERSION]))
 AC_CONFIG_SRCDIR([src/pkg.cpp])
-AC_CONFIG_HEADER([src/_pkgconfig.h:cnf/pkgconfig.h.in])
+AC_CONFIG_HEADERS([src/_pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([cnf])
 
@@ -19,6 +19,7 @@ dnl ##
 dnl ## Get canonical host info
 dnl ##
 AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
 
 dnl ##
 dnl ## Setup automake
