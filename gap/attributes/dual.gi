@@ -123,8 +123,7 @@ function(s)
   return SEMIGROUPS.DualSemigroupElementNC(S, OneMutable(x));
 end);
 
-# TODO(now): remove Other
-InstallOtherMethod(MultiplicativeNeutralElement, "for a dual semigroup",
+InstallMethod(MultiplicativeNeutralElement, "for a dual semigroup",
 [IsDualSemigroupRep],
 10,  # add rank to beat enumeration methods
 function(S)
