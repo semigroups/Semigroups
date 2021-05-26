@@ -385,9 +385,32 @@ gap> G := AutomorphismGroup(S);
 gap> StructureDescription(G);
 "S3"
 
+# IsomorphismSemigroup for Clifford semigroups to strong semilattices
+gap> S := DualSymmetricInverseMonoid(5);;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> map := IsomorphismSemigroup(IsStrongSemilatticeOfSemigroups, T);;
+gap> S := Range(map);;
+gap> S;
+<strong semilattice of 52 semigroups>
+gap> IsStrongSemilatticeOfSemigroups(S);
+true
+gap> failed := [];;
+gap> for x in T do
+>      if x <> (x ^ map)![3] then
+>        Add(failed, x);;
+>      fi;
+>    od;
+gap> failed;
+[  ]
+gap> IsomorphismSemigroups(S, T) <> fail;
+true
+gap> SemilatticeOfStrongSemilatticeOfSemigroups(S);
+<immutable meet semilattice digraph with 52 vertices, 358 edges>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
+gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
