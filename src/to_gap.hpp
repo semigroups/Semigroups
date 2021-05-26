@@ -79,20 +79,20 @@ namespace gapbind14 {
   // Constants
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_gap<T, std::enable_if_t<std::is_same<T, PositiveInfinity>::value>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_gap<PositiveInfinity> {
+    using cpp_type                          = PositiveInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    Obj operator()(T const x) {
+    Obj operator()(PositiveInfinity const x) {
       return Pinfinity;
     }
   };
 
-  template <typename T>
-  struct to_gap<T, std::enable_if_t<std::is_same<T, NegativeInfinity>::value>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_gap<NegativeInfinity> {
+    using cpp_type                          = NegativeInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    Obj operator()(T const x) {
+    Obj operator()(NegativeInfinity const x) {
       return Ninfinity;
     }
   };
@@ -101,12 +101,12 @@ namespace gapbind14 {
   // BMat <-> IsBooleanMat
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_gap<T const&, std::enable_if_t<IsBMat<T>>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_gap<libsemigroups::BMat<> const&> {
+    using cpp_type                          = libsemigroups::BMat<>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    Obj operator()(T const& x) {
+    Obj operator()(libsemigroups::BMat<> const& x) {
       size_t n = x.number_of_rows();
       Obj    o = NEW_PLIST(T_PLIST_TAB_RECT, n);
       SET_LEN_PLIST(o, n);
@@ -134,7 +134,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
   // IntMat + MaxPlusMat + MinPlusMat
   ////////////////////////////////////////////////////////////////////////
-
+  // TODO(now) remove T and split into multiple
   template <typename T>
   struct to_gap<T const&,
                 std::enable_if_t<IsMatrix<T> && !IsBMat<T> && !IsNTPMat<T>>> {
@@ -201,13 +201,13 @@ namespace gapbind14 {
     }
   };
 
-  template <typename T>
-  struct to_gap<T const&, std::enable_if_t<IsNTPMat<T>>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_gap<libsemigroups::NTPMat<> const&> {
+    using cpp_type                          = libsemigroups::NTPMat<>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    Obj operator()(T const& x) {
-      using scalar_type = typename T::scalar_type;
+    Obj operator()(libsemigroups::NTPMat<> const& x) {
+      using scalar_type = typename libsemigroups::NTPMat<>::scalar_type;
       using libsemigroups::matrix_period;
       using libsemigroups::matrix_threshold;
 
@@ -311,6 +311,7 @@ namespace gapbind14 {
     }
   }  // namespace detail
 
+  // TODO(now) remove T, just do one for PPerm and one for PPerm16
   template <typename T>
   struct to_gap<
       T,
@@ -357,8 +358,8 @@ namespace gapbind14 {
   // Bipartition
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_gap<T, std::enable_if_t<IsBipartition<std::decay_t<T>>>> {
+  template <>
+  struct to_gap<Bipartition const&> {
     Obj operator()(Bipartition const& x) const {
       return bipart_new_obj(new Bipartition(x));
     }
@@ -368,9 +369,8 @@ namespace gapbind14 {
   // PBR
   ////////////////////////////////////////////////////////////////////////
 
-  // TODO(now) this is overcomplicated, we can just use to_gap<PBR, no?
-  template <typename T>
-  struct to_gap<T, std::enable_if_t<libsemigroups::IsPBR<std::decay_t<T>>>> {
+  template <>
+  struct to_gap<libsemigroups::PBR const&> {
     Obj operator()(libsemigroups::PBR const& x) const {
       Obj result = NEW_PLIST(T_PLIST, 2 * x.degree() + 1);
       // can't use T_PLIST_TAB/HOM here because some of the subplists might be
@@ -390,7 +390,8 @@ namespace gapbind14 {
 
     static Obj get_gap_type(size_t N) {
       N++;
-      if (N > (size_t) LEN_PLIST(TYPES_PBR) || ELM_PLIST(TYPES_PBR, N) == 0) {
+      if (N > static_cast<size_t>(LEN_PLIST(TYPES_PBR))
+          || ELM_PLIST(TYPES_PBR, N) == 0) {
         CALL_1ARGS(TYPE_PBR, INTOBJ_INT(N - 1));
       }
       return ELM_PLIST(TYPES_PBR, N);
@@ -402,9 +403,11 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
-  struct to_gap<T, std::enable_if_t<libsemigroups::IsDynamicArray2<T>>> {
-    Obj operator()(std::decay_t<T> const& da) {
-      Obj result = NEW_PLIST(T_PLIST_TAB_RECT, da.number_of_rows());
+  struct to_gap<libsemigroups::detail::DynamicArray2<T> const&> {
+    using DynamicArray2_ = libsemigroups::detail::DynamicArray2<T>;
+    Obj operator()(DynamicArray2_ const& da) {
+      using value_type = typename DynamicArray2_::value_type;
+      Obj result       = NEW_PLIST(T_PLIST_TAB_RECT, da.number_of_rows());
       // this is intentionally not IMMUTABLE
       SET_LEN_PLIST(result, da.number_of_rows());
 
@@ -413,10 +416,7 @@ namespace gapbind14 {
         // this is intentionally not IMMUTABLE
         SET_LEN_PLIST(next, da.number_of_cols());
         for (size_t j = 0; j < da.number_of_cols(); ++j) {
-          SET_ELM_PLIST(
-              next,
-              j + 1,
-              to_gap<typename std::decay_t<T>::value_type>()(da.get(i, j)));
+          SET_ELM_PLIST(next, j + 1, to_gap<value_type>()(da.get(i, j)));
         }
         SET_ELM_PLIST(result, i + 1, next);
         CHANGED_BAG(result);
