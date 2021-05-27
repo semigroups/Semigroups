@@ -28,6 +28,7 @@
 #include "gapbind14/gapbind14.hpp"  // for Module etc
 
 // libsemigroups headers
+#include "libsemigroups/bmat8.hpp"         // for BMat8
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
 
 namespace gapbind14 {
@@ -91,5 +92,57 @@ void bind_froidure_pin(gapbind14::Module& m, std::string name) {
                                         S.cend_idempotents());
       });
 }
+
+namespace semigroups {
+  using WBMat8 = std::pair<libsemigroups::BMat8, uint8_t>;
+}
+
+namespace libsemigroups {
+  using semigroups::WBMat8;
+
+  template <>
+  struct Complexity<WBMat8> {
+    constexpr inline size_t operator()(WBMat8 const& x) const noexcept {
+      return Complexity<BMat8>()(x.first);
+    }
+  };
+
+  template <>
+  struct Degree<WBMat8> {
+    size_t operator()(WBMat8 const& x) const noexcept {
+      return x.second;
+    }
+  };
+
+  template <>
+  struct One<WBMat8> {
+    WBMat8 operator()(WBMat8 const& x) const noexcept {
+      return std::make_pair(One<BMat8>()(x.first), x.second);
+    }
+  };
+
+  template <>
+  struct Product<WBMat8> {
+    void operator()(WBMat8&       xy,
+                    WBMat8 const& x,
+                    WBMat8 const& y,
+                    size_t = 0) const noexcept {
+      return Product<BMat8>()(xy.first, x.first, y.first);
+    }
+  };
+
+  template <>
+  struct Hash<WBMat8> {
+    size_t operator()(WBMat8 const& x) {
+      return Hash<BMat8>()(x.first);
+    }
+  };
+
+  template <>
+  struct IncreaseDegree<WBMat8> {
+    inline void operator()(WBMat8 const&) const noexcept {}
+  };
+
+}  // namespace libsemigroups
 
 #endif  // SEMIGROUPS_SRC_FROIDURE_PIN_HPP_

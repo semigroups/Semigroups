@@ -22,6 +22,8 @@
 #include "to_gap.hpp"        // for to_gap
 
 // libsemigroups headers
+#include "libsemigroups/adapters.hpp"      // for Product etc
+#include "libsemigroups/bmat8.hpp"         // for BMat8
 #include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
 #include "libsemigroups/matrix.hpp"        // for BMat
 
@@ -32,6 +34,7 @@ namespace gapbind14 {
 
 void init_froidure_pin_bmat(gapbind14::Module& m) {
   using libsemigroups::BMat;
+  using semigroups::WBMat8;
   bind_froidure_pin<BMat<>>(m, "FroidurePinBMat");
-  // TODO must implement to_gap/to_cpp for BMat8 + HPCombi::BMat8
+  bind_froidure_pin<WBMat8>(m, "FroidurePinBMat8");
 }

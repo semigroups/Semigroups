@@ -97,6 +97,8 @@ void init_cong(gapbind14::Module& m) {
            "make_from_froidurepin_bipartition")
       .def(gapbind14::init<congruence_kind, FroidurePin<BMat<>> const&>{},
            "make_from_froidurepin_bmat")
+      .def(gapbind14::init<congruence_kind, FroidurePin<WBMat8> const&>{},
+           "make_from_froidurepin_bmat8")
       .def(gapbind14::init<congruence_kind, FroidurePin<PBR> const&>{},
            "make_from_froidurepin_pbr")
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED

@@ -74,9 +74,17 @@ function(S)
   fi;
 end);
 
-# TODO(now) use BMat8
 InstallMethod(FroidurePinMemFnRec, "for a boolean matrix semigroup",
-[IsBooleanMatSemigroup], S -> libsemigroups.FroidurePinBMat);
+[IsBooleanMatSemigroup],
+function(S)
+  local N;
+  N := DimensionOfMatrixOverSemiring(Representative(S));
+  if N <= 8 then
+    return libsemigroups.FroidurePinBMat8;
+  else 
+    return libsemigroups.FroidurePinBMat;
+  fi;
+end);
 
 InstallMethod(FroidurePinMemFnRec, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> libsemigroups.FroidurePinBipart);

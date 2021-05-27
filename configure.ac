@@ -32,7 +32,6 @@ AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[],[src/_pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
 dnl ## libsemigroups which is why this contains ../ 
-dnl ## FIXME figure out how to do this properly
 AC_PREFIX_DEFAULT('${abs_top_builddir}/../bin/')
 
 dnl ##

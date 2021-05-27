@@ -36,6 +36,7 @@
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_new_obj
+#include "froidure-pin.hpp"      // for WBMat8
 #include "pkg.hpp"               // for TYPES_PBR etc
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
@@ -45,6 +46,7 @@
 // libsemigroups headers
 #include "libsemigroups/adapters.hpp"   // for Degree
 #include "libsemigroups/bipart.hpp"     // for Bipartition, IsBipartition
+#include "libsemigroups/bmat8.hpp"      // for BMat8
 #include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
 #include "libsemigroups/matrix.hpp"     // for matrix_threshold etc
@@ -108,9 +110,6 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<PositiveInfinity> {
-    using cpp_type                          = PositiveInfinity;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
     template <typename T>
     Obj operator()(T const& x) {
       return Pinfinity;
@@ -119,9 +118,6 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<NegativeInfinity> {
-    using cpp_type                          = NegativeInfinity;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
     template <typename T>
     Obj operator()(T const& x) {
       return Ninfinity;
@@ -134,9 +130,6 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::BMat<> const&> {
-    using cpp_type                          = libsemigroups::BMat<>;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
     Obj operator()(libsemigroups::BMat<> const& x) {
       size_t n = x.number_of_rows();
       Obj    o = NEW_PLIST(T_PLIST_TAB_RECT, n);
@@ -162,16 +155,40 @@ namespace gapbind14 {
     }
   };
 
+  template <>
+  struct to_gap<semigroups::WBMat8 const&> {
+    Obj operator()(semigroups::WBMat8 const& x) {
+      size_t n = x.second;
+      Obj    o = NEW_PLIST(T_PLIST_TAB_RECT, n);
+      SET_LEN_PLIST(o, n);
+
+      for (size_t i = 0; i < n; i++) {
+        Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
+        SET_LEN_BLIST(blist, n);
+        for (size_t j = 0; j < n; j++) {
+          if (x.first.get(i, j)) {
+            SET_BIT_BLIST(blist, j + 1);
+          }
+        }
+        MakeImmutable(blist);
+        SET_ELM_PLIST(o, i + 1, blist);
+        CHANGED_BAG(o);
+      }
+
+      SET_TYPE_POSOBJ(o, BooleanMatType);
+      RetypeBag(o, T_POSOBJ);
+      CHANGED_BAG(o);
+      return o;
+    }
+  };
+
   ////////////////////////////////////////////////////////////////////////
   // MaxPlusMat<> -> MaxPlusMatrix
   ////////////////////////////////////////////////////////////////////////
 
   template <>
   struct to_gap<libsemigroups::MaxPlusMat<> const&> {
-    using MaxPlusMat_                       = libsemigroups::MaxPlusMat<>;
-    using cpp_type                          = MaxPlusMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
+    using MaxPlusMat_ = libsemigroups::MaxPlusMat<>;
     Obj operator()(MaxPlusMat_ const& x) {
       using scalar_type = typename MaxPlusMat_::scalar_type;
 
@@ -189,10 +206,7 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::MinPlusMat<> const&> {
-    using MinPlusMat_                       = libsemigroups::MinPlusMat<>;
-    using cpp_type                          = MinPlusMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
+    using MinPlusMat_ = libsemigroups::MinPlusMat<>;
     Obj operator()(MinPlusMat_ const& x) {
       using scalar_type = typename MinPlusMat_::scalar_type;
 
@@ -210,13 +224,8 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::IntMat<> const&> {
-    using IntMat_                           = libsemigroups::IntMat<>;
-    using cpp_type                          = IntMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
+    using IntMat_ = libsemigroups::IntMat<>;
     Obj operator()(IntMat_ const& x) {
-      using scalar_type = typename IntMat_::scalar_type;
-
       return detail::make_matrix(x, IntegerMatrixType, 0);
     }
   };
@@ -227,10 +236,7 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::MaxPlusTruncMat<> const&> {
-    using MaxPlusTruncMat_                  = libsemigroups::MaxPlusTruncMat<>;
-    using cpp_type                          = MaxPlusTruncMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-
+    using MaxPlusTruncMat_ = libsemigroups::MaxPlusTruncMat<>;
     Obj operator()(MaxPlusTruncMat_ const& x) {
       using libsemigroups::matrix_threshold;
       using scalar_type = typename MaxPlusTruncMat_::scalar_type;
@@ -254,9 +260,7 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::MinPlusTruncMat<> const&> {
-    using MinPlusTruncMat_                  = libsemigroups::MinPlusTruncMat<>;
-    using cpp_type                          = MinPlusTruncMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+    using MinPlusTruncMat_ = libsemigroups::MinPlusTruncMat<>;
 
     Obj operator()(MinPlusTruncMat_ const& x) {
       using libsemigroups::matrix_threshold;
@@ -281,9 +285,7 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::ProjMaxPlusMat<> const&> {
-    using ProjMaxPlusMat_                   = libsemigroups::ProjMaxPlusMat<>;
-    using cpp_type                          = ProjMaxPlusMat_;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+    using ProjMaxPlusMat_ = libsemigroups::ProjMaxPlusMat<>;
 
     Obj operator()(ProjMaxPlusMat_ const& x) {
       using scalar_type = typename ProjMaxPlusMat_::scalar_type;
@@ -302,8 +304,7 @@ namespace gapbind14 {
 
   template <>
   struct to_gap<libsemigroups::NTPMat<> const&> {
-    using NTPMat_                           = libsemigroups::NTPMat<>;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+    using NTPMat_ = libsemigroups::NTPMat<>;
 
     Obj operator()(NTPMat_ const& x) {
       using scalar_type = typename NTPMat_::scalar_type;
@@ -378,77 +379,75 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
+    template <typename T>
+    static inline Obj NEW_PPERM(T);
+
+    template <>
+    inline Obj NEW_PPERM(UInt2 N) {
+      return NEW_PPERM2(N);
+    }
+
+    template <>
+    inline Obj NEW_PPERM(UInt4 N) {
+      return NEW_PPERM4(N);
+    }
+
     // Initialise the GAP partial perm "t" using the C++ partial perm "x".
-    template <typename T, typename S>
-    void make_pperm(S const& x, Obj t, size_t const N) {
+    template <typename S, typename T>
+    Obj make_pperm(T const& x, S undef) {
       static_assert(
-          std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
+          std::is_same<S, UInt2>::value || std::is_same<S, UInt4>::value,
           "the template parameter T must be the same as UInt2 or UInt4");
-      SEMIGROUPS_ASSERT(IS_PPERM(t));
-      SEMIGROUPS_ASSERT(DEG_PPERM(t) == N);
-      SEMIGROUPS_ASSERT(N <= libsemigroups::Degree<S>()(x));
+      static_assert(
+          IsPPerm<T>
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+              || std::is_same<T, HPCombi::PPerm16>::value
+#endif
+          ,
+          "the template parameter T must be the same as PPerm<> or PPerm16");
 
-      T* ptr = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(t)) + 2) + 1;
-      T  undef;
-
-      if (IsPPerm<S>) {
-        undef = UNDEFINED;
-      } else {
-        undef = 0xFF;
+      auto N = libsemigroups::Degree<T>()(x);
+      // remove trailing 0s
+      while (N > 0 && x[N - 1] == undef) {
+        N--;
       }
 
-      for (T i = 0; i < N; i++) {
+      Obj result = NEW_PPERM<S>(N);
+      S*  ptr
+          = reinterpret_cast<S*>(static_cast<Obj*>(ADDR_OBJ(result)) + 2) + 1;
+      for (S i = 0; i < N; i++) {
         if (x[i] == undef) {
           ptr[i] = 0;
         } else {
           ptr[i] = x[i] + 1;
         }
       }
+      return result;
     }
   }  // namespace detail
 
-  // TODO(now) remove T, just do one for PPerm and one for PPerm16
-  template <typename T>
-  struct to_gap<
-      T,
-      std::enable_if_t<IsPPerm<std::decay_t<T>>
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-                       || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
-#endif
-                       >> {
-    using cpp_type = std::decay_t<T>;
-
-    Obj operator()(T const& x) {
-      auto N = libsemigroups::Degree<cpp_type>()(x);
-
-      // remove trailing 0s
-      while (N > 0 && x[N - 1] == UNDEFINED) {
-        N--;
-      }
-
-      Obj result = NEW_PPERM(N);
-      if (N < 65536) {
-        detail::to_gap_pperm<UInt2>(x, result, N);
-      } else if (N < std::numeric_limits<UInt4>::max()) {
-        detail::to_gap_pperm<UInt4>(x, result, N);
-      } else {
-        // in case of future changes to transformations in GAP
-        ErrorQuit("partial perm degree too high!", 0L, 0L);
-      }
-      CHANGED_BAG(result);
-      return result;
-    }
-
-    // FIXME this isn't right it depends on the codegree only and not the
-    // degree
-    static inline Obj NEW_PPERM(size_t deg) {
-      if (deg < 65536) {
-        return NEW_PPERM2(deg);
-      } else {
-        return NEW_PPERM4(deg);
-      }
+  template <>
+  struct to_gap<libsemigroups::PPerm<0, UInt2> const&> {
+    Obj operator()(libsemigroups::PPerm<0, UInt2> const& x) {
+      return detail::make_pperm<UInt2>(x, UNDEFINED);
     }
   };
+
+  template <>
+  struct to_gap<libsemigroups::PPerm<0, UInt4> const&> {
+    Obj operator()(libsemigroups::PPerm<0, UInt4> const& x) {
+      return detail::make_pperm<UInt4>(x, UNDEFINED);
+    }
+  };
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  template <>
+  struct to_gap<HPCombi::PPerm16 const&> {
+    Obj operator()(HPCombi::PPerm16 const& x) {
+      return detail::make_pperm<UInt2>(x, 0xFF);
+    }
+  };
+#endif
 
   ////////////////////////////////////////////////////////////////////////
   // Bipartition

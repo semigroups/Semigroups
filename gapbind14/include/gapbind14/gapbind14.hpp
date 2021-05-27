@@ -356,8 +356,7 @@ namespace gapbind14 {
                   Obj (*func)(TArgs...)) {
       static_assert(sizeof...(TArgs) > 0,
                     "there must be at least 1 parameter: Obj self");
-      // TODO(now) -> GAPBIND14_ASSERT -> static_assert
-      GAPBIND14_ASSERT(sizeof...(TArgs) <= 7);
+      static_assert(sizeof...(TArgs) <= 7, "TArgs must be at most 7");
       _funcs.push_back({copy_c_str(nm),
                         sizeof...(TArgs) - 1,
                         params(sizeof...(TArgs) - 1),
@@ -372,8 +371,7 @@ namespace gapbind14 {
                       Obj (*func)(TArgs...)) {
       static_assert(sizeof...(TArgs) > 1,
                     "there must be at least 1 parameter: Obj self, Obj arg1");
-      // TODO(now) -> GAPBIND14_ASSERT -> static_assert
-      GAPBIND14_ASSERT(sizeof...(TArgs) <= 7);
+      static_assert(sizeof...(TArgs) <= 7, "TArgs must be at most 7");
       _mem_funcs.at(subtype(sbtyp))
           .push_back({copy_c_str(nm),
                       sizeof...(TArgs) - 1,
