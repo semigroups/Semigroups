@@ -44,7 +44,6 @@ BindGlobal("_SemigroupCongruenceByGeneratingPairs",
 function(S, pairs, filt, SetGeneratingPairs)
   local fam, C, pair;
 
-  # TODO(now): more informative error message
   for pair in pairs do
     if not IsList(pair) or Length(pair) <> 2 then
       Error("the 2nd argument <pairs> must consist of lists of ",

@@ -182,39 +182,39 @@ InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
 [IsEquivalenceRelation],
 x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(CongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], EquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(LeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], EquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(RightCongruenceClasses, "for a right semigroup congruence",
 [IsRightSemigroupCongruence], EquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NrCongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], NrEquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NrLeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], NrEquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NrRightCongruenceClasses, "for a right semigroup congruence",
 [IsRightSemigroupCongruence], NrEquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NonTrivialCongruenceClasses, "for a semigroup congruence",
 [IsSemigroupCongruence], NonTrivialEquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NonTrivialLeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], NonTrivialEquivalenceClasses);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(NonTrivialRightCongruenceClasses,
 "for a right semigroup congruence", [IsRightSemigroupCongruence],
 NonTrivialEquivalenceClasses);
@@ -360,9 +360,16 @@ function(c1, c2)
          and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
 end);
 
-# TODO(now) IsSuperrelation for left/right congruences
-InstallMethod(IsSuperrelation, "for two semigroup congruences",
+InstallMethod(IsSuperrelation, "for semigroup congruences",
 [IsSemigroupCongruence, IsSemigroupCongruence],
+{C1, C2} -> IsSubrelation(C2, C1));
+
+InstallMethod(IsSuperrelation, "for left semigroup congruences",
+[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
+{C1, C2} -> IsSubrelation(C2, C1));
+
+InstallMethod(IsSuperrelation, "for right semigroup congruences",
+[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
 {C1, C2} -> IsSubrelation(C2, C1));
 
 ########################################################################
@@ -412,19 +419,19 @@ C -> _ViewCongObj("left ", C));
 InstallMethod(ViewObj, "for a right congruence class",
 [IsRightCongruenceClass], C -> _ViewCongObj("right ", C));
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(CongruenceClassOfElement,
 "for a semigroup congruence and multiplicative element",
 [IsSemigroupCongruence, IsMultiplicativeElement],
 EquivalenceClassOfElement);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(LeftCongruenceClassOfElement,
 "for a left semigroup congruence and multiplicative element",
 [IsLeftSemigroupCongruence, IsMultiplicativeElement],
 EquivalenceClassOfElement);
 
-# TODO(now) delete
+# TODO(later) delete
 InstallMethod(RightCongruenceClassOfElement,
 "for a right semigroup congruence and multiplicative element",
 [IsRightSemigroupCongruence, IsMultiplicativeElement],

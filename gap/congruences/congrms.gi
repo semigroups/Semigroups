@@ -768,8 +768,8 @@ function(c1, c2)
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
   n := Subgroup(UnderlyingSemigroup(Range(c1)), gens);
   # Calculate the join of the column and row relations
-  colBlocks := StructuralCopy(c1!.colBlocks);
-  rowBlocks := StructuralCopy(c1!.rowBlocks);
+  colBlocks := List(c1!.colBlocks, ShallowCopy);
+  rowBlocks := List(c1!.rowBlocks, ShallowCopy);
   for block in c2!.colBlocks do
     b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
     for j in [2 .. Size(block)] do
@@ -812,8 +812,8 @@ function(c1, c2)
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
   n := Subgroup(UnderlyingSemigroup(Range(c1)), gens);
   # Calculate the join of the column and row relations
-  colBlocks := StructuralCopy(c1!.colBlocks);
-  rowBlocks := StructuralCopy(c1!.rowBlocks);
+  colBlocks := List(c1!.colBlocks, ShallowCopy);
+  rowBlocks := List(c1!.rowBlocks, ShallowCopy);
   for block in c2!.colBlocks do
     b1 := PositionProperty(colBlocks, cb -> block[1] in cb);
     for j in [2 .. Size(block)] do
@@ -1462,8 +1462,7 @@ InstallMethod(AsRZMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local pairs, S, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
-        j, normalise, colBlocks, rowBlocks;
+  local pairs, S, g, mat, colLookup, rowLookup, n, u, i, pair, v, j;
 
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
@@ -1475,30 +1474,12 @@ function(cong)
   g := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
-  # Lookup tables for the column and row equivalences
-  colLookup := [1 .. Size(mat[1])];
-  rowLookup := [1 .. Size(mat)];
+  # Union-Find data structure for the column and row equivalences
+  colLookup := PartitionDS(IsPartitionDS, Size(mat[1]));
+  rowLookup := PartitionDS(IsPartitionDS, Size(mat));
 
   # Normal subgroup
   n := Subgroup(g, []);
-
-  # Functions for union-find
-  find := function(table, n)
-    while table[n] <> n do
-      n := table[n];
-    od;
-    return n;
-  end;
-
-  union := function(table, x, y)
-    x := find(table, x);
-    y := find(table, y);
-    if x < y then
-      table[y] := x;
-    elif y < x then
-      table[x] := y;
-    fi;
-  end;
 
   for pair in pairs do
     # If this pair adds no information, ignore it
@@ -1518,10 +1499,9 @@ function(cong)
       return UniversalSemigroupCongruence(S);
     fi;
 
-    # TODO(now) use UF from datastructures
     # Associate the columns and rows
-    union(colLookup, pair[1][1], pair[2][1]);
-    union(rowLookup, pair[1][3], pair[2][3]);
+    Unite(colLookup, pair[1][1], pair[2][1]);
+    Unite(rowLookup, pair[1][3], pair[2][3]);
 
     # Associate group entries in the normal subgroup
     n := ClosureGroup(n, LinkedElement(pair[1]) * LinkedElement(pair[2]) ^ -1);
@@ -1549,40 +1529,11 @@ function(cong)
     od;
   od;
 
-  # Normalise lookup tables
-  normalise := function(table)
-    local ht, next, newtab, i, ii;
-    ht := HTCreate(1);
-    next := 1;
-    newtab := [];
-    for i in [1 .. Size(table)] do
-      ii := find(table, i);
-      newtab[i] := HTValue(ht, ii);
-      if newtab[i] = fail then
-        newtab[i] := next;
-        HTAdd(ht, ii, next);
-        next := next + 1;
-      fi;
-    od;
-    return newtab;
-  end;
-  colLookup := normalise(colLookup);
-  rowLookup := normalise(rowLookup);
-
-  # Make blocks
-  colBlocks := List([1 .. Maximum(colLookup)], x -> []);
-  rowBlocks := List([1 .. Maximum(rowLookup)], x -> []);
-  for i in [1 .. Size(colLookup)] do
-    Add(colBlocks[colLookup[i]], i);
-  od;
-  for u in [1 .. Size(rowLookup)] do
-    Add(rowBlocks[rowLookup[u]], u);
-  od;
-
-  # Make n normal
   n := NormalClosure(g, n);
-
-  cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
+  cong := RZMSCongruenceByLinkedTriple(S,
+                                       n,
+                                       PartsOfPartitionDS(colLookup),
+                                       PartsOfPartitionDS(rowLookup));
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
