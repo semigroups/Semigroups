@@ -37,6 +37,7 @@
 
 // Semigroups package headers
 #include "bipart.hpp"            // for bipart_get_cpp
+#include "froidure-pin.hpp"      // for WBMat8
 #include "pkg.hpp"               // for IsInfinity etc
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
@@ -46,6 +47,7 @@
 // libsemigroups headers
 #include "libsemigroups/adapters.hpp"   // for Degree
 #include "libsemigroups/bipart.hpp"     // for Bipartition
+#include "libsemigroups/bmat8.hpp"      // for BMat8
 #include "libsemigroups/cong-intf.hpp"  // for congruence_kind
 #include "libsemigroups/cong.hpp"       // for Congruence
 #include "libsemigroups/constants.hpp"  // for constants
@@ -63,6 +65,9 @@ using libsemigroups::IsMinPlusMat;
 using libsemigroups::IsMinPlusTruncMat;
 using libsemigroups::IsNTPMat;
 using libsemigroups::IsProjMaxPlusMat;
+
+using libsemigroups::BMat8;
+using semigroups::WBMat8;
 
 using libsemigroups::Bipartition;
 using libsemigroups::MaxPlusTruncSemiring;
@@ -128,8 +133,6 @@ namespace gapbind14 {
   // BMat <-> IsBooleanMat
   ////////////////////////////////////////////////////////////////////////
 
-  // TODO(now) everything in this file needs to be replaced with the analogue
-  // of to_cpp<BMat const&>.
   template <typename T>
   struct to_cpp<T, std::enable_if_t<IsBMat<std::decay_t<T>>>> {
     using cpp_type                          = std::decay_t<T>;
@@ -160,6 +163,41 @@ namespace gapbind14 {
       }
       GAPBIND14_TRY(libsemigroups::validate(x));
       return x;
+    }
+  };
+
+  template <typename T>
+  struct to_cpp<
+      T,
+      std::enable_if_t<std::is_same<WBMat8, std::decay_t<T>>::value>> {
+    WBMat8 operator()(Obj o) {
+      if (CALL_1ARGS(IsBooleanMat, o) != True) {
+        ErrorQuit("expected boolean matrix but got %s!", (Int) TNAM_OBJ(o), 0L);
+      }
+      // else if (LEN_LIST(o) > 8) {
+      //  ErrorQuit("expected boolean matrix of dimension at most 8 got %s!",
+      //            (Int) LEN_LIST(o),
+      //            0L);
+      // }
+      SEMIGROUPS_ASSERT(LEN_PLIST(o) > 0);
+
+      Obj row = ELM_PLIST(o, 1);
+      SEMIGROUPS_ASSERT(IS_PLIST(row) || IS_BLIST_REP(row));
+      size_t m = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
+      BMat8  x(0);
+
+      for (size_t i = 0; i < m; i++) {
+        row = ELM_PLIST(o, i + 1);
+        if (!IS_BLIST_REP(row)) {
+          ConvBlist(row);
+        }
+        for (size_t j = 0; j < m; j++) {
+          if (ELM_BLIST(row, j + 1) == True) {
+            x.set(i, j, 1);
+          }
+        }
+      }
+      return std::make_pair(x, m);
     }
   };
 
