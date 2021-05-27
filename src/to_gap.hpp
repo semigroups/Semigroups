@@ -70,11 +70,38 @@ using libsemigroups::IsBipartition;
 using libsemigroups::IsPPerm;
 using libsemigroups::IsTransf;
 
+using libsemigroups::NEGATIVE_INFINITY;
 using libsemigroups::NegativeInfinity;
+using libsemigroups::POSITIVE_INFINITY;
 using libsemigroups::PositiveInfinity;
 using libsemigroups::UNDEFINED;
 
 namespace gapbind14 {
+
+  namespace detail {
+    template <typename T, typename F = to_gap<typename T::scalar_type>>
+    Obj
+    make_matrix(T const& x, Obj gap_t, size_t extra_capacity, F&& func = F()) {
+      size_t n      = x.number_of_rows();
+      size_t extra  = 0;
+      Obj    result = NEW_PLIST(T_PLIST, n + extra_capacity);
+      SET_LEN_PLIST(result, n + extra_capacity);
+
+      for (size_t i = 0; i < n; i++) {
+        Obj row = NEW_PLIST_IMM(T_PLIST_CYC, n);
+        SET_LEN_PLIST(row, n);
+        for (size_t j = 0; j < n; j++) {
+          AssPlist(row, j + 1, func(x(i, j)));
+        }
+        AssPlist(result, i + 1, row);
+      }
+      RetypeBag(result, T_POSOBJ);
+      SET_TYPE_POSOBJ(result, gap_t);
+      CHANGED_BAG(result);
+      return result;
+    }
+  }  // namespace detail
+
   ////////////////////////////////////////////////////////////////////////
   // Constants
   ////////////////////////////////////////////////////////////////////////
@@ -83,7 +110,9 @@ namespace gapbind14 {
   struct to_gap<PositiveInfinity> {
     using cpp_type                          = PositiveInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    Obj operator()(PositiveInfinity const x) {
+
+    template <typename T>
+    Obj operator()(T const& x) {
       return Pinfinity;
     }
   };
@@ -92,13 +121,15 @@ namespace gapbind14 {
   struct to_gap<NegativeInfinity> {
     using cpp_type                          = NegativeInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    Obj operator()(NegativeInfinity const x) {
+
+    template <typename T>
+    Obj operator()(T const& x) {
       return Ninfinity;
     }
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // BMat <-> IsBooleanMat
+  // BMat<> -> IsBooleanMat
   ////////////////////////////////////////////////////////////////////////
 
   template <>
@@ -132,103 +163,161 @@ namespace gapbind14 {
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // IntMat + MaxPlusMat + MinPlusMat
+  // MaxPlusMat<> -> MaxPlusMatrix
   ////////////////////////////////////////////////////////////////////////
-  // TODO(now) remove T and split into multiple
-  template <typename T>
-  struct to_gap<T const&,
-                std::enable_if_t<IsMatrix<T> && !IsBMat<T> && !IsNTPMat<T>>> {
-    using cpp_type                          = T;
+
+  template <>
+  struct to_gap<libsemigroups::MaxPlusMat<> const&> {
+    using MaxPlusMat_                       = libsemigroups::MaxPlusMat<>;
+    using cpp_type                          = MaxPlusMat_;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    Obj operator()(T const& x) {
-      using scalar_type = typename T::scalar_type;
+    Obj operator()(MaxPlusMat_ const& x) {
+      using scalar_type = typename MaxPlusMat_::scalar_type;
+
+      return detail::make_matrix(
+          x, MaxPlusMatrixType, 0, [](scalar_type const& y) {
+            return (y == NEGATIVE_INFINITY ? to_gap<NegativeInfinity>()(y)
+                                           : to_gap<scalar_type>()(y));
+          });
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // MinPlusMat<> -> MinPlusMatrix
+  ////////////////////////////////////////////////////////////////////////
+
+  template <>
+  struct to_gap<libsemigroups::MinPlusMat<> const&> {
+    using MinPlusMat_                       = libsemigroups::MinPlusMat<>;
+    using cpp_type                          = MinPlusMat_;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+
+    Obj operator()(MinPlusMat_ const& x) {
+      using scalar_type = typename MinPlusMat_::scalar_type;
+
+      return detail::make_matrix(
+          x, MinPlusMatrixType, 0, [](scalar_type const& y) {
+            return (y == POSITIVE_INFINITY ? to_gap<PositiveInfinity>()(y)
+                                           : to_gap<scalar_type>()(y));
+          });
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // IntMat<> -> IntegerMatrix
+  ////////////////////////////////////////////////////////////////////////
+
+  template <>
+  struct to_gap<libsemigroups::IntMat<> const&> {
+    using IntMat_                           = libsemigroups::IntMat<>;
+    using cpp_type                          = IntMat_;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+
+    Obj operator()(IntMat_ const& x) {
+      using scalar_type = typename IntMat_::scalar_type;
+
+      return detail::make_matrix(x, IntegerMatrixType, 0);
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // MaxPlusTruncMat<> -> TropicalMaxPlusMatrix
+  ////////////////////////////////////////////////////////////////////////
+
+  template <>
+  struct to_gap<libsemigroups::MaxPlusTruncMat<> const&> {
+    using MaxPlusTruncMat_                  = libsemigroups::MaxPlusTruncMat<>;
+    using cpp_type                          = MaxPlusTruncMat_;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+
+    Obj operator()(MaxPlusTruncMat_ const& x) {
       using libsemigroups::matrix_threshold;
+      using scalar_type = typename MaxPlusTruncMat_::scalar_type;
 
-      Obj gap_type;
-
-      size_t n      = x.number_of_rows();
-      size_t extra  = 0;
-      Obj    result = NEW_PLIST(T_PLIST, n + 1);
-
-      if (IsIntMat<T>) {
-        gap_type = IntegerMatrixType;
-      } else if (IsMaxPlusMat<T>) {
-        gap_type = MaxPlusMatrixType;
-      } else if (IsMinPlusMat<T>) {
-        gap_type = MinPlusMatrixType;
-      } else if (IsMaxPlusTruncMat<T>) {
-        extra    = 1;
-        gap_type = TropicalMaxPlusMatrixType;
-        SET_ELM_PLIST(
-            result, n + 1, to_gap<scalar_type>()(matrix_threshold(x)));
-      } else if (IsMinPlusTruncMat<T>) {
-        extra    = 1;
-        gap_type = TropicalMinPlusMatrixType;
-        SET_ELM_PLIST(
-            result, n + 1, to_gap<scalar_type>()(matrix_threshold(x)));
-      } else if (IsProjMaxPlusMat<T>) {
-        gap_type = ProjectiveMaxPlusMatrixType;
-      }
-
-      SET_LEN_PLIST(result, n + extra);
-
-      for (size_t i = 0; i < n; i++) {
-        Obj row = NEW_PLIST_IMM(T_PLIST_CYC, n);
-        SET_LEN_PLIST(row, n);
-        for (size_t j = 0; j < n; j++) {
-          scalar_type const val = x(i, j);
-          Obj               itm;
-          if (val != libsemigroups::POSITIVE_INFINITY
-              && val != libsemigroups::NEGATIVE_INFINITY) {
-            itm = to_gap<scalar_type>()(val);
-          } else if (val == libsemigroups::POSITIVE_INFINITY) {
-            // TODO check if we're an integer matrix, and complain!
-            itm = to_gap<PositiveInfinity>()(libsemigroups::POSITIVE_INFINITY);
-          } else if (val == libsemigroups::NEGATIVE_INFINITY) {
-            // TODO check if we're an integer matrix, and complain!
-            itm = to_gap<NegativeInfinity>()(libsemigroups::NEGATIVE_INFINITY);
-          }
-          AssPlist(row, j + 1, itm);
-        }
-        AssPlist(result, i + 1, row);
-      }
-
-      RetypeBag(result, T_POSOBJ);
-      SET_TYPE_POSOBJ(result, gap_type);
-      CHANGED_BAG(result);
+      auto result = detail::make_matrix(
+          x, TropicalMaxPlusMatrixType, 1, [](scalar_type const& y) {
+            return (y == NEGATIVE_INFINITY ? to_gap<NegativeInfinity>()(y)
+                                           : to_gap<scalar_type>()(y));
+          });
+      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 1);
+      SET_ELM_PLIST(result,
+                    x.number_of_rows() + 1,
+                    to_gap<scalar_type>()(matrix_threshold(x)));
       return result;
     }
   };
 
+  ////////////////////////////////////////////////////////////////////////
+  // MinPlusTruncMat<> -> TropicalMinPlusMatrix
+  ////////////////////////////////////////////////////////////////////////
+
   template <>
-  struct to_gap<libsemigroups::NTPMat<> const&> {
-    using cpp_type                          = libsemigroups::NTPMat<>;
+  struct to_gap<libsemigroups::MinPlusTruncMat<> const&> {
+    using MinPlusTruncMat_                  = libsemigroups::MinPlusTruncMat<>;
+    using cpp_type                          = MinPlusTruncMat_;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    Obj operator()(libsemigroups::NTPMat<> const& x) {
-      using scalar_type = typename libsemigroups::NTPMat<>::scalar_type;
+    Obj operator()(MinPlusTruncMat_ const& x) {
+      using libsemigroups::matrix_threshold;
+      using scalar_type = typename MinPlusTruncMat_::scalar_type;
+
+      auto result = detail::make_matrix(
+          x, TropicalMinPlusMatrixType, 1, [](scalar_type const& y) {
+            return (y == POSITIVE_INFINITY ? to_gap<PositiveInfinity>()(y)
+                                           : to_gap<scalar_type>()(y));
+          });
+      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 1);
+      SET_ELM_PLIST(result,
+                    x.number_of_rows() + 1,
+                    to_gap<scalar_type>()(matrix_threshold(x)));
+      return result;
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // ProjectiveMaxPlusMat<> -> ProjectiveMaxPlusMatrix
+  ////////////////////////////////////////////////////////////////////////
+
+  template <>
+  struct to_gap<libsemigroups::ProjMaxPlusMat<> const&> {
+    using ProjMaxPlusMat_                   = libsemigroups::ProjMaxPlusMat<>;
+    using cpp_type                          = ProjMaxPlusMat_;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+
+    Obj operator()(ProjMaxPlusMat_ const& x) {
+      using scalar_type = typename ProjMaxPlusMat_::scalar_type;
+
+      return detail::make_matrix(
+          x, ProjectiveMaxPlusMatrixType, 0, [](scalar_type const& y) {
+            return (y == NEGATIVE_INFINITY ? to_gap<NegativeInfinity>()(y)
+                                           : to_gap<scalar_type>()(y));
+          });
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+  // NTPMat<> -> NTPMatrix
+  ////////////////////////////////////////////////////////////////////////
+
+  template <>
+  struct to_gap<libsemigroups::NTPMat<> const&> {
+    using NTPMat_                           = libsemigroups::NTPMat<>;
+    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+
+    Obj operator()(NTPMat_ const& x) {
+      using scalar_type = typename NTPMat_::scalar_type;
       using libsemigroups::matrix_period;
       using libsemigroups::matrix_threshold;
 
-      size_t n      = x.number_of_rows();
-      Obj    result = NEW_PLIST(T_PLIST, n + 2);
-      SET_LEN_PLIST(result, n + 2);
-      SET_ELM_PLIST(result, n + 1, to_gap<scalar_type>()(matrix_threshold(x)));
-      SET_ELM_PLIST(result, n + 2, to_gap<scalar_type>()(matrix_period(x)));
-
-      for (size_t i = 0; i < n; i++) {
-        Obj row = NEW_PLIST_IMM(T_PLIST_CYC, n);
-        SET_LEN_PLIST(row, n);
-        for (size_t j = 0; j < n; j++) {
-          AssPlist(row, j + 1, to_gap<scalar_type>()(x(i, j)));
-        }
-        AssPlist(result, i + 1, row);
-      }
-
-      RetypeBag(result, T_POSOBJ);
-      SET_TYPE_POSOBJ(result, NTPMatrixType);
-      CHANGED_BAG(result);
+      auto result = detail::make_matrix(x, NTPMatrixType, 2);
+      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 2);
+      SET_ELM_PLIST(result,
+                    x.number_of_rows() + 1,
+                    to_gap<scalar_type>()(matrix_threshold(x)));
+      SET_ELM_PLIST(result,
+                    x.number_of_rows() + 2,
+                    to_gap<scalar_type>()(matrix_period(x)));
       return result;
     }
   };

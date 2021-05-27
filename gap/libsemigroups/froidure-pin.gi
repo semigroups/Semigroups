@@ -622,7 +622,7 @@ end);
 ## ClosureSemigroupOrMonoidNC
 ########################################################################
 
-# TODO(now) require a ClosureSemigroupDestructive that uses closure directly,
+# TODO(later) require a ClosureSemigroupDestructive that uses closure directly,
 # not copy then closure.
 
 InstallMethod(ClosureSemigroupOrMonoidNC,
