@@ -327,44 +327,51 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
-    // Initialise the GAP transformation "t" using the C++ transformation "x".
-    template <typename T, typename S>
-    void to_gap_transf(S const& x, Obj t) {
+    template <typename S, typename T>
+    Obj make_transf(T const& x) {
       static_assert(
-          std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
-          "the template parameter T must be the same as UInt2 or UInt4");
-      SEMIGROUPS_ASSERT(IS_TRANS(t));
-      // Check that x and t are compatible
-      T* ptr = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(t) + 3));
-      for (T i = 0; i < libsemigroups::Degree<S>()(x); ++i) {
-        ptr[i] = x[i];
-      }
-    }
-  }  // namespace detail
-
-  template <typename T>
-  struct to_gap<T const&,
-                std::enable_if_t<IsTransf<std::decay_t<T>>
+          std::is_same<S, UInt2>::value || std::is_same<S, UInt4>::value,
+          "the template parameter S must be the same as UInt2 or UInt4");
+      static_assert(
+          IsTransf<T>
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-                                 || std::is_same<T, HPCombi::Transf16>::value
+              || std::is_same<T, HPCombi::Transf16>::value
 #endif
-                                 >> {
-    using cpp_type = T;
+          ,
+          "the template parameter T must be the same as Transf<> or Transf16");
 
-    Obj operator()(T const& x) {
-      auto N      = libsemigroups::Degree<T>()(x);
-      Obj  result = NEW_TRANS(N);
-      if (N < 65536) {
-        detail::to_gap_transf<UInt2>(x, result);
-      } else if (N < std::numeric_limits<UInt4>::max()) {
-        detail::to_gap_transf<UInt4>(x, result);
-      } else {
-        // in case of future changes to transformations in GAP
-        ErrorQuit("transformation degree too high!", 0L, 0L);
+      auto const N      = libsemigroups::Degree<T>()(x);
+      Obj        result = NEW_TRANS(N);
+      S* ptr = reinterpret_cast<S*>(static_cast<Obj*>(ADDR_OBJ(result) + 3));
+      for (S i = 0; i < N; ++i) {
+        ptr[i] = x[i];
       }
       return result;
     }
+  }  // namespace detail
+
+  template <>
+  struct to_gap<libsemigroups::Transf<0, UInt2> const&> {
+    Obj operator()(libsemigroups::Transf<0, UInt2> const& x) {
+      return detail::make_transf<UInt2>(x);
+    }
   };
+
+  template <>
+  struct to_gap<libsemigroups::Transf<0, UInt4> const&> {
+    Obj operator()(libsemigroups::Transf<0, UInt4> const& x) {
+      return detail::make_transf<UInt4>(x);
+    }
+  };
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  template <>
+  struct to_gap<HPCombi::Transf16 const&> {
+    Obj operator()(HPCombi::Transf16 const& x) {
+      return detail::make_transf<UInt2>(x);
+    }
+  };
+#endif
 
   ////////////////////////////////////////////////////////////////////////
   // Partial perms
@@ -373,7 +380,7 @@ namespace gapbind14 {
   namespace detail {
     // Initialise the GAP partial perm "t" using the C++ partial perm "x".
     template <typename T, typename S>
-    void to_gap_pperm(S const& x, Obj t, size_t const N) {
+    void make_pperm(S const& x, Obj t, size_t const N) {
       static_assert(
           std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
           "the template parameter T must be the same as UInt2 or UInt4");
