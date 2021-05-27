@@ -81,7 +81,7 @@ function(S)
   N := DimensionOfMatrixOverSemiring(Representative(S));
   if N <= 8 then
     return libsemigroups.FroidurePinBMat8;
-  else 
+  else
     return libsemigroups.FroidurePinBMat;
   fi;
 end);

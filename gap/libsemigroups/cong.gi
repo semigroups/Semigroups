@@ -123,8 +123,9 @@ function(S)
     else
       Error("partial perm degree is too high!");
     fi;
-  elif IsMatrixOverSemiringSemigroup(S) then 
-    if IsBooleanMatSemigroup(S) and DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
+  elif IsMatrixOverSemiringSemigroup(S) then
+    if IsBooleanMatSemigroup(S)
+        and DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
       return libsemigroups.Congruence.make_from_froidurepin_bmat8;
     fi;
     # Is this right?

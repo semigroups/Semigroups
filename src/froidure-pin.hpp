@@ -22,6 +22,7 @@
 #include <cstddef>      // for size_t
 #include <string>       // for string
 #include <type_traits>  // for true_type
+#include <utility>      // for pair
 #include <vector>       // for vector
 
 // GapBind14 headers
