@@ -931,18 +931,10 @@ function(R)
   return Semigroup(MatrixEntries(N)) = U;
 end);
 
-# The next two methods are just copies of the methods in the library but with
-# the rank increased so they are used in favour of the method for
-# IsSemigroup and CanComputeFroidurePin
-
 InstallMethod(Size, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
  HasColumns],
 function(R)
-  # This is unreachable
-  # if Size(UnderlyingSemigroup(R)) = infinity then
-  #   return infinity;
-  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
@@ -950,10 +942,6 @@ InstallMethod(Size, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup and HasUnderlyingSemigroup and HasRows and
  HasColumns],
 function(R)
-  # This is unreachable
-  # if Size(UnderlyingSemigroup(R)) = infinity then
-  #   return infinity;
-  # fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
          + 1;
 end);
