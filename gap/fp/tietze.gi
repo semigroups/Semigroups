@@ -100,7 +100,7 @@ function(stz, newGens)
 end);
 
 # TODO: TCL: maybe better to call this StzIsomorphism?
-InstallMethod(TietzeIsomorphism,
+InstallMethod(StzIsomorphism,
 [IsStzPresentation],
 function(stz)
   local source, range, forward_dict, forward_map, backward_dict, backward_map;
@@ -1604,7 +1604,7 @@ function(S)
   local stz;
   stz := StzPresentation(S);
   StzSimplifyPresentation(stz);
-  return TietzeIsomorphism(stz);
+  return StzIsomorphism(stz);
 end);
 
 ########################################################################

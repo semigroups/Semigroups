@@ -40,7 +40,7 @@ DeclareOperation("SimplifyFpSemigroup", [IsFpSemigroup]);
 DeclareAttribute("UnreducedFpSemigroup", IsFpSemigroup);
 DeclareAttribute("FpTietzeIsomorphism", IsFpSemigroup);
 
-DeclareOperation("TietzeIsomorphism", [IsStzPresentation]);
+DeclareOperation("StzIsomorphism", [IsStzPresentation]);
 
 ## Tietze Transformations - various implementations
 # Tietze 1 (add relation)

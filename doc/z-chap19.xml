@@ -187,11 +187,11 @@
     interest to map elements of <C>S</C> over to <C>T</C>, where they may be
     represented by different combinations of generators. The isomorphism
     achieving this is described in this section
-    (see <Ref Oper="TietzeIsomorphism"/>).
+    (see <Ref Oper="StzIsomorphism"/>).
 
     <#Include Label="TietzeForwardMap">
     <#Include Label="TietzeBackwardMap">
-    <#Include Label="TietzeIsomorphism">
+    <#Include Label="StzIsomorphism">
   </Section>
 
   <Section Label = "Automatically simplifying a presentation">

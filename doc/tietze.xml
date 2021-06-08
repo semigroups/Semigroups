@@ -916,24 +916,24 @@ gap> TietzeBackwardMap(stz);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="TietzeIsomorphism">
+<#GAPDoc Label="StzIsomorphism">
   <ManSection>
-    <Oper Name="TietzeIsomorphism" Arg="stz"/>
+    <Oper Name="StzIsomorphism" Arg="stz"/>
     <Returns>
       A mapping object.
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>TietzeIsomorphism</C> returns a mapping object that maps the 
+      <C>StzIsomorphism</C> returns a mapping object that maps the 
       unreduced semigroup of the presentation (see
       <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
       to an FpSemigroup object that is defined by the generators and relations 
       of the semigroup presentation at the moment this function is ran.<P/>
 
-      If a <C>TietzeIsomorphism</C> is generated from <A>stz</A>, and the
+      If a <C>StzIsomorphism</C> is generated from <A>stz</A>, and the
       presentation <A>stz</A> is further modified afterwards (for example by
       applying more Tietze transformations or <Ref Oper="StzSimplifyOnce"/> to
-      <A>stz</A>), then running <C>TietzeIsomorphism(<A>stz</A>)</C> a second
+      <A>stz</A>), then running <C>StzIsomorphism(<A>stz</A>)</C> a second
       time will produce a different result consistent with the <E>new</E>
       generators and relations of <A>stz</A>.<P/>
 
@@ -955,7 +955,7 @@ gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
 gap> StzRemoveGenerator(stz, "a");
-gap> map := TietzeIsomorphism(stz);
+gap> map := StzIsomorphism(stz);
 MappingByFunction( <fp semigroup on the generators 
 [ a, b, c ]>, <fp semigroup on the generators 
 [ b, c ]>, function( word ) ... end, function( word ) ... end )
