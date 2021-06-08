@@ -713,7 +713,7 @@ gap> len = Length(stz);
 true
 gap> SetInfoLevel(InfoFpSemigroup, prevFpSemigroupInfoLevel);;
 
-# Test TietzeIsomorphism
+# Test StzIsomorphism
 gap> prevFpSemigroupInfoLevel := InfoLevel(InfoFpSemigroup);;
 gap> SetInfoLevel(InfoFpSemigroup, 1);;
 gap> f := FreeSemigroup("a", "b", "c");;
@@ -743,7 +743,7 @@ gap> StzPrintRelations(stz);
 #I  1. d*b*a = d
 #I  2. d*b = b*a*b
 #I  3. a*b*a = d
-gap> map := TietzeIsomorphism(stz);;
+gap> map := StzIsomorphism(stz);;
 gap> s = Source(map);
 true
 gap> t := Range(map);;
