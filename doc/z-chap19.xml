@@ -88,7 +88,7 @@
     <#Include Label = "IsStzPresentation">
     <#Include Label = "GeneratorsOfStzPresentation">
     <#Include Label = "RelationsOfStzPresentation">
-    <#Include Label = "UnreducedSemigroupOfStzPresentation">
+    <#Include Label = "UnreducedFpSemigroup-stz">
     <#Include Label = "Length">
   </Section>
 
@@ -238,7 +238,7 @@
 
     <#Include Label="SimplifyFpSemigroup">
     <#Include Label="SimplifiedFpSemigroup">
-    <#Include Label="UnreducedFpSemigroupOfFpSemigroup">
+    <#Include Label="UnreducedFpSemigroup-S">
     <#Include Label="FpTietzeIsomorphism">
   </Section>
 </Chapter>
