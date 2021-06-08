@@ -5,7 +5,7 @@
 
   In this chapter we describe the functions implemented in &Semigroups; that
   extend the features available in &GAP; for dealing with finitely presented
-  semigroups.
+  semigroups and monoids.
 
   <P/>
   
@@ -68,18 +68,20 @@
 
     However, finitely presented semigroups do not allow for their relations to
     be simplified, so in the following sections, we describe how to create and
-    modify the "Semigroup Tietze" object associated with an fp semigroup.
+    modify the semigroup Tietze (<Ref Filt="IsStzPresentation"/>) object
+    associated with an fp semigroup.
     This object can be automatically simplified, or the user can manually apply
     Tietze transformations to add or remove relations or generators in the
     presentation.
 
     <P/>
 
-    This object is analogous to the "Tietze object" implemented for fp groups
+    This object is analogous to <Ref Oper="PresentationFpGroup" BookName="ref"/>
+    implemented for fp groups
     in the main &GAP; distribution
     (<Ref Chap="Presentations and Tietze Transformations" BookName="ref"/>),
     but its features are semigroup-specific. Most of the functions used to
-    create, view and manipulate Semigroup Tietze objects are prefixed with
+    create, view and manipulate semigroup Tietze objects are prefixed with
     "Stz".
 
     <#Include Label = "StzPresentation">
@@ -158,9 +160,7 @@
     <P/>
 
     <#Include Label="StzAddRelation">
-    <#Include Label="StzAddRelationNC">
     <#Include Label="StzRemoveRelation">
-    <#Include Label="StzRemoveRelationNC">
     <#Include Label="StzAddGenerator">
     <#Include Label="StzRemoveGenerator">
     <#Include Label="StzSubstituteRelation">
@@ -170,15 +170,24 @@
     <Heading>
       Converting a modified presentation into a semigroup
     </Heading>
-    
-    Now that a presentation object has been established, we need to cover how 
-    this presentation (which is currently unrelated to any semigroup object)
-    can be used to both work with the old unreduced fp semigroup and create a 
-    new fp semigroup based on the presentation. This is achieved by the 
-    <C>TietzeIsomorphism</C> operation, which defines a map from the unreduced
-    fp semigroup to a newly defined one based on the altered presentation. In 
-    order to obtain this isomorphic, altered fp semigroup, the <C>Range</C> of 
-    this mapping object is taken.<P/>
+    Semigroup Tietze (<Ref Filt="IsStzPresentation"/>) objects are not actual
+    fp semigroups in the sense of <Ref Filt="IsFpSemigroup" BookName="ref"/>.
+    This is because their generators and relations can be modified
+    (see section <Ref Sect="Changing presentations"/>).
+    However, an <Ref Oper="StzPresentation"/> can be converted back into an
+    actual finitely presented semigroup using the methods described in this
+    section.<P/>
+
+    The intended use of semigroup Tietze objects is as follows: given an fp
+    semigroup <C>S</C>, create a modifiable presentation using
+    <C>stz := StzPresentation(S)</C>, apply Tietze transformations to it
+    (perhaps in order to simplify the presentation), then generate a new
+    fp semigroup <C>T</C> given by <C>stz</C> which is isomorphic to <C>S</C>,
+    but has a simpler presentation. Once <C>T</C> is obtained, it may be of
+    interest to map elements of <C>S</C> over to <C>T</C>, where they may be
+    represented by different combinations of generators. The isomorphism
+    achieving this is described in this section
+    (see <Ref Oper="TietzeIsomorphism"/>).
 
     <#Include Label="TietzeForwardMap">
     <#Include Label="TietzeBackwardMap">
