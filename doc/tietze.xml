@@ -267,9 +267,9 @@ gap> RelationsOfStzPresentation(stz);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="UnreducedFpSemigroupOfFpSemigroup">
+<#GAPDoc Label="UnreducedFpSemigroup-S">
   <ManSection>
-    <Attr Name="UnreducedFpSemigroupOfFpSemigroup" Arg="S"/>
+    <Attr Name="UnreducedFpSemigroup" Arg="S" Label="for a semigroup"/>
     <Returns>
       <A>T</A>, an fp semigroup object.
     </Returns>
@@ -278,7 +278,7 @@ gap> RelationsOfStzPresentation(stz);
       calling
       <Ref Oper="SimplifiedFpSemigroup"/>
       on some fp semigroup <A>T</A>
-      then <C>UnreducedFpSemigroupOfFpSemigroup</C> returns the original
+      then <C>UnreducedFpSemigroup</C> returns the original
       semigroup object before simplification. These are unrelated semigroup 
       objects, except that <A>S</A> will have a
       <Ref Oper="FpTietzeIsomorphism"/>
@@ -287,7 +287,7 @@ gap> RelationsOfStzPresentation(stz);
 
       If <Ref Oper="SimplifyFpSemigroup"/>
       has been called on an fp semigroup <A>T</A>,
-      then <C>UnreducedFpSemigroupOfFpSemigroup</C> can be used on the
+      then <C>UnreducedFpSemigroup</C> can be used on the
       <C>Range</C> of the resultant mapping to obtain the domain.
       <Log><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
@@ -305,7 +305,7 @@ gap> S := SimplifiedFpSemigroup(T);
 #I  <Creating new generator to replace instances of word: b^3>
 #I  Current: <fp semigroup presentation with 3 generators and 2 relations with length 10>
 <fp semigroup on the generators [ b, c, d ]>
-gap> UnreducedFpSemigroupOfFpSemigroup(S) = T;
+gap> UnreducedFpSemigroup(S) = T;
 true]]></Log>
     </Description>
   </ManSection>
@@ -430,15 +430,15 @@ gap> RelationsOfStzPresentation(stz);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="UnreducedSemigroupOfStzPresentation">
+<#GAPDoc Label="UnreducedFpSemigroup-stz">
   <ManSection>
-    <Attr Name="UnreducedSemigroupOfStzPresentation" Arg="stz"/>
+    <Attr Name="UnreducedFpSemigroup" Arg="stz" Label="for a presentation"/>
     <Returns>
       An fp semigroup.
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>UnreducedSemigroupOfStzPresentation</C> will return the fp semigroup 
+      <C>UnreducedFpSemigroup</C> will return the fp semigroup 
       that was used to create <A>stz</A> using <Ref Oper="StzPresentation"/>.
       
 
@@ -451,7 +451,7 @@ gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
-gap> UnreducedSemigroupOfStzPresentation(stz) = T;
+gap> UnreducedFpSemigroup(stz) = T;
 true]]>
 </Example>
     </Description>
@@ -852,7 +852,8 @@ gap> StzPrintPresentation(stz);
       <C>TietzeForwardMap</C> returns a list of lists of positive integers.
       There is an element of this list for every generator of the 
       unreduced semigroup of the presentation (see 
-      <Ref Attr="UnreducedSemigroupOfStzPresentation"/>) that indicates the 
+      <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
+      that indicates the 
       word (in <C>LetterRep</C> form) in the semigroup object currently defined
       by the
       presentation that the generator maps to.<P/>
@@ -891,8 +892,8 @@ gap> TietzeForwardMap(stz);
       semigroup that the presentation currently defines that indicates the 
       word (in <C>LetterRep</C> form) in the unreduced semigroup of the
       presentation 
-      (see <Ref Attr="UnreducedSemigroupOfStzPresentation"/>) that the 
-      generator maps to.<P/>
+      (see <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
+      that the generator maps to.<P/>
 
       This mapping is updated as the presentation object is transformed. It 
       begins as a list of the form <C>[[1], [2], [3], . . ., [n]]</C> where
@@ -925,7 +926,7 @@ gap> TietzeBackwardMap(stz);
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
       <C>TietzeIsomorphism</C> returns a mapping object that maps the 
       unreduced semigroup of the presentation (see
-      <Ref Attr="UnreducedSemigroupOfStzPresentation"/>)
+      <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
       to an FpSemigroup object that is defined by the generators and relations 
       of the semigroup presentation at the moment this function is ran.<P/>
 

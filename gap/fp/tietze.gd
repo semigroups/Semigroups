@@ -19,7 +19,7 @@ DeclareAttribute("RelationsOfStzPresentation", IsStzPresentation);
 DeclareAttribute("GeneratorsOfStzPresentation", IsStzPresentation);
 
 # Stores original semigroup before reductions
-DeclareAttribute("UnreducedSemigroupOfStzPresentation", IsStzPresentation);
+DeclareAttribute("UnreducedFpSemigroup", IsStzPresentation);
 
 # Stores a map between the words of each semigroup (how?)
 # Change as relations change
@@ -37,7 +37,7 @@ DeclareOperation("SimplifiedFpSemigroup", [IsFpSemigroup]);
 DeclareOperation("SimplifyFpSemigroup", [IsFpSemigroup]);
 
 # FP semigroup attributes
-DeclareAttribute("UnreducedFpSemigroupOfFpSemigroup", IsFpSemigroup);
+DeclareAttribute("UnreducedFpSemigroup", IsFpSemigroup);
 DeclareAttribute("FpTietzeIsomorphism", IsFpSemigroup);
 
 DeclareOperation("TietzeIsomorphism", [IsStzPresentation]);

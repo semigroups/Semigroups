@@ -52,7 +52,7 @@ function(S)
                                   out!.rels,
                                   GeneratorsOfStzPresentation,
                                   out!.gens,
-                                  UnreducedSemigroupOfStzPresentation,
+                                  UnreducedFpSemigroup,
                                   out!.unreducedSemigroup,
                                   TietzeForwardMap,
                                   out!.tietzeForwardMap,
@@ -79,7 +79,7 @@ function(stz)
     return stz!.rels;
 end);
 
-InstallMethod(UnreducedSemigroupOfStzPresentation,
+InstallMethod(UnreducedFpSemigroup,
 [IsStzPresentation],
 function(stz)
     return stz!.unreducedSemigroup;
@@ -114,7 +114,7 @@ InstallMethod(TietzeIsomorphism,
 [IsStzPresentation],
 function(stz)
   local source, range, forward_dict, forward_map, backward_dict, backward_map;
-  source := UnreducedSemigroupOfStzPresentation(stz);
+  source := UnreducedFpSemigroup(stz);
   range  := SEMIGROUPS.StzConvertObjToFpSemigroup(stz);
 
   # build forward map
@@ -357,7 +357,7 @@ function(stz)
   Info(InfoFpSemigroup, 1, status);
 
   # build free semigroup of old gens for display
-  oldgens := GeneratorsOfSemigroup(UnreducedSemigroupOfStzPresentation(stz));
+  oldgens := GeneratorsOfSemigroup(UnreducedFpSemigroup(stz));
   oldgens := List(oldgens, ViewString);
   oldfree := FreeSemigroup(oldgens);
   oldelms := GeneratorsOfSemigroup(oldfree);
@@ -648,7 +648,7 @@ InstallMethod(StzAddRelation,
 function(stz, pair)
   local s, pairwords, word;
   # retrieve original semigroup
-  s := UnreducedSemigroupOfStzPresentation(stz);
+  s := UnreducedFpSemigroup(stz);
   for word in pair do
     if not word in s then
       TryNextMethod();
@@ -711,7 +711,7 @@ InstallMethod(StzAddRelationNC,
 function(stz, pair)
   local s, pairwords, word;
   # retrieve original semigroup
-  s := UnreducedSemigroupOfStzPresentation(stz);
+  s := UnreducedFpSemigroup(stz);
   for word in pair do
     if not word in s then
       TryNextMethod();
@@ -833,7 +833,7 @@ function(stz, word)
   local letterrepword;
   # argument check: word should be an element of the unreduced semigroup
   # (that way we can express it as a word on the current tietze generators)
-  if not word in UnreducedSemigroupOfStzPresentation(stz) then
+  if not word in UnreducedFpSemigroup(stz) then
     TryNextMethod();
   fi;
 
@@ -886,7 +886,7 @@ function(stz, word, name)
   local letterrepword;
   # argument check: word should be an element of the unreduced semigroup
   # (that way we can express it as a word on the current tietze generators)
-  if not word in UnreducedSemigroupOfStzPresentation(stz) then
+  if not word in UnreducedFpSemigroup(stz) then
     TryNextMethod();
   fi;
 
@@ -1596,7 +1596,7 @@ function(S)
   local T, map;
   map := SimplifyFpSemigroup(S);
   T := Range(map);
-  SetUnreducedFpSemigroupOfFpSemigroup(T, S);
+  SetUnreducedFpSemigroup(T, S);
   SetFpTietzeIsomorphism(T, map);
   return T;
 end);

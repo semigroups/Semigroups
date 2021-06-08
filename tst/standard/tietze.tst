@@ -29,7 +29,7 @@ gap> GeneratorsOfStzPresentation(stz);
 [ "a", "b", "c" ]
 gap> RelationsOfStzPresentation(stz);
 [ [ [ 1, 1, 2, 1, 1, 2 ], [ 1, 1, 2 ] ], [ [ 3 ], [ 1, 1, 2 ] ] ]
-gap> s = UnreducedSemigroupOfStzPresentation(stz);
+gap> s = UnreducedFpSemigroup(stz);
 true
 gap> Length(stz);
 16
