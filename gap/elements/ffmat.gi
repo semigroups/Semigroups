@@ -247,7 +247,7 @@ function(filter, field, list)
   fi;
 
   mat := Objectify(PlistMatrixOverFiniteFieldType,
-                   rec(mat := ImmutableMatrix(field, list)));
+                   rec(mat := ImmutableMatrix(field, List(list, ShallowCopy))));
   SetBaseDomain(mat, field);
 
   return mat;
