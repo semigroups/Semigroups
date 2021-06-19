@@ -1766,6 +1766,12 @@ Error, the argument <cong> has infinitely many classes,
 gap> EquivalenceRelationLookup(S!.cong);
 Error, <equiv> must be over a finite semigroup,
 
+# Issue 788
+gap> S := GLM(2, 2);;
+gap> Matrix(GF(4), One(S));;
+gap> Size(Elements(S));
+16
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
