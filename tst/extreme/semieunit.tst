@@ -9,8 +9,8 @@
 ##
 gap> START_TEST("Semigroups package: extreme/semieunit.tst");
 gap> LoadPackage("semigroups", false);;
-gap> LoadPackage("Digraphs", false);;
-gap> LoadPackage("smallsemi", false);;
+gap> LoadPackage("smallsemi", false);
+true
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
@@ -19,7 +19,8 @@ gap> SetInfoLevel(InfoSmallsemi, 0);;
 
 #  McAlisterTriple
 gap> inv_semigroups := AllSmallSemigroups([2 .. 7], IsInverseSemigroup, true);;
-gap> e_unitary_semigroups := Filtered(inv_semigroups, IsEUnitaryInverseSemigroup);;
+gap> e_unitary_semigroups := Filtered(inv_semigroups,
+>                                     IsEUnitaryInverseSemigroup);;
 gap> triples := ShallowCopy(e_unitary_semigroups);;
 gap> Apply(triples, a -> AsSemigroup(IsPartialPermSemigroup, a));;
 gap> Apply(triples, a -> IsomorphismSemigroup(IsMcAlisterTripleSemigroup, a));;

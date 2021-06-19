@@ -102,7 +102,8 @@ true
 gap> S := Semigroup([
 > Bipartition([[1, 3, 4, 7, -1], [2, 5, 6, -5], [-2], [-3], [-4], [-6], [-7]]),
 > Bipartition([[1, 3, 4, -4], [2, 5, 6, 7, -2], [-1], [-3], [-5], [-6], [-7]]),
-> Bipartition([[1, 3, 4, 7, -3], [2, 5, 6, -6], [-1], [-2], [-4], [-5], [-7]])]);
+> Bipartition([[1, 3, 4, 7, -3], [2, 5, 6, -6], [-1], [-2], [-4], [-5],
+>              [-7]])]);
 <bipartition semigroup of degree 7 with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -197,29 +198,29 @@ true
 #   convert from IsMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
->        [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+>   [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
 > Matrix(IsMaxPlusMatrix,
->        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+>   [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
 > Matrix(IsMaxPlusMatrix,
->        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
+>   [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 7x7 max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -289,29 +290,29 @@ true
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
->        [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
->         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+>   [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>    [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
 > Matrix(IsProjectiveMaxPlusMatrix,
->        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+>   [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
 > Matrix(IsProjectiveMaxPlusMatrix,
->        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
->         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
+>   [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>    [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 7x7 projective max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>

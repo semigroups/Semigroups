@@ -39,7 +39,8 @@ SEMIGROUPS.IndexPeriodByRank := function(x, rank)
     fi;
     # (2 ^ lower) < index of x <= (2 ^ (lower + 1))
 
-    index := (2 ^ lower) + 1;  # index is always a lower bound for the true index
+    # index will always be a lower bound for the true index
+    index := (2 ^ lower) + 1;
     next := lower;
     lower := powers[lower + 1];
 

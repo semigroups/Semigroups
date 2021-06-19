@@ -581,9 +581,7 @@ gap> IsGroup(T);
 false
 gap> mat := [[t2, t1], [t1, t2]];;
 gap> R := ReesZeroMatrixSemigroup(T, mat);;
-gap> (CompareVersionNumbers(GAPInfo.Version, "4.7.7")
-> and IsRegularSemigroup(R))
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.7");
+gap> IsRegularSemigroup(R);
 true
 
 # JDM: the following lines are commented out until we have a deterministic
@@ -643,7 +641,9 @@ true
 #<automorphism group of <Rees matrix semigroup 1x2 over Sym( [ 1 .. 7 ] )>
 #  with 10080 generators>
 #gap> G:=Group((1,4,3,5,2));;
-#gap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
+#gap> mat:=[ [ (), (), () ],
+#>           [ (), (1,4,3,5,2), () ],
+#>           [ (), (1,3,2,4,5), () ] ];;
 #gap> R:=ReesMatrixSemigroup(G, mat);;
 #gap> l:=(4,6);
 #(4,6)

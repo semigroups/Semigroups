@@ -200,7 +200,8 @@ gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> T := Semigroup(S.1, S.2);
 <semigroup with 2 generators>
-gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3], SEMIGROUPS.OptionsRec(T));
+gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3],
+> SEMIGROUPS.OptionsRec(T));
 <semigroup with 3 generators>
 gap> Size(T);
 159
@@ -630,7 +631,8 @@ gap> S := Semigroup(
 <semigroup of 8x8 boolean matrices with 10 generators>
 gap> Size(S);
 266
-gap> x := Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0],
+gap> x := Matrix(IsBooleanMat, [
+>  [0, 0, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0],
 >  [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 1, 1, 1, 1, 0],
 >  [1, 0, 0, 1, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 1, 0],
 >  [1, 0, 0, 1, 0, 1, 1, 0], [1, 1, 1, 1, 0, 0, 0, 1]]);;
@@ -743,7 +745,8 @@ gap> S := SEMIGROUPS.DefaultRandomInverseSemigroup(IsTransformationSemigroup,
 > [2, 4]);;
 gap> IsInverseSemigroup(S) and IsTransformationSemigroup(S);
 true
-gap> S := SEMIGROUPS.DefaultRandomInverseSemigroup(IsTropicalMaxPlusMatrixSemigroup, 
+gap> S := SEMIGROUPS.DefaultRandomInverseSemigroup(
+> IsTropicalMaxPlusMatrixSemigroup,
 > [2, 4, 10]);;
 gap> IsInverseSemigroup(S) and IsTropicalMaxPlusMatrixSemigroup(S);
 true

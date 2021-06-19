@@ -924,21 +924,24 @@ gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3);
 <0-simple semigroup of 4x4 tropical max-plus matrices with 4 generators>
 gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, Group((1, 2)), 3);
 <0-simple semigroup of 7x7 tropical max-plus matrices with 5 generators>
-gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, DihedralGroup(4), 3);
+gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, DihedralGroup(4),
+> 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
 gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, 3);
 <0-simple semigroup of 4x4 tropical min-plus matrices with 4 generators>
 gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, Group((1, 2)), 3);
 <0-simple semigroup of 7x7 tropical min-plus matrices with 5 generators>
-gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, DihedralGroup(4), 3);
+gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, DihedralGroup(4),
+> 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
 gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, 3);
 <0-simple semigroup of 4x4 projective max-plus matrices with 4 generators>
 gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, Group((1, 2)), 3);
 <0-simple semigroup of 7x7 projective max-plus matrices with 5 generators>
-gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, DihedralGroup(4), 3);
+gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, DihedralGroup(4),
+> 3);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
 gap> S := BrandtSemigroup(IsIntegerMatrixSemigroup, 3);

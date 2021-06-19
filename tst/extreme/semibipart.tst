@@ -15,7 +15,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-# BipartitionTest1: IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
+# BipartitionTest1: IsomorphismTransformationMonoid/Semigroup
 gap> S := DualSymmetricInverseMonoid(4);
 <inverse block bijection monoid of degree 4 with 3 generators>
 gap> IsomorphismTransformationMonoid(S);

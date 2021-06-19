@@ -250,7 +250,8 @@ gap> MaximalSubsemigroups(R, rec(contain := x));
 gap> Add(x, RMSElement(R, 2, (), 1));
 gap> MaximalSubsemigroups(R, rec(contain := x));
 [  ]
-gap> MaximalSubsemigroups(R, rec(contain := x, number := true));  # <opts.number>
+gap> MaximalSubsemigroups(R,
+>                         rec(contain := x, number := true));  # <opts.number>
 0
 
 # maximal: MaximalSubsemigroups, for a Rees matrix semigroup, 6

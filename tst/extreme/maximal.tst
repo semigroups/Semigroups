@@ -115,7 +115,7 @@ gap> S := Semigroup([
 > Transformation([1, 2, 2])]);
 <transformation semigroup of degree 3 with 2 generators>
 gap> mat := [[Transformation([1, 2, 1])]];;
-gap> R := ReesMatrixSemigroup(S, mat);  # simple 1x1 RMS over non-group semigroup
+gap> R := ReesMatrixSemigroup(S, mat);  # simple 1x1 RMS over nongroup semigroup
 <Rees matrix semigroup 1x1 over <transformation semigroup of degree 3 with 2 
   generators>>
 gap> IsReesMatrixSubsemigroup(R);
@@ -243,7 +243,8 @@ gap> mat := [
 >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0],
 >   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ()]];;
 gap> G := Group(());;
-gap> R := ReesZeroMatrixSemigroup(G, mat);;  # 13x13 inverse RZMS over triv group
+gap> R := ReesZeroMatrixSemigroup(G,
+>                                 mat);;  # 13x13 inverse RZMS over triv group
 gap> NrMaximalSubsemigroups(R);
 8190
 gap> G := Group([(1, 4, 2), (1, 4, 5)]);;

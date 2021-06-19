@@ -103,7 +103,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
 gap> SemigroupCongruence(S, [S.1, S.2]);
 <semigroup congruence over <inverse partial perm semigroup of size 116, 
  rank 4 with 3 generators> with 1 generating pairs>
-gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 1024));
+gap> SemigroupCongruence(S, [S.1, S.2],
+> rec(cong_by_ker_trace_threshold := 1024));
 <semigroup congruence over <inverse partial perm semigroup of size 116, 
  rank 4 with 3 generators> with 1 generating pairs>
 gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 0));
@@ -115,7 +116,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
 >                           PartialPerm([1, 2, 3], [2, 3, 4]),
 >                           PartialPerm([1, 2, 4], [2, 1, 3])],
 >                          rec(cong_by_ker_trace_threshold := 100));;
-gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 100));
+gap> SemigroupCongruence(S, [S.1, S.2],
+> rec(cong_by_ker_trace_threshold := 100));
 <semigroup congruence over <inverse partial perm semigroup of size 116, 
  rank 4 with 3 generators> with congruence pair (116,1)>
 

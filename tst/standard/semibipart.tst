@@ -913,7 +913,7 @@ gap> S := Semigroup([
 >   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0],
 >   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
 >   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
->   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]])]);
+> [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]])]);
 <semigroup of 8x8 min-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>

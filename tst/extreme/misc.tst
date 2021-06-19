@@ -3663,8 +3663,9 @@ Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )
 gap> IsGroupHClass(h);
 true
 gap> IsSubset(Set(KnownPropertiesOfObject(h)),
-> Set(["IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsGroupHClass",
->      "IsGreensClassNC", "IsGeneratorsOfEnumerableSemigroup"]));
+> Set(["IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup",
+>      "IsGroupHClass",
+>       "IsGreensClassNC", "IsGeneratorsOfEnumerableSemigroup"]));
 true
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 

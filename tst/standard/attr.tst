@@ -266,7 +266,8 @@ gap> Size(MinimalIdeal(s)) = 1;
 false
 
 # Test MultiplicativeZero (for an infinite semigroup)
-#gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+#gap> S := Semigroup([Matrix(IsMaxPlusMatrix,
+#>                           [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 #>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 #gap> MultiplicativeZero(S); 
 # FIXME Enters an infinite loop in a library method because S is not finite

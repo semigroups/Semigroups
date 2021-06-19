@@ -418,10 +418,12 @@ end);
 InstallMethod(IsFactorisableInverseMonoid, "for an inverse semigroup ideal",
 [IsSemigroupIdeal and IsInverseSemigroup],
 function(I)
+  local x;
   if I = SupersemigroupOfIdeal(I) then
     return IsFactorisableInverseMonoid(SupersemigroupOfIdeal(I));
   fi;
-  return IsFactorisableInverseMonoid(InverseSemigroup(GeneratorsOfSemigroup(I)));
+  x := IsFactorisableInverseMonoid(InverseSemigroup(GeneratorsOfSemigroup(I)));
+  return x;
 end);
 
 InstallMethod(Ideals, "for a finite semigroup",

@@ -145,7 +145,8 @@ gap> g1 := Transformation([2, 1, 4, 5, 6, 7, 3, 2, 1]);;
 gap> g2 := Transformation([2, 1, 4, 2, 1, 4, 2, 1, 4]);;
 gap> m18 := Monoid(g1, g2);;
 gap> d := GreensDClasses(m18);;
-gap> i := Position(d, DClass(m18, Transformation([2, 1, 4, 5, 6, 7, 3, 2, 1])));;
+gap> i := Position(d,
+>                  DClass(m18, Transformation([2, 1, 4, 5, 6, 7, 3, 2, 1])));;
 gap> dc := d[i];
 <Green's D-class: Transformation( [ 2, 1, 4, 5, 6, 7, 3, 2, 1 ] )>
 gap> RankOfTransformation(Representative(dc));
