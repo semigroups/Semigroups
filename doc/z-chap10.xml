@@ -4,19 +4,8 @@
   </Heading>
 
   This chapter describes the functions in &Semigroups; for dealing with free
-  inverse semigroups and free bands. Sections
-  <Ref Sect="Free inverse semigroups" Style="Number"/>,
-  <Ref Sect="Displaying free inverse semigroup elements" Style="Number"/>,
-  <Ref Sect="Operators and operations for free inverse semigroup elements"
-  Style="Number"/>,
-  <Ref Sect="Free bands" Style="Number"/>, and
-  <Ref Sect="Operators and operations for free band elements" Style="Number"/>,
-  and the functions described therein, were written by Julius Jonu&#353;as.
-  Section <Ref Sect="Words and strings in finitely presented semigroups"
-  Style="Number"/> was written by Maria Tsalakou and Murray Whyte, and Section
-  <Ref Sect="Helper functions for creating semigroup and monoid presentations"
-  Style="Number"/> was written by Luke Elliott.
-  <P/>
+  inverse semigroups and free bands. This part of the manual and the functions
+  described herein were written by Julius Jonu&#353;as.<P/>
   
   <Section Label="Free inverse semigroups">
     <Heading>
@@ -191,33 +180,5 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     </List>
 
     <#Include Label = "GreensDClassOfElement" >
-  </Section>
-
-
-  <Section Label="Words and strings in finitely presented semigroups">
-    <Heading> Words and strings in finitely presented semigroups
-    </Heading>
-    This section contains various methods for dealing with words, which for
-    these purposes are lists of positive integers.
-
-    <#Include Label = "WordToString" >
-    <#Include Label = "RandomWord" >
-    <#Include Label = "StandardiseWord" >
-    <#Include Label = "StringToWord" >
-  </Section>
-
-  <Section
-   Label="Helper functions for creating semigroup and monoid presentations">
-    <Heading> Helper functions for creating semigroup and monoid presentations
-    </Heading>
-    This section describes operations implemented in &Semigroups; that are
-    designed to interact with standard &GAP; methods for creating finitely
-    presented semigroups and monoids (see <Ref
-    Chap="Finitely Presented Semigroups and Monoids"
-    BookName="ref"/>).
-
-    <#Include Label = "ParseRelations">
-    <#Include Label = "ElementOfFpSemigroup">
-    <#Include Label = "ElementOfFpMonoid">
   </Section>
 </Chapter>

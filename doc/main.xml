@@ -77,10 +77,11 @@
   <#Include SYSTEM "z-chap16.xml">  <!-- properties and attributes of inverse semigroups -->
   <#Include SYSTEM "z-chap17.xml">  <!-- congruences -->
   <#Include SYSTEM "z-chap18.xml">  <!-- homomorphisms -->
-  <#Include SYSTEM "z-chap19.xml">  <!-- visualising semigroups -->
-  <#Include SYSTEM "z-chap20.xml">  <!-- utils -->
-  <!--<#Include SYSTEM "z-chap21.xml">  <!-- orbits -->
-  <!-- <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->
+  <#Include SYSTEM "z-chap19.xml">  <!-- tietze -->
+  <#Include SYSTEM "z-chap20.xml">  <!-- visualising semigroups -->
+  <#Include SYSTEM "z-chap21.xml">  <!-- utils -->
+  <!--<#Include SYSTEM "z-chap22.xml">  <!-- orbits -->
+  <!-- <#Include SYSTEM "z-chap23.xml">  <!-- extending the package -->
 </Body>
 
 <Bibliography Databases="new_bibliography.xml" />
