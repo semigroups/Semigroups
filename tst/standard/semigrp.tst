@@ -1058,7 +1058,6 @@ there must be at most three arguments,
 gap> RandomSemigroup(IsSemigroup, 3, "a");
 Error, Semigroups: RandomSemigroup: usage,
 the third argument (degree or dimension) must be a pos int,
-gap> RandomMonoid(IsMonoid);;
 
 # Test AsSemigroup for a filter, ring, and semigroup
 gap> S := FullTransformationMonoid(3);;

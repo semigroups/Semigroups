@@ -17,6 +17,13 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+# TEMPORARY
+InstallMethod(IsOne, "for a matrix over finite field",
+[IsMatrixOverFiniteField],
+mat -> mat = One(mat));
+# TODO Experiment with ListOp for our matrix objects
+# TODO Experiment with Unpack for our matrix objects
+
 #############################################################################
 # Internal
 #############################################################################
@@ -28,10 +35,10 @@ SEMIGROUPS.TropicalizeMat := function(mat, threshold)
   mat[n + 1] := threshold;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if IsInt(mat[i][j]) then
-        mat[i][j] := AbsInt(mat[i][j]);
-        if mat[i][j] > threshold then
-          mat[i][j] := threshold;
+      if IsInt(mat[i, j]) then
+        mat[i, j] := AbsInt(mat[i, j]);
+        if mat[i, j] > threshold then
+          mat[i, j] := threshold;
         fi;
       fi;
     od;
@@ -47,9 +54,9 @@ SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
   x[n + 2] := period;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      x[i][j] := AbsInt(x[i][j]);
-      if x[i][j] > threshold then
-        x[i][j] := threshold + (x[i][j] - threshold) mod period;
+      x[i, j] := AbsInt(x[i, j]);
+      if x[i, j] > threshold then
+        x[i, j] := threshold + (x[i, j] - threshold) mod period;
       fi;
     od;
   od;
@@ -75,7 +82,7 @@ SEMIGROUPS.MatrixTrans := function(x, dim, zero, one)
 
   mat := List([1 .. dim], x -> ShallowCopy([1 .. dim] * 0 + zero));
   for i in [1 .. dim] do
-    mat[i][i ^ x] := one;
+    mat[i, i ^ x] := one;
   od;
   return mat;
 end;
@@ -95,7 +102,7 @@ function(file, mat)
   pickle := [SEMIGROUPS_FilterOfMatrixOverSemiring(mat), []];
   i := 1;
   while IsBound(mat![i]) do
-    pickle[2][i] := mat![i];
+    pickle[2, i] := mat![i];
     i := i + 1;
   od;
 
@@ -256,12 +263,15 @@ function(filter, mat)
   local row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+    # TODO Or InfoStatement and TryNextMethod() in full case?
+    # And an error if it's not rectangular, then a try next method if not sq?
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
                   "the 2nd argument must define a square matrix,");
   fi;
 
   if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
                     IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
+    # TODO Or TryNextMethod() to allow other packages to use this?
     ErrorNoReturn("Semigroups: Matrix:\n",
                   "cannot create a matrix from the given arguments,");
   fi;
@@ -280,6 +290,18 @@ function(filter, mat)
   od;
 
   return MatrixNC(filter, List(mat, ShallowCopy));
+end);
+
+InstallMethod(Matrix, "for a semiring and empty list",
+[IsSemiring, IsList and IsEmpty],
+function(semiring, mat)
+  if IsField(semiring) and IsFinite(semiring) then
+    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                    semiring, mat);
+  elif IsIntegers(semiring) then
+    return MatrixNC(IsIntegerMatrix, mat);
+  fi;
+  TryNextMethod();
 end);
 
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
@@ -404,22 +426,21 @@ function(mat)
   one := One(mat);
   dim := DimensionOfMatrixOverSemiring(mat);
   if Union(AsList(mat)) <> Union(AsList(one))
-      or ForAny([1 .. dim], i -> Number(mat[i], j -> j = one[1][1]) <> 1) then
+      or ForAny([1 .. dim], i -> Number(mat[i], j -> j = one[1, 1]) <> 1) then
     return fail;
   fi;
 
-  one := one[1][1];
+  one := one[1, 1];
   return Transformation(List([1 .. dim], i -> Position(mat[i], one)));
 end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)],
-            i -> ShallowCopy(mat[i])));
+mat -> List([1 .. NrRows(mat)], i -> ShallowCopy(mat[i])));
 
 InstallMethod(AsList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)], i -> mat[i]));
+mat -> List([1 .. NrRows(mat)], i -> mat[i]));
 
 InstallMethod(Iterator, "for a matrix over semiring",
 [IsMatrixOverSemiring],
@@ -450,16 +471,32 @@ function(mat)
   return IteratorByFunctions(iter);
 end);
 
-InstallMethod(ELM_LIST, "for a matrix over semiring",
+InstallOtherMethod(\[\], "for a matrix over semiring and a pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then
-    ErrorNoReturn("Semigroups: ELM_LIST (for a matrix over semiring):\n",
+    ErrorNoReturn("Semigroups: [] (for a matrix over semiring):\n",
                   "the position is greater than the dimension of the matrix,");
 
   fi;
   return mat![pos];
 end);
+
+InstallMethod(MatElm,
+"for a plist matrix over semiring positional rep, and two pos ints",
+[IsPlistMatrixOverSemiringPositionalRep, IsPosInt, IsPosInt],
+function(mat, row, col)
+  if Maximum(row, col) > NumberRows(mat) then
+    ErrorNoReturn("Semigroups: [,] (for a matrix over semiring):\n",
+                  "the matrix only has ", NrRows(mat), " rows and columns,");
+  fi;
+  return mat![row][col];
+end);
+
+# TODO W: Need to be sure that this is necessary for good reasons
+InstallMethod(\^,
+"for a matrix over semiring and a pos int",
+[IsMatrixOverSemiring, IsPosInt], POW_OBJ_INT);
 
 InstallMethod(IsBound\[\],
 "for a plist matrix over semiring positional rep and pos int",
@@ -478,7 +515,7 @@ function(x)
   for i in [1 .. n] do
     y[i] := [];
     for j in [1 .. n] do
-      y[i][j] := x[j][i];
+      y[i, j] := x[j, i];
     od;
   od;
 
@@ -517,6 +554,12 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 [IsMatrixOverSemiringCollection], ReturnFalse);
 
 InstallMethod(DimensionOfMatrixOverSemiring, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberRows, "for a matrix over a semiring",
+[IsMatrixOverSemiring], NumberColumns);
+
+InstallMethod(NumberColumns, "for a matrix over a semiring",
 [IsMatrixOverSemiring],
 function(mat)
   if IsBound(mat[1]) then
@@ -570,12 +613,12 @@ function(x)
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if x[i][j] = infinity then
+      if x[i, j] = infinity then
         length := 1;
-      elif x[i][j] = -infinity then
+      elif x[i, j] = -infinity then
         length := 2;
       else
-        length := Length(String(x[i][j]));
+        length := Length(String(x[i, j]));
       fi;
       if length > max then
         max := length;
@@ -602,7 +645,7 @@ function(x)
   str := "";
   for i in [1 .. n] do
     for j in [1 .. n] do
-      Append(str, pad(x[i][j]));
+      Append(str, pad(x[i, j]));
     od;
     Remove(str, Length(str));
     Append(str, "\n");
@@ -665,13 +708,13 @@ function(x)
     Append(str, "\>\>[");
     for j in [1 .. n] do
       if IsBooleanMat(x) then
-        if x[i][j] then
+        if x[i, j] then
           Append(str, String(1));
         else
           Append(str, String(0));
         fi;
       else
-        Append(str, String(x[i][j]));
+        Append(str, String(x[i, j]));
       fi;
 
       Append(str, ", ");

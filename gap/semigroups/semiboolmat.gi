@@ -138,18 +138,18 @@ function(n)
 
   gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
   for j in [1 .. n - 1] do
-    gens[2][j][j + 1] := true;
+    gens[2][j, j + 1] := true;
   od;
-  gens[2][n][1] := true;
+  gens[2][n, 1] := true;
 
   for i in [3, 4] do
     gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
     for j in [1 .. n - 1] do
-      gens[i][j][j] := true;
+      gens[i][j, j] := true;
     od;
   od;
-  gens[3][n][1] := true;
-  gens[3][n][n] := true;
+  gens[3][n, 1] := true;
+  gens[3][n, n] := true;
 
   Apply(gens, BooleanMat);
 
@@ -171,8 +171,8 @@ function(n)
   for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
       x := List([1 .. n], k -> BlistList([1 .. n], [k]));
-      x[i][j] := true;
-      x[j][i] := true;
+      x[i, j] := true;
+      x[j, i] := true;
       Add(gens, BooleanMat(x));
     od;
   od;
@@ -195,7 +195,7 @@ function(n)
   for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
       x := List([1 .. n], k -> BlistList([1 .. n], [k]));
-      x[i][j] := true;
+      x[i, j] := true;
       Add(gens, BooleanMat(x));
     od;
   od;
@@ -215,7 +215,7 @@ function(n)
   gens := [];
   for i in [1 .. n] do
     x := List([1 .. n], k -> BlistList([1 .. n], [k]));
-    x[i][i] := false;
+    x[i, i] := false;
     Add(gens, BooleanMat(x));
   od;
 
