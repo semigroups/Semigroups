@@ -52,14 +52,12 @@ Group(())
 # normalizer: SEMIGROUPS.NormalizerOptsRec, error, 1/?
 gap> S := Semigroup(IdentityTransformation);;
 gap> SEMIGROUPS.NormalizerOptsRec(S, rec(lambdastab := 1));
-Error, Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,
-the component `lambdastab' must be a boolean,
+Error, the component `lambdastab' is not a boolean
 
 # normalizer: SEMIGROUPS.NormalizerOptsRec, error, 2/?
 gap> S := Semigroup(IdentityTransformation);;
 gap> SEMIGROUPS.NormalizerOptsRec(S, rec(rhostab := 1));
-Error, Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,
-the component `rhostab' must be a boolean,
+Error, the component `rhostab' is not a boolean
 
 # normalizer: SEMIGROUPS.NormalizerOptsRec, error, 3/?
 gap> S := InverseSemigroup(PartialPerm([1, 4, 2]));;
@@ -86,20 +84,17 @@ Error, no 1st choice method found for `Normalizer' on 1 arguments
 
 # normalizer: SEMIGROUPS.DeterministicNormalizer, error, 2/4
 gap> SEMIGROUPS.DeterministicNormalizer(Group((1, 2)), S, rec());
-Error, Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,
-the second arg must be a semigroup of transformations,
-partial perms or bipartitions,
+Error, the 2nd argument is not a semigroup of transformations, partial perms o\
+r bipartitions
 
 # normalizer: SEMIGROUPS.DeterministicNormalizer, error, 3/4
 gap> SEMIGROUPS.DeterministicNormalizer(1, S, rec());
-Error, Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,
-the first arg must be a permutation group,
+Error, the 1st argument is not a permutation group
 
 # normalizer: SEMIGROUPS.DeterministicNormalizer, error, 4/4
 gap> SEMIGROUPS.DeterministicNormalizer(Group((1, 2)),
 > Semigroup(IdentityTransformation), fail);
-Error, Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,
-the third argument must be a record,
+Error, the 3rd argument is not a record
 
 # normalizer: SEMIGROUPS.DeterministicNormalizer, works, 1/1
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
@@ -122,20 +117,17 @@ Error, no 1st choice method found for `Normalizer' on 1 arguments
 
 # normalizer: SEMIGROUPS.NonDeterministicNormalizer, error, 2/4
 gap> SEMIGROUPS.NonDeterministicNormalizer(Group((1, 2)), S, rec());
-Error, Semigroups: SEMIGROUPS.NonDeterministicNormalizer: usage,
-the second arg must be a semigroup of transformations,
-partial perms or bipartitions,
+Error, the 2nd argument is not a semigroup of transformations, partial perms o\
+r bipartitions
 
 # normalizer: SEMIGROUPS.NonDeterministicNormalizer, error, 3/4
 gap> SEMIGROUPS.NonDeterministicNormalizer(1, S, rec());
-Error, Semigroups: SEMIGROUPS.NonDeterministicNormalizer: usage,
-the first arg must be a permutation group,
+Error, the 1st argument is not a permutation group
 
 # normalizer: SEMIGROUPS.NonDeterministicNormalizer, error, 4/4
 gap> SEMIGROUPS.NonDeterministicNormalizer(Group((1, 2)),
 > Semigroup(IdentityTransformation), fail);
-Error, Semigroups: SEMIGROUPS.NonDeterministicNormalizer: usage,
-the third arg must be a record,
+Error, the 3rd argument is not a record
 
 # normalizer: SEMIGROUPS.NonDeterministicNormalizer, trans, 1/1
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := true));;

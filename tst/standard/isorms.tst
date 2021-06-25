@@ -59,11 +59,9 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
 gap> A := AutomorphismGroup(R);;
-#I  finding automorphisms of the graph . . . 2304 found
-#I  finding the stabilizer of matrix . . . 12
-#I  finding the automorphism group of the group . . . found 6
-#I  finding the stabilizer of matrix entries . . . 1
-#I  the graph has 2 connected components
+#I  finding automorphisms of the graph . . . 2304 found#I  finding the stabili\
+zer of matrix . . . 12#I  finding the automorphism group of the group . . . fo\
+und 6#I  finding the stabilizer of matrix entries . . . 1#I  the graph has 2 connected components
 #I  backtracking in the direct product of size 2304 . . . 
 gap> Length(GeneratorsOfSemigroup(A));
 24
@@ -345,8 +343,7 @@ true
 # SEMIGROUPS.RZMStoRZMSInducedFunction: error, 1/1
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
 gap> SEMIGROUPS.RZMStoRZMSInducedFunction(R, R, fail, fail, [1]);
-Error, Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: usage,
-the 5th argument must be a list of length 2,
+Error, the 5th argument (a list) must have length 2, but found 1
 
 # \=: RMS and RMS elements
 gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
@@ -725,31 +722,31 @@ gap> S := ReesMatrixSemigroup(Group((1, 2)), [[()]]);;
 gap> auto := IdentityMapping(g);;
 gap> g_elms_list := [(), (1, 3), (), (), ()];;
 gap> RMSIsoByTriple(R, S, [(), auto, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple:
-<R1> and <R2> are not isomorphic,
+Error, the 1st and 2nd arguments (Rees matrix semigroups) have different numbe\
+rs of rows and columns
 gap> RMSIsoByTriple(R, R, [42, auto, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[1] should be a permutation,
+Error, the 1st entry in the 3rd argument (a triple) is not a permutation
 gap> RMSIsoByTriple(R, R, [(1, 7), auto, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[1] should be a permutation on [1 .. 5],
+Error, the 1st entry (a permutation) in the 3rd argument (a triple) is not a p\
+ermutation on [1 .. 5]
 gap> RMSIsoByTriple(R, R, [(1, 4), auto, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[1] should not map columns to rows,
+Error, the 1st entry (a permutation) in the 3rd argument (a triple) maps rows \
+to columns
 gap> RMSIsoByTriple(R, R, [(), fail, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[2] should be an isomorphism from
-the underlying group of <R1> to that of <R2>,
+Error, the 2nd entry in the 3rd argument (a triple) is not an isomorphism betw\
+een the underlying groups of the 1st and 2nd arguments (Rees matrix semigroups\
+)
 gap> RMSIsoByTriple(R, R, [(), auto, [(), (), ()]]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[3] should have length equal to
-the number of rows and columns of <R1>,
+Error, the 3rd entry (a list) in the 3rd argument (a triple)does not have leng\
+th equal to the number of rows and columns of the 1st argument (a Rees matrix \
+semigroup)
 gap> RMSIsoByTriple(R, R, [(), auto, [42, 43, 44, 45, 46]]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[3] should only contain elements from the underlying group of <R2>,
+Error, the 3rd entry (a list) in the 3rd argument (a triple) does not consist \
+of elements of the underlying group of the 2nd argument (a Rees matrix semigro\
+up)
 gap> RMSIsoByTriple(R, R, [(), auto, g_elms_list]);
-Error, Semigroups: RMSIsoByTriple: usage,
-<triple>[3] does not define an isomorphism,
+Error, the 3rd entry (a list) in the 3rd argument (a triple) does not define a\
+n isomorphism
 gap> iso := RMSIsoByTripleNC(R, R, [(), auto, g_elms_list]);;
 gap> BruteForceIsoCheck(iso);
 false
@@ -767,29 +764,29 @@ gap> S := ReesZeroMatrixSemigroup(Group((1, 2)), [[()]]);;
 gap> auto := IdentityMapping(g);;
 gap> g_elms_list := [(), (1, 3), (), (), (), ()];;
 gap> RZMSIsoByTriple(R, S, [(), auto, g_elms_list]);
-Error, Semigroups: RZMSIsoByTriple:
-<R1> and <R2> are not isomorphic,
+Error, the 1st and 2nd arguments (Rees 0-matrix semigroups) have different num\
+bers of rows and columns
 gap> RZMSIsoByTriple(R, R, [42, auto, g_elms_list]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[1] should be a permutation,
+Error, the 1st entry in the 3rd argument (a triple) is not a permutation
 gap> RZMSIsoByTriple(R, R, [(1, 3), auto, g_elms_list]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[1] should act as an isomorphism from
-the graph of <R1> to the graph of <R2>,
+Error, the 1st entry in the 3rd argument (a triple) is not an isomorphism from\
+ the graph of the 1st argument (a Rees 0-matrix semigroup) and the graph of th\
+e 2nd argument (a Rees 0-matrix semigroup)
 gap> RZMSIsoByTriple(R, R, [(), fail, g_elms_list]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[2] should be an isomorphism from
-the underlying group of <R1> to that of <R2>,
+Error, the 2nd entry in the 3rd argument (a triple) is not an isomorphism betw\
+een the underlying groups of the 1st and 2nd arguments (Rees 0-matrix semigrou\
+ps)
 gap> RZMSIsoByTriple(R, R, [(), auto, [(), (), ()]]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[3] should have length equal to
-the number of rows and columns of <R1>,
+Error, the 3rd entry (a list) in the 3rd argument (a triple)does not have leng\
+th equal to the number of rows and columns of the 1st argument (a Rees 0-matri\
+x semigroup)
 gap> RZMSIsoByTriple(R, R, [(), auto, [41, 42, 43, 44, 45, 46]]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[3] should only contain elements from the underlying group of <R2>,
+Error, the 3rd entry (a list) in the 3rd argument (a triple) does not consist \
+of elements of the underlying group of the 2nd argument (a Rees 0-matrix semig\
+roup)
 gap> RZMSIsoByTriple(R, R, [(), auto, g_elms_list]);
-Error, Semigroups: RZMSIsoByTriple: usage,
-<triple>[3] does not define an isomorphism,
+Error, the 3rd entry (a list) in the 3rd argument (a triple) does not define a\
+n isomorphism
 gap> iso := RZMSIsoByTripleNC(R, R, [(), auto, g_elms_list]);;
 gap> BruteForceIsoCheck(iso);
 false
@@ -883,11 +880,9 @@ true
 # IsomorphismRees(Zero)MatrixSemigroupOverPermGroup
 gap> S := FullTransformationMonoid(3);;
 gap> IsomorphismReesMatrixSemigroupOverPermGroup(S);
-Error, Semigroups: IsomorphismReesMatrixSemigroupOverPermGroup: usage,
-the argument must be a finite simple semigroup,
+Error, the argument is not a finite simple semigroup
 gap> IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);
-Error, Semigroups: IsomorphismReesZeroMatrixSemigroupOverPermGroup: usage,
-the argument must be a finite 0-simple semigroup,
+Error, the argument is not a finite 0-simple semigroup
 gap> G := SymmetricGroup(2);;
 gap> R := ReesMatrixSemigroup(G, [[G.1, G.1]]);
 <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>
@@ -1079,14 +1074,12 @@ gap> mat := [[IdentityTransformation, IdentityTransformation,
 > Transformation([2, 1])]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> CanonicalReesZeroMatrixSemigroup(S);
-Error, Semigroups: CanonicalReesZeroMatrixSemigroup: usage,
-the argument must be a Rees zero matrix semigroup with underlying semigroup wh\
-ich is a group,
+Error, the underlying semigroup of the argument (a Rees 0-matrix semigroup) is\
+ not a group
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> CanonicalReesMatrixSemigroup(S);
-Error, Semigroups: CanonicalReesMatrixSemigroup: usage,
-the argument must be a Rees matrix semigroup with underlying semigroup which i\
-s a group,
+Error, the underlying semigroup of the argument (a Rees 0-matrix semigroup) is\
+ not a group
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);

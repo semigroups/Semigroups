@@ -64,11 +64,9 @@ false
 gap> otheruni := UniversalSemigroupCongruence(FullTransformationMonoid(5));;
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> IsSubrelation(congs[4], otheruni);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> IsSubrelation(otheruni, congs[4]);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrCongruenceClasses(cong);
 1
@@ -121,16 +119,13 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 true
 gap> [Transformation([1, 3, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> [3, 4] in uni;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> [Transformation([1, 4, 2, 4])] in uni;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 
 # Classes
 gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),
@@ -140,13 +135,13 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> ImagesElm(uni, PartialPerm([1, 2, 3], [1, 3, 4])) = Elements(S);
 true
 gap> ImagesElm(uni, Transformation([1, 3, 2]));
-Error, Semigroups: ImagesElm: usage,
-the second argument <elm> must be in <cong>'s semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> classes := EquivalenceClasses(uni);
 [ <congruence class of [2,1,3]> ]
 gap> EquivalenceClassOfElement(uni, Transformation([1, 3, 2]));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-the second argument <elm> must be in the semigroup of 1st argument <cong>,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> class := EquivalenceClassOfElement(uni, PartialPerm([1, 2, 3], [1, 3, 4]));
 <congruence class of [2,3,4](1)>
 gap> PartialPerm([2], [3]) in class;
@@ -161,8 +156,7 @@ gap> T := Semigroup([PartialPerm([1], [3]),
 >                    PartialPerm([1, 2, 3], [1, 3, 4])]);;
 gap> badcong := UniversalSemigroupCongruence(T);;
 gap> class * EquivalenceClassOfElement(badcong, PartialPerm([1], [3]));
-Error, Semigroups: \*: usage,
-the args <c1> and <c2> must be over the same congruence,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> Size(class);
 11
 
@@ -172,44 +166,30 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 gap> T := Semigroup([Transformation([1, 2, 4, 1]),
 >                    Transformation([3, 3, 1, 3])]);;
 gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 1, 1]),
->                                    Transformation([1, 3, 4, 1])]);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
-gap> uni := UniversalSemigroupCongruence(S);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(uni, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(cong, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> JoinSemigroupCongruences(uni, cong);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> MeetSemigroupCongruences(uni, uni);
-<universal semigroup congruence over <transformation semigroup of degree 4 
- with 2 generators>>
-gap> MeetSemigroupCongruences(cong, uni);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
-gap> MeetSemigroupCongruences(uni, cong);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
+>                                    Transformation([1, 3, 4, 1])]);;
+gap> uni := UniversalSemigroupCongruence(S);;
+gap> uni = JoinSemigroupCongruences(uni, uni);
+true
+gap> uni = JoinSemigroupCongruences(cong, uni);
+true
+gap> uni = JoinSemigroupCongruences(uni, cong);
+true
+gap> uni = MeetSemigroupCongruences(uni, uni);
+true
+gap> cong = MeetSemigroupCongruences(cong, uni);
+true
+gap> cong = MeetSemigroupCongruences(uni, cong);
+true
 gap> badcong := SemigroupCongruence(T, [Transformation([1, 2, 4, 1]),
 >                                       Transformation([1, 1, 1, 1])]);;
 gap> JoinSemigroupCongruences(uni, badcong);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> JoinSemigroupCongruences(badcong, uni);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> MeetSemigroupCongruences(uni, badcong);
-Error, Semigroups: MeetSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> MeetSemigroupCongruences(badcong, uni);
-Error, Semigroups: MeetSemigroupCongruences: usage,
-congruences must be defined over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 4, 1]),
 >                                    Transformation([1, 3, 3, 1])]);;
 gap> cong = uni;

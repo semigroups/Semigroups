@@ -118,8 +118,7 @@ function(S, n)
   local gens, out, range, i, j;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: DigraphOfActionOnPoints: usage,\n",
-                  "the second argument <n> must be non-negative,");
+    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
   elif n = 0 then
     return EmptyDigraph(0);
   elif HasDigraphOfActionOnPoints(S)
@@ -209,8 +208,7 @@ function(S, n)
   pair, range, gr, i, j;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: DigraphOfActionOnPairs: usage,\n",
-                  "the second argument <n> must be non-negative,");
+    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
   fi;
 
   gens := GeneratorsOfSemigroup(S);
@@ -258,7 +256,7 @@ function(S, n)
   return gr;
 end);
 
-# FIXME can probably do better than this
+# can probably do better than this
 
 InstallMethod(Idempotents, "for a transformation semigroup and pos int",
 [IsTransformationSemigroup, IsPosInt],
@@ -410,8 +408,7 @@ function(coll, set)
 
   if not (IsSSortedList(set) and IsHomogeneousList(set)
           and IsPosInt(set[1])) then
-    ErrorNoReturn("Semigroups: IsTransitive: usage,\n",
-                  "the second argument <set> must be a set of positive ",
+    ErrorNoReturn("the 2nd argument (a list) must be a set of positive ",
                   "integers");
   fi;
 
@@ -641,8 +638,8 @@ function(M, S)
   local m, gensM, gensS, orbs, n, rimage, maps, next, gen1, newmap, x, y, s, i;
 
   if not IsMonoidAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                  "the second argument <S> should be a monoid (as semigroup),");
+    ErrorNoReturn("the 2nd argument (a transformation semigroup) ",
+                  "should be a monoid (as semigroup)");
   fi;
 
   m := DegreeOfTransformationCollection(M);
@@ -713,8 +710,8 @@ end);
 # TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
 InstallMethod(IsomorphismTransformationSemigroup,
-"for an enumerable semigroup",
-[IsEnumerableSemigroupRep], 2,
+"for a semigroup with CanComputeFroidurePin",
+[CanComputeFroidurePin], 2,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;

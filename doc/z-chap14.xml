@@ -17,7 +17,7 @@
      <#Include Label = "AsListCanonical">
      <#Include Label = "PositionCanonical">
      <#Include Label = "Enumerate">
-     <#Include Label = "IsFullyEnumerated">
+     <#Include Label = "IsEnumerated">
    </Section>
    
   <!--**********************************************************************-->

@@ -91,8 +91,8 @@ Matrix(IsTropicalMaxPlusMatrix, [[7, 6, 7], [4, 6, 7], [4, 2, 4]], 9)
 gap> mat3 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 5);
 <20x20 tropical max-plus matrix>
 gap> mat2 * mat3;
-Error, Semigroups: \* (for tropical max-plus matrices): usage,
-the arguments do not have the same threshold,
+Error, the arguments (tropical max-plus matrices)do not have the same threshol\
+d
 
 # maxplusmat: test tropical min-plus matrix code, 1/1
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],
@@ -125,8 +125,8 @@ Matrix(IsTropicalMinPlusMatrix, [[2, 2], [2, 2]], 2)
 gap> mat3 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 5);
 <20x20 tropical min-plus matrix>
 gap> mat2 * mat3;
-Error, Semigroups: \* (for tropical min-plus matrices): usage,
-the arguments do not have the same threshold,
+Error, the arguments (tropical min-plus matrices) do not have the same thresho\
+ld
 
 # maxplusmat: test projective max-plus matrix code, 1/1
 gap> mat := Matrix(IsProjectiveMaxPlusMatrix,
@@ -187,8 +187,7 @@ Error, no 1st choice method found for `RandomMatrixCons' on 3 arguments
 gap> mat2 := RandomMatrix(IsNTPMatrix, 20, 4, 2);
 <20x20 ntp matrix>
 gap> mat * mat2;
-Error, Semigroups: \* (for ntp matrices): usage,
-the arguments must be matrices over the same semiring,
+Error, the arguments (ntp matrices) are not over the same semiring
 gap> mat3 := RandomMatrix(IsNTPMatrix, 21, 4, 2);
 <21x21 ntp matrix>
 gap> mat3 * mat2;
@@ -196,8 +195,7 @@ gap> mat3 * mat2;
 
 # Test period can't be 0
 gap> A := Matrix(IsNTPMatrix, [[1, 0], [1, 1]], 59, 0);
-Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
- the threshold must be >=0 and the period > 0,
+Error, the 3rd argument (a pos. int.) is not > 0
 
 # maxplusmat: test integer matrix code, 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[-1, -2, 0],
@@ -598,11 +596,10 @@ gap> RandomMatrix(IsProjectiveMaxPlusMatrix, 10);
 
 # Test NTPMatrix entry checker
 gap> x := Matrix(IsNTPMatrix, [[100, 1], [0, 0]], 5, 10);
-Error, Semigroups: Matrix: usage,
-the entries in the 2nd argument do not define a matrix of type IsNTPMatrix,
+Error, the entries in the 2nd argument do not define a matrix of type IsNTPMat\
+rix
 gap> x := Matrix(IsNTPMatrix, [[1, 1], [0, 0]], 5, -10);
-Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
- the threshold must be >=0 and the period > 0,
+Error, the 3rd argument (a pos. int.) is not > 0
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

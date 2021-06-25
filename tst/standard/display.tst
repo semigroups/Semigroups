@@ -966,9 +966,8 @@ gap> TexString(Idempotents(FullTransformationMonoid(2)));
 1 & 2 \\\\\n  1 & 1\n\\end{pmatrix}\n\\begin{pmatrix}\n  1 & 2 \\\\\n  2 & 2\n\
 \\end{pmatrix}"
 gap> TexString(Transformation([1, 1, 1]), 2);
-Error, Semigroups: TexString: usage,
-the second argument (the degree) should be at least the degree of the first ar\
-gument (a transformation),
+Error, the 2nd argument (a pos. int.) is less than the degree of the 1st argum\
+ent (a transformation)
 
 # Tikz/DotLeft/RightCayleyDigraph
 gap> TikzLeftCayleyDigraph(FullTransformationMonoid(2));

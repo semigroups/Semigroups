@@ -13,10 +13,6 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
-# The following are for GAP internal objects of type T_SEMI
-DeclareCategory("IsTSemiObj", IsObject);
-BindGlobal("TheTypeTSemiObj", NewType(NewFamily("TSemiObjFamily"), IsTSemiObj));
-
 # the kernel module makes use of the c functions HTAdd_TreeHash_C and
 # HTValue_TreeHash_C and so we should only use the part of the kernel module
 # using these functions if Orb is compiled.
@@ -30,6 +26,10 @@ Unbind(_SEMIGROUPS_SO);
 if not IsBound(UserHomeExpand) then
   BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
 fi;
+
+DeclareCategory("IsTGapBind14Obj", IsObject);
+BindGlobal("TheTypeTGapBind14Obj",
+           NewType(NewFamily("TGapBind14ObjFamily"), IsTGapBind14Obj));
 
 BindGlobal("SEMIGROUPS", rec());
 MakeReadWriteGlobal("SEMIGROUPS");
@@ -49,6 +49,10 @@ ReadPackage("semigroups", "gap/elements/boolmat.gd");
 ReadPackage("semigroups", "gap/elements/trans.gd");
 ReadPackage("semigroups", "gap/elements/elements.gd");
 ReadPackage("semigroups", "gap/elements/pperm.gd");
+
+ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
+ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
+ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 
 ReadPackage("semigroups", "gap/main/fropin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");
@@ -83,10 +87,11 @@ ReadPackage("semigroups", "gap/hash.gd");
 ReadPackage("semigroups", "gap/ideals/ideals.gd");
 ReadPackage("semigroups", "gap/ideals/idealact.gd");
 ReadPackage("semigroups", "gap/ideals/ideallam.gd");
+ReadPackage("semigroups", "gap/ideals/ideals-froidure-pin.gd");
 
-ReadPackage("semigroups", "gap/greens/gree.gd");
-ReadPackage("semigroups", "gap/greens/gren.gd");
-ReadPackage("semigroups", "gap/greens/grac.gd");
+ReadPackage("semigroups", "gap/greens/generic.gd");
+ReadPackage("semigroups", "gap/greens/froidure-pin.gd");
+ReadPackage("semigroups", "gap/greens/acting.gd");
 
 ReadPackage("semigroups", "gap/tools/display.gd");
 ReadPackage("semigroups", "gap/tools/io.gd");

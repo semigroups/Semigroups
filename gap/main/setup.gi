@@ -53,30 +53,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 function(coll)
   return
   IsPermGroup(McAlisterTripleSemigroupGroup(MTSEParent(Representative(coll))));
-    # and McAlisterTripleSemigroupAction(MTSEParent(coll[1])) = OnPoints;
 end);
-
-# FIXME with the below uncommented many tests fail
-## The HasRows and HasColumns could be removed if it was possible to apply
-## immediate methods to Rees 0-matrix semigroups
-#
-# InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
-# IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
-# function(R)
-#   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
-# end);
-#
-# InstallTrueMethod(IsActingSemigroup,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
-#
-# InstallImmediateMethod(GeneratorsOfMagma,
-# IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
-# function(R)
-#   return GeneratorsOfReesMatrixSemigroupNC(R,
-#                                            Rows(R),
-#                                            UnderlyingSemigroup(R),
-#                                            Columns(R));
-# end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a matrix over finite field collection",
@@ -1170,8 +1147,8 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   elif dataishashlen then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,\n",
-                  "this shouldn't happen,");
+    ErrorNoReturn(
+                  "this shouldn't happen");
   fi;
 end;
 
@@ -1193,9 +1170,9 @@ function(x, hashlen)
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
     if not data = hashlen then
-      ErrorNoReturn("Semigroups: ChooseHashFunction: error,\n",
+      ErrorNoReturn(
                     "cannot hash RZMS elements over this ",
-                    "underlying semigroup,");
+                    "underlying semigroup");
     fi;
   fi;
   dataishashlen := data = hashlen;
@@ -1203,8 +1180,7 @@ function(x, hashlen)
     return SEMIGROUPS.HashFunctionRZMSE(x, data, under, dataishashlen);
   end;
 
-  return rec(func := func,
-             data := data);
+  return rec(func := func, data := data);
 end);
 
 # fallback method for hashing

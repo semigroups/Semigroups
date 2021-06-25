@@ -56,7 +56,7 @@ gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
 <semigroup of 2x2 tropical max-plus matrices with 3 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.1]);
-<semigroup congruence over <non-regular semigroup of 
+<semigroup congruence over <non-regular semigroup of size 9, 
  2x2 tropical max-plus matrices with 3 generators> with 1 generating pairs>
 gap> T := S / cong;;
 gap> AsList(T) * T.1;
@@ -77,18 +77,15 @@ Error, no 3rd choice method found for `*' on 2 arguments
 # quotients, ViewObj
 gap> S := Semigroup([Transformation([2, 3, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([3, 2, 3]), Transformation([1, 1, 1])];;
-gap> cong := SemigroupCongruence(S, [pair]);
-<semigroup congruence over <transformation semigroup of degree 3 with 2 
- generators> with 1 generating pairs>
-gap> Q := S / cong;
-<quotient of <semigroup congruence over <transformation semigroup of degree 3 
- with 2 generators> with 1 generating pairs>>
+gap> cong := SemigroupCongruence(S, [pair]);;
+gap> Q := S / cong;;
+gap> Size(Q);
+1
 gap> I := MinimalIdeal(S);
 <simple transformation semigroup ideal of degree 3 with 1 generator>
-gap> R := S / I;
-<quotient of <Rees congruence of <simple transformation semigroup ideal of 
- degree 3 with 1 generator> over <transformation semigroup of degree 3 with 2 
-generators>>>
+gap> R := S / I;;
+gap> Size(R);
+5
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(I);

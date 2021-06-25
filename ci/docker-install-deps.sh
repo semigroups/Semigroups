@@ -15,7 +15,7 @@ fi
 echo -e "\nInstalling dependencies . . . "
 sudo apt-get --yes update
 sudo apt-get --yes upgrade
-sudo apt-get install libtool curl --yes
+sudo apt-get install curl libtool git --yes
 
 echo -e "\nFixing permissions . . . "
 sudo chown -R gap: $GAP_HOME/pkg/semigroups
@@ -37,7 +37,7 @@ fi
 echo -e "\nCompiling the Semigroups package..."
 cd $GAP_HOME/pkg/semigroups
 ./autogen.sh
-./configure $PKG_FLAGS $EXTRA_PKG_FLAGS
+./configure $PKG_FLAGS $EXTRA_PKG_FLAGS --disable-hpcombi
 make -j4
 
 # Common curl settings

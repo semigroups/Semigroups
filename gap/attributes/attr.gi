@@ -110,17 +110,22 @@ end;
 
 BindGlobal("_GeneratorsSmallest",
 function(S)
-  local iter, gens, T, x;
+  local iter, gens, T, closure, x;
 
   iter := IteratorSorted(S);
   gens := [NextIterator(iter)];
   T    := Semigroup(gens);
 
+  if CanComputeCppFroidurePin(S) then
+    closure := {S, coll, opts} ->
+               ClosureSemigroupOrMonoidNC(Semigroup, S, coll, opts);
+  else
+    closure := ClosureSemigroup;
+  fi;
+
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.ClosureSemigroupDestructive(T,
-                                                  [x],
-                                                  SEMIGROUPS.OptionsRec(T));
+      T := closure(T, [x], SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
       if T = S then
         break;
@@ -133,8 +138,9 @@ end);
 InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 [IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
 
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsEnumerableSemigroupRep], _GeneratorsSmallest);
+InstallMethod(GeneratorsSmallest,
+"for a semigroup with CanComputeCppFroidurePin",
+[CanComputeFroidurePin], _GeneratorsSmallest);
 
 MakeReadWriteGlobal("_GeneratorsSmallest");
 Unbind(_GeneratorsSmallest);
@@ -198,8 +204,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                  "the D-class is not a subsemigroup,");
+    ErrorNoReturn("the argument (a Green's D-class) is not a semigroup");
   fi;
 
   return InjectionPrincipalFactor(D);
@@ -333,8 +338,8 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) does not ",
+                  "satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -353,8 +358,8 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
-                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+    ErrorNoReturn("the argument (a mult. elt. coll.) do not satisfy ",
+                  "IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
@@ -491,8 +496,9 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDGreaterThanFunc, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(IsGreensDGreaterThanFunc,
+"for a semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr, id;
 
@@ -515,8 +521,9 @@ function(S)
   end;
 end);
 
-InstallMethod(MaximalDClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(MaximalDClasses,
+"for a semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local gr;
 
@@ -644,8 +651,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -660,8 +666,7 @@ function(D)
   local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
 
   if not IsRegularDClass(D) then
-    ErrorNoReturn("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
-                  "the argument <D> must be a regular D-class,");
+    ErrorNoReturn("the argument (a Green's D-class) is not regular");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -683,8 +688,8 @@ function(D)
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for an enumerable semigroup with generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+"for a semigroup with CanComputeFroidurePin + generators",
+[IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
 
@@ -732,8 +737,9 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+InstallMethod(RepresentativeOfMinimalIdealNC,
+"for a semigroup with CanComputeFroidurePin",
+[IsSemigroup and CanComputeFroidurePin],
 function(S)
   local comps;
 
@@ -788,9 +794,8 @@ function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   elif not x in S then
-    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n",
-                  "the second arg (a mult. element) must belong to the first ",
-                  "arg (a semigroup),");
+    ErrorNoReturn("the 2nd argument (a mult. element) must belong to the 1st ",
+                  "argument (a semigroup)");
   fi;
   return InversesOfSemigroupElementNC(S, x);
 end);
@@ -868,50 +873,50 @@ _SemigroupSizeByIndexPeriod);
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
 Unbind(_SemigroupSizeByIndexPeriod);
 
-BindGlobal("_MonoidSizeByIndexPeriod",
-function(S)
-  local gen, ind;
-  gen := MinimalMonoidGeneratingSet(S)[1];
-  ind := IndexPeriodOfSemigroupElement(gen);
-  if ind[1] = 1 and One(S) in HClass(S, gen) then
-    # <gen> generates the One of S, so the One is not an additional element
-    # Note that this implies that S is a cyclic group
-    SetIsGroupAsSemigroup(S, true);
-    return ind[2];
-  fi;
-  return Sum(ind);
-end);
-
-InstallMethod(Size,
-"for a monogenic transformation monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsTransformationSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic partial perm monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsPartialPermSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic bipartition monoid with minimal generating set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsBipartitionSemigroup],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-InstallMethod(Size,
-"for a monogenic monoid of matrices over finite field with minimal gen set",
-[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
- IsMatrixOverFiniteFieldCollection],
-5,  # to beat IsActingSemigroup
-_MonoidSizeByIndexPeriod);
-
-MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
-Unbind(_MonoidSizeByIndexPeriod);
+# BindGlobal("_MonoidSizeByIndexPeriod",
+# function(S)
+#   local gen, ind;
+#   gen := MinimalMonoidGeneratingSet(S)[1];
+#   ind := IndexPeriodOfSemigroupElement(gen);
+#   if ind[1] = 1 and One(S) in HClass(S, gen) then
+#     # <gen> generates the One of S, so the One is not an additional element
+#     # Note that this implies that S is a cyclic group
+#     SetIsGroupAsSemigroup(S, true);
+#     return ind[2];
+#   fi;
+#   return Sum(ind);
+# end);
+#
+# InstallMethod(Size,
+# "for a monogenic transformation monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsTransformationSemigroup and IsActingSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic partial perm monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsPartialPermSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic bipartition monoid with minimal generating set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsBipartitionSemigroup],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# InstallMethod(Size,
+# "for a monogenic monoid of matrices over finite field with minimal gen set",
+# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+#  IsMatrixOverFiniteFieldCollection],
+# 5,  # to beat IsActingSemigroup
+# _MonoidSizeByIndexPeriod);
+#
+# MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
+# Unbind(_MonoidSizeByIndexPeriod);
 
 InstallMethod(MultiplicativeZero,
 "for a semigroup with generators",
@@ -1043,9 +1048,8 @@ function(S)
     return gens;
   fi;
 
-  ErrorNoReturn("Semigroups: MinimalSemigroupGeneratingSet: error,\n",
-                "no further methods for computing minimal generating sets ",
-                "are implemented,");
+  ErrorNoReturn("no further methods for computing minimal generating sets ",
+                "are implemented");
 end);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a free monoid",
@@ -1086,11 +1090,9 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadPartialOrder: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalPartialOrder(S);
   fi;
@@ -1116,13 +1118,10 @@ end);
 InstallMethod(NambooripadLeqRegularSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a finite semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsRegularSemigroup(S) then
-    ErrorNoReturn("Semigroups: NambooripadLeqRegularSemigroup: usage,\n",
-                  "the argument is not a regular semigroup,");
+    ErrorNoReturn("the argument (a semigroup) is not regular");
   elif IsInverseSemigroup(S) then
     return NaturalLeqInverseSemigroup(S);
   fi;
@@ -1134,4 +1133,54 @@ function(S)
       return IsGreensLessThanOrEqual(R, RClass(S, y))
         and ForAny(Idempotents(R), e -> e * y = x);
     end;
+end);
+
+InstallMethod(LeftIdentity,
+"for semgroup with CanComputeFroidurePin and mult. elt.",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  i := PositionCanonical(S, x);
+  p := DigraphPath(LeftCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), Reversed(p[2]));
+  return result ^ SmallestIdempotentPower(result);
+end);
+
+InstallMethod(RightIdentity,
+"for semgroup with CanComputeFroidurePin and mult. elt.",
+[IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  local i, p, result;
+  if not x in S then
+    Error("the 2nd argument (a mult. elt.) does not belong to the 1st ",
+          "argument (a semigroup)");
+  elif IsMonoid(S) then
+    return One(S);
+  elif IsMonoidAsSemigroup(S) then
+    return MultiplicativeNeutralElement(S);
+  elif IsIdempotent(x) then
+    return x;
+  fi;
+
+  i := PositionCanonical(S, x);
+  p := DigraphPath(RightCayleyDigraph(S), i, i);
+  if p = fail then
+    return fail;
+  fi;
+  result := EvaluateWord(GeneratorsOfSemigroup(S), p[2]);
+  return result ^ SmallestIdempotentPower(result);
 end);

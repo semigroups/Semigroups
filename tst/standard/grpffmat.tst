@@ -86,8 +86,7 @@ gap> IsomorphismMatrixGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismMatrixGroup' on 1 arguments
 gap> IsomorphismMatrixGroup(SLM(2, 2));
-Error, Semigroups: IsomorphismMatrixGroup: usage,
-the argument must be a group (as semigroup),
+Error, the argument must be a group (as semigroup)
 
 # ClosureGroup
 gap> G := GroupOfUnits(GLM(3, 3));
@@ -102,20 +101,14 @@ gap> x := Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3), Z(3) ^ 0, 0 * Z(3)],
 >  [0 * Z(3), Z(3), Z(3) ^ 0, Z(3)], [0 * Z(3), Z(3), 0 * Z(3), Z(3) ^ 0],
 >  [Z(3), Z(3) ^ 0, 0 * Z(3), Z(3) ^ 0]]);;
 gap> ClosureGroup(G, x);
-Error, Semigroups: ClosureGroup (for matrix over finite field group and matrix\
- over finite field): usage,
- the args must have the same base domain, degree, and
- the second arg must be invertible,
+Error, the arguments must have the same base domain, degree, and the 2nd argum\
+ent must be invertible
 gap> ClosureGroup(G, [x]);
-Error, Semigroups: ClosureGroup (for matrix over finite field group and matrix\
- over finite field): usage,
- the args must have the same base domain, degree, and
- every matrix in the second arg must be invertible,
+Error, the arguments must have the same base domain, degree, and every matrix \
+in the 2nd argument must be invertible
 gap> G ^ x;
-Error, Semigroups: \^ (for matrix over finite field group and matrix over fini\
-te field): usage,
- the args must have the same base domain, degree, and
- the second arg must be invertible,
+Error, the arguments must have the same base domain, degree, and the 2nd argum\
+ent must be invertible
 gap> S := Group(Matrix(GF(3), []));;
 gap> ClosureGroup(S, S);
 <group of 0x0 matrices over GF(3) with 1 generator>

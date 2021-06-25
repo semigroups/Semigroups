@@ -20,7 +20,7 @@ jobs:
 #   - script: ci/azure-gap.sh
 #     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_64_GAP_411_PACKAGES_required'
-  timeoutInMinutes: 10
+  timeoutInMinutes: 25
   variables:
     SUITE: test
     ABI: 64
@@ -30,7 +30,7 @@ jobs:
   - script: ci/azure-gap.sh
     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_64_GAP_410_PACKAGES_required'
-  timeoutInMinutes: 10
+  timeoutInMinutes: 25
   variables:
     SUITE: test
     ABI: 64
@@ -49,7 +49,7 @@ jobs:
 #   - script: ci/azure-gap.sh
 #     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_32_GAP_411_PACKAGES_required'
-  timeoutInMinutes: 10
+  timeoutInMinutes: 25
   variables:
     SUITE: test
     ABI: 32
@@ -59,7 +59,7 @@ jobs:
   - script: ci/azure-gap.sh
     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_32_GAP_410_PACKAGES_required'
-  timeoutInMinutes: 10
+  timeoutInMinutes: 25
   variables:
     SUITE: test
     ABI: 32

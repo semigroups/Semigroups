@@ -71,9 +71,10 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif Position(S, x) <> fail then  # check if x is already known to be in S
+  elif HasFroidurePin(S) and Position(S, x) <> fail then
+    # check if x is already known to be in S
     return true;
-  elif IsFullyEnumerated(S) then
+  elif HasFroidurePin(S) and IsEnumerated(S) then
     return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
@@ -769,8 +770,7 @@ InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
 function(data)
   if not(data!.looking) then
-    ErrorNoReturn("Semigroups: PositionOfFound: usage,\n",
-                  "not looking for anything,");
+    ErrorNoReturn("not looking for anything");
   fi;
   return data!.found;
 end);
@@ -782,8 +782,7 @@ function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
 
   if not IsSemigroupData(data) then
-    ErrorNoReturn("Semigroups: SizeOfSemigroupData: usage,\n",
-                  "the arg <data> must be semigroup data,");
+    ErrorNoReturn("the argument must be a semigroup data object");
   fi;
 
   if not data!.init then

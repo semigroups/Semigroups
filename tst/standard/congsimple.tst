@@ -24,9 +24,8 @@ gap> cong := SemigroupCongruence(S, [Transformation([2, 1, 1, 2, 1]),
 gap> i := Positions(congs, cong);;
 gap> Length(i) = 1;
 true
-gap> congs[i[1]];
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,4,2)>
+gap> IsSimpleSemigroupCongruence(congs[i[1]]);
+true
 gap> Size(congs);
 34
 gap> cong1 := SemigroupCongruence(S, [[Transformation([1, 2, 2, 1, 2]),
@@ -43,12 +42,6 @@ gap> Length(i) = 1 and Length(j) = 1;
 true
 gap> i := i[1];;
 gap> j := j[1];;
-gap> congs[i];
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (1,3,2)>
-gap> congs[j];
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (1,2,2)>
 gap> IsSubrelation(congs[i], congs[j]);
 false
 
@@ -62,18 +55,14 @@ gap> cong1 := SemigroupCongruence(S,
 > [[Transformation([1, 2, 1, 2, 2]),
 >   Transformation([2, 1, 2, 1, 2])],
 >  [Transformation([2, 1, 1, 2, 2]),
->   Transformation([1, 2, 2, 1, 2])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
+>   Transformation([1, 2, 2, 1, 2])]]);;
 gap> i := Positions(congs, cong1);;
 gap> Length(i) = 1;
 true
 gap> cong2 := SemigroupCongruence(S, [[Transformation([1, 2, 1, 2, 2]),
 >                                      Transformation([1, 2, 1, 2, 1])],
 >                                     [Transformation([1, 2, 1, 2, 2]),
->                                      Transformation([1, 2, 2, 1, 1])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
+>                                      Transformation([1, 2, 2, 1, 1])]]);;
 gap> j := Positions(congs, cong2);;
 gap> Length(j) = 1;
 true
@@ -97,9 +86,7 @@ gap> cong := SemigroupCongruence(S,
 > [[Transformation([1, 2, 1, 2, 2]),
 >   Transformation([2, 1, 2, 1, 2])],
 >  [Transformation([2, 1, 1, 2, 2]),
->   Transformation([1, 2, 2, 1, 2])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
+>   Transformation([1, 2, 2, 1, 2])]]);;
 gap> x := Transformation([1, 2, 2, 1, 1]);;
 gap> y := Transformation([1, 2, 2, 1, 2]);;
 gap> z := Transformation([2, 1, 2, 1, 1]);;
@@ -108,12 +95,10 @@ true
 gap> [x, z] in cong;
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 
 # SimpleCongTest5: Congruence classes
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
@@ -126,15 +111,13 @@ gap> cong := SemigroupCongruence(S,
 > [[Transformation([1, 2, 1, 2, 2]),
 >   Transformation([2, 1, 2, 1, 2])],
 >  [Transformation([2, 1, 1, 2, 2]),
->   Transformation([1, 2, 2, 1, 2])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
+>   Transformation([1, 2, 2, 1, 2])]]);;
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-<elm> must be an element of the range of <cong>,
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+congruence)
 gap> classx := CongruenceClassOfElement(cong, x);;
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);
@@ -178,50 +161,34 @@ gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 gap> IsSimpleSemigroup(S);
 true
 gap> congs := [];;
-gap> congs[1] := SemigroupCongruence(S, []);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (1,4,2)>
+gap> congs[1] := SemigroupCongruence(S, []);;
 gap> congs[2] := SemigroupCongruence(S, [Transformation([1, 2, 1, 2, 1]),
->                                        Transformation([3, 4, 3, 4, 3])]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,4,1)>
+>                                        Transformation([3, 4, 3, 4, 3])]);;
 gap> congs[3] := SemigroupCongruence(S, [[Transformation([1, 2, 1, 2, 2]),
 >                                         Transformation([1, 2, 1, 2, 1])],
 >                                        [Transformation([1, 2, 1, 2, 2]),
->                                         Transformation([1, 2, 2, 1, 1])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
+>                                         Transformation([1, 2, 2, 1, 1])]]);;
 gap> congs[4] := SemigroupCongruence(S, [[Transformation([1, 2, 1, 2, 1]),
 >                                         Transformation([3, 4, 3, 4, 3])],
 >                                        [Transformation([1, 2, 1, 2, 2]),
 >                                         Transformation([1, 2, 1, 2, 1])],
 >                                        [Transformation([1, 2, 1, 2, 2]),
->                                         Transformation([1, 2, 2, 1, 1])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,1)>
+>                                         Transformation([1, 2, 2, 1, 1])]]);;
 gap> congs[5] := SemigroupCongruence(S, [Transformation([1, 2, 2, 1, 2]),
->                                        Transformation([1, 2, 1, 2, 2])]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,3,2)>
+>                                        Transformation([1, 2, 1, 2, 2])]);;
 gap> congs[6] := SemigroupCongruence(S, [[Transformation([1, 2, 1, 2, 1]),
 >                                         Transformation([1, 2, 2, 1, 1])],
 >                                        [Transformation([1, 2, 1, 2, 1]),
 >                                         Transformation([3, 4, 3, 4, 3])],
 >                                        [Transformation([1, 2, 2, 1, 2]),
->                                         Transformation([1, 2, 1, 2, 2])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,1)>
-gap> congs[7] := UniversalSemigroupCongruence(S);
-<universal semigroup congruence over <simple transformation semigroup of 
- degree 5 with 4 generators>>
+>                                         Transformation([1, 2, 1, 2, 2])]]);;
+gap> congs[7] := UniversalSemigroupCongruence(S);;
 gap> congs[8] := SemigroupCongruence(S, [[Transformation([1, 2, 1, 2, 1]),
 >                                         Transformation([3, 4, 3, 4, 3])],
 >                                        [Transformation([1, 2, 1, 2, 2]),
 >                                         Transformation([1, 2, 1, 2, 1])],
 >                                        [Transformation([1, 2, 2, 1, 2]),
->                                         Transformation([1, 2, 2, 1, 1])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,1)>
+>                                         Transformation([1, 2, 2, 1, 1])]]);;
 gap> JoinSemigroupCongruences(congs[2], congs[3]) = congs[4];
 true
 gap> JoinSemigroupCongruences(congs[6], congs[3]) = congs[7];
@@ -245,10 +212,9 @@ gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 gap> IsSimpleSemigroup(S);
 true
 gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1, 2, 2]),
->                                    Transformation([1, 2, 2, 1, 1])]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,3,2)>
-gap> q := S / cong;;
+>                                    Transformation([1, 2, 2, 1, 1])]);;
+gap> Size(S / cong);
+6
 
 # SimpleCongTest8
 # Convert to and from semigroup congruence by generating pairs
@@ -266,20 +232,15 @@ gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> IsZeroSimpleSemigroup(S);
 true
-gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
-<universal semigroup congruence over <0-simple inverse partial perm semigroup 
- of rank 2 with 2 generators>>
+gap> C := SemigroupCongruence(S, [S.1, S.1 * S.2]);;
+gap> NrEquivalenceClasses(C);
+1
 
 # Test with a 0-simple semigroup
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsRegularSemigroup(S);
 true
-gap> congs := CongruencesOfSemigroup(S);
-[ <universal semigroup congruence over <0-simple regular transformation 
-     semigroup of degree 4 with 2 generators>>, 
-  <semigroup congruence over <0-simple regular transformation semigroup of 
-     degree 4 with 2 generators> with linked triple (1,2,2)> ]
-gap> Size(congs);
+gap> Size(CongruencesOfSemigroup(S));
 2
 
 # Join/Meet: bad input
@@ -298,18 +259,12 @@ gap> cong1 := SemigroupCongruence(T,
 > [[Transformation([1, 2, 1, 2, 2]),
 >   Transformation([2, 1, 2, 1, 2])],
 >  [Transformation([2, 1, 1, 2, 2]),
->   Transformation([1, 2, 2, 1, 2])]]);
-<semigroup congruence over <simple transformation semigroup of degree 5 with 
- 4 generators> with linked triple (2,2,2)>
-gap> cong2 := SemigroupCongruence(S, []);
-<semigroup congruence over <0-simple regular transformation semigroup of 
- degree 4 with 2 generators> with linked triple (1,2,2)>
+>   Transformation([1, 2, 2, 1, 2])]]);;
+gap> cong2 := SemigroupCongruence(S, []);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-Error, Semigroups: MeetSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 gap> JoinSemigroupCongruences(cong1, cong2);
-Error, Semigroups: JoinSemigroupCongruences: usage,
-<cong1> and <cong2> must be over the same semigroup,
+Error, the ranges of the arguments (congruences) do not coincide
 
 # not simple or 0-simple: try next method
 gap> S := OrderEndomorphisms(2);;

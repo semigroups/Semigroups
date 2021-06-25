@@ -173,8 +173,7 @@ gap> S := Semigroup([
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
 >  Transformation([3, 8, 1, 4, 5, 6, 7, 1])]);;
 gap> DigraphOfActionOnPoints(S, -1);
-Error, Semigroups: DigraphOfActionOnPoints: usage,
-the second argument <n> must be non-negative,
+Error, the 2nd argument (an integer) must be non-negative
 gap> DigraphOfActionOnPoints(S, 5);
 fail
 gap> gr := DigraphOfActionOnPoints(S);
@@ -1820,8 +1819,7 @@ gap> S := Semigroup([
 > Bipartition([[1, -1], [2, 3, 4, 5, -2], [-3], [-4], [-5]]),
 > Bipartition([[1, -2], [2, 3, 4, 5, -1], [-3], [-4], [-5]])]);
 <bipartition semigroup of degree 5 with 2 generators>
-gap> T := AsMonoid(IsTransformationMonoid, S);
-<commutative transformation monoid of degree 2 with 1 generator>
+gap> T := AsMonoid(IsTransformationMonoid, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1843,8 +1841,7 @@ true
 gap> S := Semigroup([
 > Transformation([1, 2, 2, 2, 2]), Transformation([2, 1, 1, 1, 1])]);
 <transformation semigroup of degree 5 with 2 generators>
-gap> T := AsMonoid(IsTransformationMonoid, S);
-<commutative transformation monoid of degree 2 with 1 generator>
+gap> T := AsMonoid(IsTransformationMonoid, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1878,7 +1875,7 @@ gap> S := Semigroup([
 >         [true, false, false, false, false]])]);
 <semigroup of 5x5 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
-<commutative transformation monoid of degree 2 with 1 generator>
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -2461,20 +2458,16 @@ gap> RandomSemigroup(IsTransformationSemigroup);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2, 2);;
 gap> RandomSemigroup(IsTransformationSemigroup, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 gap> RandomSemigroup(IsTransformationSemigroup, 2, "a");;
-Error, Semigroups: RandomSemigroup: usage,
-the third argument (degree or dimension) must be a pos int,
+Error, the third argument (degree or dimension) must be a pos int,
 gap> RandomMonoid(IsTransformationMonoid);;
 gap> RandomMonoid(IsTransformationMonoid, 2);;
 gap> RandomMonoid(IsTransformationMonoid, 2, 2);;
 gap> RandomMonoid(IsTransformationMonoid, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the second argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int,
 gap> RandomMonoid(IsTransformationMonoid, 2, "a");;
-Error, Semigroups: RandomMonoid: usage,
-the third argument (degree or dimension) must be a pos int,
+Error, the third argument (degree or dimension) must be a pos int,
 
 # Test IsConnectedTransformationSemigroup
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
@@ -2513,8 +2506,7 @@ false
 gap> IsTransitive(S, [1, 3]);
 false
 gap> IsTransitive(S, [3, 1]);
-Error, Semigroups: IsTransitive: usage,
-the second argument <set> must be a set of positive integers
+Error, the 2nd argument (a list) must be a set of positive integers
 
 # Test Idempotents with specified ranks
 gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
@@ -2703,8 +2695,7 @@ gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(2), 0);
 gap> IsEmptyDigraph(gr);
 true
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), -1);
-Error, Semigroups: DigraphOfActionOnPairs: usage,
-the second argument <n> must be non-negative,
+Error, the 2nd argument (an integer) must be non-negative
 gap> S := FullTransformationMonoid(4);
 <full transformation monoid of degree 4>
 gap> gr := DigraphOfActionOnPairs(S);

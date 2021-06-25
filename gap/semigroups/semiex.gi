@@ -53,9 +53,8 @@ function(partition)
   m, y, w, p, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
-    ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
-                  "the argument <partition> must be a list of positive ",
-                  "integers,");
+    ErrorNoReturn("the argument (a cyclo. coll.) does not consist of ",
+                  "positive integers");
   elif ForAll(partition, x -> x = 1) then
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
@@ -343,8 +342,7 @@ function(S)
   local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k;
 
   if not IsSemilattice(S) then
-    ErrorNoReturn("Semigroups: GeneratorsOfMunnSemigroup: usage,\n",
-                  "the argument must be a semilattice,");
+    ErrorNoReturn("the argument (a semigroup) is not a semilattice");
   fi;
 
   po := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
@@ -366,7 +364,6 @@ function(S)
     Add(su[Length(x)], gr);
   od;
 
-  # Error();
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do
@@ -509,14 +506,12 @@ function(n)
   return Monoid(gens, rec(acting := false));
 end);
 
-InstallMethod(PartitionMonoid, "for an integer",
-[IsInt],
+InstallMethod(PartitionMonoid, "for an integer", [IsInt],
 function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartitionMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -540,8 +535,7 @@ function(n)
   local gens;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: DualSymmetricInverseMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -564,8 +558,7 @@ function(n)
   local gens;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialDualSymmetricInverseMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 or n = 2 then
@@ -586,8 +579,7 @@ function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: BrauerMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -609,8 +601,7 @@ function(n)
   local S;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialBrauerMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   fi;
 
   S := Semigroup(BrauerMonoid(n),
@@ -627,8 +618,7 @@ function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: JonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -658,8 +648,7 @@ function(n)
   local p, x, M, j;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: AnnularJonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 or n = 1 then
     return JonesMonoid(n);
   fi;
@@ -684,8 +673,7 @@ function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: PartialJonesMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -717,8 +705,7 @@ function(n)
   local gens, M;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: MotzkinMonoid: usage,\n",
-                  "the argument <n> must be a non-negative integer,");
+    ErrorNoReturn("the argument (an int) is not >= 0");
   elif n = 0 then
     return Monoid(Bipartition([]));
   fi;
@@ -1063,8 +1050,7 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularTransformationSemigroup: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := FullTransformationSemigroup(n);
@@ -1076,8 +1062,7 @@ InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularOrderEndomorphisms: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := OrderEndomorphisms(n);
@@ -1090,8 +1075,7 @@ function(n)
   local blocks, x, S, i;
 
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularBrauerMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -1108,8 +1092,7 @@ InstallMethod(SingularJonesMonoid, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularJonesMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -1126,8 +1109,7 @@ InstallMethod(SingularDualSymmetricInverseMonoid, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularDualSymmetricInverseMonoid: usage,\n",
-                  "the argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1144,8 +1126,7 @@ InstallMethod(SingularPlanarUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularPlanarUniformBlockBijectionMonoid:",
-                  " usage,\nthe argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1163,8 +1144,7 @@ InstallMethod(SingularUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularUniformBlockBijectionMonoid:",
-                  " usage,\nthe argument must be greater than 1,");
+    ErrorNoReturn("the argument (an int) is not > 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1183,9 +1163,8 @@ InstallMethod(SingularApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    ErrorNoReturn("Semigroups: SingularApsisMonoid: usage,\n",
-                  "the first argument must be less than or equal to the ",
-                  "second argument,");
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1204,9 +1183,8 @@ InstallMethod(SingularCrossedApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    ErrorNoReturn("Semigroups: SingularCrossedApsisMonoid: usage,\n",
-                  "the first argument must be less than or equal to ",
-                  "the second argument,");
+    ErrorNoReturn("the 1st argument (a pos. int.) is not <= to the ",
+                  "2nd argument (a pos. int.)");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1229,9 +1207,8 @@ function(m, n)
       return SemigroupIdeal(PlanarModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      ErrorNoReturn("Semigroups: SingularPlanarModularPartitionMonoid:",
-                    " usage,\nthe second argument must be greater than 1",
-                    " when the first argument is also greater than 1,");
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
     fi;
   fi;
 
@@ -1273,9 +1250,8 @@ function(m, n)
       return SemigroupIdeal(ModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      ErrorNoReturn("Semigroups: SingularModularPartitionMonoid:",
-                    " usage,\nthe second argument must be greater than 1",
-                    " when the first argument is also greater than 1,");
+      ErrorNoReturn("the 2nd argument (a pos. int.) must be > 1",
+                    " when the 1st argument (a pos. int.) is also > 1");
     fi;
   fi;
 

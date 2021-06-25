@@ -14,25 +14,20 @@ gap> SEMIGROUPS.StartTest();
 
 # constructions: TrivialSemigroup: errors
 gap> S := TrivialSemigroup(-1);
-Error, Semigroups: TrivialSemigroup: usage,
-the arguments must be a non-negative integer or a filter and a non-negative
-integer,
+Error, the arguments must be a non-negative integer or a filter and a non-nega\
+tive integer
 gap> S := TrivialSemigroup(IsPartialPermSemigroup, -1);
-Error, Semigroups: TrivialSemigroup: usage,
-the arguments must be a non-negative integer or a filter and a non-negative
-integer,
+Error, the arguments must be a non-negative integer or a filter and a non-nega\
+tive integer
 gap> S := TrivialSemigroup(0, 1);
-Error, Semigroups: TrivialSemigroup: usage,
-the arguments must be a non-negative integer or a filter and a non-negative
-integer,
+Error, the arguments must be a non-negative integer or a filter and a non-nega\
+tive integer
 gap> S := TrivialSemigroup(IsPartialPermSemigroup, 1, 1);
-Error, Semigroups: TrivialSemigroup: usage,
-the arguments must be a non-negative integer or a filter and a non-negative
-integer,
+Error, the arguments must be a non-negative integer or a filter and a non-nega\
+tive integer
 gap> S := TrivialSemigroup(IsPermGroup, 1, 1);
-Error, Semigroups: TrivialSemigroup: usage,
-the arguments must be a non-negative integer or a filter and a non-negative
-integer,
+Error, the arguments must be a non-negative integer or a filter and a non-nega\
+tive integer
 gap> S := TrivialSemigroup(IsFreeBand);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `TrivialSemigroupCons' on 2 arguments
@@ -139,29 +134,23 @@ gap> S := TrivialSemigroup(IsMaxPlusMatrixSemigroup);
 
 # constructions: MonogenicSemigroup: errors
 gap> S := MonogenicSemigroup(0);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 0);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(0, 1);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 0, 0);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(IsPermGroup, 1, 1, 1);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 2, true);
-Error, Semigroups: MonogenicSemigroup: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := MonogenicSemigroup(IsMaxPlusMatrixSemigroup, 100, 100);
 <commutative non-regular semigroup of size 199, 200x200 max-plus matrices 
  with 1 generator>
@@ -328,29 +317,23 @@ gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 10, 11);
 
 # constructions: RectangularBand: errors
 gap> S := RectangularBand(0);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(IsPartialPermSemigroup, 0);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(0, 1);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(IsPartialPermSemigroup, 0, 0);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(IsPermGroup, 1, 1, 1);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(IsPartialPermSemigroup, 2, true);
-Error, Semigroups: RectangularBand: usage,
-the arguments must be two positive integers or a filter and a two positive
-integers,
+Error, the arguments must be 2 positive integers or a filter and a 2 positive \
+integers
 gap> S := RectangularBand(IsMaxPlusMatrixSemigroup, 100, 100);
 <regular semigroup of size 10000, 21x21 max-plus matrices with 100 generators>
 
@@ -514,23 +497,23 @@ gap> S := RectangularBand(IsReesMatrixSemigroup, 10, 11);
 
 # constructions: ZeroSemigroup: errors
 gap> S := ZeroSemigroup(0);
-Error, Semigroups: ZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 0);
-Error, Semigroups: ZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := ZeroSemigroup(0, 1);
-Error, Semigroups: ZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := ZeroSemigroup(0, 0);
-Error, Semigroups: ZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := ZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
-Error, Semigroups: ZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := ZeroSemigroup(IsMaxPlusMatrixSemigroup, 10);
 <commutative non-regular semigroup of size 10, 6x6 max-plus matrices with 9 
  generators>
@@ -741,8 +724,7 @@ true
 
 # constructions: ZeroSemigroup: Rees 0-matrix semigroup, error
 gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 1);
-Error, Semigroups: ZeroSemigroupCons: usage:
-there is no Rees 0-matrix semigroup of order 1,
+Error, there is no Rees 0-matrix semigroup of order 1
 
 # constructions: ZeroSemigroup: Rees 0-matrix semigroup, 2
 gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 2);
@@ -756,20 +738,20 @@ true
 
 # constructions: LeftZeroSemigroup, error
 gap> S := LeftZeroSemigroup();
-Error, Semigroups: LeftZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := LeftZeroSemigroup(0);
-Error, Semigroups: LeftZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := LeftZeroSemigroup(0, 1);
-Error, Semigroups: LeftZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := LeftZeroSemigroup(IsTransformationSemigroup, 0);
-Error, Semigroups: LeftZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := LeftZeroSemigroup(1, 2, 3);
-Error, Semigroups: LeftZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := LeftZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
 <regular semigroup of size 4, 4x4 max-plus matrices with 4 generators>
 gap> S := LeftZeroSemigroup(IsGroup, 4);
@@ -788,20 +770,20 @@ gap> Size(S);
 
 # constructions: RightZeroSemigroup, error
 gap> S := RightZeroSemigroup();
-Error, Semigroups: RightZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := RightZeroSemigroup(0);
-Error, Semigroups: RightZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := RightZeroSemigroup(0, 1);
-Error, Semigroups: RightZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := RightZeroSemigroup(IsTransformationSemigroup, 0);
-Error, Semigroups: RightZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := RightZeroSemigroup(1, 2, 3);
-Error, Semigroups: RightZeroSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
 gap> S := RightZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
 <regular semigroup of size 4, 4x4 max-plus matrices with 4 generators>
 gap> S := RightZeroSemigroup(IsGroup, 4);
@@ -864,11 +846,9 @@ gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, DihedralGroup(4), 4);
 gap> IsInverseSemigroup(last);
 true
 gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, DihedralGroup(4));
-Error, Semigroups: BrandtSemigroup: usage,
-the arguments must be a positive integer or a filter and a positive integer, o\
-r
- a perm group and positive integer, or a filter, perm group, and positive
- integer,
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger, or  a perm group and positive integer, or a filter, perm group, and posi\
+tive integer
 
 # constructions: Brandt semigroups, other semigroups
 gap> S := BrandtSemigroup(IsTransformationSemigroup, 3);

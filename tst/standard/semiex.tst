@@ -15,8 +15,7 @@ gap> SEMIGROUPS.StartTest();
 
 # Test EndomorphismsPartition 1
 gap> EndomorphismsPartition([-1]);
-Error, Semigroups: EndomorphismsPartition: usage,
-the argument <partition> must be a list of positive integers,
+Error, the argument (a cyclo. coll.) does not consist of positive integers
 gap> EndomorphismsPartition([1, 1, 1]);
 <full transformation monoid of degree 3>
 gap> EndomorphismsPartition([5]);
@@ -170,8 +169,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> SingularPlanarUniformBlockBijectionMonoid(1);
-Error, Semigroups: SingularPlanarUniformBlockBijectionMonoid: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 
 # uniform block bijection monoid
 gap> S := UniformBlockBijectionMonoid(1);
@@ -255,8 +253,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
 gap> SingularUniformBlockBijectionMonoid(1);
-Error, Semigroups: SingularUniformBlockBijectionMonoid: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 
 # apsis monoid
 gap> S := ApsisMonoid(1, 1);
@@ -470,8 +467,8 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> SingularApsisMonoid(2, 1);
-Error, Semigroups: SingularApsisMonoid: usage,
-the first argument must be less than or equal to the second argument,
+Error, the 1st argument (a pos. int.) is not <= to the 2nd argument (a pos. in\
+t.)
 
 # crossed apsis monoid
 gap> S := CrossedApsisMonoid(1, 1);
@@ -685,8 +682,8 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> SingularCrossedApsisMonoid(2, 1);
-Error, Semigroups: SingularCrossedApsisMonoid: usage,
-the first argument must be less than or equal to the second argument,
+Error, the 1st argument (a pos. int.) is not <= to the 2nd argument (a pos. in\
+t.)
 
 # planar modular partition monoid
 gap> S := PlanarModularPartitionMonoid(1, 1);
@@ -926,9 +923,8 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> SingularPlanarModularPartitionMonoid(2, 1);
-Error, Semigroups: SingularPlanarModularPartitionMonoid: usage,
-the second argument must be greater than 1 when the first argument is also gre\
-ater than 1,
+Error, the 2nd argument (a pos. int.) must be > 1 when the 1st argument (a pos\
+. int.) is also > 1
 
 # planar partition monoid
 gap> S := PlanarPartitionMonoid(1);
@@ -1252,9 +1248,8 @@ gap> StructureDescriptionMaximalSubgroups(S);
 gap> SingularModularPartitionMonoid(1, 1);
 <commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
 gap> SingularModularPartitionMonoid(2, 1);
-Error, Semigroups: SingularModularPartitionMonoid: usage,
-the second argument must be greater than 1 when the first argument is also gre\
-ater than 1,
+Error, the 2nd argument (a pos. int.) must be > 1 when the 1st argument (a pos\
+. int.) is also > 1
 
 # Catalan monoid
 gap> S := CatalanMonoid(1);
@@ -1536,8 +1531,7 @@ gap> List([0 .. 5], n -> Size(PartialDualSymmetricInverseMonoid(n)));
 gap> List([0 .. 5], n -> NrDClasses(PartialDualSymmetricInverseMonoid(n)));
 [ 1, 2, 4, 6, 8, 10 ]
 gap> PartialDualSymmetricInverseMonoid(-1);
-Error, Semigroups: PartialDualSymmetricInverseMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 
 # Test RookPartitionMonoid
 gap> S := RookPartitionMonoid(4);
@@ -1611,8 +1605,7 @@ gap> NrIdempotents(M);
 gap> NrIdempotents(S);
 60
 gap> MunnSemigroup(S);
-Error, Semigroups: GeneratorsOfMunnSemigroup: usage,
-the argument must be a semilattice,
+Error, the argument (a semigroup) is not a semilattice
 
 # Test OrderEndomorphisms
 gap> S := OrderEndomorphisms(4);
@@ -1760,8 +1753,7 @@ true
 
 # PartitionMonoid
 gap> PartitionMonoid(-1);
-Error, Semigroups: PartitionMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> PartitionMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> PartitionMonoid(1);
@@ -1771,8 +1763,7 @@ gap> PartitionMonoid(5);
 
 # DualSymmetricInverseMonoid
 gap> DualSymmetricInverseMonoid(-1);
-Error, Semigroups: DualSymmetricInverseMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> DualSymmetricInverseMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> DualSymmetricInverseMonoid(1);
@@ -1784,8 +1775,7 @@ gap> DualSymmetricInverseMonoid(5);
 
 # BrauerMonoid
 gap> BrauerMonoid(-1);
-Error, Semigroups: BrauerMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> BrauerMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> BrauerMonoid(1);
@@ -1797,8 +1787,7 @@ gap> BrauerMonoid(5);
 
 # PartialBrauerMonoid
 gap> PartialBrauerMonoid(-1);
-Error, Semigroups: PartialBrauerMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> PartialBrauerMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> PartialBrauerMonoid(1);
@@ -1810,8 +1799,7 @@ gap> PartialBrauerMonoid(5);
 
 # JonesMonoid
 gap> JonesMonoid(-1);
-Error, Semigroups: JonesMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> JonesMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> JonesMonoid(1);
@@ -1823,8 +1811,7 @@ gap> JonesMonoid(5);
 
 # AnnularJonesMonoid
 gap> AnnularJonesMonoid(-1);
-Error, Semigroups: AnnularJonesMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> AnnularJonesMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> AnnularJonesMonoid(1);
@@ -1836,8 +1823,7 @@ gap> AnnularJonesMonoid(5);
 
 # PartialJonesMonoid
 gap> PartialJonesMonoid(-1);
-Error, Semigroups: PartialJonesMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> PartialJonesMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> PartialJonesMonoid(1);
@@ -1849,8 +1835,7 @@ gap> PartialJonesMonoid(5);
 
 # MotzkinMonoid
 gap> MotzkinMonoid(-1);
-Error, Semigroups: MotzkinMonoid: usage,
-the argument <n> must be a non-negative integer,
+Error, the argument (an int) is not >= 0
 gap> MotzkinMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 gap> MotzkinMonoid(1);
@@ -1901,8 +1886,7 @@ gap> SingularPartitionMonoid(5);
 
 # SingularTransformationMonoid
 gap> SingularTransformationMonoid(1);
-Error, Semigroups: SingularTransformationSemigroup: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 gap> SingularTransformationMonoid(2);
 <regular transformation semigroup ideal of degree 2 with 1 generator>
 gap> SingularTransformationMonoid(5);
@@ -1910,8 +1894,7 @@ gap> SingularTransformationMonoid(5);
 
 # SingularOrderEndomorphisms
 gap> SingularOrderEndomorphisms(1);
-Error, Semigroups: SingularOrderEndomorphisms: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 gap> SingularOrderEndomorphisms(2);
 <regular transformation semigroup ideal of degree 2 with 1 generator>
 gap> SingularOrderEndomorphisms(5);
@@ -1919,8 +1902,7 @@ gap> SingularOrderEndomorphisms(5);
 
 # SingularBrauerMonoid
 gap> SingularBrauerMonoid(1);
-Error, Semigroups: SingularBrauerMonoid: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 gap> SingularBrauerMonoid(2);
 <regular bipartition *-semigroup ideal of degree 2 with 1 generator>
 gap> SingularBrauerMonoid(5);
@@ -1928,8 +1910,7 @@ gap> SingularBrauerMonoid(5);
 
 # SingularJonesMonoid
 gap> SingularJonesMonoid(1);
-Error, Semigroups: SingularJonesMonoid: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 gap> SingularJonesMonoid(2);
 <commutative inverse bipartition semigroup ideal of degree 2 with 1 generator>
 gap> SingularJonesMonoid(5);
@@ -1937,8 +1918,7 @@ gap> SingularJonesMonoid(5);
 
 # SingularDualSymmetricInverseMonoid
 gap> SingularDualSymmetricInverseMonoid(1);
-Error, Semigroups: SingularDualSymmetricInverseMonoid: usage,
-the argument must be greater than 1,
+Error, the argument (an int) is not > 1
 gap> SingularDualSymmetricInverseMonoid(2);
 <inverse bipartition semigroup ideal of degree 2 with 1 generator>
 gap> SingularDualSymmetricInverseMonoid(5);

@@ -616,10 +616,9 @@ function(f, deg)
   local str, i;
 
   if deg < DegreeOfTransformation(f) then
-    ErrorNoReturn("Semigroups: TexString: usage,\n",
-                  "the second argument (the degree) should be at ",
-                  "least the degree of the first argument (a ",
-                  "transformation),");
+    ErrorNoReturn("the 2nd argument (a pos. int.) is less than ",
+                  "the degree of the 1st argument (a ",
+                  "transformation)");
   fi;
   str := "\\begin{pmatrix}\n  ";
   for i in [1 .. deg] do
@@ -668,7 +667,7 @@ function(digraph)
   local S, vertex, edge, str, nbs, x, from, gen;
 
   S := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanComputeFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
 
@@ -729,7 +728,7 @@ InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
 function(digraph)
   local S, li, label, i;
   S  := SemigroupOfCayleyDigraph(digraph);
-  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+  if not CanComputeFroidurePin(S) or Size(S) > 26 then
     TryNextMethod();
   fi;
   li := AsListCanonical(S);

@@ -291,8 +291,7 @@ gap> UnderlyingElementOfDualSemigroupElement(d);
 gap> Representative(S);
 <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
 gap> UnderlyingElementOfDualSemigroupElement(S);
-Error, Semigroups: UnderlyingElementOfDualSemigroupElement: 
-the argument must be an element represented as a dual semigroup element,
+Error, the argument is not an element represented as a dual semigroup element
 gap> T := Semigroup(GeneratorsOfSemigroup(D){[1000 .. 2000]});
 <dual semigroup of <bipartition semigroup of degree 4 with 1001 generators>>
 gap> UnderlyingElementOfDualSemigroupElement(Representative(T));

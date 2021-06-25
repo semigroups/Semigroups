@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for ideals of semigroups, which do not depend on
-# the representation as IsActingSemigroup or IsEnumerableSemigroupRep.
+# the representation as IsActingSemigroup or CanComputeFroidurePin.
 
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
@@ -140,10 +140,8 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    ErrorNoReturn("Semigroups: \\.: usage,\n",
-                  "the second argument <n> should be a positive integer\n",
-                  "not greater than the number of generators of the semigroup ",
-                  "<S> in\nthe first argument,");
+    ErrorNoReturn("the 2nd argument (a positive integer) exceeds ",
+                  "the number of generators of the 1st argument (an ideal)");
   fi;
   return S[n];
 end);
@@ -196,18 +194,10 @@ InstallGlobalFunction(SemigroupIdeal,
 function(arg)
   local out, i;
 
-  if Length(arg) = 0 then
-    # no argument given, error
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                  "the second argument must be a combination ",
-                  "of generators,\nlists of generators, or semigroups,");
+  if Length(arg) <= 1 then
+    ErrorNoReturn("there must be 2 or more arguments");
   elif not IsSemigroup(arg[1]) then
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                  "the first argument must be a semigroup,");
-  elif Length(arg) = 1 then
-    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                  "there must be a second argument, which specifies\n",
-                  "the generators of the ideal,");
+    ErrorNoReturn("the 1st argument is not a semigroup");
   elif Length(arg) = 2 and IsMatrix(arg[2]) then
     # special case for matrices, because they may look like lists
     return SemigroupIdealByGenerators(arg[1], [arg[2]]);
@@ -241,17 +231,14 @@ function(arg)
           Append(out, AsList(arg[i]));
         fi;
       else
-        ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                      "the second argument must be a ",
-                      "combination of generators,\n lists of generators, ",
-                      "or semigroups,");
+        ErrorNoReturn("the 2nd argument is not a combination ",
+                      "of generators, lists of generators, ",
+                      "nor semigroups");
       fi;
     od;
     return SemigroupIdealByGenerators(arg[1], out);
   fi;
-  ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
-                "the second argument must be a combination ",
-                "of generators,\nlists of generators, or semigroups,");
+  ErrorNoReturn("invalid arguments");
 end);
 
 InstallMethod(SemigroupIdealByGenerators,
@@ -266,9 +253,8 @@ InstallMethod(SemigroupIdealByGenerators,
 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
-    ErrorNoReturn("Semigroups: SemigroupIdealByGenerators: usage,\n",
-                  "the second argument <gens> do not all belong to the ",
-                  "semigroup,");
+    ErrorNoReturn("the 2nd argument (a mult. elt. coll.) do not all ",
+                  "belong to the semigroup");
   fi;
   return SemigroupIdealByGeneratorsNC(S, gens, opts);
 end);
@@ -289,9 +275,6 @@ function(S, gens, opts)
     if opts.regular then
       filts := filts and IsRegularActingSemigroupRep;
     fi;
-  elif IsEnumerableSemigroupRep(S)
-      and IsGeneratorsOfEnumerableSemigroup(gens) then
-    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -345,12 +328,11 @@ function(S, gens, opts)
   return I;
 end);
 
-# JDM HERE!!
 InstallMethod(MinimalIdealGeneratingSet,
 "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local S, dclasses, gr, labels, x;
+  local S, dclasses, D, labels, x;
 
   if Length(GeneratorsOfSemigroupIdeal(I)) = 1 then
     return GeneratorsOfSemigroupIdeal(I);
@@ -363,12 +345,11 @@ function(I)
       Add(dclasses, DClass(S, x));
     fi;
   od;
-  # TODO improve the following
-  gr := InducedSubdigraph(Digraph(PartialOrderOfDClasses(S)),
-                          List(dclasses, x -> Position(DClasses(S), x)));
-  gr := DigraphRemoveLoops(gr);
-  labels := DigraphVertexLabels(gr);
-  return List(DigraphSources(gr), x -> Representative(DClasses(S)[labels[x]]));
+  D := Digraph(IsMutableDigraph, PartialOrderOfDClasses(S));
+  InducedSubdigraph(D, List(dclasses, x -> Position(DClasses(S), x)));
+  DigraphRemoveLoops(D);
+  labels := DigraphVertexLabels(D);
+  return List(DigraphSources(D), x -> Representative(DClasses(S)[labels[x]]));
 end);
 
 # JDM: is there a better method? Certainly for regular acting ideals

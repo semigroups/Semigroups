@@ -33,7 +33,7 @@ gap> cong := SemigroupCongruence(S, gens);
 gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, <equiv> must be over a finite semigroup,
+Error, the argument (a congruence) must have finite range
 gap> NrCongruenceClasses(cong);
 3
 gap> class := CongruenceClassOfElement(cong, x);;
@@ -55,9 +55,9 @@ gap> T := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <trivial transformation group of 
  degree 0 with 1 generator>>
-gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);
-<semigroup congruence over <commutative non-regular transformation monoid of 
- degree 10 with 1 generator> with 0 generating pairs>
+gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);;
+gap> Size(GeneratingPairsOfSemigroupCongruence(v));
+0
 gap> NrCongruenceClasses(v);
 6
 gap> Size(T);
@@ -82,14 +82,18 @@ gap> NrCongruenceClasses(u);
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> S := Semigroup(gens);;
 gap> gens := List(S, x -> [gens[1], x]);;
-gap> u := SemigroupCongruence(S, gens);  # universal congruence
-<semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 4 generating pairs>
+gap> u := SemigroupCongruence(S, gens);;  # universal congruence
+gap> HasGeneratingPairsOfMagmaCongruence(u);
+true
+gap> Size(GeneratingPairsOfSemigroupCongruence(u));
+4
 gap> u = UniversalSemigroupCongruence(S);
 true
-gap> v := SemigroupCongruence(S, [gens[1], gens[1]]);  # trivial congruence
-<semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 0 generating pairs>
+gap> v := SemigroupCongruence(S, [gens[1], gens[1]]);;  # trivial congruence
+gap> HasGeneratingPairsOfMagmaCongruence(v);
+true
+gap> Size(GeneratingPairsOfSemigroupCongruence(v));
+0
 gap> classes := Set(CongruenceClasses(v));
 [ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
   <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
@@ -99,11 +103,9 @@ gap> classes := Set(CongruenceClasses(v));
 gap> CongruenceClasses(u)[1] in classes;
 false
 gap> classes[1] * CongruenceClasses(u)[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> CongruenceClasses(u)[1] * classes[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
@@ -131,9 +133,7 @@ gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
 >              Transformation([3, 4, 3, 4, 3])];;
-gap> cong := SemigroupCongruence(S, pair1, pair2);
-<semigroup congruence over <transformation semigroup of degree 5 with 4 
- generators> with 2 generating pairs>
+gap> cong := SemigroupCongruence(S, pair1, pair2);;
 gap> Print(cong); Print("\n");
 SemigroupCongruence( Semigroup( [ Transformation( [ 2, 1, 1, 2, 1 ] ), 
   Transformation( [ 3, 4, 3, 4, 3 ] ), Transformation( [ 4, 3, 3, 4, 4 ] ), 
@@ -169,22 +169,18 @@ gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([1, 3, 4, 1, 3])]);;
 gap> cong2 := SemigroupCongruence(T, pair1, pair2);;
 gap> EquivalenceClassOfElement(cong, Transformation([2, 3, 2, 2, 3, 1]));
-Error, Semigroups: EquivalenceClassOfElement: usage,
-the second arg <elm> must be in the semigroup of the first arg <cong>,
+Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
+,
 gap> JoinSemigroupCongruences(cong, cong2);
-Error, Semigroups: SEMIGROUPS.JoinCongruences: usage,
-the congruences must be defined over the same semigroup,
+Error, cannot form the join of congruences over different semigroups,
 gap> IsSubrelation(cong, cong2);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the 1st and 2nd arguments are congruences over different semigroups
 gap> cong := LeftSemigroupCongruence(S, pair1, pair2);;
 gap> IsSubrelation(cong2, cong);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the 1st and 2nd arguments are congruences over different semigroups
 gap> cong := RightSemigroupCongruence(S, pair1, pair2);;
 gap> IsSubrelation(cong2, cong);
-Error, Semigroups: IsSubrelation: usage,
-congruences must be defined over the same semigroup,
+Error, the 1st and 2nd arguments are congruences over different semigroups
 
 # A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
@@ -312,18 +308,16 @@ gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> cong := SemigroupCongruence(S, pair1);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 
 # Classes
 gap> S := Semigroup([
 > Transformation([1, 5, 4, 2, 1]), Transformation([2, 1, 1, 1, 3])]);;
-gap> pair := [Transformation([2, 2, 2, 3, 2]), Transformation([2, 2, 1, 1, 2])];
-[ Transformation( [ 2, 2, 2, 3, 2 ] ), Transformation( [ 2, 2, 1, 1, 2 ] ) ]
+gap> pair := [Transformation([2, 2, 2, 3, 2]), 
+>             Transformation([2, 2, 1, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
@@ -357,9 +351,8 @@ gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
 gap> Transformation([6, 2, 3, 4, 1, 1]) in class;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> Size(class);
 89
 
@@ -536,23 +529,20 @@ true
 # SemigroupCongruenceByGeneratingPairs bad input
 gap> S := FullTransformationMonoid(3);;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
-Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
-Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <S>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
-Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
-Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <S>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
-Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of length 2,
+Error, the 2nd argument <pairs> must consist of lists of length 2
 gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
-Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
-<pairs> must all be lists of elements of <S>,
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
 
 # SemigroupCongruenceByGeneratingPairs for infinite semigroups
 gap> S := Semigroup(
@@ -589,10 +579,10 @@ gap> Length(classes);
 8
 gap> ForAll(S, x -> Number(classes, c -> x in c) = 1);
 true
-gap> part := CongruenceByGeneratingPairsPartition(cong);;
+gap> part := EquivalenceRelationPartitionIncludingSingletons(cong);;
 gap> SortedList(List(part, Size)) = [1, 1, 1, 1, 1, 2, 2, 2];
 true
-gap> Set(Flat(part)) = [1 .. Size(S)];
+gap> Set(Flat(part)) = Set(S);
 true
 
 # a right congruence over an fp semigroup
@@ -624,12 +614,10 @@ gap> S := F / [[F.2 ^ 2, F.2],
 gap> pair := [S.1 * S.2 * S.1, S.1];;
 gap> cong := RightSemigroupCongruence(S, pair);;
 gap> [Transformation([2, 1, 1, 2, 1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 
 # comparing congruence classes over fp semigroups
 gap> F := FreeSemigroup(3);;
@@ -678,6 +666,305 @@ gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
 gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
 <right semigroup congruence over <fp monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
+
+# tests from congfpmon.tst
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
+gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
+Error, the 2nd argument <pairs> must consist of lists of length 2
+gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
+gap> cong := LeftSemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
+Error, the 2nd argument <pairs> must consist of lists of length 2
+gap> cong := LeftSemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
+gap> cong := RightSemigroupCongruenceByGeneratingPairs(M, [[M.2]]);
+Error, the 2nd argument <pairs> must consist of lists of length 2
+gap> cong := RightSemigroupCongruenceByGeneratingPairs(M, [[M.1, F.1]]);
+Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
+rgument <S> (a semigroup)
+gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, M.2]]);;
+gap> [M.1, M.2, M.2 ^ 2] in cong;
+Error, the 1st argument (a list) does not have length 2
+gap> [F.1, F.2] in cong;
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
+gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
+Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
+,
+
+# A 2-sided example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.2 ^ 2, F.2],
+>              [F.1 ^ 3, F.1 ^ 2],
+>              [F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
+gap> Size(M);
+13
+gap> M.1 ^ 2 = M.2 * M.1;
+false
+gap> (M.2 * M.1) ^ 2 * M.2 * M.1 ^ 2 = M.1 ^ 3;
+true
+gap> pair := [M.1 ^ 2 * M.2 * M.1, M.1 * M.2 * M.1];;
+gap> cong := SemigroupCongruence(M, pair);
+<semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
+1 generating pairs>
+gap> NrEquivalenceClasses(cong);
+3
+gap> [M.2, M.2 * M.1] in cong;
+true
+gap> part := EquivalenceRelationPartition(cong);;
+gap> Length(part) = 1;
+true
+gap> Length(part[1]) = 11;
+true
+gap> Size(EquivalenceRelationCanonicalPartition(cong));
+1
+gap> Size(EquivalenceRelationCanonicalPartition(cong)[1]);
+11
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ]
+gap> ImagesElm(cong, GeneratorsOfMonoid(M)[1]);
+[ m1 ]
+gap> ImagesElm(cong, One(M));
+[ <identity ...> ]
+gap> classes := EquivalenceClasses(cong);;
+gap> SortedList(List(classes, Size));
+[ 1, 1, 11 ]
+gap> gens := GeneratorsOfMonoid(M);;
+gap> class1 := EquivalenceClassOfElement(cong, gens[2] * gens[1]);;
+gap> class2 := EquivalenceClassOfElement(cong, gens[1]);;
+gap> gens[1] ^ 2 in class1;
+true
+gap> gens[1] in class1;
+false
+gap> class1 = class2;
+false
+gap> enum := Enumerator(class1);;
+gap> AsSSortedList(enum);
+[ m2, m1^2, m1*m2, m2*m1, m1^2*m2, m1*m2*m1, m2*m1*m2, m1^2*m2*m1, (m1*m2)^2, 
+  (m2*m1)^2, (m1*m2)^2*m1 ]
+gap> Size(enum);
+11
+gap> class1 * class2 = EquivalenceClassOfElement(cong, gens[2] ^ 20 * gens[1] ^ 42);
+true
+gap> class1 * class2 = EquivalenceClassOfElement(cong, One(M));
+false
+
+# A left congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> Size(M);
+40
+gap> cong := LeftSemigroupCongruence(M, [M.1, M.2 ^ 3]);
+<left semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
+1 generating pairs>
+gap> IsLeftSemigroupCongruence(cong);
+true
+gap> HasIsSemigroupCongruence(cong);
+false
+gap> NrEquivalenceClasses(cong);
+11
+gap> [M.1 ^ 9, M.2 * M.1 ^ 3 * M.2 * M.1] in cong;
+true
+gap> part := EquivalenceRelationPartition(cong);;
+gap> Length(part) = 1;
+true
+gap> Length(part[1]) = 30;
+true
+gap> part := EquivalenceRelationCanonicalPartition(cong);;
+gap> Size(part);
+1
+gap> Size(part[1]);
+30
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 2, 4, 2, 2, 2, 5, 2, 2, 6, 2, 7, 2, 2, 8, 2, 2, 2, 9, 2, 2, 10, 2, 
+  2, 2, 2, 11, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
+gap> Set(ImagesElm(cong, M.1)) = part[1];
+true
+gap> ImagesElm(cong, One(M));
+[ <identity ...> ]
+gap> classes := EquivalenceClasses(cong);;
+gap> SortedList(List(classes, Size));
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 30 ]
+gap> class1 := EquivalenceClassOfElement(cong, M.2 * M.1 ^ 2);;
+gap> class2 := EquivalenceClassOfElement(cong, M.2);;
+gap> M.1 in class1;
+true
+gap> M.2 in class1;
+false
+gap> class1 = class2;
+false
+gap> enum := Enumerator(class1);;
+gap> M.2 * M.1 in enum;
+true
+gap> M.2 * M.1 ^ 3 in enum;
+true
+gap> M.2 * M.1 * M.2 * M.1 in enum;
+true
+gap> Size(enum);
+30
+
+# A right congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> Size(M);
+40
+gap> cong := RightSemigroupCongruence(M, [M.1, M.2 ^ 3]);
+<right semigroup congruence over <fp monoid on the generators 
+[ m1, m2 ]> with 1 generating pairs>
+gap> IsRightSemigroupCongruence(cong);
+true
+gap> HasIsSemigroupCongruence(cong);
+false
+gap> NrEquivalenceClasses(cong);
+13
+gap> [M.1 ^ 9, M.2 * M.1 ^ 3 * M.2 * M.1] in cong;
+false
+gap> [M.2 * M.1 * M.2 ^ 2, M.1 ^ 4] in cong;
+true
+gap> part := EquivalenceRelationCanonicalPartition(cong);;
+gap> Length(part) = 4;
+true
+gap> Set(part, Length) = [4, 8, 11];
+true
+gap> part := EquivalenceRelationCanonicalPartition(cong);;
+gap> Length(part);
+4
+gap> SortedList(List(part, Length));
+[ 4, 8, 8, 11 ]
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 4, 2, 5, 2, 6, 7, 4, 8, 9, 4, 2, 6, 6, 7, 10, 11, 6, 7, 4, 2, 2, 
+  2, 6, 12, 6, 7, 4, 4, 2, 13, 2, 6, 6, 4, 2, 2, 4 ]
+gap> part1 := First(part, l -> M.1 in l);;
+gap> Set(ImagesElm(cong, M.1)) = part1;
+true
+gap> NrEquivalenceClasses(cong);
+13
+gap> ImagesElm(cong, One(M));
+[ <identity ...> ]
+gap> classes := EquivalenceClasses(cong);;
+gap> SortedList(List(classes, Size));
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 8, 8, 11 ]
+gap> class1 := EquivalenceClassOfElement(cong, M.1 * (M.2 * M.1) ^ 2 * M.2);;
+gap> class2 := EquivalenceClassOfElement(cong, M.2 ^ 2 * M.1);;
+gap> M.1 in class1;
+true
+gap> M.2 in class1;
+false
+gap> class1 = class2;
+false
+gap> enum := Enumerator(class1);;
+gap> M.2 ^ 2 in enum;
+true
+gap> M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3 in enum;
+true
+gap> enum[Position(enum, M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3)]
+> = M.1 * (M.1 * M.2) ^ 2 * M.1 ^ 3;
+true
+gap> Size(enum);
+11
+
+# Joining two congs together
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
+>              [F.1 ^ 3 * F.2, F.1 ^ 3],
+>              [F.1 * F.2 ^ 2 * F.1, F.1 ^ 2],
+>              [F.1 * F.2 ^ 3, F.1],
+>              [F.2 * F.1 ^ 3, F.1 ^ 3],
+>              [F.2 ^ 3 * F.1, F.1],
+>              [F.2 ^ 4, F.2],
+>              [F.1 ^ 2 * F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.1, F.1 * F.2 * F.1 ^ 2]];;
+gap> Size(M);
+39
+gap> cong1 := SemigroupCongruence(M, [M.1, M.2]);;
+gap> cong2 := SemigroupCongruence(M, [M.1, M.1 ^ 2]);;
+gap> cong1 = cong2;
+false
+gap> IsSubrelation(cong1, cong2);
+true
+gap> JoinSemigroupCongruences(cong1, cong2) = cong1;
+true
+gap> M := F / [[F.1, F.2]];;
+gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
+gap> JoinSemigroupCongruences(cong1, cong3);
+Error, cannot form the join of congruences over different semigroups,
+
+# Joining two left congs together
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
+>              [F.1 ^ 3 * F.2, F.1 ^ 3],
+>              [F.1 * F.2 ^ 2 * F.1, F.1 ^ 2],
+>              [F.1 * F.2 ^ 3, F.1],
+>              [F.2 * F.1 ^ 3, F.1 ^ 3],
+>              [F.2 ^ 3 * F.1, F.1],
+>              [F.2 ^ 4, F.2],
+>              [F.1 ^ 2 * F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.1, F.1 * F.2 * F.1 ^ 2]];;
+gap> Size(M);
+39
+gap> cong1 := LeftSemigroupCongruence(M, [M.1, M.2]);;
+gap> cong2 := LeftSemigroupCongruence(M, [M.1, M.1 ^ 2]);;
+gap> cong1 = cong2;
+false
+gap> IsSubrelation(cong1, cong2);
+true
+gap> JoinLeftSemigroupCongruences(cong1, cong2) = cong1;
+true
+gap> M := F / [[F.1, F.2]];;
+gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
+gap> JoinLeftSemigroupCongruences(cong1, cong3);
+Error, cannot form the join of congruences over different semigroups,
+
+# Joining two right congs together
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 ^ 4, F.1 ^ 3],
+>              [F.1 ^ 3 * F.2, F.1 ^ 3],
+>              [F.1 * F.2 ^ 2 * F.1, F.1 ^ 2],
+>              [F.1 * F.2 ^ 3, F.1],
+>              [F.2 * F.1 ^ 3, F.1 ^ 3],
+>              [F.2 ^ 3 * F.1, F.1],
+>              [F.2 ^ 4, F.2],
+>              [F.1 ^ 2 * F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.1, F.1 * F.2 * F.1 ^ 2]];;
+gap> Size(M);
+39
+gap> cong1 := RightSemigroupCongruence(M, [M.1, M.2]);;
+gap> cong2 := RightSemigroupCongruence(M, [M.1, M.1 ^ 2]);;
+gap> cong1 = cong2;
+false
+gap> IsSubrelation(cong1, cong2);
+true
+gap> JoinRightSemigroupCongruences(cong1, cong2) = cong1;
+true
+gap> M := F / [[F.1, F.2]];;
+gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
+gap> JoinRightSemigroupCongruences(cong1, cong3);
+Error, cannot form the join of congruences over different semigroups,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
