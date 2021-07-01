@@ -17,9 +17,7 @@
 InstallMethod(Factorization,
 "for semigroup with CanComputeFroidurePin and multiplicative element",
 [IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
-function(S, x)
-  return MinimalFactorization(S, x);
-end);
+MinimalFactorization);
 
 InstallMethod(NonTrivialFactorization,
 "for semigroup with CanComputeFroidurePin and multiplicative element",

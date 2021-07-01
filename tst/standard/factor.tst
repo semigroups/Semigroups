@@ -314,7 +314,6 @@ gap> gens := [
 >  Transformation([6, 2, 1, 5, 6, 6]),
 >  Transformation([3, 5, 2, 1, 3, 3])];;
 gap> S := Semigroup(gens, rec(acting := true));
-<transformation semigroup of degree 6 with 5 generators>
 gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 [ [ 1, 5, 1, 5, 1, 5, 1, 5, 1 ], 
   [ 2, 1, 5, 2, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4 ], [ 3, 1, 1 ], 
