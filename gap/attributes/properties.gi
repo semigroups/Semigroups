@@ -1784,3 +1784,9 @@ x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);
 InstallMethod(IsSurjectiveSemigroup, "for a semigroup",
 [IsSemigroup],
 S -> IsEmpty(IndecomposableElements(S)));
+
+InstallMethod(IsOrthogroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return IsCompletelyRegularSemigroup(S) and IsOrthodoxSemigroup(S);
+end);

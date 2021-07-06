@@ -327,3 +327,61 @@ function(S)
   UseIsomorphismRelation(H, G);
   return H;
 end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsStrongSemilatticeOfSemigroups and a Clifford semigroup",
+[IsStrongSemilatticeOfSemigroups, IsSemigroup and IsFinite],
+function(filt, S)
+  local A, idemps, n, D, N, L, classes, idemp, DC, H, SSS, i, j, addfunc;
+  # decomposes a finite Clifford semigroup S into a strong semilattice of
+  # groups and returns an SSS object.
+  if not (IsCliffordSemigroup(S) and IsFinite(S)) then
+    TryNextMethod();
+  fi;
+  # There should be one idempotent per D-class, i.e. per semilattice element
+  # since the semilattice decomposition is by J-classes, and J = D here
+  A      := Semigroup(Idempotents(S));
+  idemps := Elements(A);
+  n      := Size(idemps);
+
+  # create semilattice
+  D := Digraph(NaturalPartialOrder(A));
+  # currently wrong way round
+  D := DigraphReverse(D);
+  N := OutNeighbours(D);
+
+  # populate list of semigroups in semilattice.
+  # keep a list of D-classes at the same time, to figure out where elements are
+  L       := [];
+  classes := [];
+  for i in [1 .. n] do
+    idemp := idemps[i];  # the idempotent of this D-class
+    DC := DClass(S, idemp);
+    Add(L, Semigroup(DC));
+    Add(classes, DC);
+  od;
+
+  # populate list of homomorphisms
+  H := [];
+  for i in [1 .. n] do
+    idemp := idemps[i];
+    Add(H, []);
+    addfunc := function(x, a, b, c)  # horrible namespace hack (credits JDM)
+      Add(x, [a, b, z -> c * z]);
+    end;
+    for j in N[i] do
+      addfunc(H[i], L[j], L[i], idemps[i]);
+    od;
+    Apply(H[i], x -> MappingByFunction(x[1], x[2], x[3]));
+  od;
+
+  SSS := StrongSemilatticeOfSemigroups(D, L, H);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       SSS,
+                                       x -> SSSE(SSS,
+                                                 Position(classes,
+                                                          DClass(S, x)),
+                                                 x),
+                                       x -> x![3]);
+end);

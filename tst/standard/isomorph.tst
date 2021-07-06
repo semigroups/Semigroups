@@ -385,9 +385,72 @@ gap> G := AutomorphismGroup(S);
 gap> StructureDescription(G);
 "S3"
 
+# IsomorphismSemigroup for Clifford semigroups to strong semilattices (1/3)
+gap> S := DualSymmetricInverseMonoid(5);;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> map := IsomorphismSemigroup(IsStrongSemilatticeOfSemigroups, T);;
+gap> S := Range(map);;
+gap> S;
+<strong semilattice of 52 semigroups>
+gap> IsStrongSemilatticeOfSemigroups(S);
+true
+gap> failed := [];;
+gap> for x in T do
+>      if x <> (x ^ map)![3] then
+>        Add(failed, x);;
+>      fi;
+>    od;
+gap> failed;
+[  ]
+gap> IsomorphismSemigroups(S, T) <> fail;
+true
+gap> SemilatticeOfStrongSemilatticeOfSemigroups(S);
+<immutable meet semilattice digraph with 52 vertices, 358 edges>
+gap> BruteForceIsoCheck(map);
+true
+
+# IsomorphismSemigroup for Clifford semigroups to strong semilattices (2/3)
+gap> T := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]),
+>                   Transformation([3, 3, 4, 5, 6, 2, 7, 8]),
+>                   Transformation([1, 2, 5, 3, 6, 8, 4, 4]));;
+gap> Size(T);
+864
+gap> NrIdempotents(T);
+4
+gap> S := IsomorphismSemigroup(IsStrongSemilatticeOfSemigroups, T);;
+gap> map := IsomorphismSemigroup(IsStrongSemilatticeOfSemigroups, T);;
+gap> S := Range(map);
+<strong semilattice of 4 semigroups>
+gap> Size(S);
+864
+gap> # Property of CLifford semigroups:
+gap> List(SemigroupsOfStrongSemilatticeOfSemigroups(S), IsGroupAsSemigroup);
+[ true, true, true, true ]
+gap> BruteForceIsoCheck(map);
+true
+
+# IsomorphismSemigroup for Clifford semigroups to strong semilattices (3/3)
+gap> T := Semigroup(List([2 .. 10],
+>                   x -> Transformation(ListWithIdenticalEntries(x, 1))));
+<transformation semigroup of degree 10 with 9 generators>
+gap> IsCliffordSemigroup(T);
+true
+gap> map := IsomorphismSemigroup(IsStrongSemilatticeOfSemigroups, T);;
+gap> S := Range(map);
+<strong semilattice of 9 semigroups>
+gap> BruteForceIsoCheck(map);
+true
+gap> Size(S) = Size(T);
+true
+gap> SemilatticeOfStrongSemilatticeOfSemigroups(S) =
+>    DigraphReflexiveTransitiveClosure(ChainDigraph(9));
+true
+
 # SEMIGROUPS_UnbindVariables
+gap> Unbind(map);
 gap> Unbind(S);
 gap> Unbind(T);
+gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
