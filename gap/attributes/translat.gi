@@ -244,8 +244,8 @@ end;
 SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
   local n, m, id, genspos, multtable, multsets, r_classes, r_class_map,
   r_class_inv_map, r_classes_below, max_R_intersects, intersect, reps,
-  left_inverses_by_gen, right_inverses, seen, s,
-  transposed_multtable, transposed_multsets, U, Ui, keep, B, sb, r, i, j, a, t,
+  left_canon_inverse_by_gen, left_inverses_by_gen, x, right_inverses, seen, t,
+  s, transposed_multtable, transposed_multsets, U, Ui, keep, B, sb, r, i, j, a,
   u;
 
   n           := Size(S);
@@ -289,13 +289,20 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
     od;
   od;
 
+  left_canon_inverse_by_gen := List([1 .. n], x -> []);
+  
   # for all s in S, store the elements t such that gens[i] * t = s for each i
   left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
     for t in [1 .. n + 1] do
-      Add(left_inverses_by_gen[multtable[genspos[i]][t]][i], t);
+      x := multtable[genspos[i]][t];
+      Add(left_inverses_by_gen[x][i], t);
+      if not IsBound(left_canon_inverse_by_gen[x][i]) then
+        left_canon_inverse_by_gen[x][i] := t;
+      fi;
     od;
   od;
+
 
   # for each t in the left inverses of some a in max_R_intersects[i][j] by 
   # gens[j], compute the right inverses of each s in S under t
@@ -307,19 +314,18 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
         continue;
       fi;
       for a in max_R_intersects[i][j] do
-        for t in left_inverses_by_gen[a][j] do
-          # don't repeat the calculation if we've already done it for t!
-          if not seen[t] then
-            seen[t] := true;
-            for u in [1 .. n] do
-              s := multtable[u][t];
-              if right_inverses[s][t] = fail then
-                right_inverses[s][t] := [];
-              fi;
-              Add(right_inverses[s][t], u);
-            od;
-          fi;
-        od;
+        t := left_canon_inverse_by_gen[a][j];
+        # don't repeat the calculation if we've already done it for t!
+        if not seen[t] then
+          seen[t] := true;
+          for u in [1 .. n] do
+            s := multtable[u][t];
+            if right_inverses[s][t] = fail then
+              right_inverses[s][t] := [];
+            fi;
+            Add(right_inverses[s][t], u);
+          od;
+        fi;
       od;
     od;
   od;
@@ -353,6 +359,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
   od;
 
   r := rec();
+  r.left_canon_inverse_by_gen := left_canon_inverse_by_gen;
   r.left_inverses_by_gen := left_inverses_by_gen;
   r.max_R_intersects := max_R_intersects;
   r.multtable := multtable;
@@ -572,39 +579,37 @@ SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
   fi;
 
   right_inverses := data.right_inverses;
-  V := [1 .. Size(data.multtable)];
-  for t in data.left_inverses_by_gen[a][j] do
-    C := right_inverses[s][t];
-    if C = fail then
-      V := [];
-      break;
-    else
-      V := Intersection(V, C);
-    fi;
-  od;
+  t :=  data.left_canon_inverse_by_gen[a][j];
+  C := right_inverses[s][t];
+  if C = fail then
+    V := [];
+  else
+  fi;
   data.V[j][a][s] := V;
   return V;
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
-  local left_inverses_by_gen, multtable, W, x, a, r;
+  local left_canon_inverse_by_gen, multtable, right_inverses, W, r, x, a;
 
   if IsBound(data.W[i][j][s]) then
     return data.W[i][j][s];
   fi;
 
-  left_inverses_by_gen := data.left_inverses_by_gen;
+  left_canon_inverse_by_gen := data.left_canon_inverse_by_gen;
   multtable := data.multtable;
+  right_inverses := data.right_inverses;
   W := [1 .. data.n];
   for a in data.max_R_intersects[i][j] do
-    for r in left_inverses_by_gen[a][i] do
-      x := multtable[s][r];
+    r := left_canon_inverse_by_gen[a][i];
+    x := multtable[s][r];
+    if right_inverses[x][left_canon_inverse_by_gen[a][j]] = fail then
+      W := [];
+      break;
+    else 
       W := Intersection(W, 
-                        SEMIGROUPS.LeftTranslationsBacktrackDataV(data,
-                                                                  j,
-                                                                  a,
-                                                                  x));
-    od;
+           right_inverses[x][left_canon_inverse_by_gen[a][j]]);
+    fi;
   od;
   data.W[i][j][s] := W;
   return W;
@@ -731,7 +736,7 @@ SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens)
   lambda := [];
   out := [];
   bt(1);
-  Apply(out, x -> LeftTranslationNC(S, x));
+  Apply(out, x -> LeftTranslationNC(LeftTranslations(S), x));
   return out;
 end;
 
