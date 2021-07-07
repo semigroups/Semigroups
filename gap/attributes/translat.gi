@@ -375,6 +375,7 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S)
   return SEMIGROUPS.RightTranslationsBacktrackDataWithGens(S, GeneratorsOfSemigroup(S));
 end;
 
+# TODO: remove F like V was removed for left translations
 SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   local n, m, id, genspos, transpose_multtable, transpose_multsets, l_classes,
   l_class_map, l_class_inv_map, l_classes_below, max_L_intersects, intersect,
@@ -501,14 +502,19 @@ end;
 # S does not contain the empty word
 # S is finite!
 SEMIGROUPS.LeftTranslationsFPBacktrackData := function(S)
-  local gens, rels, n, m, suff_rels, suff_rels_by_first_letter, suff_rel, i, j,
-  word, suffix, U, keep, suffs, right_inverses_by_suffix, Slist, r, rel, x, s;
+  local gens, rels, n, m, iso, T, suff_rels, suff_rels_by_first_letter,
+  suff_rel, i, j, word, suffix, T_gens, iso_with_one,
+  T_suff_rels_by_first_letter, U, keep, T_suff_rels, T_suffs,
+  right_inverses_by_suffix, Tlist, r, rel, x, suffs, t, T_rel, suff;
 
   gens := GeneratorsOfSemigroup(S);
   rels := RelationsOfFpSemigroup(S);
 
   n := Size(S);
   m := Size(gens);
+
+  iso := IsomorphismTransformationSemigroup(S);
+  T := Range(iso);
 
   suff_rels := [];
   suff_rels_by_first_letter := List(gens, x -> List(gens, y -> []));
@@ -533,39 +539,66 @@ SEMIGROUPS.LeftTranslationsFPBacktrackData := function(S)
     fi;
   od;
 
-  U := List(gens, x -> []);
-  for i in [1 .. Length(gens)] do
-    for s in S do
+  T_gens := List(gens, x -> x^iso);
+
+  iso_with_one := function(x)
+    if x = SEMIGROUPS.UniversalFakeOne then
+      return x;
+    else
+      return x ^ iso;
+    fi;
+  end;
+
+  T_suff_rels_by_first_letter := List(gens, x -> List(gens, y -> []));
+  for i in [1 .. m] do
+    for j in [i .. m] do
+      for suffs in suff_rels_by_first_letter[i][j] do
+        Add(T_suff_rels_by_first_letter[i][j], List(suffs, iso_with_one));
+      od;
+    od;
+  od;
+
+
+  U := List([1 .. m], x -> []);
+  for i in [1 .. m] do
+    for t in T do
       keep := true;
-      for rel in suff_rels_by_first_letter[i][i] do
-        if s * rel[1] <> s * rel[2] then
+      for T_rel in T_suff_rels_by_first_letter[i][i] do
+        if t * rel[1] <> t * rel[2] then
           keep := false;
           break;
         fi;
       od;
     if keep then
-      Add(U[i], PositionCanonical(S, s));
+      Add(U[i], PositionCanonical(T, t));
     fi;
     od;
   od;
 
-  suffs := Set(List(suff_rels, x -> x[2]));
-  right_inverses_by_suffix := List([1 .. n], x -> List([1 .. Length(suffs)], y -> []));
+  T_suff_rels := List(suff_rels, suff_rel -> List(suff_rel, iso_with_one));
+  T_suffs := Set(Flat(T_suff_rels));
+  right_inverses_by_suffix := List([1 .. n], x -> List([1 .. n + 1], y -> []));
 
-  Slist := AsListCanonical(S);;
+  Tlist := AsListCanonical(T);;
 
-  for i in [1 .. Length(suffs)] do
-    for s in [1 .. n] do
-      Add(right_inverses_by_suffix[PositionCanonical(S, Slist[s] * suffs[i])][i],
-          s);
+  for suff in T_suffs do
+    if suff = SEMIGROUPS.UniversalFakeOne then
+      i := n + 1;
+    else
+      i := PositionCanonical(T, suff);
+    fi;
+    for t in [1 .. n] do
+      Add(right_inverses_by_suffix[PositionCanonical(T, Tlist[t] * suff)][i], t);
     od;
   od;
 
   r := rec();
+  r.n := n;
   r.right_inverses_by_suffix := right_inverses_by_suffix;
   r.S := S;
-  r.suff_rels_by_first_letter := suff_rels_by_first_letter;
-  r.suffixes := suffs;
+  r.T := T;
+  r.T_suff_rels_by_first_letter := T_suff_rels_by_first_letter;
+  r.T_suffixes := T_suffs;
   r.U := U;
   r.W := List([1 .. m], i -> List([1 .. m], j -> []));
   return r;
@@ -616,7 +649,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
 end;
 
 SEMIGROUPS.LeftTranslationsFPBacktrackDataW := function(data, i, j, s)
-  local S, W, u, suff_rel;
+  local S, W, enum, u, suff_rel;
 
   if IsBound(data.W[i][j][s]) then
     return data.W[i][j][s];
@@ -625,14 +658,17 @@ SEMIGROUPS.LeftTranslationsFPBacktrackDataW := function(data, i, j, s)
   S := data.S;
 
   W := [1 .. Size(S)];
-  for suff_rel in data.suff_rels_by_first_letter[i][j] do
-    u := Position(data.suffixes, suff_rel[2]);
+  enum := EnumeratorCanonical(data.T);
+  for suff_rel in data.T_suff_rels_by_first_letter[i][j] do
+    if suff_rel[2] = SEMIGROUPS.UniversalFakeOne then
+      u := data.n + 1;
+    else
+      u := PositionCanonical(data.T, suff_rel[2]);
+    fi;
     W := Intersection(W, 
-          data.right_inverses_by_suffix[PositionCanonical(data.S,
-          EnumeratorCanonical(S)[s] *
-          suff_rel[1])][u]);
+          data.right_inverses_by_suffix[PositionCanonical(data.T, enum[s] * suff_rel[1])][u]);
   od;
-  
+
   data.W[i][j][s] := W;
   return W;
 end;
@@ -751,16 +787,16 @@ SEMIGROUPS.LeftTranslationsFPBacktrack := function(S)
   data := SEMIGROUPS.LeftTranslationsFPBacktrackData(S);
   
   bt := function(i) 
-    local consistent, W, s, j;
-    for s in omega_stack[i][i] do
-      lambda[i] := s;
+    local consistent, W, t, j;
+    for t in omega_stack[i][i] do
+      lambda[i] := t;
       if i = m then
         Add(out, ShallowCopy(lambda));
       else
         consistent := true;
         omega_stack[i + 1] := [];
         for j in [i + 1 .. m] do
-          W := SEMIGROUPS.LeftTranslationsFPBacktrackDataW(data, i, j, s);
+          W := SEMIGROUPS.LeftTranslationsFPBacktrackDataW(data, i, j, t);
           omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
           if IsEmpty(omega_stack[i + 1][j]) then
             consistent := false;
@@ -778,7 +814,7 @@ SEMIGROUPS.LeftTranslationsFPBacktrack := function(S)
   lambda := [];
   out := [];
   bt(1);
-  Apply(out, x -> LeftTranslationNC(S, x));
+  #Apply(out, x -> LeftTranslationNC(S, x));
   return out;
 end;
 
