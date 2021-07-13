@@ -95,56 +95,53 @@ if IsPackageMarkedForLoading("io", "4.5.4") then
     od;
     return [Int(Sum(times)/Length(times)), Length(times)];
   end;
-
-  BenchmarkLeftTranslationsWithGens := function(arg)
-    local funcs, strs, res, i;
-    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens,
-             SEMIGROUPS.LeftTranslationsBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens];
-    
-    strs := ["NaiveBacktrack",
-             "BacktrackNoCache",
-             "BacktrackWithCache",
-             "StabilisedBacktrack"];
-
-    Print("Benchmarking:");
-    ViewObj(arg[1]);
-    Print("\n");
-    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], arg[2]);
-    for i in [1 .. Length(funcs)] do
-      res := Benchmark(funcs[i], arg);
-      Print("Left translations, ", strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
-    od;
+  
+  BenchmarkLeftTranslationsWithGensStabilisedDown := function(arg)
+    local res;
+    res := Benchmark(SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens, arg);
+    Print("Left translations, StabilisedBacktrack: ", res[1], " in ", res[2], " runs.\n");
+  end;
+  
+  BenchmarkLeftTranslationsWithGensStandardDown := function(arg)
+    local res;
+    res := Benchmark(SEMIGROUPS.LeftTranslationsBacktrackWithGens, arg);
+    Print("Left translations, StandardBacktrack: ", res[1], " in ", res[2], " runs.\n");
+    BenchmarkLeftTranslationsWithGensStabilisedDown(arg[1], arg[2]);
   end;
 
-  BenchmarkFPLeftTranslationsWithGens := function(arg)
-    local funcs, strs, res, i;
-    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens,
-             SEMIGROUPS.LeftTranslationsBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsFPBacktrack];
-    
-    strs := ["NaiveBacktrack",
-             "BacktrackNoCache",
-             "BacktrackWithCache",
-             "StabilisedBacktrack",
-             "FPBacktrack"];
+  BenchmarkLeftTranslationsWithGensNoCacheDown := function(arg)
+    local res;
+    res := Benchmark(SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens, arg);
+    Print("Left translations, CachelessBacktrack: ", res[1], " in ", res[2], " runs.\n");
+    BenchmarkLeftTranslationsWithGensStandardDown(arg[1], arg[2]);
+  end;
+
+  BenchmarkLeftTranslationsAll := function(arg)
+    local res;
+    res := Benchmark(SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens, arg);
+    Print("Left translations, NaiveBacktrack: ", res[1], " in ", res[2], " runs.\n");
+    BenchmarkLeftTranslationsWithGensNoCacheDown(arg[1], arg[2]);
+  end;
+
+  BenchmarkFPLeftTranslations := function(S)
+    local iso, T_gens, res;
 
     Print("Benchmarking:");
-    ViewObj(arg[1]);
+    ViewObj(S);
     Print("\n");
-    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], arg[2]);
-    SEMIGROUPS.LeftTranslationsFPBacktrackData(arg[1]);
-    for i in [1 .. Length(funcs)] do
-      res := Benchmark(funcs[i], arg);
-      Print("Left translations, ", strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
-    od;
+    SEMIGROUPS.LeftTranslationsFPBacktrackData(S);
+    iso := IsomorphismTransformationSemigroup(S);
+    T_gens := List(GeneratorsOfSemigroup(S), x -> x ^ iso);
+
+    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(Range(iso), T_gens);
+    res := Benchmark(SEMIGROUPS.LeftTranslationsFPBacktrack, [S]);
+    Print("Left translations, FPBacktrack: ", res[1], " in ", res[2], " runs.\n");
+    res := Benchmark(SEMIGROUPS.LeftTranslationsBacktrackWithGens, [Range(iso), T_gens]);
+    Print("Left translations, StandardBacktrack: ", res[1], " in ", res[2], " runs.\n");
   end;
   
   BenchmarkLeftTranslations := function(arg)
-    BenchmarkLeftTranslationsWithGens(arg[1], GeneratorsOfSemigroup(arg[1]));  
+    BenchmarkLeftTranslationsAll(arg[1], GeneratorsOfSemigroup(arg[1]));  
   end;
 
   BenchmarkTranslationalHull := function(arg)
