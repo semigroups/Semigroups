@@ -385,6 +385,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
   r.left_canon_inverse_by_gen := left_canon_inverse_by_gen;
   r.left_inverses_by_gen := left_inverses_by_gen;
   r.max_R_intersects := max_R_intersects;
+  r.multsets := multsets;
   r.multtable := multtable;
   r.n := n;
   r.right_inverses := right_inverses;
@@ -921,8 +922,8 @@ SEMIGROUPS.LeftTranslationsFPBacktrack := function(S)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens := function(S, gens)
-  local n, m, genspos, omega_stack, possiblefgenvals, multtable, data, U, bt,
-  lambda, out, i;
+  local n, m, genspos, omega_stack, possiblefgenvals, multtable, data, multsets,
+  left_inverses_by_gen, bt, lambda, out;
 
   n           := Size(S);
   m           := Size(gens);
@@ -933,33 +934,63 @@ SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens := function(S, gens)
   multtable := MultiplicationTableWithCanonicalPositions(S);
 
   data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
-  U := data.U;
-  
-  # restrict via the U_{i}
-  for i in [1 .. m] do
-    IntersectSet(possiblefgenvals[i], U[i]);
-  od;
+
+  multsets := data.multsets;
+  left_inverses_by_gen := data.left_inverses_by_gen;;
 
   bt := function(i) 
-    local consistent, W, s, j;
+    local consistent, su, sv, W, s, b, u, v, j;
     for s in omega_stack[i][i] do
       lambda[i] := s;
-      if i = m then
-        Add(out, ShallowCopy(lambda));
-      else
-        consistent := true;
-        omega_stack[i + 1] := [];
-        for j in [i + 1 .. m] do
-          W := SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache(data, i, j, s);
-          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
-          if IsEmpty(omega_stack[i + 1][j]) then
-            consistent := false;
+      consistent := true;
+      omega_stack[i + 1] := [];
+
+      for b in multsets[genspos[i]] do
+        for u in left_inverses_by_gen[b][i] do
+          if u <= n then
+            su := multtable[s][u];
+          else
+            su := s;
+          fi;
+          for v in left_inverses_by_gen[b][i] do
+            if v <= n then
+              sv := multtable[s][v];
+            else
+              sv := s;
+            fi;
+            if su <> sv then
+              consistent := false;
+              break;
+            fi;
+          od;
+          if not consistent then
             break;
           fi;
         od;
-        if consistent then
-          bt(i + 1);
+        if not consistent then
+          break;
         fi;
+      od;
+      
+      if not consistent then
+        continue;
+      fi;
+
+      if i = m then
+        Add(out, ShallowCopy(lambda));
+        continue;
+      fi;
+
+      for j in [i + 1 .. m] do
+        W := SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache(data, i, j, s);
+        omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
+        if IsEmpty(omega_stack[i + 1][j]) then
+          consistent := false;
+          break;
+        fi;
+      od;
+      if consistent then
+        bt(i + 1);
       fi;
     od;
   end;
@@ -1012,11 +1043,11 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
     stab_depth := PositionProperty(stabs, x -> Size(x) = 0) - 1;
     nr := nr + Product(List(coset_reps{[1 .. stab_depth]}, Length));
     AddSet(out, ShallowCopy(lambda));
-    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
-    while not IsDoneIterator(it) do
-      mult := Product(NextIterator(it));
-      AddSet(out, OnTuples(lambda, mult));
-    od;
+#    it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
+#    while not IsDoneIterator(it) do
+#      mult := Product(NextIterator(it));
+#      AddSet(out, OnTuples(lambda, mult));
+#    od;
   end;
 
   bt := function(i) 
