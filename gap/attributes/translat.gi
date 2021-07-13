@@ -403,8 +403,8 @@ end;
 SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   local n, m, id, genspos, transpose_multtable, transpose_multsets, l_classes,
   l_class_map, l_class_inv_map, l_classes_below, max_L_intersects, intersect,
-  reps, right_inverses_by_gen, left_inverses, seen, s, multsets, T, Ti, keep, B,
-  sb, r, i, j, t, a, u;
+  reps, right_canon_inverse_by_gen, right_inverses_by_gen, x, left_inverses,
+  seen, s, multsets, T, Ti, keep, B, sb, r, i, j, t, a, u;
   
   n           := Size(S);
   m           := Size(gens);
@@ -448,12 +448,18 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
       max_L_intersects[j][i] := max_L_intersects[i][j];
     od;
   od;
+  
+  right_canon_inverse_by_gen := List([1 .. n], x -> []);
 
   # for all s in S, store the elements t such that t * gens[i] = s for each i
   right_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
     for t in [1 .. n] do
+      x := transpose_multtable[genspos[i]][t];
       Add(right_inverses_by_gen[transpose_multtable[genspos[i]][t]][i], t);
+      if not IsBound(right_canon_inverse_by_gen[x][i]) then
+        right_canon_inverse_by_gen[x][i] := t;
+      fi;
     od;
   od;
 
@@ -514,6 +520,7 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   r.left_inverses := left_inverses;
   r.max_L_intersects := max_L_intersects;
   r.n := n;
+  r.right_canon_inverse_by_gen := right_canon_inverse_by_gen;
   r.right_inverses_by_gen := right_inverses_by_gen;
   r.transpose_multtable := transpose_multtable;
   r.T := T;
@@ -693,31 +700,6 @@ SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
   return W;
 end;
 
-SEMIGROUPS.LeftTranslationsFPBacktrackDataW := function(data, i, j, s)
-  local S, W, enum, u, suff_rel;
-
-  if IsBound(data.W[i][j][s]) then
-    return data.W[i][j][s];
-  fi;
-
-  S := data.S;
-
-  W := [1 .. Size(S)];
-  enum := EnumeratorCanonical(data.T);
-  for suff_rel in data.T_suff_rels_by_first_letter[i][j] do
-    if suff_rel[2] = SEMIGROUPS.UniversalFakeOne then
-      u := data.n + 1;
-    else
-      u := PositionCanonical(data.T, suff_rel[2]);
-    fi;
-    W := Intersection(W, 
-          data.right_inverses_by_suffix[PositionCanonical(data.T, enum[s] * suff_rel[1])][u]);
-  od;
-
-  data.W[i][j][s] := W;
-  return W;
-end;
-
 SEMIGROUPS.RightTranslationsBacktrackDataF := function(data, j, a, s)
   local left_inverses, F, C, t;
 
@@ -741,27 +723,54 @@ SEMIGROUPS.RightTranslationsBacktrackDataF := function(data, j, a, s)
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackDataG := function(data, i, j, s)
-  local right_inverses_by_gen, transpose_multtable, G, x, a, l;
+  local right_canon_inverse_by_gen, transpose_multtable, left_inverses, G, l, x, a;
 
   if IsBound(data.G[i][j][s]) then
     return data.G[i][j][s];
   fi;
 
-  right_inverses_by_gen := data.right_inverses_by_gen;
+  right_canon_inverse_by_gen := data.right_canon_inverse_by_gen;
   transpose_multtable := data.transpose_multtable;
+  left_inverses := data.left_inverses;
   G := [1 .. data.n];
   for a in data.max_L_intersects[i][j] do
-    for l in right_inverses_by_gen[a][i] do
-      x := transpose_multtable[s][l];
+    l := right_canon_inverse_by_gen[a][i];
+    x := transpose_multtable[s][l];
+    if left_inverses[x][right_canon_inverse_by_gen[a][j]] = fail then
+      G := [];
+      break;
+    else 
       G := Intersection(G, 
-                        SEMIGROUPS.RightTranslationsBacktrackDataF(data,
-                                                                   j,
-                                                                   a,
-                                                                   x));
-    od;
+           left_inverses[x][right_canon_inverse_by_gen[a][j]]);
+    fi;
   od;
   data.G[i][j][s] := G;
   return G;
+end;
+
+SEMIGROUPS.LeftTranslationsFPBacktrackDataW := function(data, i, j, s)
+  local S, W, enum, u, suff_rel;
+
+  if IsBound(data.W[i][j][s]) then
+    return data.W[i][j][s];
+  fi;
+
+  S := data.S;
+
+  W := [1 .. Size(S)];
+  enum := EnumeratorCanonical(data.T);
+  for suff_rel in data.T_suff_rels_by_first_letter[i][j] do
+    if suff_rel[2] = SEMIGROUPS.UniversalFakeOne then
+      u := data.n + 1;
+    else
+      u := PositionCanonical(data.T, suff_rel[2]);
+    fi;
+    W := Intersection(W, 
+          data.right_inverses_by_suffix[PositionCanonical(data.T, enum[s] * suff_rel[1])][u]);
+  od;
+
+  data.W[i][j][s] := W;
+  return W;
 end;
 
 SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens := function(S, gens)
