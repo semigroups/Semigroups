@@ -43,7 +43,7 @@
 #############################################################################
 
 
-if IsPackageMarkedForLoading("io", "4.4.4") then 
+if IsPackageMarkedForLoading("io", "4.5.4") then 
   __JDMS_GLOBAL_TIMINGS_RECORD := rec(running := false);
   StartTimer := function()
     if not __JDMS_GLOBAL_TIMINGS_RECORD.running then 
@@ -101,16 +101,12 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
     funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens,
              SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens,
              SEMIGROUPS.LeftTranslationsBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsStabilisedOrderedBacktrackWithGens,
-             SEMIGROUPS.LeftTranslationsStabilisedReverseOrderedBacktrackWithGens];
+             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens];
     
     strs := ["NaiveBacktrack",
              "BacktrackNoCache",
              "BacktrackWithCache",
-             "StabilisedBacktrack",
-             "StabilisedOrderedBacktrack",
-             "StabilisedReverseOrderedBacktrack"];
+             "StabilisedBacktrack"];
 
     Print("Benchmarking:");
     ViewObj(arg[1]);
@@ -118,31 +114,61 @@ if IsPackageMarkedForLoading("io", "4.4.4") then
     SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], arg[2]);
     for i in [1 .. Length(funcs)] do
       res := Benchmark(funcs[i], arg);
-      Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
+      Print("Left translations, ", strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
+    od;
+  end;
+
+  BenchmarkFPLeftTranslationsWithGens := function(arg)
+    local funcs, strs, res, i;
+    funcs := [SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens,
+             SEMIGROUPS.LeftTranslationsBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens,
+             SEMIGROUPS.LeftTranslationsFPBacktrack];
+    
+    strs := ["NaiveBacktrack",
+             "BacktrackNoCache",
+             "BacktrackWithCache",
+             "StabilisedBacktrack",
+             "FPBacktrack"];
+
+    Print("Benchmarking:");
+    ViewObj(arg[1]);
+    Print("\n");
+    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], arg[2]);
+    SEMIGROUPS.LeftTranslationsFPBacktrackData(arg[1]);
+    for i in [1 .. Length(funcs)] do
+      res := Benchmark(funcs[i], arg);
+      Print("Left translations, ", strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
     od;
   end;
   
   BenchmarkLeftTranslations := function(arg)
     BenchmarkLeftTranslationsWithGens(arg[1], GeneratorsOfSemigroup(arg[1]));  
   end;
-  
-  BenchmarkLeftIdealTranslationsWithGens := function(arg)
-    local funcs, strs, res, i;
-    funcs := [SEMIGROUPS.LeftTranslationsIdealBacktrack,
-             SEMIGROUPS.LeftTranslationsIdealStabilisedBacktrack];
-    strs := ["IdealBacktrack", "StabilisedIdealBacktrack"];
-    Print("Benchmarking ideal left translations of ",
-          arg[1],
-          " in ",
-          arg[2],
-          "\n");
-    SEMIGROUPS.LeftTranslationsIdealBacktrackData(arg[1], arg[2], arg[3]);
+
+  BenchmarkTranslationalHull := function(arg)
+    local funcs, strs, gens, res, i;
+    funcs := [SEMIGROUPS.BitranslationsAlternatingBacktrack,
+             SEMIGROUPS.BitranslationsRLSequentialBacktrack,
+             SEMIGROUPS.BitranslationsAlternatingStabilisedBacktrack];
+    
+    strs := ["AlternatingBacktrack",
+             "RLSequentialBacktrack",
+             "StabilisedAlternatingBacktrack"];
+
+    Print("Benchmarking:");
+    ViewObj(arg[1]);
+    Print("\n");
+    gens := GeneratorsOfSemigroup(arg[1]);
+    SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(arg[1], gens);
+    SEMIGROUPS.RightTranslationsBacktrackDataWithGens(arg[1], gens);
     for i in [1 .. Length(funcs)] do
       res := Benchmark(funcs[i], arg);
-      Print(strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
+      Print("Bitranslations, ", strs[i] , ": ", res[1], " in ", res[2], " runs.\n");
     od;
-  end;
 
+  end;
 fi;
 
 # Hash translations by their underlying transformations
@@ -170,10 +196,10 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
-      return SEMIGROUPS.LeftTranslationsBacktrack(T);
+      return SEMIGROUPS.LeftTranslationsBacktrack(UnderlyingSemigroup(T));
     else
       # TODO: dual or backtrack?
-      return SEMIGROUPS.RightTranslationsBacktrack(T);
+      return SEMIGROUPS.RightTranslationsBacktrack(UnderlyingSemigroup(T));
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
@@ -622,6 +648,27 @@ SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
   return V;
 end;
 
+SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache := function(data, i, j, s)
+  local left_canon_inverse_by_gen, multtable, right_inverses, W, r, x, a;
+
+  left_canon_inverse_by_gen := data.left_canon_inverse_by_gen;
+  multtable := data.multtable;
+  right_inverses := data.right_inverses;
+  W := [1 .. data.n];
+  for a in data.max_R_intersects[i][j] do
+    r := left_canon_inverse_by_gen[a][i];
+    x := multtable[s][r];
+    if right_inverses[x][left_canon_inverse_by_gen[a][j]] = fail then
+      W := [];
+      break;
+    else 
+      W := Intersection(W, 
+           right_inverses[x][left_canon_inverse_by_gen[a][j]]);
+    fi;
+  od;
+  return W;
+end;
+
 SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
   local left_canon_inverse_by_gen, multtable, right_inverses, W, r, x, a;
 
@@ -718,6 +765,64 @@ SEMIGROUPS.RightTranslationsBacktrackDataG := function(data, i, j, s)
   data.G[i][j][s] := G;
   return G;
 end;
+
+SEMIGROUPS.LeftTranslationsNaiveBacktrackWithGens := function(S, gens)
+  local n, m, genspos, multtable, bt, lambda, out;
+
+  n           := Size(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+
+  bt := function(i) 
+    local bound, consistent, xit, st, s, t, x;
+    for s in [1 .. n] do
+      bound := [];
+      consistent := true;
+      if IsBound(lambda[genspos[i]]) then
+        if lambda[genspos[i]] <> s then
+          consistent := false;
+        fi;
+      else
+        lambda[genspos[i]] := s;
+        Add(bound, genspos[i]);
+      fi;
+      if consistent then
+        for t in [1 .. n] do
+          xit := multtable[genspos[i]][t];
+          st := multtable[s][t];
+          if IsBound(lambda[xit]) then
+            if lambda[xit] <> multtable[s][t] then
+              consistent := false;
+              break;
+            fi;
+          else
+            lambda[xit] := multtable[s][t];
+            Add(bound, xit);
+          fi;
+        od;
+      fi;
+      if consistent then
+        if i = m then
+          Add(out, ShallowCopy(lambda));
+        else
+          bt(i + 1);
+        fi;
+      fi;
+      for x in bound do
+        Unbind(lambda[x]);
+      od;
+    od;
+  end;
+
+  lambda := [];
+  out := [];
+  bt(1);
+#  Apply(out, x -> LeftTranslationNC(L, x));
+  return out;
+end;
+
 
 SEMIGROUPS.LeftTranslationsBacktrack := function(L)
   return SEMIGROUPS.LeftTranslationsBacktrackWithGens(UnderlyingSemigroup(L),
@@ -818,6 +923,58 @@ SEMIGROUPS.LeftTranslationsFPBacktrack := function(S)
   return out;
 end;
 
+SEMIGROUPS.LeftTranslationsBacktrackNoCacheWithGens := function(S, gens)
+  local n, m, genspos, omega_stack, possiblefgenvals, multtable, data, U, bt,
+  lambda, out, i;
+
+  n           := Size(S);
+  m           := Size(gens);
+  genspos     := List(gens, x -> PositionCanonical(S, x));
+  omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+
+  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  U := data.U;
+  
+  # restrict via the U_{i}
+  for i in [1 .. m] do
+    IntersectSet(possiblefgenvals[i], U[i]);
+  od;
+
+  bt := function(i) 
+    local consistent, W, s, j;
+    for s in omega_stack[i][i] do
+      lambda[i] := s;
+      if i = m then
+        Add(out, ShallowCopy(lambda));
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataWNoCache(data, i, j, s);
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
+          if IsEmpty(omega_stack[i + 1][j]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          bt(i + 1);
+        fi;
+      fi;
+    od;
+  end;
+
+  omega_stack := [possiblefgenvals];
+  lambda := [];
+  out := [];
+  bt(1);
+#  Apply(out, x -> LeftTranslationNC(L, x));
+  return out;
+end;
+
 SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
   return SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens(UnderlyingSemigroup(L),
           GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
@@ -861,7 +1018,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
     it := IteratorOfCartesianProduct(coset_reps{[1 .. stab_depth]});
     while not IsDoneIterator(it) do
       mult := Product(NextIterator(it));
-      Add(out, OnTuples(lambda, mult));
+      AddSet(out, OnTuples(lambda, mult));
     od;
   end;
 
@@ -926,7 +1083,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens)
   out := [];
   nr := 0;
   bt(1);
-  Apply(out, x -> LeftTranslationNC(S, x));
+#  Apply(out, x -> LeftTranslationNC(S, x));
   return out;
 end;
 
@@ -985,7 +1142,7 @@ SEMIGROUPS.RightTranslationsBacktrack := function(S)
     return Length(out);
   fi;
 
-  Apply(out, x -> RightTranslationNC(S, x));
+#  Apply(out, x -> RightTranslationNC(S, x));
   return out;
 end;
 
@@ -1099,16 +1256,15 @@ SEMIGROUPS.RightTranslationsStabilisedBacktrackWithGens := function(S, gens)
     return Length(out);
   fi;
 
-  Apply(out, x -> RightTranslationNC(S, x));
+#  Apply(out, x -> RightTranslationNC(S, x));
   return out;
 end;
 
-SEMIGROUPS.BitranslationsAlternatingBacktrack := function(H)
-  local S, n, gens, m, genspos, l_omega_stack, r_omega_stack, multtable,
+SEMIGROUPS.BitranslationsAlternatingBacktrack := function(S)
+  local n, gens, m, genspos, l_omega_stack, r_omega_stack, multtable,
   left_data, right_data, U, W, left_inverses_by_gen, G, T,
   right_inverses_by_gen, bt, lambda, rho, out, L, R, i, j, s;
 
-  S             := UnderlyingSemigroup(H);
   n             := Size(S);
   gens          := GeneratorsOfSemigroup(S);
   m             := Size(gens);
@@ -1212,19 +1368,87 @@ SEMIGROUPS.BitranslationsAlternatingBacktrack := function(H)
 
   L := LeftTranslations(S);
   R := RightTranslations(S);
-  Apply(out, x -> BitranslationNC(H,
-                                  LeftTranslationNC(L, x[1]),
-                                  RightTranslationNC(R, x[2])));
+#  Apply(out, x -> BitranslationNC(TranslationalHull(S),
+#                                  LeftTranslationNC(L, x[1]),
+#                                  RightTranslationNC(R, x[2])));
   return out;
 end;
 
-SEMIGROUPS.BitranslationsAlternatingStabilisedBacktrack := function(H)
-  local S, n, gens, m, genspos, l_omega_stack, r_omega_stack, l_stabs,
+SEMIGROUPS.BitranslationsRLSequentialBacktrack := function(S)
+  local n, gens, m, genspos, multtable, data, left_inverses_by_gen, U, bt,
+  out, R, omega_stack, lambda, L, rho, i, j;
+
+  n             := Size(S);
+  gens          := GeneratorsOfSemigroup(S);
+  m             := Size(gens);
+  genspos       := List(gens, x -> PositionCanonical(S, x));
+
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+
+  data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  left_inverses_by_gen := data.left_inverses_by_gen;
+  U := data.U;
+
+  bt := function(i) 
+    local consistent, W, s, j;
+    for s in omega_stack[i][i] do
+      lambda[i] := s;
+      if i = m then
+        Add(out, ShallowCopy(lambda));
+      else
+        consistent := true;
+        omega_stack[i + 1] := [];
+        for j in [i + 1 .. m] do
+          W := SEMIGROUPS.LeftTranslationsBacktrackDataW(data, i, j, s);
+          omega_stack[i + 1][j] := Intersection(omega_stack[i][j], W);
+          if IsEmpty(omega_stack[i + 1][j]) then
+            consistent := false;
+            break;
+          fi;
+        od;
+        if consistent then
+          bt(i + 1);
+        fi;
+      fi;
+    od;
+  end;
+
+  out := [];
+  
+  for rho in SEMIGROUPS.RightTranslationsBacktrack(S) do
+    omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
+    omega_stack[1] := List([1 .. m], i -> U[i]);
+    for i in [1 .. m] do
+      for j in [1 .. m] do
+          omega_stack[1][j] :=
+            Intersection(omega_stack[1][j],
+                         left_inverses_by_gen[multtable[rho[i]][genspos[j]]][i]);
+      od;
+    od;
+
+    lambda := [];
+    bt(1);
+  od;
+  
+  if ValueOption("SEMIGROUPS_bitranslat_nr_only") = true then
+    return Length(out);
+  fi;
+
+#  L := LeftTranslations(S);
+#  Apply(out, x -> Bitranslation(H,
+#                                LeftTranslationNC(L, x[1]),
+#                                RightTranslationNC(R, x[2])));
+  return out;
+end;
+
+
+
+SEMIGROUPS.BitranslationsAlternatingStabilisedBacktrack := function(S)
+  local n, gens, m, genspos, l_omega_stack, r_omega_stack, l_stabs,
   l_coset_reps, r_stabs, r_coset_reps, stab_thresh, multtable, left_data,
   right_data, left_inverses_by_gen, right_inverses_by_gen, U, T, aut,
   add_stabilised_pair, bt, lambda, rho, out, L, R, i;
 
-  S             := UnderlyingSemigroup(H);
   n             := Size(S);
   gens          := GeneratorsOfSemigroup(S);
   m             := Size(gens);
@@ -1326,7 +1550,7 @@ SEMIGROUPS.BitranslationsAlternatingStabilisedBacktrack := function(H)
         if consistent then
           if use_stab then
             l_stabs[k] := Stabiliser(stab, s);
-            l_coset_reps[k] := List(RightCosets(stab, r_stabs[k]), Representative);
+            l_coset_reps[k] := List(RightCosets(stab, l_stabs[k]), Representative);
           else
             l_stabs[k] := [];
             l_coset_reps[k] := [];
@@ -1389,11 +1613,11 @@ SEMIGROUPS.BitranslationsAlternatingStabilisedBacktrack := function(H)
   out := [];
   bt(1);
 
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-  Apply(out, x -> Bitranslation(H,
-                                LeftTranslationNC(L, x[1]),
-                                RightTranslationNC(R, x[2])));
+#  L := LeftTranslations(S);
+#  R := RightTranslations(S);
+#  Apply(out, x -> Bitranslation(H,
+#                                LeftTranslationNC(L, x[1]),
+#                                RightTranslationNC(R, x[2])));
   return out;
 end;
 
