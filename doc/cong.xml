@@ -406,8 +406,8 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
 
 <#GAPDoc Label="EquivalenceRelationLookup">
   <ManSection>
-    <Attr Name = "EquivalenceRelationLookup" Arg = "equiv" Label="for an
-      equivalence relation over a finite semigroup"/>
+    <Attr Name="EquivalenceRelationLookup" Arg="equiv"
+      Label="for an equivalence relation over a finite semigroup"/>
     <Returns>A list.</Returns>
     <Description>
       This attribute describes the equivalence relation <A>equiv</A>, defined
@@ -426,7 +426,9 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
       mathematical relation might therefore have different lookups.  Note also
       that the maximum value of the list may not be the number of classes of
       <A>equiv</A>, and that any integer might not be included.  However, see
-      <Ref Attr = "EquivalenceRelationCanonicalLookup"/>.<P/>
+      <Ref Attr="EquivalenceRelationCanonicalLookup"
+           Label="for an equivalence relation over a finite semigroup"/>.
+      <P/>
 
       See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
@@ -445,8 +447,8 @@ false]]></Example>
 
 <#GAPDoc Label="EquivalenceRelationCanonicalLookup">
   <ManSection>
-    <Attr Name = "EquivalenceRelationCanonicalLookup" Arg = "equiv" Label="for
-      an equivalence relation over a finite semigroup"/>
+    <Attr Name="EquivalenceRelationCanonicalLookup" Arg="equiv"
+      Label="for an equivalence relation over a finite semigroup"/>
     <Returns>A list.</Returns>
     <Description>
       This attribute describes the equivalence relation <A>equiv</A>, defined
@@ -469,7 +471,8 @@ false]]></Example>
       number at their respective positions in the lookup.
       <P/>
 
-      See also <Ref Attr = "EquivalenceRelationLookup"/> and
+      See also <Ref Attr="EquivalenceRelationLookup"
+        Label="for an equivalence relation over a finite semigroup"/> and
       <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
 gap> S := Monoid([
