@@ -292,3 +292,28 @@ function(x, y)
     return Range(yobj);
   fi;
 end);
+
+InstallMethod(VerticesOfGraphInverseSemigroup,
+"for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+function(S)
+  local graph, m, result, i;
+  graph := GraphOfGraphInverseSemigroup(S);
+  m := DigraphNrEdges(graph);
+  result := [];
+  for i in [m + 1 .. DigraphNrVertices(graph) + m] do
+    Add(result, Objectify(ElementsFamily(FamilyObj(S))!.type, [[i], graph]));
+  od;
+  return result;
+end);
+
+InstallMethod(IndexOfVertexOfGraphInverseSemigroup,
+"for a graph inverse semigroup element",
+[IsGraphInverseSemigroupElement],
+function(x)
+  if not IsVertex(x) then
+    ErrorNoReturn(x, "must be a vertex of a graph inverse semigroup");
+  fi;
+  return x![1][1] - DigraphNrEdges(x![2]);
+end);
+

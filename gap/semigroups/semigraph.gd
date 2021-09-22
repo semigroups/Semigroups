@@ -33,3 +33,8 @@ InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 DeclareAttribute("MultiplicativeZero", IsGraphInverseSemigroup);
 DeclareOperation("ZeroOp", [IsGraphInverseSemigroupElement]);
 DeclareProperty("IsZero", IsGraphInverseSemigroupElement);
+
+DeclareOperation("IndexOfVertexOfGraphInverseSemigroup",
+                 [IsGraphInverseSemigroupElement]);
+DeclareAttribute("VerticesOfGraphInverseSemigroup",
+                 IsGraphInverseSemigroup);

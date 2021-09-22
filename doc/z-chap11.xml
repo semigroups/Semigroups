@@ -22,5 +22,19 @@
     <#Include Label = "GraphOfGraphInverseSemigroup">
     <#Include Label = "IsGraphInverseSemigroupElementCollection">
     <#Include Label = "IsGraphInverseSubsemigroup">
+    <#Include Label = "VerticesOfGraphInverseSubsemigroup">
+    <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
+
+  </Section>
+  <Section>
+    <Heading>
+      Graph inverse semigroup congruences
+    </Heading>
+
+    <#Include Label = "IsCongruenceByWangPair">
+    <#Include Label = "CongruenceByWangPair">
+    <#Include Label = "AsCongruenceByWangPair">
+    <#Include Label = "GISGeneratingCongruences">
+
   </Section>
 </Chapter>

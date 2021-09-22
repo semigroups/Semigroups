@@ -1,0 +1,144 @@
+############################################################################
+##
+##  congsemigraph.xml
+##  Copyright (C) 2021                       Marina Anagnostopoulou-Merkouri
+##                                                            James Mitchell 
+##
+##  Licensing information can be found in the README file of this package.
+##
+############################################################################
+
+<#GAPDoc Label="CongruenceByWangPair">
+  <ManSection>
+    <Func Name = "CongruenceByWangPair" Arg = "S, H, W"/>
+    <Returns>A semigroup congruence.</Returns>
+    <Description>
+      This function returns a semigroup congruence over the graph inverse semigroup
+      <A>S</A> in the form of a Wang pair.<P/>
+      
+      If <A>S</A> is a graph inverse semigroup <A>H</A> and <A>W</A> are two lists of vertices in the graph of
+      <A>S</A> representing a valid hereditary subset and a W-set respectively then this function
+      will return the semigroup congruence defined by this Wang pair. For more information on Wang pairs
+      see <Cite Key="Wang2019aa"/> and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.<P/>
+
+      <Example><![CDATA[
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> cong := CongruenceByWangPair(S, [3, 4], []);
+<gis-congruence with H=[ 3, 4 ], W=[  ]>
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> cong := CongruenceByWangPair(S, [3, 4], []);
+<gis-congruence with H=[ 3, 4 ], W=[  ]>
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="IsCongruenceByWangPair">
+  <ManSection>
+    <Prop Name="IsCongruenceByWangPair" Arg="cong"/>
+    <Description>
+    A congruence by Wang pair <C>cong</C> is a congruence of a graph inverse semigroup <C>S</C>
+    which is expressed in terms of two sets <A>H</A> and <A>W</A> of vertices of the corresponding
+    graph of <A>S</A>. For more information on Wang pairs see <Cite Key="Wang2019aa"/> and
+    <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.<P/>
+
+    <Example><![CDATA[
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> cong := CongruenceByWangPair(S, [3, 4], []);
+<gis-congruence with H=[ 3, 4 ], W=[  ]>
+gap> IsCongruenceByWangPair(cong);
+true
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> IsCongruenceByWangPair(cong);
+true
+gap> AssignGeneratorVariables(S);
+#I  Assigned the global variables [ e_1, e_2, e_3, e_4, e_5, v_1, v_2, v_3, v_4 ]
+gap> cong := SemigroupCongruence(S, [[v_1, e_1]]);
+<semigroup congruence over <finite graph inverse semigroup with 4 vertices, 5 
+edges> with 1 generating pairs>
+gap> IsCongruenceByWangPair(cong);
+false
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="AsCongruenceByWangPair">
+  <ManSection>
+    <Oper Name = "AsCongruenceByWangPair" Arg = "cong"/>
+    <Returns>A congruence by Wang pair.</Returns>
+    <Description>
+      This operation takes <A>cong</A>, a graph inverse semigroup congruence, and returns the
+      same congruence relation, but described as a congruence by Wang pairs: a pair of sets <A>H</A>
+      and <A>W</A> of the corresponding graph of <A>S</A> that are a hereditary subset and a W-set
+      of the graph of <A>S</A> respectively. For more information about Wang pairs see  <Cite Key="Wang2019aa"/>
+      and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.</P>
+
+      <Example><![CDATA[
+	      gap> D := Digraph([[2, 3], [3], [4], []]);
+<immutable digraph with 4 vertices, 4 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 4 edges>
+gap> CongruenceByWangPair(S, [4], [2]);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
+<semigroup congruence over <finite graph inverse semigroup with 4 vertices, 4 
+edges> with 2 generating pairs>
+gap> AsCongruenceByWangPair(cong);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> CongruenceByWangPair(S, [3, 4], [1]);
+<gis-congruence with H=[ 3, 4 ], W=[ 1 ]>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
+<semigroup congruence over <finite graph inverse semigroup with 4 vertices, 4 
+edges> with 3 generating pairs>
+gap> AsCongruenceByWangPair(cong);
+<gis-congruence with H=[ 3, 4 ], W=[ 1 ]>
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="GISGeneratingCongruences">
+  <ManSection>
+    <Oper Name = "GISGeneratingCongruences" Arg = "S"/>
+    <Returns>A semigroup.</Returns>
+    <Description>
+      This operation takes a graph inverse semigroup <A>S</A>, a graph inverse semigroup congruence,
+      and returns a minimal generating set for the lattice of congruences of <A>S</A>, as described in
+      <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.</P>
+           <Example><![CDATA[
+	      gap> D := Digraph([[2, 3], [3], [4], []]);
+<immutable digraph with 4 vertices, 4 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 4 edges>
+gap> CongruenceByWangPair(S, [4], [2]);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
+<semigroup congruence over <finite graph inverse semigroup with 4 vertices, 4 
+edges> with 2 generating pairs>
+gap> AsCongruenceByWangPair(cong);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> CongruenceByWangPair(S, [3, 4], [1]);
+<gis-congruence with H=[ 3, 4 ], W=[ 1 ]>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
+<semigroup congruence over <finite graph inverse semigroup with 4 vertices, 4 
+edges> with 3 generating pairs>
+gap> AsCongruenceByWangPair(cong);
+<gis-congruence with H=[ 3, 4 ], W=[ 1 ]>
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+
+
+
+

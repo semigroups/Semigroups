@@ -1,0 +1,27 @@
+<Chapter Label = "GraphInverseSemigroupCongruences">
+  <Heading>
+    Graph inverse semigroup congruences
+  </Heading>
+
+  In this chapter we provide documentation for functions for congruences of
+  graph inverse semigroups.<P/>
+
+  The functionality in &Semigroups; for graph inverse semigroups was written
+  by Marina Anagnostopoulou-Merkouri (St Andrews).
+  <P/>
+
+  <Section>
+    <Heading>
+      Creating graph inverse semigroups
+    </Heading>
+
+    <#Include Label = "IsCongruenceByWangPair">
+    <#Include Label = "CongruenceByWangPair">
+    <#Include Label = "AsCongruenceByWangPair">
+    <#Include Label = "IsGraphInverseSemigroup">
+    <#Include Label = "GISGeneratingCongruences">
+
+>>>>>>> d4d67af2 (trying to fix doc)
+  </Section>
+</Chapter>
+

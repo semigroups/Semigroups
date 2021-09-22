@@ -552,4 +552,29 @@
   <other type="doi">10.1007/s00454-015-9666-1</other>
 </article></entry>
 
+<entry id="Wang2019aa"><article>
+  <author>
+    <name><first>Zheng-Pan</first><last>Wang</last></name>
+  </author>
+  <title>Congruences on Graph Inverse Semigroups</title>
+  <journal>Journal of Algebra</journal>
+  <year>2019</year>
+  <month>sep</month>
+  <volume>534</volume>
+  <pages>51--64</pages>
+  <publisher>Elsevier {BV}</publisher>
+  <url>https://doi.org/10.1016/j.jalgebra.2019.06.020</url>
+  </article>
+  </entry>
+
+<entry id="Anagnostopoulou-Merkouri2021aa"><article>
+  <author>
+    <name><first>Marina</first><last>Anagnostopoulou-Merkouri</last></name>
+    <name><first>James D.</first><last>Mitchell</last></name>
+  </author>
+  <title>Properties of Congruence Lattices of Finite Graph Inverse Semigroups</title>
+  <year>2021</year>
+  <other type="arxiv">2108.08277</other>
+</article></entry>
+
 </file>
