@@ -38,12 +38,6 @@
 
 using libsemigroups::Congruence;
 
-#if !defined(SIZEOF_VOID_P)
-#error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
-#elif SIZEOF_VOID_P == 4
-#define SYSTEM_IS_32_BIT
-#endif
-
 Obj SEMIGROUPS;
 
 Obj TheTypeTSemiObj;
@@ -179,7 +173,7 @@ void TSemiObjLoadFunc(Obj o) {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
       ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
-        SEMIGROUPS_ASSERT(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
+        SEMIGROUPS_ASSERT(SIZE_OBJ(o) == 6 * sizeof(void *));
         ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
         ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
         ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
