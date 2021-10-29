@@ -313,7 +313,7 @@ gap> gens := [
 >  Transformation([4, 3, 3, 2, 4, 3]),
 >  Transformation([6, 2, 1, 5, 6, 6]),
 >  Transformation([3, 5, 2, 1, 3, 3])];;
-gap> S := Semigroup(gens, rec(acting := true));
+gap> S := Semigroup(gens, rec(acting := true));;
 gap> x := List(gens, g -> NonTrivialFactorization(S, g));
 [ [ 1, 5, 1, 5, 1, 5, 1, 5, 1 ], 
   [ 2, 1, 5, 2, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4, 1, 5, 1, 1, 4 ], [ 3, 1, 1 ], 
