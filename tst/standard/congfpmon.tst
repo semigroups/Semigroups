@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/congfpmon.tst
-#Y  Copyright (C) 2017                                      Michael Torpey
+#Y  Copyright (C) 2017                                      Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

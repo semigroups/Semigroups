@@ -121,7 +121,7 @@
 
     This section describes the implementation of congruences of simple and 0-simple
     semigroups in the &Semigroups; package, and the functions associated with
-    them.  This code and this part of the manual were written by Michael Torpey.
+    them.  This code and this part of the manual were written by Michael Young.
     Most of the theorems used in this chapter are from Section 3.5 of
     <Cite Key = "Howie1995aa"/>.<P/>
 
@@ -213,7 +213,7 @@
     This section describes the implementation of congruences of inverse
     semigroups in the &Semigroups; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael
-    Torpey.  Most of the theorems used in this chapter are from Section 5.3 of
+    Young.  Most of the theorems used in this chapter are from Section 5.3 of
     <Cite Key = "Howie1995aa"/>.<P/>
 
     The congruences of an inverse semigroup are in 1-1 correspondence with its

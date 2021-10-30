@@ -242,12 +242,12 @@ Persons := [
     WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
-    LastName      := "Torpey",
+    LastName      := "Young",
     FirstNames    := "Michael",
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "https://mtorpey.github.io",
+    WWWHome       := "https://mct25.host.cs.st-andrews.ac.uk",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),

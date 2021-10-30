@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/congpairs.tst
-#Y  Copyright (C) 2014-16                                   Michael Torpey
+#Y  Copyright (C) 2014-16                                   Michael Young
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.

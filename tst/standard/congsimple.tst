@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/congsimple.tst
-#Y  Copyright (C) 2014-15                                   Michael Torpey
+#Y  Copyright (C) 2014-15                                   Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

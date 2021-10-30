@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  extreme/conginv.tst
-#Y  Copyright (C) 2015-16                                Michael C. Torpey
+#Y  Copyright (C) 2015-16                                Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

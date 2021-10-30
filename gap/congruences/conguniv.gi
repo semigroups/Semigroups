@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/conguniv.gi
-##  Copyright (C) 2015                                   Michael C. Torpey
+##  Copyright (C) 2015                                   Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

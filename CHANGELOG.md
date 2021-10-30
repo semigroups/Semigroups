@@ -149,7 +149,7 @@ existing behaviour, new functionality, and bugfixes.
 * Congruence posets are now digraph objects (in the sense of the
   [Digraphs package][]) rather than lists of lists. This applies to
   `LatticeOfCongruences`, `PosetOfCongruences`, and several other functions.
-  This change was made by [Michael Torpey][] in
+  This change was made by [Michael Young][] in
   [PR #385](https://github.com/gap-packages/Semigroups/pull/385).
 * The attributes `LeftCayleyDigraph` and `RightCayleyDigraph` are introduced to
   replace `LeftCayleyGraphSemigroup` and `RightCayleyGraphSemigroup`. These new
@@ -191,13 +191,13 @@ existing behaviour, new functionality, and bugfixes.
   [#467](https://github.com/gap-packages/Semigroups/pull/467) and
   [#479](https://github.com/gap-packages/Semigroups/pull/479).
 * The option `numbers` is available when calling `DotString` on a congruence
-  poset (added by [Michael Torpey][] in
+  poset (added by [Michael Young][] in
   [PR #455](https://github.com/gap-packages/Semigroups/pull/455)).
 * More `Info` statements can be produced, if desired, during computations of
-  congruence lattices (added by [Michael Torpey][] in
+  congruence lattices (added by [Michael Young][] in
   [PR #403](https://github.com/gap-packages/Semigroups/pull/403)).
 * It is now possible to construct all non-empty two-sided ideals of a finite
-  semigroup with the command `Ideals` (added by [Michael Torpey][] in
+  semigroup with the command `Ideals` (added by [Michael Young][] in
   [PR #500](https://github.com/gap-packages/Semigroups/pull/500)).
 * `WriteMultiplicatiomTable`, `ReadMultiplicationTable`, and
   `IteratorFromMultiplicationTableFile` were added by Chris Russell in
@@ -208,7 +208,7 @@ existing behaviour, new functionality, and bugfixes.
   producth of a transformation monoid or permutation group with a transformation
   semigroup or permutation group. This work was done by Fernando Flores Brito in
   [PR #262](https://github.com/gap-packages/Semigroups/pull/262).
-* `SemigroupsTestAll` was introduced by [Michael Torpey][] in
+* `SemigroupsTestAll` was introduced by [Michael Young][] in
   PRs [#404](https://github.com/gap-packages/Semigroups/pull/404)
   and [#446](https://github.com/gap-packages/Semigroups/pull/446).
 * Some basic methods for `MinimalSemigroupGeneratingSet` were implemented by
@@ -331,11 +331,11 @@ This version contains some bugfixes, and some improved functionality:
 * [PR 457](https://github.com/gap-packages/Semigroups/pull/457): an improved
   method for finding a set of generating pairs of a congruence over a Rees
   0-matrix semigroup represented as a linked triple
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 * [Issue 461](https://github.com/gap-packages/Semigroups/issues/461):
   `NrCongruenceClasses` sometimes returned the wrong result for classes of
   semigroups not defined in the [Semigroups][] package.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 * [Issue 463](https://github.com/gap-packages/Semigroups/pull/463): replaced use
   of `EvalString` by `ValueGlobal`.
     [[James D. Mitchell][]]
@@ -453,7 +453,7 @@ Some minor issues are fixed in this release:
   applied to semigroups satisfying `IsMonoidAsSemigroup`.
     [[James D. Mitchell][]]
 
-Some documentation and tests were added by [Michael Torpey][].
+Some documentation and tests were added by [Michael Young][].
 
 ### Version 3.0.3 (released 21/06/2017)
 
@@ -483,7 +483,7 @@ The following issues were resolved:
     [[James D. Mitchell][]]
 
 There are improvements to the following:
-* some missing documentation was added by [Michael Torpey][].
+* some missing documentation was added by [Michael Young][].
 * the subsemigroup returned by `IdempotentGeneratedSubsemigroup` for Rees
   (0-)matrix semigroup over a group has a smaller generating set than
   previously, and can be found more quickly.
@@ -544,7 +544,7 @@ The new features in this release are contributed by [Nick Ham][]:
   contain `0`.
     [[Wilf A. Wilson][]]
 * Some tests failed when GAP was compiled in 32-bit mode.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 ### Version 2.7.6 (released 19/04/2016)
 This is a very minor release changing the name of the `README` (to `README.md`)
@@ -652,7 +652,7 @@ feature (efficient methods for semigroups of matrices over a finite field).
 * [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131):
   testing membership in a Rees 0-matrix semigroup that knows it is inverse
   sometimes resulted in an error.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * [Issue 132](https://bitbucket.org/james-d-mitchell/semigroups/issue/132): this
   was a feature request to introduce the operations `MotzkinMonoid` and
@@ -682,11 +682,11 @@ in the documentation, some improvements in performance, and some new features.
 
 * The documentation for congruences has been improved and new tests have been
   added.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * A `UniversalSemigroupCongruence` now returns a much smaller set of generating
   pairs.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 #### Issues Resolved in Version 2.5
 
@@ -711,7 +711,7 @@ Issue numbers refer to those on the [Bitbucket issue tracker][].
 
 * The universal congruence specified by generating pairs on a (0-)simple
   semigroup no longer causes an error.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 ### Version 2.4.1 (released 15/05/2015)
 This is a extremely minor release to change 1 character in the PackageInfo.g
@@ -740,14 +740,14 @@ performance, and some new features.
     [[Wilf A. Wilson][]]
 
 * The documentation and tests for congruences has been improved.
-    [[Michael Torpey][] and [Wilf A. Wilson][]]
+    [[Michael Young][] and [Wilf A. Wilson][]]
 
 * The functionality for Rees congruences has been rewritten and improved.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 * There is a new `Enumerator` method for congruence classes of a semigroup
   congruence.
-    [[Michael Torpey][]]
+    [[Michael Young][]]
 
 #### Issues Resolved in Version 2.4
 
@@ -1301,7 +1301,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Julius Jonusas]: http://julius.jonusas.work
 [Markus Pfeiffer]: https://markusp.morphism.de
 [Max Horn]: https://www.quendi.de/en/math
-[Michael Torpey]: https://mtorpey.github.io
+[Michael Young]: https://mct25.host.cs.st-andrews.ac.uk
 [Nick Ham]: https://n-ham.github.io
 [Wilf A. Wilson]: https://wilf.me
 [Chris Jefferson]: https://caj.host.cs.st-andrews.ac.uk/
