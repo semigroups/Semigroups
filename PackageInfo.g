@@ -258,7 +258,7 @@ Persons := [
     IsMaintainer  := false,
     Email         := "gap@wilf-wilson.net",
     WWWHome       := "https://wilf.me"),
-  
+
   rec(
     LastName      := "Young",
     FirstNames    := "Michael",
