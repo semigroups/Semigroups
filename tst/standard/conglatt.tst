@@ -1,8 +1,8 @@
 #############################################################################
 ##
 #W  standard/conglatt.tst
-#Y  Copyright (C) 2014-16                                   Michael Young
-##                                                          Wilf A. Wilson
+#Y  Copyright (C) 2014-16                                   Wilf A. Wilson
+##                                                          Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

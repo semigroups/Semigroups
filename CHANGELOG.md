@@ -740,7 +740,7 @@ performance, and some new features.
     [[Wilf A. Wilson][]]
 
 * The documentation and tests for congruences has been improved.
-    [[Michael Young][] and [Wilf A. Wilson][]]
+    [Wilf A. Wilson][]] and [[Michael Young][]
 
 * The functionality for Rees congruences has been rewritten and improved.
     [[Michael Young][]]
