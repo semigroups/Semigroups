@@ -312,7 +312,7 @@ InstallMethod(IndexOfVertexOfGraphInverseSemigroup,
 [IsGraphInverseSemigroupElement],
 function(x)
   if not IsVertex(x) then
-    ErrorNoReturn(x, "must be a vertex of a graph inverse semigroup");
+    ErrorNoReturn(x, " must be a vertex of a graph inverse semigroup");
   fi;
   return x![1][1] - DigraphNrEdges(x![2]);
 end);

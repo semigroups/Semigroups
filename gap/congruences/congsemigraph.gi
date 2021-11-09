@@ -12,6 +12,9 @@ BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
   local out, h, v, D;
   D := GraphOfGraphInverseSemigroup(S);
+  if IsMultiDigraph(D) then
+    ErrorNoReturn(D, " must not have multiple edges");
+  fi;
   out := OutNeighbours(D);
   for h in H do
     for v in out[h] do
@@ -30,6 +33,9 @@ function(S, H, W)
     ErrorNoReturn(H, "must be a valid hereditary subset");
   fi;
   D := GraphOfGraphInverseSemigroup(S);
+  if IsMultiDigraph(D) then
+    ErrorNoReturn(D, "must not have multiple edges");
+  fi;
   out := OutNeighbours(D);
   for w in W do
     c := 0;
@@ -127,7 +133,10 @@ end);
 
 BindGlobal("SEMIGROUPS_MinimalHereditarySubsetsVertex",
 function(D, v)
-  local subsets, hereditary, u, out, j, s, a;
+  local subsets, hereditary, u, out, s, a;
+  if IsMultiDigraph(D) then
+    ErrorNoReturn(D, " must not have multiple edges");
+  fi;
   if not (v in DigraphVertices(D)) then
     ErrorNoReturn(v, " must be a vertex of ", D);
   fi;
@@ -136,15 +145,12 @@ function(D, v)
   for u in [1 .. Length(out)] do
     a := out[u];
     RemoveSet(out, a);
-    hereditary := Set([]);
-    Append(hereditary, out);
+    hereditary := ShallowCopy(out);
     for s in out do
-      for j in VerticesReachableFrom(D, s) do
-        AddSet(hereditary, j);
-      od;
+      UniteSet(hereditary, VerticesReachableFrom(D, s));
     od;
-    if not (hereditary in subsets) and not (a in hereditary) then
-      Add(subsets, hereditary);
+    if not (a in hereditary) and not (hereditary in subsets) then
+      AddSet(subsets, hereditary);
     fi;
     AddSet(out, a);
   od;
@@ -210,7 +216,7 @@ InstallMethod(JoinSemigroupCongruences,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
 function(cong1, cong2)
-  local out, H, W, v, c, u, X, W_zero, S, D, w, e, k, d, H1, H2;
+  local out, H, W, v, u, X, W_zero, S, D, w, e, k, d, H1, H2;
   S := Source(cong1);
   D := GraphOfGraphInverseSemigroup(S);
   out := OutNeighbours(D);
@@ -222,12 +228,7 @@ function(cong1, cong2)
   W_zero := [];
   for v in W do
     c := 0;
-    for w in out[v] do
-      if w in H then
-        c := c + 1;
-      fi;
-    od;
-    if c = Length(out[v]) then
+    if ForAll(out[v], w -> w in H) then
       Add(W_zero, v);
       Add(X, v);
     fi;
@@ -254,22 +255,14 @@ InstallMethod(IsSubrelation,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
 function(cong1, cong2)
-  if IsSubset(Union(cong1!.H, cong1!.W), Union(cong2!.H, cong2!.W)) then
-    return true;
-  else
-    return false;
-  fi;
+  return IsSubset(Union(cong1!.H, cong1!.W), Union(cong2!.H, cong2!.W));
 end);
 
 InstallMethod(IsSuperrelation,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
 function(cong1, cong2)
-  if IsSubset(Union(cong2!.H, cong2!.W), Union(cong1!.H, cong1!.W)) then
-    return true;
-  else
-    return false;
-  fi;
+  return IsSubset(Union(cong2!.H, cong2!.W), Union(cong1!.H, cong1!.W));
 end);
 
 InstallMethod(LatticeOfCongruences,
