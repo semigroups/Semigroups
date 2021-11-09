@@ -59,9 +59,11 @@ gap> cong := CongruenceByWangPair(S, [4], [2]);
 <gis-congruence with H=[ 4 ], W=[ 2 ]>
 gap> IsCongruenceByWangPair(cong);
 true
-gap> AssignGeneratorVariables(S);
-#I  Assigned the global variables [ e_1, e_2, e_3, e_4, e_5, v_1, v_2, v_3, v_4 ]
-gap> cong := SemigroupCongruence(S, [[v_1, e_1]]);
+gap> e_1 := S.1;
+e_1
+gap> e_3 := S.3;
+e_3
+gap> cong := SemigroupCongruence(S, [[e_1, e_3]]);
 <semigroup congruence over <finite graph inverse semigroup with 4 vertices, 5 
 edges> with 1 generating pairs>
 gap> IsCongruenceByWangPair(cong);
