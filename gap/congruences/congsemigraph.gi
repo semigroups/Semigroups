@@ -227,7 +227,6 @@ function(cong1, cong2)
   W := Difference(Union(cong1!.W, cong2!.W), H);
   W_zero := [];
   for v in W do
-    c := 0;
     if ForAll(out[v], w -> w in H) then
       Add(W_zero, v);
       Add(X, v);
