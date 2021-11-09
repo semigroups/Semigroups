@@ -8,35 +8,6 @@
 ##
 ############################################################################
 
-<#GAPDoc Label="CongruenceByWangPair">
-  <ManSection>
-    <Func Name = "CongruenceByWangPair" Arg = "S, H, W"/>
-    <Returns>A semigroup congruence.</Returns>
-    <Description>
-      This function returns a semigroup congruence over the graph inverse semigroup
-      <A>S</A> in the form of a Wang pair.<P/>
-      
-      If <A>S</A> is a graph inverse semigroup <A>H</A> and <A>W</A> are two lists of vertices in the graph of
-      <A>S</A> representing a valid hereditary subset and a W-set respectively then this function
-      will return the semigroup congruence defined by this Wang pair. For more information on Wang pairs
-      see <Cite Key="Wang2019aa"/> and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.<P/>
-
-      <Example><![CDATA[
-gap> D := Digraph([[3, 4], [3, 4], [4], []]);
-<immutable digraph with 4 vertices, 5 edges>
-gap> S := GraphInverseSemigroup(D);
-<finite graph inverse semigroup with 4 vertices, 5 edges>
-gap> cong := CongruenceByWangPair(S, [3, 4], []);
-<gis-congruence with H=[ 3, 4 ], W=[  ]>
-gap> cong := CongruenceByWangPair(S, [4], [2]);
-<gis-congruence with H=[ 4 ], W=[ 2 ]>
-gap> cong := CongruenceByWangPair(S, [3, 4], []);
-<gis-congruence with H=[ 3, 4 ], W=[  ]>
-]]></Example>
-    </Description>
-  </ManSection>
-  <#/GAPDoc>
-
 <#GAPDoc Label="IsCongruenceByWangPair">
   <ManSection>
     <Prop Name="IsCongruenceByWangPair" Arg="cong"/>
@@ -68,6 +39,35 @@ gap> cong := SemigroupCongruence(S, [[e_1, e_3]]);
 edges> with 1 generating pairs>
 gap> IsCongruenceByWangPair(cong);
 false
+]]></Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
+<#GAPDoc Label="CongruenceByWangPair">
+  <ManSection>
+    <Func Name = "CongruenceByWangPair" Arg = "S, H, W"/>
+    <Returns>A semigroup congruence.</Returns>
+    <Description>
+      This function returns a semigroup congruence over the graph inverse semigroup
+      <A>S</A> in the form of a Wang pair.<P/>
+      
+      If <A>S</A> is a graph inverse semigroup <A>H</A> and <A>W</A> are two lists of vertices in the graph of
+      <A>S</A> representing a valid hereditary subset and a W-set respectively then this function
+      will return the semigroup congruence defined by this Wang pair. For more information on Wang pairs
+      see <Cite Key="Wang2019aa"/> and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.<P/>
+
+      <Example><![CDATA[
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> cong := CongruenceByWangPair(S, [3, 4], []);
+<gis-congruence with H=[ 3, 4 ], W=[  ]>
+gap> cong := CongruenceByWangPair(S, [4], [2]);
+<gis-congruence with H=[ 4 ], W=[ 2 ]>
+gap> cong := CongruenceByWangPair(S, [3, 4], []);
+<gis-congruence with H=[ 3, 4 ], W=[  ]>
 ]]></Example>
     </Description>
   </ManSection>
