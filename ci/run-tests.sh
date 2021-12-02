@@ -4,7 +4,7 @@
 set -e
 set -o pipefail
 
-if [ -n "$GAP_HOME" ]; then
+if [ -z "$GAP_HOME" ]; then
   echo -e "\nError, the environment variable \"GAP_HOME\" must be set"
   exit 1
 elif [ "$ABI" != "32" ] && [ "$ABI" != "64" ]; then

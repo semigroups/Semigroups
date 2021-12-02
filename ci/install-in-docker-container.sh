@@ -6,10 +6,10 @@ set -o pipefail
 
 # This script is intended to be run inside a docker container
 
-if [ -n "$GAP_HOME" ]; then
+if [ -z "$GAP_HOME" ]; then
   echo -e "\nError, the environment variable \"GAP_HOME\" must be set"
   exit 1
-elif [ -n "$GAP_VERSION" ]; then
+elif [ -z "$GAP_VERSION" ]; then
   echo -e "\nError, the environment variable \"GAP_VERSION\" must be set"
   exit 1
 elif [ "$PACKAGES" != "required" ] && [ "$PACKAGES" != "latest" ]; then
