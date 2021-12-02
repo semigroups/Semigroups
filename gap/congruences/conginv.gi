@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/conginv.gi
-##  Copyright (C) 2015                                   Michael C. Torpey
+##  Copyright (C) 2015                                   Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,7 +11,7 @@
 ## "kernel and trace" representation.
 ##
 ## See J.M. Howie's "Fundamentals of Semigroup Theory" Section 5.3, and see
-## Michael Torpey's MSc thesis "Computing with Semigroup Congruences" Chapter 5
+## Michael Young's MSc thesis "Computing with Semigroup Congruences" Chapter 5
 ## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
 ##
 

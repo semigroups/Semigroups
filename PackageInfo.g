@@ -242,17 +242,6 @@ Persons := [
     WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
 
   rec(
-    LastName      := "Torpey",
-    FirstNames    := "Michael",
-    IsAuthor      := false,
-    IsMaintainer  := false,
-    Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "https://mtorpey.github.io",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
-
-  rec(
     LastName      := "Whyte",
     FirstNames    := "Murray",
     IsAuthor      := false,
@@ -268,7 +257,18 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "gap@wilf-wilson.net",
-    WWWHome       := "https://wilf.me")],
+    WWWHome       := "https://wilf.me"),
+
+  rec(
+    LastName      := "Young",
+    FirstNames    := "Michael",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "mct25@st-and.ac.uk",
+    WWWHome       := "https://mct25.host.cs.st-andrews.ac.uk",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews")],
 
 Status := "deposited",
 

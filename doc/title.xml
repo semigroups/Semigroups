@@ -22,9 +22,9 @@
   <Author>Ben Steinberg</Author>
   <Author>Finn Smith</Author>
   <Author>Jhevon Smith</Author>
-  <Author>Michael Torpey</Author>
   <Author>Murray Whyte</Author>
   <Author>Wilf A. Wilson</Author>
+  <Author>Michael Young</Author>  
 
   <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell et al.<P/>
     &Semigroups; is free software; you can redistribute it and/or modify it
@@ -113,7 +113,7 @@
     Jhevon Smith and Ben Steinberg contributed the function
     <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
 
-    Michael Torpey contributed the part of the package relating to congruences.
+    Michael Young contributed the part of the package relating to congruences.
     <P/>
     
     Murray Whyte was kind enough to update the bibliography in 2019.
@@ -131,7 +131,7 @@
     for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A. Wilson
     when they
     worked on this project; the Engineering and Physical Sciences Research
-    Council (EPSRC) for funding the PhD scholarship of M. Torpey when he worked
+    Council (EPSRC) for funding the PhD scholarship of M. Young when he worked
     on this project (EP/M506631/1).
   </Acknowledgements>
 
