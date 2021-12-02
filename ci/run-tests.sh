@@ -4,8 +4,13 @@
 set -e
 set -o pipefail
 
-# This script is intended to be run inside the docker container
-# jamesdbmitchell/gap-docker:version-?.?.?
+if [ -n "$GAP_HOME" ]; then
+  echo -e "\nError, the environment variable \"GAP_HOME\" must be set"
+  exit 1
+elif [ "$ABI" != "32" ] && [ "$ABI" != "64" ]; then
+  echo -e "\nError, the environment variable \"ABI\" must be set to \"32\" or \"64\", found \"$ABI\""
+  exit 1
+fi
 
 touch $GAP_HOME/testlog.txt
 TESTLOG="$GAP_HOME/testlog.txt"
@@ -41,7 +46,7 @@ if [ "$ABI" == "64" ]; then
     $GAPSH -A -x 80 -m 100m -o 1g -K 2g -T 2>&1 | tee -a $TESTLOG
 
   # Run GAP testbugfix with Semigroups loaded; this only works with GAP master
-  if [ "$GAP" == "master" ]; then
+  if [ "$GAP_VERSION" == "master" ]; then
     echo -e "\nRunning GAP's testbugfix tests with Semigroups loaded..."
     # Delete some problematic or very long-running tests
     rm $GAP_HOME/tst/testbugfix/2016-03-03-t00332.tst
