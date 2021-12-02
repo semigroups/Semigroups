@@ -8,4 +8,4 @@ set -o pipefail
 # below directly in launch-docker-container.sh
 
 $GAP_HOME/pkg/semigroups/ci/install-in-docker-container.sh
-$GAP_HOME/pkg/semigroups/ci/run-tests-in-docker-container.sh
+$GAP_HOME/pkg/semigroups/ci/run-tests.sh
