@@ -4,15 +4,9 @@
 set -e
 set -o pipefail
 
-# This script is intended to be run inside the docker container
-# jamesdbmitchell/gap-docker:version-?.?.?
+# This script is intended to be run inside a docker container
 
-if [ "$SUITE" != "test" ] && [ "$SUITE" != "coverage" ]; then
-  echo -e "\nError, unrecognised Travis suite: $SUITE"
-  exit 1
-fi
-
-echo -e "\nInstalling dependencies . . . "
+echo -e "\nInstalling dependencies . . ."
 sudo apt-get --yes update
 sudo apt-get --yes upgrade
 sudo apt-get install curl libtool git --yes
@@ -22,17 +16,15 @@ sudo chown -R gap: $GAP_HOME/pkg/semigroups
 
 ################################################################################
 # Install libsemigroups
+################################################################################
+
+echo -e "\nRunning semigroups/prerequisites.sh . . ."
 cd $GAP_HOME/pkg/semigroups
-if [ "$SUITE" != "external-libsemigroups" ]; then
-  ./prerequisites.sh
-else
-  # Autoreconf requires that this directory exists even if we don't use the
-  # included libsemigroups . . .
-  mkdir libsemigroups 
-fi
+./prerequisites.sh
 
 ################################################################################
 # Compile Semigroups package
+################################################################################
 
 echo -e "\nCompiling the Semigroups package..."
 cd $GAP_HOME/pkg/semigroups
@@ -41,15 +33,14 @@ cd $GAP_HOME/pkg/semigroups
 make -j4
 
 # Common curl settings
-CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L"
+CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 \
+      --retry-max-time 40 -L"
 
 ################################################################################
 # Install digraphs, genss, io, orb, images, and profiling
 PKGS=( "digraphs" "genss" "io" "orb" "images" "datastructures")
-if [ "$SUITE"  == "coverage" ]; then
-  PKGS+=( "profiling" )
-fi
-# We now need a newer GAPDoc than the one included in the Docker container for GAP 4.10.2
+# We now need a newer GAPDoc than the one included in the Docker container for
+# GAP 4.10.2
 if [ "$GAP_VERSION" == "4.10.2" ]; then
   PKGS+=( "GAPDoc" )
 fi

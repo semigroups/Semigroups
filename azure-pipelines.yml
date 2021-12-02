@@ -10,61 +10,39 @@ pool:
   vmImage: 'ubuntu-latest'
 
 jobs:
-# - job: 'ABI_64_GAP_master_PACKAGES_latest'
-#   variables:
-#     SUITE: test
-#     ABI: 64
-#     GAP_VERSION: master
-#     PACKAGES: latest
-#   steps:
-#   - script: ci/azure-gap.sh
-#     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_64_GAP_411_PACKAGES_required'
   timeoutInMinutes: 25
   variables:
-    SUITE: test
     ABI: 64
     GAP_VERSION: 4.11.0
     PACKAGES: required
   steps:
-  - script: ci/azure-gap.sh
+  - script: ci/launch-docker-container.sh
     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_64_GAP_410_PACKAGES_required'
   timeoutInMinutes: 25
   variables:
-    SUITE: test
     ABI: 64
     GAP_VERSION: 4.10.2
     PACKAGES: required
   steps:
-  - script: ci/azure-gap.sh
+  - script: ci/launch-docker-container.sh
     displayName: 'Running the Semigroups tests in docker container. . .'
-# - job: 'ABI_32_GAP_master_PACKAGES_latest'
-#   variables:
-#     SUITE: test
-#     ABI: 32
-#     GAP_VERSION: master
-#     PACKAGES: latest
-#   steps:
-#   - script: ci/azure-gap.sh
-#     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_32_GAP_411_PACKAGES_required'
   timeoutInMinutes: 25
   variables:
-    SUITE: test
     ABI: 32
     GAP_VERSION: 4.11.0
     PACKAGES: required
   steps:
-  - script: ci/azure-gap.sh
+  - script: ci/launch-docker-container.sh
     displayName: 'Running the Semigroups tests in docker container. . .'
 - job: 'ABI_32_GAP_410_PACKAGES_required'
   timeoutInMinutes: 25
   variables:
-    SUITE: test
     ABI: 32
     GAP_VERSION: 4.10.2
     PACKAGES: required
   steps:
-  - script: ci/azure-gap.sh
+  - script: ci/launch-docker-container.sh
     displayName: 'Running the Semigroups tests in docker container. . .'

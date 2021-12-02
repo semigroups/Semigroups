@@ -15,7 +15,7 @@ fi
 docker pull $CONTAINER_NAME 
 
 # Start the docker container detached
-ID=$(docker run --rm -i -d -e SUITE -e PACKAGES -e ABI "$CONTAINER_NAME")
+ID=$(docker run --rm -i -d -e PACKAGES -e ABI "$CONTAINER_NAME")
 
 GAP_HOME=$(docker exec $ID bash -c 'echo "$GAP_HOME"')
 
@@ -23,7 +23,8 @@ GAP_HOME=$(docker exec $ID bash -c 'echo "$GAP_HOME"')
 docker cp . $ID:$GAP_HOME/pkg/semigroups
 
 # Run the ci/docker-install-deps.sh + docker-test.sh in the running container
-docker exec -i $ID "$GAP_HOME/pkg/semigroups/ci/docker.sh" ; exit
+docker exec -i $ID "$GAP_HOME/pkg/semigroups/ci/install-in-docker-container.sh \
+  && $GAP_HOME/pkg/semigroups/ci/run-tests-in-docker-container.sh" ; exit
 
 # Attach to the container
 docker attach $ID
