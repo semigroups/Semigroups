@@ -1136,7 +1136,7 @@ function(S)
 end);
 
 InstallMethod(LeftIdentity,
-"for semgroup with CanComputeFroidurePin and mult. elt.",
+"for semigroup with CanComputeFroidurePin and mult. elt.",
 [IsSemigroup and CanComputeFroidurePin, IsMultiplicativeElement],
 function(S, x)
   local i, p, result;
