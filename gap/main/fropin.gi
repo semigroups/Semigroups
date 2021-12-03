@@ -248,14 +248,7 @@ function(S)
     fi;
   end;
 
-  # FIXME(now) this should be Size(S) hack around RZMS
-  enum.Length := function(enum)
-    if not IsFinite(S) then
-      return infinity;
-    else
-      return Size(S);
-    fi;
-  end;
+  enum.Length := enum -> Size(S);
 
   enum.AsList := function(enum)
     return AsListCanonical(S);
