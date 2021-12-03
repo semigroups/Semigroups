@@ -1214,10 +1214,10 @@ function(S, opts)
     fi;
   end;
 
-  # TODO: sort <try> optimally such that any D-classes which have the same ideal
-  # directly below occur together, so that that ideal needs to be computed only
-  # once. And then check to actually see if it is necessary to re-compute ideal
-  # Can possibly use <below> to help do this?
+  # TODO(later) sort <try> optimally such that any D-classes which have the
+  # same ideal directly below occur together, so that that ideal needs to be
+  # computed only once. And then check to actually see if it is necessary to
+  # re-compute ideal Can possibly use <below> to help do this?
 
   for i in try do  # The D-classes to contain are those indexed by <try>
     Unbind(ideal);
@@ -1840,7 +1840,7 @@ function(S, opts)
       fi;
     fi;
 
-    # TODO check for maximal subsemigroups formed by removing D[i]
+    # TODO(later) check for maximal subsemigroups formed by removing D[i]
     # if tot is what it started as, then if we have reached here,
     # that means there ARE maximal subsemigroups arising from D[i]
     # but none of the types so far have been found. Therefore S\D[i]

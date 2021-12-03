@@ -943,8 +943,6 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
   ErrorNoReturn("the 2nd argument must have length 2, 3, or 4");
 end;
 
-# TODO RandomSource?
-
 InstallGlobalFunction(RandomSemigroup,
 function(arg)
   local filt, params;

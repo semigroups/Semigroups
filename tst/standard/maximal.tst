@@ -373,7 +373,6 @@ gap> MaximalSubsemigroups(R, rec(number := true, D := DClass(R, R.2)));
 gap> S := FreeGroup(1);;
 gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);  # not finite
 <Rees 0-matrix semigroup 1x1 over <free group on the generators [ f1 ]>>
-gap> SetIsFinite(R, false);  # TODO remove this when the bug is fixed
 gap> MaximalSubsemigroups(R);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `MaximalSubsemigroupsNC' on 2 arguments

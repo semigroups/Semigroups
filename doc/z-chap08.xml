@@ -97,7 +97,7 @@
     information about matrices over a finite field.
     <#Include Label = "GeneralLinearMonoid">
     <#Include Label = "SpecialLinearMonoid">
-    <!-- FIXME move to a more appropriate place -->
+    <!-- TODO(later) move to a more appropriate place -->
     <#Include Label = "IsFullMatrixMonoid">
   </Section>
 

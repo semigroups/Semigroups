@@ -55,7 +55,7 @@ function(filt, params)
                             i -> RandomPartialPerm(params[2])));
 end);
 
-# TODO improve this
+# TODO(later) improve this
 
 SEMIGROUPS.SubsetNumber := function(m, k, n, set, min, nr, coeff)
   local i;
@@ -148,7 +148,7 @@ function(S)
 end);
 
 # the <m>th subset of <[1..n]> with <k> elements
-# TODO improve this
+# TODO(later) improve this
 
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
@@ -492,9 +492,9 @@ function(I)
   return fail;
 end);
 
-# FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
-# is not correct, since the generators acted on by generators of the
+# FIXME(now) this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
+# not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
 InstallMethod(CodegreeOfPartialPermSemigroup,
@@ -504,9 +504,9 @@ function(I)
   return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-# FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
-# is not correct, since the generators acted on by generators of the
+# FIXME(now) this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
+# not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
 InstallMethod(DegreeOfPartialPermSemigroup,
@@ -516,9 +516,9 @@ function(I)
   return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-# FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
-# is not correct, since the generators acted on by generators of the
+# FIXME(now) this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
+# not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
 InstallMethod(RankOfPartialPermSemigroup,
@@ -900,7 +900,7 @@ function(S)
           nr_collapsed := nr_collapsed + 1;
         fi;
         break;
-        # TODO - no need to keep acting on <i> if it has been collapsed
+        # TODO(later) - no need to keep acting on <i> if it has been collapsed
       fi;
       pos := positions[act];
       Add(in_nbs[pos], m);

@@ -301,7 +301,7 @@ function(filter, basedomain, deg)
                                   NullMat(deg, deg, basedomain));
 end);
 
-# TODO known information can be copied!
+# TODO(later) known information can be copied!
 
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
 [IsPlistMatrixOverFiniteFieldRep],

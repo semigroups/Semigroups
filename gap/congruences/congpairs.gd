@@ -8,12 +8,10 @@
 #############################################################################
 ##
 ## This file contains functions for any semigroup congruence with generating
-## pairs.  These act as a wrapper to the congpairs.cc file, which in turn uses
-## the congruence methods in libsemigroups.
-##
+## pairs.  
 
-DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-                 [IsSemigroupCongruence]);
+# DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
+#                 [IsSemigroupCongruence]);
 
 # This is a representation for left/right/two-sided congruences of a finite
 # semigroup by generating pairs.

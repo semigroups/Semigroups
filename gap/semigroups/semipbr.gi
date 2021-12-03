@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-# TODO IsomorphismSemigroup for IsBooleanMatSemigroup
+# TODO(later) IsomorphismSemigroup for IsBooleanMatSemigroup
 #
 # This file contains methods for semigroups of PBRs.
 

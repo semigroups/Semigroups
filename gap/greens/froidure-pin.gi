@@ -153,7 +153,7 @@ SEMIGROUPS.XClassIndex := C -> C!.index;
 
 # This should be removed after the library method for AsSSortedList for a
 # Green's class is removed. The default AsSSortedList for a collection is what
-# should be used (it is identical)! FIXME
+# should be used (it is identical)!
 
 InstallMethod(AsSSortedList, "for a Green's class",
 [IsGreensClassOfSemigroupThatCanComputeFroidurePinRep],

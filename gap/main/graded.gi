@@ -55,8 +55,6 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# TODO negate the global option so that it corresponds to NC
-
 InstallGlobalFunction(GradedLambdaOrb,
 function(arg)
   local S, x, global, obj, lambda, graded, pos, gradingfunc, onlygrades,
@@ -117,7 +115,8 @@ function(arg)
   fi;
 
   orb := ShallowCopy(LambdaOrbOpts(S));
-  # TODO include as much of the following as appropriate in LambdaOrbOpts
+  # TODO(later) include as much of the following as appropriate in
+  # LambdaOrbOpts
   orb.parent := S;
   orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   orb.schreier := true;
@@ -147,7 +146,7 @@ function(arg)
     for l in [1 .. Length(o)] do
       HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
-    # remove this it is only used in one place in this file TODO
+    # remove this it is only used in one place in this file TODO(later)
     o!.position_in_graded := [j, k];
     graded!.lens[j] := k;
   fi;
@@ -156,8 +155,6 @@ function(arg)
   fi;
   return o;
 end);
-
-# TODO negate the global option so that it corresponds to NC
 
 InstallGlobalFunction(GradedRhoOrb,
 function(arg)

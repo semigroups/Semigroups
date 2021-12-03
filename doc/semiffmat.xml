@@ -95,7 +95,7 @@ gap> Size(Range(iso));
 </ManSection>
 <#/GAPDoc>
 
-<!-- FIXME this will need to be updated once the method is fixed
+<!-- FIXME(later) this will need to be updated once the method is fixed
      since this is not the behaviour that we want -->
 
 <#GAPDoc Label="IsFullMatrixMonoid">

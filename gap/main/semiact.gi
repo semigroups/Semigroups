@@ -73,8 +73,8 @@ function(Constructor, S, coll, opts)
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
 
-  # TODO split this into two methods, one for collections and the other for
-  # single elements
+  # TODO(later) split this into two methods, one for collections and the other
+  # for single elements
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
@@ -414,7 +414,7 @@ function(Constructor, S, coll, opts)
     TryNextMethod();
   fi;
 
-  # TODO split this into two methods
+  # TODO(later) split this into two methods
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
@@ -685,7 +685,7 @@ function(x, S)
 end);
 
 # same method for inverse ideals
-# TODO clean this up
+# TODO(later) clean this up
 
 InstallMethod(\in,
 "for a multiplicative element and inverse acting semigroup rep",

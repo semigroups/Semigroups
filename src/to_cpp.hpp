@@ -303,7 +303,7 @@ namespace gapbind14 {
                   0L);
       }
 
-      // FIXME something is wrong with LEN_LIST here
+      // TODO(later) something is wrong with LEN_LIST here
       // if (LEN_LIST(o) == 0) {
       //  ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
       //}

@@ -49,7 +49,6 @@ function(G, X, Y, act)
   fi;
 
   # Check condition M2 (check that Y is an order ideal of X.)
-  # TODO: implement IsOrderIdeal for a subset of a partial order digraph.
   out_nbrs := OutNeighbors(X);
   for x in DigraphVertices(X) do
     if not x in DigraphVertexLabels(Y) then
@@ -232,7 +231,7 @@ function(S)
   return;
 end);
 
-# TODO Linebreak hints
+# TODO(later) Linebreak hints
 
 InstallMethod(ViewString, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup],
@@ -444,7 +443,7 @@ SEMIGROUPS.MTSSmallGen := function(S)
 
              r := RightCosets(Gcj, stabs[j]);
              i := 1;
-             while i <= Length(r) do  # TODO: make this faster
+             while i <= Length(r) do  # TODO(later): make this faster
                if r[i] = RightCoset(stabs[j], One(Gcj)) then
                  i := i + 1;
                elif MTSAction(S)(nbr, Representative(r[i])) in X_Y then
@@ -676,7 +675,7 @@ function(x)
                        String(x![2]), ")");
 end);
 
-# TODO Linebreak hints
+# TODO(later) Linebreak hints
 
 InstallMethod(ViewString, "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
@@ -885,7 +884,7 @@ function(S)
 end);
 
 ###############################################################################
-# TODO:
+# TODO(later):
 # 1) Write hash function that works when the MTSGroup is not a perm group.
 # 2) Consider hash function for improvements.
 # 3) Write OrderIdeal and FindOrderIrreducibleElements for digraphs package

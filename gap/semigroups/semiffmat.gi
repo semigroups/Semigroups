@@ -396,7 +396,7 @@ function(S, V, mat)
   k := Rank(V);
 
   if n = 0 or k = 0 then
-    # FIXME improve this
+    # FIXME(later) improve this
     ErrorNoReturn("nullspace");
   fi;
 
@@ -408,7 +408,7 @@ function(S, V, mat)
   se := SemiEchelonMat(W);
   # If the matrix does not act injectively on V,
   # then there is no right inverse
-  # FIXME: I think we can now simplify things below
+  # TODO(later) I think we can now simplify things below
   if Number(se.heads{[1 .. n]}, IsZero) > n - k then
     return fail;
   fi;
@@ -438,8 +438,8 @@ function(S, V, mat)
 end);
 
 # Returns an invertible matrix.
-# TODO: make pretty and efficient (in that order).  In particular the setup for
-# the matrix should be much more efficient.
+# TODO(later): make pretty and efficient (in that order).  In particular the
+# setup for the matrix should be much more efficient.
 InstallGlobalFunction(MatrixOverFiniteFieldSchutzGrpElement,
 function(S, x, y)
   local deg, n, eqs, idx, col, row, res;
@@ -593,7 +593,7 @@ function(coll)
   return true;
 end);
 
-# FIXME this method is not correct (although it works as documented)
+# FIXME(later) this method is not correct (although it works as documented)
 # This should check whether <S> = GLM of the right dimensions/field
 
 InstallMethod(IsFullMatrixMonoid, "for a semigroup",

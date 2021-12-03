@@ -345,7 +345,7 @@ function(S)
   return IsEUnitaryInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
-# different method for ideals TODO or same?
+# different method for ideals TODO(later) or same?
 
 InstallMethod(IsFactorisableInverseMonoid,
 "for an inverse semigroup with generators",
@@ -1431,7 +1431,7 @@ end);
 InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-# same method for ideals, FIXME make this a synonym?
+# same method for ideals
 
 InstallMethod(IsSemiband, "for a semigroup", [IsSemigroup],
 IsIdempotentGenerated);
@@ -1772,7 +1772,7 @@ InstallMethod(IsFinite, "for a finitely presented semigroup",
 function(S)
   if IsEmpty(RelationsOfFpSemigroup(S)) or
       ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
-    # TODO add nr gens is higher than nr relations
+    # TODO(now) add nr gens is higher than nr relations
     return false;
   fi;
   TryNextMethod();

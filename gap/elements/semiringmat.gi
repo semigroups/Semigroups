@@ -672,7 +672,6 @@ function(x)
   od;
   Append(str, "\<\<]");
 
-  # TODO remove this from here make it a SEMIGROUPS_ function
   if IsNTPMatrix(x) then
     Append(str, ", \>");
     Append(str, PrintString(ThresholdNTPMatrix(x)));

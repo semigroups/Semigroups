@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
-# TODO SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
+# TODO(never)(now): delete this whole horror show
+
+# TODO(never) SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
 # their own type)
 
 #############################################################################
@@ -207,7 +209,7 @@ SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
   return out;
 end;
 
-# TODO the next function should be combined with the previous one.
+# TODO(never) the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   local mat1, mat2, m, rmsgraph, components, reps, imagelist, edges,
@@ -293,7 +295,7 @@ function(R)
 
   if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
           and IsZeroSimpleSemigroup(R)) then
-    TryNextMethod();  # TODO write such a method
+    TryNextMethod();  # TODO(never) write such a method
   fi;
 
   m := Length(Rows(R));
@@ -472,7 +474,7 @@ function(R)
   G := UnderlyingSemigroup(R);
   if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
           and IsSimpleSemigroup(R)) then
-    TryNextMethod();  # TODO write such a method
+    TryNextMethod();  # TODO(never) write such a method
   fi;
 
   m := Length(Rows(R));
@@ -803,7 +805,7 @@ function(S, T)
   for l in graphiso do
     for g in groupiso do
       for tup in tuples do
-        # TODO it should be possible to cut this down
+        # TODO(never) it should be possible to cut this down
         map := RZMStoRZMSInducedFunction(S, T, l, g, tup);
         if map <> fail then
           return RZMSIsoByTripleNC(S, T, [l, g, map]);

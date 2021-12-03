@@ -312,13 +312,6 @@ true
 gap> f := Random(s);;
 gap> (f ^ iso) ^ inv = f;
 true
-
-# InverseTest7  
-# this is too slow, it used to work better! but the method was incorrect in
-# general FIXME
-
-#gap> ForAll(s, f -> (f ^ iso) ^ inv = f);
-#true
 gap> Size(Range(iso));
 631
 gap> ForAll(s, f -> f ^ iso in Range(iso));

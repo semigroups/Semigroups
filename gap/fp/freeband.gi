@@ -7,9 +7,9 @@
 ##
 ###############################################################################
 
-# TODO: this is not really finished.
+# TODO(later): this is not really finished.
 
-# TODO
+# TODO(later)
 # InstallMethod(FreeBandOfFreeBandElement,
 
 InstallMethod(ContentOfFreeBandElement, "for a free band element",
@@ -588,7 +588,7 @@ function(w1_in, w2_in)
   return edgecodes[1] = edgecodes[l1 + 2];
 end);
 
-# TODO Is there a more efficient way to compare elements? JJ
+# TODO(later) Is there a more efficient way to compare elements? JJ
 
 InstallMethod(\=, "for elements of a free band",
 IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],
@@ -606,7 +606,8 @@ function(x, y)
   return true;
 end);
 
-# TODO Is it possible to find a non recursive way to compare elements? JJ
+# TODO(later) Is it possible to find a non recursive way to compare elements?
+# JJ
 
 InstallMethod(\<, "for elements of a free band",
 IsIdenticalObj, [IsFreeBandElement, IsFreeBandElement],

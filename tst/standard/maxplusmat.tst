@@ -144,12 +144,12 @@ Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -infinity, -infinity],
   [-infinity, 0, -infinity, -infinity], [-infinity, -infinity, 0, -infinity], 
   [-infinity, -infinity, -infinity, 0]])
 
-# maxplusmat: FIXME this doesn't work, I'm not sure that this is
-#well-defined.
-#gap> One(mat) * mat = mat;
-#true
-#gap> mat * One(mat) = mat;
-#true
+# maxplusmat: FIXME(later) this doesn't work, I'm not sure that this is
+# well-defined.
+# gap> One(mat) * mat = mat;
+# true
+# gap> mat * One(mat) = mat;
+# true
 gap> mat = One(mat);
 false
 gap> mat2 := Matrix(IsProjectiveMaxPlusMatrix,

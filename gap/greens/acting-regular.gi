@@ -332,8 +332,8 @@ function(S)
   lookup   := OrbSCCLookup(rho_o);
 
   for i in [2 .. Length(lambda_o)] do
-    # TODO this could be better, just multiply by next element of the Schreier
-    # tree
+    # TODO(later) this could be better, just multiply by next element of the
+    # Schreier tree
     rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
     rho := rhofunc(rep);
     j := lookup[Position(rho_o, rho)];
@@ -382,7 +382,7 @@ function(S)
   TryNextMethod();
 end);
 
-# TODO other methods for this!
+# TODO(later) methods NrIdempotentsByRank for other types of semigroup.
 
 InstallMethod(NrIdempotentsByRank,
 "for a regular star bipartition acting semigroup",

@@ -407,7 +407,7 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
   [ 11, 12 ], [ 5, 10 ], [ 6 ], [ 13 ], [ 13 ], [ 7 ] ]
 
 # Check robustness against non-free infinite semigroups
-#TODO!
+# TODO(later)!
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(P);

@@ -9,9 +9,7 @@
 ##
 ## This file contains methods for congruences on finite (0-)simple semigroups,
 ## using isomorphisms to Rees (0-)matrix semigroups and methods in
-## congruences/reesmat.gd/gi.  These functions are not intended for direct
-## use by an end-user.
-##
+## congruences/reesmat.gd/gi.
 
 DeclareCategory("IsSimpleSemigroupCongruence",
                 IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);

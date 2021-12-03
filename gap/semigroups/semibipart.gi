@@ -120,8 +120,8 @@ function(S)
   if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
-  # TODO A block bijection *-semigroup is necessarily inverse, install a true
-  # method for this
+  # TODO(later) A block bijection *-semigroup is necessarily inverse, install a
+  # true method for this
   return "\>block bijection\< *-";
 end);
 
@@ -186,8 +186,8 @@ function(S)
     return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
-  # TODO this could be better only have to check the generators of the ideal
-  # times the generators of the semigroup on the left and right.
+  # TODO(later) this could be better only have to check the generators of the
+  # ideal times the generators of the semigroup on the left and right.
 end);
 
 InstallMethod(IsPartialPermBipartitionSemigroup,
@@ -527,7 +527,7 @@ function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
-# TODO could have a method for IsomorphismSemigroup for
+# TODO(later) could have a method for IsomorphismSemigroup for
 # IsPartialPermBipartitions and IsBlockBijectionSemigroup too... or just for
 # general inverse semigroups, via composing IsomorphismPartialPermSemigroup and
 # the isomorphism to a block bijection semigroup.

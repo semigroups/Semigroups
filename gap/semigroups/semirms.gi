@@ -176,8 +176,9 @@ function(S)
     TryNextMethod();
   elif not IsSimpleSemigroup(S) then
     ErrorNoReturn("the argument (a semigroup) is not simple semigroup");
-    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
+    # TODO(later) is there another method? I.e. can we turn
+    # non-simple/non-0-simple semigroups into Rees (0-)matrix semigroups over
+    # non-groups?
   fi;
 
   D := GreensDClasses(S)[1];
@@ -200,8 +201,9 @@ function(S)
     TryNextMethod();
   elif not IsZeroSimpleSemigroup(S) then
     ErrorNoReturn("the argument (a semigroup) is not a 0-simple semigroup");
-    # TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
+    # TODO(later) is there another method? I.e. can we turn
+    # non-simple/non-0-simple semigroups into Rees (0-)matrix semigroups over
+    # non-groups?
   fi;
 
   D := First(GreensDClasses(S),
@@ -359,7 +361,7 @@ function(R)
                     Random(Columns(R)), Matrix(ParentAttr(R))]);
 end);
 
-# TODO a proper method here
+# TODO(later) a proper method here
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a collection of Rees 0-matrix semigroup elements",

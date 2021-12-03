@@ -8,9 +8,7 @@
 #############################################################################
 ##
 
-# TODO: Normalizer doesn't work for non-acting semigroups, there is no reason
-#       it shouldn't.
-# TODO: remove this?
+# TODO(now): remove this?
 
 # process the options record...
 

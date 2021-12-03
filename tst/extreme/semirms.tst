@@ -261,7 +261,7 @@ gap> StructureDescription(H);
 
 # ReesMatTest19: Random
 gap> Random(V);;
-gap> List(U, Random);;  # FIXME no this is not expected
+gap> List(U, Random);;  # FIXME(later) no this is not expected
 
 # ReesMatTest20: DClassOf.Class etc
 gap> H := First(HClasses(V), x -> not IsRegularGreensClass(x));

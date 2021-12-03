@@ -58,7 +58,7 @@ DeclareConstructor("NewMatrixOverFiniteField",
 DeclareConstructor("NewMatrixOverFiniteField",
                    [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
 
-# TODO make these cons/opers/attributes for MatrixOverSemiring
+# TODO(later) make these cons/opers/attributes for MatrixOverSemiring
 DeclareConstructor("NewIdentityMatrixOverFiniteField",
                    [IsMatrixOverFiniteField, IsRing, IsInt]);
 DeclareConstructor("NewZeroMatrixOverFiniteField",
@@ -77,28 +77,28 @@ DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
 
-# FIXME: Implement
+# TODO(later) Implement
 # DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
 # DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
 # DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
 
 DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
 DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-# FIXME: Implement
+# TODO(later) Implement
 # DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
 # DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
 
-# FIXME shouldn't this be IsMultiplicativeZero??
+# TODO(later) shouldn't this be IsMultiplicativeZero??
 DeclareProperty("IsZero", IsMatrixOverFiniteField);
 
 #############################################################################
 ## Declarations specifically for finite field matrices collections
 #############################################################################
 
-# TODO make these cons/opers/attributes for MatrixOverSemiring
+# TODO(later) make these cons/opers/attributes for MatrixOverSemiring
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 #############################################################################

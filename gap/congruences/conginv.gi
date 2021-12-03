@@ -60,7 +60,7 @@ function(S, kernel, traceBlocks)
       od;
     od;
   od;
-  # TODO: check trace is *normal*
+  # TODO(later) check trace is *normal*
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 
@@ -420,7 +420,7 @@ function(c1, c2)
   fi;
 
   # Calculate the intersection of the kernels
-  # TODO: can we do this without enumerating the whole kernel?
+  # TODO(later): can we do this without enumerating the whole kernel?
   kernel := InverseSemigroup(Intersection(c1!.kernel, c2!.kernel));
   kernel := InverseSemigroup(SmallInverseSemigroupGeneratingSet(kernel));
 
@@ -448,8 +448,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # equivalence traceBlocks on the idempotents, and a list of pairs in S.
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
-  # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
-  # better?
+  # TODO(later) Review this JDM for use of Elements, AsList etc. Could
+  # iterators work better?
 
   canonical_lookup := function(uf)
     local N;

@@ -48,12 +48,12 @@ semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
 if WITH_INCLUDED_LIBSEMIGROUPS
-# FIXME all the include paths should point into bin/include/ and not to the
-# sources, or otherwise we should stop make installing into bin
+# FIXME(now) all the include paths should point into bin/include/ and not to
+# the sources, or otherwise we should stop make installing into bin
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-5.3.0/include
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/includeS
 endif
 semigroups_la_CPPFLAGS += -DFMT_HEADER_ONLY
 

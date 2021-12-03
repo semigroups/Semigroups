@@ -22,8 +22,6 @@ function(S, x)
 end);
 
 # same method for ideals
-# TODO take the transitive closure of the partial order and use that instead of
-# comp_index
 
 InstallMethod(IsGreensDGreaterThanFunc, "for an acting semigroup",
 [IsActingSemigroup],

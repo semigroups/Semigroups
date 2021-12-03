@@ -35,7 +35,6 @@ for x in [IsFpSemigroup and IsFinite,
           IsSemigroup and IsFreeBandElementCollection,
           IsPermGroup,
           IsFreeInverseSemigroupCategory] do
-          # TODO PermGroups shuold be in CanComputeCppFroidurePin
   InstallTrueMethod(CanComputeGapFroidurePin, x);
 od;
 
@@ -221,8 +220,6 @@ end);
 InstallMethod(EnumeratorCanonical,
 "for a semigroup with CanComputeGapFroidurePin",
 [IsSemigroup and CanComputeGapFroidurePin],
-# RankFilter(IsActingSemigroup) + 6,
-# to beat the method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
 
@@ -251,7 +248,7 @@ function(S)
     fi;
   end;
 
-  # FIXME this should be Size(S) hack around RZMS
+  # FIXME(now) this should be Size(S) hack around RZMS
   enum.Length := function(enum)
     if not IsFinite(S) then
       return infinity;

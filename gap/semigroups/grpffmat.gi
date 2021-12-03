@@ -9,7 +9,7 @@
 #############################################################################
 ##
 
-# TODO special cases for 0 dimensional matrices over finite fields
+# TODO(later) special cases for 0 dimensional matrices over finite fields
 
 InstallMethod(IsomorphismPermGroup, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup],
@@ -25,7 +25,7 @@ function(G)
                                           InverseGeneralMapping(iso1));
 end);
 
-# TODO ViewString
+# TODO(later) ViewString
 
 InstallMethod(ViewObj,
 "for a matrix over finite field group with generators",

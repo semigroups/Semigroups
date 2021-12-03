@@ -269,7 +269,7 @@ false
 #gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 #>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 #gap> MultiplicativeZero(S); 
-# FIXME Enters an infinite loop in a library method because S is not finite
+# FIXME(later) Enters an infinite loop in a library method because S is not finite
 
 # Ideals
 gap> s := InverseSemigroup([
@@ -910,7 +910,7 @@ true
 
 # attr: MultiplicativeZero, infinite, 1
 #gap> MultiplicativeZero(FreeMonoid(2)); 
-#FIXME this causes an infinite loop in the GAP library code
+#FIXME(later) this causes an infinite loop in the GAP library code
 
 # attr: MultiplicativeZero, infinite, 2
 gap> F := FreeSemigroup(2);;
@@ -1407,11 +1407,11 @@ gap> InversesOfSemigroupElement(S, (1, 3, 2));
 [ (1,2,3) ]
 
 # attr: InversesOfSemigroupElement, for a semigroup
-#gap> S := Semigroup([
-#>  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
-#>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
-#gap> InversesOfSemigroupElement(S, S.1);
-# FIXME This test fails due to the library method
+gap> S := Semigroup([
+>  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> InversesOfSemigroupElement(S, S.1);
+Error, the first argument (a semigroup) must be finite,
 gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
 gap> InversesOfSemigroupElement(S, Transformation([1, 3, 2]));
 Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\

@@ -2629,8 +2629,6 @@ gap> CyclesOfTransformationSemigroup(S);
   [ 11 ], [ 12 ], [ 1, 2 ], [ 1, 2, 3 ], [ 4, 5 ], [ 4, 5, 6 ], [ 7, 8 ], 
   [ 7, 8, 9 ], [ 10, 11 ], [ 10, 11, 12 ] ]
 gap> S := SemigroupIdeal(S, S.1);;
-gap> ComponentRepsOfTransformationSemigroup(S);
-[ 1, 4, 7, 10 ]
 gap> ComponentsOfTransformationSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments

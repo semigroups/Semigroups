@@ -1081,8 +1081,6 @@ gap> schutz := LambdaOrbStabChain(o, 3);;
 gap> SchutzGpMembership(M)(schutz, ());
 true
 
-# gap> SchutzGpMembership(M)(schutz, ()); TODO: THIS DOESN'T WORK!
-
 # SchutzGpMembership, for a matrix over FF semigroup
 gap> S := Monoid([
 >  Matrix(GF(2), [[0 * Z(2), Z(2) ^ 0], [0 * Z(2), 0 * Z(2)]]),

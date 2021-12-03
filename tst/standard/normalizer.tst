@@ -7,7 +7,9 @@
 ##
 #############################################################################
 ##
-## TODO: remove acting := true from all of these, when there are methods
+## TODO(now)
+## - remove this entire file
+## - remove acting := true from all of these, when there are methods
 ## available for Normalizer for non-acting semigroups.
 
 #

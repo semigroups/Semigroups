@@ -30,7 +30,8 @@
 # See DirectProductOp for transformation semigroups or bipartition semigroups
 # for examples of how to use SEMIGROUPS.DirectProductOp.
 
-# TODO: add reference to a description & proof of this algorithm, when possible.
+# TODO(later): add reference to a description & proof of this algorithm, when
+# possible.
 
 SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
   local f, create, n, gens_old, gens_new, indecomp, pre_mult, pos_mult, out,

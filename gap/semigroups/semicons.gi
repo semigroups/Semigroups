@@ -903,12 +903,12 @@ function(D, semigroups, homomorphisms)
         od;
         # If no errors so far, then all paths commute and we can add the comp.
         Add(maps[i], firsthom);
-        # FIXME for larger digraphs, the current method will compute some
-        # compositions of homomorphisms several times.
-        # For example, take Digraph([[], [1], [1], [2, 3], [4]]). It defines a
-        # meet-semilattice and the SSS initialisation will check that composing
-        # the homomorphisms 1->3->4 and 1->2->4 give the same result. Later on
-        # in the initialisation, it will also check equivalence of the paths
+        # TODO(later) for larger digraphs, the current method will compute some
+        # compositions of homomorphisms several times.  For example, take
+        # Digraph([[], [1], [1], [2, 3], [4]]). It defines a meet-semilattice
+        # and the SSS initialisation will check that composing the
+        # homomorphisms 1->3->4 and 1->2->4 give the same result. Later on in
+        # the initialisation, it will also check equivalence of the paths
         # 1->2->4->5 and 1->3->4->5, but will not be re-using previously
         # computed information on what the composition 1->3->4 equals, say.
         # Saving the homomorphsisms already computed using some sort of dynamic

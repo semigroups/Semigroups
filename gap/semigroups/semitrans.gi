@@ -357,7 +357,7 @@ function(S)
   return Maximum(List(RClasses(S), SEMIGROUPS.LargestElementRClass));
 end);
 
-# different method required (but not yet given!! JDM FIXME) for ideals
+# TODO(later) different method required for ideals
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
@@ -706,8 +706,7 @@ function(filt, S)
   return IsomorphismTransformationMonoid(S);
 end);
 
-# there could be an even faster C/C++ version of this
-# TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
+# TODO(later) AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a semigroup with CanComputeFroidurePin",
@@ -745,7 +744,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
@@ -781,7 +780,7 @@ function(S)
     return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
   end;
 
-  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
@@ -917,48 +916,24 @@ function(I)
   return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
 end);
 
-# TODO replace this method with one using Digraphs
-
 InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, reps, next, opts, gens, o, out, i;
-
-  pts := [1 .. DegreeOfTransformationSemigroup(S)];
-  reps := BlistList(pts, []);
-  # true=its a rep, false=not seen it, fail=its not a rep
-  next := 1;
-  opts := rec(lookingfor := function(o, x)
-                              return reps[x] = true or reps[x] = fail;
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    o := Orb(gens, next, OnPoints, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false and reps[o[PositionOfFound(o)]] = true then
-      reps[o[PositionOfFound(o)]] := fail;
-    fi;
-    reps[next] := true;
-    for i in [2 .. Length(o)] do
-      reps[o[i]] := fail;
-    od;
-    next := Position(reps, false, next);
-  until next = fail;
-
-  out := [];
-  for i in pts do
-    if reps[i] = true then
-      Add(out, i);
+  local D, sources, id, lookup, reps, comp;
+  D := DigraphOfActionOnPoints(S);
+  sources := DigraphSources(D);
+  id := DigraphConnectedComponents(D).id;
+  lookup := BlistList([1 .. DigraphNrVertices(D)], id{sources});
+  reps := [];
+  for comp in DigraphStronglyConnectedComponents(D).comps do
+    # Check if comp[1] belongs to the same connected component as any of the
+    # sources
+    if not lookup[id[comp[1]]] then 
+      Add(reps, comp[1]);
     fi;
   od;
-
-  return out;
+  Append(reps, sources);
+  return reps;
 end);
 
 InstallMethod(ComponentsOfTransformationSemigroup,

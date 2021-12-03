@@ -45,8 +45,6 @@
 # are not the same.  But unfortunately this disagrees with the definition of
 # equality of congruences...
 
-# TODO move this to the library
-
 InstallMethod(\=, "for Green's relations",
 [IsGreensRelation, IsGreensRelation], 5,  # to beat the method for congruences
 function(rel1, rel2)
@@ -128,7 +126,7 @@ function(H)
       ErrorNoReturn("the argument does not belong to the domain of the ",
                     "function");
     fi;
-    # TODO this currently sucks performancewise
+    # TODO(later) this currently sucks performancewise
     return First(H, h -> map(h) = x);
   end;
   return MappingByFunction(H, G, map, inv);
@@ -184,9 +182,6 @@ InstallMethod(GreensJClassOfElementNC,
 
 # Green's class of a Green's class (finer from coarser)
 
-# FIXME Should these be for
-# IsGreensClassOfSemigroupThatCanComputeFroidurePinRep??
-
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",
 [IsGreensDClass, IsMultiplicativeElement],
@@ -236,8 +231,8 @@ function(S, x)
   return EquivalenceClassOfElementNC(GreensDRelation(S), x);
 end);
 
-# TODO could include InfoWarning statement here, to say that this is just using
-# GreensRClassOfElement
+# TODO(now) could include InfoWarning statement here, to say that this is just
+# using GreensRClassOfElement
 
 InstallMethod(GreensRClassOfElementNC,
 "for a D-class and multiplicative element",
@@ -529,9 +524,6 @@ function(rel)
 
   return str;
 end);
-
-# TODO: remove/improve the library method for congruences, so that this is
-# obsolete.
 
 InstallMethod(ViewObj, "for a Green's relation",
 [IsGreensRelation], 2,  # to beat the method for congruences

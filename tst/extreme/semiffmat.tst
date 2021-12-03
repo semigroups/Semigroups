@@ -323,7 +323,7 @@ gap> SchutzenbergerGroup(DClasses(S)[1]);
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
-#FIXME 
+#FIXME(later)
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 
 #T This takes ages, and this is probably due to the
 #T StructureDescription for matrix over finite field

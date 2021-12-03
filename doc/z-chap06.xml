@@ -138,7 +138,7 @@
           operations min and plus;
         </Item>
         <!-- <Item>
-          the <E>projective max-plus semiring</E> ... TODO
+          the <E>projective max-plus semiring</E> ... TODO(later)
         </Item> -->
         <Item>
           the semiring <M>\mathbb{N}_{t, p} = \{0, 1,

@@ -486,8 +486,6 @@ InstallMethod(AsBooleanMat, "for a partial perm",
 x -> AsBooleanMat(x, Maximum(DegreeOfPartialPerm(x),
                              CodegreeOfPartialPerm(x))));
 
-# TODO this could be more elaborate, i.e. it could take a set, then just take
-# the restriction of <x> to that set as a Boolean matrix
 InstallMethod(AsBooleanMat, "for a transformation and pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
@@ -505,7 +503,7 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
-  # TODO: OK? Is out in BlistRep?
+  # TODO(now) OK? Is out in BlistRep?
   return MatrixNC(BooleanMatType, out);
 end);
 
@@ -519,7 +517,7 @@ function(mat, m)
     return MatrixNC(BooleanMatType,
                     List([1 .. m], i -> mat![i]{[1 .. m]}));
   fi;
-  # TODO use AsList
+  # TODO(now) use AsList
   out := List([1 .. n], i -> ShallowCopy(mat![i]));
   for i in [1 .. n] do
     Append(out[i], BlistList([n + 1 .. m], []));
@@ -527,11 +525,11 @@ function(mat, m)
   for i in [n + 1 .. m] do
     Add(out, BlistList([1 .. m], []));
   od;
-  # TODO: OK? Is out in BlistRep?
+  # TODO(now) OK? Is out in BlistRep?
   return MatrixNC(BooleanMatType, out);
 end);
 
-# TODO AsBooleanMat for a BooleanMat
+# TODO(later) AsBooleanMat for a BooleanMat
 
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],

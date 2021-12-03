@@ -105,7 +105,7 @@ function(o, m, i)
   mults := o!.mults;
 
   if not IsInverseActingSemigroupRep(o!.parent) then
-    # FIXME it would be better to use the SchreierTree here not the
+    # It would be better to use the SchreierTree here not the
     # ReverseSchreierTree
     genpos := ReverseSchreierTreeOfSCC(o, m);
     inv := function(lambda, x)

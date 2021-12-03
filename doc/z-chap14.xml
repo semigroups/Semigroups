@@ -123,7 +123,7 @@
     </Heading>
  
     <#Include Label = "GroupOfUnits">
-    <!--TODO add man entry for MultiplicativeNeutralElement-->
+    <!--TODO(later) add man entry for MultiplicativeNeutralElement-->
 
   </Section>
  

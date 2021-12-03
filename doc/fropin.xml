@@ -14,7 +14,7 @@
     <Filt Name = "IsEnumerableSemigroupRep" Arg = "obj"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      TODO revise
+      # TODO(now) revise
       Every semigroup with this representation can have the 
       Froidure-Pin algorithm
       applied to it; see Section <Ref Subsect="Enumerable semigroups"/> for

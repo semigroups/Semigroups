@@ -516,7 +516,6 @@ function(D)
   p := LambdaConjugator(Parent(D))(RhoOrbRep(o, m), Representative(D));
   rho_schutz := rho_schutz ^ p;
 
-  # FIXME should make the following case distinction unnecessary
   if IsPermGroup(rho_schutz) then
     SetRhoOrbStabChain(D, StabChainImmutable(rho_schutz));
   else  # if IsMatrixGroup(g)
@@ -636,7 +635,7 @@ function(x, y)
   return SemigroupDataIndex(x) < SemigroupDataIndex(y);
 end);
 
-# TODO a method for L-classes?
+# TODO(now) a method for L-classes?
 
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass], IsRegularGreensClass);
@@ -1075,7 +1074,6 @@ function(x, D)
   S := Parent(D);
   rep := Representative(D);
 
-  # FIXME ActionRank method selection causes slow down here...
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(S)
           and ActionDegree(x) <> ActionDegree(rep))
@@ -1771,7 +1769,7 @@ function(S)
   lookup := OrbSCCLookup(rho_o);
 
   for i in [2 .. Length(lambda_o)] do
-    # TODO this could be better, just take the product with the next
+    # TODO(later) this could be better, just take the product with the next
     # schreiergen every time
     rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
     rho := rhofunc(rep);
@@ -1825,7 +1823,7 @@ function(S, n)
   Enumerate(lambda_o, infinity);
 
   for i in [2 .. Length(lambda_o)] do
-    # TODO this could be better, just take the product with the next
+    # TODO(later) this could be better, just take the product with the next
     # schreiergen every time
     rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
     rho := rhofunc(rep);
@@ -2027,10 +2025,6 @@ end);
 ## 7. Iterators and enumerators . . .
 #############################################################################
 
-# FIXME move to separate file
-
-# TODO improve the performance of this
-
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
@@ -2090,7 +2084,7 @@ function(S)
                                 end));
 end);
 
-# TODO this should be improved at some point
+# TODO(later) this should be improved at some point
 
 # different method for regular/inverse
 
@@ -2121,7 +2115,7 @@ function(S)
       return D;
     end,
     [],
-    function(iter, x)         # isnew FIXME ugh!!
+    function(iter, x)         # FIXME(later) ugh!!
       return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
      end,
      rec(classes := [],

@@ -23,8 +23,6 @@ function(o, x)
   fi;
 end);
 
-# FIXME this should work for the RhoOrb too!
-
 InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
 function(o, limit)
@@ -265,7 +263,7 @@ InstallGlobalFunction(LookForInOrb,
 function(o, func, start)
   local pos, i;
 
-  # FIXME not including the following line means that when considering
+  # FIXME(later) not including the following line means that when considering
   # LambdaOrb(S) the first point is considered which it shouldn't be. Whatever
   # is broken when this line is not included should be fixed as at present this
   # is not consistent.

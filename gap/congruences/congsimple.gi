@@ -9,9 +9,7 @@
 ##
 ## This file contains methods for congruences on finite (0-)simple semigroups,
 ## using isomorphisms to Rees (0-)matrix semigroups and methods in
-## congruences/reesmat.gd/gi.  These functions are not intended for direct # use
-## by an end-user. JDM: say what?
-##
+## congruences/reesmat.gd/gi.
 
 InstallMethod(ViewObj,
 "for a (0-)simple semigroup congruence",
@@ -26,7 +24,7 @@ function(cong)
 end);
 
 InstallMethod(CongruencesOfSemigroup,
-"for a (0-)simple or simple semigroup",
+"for a (0-)simple semigroup",
 [IsSemigroup],
 1,  # Try this before the method in congpairs.gi
 function(S)
@@ -34,8 +32,7 @@ function(S)
   if not (IsFinite(S) and (IsSimpleSemigroup(S)
                            or IsZeroSimpleSemigroup(S))) then
     TryNextMethod();
-  fi;
-  if IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
+  elif IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
     return CongruencesOfSemigroup(S);
   fi;
   if IsSimpleSemigroup(S) then
@@ -207,7 +204,6 @@ end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
-# FIXME Why does the string say (0-)simple and not simple?
 [IsSimpleSemigroupCongruence],
 function(cong)
   local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;

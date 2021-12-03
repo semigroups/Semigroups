@@ -325,8 +325,9 @@ gap> S := McAlisterTripleSemigroup(Group((4, 5)),
 gap> IsFInverseSemigroup(S);
 false
 
-#  EUnitaryInverseCover 
-#TODO: Add checks that these covers are idempotent separating homomorphisms
+# EUnitaryInverseCover 
+# TODO(later) Add checks that these covers are idempotent separating
+# homomorphisms
 gap> S := InverseMonoid([PartialPermNC([1, 3], [1, 3]),
 > PartialPermNC([1, 2], [3, 1]), PartialPermNC([1, 2], [3, 2])]);;
 gap> cov := EUnitaryInverseCover(S);;

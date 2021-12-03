@@ -76,7 +76,7 @@ true]]></Example>
 
 <#GAPDoc Label="ElementOfFpMonoid">
 <ManSection>
-  <Oper Name="ElementOfFpSemigroup" Arg="M, word"/>
+  <Oper Name="ElementOfFpMonoid" Arg="M, word"/>
   <Returns>An element of the fp monoid <A>M</A>.</Returns>
   <Description>
     When <A>M</A> is a finitely presented monoid and <A>word</A> is an

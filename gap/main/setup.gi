@@ -902,7 +902,7 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
 function(x, y)
-  return ();  # FIXME is this right???? This is not right!!
+  return ();  # FIXME(later) is this right???? This is not right!!
 end);
 
 InstallMethod(LambdaConjugator, "for a McAlister triple subsemigroup",

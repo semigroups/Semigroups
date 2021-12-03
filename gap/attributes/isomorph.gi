@@ -213,8 +213,8 @@ function(S, T)
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
-# TODO when/if Digraphs has vertex coloured digraphs, make this a user facing
-# function
+# TODO(later) when/if Digraphs has vertex coloured digraphs, make this a user
+# facing function
 SEMIGROUPS.CanonicalDigraph := function(S)
   local M, n, Color1Node, Color2Node, Widget, out, colors, x, y, z;
 
@@ -261,7 +261,7 @@ InstallMethod(IsomorphismSemigroups, "for semigroups",
 function(S, T)
   local invariants, map, DS, DT, p, inv;
 
-  # TODO more invariants
+  # TODO(later) more invariants
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
                  NrLClasses, NrDClasses, NrRClasses, NrHClasses, NrIdempotents];
   if S = T then
@@ -306,7 +306,8 @@ function(S)
   # is 0-simple, or simple. Note that the first test in tst/standard/isorms.tst
   # is much much faster using the R(Z)MS specific method.
 
-  # TODO use the R(Z)MS specific method if we have a (0-)simple semigroup.
+  # TODO(later) use the R(Z)MS specific method if we have a (0-)simple
+  # semigroup.
 
   if not IsFinite(S) then
     TryNextMethod();

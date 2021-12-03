@@ -537,7 +537,7 @@ function(S, opts)
     Append(str, "</TABLE>>];\n");
   od;
 
-  # TODO make PartialOrderOfDClasses return a digraph
+  # TODO(now) make PartialOrderOfDClasses return a digraph
   rel := OutNeighbours(DigraphReflexiveTransitiveReduction(
                        Digraph(PartialOrderOfDClasses(S))));
   for i in [1 .. Length(rel)] do

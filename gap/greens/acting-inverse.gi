@@ -602,11 +602,6 @@ InstallMethod(NrIdempotents,
 ## 5. Iterators and enumerators . . .
 #############################################################################
 
-# FIXME move this elsewhere
-
-# JDM again this method might not nec. if acting inverse semigroups rep
-# have RhoOrb method
-
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.

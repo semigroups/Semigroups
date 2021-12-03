@@ -91,7 +91,7 @@ InstallMethod(ExtRepOfObj, "for an element of an fp semigroup",
 InstallMethod(ExtRepOfObj, "for an element of an fp monoid",
 [IsElementOfFpMonoid], x -> ExtRepOfObj(UnderlyingElement(x)));
 
-# TODO AsSSortedList, RightCayleyDigraph, any more?
+# TODO(now) AsSSortedList, RightCayleyDigraph, any more?
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
@@ -425,8 +425,8 @@ function(G)
 
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);
-  # TODO the method for IsomorphismFpSemigroup uses the generators of G and
-  # their inverses, since we know that G is finite this could be avoided.
+  # TODO(later) the method for IsomorphismFpSemigroup uses the generators of G
+  # and their inverses, since we know that G is finite this could be avoided.
   iso2 := IsomorphismFpSemigroup(Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
@@ -447,8 +447,8 @@ function(G)
 
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);
-  # TODO the method for IsomorphismFpMonoid uses the generators of G and their
-  # inverses, since we know that G is finite this could be avoided.
+  # TODO(later) the method for IsomorphismFpMonoid uses the generators of G and
+  # their inverses, since we know that G is finite this could be avoided.
   iso2 := IsomorphismFpMonoid(Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 

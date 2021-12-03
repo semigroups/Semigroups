@@ -99,7 +99,6 @@ function(stz, newGens)
     stz!.GeneratorsOfStzPresentation := newGens;
 end);
 
-# TODO: TCL: maybe better to call this StzIsomorphism?
 InstallMethod(StzIsomorphism,
 [IsStzPresentation],
 function(stz)
@@ -125,7 +124,7 @@ function(stz)
     return Product(new_word, x -> GeneratorsOfSemigroup(source)[x]);
   end;
 
-  # TODO: are we okay to assume this is necessarily an isomorphism?
+  # TODO(later) are we okay to assume this is necessarily an isomorphism?
   return MagmaIsomorphismByFunctionsNC(source,
                                        range,
                                        forward_map,
@@ -551,7 +550,7 @@ SEMIGROUPS.TietzeTransformation4 := function(stz, gen, index)
   end;
 
   # update forward mapping component
-  # TODO: do we really need TietzeForwardMapReplaceSubword?
+  # TODO(later) do we really need TietzeForwardMapReplaceSubword?
   TietzeForwardMapReplaceSubword(stz, [gen], expr);
   tempMaps := ShallowCopy(TietzeForwardMap(stz));
   Apply(tempMaps, x -> List(x, decrement));
@@ -1237,7 +1236,7 @@ SEMIGROUPS.StzFrequentSubwordCheck := function(stz)
   # flat list of words (don't care about which one is related to which)
   flat := [];
   for pair in stz!.RelationsOfStzPresentation do
-    Append(flat, ShallowCopy(pair));  # TODO might not need shallow copy
+    Append(flat, ShallowCopy(pair));  # TODO(later) might not need shallow copy
   od;
 
   # function to count occurrences of subword in list of lists
@@ -1502,9 +1501,9 @@ SEMIGROUPS.StzRelsSubApply := function(stz, args)
   rels := RelationsOfStzPresentation(stz);
   rel := ShallowCopy(rels[relIndex]);
   SortBy(rel, Length);
-  # TODO line above: potential edge cases where we are not substituting the
-  # longer for the shorter, but rather two words of equal length? I guess not,
-  # since the checker function would only suggest this applier function if
+  # TODO(later) line above: potential edge cases where we are not substituting
+  # the longer for the shorter, but rather two words of equal length? I guess
+  # not, since the checker function would only suggest this applier function if
   # there was an actual reduction? In that case, careful to use correctly
 
   # record words to sub out (one we are searching for) and to replace with
@@ -1598,36 +1597,10 @@ function(S)
   return T;
 end);
 
-InstallMethod(SimplifyFpSemigroup,
-[IsFpSemigroup],
+InstallMethod(SimplifyFpSemigroup, "for an f.p. semigroup", [IsFpSemigroup],
 function(S)
   local stz;
   stz := StzPresentation(S);
   StzSimplifyPresentation(stz);
   return StzIsomorphism(stz);
 end);
-
-########################################################################
-# 8. Other
-########################################################################
-
-#### TODO
-# For testing purposes, remove before merge (also possibly a duplicate of an
-# existing function)
-# SEMIGROUPS.RandomFpSemigroup := function(maxgen, maxrel, maxwordlen)
-#   local ngens, nrels, F, gens, rels, nwordlen, lside, rside, i;
-#   ngens := Random([1 .. maxgen]);
-#   nrels := Random([1 .. maxrel]);
-#   F     := FreeSemigroup(ngens);
-#   gens  := GeneratorsOfSemigroup(F);
-#   rels  := [];
-#   for i in [1 .. nrels] do
-#     nwordlen := Random([1 .. maxwordlen]);
-#     lside    := Product(List([1 .. nwordlen],
-#                         x -> gens[Random([1 .. ngens])]));
-#     rside    := Product(List([1 .. nwordlen],
-#                               x -> gens[Random([1 .. ngens])]));
-#     Append(rels, [[lside, rside]]);
-#   od;
-#   return F / rels;
-# end;

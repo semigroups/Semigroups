@@ -190,7 +190,7 @@ function(S)
                         List(w, x -> gen2[x]));
   end;
 
-  # TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, G, iso, inv);
 end);
 

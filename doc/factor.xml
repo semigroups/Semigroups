@@ -24,8 +24,8 @@
       <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</Log>
     </Item>
 
-      <!-- FIXME improve: it not clear to me whether this applies to all inverse
-           semigroups or to ones with an inverse op WW -->
+      <!-- FIXME(later) improve: it not clear to me whether this applies to all
+    inverse semigroups or to ones with an inverse op WW -->
       <Mark>for inverse semigroups</Mark>
       <Item>
          When <A>S</A> is an inverse semigroup and <A>x</A> belongs to <A>S</A>,

@@ -299,7 +299,6 @@ gap> AsMonoid(S);
     For <C>RandomMonoid</C> and <C>RandomInverseMonoid</C> the argument
     <A>filter</A>  must be of the form <C>IsXMonoid</C>; such as <Ref Prop =
       "IsBipartitionMonoid"/> or <Ref Filt = "IsBooleanMatMonoid"/>.
-    <!-- FIXME the reference to IsBooleanMatMonoid does not work -->
     <P/>
 
     Suppose that the first argument <A>filter</A> is <Ref Prop="IsFpSemigroup"

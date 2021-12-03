@@ -203,9 +203,10 @@ function(S)
 
   T := IdempotentGeneratedSubsemigroup(S);
   i := Position(Elements(T), MultiplicativeZero(S));
+  # TODO(now): NaturalPartialOrder should return a Digraph
   gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
-  return Elements(T){prims};  # TODO use EnumeratorSorted here
+  return Elements(T){prims};  # TODO(now) use EnumeratorSorted here
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting inverse semigroup rep",
@@ -240,7 +241,7 @@ function(s)
 end);
 
 # same method for ideals
-# TODO a non-inverse-op version of this
+# TODO(later) a non-inverse-op version of this
 
 InstallMethod(IsJoinIrreducible,
 "for inverse semigroup with inverse op and a multiplicative element",
@@ -555,7 +556,7 @@ function(S, f)
 end);
 
 # same method for ideals
-# TODO: rename this RightCosets
+# TODO(later): rename this RightCosets
 
 InstallMethod(RightCosetsOfInverseSemigroup,
 "for inverse semigroup and inverse semigroup",

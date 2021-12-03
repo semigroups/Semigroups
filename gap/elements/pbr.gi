@@ -314,7 +314,7 @@ function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
 
-# TODO (later) The following doesn't define a monoid embedding of P_n into
+# TODO(later) The following doesn't define a monoid embedding of P_n into
 # PBR_n. What is a monoid embedding from P_n to PBR_n?
 
 InstallMethod(AsPBR, "for a bipartition",
