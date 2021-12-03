@@ -10,6 +10,12 @@
 
 DeclareSynonym("RookMonoid", SymmetricInverseMonoid);
 
+DeclareAttribute("DigraphOfActionOnPoints", IsPartialPermSemigroup);
+DeclareOperation("DigraphOfActionOnPoints",
+                 [IsPartialPermSemigroup, IsInt]);
+
+DeclareAttribute("FixedPointsOfPartialPermSemigroup",
+                 IsPartialPermSemigroup);
 DeclareAttribute("CyclesOfPartialPermSemigroup",
                  IsPartialPermSemigroup);
 DeclareAttribute("ComponentRepsOfPartialPermSemigroup",

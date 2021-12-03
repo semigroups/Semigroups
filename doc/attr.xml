@@ -451,7 +451,7 @@ gap> D := DClass(S, x);;
 gap> ForAll(GreensDClasses(S), x -> IsGreensLessThanOrEqual(D, x));
 true
 gap> MinimalIdeal(POI(10));
-<partial perm group of rank 10>
+<partial perm group of rank 0>
 gap> MinimalIdeal(BrauerMonoid(6));
 <simple bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
     </Description>

@@ -2631,10 +2631,10 @@ gap> CyclesOfTransformationSemigroup(S);
 gap> S := SemigroupIdeal(S, S.1);;
 gap> ComponentsOfTransformationSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments
+Error, no 1st choice method found for `DigraphOfActionOnPoints' on 1 arguments
 gap> CyclesOfTransformationSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments
+Error, no 1st choice method found for `DigraphOfActionOnPoints' on 1 arguments
 
 # Test IsomorphismSemigroup for a semigroup of binary relations on points
 gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),

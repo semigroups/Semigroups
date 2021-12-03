@@ -108,6 +108,7 @@ InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup",
 [IsPartialPermSemigroup], RankOfPartialPermCollection);
 
+# TODO Check that this actually performs better than alternatives
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
 Maximum(RankFilter(IsActingSemigroup),
@@ -492,40 +493,102 @@ function(I)
   return fail;
 end);
 
-# FIXME(now) this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
-# not correct, since the generators acted on by generators of the
-# supersemigroup can have higher degree.
+InstallMethod(FixedPointsOfPartialPermSemigroup,
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, gens;
+  n    := DegreeOfPartialPermSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  return Filtered([1 .. n], i -> ForAll(gens, x -> i ^ x = i));
+end);
 
-InstallMethod(CodegreeOfPartialPermSemigroup,
+InstallMethod(FixedPointsOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
+  local S, F;
+
+  S := SupersemigroupOfIdeal(I);
+  F := FixedPointsOfPartialPermSemigroup(S);
+  return Intersection(F, DomainOfPartialPermCollection(I));
 end);
 
-# FIXME(now) this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
-# not correct, since the generators acted on by generators of the
-# supersemigroup can have higher degree.
+BindGlobal("_DomainImageOfPartialPermIdeal", 
+function(I, DomainOrImage, InversesOrGenerators)
+  local O, S, hash, val, x, y;
+
+  O := DomainOrImage(GeneratorsOfSemigroupIdeal(I));
+  S := SupersemigroupOfIdeal(I);
+  if O = DomainOrImage(S) then
+    return O;
+  fi;
+  O := ShallowCopy(O);
+  hash := HashSet();
+  for x in O do
+    for y in InversesOrGenerators do
+      val := x ^ y;
+      if val <> 0 and not val in hash then
+        Add(O, val);
+        AddSet(hash, val);
+      fi;
+    od;
+  od;
+  return Set(O);
+end);
+
+InstallMethod(ImageOfPartialPermCollection, 
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local S;
+  S := SupersemigroupOfIdeal(I);
+  return _DomainImageOfPartialPermIdeal(I, 
+                                        ImageOfPartialPermCollection, 
+                                        GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(DomainOfPartialPermCollection, 
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local S;
+  S := SupersemigroupOfIdeal(I);
+  return _DomainImageOfPartialPermIdeal(I, 
+                                        DomainOfPartialPermCollection, 
+                                        List(GeneratorsOfSemigroup(S), 
+                                             InverseOp));
+end);
 
 InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
+  local dom;
+  dom := DomainOfPartialPermCollection(I);
+  if IsEmpty(dom) then
+    return 0;
+  fi;
+  return Maximum(dom);
 end);
 
-# FIXME(now) this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) is
-# not correct, since the generators acted on by generators of the
-# supersemigroup can have higher degree.
+InstallMethod(CodegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local im;
+  im := ImageOfPartialPermCollection(I);
+  if IsEmpty(im) then
+    return 0;
+  fi;
+  return Maximum(im);
+end);
 
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return RankOfPartialPermCollection(SupersemigroupOfIdeal(I));
+  return Length(DomainOfPartialPermCollection(I)); 
 end);
 
 InstallMethod(DisplayString,
@@ -534,24 +597,26 @@ InstallMethod(DisplayString,
  HasGeneratorsOfSemigroupIdeal],
 ViewString);
 
-InstallMethod(ComponentRepsOfPartialPermSemigroup,
-"for a partial perm semigroup", [IsPartialPermSemigroup],
-function(S)
-  local deg, pts, reps, next, opts, gens, o, out, i;
+InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S), 
+                                        CodegreeOfPartialPermSemigroup(S))));
 
-  deg  := Maximum(DegreeOfPartialPermSemigroup(S),
-                  CodegreeOfPartialPermSemigroup(S));
-  pts  := [1 .. deg];
-  reps := BlistList(pts, []);
-  # true=its a rep, false=not seen it, fail=its not a rep
-  next := 1;
-  opts := rec(lookingfor := function(o, x)
-                              if not IsEmpty(x) then
-                                return reps[x[1]] = true or reps[x[1]] = fail;
-                              else
-                                return false;
-                              fi;
-                            end);
+InstallMethod(DigraphOfActionOnPoints,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup, IsInt],
+function(S, n)
+  local gens, out, range, i, x;
+
+  if n < 0 then
+    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
+  elif n = 0 then
+    return EmptyDigraph(0);
+  elif HasDigraphOfActionOnPoints(S)
+      and n = Maximum(DegreeOfPartialPermSemigroup(S), 
+                      CodegreeOfPartialPermSemigroup(S)) then
+    return DigraphOfActionOnPoints(S);
+  fi;
 
   if IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
@@ -559,144 +624,45 @@ function(S)
     gens := GeneratorsOfSemigroup(S);
   fi;
 
-  repeat
-    o := Orb(gens, [next], OnSets, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false
-        and reps[o[PositionOfFound(o)][1]] = true then
-      if not IsEmpty(o[PositionOfFound(o)]) then
-        reps[o[PositionOfFound(o)][1]] := fail;
-      fi;
-    fi;
-    reps[next] := true;
-    for i in [2 .. Length(o)] do
-      if not IsEmpty(o[i]) then
-        reps[o[i][1]] := fail;
+  out := List([1 .. n], x -> []);
+  for i in [1 .. n] do
+    for x in gens do
+      range := i ^ x;
+      if range > n then
+        return fail;
+      elif range > 0 then
+        AddSet(out[i], range);
       fi;
     od;
-    next := Position(reps, false, next);
-  until next = fail;
-
-  out := [];
-  for i in pts do
-    if reps[i] = true then
-      Add(out, i);
-    fi;
   od;
+  return DigraphNC(out);
+end);
 
-  return out;
+InstallMethod(ComponentRepsOfPartialPermSemigroup,
+"for a partial perm semigroup", [IsPartialPermSemigroup],
+function(S)
+  local D;
+  D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
+  DigraphRemoveLoops(QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps));
+  return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
 end);
 
 InstallMethod(ComponentsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local deg, pts, comp, next, nr, opts, gens, o, out, i;
-
-  deg  := Maximum(DegreeOfPartialPermSemigroup(S),
-                  CodegreeOfPartialPermSemigroup(S));
-  pts  := [1 .. deg];
-  comp := BlistList(pts, []);
-  # integer=its component index, false=not seen it
-  next := 1;
-  nr := 0;
-  opts := rec(lookingfor := function(o, x)
-                              if not IsEmpty(x) then
-                                return IsPosInt(comp[x[1]]);
-                              else
-                                return false;
-                              fi;
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    o := Orb(gens, [next], OnSets, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false then
-      for i in o do
-        if not IsEmpty(i) then
-          comp[i[1]] := comp[o[PositionOfFound(o)][1]];
-        fi;
-      od;
-    else
-      nr := nr + 1;
-      for i in o do
-        if not IsEmpty(i) then
-          comp[i[1]] := nr;
-        fi;
-      od;
-    fi;
-    next := Position(comp, false, next);
-  until next = fail;
-
-  out := [];
-  for i in pts do
-    if not IsBound(out[comp[i]]) then
-      out[comp[i]] := [];
-    fi;
-    Add(out[comp[i]], i);
-  od;
-
-  return out;
+  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
 end);
 
 InstallMethod(CyclesOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local deg, pts, comp, next, nr, cycles, opts, gens, o, scc, i;
-
-  deg := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
-  pts := [1 .. deg];
-  comp := BlistList(pts, []);
-  # integer=its component index, false=not seen it
-  next := 1;
-  nr := 0;
-  cycles := [];
-  opts := rec(lookingfor := function(o, x)
-                              if not IsEmpty(x) then
-                                return IsPosInt(comp[x[1]]);
-                              else
-                                return false;
-                              fi;
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    # JDM the next line doesn't work if OnPoints is used...
-    o := Orb(gens, [next], OnSets, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false then
-      for i in o do
-        if not IsEmpty(i) then
-          comp[i[1]] := comp[o[PositionOfFound(o)][1]];
-        fi;
-      od;
-    else
-      nr := nr + 1;
-      for i in o do
-        if not IsEmpty(i) then
-          comp[i[1]] := nr;
-        fi;
-      od;
-      scc := First(OrbSCC(o), x -> Length(x) > 1);
-      if scc <> fail then
-        Add(cycles, List(o{scc}, x -> x[1]));
-      fi;
-    fi;
-    next := Position(comp, false, next);
-  until next = fail;
-
-  return cycles;
+  local D, C, F;
+  D := DigraphOfActionOnPoints(S);
+  C := DigraphStronglyConnectedComponents(D).comps;
+  C := Filtered(C, x -> Size(x) > 1);
+  F := FixedPointsOfPartialPermSemigroup(S);
+  Append(C, List(F, x -> [x]));
+  return C;
 end);
 
 InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",

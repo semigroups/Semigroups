@@ -56,7 +56,7 @@ gap> I;
 <trivial group of 1x1 boolean matrices>
 gap> S := SymmetricInverseMonoid(3);;
 gap> MinimalIdeal(S);
-<partial perm group of rank 3>
+<partial perm group of rank 0>
 gap> S := RegularBooleanMatMonoid(3);;
 gap> x := Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]]);;
 gap> I := SemigroupIdeal(S, x);

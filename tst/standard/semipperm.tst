@@ -2107,9 +2107,9 @@ gap> I := SemigroupIdeal(S, S.5);;
 gap> ComponentRepsOfPartialPermSemigroup(I);
 [ 1 ]
 gap> CyclesOfPartialPermSemigroup(I);
-[ [ 1, 2, 6, 3, 8, 4, 10, 7, 5 ] ]
+[ [ 1, 2, 3, 4, 6, 8, 10, 7, 5 ] ]
 gap> CyclesOfPartialPermSemigroup(S);
-[ [ 1, 2, 6, 3, 8, 4, 10, 7, 5 ] ]
+[ [ 1, 2, 3, 4, 6, 8, 10, 7, 5 ] ]
 
 # Test NaturalLeqInverseSemigroup
 gap> S := Semigroup([

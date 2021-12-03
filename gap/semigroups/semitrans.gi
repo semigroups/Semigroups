@@ -920,20 +920,9 @@ InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
   local D, sources, id, lookup, reps, comp;
-  D := DigraphOfActionOnPoints(S);
-  sources := DigraphSources(D);
-  id := DigraphConnectedComponents(D).id;
-  lookup := BlistList([1 .. DigraphNrVertices(D)], id{sources});
-  reps := [];
-  for comp in DigraphStronglyConnectedComponents(D).comps do
-    # Check if comp[1] belongs to the same connected component as any of the
-    # sources
-    if not lookup[id[comp[1]]] then 
-      Add(reps, comp[1]);
-    fi;
-  od;
-  Append(reps, sources);
-  return reps;
+  D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
+  DigraphRemoveLoops(QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps));
+  return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
 end);
 
 InstallMethod(ComponentsOfTransformationSemigroup,
