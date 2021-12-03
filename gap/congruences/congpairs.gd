@@ -8,7 +8,7 @@
 #############################################################################
 ##
 ## This file contains functions for any semigroup congruence with generating
-## pairs.  
+## pairs.
 
 # DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
 #                 [IsSemigroupCongruence]);

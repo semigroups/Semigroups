@@ -10,8 +10,8 @@
 
 # TODO(never)(now): delete this whole horror show
 
-# TODO(never) SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
-# their own type)
+# TODO(never) SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to
+# have their own type)
 
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees

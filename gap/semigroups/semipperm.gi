@@ -514,7 +514,7 @@ function(I)
   return Intersection(F, DomainOfPartialPermCollection(I));
 end);
 
-BindGlobal("_DomainImageOfPartialPermIdeal", 
+BindGlobal("_DomainImageOfPartialPermIdeal",
 function(I, DomainOrImage, InversesOrGenerators)
   local O, S, hash, val, x, y;
 
@@ -537,26 +537,26 @@ function(I, DomainOrImage, InversesOrGenerators)
   return Set(O);
 end);
 
-InstallMethod(ImageOfPartialPermCollection, 
+InstallMethod(ImageOfPartialPermCollection,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   local S;
   S := SupersemigroupOfIdeal(I);
-  return _DomainImageOfPartialPermIdeal(I, 
-                                        ImageOfPartialPermCollection, 
+  return _DomainImageOfPartialPermIdeal(I,
+                                        ImageOfPartialPermCollection,
                                         GeneratorsOfSemigroup(S));
 end);
 
-InstallMethod(DomainOfPartialPermCollection, 
+InstallMethod(DomainOfPartialPermCollection,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   local S;
   S := SupersemigroupOfIdeal(I);
-  return _DomainImageOfPartialPermIdeal(I, 
-                                        DomainOfPartialPermCollection, 
-                                        List(GeneratorsOfSemigroup(S), 
+  return _DomainImageOfPartialPermIdeal(I,
+                                        DomainOfPartialPermCollection,
+                                        List(GeneratorsOfSemigroup(S),
                                              InverseOp));
 end);
 
@@ -588,7 +588,7 @@ InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
-  return Length(DomainOfPartialPermCollection(I)); 
+  return Length(DomainOfPartialPermCollection(I));
 end);
 
 InstallMethod(DisplayString,
@@ -599,7 +599,7 @@ ViewString);
 
 InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S), 
+S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S),
                                         CodegreeOfPartialPermSemigroup(S))));
 
 InstallMethod(DigraphOfActionOnPoints,
@@ -613,7 +613,7 @@ function(S, n)
   elif n = 0 then
     return EmptyDigraph(0);
   elif HasDigraphOfActionOnPoints(S)
-      and n = Maximum(DegreeOfPartialPermSemigroup(S), 
+      and n = Maximum(DegreeOfPartialPermSemigroup(S),
                       CodegreeOfPartialPermSemigroup(S)) then
     return DigraphOfActionOnPoints(S);
   fi;
@@ -643,7 +643,8 @@ InstallMethod(ComponentRepsOfPartialPermSemigroup,
 function(S)
   local D;
   D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
-  DigraphRemoveLoops(QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps));
+  C := DigraphStronglyConnectedComponents(D).comps;
+  DigraphRemoveLoops(QuotientDigraph(D, C));
   return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
 end);
 

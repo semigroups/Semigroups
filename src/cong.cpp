@@ -18,49 +18,49 @@
 
 #include "cong.hpp"
 
-#include <exception>   // for exception
-#include <type_traits> // for true_type
-#include <vector>      // for vector
+#include <exception>    // for exception
+#include <type_traits>  // for true_type
+#include <vector>       // for vector
 
 // Semigroups GAP package headers
-#include "froidure-pin.hpp" // for to_cpp<FroidurePin<Bipartition>
-#include "to_cpp.hpp"       // for to_cpp
-#include "to_gap.hpp"       // for to_gap
+#include "froidure-pin.hpp"  // for to_cpp<FroidurePin<Bipartition>
+#include "to_cpp.hpp"        // for to_cpp
+#include "to_gap.hpp"        // for to_gap
 
 // GAP headers
-#include "compiled.h" // for UInt2, UInt4
+#include "compiled.h"  // for UInt2, UInt4
 
 // GapBind14 headers
-#include "gapbind14/gapbind14.hpp" // for class_ etc
+#include "gapbind14/gapbind14.hpp"  // for class_ etc
 
 // libsemigroups headers
-#include "libsemigroups/bipart.hpp"       // for Bipartition
-#include "libsemigroups/cong-intf.hpp"    // for congruence_kind
-#include "libsemigroups/cong.hpp"         // for Congruence
-#include "libsemigroups/constants.hpp"    // for UNDEFINED etc
-#include "libsemigroups/froidure-pin.hpp" // for FroidurePin
-#include "libsemigroups/matrix.hpp"       // for BMat etc
-#include "libsemigroups/todd-coxeter.hpp" // for ToddCoxeter
-#include "libsemigroups/transf.hpp"       // for PPerm etc
-#include "libsemigroups/types.hpp"        // for word_type
+#include "libsemigroups/bipart.hpp"        // for Bipartition
+#include "libsemigroups/cong-intf.hpp"     // for congruence_kind
+#include "libsemigroups/cong.hpp"          // for Congruence
+#include "libsemigroups/constants.hpp"     // for UNDEFINED etc
+#include "libsemigroups/froidure-pin.hpp"  // for FroidurePin
+#include "libsemigroups/matrix.hpp"        // for BMat etc
+#include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter
+#include "libsemigroups/transf.hpp"        // for PPerm etc
+#include "libsemigroups/types.hpp"         // for word_type
 
 // Forward decls
 namespace libsemigroups {
-class FpSemigroup;
-class PBR;
-} // namespace libsemigroups
+  class FpSemigroup;
+  class PBR;
+}  // namespace libsemigroups
 
 namespace gapbind14 {
-template <>
-struct IsGapBind14Type<libsemigroups::FpSemigroup &> : std::true_type {};
+  template <>
+  struct IsGapBind14Type<libsemigroups::FpSemigroup &> : std::true_type {};
 
-template <>
-struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter const &>
-    : std::true_type {};
+  template <>
+  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter const &>
+      : std::true_type {};
 
-template <>
-struct IsGapBind14Type<libsemigroups::Congruence &> : std::true_type {};
-} // namespace gapbind14
+  template <>
+  struct IsGapBind14Type<libsemigroups::Congruence &> : std::true_type {};
+}  // namespace gapbind14
 
 ////////////////////////////////////////////////////////////////////////
 // Congruence
@@ -127,8 +127,9 @@ void init_cong(gapbind14::Module &m) {
            "make_from_table")
       .def("set_number_of_generators", &Congruence::set_number_of_generators)
       .def("number_of_pairs", &Congruence::number_of_generating_pairs)
-      .def("add_pair", overload_cast<word_type const &, word_type const &>(
-                           &Congruence::add_pair))
+      .def("add_pair",
+           overload_cast<word_type const &, word_type const &>(
+               &Congruence::add_pair))
       .def("number_of_classes", &Congruence::number_of_classes)
       .def("word_to_class_index", &Congruence::word_to_class_index)
       .def("class_index_to_word", &Congruence::class_index_to_word)
