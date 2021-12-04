@@ -485,7 +485,10 @@ function(S)
   od;
 
   Perform(out, ShrinkAllocationPlist);
-  return out;
+  D := DigraphNC(IsMutableDigraph, out);
+  DigraphRemoveLoops(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

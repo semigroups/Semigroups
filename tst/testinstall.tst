@@ -1255,7 +1255,7 @@ Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
 >                   Bipartition([[1, 2], [3, 4], [-1, -4], [-2, -3]]));;
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ] ]
+<immutable empty digraph with 1 vertex>
 
 # Test for Issue 144
 gap> S := Semigroup(Bipartition([[1, 2], [-1], [-2]]),

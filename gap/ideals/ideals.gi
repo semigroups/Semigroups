@@ -345,7 +345,8 @@ function(I)
       Add(dclasses, DClass(S, x));
     fi;
   od;
-  D := Digraph(IsMutableDigraph, PartialOrderOfDClasses(S));
+  D := DigraphMutableCopy(PartialOrderOfDClasses(S));
+  ClearDigraphVertexLabels(D);
   InducedSubdigraph(D, List(dclasses, x -> Position(DClasses(S), x)));
   DigraphRemoveLoops(D);
   labels := DigraphVertexLabels(D);
@@ -408,20 +409,21 @@ end);
 InstallMethod(Ideals, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local reps, gr, cliques;
+  local reps, D, cliques;
+
   # Groups have only one ideal
   if IsGroup(S) or (HasIsGroupAsSemigroup(S) and IsGroupAsSemigroup(S)) then
     return [SemigroupIdeal(S, S.1)];
   fi;
   reps := DClassReps(S);
   # Digraph of D-class partial order
-  gr := Digraph(PartialOrderOfDClasses(S));
+  D := DigraphMutableCopy(PartialOrderOfDClasses(S));
   # Graph with an edge between any two comparable D-classes
-  gr := DigraphSymmetricClosure(DigraphReflexiveTransitiveClosure(gr));
+  DigraphSymmetricClosure(DigraphReflexiveTransitiveClosure(D));
   # Graph with an edge between any two non-comparable D-classes
-  gr := DigraphDual(gr);
+  DigraphDual(D);
   # All non-empty sets of pairwise incomparable D-classes
-  cliques := DigraphCliques(gr);
+  cliques := DigraphCliques(D);
   return List(cliques, clique -> SemigroupIdeal(S, reps{clique}));
 end);
 

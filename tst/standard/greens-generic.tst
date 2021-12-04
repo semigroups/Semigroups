@@ -935,9 +935,7 @@ Error, the argument is not a Green's R-, L-, or D-class
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;
 gap> S := Semigroup(S, rec(acting := false));;
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ], [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 2, 3, 5 ], [ 3, 4, 5, 6 ], 
-  [ 3, 4, 5, 7 ], [ 3, 4, 5, 8 ], [ 3, 4, 5, 6, 7, 8, 9 ], [ 2, 5, 10 ], 
-  [ 5, 9, 10, 11 ] ]
+<immutable digraph with 11 vertices, 25 edges>
 
 # Test Idempotents, 1/?
 gap> S := AsSemigroup(IsTransformationSemigroup, FullPBRMonoid(1));;
@@ -1420,7 +1418,7 @@ false
 gap> CanComputeFroidurePin(S);
 true
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ], [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2 ] ]
+<immutable digraph with 5 vertices, 7 edges>
 
 # 
 gap> SEMIGROUPS.StopTest();

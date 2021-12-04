@@ -401,7 +401,6 @@ InstallMethod(StructureDescription, "for a Brandt semigroup",
 [IsBrandtSemigroup],
 function(S)
   local D;
-
   D := MaximalDClasses(S)[1];
   return Concatenation("B(", StructureDescription(GroupHClass(D)), ", ",
                        String(NrRClasses(D)), ")");
@@ -461,22 +460,20 @@ InstallMethod(MultiplicativeZero, "for a free inverse semigroup",
 InstallMethod(LengthOfLongestDClassChain, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gr, nbs, po, minimal_dclass;
+  local D, min;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  nbs := OutNeighbours(gr);
-  po := Digraph(InNeighbours(gr));
-  minimal_dclass := First(DigraphVertices(po), x -> IsEmpty(nbs[x]));
-
-  SetMinimalDClass(S, GreensDClasses(S)[minimal_dclass]);
+  D := DigraphReverse(PartialOrderOfDClasses(S)); 
+  Assert(1, Length(DigraphSources(D)) = 1);
+  min := DigraphSources(D)[1]; # minimal D-class
+  SetMinimalDClass(S, GreensDClasses(S)[min]);
   SetRepresentativeOfMinimalIdeal(S, Representative(
-                                     GreensDClasses(S)[minimal_dclass]));
+                                     GreensDClasses(S)[min]));
 
-  return DigraphLongestDistanceFromVertex(po, minimal_dclass);
+  return DigraphLongestDistanceFromVertex(D, min);
 end);
 
 InstallMethod(NilpotencyDegree, "for a finite semigroup",
@@ -500,14 +497,13 @@ InstallMethod(IsGreensDGreaterThanFunc,
 "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local gr, id;
+  local D, id;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  gr := Digraph(PartialOrderOfDClasses(S));
-  gr := DigraphReflexiveTransitiveClosure(gr);
+  D := PartialOrderOfDClasses(S);
   id := GreensDRelation(S)!.data.id;
 
   return function(x, y)
@@ -517,7 +513,7 @@ function(S)
     fi;
     u := id[PositionCanonical(S, x)];
     v := id[PositionCanonical(S, y)];
-    return u <> v and IsReachable(gr, u, v);
+    return u <> v and IsReachable(D, u, v);
   end;
 end);
 
@@ -525,14 +521,12 @@ InstallMethod(MaximalDClasses,
 "for a semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin],
 function(S)
-  local gr;
-
+  local D;
   if NrDClasses(S) = 1 then
     return DClasses(S);
   fi;
-
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  return DClasses(S){DigraphSources(gr)};
+  D := PartialOrderOfDClasses(S);
+  return DClasses(S){DigraphSources(D)};
 end);
 
 InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
@@ -753,11 +747,10 @@ end);
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local gr, pos;
-  gr  := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  pos := DigraphSinks(gr)[1];
-
-  Assert(1, Length(DigraphSinks(gr)) = 1);
+  local D, pos;
+  D   := PartialOrderOfDClasses(S);
+  pos := DigraphSinks(D)[1];
+  Assert(1, Length(DigraphSinks(D)) = 1);
   return Representative(DClasses(S)[pos]);
 end);
 
@@ -1028,7 +1021,7 @@ function(S)
     non_unit_gens := Filtered(gens, x -> not x in D);
     classes := List(non_unit_gens, x -> Position(DClasses(S), DClass(S, x)));
     if IsDuplicateFreeList(classes) then
-      po := Digraph(PartialOrderOfDClasses(S));
+      po := PartialOrderOfDClasses(S);
       po := DigraphReflexiveTransitiveReduction(po);
       nbs := OutNeighboursOfVertex(po, Position(DClasses(S), D));
       if ForAll(classes, x -> x in nbs) then

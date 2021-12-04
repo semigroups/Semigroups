@@ -26,10 +26,9 @@ end);
 InstallMethod(IsGreensDGreaterThanFunc, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local gr, data;
+  local D, data;
 
-  gr := Digraph(PartialOrderOfDClasses(S));
-  gr := DigraphReflexiveTransitiveClosure(gr);
+  D    := PartialOrderOfDClasses(S);
   data := SemigroupData(S);
 
   return
@@ -40,65 +39,8 @@ function(S)
     fi;
     u := OrbSCCLookup(data)[Position(data, x)] - 1;
     v := OrbSCCLookup(data)[Position(data, y)] - 1;
-    return u <> v and IsReachable(gr, u, v);
+    return u <> v and IsReachable(D, u, v);
   end;
-end);
-
-# different method for ideals/regular/inverse, although this method also works
-
-InstallMethod(MaximalDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local gens, partial, data, pos, i, out, classes, x;
-
-  gens := GeneratorsOfSemigroup(s);
-  partial := PartialOrderOfDClasses(s);
-  data := SemigroupData(s);
-  pos := [];
-  for x in gens do
-    i := OrbSCCLookup(data)[Position(data, x)] - 1;
-    # index of the D-class containing x
-    AddSet(pos, i);
-  od;
-
-  out := [];
-  classes := GreensDClasses(s);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# same method for inverse, different method for inverse ideals
-
-InstallMethod(MaximalDClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  local gens, partial, pos, o, scc, out, classes, x, i;
-
-  gens := GeneratorsOfSemigroup(S);
-  partial := PartialOrderOfDClasses(S);
-  pos := [];
-  o := LambdaOrb(S);
-  scc := OrbSCCLookup(o);
-
-  for x in gens do
-    # index of the D-class containing x
-    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
-  od;
-
-  out := [];
-  classes := GreensDClasses(S);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
 end);
 
 # same method for ideals

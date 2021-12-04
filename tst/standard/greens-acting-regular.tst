@@ -175,8 +175,8 @@ gap> NrHClasses(L);
 # PartialOrderOfDClasses for a regular acting semigroup w gens 1
 gap> S := FullTransformationMonoid(4);;
 gap> S := RegularSemigroup(S, rec(acting := true));;
-gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
-> PartialOrderOfDClasses(S))));
+gap> OutNeighbours(DigraphReflexiveTransitiveReduction(
+> PartialOrderOfDClasses(S)));
 [ [ 2 ], [ 3 ], [ 4 ], [  ] ]
 
 # NrIdempotents, for a regular acting semigroup, 1

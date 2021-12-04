@@ -14,58 +14,6 @@
 # Attributes with better methods than the ones for
 # IsActingSemigroup without IsSemigroupIdeal.
 
-InstallMethod(MaximalDClasses,
-"for an inverse acting semigroup rep ideal",
-[IsInverseActingSemigroupRep and IsSemigroupIdeal],
-function(S)
-  local gens, partial, pos, o, scc, out, classes, x, i;
-
-  gens := GeneratorsOfSemigroupIdeal(S);
-  partial := PartialOrderOfDClasses(S);
-  pos := [];
-  o := LambdaOrb(S);
-  scc := OrbSCCLookup(o);
-
-  for x in gens do
-    # index of the D-class containing x
-    AddSet(pos, scc[Position(o, LambdaFunc(S)(x))] - 1);
-  od;
-
-  out := [];
-  classes := GreensDClasses(S);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
-# different method for inverse
-
-InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
-[IsSemigroupIdeal and IsRegularActingSemigroupRep],
-function(I)
-  local data, pos, partial, classes, out, i;
-
-  data := SemigroupIdealData(I);
-  partial := PartialOrderOfDClasses(I);
-  classes := GreensDClasses(I);
-
-  pos := [1 .. data!.genspos - 1];
-  # the D-classes of the generators in positions [1 .. n - 1] in data!.dorbit
-
-  out := [];
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
-end);
-
 # This is here so that for regular ideals this method has higher rank than the
 # method for IsSemigroup.
 
@@ -96,13 +44,16 @@ InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
-  local data;
+  local data, D;
   if IsInverseActingSemigroupRep(I) then
     TryNextMethod();
   fi;
   data := SemigroupIdealData(I);
   Enumerate(data);
-  return data!.poset;
+  D := DigraphNC(IsMutableDigraph, data!.poset);
+  DigraphRemoveLoops(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 InstallMethod(DClassReps, "for a regular acting semigroup ideal rep",
@@ -247,7 +198,7 @@ function(I)
 
   # find generators for I...
   U := InverseSemigroup(MinimalIdealGeneratingSet(I));
-  partial := PartialOrderOfDClasses(I);
+  partial := OutNeighbours(PartialOrderOfDClasses(I));
   D := GreensDClasses(I);
 
   # positions of the D-classes containing generators of the ideal...
@@ -294,7 +245,7 @@ function(I)
 
   # find generators for I...
   U := InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
-  partial := PartialOrderOfDClasses(I);
+  partial := OutNeighbours(PartialOrderOfDClasses(I));
   D := GreensDClasses(I);
 
   # positions of the D-classes containing generators of the ideal...

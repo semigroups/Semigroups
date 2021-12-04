@@ -283,8 +283,7 @@ R -> Length(LambdaOrbSCC(R)));
 
 InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup rep with generators",
-[IsRegularActingSemigroupRep
- and HasGeneratorsOfSemigroup],
+[IsRegularActingSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   local D, n, out, o, gens, lookup, lambdafunc, i, x, y;
 
@@ -308,7 +307,10 @@ function(S)
   od;
 
   Perform(out, ShrinkAllocationPlist);
-  return out;
+  D := DigraphNC(IsMutableDigraph, out);
+  DigraphRemoveLoops(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

@@ -167,11 +167,10 @@ end);
 InstallMethod(IsGreensDGreaterThanFunc, "for an inverse acting semigroup rep",
 [IsInverseActingSemigroupRep],
 function(S)
-  local gr, o;
+  local D, o;
 
-  gr := Digraph(PartialOrderOfDClasses(S));
-  gr := DigraphReflexiveTransitiveClosure(gr);
-  o  := LambdaOrb(S);
+  D := PartialOrderOfDClasses(S);
+  o := LambdaOrb(S);
 
   return function(x, y)
     local u, v;
@@ -180,7 +179,7 @@ function(S)
     fi;
     u := OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))] - 1;
     v := OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))] - 1;
-    return u <> v and IsReachable(gr, u, v);
+    return u <> v and IsReachable(D, u, v);
   end;
 end);
 

@@ -354,8 +354,8 @@ gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([3, 5], [4, 1])));
 # PartialOrderOfDClasses, for an inverse op acting semigroup
 gap> S := SymmetricInverseSemigroup(5);;
 gap> S := InverseSemigroup(S, rec(acting := true));;
-gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
-> PartialOrderOfDClasses(S))));
+gap> OutNeighbours(DigraphReflexiveTransitiveReduction(
+> PartialOrderOfDClasses(S)));
 [ [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [  ] ]
 
 # (Nr)Idempotents, for an inv op acting R/L/D-class

@@ -1666,7 +1666,7 @@ InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 function(S)
   local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens,
   ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup,
-  schutz, mults, f, l, m, val, j, i, k, x;
+  schutz, mults, f, l, m, val, j, D, i, k, x;
 
   d := GreensDClasses(S);
   n := Length(d);
@@ -1706,6 +1706,7 @@ function(S)
     for x in gens do
       for f in LClassReps(d[i]) do
         # the below is an expanded version of Position(data, f * x)
+        # TODO(now) replace with a call to Position(data, f * x)!
         f := f * x;
         l := Position(o, lambdafunc(f));
         m := lookup[l];
@@ -1738,7 +1739,10 @@ function(S)
     od;
   od;
   Perform(out, ShrinkAllocationPlist);
-  return out;
+  D := DigraphNC(IsMutableDigraph, out);
+  DigraphRemoveLoops(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

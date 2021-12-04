@@ -641,7 +641,7 @@ end);
 InstallMethod(ComponentRepsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local D;
+  local D, C;
   D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
   C := DigraphStronglyConnectedComponents(D).comps;
   DigraphRemoveLoops(QuotientDigraph(D, C));

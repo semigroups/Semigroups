@@ -345,7 +345,7 @@ function(S)
     ErrorNoReturn("the argument (a semigroup) is not a semilattice");
   fi;
 
-  po := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
+  po := DigraphReflexiveTransitiveClosure(PartialOrderOfDClasses(S));
   au := [];  # automorphism groups partitions by size
   id := [];  # ideals (as sets of indices) partitioned by size
   su := [];  # induced subdigraphs corresponding to ideals

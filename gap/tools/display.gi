@@ -398,8 +398,8 @@ end);
 InstallMethod(DotString, "for a semigroup and record",
 [IsSemigroup, IsRecord],
 function(S, opts)
-  local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, rel, ii,
-  di, j, dk, k, d, l, row, col;
+  local es, elts, str, i, color, pos, gp, iso, inv, RMS, mat, G, x, D, rel, ii,
+  di, j, dk, k, d, l, col, row;
 
   # process the options
   if not IsBound(opts.maximal) then
@@ -536,10 +536,8 @@ function(S, opts)
     od;
     Append(str, "</TABLE>>];\n");
   od;
-
-  # TODO(now) make PartialOrderOfDClasses return a digraph
-  rel := OutNeighbours(DigraphReflexiveTransitiveReduction(
-                       Digraph(PartialOrderOfDClasses(S))));
+  D := PartialOrderOfDClasses(S);
+  rel := OutNeighbours(DigraphReflexiveTransitiveReduction(D));
   for i in [1 .. Length(rel)] do
     ii := String(i);
     for k in rel[i] do

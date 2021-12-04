@@ -413,16 +413,21 @@ InstallMethod(HClassReps, "for a Green's class",
 InstallMethod(RegularDClasses, "for a semigroup",
 [IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
 
+# We cannot use Left/RightCayleyDigraph below because this is only implemented
+# for CanComputeFroidurePin
 InstallMethod(PartialOrderOfDClasses, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local l, r, gr;
-
-  l  := LeftCayleyGraphSemigroup(S);
-  r  := RightCayleyGraphSemigroup(S);
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
-  gr := QuotientDigraph(gr, DigraphStronglyConnectedComponents(gr).comps);
-  return List(OutNeighbours(gr), Set);
+  local L, R, D;
+  L  := LeftCayleyGraphSemigroup(S);
+  R  := RightCayleyGraphSemigroup(S);
+  D := Digraph(IsMutableDigraph, List([1 .. Length(L)], 
+                                      i -> Concatenation(L[i], R[i])));
+  D := QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps);
+  Apply(OutNeighbours(D), Set);
+  DigraphRemoveLoops(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

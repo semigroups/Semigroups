@@ -545,12 +545,14 @@ InstallMethod(PartialOrderOfDClasses,
 "for a finite semigroup with CanComputeFroidurePin",
 [IsSemigroup and CanComputeFroidurePin and IsFinite],
 function(S)
-  local l, r, gr;
-  l  := LeftCayleyDigraph(S);
-  r  := RightCayleyDigraph(S);
-  gr := DigraphEdgeUnion(l, r);
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
-  return List(OutNeighbours(gr), Set);
+  local D;
+  D := DigraphMutableCopy(LeftCayleyDigraph(S));
+  DigraphEdgeUnion(D, RightCayleyDigraph(S));
+  QuotientDigraph(D, GreensDRelation(S)!.data.comps);
+  DigraphRemoveLoops(D);
+  Apply(OutNeighbours(D), Set);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

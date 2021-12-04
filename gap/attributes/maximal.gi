@@ -1169,14 +1169,20 @@ function(S, opts)
     Info(InfoSemigroups, 1, "computing the partial order of D-classes...");
     po := PartialOrderOfDClasses(S);
     Info(InfoSemigroups, 1, "processing the partial order of D-classes...");
-    po := DigraphNC(po);
-    po := DigraphRemoveLoops(po);
+
+    po := DigraphMutableCopy(po);
+    DigraphRemoveLoops(po);
+    MakeImmutable(po);
     SetIsAcyclicDigraph(po, true);
+
     below := DigraphReflexiveTransitiveReduction(po);
-    above := DigraphReverse(below);
+
+    above := DigraphReverse(DigraphMutableCopy(below));
+    DigraphRemoveLoops(DigraphTransitiveClosure(above));
+    ClearDigraphVertexLabels(above);
+    InducedSubdigraph(above, try);
+    MakeImmutable(above);
     SetIsAcyclicDigraph(above, true);
-    above := DigraphRemoveLoops(DigraphTransitiveClosure(above));
-    above := InducedSubdigraph(above, try);
 
     # <vertex_class[i]> is the vertex number of <above> corresponding to <D[i]>
     # <DigraphVertexLabel(above, vertex_class[i])> is the list of gens in <D[i]>
