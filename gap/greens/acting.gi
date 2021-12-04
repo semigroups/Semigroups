@@ -1664,77 +1664,28 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens,
-  ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup,
-  schutz, mults, f, l, m, val, j, D, i, k, x;
+  local D, n, out, data, gens, graph, datalookup, i, j, k, x, f;
 
-  d := GreensDClasses(S);
-  n := Length(d);
+  D := GreensDClasses(S);
+  n := Length(D);
   out := List([1 .. n], x -> []);
 
-  data := SemigroupData(S);
-  gens := data!.gens;
-  graph := data!.graph;
-  lambdarhoht := data!.lambdarhoht;
+  data       := SemigroupData(S);
+  gens       := data!.gens;
+  graph      := data!.graph;
   datalookup := OrbSCCLookup(data) - 1;
-  reps := data!.reps;
-  repslens := data!.repslens;
-  ht := data!.ht;
-  repslookup := data!.repslookup;
-
-  lambdafunc := LambdaFunc(S);
-  rhofunc := RhoFunc(S);
-  lambdaperm := LambdaPerm(S);
-
-  o := LambdaOrb(S);
-  orho := RhoOrb(S);
-  scc := OrbSCC(o);
-  lookup := OrbSCCLookup(o);
-  Perform([2 .. Length(scc)], x -> LambdaOrbSchutzGp(o, x));
-  Perform([2 .. Length(scc)], x -> LambdaOrbMults(o, x));
-  schutz := o!.schutzstab;
-  mults := o!.mults;
 
   for i in [1 .. n] do
-    # collect info about left multiplying R-class reps of d[i] by gens
-    for j in OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d[i])]] do
+    # collect info about left multiplying R-class reps of D[i] by gens
+    for j in OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(D[i])]] do
       for k in graph[j] do
         AddSet(out[i], datalookup[k]);
       od;
     od;
 
     for x in gens do
-      for f in LClassReps(d[i]) do
-        # the below is an expanded version of Position(data, f * x)
-        # TODO(now) replace with a call to Position(data, f * x)!
-        f := f * x;
-        l := Position(o, lambdafunc(f));
-        m := lookup[l];
-        val := lambdarhoht[Position(orho, rhofunc(f))][m];
-        if not IsBound(schutz[m]) then
-          LambdaOrbSchutzGp(o, m);
-        fi;
-        if schutz[m] = true then
-          j := repslookup[m][val][1];
-        else
-          if l <> scc[m][1] then
-            f := f * mults[l][2];
-          fi;
-          if schutz[m] = false then
-            j := HTValue(ht, f);
-          else
-            n := 0;
-            j := 0;
-            repeat
-              n := n + 1;
-              if SchutzGpMembership(S)(schutz[m],
-                                       lambdaperm(reps[m][val][n], f)) then
-                j := repslookup[m][val][n];
-              fi;
-            until j <> 0;
-          fi;
-        fi;
-        AddSet(out[i], datalookup[j]);
+      for f in LClassReps(D[i]) do
+        AddSet(out[i], datalookup[Position(data, f * x)]);
       od;
     od;
   od;
