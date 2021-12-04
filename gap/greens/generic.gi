@@ -231,8 +231,7 @@ function(S, x)
   return EquivalenceClassOfElementNC(GreensDRelation(S), x);
 end);
 
-# TODO(now) could include InfoWarning statement here, to say that this is just
-# using GreensRClassOfElement
+# Fallback methods
 
 InstallMethod(GreensRClassOfElementNC,
 "for a D-class and multiplicative element",
@@ -421,7 +420,7 @@ function(S)
   local L, R, D;
   L  := LeftCayleyGraphSemigroup(S);
   R  := RightCayleyGraphSemigroup(S);
-  D := Digraph(IsMutableDigraph, List([1 .. Length(L)], 
+  D := Digraph(IsMutableDigraph, List([1 .. Length(L)],
                                       i -> Concatenation(L[i], R[i])));
   D := QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps);
   Apply(OutNeighbours(D), Set);

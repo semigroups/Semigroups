@@ -466,9 +466,9 @@ function(S)
     TryNextMethod();
   fi;
 
-  D := DigraphReverse(PartialOrderOfDClasses(S)); 
+  D := DigraphReverse(PartialOrderOfDClasses(S));
   Assert(1, Length(DigraphSources(D)) = 1);
-  min := DigraphSources(D)[1]; # minimal D-class
+  min := DigraphSources(D)[1];  # minimal D-class
   SetMinimalDClass(S, GreensDClasses(S)[min]);
   SetRepresentativeOfMinimalIdeal(S, Representative(
                                      GreensDClasses(S)[min]));
