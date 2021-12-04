@@ -503,7 +503,7 @@ function(x, n)
       out[i][j] := true;
     fi;
   od;
-  # TODO(now) OK? Is out in BlistRep?
+  Perform(out, ConvertToBlistRep);
   return MatrixNC(BooleanMatType, out);
 end);
 
@@ -517,15 +517,14 @@ function(mat, m)
     return MatrixNC(BooleanMatType,
                     List([1 .. m], i -> mat![i]{[1 .. m]}));
   fi;
-  # TODO(now) use AsList
-  out := List([1 .. n], i -> ShallowCopy(mat![i]));
+  out := AsMutableList(mat);
   for i in [1 .. n] do
     Append(out[i], BlistList([n + 1 .. m], []));
   od;
   for i in [n + 1 .. m] do
     Add(out, BlistList([1 .. m], []));
   od;
-  # TODO(now) OK? Is out in BlistRep?
+  Perform(out, ConvertToBlistRep);
   return MatrixNC(BooleanMatType, out);
 end);
 

@@ -202,10 +202,11 @@ function(S)
 
   T := IdempotentGeneratedSubsemigroup(S);
   i := Position(Elements(T), MultiplicativeZero(S));
-  # TODO(now): NaturalPartialOrder should return a Digraph
+  # TODO(later): NaturalPartialOrder should return a Digraph but
+  # NaturalPartialOrder is declared in GAP library, and so we can't.
   gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
-  return Elements(T){prims};  # TODO(now) use EnumeratorSorted here
+  return EnumeratorSorted(T){prims};
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting inverse semigroup rep",

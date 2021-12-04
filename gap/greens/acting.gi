@@ -635,7 +635,7 @@ function(x, y)
   return SemigroupDataIndex(x) < SemigroupDataIndex(y);
 end);
 
-# TODO(now) a method for L-classes?
+# TODO(later) a method for L-classes?
 
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass], IsRegularGreensClass);

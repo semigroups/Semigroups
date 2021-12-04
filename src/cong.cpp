@@ -137,6 +137,8 @@ void init_cong(gapbind14::Module &m) {
       .def("less", &Congruence::less)
       .def("add_runner",
            &Congruence::add_runner<libsemigroups::congruence::ToddCoxeter>)
+      .def("is_quotient_obviously_infinite",
+           &Congruence::is_quotient_obviously_infinite)
       .def("ntc", [](Congruence &C) {
         return gapbind14::make_iterator(C.cbegin_ntc(), C.cend_ntc());
       });

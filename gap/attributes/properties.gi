@@ -1199,57 +1199,6 @@ function(S)
   return data!.found = false;
 end);
 
-# InstallMethod(IsRegularSemigroup,
-# "for an acting star semigroup with generators",
-# [IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
-# function(S)
-#   local lookfunc, data, i;
-#
-#   if IsSimpleSemigroup(S) then
-#     Info(InfoSemigroups, 2, "the semigroup is simple");
-#     return true;
-#   elif HasIsCompletelyRegularSemigroup(S)
-#       and IsCompletelyRegularSemigroup(S) then
-#     Info(InfoSemigroups, 2, "the semigroup is completely regular");
-#     return true;
-#   elif HasGreensDClasses(S) then
-#     return ForAll(GreensDClasses(S), IsRegularDClass);
-#   fi;
-#
-#   # look for <S> not being regular
-#   lookfunc := function(data, x)
-#     local l;
-#     if data!.repslens[x[2]][data!.orblookup1[x[6]]] > 1 then
-#       return true;
-#     fi;
-#
-#     # data corresponds to the group of units...
-#     if IsActingSemigroupWithFixedDegreeMultiplication(S)
-#         and ActionRank(S)(x[4]) = ActionDegree(x[4]) then
-#       return false;
-#     fi;
-#     #check that the rho value of <x> is in the same scc as the lambda value of
-#     #<x>
-#     l := Position(x[3], RhoFunc(S)(x[4]));
-#     return l = fail or OrbSCCLookup(x[3])[l] <> x[2];
-#   end;
-#
-#   data := SemigroupData(S);
-#
-#   for i in [2 .. Length(data)] do
-#     if lookfunc(data, data[i]) then
-#       return false;
-#     fi;
-#   od;
-#
-#   if IsClosedData(data) then
-#     return true;
-#   fi;
-#
-#   data := Enumerate(data, infinity, lookfunc);
-#   return data!.found = false;
-# end);
-
 # same method for ideals
 
 InstallMethod(IsRegularSemigroupElement,
@@ -1280,29 +1229,6 @@ function(S, x)
   od;
   return false;
 end);
-
-# InstallMethod(IsRegularSemigroupElement,
-# "for an acting star semigroup and associative element with star",
-# [IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
-# function(S, x)
-#   local o, k, l;
-#
-#   if not x in S then
-#     Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
-#     return false;
-#   fi;
-#
-#   if HasIsRegularSemigroup(S) and IsRegularSemigroup(S) then
-#     Info(InfoSemigroups, 2, "the semigroup is regular,");
-#     return true;
-#   fi;
-#
-#   o := LambdaOrb(S);
-#   k := Position(o, LambdaFunc(S)(x));
-#   l := Position(o, RhoFunc(S)(x));
-#
-#   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
-# end);
 
 # same method for ideals
 
@@ -1335,27 +1261,6 @@ function(S, x)
   od;
   return false;
 end);
-
-# InstallMethod(IsRegularSemigroupElementNC,
-# "for an acting semigroup with star and associative element with star",
-# [IsActingSemigroup and IsStarSemigroup, IsAssociativeElementWithStar],
-# function(S, x)
-#   local o, k, l;
-#
-#    if IsClosedOrbit(LambdaOrb(S)) then
-#     o := LambdaOrb(S);
-#     k := Position(o, LambdaFunc(S)(x));
-#     if k = fail then
-#       return false;
-#     fi;
-#   else
-#     # this has to be false, since we're not sure if <x> in <S>
-#     o := GradedLambdaOrb(S, x, false);
-#     k := 1;
-#   fi;
-#   l := EnumeratePosition(o, RhoFunc(S)(x));
-#   return l <> fail and OrbSCCLookup(o)[k] = OrbSCCLookup(o)[l];
-# end);
 
 InstallMethod(IsRegularSemigroupElementNC,
 [IsSemigroup, IsMultiplicativeElement], IsRegularSemigroupElement);
@@ -1754,12 +1659,9 @@ InstallMethod(IsNilpotentSemigroup, "for a semigroup",
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if HasNrIdempotents(S) and NrIdempotents(S) <> 1 then
+  elif HasNrIdempotents(S) and NrIdempotents(S) <> 1 then
     return false;
-  fi;
-  if MultiplicativeZero(S) = fail then
+  elif MultiplicativeZero(S) = fail then
     return false;
   fi;
   return NrIdempotents(S) = 1;
@@ -1771,8 +1673,10 @@ InstallMethod(IsFinite, "for a finitely presented semigroup",
 [IsFpSemigroup],
 function(S)
   if IsEmpty(RelationsOfFpSemigroup(S)) or
-      ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
-    # TODO(now) add nr gens is higher than nr relations
+      ForAll(RelationsOfFpSemigroup(S),
+             x -> IsIdenticalObj(x[1], x[2]))
+      or Length(GeneratorsOfSemigroup(S)) >
+      Length(RelationsOfFpSemigroup(S)) then
     return false;
   fi;
   TryNextMethod();
