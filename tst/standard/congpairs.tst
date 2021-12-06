@@ -26,7 +26,7 @@ gap> cong := SemigroupCongruence(S, gens);
 1 generating pairs>
 
 # The next test is now valid (but would run forever)
-#gap> NonTrivialCongruenceClasses(cong);
+#gap> NonTrivialEquivalenceClasses(cong);
 #Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 #Error, no 2nd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
 #ments
@@ -153,7 +153,7 @@ false
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
-gap> NonTrivialCongruenceClasses(cong);
+gap> NonTrivialEquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
 gap> classes := EquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
@@ -286,10 +286,6 @@ gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 false
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
-gap> NonTrivialCongruenceClasses(cong);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `NonTrivialCongruenceClasses' on 1 argum\
-ents
 gap> NonTrivialEquivalenceClasses(cong);
 [ <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> IsLeftSemigroupCongruence(cong);

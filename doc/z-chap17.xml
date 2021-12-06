@@ -67,7 +67,7 @@
       Congruence classes
     </Heading>
 
-    The main operations and functions for a congruence are:
+    The main operations and attributes for congruences in the &GAP; library are:
     <List>
       <Item>
         <Ref Attr="EquivalenceClasses" BookName="ref"/>
@@ -82,7 +82,6 @@
     <#Include Label = "IsRightCongruenceClass">
     <#Include Label = "EquivalenceClassOfElement">
     <#Include Label = "NonTrivialEquivalenceClasses">
-    <#Include Label = "NonTrivialCongruenceClasses">
     <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "EquivalenceRelationCanonicalLookup">
     <#Include Label = "EquivalenceRelationCanonicalPartition">
