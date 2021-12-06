@@ -9,7 +9,8 @@
 ##
 
 # This file contains methods for finding various attributes of finite
-# semigroups, where no better method is known.
+# semigroups, which satisfy CanComputeFroidurePin or where no better method is
+# known.
 
 # Note about the difference between One and MultiplicativeNeutralElement
 # (the same goes for Zero and MultplicativeZero):
@@ -163,22 +164,18 @@ function(S)
   return EnumeratorSorted(S)[Size(S)];
 end);
 
-InstallMethod(NrIdempotents, "for a semigroup",
-[IsSemigroup],
+InstallMethod(NrIdempotents, "for a semigroup", [IsSemigroup],
 function(S)
   return Length(Idempotents(S));
 end);
 
-InstallMethod(GroupOfUnits, "for a semigroup",
-[IsSemigroup],
+InstallMethod(GroupOfUnits, "for a semigroup", [IsSemigroup],
 function(S)
   local H, map, U, iso;
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if MultiplicativeNeutralElement(S) = fail then
+  elif MultiplicativeNeutralElement(S) = fail then
     return fail;
   fi;
 
@@ -282,7 +279,8 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
+  I := SemigroupIdealByGeneratorsNC(S,
+                                    [RepresentativeOfMinimalIdeal(S)],
                                     SEMIGROUPS.OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
   return I;
@@ -316,7 +314,7 @@ InstallMethod(SmallMonoidGeneratingSet,
 "for a multiplicative element with one collection",
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
-  if Length(coll) = 1 then
+  if Length(coll) < 2 then
     return coll;
   fi;
   return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));
@@ -327,8 +325,8 @@ end);
 InstallMethod(SmallMonoidGeneratingSet, "for a finite monoid",
 [IsFinite and IsMonoid],
 function(S)
-  if IsEmpty(GeneratorsOfMonoid(S)) then
-    return [];
+  if Length(GeneratorsOfMonoid(S)) < 2 then
+    return GeneratorsOfMonoid(S);
   fi;
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
 end);
@@ -361,6 +359,8 @@ function(coll)
     ErrorNoReturn("the argument (a mult. elt. coll.) do not satisfy ",
                   "IsGeneratorsOfInverseSemigroup");
   fi;
+  # The empty list does not satisfy IsGeneratorsOfInverseSemigroup
+  Assert(1, not IsEmpty(coll));
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
       return [];
@@ -777,7 +777,7 @@ function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return Filtered(AsSet(S), y -> x * y * x = x and y * x * y = y);
+  return Filtered(EnumeratorSorted(S), y -> x * y * x = x and y * x * y = y);
 end);
 
 InstallMethod(InversesOfSemigroupElement,
@@ -866,53 +866,7 @@ _SemigroupSizeByIndexPeriod);
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
 Unbind(_SemigroupSizeByIndexPeriod);
 
-# BindGlobal("_MonoidSizeByIndexPeriod",
-# function(S)
-#   local gen, ind;
-#   gen := MinimalMonoidGeneratingSet(S)[1];
-#   ind := IndexPeriodOfSemigroupElement(gen);
-#   if ind[1] = 1 and One(S) in HClass(S, gen) then
-#     # <gen> generates the One of S, so the One is not an additional element
-#     # Note that this implies that S is a cyclic group
-#     SetIsGroupAsSemigroup(S, true);
-#     return ind[2];
-#   fi;
-#   return Sum(ind);
-# end);
-#
-# InstallMethod(Size,
-# "for a monogenic transformation monoid with minimal generating set",
-# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
-#  IsTransformationSemigroup and IsActingSemigroup],
-# 5,  # to beat IsActingSemigroup
-# _MonoidSizeByIndexPeriod);
-#
-# InstallMethod(Size,
-# "for a monogenic partial perm monoid with minimal generating set",
-# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
-#  IsPartialPermSemigroup],
-# 5,  # to beat IsActingSemigroup
-# _MonoidSizeByIndexPeriod);
-#
-# InstallMethod(Size,
-# "for a monogenic bipartition monoid with minimal generating set",
-# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
-#  IsBipartitionSemigroup],
-# 5,  # to beat IsActingSemigroup
-# _MonoidSizeByIndexPeriod);
-#
-# InstallMethod(Size,
-# "for a monogenic monoid of matrices over finite field with minimal gen set",
-# [IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
-#  IsMatrixOverFiniteFieldCollection],
-# 5,  # to beat IsActingSemigroup
-# _MonoidSizeByIndexPeriod);
-#
-# MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
-# Unbind(_MonoidSizeByIndexPeriod);
-
-InstallMethod(MultiplicativeZero,
-"for a semigroup with generators",
+InstallMethod(MultiplicativeZero, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, z;
@@ -926,8 +880,7 @@ function(S)
   TryNextMethod();
 end);
 
-InstallMethod(MultiplicativeZero,
-"for a monoid with generators",
+InstallMethod(MultiplicativeZero, "for a monoid with generators",
 [IsMonoid and HasGeneratorsOfMonoid],
 function(S)
   local gens, z;
@@ -941,8 +894,7 @@ function(S)
   TryNextMethod();
 end);
 
-InstallMethod(IndecomposableElements, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IndecomposableElements, "for a semigroup", [IsSemigroup],
 function(S)
   local out, D;
 
@@ -959,8 +911,7 @@ function(S)
 end);
 
 InstallMethod(MinimalSemigroupGeneratingSet, "for a free semigroup",
-[IsFreeSemigroup],
-GeneratorsOfSemigroup);
+[IsFreeSemigroup], GeneratorsOfSemigroup);
 
 InstallMethod(MinimalSemigroupGeneratingSet, "for a semigroup",
 [IsSemigroup],
@@ -1046,8 +997,7 @@ function(S)
 end);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a free monoid",
-[IsFreeMonoid],
-GeneratorsOfMonoid);
+[IsFreeMonoid], GeneratorsOfMonoid);
 
 InstallMethod(MinimalMonoidGeneratingSet, "for a monoid",
 [IsMonoid],

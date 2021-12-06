@@ -45,7 +45,7 @@ S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
 # TODO(later) more of these
 
 InstallMethod(Size, "for an fp semigroup with nice monomorphism",
-[IsFpSemigroup and HasNiceMonomorphism], 
+[IsFpSemigroup and HasNiceMonomorphism],
 function(S)
   return Size(Range(NiceMonomorphism(S)));
 end);
@@ -253,7 +253,7 @@ end);
 
 # same method for ideals
 # We do not add CanComputeFroidurePin to the filters below because FpSemigroups
-# only satisfy this if they are finite and they know it. 
+# only satisfy this if they are finite and they know it.
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
 [IsSemigroup], 3,
@@ -280,11 +280,10 @@ function(S)
   return result;
 end);
 
-
 # same method for ideals
 
 # We do not add CanComputeFroidurePin to the filters below because FpSemigroups
-# only satisfy this if they are finite and they know it. 
+# only satisfy this if they are finite and they know it.
 
 InstallMethod(IsomorphismFpMonoid, "for a semigroup",
 [IsSemigroup], 8,

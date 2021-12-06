@@ -10,7 +10,7 @@
 
 # This file contains methods for finding various attributes of acting
 # semigroups, sometimes there is no better method than that given in
-# attributes.gi.
+# attr.gi.
 
 # same method for ideals
 
@@ -124,7 +124,6 @@ function(S, x)
   out := [];
   k := 0;
 
-  # if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(S);
   Enumerate(o);  # just in case
@@ -139,33 +138,6 @@ function(S, x)
       od;
     fi;
   od;
-  #  else
-  #     opts := rec(treehashsize := s!.opts.hashlen,
-  #                 gradingfunc := function(o, x) return lambdarank(x); end,
-  #                 onlygrades := function(x, y) return x >= rank; end,
-  #                 onlygradesdata := fail);
-
-  #    for name in RecNames(LambdaOrbOpts(s)) do
-  #      opts.(name) := LambdaOrbOpts(s).(name);
-  #    od;
-
-  #   o := Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
-  #   Enumerate(o);
-  #   grades := Grades(o);
-
-  #   for i in [2 .. Length(o)] do
-  #     if grades[i] = rank and tester(o[i], rho_x) then
-  #       for rho in rhos do
-  #         g := creator(lambda, rho) * inv(o[i], f);
-  #         if regular or g in s then
-  #           k := k + 1;
-  #           out[k] := g;
-  #         fi;
-  #       od;
-  #     fi;
-  #   od;
-  # fi;
-
   return out;
 end);
 

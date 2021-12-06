@@ -174,8 +174,6 @@
 
     <#Include Label = "IsActingSemigroup">
     <#Include Label = "CanComputeFroidurePin">
-    <#Include Label = "CanComputeGapFroidurePin">
-    <#Include Label = "CanComputeCppFroidurePin">
   </Section>
 
   <Section Label = "Semigroups represented by generators">

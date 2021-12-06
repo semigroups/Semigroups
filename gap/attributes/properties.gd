@@ -40,6 +40,7 @@ DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsSemigroup);
 DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
+DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
 
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
@@ -98,7 +99,6 @@ InstallTrueMethod(IsFinite, IsMonogenicSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup,
                   IsMonogenicSemigroup and IsRegularSemigroup);
 
-DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsMonoidAsSemigroup);
 InstallTrueMethod(IsSurjectiveSemigroup, IsIdempotentGenerated);
