@@ -453,7 +453,7 @@ false]]></Example>
     <Description>
       This attribute describes the equivalence relation <A>equiv</A>, defined
       over a finite semigroup, as a list of positive integers of length the size
-      of the finite semigroup over which <A>equiv</A> is defined.<P/>
+      of the semigroup.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in a
       consistent canonical order as defined by <Ref Oper =
