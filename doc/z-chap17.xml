@@ -75,12 +75,14 @@
       <Item>
         <C>NrEquivalenceClasses</C>
       </Item>
+      <Item>
+        <Ref Oper="EquivalenceClassOfElement" BookName="ref"/>
+      </Item>
     </List>
     
     <#Include Label = "IsCongruenceClass">
     <#Include Label = "IsLeftCongruenceClass">
     <#Include Label = "IsRightCongruenceClass">
-    <#Include Label = "EquivalenceClassOfElement">
     <#Include Label = "NonTrivialEquivalenceClasses">
     <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "EquivalenceRelationCanonicalLookup">

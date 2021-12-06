@@ -501,8 +501,8 @@ InstallMethod(EquivalenceClassOfElement,
 [CanComputeCppCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("the 2nd argument <elm> must belong to the ",
-                  "range of the first arg <cong>,");
+    Error("the 2nd argument <elm> must belong to the range of the first ",
+          "arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);

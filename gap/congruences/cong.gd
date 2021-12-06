@@ -21,6 +21,13 @@
 ## Some general functions are also implemented in cong.gi
 ##
 
+# Possibly missing:
+# - ImagesElm (implemented in conginv.gi)
+
+########################################################################
+# Congruences
+########################################################################
+
 # These are equivalence relations
 InstallTrueMethod(IsEquivalenceRelation, IsLeftSemigroupCongruence);
 InstallTrueMethod(IsEquivalenceRelation, IsRightSemigroupCongruence);
@@ -30,11 +37,64 @@ DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
 DeclareGlobalFunction("RightSemigroupCongruence");
 
-# Separate categories for the classes of left, right, and 2-sided congruences
+# Properties of congruences
+DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
+
+# Attributes of congruences
+# EquivalenceRelationPartition is implemented in libsemigroups/cong.gi
+DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
+DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationCanonicalPartition",
+                 IsEquivalenceRelation);
+
+# TODO(now): shouldn't the below be in congpairs.gd
+
+DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
+               GeneratingPairsOfLeftMagmaCongruence);
+DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
+               GeneratingPairsOfRightMagmaCongruence);
+
+# No-checks version of the "\in" operation
+DeclareOperation("CongruenceTestMembershipNC", [IsEquivalenceRelation,
+                                                IsMultiplicativeElement,
+                                                IsMultiplicativeElement]);
+
+# Algebraic operators
+DeclareOperation("JoinLeftSemigroupCongruences",
+                 [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
+DeclareOperation("JoinRightSemigroupCongruences",
+                 [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
+
+# Comparison operators
+DeclareOperation("IsSubrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
+DeclareOperation("IsSuperrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
+
+########################################################################
+# Congruence classes
+########################################################################
+
+# IsCongruenceClass is declared in gap/lib/mgmcong.gd:140
 DeclareCategory("IsLeftCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
 DeclareCategory("IsRightCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
+
+# Actions
+DeclareOperation("OnLeftCongruenceClasses",
+                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
+DeclareOperation("OnRightCongruenceClasses",
+                 [IsRightCongruenceClass, IsMultiplicativeElement]);
+
+########################################################################
+# Congruence lattices and related
+########################################################################
 
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
@@ -61,49 +121,3 @@ DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
                  [IsSemigroup, IsMultiplicativeElementCollection]);
 DeclareOperation("PrincipalRightCongruencesOfSemigroup",
                  [IsSemigroup, IsMultiplicativeElementCollection]);
-
-DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
-               GeneratingPairsOfLeftMagmaCongruence);
-DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
-               GeneratingPairsOfRightMagmaCongruence);
-
-DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
-
-DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
-DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
-DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
-
-DeclareAttribute("EquivalenceRelationCanonicalPartition",
-                 IsEquivalenceRelation);
-
-DeclareOperation("JoinLeftSemigroupCongruences",
-                 [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
-DeclareOperation("JoinRightSemigroupCongruences",
-                 [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
-
-DeclareOperation("IsSubrelation",
-                 [IsEquivalenceRelation, IsEquivalenceRelation]);
-DeclareOperation("IsSuperrelation",
-                 [IsEquivalenceRelation, IsEquivalenceRelation]);
-
-DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
-DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
-
-DeclareOperation("OnLeftCongruenceClasses",
-                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
-DeclareOperation("OnRightCongruenceClasses",
-                 [IsRightCongruenceClass, IsMultiplicativeElement]);
-
-# Helper functions to EquivalenceClasses for specific categories
-
-DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
-                                                  IsMultiplicativeElement]);
-DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,
-                                                   IsMultiplicativeElement]);
-
-# No-checks version of the "\in" operation
-DeclareOperation("CongruenceTestMembershipNC", [IsEquivalenceRelation,
-                                                IsMultiplicativeElement,
-                                                IsMultiplicativeElement]);

@@ -565,7 +565,7 @@ gap> S := F / [[F.2 ^ 2, F.2],
 >              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
 gap> pair := [S.1 * S.2 * S.1, S.1];;
 gap> cong := LeftSemigroupCongruence(S, pair);;
-gap> class := LeftCongruenceClassOfElement(cong, S.1);;
+gap> class := EquivalenceClassOfElement(cong, S.1);;
 gap> Size(class);
 2
 gap> Elements(class) = [S.1, S.1 * S.2 * S.1];
@@ -591,7 +591,7 @@ gap> S := F / [[F.2 ^ 2, F.2],
 >              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
 gap> pair := [S.1 * S.2 * S.1, S.1];;
 gap> cong := RightSemigroupCongruence(S, pair);;
-gap> class := RightCongruenceClassOfElement(cong, S.1);;
+gap> class := EquivalenceClassOfElement(cong, S.1);;
 gap> Elements(class) = [S.1, S.1 * S.2 * S.1];
 true
 gap> cong2 := RightSemigroupCongruence(S, [[S.1, S.2]]);;

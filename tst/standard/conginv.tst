@@ -168,8 +168,7 @@ gap> [PartialPerm([4], [4]), 42] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
 f the 2nd argument (a right semigroup congruence)
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
-Error, the 2nd argument (a mult. elt.) must belong to the range of the 1st arg\
-ument (an inverse semigroup congruence by kernel + trace)
+Error, Representative must lie in underlying set of the relation
 
 # Congruence Class Multiplication: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),

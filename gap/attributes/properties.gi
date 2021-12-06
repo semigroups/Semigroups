@@ -509,7 +509,7 @@ end);
 InstallMethod(IsRTrivial, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter, x;
+  local x;
 
   if HasParent(S) and HasIsRTrivial(Parent(S)) and IsRTrivial(Parent(S)) then
     return true;

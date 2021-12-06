@@ -203,6 +203,9 @@ function(cong)
   return Length(EquivalenceClasses(cong));
 end);
 
+# Although the next method doesn't use the representation, it also doesn't
+# require additional computation of the uncongruence, since it calls
+# EquivalenceClasses.
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
@@ -241,18 +244,6 @@ function(cong, elm1, elm2)
   return false;
 end);
 
-InstallMethod(EquivalenceClassOfElement,
-"for inverse semigroup congruence and multiplicative element",
-[IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
-function(cong, elm)
-  if not elm in Range(cong) then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong ",
-                  "to the range of the 1st argument (an inverse semigroup",
-                  " congruence by kernel + trace)");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
-end);
-
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and multiplicative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
@@ -278,7 +269,7 @@ InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
  IsInverseSemigroupCongruenceClassByKernelTrace],
-              function(c1, c2)
+function(c1, c2)
   return(EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
 end);

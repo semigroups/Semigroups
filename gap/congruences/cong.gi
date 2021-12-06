@@ -314,6 +314,7 @@ _GenericCongEquality);
 MakeReadWriteGlobal("_GenericCongEquality");
 Unbind(_GenericCongEquality);
 
+# TODO(now) shouldn't this be in another file?
 InstallMethod(\=, "for two semigroup congruences with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
  IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
@@ -381,18 +382,6 @@ C -> _ViewCongObj("left ", C));
 
 InstallMethod(ViewObj, "for a right congruence class",
 [IsRightCongruenceClass], C -> _ViewCongObj("right ", C));
-
-# TODO(later) delete
-InstallMethod(LeftCongruenceClassOfElement,
-"for a left semigroup congruence and multiplicative element",
-[IsLeftSemigroupCongruence, IsMultiplicativeElement],
-EquivalenceClassOfElement);
-
-# TODO(later) delete
-InstallMethod(RightCongruenceClassOfElement,
-"for a right semigroup congruence and multiplicative element",
-[IsRightSemigroupCongruence, IsMultiplicativeElement],
-EquivalenceClassOfElement);
 
 InstallMethod(OnLeftCongruenceClasses,
 "for a left congruence class and a multiplicative element",
