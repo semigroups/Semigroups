@@ -934,14 +934,14 @@ gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
 
 # TestInstall62: Issue 119:
-# Bug in NrCongruenceClasses for Rees congruences
+# Bug in NrEquivalenceClasses for Rees congruences
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1, 2, 2, 2])]);
 <regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
 <Rees congruence of <regular transformation semigroup ideal of degree 4 with
   1 generator> over <full transformation monoid of degree 4>>
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 169
 
 # TestInstall65: Issue 126:
@@ -1611,7 +1611,7 @@ Error, the argument (a congruence) must have finite range
 gap> EquivalenceClasses(cong);
 [ <congruence class of s1>, <congruence class of s1^2>, 
   <congruence class of s1^3> ]
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 3
 
 # Issue 300: problem with InverseOfSemigroupElement for an acting monoid
@@ -1729,13 +1729,13 @@ false
 gap> Size(M0);
 0
 
-# Issue 461: NrCongruenceClasses gives incorrect answer
+# Issue 461: NrEquivalenceClasses gives incorrect answer
 gap> tab := [[1, 2, 3, 3], [2, 3, 1, 1], [3, 1, 2, 2], [3, 1, 2, 2]];;
 gap> S := SemigroupByMultiplicationTable(tab);;
 gap> cong := SemigroupCongruence(S, [[S.3, S.4]]);;
 gap> S.1 in EquivalenceClassOfElement(cong, S.3);
 false
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 3
 gap> S.1 in EquivalenceClassOfElement(cong, S.3);
 false

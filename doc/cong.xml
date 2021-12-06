@@ -279,7 +279,7 @@ gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 gap> congs := CongruencesOfSemigroup(S);;
 gap> Length(congs);
 4
-gap> Set(congs, NrCongruenceClasses);
+gap> Set(congs, NrEquivalenceClasses);
 [ 1, 5, 9, 25 ]
 gap> pos := Position(congs, UniversalSemigroupCongruence(S));;
 gap> congs[pos];
@@ -511,54 +511,6 @@ gap> EquivalenceRelationCanonicalPartition(cong);
       Transformation( [ 1, 4, 3, 3 ] ) ], 
   [ Transformation( [ 3, 3, 3, 3 ] ), 
       Transformation( [ 4, 3, 3, 3 ] ) ] ]
-]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="NrEquivalenceClasses">
-  <ManSection>
-    <Attr Name = "NrEquivalenceClasses" Arg = "eq"/>
-    <Returns>A positive integer.</Returns>
-    <Description>
-      If <A>eq</A> is an equivalence relation, then this attribute describes
-      the number of equivalence classes it has. <P/>
-
-      <Example><![CDATA[
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
->                                 [[(), (1, 3, 2)], [(1, 2), 0]]);;
-gap> cong := CongruencesOfSemigroup(S)[3];;
-gap> NrEquivalenceClasses(cong);
-9]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="NrCongruenceClasses">
-  <ManSection>
-    <Oper Name = "NrCongruenceClasses" Arg = "cong"/>
-    <Oper Name = "NrLeftCongruenceClasses" Arg = "cong"/>
-    <Oper Name = "NrRightCongruenceClasses" Arg = "cong"/>
-    <Returns>A list of equivalence classes.</Returns>
-    <Description>
-      These operations act as a synonym of <C>NrEquivalenceClasses</C> in the
-      case that the argument <A>cong</A> is a congruence, left congruence, or
-      right congruence (respectively) of a semigroup.<P/>
-
-      See <Ref Prop="IsLeftSemigroupCongruence"/>,
-      <Ref Prop="IsRightSemigroupCongruence"/>, and
-      <Ref Prop="IsSemigroupCongruence"/>.<P/>
-
-      <Example><![CDATA[
-gap> S := Monoid([
->  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
-gap> pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;
-gap> cong := SemigroupCongruence(S, pair);;
-gap> NrCongruenceClasses(cong);
-6
-gap> cong := RightSemigroupCongruence(S, pair);;
-gap> NrRightCongruenceClasses(cong);
-10
 ]]></Example>
     </Description>
   </ManSection>

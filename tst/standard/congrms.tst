@@ -125,7 +125,7 @@ g to the range of the 1st argument (a congruence)
 
 # ReesMatCongTest5: Equivalence classes
 gap> classes := EquivalenceClasses(cong);;
-gap> Size(classes) = NrCongruenceClasses(cong);
+gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := EquivalenceClassOfElement(cong, y);;
@@ -426,7 +426,7 @@ gap> Size(class0);
 gap> CanonicalRepresentative(class0);
 0
 gap> classes := EquivalenceClasses(cong);;
-gap> Size(classes) = NrCongruenceClasses(cong);
+gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := EquivalenceClassOfElement(cong, y);;

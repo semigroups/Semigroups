@@ -183,10 +183,6 @@ InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
 x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
 
 # TODO(later) delete
-InstallMethod(NrCongruenceClasses, "for a semigroup congruence",
-[IsSemigroupCongruence], NrEquivalenceClasses);
-
-# TODO(later) delete
 InstallMethod(NrLeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], NrEquivalenceClasses);
 

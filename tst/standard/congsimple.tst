@@ -113,7 +113,7 @@ gap> cong := SemigroupCongruence(S,
 >  [Transformation([2, 1, 1, 2, 2]),
 >   Transformation([1, 2, 2, 1, 2])]]);;
 gap> classes := EquivalenceClasses(cong);;
-gap> Size(classes) = NrCongruenceClasses(cong);
+gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
 Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \

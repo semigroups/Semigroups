@@ -72,6 +72,9 @@
       <Item>
         <Ref Attr="EquivalenceClasses" BookName="ref"/>
       </Item>
+      <Item>
+        <C>NrEquivalenceClasses</C>
+      </Item>
     </List>
     
     <#Include Label = "IsCongruenceClass">
@@ -80,8 +83,6 @@
     <#Include Label = "EquivalenceClassOfElement">
     <#Include Label = "NonTrivialEquivalenceClasses">
     <#Include Label = "NonTrivialCongruenceClasses">
-    <#Include Label = "NrEquivalenceClasses">
-    <#Include Label = "NrCongruenceClasses">
     <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "EquivalenceRelationCanonicalLookup">
     <#Include Label = "EquivalenceRelationCanonicalPartition">

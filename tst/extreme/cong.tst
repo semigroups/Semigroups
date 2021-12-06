@@ -44,7 +44,7 @@ gap> [x, Transformation([1])] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
 f the 2nd argument (a right semigroup congruence)
 gap> classes := CongruenceClasses(cong);;
-gap> Size(classes) = NrCongruenceClasses(cong);
+gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> classx := EquivalenceClassOfElement(cong, x);;
 gap> classy := EquivalenceClassOfElement(cong, y);;
@@ -97,7 +97,7 @@ gap> u := UniversalSemigroupCongruence(s);
 gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
 <semigroup congruence over <commutative non-regular transformation monoid of 
  degree 10 with 1 generator> with 0 generating pairs>
-gap> NrCongruenceClasses(v);
+gap> NrEquivalenceClasses(v);
 6
 gap> Size(t);
 6
@@ -114,7 +114,7 @@ gap> v := SemigroupCongruence(t, gens);
  of size 6, degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
-gap> NrCongruenceClasses(u);
+gap> NrEquivalenceClasses(u);
 1
 
 # PairsCongTest4: \* for two semigroups congruence classes

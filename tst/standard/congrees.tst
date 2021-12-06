@@ -53,7 +53,7 @@ gap> S := Semigroup([Transformation([2, 4, 3, 5, 5]),
 gap> I := SemigroupIdeal(S, [Transformation([3, 1, 1, 4, 4]),
 >                            Transformation([1, 4, 1, 4, 1])]);;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 19
 gap> cc := Set(EquivalenceClasses(cong));;
 gap> Size(cc);
@@ -85,7 +85,7 @@ gap> I := SemigroupIdeal(S, Transformation([5, 2, 1, 5, 2]),
 >                            Transformation([5, 2, 1, 5, 2]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);;
-gap> NrCongruenceClasses(ccong);
+gap> NrEquivalenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
 true
@@ -168,7 +168,7 @@ gap> class1 * class2;
 Error, the arguments (classes of Rees congruences) do not belong to the same c\
 ongruence
 gap> cc := JoinSemigroupCongruences(ci, cj);;
-gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
+gap> NrEquivalenceClasses(ci); NrEquivalenceClasses(cj); NrEquivalenceClasses(cc);
 16
 17
 15

@@ -34,7 +34,7 @@ gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
 Error, the argument (a congruence) must have finite range
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 3
 gap> class := EquivalenceClassOfElement(cong, x);;
 gap> cong2 := SemigroupCongruence(S, [x ^ 2, x ^ 2]);;
@@ -58,7 +58,7 @@ gap> u := UniversalSemigroupCongruence(S);
 gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);;
 gap> Size(GeneratingPairsOfSemigroupCongruence(v));
 0
-gap> NrCongruenceClasses(v);
+gap> NrEquivalenceClasses(v);
 6
 gap> Size(T);
 6
@@ -75,7 +75,7 @@ gap> v := SemigroupCongruence(T, gens);
  of size 6, degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
-gap> NrCongruenceClasses(u);
+gap> NrEquivalenceClasses(u);
 1
 
 # PairsCongTest4: \* for two semigroup congruence classes

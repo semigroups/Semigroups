@@ -21,7 +21,7 @@ gap> uni := UniversalSemigroupCongruence(S);
  with 2 generators>>
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruence(S, pairs);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 1
 gap> part := EquivalenceRelationPartition(uni);;
 gap> Size(part);
@@ -35,7 +35,7 @@ gap> S := Semigroup([Transformation([2, 4, 3, 5, 5, 7, 1]),
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruence(S, pairs);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 1
 
 # CongUnivTest3: Has zero, is 0-simple
@@ -68,7 +68,7 @@ Error, the ranges of the arguments (congruences) do not coincide
 gap> IsSubrelation(otheruni, congs[4]);
 Error, the ranges of the arguments (congruences) do not coincide
 gap> cong := SemigroupCongruence(r, pairs);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 1
 
 # CongUnivTest4: No zero, is simple
@@ -86,7 +86,7 @@ gap> S := Semigroup(
 gap> uni := UniversalSemigroupCongruence(r);;
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruence(r, pairs);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 1
 
 # EquivalenceRelationCanonicalLookup
@@ -220,7 +220,7 @@ gap> uni := UniversalSemigroupCongruence(S);
  with 2 generators>>
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(S, pairs);;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 1
 
 # IsUniversalSemigroupCongruence for a cong by generating pairs
