@@ -111,8 +111,6 @@ DeclareOperation("NrCongruenceClasses", [IsSemigroupCongruence]);
 DeclareOperation("NrLeftCongruenceClasses", [IsLeftSemigroupCongruence]);
 DeclareOperation("NrRightCongruenceClasses", [IsRightSemigroupCongruence]);
 
-DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
-                                              IsMultiplicativeElement]);
 DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
                                                   IsMultiplicativeElement]);
 DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,

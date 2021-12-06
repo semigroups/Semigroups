@@ -36,9 +36,9 @@ gap> EquivalenceRelationLookup(cong);
 Error, the argument (a congruence) must have finite range
 gap> NrCongruenceClasses(cong);
 3
-gap> class := CongruenceClassOfElement(cong, x);;
+gap> class := EquivalenceClassOfElement(cong, x);;
 gap> cong2 := SemigroupCongruence(S, [x ^ 2, x ^ 2]);;
-gap> class := CongruenceClassOfElement(cong2, x);;
+gap> class := EquivalenceClassOfElement(cong2, x);;
 gap> enum := Enumerator(class);
 [ s1 ]
 gap> Size(class);
@@ -110,8 +110,8 @@ gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
-gap> CongruenceClassOfElement(v, Representative(classes[5] * classes[2])) =
-> CongruenceClassOfElement(v, 
+gap> EquivalenceClassOfElement(v, Representative(classes[5] * classes[2])) =
+> EquivalenceClassOfElement(v, 
 >                          Representative(classes[5]) *
 >                          Representative(classes[2]));
 true
@@ -319,7 +319,7 @@ gap> S := Semigroup([
 gap> pair := [Transformation([2, 2, 2, 3, 2]), 
 >             Transformation([2, 2, 1, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
 gap> Transformation([1, 2, 2, 2, 1]) in enum;
 true
@@ -338,7 +338,7 @@ true
 gap> enum[2000];
 Error, List Element: <list>[2000] must have an assigned value
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
 gap> x := enum[1];;
 gap> EquivalenceRelationCanonicalLookup(cong);;
@@ -347,7 +347,7 @@ gap> Position(enum, Transformation([2, 2, 2, 2, 3]));
 gap> Position(enum, x);
 1
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
 gap> Transformation([6, 2, 3, 4, 1, 1]) in class;

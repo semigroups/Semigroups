@@ -46,9 +46,9 @@ f the 2nd argument (a right semigroup congruence)
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
-gap> classx := CongruenceClassOfElement(cong, x);;
-gap> classy := CongruenceClassOfElement(cong, y);;
-gap> classz := CongruenceClassOfElement(cong, z);
+gap> classx := EquivalenceClassOfElement(cong, x);;
+gap> classy := EquivalenceClassOfElement(cong, y);;
+gap> classz := EquivalenceClassOfElement(cong, z);
 <congruence class of Transformation( [ 2, 4, 6, 1, 6, 5 ] )>
 gap> classx = classy;
 true

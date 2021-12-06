@@ -146,7 +146,7 @@ gap> I := InverseSemigroup([
 gap> cong := SemigroupCongruence(I,
 > [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
 >  [PartialPerm([]), PartialPerm([1, 2])]]);;
-gap> class := CongruenceClassOfElement(cong,
+gap> class := EquivalenceClassOfElement(cong,
 >                                      PartialPerm([1, 2], [2, 3]));;
 gap> IsInverseSemigroupCongruenceClassByKernelTrace(class);
 true]]></Example>

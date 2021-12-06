@@ -132,16 +132,16 @@ gap> Size(im);
 gap> ImagesElm(cong, z);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a Rees congruence)
-gap> yclass := CongruenceClassOfElement(cong, y);;
+gap> yclass := EquivalenceClassOfElement(cong, y);;
 gap> x in yclass;
 false
-gap> tclass := CongruenceClassOfElement(cong, t);;
+gap> tclass := EquivalenceClassOfElement(cong, t);;
 gap> y in tclass;
 true
-gap> CongruenceClassOfElement(cong, z);
+gap> EquivalenceClassOfElement(cong, z);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a Rees congruence)
-gap> xclass := CongruenceClassOfElement(cong, x);
+gap> xclass := EquivalenceClassOfElement(cong, x);
 <congruence class of Transformation( [ 3, 4, 2, 4 ] )>
 gap> x in xclass;
 true
@@ -149,7 +149,7 @@ gap> xclass * yclass = tclass;
 true
 gap> yclass * xclass = yclass;
 true
-gap> xxclass := CongruenceClassOfElement(cong, x * x);;
+gap> xxclass := EquivalenceClassOfElement(cong, x * x);;
 gap> xclass * xclass = xxclass;
 true
 
@@ -162,8 +162,8 @@ gap> I := SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]));;
 gap> J := SemigroupIdeal(S, Transformation([3, 3, 3, 3, 1]));;
 gap> ci := ReesCongruenceOfSemigroupIdeal(I);;
 gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
-gap> class1 := CongruenceClassOfElement(ci, Transformation([1, 1, 3, 1, 3]));;
-gap> class2 := CongruenceClassOfElement(cj, Transformation([1, 1, 3, 1, 3]));;
+gap> class1 := EquivalenceClassOfElement(ci, Transformation([1, 1, 3, 1, 3]));;
+gap> class2 := EquivalenceClassOfElement(cj, Transformation([1, 1, 3, 1, 3]));;
 gap> class1 * class2;
 Error, the arguments (classes of Rees congruences) do not belong to the same c\
 ongruence

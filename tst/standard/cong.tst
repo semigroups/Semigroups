@@ -303,7 +303,7 @@ gap> S := Semigroup(
 > [Transformation([1, 4, 3, 4]), Transformation([2, 3, 4, 2])]);;
 gap> pair := [Transformation([2, 3, 4, 2]), Transformation([4, 4, 4, 4])];;
 gap> cong := SemigroupCongruence(S, pair);;
-gap> class := CongruenceClassOfElement(cong, Transformation([4, 4, 4, 4]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([4, 4, 4, 4]));;
 gap> class * EquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 4, 4, 4, 4 ] )>, 
   <congruence class of Transformation( [ 2, 2, 2, 2 ] )> ]
@@ -317,10 +317,10 @@ gap> S := Semigroup(
 gap> pair := [Transformation([2, 3, 4, 2]), Transformation([4, 4, 4, 4])];;
 gap> cong1 := SemigroupCongruence(S, pair);;
 gap> cong2 := SemigroupCongruence(S, []);;
-gap> class1a := CongruenceClassOfElement(cong1, Transformation([4, 4, 4, 4]));;
-gap> class1b := CongruenceClassOfElement(cong1, Transformation([2, 3, 4, 2]));;
-gap> class1c := CongruenceClassOfElement(cong1, Transformation([1, 4, 3, 4]));;
-gap> class2 := CongruenceClassOfElement(cong2, Transformation([4, 4, 4, 4]));;
+gap> class1a := EquivalenceClassOfElement(cong1, Transformation([4, 4, 4, 4]));;
+gap> class1b := EquivalenceClassOfElement(cong1, Transformation([2, 3, 4, 2]));;
+gap> class1c := EquivalenceClassOfElement(cong1, Transformation([1, 4, 3, 4]));;
+gap> class2 := EquivalenceClassOfElement(cong2, Transformation([4, 4, 4, 4]));;
 gap> class1a * class1b;
 <congruence class of Transformation( [ 2, 2, 2, 2 ] )>
 gap> class1b * class1a;

@@ -118,9 +118,9 @@ true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
 Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
 congruence)
-gap> classx := CongruenceClassOfElement(cong, x);;
-gap> classy := CongruenceClassOfElement(cong, y);;
-gap> classz := CongruenceClassOfElement(cong, z);
+gap> classx := EquivalenceClassOfElement(cong, x);;
+gap> classy := EquivalenceClassOfElement(cong, y);;
+gap> classz := EquivalenceClassOfElement(cong, z);
 <congruence class of Transformation( [ 2, 1, 2, 1, 1 ] )>
 gap> elms := ImagesElm(cong, x);
 [ Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 1, 2, 1 ] ), 

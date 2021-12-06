@@ -71,10 +71,10 @@ gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
   [ <identity partial perm on [ 1, 2, 5 ]> ] ]
 
 # Congruence classes
-gap> classx := CongruenceClassOfElement(cong, x);
+gap> classx := EquivalenceClassOfElement(cong, x);
 <congruence class of [1,2]>
-gap> classy := CongruenceClassOfElement(cong, y);;
-gap> classz := CongruenceClassOfElement(cong, z);;
+gap> classy := EquivalenceClassOfElement(cong, y);;
+gap> classz := EquivalenceClassOfElement(cong, z);;
 gap> classx = classy;
 false
 gap> classz = classx;
@@ -181,8 +181,8 @@ gap> cong1 := SemigroupCongruence(S,
 gap> cong2 := SemigroupCongruence(S,
 >             [PartialPerm([], []), PartialPerm([1, 2, 5], [4, 2, 1])],
 >             [PartialPerm([], []), PartialPerm([1, 2, 3], [2, 5, 3])]);;
-gap> x := CongruenceClassOfElement(cong1, PartialPerm([1, 2, 3], [2, 5, 3]));;
-gap> y := CongruenceClassOfElement(cong2, PartialPerm([1, 2, 4], [3, 1, 5]));;
+gap> x := EquivalenceClassOfElement(cong1, PartialPerm([1, 2, 3], [2, 5, 3]));;
+gap> y := EquivalenceClassOfElement(cong2, PartialPerm([1, 2, 4], [3, 1, 5]));;
 gap> x * y;
 Error, the arguments must be classes of the same congruence
 

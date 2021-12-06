@@ -183,7 +183,6 @@ InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
 x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
 
 # TODO(later) delete
-# TODO(later) delete
 InstallMethod(LeftCongruenceClasses, "for a left semigroup congruence",
 [IsLeftSemigroupCongruence], EquivalenceClasses);
 
@@ -415,15 +414,6 @@ C -> _ViewCongObj("left ", C));
 
 InstallMethod(ViewObj, "for a right congruence class",
 [IsRightCongruenceClass], C -> _ViewCongObj("right ", C));
-
-MakeReadWriteGlobal("_ViewCongObj");
-UnbindGlobal("_ViewCongObj");
-
-# TODO(later) delete
-InstallMethod(CongruenceClassOfElement,
-"for a semigroup congruence and multiplicative element",
-[IsSemigroupCongruence, IsMultiplicativeElement],
-EquivalenceClassOfElement);
 
 # TODO(later) delete
 InstallMethod(LeftCongruenceClassOfElement,

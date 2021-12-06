@@ -709,9 +709,9 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CongruenceClassOfElement">
+<#GAPDoc Label="EquivalenceClassOfElement">
   <ManSection>
-    <Oper Name = "CongruenceClassOfElement" Arg = "cong, elm"/>
+    <Oper Name = "EquivalenceClassOfElement" Arg = "cong, elm"/>
     <Oper Name = "LeftCongruenceClassOfElement" Arg = "cong, elm"/>
     <Oper Name = "RightCongruenceClassOfElement" Arg = "cong, elm"/>
     <Returns>An equivalence class.</Returns>
@@ -729,7 +729,7 @@ gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
 gap> elm := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;
-gap> CongruenceClassOfElement(cong, elm);
+gap> EquivalenceClassOfElement(cong, elm);
 <congruence class of (1,(1,3,2),1)>
 ]]></Example>
   </Description>

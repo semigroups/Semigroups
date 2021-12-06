@@ -128,7 +128,7 @@ gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
-gap> class2 := CongruenceClassOfElement(cong, y);;
+gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(2,3,4),3)>
 gap> EquivalenceClassOfElement(cong, t);
@@ -257,7 +257,7 @@ gap> [x, z] in uni;
 true
 gap> Length(EquivalenceClasses(uni)) = 1;
 true
-gap> eq := CongruenceClassOfElement(uni, y);;
+gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
@@ -415,7 +415,7 @@ gap> ims := ImagesElm(cong, zero);
 [ 0 ]
 
 # ReesZeroMatCongTest5: Equivalence classes
-gap> class0 := CongruenceClassOfElement(cong, zero);
+gap> class0 := EquivalenceClassOfElement(cong, zero);
 <congruence class of 0>
 gap> class0!.nCoset;
 0
@@ -429,7 +429,7 @@ gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
-gap> class2 := CongruenceClassOfElement(cong, y);;
+gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(1,3,5),2)>
 gap> EquivalenceClassOfElement(cong, t);
@@ -552,7 +552,7 @@ gap> Length(EquivalenceClasses(uni)) = 1 and
 > or Representative(EquivalenceClasses(uni)[1]) =
 >   RMSElement(S, 1, (), 1));  # the first is after 4.7.7 the latter before
 true
-gap> eq := CongruenceClassOfElement(uni, y);
+gap> eq := EquivalenceClassOfElement(uni, y);
 <congruence class of (6,(1,3,5),1)>
 gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
@@ -654,11 +654,11 @@ gap> s := Semigroup([Transformation([1, 1, 3, 1, 3]),
 >                      Transformation([3, 1, 3, 2, 4])]);;
 gap> i := SemigroupIdeal(s, Transformation([1, 1, 1, 3, 1]));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
-gap> class := CongruenceClassOfElement(cong, Transformation([3, 3, 3, 3, 3]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([3, 3, 3, 3, 3]));;
 gap> enum := Enumerator(class);;
 gap> Size(enum);
 5
-gap> class := CongruenceClassOfElement(cong, Transformation([2, 2, 2, 1, 2]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([2, 2, 2, 1, 2]));;
 gap> enum := Enumerator(class);
 [ Transformation( [ 2, 2, 2, 1, 2 ] ) ]
 gap> Size(enum);

@@ -1083,10 +1083,10 @@ gap> [y, z] in cong;
 false
 
 # InverseCongTest4: Congruence classes
-gap> classx := CongruenceClassOfElement(cong, x);
+gap> classx := EquivalenceClassOfElement(cong, x);
 <congruence class of [4,5]>
-gap> classy := CongruenceClassOfElement(cong, y);;
-gap> classz := CongruenceClassOfElement(cong, z);;
+gap> classy := EquivalenceClassOfElement(cong, y);;
+gap> classz := EquivalenceClassOfElement(cong, z);;
 gap> classx = classy;
 false
 gap> classz = classx;

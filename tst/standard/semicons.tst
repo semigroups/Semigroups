@@ -1065,11 +1065,11 @@ gap> # this congruence separates T_4 into three sets:
 gap> # A_4;
 gap> # S_4 \ A_4;
 gap> # all transformations with size of image < 4.
-gap> c1 := CongruenceClassOfElement(c,
+gap> c1 := EquivalenceClassOfElement(c,
 >                                   Transformation([1, 2, 3, 1]));;
-gap> c2 := CongruenceClassOfElement(c,
+gap> c2 := EquivalenceClassOfElement(c,
 >                                   IdentityTransformation);;
-gap> c3 := CongruenceClassOfElement(c,
+gap> c3 := EquivalenceClassOfElement(c,
 >                                   Transformation([2, 3, 4, 1]));;
 gap> m1 := function(trans)
 >      if trans in c1 then
