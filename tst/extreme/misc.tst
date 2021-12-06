@@ -3664,7 +3664,7 @@ gap> IsGroupHClass(h);
 true
 gap> IsSubset(Set(KnownPropertiesOfObject(h)),
 > Set(["IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsGroupHClass",
->      "IsGreensClassNC", "IsGeneratorsOfEnumerableSemigroup"]));
+>      "IsGreensClassNC"]));
 true
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 

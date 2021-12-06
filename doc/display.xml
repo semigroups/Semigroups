@@ -305,8 +305,8 @@ d{pmatrix}"]]></Example>
     <Oper Name="TikzRightCayleyDigraph" Arg="S"/>
     <Returns>A string.</Returns>
     <Description>
-      If <A>S</A> is a semigroup in the representation 
-      <Ref Filt="IsEnumerableSemigroupRep"/>, then <C>TikzLeftCayleyDigraph</C>
+      If <A>S</A> is a semigroup satisfying 
+      <Ref Prop="CanComputeFroidurePin"/>, then <C>TikzLeftCayleyDigraph</C>
       is simply short for <C>TikzString(LeftCayleyDigraph(<A>S</A>))</C>.<P/>
 
       <C>TikzRightCayleyDigraph</C> can be used to produce a tikz string for
@@ -344,8 +344,8 @@ kzpicture}"]]></Log>
     <Oper Name="DotRightCayleyDigraph" Arg="S"/>
     <Returns>A string.</Returns>
     <Description>
-      If <A>S</A> is a semigroup in the representation <Ref
-        Filt="IsEnumerableSemigroupRep"/>, then <C>DotLeftCayleyDigraph</C> is
+      If <A>S</A> is a semigroup satisfying <Ref
+        Prop="CanComputeFroidurePin"/>, then <C>DotLeftCayleyDigraph</C> is
       simply short for <C>DotString(LeftCayleyDigraph(<A>S</A>))</C>.<P/>
 
       <C>DotRightCayleyDigraph</C> can be used to produce a dot string for

@@ -39,7 +39,7 @@ MappingByFunction( <bipartition monoid of size 41, degree 4 with 4 generators>
  , <transformation monoid of size 41, degree 41 with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
-# IsomorphismBipartitionSemigroup for a enumerable semigroup
+# IsomorphismBipartitionSemigroup for a CanComputeFroidurePin semigroup
 gap> S := Semigroup(
 > Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
 > Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]),

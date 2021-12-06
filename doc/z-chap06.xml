@@ -7,8 +7,8 @@
   be created in &Semigroups;, and the options that are available at the time of
   creation.
  
-  <Section Label = "Underlying algorithms and related representations">
-    <Heading>Underlying algorithms and related representations</Heading>
+  <Section Label = "Underlying algorithms">
+    <Heading>Underlying algorithms</Heading>
     Computing the Green's structure of a semigroup is fundamental to almost
     every other algorithm for semigroups.  There are two fundamental
     algorithms in the &Semigroups; package for computing the Green's structure
@@ -75,13 +75,13 @@
       extend &Semigroups; see <Ref Chap = "Extending the package"/>.-->  
     </Subsection>
 
-    <Subsection Label="Enumerable semigroups">
-      <Heading>Enumerable semigroups</Heading>
-      The second fundamental algorithm is the Froidure-Pin Algorithm <Cite Key
-        = "Froidure1997aa"/>. The &Semigroups; package contains two
-      implementations of the Froidure-Pin Algorithm: one in the 
-      &libsemigroups; C++ library and the other within the &Semigroups; package
-      kernel module.<P/>
+    <Subsection Label="FroidurePin">
+      <Heading>The Froidure-Pin Algorithm</Heading>
+      The second fundamental algorithm for computing finite semigroups is the
+      Froidure-Pin Algorithm <Cite Key = "Froidure1997aa"/>. The &Semigroups;
+      package contains two implementations of the Froidure-Pin Algorithm: one
+      in the &libsemigroups; C++ library and the other within the
+      &Semigroups; package kernel module.<P/>
       
       Both implementations outperform the
       algorithms for acting semigroups when applied to semigroups with small
@@ -91,13 +91,10 @@
       to a given semigroup; see Section 
       <Ref Sect = "Options when creating semigroups"/>.<P/>
 
-      We refer to semigroups to which the Froidure-Pin Algorithm can be
-      applied in &GAP; as <E>enumerable semigroups</E>, and such semigroups
-      should belong to the representation <Ref
-        Filt="IsEnumerableSemigroupRep"/>. Every acting semigroup in
-      &Semigroups; is an enumerable semigroup since the acting semigroup data
-      structure does not readily admit computation of certain properties or
-      attributes. 
+      A semigroup to which the Froidure-Pin Algorithm can be applied in
+      &Semigroups; satisfy <Ref Prop="CanComputeFroidurePin"/>.  Every acting
+      semigroup in &Semigroups; satisfies <Ref Prop="CanComputeFroidurePin"/>
+      and the Froidure-Pin is used to compute certain properties or attributes. 
       <P/>
 
       Currently, the &libsemigroups; implementation of the Froidure-Pin
@@ -151,18 +148,21 @@
       
       The version of the Froidure-Pin Algorithm <Cite Key =
         "Froidure1997aa"/> written in C within the &Semigroups; package
-      kernel module can be used to compute any other semigroup in &GAP; with
-      representation <Ref Filt="IsEnumerableSemigroupRep"/>. In theory, any
+      kernel module can be used to compute any other semigroup in &GAP; which 
+      satisfies <Ref Prop="CanComputeGapFroidurePin"/>. In theory, any
       finite semigroup can be computed using this algorithm. However, the
-      condition that the semigroup has representation  <Ref
-        Filt="IsEnumerableSemigroupRep"/> is imposed to avoid this method
-      being used when it is inappropriate (such as for finitely presented
-      semigroups which happen to be finite). If implementing a new type of
+      condition that the semigroup has satisfies <Ref
+        Filt="CanComputeGapFroidurePin"/> is imposed to avoid this method
+      being used when it is inappropriate. If implementing a new type of
       semigroup in &GAP;, then simply do
-<Log>InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+<Log>InstallTrueMethod(CanComputeGapFroidurePin,
                        MyNewSemigroupType);</Log> 
       to make your new semigroup type <C>MyNewSemigroupType</C> use this
-      version of the Froidure-Pin Algorithm. <P/>
+      version of the Froidure-Pin Algorithm.  To make this work efficiently it
+      is necessary that a hash function is implemented for the elements of
+      <C>MyNewSemigroupType</C>; more details will be included in a future
+      edition of this manual.
+      <P/>
 
       Mostly due to the way that &GAP; handles memory, this implementation is
       approximately 4 times slower than the implementation in
@@ -170,14 +170,12 @@
       included because it applies to a wider class of semigroups than those
       currently implemented in &libsemigroups; and it is more straightforward
       to extend the classes of semigroup to which it applies.
-      
-      From a usage perspective there is no difference between those enumerable
-      semigroups that are representable in &libsemigroups; and those that are
-      not, except that the latter has superior performance.
     </Subsection>
 
     <#Include Label = "IsActingSemigroup">
-    <#Include Label = "IsEnumerableSemigroupRep">
+    <#Include Label = "CanComputeFroidurePin">
+    <#Include Label = "CanComputeGapFroidurePin">
+    <#Include Label = "CanComputeCppFroidurePin">
   </Section>
 
   <Section Label = "Semigroups represented by generators">
@@ -314,7 +312,7 @@
 
     <Mark><C>batch_size</C></Mark>
     <Item>this component should be a positive integer. If <A>S</A> is a
-      semigroup with representation <Ref Filt="IsEnumerableSemigroupRep" />,
+      semigroup with representation <Ref Prop="CanComputeFroidurePin" />,
       then when certain computations are performed with <A>S</A> using the
       &libsemigroups; C++ library, then the computations will be executed in
       batches of size at least <C>batch_size</C>.  This value of this component

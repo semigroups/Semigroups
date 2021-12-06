@@ -15,7 +15,7 @@ gap> SEMIGROUPS.StartTest();
 
 # Test for previous issue of wrong methods apply to free bands. These tests
 # check that IsomorphismTransformationSemigroup works for free bands below and
-# above the threshold for them being IsEnumerableSemigroupRep.
+# above the threshold for them being CanComputeFroidurePin.
 gap> S := FreeBand(1);
 <free band on the generators [ x1 ]>
 gap> AsSemigroup(IsReesMatrixSemigroup, S);

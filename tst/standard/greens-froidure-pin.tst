@@ -1640,7 +1640,7 @@ Mat\<, \>[\>\>[1, 1, 0]\<, \<\>\>[1, 0, 1]\<, \<\>\>[0, 1, 1]\<\<]\<)\<\<\<\> \
 )\<,\< \>\>\>Matrix(\<\>IsBooleanMat\<, \>[\>\>[0, 1, 0]\<, \<\>\>[0, 0, 1]\<,\
  \<\>\>[1, 0, 0]\<\<]\<)\<\<)\<\<"
 
-# Test NrXClasses for an enumerable semigroup
+# Test NrXClasses for an CanComputeFroidurePin semigroup
 gap> S := RegularBooleanMatMonoid(3);;
 gap> NrLClasses(S);
 54
@@ -1651,7 +1651,7 @@ gap> NrHClasses(S);
 gap> NrDClasses(S);
 10
 
-# Test GreensLClasses for a D-class of an enumerable semigroup
+# Test GreensLClasses for a D-class of an CanComputeFroidurePin semigroup
 gap> S := RegularBooleanMatMonoid(3);;
 gap> D := DClass(S, S.3 * S.4);
 <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]])>
@@ -1666,7 +1666,7 @@ gap> GreensLClasses(D);
   <Green's L-class: Matrix(IsBooleanMat, [[1, 1, 0], [0, 1, 1], [1, 1, 1]])>, 
   <Green's L-class: Matrix(IsBooleanMat, [[0, 1, 1], [1, 0, 1], [1, 1, 1]])> ]
 
-# Test GreensXClasses for an infinite enumerable semigroup
+# Test GreensXClasses for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, 2], [-1, 0]]));;
 gap> GreensLClasses(S);
 Error, the first argument (a semigroup) must be finite,

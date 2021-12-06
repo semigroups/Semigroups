@@ -964,7 +964,7 @@ gap> S := Monoid(PartialPerm([1]));
 gap> S := Monoid(IdentityTransformation);
 <trivial transformation group of degree 0 with 1 generator>
 
-# InverseSemigroupByGenerators, enumerable semigroup rep
+# InverseSemigroupByGenerators, CanComputeFroidurePin semigroup
 gap> S := InverseSemigroup(PartialPerm([2, 1, 3]), rec(acting := false));;
 gap> S := InverseMonoid(PartialPerm([2, 1, 3]), rec(acting := false));;
 

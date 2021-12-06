@@ -41,10 +41,6 @@ DeclareRepresentation("IsCongruenceByGeneratingPairsRep",
                       IsCongruenceByGeneratingPairs,
                       ["range", "genpairs", "type", "report"]);
 
-DeclareCategory("IsEnumerableSemigroupCongruence",
-                IsCongruenceByGeneratingPairsRep,
-                RankFilter(IsSemigroupCongruence));
-
 DeclareCategory("IsFpSemigroupCongruence",
                 IsCongruenceByGeneratingPairsRep,
                 RankFilter(IsSemigroupCongruence));
@@ -68,10 +64,6 @@ DeclareRepresentation("IsCongruenceClassByGeneratingPairsRep",
                       IsEquivalenceClass and IsAttributeStoringRep and
                       IsCongruenceClassByGeneratingPairs,
                       ["rep", "cong"]);
-
-DeclareCategory("IsEnumerableSemigroupCongruenceClass",
-                IsCongruenceClassByGeneratingPairsRep,
-                RankFilter(IsCongruenceClass));
 
 DeclareCategory("IsFpSemigroupCongruenceClass",
                 IsCongruenceClassByGeneratingPairsRep,

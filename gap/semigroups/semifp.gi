@@ -42,6 +42,14 @@ InstallMethod(ElementOfFpMonoid,
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup],
 S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
 
+# TODO(later) more of these
+
+InstallMethod(Size, "for an fp semigroup with nice monomorphism",
+[IsFpSemigroup and HasNiceMonomorphism], 
+function(S)
+  return Size(Range(NiceMonomorphism(S)));
+end);
+
 InstallMethod(Size, "for an fp monoid", [IsFpMonoid],
 S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
 
@@ -91,7 +99,9 @@ InstallMethod(ExtRepOfObj, "for an element of an fp semigroup",
 InstallMethod(ExtRepOfObj, "for an element of an fp monoid",
 [IsElementOfFpMonoid], x -> ExtRepOfObj(UnderlyingElement(x)));
 
-# TODO(now) AsSSortedList, RightCayleyDigraph, any more?
+# TODO(later) AsSSortedList, RightCayleyDigraph, any more?
+# - for both IsFpSemigroup/Monoid and IsFpSemigroup/Monoid +
+# HasNiceMonomorphism
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
@@ -242,11 +252,13 @@ function(filt, S)
 end);
 
 # same method for ideals
+# We do not add CanComputeFroidurePin to the filters below because FpSemigroups
+# only satisfy this if they are finite and they know it. 
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
 [IsSemigroup], 3,
 function(S)
-  local rules, F, A, rels, Q, B, map, inv;
+  local rules, F, A, rels, Q, B, map, inv, result;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -263,11 +275,16 @@ function(S)
 
   map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
-
-  return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
+  result := MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
+  SetNiceMonomorphism(Q, InverseGeneralMapping(result));
+  return result;
 end);
 
+
 # same method for ideals
+
+# We do not add CanComputeFroidurePin to the filters below because FpSemigroups
+# only satisfy this if they are finite and they know it. 
 
 InstallMethod(IsomorphismFpMonoid, "for a semigroup",
 [IsSemigroup], 8,

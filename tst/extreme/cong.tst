@@ -39,12 +39,10 @@ true
 false
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a relation): usage,
-the first arg <pair> must be a list of length 2,
+Error, the 1st argument (a list) does not have length 2
 gap> [x, Transformation([1])] in cong;
-Error, Semigroups: \in (for a relation): usage,
-elements of the first arg <pair> must be
-in the range of the second arg <cong>,
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a right semigroup congruence)
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
@@ -140,11 +138,9 @@ gap> classes := Set(CongruenceClasses(v));
 gap> ForAny(CongruenceClasses(u), x -> x in classes);
 false
 gap> classes[1] * CongruenceClasses(u)[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> CongruenceClasses(u)[1] * classes[1];
-Error, Semigroups: \*: usage,
-the args must be classes of the same congruence,
+Error, the arguments are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
@@ -172,8 +168,8 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
 gap> S := Semigroup([
 > Transformation([1, 4, 3, 1, 4, 2]), Transformation([1, 6, 6, 3, 6, 6])]);;
 gap> l := LatticeOfCongruences(S);
-<poset of 5 congruences over <transformation semigroup of size 48, degree 6 
- with 2 generators>>
+<poset of 5 congruences over <non-regular transformation semigroup 
+ of size 48, degree 6 with 2 generators>>
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
 [ [ 2 ], [ 4 ], [ 5 ], [ 3 ], [  ] ]
 gap> S := Semigroup([

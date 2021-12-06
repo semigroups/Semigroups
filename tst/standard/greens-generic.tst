@@ -1312,7 +1312,7 @@ gap> NrLClasses(D);
 gap> NrRClasses(D);
 6
 
-# Test NrXClasses for a non-enumerable semigroup
+# Test NrXClasses for a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> CanComputeFroidurePin(S);
 false
@@ -1325,7 +1325,7 @@ gap> NrRClasses(S);
 gap> NrHClasses(S);
 1
 
-# Test NrXClassReps for a non-enumerable semigroup
+# Test NrXClassReps for a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> CanComputeFroidurePin(S);
 false
@@ -1338,7 +1338,7 @@ gap> LClassReps(S);
 gap> HClassReps(S);
 [ <universal fake one> ]
 
-# Test NrXClassReps for a D-class of a non-enumerable semigroup
+# Test NrXClassReps for a D-class of a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> CanComputeFroidurePin(S);
 false
@@ -1354,7 +1354,7 @@ gap> NrIdempotents(D);
 gap> Idempotents(D);
 [ <universal fake one> ]
 
-# Test IteratorOfXClasses for a non-enumerable semigroup
+# Test IteratorOfXClasses for a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> CanComputeFroidurePin(S);
 false
@@ -1377,7 +1377,7 @@ gap> NextIterator(iter);
 gap> IsDoneIterator(iter);
 true
 
-# Test GreensXClassOfElementNC for a non-enumerable semigroup
+# Test GreensXClassOfElementNC for a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> IsFinite(S);
 true
@@ -1392,7 +1392,7 @@ gap> GreensDClassOfElementNC(S, S.1);
 gap> GreensHClassOfElementNC(S, S.1);
 <Green's H-class: <object>>
 
-# Test XClassOfYClass for a non-enumerable semigroup
+# Test XClassOfYClass for a non-CanComputeFroidurePin semigroup
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> IsFinite(S);
 true
@@ -1407,7 +1407,8 @@ gap> RClassOfHClass(GreensHClassOfElementNC(S, S.1));
 gap> LClassOfHClass(GreensHClassOfElementNC(S, S.1));
 <Green's L-class: <object>>
 
-# Test PartialOrderOfDClasses for a finite non-enumerable, non-acting semigroup
+# Test PartialOrderOfDClasses for a finite non-CanComputeFroidurePin,
+# non-acting semigroup
 gap> S := SemigroupByMultiplicationTable([[1, 1, 1, 1, 1], 
 >                                         [1, 1, 1, 1, 1], 
 >                                         [1, 1, 1, 1, 2], 

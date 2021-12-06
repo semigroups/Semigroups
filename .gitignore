@@ -62,7 +62,7 @@ doc/manual.pdf
 doc/manual.six
 gh-pages
 lcov*
-libsemigroups/
+./libsemigroups/
 libtool
 libtool.m4
 ltmain.sh

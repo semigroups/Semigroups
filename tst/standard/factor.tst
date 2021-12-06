@@ -247,13 +247,14 @@ gap> NonTrivialFactorization(S, S.1 ^ 2);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `NonTrivialFactorization' on 2 arguments
 
-# factor: NonTrivialFactorization, for an enumerable semigroup, error, 1
+# factor: NonTrivialFactorization, for an CanComputeFroidurePin semigroup,
+# error, 1
 gap> S := FullPBRMonoid(1);;
 gap> NonTrivialFactorization(S, EmptyPartialPerm());
 Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
 p)
 
-# factor: NonTrivialFactorization, for an enumerable semigroup, 1
+# factor: NonTrivialFactorization, for an CanComputeFroidurePin semigroup, 1
 
 # Monogenic semigroup as a non-acting partial perm semigroup
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 3, 2);;
@@ -280,14 +281,14 @@ fail
 gap> NonTrivialFactorization(S, S.1 ^ 2);
 [ 1, 1 ]
 
-# factor: NonTrivialFactorization, for an enumerable semigroup, 2
+# factor: NonTrivialFactorization, for an CanComputeFroidurePin semigroup, 2
 gap> S := FullPBRMonoid(1);;
 gap> Factorization(S, EmptyPBR(1));
 [ 1, 3 ]
 gap> NonTrivialFactorization(S, EmptyPBR(1));
 [ 1, 3 ]
 
-# factor: NonTrivialFactorization, for an enumerable semigroup, 3
+# factor: NonTrivialFactorization, for an CanComputeFroidurePin semigroup, 3
 gap> gens := [
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]),
 >  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 1, 0]]),
@@ -508,7 +509,8 @@ gap> y := Filtered([1 .. 4], i -> x[i] <> fail);
 gap> ForAll(y, i -> EvaluateWord(gens, x[i]) = gens[i]);
 true
 
-# factor: NonTrivialFactorization, for enumerable and acting semigroups, 1
+# factor: NonTrivialFactorization, for CanComputeFroidurePin and acting
+# semigroups, 1
 gap> gens := [
 >  PBR([[1, 2], [-2, 1, 2]], [[-1, 1, 2], [-2, 1, 2]]),
 >  PBR([[1], []], [[-2, -1, 2], [-1]]),

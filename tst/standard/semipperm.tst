@@ -2121,7 +2121,8 @@ gap> S := Semigroup([
 gap> NaturalLeqInverseSemigroup(S);
 Error, the argument is not an inverse semigroup
 
-# Test SmallerDegreePartialPermRepresentation for enumerable semigroup
+# Test SmallerDegreePartialPermRepresentation for CanComputeFroidurePin
+# semigroup
 gap> S := Range(VagnerPrestonRepresentation(DualSymmetricInverseMonoid(3)));;
 gap> S := Semigroup(S, rec(acting := false));
 <partial perm monoid of rank 25 with 3 generators>

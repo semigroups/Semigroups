@@ -403,7 +403,7 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> PositionSorted(S, S.1);
 Error, the first argument (a semigroup) must be finite,
 
-# Left/RightCayleyDigraph, for an infinite enumerable semigroup
+# Left/RightCayleyDigraph, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> RightCayleyDigraph(S);
 Error, the first argument (a semigroup) must be finite,
@@ -431,12 +431,12 @@ gap> RightCayleyGraphSemigroup(S);
   [ 22, 26, 26, 22 ], [ 23, 11, 25, 22 ], [ 24, 18, 17, 22 ], 
   [ 25, 24, 23, 11 ], [ 26, 27, 22, 26 ], [ 27, 22, 27, 22 ] ]
 
-# AsSet, for an infinite enumerable semigroup
+# AsSet, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> AsSet(S);
 Error, the first argument (a semigroup) must be finite,
 
-# Size, for an infinite enumerable semigroup
+# Size, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> Size(S);
 infinity

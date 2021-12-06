@@ -723,7 +723,7 @@ true
 gap> foo(z, z);
 false
 
-# Test IsGreensDGreaterThanFunc for an infinite enumerable semigroup
+# Test IsGreensDGreaterThanFunc for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup([Matrix(IsMaxPlusMatrix,
 >                           [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 >                    Matrix(IsMaxPlusMatrix,
