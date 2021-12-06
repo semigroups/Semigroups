@@ -1407,8 +1407,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsSimpleSemigroup, "for a finite inverse semigroup",
-[IsInverseSemigroup and IsFinite],
-IsGroupAsSemigroup);
+[IsInverseSemigroup and IsFinite], IsGroupAsSemigroup);
 
 # different method for ideals
 
@@ -1505,8 +1504,7 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsZeroGroup, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IsZeroGroup, "for a semigroup", [IsSemigroup],
 function(S)
 
   if HasParent(S) and HasIsZeroGroup(Parent(S)) and IsZeroGroup(Parent(S)) then
@@ -1529,14 +1527,12 @@ end);
 InstallMethod(IsZeroRectangularBand, "for a semigroup",
 [IsSemigroup],
 function(S)
-
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsZeroSimpleSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not 0-simple");
     return false;
   fi;
-
   return IsHTrivial(S);
 end);
 

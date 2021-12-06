@@ -67,11 +67,17 @@
       Congruence classes
     </Heading>
 
+    The main operations and functions for a congruence are:
+    <List>
+      <Item>
+        <Ref Attr="EquivalenceClasses" BookName="ref"/>
+      </Item>
+    </List>
+    
     <#Include Label = "IsCongruenceClass">
     <#Include Label = "IsLeftCongruenceClass">
     <#Include Label = "IsRightCongruenceClass">
     <#Include Label = "EquivalenceClassOfElement">
-    <#Include Label = "EquivalenceClasses">
     <#Include Label = "NonTrivialEquivalenceClasses">
     <#Include Label = "NonTrivialCongruenceClasses">
     <#Include Label = "NrEquivalenceClasses">

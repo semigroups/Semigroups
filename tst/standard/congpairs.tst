@@ -209,7 +209,7 @@ gap> NonTrivialEquivalenceClasses(cong);
   <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
   <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
   <left congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
-gap> LeftCongruenceClasses(cong);
+gap> EquivalenceClasses(cong);
 [ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
   <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
   <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
