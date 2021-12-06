@@ -71,7 +71,7 @@
     <#Include Label = "IsLeftCongruenceClass">
     <#Include Label = "IsRightCongruenceClass">
     <#Include Label = "CongruenceClassOfElement">
-    <#Include Label = "CongruenceClasses">
+    <#Include Label = "EquivalenceClasses">
     <#Include Label = "NonTrivialEquivalenceClasses">
     <#Include Label = "NonTrivialCongruenceClasses">
     <#Include Label = "NrEquivalenceClasses">

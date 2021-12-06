@@ -94,17 +94,17 @@ gap> HasGeneratingPairsOfMagmaCongruence(v);
 true
 gap> Size(GeneratingPairsOfSemigroupCongruence(v));
 0
-gap> classes := Set(CongruenceClasses(v));
+gap> classes := Set(EquivalenceClasses(v));
 [ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
   <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
   <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
   <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
   <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
-gap> CongruenceClasses(u)[1] in classes;
+gap> EquivalenceClasses(u)[1] in classes;
 false
-gap> classes[1] * CongruenceClasses(u)[1];
+gap> classes[1] * EquivalenceClasses(u)[1];
 Error, the arguments are not classes of the same congruence
-gap> CongruenceClasses(u)[1] * classes[1];
+gap> EquivalenceClasses(u)[1] * classes[1];
 Error, the arguments are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
@@ -155,7 +155,7 @@ gap> EquivalenceRelationCanonicalLookup(cong);
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialCongruenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
-gap> classes := CongruenceClasses(cong);
+gap> classes := EquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
   <congruence class of Transformation( [ 1, 3, 4, 1, 3 ] )> ]
 gap> ImagesElm(cong, Transformation([1, 3, 4, 1, 3]));

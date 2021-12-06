@@ -61,5 +61,5 @@ InstallMethod(Size, "for a quotient semigroup",
 function(q)
   local cong;
   cong := QuotientSemigroupCongruence(q);
-  return NrCongruenceClasses(cong);
+  return NrEquivalenceClasses(cong);
 end);

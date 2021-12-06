@@ -304,10 +304,10 @@ gap> S := Semigroup(
 gap> pair := [Transformation([2, 3, 4, 2]), Transformation([4, 4, 4, 4])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> class := CongruenceClassOfElement(cong, Transformation([4, 4, 4, 4]));;
-gap> class * CongruenceClasses(cong);
+gap> class * EquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 4, 4, 4, 4 ] )>, 
   <congruence class of Transformation( [ 2, 2, 2, 2 ] )> ]
-gap> CongruenceClasses(cong) * class;
+gap> EquivalenceClasses(cong) * class;
 [ <congruence class of Transformation( [ 4, 4, 4, 4 ] )>, 
   <congruence class of Transformation( [ 4, 4, 4, 4 ] )> ]
 

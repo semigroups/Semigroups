@@ -124,7 +124,7 @@ Error, the 2nd argument (an element of a Rees matrix semigroup) does not belon\
 g to the range of the 1st argument (a congruence)
 
 # ReesMatCongTest5: Equivalence classes
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
@@ -255,7 +255,7 @@ gap> uni := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <Rees matrix semigroup 2x3 over S4>>
 gap> [x, z] in uni;
 true
-gap> Length(CongruenceClasses(uni)) = 1;
+gap> Length(EquivalenceClasses(uni)) = 1;
 true
 gap> eq := CongruenceClassOfElement(uni, y);;
 gap> z in eq;
@@ -425,7 +425,7 @@ gap> Size(class0);
 1
 gap> CanonicalRepresentative(class0);
 0
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
@@ -547,9 +547,9 @@ Error, the ranges of the arguments (congruences) do not coincide
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> [x, z] in uni;
 true
-gap> Length(CongruenceClasses(uni)) = 1 and
->   (Representative(CongruenceClasses(uni)[1]) = RMSElement(S, 1, (1, 4, 5), 3)
-> or Representative(CongruenceClasses(uni)[1]) =
+gap> Length(EquivalenceClasses(uni)) = 1 and
+>   (Representative(EquivalenceClasses(uni)[1]) = RMSElement(S, 1, (1, 4, 5), 3)
+> or Representative(EquivalenceClasses(uni)[1]) =
 >   RMSElement(S, 1, (), 1));  # the first is after 4.7.7 the latter before
 true
 gap> eq := CongruenceClassOfElement(uni, y);

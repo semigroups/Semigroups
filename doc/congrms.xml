@@ -70,7 +70,7 @@ gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
 gap> rowBlocks := [[1], [2], [3]];;
 gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> IsRZMSCongruenceClassByLinkedTriple(classes[1]);
 true]]></Example>
     </Description>
@@ -198,7 +198,7 @@ true]]></Example>
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
-gap> class := CongruenceClasses(cong)[3];;
+gap> class := EquivalenceClasses(cong)[3];;
 gap> CanonicalRepresentative(class);
 (1,(1,2,3),2)]]></Example>
     </Description>

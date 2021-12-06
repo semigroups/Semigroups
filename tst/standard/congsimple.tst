@@ -112,7 +112,7 @@ gap> cong := SemigroupCongruence(S,
 >   Transformation([2, 1, 2, 1, 2])],
 >  [Transformation([2, 1, 1, 2, 2]),
 >   Transformation([1, 2, 2, 1, 2])]]);;
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));

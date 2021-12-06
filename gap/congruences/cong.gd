@@ -97,7 +97,6 @@ DeclareOperation("OnRightCongruenceClasses",
                  [IsRightCongruenceClass, IsMultiplicativeElement]);
 
 # Helper functions to EquivalenceClasses for specific categories
-DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
 DeclareOperation("LeftCongruenceClasses", [IsLeftSemigroupCongruence]);
 DeclareOperation("RightCongruenceClasses", [IsRightSemigroupCongruence]);
 

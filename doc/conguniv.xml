@@ -48,7 +48,7 @@ true]]></Example>
       <Example><![CDATA[
 gap> S := Semigroup([Transformation([3, 2, 3])]);;
 gap> U := UniversalSemigroupCongruence(S);;
-gap> classes := CongruenceClasses(U);;
+gap> classes := EquivalenceClasses(U);;
 gap> IsUniversalSemigroupCongruenceClass(classes[1]);
 true]]></Example>
     </Description>

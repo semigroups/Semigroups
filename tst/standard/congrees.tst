@@ -55,7 +55,7 @@ gap> I := SemigroupIdeal(S, [Transformation([3, 1, 1, 4, 4]),
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> NrCongruenceClasses(cong);
 19
-gap> cc := Set(CongruenceClasses(cong));;
+gap> cc := Set(EquivalenceClasses(cong));;
 gap> Size(cc);
 19
 gap> List(cc, Size);

@@ -736,9 +736,9 @@ gap> CongruenceClassOfElement(cong, elm);
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CongruenceClasses">
+<#GAPDoc Label="EquivalenceClasses">
   <ManSection>
-    <Oper Name = "CongruenceClasses" Arg = "cong"/>
+    <Oper Name = "EquivalenceClasses" Arg = "cong"/>
     <Oper Name = "LeftCongruenceClasses" Arg = "cong"/>
     <Oper Name = "RightCongruenceClasses" Arg = "cong"/>
     <Returns>A list of equivalence classes.</Returns>
@@ -756,7 +756,7 @@ gap> S := Monoid([
 >  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
-gap> classes := CongruenceClasses(cong);;
+gap> classes := EquivalenceClasses(cong);;
 gap> Set(classes);
 [ <congruence class of Transformation( [ 3, 3, 3 ] )>, 
   <congruence class of Transformation( [ 2, 1, 2 ] )>, 
