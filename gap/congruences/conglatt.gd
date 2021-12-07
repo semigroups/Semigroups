@@ -52,3 +52,29 @@ DeclareAttribute("MinimalCongruences", IsListOrCollection);
 DeclareAttribute("MinimalCongruences", IsCongruencePoset);
 
 DeclareAttribute("Size", IsCongruencePoset);
+
+DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareOperation("MinimalCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("MinimalLeftCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("MinimalRightCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+
+DeclareAttribute("PrincipalCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("PrincipalLeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("PrincipalRightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareOperation("PrincipalCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("PrincipalRightCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);

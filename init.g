@@ -50,7 +50,6 @@ ReadPackage("semigroups", "gap/elements/trans.gd");
 ReadPackage("semigroups", "gap/elements/elements.gd");
 ReadPackage("semigroups", "gap/elements/pperm.gd");
 
-ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 
@@ -110,14 +109,16 @@ ReadPackage("semigroups", "gap/attributes/maximal.gd");
 ReadPackage("semigroups", "gap/attributes/normalizer.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
 
+ReadPackage("semigroups", "gap/congruences/cong.gd");
 ReadPackage("semigroups", "gap/congruences/congpairs.gd");
 ReadPackage("semigroups", "gap/congruences/congrms.gd");
 ReadPackage("semigroups", "gap/congruences/conguniv.gd");
 ReadPackage("semigroups", "gap/congruences/conginv.gd");
 ReadPackage("semigroups", "gap/congruences/congsimple.gd");
 ReadPackage("semigroups", "gap/congruences/congrees.gd");
-ReadPackage("semigroups", "gap/congruences/cong.gd");
 ReadPackage("semigroups", "gap/congruences/conglatt.gd");
+
+ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
 
 ReadPackage("semigroups", "gap/fp/freeinverse.gd");
 ReadPackage("semigroups", "gap/fp/freeband.gd");

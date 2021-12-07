@@ -10,9 +10,20 @@
 ## This file contains functions for any semigroup congruence with generating
 ## pairs.
 
-# DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-#                 [IsSemigroupCongruence]);
 
+DeclareAttribute("GeneratingPairsOfAnyCongruence", IsAnyCongruenceCategory);
+
+DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
+               GeneratingPairsOfLeftMagmaCongruence);
+DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
+               GeneratingPairsOfRightMagmaCongruence);
+
+DeclareCategory("IsCongruenceByGeneratingPairs",
+                IsEquivalenceRelation, RankFilter(IsSemigroupCongruence));
+
+# 
+# FIXME(now) remove this representation completely, I don't think it's required
+# any longer
 # This is a representation for left/right/two-sided congruences of a finite
 # semigroup by generating pairs.
 #
@@ -32,10 +43,6 @@
 #
 #   report:   should be true or false, sets whether information is printed
 #             during a computation or not.
-
-DeclareCategory("IsCongruenceByGeneratingPairs",
-                IsEquivalenceRelation, RankFilter(IsSemigroupCongruence));
-
 DeclareRepresentation("IsCongruenceByGeneratingPairsRep",
                       IsEquivalenceRelation and IsAttributeStoringRep and
                       IsCongruenceByGeneratingPairs,

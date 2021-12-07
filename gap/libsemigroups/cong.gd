@@ -8,26 +8,6 @@
 #############################################################################
 ##
 
-#TODO(now) move everything from here
-
-DeclareCategory("IsAnyCongruenceCategory", IsEquivalenceRelation);
-DeclareCategory("IsCongruenceCategory",
-                IsAnyCongruenceCategory and IsSemigroupCongruence and
-                IsMagmaCongruence);
-DeclareCategory("IsLeftCongruenceCategory",
-                IsAnyCongruenceCategory and IsLeftSemigroupCongruence and
-                IsLeftMagmaCongruence);
-DeclareCategory("IsRightCongruenceCategory",
-                IsAnyCongruenceCategory and IsRightSemigroupCongruence and
-                IsRightMagmaCongruence);
-DeclareAttribute("Kind", IsAnyCongruenceCategory);
-DeclareAttribute("GeneratingPairs", IsAnyCongruenceCategory);
-DeclareCategory("IsAnyCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep);
-DeclareAttribute("EquivalenceRelationPartitionWithSingletons",
-                 IsAnyCongruenceCategory);
-# to here into cong.gd
-
 DeclareCategory("CanComputeCppCongruence", IsAnyCongruenceCategory);
 
 DeclareGlobalFunction("CppCongruence");

@@ -10,36 +10,25 @@
 
 # TODO: A method for MeetXSemigroupCongruences
 
-InstallMethod(GeneratingPairs,
-"for a 2-sided congruence with known generating pairs",
-[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
-GeneratingPairsOfSemigroupCongruence);
 
-InstallMethod(GeneratingPairs,
-"for a left congruence with known generating pairs",
-[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
-GeneratingPairsOfLeftSemigroupCongruence);
-
-InstallMethod(GeneratingPairs,
-"for a right congruence with known generating pairs",
-[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
-GeneratingPairsOfRightSemigroupCongruence);
-
-InstallMethod(Kind,
+# TODO move to cong.gi . . . . . . HERE
+InstallMethod(AnyCongruenceKind,
 "for a congruence with CanComputeCppCongruence",
 [IsCongruenceCategory and CanComputeCppCongruence],
 C -> "twosided");
 
-InstallMethod(Kind,
+InstallMethod(AnyCongruenceKind,
 "for a left congruence with CanComputeCppCongruence",
 [IsLeftCongruenceCategory and CanComputeCppCongruence],
 C -> "left");
 
-InstallMethod(Kind,
+InstallMethod(AnyCongruenceKind,
 "for a right congruence with CanComputeCppCongruence",
 [IsRightCongruenceCategory and CanComputeCppCongruence],
 C -> "right");
+#  . . . . . . TO HERE
 
+# TODO move to cong-pairs.gi . . . . . . HERE
 BindGlobal("_SemigroupCongruenceByGeneratingPairs",
 function(S, pairs, filt, SetGeneratingPairs)
   local fam, C, pair;
@@ -92,6 +81,7 @@ InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
    pairs,
    IsRightCongruenceCategory,
    SetGeneratingPairsOfRightMagmaCongruence));
+#  . . . . . . TO HERE
 
 ###########################################################################
 ## Methods using the libsemigroups object directly
@@ -154,16 +144,16 @@ function(C)
 
   S  := Range(C);
   if CanComputeCppFroidurePin(S) then
-    CC := CppCongruenceConstructor(S)([Kind(C), CppFroidurePin(S)]);
+    CC := CppCongruenceConstructor(S)([AnyCongruenceKind(C), CppFroidurePin(S)]);
     factor := MinimalFactorization;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    CC := libsemigroups.Congruence.make_from_fpsemigroup([Kind(C),
+    CC := libsemigroups.Congruence.make_from_fpsemigroup([AnyCongruenceKind(C),
                                                        CppFpSemigroup(S)]);
     factor := Factorization;
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.make([Kind(C)]);
+    tc := libsemigroups.ToddCoxeter.make([AnyCongruenceKind(C)]);
     libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
     if IsLeftCongruenceCategory(C) then
       table := LeftCayleyGraphSemigroup(Range(C)) - 1;
@@ -171,7 +161,7 @@ function(C)
       table := RightCayleyGraphSemigroup(Range(C)) - 1;
     fi;
     libsemigroups.ToddCoxeter.prefill(tc, table);
-    CC := libsemigroups.Congruence.make_from_table([Kind(C), "none"]);
+    CC := libsemigroups.Congruence.make_from_table([AnyCongruenceKind(C), "none"]);
     libsemigroups.Congruence.set_number_of_generators(CC, N);
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
@@ -180,7 +170,7 @@ function(C)
           "been able to reach here!");
   fi;
   add_pair := libsemigroups.Congruence.add_pair;
-  for pair in GeneratingPairs(C) do
+  for pair in GeneratingPairsOfAnyCongruence(C) do
     add_pair(CC, factor(S, pair[1]) - 1, factor(S, pair[2]) - 1);
   od;
   C!.CppCongruence := CC;
@@ -301,10 +291,10 @@ InstallMethod(\=,
 "for two congruence with CanComputeCppCongruence",
 [CanComputeCppCongruence, CanComputeCppCongruence],
 function(c1, c2)
-  if Kind(c1) = Kind(c2) then
+  if AnyCongruenceKind(c1) = AnyCongruenceKind(c2) then
     return Range(c1) = Range(c2)
-           and ForAll(GeneratingPairs(c1), pair -> pair in c2)
-           and ForAll(GeneratingPairs(c2), pair -> pair in c1);
+           and ForAll(GeneratingPairsOfAnyCongruence(c1), pair -> pair in c2)
+           and ForAll(GeneratingPairsOfAnyCongruence(c2), pair -> pair in c1);
   fi;
   TryNextMethod();
 end);
@@ -416,7 +406,7 @@ InstallMethod(IsSubrelation,
 [CanComputeCppCongruence, CanComputeCppCongruence],
 function(cong1, cong2)
   # Only valid for certain combinations of types
-  if Kind(cong1) <> Kind(cong2) and Kind(cong1) <> "twosided" then
+  if AnyCongruenceKind(cong1) <> AnyCongruenceKind(cong2) and AnyCongruenceKind(cong1) <> "twosided" then
     TryNextMethod();
   elif Range(cong1) <> Range(cong2) then
     Error("the 1st and 2nd arguments are congruences over different",
@@ -424,7 +414,7 @@ function(cong1, cong2)
   fi;
 
   # Test whether cong1 contains all the pairs in cong2
-  return ForAll(GeneratingPairs(cong2),
+  return ForAll(GeneratingPairsOfAnyCongruence(cong2),
                 pair -> CongruenceTestMembershipNC(cong1, pair[1], pair[2]));
 end);
 
@@ -465,8 +455,8 @@ function(constructor, c1, c2)
   elif c1 = c2 then
     return c1;
   fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairs(c1)),
-                         ShallowCopy(GeneratingPairs(c2)));
+  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(c1)),
+                         ShallowCopy(GeneratingPairsOfAnyCongruence(c2)));
   return constructor(Range(c1), pairs);
 end);
 

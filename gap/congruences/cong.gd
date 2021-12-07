@@ -25,6 +25,31 @@
 # - ImagesElm (implemented in conginv.gi)
 
 ########################################################################
+# Categories
+# 
+# IsLeft/Right/SemigroupCongruence is a property, and so we introduce a
+# category for each type of congruence. Many operations are agnostic to the
+# "handedness" of the congruence, and so we also introduce the category
+# IsAnyCongruenceCategory (meaning a left, right or 2-sided congruence). 
+#
+########################################################################
+
+DeclareCategory("IsAnyCongruenceCategory", IsEquivalenceRelation);
+DeclareCategory("IsCongruenceCategory",
+                IsAnyCongruenceCategory and IsSemigroupCongruence and
+                IsMagmaCongruence);
+DeclareCategory("IsLeftCongruenceCategory",
+                IsAnyCongruenceCategory and IsLeftSemigroupCongruence and
+                IsLeftMagmaCongruence);
+DeclareCategory("IsRightCongruenceCategory",
+                IsAnyCongruenceCategory and IsRightSemigroupCongruence and
+                IsRightMagmaCongruence);
+
+DeclareAttribute("AnyCongruenceKind", IsAnyCongruenceCategory);
+DeclareCategory("IsAnyCongruenceClass",
+                IsEquivalenceClass and IsAttributeStoringRep);
+
+########################################################################
 # Congruences
 ########################################################################
 
@@ -51,13 +76,8 @@ DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 DeclareAttribute("EquivalenceRelationCanonicalPartition",
                  IsEquivalenceRelation);
-
-# TODO(now): shouldn't the below be in congpairs.gd
-
-DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
-               GeneratingPairsOfLeftMagmaCongruence);
-DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
-               GeneratingPairsOfRightMagmaCongruence);
+DeclareAttribute("EquivalenceRelationPartitionWithSingletons",
+                 IsEquivalenceRelation);
 
 # No-checks version of the "\in" operation
 DeclareOperation("CongruenceTestMembershipNC", [IsEquivalenceRelation,
@@ -96,28 +116,3 @@ DeclareOperation("OnRightCongruenceClasses",
 # Congruence lattices and related
 ########################################################################
 
-DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareOperation("MinimalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("MinimalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("MinimalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-
-DeclareAttribute("PrincipalCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("PrincipalLeftCongruencesOfSemigroup", IsSemigroup);
-DeclareAttribute("PrincipalRightCongruencesOfSemigroup", IsSemigroup);
-
-DeclareOperation("PrincipalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("PrincipalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);

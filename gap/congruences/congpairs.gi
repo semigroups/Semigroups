@@ -7,11 +7,23 @@
 ##
 #############################################################################
 ##
-## This file contains functions for any congruence of a semigroup with
-## HasGeneratingPairsOfMagmaCongruence
-## or HasGeneratingPairsOfRightMagmaCongruence
-## or HasGeneratingPairsOfLeftMagmaCongruence
+## This file contains functions for any congruence of a semigroup with TODO
 #############################################################################
+
+InstallMethod(GeneratingPairsOfAnyCongruence,
+"for a 2-sided congruence with known generating pairs",
+[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
+GeneratingPairsOfSemigroupCongruence);
+
+InstallMethod(GeneratingPairsOfAnyCongruence,
+"for a left congruence with known generating pairs",
+[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
+GeneratingPairsOfLeftSemigroupCongruence);
+
+InstallMethod(GeneratingPairsOfAnyCongruence,
+"for a right congruence with known generating pairs",
+[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
+GeneratingPairsOfRightSemigroupCongruence);
 
 #############################################################################
 # Properties of congruences
