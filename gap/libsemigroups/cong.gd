@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareAttribute("AnyCongruenceKindString", IsAnyCongruenceCategory);
+
 DeclareCategory("CanComputeCppCongruence", IsAnyCongruenceCategory);
 
 DeclareGlobalFunction("CppCongruence");

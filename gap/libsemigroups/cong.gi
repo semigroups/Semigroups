@@ -11,18 +11,19 @@
 # TODO: A method for MeetXSemigroupCongruences
 
 
-# TODO move to cong.gi . . . . . . HERE
-InstallMethod(AnyCongruenceKind,
+# TODO move to cong.gi + change to returning the actual type
+# IsCongruenceCategory etc . . . . . . HERE
+InstallMethod(AnyCongruenceKindString,
 "for a congruence with CanComputeCppCongruence",
 [IsCongruenceCategory and CanComputeCppCongruence],
 C -> "twosided");
 
-InstallMethod(AnyCongruenceKind,
+InstallMethod(AnyCongruenceKindString,
 "for a left congruence with CanComputeCppCongruence",
 [IsLeftCongruenceCategory and CanComputeCppCongruence],
 C -> "left");
 
-InstallMethod(AnyCongruenceKind,
+InstallMethod(AnyCongruenceKindString,
 "for a right congruence with CanComputeCppCongruence",
 [IsRightCongruenceCategory and CanComputeCppCongruence],
 C -> "right");
@@ -144,16 +145,16 @@ function(C)
 
   S  := Range(C);
   if CanComputeCppFroidurePin(S) then
-    CC := CppCongruenceConstructor(S)([AnyCongruenceKind(C), CppFroidurePin(S)]);
+    CC := CppCongruenceConstructor(S)([AnyCongruenceKindString(C), CppFroidurePin(S)]);
     factor := MinimalFactorization;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    CC := libsemigroups.Congruence.make_from_fpsemigroup([AnyCongruenceKind(C),
+    CC := libsemigroups.Congruence.make_from_fpsemigroup([AnyCongruenceKindString(C),
                                                        CppFpSemigroup(S)]);
     factor := Factorization;
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.make([AnyCongruenceKind(C)]);
+    tc := libsemigroups.ToddCoxeter.make([AnyCongruenceKindString(C)]);
     libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
     if IsLeftCongruenceCategory(C) then
       table := LeftCayleyGraphSemigroup(Range(C)) - 1;
@@ -161,7 +162,7 @@ function(C)
       table := RightCayleyGraphSemigroup(Range(C)) - 1;
     fi;
     libsemigroups.ToddCoxeter.prefill(tc, table);
-    CC := libsemigroups.Congruence.make_from_table([AnyCongruenceKind(C), "none"]);
+    CC := libsemigroups.Congruence.make_from_table([AnyCongruenceKindString(C), "none"]);
     libsemigroups.Congruence.set_number_of_generators(CC, N);
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
@@ -291,7 +292,7 @@ InstallMethod(\=,
 "for two congruence with CanComputeCppCongruence",
 [CanComputeCppCongruence, CanComputeCppCongruence],
 function(c1, c2)
-  if AnyCongruenceKind(c1) = AnyCongruenceKind(c2) then
+  if AnyCongruenceKindString(c1) = AnyCongruenceKindString(c2) then
     return Range(c1) = Range(c2)
            and ForAll(GeneratingPairsOfAnyCongruence(c1), pair -> pair in c2)
            and ForAll(GeneratingPairsOfAnyCongruence(c2), pair -> pair in c1);
@@ -406,7 +407,7 @@ InstallMethod(IsSubrelation,
 [CanComputeCppCongruence, CanComputeCppCongruence],
 function(cong1, cong2)
   # Only valid for certain combinations of types
-  if AnyCongruenceKind(cong1) <> AnyCongruenceKind(cong2) and AnyCongruenceKind(cong1) <> "twosided" then
+  if AnyCongruenceKindString(cong1) <> AnyCongruenceKindString(cong2) and AnyCongruenceKindString(cong1) <> "twosided" then
     TryNextMethod();
   elif Range(cong1) <> Range(cong2) then
     Error("the 1st and 2nd arguments are congruences over different",

@@ -111,8 +111,3 @@ DeclareOperation("OnLeftCongruenceClasses",
                  [IsLeftCongruenceClass, IsMultiplicativeElement]);
 DeclareOperation("OnRightCongruenceClasses",
                  [IsRightCongruenceClass, IsMultiplicativeElement]);
-
-########################################################################
-# Congruence lattices and related
-########################################################################
-
