@@ -45,7 +45,7 @@ DeclareCategory("IsRightCongruenceCategory",
                 IsAnyCongruenceCategory and IsRightSemigroupCongruence and
                 IsRightMagmaCongruence);
 
-DeclareAttribute("AnyCongruenceKind", IsAnyCongruenceCategory);
+DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
 

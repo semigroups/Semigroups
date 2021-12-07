@@ -844,6 +844,7 @@ end);
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
 [IsIntegerMatrixSemigroup],
+3, # to beat the method for semigroups with CanComputeCppFroidurePin
 function(S)
   local gens, ET, mat, row, val;
 
