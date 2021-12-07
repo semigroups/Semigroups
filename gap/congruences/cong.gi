@@ -352,6 +352,9 @@ function(class1, class2)
                                      Representative(class2));
 end);
 
+# FIXME why isn't there a method of IsLeftCongruenceClass and
+# IsRightCongruenceClass
+
 InstallMethod(\=, "for two congruence classes",
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
@@ -364,6 +367,15 @@ InstallMethod(\<, "for two congruence classes",
 function(class1, class2)
   return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
     and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
+end);
+
+InstallMethod(\in,
+"for multiplicative element and congruence class",
+[IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
+function(elm, class)
+  local cong;
+  cong := EquivalenceClassRelation(class);
+  return elm in Range(cong) and [elm, class!.rep] in cong;
 end);
 
 BindGlobal("_ViewCongObj",

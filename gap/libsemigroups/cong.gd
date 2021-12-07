@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+#TODO(now) move everything from here
+
 DeclareCategory("IsAnyCongruenceCategory", IsEquivalenceRelation);
 DeclareCategory("IsCongruenceCategory",
                 IsAnyCongruenceCategory and IsSemigroupCongruence and
@@ -18,11 +20,16 @@ DeclareCategory("IsLeftCongruenceCategory",
 DeclareCategory("IsRightCongruenceCategory",
                 IsAnyCongruenceCategory and IsRightSemigroupCongruence and
                 IsRightMagmaCongruence);
-
-DeclareCategory("CanComputeCppCongruence", IsAnyCongruenceCategory);
-
 DeclareAttribute("Kind", CanComputeCppCongruence);
 DeclareAttribute("GeneratingPairs", IsAnyCongruenceCategory);
+# TODO rename IsAnyCongruenceClass
+DeclareCategory("IsCongruenceClassOfCanComputeCppCongruence",
+                IsEquivalenceClass and IsAttributeStoringRep);
+DeclareAttribute("EquivalenceRelationPartitionIncludingSingletons",
+                 IsAnyCongruenceCategory);
+# to here into cong.gd
+
+DeclareCategory("CanComputeCppCongruence", IsAnyCongruenceCategory);
 
 DeclareGlobalFunction("CppCongruence");
 
@@ -30,12 +37,6 @@ DeclareOperation("CongruenceWordToClassIndex",
                  [CanComputeCppCongruence, IsHomogeneousList]);
 DeclareOperation("CongruenceWordToClassIndex",
                  [CanComputeCppCongruence, IsMultiplicativeElement]);
-
-DeclareCategory("IsCongruenceClassOfCanComputeCppCongruence",
-                IsEquivalenceClass and IsAttributeStoringRep);
-
-DeclareAttribute("EquivalenceRelationPartitionIncludingSingletons",
-                 IsAnyCongruenceCategory);
 
 DeclareOperation("CongruenceLessNC",
                  [CanComputeCppCongruence,

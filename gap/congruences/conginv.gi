@@ -265,6 +265,7 @@ function(cong)
                  IsInverseSemigroupCongruenceClassByKernelTrace);
 end);
 
+# TODO(now) remove this to congruences/cong.gi
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
@@ -274,30 +275,11 @@ function(c1, c2)
          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
 end);
 
-InstallMethod(\in,
-"for multiplicative element and inverse semigroup congruence class",
-[IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
-function(elm, class)
-  local cong;
-  cong := EquivalenceClassRelation(class);
-  return elm in Range(cong) and [elm, class!.rep] in cong;
-end);
-
-InstallMethod(\*,
-"for two inverse semigroup congruence classes",
-[IsInverseSemigroupCongruenceClassByKernelTrace,
- IsInverseSemigroupCongruenceClassByKernelTrace],
-function(c1, c2)
-  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("the arguments must be classes of the same congruence");
-  fi;
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
-                                     c1!.rep * c2!.rep);
-end);
-
+# TODO(now) remove this to congruences/cong.gi
 InstallMethod(Enumerator, "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace], AsList);
 
+# TODO(now) remove this to congruences/cong.gi
 InstallMethod(AsList,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
@@ -305,6 +287,7 @@ function(class)
   return ImagesElm(EquivalenceClassRelation(class), class!.rep);
 end);
 
+# TODO(now) remove this to congruences/cong.gi
 InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
@@ -312,6 +295,7 @@ function(class)
   return SSortedList(AsList(class));
 end);
 
+# TODO(now) remove this to congruences/cong.gi
 InstallMethod(Size,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
