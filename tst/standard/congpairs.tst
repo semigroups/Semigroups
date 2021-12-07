@@ -524,19 +524,20 @@ true
 
 # SemigroupCongruenceByGeneratingPairs bad input
 gap> S := FullTransformationMonoid(3);;
+gap> x := Transformation([1, 1, 1, 1]);;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
 Error, the 2nd argument <pairs> must consist of lists of length 2
-gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, x]]);
 Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
 rgument <S> (a semigroup)
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
 Error, the 2nd argument <pairs> must consist of lists of length 2
-gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, x]]);
 Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
 rgument <S> (a semigroup)
 gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
 Error, the 2nd argument <pairs> must consist of lists of length 2
-gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, x]]);
 Error, the 2nd argument <pairs> must consist of lists of elements of the 1st a\
 rgument <S> (a semigroup)
 

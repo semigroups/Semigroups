@@ -26,6 +26,46 @@ InstallMethod(GeneratingPairsOfAnyCongruence,
 GeneratingPairsOfRightSemigroupCongruence);
 
 #############################################################################
+# Constructor
+#############################################################################
+
+InstallMethod(AnyCongruenceByGeneratingPairs,
+[IsSemigroup, IsHomogeneousList, IsFunction],
+function(S, pairs, filt)
+  local fam, C, pair;
+
+  for pair in pairs do
+    if not IsList(pair) or Length(pair) <> 2 then
+      Error("the 2nd argument <pairs> must consist of lists of ",
+            "length 2");
+    elif not pair[1] in S or not pair[2] in S then
+      Error("the 2nd argument <pairs> must consist of lists of ",
+            "elements of the 1st argument <S> (a semigroup)");
+    fi;
+  od;
+
+  # Create the Object
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+
+  C := Objectify(NewType(fam, filt and IsAttributeStoringRep),
+                 rec());
+  SetSource(C, S);
+  SetRange(C, S);
+  if IsCongruenceCategory(C) then
+    SetGeneratingPairsOfMagmaCongruence(C, pairs);
+  elif IsLeftCongruenceCategory(C) then
+    SetGeneratingPairsOfLeftMagmaCongruence(C, pairs);
+  elif IsRightCongruenceCategory(C) then 
+    SetGeneratingPairsOfRightMagmaCongruence(C, pairs);
+  else 
+    Error("Something has gone wrong, should not have ",
+          "been able to reach here!");
+  fi;
+  return C;
+end);
+
+#############################################################################
 # Properties of congruences
 #############################################################################
 

@@ -53,44 +53,14 @@ function(C)
   fi;
 end);
 
-# TODO move to cong-pairs.gi . . . . . . HERE
-BindGlobal("_SemigroupCongruenceByGeneratingPairs",
-function(S, pairs, filt, set_pairs)
-  local fam, C, pair;
-
-  for pair in pairs do
-    if not IsList(pair) or Length(pair) <> 2 then
-      Error("the 2nd argument <pairs> must consist of lists of ",
-            "length 2");
-    elif not pair[1] in S or not pair[2] in S then
-      Error("the 2nd argument <pairs> must consist of lists of ",
-            "elements of the 1st argument <S> (a semigroup)");
-    fi;
-  od;
-
-  # Create the Object
-  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-                               ElementsFamily(FamilyObj(S)));
-
-  C := Objectify(NewType(fam, filt and IsAttributeStoringRep),
-                 rec());
-  SetSource(C, S);
-  SetRange(C, S);
-  set_pairs(C, pairs);
-  return C;
-end);
-
-# .. TO HERE
-
 InstallMethod(SemigroupCongruenceByGeneratingPairs, 
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList], 
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
-  local filt, set_pairs;
-  filt      := IsCongruenceCategory and CanComputeCppCongruence;
-  set_pairs := SetGeneratingPairsOfMagmaCongruence;
-  return _SemigroupCongruenceByGeneratingPairs(S, pairs, filt, set_pairs);
+  local filt;
+  filt := IsCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
@@ -98,10 +68,9 @@ InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 [IsSemigroup and CanComputeCppCongruences, IsList], 
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
-  local filt, set_pairs;
-  filt      := IsLeftCongruenceCategory and CanComputeCppCongruence;
-  set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
-  return _SemigroupCongruenceByGeneratingPairs(S, pairs, filt, set_pairs);
+  local filt;
+  filt := IsLeftCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
@@ -109,10 +78,9 @@ InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 [IsSemigroup and CanComputeCppCongruences, IsList], 
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
-  local filt, set_pairs;
-  filt      := IsRightCongruenceCategory and CanComputeCppCongruence;
-  set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
-  return _SemigroupCongruenceByGeneratingPairs(S, pairs, filt, set_pairs);
+  local filt;
+  filt := IsRightCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
 ###########################################################################
