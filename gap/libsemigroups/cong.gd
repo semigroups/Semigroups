@@ -20,12 +20,11 @@ DeclareCategory("IsLeftCongruenceCategory",
 DeclareCategory("IsRightCongruenceCategory",
                 IsAnyCongruenceCategory and IsRightSemigroupCongruence and
                 IsRightMagmaCongruence);
-DeclareAttribute("Kind", CanComputeCppCongruence);
+DeclareAttribute("Kind", IsAnyCongruenceCategory);
 DeclareAttribute("GeneratingPairs", IsAnyCongruenceCategory);
-# TODO rename IsAnyCongruenceClass
-DeclareCategory("IsCongruenceClassOfCanComputeCppCongruence",
+DeclareCategory("IsAnyCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
-DeclareAttribute("EquivalenceRelationPartitionIncludingSingletons",
+DeclareAttribute("EquivalenceRelationPartitionWithSingletons",
                  IsAnyCongruenceCategory);
 # to here into cong.gd
 

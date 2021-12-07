@@ -575,7 +575,7 @@ gap> Length(classes);
 8
 gap> ForAll(S, x -> Number(classes, c -> x in c) = 1);
 true
-gap> part := EquivalenceRelationPartitionIncludingSingletons(cong);;
+gap> part := EquivalenceRelationPartitionWithSingletons(cong);;
 gap> SortedList(List(part, Size)) = [1, 1, 1, 1, 1, 2, 2, 2];
 true
 gap> Set(Flat(part)) = Set(S);

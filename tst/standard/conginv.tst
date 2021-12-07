@@ -183,7 +183,7 @@ gap> cong2 := SemigroupCongruence(S,
 gap> x := EquivalenceClassOfElement(cong1, PartialPerm([1, 2, 3], [2, 5, 3]));;
 gap> y := EquivalenceClassOfElement(cong2, PartialPerm([1, 2, 4], [3, 1, 5]));;
 gap> x * y;
-Error, the arguments must be classes of the same congruence
+Error, the arguments are not classes of the same congruence
 
 # Non-inverse semigroups
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),

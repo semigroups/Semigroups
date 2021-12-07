@@ -278,8 +278,8 @@ end);
 
 InstallMethod(\<,
 "for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsCongruenceClassOfCanComputeCppCongruence,
- IsCongruenceClassOfCanComputeCppCongruence],
+[IsAnyCongruenceClass,
+ IsAnyCongruenceClass],
 function(class1, class2)
   local C, word1, word2, CC;
 
@@ -344,14 +344,14 @@ function(C)
     return ntc;
   elif CanComputeGapFroidurePin(S) then
     # in this case libsemigroups.Congruence.ntc doesn't work
-    return Filtered(EquivalenceRelationPartitionIncludingSingletons(C),
+    return Filtered(EquivalenceRelationPartitionWithSingletons(C),
                     x -> Size(x) > 1);
    else
     Error("shouldn't have been able to reach here!");
   fi;
 end);
 
-InstallMethod(EquivalenceRelationPartitionIncludingSingletons,
+InstallMethod(EquivalenceRelationPartitionWithSingletons,
 "for CanComputeCppCongruence",
 [CanComputeCppCongruence], 100,
 function(C)
@@ -439,7 +439,7 @@ function(cong, elm)
       and CanComputeFroidurePin(Range(cong)) then
     lookup := EquivalenceRelationCanonicalLookup(cong);
     id     := lookup[PositionCanonical(Range(cong), elm)];
-    part   := EquivalenceRelationPartitionIncludingSingletons(cong);
+    part   := EquivalenceRelationPartitionWithSingletons(cong);
     return part[id];
   elif IsFpSemigroup(Range(cong))
       or (HasIsFreeSemigroup(Range(cong)) and IsFreeSemigroup(Range(cong)))
@@ -513,7 +513,7 @@ InstallMethod(EquivalenceClassOfElementNC,
 function(cong, elm)
   local filt, class;
 
-  filt := IsCongruenceClassOfCanComputeCppCongruence;
+  filt := IsAnyCongruenceClass;
 
   if IsCongruenceCategory(cong) then
     filt := filt and IsCongruenceClass;
@@ -538,15 +538,15 @@ end);
 
 InstallMethod(\in,
 "for a mult. elt. and a congruence class of CanComputeCppCongruence",
-[IsMultiplicativeElement, IsCongruenceClassOfCanComputeCppCongruence],
+[IsMultiplicativeElement, IsAnyCongruenceClass],
 function(elm, class)
   return [elm, Representative(class)] in EquivalenceClassRelation(class);
 end);
 
 InstallMethod(\=,
 "for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsCongruenceClassOfCanComputeCppCongruence,
- IsCongruenceClassOfCanComputeCppCongruence],
+[IsAnyCongruenceClass,
+ IsAnyCongruenceClass],
 function(class1, class2)
   local cong;
   cong := EquivalenceClassRelation(class1);
@@ -558,23 +558,23 @@ end);
 
 InstallMethod(AsList,
 "for a congruence class of CanComputeCppCongruence",
-[IsCongruenceClassOfCanComputeCppCongruence],
+[IsAnyCongruenceClass],
 function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 InstallMethod(Enumerator, "for a congruence class of CanComputeCppCongruence",
-[IsCongruenceClassOfCanComputeCppCongruence], AsList);
+[IsAnyCongruenceClass], AsList);
 
 InstallMethod(Size,
 "for a congruence class of CanComputeCppCongruence",
-[IsCongruenceClassOfCanComputeCppCongruence],
+[IsAnyCongruenceClass],
 function(class)
   local cong, part, id;
   cong := EquivalenceClassRelation(class);
   if HasIsFinite(Range(cong)) and IsFinite(Range(cong))
       and CanComputeCppFroidurePin(Range(cong)) then
-    part := EquivalenceRelationPartitionIncludingSingletons(cong);
+    part := EquivalenceRelationPartitionWithSingletons(cong);
     id   := CongruenceWordToClassIndex(cong, Representative(class));
     return Size(part[id]);
   elif IsFpSemigroup(Range(cong))

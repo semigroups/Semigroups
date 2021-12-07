@@ -1758,7 +1758,7 @@ gap> cong := SemigroupCongruence(F, rels);
 1 generating pairs>
 gap> NrEquivalenceClasses(cong);
 infinity
-gap> EquivalenceRelationPartitionIncludingSingletons(cong);
+gap> EquivalenceRelationPartitionWithSingletons(cong);
 Error, the argument (a congruence) must have finite range
 gap> EquivalenceRelationLookup(cong);
 Error, the argument (a congruence) must have finite range
