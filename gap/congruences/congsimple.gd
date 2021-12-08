@@ -12,11 +12,11 @@
 ## congruences/reesmat.gd/gi.
 
 DeclareCategory("IsSimpleSemigroupCongruence",
-                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+                IsCongruenceCategory and IsAttributeStoringRep and IsFinite);
 
 DeclareCategory("IsSimpleSemigroupCongruenceClass",
-                IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsAnyCongruenceClass and IsCongruenceClass and
+                IsAttributeStoringRep and IsAssociativeElement);
 
 SEMIGROUPS.SimpleCongFromPairs :=
 function(S, pairs)

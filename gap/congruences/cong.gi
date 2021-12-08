@@ -310,7 +310,8 @@ function(pair, cong)
   return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
 end);
 
-BindGlobal("_GenericCongEquality",
+InstallMethod(\=, "for IsAnyCongruenceCategory", 
+[IsAnyCongruenceCategory, IsAnyCongruenceCategory],
 function(cong1, cong2)
   local S;
   S := Range(cong1);
@@ -323,28 +324,6 @@ function(cong1, cong2)
   return EquivalenceRelationCanonicalPartition(cong1) =
          EquivalenceRelationCanonicalPartition(cong2);
 end);
-
-InstallMethod(\=, "for two left semigroup congruences",
-[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for a left and a right semigroup congruence",
-[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for a right and a left semigroup congruence",
-[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
-_GenericCongEquality);
-
-InstallMethod(\=, "for two right semigroup congruences",
-[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
-_GenericCongEquality);
-
-
-# Since two-sided congs are both left and right, this covers all cases
-
-MakeReadWriteGlobal("_GenericCongEquality");
-Unbind(_GenericCongEquality);
 
 # TODO(now) shouldn't this be in another file?
 InstallMethod(\=, "for two semigroup congruences with generating pairs",
@@ -404,17 +383,13 @@ function(cong, elm)
 end);
 
 InstallMethod(AsList, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
-function(C)
-  return ImagesElm(EquivalenceClassRelation(C), Representative(C));
-end);
+C -> ImagesElm(EquivalenceClassRelation(C), Representative(C)));
 
 InstallMethod(Enumerator, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
 AsList);
 
 InstallMethod(Size, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
-function(C)
-  return Size(AsList(C));
-end);
+C -> Size(AsList(C)));
 
 # Multiplication for congruence classes: only makes sense for 2-sided
 InstallMethod(\*, "for two congruence classes",
@@ -455,22 +430,20 @@ function(elm, class)
   return elm in Range(cong) and [elm, Representative(class)] in cong;
 end);
 
-BindGlobal("_ViewCongObj",
-function(string, C)
+InstallMethod(ViewObj, "for IsAnyCongruenceClass", [IsAnyCongruenceClass], 
+100, # TODO
+function(C)
+  local string;
+  if IsCongruenceCategory(EquivalenceClassRelation(C)) then
+    string := "";
+  else 
+    string := Concatenation(AnyCongruenceString(EquivalenceClassRelation(C)), 
+                            " ");
+  fi;
   Print("<", string, "congruence class of ");
   ViewObj(Representative(C));
   Print(">");
-  return fail;
 end);
-
-InstallMethod(ViewObj, "for a congruence class", [IsCongruenceClass],
-C -> _ViewCongObj("", C));
-
-InstallMethod(ViewObj, "for a left congruence class", [IsLeftCongruenceClass],
-C -> _ViewCongObj("left ", C));
-
-InstallMethod(ViewObj, "for a right congruence class",
-[IsRightCongruenceClass], C -> _ViewCongObj("right ", C));
 
 InstallMethod(OnLeftCongruenceClasses,
 "for a left congruence class and a multiplicative element",

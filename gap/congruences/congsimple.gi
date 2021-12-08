@@ -72,7 +72,7 @@ InstallMethod(JoinSemigroupCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the join of congruences over different semigroups");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
@@ -84,7 +84,7 @@ InstallMethod(MeetSemigroupCongruences,
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the meet of congruences over different semigroups");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
@@ -111,17 +111,6 @@ InstallMethod(EquivalenceClasses,
 function(cong)
   return List(EquivalenceClasses(cong!.rmscong),
               c -> SEMIGROUPS.SimpleClassFromRMSclass(cong, c));
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for a (0-)simple semigroup congruence and multiplicative element",
-[IsSimpleSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  if not elm in Range(cong) then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
-                  "the 1st argument (a congruence)");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,

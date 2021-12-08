@@ -262,7 +262,7 @@ gap> cong1 := SemigroupCongruence(T,
 >   Transformation([1, 2, 2, 1, 2])]]);;
 gap> cong2 := SemigroupCongruence(S, []);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the meet of congruences over different semigroups
 gap> JoinSemigroupCongruences(cong1, cong2);
 Error, cannot form the join of congruences over different semigroups
 

@@ -10,22 +10,22 @@
 ## This file contains functions for any congruence of a semigroup with TODO
 #############################################################################
 
-InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
-                       IsCongruenceCategory 
-                         and HasGeneratingPairsOfMagmaCongruence, 
-                       0, 
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence,
+                       IsCongruenceCategory
+                         and HasGeneratingPairsOfMagmaCongruence,
+                       0,
                        GeneratingPairsOfMagmaCongruence);
 
-InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence,
                        IsLeftCongruenceCategory
-                         and HasGeneratingPairsOfLeftMagmaCongruence, 
-                       0, 
+                         and HasGeneratingPairsOfLeftMagmaCongruence,
+                       0,
                        GeneratingPairsOfLeftMagmaCongruence);
 
-InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence,
                        IsRightCongruenceCategory
-                         and HasGeneratingPairsOfRightMagmaCongruence, 
-                       0, 
+                         and HasGeneratingPairsOfRightMagmaCongruence,
+                       0,
                        GeneratingPairsOfRightMagmaCongruence);
 
 #############################################################################
@@ -59,9 +59,9 @@ function(S, pairs, filt)
     SetGeneratingPairsOfMagmaCongruence(C, pairs);
   elif IsLeftCongruenceCategory(C) then
     SetGeneratingPairsOfLeftMagmaCongruence(C, pairs);
-  elif IsRightCongruenceCategory(C) then 
+  elif IsRightCongruenceCategory(C) then
     SetGeneratingPairsOfRightMagmaCongruence(C, pairs);
-  else 
+  else
     Error("Something has gone wrong, should not have ",
           "been able to reach here!");
   fi;
@@ -200,7 +200,7 @@ end);
 
 InstallMethod(\=,
 "for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
-[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
 function(c1, c2)
   if AnyCongruenceCategory(c1) = AnyCongruenceCategory(c2) then
@@ -213,11 +213,11 @@ end);
 
 InstallMethod(IsSubrelation,
 "for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
-[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
 function(c1, c2)
   # Only valid for certain combinations of types
-  if AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2) 
+  if AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2)
       and AnyCongruenceCategory(c1) <> IsCongruenceCategory then
     TryNextMethod();
   elif Range(c1) <> Range(c2) then
@@ -235,8 +235,8 @@ end);
 ########################################################################
 
 InstallMethod(JoinAnyCongruences,
-"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence", 
-[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
 function(c1, c2)
   local Constructor, pairs;
@@ -248,11 +248,11 @@ function(c1, c2)
     return c1;
   fi;
 
-  if IsCongruenceCategory(c1) then 
+  if IsCongruenceCategory(c1) then
     Constructor := SemigroupCongruenceByGeneratingPairs;
   elif IsLeftCongruenceCategory(c1) then
     Constructor := LeftSemigroupCongruenceByGeneratingPairs;
-  else 
+  else
     Assert(1, IsRightCongruenceCategory(c1));
     Constructor := RightSemigroupCongruenceByGeneratingPairs;
   fi;
@@ -261,20 +261,20 @@ function(c1, c2)
   return Constructor(Range(c1), pairs);
 end);
 
-InstallMethod(JoinSemigroupCongruences, 
+InstallMethod(JoinSemigroupCongruences,
 "for a semigroup congruence with known generating pairs",
-[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence, 
+[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence,
  IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
 JoinAnyCongruences);
 
-InstallMethod(JoinLeftSemigroupCongruences, 
+InstallMethod(JoinLeftSemigroupCongruences,
 "for a semigroup left congruence with known generating pairs",
-[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence, 
+[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence,
  IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
 JoinAnyCongruences);
 
-InstallMethod(JoinRightSemigroupCongruences, 
+InstallMethod(JoinRightSemigroupCongruences,
 "for a semigroup Right congruence with known generating pairs",
-[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence, 
+[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence,
  IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
 JoinAnyCongruences);
