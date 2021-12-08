@@ -132,55 +132,37 @@ IsLeftSemigroupCongruence);
 InstallMethod(PrintObj,
 "for IsAnyCongruenceCategory with known generating pairs",
 [IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
-function(cong)
+function(C)
   local string;
-
-  if not IsCongruenceCategory(cong) then
-    string := ShallowCopy(AnyCongruenceString(cong));
+  if not IsCongruenceCategory(C) then
+    string := ShallowCopy(AnyCongruenceString(C));
     string[1] := UppercaseChar(string[1]);
   else
     string := "";
   fi;
 
   Print(string, "SemigroupCongruence( ");
-  PrintObj(Range(cong));
+  PrintObj(Range(C));
   Print(", ");
-  Print(GeneratingPairsOfAnyCongruence(cong));
+  Print(GeneratingPairsOfAnyCongruence(C));
   Print(" )");
 end);
 
-# HERE
-
 InstallMethod(ViewObj,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-function(cong)
-  Print("<left semigroup congruence over ");
-  ViewObj(Range(cong));
+"for IsAnyCongruenceCategory with known generating pairs",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
+function(C)
+  local string;
+  if not IsCongruenceCategory(C) then
+    string := ShallowCopy(AnyCongruenceString(C));
+    Append(string, " ");
+  else
+    string := "";
+  fi;
+  Print("<", string, "semigroup congruence over ");
+  ViewObj(Range(C));
   Print(" with ",
-        Size(GeneratingPairsOfLeftSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
-
-InstallMethod(ViewObj,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong)
-  Print("<right semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
-        " generating pairs>");
-end);
-
-InstallMethod(ViewObj,
-"for a semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ",
-        Size(GeneratingPairsOfSemigroupCongruence(cong)),
+        Size(GeneratingPairsOfAnyCongruence(C)),
         " generating pairs>");
 end);
 
@@ -192,11 +174,11 @@ InstallMethod(\=,
 "for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
 [IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
-function(c1, c2)
-  if AnyCongruenceCategory(c1) = AnyCongruenceCategory(c2) then
-    return Range(c1) = Range(c2)
-           and ForAll(GeneratingPairsOfAnyCongruence(c1), pair -> pair in c2)
-           and ForAll(GeneratingPairsOfAnyCongruence(c2), pair -> pair in c1);
+function(lhop, rhop)
+  if AnyCongruenceCategory(lhop) = AnyCongruenceCategory(rhop) then
+    return Range(lhop) = Range(rhop)
+           and ForAll(GeneratingPairsOfAnyCongruence(lhop), x -> x in rhop)
+           and ForAll(GeneratingPairsOfAnyCongruence(rhop), x -> x in lhop);
   fi;
   TryNextMethod();
 end);
@@ -205,26 +187,26 @@ InstallMethod(IsSubrelation,
 "for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
 [IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
-function(c1, c2)
+function(lhop, rhop)
   # Only valid for certain combinations of types
-  if AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2)
-      and AnyCongruenceCategory(c1) <> IsCongruenceCategory then
+  if AnyCongruenceCategory(lhop) <> AnyCongruenceCategory(rhop)
+      and AnyCongruenceCategory(lhop) <> IsCongruenceCategory then
     TryNextMethod();
-  elif Range(c1) <> Range(c2) then
+  elif Range(lhop) <> Range(rhop) then
     Error("the 1st and 2nd arguments are congruences over different",
           " semigroups");
   fi;
 
-  # Test whether c1 contains all the pairs in c2
-  return ForAll(GeneratingPairsOfAnyCongruence(c2),
-                pair -> CongruenceTestMembershipNC(c1, pair[1], pair[2]));
+  # Test whether lhop contains all the pairs in rhop
+  return ForAll(GeneratingPairsOfAnyCongruence(rhop),
+                x -> CongruenceTestMembershipNC(lhop, x[1], x[2]));
 end);
 
 ########################################################################
 # Algebraic operators
 ########################################################################
 
-BindGlobal("JoinAnyCongruences",
+BindGlobal("_JoinAnyCongruences",
 function(lhop, rhop)
   local Constructor, pairs;
   if Range(lhop) <> Range(rhop) then
@@ -243,8 +225,8 @@ function(lhop, rhop)
     Assert(1, IsRightCongruenceCategory(lhop));
     Constructor := RightSemigroupCongruenceByGeneratingPairs;
   fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(lhop)),
-                         ShallowCopy(GeneratingPairsOfAnyCongruence(rhop)));
+  pairs := Concatenation(GeneratingPairsOfAnyCongruence(lhop),
+                         GeneratingPairsOfAnyCongruence(rhop));
   return Constructor(Range(lhop), pairs);
 end);
 
@@ -252,16 +234,16 @@ InstallMethod(JoinSemigroupCongruences,
 "for a semigroup congruence with known generating pairs",
 [IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence,
  IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
-JoinAnyCongruences);
+_JoinAnyCongruences);
 
 InstallMethod(JoinLeftSemigroupCongruences,
 "for a semigroup left congruence with known generating pairs",
 [IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence,
  IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
-JoinAnyCongruences);
+_JoinAnyCongruences);
 
 InstallMethod(JoinRightSemigroupCongruences,
-"for a semigroup Right congruence with known generating pairs",
+"for a semigroup right congruence with known generating pairs",
 [IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence,
  IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
-JoinAnyCongruences);
+_JoinAnyCongruences);

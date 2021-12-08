@@ -71,6 +71,7 @@ end);
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
+100, # TODO 
 function(cong)
   Print("<universal semigroup congruence over ");
   ViewObj(Range(cong));
