@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/congpairs.gd
-##  Copyright (C) 2015-17                                Michael C. Young
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,14 +12,12 @@
 
 DeclareAttribute("GeneratingPairsOfAnyCongruence", IsAnyCongruenceCategory);
 
-DeclareOperation("AnyCongruenceByGeneratingPairs",
-                 [IsSemigroup, IsHomogeneousList, IsFunction]);
-
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
 DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
 
-DeclareOperation("JoinAnyCongruences",
-[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
- IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence]);
+# Internal detail
+
+DeclareOperation("_AnyCongruenceByGeneratingPairs",
+                 [IsSemigroup, IsHomogeneousList, IsFunction]);

@@ -1,13 +1,14 @@
 ############################################################################
 ##
 ##  congruences/congpairs.gi
-##  Copyright (C) 2015-21                                Michael C. Young
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## This file contains functions for any congruence of a semigroup with TODO
+## This file contains functions for any congruence of a semigroup with
+## generating pairs.
 #############################################################################
 
 InstallImmediateMethod(GeneratingPairsOfAnyCongruence,
@@ -32,7 +33,7 @@ InstallImmediateMethod(GeneratingPairsOfAnyCongruence,
 # Constructor
 #############################################################################
 
-InstallMethod(AnyCongruenceByGeneratingPairs,
+InstallMethod(_AnyCongruenceByGeneratingPairs,
 [IsSemigroup, IsHomogeneousList, IsFunction],
 function(S, pairs, filt)
   local fam, C, pair;
@@ -129,37 +130,26 @@ IsLeftSemigroupCongruence);
 #############################################################################
 
 InstallMethod(PrintObj,
-"for a left semigroup congruence with known generating pairs",
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+"for IsAnyCongruenceCategory with known generating pairs",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
 function(cong)
-  Print("LeftSemigroupCongruence( ");
+  local string;
+
+  if not IsCongruenceCategory(cong) then
+    string := ShallowCopy(AnyCongruenceString(cong));
+    string[1] := UppercaseChar(string[1]);
+  else
+    string := "";
+  fi;
+
+  Print(string, "SemigroupCongruence( ");
   PrintObj(Range(cong));
   Print(", ");
-  Print(GeneratingPairsOfLeftSemigroupCongruence(cong));
+  Print(GeneratingPairsOfAnyCongruence(cong));
   Print(" )");
 end);
 
-InstallMethod(PrintObj,
-"for a right semigroup congruence with known generating pairs",
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong)
-  Print("RightSemigroupCongruence( ");
-  PrintObj(Range(cong));
-  Print(", ");
-  Print(GeneratingPairsOfRightSemigroupCongruence(cong));
-  Print(" )");
-end);
-
-InstallMethod(PrintObj,
-"for a semigroup congruence with known generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  Print("SemigroupCongruence( ");
-  PrintObj(Range(cong));
-  Print(", ");
-  Print(GeneratingPairsOfSemigroupCongruence(cong));
-  Print(" )");
-end);
+# HERE
 
 InstallMethod(ViewObj,
 "for a left semigroup congruence",
@@ -234,31 +224,28 @@ end);
 # Algebraic operators
 ########################################################################
 
-InstallMethod(JoinAnyCongruences,
-"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
-[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
- IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
-function(c1, c2)
+BindGlobal("JoinAnyCongruences",
+function(lhop, rhop)
   local Constructor, pairs;
-  if Range(c1) <> Range(c2) then
+  if Range(lhop) <> Range(rhop) then
     Error("cannot form the join of congruences over different semigroups");
-  elif AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2) then
+  elif AnyCongruenceCategory(lhop) <> AnyCongruenceCategory(rhop) then
     Error("cannot form the join of congruences of different handedness");
-  elif c1 = c2 then
-    return c1;
+  elif lhop = rhop then
+    return lhop;
   fi;
 
-  if IsCongruenceCategory(c1) then
+  if IsCongruenceCategory(lhop) then
     Constructor := SemigroupCongruenceByGeneratingPairs;
-  elif IsLeftCongruenceCategory(c1) then
+  elif IsLeftCongruenceCategory(lhop) then
     Constructor := LeftSemigroupCongruenceByGeneratingPairs;
   else
-    Assert(1, IsRightCongruenceCategory(c1));
+    Assert(1, IsRightCongruenceCategory(lhop));
     Constructor := RightSemigroupCongruenceByGeneratingPairs;
   fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(c1)),
-                         ShallowCopy(GeneratingPairsOfAnyCongruence(c2)));
-  return Constructor(Range(c1), pairs);
+  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(lhop)),
+                         ShallowCopy(GeneratingPairsOfAnyCongruence(rhop)));
+  return Constructor(Range(lhop), pairs);
 end);
 
 InstallMethod(JoinSemigroupCongruences,

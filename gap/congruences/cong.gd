@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  cong.gd
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -20,9 +20,6 @@
 ##
 ## Some general functions are also implemented in cong.gi
 ##
-
-# Possibly missing:
-# - ImagesElm (implemented in conginv.gi)
 
 ########################################################################
 # Categories

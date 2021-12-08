@@ -375,7 +375,7 @@ RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
   filt := IsCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
+  return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
@@ -385,7 +385,7 @@ RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
   filt := IsLeftCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
+  return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
@@ -395,5 +395,5 @@ RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
   filt := IsRightCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
+  return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
