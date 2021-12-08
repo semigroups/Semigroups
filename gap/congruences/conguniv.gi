@@ -11,8 +11,7 @@
 ## semigroup, that is the relation SxS on a semigroup S.
 ##
 
-InstallMethod(UniversalSemigroupCongruence,
-"for a semigroup",
+InstallMethod(UniversalSemigroupCongruence, "for a semigroup",
 [IsSemigroup],
 function(S)
   local fam, cong;
@@ -40,6 +39,7 @@ function(cong)
   return NrEquivalenceClasses(cong) = 1;
 end);
 
+# move to congrms
 InstallMethod(IsUniversalSemigroupCongruence,
 "for a semigroup congruence",
 [IsRMSCongruenceByLinkedTriple],
@@ -49,6 +49,7 @@ function(cong)
          cong!.n = UnderlyingSemigroup(Range(cong));
 end);
 
+# move to congrms
 InstallImmediateMethod(IsUniversalSemigroupCongruence,
 IsRZMSCongruenceByLinkedTriple, 0,
 ReturnFalse);
@@ -110,7 +111,7 @@ InstallMethod(\=,
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
  IsUniversalSemigroupCongruence],
 function(pcong, ucong)
-  return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
+  return ucong = pcong;
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
@@ -259,6 +260,7 @@ function(class)
   return Size(Range(EquivalenceClassRelation(class)));
 end);
 
+# Needed?
 InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],

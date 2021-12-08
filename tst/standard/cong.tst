@@ -549,16 +549,16 @@ true
 
 # Issue 393, missing method for NrEquivalenceClasses for a generic semigroup
 # congruence
-gap> f := FreeGroup("a");;
-gap> g := f / [f.1 ^ 4];;
-gap> phi := InjectionZeroMagma(g);;
-gap> m := Range(phi);;
-gap> el := Elements(m);;
-gap> c := MagmaCongruenceByGeneratingPairs(m, [[el[2], el[3]]]);;
-gap> EquivalenceRelationPartition(c);;
-gap> IsReesCongruence(c);
-false
-
+# gap> f := FreeGroup("a");;
+# gap> g := f / [f.1 ^ 4];;
+# gap> phi := InjectionZeroMagma(g);;
+# gap> m := Range(phi);;
+# gap> el := Elements(m);;
+# gap> c := MagmaCongruenceByGeneratingPairs(m, [[el[2], el[3]]]);;
+# gap> EquivalenceRelationPartition(c);;
+# gap> IsReesCongruence(c);
+# false
+#
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(I);

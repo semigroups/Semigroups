@@ -177,19 +177,19 @@ end);
 # 2. Attributes
 ########################################################################
 
-InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
-[IsSemigroupCongruence],
-function(cong)
-  local classes;
-  classes := EquivalenceClasses(cong);
-  # Note: EquivalenceClasses may exclude all singletons due to a bug in GAP.
-  # This is a workaround which adds any missing singletons.
-  return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
-end);
+# InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
+# [IsSemigroupCongruence],
+# function(cong)
+#   local classes;
+#   classes := EquivalenceClasses(cong);
+#   # Note: EquivalenceClasses may exclude all singletons due to a bug/feature in
+#   # GAP. This is a workaround which adds any missing singletons.
+#   return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
+# end);
 
-InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
-[IsEquivalenceRelation],
-x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
+# InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
+# [IsEquivalenceRelation],
+# x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
 
 InstallMethod(NonTrivialEquivalenceClasses, "for IsAnyCongruenceCategory",
 [IsAnyCongruenceCategory],
