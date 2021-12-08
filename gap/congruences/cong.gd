@@ -5,7 +5,7 @@
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
-#############################################################################
+############################################################################
 ##
 ## This file contains declarations for functions, operations and attributes of
 ## semigroup congruences.  Methods for most of these are implemented for

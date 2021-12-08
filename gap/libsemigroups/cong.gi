@@ -8,36 +8,35 @@
 ###########################################################################
 ##
 
+## This file contains the interface to libsemigroups Congruence objects. There
+## is no declaration/implementation file because no other part of the
+## Semigroups package should directly use any of the functionality in
+## libsemigroups, only via the functions specified in this file.
+
 # TODO: A method for MeetXSemigroupCongruences
 
-# A congruence belongs to this category if it can use libsemigroups to compute
-# things about itself.
-DeclareCategory("CanComputeCppCongruence", IsAnyCongruenceCategory);
+###########################################################################
+# Categories + properties + true methods
+###########################################################################
 
-# A semigroup satisfies this property if its congruences should belong to
+# A semigroup satisfies this property if its congruences should belong to
 # CanComputeCppCongruence.
 DeclareProperty("CanComputeCppCongruences", IsSemigroup);
 
-DeclareGlobalFunction("CppCongruence");
-
-DeclareOperation("CongruenceWordToClassIndex",
-                 [CanComputeCppCongruence, IsHomogeneousList]);
-DeclareOperation("CongruenceWordToClassIndex",
-                 [CanComputeCppCongruence, IsMultiplicativeElement]);
-
-DeclareOperation("CongruenceLessNC",
-                 [CanComputeCppCongruence,
-                  IsMultiplicativeElement,
-                  IsMultiplicativeElement]);
-
 InstallTrueMethod(CanComputeCppCongruences,
                   IsSemigroup and CanComputeFroidurePin);
+InstallTrueMethod(CanComputeCppCongruences,
+                  IsFpSemigroup);
+InstallTrueMethod(CanComputeCppCongruences,
+                  IsFpMonoid);
+InstallTrueMethod(CanComputeCppCongruences,
+                  HasIsFreeSemigroup and IsFreeSemigroup);
+InstallTrueMethod(CanComputeCppCongruences,
+                  HasIsFreeMonoid and IsFreeMonoid);
 
-InstallTrueMethod(CanComputeCppCongruences, IsFpSemigroup);
-InstallTrueMethod(CanComputeCppCongruences, IsFpMonoid);
-
-InstallTrueMethod(CanComputeCppCongruences, HasIsFreeSemigroup and IsFreeSemigroup);
-InstallTrueMethod(CanComputeCppCongruences, HasIsFreeMonoid and IsFreeMonoid);
+###########################################################################
+# Helper
+###########################################################################
 
 BindGlobal("_KindString",
 function(C)
@@ -53,40 +52,12 @@ function(C)
   fi;
 end);
 
-InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
-function(S, pairs)
-  local filt;
-  filt := IsCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
-end);
-
-InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
-function(S, pairs)
-  local filt;
-  filt := IsLeftCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
-end);
-
-InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
-function(S, pairs)
-  local filt;
-  filt := IsRightCongruenceCategory and CanComputeCppCongruence;
-  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
-end);
-
 ###########################################################################
-## Methods using the libsemigroups object directly
+# Functions/methods that are declared in this file and that use the
+# libsemigroups object directly
 ###########################################################################
 
+# Construct a libsemigroups::Congruence from some GAP object
 BindGlobal("CppCongruenceConstructor",
 function(S)
   local N;
@@ -130,7 +101,9 @@ function(S)
   fi;
 end);
 
-InstallGlobalFunction(CppCongruence,
+# Get the libsemigroups::Congruence object associated to a GAP object
+
+BindGlobal("CppCongruence",
 function(C)
   local S, CC, factor, N, tc, table, add_pair, pair;
 
@@ -178,10 +151,16 @@ function(C)
   return CC;
 end);
 
+########################################################################
+
+DeclareOperation("CongruenceWordToClassIndex",
+                 [CanComputeCppCongruence, IsHomogeneousList]);
+DeclareOperation("CongruenceWordToClassIndex",
+                 [CanComputeCppCongruence, IsMultiplicativeElement]);
+
 InstallMethod(CongruenceWordToClassIndex,
 "for CanComputeCppCongruence and hom. list",
 [CanComputeCppCongruence, IsHomogeneousList],
-# {C, word} -> WordToClassIndex(CppCongruence(C), word - 1) + 1);
 function(C, word)
   local CC;
   CC := CppCongruence(C);
@@ -193,6 +172,55 @@ InstallMethod(CongruenceWordToClassIndex,
 [CanComputeCppCongruence, IsMultiplicativeElement],
 function(C, x)
   return CongruenceWordToClassIndex(C, MinimalFactorization(Range(C), x));
+end);
+
+########################################################################
+
+InstallMethod(CongruenceLessNC,
+ "for CanComputeCppCongruence and two mult. elements",
+ [CanComputeCppCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+function(C, elm1, elm2)
+  local S, pos1, pos2, lookup, word1, word2, CC;
+  Assert(1, CanComputeCppCongruence(C));
+  Assert(1, IsMultiplicativeElement(elm1));
+  Assert(1, IsMultiplicativeElement(elm2));
+
+  S := Range(C);
+  if CanComputeFroidurePin(S) then
+    pos1 := PositionCanonical(S, elm1);
+    pos2 := PositionCanonical(S, elm2);
+    if HasEquivalenceRelationLookup(C) then
+      lookup := EquivalenceRelationLookup(C);
+      return lookup[pos1] < lookup[pos2];
+    else
+      word1 := MinimalFactorization(S, pos1);
+      word2 := MinimalFactorization(S, pos2);
+    fi;
+  elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
+      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+    word1 := Factorization(S, elm1);
+    word2 := Factorization(S, elm2);
+  else
+    TryNextMethod();
+  fi;
+  CC := CppCongruence(C);
+  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
+end);
+
+###########################################################################
+# Functions/methods that are declared elsewhere and that use the
+# libsemigroups object directly
+###########################################################################
+
+InstallMethod(NrEquivalenceClasses, "for CanComputeCppCongruence",
+[CanComputeCppCongruence], 100,
+function(C)
+  local result;
+  result := libsemigroups.Congruence.number_of_classes(CppCongruence(C));
+  if result = -2 then
+    return infinity;
+  fi;
+  return result;
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
@@ -224,90 +252,7 @@ function(C, elm1, elm2)
   return libsemigroups.Congruence.contains(CC, word1 - 1, word2 - 1);
 end);
 
-InstallMethod(CongruenceLessNC,
-"for CanComputeCppCongruence and two mult. elements",
-[CanComputeCppCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
-100,
-function(C, elm1, elm2)
-  local S, pos1, pos2, lookup, word1, word2, CC;
-
-  S := Range(C);
-  if CanComputeFroidurePin(S) then
-    pos1 := PositionCanonical(S, elm1);
-    pos2 := PositionCanonical(S, elm2);
-    if HasEquivalenceRelationLookup(C) then
-      lookup := EquivalenceRelationLookup(C);
-      return lookup[pos1] < lookup[pos2];
-    else
-      word1 := MinimalFactorization(S, pos1);
-      word2 := MinimalFactorization(S, pos2);
-    fi;
-  elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
-      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    word1 := Factorization(S, elm1);
-    word2 := Factorization(S, elm2);
-  else
-    TryNextMethod();
-  fi;
-  CC := CppCongruence(C);
-  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
-end);
-
-InstallMethod(NrEquivalenceClasses,
-"for CanComputeCppCongruence",
-[CanComputeCppCongruence], 100,
-function(C)
-  local result;
-  result := libsemigroups.Congruence.number_of_classes(CppCongruence(C));
-  if result = -2 then
-    return infinity;
-  fi;
-  return result;
-end);
-
-# Methods for congruence classes
-
-InstallMethod(\<,
-"for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsAnyCongruenceClass,
- IsAnyCongruenceClass],
-function(class1, class2)
-  local C, word1, word2, CC;
-
-  C := EquivalenceClassRelation(class1);
-  if C <> EquivalenceClassRelation(class2) then
-    return false;
-  fi;
-  word1 := Factorization(Range(C), Representative(class1));
-  word2 := Factorization(Range(C), Representative(class2));
-  CC := CppCongruence(C);
-  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
-end);
-
-InstallMethod(EquivalenceClasses,
-"for CanComputeCppCongruence",
-[CanComputeCppCongruence], 100,
-function(C)
-  local result, CC, gens, class_index_to_word, rep, i;
-
-  if NrEquivalenceClasses(C) = infinity then
-    Error("the argument (a congruence) must have a finite ",
-                  "number of classes");
-  fi;
-
-  result := EmptyPlist(NrEquivalenceClasses(C));
-  CC := CppCongruence(C);
-  gens := GeneratorsOfSemigroup(Range(C));
-  class_index_to_word := libsemigroups.Congruence.class_index_to_word;
-  for i in [1 .. NrEquivalenceClasses(C)] do
-    rep := EvaluateWord(gens, class_index_to_word(CC, i - 1) + 1);
-    result[i] := EquivalenceClassOfElementNC(C, rep);
-  od;
-  return result;
-end);
-
-InstallMethod(EquivalenceRelationPartition,
-"for CanComputeCppCongruence",
+InstallMethod(EquivalenceRelationPartition, "for CanComputeCppCongruence",
 [CanComputeCppCongruence], 100,
 function(C)
   local S, CC, ntc, gens, class, i, j;
@@ -332,9 +277,48 @@ function(C)
   fi;
 end);
 
+# Methods for congruence classes
+
+InstallMethod(\<,
+"for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
+[IsAnyCongruenceClass, IsAnyCongruenceClass],
+function(class1, class2)
+  local C, word1, word2, CC;
+
+  C := EquivalenceClassRelation(class1);
+  if C <> EquivalenceClassRelation(class2) then
+    return false;
+  fi;
+  word1 := Factorization(Range(C), Representative(class1));
+  word2 := Factorization(Range(C), Representative(class2));
+  CC := CppCongruence(C);
+  return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
+end);
+
+InstallMethod(EquivalenceClasses, "for CanComputeCppCongruence",
+[CanComputeCppCongruence], 100,
+function(C)
+  local result, CC, gens, class_index_to_word, rep, i;
+
+  if NrEquivalenceClasses(C) = infinity then
+    Error("the argument (a congruence) must have a finite ",
+                  "number of classes");
+  fi;
+
+  result := EmptyPlist(NrEquivalenceClasses(C));
+  CC := CppCongruence(C);
+  gens := GeneratorsOfSemigroup(Range(C));
+  class_index_to_word := libsemigroups.Congruence.class_index_to_word;
+  for i in [1 .. NrEquivalenceClasses(C)] do
+    rep := EvaluateWord(gens, class_index_to_word(CC, i - 1) + 1);
+    result[i] := EquivalenceClassOfElementNC(C, rep);
+  od;
+  return result;
+end);
+
 ###########################################################################
-## Methods NOT using the libsemigroups object directly but that use an
-## operation or function that only applies to CanComputeCppCongruence
+# Methods NOT using libsemigroups object directly but that use an
+# operation or function that only applies to CanComputeCppCongruence
 ###########################################################################
 
 InstallMethod(EquivalenceRelationLookup, "for CanComputeCppCongruence",
@@ -353,7 +337,6 @@ function(C)
   return lookup;
 end);
 
-# TODO refactor
 # Not sure if this needs to be here or not
 InstallMethod(ImagesElm,
 "for CanComputeCppCongruence and a multiplicative element",
@@ -382,67 +365,35 @@ function(cong, elm)
   fi;
 end);
 
-#############################################################################
-#############################################################################
-# Congruence classes
-#############################################################################
-#############################################################################
+# These constructors exist so that the resulting congruences belong to the
+# correct categories, namely CanComputeCppCongruence.
 
-# TODO move to cong.gi
-# TODO move to cong.gi
-
-# TODO move to cong.gi
-InstallMethod(\in,
-"for a mult. elt. and a congruence class of CanComputeCppCongruence",
-[IsMultiplicativeElement, IsAnyCongruenceClass],
-function(elm, class)
-  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup with CanComputeCppCongruences and a list",
+[IsSemigroup and CanComputeCppCongruences, IsList],
+RankFilter(IsList and IsEmpty),
+function(S, pairs)
+  local filt;
+  filt := IsCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
-# TODO move to cong.gi
-InstallMethod(\=,
-"for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsAnyCongruenceClass,
- IsAnyCongruenceClass],
-function(class1, class2)
-  local cong;
-  cong := EquivalenceClassRelation(class1);
-  if cong <> EquivalenceClassRelation(class2) then
-    return false;
-  fi;
-  return [Representative(class1), Representative(class2)] in cong;
+InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
+"for a semigroup with CanComputeCppCongruences and a list",
+[IsSemigroup and CanComputeCppCongruences, IsList],
+RankFilter(IsList and IsEmpty),
+function(S, pairs)
+  local filt;
+  filt := IsLeftCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
-# TODO move to cong.gi
-InstallMethod(AsList,
-"for a congruence class of CanComputeCppCongruence",
-[IsAnyCongruenceClass],
-function(class)
-  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
-end);
-
-# TODO move to cong.gi
-InstallMethod(Enumerator, "for a congruence class of CanComputeCppCongruence",
-[IsAnyCongruenceClass], AsList);
-
-# TODO move to cong.gi
-InstallMethod(Size,
-"for a congruence class of CanComputeCppCongruence",
-[IsAnyCongruenceClass and CanComputeCppCongruence],
-function(class)
-  local cong, part, id;
-  # cong := EquivalenceClassRelation(class);
-  #if HasIsFinite(Range(cong)) and IsFinite(Range(cong))
-  #    and CanComputeCppFroidurePin(Range(cong)) then
-  #  part := EquivalenceRelationPartitionWithSingletons(cong);
-  #  id   := CongruenceWordToClassIndex(cong, Representative(class));
-  #  return Size(part[id]);
-  # elif IsFpSemigroup(Range(cong))
-  #     or (HasIsFreeSemigroup(Range(cong)) and IsFreeSemigroup(Range(cong)))
-  #     or IsFpMonoid(Range(cong))
-  #     or (HasIsFreeMonoid(Range(cong)) and IsFreeMonoid(Range(cong))) then
-  return Size(AsList(class));
-  # else
-  #   Error("shouldn't have been able to reach here!");
-  # fi;
+InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
+"for a semigroup with CanComputeCppCongruences and a list",
+[IsSemigroup and CanComputeCppCongruences, IsList],
+RankFilter(IsList and IsEmpty),
+function(S, pairs)
+  local filt;
+  filt := IsRightCongruenceCategory and CanComputeCppCongruence;
+  return AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);

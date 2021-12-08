@@ -216,7 +216,9 @@ function(cong, x)
 
   # Construct the object
   fam := CollectionsFamily(FamilyObj(x));
-  class := Objectify(NewType(fam, IsReesCongruenceClass),
+  class := Objectify(NewType(fam, 
+                             IsReesCongruenceClass 
+                             and IsAnyCongruenceClass),
                      rec());
   if is_ideal_class then
     SetSize(class, Size(SemigroupIdealOfReesCongruence(cong)));

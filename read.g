@@ -22,7 +22,7 @@ ReadPackage("semigroups", "gap/elements/trans.gi");
 ReadPackage("semigroups", "gap/elements/elements.gi");
 ReadPackage("semigroups", "gap/elements/pperm.gi");
 
-ReadPackage("semigroups", "gap/libsemigroups/cong.g");
+ReadPackage("semigroups", "gap/libsemigroups/cong.gi");
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gi");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gi");
 

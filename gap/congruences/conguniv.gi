@@ -206,6 +206,7 @@ function(cong)
   return [EquivalenceClassOfElement(cong, Representative(Range(cong)))];
 end);
 
+# TODO remove
 InstallMethod(EquivalenceClassOfElement,
 "for universal semigroup congruence and associative element",
 [IsUniversalSemigroupCongruence, IsMultiplicativeElement],
@@ -224,7 +225,10 @@ InstallMethod(EquivalenceClassOfElementNC,
 function(cong, elm)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(elm));
-  class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec());
+  class := Objectify(NewType(fam,
+                             IsUniversalSemigroupCongruenceClass
+                             and IsAnyCongruenceClass), 
+                     rec());
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);

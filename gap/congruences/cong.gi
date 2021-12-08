@@ -329,8 +329,7 @@ function(cong1, cong2)
   S := Range(cong1);
   if S <> Range(cong2) then
     return false;
-  fi;
-  if HasIsFinite(S) and IsFinite(S) then
+  elif HasIsFinite(S) and IsFinite(S) then
     return EquivalenceRelationCanonicalLookup(cong1) =
            EquivalenceRelationCanonicalLookup(cong2);
   fi;
@@ -353,6 +352,7 @@ _GenericCongEquality);
 InstallMethod(\=, "for two right semigroup congruences",
 [IsRightSemigroupCongruence, IsRightSemigroupCongruence],
 _GenericCongEquality);
+
 
 # Since two-sided congs are both left and right, this covers all cases
 
@@ -416,6 +416,19 @@ function(cong, elm)
   return class;
 end);
 
+InstallMethod(AsList, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+function(C)
+  return ImagesElm(EquivalenceClassRelation(C), Representative(C));
+end);
+
+InstallMethod(Enumerator, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+AsList);
+
+InstallMethod(Size, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
+function(C)
+  return Size(AsList(C));
+end);
+
 # Multiplication for congruence classes: only makes sense for 2-sided
 InstallMethod(\*, "for two congruence classes",
 [IsCongruenceClass, IsCongruenceClass],
@@ -431,11 +444,14 @@ end);
 # FIXME why isn't there a method of IsLeftCongruenceClass and
 # IsRightCongruenceClass
 
-InstallMethod(\=, "for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
+InstallMethod(\=,
+"for IsAnyCongruenceClass and IsAnyCongruenceClass", 
+IsIdenticalObj,
+[IsAnyCongruenceClass, IsAnyCongruenceClass],
 function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-         and Representative(class1) in class2;
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2) 
+    and [Representative(class1), Representative(class2)] 
+    in EquivalenceClassRelation(class1);
 end);
 
 InstallMethod(\<, "for two congruence classes",
@@ -453,6 +469,14 @@ function(elm, class)
   cong := EquivalenceClassRelation(class);
   return elm in Range(cong) and [elm, class!.rep] in cong;
 end);
+
+InstallMethod(\in,
+"for a mult. elt. and IsAnyCongruenceClass",
+[IsMultiplicativeElement, IsAnyCongruenceClass],
+function(elm, class)
+  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+end);
+
 
 BindGlobal("_ViewCongObj",
 function(string, C)

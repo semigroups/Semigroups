@@ -118,6 +118,8 @@ ReadPackage("semigroups", "gap/congruences/congsimple.gd");
 ReadPackage("semigroups", "gap/congruences/congrees.gd");
 ReadPackage("semigroups", "gap/congruences/conglatt.gd");
 
+ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
+
 ReadPackage("semigroups", "gap/fp/freeinverse.gd");
 ReadPackage("semigroups", "gap/fp/freeband.gd");
 ReadPackage("semigroups", "gap/fp/word.gd");
