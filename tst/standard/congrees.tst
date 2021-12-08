@@ -140,7 +140,7 @@ gap> y in tclass;
 true
 gap> EquivalenceClassOfElement(cong, z);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a Rees congruence)
+ argument (a congruence)
 gap> xclass := EquivalenceClassOfElement(cong, x);
 <congruence class of Transformation( [ 3, 4, 2, 4 ] )>
 gap> x in xclass;

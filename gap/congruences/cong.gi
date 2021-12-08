@@ -21,6 +21,10 @@
 ## cong.gd contains declarations for many of these.
 ##
 
+# Where possible, we only provide methods in this file for
+# IsAnyCongruenceCategory and IsAnyCongruenceClass, and not arbitrary
+# congruences.
+
 InstallMethod(AnyCongruenceCategory, "for a right congruence category", 
 [IsRightCongruenceCategory], C -> IsRightCongruenceCategory);
 
@@ -177,20 +181,6 @@ end);
 # 2. Attributes
 ########################################################################
 
-# InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
-# [IsSemigroupCongruence],
-# function(cong)
-#   local classes;
-#   classes := EquivalenceClasses(cong);
-#   # Note: EquivalenceClasses may exclude all singletons due to a bug/feature in
-#   # GAP. This is a workaround which adds any missing singletons.
-#   return Length(classes) + Size(Range(cong)) - Sum(classes, Size);
-# end);
-
-# InstallMethod(NonTrivialEquivalenceClasses, "for an equivalence relation",
-# [IsEquivalenceRelation],
-# x -> Filtered(EquivalenceClasses(x), y -> Size(y) > 1));
-
 InstallMethod(NonTrivialEquivalenceClasses, "for IsAnyCongruenceCategory",
 [IsAnyCongruenceCategory],
 function(cong)
@@ -206,7 +196,7 @@ function(cong)
 end);
 
 InstallMethod(EquivalenceRelationLookup, "for an equivalence relation",
-[IsEquivalenceRelation],
+[IsAnyCongruenceCategory],
 function(equiv)
   local S, lookup, class, nr, elm;
   S := Range(equiv);
@@ -382,8 +372,8 @@ InstallMethod(EquivalenceClassOfElement,
 [IsAnyCongruenceCategory, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    Error("the 2nd argument <elm> must belong to the range of the first ",
-          "arg <cong>,");
+    Error("the 2nd argument (a mult. elt.) does not belong to the range ", 
+          "of the 1st argument (a congruence)");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);

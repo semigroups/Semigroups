@@ -169,8 +169,8 @@ gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([1, 3, 4, 1, 3])]);;
 gap> cong2 := SemigroupCongruence(T, pair1, pair2);;
 gap> EquivalenceClassOfElement(cong, Transformation([2, 3, 2, 2, 3, 1]));
-Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
-,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> JoinSemigroupCongruences(cong, cong2);
 Error, cannot form the join of congruences over different semigroups
 gap> IsSubrelation(cong, cong2);
@@ -689,8 +689,8 @@ gap> [F.1, F.2] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
 f the 2nd argument (a right semigroup congruence)
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
-Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
-,
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 
 # A 2-sided example
 gap> F := FreeMonoid(2);;

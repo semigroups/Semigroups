@@ -19,4 +19,3 @@ DeclareCategory("IsReesCongruenceClass",
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
-

@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/congrees.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015                                    Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -64,7 +64,7 @@ function(I)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  type := NewType(fam, IsSemigroupCongruence and IsAttributeStoringRep);
+  type := NewType(fam, IsCongruenceCategory and IsAttributeStoringRep);
   cong := Objectify(type, rec());
   # Set some attributes
   SetSource(cong, S);
@@ -203,7 +203,8 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and a multiplicative element",
-[IsReesCongruence, IsMultiplicativeElement],
+[IsReesCongruence, IsMultiplicativeElement], 
+20, # to beat the method for IsAnyCongruenceCategory
 function(cong, x)
   local is_ideal_class, fam, class;
   # Ensure consistency of representatives
