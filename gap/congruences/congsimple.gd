@@ -60,7 +60,9 @@ SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, IsSimpleSemigroupCongruence),
+  cong := Objectify(NewType(fam, 
+                            IsSimpleSemigroupCongruence
+                            and IsCongruenceCategory),
                     rec(rmscong := rmscong, iso := iso));
   SetSource(cong, S);
   SetRange(cong, S);

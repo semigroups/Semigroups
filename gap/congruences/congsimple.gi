@@ -126,7 +126,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and multiplicative element",
-[IsSimpleSemigroupCongruence, IsMultiplicativeElement],
+[IsSimpleSemigroupCongruence, IsMultiplicativeElement], 100, # TODO(now)
 function(cong, elm)
   local class;
   class := EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso);

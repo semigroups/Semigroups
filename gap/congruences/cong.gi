@@ -195,7 +195,7 @@ function(cong)
   return classes;
 end);
 
-InstallMethod(EquivalenceRelationLookup, "for an equivalence relation",
+InstallMethod(EquivalenceRelationLookup, "for IsAnyCongruenceCategory",
 [IsAnyCongruenceCategory],
 function(equiv)
   local S, lookup, class, nr, elm;
@@ -219,8 +219,8 @@ function(equiv)
 end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
-"for an equivalence relation",
-[IsEquivalenceRelation],
+"for IsAnyCongruenceCategory",
+[IsAnyCongruenceCategory],
 function(equiv)
   local S, lookup, max, dictionary, next, out, new_nr, i;
   S := Range(equiv);
@@ -249,13 +249,8 @@ function(equiv)
 end);
 
 InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-cong -> Set(EquivalenceRelationPartition(cong), Set));
-
-InstallMethod(EquivalenceRelationCanonicalPartition,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
+"for IsAnyCongruenceCategory",
+[IsAnyCongruenceCategory],
 cong -> Set(EquivalenceRelationPartition(cong), Set));
 
 InstallMethod(EquivalenceRelationPartitionWithSingletons,

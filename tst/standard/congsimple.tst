@@ -116,8 +116,8 @@ gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
-Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
-congruence)
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> classx := EquivalenceClassOfElement(cong, x);;
 gap> classy := EquivalenceClassOfElement(cong, y);;
 gap> classz := EquivalenceClassOfElement(cong, z);
@@ -264,7 +264,7 @@ gap> cong2 := SemigroupCongruence(S, []);;
 gap> MeetSemigroupCongruences(cong1, cong2);
 Error, the ranges of the arguments (congruences) do not coincide
 gap> JoinSemigroupCongruences(cong1, cong2);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the join of congruences over different semigroups
 
 # not simple or 0-simple: try next method
 gap> S := OrderEndomorphisms(2);;
