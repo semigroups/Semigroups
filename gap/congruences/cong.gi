@@ -34,6 +34,15 @@ InstallMethod(AnyCongruenceCategory, "for a left congruence category",
 InstallMethod(AnyCongruenceCategory, "for a 2-sided congruence category", 
 [IsCongruenceCategory], C -> IsCongruenceCategory);
 
+InstallMethod(AnyCongruenceString, "for a right congruence category", 
+[IsRightCongruenceCategory], C -> "right");
+
+InstallMethod(AnyCongruenceString, "for a left congruence category", 
+[IsLeftCongruenceCategory], C -> "left");
+
+InstallMethod(AnyCongruenceString, "for a 2-sided congruence category", 
+[IsCongruenceCategory], C -> "2-sided");
+
 ########################################################################
 # 1. Constructors
 ########################################################################
@@ -254,7 +263,8 @@ InstallMethod(EquivalenceRelationCanonicalPartition,
 cong -> Set(EquivalenceRelationPartition(cong), Set));
 
 InstallMethod(EquivalenceRelationPartitionWithSingletons,
-"for IsAnyCongruenceCategory", [IsAnyCongruenceCategory], 100, # TODO check if this is required
+"for IsAnyCongruenceCategory", [IsAnyCongruenceCategory], 
+100, # TODO check if this is required
 function(C)
   local en, partition, lookup, i;
   if not CanComputeFroidurePin(Range(C)) then
@@ -278,17 +288,19 @@ end);
 # 3. Operators
 ########################################################################
 
-BindGlobal("_GenericCongIn",
-function(string, pair, cong)
-  local S;
-  Assert(1, IsString(string));
-  Assert(1, IsDenseList(pair));
-  Assert(1, IsLeftSemigroupCongruence(cong)
-            or IsRightSemigroupCongruence(cong));
-  S := Range(cong);
+InstallMethod(\in,
+"for homog. list and IsAnyCongruenceCategory",
+[IsHomogeneousList, IsAnyCongruenceCategory],
+function(pair, cong)
+  local S, string;
+
   if Size(pair) <> 2 then
     ErrorNoReturn("the 1st argument (a list) does not have length 2");
-  elif not (pair[1] in S and pair[2] in S) then
+  fi;
+  
+  S      := Range(cong);
+  string := AnyCongruenceString(cong);
+  if not (pair[1] in S and pair[2] in S) then
     ErrorNoReturn("the items in the 1st argument (a list) do not all belong to ",
                   "the range of the 2nd argument (a ", string, " semigroup ",
                   "congruence)");
@@ -297,16 +309,6 @@ function(string, pair, cong)
   fi;
   return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
 end);
-
-InstallMethod(\in,
-"for dense list and left semigroup congruence",
-[IsDenseList, IsLeftSemigroupCongruence],
-{pair, cong} -> _GenericCongIn("left", pair, cong));
-
-InstallMethod(\in,
-"for dense list and right semigroup congruence",
-[IsDenseList, IsRightSemigroupCongruence],
-{pair, cong} -> _GenericCongIn("right", pair, cong));
 
 BindGlobal("_GenericCongEquality",
 function(cong1, cong2)
@@ -419,7 +421,8 @@ InstallMethod(\*, "for two congruence classes",
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorNoReturn("the arguments are not classes of the same congruence");
+    ErrorNoReturn("the arguments (cong. classes) are not classes of the same ",
+                  "congruence");
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
                                      Representative(class1) *
@@ -446,6 +449,7 @@ function(class1, class2)
     and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
 end);
 
+# TODO move or remove
 InstallMethod(\in,
 "for multiplicative element and congruence class",
 [IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
@@ -459,9 +463,10 @@ InstallMethod(\in,
 "for a mult. elt. and IsAnyCongruenceClass",
 [IsMultiplicativeElement, IsAnyCongruenceClass],
 function(elm, class)
-  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+  local cong;
+  cong := EquivalenceClassRelation(class);
+  return elm in Range(cong) and [elm, Representative(class)] in cong;
 end);
-
 
 BindGlobal("_ViewCongObj",
 function(string, C)

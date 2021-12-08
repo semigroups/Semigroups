@@ -165,10 +165,11 @@ gap> cong := SemigroupCongruence(S,
 gap> [2] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [PartialPerm([4], [4]), 42] in cong;
-Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `in' on 2 arguments
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
-Error, Representative must lie in underlying set of the relation
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 
 # Congruence Class Multiplication: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -183,7 +184,7 @@ gap> cong2 := SemigroupCongruence(S,
 gap> x := EquivalenceClassOfElement(cong1, PartialPerm([1, 2, 3], [2, 5, 3]));;
 gap> y := EquivalenceClassOfElement(cong2, PartialPerm([1, 2, 4], [3, 1, 5]));;
 gap> x * y;
-Error, the arguments are not classes of the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 
 # Non-inverse semigroups
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),

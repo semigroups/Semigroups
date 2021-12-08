@@ -176,8 +176,8 @@ gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
 gap> latt := LatticeOfRightCongruences(S, restriction);
-<poset of 4 congruences over <transformation semigroup of size 11, degree 3 
- with 2 generators>>
+<poset of 4 congruences over <transformation semigroup of degree 3 with 2 
+ generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 1, 4 ] ]
 gap> congs := CongruencesOfPoset(latt);;
@@ -187,14 +187,14 @@ gap> IsDuplicateFreeList(congs);
 true
 gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
-<poset of 2 congruences over <transformation semigroup of size 11, degree 3 
- with 2 generators>>
+<poset of 2 congruences over <transformation semigroup of degree 3 with 2 
+ generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
-<poset of 1 congruences over <transformation semigroup of size 11, degree 3 
- with 2 generators>>
+<poset of 1 congruences over <transformation semigroup of degree 3 with 2 
+ generators>>
 gap> InNeighbours(latt);
 [ [ 1 ] ]
 

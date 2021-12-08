@@ -56,7 +56,7 @@ gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+f the 2nd argument (a 2-sided semigroup congruence)
 
 # SemigroupCongruence: Infinite semigroup
 gap> S := FreeSemigroup(2);;
@@ -326,7 +326,7 @@ gap> class1a * class1b;
 gap> class1b * class1a;
 <congruence class of Transformation( [ 4, 4, 4, 4 ] )>
 gap> class1a * class2;
-Error, the arguments are not classes of the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> class1a = class1b;
 true
 gap> class1a = class2;

@@ -50,6 +50,7 @@ DeclareCategory("IsRightCongruenceCategory",
                 IsRightMagmaCongruence);
 
 DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
+DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
 

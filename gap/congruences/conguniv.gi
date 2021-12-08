@@ -18,7 +18,7 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
   cong := Objectify(NewType(fam,
-                            IsSemigroupCongruence and IsAttributeStoringRep),
+                            IsCongruenceCategory and IsAttributeStoringRep),
                     rec());
   SetSource(cong, S);
   SetRange(cong, S);

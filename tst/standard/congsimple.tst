@@ -98,7 +98,7 @@ gap> [x, y, z] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+f the 2nd argument (a 2-sided semigroup congruence)
 
 # SimpleCongTest5: Congruence classes
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),

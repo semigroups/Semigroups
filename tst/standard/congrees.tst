@@ -115,7 +115,7 @@ gap> [x, y, y] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [x, z] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+f the 2nd argument (a 2-sided semigroup congruence)
 gap> t := Transformation([1, 3, 4, 1, 4]);;   # in i
 gap> [t, y] in cong;
 true

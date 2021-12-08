@@ -103,9 +103,9 @@ gap> classes := Set(EquivalenceClasses(v));
 gap> EquivalenceClasses(u)[1] in classes;
 false
 gap> classes[1] * EquivalenceClasses(u)[1];
-Error, the arguments are not classes of the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> EquivalenceClasses(u)[1] * classes[1];
-Error, the arguments are not classes of the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];
@@ -307,7 +307,7 @@ gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+f the 2nd argument (a 2-sided semigroup congruence)
 
 # Classes
 gap> S := Semigroup([
@@ -347,8 +347,7 @@ gap> class := EquivalenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
 gap> Transformation([6, 2, 3, 4, 1, 1]) in class;
-Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+false
 gap> Size(class);
 89
 
@@ -687,7 +686,7 @@ gap> [M.1, M.2, M.2 ^ 2] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [F.1, F.2] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
+f the 2nd argument (a 2-sided semigroup congruence)
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a congruence)
