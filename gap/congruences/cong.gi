@@ -214,6 +214,7 @@ function(equiv)
     ErrorNoReturn("the range of the argument (an equivalence relation) ",
                   "is not a finite semigroup");
   elif not CanComputeFroidurePin(S) then
+    # PositionCanonical requires CanComputeFroidurePin
     TryNextMethod();
   fi;
 
@@ -375,6 +376,45 @@ InstallMethod(IsSuperrelation, "for semigroup congruences",
 ########################################################################
 # 4. Congruence classes
 ########################################################################
+
+InstallMethod(EquivalenceClassOfElement,
+"for IsAnyCongruenceCategory and multiplicative element",
+[IsAnyCongruenceCategory, IsMultiplicativeElement],
+function(cong, elm)
+  if not elm in Range(cong) then
+    Error("the 2nd argument <elm> must belong to the range of the first ",
+          "arg <cong>,");
+  fi;
+  return EquivalenceClassOfElementNC(cong, elm);
+end);
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for IsAnyCongruenceCategory and multiplicative element",
+[IsAnyCongruenceCategory, IsMultiplicativeElement],
+function(cong, elm)
+  local filt, class;
+
+  filt := IsAnyCongruenceClass;
+
+  if IsCongruenceCategory(cong) then
+    filt := filt and IsCongruenceClass;
+  elif IsLeftCongruenceCategory(cong) then
+    filt := filt and IsLeftCongruenceClass;
+  else
+    Assert(1, IsRightCongruenceCategory(cong));
+    filt := filt and IsRightCongruenceClass;
+  fi;
+
+  class := Objectify(NewType(FamilyObj(Range(cong)), filt), rec());
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, elm);
+  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
+    SetIsFinite(class, true);
+  fi;
+
+  return class;
+end);
 
 # Multiplication for congruence classes: only makes sense for 2-sided
 InstallMethod(\*, "for two congruence classes",

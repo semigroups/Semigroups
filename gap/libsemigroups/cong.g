@@ -389,46 +389,7 @@ end);
 #############################################################################
 
 # TODO move to cong.gi
-InstallMethod(EquivalenceClassOfElement,
-"for CanComputeCppCongruence and multiplicative element",
-[CanComputeCppCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  if not elm in Range(cong) then
-    Error("the 2nd argument <elm> must belong to the range of the first ",
-          "arg <cong>,");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
-end);
-
 # TODO move to cong.gi
-InstallMethod(EquivalenceClassOfElementNC,
-"for CanComputeCppCongruence and multiplicative element",
-[CanComputeCppCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  local filt, class;
-
-  filt := IsAnyCongruenceClass;
-
-  if IsCongruenceCategory(cong) then
-    filt := filt and IsCongruenceClass;
-  elif IsLeftCongruenceCategory(cong) then
-    filt := filt and IsLeftCongruenceClass;
-  elif IsRightCongruenceCategory(cong) then
-    filt := filt and IsRightCongruenceClass;
-  else
-    Error("Shouldn't have reached here!");
-  fi;
-
-  class := Objectify(NewType(FamilyObj(Range(cong)), filt), rec());
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, elm);
-  if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-    SetIsFinite(class, true);
-  fi;
-
-  return class;
-end);
 
 # TODO move to cong.gi
 InstallMethod(\in,
