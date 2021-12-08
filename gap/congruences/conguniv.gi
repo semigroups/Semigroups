@@ -222,7 +222,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for universal semigroup congruence and associative element",
-[IsUniversalSemigroupCongruence, IsMultiplicativeElement],
+[IsUniversalSemigroupCongruence, IsMultiplicativeElement], 100,
 function(cong, elm)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(elm));
@@ -248,7 +248,8 @@ InstallMethod(\*,
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("the arguments (cong. classes) are not classes of the same ",
+                  "congruence");
   fi;
   return c1;
 end);

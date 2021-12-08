@@ -26,18 +26,18 @@
 
 ########################################################################
 # Categories
-# 
+#
 # IsLeft/Right/SemigroupCongruence is a property, and so we introduce a
 # category for each type of congruence. Many operations are agnostic to the
 # "handedness" of the congruence, and so we also introduce the category
-# IsAnyCongruenceCategory (meaning a left, right or 2-sided congruence). 
+# IsAnyCongruenceCategory (meaning a left, right or 2-sided congruence).
 #
 ########################################################################
 
-DeclareCategory("IsAnyCongruenceCategory", 
-                IsEquivalenceRelation, 
-                Maximum(RankFilter(IsMagmaCongruence), 
-                        RankFilter(IsLeftMagmaCongruence), 
+DeclareCategory("IsAnyCongruenceCategory",
+                IsEquivalenceRelation,
+                Maximum(RankFilter(IsMagmaCongruence),
+                        RankFilter(IsLeftMagmaCongruence),
                         RankFilter(IsRightMagmaCongruence)));
 DeclareCategory("IsCongruenceCategory",
                 IsAnyCongruenceCategory and IsSemigroupCongruence and
@@ -57,10 +57,6 @@ DeclareCategory("IsAnyCongruenceClass",
 ########################################################################
 # Congruences
 ########################################################################
-
-# These are equivalence relations
-InstallTrueMethod(IsEquivalenceRelation, IsLeftSemigroupCongruence);
-InstallTrueMethod(IsEquivalenceRelation, IsRightSemigroupCongruence);
 
 # Flexible functions for creating congruences
 DeclareGlobalFunction("SemigroupCongruence");
