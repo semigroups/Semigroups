@@ -1759,7 +1759,9 @@ gap> cong := SemigroupCongruence(F, rels);
 gap> NrEquivalenceClasses(cong);
 infinity
 gap> EquivalenceRelationPartitionWithSingletons(cong);
-Error, the argument (a congruence) must have finite range
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `EquivalenceRelationPartitionWithSinglet\
+ons' on 1 arguments
 gap> EquivalenceRelationLookup(cong);
 Error, the argument (a congruence) must have finite range
 

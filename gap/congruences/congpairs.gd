@@ -10,12 +10,16 @@
 ## This file contains functions for any semigroup congruence with generating
 ## pairs.
 
-
 DeclareAttribute("GeneratingPairsOfAnyCongruence", IsAnyCongruenceCategory);
 
-DeclareOperation("AnyCongruenceByGeneratingPairs", [IsSemigroup, IsHomogeneousList, IsFunction]);
+DeclareOperation("AnyCongruenceByGeneratingPairs",
+                 [IsSemigroup, IsHomogeneousList, IsFunction]);
 
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
 DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
+
+DeclareOperation("JoinSemigroupCongruences",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
+ IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence]);

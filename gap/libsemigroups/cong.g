@@ -30,7 +30,7 @@ DeclareOperation("CongruenceLessNC",
                   IsMultiplicativeElement,
                   IsMultiplicativeElement]);
 
-InstallTrueMethod(CanComputeCppCongruences, 
+InstallTrueMethod(CanComputeCppCongruences,
                   IsSemigroup and CanComputeFroidurePin);
 
 InstallTrueMethod(CanComputeCppCongruences, IsFpSemigroup);
@@ -46,16 +46,16 @@ function(C)
 
   if IsCongruenceCategory(C) then
     return "twosided";
-  elif IsLeftCongruenceCategory(C) then 
+  elif IsLeftCongruenceCategory(C) then
     return "left";
-  elif IsRightCongruenceCategory(C) then 
+  elif IsRightCongruenceCategory(C) then
     return "right";
   fi;
 end);
 
-InstallMethod(SemigroupCongruenceByGeneratingPairs, 
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList], 
+[IsSemigroup and CanComputeCppCongruences, IsList],
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
@@ -65,7 +65,7 @@ end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList], 
+[IsSemigroup and CanComputeCppCongruences, IsList],
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
@@ -75,7 +75,7 @@ end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList], 
+[IsSemigroup and CanComputeCppCongruences, IsList],
 RankFilter(IsList and IsEmpty),
 function(S, pairs)
   local filt;
@@ -336,111 +336,7 @@ end);
 ## Methods NOT using the libsemigroups object directly
 ###########################################################################
 
-# TODO move to cong.gi
-InstallMethod(\=,
-"for two congruence with CanComputeCppCongruence",
-[CanComputeCppCongruence, CanComputeCppCongruence],
-function(c1, c2)
-  if _KindString(c1) = _KindString(c2) then
-    return Range(c1) = Range(c2)
-           and ForAll(GeneratingPairsOfAnyCongruence(c1), pair -> pair in c2)
-           and ForAll(GeneratingPairsOfAnyCongruence(c2), pair -> pair in c1);
-  fi;
-  TryNextMethod();
-end);
 
-# TODO move to cong.gi
-InstallMethod(EquivalenceRelationPartitionWithSingletons,
-"for CanComputeCppCongruence",
-[CanComputeCppCongruence], 100,
-function(C)
-  local en, partition, lookup, i;
-  if not IsFinite(Range(C)) then
-    Error("the argument (a congruence) must have finite range");
-  fi;
-  en        := EnumeratorCanonical(Range(C));
-  partition := List([1 .. NrEquivalenceClasses(C)], x -> []);
-  lookup    := EquivalenceRelationCanonicalLookup(C);
-  for i in [1 .. Length(lookup)] do
-    Add(partition[lookup[i]], en[i]);
-    # TODO could also just return numbers
-  od;
-
-  return partition;
-end);
-
-# TODO move to cong.gi
-InstallMethod(NonTrivialEquivalenceClasses,
-"for CanComputeCppCongruence",
-[CanComputeCppCongruence],
-function(cong)
-  local part, nr_classes, classes, i;
-  part := EquivalenceRelationPartition(cong);
-  nr_classes := Length(part);
-  classes := EmptyPlist(nr_classes);
-  for i in [1 .. nr_classes] do
-    classes[i] := EquivalenceClassOfElementNC(cong, part[i][1]);
-    SetAsList(classes[i], part[i]);
-  od;
-  return classes;
-end);
-
-# TODO move to congpair.gi
-InstallMethod(IsSubrelation,
-"for two CanComputeCppCongruence",
-[CanComputeCppCongruence, CanComputeCppCongruence],
-function(cong1, cong2)
-  # Only valid for certain combinations of types
-  if _KindString(cong1) <> _KindString(cong2) 
-      and _KindString(cong1) <> "twosided" then
-    TryNextMethod();
-  elif Range(cong1) <> Range(cong2) then
-    Error("the 1st and 2nd arguments are congruences over different",
-          " semigroups");
-  fi;
-
-  # Test whether cong1 contains all the pairs in cong2
-  return ForAll(GeneratingPairsOfAnyCongruence(cong2),
-                pair -> CongruenceTestMembershipNC(cong1, pair[1], pair[2]));
-end);
-
-# TODO move to congpair.gi
-BindGlobal("_JoinCongruences",
-function(constructor, c1, c2)
-  local pairs;
-
-  if Range(c1) <> Range(c2) then
-    Error("cannot form the join of congruences over different semigroups,");
-  elif c1 = c2 then
-    return c1;
-  fi;
-  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(c1)),
-                         ShallowCopy(GeneratingPairsOfAnyCongruence(c2)));
-  return constructor(Range(c1), pairs);
-end);
-
-# TODO move to congpair.gi
-# TODO should the following 3 methods require
-# HasGeneratingPairsOfRightSemigroupCongruence? or analogue
-InstallMethod(JoinSemigroupCongruences,
-"for 2-sided semigroup congruences with CanComputeCppCongruence",
-[IsSemigroupCongruence and CanComputeCppCongruence,
- IsSemigroupCongruence and CanComputeCppCongruence],
-{c1, c2} -> _JoinCongruences(SemigroupCongruence, c1, c2));
-
-# TODO move to congpair.gi
-InstallMethod(JoinLeftSemigroupCongruences,
-"for left semigroup congruences with CanComputeCppCongruence",
-[IsLeftSemigroupCongruence and CanComputeCppCongruence,
- IsLeftSemigroupCongruence and CanComputeCppCongruence],
-{c1, c2} -> _JoinCongruences(LeftSemigroupCongruence, c1, c2));
-
-# TODO move to congpair.gi
-InstallMethod(JoinRightSemigroupCongruences,
-"for right semigroup congruences with CanComputeCppCongruence",
-[IsRightSemigroupCongruence and CanComputeCppCongruence,
- IsRightSemigroupCongruence and CanComputeCppCongruence],
-{c1, c2} -> _JoinCongruences(RightSemigroupCongruence, c1, c2));
 
 # Don't move to cong.gi
 

@@ -10,20 +10,23 @@
 ## This file contains functions for any congruence of a semigroup with TODO
 #############################################################################
 
-InstallMethod(GeneratingPairsOfAnyCongruence,
-"for a 2-sided congruence with known generating pairs",
-[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
-GeneratingPairsOfSemigroupCongruence);
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
+                       IsCongruenceCategory 
+                         and HasGeneratingPairsOfMagmaCongruence, 
+                       0, 
+                       GeneratingPairsOfMagmaCongruence);
 
-InstallMethod(GeneratingPairsOfAnyCongruence,
-"for a left congruence with known generating pairs",
-[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
-GeneratingPairsOfLeftSemigroupCongruence);
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
+                       IsLeftCongruenceCategory
+                         and HasGeneratingPairsOfLeftMagmaCongruence, 
+                       0, 
+                       GeneratingPairsOfLeftMagmaCongruence);
 
-InstallMethod(GeneratingPairsOfAnyCongruence,
-"for a right congruence with known generating pairs",
-[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
-GeneratingPairsOfRightSemigroupCongruence);
+InstallImmediateMethod(GeneratingPairsOfAnyCongruence, 
+                       IsRightCongruenceCategory
+                         and HasGeneratingPairsOfRightMagmaCongruence, 
+                       0, 
+                       GeneratingPairsOfRightMagmaCongruence);
 
 #############################################################################
 # Constructor
@@ -189,4 +192,72 @@ function(cong)
   Print(" with ",
         Size(GeneratingPairsOfSemigroupCongruence(cong)),
         " generating pairs>");
+end);
+
+########################################################################
+# Comparison operators
+########################################################################
+
+InstallMethod(\=,
+"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+ IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
+function(c1, c2)
+  if AnyCongruenceCategory(c1) = AnyCongruenceCategory(c2) then
+    return Range(c1) = Range(c2)
+           and ForAll(GeneratingPairsOfAnyCongruence(c1), pair -> pair in c2)
+           and ForAll(GeneratingPairsOfAnyCongruence(c2), pair -> pair in c1);
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsSubrelation,
+"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence",
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+ IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
+function(c1, c2)
+  # Only valid for certain combinations of types
+  if AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2) 
+      and AnyCongruenceCategory(c1) <> IsCongruenceCategory then
+    TryNextMethod();
+  elif Range(c1) <> Range(c2) then
+    Error("the 1st and 2nd arguments are congruences over different",
+          " semigroups");
+  fi;
+
+  # Test whether c1 contains all the pairs in c2
+  return ForAll(GeneratingPairsOfAnyCongruence(c2),
+                pair -> CongruenceTestMembershipNC(c1, pair[1], pair[2]));
+end);
+
+########################################################################
+# Algebraic operators
+########################################################################
+
+# TODO move to congpair.gi
+InstallMethod(JoinSemigroupCongruences,
+"for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence", 
+[IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
+ IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
+function(c1, c2)
+  local Constructor, pairs;
+  if Range(c1) <> Range(c2) then
+    Error("cannot form the join of congruences over different semigroups");
+  elif AnyCongruenceCategory(c1) <> AnyCongruenceCategory(c2) then
+    Error("cannot form the join of congruences of different handedness");
+  elif c1 = c2 then
+    return c1;
+  fi;
+
+  if IsCongruenceCategory(c1) then 
+    Constructor := SemigroupCongruenceByGeneratingPairs;
+  elif IsLeftCongruenceCategory(c1) then
+    Constructor := LeftSemigroupCongruenceByGeneratingPairs;
+  else 
+    Assert(1, IsRightCongruenceCategory(c1));
+    Constructor := RightSemigroupCongruenceByGeneratingPairs;
+  fi;
+  pairs := Concatenation(ShallowCopy(GeneratingPairsOfAnyCongruence(c1)),
+                         ShallowCopy(GeneratingPairsOfAnyCongruence(c2)));
+  return Constructor(Range(c1), pairs);
 end);

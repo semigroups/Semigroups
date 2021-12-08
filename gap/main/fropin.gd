@@ -17,6 +17,13 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+DeclareAttribute("GapFroidurePin", IsSemigroup, "mutable");
+DeclareProperty("CanComputeGapFroidurePin", IsSemigroup);
+
+DeclareProperty("CanComputeFroidurePin", IsSemigroup);
+DeclareOperation("HasFroidurePin", [IsSemigroup]);
+
+#TODO(now) change IsSemigroup -> IsSemigroup and CanComputeFroidurePin
 DeclareAttribute("AsListCanonical", IsSemigroup);
 DeclareOperation("PositionCanonical",
                  [IsSemigroup, IsMultiplicativeElement]);
@@ -46,11 +53,6 @@ DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
 DeclareAttribute("RulesOfSemigroup", IsSemigroup);
 
-DeclareAttribute("GapFroidurePin", IsSemigroup, "mutable");
-DeclareProperty("CanComputeGapFroidurePin", IsSemigroup);
-
-DeclareProperty("CanComputeFroidurePin", IsSemigroup);
-DeclareOperation("HasFroidurePin", [IsSemigroup]);
 
 DeclareOperation("IdempotentsSubset",
                  [IsSemigroup and CanComputeFroidurePin, IsHomogeneousList]);
