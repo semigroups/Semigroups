@@ -172,7 +172,7 @@ gap> EquivalenceClassOfElement(cong, Transformation([2, 3, 2, 2, 3, 1]));
 Error, the 2nd argument <elm> must belong to the range of the first arg <cong>\
 ,
 gap> JoinSemigroupCongruences(cong, cong2);
-Error, cannot form the join of congruences over different semigroups,
+Error, cannot form the join of congruences over different semigroups
 gap> IsSubrelation(cong, cong2);
 Error, the 1st and 2nd arguments are congruences over different semigroups
 gap> cong := LeftSemigroupCongruence(S, pair1, pair2);;
@@ -905,7 +905,7 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinSemigroupCongruences(cong1, cong3);
-Error, cannot form the join of congruences over different semigroups,
+Error, cannot form the join of congruences over different semigroups
 
 # Joining two left congs together
 gap> F := FreeMonoid(2);;
@@ -933,7 +933,9 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinLeftSemigroupCongruences(cong1, cong3);
-Error, cannot form the join of congruences over different semigroups,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `JoinLeftSemigroupCongruences' on 2 argu\
+ments
 
 # Joining two right congs together
 gap> F := FreeMonoid(2);;
@@ -961,7 +963,9 @@ true
 gap> M := F / [[F.1, F.2]];;
 gap> cong3 := SemigroupCongruence(M, [M.1, M.2 ^ 10]);;
 gap> JoinRightSemigroupCongruences(cong1, cong3);
-Error, cannot form the join of congruences over different semigroups,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `JoinRightSemigroupCongruences' on 2 arg\
+uments
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);

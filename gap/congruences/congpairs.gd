@@ -20,6 +20,6 @@ DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
 DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
 
-DeclareOperation("JoinSemigroupCongruences",
+DeclareOperation("JoinAnyCongruences",
 [IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence,
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence]);

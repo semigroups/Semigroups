@@ -234,8 +234,7 @@ end);
 # Algebraic operators
 ########################################################################
 
-# TODO move to congpair.gi
-InstallMethod(JoinSemigroupCongruences,
+InstallMethod(JoinAnyCongruences,
 "for IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence", 
 [IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence, 
  IsAnyCongruenceCategory and HasGeneratingPairsOfAnyCongruence],
@@ -261,3 +260,21 @@ function(c1, c2)
                          ShallowCopy(GeneratingPairsOfAnyCongruence(c2)));
   return Constructor(Range(c1), pairs);
 end);
+
+InstallMethod(JoinSemigroupCongruences, 
+"for a semigroup congruence with known generating pairs",
+[IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence, 
+ IsCongruenceCategory and HasGeneratingPairsOfMagmaCongruence],
+JoinAnyCongruences);
+
+InstallMethod(JoinLeftSemigroupCongruences, 
+"for a semigroup left congruence with known generating pairs",
+[IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence, 
+ IsLeftCongruenceCategory and HasGeneratingPairsOfLeftMagmaCongruence],
+JoinAnyCongruences);
+
+InstallMethod(JoinRightSemigroupCongruences, 
+"for a semigroup Right congruence with known generating pairs",
+[IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence, 
+ IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
+JoinAnyCongruences);

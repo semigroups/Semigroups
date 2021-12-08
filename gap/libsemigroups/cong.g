@@ -333,12 +333,9 @@ function(C)
 end);
 
 ###########################################################################
-## Methods NOT using the libsemigroups object directly
+## Methods NOT using the libsemigroups object directly but that use an
+## operation or function that only applies to CanComputeCppCongruence
 ###########################################################################
-
-
-
-# Don't move to cong.gi
 
 InstallMethod(EquivalenceRelationLookup, "for CanComputeCppCongruence",
 [CanComputeCppCongruence], 100,
@@ -357,6 +354,7 @@ function(C)
 end);
 
 # TODO refactor
+# Not sure if this needs to be here or not
 InstallMethod(ImagesElm,
 "for CanComputeCppCongruence and a multiplicative element",
 [CanComputeCppCongruence, IsMultiplicativeElement],

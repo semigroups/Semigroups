@@ -34,7 +34,11 @@
 #
 ########################################################################
 
-DeclareCategory("IsAnyCongruenceCategory", IsEquivalenceRelation);
+DeclareCategory("IsAnyCongruenceCategory", 
+                IsEquivalenceRelation, 
+                Maximum(RankFilter(IsMagmaCongruence), 
+                        RankFilter(IsLeftMagmaCongruence), 
+                        RankFilter(IsRightMagmaCongruence)));
 DeclareCategory("IsCongruenceCategory",
                 IsAnyCongruenceCategory and IsSemigroupCongruence and
                 IsMagmaCongruence);

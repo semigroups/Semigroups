@@ -190,7 +190,7 @@ gap> CongruencesOfPoset(latt);
      of size 3, degree 2 with 2 generators> with 0 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <regular transformation monoid 
+  <semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs>, 

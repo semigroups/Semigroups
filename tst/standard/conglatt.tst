@@ -166,8 +166,8 @@ gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 >                                    Transformation([2, 2, 2]),
 >                                    Transformation([3, 3, 3])]);;
 gap> latt := LatticeOfLeftCongruences(S, restriction);
-<poset of 5 congruences over <transformation semigroup of size 11, degree 3 
- with 2 generators>>
+<poset of 5 congruences over <transformation semigroup of degree 3 with 2 
+ generators>>
 gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 2, 3, 4, 5 ] ]
 gap> OutNeighbours(latt);

@@ -369,15 +369,7 @@ function(c1, c2)
 end);
 
 InstallMethod(IsSuperrelation, "for semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
-{C1, C2} -> IsSubrelation(C2, C1));
-
-InstallMethod(IsSuperrelation, "for left semigroup congruences",
-[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
-{C1, C2} -> IsSubrelation(C2, C1));
-
-InstallMethod(IsSuperrelation, "for right semigroup congruences",
-[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
+[IsAnyCongruenceCategory, IsAnyCongruenceCategory],
 {C1, C2} -> IsSubrelation(C2, C1));
 
 ########################################################################
