@@ -152,8 +152,8 @@ gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> ttrace := List(Idempotents(S), e -> [e]);;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, ttrace);;
 gap> ImagesElm(cong, (1, 5, 2));
-Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+Error, the 2nd argument (a mult. elt. with inverse) does not belong to the ran\
+ge of the 1st argument (a congruence)
 
 # \in, EquivalenceClassOfElement: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),

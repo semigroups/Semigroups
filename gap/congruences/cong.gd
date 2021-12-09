@@ -49,7 +49,8 @@ DeclareCategory("IsRightCongruenceCategory",
 DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
 DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep);
+                IsEquivalenceClass and IsAttributeStoringRep, 
+                2); # to beat IsCongruenceClass
 
 ########################################################################
 # Congruences

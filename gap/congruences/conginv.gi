@@ -15,17 +15,23 @@
 ## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
 ##
 
+# TODO use a congruence on the semilattice of idempotents for the trace,
+# instead of traceBlocks and traceLookup.
+
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
 function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
-  # Check that the kernel is an inverse subsemigroup
-  if not IsInverseSubsemigroup(S, kernel) then
+  if not IsInverseSemigroup(S)
+    and IsMultiplicativeElementWithInverseCollection(S) then
+    ErrorNoReturn("the 1st argument is not an inverse ",
+                  "semigroup with inverse op");
+  elif not IsInverseSubsemigroup(S, kernel) then
+    # Check that the kernel is an inverse subsemigroup
     ErrorNoReturn("the 2nd argument is not an inverse ",
                   "subsemigroup of the 1st argument (an inverse semigroup)");
-  fi;
   # CHECK KERNEL IS NORMAL:
-  # (1) Must contain all the idempotents of S
-  if NrIdempotents(kernel) <> NrIdempotents(S) then
+  elif NrIdempotents(kernel) <> NrIdempotents(S) then
+    # (1) Must contain all the idempotents of S
     ErrorNoReturn("the 2nd argument (an inverse semigroup) does not contain ",
                   "all of the idempotents of the 1st argument (an inverse",
                   " semigroup)");
@@ -133,13 +139,14 @@ end);
 
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and multiplicative element",
-[IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace,
+ IsMultiplicativeElementWithInverse],
 function(cong, elm)
   local S, images, e, b;
   S := Range(cong);
   if not elm in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
-                  "the range of the 1st argument (a congruence)");
+    ErrorNoReturn("the 2nd argument (a mult. elt. with inverse) does not ",
+                  "belong to the range of the 1st argument (a congruence)");
   fi;
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
@@ -250,7 +257,7 @@ InstallMethod(EquivalenceClassOfElementNC,
 function(cong, elm)
   local class;
   class := Objectify(InverseSemigroupCongruenceClassByKernelTraceType(cong),
-                     rec(rep := elm));
+                     rec());
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
@@ -263,44 +270,6 @@ InstallMethod(InverseSemigroupCongruenceClassByKernelTraceType,
 function(cong)
   return NewType(FamilyObj(Range(cong)),
                  IsInverseSemigroupCongruenceClassByKernelTrace);
-end);
-
-# TODO(now) remove this to congruences/cong.gi
-InstallMethod(\=,
-"for two inverse semigroup congruence classes",
-[IsInverseSemigroupCongruenceClassByKernelTrace,
- IsInverseSemigroupCongruenceClassByKernelTrace],
-function(c1, c2)
-  return(EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
-         [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
-end);
-
-# TODO(now) remove this to congruences/cong.gi
-InstallMethod(Enumerator, "for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClassByKernelTrace], AsList);
-
-# TODO(now) remove this to congruences/cong.gi
-InstallMethod(AsList,
-"for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClassByKernelTrace],
-function(class)
-  return ImagesElm(EquivalenceClassRelation(class), class!.rep);
-end);
-
-# TODO(now) remove this to congruences/cong.gi
-InstallMethod(AsSSortedList,
-"for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClassByKernelTrace],
-function(class)
-  return SSortedList(AsList(class));
-end);
-
-# TODO(now) remove this to congruences/cong.gi
-InstallMethod(Size,
-"for inverse semigroup congruence class",
-[IsInverseSemigroupCongruenceClassByKernelTrace],
-function(class)
-  return Size(AsList(class));
 end);
 
 InstallMethod(TraceOfSemigroupCongruence,

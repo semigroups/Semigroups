@@ -26,8 +26,8 @@ DeclareAttribute("InverseSemigroupCongruenceClassByKernelTraceType",
 
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
-                IsAnyCongruenceClass and IsCongruenceClass and IsAttributeStoringRep and
-                IsMultiplicativeElement);
+                IsAnyCongruenceClass and IsCongruenceClass and
+                IsAttributeStoringRep and IsMultiplicativeElement);
 
 # Special congruences
 DeclareAttribute("MinimumGroupCongruence",
