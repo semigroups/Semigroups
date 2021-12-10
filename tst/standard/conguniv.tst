@@ -183,9 +183,9 @@ true
 gap> badcong := SemigroupCongruence(T, [Transformation([1, 2, 4, 1]),
 >                                       Transformation([1, 1, 1, 1])]);;
 gap> JoinSemigroupCongruences(uni, badcong);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the join of congruences over different semigroups
 gap> JoinSemigroupCongruences(badcong, uni);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the join of congruences over different semigroups
 gap> MeetSemigroupCongruences(uni, badcong);
 Error, cannot form the meet of congruences over different semigroups
 gap> MeetSemigroupCongruences(badcong, uni);

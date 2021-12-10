@@ -807,7 +807,8 @@ InstallMethod(JoinSemigroupCongruences,
 function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the join of congruences over different",
+                  " semigroups");
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));
@@ -893,7 +894,8 @@ InstallMethod(MeetSemigroupCongruences,
 function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the meet of congruences over different",
+                  " semigroups");
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);

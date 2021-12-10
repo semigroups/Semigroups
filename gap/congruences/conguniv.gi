@@ -166,7 +166,8 @@ InstallMethod(JoinSemigroupCongruences,
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the join of congruences over different",
+                  " semigroups");
   fi;
   return ucong;
 end);
@@ -176,7 +177,8 @@ InstallMethod(JoinSemigroupCongruences,
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the join of congruences over different",
+                  " semigroups");
   fi;
   return ucong;
 end);
@@ -186,7 +188,8 @@ InstallMethod(MeetSemigroupCongruences,
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the meet of congruences over different",
+                  " semigroups");
   fi;
   return cong;
 end);
@@ -196,7 +199,8 @@ InstallMethod(MeetSemigroupCongruences,
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
-    ErrorNoReturn("the ranges of the arguments (congruences) do not coincide");
+    ErrorNoReturn("cannot form the meet of congruences over different",
+                  " semigroups");
   fi;
   return cong;
 end);
