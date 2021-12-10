@@ -15,21 +15,21 @@
 ## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
 ##
 
-# TODO use a congruence on the semilattice of idempotents for the trace,
+# TODO use a congruence on the semilattice of idempotents for the trace,
 # instead of traceBlocks and traceLookup.
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
 function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   if not IsInverseSemigroup(S)
-    and IsMultiplicativeElementWithInverseCollection(S) then
+      and IsMultiplicativeElementWithInverseCollection(S) then
     ErrorNoReturn("the 1st argument is not an inverse ",
                   "semigroup with inverse op");
   elif not IsInverseSubsemigroup(S, kernel) then
     # Check that the kernel is an inverse subsemigroup
     ErrorNoReturn("the 2nd argument is not an inverse ",
                   "subsemigroup of the 1st argument (an inverse semigroup)");
-  # CHECK KERNEL IS NORMAL:
+    # CHECK KERNEL IS NORMAL:
   elif NrIdempotents(kernel) <> NrIdempotents(S) then
     # (1) Must contain all the idempotents of S
     ErrorNoReturn("the 2nd argument (an inverse semigroup) does not contain ",

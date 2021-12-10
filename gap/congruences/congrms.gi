@@ -1306,7 +1306,7 @@ end);
 
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for Rees matrix semigroup and list of pairs",
-[IsReesMatrixSemigroup, IsHomogeneousList], 100, #FIXME
+[IsReesMatrixSemigroup, IsHomogeneousList], 100,  # FIXME
 function(S, pairs)
   local g, mat, colLookup, rowLookup, n, find, union, normalise, colBlocks,
   rowBlocks, cong, pair, v, j, i, u;
@@ -1410,7 +1410,7 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a Rees 0-matrix semigroup and list of pairs",
 [IsReesZeroMatrixSemigroup, IsHomogeneousList],
-100, # FIXME
+100,  # FIXME
 function(S, pairs)
   local g, mat, colLookup, rowLookup, n, u, i, cong, pair, v, j;
 

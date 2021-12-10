@@ -23,7 +23,7 @@ DeclareProperty("CanComputeGapFroidurePin", IsSemigroup);
 DeclareProperty("CanComputeFroidurePin", IsSemigroup);
 DeclareOperation("HasFroidurePin", [IsSemigroup]);
 
-#TODO(now) change IsSemigroup -> IsSemigroup and CanComputeFroidurePin
+# TODO(now) change IsSemigroup -> IsSemigroup and CanComputeFroidurePin
 DeclareAttribute("AsListCanonical", IsSemigroup);
 DeclareOperation("PositionCanonical",
                  [IsSemigroup, IsMultiplicativeElement]);
@@ -52,7 +52,6 @@ DeclareOperation("IteratorCanonical", [IsSemigroup]);
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
 DeclareAttribute("RulesOfSemigroup", IsSemigroup);
-
 
 DeclareOperation("IdempotentsSubset",
                  [IsSemigroup and CanComputeFroidurePin, IsHomogeneousList]);

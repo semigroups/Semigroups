@@ -71,7 +71,7 @@ end);
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
-100, # TODO 
+100,  # TODO
 function(cong)
   Print("<universal semigroup congruence over ");
   ViewObj(Range(cong));
@@ -229,7 +229,7 @@ function(cong, elm)
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam,
                              IsUniversalSemigroupCongruenceClass
-                             and IsAnyCongruenceClass), 
+                             and IsAnyCongruenceClass),
                      rec());
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
@@ -306,7 +306,7 @@ function(cong)
   colBlocks := [[1 .. Size(Matrix(r)[1])]];
   rowBlocks := [[1 .. Size(Matrix(r))]];
   rmscong := RMSCongruenceByLinkedTriple(r, n, colBlocks, rowBlocks);
-  cong := SEMIGROUPS.SimpleCongFromRMSCong(m, iso, rmscong);
+  cong := CongruenceByIsomorphism(iso, rmscong);
   pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
 
   if IsSimpleSemigroup(S) then

@@ -184,8 +184,8 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and a multiplicative element",
-[IsReesCongruence, IsMultiplicativeElement], 
-20, # to beat the method for IsAnyCongruenceCategory
+[IsReesCongruence, IsMultiplicativeElement],
+20,  # to beat the method for IsAnyCongruenceCategory
 function(cong, x)
   local is_ideal_class, fam, class;
   # Ensure consistency of representatives
@@ -198,8 +198,8 @@ function(cong, x)
 
   # Construct the object
   fam := CollectionsFamily(FamilyObj(x));
-  class := Objectify(NewType(fam, 
-                             IsReesCongruenceClass 
+  class := Objectify(NewType(fam,
+                             IsReesCongruenceClass
                              and IsAnyCongruenceClass),
                      rec());
   if is_ideal_class then

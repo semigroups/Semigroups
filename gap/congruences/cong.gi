@@ -98,7 +98,7 @@ function(arg)
 
     # Decide which representation to use
     if not IsFinite(S)
-      or ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
+        or ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
            or HasSize(S) or IsReesMatrixSemigroup(S))
           and IsSimpleSemigroup(S)) or
          ((HasIsZeroSimpleSemigroup(S) or IsActingSemigroup(S)
@@ -120,7 +120,7 @@ function(arg)
       then
     # We should have a congruence of an isomorphic RMS/RZMS
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
-      return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
+      return CongruenceByIsomorphism(arg[2], arg[3]);
     else
       ErrorNoReturn("the range of the 3rd argument (a congruence) is ",
                     "not a Rees (0-)matrix semigroup isomorphic to the ",
@@ -329,13 +329,11 @@ InstallMethod(IsSuperrelation, "for semigroup congruences",
 [IsAnyCongruenceCategory, IsAnyCongruenceCategory],
 {lhop, rhop} -> IsSubrelation(rhop, lhop));
 
-InstallMethod(MeetSemigroupCongruences, "for semigroup congruences", 
-[IsAnyCongruenceCategory, IsAnyCongruenceCategory], 
+InstallMethod(MeetSemigroupCongruences, "for semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
 function(lhop, rhop)
   if Range(lhop) <> Range(rhop) then
     Error("cannot form the meet of congruences over different semigroups");
-  elif AnyCongruenceCategory(lhop) <> AnyCongruenceCategory(rhop) then
-    Error("cannot form the meet of congruences of different handedness");
   elif lhop = rhop then
     return lhop;
   fi;

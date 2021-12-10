@@ -49,8 +49,8 @@ DeclareCategory("IsRightCongruenceCategory",
 DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
 DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
-                IsEquivalenceClass and IsAttributeStoringRep, 
-                2); # to beat IsCongruenceClass
+                IsEquivalenceClass and IsAttributeStoringRep,
+                2);  # to beat IsCongruenceClass
 
 ########################################################################
 # Congruences
@@ -88,9 +88,6 @@ DeclareOperation("JoinLeftSemigroupCongruences",
                  [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
 DeclareOperation("JoinRightSemigroupCongruences",
                  [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
-# TODO left/right
-DeclareOperation("MeetSemigroupCongruences", 
-                 [IsAnyCongruenceCategory, IsAnyCongruenceCategory]);
 
 # Comparison operators
 DeclareOperation("IsSubrelation",
