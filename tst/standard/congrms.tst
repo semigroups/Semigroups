@@ -132,8 +132,8 @@ gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(2,3,4),3)>
 gap> EquivalenceClassOfElement(cong, t);
-Error, the 2nd argument (an element of a Rees matrix semigroup) does not belon\
-g to the range of the 1st argument (a congruence)
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),
 >                                        RMSElement(S, 2, (), 2)],
 >                                       [RMSElement(S, 1, (1, 3), 1),
@@ -172,7 +172,7 @@ true
 gap> classes[24] * classes[2] = classes[15];  # actually 16
 false
 gap> class1 * classother;
-Error, the arguments (congruence classes) do not belong to the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> Size(classes[13]);
 8
 gap> Size(classes[24]);
@@ -240,16 +240,6 @@ gap> q := S / congs13;;
 gap> Size(q);
 4
 
-# ReesMatCongTest8
-# Convert to and from semigroup congruence by generating pairs
-gap> ForAll(congs, x -> x = AsRMSCongruenceByLinkedTriple(
->  AsSemigroupCongruenceByGeneratingPairs(x)));
-true
-gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
-gap> AsRZMSCongruenceByLinkedTriple(cong);
-Error, the range of the argument (a congruence) is not a Rees 0-matrix semigro\
-up
-
 # ReesMatCongTest9: Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <Rees matrix semigroup 2x3 over S4>>
@@ -261,13 +251,10 @@ gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
-gap> cong := AsRMSCongruenceByLinkedTriple(cong);;
-gap> cong = uni;
-true
 gap> Size(S / uni);
 1
 
-# AsRMSCongruenceByLinkedTriple
+# 
 gap> g := SymmetricGroup(4);;
 gap> mat := [[(1, 3), (1, 2)(3, 4)],
 >            [(1, 4, 3, 2), ()],
@@ -275,8 +262,7 @@ gap> mat := [[(1, 3), (1, 2)(3, 4)],
 gap> S := ReesMatrixSemigroup(g, mat);;
 gap> x := RMSElement(S, 2, (1, 3)(2, 4), 3);;
 gap> y := RMSElement(S, 1, (), 3);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;
-gap> AsRMSCongruenceByLinkedTriple(cong);
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);
 <semigroup congruence over <Rees matrix semigroup 2x3 over Sym( [ 1 .. 4 ] )>
   with linked triple (S4,1,3)>
 
@@ -433,8 +419,8 @@ gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(1,3,5),2)>
 gap> EquivalenceClassOfElement(cong, t);
-Error, the 2nd argument (an element of a Rees matrix semigroup) does not belon\
-g to the range of the 1st argument (a congruence)
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
 gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
 >                                        RMSElement(S, 5, (3, 5), 2)],
 >                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
@@ -469,7 +455,7 @@ false
 gap> classes[28] * [classes[32], classes[73]] = [classes[36], class0];
 true
 gap> class1 * classother;
-Error, the arguments (congruence classes) do not belong to the same congruence
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> Size(classes[13]);
 4
 gap> Size(classes[72]);
@@ -524,12 +510,6 @@ gap> q := S / congs13;;
 gap> Size(q);
 73
 
-# ReesZeroMatCongTest8
-# Convert to and from semigroup congruence by generating pairs
-gap> ForAll(congs, x -> x = AsRZMSCongruenceByLinkedTriple(
->  AsSemigroupCongruenceByGeneratingPairs(x)));
-true
-
 # IsSubrelation: bad input (with zero)
 gap> g := SymmetricGroup(4);;
 gap> mat := [[(), (1, 2)(3, 4)],
@@ -558,7 +538,6 @@ gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
-gap> cong := AsRZMSCongruenceByLinkedTriple(cong);;
 gap> cong = uni;
 true
 gap> Size(S / uni);
@@ -611,8 +590,6 @@ gap> MeetSemigroupCongruences(congs9, congs28);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (A4,4,3)>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs9);;
-gap> AsRZMSCongruenceByLinkedTriple(cong) = congs9;
-true
 gap> cong = congs9;
 true
 
@@ -627,8 +604,7 @@ gap> mat := [[0, (4, 5), (3, 4), (1, 4, 3), 0],
 gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> x := RMSElement(S, 5, (3, 4), 2);;
 gap> y := RMSElement(S, 1, (), 4);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;
-gap> AsRZMSCongruenceByLinkedTriple(cong);
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (S4,4,3)>
 

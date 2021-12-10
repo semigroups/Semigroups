@@ -38,6 +38,7 @@ InstallTrueMethod(CanComputeCppCongruences,
 # Helper
 ###########################################################################
 
+# TODO(now) remove this use AnyCongruenceString
 BindGlobal("_KindString",
 function(C)
   Assert(1, CanComputeCppCongruence(C));

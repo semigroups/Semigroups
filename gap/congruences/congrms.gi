@@ -997,32 +997,6 @@ function(cong, nCoset, colClass, rowClass)
   return class;
 end);
 
-InstallMethod(EquivalenceClassOfElement,
-"for Rees matrix semigroup congruence by linked triple and element",
-[IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
-function(cong, elm)
-  # Check that the args make sense
-  if not elm in Range(cong) then
-    ErrorNoReturn("the 2nd argument (an element of a Rees matrix ",
-                  "semigroup) does not belong to the range of the 1st ",
-                  "argument (a congruence)");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for Rees 0-matrix semigroup congruence by linked triple and an element",
-[IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
-function(cong, elm)
-  # Check that the args make sense
-  if not elm in Range(cong) then
-    ErrorNoReturn("the 2nd argument (an element of a Rees matrix ",
-                  "semigroup) does not belong to the range of the 1st ",
-                  "argument (a congruence)");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
-end);
-
 InstallMethod(EquivalenceClassOfElementNC,
 "for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
@@ -1095,32 +1069,6 @@ function(elm, class)
          cong!.colLookup[elm[1]] = class!.colClass and
          cong!.rowLookup[elm[3]] = class!.rowClass and
          LinkedElement(elm) in class!.nCoset);
-end);
-
-InstallMethod(\*,
-"for two RMS congruence classes by linked triple",
-[IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
-function(c1, c2)
-  local elm;
-  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("the arguments (congruence classes) do not ",
-                  "belong to the same congruence");
-  fi;
-  elm := Representative(c1) * Representative(c2);
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
-end);
-
-InstallMethod(\*,
-"for two RZMS congruence classes by linked triple",
-[IsRZMSCongruenceClassByLinkedTriple, IsRZMSCongruenceClassByLinkedTriple],
-function(c1, c2)
-  local elm;
-  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorNoReturn("the arguments (congruence classes) do not ",
-                  "belong to the same congruence");
-  fi;
-  elm := Representative(c1) * Representative(c2);
-  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
 end);
 
 InstallMethod(Size,
@@ -1344,6 +1292,8 @@ function(cong)
   return pairs;
 end);
 
+# TODO move this
+
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for semigroup congruence",
 [IsSemigroupCongruence],
@@ -1354,16 +1304,14 @@ function(cong)
   return SemigroupCongruenceByGeneratingPairs(S, pairs);
 end);
 
-InstallMethod(AsRMSCongruenceByLinkedTriple,
-"for semigroup congruence by generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  local pairs, S, g, mat, colLookup, rowLookup, n, find, union, pair, u, v, i,
-        j, normalise, colBlocks, rowBlocks;
-  # Extract some information
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  S := Range(cong);
-  g := UnderlyingSemigroup(S);
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for Rees matrix semigroup and list of pairs",
+[IsReesMatrixSemigroup, IsHomogeneousList], 100, #FIXME
+function(S, pairs)
+  local g, mat, colLookup, rowLookup, n, find, union, normalise, colBlocks,
+  rowBlocks, cong, pair, v, j, i, u;
+
+  g   := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
   # Lookup tables for the column and row equivalences
@@ -1373,6 +1321,7 @@ function(cong)
   # Normal subgroup
   n := Subgroup(g, []);
 
+  # TODO use UF
   # Functions for union-find
   find := function(table, n)
     while table[n] <> n do
@@ -1458,19 +1407,13 @@ function(cong)
   return cong;
 end);
 
-InstallMethod(AsRZMSCongruenceByLinkedTriple,
-"for semigroup congruence by generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  local pairs, S, g, mat, colLookup, rowLookup, n, u, i, pair, v, j;
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a Rees 0-matrix semigroup and list of pairs",
+[IsReesZeroMatrixSemigroup, IsHomogeneousList],
+100, # FIXME
+function(S, pairs)
+  local g, mat, colLookup, rowLookup, n, u, i, cong, pair, v, j;
 
-  # Extract some information
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  S := Range(cong);
-  if not IsReesZeroMatrixSemigroup(S) then
-    ErrorNoReturn("the range of the argument (a congruence) is not a Rees ",
-                  "0-matrix semigroup");
-  fi;
   g := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
@@ -1538,33 +1481,36 @@ function(cong)
   return cong;
 end);
 
-_EquivalenceRelationCanonicalLookupRMS := function(cong)
-  local S, n, elms, table, next, i, x;
-
-  S := Range(cong);
-  n := Size(S);
-  elms := AsListCanonical(S);
+_EquivalenceRelationPartition := function(C)
+  local S, n, elms, table, next, part, i, x;
+  S     := Range(C);
+  n     := Size(S);
+  elms  := EnumeratorCanonical(S);
   table := EmptyPlist(n);
-  next := 1;
+  next  := 1;
+  part  := [];
   for i in [1 .. n] do
     if not IsBound(table[i]) then
-      for x in ImagesElm(cong, elms[i]) do
+      Add(part, ImagesElm(C, elms[i]));
+      for x in part[Length(part)] do
         table[PositionCanonical(S, x)] := next;
       od;
       next := next + 1;
     fi;
   od;
-  return table;
+  SetEquivalenceRelationCanonicalLookup(C, table);
+  SetEquivalenceRelationCanonicalPartition(C, part);
+  return part;
 end;
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
+InstallMethod(EquivalenceRelationPartition,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-_EquivalenceRelationCanonicalLookupRMS);
+_EquivalenceRelationPartition);
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
+InstallMethod(EquivalenceRelationPartition,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-_EquivalenceRelationCanonicalLookupRMS);
+_EquivalenceRelationPartition);
 
-Unbind(_EquivalenceRelationCanonicalLookupRMS);
+Unbind(_EquivalenceRelationPartition);

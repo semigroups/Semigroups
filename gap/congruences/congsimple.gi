@@ -9,7 +9,53 @@
 ##
 ## This file contains methods for congruences on finite (0-)simple semigroups,
 ## using isomorphisms to Rees (0-)matrix semigroups and methods in
-## congruences/reesmat.gd/gi.
+## congruences/congrms.gd/gi.
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a simple semigroup and list of pairs",
+[IsSimpleSemigroup, IsHomogeneousList],
+13, # to beat the method for a semigroup with CanComputeCppCongruences
+function(S, pairs)
+  local map, R, P, C;
+  if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S)) 
+      or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+    TryNextMethod();
+  fi;
+  map := IsomorphismReesMatrixSemigroup(S);
+  R   := Range(map);
+  P   := List(pairs, p -> [p[1] ^ map, p[2] ^ map]);
+  C   := SemigroupCongruenceByGeneratingPairs(R, P);
+  if IsUniversalSemigroupCongruence(C) then
+    C := UniversalSemigroupCongruence(S);
+  else
+    C := SemigroupCongruence(S, map, C);
+  fi;
+  SetGeneratingPairsOfMagmaCongruence(C, pairs);
+  return C;
+end);
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a 0-simple semigroup and list of pairs",
+[IsZeroSimpleSemigroup, IsHomogeneousList],
+20, # to beat the method for a semigroup with CanComputeCppCongruences
+function(S, pairs)
+  local map, R, P, C;
+  if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S)) 
+      or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+    TryNextMethod();
+  fi;
+  map := IsomorphismReesZeroMatrixSemigroup(S);
+  R   := Range(map);
+  P   := List(pairs, p -> [p[1] ^ map, p[2] ^ map]);
+  C   := SemigroupCongruenceByGeneratingPairs(R, P);
+  if IsUniversalSemigroupCongruence(C) then
+    C := UniversalSemigroupCongruence(S);
+  else
+    C := SemigroupCongruence(S, map, C);
+  fi;
+  SetGeneratingPairsOfMagmaCongruence(C, pairs);
+  return C;
+end);
 
 InstallMethod(ViewObj,
 "for a (0-)simple semigroup congruence",
@@ -72,7 +118,8 @@ InstallMethod(JoinSemigroupCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("cannot form the join of congruences over different semigroups");
+    ErrorNoReturn("cannot form the join of congruences over different ",
+                  "semigroups");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
@@ -80,11 +127,12 @@ end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
-[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence], 100, #FIXME
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("cannot form the meet of congruences over different semigroups");
+    ErrorNoReturn("cannot form the meet of congruences over different ",
+                  "semigroups");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);

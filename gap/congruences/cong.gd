@@ -88,6 +88,9 @@ DeclareOperation("JoinLeftSemigroupCongruences",
                  [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
 DeclareOperation("JoinRightSemigroupCongruences",
                  [IsRightSemigroupCongruence, IsRightSemigroupCongruence]);
+# TODO left/right
+DeclareOperation("MeetSemigroupCongruences", 
+                 [IsAnyCongruenceCategory, IsAnyCongruenceCategory]);
 
 # Comparison operators
 DeclareOperation("IsSubrelation",

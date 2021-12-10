@@ -265,9 +265,9 @@ gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong1 := MinimumGroupCongruence(S);;
 gap> cong2 := SemigroupCongruence(T, pair);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-Error, the ranges of the arguments (congruences) must coincide
+Error, cannot form the meet of congruences over different semigroups
 gap> JoinSemigroupCongruences(cong1, cong2);
-Error, the ranges of the arguments (congruences) must coincide
+Error, cannot form the join of congruences over different semigroups
 gap> IsSubrelation(cong1, cong2);
 Error, the ranges of the arguments (congruences) must be the same
 

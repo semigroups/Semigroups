@@ -210,7 +210,6 @@
     <#Include Label = "IsLinkedTriple">
     <#Include Label = "CanonicalRepresentative">
     <#Include Label = "AsSemigroupCongruenceByGeneratingPairs">
-    <#Include Label = "AsRZMSCongruenceByLinkedTriple">
   </Section>
 
   <Section Label="Congruences on inverse semigroups">

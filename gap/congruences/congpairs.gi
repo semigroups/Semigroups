@@ -211,8 +211,6 @@ function(lhop, rhop)
   local Constructor, pairs;
   if Range(lhop) <> Range(rhop) then
     Error("cannot form the join of congruences over different semigroups");
-  elif AnyCongruenceCategory(lhop) <> AnyCongruenceCategory(rhop) then
-    Error("cannot form the join of congruences of different handedness");
   elif lhop = rhop then
     return lhop;
   fi;
@@ -247,3 +245,6 @@ InstallMethod(JoinRightSemigroupCongruences,
 [IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence,
  IsRightCongruenceCategory and HasGeneratingPairsOfRightMagmaCongruence],
 _JoinAnyCongruences);
+
+MakeReadWriteGlobal("_JoinAnyCongruences");
+Unbind(_JoinAnyCongruences);

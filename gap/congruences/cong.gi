@@ -97,15 +97,14 @@ function(arg)
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
 
     # Decide which representation to use
-    if not IsFinite(S) then
-      return SemigroupCongruenceByGeneratingPairs(S, pairs);
-    elif ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
+    if not IsFinite(S)
+      or ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
            or HasSize(S) or IsReesMatrixSemigroup(S))
           and IsSimpleSemigroup(S)) or
          ((HasIsZeroSimpleSemigroup(S) or IsActingSemigroup(S)
            or HasSize(S) or IsReesZeroMatrixSemigroup(S))
           and IsZeroSimpleSemigroup(S)) then
-      return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
+      return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S) and
          Size(S) >= opts.cong_by_ker_trace_threshold then
       cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
@@ -140,9 +139,8 @@ function(arg)
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);
-  else
-    ErrorNoReturn("the arguments are not valid for this function");
   fi;
+  ErrorNoReturn("the arguments are not valid for this function");
 end);
 
 BindGlobal("_LeftOrRightCong",
@@ -193,7 +191,7 @@ end);
 ########################################################################
 # Congruence attributes
 ########################################################################
-
+?
 InstallMethod(NonTrivialEquivalenceClasses, "for IsAnyCongruenceCategory",
 [IsAnyCongruenceCategory],
 function(C)
@@ -223,7 +221,6 @@ function(C)
 
   lookup := [1 .. Size(S)];
   for class in NonTrivialEquivalenceClasses(C) do
-
     nr := PositionCanonical(S, Representative(class));
     for elm in class do
       lookup[PositionCanonical(S, elm)] := nr;
@@ -331,6 +328,20 @@ end);
 InstallMethod(IsSuperrelation, "for semigroup congruences",
 [IsAnyCongruenceCategory, IsAnyCongruenceCategory],
 {lhop, rhop} -> IsSubrelation(rhop, lhop));
+
+InstallMethod(MeetSemigroupCongruences, "for semigroup congruences", 
+[IsAnyCongruenceCategory, IsAnyCongruenceCategory], 
+function(lhop, rhop)
+  if Range(lhop) <> Range(rhop) then
+    Error("cannot form the meet of congruences over different semigroups");
+  elif AnyCongruenceCategory(lhop) <> AnyCongruenceCategory(rhop) then
+    Error("cannot form the meet of congruences of different handedness");
+  elif lhop = rhop then
+    return lhop;
+  fi;
+  # TODO actually implement a method
+  TryNextMethod();
+end);
 
 ########################################################################
 # Congruence classes

@@ -11,8 +11,7 @@
 ## defined by a two-sided ideal.  See Howie 1.7
 ##
 
-InstallMethod(IsReesCongruence,
-"for a semigroup congruence",
+InstallMethod(IsReesCongruence, "for a semigroup congruence",
 [IsSemigroupCongruence],
 1,  # Prioritise this function over the one in the library
 function(cong)
@@ -54,8 +53,7 @@ function(cong)
   fi;
 end);
 
-InstallMethod(ReesCongruenceOfSemigroupIdeal,
-"for a semigroup ideal",
+InstallMethod(ReesCongruenceOfSemigroupIdeal, "for a semigroup ideal",
 [IsSemigroupIdeal],
 1,  # Prioritise this function over the one in the library
 function(I)
@@ -85,8 +83,7 @@ function(cong)
   Print(">");
 end);
 
-InstallMethod(PrintObj,
-"for a Rees congruence",
+InstallMethod(PrintObj, "for a Rees congruence",
 [IsReesCongruence],
 function(cong)
   Print("ReesCongruenceOfSemigroupIdeal( ");
@@ -94,8 +91,7 @@ function(cong)
   Print(" )");
 end);
 
-InstallMethod(NrEquivalenceClasses,
-"for a Rees congruence",
+InstallMethod(NrEquivalenceClasses, "for a Rees congruence",
 [IsReesCongruence],
 cong -> Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1);
 
@@ -107,8 +103,7 @@ function(c1, c2)
          SemigroupIdealOfReesCongruence(c2);
 end);
 
-InstallMethod(IsSubrelation,
-"for two Rees congruences",
+InstallMethod(IsSubrelation, "for two Rees congruences",
 [IsReesCongruence, IsReesCongruence],
 function(cong1, cong2)
   local i1, i2;
@@ -145,8 +140,7 @@ function(cong, elm)
   fi;
 end);
 
-InstallMethod(JoinSemigroupCongruences,
-"for two Rees congruences",
+InstallMethod(JoinSemigroupCongruences, "for two Rees congruences",
 [IsReesCongruence, IsReesCongruence],
 function(c1, c2)
   local gens1, gens2, I;
@@ -161,9 +155,7 @@ function(c1, c2)
   return ReesCongruenceOfSemigroupIdeal(I);
 end);
 
-InstallMethod(EquivalenceClasses,
-"for a Rees congruence",
-[IsReesCongruence],
+InstallMethod(EquivalenceClasses, "for a Rees congruence", [IsReesCongruence],
 function(cong)
   local classes, I, next, x;
   classes := EmptyPlist(NrEquivalenceClasses(cong));
@@ -188,17 +180,6 @@ function(cong)
     return [];
   fi;
   return [EquivalenceClassOfElementNC(cong, I.1)];
-end);
-
-InstallMethod(EquivalenceClassOfElement,
-"for a Rees congruence and a multiplicative element",
-[IsReesCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  if not elm in Range(cong) then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong ",
-                  "to the range of the 1st argument (a Rees congruence)");
-  fi;
-  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
@@ -267,8 +248,7 @@ function(c1, c2)
          or (Size(c1) > 1 and Size(c2) > 1);
 end);
 
-InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
-"for a Rees congruence",
+InstallMethod(AsSemigroupCongruenceByGeneratingPairs, "for a Rees congruence",
 [IsReesCongruence],
 function(cong)
   local S, gens, min, pairs, y, x;
@@ -288,15 +268,14 @@ function(cong)
   return cong;
 end);
 
-InstallMethod(GeneratingPairsOfMagmaCongruence,
-"for a Rees congruence", [IsReesCongruence],
+InstallMethod(GeneratingPairsOfMagmaCongruence, "for a Rees congruence",
+[IsReesCongruence],
 function(cong)
   cong := AsSemigroupCongruenceByGeneratingPairs(cong);
   return GeneratingPairsOfSemigroupCongruence(cong);
 end);
 
-InstallMethod(Enumerator,
-"for a Rees congruence class",
+InstallMethod(Enumerator, "for a Rees congruence class",
 [IsReesCongruenceClass],
 function(class)
   local cong;
