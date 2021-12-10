@@ -225,9 +225,9 @@ gap> MeetSemigroupCongruences(congs9, congs3) = cong1;
 true
 gap> cong1 := SemigroupCongruence(T, []);;
 gap> MeetSemigroupCongruences(congs3, cong1);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the meet of congruences over different semigroups
 gap> JoinSemigroupCongruences(congs3, cong1);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, cannot form the join of congruences over different semigroups
 
 # ReesMatCongTest7: Quotients
 gap> congs13 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),

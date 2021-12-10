@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/congsimple.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -77,16 +77,15 @@ function(map, C)
   return C;
 end);
 
-InstallMethod(ViewObj,
-"for a (0-)simple semigroup congruence",
+InstallMethod(ViewObj, "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
-function(cong)
+function(C)
   Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
+  ViewObj(Range(C));
   Print(" with linked triple (",
-        StructureDescription(cong!.rmscong!.n:short), ",",
-        Size(cong!.rmscong!.colBlocks), ",",
-        Size(cong!.rmscong!.rowBlocks), ")>");
+        StructureDescription(C!.rmscong!.n:short), ",",
+        Size(C!.rmscong!.colBlocks), ",",
+        Size(C!.rmscong!.rowBlocks), ")>");
 end);
 
 InstallMethod(CongruencesOfSemigroup, "for a (0-)simple semigroup",
@@ -110,7 +109,7 @@ function(S)
   if IsReesMatrixSemigroup(R) then
     # The universal congruence has a linked triple
     return List(congs,
-                cong -> CongruenceByIsomorphism(iso, cong));
+                x -> CongruenceByIsomorphism(iso, x));
   else
     # The universal congruence has no linked triple
     for i in [1 .. Length(congs)] do
@@ -127,34 +126,26 @@ end);
 InstallMethod(\=,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
-function(cong1, cong2)
-  return (Range(cong1) = Range(cong2) and cong1!.rmscong = cong2!.rmscong);
+function(lhop, rhop)
+  return lhop!.rmscong = rhop!.rmscong;
 end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
-function(cong1, cong2)
+function(lhop, rhop)
   local join;
-  if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("cannot form the join of congruences over different ",
-                  "semigroups");
-  fi;
-  join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
-  return CongruenceByIsomorphism(cong1!.iso, join);
+  join := JoinSemigroupCongruences(lhop!.rmscong, rhop!.rmscong);
+  return CongruenceByIsomorphism(lhop!.iso, join);
 end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence], 100,  # FIXME
-function(cong1, cong2)
+function(lhop, rhop)
   local meet;
-  if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorNoReturn("cannot form the meet of congruences over different ",
-                  "semigroups");
-  fi;
-  meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
-  return CongruenceByIsomorphism(cong1!.iso, meet);
+  meet := MeetSemigroupCongruences(lhop!.rmscong, rhop!.rmscong);
+  return CongruenceByIsomorphism(lhop!.iso, meet);
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
@@ -162,60 +153,60 @@ InstallMethod(CongruenceTestMembershipNC,
 [IsSimpleSemigroupCongruence,
  IsMultiplicativeElement,
  IsMultiplicativeElement],
-function(cong, elm1, elm2)
-  return [elm1 ^ cong!.iso, elm2 ^ cong!.iso] in cong!.rmscong;
+function(C, x, y)
+  return [x ^ C!.iso, y ^ C!.iso] in C!.rmscong;
 end);
 
 InstallMethod(ImagesElm,
 "for a (0-)simple semigroup congruence and a multiplicative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
-function(cong, elm)
-  return List(ImagesElm(cong!.rmscong, elm ^ cong!.iso),
-              x -> x ^ InverseGeneralMapping(cong!.iso));
+function(C, x)
+  return List(ImagesElm(C!.rmscong, x ^ C!.iso),
+              y -> y ^ InverseGeneralMapping(C!.iso));
 end);
 
 BindGlobal("_SimpleClassFromRMSclass",
-function(cong, rmsclass)
+function(C, rmsclass)
   local fam, class;
-  fam := FamilyObj(Range(cong));
+  fam := FamilyObj(Range(C));
   class := Objectify(NewType(fam, IsSimpleSemigroupCongruenceClass),
-                     rec(rmsclass := rmsclass, iso := cong!.iso));
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
+                     rec(rmsclass := rmsclass, iso := C!.iso));
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
   SetRepresentative(class, Representative(rmsclass) ^
-                           InverseGeneralMapping(cong!.iso));
+                           InverseGeneralMapping(C!.iso));
   return class;
 end);
 
 InstallMethod(EquivalenceClasses,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
-function(cong)
-  return List(EquivalenceClasses(cong!.rmscong),
-              c -> _SimpleClassFromRMSclass(cong, c));
+function(C)
+  return List(EquivalenceClasses(C!.rmscong),
+              c -> _SimpleClassFromRMSclass(C, c));
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and multiplicative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement], 100,  # TODO(now)
-function(cong, elm)
+function(C, elm)
   local class;
-  class := EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso);
-  return _SimpleClassFromRMSclass(cong, class);
+  class := EquivalenceClassOfElementNC(C!.rmscong, elm ^ C!.iso);
+  return _SimpleClassFromRMSclass(C, class);
 end);
 
 InstallMethod(NrEquivalenceClasses,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
-function(cong)
-  return NrEquivalenceClasses(cong!.rmscong);
+function(C)
+  return NrEquivalenceClasses(C!.rmscong);
 end);
 
 InstallMethod(\in,
 "for a multiplicative element and a (0-)simple semigroup congruence class",
 [IsMultiplicativeElement, IsSimpleSemigroupCongruenceClass],
-function(elm, class)
-  return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
+function(x, class)
+  return (x ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
 end);
 
 InstallMethod(Size,
@@ -228,17 +219,17 @@ end);
 InstallMethod(\=,
 "for two (0-)simple semigroup congruence classes",
 [IsSimpleSemigroupCongruenceClass, IsSimpleSemigroupCongruenceClass],
-function(c1, c2)
-  return c1!.rmsclass = c2!.rmsclass;
+function(lhop, rhop)
+  return lhop!.rmsclass = rhop!.rmsclass;
 end);
 
 InstallMethod(GeneratingPairsOfSemigroupCongruence,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
-function(cong)
+function(C)
   local map;
-  map := InverseGeneralMapping(cong!.iso);
-  return List(GeneratingPairsOfSemigroupCongruence(cong!.rmscong),
+  map := InverseGeneralMapping(C!.iso);
+  return List(GeneratingPairsOfSemigroupCongruence(C!.rmscong),
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
@@ -253,20 +244,22 @@ end);
 InstallMethod(IsSubrelation,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
-function(cong1, cong2)
-  return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
+function(lhop, rhop)
+  return IsSubrelation(lhop!.rmscong, rhop!.rmscong);
 end);
+
+# TODO shouldn't this be EquivalenceRelationPartition?
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
-function(cong)
+function(C)
   local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;
 
-  S         := Range(cong);
-  rmstable  := EquivalenceRelationCanonicalLookup(cong!.rmscong);
-  nrclasses := NrEquivalenceClasses(cong!.rmscong);
-  iso       := cong!.iso;
+  S         := Range(C);
+  rmstable  := EquivalenceRelationCanonicalLookup(C!.rmscong);
+  nrclasses := NrEquivalenceClasses(C!.rmscong);
+  iso       := C!.iso;
   elms      := AsListCanonical(S);
 
   # Renumber the entries so we start at 1
