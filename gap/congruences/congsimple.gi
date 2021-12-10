@@ -75,8 +75,8 @@ InstallMethod(CongruencesOfSemigroup,
 1,  # Try this before the method in congpairs.gi
 function(S)
   local iso, R, congs, i;
-  if not (IsFinite(S) and (IsSimpleSemigroup(S)
-                           or IsZeroSimpleSemigroup(S))) then
+  if not (IsFinite(S) 
+      and (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S))) then
     TryNextMethod();
   elif IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
     return CongruencesOfSemigroup(S);
@@ -140,7 +140,9 @@ end);
 
 InstallMethod(CongruenceTestMembershipNC,
 "for (0-)simple semigroup congruence and two multiplicative elements",
-[IsSimpleSemigroupCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+[IsSimpleSemigroupCongruence, 
+ IsMultiplicativeElement,
+ IsMultiplicativeElement],
 function(cong, elm1, elm2)
   return [elm1 ^ cong!.iso, elm2 ^ cong!.iso] in cong!.rmscong;
 end);
@@ -184,21 +186,6 @@ function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
 end);
 
-InstallMethod(Enumerator,
-"for a (0-)simple semigroup congruence class",
-[IsSimpleSemigroupCongruenceClass],
-function(class)
-  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
-end);
-
-InstallMethod(\*,
-"for two (0-)simple semigroup congruence classes",
-[IsSimpleSemigroupCongruenceClass, IsSimpleSemigroupCongruenceClass],
-function(c1, c2)
-  return SEMIGROUPS.SimpleClassFromRMSclass(EquivalenceClassRelation(c1),
-                                            c1!.rmsclass * c2!.rmsclass);
-end);
-
 InstallMethod(Size,
 "for a (0-)simple semigroup congruence class",
 [IsSimpleSemigroupCongruenceClass],
@@ -210,8 +197,7 @@ InstallMethod(\=,
 "for two (0-)simple semigroup congruence classes",
 [IsSimpleSemigroupCongruenceClass, IsSimpleSemigroupCongruenceClass],
 function(c1, c2)
-  return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
-         c1!.rmsclass = c2!.rmsclass;
+  return c1!.rmsclass = c2!.rmsclass;
 end);
 
 InstallMethod(GeneratingPairsOfSemigroupCongruence,
