@@ -191,7 +191,7 @@ end);
 ########################################################################
 # Congruence attributes
 ########################################################################
-?
+
 InstallMethod(NonTrivialEquivalenceClasses, "for IsAnyCongruenceCategory",
 [IsAnyCongruenceCategory],
 function(C)

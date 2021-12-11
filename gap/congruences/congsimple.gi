@@ -18,7 +18,8 @@ InstallMethod(SemigroupCongruenceByGeneratingPairs,
 function(S, pairs)
   local map, R, P, C;
   if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
-      or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+      or (HasIsFreeMonoid(S) and IsFreeMonoid(S))
+      or IsFreeGroup(S) then
     TryNextMethod();
   fi;
   map := IsomorphismReesMatrixSemigroup(S);

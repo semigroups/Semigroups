@@ -12,7 +12,7 @@
 ##
 
 InstallMethod(IsReesCongruence, "for a semigroup congruence",
-[IsSemigroupCongruence],
+[IsCongruenceCategory],
 1,  # Prioritise this function over the one in the library
 function(cong)
   local S, classes, nontrivial, i, class, ideal;
