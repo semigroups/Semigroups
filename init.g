@@ -81,8 +81,6 @@ ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
 ReadPackage("semigroups", "gap/semigroups/semieunit.gd");
 ReadPackage("semigroups", "gap/semigroups/semidp.gd");
 
-ReadPackage("semigroups", "gap/hash.gd");
-
 ReadPackage("semigroups", "gap/ideals/ideals.gd");
 ReadPackage("semigroups", "gap/ideals/idealact.gd");
 ReadPackage("semigroups", "gap/ideals/ideallam.gd");
