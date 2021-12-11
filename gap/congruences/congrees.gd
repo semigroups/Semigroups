@@ -17,5 +17,4 @@ DeclareCategory("IsReesCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsMultiplicativeElement);
 
-DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-                 [IsSemigroupCongruence]);
+DeclareProperty("IsReesCongruence", IsAnyCongruenceCategory);

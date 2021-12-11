@@ -12,10 +12,13 @@
 ##
 
 InstallMethod(IsReesCongruence, "for a semigroup congruence",
-[IsCongruenceCategory],
+[IsAnyCongruenceCategory],
 1,  # Prioritise this function over the one in the library
 function(cong)
   local S, classes, nontrivial, i, class, ideal;
+  if not IsSemigroupCongruence(cong) then
+    return false;
+  fi;
   # This function is adapted from code in the library
   S := Range(cong);
   if NrEquivalenceClasses(cong) = Size(S) then

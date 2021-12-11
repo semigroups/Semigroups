@@ -17,6 +17,9 @@ DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
 DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
 
+DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
+                 [IsSemigroupCongruence]);
+
 # Internal detail
 
 DeclareOperation("_AnyCongruenceByGeneratingPairs",

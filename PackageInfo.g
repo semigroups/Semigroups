@@ -9,12 +9,12 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.4.2">
+##  <!ENTITY VERSION "4.0.0">
 ##  <!ENTITY GAPVERS "4.10.0">
-##  <!ENTITY ARCHIVENAME "semigroups-3.4.2">
+##  <!ENTITY ARCHIVENAME "semigroups-4.0.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-21">
 ##  <!ENTITY DATASTRUCTURESVERS "0.2.5">
-##  <!ENTITY DIGRAPHSVERS "1.2.0">
+##  <!ENTITY DIGRAPHSVERS "1.5.0">
 ##  <!ENTITY GENSSVERS "1.6.5">
 ##  <!ENTITY IMAGESVERS "1.3.0">
 ##  <!ENTITY IOVERS "4.5.1">
@@ -49,7 +49,7 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "3.4.2",
+Version := "4.0.0",
 Date := "07/02/2021",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
@@ -311,7 +311,7 @@ Dependencies := rec(
   NeededOtherPackages := [["orb", ">=4.8.2"],
                           ["io", ">=4.5.1"],
                           ["datastructures", ">=0.2.5"],
-                          ["digraphs", ">=1.2.0"],
+                          ["digraphs", ">=1.5.0"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.0"]],
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"]],
