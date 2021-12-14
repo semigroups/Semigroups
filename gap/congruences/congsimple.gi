@@ -14,6 +14,9 @@
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a simple semigroup and list of pairs",
 [IsSimpleSemigroup, IsHomogeneousList],
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, 
+        IsList and IsEmpty]),
 function(S, pairs)
   local map, R, P, C;
   if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
@@ -37,7 +40,9 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a 0-simple semigroup and list of pairs",
 [IsZeroSimpleSemigroup, IsHomogeneousList],
-20,  # to beat the method for a semigroup with CanComputeCppCongruences
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, 
+        IsList and IsEmpty]),
 function(S, pairs)
   local map, R, P, C;
   map := IsomorphismReesZeroMatrixSemigroup(S);
@@ -85,7 +90,7 @@ end);
 
 InstallMethod(CongruencesOfSemigroup, "for a (0-)simple semigroup",
 [IsSemigroup],
-1,  # Try this before the method in congpairs.gi
+1,  # Try this before the method in conglatt.gi
 function(S)
   local iso, R, congs, i;
   if not (IsFinite(S)

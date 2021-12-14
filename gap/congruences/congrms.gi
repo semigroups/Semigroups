@@ -1315,8 +1315,12 @@ InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for Rees matrix semigroup and list of pairs",
 [IsReesMatrixSemigroup, IsHomogeneousList], 
 ToBeat([IsReesMatrixSemigroup, IsHomogeneousList], 
-       [IsSemigroup and CanComputeCppCongruences, IsList], 
-       [IsSimpleSemigroup, IsHomogeneousList]),
+       [IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty], 
+       [IsSimpleSemigroup, IsHomogeneousList])
++ 
+ToBeat([IsSimpleSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, 
+        IsList and IsEmpty]),
 function(S, pairs)
   local g, mat, colLookup, rowLookup, n, find, union, normalise, colBlocks,
   rowBlocks, C, pair, v, j, i, u;
@@ -1420,7 +1424,13 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a Rees 0-matrix semigroup and list of pairs",
 [IsReesZeroMatrixSemigroup, IsHomogeneousList],
-100,  # FIXME
+ToBeat([IsReesZeroMatrixSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty], 
+       [IsZeroSimpleSemigroup, IsHomogeneousList])
++ 
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, 
+        IsList and IsEmpty]),
 function(S, pairs)
   local g, mat, colLookup, rowLookup, n, u, i, C, pair, v, j;
 

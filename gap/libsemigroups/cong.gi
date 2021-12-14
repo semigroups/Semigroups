@@ -391,6 +391,7 @@ function(S, pairs)
   return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
+# TODO(now) separate out the empty list one
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
@@ -401,6 +402,7 @@ function(S, pairs)
   return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
+# TODO(now) separate out the empty list one
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
