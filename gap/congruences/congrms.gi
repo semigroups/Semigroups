@@ -13,6 +13,19 @@
 ## and MSc thesis "Computing with Semigroup Congruences" chapter 3.
 ##
 
+
+InstallMethod(IsUniversalSemigroupCongruence,
+"for a semigroup congruence",
+[IsRMSCongruenceByLinkedTriple],
+function(C)
+  return Length(C!.colBlocks) = 1 and
+         Length(C!.rowBlocks) = 1 and
+         C!.n = UnderlyingSemigroup(Range(C));
+end);
+
+InstallImmediateMethod(IsUniversalSemigroupCongruence,
+IsRZMSCongruenceByLinkedTriple, 0, ReturnFalse);
+
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, g;

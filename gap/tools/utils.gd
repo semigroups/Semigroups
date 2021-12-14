@@ -14,4 +14,6 @@ DeclareGlobalFunction("SemigroupsTestStandard");
 DeclareGlobalFunction("SemigroupsTestExtreme");
 DeclareGlobalFunction("SemigroupsTestAll");
 
+DeclareGlobalFunction("ToBeat");
+
 SEMIGROUPS.OmitFromTests := [];

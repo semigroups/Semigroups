@@ -19,6 +19,22 @@
 # 2. Documentation - functions relating to compiling and verifying the
 #    documentation.
 
+InstallGlobalFunction(ToBeat,
+function(list, list_to_beat)
+  local rank, rank_to_beat;
+  Assert(1, IsList(list));
+  Assert(1, IsList(list_to_beat));
+
+  rank := Sum(list, RankFilter);
+  rank_to_beat := Sum(list_to_beat, RankFilter);
+
+  if rank > rank_to_beat then
+    return 0;
+  else
+    return rank - rank_to_beat + 1;
+  fi;
+end);
+
 #############################################################################
 # 1. Tests - internal stuff . . .
 #############################################################################

@@ -64,9 +64,9 @@ false
 gap> otheruni := UniversalSemigroupCongruence(FullTransformationMonoid(5));;
 gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> IsSubrelation(congs[4], otheruni);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, the 1st and 2nd arguments are congruences over different semigroups
 gap> IsSubrelation(otheruni, congs[4]);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, the 1st and 2nd arguments are congruences over different semigroups
 gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrEquivalenceClasses(cong);
 1
@@ -132,7 +132,7 @@ gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),
 >                    PartialPerm([1, 2, 3], [1, 3, 4])]);
 <partial perm semigroup of rank 3 with 2 generators>
 gap> uni := UniversalSemigroupCongruence(S);;
-gap> ImagesElm(uni, PartialPerm([1, 2, 3], [1, 3, 4])) = Elements(S);
+gap> AsSSortedList(ImagesElm(uni, PartialPerm([1, 2, 3], [1, 3, 4]))) = Elements(S);
 true
 gap> ImagesElm(uni, Transformation([1, 3, 2]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
