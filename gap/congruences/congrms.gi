@@ -1311,18 +1311,6 @@ function(C)
   return pairs;
 end);
 
-# TODO(now) move this, also for left/right? 
-
-InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
-"for semigroup congruence",
-[IsSemigroupCongruence],
-function(C)
-  local S, pairs;
-  S := Range(C);
-  pairs := GeneratingPairsOfMagmaCongruence(C);
-  return SemigroupCongruenceByGeneratingPairs(S, pairs);
-end);
-
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for Rees matrix semigroup and list of pairs",
 [IsReesMatrixSemigroup, IsHomogeneousList], 

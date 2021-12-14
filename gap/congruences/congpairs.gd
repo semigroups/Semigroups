@@ -19,6 +19,10 @@ DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
+DeclareOperation("AsRightSemigroupCongruenceByGeneratingPairs",
+                 [IsRightSemigroupCongruence]);
+DeclareOperation("AsLeftSemigroupCongruenceByGeneratingPairs",
+                 [IsLeftSemigroupCongruence]);
 
 # Internal detail
 

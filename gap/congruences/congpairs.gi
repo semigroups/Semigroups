@@ -69,6 +69,36 @@ function(S, pairs, filt)
   return C;
 end);
 
+InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
+"for semigroup congruence",
+[IsSemigroupCongruence],
+function(C)
+  local S, pairs;
+  S := Range(C);
+  pairs := GeneratingPairsOfMagmaCongruence(C);
+  return SemigroupCongruenceByGeneratingPairs(S, pairs);
+end);
+
+InstallMethod(AsRightSemigroupCongruenceByGeneratingPairs,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+function(C)
+  local S, pairs;
+  S := Range(C);
+  pairs := GeneratingPairsOfRightMagmaCongruence(C);
+  return RightSemigroupCongruenceByGeneratingPairs(S, pairs);
+end);
+
+InstallMethod(AsLeftSemigroupCongruenceByGeneratingPairs,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+function(C)
+  local S, pairs;
+  S := Range(C);
+  pairs := GeneratingPairsOfLeftMagmaCongruence(C);
+  return LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
+end);
+
 #############################################################################
 # Properties of congruences
 #############################################################################
