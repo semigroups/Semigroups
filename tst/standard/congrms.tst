@@ -99,7 +99,7 @@ gap> EquivalenceRelationCanonicalLookup(cong2);
   1, 1, 2, 3, 1, 3, 3, 4, 2, 2, 3, 3, 2, 2, 2, 3, 2, 4, 3, 2, 4, 4, 3, 2, 4, 
   3, 2, 3, 2, 3, 2, 3, 3, 3, 1, 3, 2, 3, 2, 3, 3, 2, 2, 2 ]
 gap> IsSubrelation(cong2, cong);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, the 1st and 2nd arguments are congruences over different semigroups
 
 # ReesMatCongTest4: Testing membership
 gap> x := ReesMatrixSemigroupElement(S, 1, (2, 3), 2);;
@@ -521,7 +521,7 @@ gap> colBlocks := [[1, 2]];;
 gap> rowBlocks := [[1], [2, 3]];;
 gap> cong2 := RZMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
 gap> IsSubrelation(cong2, congs[3]);
-Error, the ranges of the arguments (congruences) do not coincide
+Error, the 1st and 2nd arguments are congruences over different semigroups
 
 # ReesZeroMatCongTest9: Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(S);;

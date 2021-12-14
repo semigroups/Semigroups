@@ -70,8 +70,7 @@ function(map, C)
   S   := Source(map);
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  C := Objectify(NewType(fam,
-                            IsSimpleSemigroupCongruence),
+  C := Objectify(NewType(fam, IsSimpleSemigroupCongruence),
                     rec(rmscong := C, iso := map));
   SetSource(C, S);
   SetRange(C, S);

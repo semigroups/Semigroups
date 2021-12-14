@@ -182,7 +182,7 @@ gap> ck := ReesCongruenceOfSemigroupIdeal(K);
 <Rees congruence of <regular transformation semigroup ideal of degree 5 with
   1 generator> over <full transformation monoid of degree 5>>
 gap> JoinSemigroupCongruences(ci, ck);
-Error, the ranges of the arguments (Rees congruences) do not coincide
+Error, cannot form the join of congruences over different semigroups
 
 # Generating pairs
 gap> S := Semigroup([Transformation([1, 1, 3, 1, 3]),
@@ -249,7 +249,7 @@ gap> T := Semigroup([Transformation([2, 4, 1, 2])]);;
 gap> i4 := SemigroupIdeal(T, [Transformation([2, 4, 1, 2])]);;
 gap> c4 := ReesCongruenceOfSemigroupIdeal(i4);;
 gap> IsSubrelation(c4, c1);
-Error, the ranges of the arguments (Rees congruences) do not coincide
+Error, the 1st and 2nd arguments are congruences over different semigroups
 
 # EquivalenceRelation(Canonical)Lookup
 gap> S := FullTransformationMonoid(3);;

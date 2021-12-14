@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  congruences/conguniv.gi
-##  Copyright (C) 2015                                   Michael C. Young
+##  Copyright (C) 2015-2021                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -39,7 +39,7 @@ function(cong)
   return NrEquivalenceClasses(cong) = 1;
 end);
 
-# move to congrms
+# TODO move to congrms
 InstallMethod(IsUniversalSemigroupCongruence,
 "for a semigroup congruence",
 [IsRMSCongruenceByLinkedTriple],
@@ -49,7 +49,7 @@ function(cong)
          cong!.n = UnderlyingSemigroup(Range(cong));
 end);
 
-# move to congrms
+# TODO move to congrms
 InstallImmediateMethod(IsUniversalSemigroupCongruence,
 IsRZMSCongruenceByLinkedTriple, 0,
 ReturnFalse);
