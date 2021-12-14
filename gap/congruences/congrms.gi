@@ -1311,7 +1311,7 @@ function(C)
   return pairs;
 end);
 
-# TODO move this
+# TODO(now) move this, also for left/right? 
 
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for semigroup congruence",
@@ -1325,7 +1325,10 @@ end);
 
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for Rees matrix semigroup and list of pairs",
-[IsReesMatrixSemigroup, IsHomogeneousList], 100,  # FIXME
+[IsReesMatrixSemigroup, IsHomogeneousList], 
+ToBeat([IsReesMatrixSemigroup, IsHomogeneousList], 
+       [IsSemigroup and CanComputeCppCongruences, IsList], 
+       [IsSimpleSemigroup, IsHomogeneousList]),
 function(S, pairs)
   local g, mat, colLookup, rowLookup, n, find, union, normalise, colBlocks,
   rowBlocks, C, pair, v, j, i, u;

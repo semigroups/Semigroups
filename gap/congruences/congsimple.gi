@@ -14,7 +14,6 @@
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a simple semigroup and list of pairs",
 [IsSimpleSemigroup, IsHomogeneousList],
-13,  # to beat the method for a semigroup with CanComputeCppCongruences
 function(S, pairs)
   local map, R, P, C;
   if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
@@ -41,10 +40,6 @@ InstallMethod(SemigroupCongruenceByGeneratingPairs,
 20,  # to beat the method for a semigroup with CanComputeCppCongruences
 function(S, pairs)
   local map, R, P, C;
-  if (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
-      or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    TryNextMethod();
-  fi;
   map := IsomorphismReesZeroMatrixSemigroup(S);
   R   := Range(map);
   P   := List(pairs, p -> [p[1] ^ map, p[2] ^ map]);

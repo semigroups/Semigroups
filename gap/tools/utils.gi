@@ -20,18 +20,17 @@
 #    documentation.
 
 InstallGlobalFunction(ToBeat,
-function(list, list_to_beat)
+function(list, arg...)
   local rank, rank_to_beat;
   Assert(1, IsList(list));
-  Assert(1, IsList(list_to_beat));
 
-  rank := Sum(list, RankFilter);
-  rank_to_beat := Sum(list_to_beat, RankFilter);
+  rank         := Sum(list, RankFilter);
+  rank_to_beat := Maximum(List(arg, x -> Sum(x, RankFilter)));
 
   if rank > rank_to_beat then
     return 0;
   else
-    return rank - rank_to_beat + 1;
+    return rank_to_beat - rank + 1;
   fi;
 end);
 

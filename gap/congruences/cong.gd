@@ -51,7 +51,7 @@ DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
 DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep,
-                2); # to beat IsCongruenceClass
+                3); # to beat IsCongruenceClass
 
 Assert(1, RankFilter(IsAnyCongruenceClass) > RankFilter(IsCongruenceClass));
 

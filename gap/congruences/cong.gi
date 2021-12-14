@@ -424,7 +424,7 @@ function(lhop, rhop)
 end);
 
 InstallMethod(\<, "for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
+[IsAnyCongruenceClass, IsAnyCongruenceClass],
 function(lhop, rhop)
   return EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop)
     and RepresentativeSmallest(lhop) < RepresentativeSmallest(rhop);

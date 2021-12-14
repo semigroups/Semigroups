@@ -13,7 +13,6 @@
 
 InstallMethod(IsReesCongruence, "for a semigroup congruence",
 [IsAnyCongruenceCategory],
-1,  # Prioritise this function over the one in the library
 function(C)
   local S, classes, nontrivial, i, class, I;
   if not IsSemigroupCongruence(C) then
@@ -58,7 +57,6 @@ end);
 
 InstallMethod(ReesCongruenceOfSemigroupIdeal, "for a semigroup ideal",
 [IsSemigroupIdeal],
-1,  # Prioritise this function over the one in the library
 function(I)
   local S, fam, type, C;
   S := Parent(I);
@@ -75,8 +73,7 @@ function(I)
   return C;
 end);
 
-InstallMethod(ViewObj,
-"for a Rees congruence",
+InstallMethod(ViewObj, "for a Rees congruence",
 [IsReesCongruence],
 function(C)
   Print("<Rees congruence of ");
@@ -224,7 +221,6 @@ end);
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
-20,  # to beat the method for IsAnyCongruenceCategory
 function(C, x)
   local is_ideal_class, fam, class;
   # Ensure consistency of representatives

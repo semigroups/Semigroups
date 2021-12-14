@@ -282,14 +282,18 @@ end);
 
 InstallMethod(\<,
 "for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsAnyCongruenceClass, IsAnyCongruenceClass],
+[IsAnyCongruenceClass, IsAnyCongruenceClass], 
+1, # to beat the method in congruences/cong.gi for IsAnyCongruenceClass
 function(class1, class2)
   local C, word1, word2, CC;
 
   C := EquivalenceClassRelation(class1);
   if C <> EquivalenceClassRelation(class2) then
     return false;
+  elif not CanComputeCppCongruence(C) then
+    TryNextMethod();
   fi;
+
   word1 := Factorization(Range(C), Representative(class1));
   word2 := Factorization(Range(C), Representative(class2));
   CC := CppCongruence(C);
@@ -372,7 +376,15 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
+function(S, pairs)
+  local filt;
+  filt := IsCongruenceCategory and CanComputeCppCongruence;
+  return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
+end);
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup with CanComputeCppCongruences and a list",
+[IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty],
 function(S, pairs)
   local filt;
   filt := IsCongruenceCategory and CanComputeCppCongruence;
