@@ -264,7 +264,6 @@ C -> Set(EquivalenceRelationPartition(C), Set));
 
 InstallMethod(EquivalenceRelationPartitionWithSingletons,
 "for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
-100,  # TODO check if this is required
 function(C)
   local en, partition, lookup, i;
   if not CanComputeFroidurePin(Range(C)) then
@@ -441,7 +440,6 @@ function(x, class)
 end);
 
 InstallMethod(ViewObj, "for IsAnyCongruenceClass", [IsAnyCongruenceClass],
-100,  # TODO
 function(C)
   local string;
   if IsCongruenceCategory(EquivalenceClassRelation(C)) then

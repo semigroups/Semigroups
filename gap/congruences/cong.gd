@@ -33,9 +33,10 @@
 
 DeclareCategory("IsAnyCongruenceCategory",
                 IsEquivalenceRelation,
-                Maximum(RankFilter(IsMagmaCongruence),
+                Maximum(RankFilter(IsSemigroupCongruence),
                         RankFilter(IsLeftMagmaCongruence),
-                        RankFilter(IsRightMagmaCongruence)));
+                        RankFilter(IsRightMagmaCongruence)) 
+                - RankFilter(IsEquivalenceRelation) + 1);
 DeclareCategory("IsCongruenceCategory",
                 IsAnyCongruenceCategory and IsSemigroupCongruence and
                 IsMagmaCongruence);
@@ -50,7 +51,9 @@ DeclareAttribute("AnyCongruenceCategory", IsAnyCongruenceCategory);
 DeclareAttribute("AnyCongruenceString", IsAnyCongruenceCategory);
 DeclareCategory("IsAnyCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep,
-                2);  # to beat IsCongruenceClass
+                2); # to beat IsCongruenceClass
+
+Assert(1, RankFilter(IsAnyCongruenceClass) > RankFilter(IsCongruenceClass));
 
 ########################################################################
 # Congruences

@@ -72,7 +72,7 @@ end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
 function(S, kernel, traceBlocks)
-  local traceLookup, ES, fam, cong, i, elm;
+  local traceLookup, ES, fam, C, i, elm;
 
   # Sort blocks
   traceBlocks := SortedList(List(traceBlocks, SortedList));
@@ -90,69 +90,69 @@ function(S, kernel, traceBlocks)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, IsInverseSemigroupCongruenceByKernelTrace),
+  C := Objectify(NewType(fam, IsInverseSemigroupCongruenceByKernelTrace),
                     rec(kernel := kernel,
                         traceBlocks := traceBlocks,
                         traceLookup := traceLookup));
-  SetSource(cong, S);
-  SetRange(cong, S);
-  SetKernelOfSemigroupCongruence(cong, kernel);
-  SetTraceOfSemigroupCongruence(cong, traceBlocks);
-  return cong;
+  SetSource(C, S);
+  SetRange(C, S);
+  SetKernelOfSemigroupCongruence(C, kernel);
+  SetTraceOfSemigroupCongruence(C, traceBlocks);
+  return C;
 end);
 
 InstallMethod(ViewObj,
-"for inverse semigroup congruence",
+"for inverse semigroup congruence by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace],
-function(cong)
+function(C)
   Print("<semigroup congruence over ");
-  ViewObj(Range(cong));
+  ViewObj(Range(C));
   Print(" with congruence pair (",
-        Size(cong!.kernel), ",",
-        Size(cong!.traceBlocks), ")>");
+        Size(C!.kernel), ",",
+        Size(C!.traceBlocks), ")>");
 end);
 
 InstallMethod(\=,
-"for two inverse semigroup congruences",
+"for two inverse semigroup congruences by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
-function(cong1, cong2)
-  return(Range(cong1) = Range(cong2) and
-         cong1!.kernel = cong2!.kernel and
-         cong1!.traceBlocks = cong2!.traceBlocks);
+function(lhop, rhop)
+  return(Range(lhop) = Range(rhop) and
+         lhop!.kernel = rhop!.kernel and
+         lhop!.traceBlocks = rhop!.traceBlocks);
 end);
 
 InstallMethod(IsSubrelation,
-"for two inverse semigroup congruences",
+"for two inverse semigroup congruences by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
-function(cong1, cong2)
-  # Tests whether cong2 is a subcongruence of cong1
-  if Range(cong1) <> Range(cong2) then
-    ErrorNoReturn("the ranges of the arguments (congruences) must be ",
-                  "the same");
+function(lhop, rhop)
+  # Tests whether rhop is a subcongruence of lhop
+  if Range(lhop) <> Range(rhop) then
+    Error("the 1st and 2nd arguments are congruences over different",
+          " semigroups");
   fi;
-  return IsSubsemigroup(cong1!.kernel, cong2!.kernel)
-         and ForAll(cong2!.traceBlocks,
-                    b2 -> ForAny(cong1!.traceBlocks, b1 -> IsSubset(b1, b2)));
+  return IsSubsemigroup(lhop!.kernel, rhop!.kernel)
+         and ForAll(rhop!.traceBlocks,
+                    b2 -> ForAny(lhop!.traceBlocks, b1 -> IsSubset(b1, b2)));
 end);
 
 InstallMethod(ImagesElm,
-"for inverse semigroup congruence and multiplicative element",
+"for inverse semigroup congruence by kernel and trace and mult. elt.",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsMultiplicativeElementWithInverse],
-function(cong, elm)
+function(C, elm)
   local S, images, e, b;
-  S := Range(cong);
+  S := Range(C);
   if not elm in S then
     ErrorNoReturn("the 2nd argument (a mult. elt. with inverse) does not ",
                   "belong to the range of the 1st argument (a congruence)");
   fi;
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
-  for e in First(cong!.traceBlocks, c -> (elm ^ -1 * elm) in c) do
+  for e in First(C!.traceBlocks, c -> (elm ^ -1 * elm) in c) do
     for b in LClass(S, e) do
-      if elm * b ^ -1 in cong!.kernel then
+      if elm * b ^ -1 in C!.kernel then
         Add(images, b);
       fi;
     od;
@@ -161,18 +161,18 @@ function(cong, elm)
 end);
 
 InstallMethod(EquivalenceClasses,
-"for inverse semigroup congruence",
+"for inverse semigroup congruence by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace],
-function(cong)
+function(C)
   local S, reps, elmlists, kernel, traceBlock, blockreps, blockelmlists, id,
         elm, pos, classes, i;
-  S := Range(cong);
+  S := Range(C);
   reps := [];
   elmlists := [];
-  kernel := Elements(cong!.kernel);
+  kernel := Elements(C!.kernel);
 
   # Consider each trace-class in turn
-  for traceBlock in cong!.traceBlocks do
+  for traceBlock in C!.traceBlocks do
     # Consider all the congruence classes corresponding to this trace-class
     blockreps := [];       # List of class reps
     blockelmlists := [];   # List of lists of elms in class
@@ -197,30 +197,30 @@ function(cong)
   # Create the class objects
   classes := [];
   for i in [1 .. Length(reps)] do
-    classes[i] := EquivalenceClassOfElementNC(cong, reps[i]);
+    classes[i] := EquivalenceClassOfElementNC(C, reps[i]);
     SetAsList(classes[i], elmlists[i]);
   od;
   return classes;
 end);
 
 InstallMethod(NrEquivalenceClasses,
-"for inverse semigroup congruence",
+"for inverse semigroup congruence by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace],
-function(cong)
-  return Length(EquivalenceClasses(cong));
+function(C)
+  return Length(EquivalenceClasses(C));
 end);
 
 # Although the next method doesn't use the representation, it also doesn't
 # require additional computation of the uncongruence, since it calls
 # EquivalenceClasses.
 InstallMethod(EquivalenceRelationCanonicalLookup,
-"for inverse semigroup congruence",
+"for inverse semigroup congruence by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace],
-function(cong)
+function(C)
   local S, n, classes, elms, table, next, i, x;
-  S := Range(cong);
+  S := Range(C);
   n := Size(S);
-  classes := EquivalenceClasses(cong);
+  classes := EquivalenceClasses(C);
   elms := AsListCanonical(S);
   table := EmptyPlist(n);
   next := 1;
@@ -236,15 +236,16 @@ function(cong)
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
-"for inverse semigroup congruence and two multiplicative elements",
+"for inverse semigroup congruence by kernel and trace and two mult. elts",
 [IsInverseSemigroupCongruenceByKernelTrace,
- IsMultiplicativeElement, IsMultiplicativeElement],
-function(cong, elm1, elm2)
+ IsMultiplicativeElement,
+ IsMultiplicativeElement],
+function(C, x, y)
   # Is (a^-1 a, b^-1 b) in the trace?
-  if elm1 ^ -1 * elm1 in
-      First(cong!.traceBlocks, c -> elm2 ^ -1 * elm2 in c) then
+  if x ^ -1 * x in
+      First(C!.traceBlocks, c -> y ^ -1 * y in c) then
     # Is ab^-1 in the kernel?
-    if elm1 * elm2 ^ -1 in cong!.kernel then
+    if x * y ^ -1 in C!.kernel then
       return true;
     fi;
   fi;
@@ -252,60 +253,58 @@ function(cong, elm1, elm2)
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for inverse semigroup congruence and multiplicative element",
+"for inverse semigroup congruence by kernel and trace and mult. elt.",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
-function(cong, elm)
+function(C, x)
   local class;
-  class := Objectify(InverseSemigroupCongruenceClassByKernelTraceType(cong),
+  class := Objectify(InverseSemigroupCongruenceClassByKernelTraceType(C),
                      rec());
-  SetParentAttr(class, Range(cong));
-  SetEquivalenceClassRelation(class, cong);
-  SetRepresentative(class, elm);
+  SetParentAttr(class, Range(C));
+  SetEquivalenceClassRelation(class, C);
+  SetRepresentative(class, x);
   return class;
 end);
 
 InstallMethod(InverseSemigroupCongruenceClassByKernelTraceType,
-"for an inverse semigroup congruence",
+"for inverse semigroup congruence by kernel and trace",
 [IsInverseSemigroupCongruenceByKernelTrace],
-function(cong)
-  return NewType(FamilyObj(Range(cong)),
+function(C)
+  return NewType(FamilyObj(Range(C)),
                  IsInverseSemigroupCongruenceClassByKernelTrace);
 end);
 
-InstallMethod(TraceOfSemigroupCongruence,
-"for semigroup congruence",
+InstallMethod(TraceOfSemigroupCongruence, "for semigroup congruence",
 [IsSemigroupCongruence],
-function(cong)
+function(C)
   local S, invcong;
-  S := Range(cong);
+  S := Range(C);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("the range of the argument (a congruence) must be an ",
                   "inverse semigroup with inverse op");
   fi;
-  invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+  invcong := AsInverseSemigroupCongruenceByKernelTrace(C);
   return invcong!.traceBlocks;
 end);
 
-InstallMethod(KernelOfSemigroupCongruence,
-"for semigroup congruence",
+InstallMethod(KernelOfSemigroupCongruence, "for semigroup congruence",
 [IsSemigroupCongruence],
-function(cong)
+function(C)
   local S, invcong;
-  S := Range(cong);
+  S := Range(C);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("the range of the argument (a congruence) must be an ",
                   "inverse semigroup with inverse op");
   fi;
-  invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+  invcong := AsInverseSemigroupCongruenceByKernelTrace(C);
   return invcong!.kernel;
 end);
 
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
+function(C)
   local S;
-  S := Range(cong);
+  S := Range(C);
   if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("the range of the argument (a congruence) must be an ",
                   "inverse semigroup with inverse op");
@@ -314,28 +313,28 @@ function(cong)
     SEMIGROUPS.KernelTraceClosure(S,
                                   IdempotentGeneratedSubsemigroup(S),
                                   List(Idempotents(S), e -> [e]),
-                                  GeneratingPairsOfSemigroupCongruence(cong));
+                                  GeneratingPairsOfSemigroupCongruence(C));
 end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
-function(c1, c2)
+function(lhop, rhop)
   local S, gens1, gens2, kernel, traceBlocks, block, b1, j, pos;
-  S := Range(c1);
-  if S <> Range(c2) then
+  S := Range(lhop);
+  if S <> Range(rhop) then
     Error("cannot form the join of congruences over different semigroups");
   fi;
 
-  # kernel generated by union of c1's kernel and c2's kernel
-  gens1 := GeneratorsOfInverseSemigroup(c1!.kernel);
-  gens2 := GeneratorsOfInverseSemigroup(c2!.kernel);
+  # kernel generated by union of lhop's kernel and rhop's kernel
+  gens1 := GeneratorsOfInverseSemigroup(lhop!.kernel);
+  gens2 := GeneratorsOfInverseSemigroup(rhop!.kernel);
   kernel := InverseSemigroup(Concatenation(gens1, gens2));
 
-  # trace is join of c1's trace and c2's trace
-  traceBlocks := StructuralCopy(c1!.traceBlocks);
-  for block in c2!.traceBlocks do
+  # trace is join of lhop's trace and rhop's trace
+  traceBlocks := StructuralCopy(lhop!.traceBlocks);
+  for block in rhop!.traceBlocks do
     b1 := PositionProperty(traceBlocks, b -> block[1] in b);
     for j in [2 .. Size(block)] do
       if not block[j] in traceBlocks[b1] then
@@ -356,23 +355,23 @@ InstallMethod(MeetSemigroupCongruences,
 "for two inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
-function(c1, c2)
+function(lhop, rhop)
   local S, kernel, traceBlocks, ids, c2lookup, classnos, block, classno;
-  S := Range(c1);
-  if S <> Range(c2) then
+  S := Range(lhop);
+  if S <> Range(rhop) then
     Error("cannot form the meet of congruences over different semigroups");
   fi;
 
   # Calculate the intersection of the kernels
   # TODO(later): can we do this without enumerating the whole kernel?
-  kernel := InverseSemigroup(Intersection(c1!.kernel, c2!.kernel));
+  kernel := InverseSemigroup(Intersection(lhop!.kernel, rhop!.kernel));
   kernel := InverseSemigroup(SmallInverseSemigroupGeneratingSet(kernel));
 
   # Calculate the intersection of the traces
   traceBlocks := [];
   ids := IdempotentGeneratedSubsemigroup(S);
-  c2lookup := c2!.traceLookup;
-  for block in c1!.traceBlocks do
+  c2lookup := rhop!.traceLookup;
+  for block in lhop!.traceBlocks do
     classnos := c2lookup{List(block, x -> Position(ids, x))};
     for classno in DuplicateFreeList(classnos) do
       Add(traceBlocks, block{Positions(classnos, classno)});

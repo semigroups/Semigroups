@@ -269,7 +269,7 @@ Error, cannot form the meet of congruences over different semigroups
 gap> JoinSemigroupCongruences(cong1, cong2);
 Error, cannot form the join of congruences over different semigroups
 gap> IsSubrelation(cong1, cong2);
-Error, the ranges of the arguments (congruences) must be the same
+Error, the 1st and 2nd arguments are congruences over different semigroups
 
 # EquivalenceRelationCanonicalLookup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
