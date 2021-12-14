@@ -7,10 +7,10 @@
 ##
 #############################################################################
 
-# The rank of IsActingSemigroup is incremented by 8 so that it is greater than
+# The rank of IsActingSemigroup is incremented by 10 so that it is greater than
 # IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and IsSemigroupIdeal
 # and IsFinite and HasGeneratorsOfSemigroupIdeal
-DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
+DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 10);
 
 DeclareCategory("IsRegularActingSemigroupRep",
                 IsRegularSemigroup and IsActingSemigroup);

@@ -33,7 +33,9 @@ jobs:
             ABI: 64
           # macOS job
           - gap-branch: master
-            pkgs-to-clone: "datastructures" # to ensure >= v0.2.6
+            # to ensure datastructures>= v0.2.6
+            # + digraphs >=1.5.0
+            pkgs-to-clone: "datastructures digraphs/digraphs" 
             os: macos
             ABI: 64
 
