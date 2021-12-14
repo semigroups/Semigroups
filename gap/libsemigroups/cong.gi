@@ -282,8 +282,8 @@ end);
 
 InstallMethod(\<,
 "for congruence classes of CanComputeCppCongruence", IsIdenticalObj,
-[IsAnyCongruenceClass, IsAnyCongruenceClass], 
-1, # to beat the method in congruences/cong.gi for IsAnyCongruenceClass
+[IsAnyCongruenceClass, IsAnyCongruenceClass],
+1,  # to beat the method in congruences/cong.gi for IsAnyCongruenceClass
 function(class1, class2)
   local C, word1, word2, CC;
 

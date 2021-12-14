@@ -13,7 +13,6 @@
 ## and MSc thesis "Computing with Semigroup Congruences" chapter 3.
 ##
 
-
 InstallMethod(IsUniversalSemigroupCongruence,
 "for a semigroup congruence",
 [IsRMSCongruenceByLinkedTriple],
@@ -754,7 +753,7 @@ function(C)
   return(Index(g, C!.n)             # Number of cosets of n
          * Size(C!.colBlocks)       # Number of column blocks
          * Size(C!.rowBlocks)       # Number of row blocks
-         + 1);                         # Class containing zero
+         + 1);                      # Class containing zero
 end);
 
 InstallMethod(Enumerator,
@@ -1322,8 +1321,7 @@ ToBeat([IsSimpleSemigroup, IsHomogeneousList],
        [IsSemigroup and CanComputeCppCongruences,
         IsList and IsEmpty]),
 function(S, pairs)
-  local g, mat, colLookup, rowLookup, n, find, union, normalise, colBlocks,
-  rowBlocks, C, pair, v, j, i, u;
+  local g, mat, colLookup, rowLookup, n, C, pair, v, j;
 
   g   := UnderlyingSemigroup(S);
   mat := Matrix(S);

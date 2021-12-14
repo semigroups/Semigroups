@@ -275,7 +275,8 @@ function(lhop, rhop)
     return rhop;
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(lhop),
-                                     Representative(lhop) * Representative(rhop));
+                                     Representative(lhop) *
+                                     Representative(rhop));
 end);
 
 InstallMethod(\=, "for two Rees congruence classes",

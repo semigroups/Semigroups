@@ -328,6 +328,7 @@ InstallMethod(IsSuperrelation, "for semigroup congruences",
 [IsAnyCongruenceCategory, IsAnyCongruenceCategory],
 {lhop, rhop} -> IsSubrelation(rhop, lhop));
 
+# TODO what about MeetLeftSemigroupCongruences, MeetRightSemigroupCongruences?
 InstallMethod(MeetSemigroupCongruences, "for semigroup congruences",
 [IsSemigroupCongruence, IsSemigroupCongruence],
 function(lhop, rhop)
@@ -335,7 +336,20 @@ function(lhop, rhop)
     Error("cannot form the meet of congruences over different semigroups");
   elif lhop = rhop then
     return lhop;
+  elif IsSubrelation(lhop, rhop) then
+    return rhop;
+  elif IsSubrelation(rhop, lhop) then
+    return lhop;
   fi;
+  # lhop_lookup := EquivalenceRelationCanonicalLookup(lhop);
+  # rhop_lookup := EquivalenceRelationCanonicalLookup(rhop);
+  # N           := Length(lhop);
+
+  # hash := HashMap();
+  # next := 1;
+  # for i in [1 .. N] do
+  # The problem is how to represent the meet of the congruences
+  # od;
   # TODO actually implement a method
   TryNextMethod();
 end);
