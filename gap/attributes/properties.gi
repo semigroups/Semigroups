@@ -1649,3 +1649,37 @@ x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);
 InstallMethod(IsSurjectiveSemigroup, "for a semigroup",
 [IsSemigroup],
 S -> IsEmpty(IndecomposableElements(S)));
+
+InstallMethod(IsFullInverseSubsemigroup,
+"for an inverse semigroup and an inverse subsemigroup",
+[IsInverseSemigroup, IsInverseSemigroup],
+function(S, T)
+  return IsSubsemigroup(S, T) and IsInverseSemigroup(T)
+    and NrIdempotents(S) = NrIdempotents(T);
+end);
+
+InstallMethod(IsNormalInverseSubsemigroup,
+"for an inverse semigroup and an inverse subsemigroup",
+[IsInverseSemigroup, IsInverseSemigroup],
+function(S, T)
+  local DS, G, N, p, DT;
+
+  if not IsSubsemigroup(S, T) or not IsInverseSemigroup(T) then
+    return false;
+  fi;
+
+  for DT in DClasses(T) do
+    DS := DClass(S, Representative(DT));
+    G := Image(IsomorphismPermGroup(GroupHClass(DS)));
+    N := Image(IsomorphismPermGroup(GroupHClass(DT)));
+    if not IsSubset(MovedPoints(G), MovedPoints(N)) then
+      p := MappingPermListList(MovedPoints(G), MovedPoints(N));
+      N := N ^ p;
+    fi;
+    Assert(0, IsSubset(MovedPoints(G), MovedPoints(N)));
+    if not IsNormal(G, N) then
+      return false;
+    fi;
+  od;
+  return true;
+end);

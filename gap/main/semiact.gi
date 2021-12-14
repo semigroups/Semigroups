@@ -127,7 +127,6 @@ function(Constructor, S, coll, opts)
   Unbind(o!.schutz);
   Unbind(o!.reverse);
   Unbind(o!.rev);
-  Unbind(o!.truth);
   Unbind(o!.schutzstab);
   Unbind(o!.factorgroups);
   Unbind(o!.factors);
@@ -161,7 +160,6 @@ function(Constructor, S, coll, opts)
   Unbind(rho_o!.schutz);
   Unbind(rho_o!.reverse);
   Unbind(rho_o!.rev);
-  Unbind(rho_o!.truth);
   Unbind(rho_o!.schutzstab);
 
   rho_o!.parent := t;
@@ -455,7 +453,6 @@ function(Constructor, S, coll, opts)
   Unbind(o!.schutz);
   Unbind(o!.reverse);
   Unbind(o!.rev);
-  Unbind(o!.truth);
   Unbind(o!.schutzstab);
   Unbind(o!.factorgroups);
   Unbind(o!.factors);

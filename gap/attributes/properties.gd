@@ -41,6 +41,10 @@ DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsSemigroup);
 DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 DeclareProperty("IsSurjectiveSemigroup", IsSemigroup);
+DeclareOperation("IsFullInverseSubsemigroup",
+                 [IsInverseSemigroup, IsInverseSemigroup]);
+DeclareOperation("IsNormalInverseSubsemigroup",
+                 [IsInverseSemigroup, IsInverseSemigroup]);
 
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);

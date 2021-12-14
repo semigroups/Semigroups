@@ -400,7 +400,6 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   Unbind(new!.schutz);
   Unbind(new!.reverse);
   Unbind(new!.rev);
-  Unbind(new!.truth);
   Unbind(new!.schutzstab);
   Unbind(new!.factorgroups);
   Unbind(new!.factors);
@@ -515,7 +514,6 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   Unbind(new!.schutz);
   Unbind(new!.reverse);
   Unbind(new!.rev);
-  Unbind(new!.truth);
   Unbind(new!.schutzstab);
   Unbind(new!.factorgroups);
   Unbind(new!.factors);
