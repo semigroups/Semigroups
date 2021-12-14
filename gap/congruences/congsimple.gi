@@ -14,8 +14,8 @@
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a simple semigroup and list of pairs",
 [IsSimpleSemigroup, IsHomogeneousList],
-ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList], 
-       [IsSemigroup and CanComputeCppCongruences, 
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanComputeCppCongruences,
         IsList and IsEmpty]),
 function(S, pairs)
   local map, R, P, C;
@@ -40,8 +40,8 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a 0-simple semigroup and list of pairs",
 [IsZeroSimpleSemigroup, IsHomogeneousList],
-ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList], 
-       [IsSemigroup and CanComputeCppCongruences, 
+ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList],
+       [IsSemigroup and CanComputeCppCongruences,
         IsList and IsEmpty]),
 function(S, pairs)
   local map, R, P, C;
@@ -141,7 +141,7 @@ end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
-[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence], 100,  # FIXME
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(lhop, rhop)
   local meet;
   meet := MeetSemigroupCongruences(lhop!.rmscong, rhop!.rmscong);
@@ -188,7 +188,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and multiplicative element",
-[IsSimpleSemigroupCongruence, IsMultiplicativeElement], 100,  # TODO(now)
+[IsSimpleSemigroupCongruence, IsMultiplicativeElement],
 function(C, elm)
   local class;
   class := EquivalenceClassOfElementNC(C!.rmscong, elm ^ C!.iso);
