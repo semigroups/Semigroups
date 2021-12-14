@@ -44,10 +44,8 @@ InstallMethod(EquivalenceRelationPartition,
 [IsUniversalSemigroupCongruence],
 C -> [AsList(Range(C))]);
 
-InstallMethod(ViewObj,
-"for universal semigroup congruence",
+InstallMethod(ViewObj, "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
-100,  # TODO
 function(C)
   Print("<universal semigroup congruence over ");
   ViewObj(Range(C));
@@ -183,7 +181,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for universal semigroup congruence and associative element",
-[IsUniversalSemigroupCongruence, IsMultiplicativeElement], 100,
+[IsUniversalSemigroupCongruence, IsMultiplicativeElement],
 function(C, x)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(x));
@@ -206,6 +204,7 @@ function(x, class)
   return x in Parent(class);
 end);
 
+# TODO more \* methods for universal and non-universal congruences??
 InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
@@ -222,7 +221,6 @@ InstallMethod(Size,
 [IsUniversalSemigroupCongruenceClass],
 C -> Size(Range(EquivalenceClassRelation(C))));
 
-# Needed?
 InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
