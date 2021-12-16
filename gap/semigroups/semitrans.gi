@@ -714,8 +714,9 @@ InstallMethod(IsomorphismTransformationSemigroup,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;
-
-  if not IsFinite(S) then
+  if IsTransformationSemigroup(S) then
+    TryNextMethod();
+  elif not IsFinite(S) then
     # This is unreachable in tests, since there is no other method that
     # terminates
     TryNextMethod();
