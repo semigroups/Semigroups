@@ -208,7 +208,6 @@
     <#Include Label = "IsRZMSCongruenceClassByLinkedTriple">
     <#Include Label = "RZMSCongruenceClassByLinkedTriple">
     <#Include Label = "IsLinkedTriple">
-    <#Include Label = "CanonicalRepresentative">
     <#Include Label = "AsSemigroupCongruenceByGeneratingPairs">
   </Section>
 

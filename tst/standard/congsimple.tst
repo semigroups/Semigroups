@@ -150,8 +150,8 @@ gap> x * z in classz * classx;
 false
 gap> Size(classx);
 4
-gap> CanonicalRepresentative(classx);
-Transformation( [ 1, 2, 2, 1, 2 ] )
+gap> Representative(classx);
+Transformation( [ 1, 2, 2, 1, 1 ] )
 
 # SimpleCongTest6: Join and meet congruences
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),

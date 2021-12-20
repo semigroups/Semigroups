@@ -233,12 +233,11 @@ function(C)
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
-InstallMethod(CanonicalRepresentative,
+InstallMethod(Representative,
 "for a (0-)simple semigroup congruence class",
 [IsSimpleSemigroupCongruenceClass],
 function(class)
-  return CanonicalRepresentative(class!.rmsclass) ^
-         InverseGeneralMapping(class!.iso);
+  return Representative(class!.rmsclass) ^ InverseGeneralMapping(class!.iso);
 end);
 
 InstallMethod(IsSubrelation,

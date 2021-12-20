@@ -994,7 +994,6 @@ function(C, nCoset, colClass, rowClass)
                          rowClass := rowClass));
   SetParentAttr(class, Range(C));
   SetEquivalenceClassRelation(class, C);
-  SetRepresentative(class, CanonicalRepresentative(class));
   return class;
 end);
 
@@ -1011,7 +1010,6 @@ function(C, nCoset, colClass, rowClass)
                          rowClass := rowClass));
   SetParentAttr(class, Range(C));
   SetEquivalenceClassRelation(class, C);
-  SetRepresentative(class, CanonicalRepresentative(class));
   return class;
 end);
 
@@ -1139,7 +1137,7 @@ function(lhop, rhop)
          lhop!.rowClass = rhop!.rowClass);
 end);
 
-InstallMethod(CanonicalRepresentative,
+InstallMethod(Representative,
 "for Rees matrix semigroup congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
 function(class)
@@ -1157,7 +1155,7 @@ function(class)
   return RMSElement(S, i, a, u);
 end);
 
-InstallMethod(CanonicalRepresentative,
+InstallMethod(Representative,
 "for Rees 0-matrix semigroup congruence class by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)

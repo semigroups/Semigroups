@@ -409,7 +409,7 @@ gap> HasSize(class0);
 false
 gap> Size(class0);
 1
-gap> CanonicalRepresentative(class0);
+gap> Representative(class0);
 0
 gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrEquivalenceClasses(cong);

@@ -44,4 +44,3 @@ DeclareOperation("RMSCongruenceClassByLinkedTripleNC",
 DeclareOperation("RZMSCongruenceClassByLinkedTripleNC",
                  [IsRZMSCongruenceByLinkedTriple,
                   IsRightCoset, IsPosInt, IsPosInt]);
-DeclareAttribute("CanonicalRepresentative", IsEquivalenceClass);
