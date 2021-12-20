@@ -366,7 +366,7 @@ namespace gapbind14 {
         return congruence_kind::left;
       } else if (stype == "right") {
         return congruence_kind::right;
-      } else if (stype == "twosided") {
+      } else if (stype == "2-sided") {
         return congruence_kind::twosided;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);

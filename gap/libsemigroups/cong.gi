@@ -35,25 +35,6 @@ InstallTrueMethod(CanComputeCppCongruences,
                   HasIsFreeMonoid and IsFreeMonoid);
 
 ###########################################################################
-# Helper
-###########################################################################
-
-# TODO(now) remove this use AnyCongruenceString
-BindGlobal("_KindString",
-function(C)
-  Assert(1, CanComputeCppCongruence(C));
-  Assert(1, IsAnyCongruenceCategory(C));
-
-  if IsCongruenceCategory(C) then
-    return "twosided";
-  elif IsLeftCongruenceCategory(C) then
-    return "left";
-  elif IsRightCongruenceCategory(C) then
-    return "right";
-  fi;
-end);
-
-###########################################################################
 # Functions/methods that are declared in this file and that use the
 # libsemigroups object directly
 ###########################################################################
@@ -118,16 +99,16 @@ function(C)
 
   S  := Range(C);
   if CanComputeCppFroidurePin(S) then
-    CC := CppCongruenceConstructor(S)([_KindString(C), CppFroidurePin(S)]);
+    CC := CppCongruenceConstructor(S)([AnyCongruenceString(C), CppFroidurePin(S)]);
     factor := MinimalFactorization;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    CC := libsemigroups.Congruence.make_from_fpsemigroup([_KindString(C),
-                                                       CppFpSemigroup(S)]);
+    CC := libsemigroups.Congruence.make_from_fpsemigroup([AnyCongruenceString(C),
+                                                          CppFpSemigroup(S)]);
     factor := Factorization;
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.make([_KindString(C)]);
+    tc := libsemigroups.ToddCoxeter.make([AnyCongruenceString(C)]);
     libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
     if IsLeftCongruenceCategory(C) then
       table := LeftCayleyGraphSemigroup(Range(C)) - 1;
@@ -135,7 +116,7 @@ function(C)
       table := RightCayleyGraphSemigroup(Range(C)) - 1;
     fi;
     libsemigroups.ToddCoxeter.prefill(tc, table);
-    CC := libsemigroups.Congruence.make_from_table([_KindString(C),
+    CC := libsemigroups.Congruence.make_from_table([AnyCongruenceString(C),
                                                     "none"]);
     libsemigroups.Congruence.set_number_of_generators(CC, N);
     libsemigroups.Congruence.add_runner(CC, tc);

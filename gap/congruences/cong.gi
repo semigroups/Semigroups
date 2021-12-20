@@ -260,18 +260,21 @@ end);
 
 InstallMethod(EquivalenceRelationCanonicalPartition,
 "for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
-C -> Set(EquivalenceRelationPartition(C), Set));
+function(C)
+  return Filtered(EquivalenceRelationPartitionWithSingletons(C),
+                  x -> Size(x) <> 1);
+end);
 
 InstallMethod(EquivalenceRelationPartitionWithSingletons,
 "for IsAnyCongruenceCategory", [IsAnyCongruenceCategory],
 function(C)
   local en, partition, lookup, i;
-  if not CanComputeFroidurePin(Range(C)) then
+  if not IsFinite(Range(C)) then
+    Error("the argument (a congruence) must have finite range");
+  elif not CanComputeFroidurePin(Range(C)) then
     # This is required because EnumeratorCanonical is not a thing for other
     # types of congruences.
     TryNextMethod();
-  elif not IsFinite(Range(C)) then
-    Error("the argument (a congruence) must have finite range");
   fi;
   en        := EnumeratorCanonical(Range(C));
   partition := List([1 .. NrEquivalenceClasses(C)], x -> []);

@@ -507,10 +507,10 @@ gap> S := Semigroup(Transformation([1, 4, 3, 3]),
 gap> cong := SemigroupCongruence(S, [Transformation([1, 4, 3, 3]),
 >                                    Transformation([1, 3, 3, 3])]);;
 gap> EquivalenceRelationCanonicalPartition(cong);
-[ [ Transformation( [ 1, 3, 3, 3 ] ), 
-      Transformation( [ 1, 4, 3, 3 ] ) ], 
-  [ Transformation( [ 3, 3, 3, 3 ] ), 
-      Transformation( [ 4, 3, 3, 3 ] ) ] ]
+[ [ Transformation( [ 1, 4, 3, 3 ] ), 
+      Transformation( [ 1, 3, 3, 3 ] ) ], 
+  [ Transformation( [ 4, 3, 3, 3 ] ), 
+      Transformation( [ 3, 3, 3, 3 ] ) ] ]
 ]]></Example>
     </Description>
   </ManSection>

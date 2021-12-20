@@ -123,7 +123,7 @@ gap> S := Semigroup([Transformation([3, 3, 3]),
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> EquivalenceRelationCanonicalPartition(cong);
-[ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
+[ [ Transformation( [ 3, 4, 3, 3 ] ), Transformation( [ 3, 3, 3, 3 ] ) ] ]
 
 # SemigroupCongruence: left congruence
 gap> S := Semigroup([Transformation([3, 3, 3]),
@@ -131,7 +131,7 @@ gap> S := Semigroup([Transformation([3, 3, 3]),
 gap> pair := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
 gap> cong := LeftSemigroupCongruence(S, pair);;
 gap> EquivalenceRelationCanonicalPartition(cong);
-[ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
+[ [ Transformation( [ 3, 4, 3, 3 ] ), Transformation( [ 3, 3, 3, 3 ] ) ] ]
 gap> pair in cong;
 true
 gap> [S.1, S.1] in cong;
@@ -494,20 +494,17 @@ gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> Size(EquivalenceRelationPartition(cong)[1]);
 21
 gap> EquivalenceRelationCanonicalPartition(cong);
-[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
-      Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
-      Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 3, 1 ] ), 
-      Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
-      Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 2, 1 ] ), 
-      Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
-      Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 3, 3 ] ), 
-      Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 1, 3 ] ), 
-      Transformation( [ 3, 2, 2 ] ), Transformation( [ 3, 2, 3 ] ), 
-      Transformation( [ 3, 3, 1 ] ), Transformation( [ 3, 3, 2 ] ), 
+[ [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 2, 1, 1 ] ), 
+      Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 1, 2 ] ), 
+      Transformation( [ 1, 1, 2 ] ), Transformation( [ 3, 2, 2 ] ), 
+      Transformation( [ 1, 2, 2 ] ), Transformation( [ 3, 1, 3 ] ), 
+      Transformation( [ 1, 3, 1 ] ), Transformation( [ 3, 2, 3 ] ), 
+      Transformation( [ 2, 2 ] ), Transformation( [ 2, 2, 1 ] ), 
+      Transformation( [ 1, 3, 3 ] ), Transformation( [ 3, 1, 1 ] ), 
+      Transformation( [ 2, 3, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
+      Transformation( [ 3, 3, 1 ] ), Transformation( [ 1, 1 ] ), 
+      Transformation( [ 3, 3, 2 ] ), Transformation( [ 2, 2, 2 ] ), 
       Transformation( [ 3, 3, 3 ] ) ] ]
-gap> EquivalenceRelationCanonicalPartition(cong)
->        = Set(EquivalenceRelationPartition(cong), Set);
-true
 
 # A left congruence example
 gap> F := FreeMonoid(2);;

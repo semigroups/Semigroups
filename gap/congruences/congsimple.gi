@@ -14,7 +14,7 @@
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a simple semigroup and list of pairs",
 [IsSimpleSemigroup, IsHomogeneousList],
-ToBeat([IsZeroSimpleSemigroup, IsHomogeneousList],
+ToBeat([IsSimpleSemigroup, IsHomogeneousList],
        [IsSemigroup and CanComputeCppCongruences,
         IsList and IsEmpty]),
 function(S, pairs)
@@ -248,32 +248,19 @@ function(lhop, rhop)
   return IsSubrelation(lhop!.rmscong, rhop!.rmscong);
 end);
 
-# TODO shouldn't this be EquivalenceRelationPartition?
+# InstallMethod(EquivalenceRelationLookup,
+# "for a (0-)simple semigroup congruence",
+# [IsSimpleSemigroupCongruence],
+# function(C)
+#   return EquivalenceRelationLookup(C!.rmscong);
+# end);
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
+InstallMethod(EquivalenceRelationPartition,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
 function(C)
-  local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;
-
-  S         := Range(C);
-  rmstable  := EquivalenceRelationCanonicalLookup(C!.rmscong);
-  nrclasses := NrEquivalenceClasses(C!.rmscong);
-  iso       := C!.iso;
-  elms      := AsListCanonical(S);
-
-  # Renumber the entries so we start at 1
-  table   := EmptyPlist(Length(elms));
-  newnums := EmptyPlist(nrclasses);
-  next    := 1;
-
-  for i in [1 .. Length(elms)] do
-    rmsclass := rmstable[PositionCanonical(Range(iso), elms[i] ^ iso)];
-    if not IsBound(newnums[rmsclass]) then
-      newnums[rmsclass] := next;
-      next := next + 1;
-    fi;
-    table[i] := newnums[rmsclass];
-  od;
-  return table;
+  local map;
+  map := InverseGeneralMapping(C!.iso);
+  return List(EquivalenceRelationPartition(C!.rmscong),
+              C -> List(C, x -> x ^ map));
 end);
