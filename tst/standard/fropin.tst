@@ -89,7 +89,7 @@ rec( elts := [ x1, x2, x3, x4, x5 ], final := [ 1, 2, 3, 4, 5 ],
       [ false, false, false, false, false ], 
       [ false, false, false, false, false ], 
       [ false, false, false, false, false ], 
-      [ false, false, false, false, false ] ], report := false, 
+      [ false, false, false, false, false ] ], 
   right := [ [  ], [  ], [  ], [  ], [  ] ], rules := [  ], stopper := false, 
   suffix := [ 0, 0, 0, 0, 0 ], words := [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] 
  )

@@ -400,8 +400,7 @@ function(S)
   return BIPART_NR_IDEMPOTENTS(o,
                                OrbSCC(o),
                                OrbSCCLookup(o),
-                               opts.nr_threads,
-                               opts.report);
+                               opts.nr_threads);
 end);
 
 #############################################################################

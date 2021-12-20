@@ -13,7 +13,6 @@ SEMIGROUPS.DefaultOptionsRec :=
       hashlen    := 12517,
       regular    := false,
       acting     := true,
-      report     := false,
       batch_size := 8192,
       nr_threads := 4,
       cong_by_ker_trace_threshold := 10 ^ 5);

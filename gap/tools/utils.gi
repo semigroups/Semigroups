@@ -96,7 +96,7 @@ SEMIGROUPS.StartTest := function()
                     "minimal");
 
   # set default options
-  SEMIGROUPS.DefaultOptionsRec.report := false;
+  libsemigroups.set_report(false);
   return;
 end;
 

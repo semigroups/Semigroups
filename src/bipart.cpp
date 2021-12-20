@@ -1332,17 +1332,12 @@ class IdempotentCounter {
   typedef std::vector<std::vector<unpr_t>> thrds_unpr_t;
 
  public:
-  IdempotentCounter(Obj          orbit,
-                    Obj          scc,
-                    Obj          lookup,
-                    unsigned int nr_threads,
-                    Obj          report)
+  IdempotentCounter(Obj orbit, Obj scc, Obj lookup, unsigned int nr_threads)
       : _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
         _fuse_tab(thrds_size_t(_nr_threads, std::vector<size_t>())),
         _lookup(thrds_bool_t(_nr_threads, std::vector<bool>())),
         _min_scc(),
         _orbit(),
-        _report(report == True),
         _scc(),
         _scc_pos(std::vector<size_t>(LEN_LIST(orbit), 0)),
         _seen(thrds_bool_t(_nr_threads, std::vector<bool>())),
@@ -1399,7 +1394,6 @@ class IdempotentCounter {
 
   std::vector<size_t> count() {
     libsemigroups::THREAD_ID_MANAGER.reset();
-    auto rg = libsemigroups::ReportGuard(_report);
     REPORT_DEFAULT("using %llu / %llu additional threads",
                    _nr_threads,
                    std::thread::hardware_concurrency());
@@ -1525,7 +1519,6 @@ class IdempotentCounter {
   thrds_bool_t         _lookup;
   size_t               _min_scc;
   std::vector<Blocks*> _orbit;
-  bool                 _report;
   std::vector<size_t>  _ranks;
   thrds_size_t         _scc;
   std::vector<size_t>  _scc_pos;
@@ -1543,9 +1536,8 @@ Obj BIPART_NR_IDEMPOTENTS(Obj self,
                           Obj o,
                           Obj scc,
                           Obj lookup,
-                          Obj nr_threads,
-                          Obj report) {
-  IdempotentCounter   finder(o, scc, lookup, INT_INTOBJ(nr_threads), report);
+                          Obj nr_threads) {
+  IdempotentCounter   finder(o, scc, lookup, INT_INTOBJ(nr_threads));
   std::vector<size_t> vals = finder.count();
 
   Obj out = NEW_PLIST(T_PLIST_CYC, vals.size());

@@ -86,6 +86,6 @@ Obj BLOCKS_RIGHT_ACT(Obj, Obj, Obj);
 Obj BLOCKS_INV_LEFT(Obj, Obj, Obj);
 Obj BLOCKS_INV_RIGHT(Obj, Obj, Obj);
 
-Obj BIPART_NR_IDEMPOTENTS(Obj, Obj, Obj, Obj, Obj, Obj);
+Obj BIPART_NR_IDEMPOTENTS(Obj, Obj, Obj, Obj, Obj);
 
 #endif  // SEMIGROUPS_SRC_BIPART_HPP_

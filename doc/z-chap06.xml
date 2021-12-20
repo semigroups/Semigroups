@@ -302,12 +302,6 @@
         for more information about the "kernel and trace" method.
     </Item>
 
-    <Mark><C>report</C></Mark>
-    <Item>this component should be either <K>true</K> or <K>false</K>. If this
-      component is set to <K>true</K>, then some additional information will be
-      provided during computations performed by the &libsemigroups; C++ library.
-    </Item>
-
     <Mark><C>batch_size</C></Mark>
     <Item>this component should be a positive integer. If <A>S</A> is a
       semigroup with representation <Ref Prop="CanComputeFroidurePin" />,

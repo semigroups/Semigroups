@@ -46,13 +46,9 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
            restriction,
            SemigroupXCongruence,
            GeneratingPairsOfXSemigroupCongruence)
-  local report, pairs, total, congs, nrcongs, children, parents, last_collected,
+  local pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p,
         poset;
-
-  # Suppress reporting
-  report := SEMIGROUPS.OptionsRec(S).report;
-  SEMIGROUPS.OptionsRec(S).report := false;
 
   # Only try pairs from <restriction>
   pairs := IteratorOfCombinations(AsList(restriction), 2);
@@ -108,8 +104,6 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
     fi;
   od;
 
-  SEMIGROUPS.OptionsRec(S).report := report;
-
   # We are done: make the object and return
   poset := Digraph(parents);
   SetInNeighbours(poset, children);
@@ -134,7 +128,7 @@ InstallMethod(JoinSemilatticeOfCongruences,
 "for a congruence poset and a function",
 [IsCongruencePoset, IsFunction],
 function(poset, join_func)
-  local children, parents, congs, princ_congs, nrcongs, S, report, length,
+  local children, parents, congs, princ_congs, nrcongs, S, length,
         found, ignore, start, i, j, newcong, badcong, newchildren, newparents,
         k, c, p;
 
@@ -150,10 +144,6 @@ function(poset, join_func)
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
   S := UnderlyingSemigroupOfCongruencePoset(poset);
-
-  # Suppress reporting
-  report := SEMIGROUPS.OptionsRec(S).report;
-  SEMIGROUPS.OptionsRec(S).report := false;
 
   # Take all the joins
   Info(InfoSemigroups, 1, "Finding joins of congruences . . .");
@@ -207,8 +197,6 @@ function(poset, join_func)
            " (", Length(congs) - i, " remaining)");
     od;
   od;
-
-  SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
   poset := Digraph(parents);

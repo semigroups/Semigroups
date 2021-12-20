@@ -114,7 +114,6 @@ function(S)
               suffix := [],
               words := []);
 
-  data.report     := SEMIGROUPS.OptionsRec(S).report;
   hashlen         := SEMIGROUPS.OptionsRec(S).hashlen;
 
   data.gens := ShallowCopy(GeneratorsOfSemigroup(S));

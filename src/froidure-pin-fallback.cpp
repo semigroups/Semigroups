@@ -42,6 +42,16 @@ using libsemigroups::detail::Timer;
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 
+#define SEMIGROUPS_REPORT(...)                                             \
+  (libsemigroups::REPORTER.report() ? libsemigroups::REPORTER(__VA_ARGS__) \
+                                    : libsemigroups::REPORTER)
+
+#define SEMIGROUPS_REPORT_DEFAULT(...) SEMIGROUPS_REPORT(__VA_ARGS__).flush();
+
+#define SEMIGROUPS_REPORT_TIME(var) \
+  SEMIGROUPS_REPORT_DEFAULT(        \
+      "elapsed time (%s): %s\n", __func__, var.string().c_str());
+
 static Int RNam_batch_size        = 0;
 static Int RNam_DefaultOptionsRec = 0;
 static Int RNam_opts              = 0;
@@ -80,9 +90,11 @@ static inline size_t get_batch_size(Obj so) {
   return INT_INTOBJ(get_default_value(RNam_batch_size));
 }
 
-// GAP kernel version of the algorithm for other types of semigroups.
+// GAP kernel version of the algorithm for
+// other types of semigroups.
 //
-// Assumes the length of data!.elts is at most 2 ^ 28.
+// Assumes the length of data!.elts is at
+// most 2 ^ 28.
 
 Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
@@ -92,7 +104,8 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
       intval, stop, one;
 
   if (!IS_PREC(obj)) {
-    ErrorQuit("expected a plain record as first argument, found %s",
+    ErrorQuit("expected a plain record as "
+              "first argument, found %s",
               (Int) TNAM_OBJ(obj),
               0L);
   }  // TODO(now) other checks
@@ -112,9 +125,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
     return data;
   }
   int_limit = std::max(static_cast<UInt>(INT_INTOBJ(limit)), nr + batch_size);
-  if (libsemigroups::REPORTER.report()) {
-    std::cout << "limit = " << int_limit << "\n";
-  }
+  SEMIGROUPS_REPORT_DEFAULT("limit = %llu", uint64_t(int_limit));
 
   Timer timer;
 
@@ -126,28 +137,36 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   gens = ElmPRec(data, RNamName("gens"));
   // the generators
   genslookup = ElmPRec(data, RNamName("genslookup"));
-  // genslookup[i]=Position(elts, gens[i], this is not always <i+1>!
+  // genslookup[i]=Position(elts, gens[i],
+  // this is not always <i+1>!
   lenindex = ElmPRec(data, RNamName("lenindex"));
-  // lenindex[len]=position in <words> and <elts> of first element of length
-  // <len>
+  // lenindex[len]=position in <words> and
+  // <elts> of first element of length <len>
   first = ElmPRec(data, RNamName("first"));
-  // elts[i]=gens[first[i]]*elts[suffix[i]], first letter
+  // elts[i]=gens[first[i]]*elts[suffix[i]],
+  // first letter
   final = ElmPRec(data, RNamName("final"));
   // elts[i]=elts[prefix[i]]*gens[final[i]]
   prefix = ElmPRec(data, RNamName("prefix"));
-  // see final, 0 if prefix is empty i.e. elts[i] is a gen
+  // see final, 0 if prefix is empty i.e.
+  // elts[i] is a gen
   suffix = ElmPRec(data, RNamName("suffix"));
-  // see first, 0 if suffix is empty i.e. elts[i] is a gen
+  // see first, 0 if suffix is empty i.e.
+  // elts[i] is a gen
 
   // lists of lists
   right = ElmPRec(data, RNamName("right"));
-  // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
+  // elts[right[i][j]]=elts[i]*gens[j],
+  // right Cayley graph
   left = ElmPRec(data, RNamName("left"));
-  // elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
+  // elts[left[i][j]]=gens[j]*elts[i], left
+  // Cayley graph
   reduced = ElmPRec(data, RNamName("reduced"));
-  // words[right[i][j]] is reduced if reduced[i][j]=true
+  // words[right[i][j]] is reduced if
+  // reduced[i][j]=true
   words = ElmPRec(data, RNamName("words"));
-  // words[i] is a word in the gens equal to elts[i]
+  // words[i] is a word in the gens equal to
+  // elts[i]
   rules = ElmPRec(data, RNamName("rules"));
   if (TNUM_OBJ(rules) == T_PLIST_EMPTY) {
     RetypeBag(rules, T_PLIST_CYC);
@@ -159,14 +178,16 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   // current word length
   len = INT_INTOBJ(ElmPRec(data, RNamName("len")));
 
-  // <elts[one]> is the mult. neutral element
+  // <elts[one]> is the mult. neutral
+  // element
   if (IS_INTOBJ(ElmPRec(data, RNamName("one")))) {
     one = INT_INTOBJ(ElmPRec(data, RNamName("one")));
   } else {
     one = 0;
   }
 
-  // stop when we have applied generators to elts[stopper_int]
+  // stop when we have applied generators to
+  // elts[stopper_int]
   stopper = ElmPRec(data, RNamName("stopper"));
   if (!IS_INTOBJ(stopper)) {
     stopper_int = -1;
@@ -184,7 +205,9 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
     while (i <= nr && (UInt) LEN_PLIST(ELM_PLIST(words, i)) == len && !stop) {
       b = INT_INTOBJ(ELM_PLIST(first, i));
       s = INT_INTOBJ(ELM_PLIST(suffix, i));
-      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC);  // from T_PLIST_EMPTY
+      RetypeBag(ELM_PLIST(right, i),
+                T_PLIST_CYC);  // from
+                               // T_PLIST_EMPTY
       for (j = 1; j <= nrgens; j++) {
         if (s != 0 && ELM_PLIST2(reduced, s, j) == False) {
           r = INT_PLIST2(right, s, j);
@@ -279,14 +302,18 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
             stop = (nr >= int_limit);
           }
         }
-      }  // finished applying gens to <elts[i]>
+      }  // finished applying gens to
+         // <elts[i]>
       stop = (stop || i == stopper_int);
       i++;
-    }  // finished words of length <len> or <stop>
+    }  // finished words of length <len> or
+       // <stop>
     if (i > nr || (UInt) LEN_PLIST(ELM_PLIST(words, i)) != len) {
       if (len > 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j),
+                    T_PLIST_CYC);  // from
+                                   // T_PLIST_EMPTY
           p = INT_INTOBJ(ELM_PLIST(prefix, j));
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
@@ -296,7 +323,9 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
         }
       } else if (len == 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j),
+                    T_PLIST_CYC);  // from
+                                   // T_PLIST_EMPTY
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
             SET_ELM_PLIST2(
@@ -307,16 +336,21 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
-    if (libsemigroups::REPORTER.report()) {
-      if (i <= nr) {
-        std::cout << "found " << nr << " elements, " << nrrules
-                  << " rules, max word length " << len + 1 << ", so far,\n";
-      } else {
-        std::cout << "found " << nr << " elements, " << nrrules
-                  << " rules, max word length " << len + 1 << ", finished!\n";
-        // NOLINTNEXTLINE(build/include_what_you_use)
-        std::cout << "elapsed time = " << timer.string() << "\n";
-      }
+    if (i <= nr) {
+      SEMIGROUPS_REPORT_DEFAULT("found %llu elements, %llu "
+                                "rules, max word length %llu, so "
+                                "far\n",
+                                uint64_t(nr),
+                                uint64_t(nrrules),
+                                uint64_t(len - 1));
+    } else {
+      SEMIGROUPS_REPORT_DEFAULT("found %llu elements, %llu "
+                                "rules, max word length %llu, "
+                                "finished!\n",
+                                uint64_t(nr),
+                                uint64_t(nrrules),
+                                uint64_t(len - 1));
+      SEMIGROUPS_REPORT_TIME(timer);
     }
   }
 
@@ -331,9 +365,13 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
   return data;
 }
 
-// Using the output of DigraphStronglyConnectedComponents on the right and
-// left Cayley graphs of a semigroup, the following function calculates the
-// strongly connected components of the union of these two graphs.
+// Using the output of
+// DigraphStronglyConnectedComponents on the
+// right and left Cayley graphs of a
+// semigroup, the following function
+// calculates the strongly connected
+// components of the union of these two
+// graphs.
 
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   UInt *ptr;
@@ -406,10 +444,13 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   return out;
 }
 
-// <right> and <left> should be scc data structures for the right and left
-// Cayley graphs of a semigroup, as produced by
-// DigraphStronglyConnectedComponents. This function find the H-classes of the
-// semigroup from <right> and <left>. The method used is that described in:
+// <right> and <left> should be scc data
+// structures for the right and left Cayley
+// graphs of a semigroup, as produced by
+// DigraphStronglyConnectedComponents. This
+// function find the H-classes of the
+// semigroup from <right> and <left>. The
+// method used is that described in:
 // https://www.irif.fr/~jep//PDF/Exposes/StAndrews.pdf
 
 Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {

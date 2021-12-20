@@ -131,11 +131,9 @@ function(blocks)
   fi;
 
   Print(">");
-  return;
 end);
 
 InstallMethod(PrintObj, "for blocks", [IsBlocks], 10,
 function(blocks)
   Print(PrintString(blocks));
-  return;
 end);

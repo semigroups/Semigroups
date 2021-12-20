@@ -373,8 +373,8 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("bipart.cpp", BLOCKS_INV_RIGHT, 2, "blocks, x"),
     GVAR_ENTRY("bipart.cpp",
                BIPART_NR_IDEMPOTENTS,
-               5,
-               "o, scc, lookup, nr_threads, report"),
+               4,
+               "o, scc, lookup, nr_threads"),
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 

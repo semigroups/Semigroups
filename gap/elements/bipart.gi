@@ -638,10 +638,7 @@ end);
 # Bipartition collections
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(S)
-  return DegreeOfBipartitionSemigroup(S);
-end);
+[IsBipartitionSemigroup], DegreeOfBipartitionSemigroup);
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection],
