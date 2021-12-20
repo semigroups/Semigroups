@@ -39,48 +39,76 @@ InstallTrueMethod(CanComputeCppCongruences,
 # libsemigroups object directly
 ###########################################################################
 
+DeclareAttribute("CppCongruenceConstructor",
+IsSemigroup and CanComputeCppCongruences);
+
 # Construct a libsemigroups::Congruence from some GAP object
-BindGlobal("CppCongruenceConstructor",
+
+InstallMethod(CppCongruenceConstructor,
+"for a transformation semigroup with CanComputeCppCongruences",
+[IsTransformationSemigroup and CanComputeCppCongruences],
 function(S)
   local N;
-  if IsTransformationSemigroup(S) then
-    if DegreeOfTransformationSemigroup(S) <= 16 and
-        IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
-    elif DegreeOfTransformationSemigroup(S) <= 65536 then
-      return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
-    elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
-      return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
-    else
-      Error("transformation degree is too high!");
-    fi;
-  elif IsPartialPermSemigroup(S) then
-    N := Maximum(DegreeOfPartialPermSemigroup(S),
-                 CodegreeOfPartialPermSemigroup(S));
-    if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
-      return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
-    elif N <= 65536 then
-      return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
-    elif N <= 18446744073709551616 then
-      return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
-    else
-      Error("partial perm degree is too high!");
-    fi;
-  elif IsMatrixOverSemiringSemigroup(S) then
-    if IsBooleanMatSemigroup(S)
-        and DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
-      return libsemigroups.Congruence.make_from_froidurepin_bmat8;
-    fi;
-    # Is this right?
-    return libsemigroups.Congruence.make_from_froidurepin_bmat;
-  elif IsBipartitionSemigroup(S) then
-    return libsemigroups.Congruence.make_from_froidurepin_bipartition;
-  elif IsPBRSemigroup(S) then
-    return libsemigroups.Congruence.make_from_froidurepin_pbr;
+  N := DegreeOfTransformationSemigroup(S);
+  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+    return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
+  elif N <= 65536 then
+    return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
+  elif N <= 18446744073709551616 then
+    return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
   else
-    Error("Something has gone wrong, should not have ",
-          "been able to reach here!");
+    Error("transformation degree is too high!");
   fi;
+end);
+
+InstallMethod(CppCongruenceConstructor,
+"for a partial perm semigroup with CanComputeCppCongruences",
+[IsPartialPermSemigroup and CanComputeCppCongruences],
+function(S)
+  local N;
+  N := Maximum(DegreeOfPartialPermSemigroup(S),
+               CodegreeOfPartialPermSemigroup(S));
+  if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
+    return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
+  elif N <= 65536 then
+    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
+  elif N <= 18446744073709551616 then
+    return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
+  else
+    Error("partial perm degree is too high!");
+  fi;
+end);
+
+InstallMethod(CppCongruenceConstructor,
+"for a boolean matrix semigroup with CanComputeCppCongruences",
+[IsBooleanMatSemigroup and CanComputeCppCongruences],
+function(S)
+  if DimensionOfMatrixOverSemiring(Representative(S)) <= 8 then
+    return libsemigroups.Congruence.make_from_froidurepin_bmat8;
+  fi;
+  return libsemigroups.Congruence.make_from_froidurepin_bmat;
+end);
+
+InstallMethod(CppCongruenceConstructor,
+"for a matrix semigroup with CanComputeCppCongruences",
+[IsMatrixOverSemiringSemigroup and CanComputeCppCongruences],
+function(S)
+  # Why does this work for types other than boolean matrices?
+  return libsemigroups.Congruence.make_from_froidurepin_bmat;
+end);
+
+InstallMethod(CppCongruenceConstructor,
+"for a bipartition semigroup with CanComputeCppCongruences",
+[IsBipartitionSemigroup and CanComputeCppCongruences],
+function(S)
+  return libsemigroups.Congruence.make_from_froidurepin_bipartition;
+end);
+
+InstallMethod(CppCongruenceConstructor,
+"for a PBR semigroup and CanComputeCppCongruences",
+[IsPBRSemigroup and CanComputeCppCongruences],
+function(S)
+  return libsemigroups.Congruence.make_from_froidurepin_pbr;
 end);
 
 # Get the libsemigroups::Congruence object associated to a GAP object
@@ -99,7 +127,8 @@ function(C)
 
   S  := Range(C);
   if CanComputeCppFroidurePin(S) then
-    CC := CppCongruenceConstructor(S)([AnyCongruenceString(C), CppFroidurePin(S)]);
+    CC := CppCongruenceConstructor(S)([AnyCongruenceString(C),
+                                       CppFroidurePin(S)]);
     factor := MinimalFactorization;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
