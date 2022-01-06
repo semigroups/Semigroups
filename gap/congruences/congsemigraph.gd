@@ -21,4 +21,3 @@ DeclareOperation("MinimalHereditarySubsetsVertex",
 
 DeclareOperation("GISGeneratingCongruences",
                  [IsGraphInverseSemigroup]);
-
