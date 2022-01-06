@@ -113,7 +113,7 @@ gap> AsCongruenceByWangPair(cong);
     <Oper Name = "GISGeneratingCongruences" Arg = "S"/>
     <Returns>A semigroup.</Returns>
     <Description>
-      This operation takes a graph inverse semigroup <A>S</A>, a graph inverse semigroup congruence,
+      This operation takes a graph inverse semigroup <A>S</A>, a graph inverse semigroup,
       and returns a minimal generating set for the lattice of congruences of <A>S</A>, as described in
       <Cite Key="Anagnostopoulou-Merkouri2021aa"/>.<P/>
            <Example><![CDATA[
