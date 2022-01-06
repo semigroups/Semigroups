@@ -79,7 +79,7 @@ gap> cong := CongruenceByWangPair(S, [3, 4], []);
     <Returns>A congruence by Wang pair.</Returns>
     <Description>
       This operation takes <A>cong</A>, a graph inverse semigroup congruence, and returns the
-      same congruence relation, but described as a congruence by Wang pairs: a pair of sets <A>H</A>
+      an object representing the same congruence, but described as a congruence by Wang pairs: a pair of sets <A>H</A>
       and <A>W</A> of the corresponding graph of <A>S</A> that are a hereditary subset and a W-set
       of the graph of <A>S</A> respectively. For more information about Wang pairs see  <Cite Key="Wang2019aa"/>
       and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>. <P/>
