@@ -66,4 +66,4 @@ jobs:
           # Therefore we temporarily have to specify tst/teststandard.g here.
           GAP_TESTFILE: "tst/teststandard.g"
       - uses: gap-actions/process-coverage@v2
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
