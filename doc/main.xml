@@ -1,5 +1,5 @@
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
-   [ <!ENTITY Semigroups "<Package>Semigroups</Package>">
+[ <!ENTITY Semigroups "<Package>Semigroups</Package>">
    <!ENTITY Smallsemi "<Alt Not='Text'><URL
    Text='Smallsemi'>https://gap-packages.github.io/smallsemi/</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
      <!ENTITY Digraphs "<Alt Not='Text'><URL

@@ -22,6 +22,7 @@
 
 #include <algorithm>  // for max
 #include <iostream>   // for operator<<, cout, ostream
+#include <string>     // for string
 
 // GAP headers
 #include "compiled.h"  // for RNamName etc

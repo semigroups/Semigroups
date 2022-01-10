@@ -8,11 +8,6 @@
 #############################################################################
 ##
 
-# TODO(never)(now): delete this whole horror show
-
-# TODO(never) SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to
-# have their own type)
-
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees
 ## matrix and 0-matrix semigroup. The algorithm used in this file is described
@@ -42,22 +37,6 @@
 # 1. Internal functions
 #############################################################################
 
-# Same as <Info> but without a line break at the end if the boolean <linebreak>
-# is false.
-
-SEMIGROUPS.InfoStatement := function(level, linebreak, arg...)
-  if InfoLevel(InfoSemigroups) >= level then
-    Apply(arg, String);
-    if not linebreak then
-      Print("#I  ");
-    fi;
-    Print(Concatenation(arg));
-    if linebreak then
-      Print("");
-    fi;
-  fi;
-end;
-
 # Find the stabiliser of the matrix of a Rees (0-)matrix semigroup under the
 # action of the automorphism group of the R(Z)MSGraph via rearranging rows and
 # columns
@@ -77,9 +56,8 @@ SEMIGROUPS.StabOfRMSMatrix := function(G, R)
 
     return List(Permuted(mat, rows), y -> Permuted(y, x));
   end;
-  SEMIGROUPS.InfoStatement(2, false, "finding the stabilizer of matrix . . . ");
-  H := Stab(G, Matrix(R), OnMatrix).stab;
-  SEMIGROUPS.InfoStatement(2, true, Size(H));
+  H := Stabilizer(G, Matrix(R), OnMatrix);
+  Info(InfoSemigroups, 2, "the size of stabilizer of the matrix is ", Size(H));
   return H;
 end;
 
@@ -89,8 +67,6 @@ end;
 
 SEMIGROUPS.StabOfRMSEntries := function(G, R)
   local H, entries, i;
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the stabilizer of matrix entries . . . ");
   H := G;
   entries := MatrixEntries(R);
   i := PositionProperty(entries, x -> x <> 0 and x <> ());
@@ -100,32 +76,11 @@ SEMIGROUPS.StabOfRMSEntries := function(G, R)
     i := i + 1;
   od;
 
-  SEMIGROUPS.InfoStatement(2, true, Size(H));
+  Info(InfoSemigroups,
+       2,
+       "the size of the stabilizer of the matrix entries is ",
+       Size(H));
   return H;
-end;
-
-# An elementary pruner for the backtrack search in the direct product V (to
-# find the subgroup U).
-
-SEMIGROUPS.RMSIsoPruner := function(U, V)
-  local blist, right;
-
-  if IsTrivial(U) then
-    return false;
-  fi;
-  blist := BlistList([1 .. Index(V, U)], [1]);
-  right := RightTransversal(V, U);
-  return
-    function(chain, j, x, y, word)
-      local pos;
-      pos := PositionCanonical(right, x);
-      if blist[pos] then  # we visited this coset before. . .
-        return false;     # don't continue searching in this subtree. . .
-      else
-        blist[pos] := true;
-        return true;
-      fi;
-    end;
 end;
 
 # Theorem 3.4.1 in Howie's book, Fundamentals of Semigroup Theory. This
@@ -209,7 +164,7 @@ SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
   return out;
 end;
 
-# TODO(never) the next function should be combined with the previous one.
+# TODO(later) the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   local mat1, mat2, m, rmsgraph, components, reps, imagelist, edges,
@@ -295,15 +250,13 @@ function(R)
 
   if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
           and IsZeroSimpleSemigroup(R)) then
-    TryNextMethod();  # TODO(never) write such a method
+    TryNextMethod();  # There is no such method at present
   fi;
 
   m := Length(Rows(R));
   n := Length(Columns(R));
 
   # automorphism group of the graph . . .
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding automorphisms of the graph . . . ");
 
   aut_graph := AutomorphismGroup(RZMSDigraph(R), [[1 .. m], [m + 1 .. n + m]]);
 
@@ -311,8 +264,7 @@ function(R)
     aut_graph := Group(());
   fi;
 
-  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph);  # for genss
+  Info(InfoSemigroups, 2, "the graph has ", Size(aut_graph), " automorphisms");
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -323,11 +275,12 @@ function(R)
   fi;
 
   # automorphism group of the underlying group
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the automorphism group of the group",
-                            " . . . ");
   aut_group := AutomorphismGroup(G);
-  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  Info(InfoSemigroups,
+       2,
+       "the underlying group has ",
+       Size(aut_group),
+       " automorphisms");
 
   # pointwise stabiliser of the entries in the matrix of R under the
   # automorphism group of the group
@@ -414,13 +367,17 @@ function(R)
   if U <> V then  # some search required
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
          Size(V), " . . . ");
-    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                           tester,
-                                           ReturnTrue);
-                                           # FIXME the pruner prunes too much!
-                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+    # This appears to do nothing, but the subgroup is computed when we call
+    # Size, and the resulting isomorphisms-by-triple are stored in A by the
+    # function tester
+    U := BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                                tester,
+                                                ReturnTrue);
+    Info(InfoSemigroups, 2, "found subgroup of size ", Size(U));
   else
     # U = V
+    # This appears to do nothing, but the the resulting isomorphisms-by-triple
+    # are stored in A by the function tester
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
@@ -480,10 +437,7 @@ function(R)
   m := Length(Rows(R));
   n := Length(Columns(R));
 
-  # automorphism group of the graph . . .
   # this is easy since the graph is complete bipartite
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding automorphisms of the graph . . . ");
 
   if n = 1 and m = 1 then
     gens := GeneratorsOfGroup(AutomorphismGroup(G));
@@ -506,8 +460,7 @@ function(R)
     aut_graph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
   fi;
 
-  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-  Size(aut_graph);  # for genss
+  Info(InfoSemigroups, 2, "the graph has ", Size(aut_graph), " automorphisms");
 
   # stabiliser of the matrix under rearranging rows and columns by elements
   # of the automorphism group of the graph
@@ -518,11 +471,12 @@ function(R)
   fi;
 
   # automorphism group of the underlying group
-  SEMIGROUPS.InfoStatement(2, false,
-                           "finding the automorphism group of the group",
-                           " . . . ");
   aut_group := AutomorphismGroup(G);
-  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  Info(InfoSemigroups,
+       2,
+       "the underlying group has ",
+       Size(aut_group),
+       " automorphisms");
 
   # pointwise stabiliser of the entries in the matrix of R under the
   # automorphism group of the group
@@ -584,13 +538,14 @@ function(R)
 
   if U <> V then
     Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
-         Size(V), ". . .");
-    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                           tester,
-                                           ReturnTrue);
-                                           # FIXME the pruner prunes too much!
-                                           # SEMIGROUPS.RMSIsoPruner(U, V));
+         Size(V), " . . . ");
+    # See the comments in the AutomorphismGroup(Rees 0-matrix semigroup) method
+    U := BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                                tester,
+                                                ReturnTrue);
+    Info(InfoSemigroups, 2, "found subgroup of size ", Size(U));
   else  # U = V
+    # See the comments in the AutomorphismGroup(Rees 0-matrix semigroup) method
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 

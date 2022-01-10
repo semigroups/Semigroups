@@ -44,8 +44,6 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
 gap> A := AutomorphismGroup(R);;
-gap> Length(GeneratorsOfSemigroup(A));
-24
 gap> Size(Range(IsomorphismPermGroup(A)));
 82944
 
@@ -59,12 +57,13 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
 gap> A := AutomorphismGroup(R);;
-#I  finding automorphisms of the graph . . . 2304 found#I  finding the stabili\
-zer of matrix . . . 12#I  finding the automorphism group of the group . . . fo\
-und 6#I  finding the stabilizer of matrix entries . . . 1#I  the graph has 2 connected components
+#I  the graph has 2304 automorphisms
+#I  the size of stabilizer of the matrix is 12
+#I  the underlying group has 6 automorphisms
+#I  the size of the stabilizer of the matrix entries is 1
+#I  the graph has 2 connected components
 #I  backtracking in the direct product of size 2304 . . . 
-gap> Length(GeneratorsOfSemigroup(A));
-24
+#I  found subgroup of size 2304
 gap> Size(Range(IsomorphismPermGroup(A)));
 82944
 gap> SetInfoLevel(InfoSemigroups, 0);
