@@ -19,6 +19,6 @@ DeclareOperation("AsCongruenceByWangPair", [IsSemigroupCongruence]);
 DeclareOperation("MinimalHereditarySubsetsVertex",
                  [IsGraphInverseSemigroup, IsPosInt]);
 
-DeclareOperation("GISGeneratingCongruences",
+DeclareOperation("GeneratingCongruencesOfLattice",
                  [IsGraphInverseSemigroup]);
 

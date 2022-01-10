@@ -138,56 +138,56 @@ edges> with 1 generating pairs>
 gap> EquivalenceRelationPartition(cong);
 [ [ v_1, e_1e_1^-1 ] ]
 
-# GISGeneratingCongruences
+# GeneratingCongruencesOfSemigroup
 gap> D := Digraph([[2], [3, 4], [4], []]);
 <immutable digraph with 4 vertices, 4 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 4 edges>
-gap> GISGeneratingCongruences(S)[1];
+gap> GeneratingCongruencesOfLattice(S)[1];
 <gis-congruence with H=[  ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[2];
+gap> GeneratingCongruencesOfLattice(S)[2];
 <gis-congruence with H=[ 4 ], W=[ 2 ]>
-gap> GISGeneratingCongruences(S)[3];
+gap> GeneratingCongruencesOfLattice(S)[3];
 <gis-congruence with H=[  ], W=[ 3 ]>
-gap> GISGeneratingCongruences(S)[4];
+gap> GeneratingCongruencesOfLattice(S)[4];
 <gis-congruence with H=[ 4 ], W=[  ]>
 gap> D := Digraph([[2, 3, 4], [4], [4], []]);
 <immutable digraph with 4 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 5 edges>
-gap> GISGeneratingCongruences(S)[1];
+gap> GeneratingCongruencesOfLattice(S)[1];
 <gis-congruence with H=[ 2, 4 ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[2];
+gap> GeneratingCongruencesOfLattice(S)[2];
 <gis-congruence with H=[ 3, 4 ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[3];
+gap> GeneratingCongruencesOfLattice(S)[3];
 <gis-congruence with H=[  ], W=[ 2 ]>
-gap> GISGeneratingCongruences(S)[4];
+gap> GeneratingCongruencesOfLattice(S)[4];
 <gis-congruence with H=[  ], W=[ 3 ]>
 gap> D := Digraph([[3], [3, 4], [], []]);
 <immutable digraph with 4 vertices, 3 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 4 vertices, 3 edges>
-gap> GISGeneratingCongruences(S)[1];
+gap> GeneratingCongruencesOfLattice(S)[1];
 <gis-congruence with H=[  ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[2];
+gap> GeneratingCongruencesOfLattice(S)[2];
 <gis-congruence with H=[ 3 ], W=[ 2 ]>
-gap> GISGeneratingCongruences(S)[3];
+gap> GeneratingCongruencesOfLattice(S)[3];
 <gis-congruence with H=[ 4 ], W=[ 2 ]>
-gap> GISGeneratingCongruences(S)[4];
+gap> GeneratingCongruencesOfLattice(S)[4];
 <gis-congruence with H=[ 3 ], W=[  ]>
 gap> D := Digraph([[2, 3, 4, 5], [3], [], [], []]);
 <immutable digraph with 5 vertices, 5 edges>
 gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 5 vertices, 5 edges>
-gap> GISGeneratingCongruences(S)[1];
+gap> GeneratingCongruencesOfLattice(S)[1];
 <gis-congruence with H=[ 2, 3, 4 ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[2];
+gap> GeneratingCongruencesOfLattice(S)[2];
 <gis-congruence with H=[ 2, 3, 5 ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[3];
+gap> GeneratingCongruencesOfLattice(S)[3];
 <gis-congruence with H=[ 3, 4, 5 ], W=[ 1 ]>
-gap> GISGeneratingCongruences(S)[4];
+gap> GeneratingCongruencesOfLattice(S)[4];
 <gis-congruence with H=[  ], W=[ 2 ]>
-gap> GISGeneratingCongruences(S)[5];
+gap> GeneratingCongruencesOfLattice(S)[5];
 <gis-congruence with H=[ 3 ], W=[  ]>
 
 #AsCongruenceByWangPair

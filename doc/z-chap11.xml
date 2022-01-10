@@ -35,7 +35,7 @@
     <#Include Label = "IsCongruenceByWangPair">
     <#Include Label = "CongruenceByWangPair">
     <#Include Label = "AsCongruenceByWangPair">
-    <#Include Label = "GISGeneratingCongruences">
+    <#Include Label = "GeneratingCongruencesOfLattice">
 
   </Section>
 </Chapter>

@@ -12,10 +12,10 @@ BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
   local out, h, v, D;
   D := GraphOfGraphInverseSemigroup(S);
-  if IsMultiDigraph(D) then
-    ErrorNoReturn(D, " must not have multiple edges");
-  fi;
   out := OutNeighbours(D);
+  if H = [] or H = DigraphVertices(D) then
+    return true;
+  fi;
   for h in H do
     for v in out[h] do
       if not (v in H) then
@@ -23,48 +23,43 @@ function(S, H)
       fi;
     od;
   od;
+  if not IsDuplicateFreeList(H) then
+    return false;
+  elif not IsSortedList(H) then
+    return false;
+  fi;
   return true;
 end);
 
 BindGlobal("SEMIGROUPS_IsValidWSet",
 function(S, H, W)
-  local w, c, v, out, D;
-  if not SEMIGROUPS_IsHereditarySubset(S, H) then
-    ErrorNoReturn(H, "must be a valid hereditary subset");
-  fi;
+  local w, out, D;
   D := GraphOfGraphInverseSemigroup(S);
-  if IsMultiDigraph(D) then
-    ErrorNoReturn(D, "must not have multiple edges");
-  fi;
   out := OutNeighbours(D);
   for w in W do
-    c := 0;
-    for v in out[w] do
-      if v in H then
-        c := c + 1;
-      fi;
-    od;
-    if c <> Length(out[w]) - 1 then
+    if Size(Intersection(out[w], H)) <> Size(out[w]) - 1 then
       return false;
     fi;
   od;
+  if not IsDuplicateFreeList(H) then
+    return false;
+  elif not IsSortedList(H) then
+    return false;
+  fi;
   return true;
 end);
 
 BindGlobal("SEMIGROUPS_ValidateWangPair",
 function(S, H, W)
-  local v, D;
+  local D;
   D := GraphOfGraphInverseSemigroup(S);
-  for v in Union(H, W) do
-    if not (v in DigraphVertices(D)) then
-      ErrorNoReturn("the elements of ", H, " and ",
+  if not IsSubset(DigraphVertices(D), Union(H, W)) then
+    ErrorNoReturn("the elements of ", H, " and ",
                     W, " are not all vertices of ", D);
-    fi;
-  od;
+  fi;
   if not SEMIGROUPS_IsHereditarySubset(S, H) then
     ErrorNoReturn(H, " is not a valid hereditary subset");
-  fi;
-  if not SEMIGROUPS_IsValidWSet(S, H, W) then
+  elif not SEMIGROUPS_IsValidWSet(S, H, W) then
     ErrorNoReturn(W, " is not a valid W-set");
   fi;
   return true;
@@ -111,7 +106,7 @@ function(cong)
   W := cong!.W;
   pairs := [];
   gens := GeneratorsOfSemigroup(S);
-  verts := Filtered(gens, IsVertex);
+  verts := VerticesOfGraphInverseSemigroup(S);
   D := GraphOfGraphInverseSemigroup(S);
   out := OutNeighbours(D);
   for v in H do
@@ -157,7 +152,7 @@ function(D, v)
   return AsSortedList(subsets);
 end);
 
-InstallMethod(GISGeneratingCongruences,
+InstallMethod(GeneratingCongruencesOfLattice,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 function(S)
@@ -183,9 +178,7 @@ end);
 InstallMethod(AsCongruenceByWangPair, "for a semigroup congruence",
 [IsSemigroupCongruence],
 function(C)
-  local H, W, eq, j, Hgraph, Wgraph, v;
-  Hgraph := [];
-  Wgraph := [];
+  local H, W, eq, j;
   if not IsGraphInverseSemigroup(Source(C)) then
     ErrorNoReturn(Source(C), " is not a graph inverse semigroup");
   fi;
@@ -196,34 +189,26 @@ function(C)
   eq := Filtered(eq, x -> ForAny(x, IsVertex));
   for j in eq do
     if MultiplicativeZero(Source(C)) in j then
-      Append(H, Filtered(j, IsVertex));
+      H := Union(H, List(Filtered(j, IsVertex),
+      IndexOfVertexOfGraphInverseSemigroup));
     else
-      Append(W, Filtered(j, IsVertex));
+      W := Union(W, List(Filtered(j, IsVertex),
+      IndexOfVertexOfGraphInverseSemigroup));
     fi;
   od;
-  Sort(H);
-  Sort(W);
-  for v in H do
-    Add(Hgraph, IndexOfVertexOfGraphInverseSemigroup(v));
-  od;
-  for v in W do
-    Add(Wgraph, IndexOfVertexOfGraphInverseSemigroup(v));
-  od;
-  return CongruenceByWangPair(Source(C), Hgraph, Wgraph);
+  return CongruenceByWangPair(Source(C), H, W);
 end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
 function(cong1, cong2)
-  local out, H, W, v, u, X, W_zero, S, D, w, e, k, d, H1, H2;
+  local out, H, W, v, u, X, W_zero, S, D, w, k;
   S := Source(cong1);
   D := GraphOfGraphInverseSemigroup(S);
   out := OutNeighbours(D);
   X := [];
-  H1 := cong1!.H;
-  H2 := cong2!.H;
-  H := Union(H1, H2);
+  H := Union(cong1!.H, cong2!.H);
   W := Difference(Union(cong1!.W, cong2!.W), H);
   W_zero := [];
   for v in W do
@@ -235,13 +220,7 @@ function(cong1, cong2)
   for v in W do
     for u in W_zero do
       for k in IteratorOfPaths(D, v, u) do
-        d := 0;
-        for e in [1 .. Length(k[1]) - 1] do
-          if k[1][e] in W then
-            d := d + 1;
-          fi;
-        od;
-        if d = Length(k[1]) - 1 then
+        if ForAll(k[1], x -> x in W) then
           Add(X, v);
         fi;
       od;
@@ -267,5 +246,5 @@ end);
 InstallMethod(LatticeOfCongruences,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
-S -> JoinSemilatticeOfCongruences(GISGeneratingCongruences(S),
+S -> JoinSemilatticeOfCongruences(GeneratingCongruencesOfLattice(S),
                                   JoinSemigroupCongruences));
