@@ -762,7 +762,7 @@ gap> Size(I);
 # TestInstall50: Issue 105 (CyclesOfPartialPerm returned nonsense)
 gap> x := PartialPerm([1, 2, 3, 4, 5, 8, 10], [3, 1, 4, 2, 5, 6, 7]);;
 gap> CyclesOfPartialPerm(x);
-[ [ 3, 4, 2, 1 ], [ 5 ] ]
+[ [ 5 ], [ 1, 3, 4, 2 ] ]
 
 # TestInstall51: Issue 107
 # (problems with Green's classes of ideals, and inverse semigroups)

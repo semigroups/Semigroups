@@ -31,4 +31,3 @@ DeclareOperation("OnRightBlocks", [IsBlocks, IsBipartition]);
 DeclareOperation("OnLeftBlocks", [IsBlocks, IsBipartition]);
 DeclareOperation("AsDigraph", [IsBlocks]);
 DeclareAttribute("CanonicalBlocks", IsBlocks);
-

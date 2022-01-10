@@ -1664,7 +1664,7 @@ InstallMethod(IsNormalInverseSubsemigroup,
 function(S, T)
   local DS, G, N, p, DT;
 
-  if not IsSubsemigroup(S, T) or not IsInverseSemigroup(T) then
+  if not IsSubsemigroup(S, T) then
     return false;
   fi;
 
