@@ -301,14 +301,6 @@ InstallMethod(AutomorphismGroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local D, G, X, map, Y, H;
-  # JDM: I'm not sure I trust the AutomorphismGroup methods for Rees 0-matrix
-  # semigroups, and so this method doesn't try to use them in the case that S
-  # is 0-simple, or simple. Note that the first test in tst/standard/isorms.tst
-  # is much much faster using the R(Z)MS specific method.
-
-  # TODO(later) use the R(Z)MS specific method if we have a (0-)simple
-  # semigroup.
-
   if not IsFinite(S) then
     TryNextMethod();
   fi;

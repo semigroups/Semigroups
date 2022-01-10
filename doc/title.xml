@@ -54,12 +54,11 @@
     <P/>
 
     There are methods for finding presentations for a semigroup, the
-    congruences of a semigroup, the normalizer of a semigroup in a permutation
-    group, the maximal subsemigroups of a finite semigroup, smaller degree
-    partial permutation representations, and the character tables of inverse
-    semigroups. There are functions for producing pictures of the Green's
-    structure of a semigroup, and for drawing graphical representations of
-    certain types of elements.
+    congruences of a semigroup, the maximal subsemigroups of a finite
+    semigroup, smaller degree partial permutation representations, and the
+    character tables of inverse semigroups. There are functions for producing
+    pictures of the Green's structure of a semigroup, and for drawing graphical
+    representations of certain types of elements.
   </Abstract>
 
   <Acknowledgements>

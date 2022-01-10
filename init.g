@@ -104,7 +104,6 @@ ReadPackage("semigroups", "gap/attributes/factor.gd");
 ReadPackage("semigroups", "gap/attributes/isomorph.gd");
 ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/maximal.gd");
-ReadPackage("semigroups", "gap/attributes/normalizer.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
 
 ReadPackage("semigroups", "gap/congruences/cong.gd");

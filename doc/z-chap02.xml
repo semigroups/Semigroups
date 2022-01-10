@@ -104,18 +104,16 @@ make]]></Listing>
 
     <!--********************************************************************-->
 
+    <!-- TODO: update this -->
+
     The &Semigroups; package is written in &GAP; and C++ and requires the
     &Orb;, &IO;, &Digraphs;, &genss;, and &images; packages. The &Orb;
     package is used to efficiently compute components of actions, which
-    underpin many of the features of &Semigroups;.  The &IO; package is used
-    to read and write elements of a semigroup to a file.  The &genss; package
-    is used in a non-deterministic version of the operation <Ref Oper =
-    "Normalizer" Label = "for a perm group, semigroup, record"/> and in
-    calculating the stabiliser of a Rees 0-matrix semigroup's matrix.  The
-    &Digraphs; package is used in a variety of ways in the &Semigroups;
-    package, in particular, to apply standard graph theoretic algorithms to
-    certain data structures, and in certain cases for finding isomorphisms or
-    automorphisms of digraphs.
+    underpin many of the features of &Semigroups;.  The &IO; package is used to
+    read and write elements of a semigroup to a file.  The &Digraphs; package
+    is used in a variety of ways in the &Semigroups; package, in particular, to
+    apply standard graph theoretic algorithms to certain data structures, and
+    in certain cases for finding isomorphisms or automorphisms of digraphs.
     <P/>
   </Section>
 

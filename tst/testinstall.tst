@@ -731,13 +731,6 @@ true
 gap> SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
 true
 
-# TestInstall45: Issue 97
-# (bug in normalizer and the kernel function POW_KER_TRANS)
-gap> G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
->                                                 rec(acting := true)));;
-gap> G = SymmetricGroup(3);
-true
-
 # TestInstall46: Issue 98
 # (incorrect definition of partition monoid on 1 point)
 gap> GeneratorsOfSemigroup(PartitionMonoid(1));

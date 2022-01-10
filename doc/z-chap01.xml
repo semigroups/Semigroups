@@ -22,18 +22,16 @@
     elements over the generators, and much more; see below for more details.
     <P/>
 
-    There are methods for finding: congruences of semigroups, the normalizer of
-    a semigroup in a permutation group (using the method from <Cite Key =
-      "Araujo2010aa"/>), the maximal subsemigroups of a finite semigroup (based
-    on <Cite Key = "Graham1968aa"/> and described in <Cite Key =
-      "Donoven2018aa"/>), smaller degree partial permutation representations
-    (based on <Cite Key = "Schein1992aa"/>) and the character table of an
-    inverse semigroup.  There are functions for producing pictures of the
-    Green's structure of a semigroup (inspired by 
-    <Alt Not='Text'><URL
+    There are methods for finding: congruences of semigroups, the maximal
+    subsemigroups of a finite semigroup (based on <Cite Key = "Graham1968aa"/>
+    and described in <Cite Key = "Donoven2018aa"/>), smaller degree partial
+    permutation representations (based on <Cite Key = "Schein1992aa"/>) and the
+    character table of an inverse semigroup.  There are functions for producing
+    pictures of the Green's structure of a semigroup (inspired by <Alt
+      Not='Text'><URL
         Text='sgpviz'>https://www.gap-system.org/Packages/sgpviz.html</URL></Alt><Alt
-      Only='Text'><Package>sgpviz</Package></Alt>), and for drawing graphical
-    representations of the elements of certain semigroups. <P/>
+        Only='Text'><Package>sgpviz</Package></Alt>), and for drawing graphical
+        representations of the elements of certain semigroups. <P/>
 
     Many standard examples of semigroups and classes of semigroups are
     provided; see Section <Ref Sect = "Standard examples"/>.  &Semigroups; also

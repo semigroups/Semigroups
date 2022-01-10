@@ -80,7 +80,6 @@ ReadPackage("semigroups", "gap/attributes/factor.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");
 ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/maximal.gi");
-ReadPackage("semigroups", "gap/attributes/normalizer.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");

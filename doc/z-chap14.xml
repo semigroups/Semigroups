@@ -197,19 +197,6 @@
   <Section>
 
     <Heading>
-      The normalizer of a semigroup
-    </Heading>
-
-    <#Include Label = "Normalizer">
- 
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section>
-
-    <Heading>
       Attributes of transformations and transformation semigroups
     </Heading>
 
