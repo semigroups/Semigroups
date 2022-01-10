@@ -25,11 +25,10 @@ gap> WordToString("", []);
 gap> WordToString("abc", [1]);
 "a"
 gap> WordToString("abc", [4]);
-Error, Semigroups: WordToString: usage,
-there are not enough letters in the alphabet,
+Error, the 1st argument (a string) is too short, expected at least 4but found 
+3
 gap> WordToString("ab", [1, -1]);
-Error, Semigroups: WordToString: usage,
-expected list of positive integers as second argument,
+Error, expected list of positive integers as 2nd argument
 
 # Test RandomWord
 gap> Length(RandomWord(4, 4)) = 4;
@@ -43,11 +42,12 @@ true
 gap> RandomWord(0, 0);
 [  ]
 gap> RandomWord(1, 0);
-Error, first argument cannot be positive if second is zero
+Error, the 1st argument (an integer) cannot be non-zero if the 2nd argument is\
+ 0
 gap> RandomWord(-1, 2);
-Error, expected non-negative integer as first argument
+Error, expected non-negative integer as 1st argument
 gap> RandomWord(2, -1);
-Error, expected non-negative integer as second argument
+Error, expected non-negative integer as 2nd argument
 
 # Test StandardiseWord
 gap> A := [3, 100, 2, 100, 3];
@@ -75,9 +75,9 @@ gap> A := [2, 1, 2, 3, 2];
 gap> StandardiseWord(A);
 [ 1, 2, 1, 3, 1 ]
 gap> StandardiseWord([0, 1, 2, 1]);
-Error, expected a list of positive integers as argument
+Error, expected a list of positive integers as 2nd argument
 gap> StandardiseWord([[1, 2], [0]]);
-Error, expected a list of positive integers as argument
+Error, expected a list of positive integers as 2nd argument
 
 # Test StringToWord
 gap> w := "aabaacaad";

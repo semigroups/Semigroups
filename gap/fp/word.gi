@@ -8,79 +8,60 @@
 #############################################################################
 ##
 
-InstallMethod(WordToString, "for a string and a list",
-[IsString, IsList],
+InstallMethod(WordToString, "for a string and a homogeneous list",
+[IsString, IsHomogeneousList],
 function(alphabet, word)
-  local str, i;
   if Length(word) = 0 then
     return "";
+  elif not ForAll(word, IsPosInt) then
+    ErrorNoReturn("expected list of positive integers as 2nd argument");
+  elif Maximum(word) > Length(alphabet) then
+    ErrorNoReturn("the 1st argument (a string) is too short, ",
+                  "expected at least ", Maximum(word),
+                  "but found ", Length(alphabet));
   fi;
-  for i in word do
-    if not IsPosInt(i) then
-      ErrorNoReturn("Semigroups: WordToString: usage,\n",
-                    "expected list of positive integers as second argument,");
-    fi;
-  od;
-  if Maximum(word) > Length(alphabet) then
-    ErrorNoReturn("Semigroups: WordToString: usage,\n",
-                  "there are not enough letters in the alphabet,");
-  fi;
-  str := "";
-  for i in word do
-     Add(str, alphabet[i]);
-  od;
-  return str;
+  return List(word, i -> alphabet[i]);
 end);
 
-InstallMethod(RandomWord, "for two non-negative integers",
+InstallMethod(RandomWord, "for two integers",
 [IsInt, IsInt],
 function(length, number_letters)
   local word, i;
   if length < 0 then
-    ErrorNoReturn("expected non-negative integer as first argument");
+    ErrorNoReturn("expected non-negative integer as 1st argument");
   elif number_letters < 0 then
-    ErrorNoReturn("expected non-negative integer as second argument");
+    ErrorNoReturn("expected non-negative integer as 2nd argument");
   elif number_letters = 0 and length > 0 then
-    ErrorNoReturn("first argument cannot be positive if second is zero");
+    ErrorNoReturn("the 1st argument (an integer) cannot be ",
+                  "non-zero if the 2nd argument is 0");
   fi;
-  word := EmptyPlist(length);
-  for i in [1 .. length] do
-      Add(word, Random([1 .. number_letters]));
-  od;
-  return word;
+  return List([1 .. length], x -> Random([1 .. number_letters]));
 end);
 
-InstallMethod(StandardiseWord, "for a list of positive integers",
-[IsList],
-function(w)
-  local L, distinct_chars, lookup, i;
+InstallMethod(StandardiseWord, "for a homogeneous list",
+[IsHomogeneousList],
+function(word)
+  local distinct_chars, lookup, i;
 
-  L := Length(w);
-  if L = 0 then
-    return w;
+  if Length(word) = 0 then
+    return word;
+  elif not ForAll(word, IsPosInt) then
+    ErrorNoReturn("expected a list of positive integers as 2nd argument");
   fi;
-
-  for i in w do
-    if not IsPosInt(i) then
-      ErrorNoReturn("expected a list of positive integers as argument");
-    fi;
-  od;
 
   distinct_chars := 1;
   lookup         := [];
-  lookup[w[1]]   := 1;
-  w[1]           := 1;
 
-  for i in [2 .. L] do
-    if IsBound(lookup[w[i]]) then
-      w[i] := lookup[w[i]];
+  for i in [1 .. Length(word)] do
+    if IsBound(lookup[word[i]]) then
+      word[i] := lookup[word[i]];
     else
-      distinct_chars := distinct_chars + 1;
-      lookup[w[i]]   := distinct_chars;
-      w[i]           := distinct_chars;
+      lookup[word[i]]   := distinct_chars;
+      word[i]           := distinct_chars;
+      distinct_chars    := distinct_chars + 1;
     fi;
   od;
-  return w;
+  return word;
 end);
 
 InstallMethod(StringToWord, "for a string", [IsString],

@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-# star
-
 InstallMethod(Star, "for an associative element with star",
 [IsAssociativeElementWithStar],
 function(elm)

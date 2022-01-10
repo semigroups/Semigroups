@@ -10,6 +10,6 @@
 
 DeclareOperation("WordToString", [IsString, IsList]);
 DeclareOperation("RandomWord", [IsInt, IsInt]);
-DeclareOperation("StandardiseWord", [IsList]);
+DeclareOperation("StandardiseWord", [IsHomogeneousList]);
 DeclareSynonym("StandardizeWord", StandardiseWord);
 DeclareOperation("StringToWord", [IsString]);

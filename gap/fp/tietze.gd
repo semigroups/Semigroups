@@ -1,10 +1,21 @@
+############################################################################
+##
+##  tietze.gd
+##  Copyright (C) 2021                                    Tom Conti-Leslie
+##                                                              Ben Spiers
+##
+##  Licensing information can be found in the README file of this package.
+##
+############################################################################
+##
+
 ################################################################################
-# The Stz Object (name pending)
-# Idea is to have a single object containing generators and relations that can
-# have the relations be presented in a number of different computation-friendly
-# or user-friendly formats (LetterRepAssocWord, ExtRepOfObj, user-readable
-# strings). Ideally never seen by the user, but used internally to - among other
-# things - reduce the relations of an FP semigroup/monoid to a simple form
+# The Stz Object (name pending) Idea is to have a single object containing
+# generators and relations that can have the relations be presented in a number
+# of different computation-friendly or user-friendly formats
+# (LetterRepAssocWord, ExtRepOfObj, user-readable strings). Ideally never seen
+# by the user, but used internally to - among other things - reduce the
+# relations of an FP semigroup/monoid to a simple form.
 #
 # I argue: no need for IsMutable/IsImmutable/etc, since StzPresentation likely
 # is never seen by the user, so as long as it is contained to the stz reduction
@@ -75,4 +86,3 @@ DeclareOperation("StzPrintPresentation", [IsStzPresentation]);
 
 # Information class for relation printing etc
 DeclareInfoClass("InfoFpSemigroup");
-SetInfoLevel(InfoFpSemigroup, 2);
