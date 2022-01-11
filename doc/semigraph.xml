@@ -232,7 +232,7 @@ true]]></Example>
   <Description>
     If <A>S</A> is a graph inverse semigroup (i.e. it satisfies
     <Ref Filt="IsGraphInverseSemigroup"/>), then this attribute returns the
-    list of vertices of <A>S</A>.<P/>
+    list of vertices of <A>S</A>.
 
     <Example><![CDATA[
 gap> D := Digraph([[3, 4], [3, 4], [4], []]);

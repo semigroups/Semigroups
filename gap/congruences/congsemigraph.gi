@@ -70,6 +70,9 @@ InstallMethod(CongruenceByWangPair,
 [IsGraphInverseSemigroup, IsHomogeneousList, IsHomogeneousList],
 function(S, H, W)
   local fam, cong;
+  if not IsFinite(S) then
+    ErrorNoReturn(S, " must be a finite graph inverse semigroup");
+  fi;
   SEMIGROUPS_ValidateWangPair(S, H, W);
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
@@ -157,6 +160,9 @@ InstallMethod(GeneratingCongruencesOfLattice,
 [IsGraphInverseSemigroup],
 function(S)
   local congs, out, v, h, D;
+  if not IsFinite(S) then
+    ErrorNoReturn(S, " must be a finite graph inverse semigroup");
+  fi;
   D := GraphOfGraphInverseSemigroup(S);
   congs := [];
   out := OutNeighbours(D);

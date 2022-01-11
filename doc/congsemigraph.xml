@@ -80,8 +80,8 @@ gap> cong := CongruenceByWangPair(S, [3, 4], []);
     <Oper Name = "AsCongruenceByWangPair" Arg = "cong"/>
     <Returns>A congruence by Wang pair.</Returns>
     <Description>
-      This operation takes <A>cong</A>, a graph inverse semigroup congruence, and returns the
-      same congruence relation, but described as a congruence by Wang pairs: a pair of sets <A>H</A>
+      This operation takes <A>cong</A>, a finite graph inverse semigroup congruence, and returns
+      an object representing the same congruence, but described as a congruence by Wang pairs: a pair of sets <A>H</A>
       and <A>W</A> of the corresponding graph of <A>S</A> that are a hereditary subset and a W-set
       of the graph of <A>S</A> respectively. For more information about Wang pairs see  <Cite Key="Wang2019aa"/>
       and <Cite Key="Anagnostopoulou-Merkouri2021aa"/>. <P/>
@@ -115,10 +115,7 @@ gap> AsCongruenceByWangPair(cong);
     <Oper Name = "GeneratingCongruencesOfLattice" Arg = "S"/>
     <Returns>A semigroup.</Returns>
     <Description>
-      This operation takes a finite graph inverse semigroup <A>S</A>, a graph inverse semigroup congruence,
-      and returns a minimal generating set for the lattice of congruences of <A>S</A>, as described in
-      <Cite Key="Anagnostopoulou-Merkouri2021aa"/>. This operation works only if the corresponding
-      digraph of the graph inverse semigroup is simple. If there are multiple edges, an error is returned.<P/>
+This operation takes a finite graph inverse semigroup <A>S</A> and returns a minimal generating set for the lattice of congruences of <A>S</A>, as described in <Cite Key="Anagnostopoulou-Merkouri2021aa"/>. This operation works only if the corresponding digraph of the graph inverse semigroup is simple. If there are multiple edges, an error is returned.<P/>
            <Example><![CDATA[
 gap> D := Digraph([[2, 3], [3], [4], []]);
 <immutable digraph with 4 vertices, 4 edges>
