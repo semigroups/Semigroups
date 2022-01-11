@@ -10,15 +10,16 @@
 
 BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
-  local out, h, v, D;
+  local out, h, v, D, BlistH;
   D := GraphOfGraphInverseSemigroup(S);
   out := OutNeighbours(D);
   if H = [] or H = DigraphVertices(D) then
     return true;
   fi;
+  BlistH := BlistList(DigraphVertices(D), H);
   for h in H do
     for v in out[h] do
-      if not (v in H) then
+      if not BlistH[v] then
         return false;
       fi;
     od;
@@ -103,7 +104,7 @@ InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for a congruence by Wang pair",
 [IsCongruenceByWangPair],
 function(cong)
-  local pairs, gens, verts, v, u, e, D, out, S, H, W;
+  local pairs, gens, verts, v, u, e, D, out, S, H, W, BlistH;
   S := Source(cong);
   H := cong!.H;
   W := cong!.W;
@@ -112,12 +113,13 @@ function(cong)
   verts := VerticesOfGraphInverseSemigroup(S);
   D := GraphOfGraphInverseSemigroup(S);
   out := OutNeighbours(D);
+  BlistH := BlistList(DigraphVertices(D), H);
   for v in H do
     Add(pairs, [verts[v], MultiplicativeZero(S)]);
   od;
   for v in W do
     for u in out[v] do
-      if not (u in H) then
+      if not BlistH[u] then
         for e in gens do
           if Source(e) = verts[v] and Range(e) = verts[u] then
             Add(pairs, [verts[v], e * e ^ -1]);
