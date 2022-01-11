@@ -142,25 +142,15 @@ gap> s := f / [[f.1 * f.2, f.3], [f.2 * f.3, f.1], [f.3 * f.1, f.2]];;
 gap> stz := StzPresentation(s);
 <fp semigroup presentation with 3 generators and 3 relations with length 12>
 gap> SetRelationsOfStzPresentation(stz, "yeet");
-Error, SetRelationsOfStzPresentation:
-parameter <arg> must be a list of pairs of words in
-LetterRep format
+Error, parameter <arg> must be a list of pairs of words in LetterRep format
 gap> SetRelationsOfStzPresentation(stz, [[1, "yeet"]]);
-Error, SetRelationsOfStzPresentation:
-parameter <arg> must be a list of pairs of words in
-LetterRep format
+Error, parameter <arg> must be a list of pairs of words in LetterRep format
 gap> SetRelationsOfStzPresentation(stz, [[1, 2, 3]]);
-Error, SetRelationsOfStzPresentation:
-parameter <arg> must be a list of pairs of words in
-LetterRep format
+Error, parameter <arg> must be a list of pairs of words in LetterRep format
 gap> SetRelationsOfStzPresentation(stz, [[[1], [2], [3]]]);
-Error, SetRelationsOfStzPresentation:
-parameter <arg> must be a list of pairs of words in
-LetterRep format
+Error, parameter <arg> must be a list of pairs of words in LetterRep format
 gap> SetRelationsOfStzPresentation(stz, [[["yeet"], [2]]]);
-Error, SetRelationsOfStzPresentation:
-parameter <arg> must be a list of pairs of words in
-LetterRep format
+Error, parameter <arg> must be a list of pairs of words in LetterRep format
 gap> SetRelationsOfStzPresentation(stz,
 >    [[[1, 2], [3, 3, 2]], [[1, 3], [3, 1]]]);
 gap> StzPrintRelations(stz);
@@ -176,11 +166,9 @@ gap> stz := StzPresentation(s);
 gap> TietzeForwardMap(stz);
 [ [ 1 ], [ 2 ], [ 3 ] ]
 gap> SetTietzeForwardMap(stz, [1, 2, 3]);
-Error, SetTietzeForwardMap: second argument <newMaps> must
-be a list of lists of positive integers
+Error, the 2nd argument <newMaps> must be a list of lists of positive integers
 gap> SetTietzeForwardMap(stz, [["yeet", 1]]);
-Error, SetTietzeForwardMap: second argument <newMaps> must
-be a list of lists of positive integers
+Error, the 2nd argument <newMaps> must be a list of lists of positive integers
 gap> SetTietzeForwardMap(stz, [[1], [2], [1, 1]]);
 gap> TietzeForwardMap(stz);
 [ [ 1 ], [ 2 ], [ 1, 1 ] ]
@@ -193,11 +181,9 @@ gap> stz := StzPresentation(s);
 gap> TietzeBackwardMap(stz);
 [ [ 1 ], [ 2 ], [ 3 ] ]
 gap> SetTietzeBackwardMap(stz, [1, 2, 3]);
-Error, SetTietzeBackwardMap: second argument <newMaps> must
-be a list of lists of positive integers
+Error, the 2nd argument <newMaps> must be a list of lists of positive integers
 gap> SetTietzeBackwardMap(stz, [["yeet", 1]]);
-Error, SetTietzeBackwardMap: second argument <newMaps> must
-be a list of lists of positive integers
+Error, the 2nd argument <newMaps> must be a list of lists of positive integers
 gap> SetTietzeBackwardMap(stz, [[1], [2], [3], [1, 2, 3]]);
 gap> TietzeBackwardMap(stz);
 [ [ 1 ], [ 2 ], [ 3 ], [ 1, 2, 3 ] ]

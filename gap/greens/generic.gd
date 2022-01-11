@@ -11,6 +11,11 @@
 # This file contains methods for Green's relations and classes of semigroups
 # where the particular representation of the Green's classes is not important.
 
+DeclareAttribute("DClassType", IsSemigroup);
+DeclareAttribute("HClassType", IsSemigroup);
+DeclareAttribute("LClassType", IsSemigroup);
+DeclareAttribute("RClassType", IsSemigroup);
+
 DeclareProperty("IsGreensClassNC", IsGreensClass);
 DeclareProperty("IsRegularGreensClass", IsGreensClass);
 
