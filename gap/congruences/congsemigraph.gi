@@ -182,7 +182,6 @@ function(C)
   if not IsGraphInverseSemigroup(Source(C)) then
     ErrorNoReturn(Source(C), " is not a graph inverse semigroup");
   fi;
-
   H := [];
   W := [];
   eq := EquivalenceRelationPartition(C);
