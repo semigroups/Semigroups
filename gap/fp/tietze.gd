@@ -86,3 +86,4 @@ DeclareOperation("StzPrintPresentation", [IsStzPresentation]);
 
 # Information class for relation printing etc
 DeclareInfoClass("InfoFpSemigroup");
+SetInfoLevel(InfoFpSemigroup, 2);
