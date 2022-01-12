@@ -9,7 +9,8 @@
 ##
 
 # This file contains methods for accessing the kernel level version of the
-# Froidure-Pin algorithm for enumerating arbitrary semigroups.
+# Froidure-Pin algorithm for enumerating arbitrary semigroups, i.e. the version
+# that is not in libsemigroups.
 
 #  For details see:
 #
@@ -23,35 +24,39 @@ DeclareProperty("CanComputeGapFroidurePin", IsSemigroup);
 DeclareProperty("CanComputeFroidurePin", IsSemigroup);
 DeclareOperation("HasFroidurePin", [IsSemigroup]);
 
-# TODO(now) change IsSemigroup -> IsSemigroup and CanComputeFroidurePin
-DeclareAttribute("AsListCanonical", IsSemigroup);
+DeclareAttribute("AsListCanonical",
+                 IsSemigroup and CanComputeFroidurePin);
 DeclareOperation("PositionCanonical",
-                 [IsSemigroup, IsMultiplicativeElement]);
+                 [IsSemigroup and CanComputeFroidurePin,
+                  IsMultiplicativeElement]);
 
 DeclareOperation("PositionSortedOp",
-                 [IsSemigroup, IsMultiplicativeElement]);
+                 [IsSemigroup and CanComputeFroidurePin,
+                 IsMultiplicativeElement]);
 DeclareOperation("PositionOp",
-                 [IsSemigroup,
+                 [IsSemigroup and CanComputeFroidurePin,
                   IsMultiplicativeElement,
                   IsZeroCyc]);
 DeclareOperation("Position",
-                 [IsSemigroup, IsMultiplicativeElement]);
+                 [IsSemigroup and CanComputeFroidurePin,
+                  IsMultiplicativeElement]);
 DeclareOperation("Position",
-                 [IsSemigroup, IsMultiplicativeElement,
+                 [IsSemigroup and CanComputeFroidurePin,
+                  IsMultiplicativeElement,
                   IsZeroCyc]);
 
-DeclareOperation("Enumerate", [IsSemigroup, IsInt]);
-DeclareOperation("Enumerate", [IsSemigroup]);
+DeclareOperation("Enumerate", [IsSemigroup and CanComputeFroidurePin, IsInt]);
+DeclareOperation("Enumerate", [IsSemigroup and CanComputeFroidurePin]);
 
-DeclareAttribute("LeftCayleyDigraph", IsSemigroup);
-DeclareAttribute("RightCayleyDigraph", IsSemigroup);
+DeclareAttribute("LeftCayleyDigraph", IsSemigroup and CanComputeFroidurePin);
+DeclareAttribute("RightCayleyDigraph", IsSemigroup and CanComputeFroidurePin);
 
-DeclareAttribute("EnumeratorCanonical", IsSemigroup);
-DeclareOperation("IteratorCanonical", [IsSemigroup]);
+DeclareAttribute("EnumeratorCanonical", IsSemigroup and CanComputeFroidurePin);
+DeclareOperation("IteratorCanonical", [IsSemigroup and CanComputeFroidurePin]);
 
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
-DeclareAttribute("RulesOfSemigroup", IsSemigroup);
+DeclareAttribute("RulesOfSemigroup", IsSemigroup and CanComputeFroidurePin);
 
 DeclareOperation("IdempotentsSubset",
                  [IsSemigroup and CanComputeFroidurePin, IsHomogeneousList]);

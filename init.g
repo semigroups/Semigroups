@@ -53,7 +53,7 @@ ReadPackage("semigroups", "gap/elements/pperm.gd");
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 
-ReadPackage("semigroups", "gap/main/fropin.gd");
+ReadPackage("semigroups", "gap/main/froidure-pin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");
 ReadPackage("semigroups", "gap/main/setup.gd");
 ReadPackage("semigroups", "gap/main/acting.gd");
