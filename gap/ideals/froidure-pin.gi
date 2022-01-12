@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-##  ideals-froidure-pin.gi
+##  ideals/froidure-pin.gi
 ##  Copyright (C) 2014-21                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,46 +9,6 @@
 ##
 
 # This file contains method specific to ideals of semigroups.
-
-if not IsBound(VerticesReachableFrom) then
-  DeclareOperation("VerticesReachableFrom", [IsDigraph, IsPosInt]);
-  InstallMethod(VerticesReachableFrom, "for a digraph and a vertex",
-  [IsDigraph, IsPosInt],
-  function(D, root)
-    local N, index, current, succ, visited, prev, n, i, parent,
-          have_visited_root;
-    N := DigraphNrVertices(D);
-    index := ListWithIdenticalEntries(N, 0);
-    have_visited_root := false;
-    index[root] := 1;
-    current := root;
-    succ := OutNeighbours(D);
-    visited := [];
-    parent := [];
-    parent[root] := fail;
-    repeat
-      prev := current;
-      for i in [index[current] .. Length(succ[current])] do
-        n := succ[current][i];
-        if n = root and have_visited_root = false then
-           Add(visited, root);
-           have_visited_root := true;
-        elif index[n] = 0 then
-          Add(visited, n);
-            parent[n] := current;
-            index[current] := i + 1;
-            current := n;
-            index[current] := 1;
-            break;
-        fi;
-      od;
-      if prev = current then
-        current := parent[current];
-      fi;
-    until current = fail;
-    return visited;
-  end);
-fi;
 
 # We use the result of running the Froidure-Pin algorithm on the supersemigroup
 # of an ideal to calculate elements, size, test membership, find idempotents,

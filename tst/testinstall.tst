@@ -999,9 +999,11 @@ gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
 5
-gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
+gap> C := SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
+gap> IsUniversalSemigroupCongruence(C);
+true
 
 # TestInstall65: Fixed bug where the GeneratorsOfMonoid were incorrectly set
 #   for partial perm monoids/inverse monoids, due to removal of the One.

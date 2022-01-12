@@ -1411,7 +1411,7 @@ gap> S := Semigroup([
 >  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 >  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> InversesOfSemigroupElement(S, S.1);
-Error, the first argument (a semigroup) must be finite,
+Error, the 1st argument (a semigroup) is not finite
 gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
 gap> InversesOfSemigroupElement(S, Transformation([1, 3, 2]));
 Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\

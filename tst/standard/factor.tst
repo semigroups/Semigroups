@@ -162,7 +162,8 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])]);;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> MinimalFactorization(S, x);
-Error, the second argument <x> is not an element of the first argument <S>,
+Error, the 2nd argument (a mult. element) is not an element of the first argum\
+ent (a semigroup)
 
 # factor: Factorization, error, 3/5
 gap> S := DualSymmetricInverseMonoid(3);;

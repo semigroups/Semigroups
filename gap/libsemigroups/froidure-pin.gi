@@ -193,7 +193,7 @@ InstallMethod(AsSet, "for a semigroup with CanComputeCppFroidurePin",
 function(S)
   local result, sorted_at, T, i;
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   elif IsPartialPermSemigroup(S) then
     # Special case required because < for libsemigroups PartialPerms and < for
     # GAP partial perms are different.
@@ -215,7 +215,7 @@ InstallMethod(AsListCanonical,
 function(S)
   local result, at, T, i;
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   result := EmptyPlist(Size(S));
   at := FroidurePinMemFnRec(S).at;
@@ -294,7 +294,7 @@ InstallMethod(PositionSortedOp,
 function(S, x)
   local pos;
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   elif IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)
         or CodegreeOfPartialPermSemigroup(S) < CodegreeOfPartialPerm(x) then
@@ -332,7 +332,7 @@ InstallMethod(NrIdempotents,
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   return FroidurePinMemFnRec(S).number_of_idempotents(CppFroidurePin(S));
 end);
@@ -342,7 +342,7 @@ InstallMethod(Idempotents,
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   return FroidurePinMemFnRec(S).idempotents(CppFroidurePin(S));
 end);
@@ -363,8 +363,8 @@ InstallMethod(MinimalFactorization,
 [IsSemigroup and CanComputeCppFroidurePin, IsMultiplicativeElement],
 function(S, x)
   if not x in S then
-    Error("the second argument <x> is not an element ",
-                  "of the first argument <S>,");
+    Error("the 2nd argument (a mult. element) is not an element ",
+          "of the first argument (a semigroup)");
   fi;
   return MinimalFactorization(S, PositionCanonical(S, x));
 end);
@@ -415,7 +415,7 @@ InstallMethod(LeftCayleyGraphSemigroup,
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   return FroidurePinMemFnRec(S).left_cayley_graph(CppFroidurePin(S)) + 1;
 end);
@@ -426,7 +426,7 @@ InstallMethod(LeftCayleyDigraph,
 function(S)
   local D;
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   D := DigraphNC(LeftCayleyGraphSemigroup(S));
   SetFilterObj(D, IsCayleyDigraph);
@@ -440,7 +440,7 @@ InstallMethod(RightCayleyGraphSemigroup,
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   return FroidurePinMemFnRec(S).right_cayley_graph(CppFroidurePin(S)) + 1;
 end);
@@ -451,7 +451,7 @@ InstallMethod(RightCayleyDigraph,
 function(S)
   local D;
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   D := DigraphNC(RightCayleyGraphSemigroup(S));
   SetFilterObj(D, IsCayleyDigraph);
@@ -471,7 +471,7 @@ function(S)
   local sorted_at, T, enum;
 
   if not IsFinite(S) then
-    Error("the first argument (a semigroup) must be finite,");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
 
   sorted_at := FroidurePinMemFnRec(S).sorted_at;

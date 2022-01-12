@@ -386,37 +386,30 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
+ToBeat([IsSemigroup and CanComputeCppCongruences, IsList],
+       [IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty]),
 function(S, pairs)
   local filt;
   filt := IsCongruenceCategory and CanComputeCppCongruence;
   return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
-InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup with CanComputeCppCongruences and a list",
-[IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty],
-function(S, pairs)
-  local filt;
-  filt := IsCongruenceCategory and CanComputeCppCongruence;
-  return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
-end);
-
-# TODO(now) separate out the empty list one
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
+ToBeat([IsSemigroup and CanComputeCppCongruences, IsList],
+       [IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty]),
 function(S, pairs)
   local filt;
   filt := IsLeftCongruenceCategory and CanComputeCppCongruence;
   return _AnyCongruenceByGeneratingPairs(S, pairs, filt);
 end);
 
-# TODO(now) separate out the empty list one
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup with CanComputeCppCongruences and a list",
 [IsSemigroup and CanComputeCppCongruences, IsList],
-RankFilter(IsList and IsEmpty),
+ToBeat([IsSemigroup and CanComputeCppCongruences, IsList],
+       [IsSemigroup and CanComputeCppCongruences, IsList and IsEmpty]),
 function(S, pairs)
   local filt;
   filt := IsRightCongruenceCategory and CanComputeCppCongruence;

@@ -82,9 +82,9 @@ ReadPackage("semigroups", "gap/semigroups/semieunit.gd");
 ReadPackage("semigroups", "gap/semigroups/semidp.gd");
 
 ReadPackage("semigroups", "gap/ideals/ideals.gd");
-ReadPackage("semigroups", "gap/ideals/idealact.gd");
-ReadPackage("semigroups", "gap/ideals/ideallam.gd");
-ReadPackage("semigroups", "gap/ideals/ideals-froidure-pin.gd");
+ReadPackage("semigroups", "gap/ideals/acting.gd");
+ReadPackage("semigroups", "gap/ideals/lambda-rho.gd");
+ReadPackage("semigroups", "gap/ideals/froidure-pin.gd");
 
 ReadPackage("semigroups", "gap/greens/generic.gd");
 ReadPackage("semigroups", "gap/greens/froidure-pin.gd");

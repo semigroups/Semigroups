@@ -23,8 +23,3 @@ DeclareRepresentation("IsGreensClassOfSemigroupThatCanComputeFroidurePinRep",
 DeclareRepresentation("IsGreensRelationOfSemigroupThatCanComputeFroidurePinRep",
                       IsComponentObjectRep and IsGreensRelation,
                       ["data"]);
-
-DeclareAttribute("DClassType", IsSemigroup);
-DeclareAttribute("HClassType", IsSemigroup);
-DeclareAttribute("LClassType", IsSemigroup);
-DeclareAttribute("RClassType", IsSemigroup);

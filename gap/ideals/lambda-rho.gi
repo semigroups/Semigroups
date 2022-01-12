@@ -1,6 +1,6 @@
 ############################################################################
 ##
-##  ideallam.gi
+##  ideals/lambda-rho.gi
 ##  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -79,28 +79,6 @@ InstallMethod(IsBound\[\], "for an inverse ideal orb and positive integer",
 function(o, i)
   return IsBound(o!.orbit[i]);
 end);
-
-# returns the index of the component containing <o[i]>
-
-# InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
-# [IsIdealOrb, IsPosInt],
-# function(o, i)
-#   local nr;
-#
-#   nr := 1;
-#   while i > Length(o!.orbits[nr]) do
-#     i := i - Length(o!.orbits[nr]);
-#     nr := nr + 1;
-#   od;
-#   return nr;
-# end);
-
-# InstallMethod(ComponentOfIndex,
-# "for an inverse ideal orb and positive integer",
-# [IsIdealOrb and IsInverseOrb, IsPosInt],
-# function(o, i)
-#   return 1;
-# end);
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -659,35 +637,4 @@ function(o, i)
   od;
 
   return [Reversed(leftword), o!.orbtogen[nr], Reversed(rightword)];
-end);
-
-# the arguments are a lambda/rho orbit of a parent semigroup and a number. jj
-InstallGlobalFunction(SuffixOrb,
-function(o, i)
-  local out, scc, lookup, graph, adj, bool, x, z, y, newadj;
-
-  scc := OrbSCC(o);
-  lookup := OrbSCCLookup(o);
-  graph := OrbitGraph(o);
-  adj := [lookup[i]];
-  bool := BlistList([1 .. Length(scc)], [lookup[i]]);
-  out := [lookup[i]];
-
-  while adj <> [] do
-    newadj := [];
-    for x in adj do
-      for y in scc[x] do
-        for z in graph[y] do
-          if not bool[lookup[z]] then
-            bool[lookup[z]] := true;
-            Add(out, lookup[z]);
-            Add(newadj, lookup[z]);
-          fi;
-        od;
-      od;
-    od;
-    adj := newadj;
-  od;
-
-  return out;
 end);
