@@ -329,7 +329,7 @@ InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
 function(S)
   local rules, F, A, rels, Q, B, map, inv, result;
 
-  if not IsFinite(S) then
+  if not IsFinite(S) or not CanComputeFroidurePin(S) then
     TryNextMethod();
   fi;
 
@@ -345,7 +345,10 @@ function(S)
   map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
   result := MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
-  SetNiceMonomorphism(Q, InverseGeneralMapping(result));
+  if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) 
+      or IsBipartitionSemigroup(S) then
+    SetNiceMonomorphism(Q, InverseGeneralMapping(result));
+  fi;
   return result;
 end);
 
