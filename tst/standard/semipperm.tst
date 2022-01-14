@@ -282,7 +282,7 @@ gap> s := Semigroup(PartialPerm([2, 3], [3, 2]));
 gap> HasIsGroupAsSemigroup(s);
 false
 gap> RepresentativeOfMinimalIdeal(s);
-(2,3)
+<identity partial perm on [ 2, 3 ]>
 gap> IsGroupAsSemigroup(s);
 true
 gap> RepresentativeOfMinimalIdeal(s) in s;
@@ -2107,9 +2107,9 @@ gap> I := SemigroupIdeal(S, S.5);;
 gap> ComponentRepsOfPartialPermSemigroup(I);
 [ 1 ]
 gap> CyclesOfPartialPermSemigroup(I);
-[ [ 1, 2, 3, 4, 6, 8, 10, 7, 5 ] ]
+[ [ 1, 2, 6, 3, 4, 8, 10, 7, 5 ] ]
 gap> CyclesOfPartialPermSemigroup(S);
-[ [ 1, 2, 3, 4, 6, 8, 10, 7, 5 ] ]
+[ [ 1, 2, 6, 3, 4, 8, 10, 7, 5 ] ]
 
 # Test NaturalLeqInverseSemigroup
 gap> S := Semigroup([

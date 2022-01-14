@@ -631,7 +631,7 @@ function(S, n)
       if range > n then
         return fail;
       elif range > 0 then
-        AddSet(out[i], range);
+        Add(out[i], range);
       fi;
     od;
   od;
@@ -791,138 +791,60 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
 function(S)
-  local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
-  domain, range, lenrange, codeg, in_nbs, labels, positions, collapsed,
-  nr_collapsed, i, act, pos, collapsible, squashed, elts, j, t, im,
-  reduced_rank, m, k;
+  local D, N, stack, Q, M, seen, good, labels, next, result, root, x;
 
-  gens := GeneratorsOfSemigroup(S);
-  empty_map := PartialPerm([], []);
-  if empty_map in gens then
-    return empty_map;
-  fi;
-  nrgens := Length(gens);
+  D := DigraphOfActionOnPoints(S);
+  N := Length(GeneratorsOfSemigroup(S));
 
-  # Find the minimum rank of a generator
-  min_rank := infinity;
-  doms := EmptyPlist(nrgens);
-  ims := EmptyPlist(nrgens);
-  for i in [1 .. nrgens] do
-    doms[i] := DomainOfPartialPerm(gens[i]);
-    ims[i] := ImageListOfPartialPerm(gens[i]);
-    rank := Length(doms[i]);
-    if rank < min_rank then
-      min_rank := rank;
-      min_rank_index := i;
-      if min_rank = 1 then
-        if not IsIdempotent(gens[i]) then
-          return empty_map;
+  # A point occurs in the domain/image of a partial perm in the minimal ideal
+  # if and only if no node in D reachable from that point has degree < N.
+  # We perform a simple DFS to find such nodes.
+  stack := Stack();
+
+  Q := QuotientDigraph(D, DigraphStronglyConnectedComponents(D).comps);
+  M := DigraphNrVertices(Q);
+  seen := BlistList([1 .. M], []);
+  good := BlistList([1 .. M], [1 .. M]);
+  labels := DigraphVertexLabels(Q);
+
+  for root in [1 .. M] do
+    if not seen[root] then
+      Push(stack, root);
+      while Size(stack) > 0 do
+        next := Pop(stack);
+        if next < 0 then
+          # Postorder: all neighbours of -next already processed
+          next := -next;
+          if good[next]
+              and ForAny(OutNeighboursOfVertex(Q, next), x -> not good[x]) then
+            good[next] := false;
+          fi;
+        elif not seen[next] then
+          seen[next] := true;
+          if good[next]
+              and ForAny(labels[next],
+                         x -> Length(OutNeighboursOfVertex(D, x)) < N) then
+            good[next] := false;
+          fi;
+          # To mark the starting point of the neighbours of next in stack
+          Push(stack, -next);
+          for x in OutNeighboursOfVertex(Q, next) do
+            Push(stack, x);
+          od;
         fi;
-      fi;
+      od;
     fi;
   od;
 
-  # Union of the domains and images of the gens
-  domain := Union(doms);
-  rank := Length(domain);
-  range := Union(ims);
-  lenrange := Length(range);
-  codeg := Maximum(range);
-
-  if min_rank = rank and domain = range then
-    if not IsGroup(S) then
-      SetIsGroupAsSemigroup(S, true);
-    fi;
-    return gens[1];
-  fi;
-
-  if rank = 1 or lenrange = 1 then
-    # note that domain <> range otherwise we match the previous if statement.
-    # S must contain the empty map: all generators have rank 1
-    # And one of those generators has domain <> range
-    return empty_map;
-  fi;
-
-  # The labelled action graph, defined by in-neighbours
-  # Vertex lenrange + 1 corresponds to NULL
-  in_nbs := List([1 .. lenrange + 1], x -> []);
-  labels := List([1 .. lenrange + 1], x -> []);
-  positions := EmptyPlist(codeg);
-  for m in [1 .. lenrange] do
-    positions[range[m]] := m;
-  od;
-
-  # Record of which image points (and how many) can be mapped to NULL
-  collapsed := BlistList([1 .. lenrange], []);
-  nr_collapsed := 0;
-  for m in [1 .. lenrange] do
-    i := range[m];
-    for j in [1 .. nrgens] do
-      act := i ^ gens[j];
-      if act = 0 then
-        Add(in_nbs[lenrange + 1], m);
-        Add(labels[lenrange + 1], j);
-        if not collapsed[m] then
-          collapsed[m] := true;
-          nr_collapsed := nr_collapsed + 1;
-        fi;
-        break;
-        # TODO(later) - no need to keep acting on <i> if it has been collapsed
-      fi;
-      pos := positions[act];
-      Add(in_nbs[pos], m);
-      Add(labels[pos], j);
-      if collapsed[pos] then
-        collapsed[m] := true;
-        nr_collapsed := nr_collapsed + 1;
-        break;
-      fi;
-    od;
-  od;
-
-  # Do we know that every point be mapped to NULL? If so, empty_map is in S
-  if nr_collapsed = lenrange then
-    return empty_map;
-  fi;
-
-  # For each collapsible image point analyse graph find a word to collapse it
-  collapsible := BlistList([1 .. codeg], []);
-  squashed := [lenrange + 1];
-  elts := List([1 .. lenrange + 1], x -> []);
-  for i in squashed do
-    for k in [1 .. Length(in_nbs[i])] do
-      j := in_nbs[i][k];
-      if not collapsible[j] then
-        collapsible[j] := true;
-        elts[j] := Concatenation([labels[i][k]], elts[i]);
-        Add(squashed, j);
-      fi;
-    od;
-  od;
-
-  # Can every point be mapped to NULL? If so, empty_map is in S
-  if Length(squashed) = lenrange + 1 then
-    return empty_map;
-  fi;
-
-  # empty_map is not in S; now multiply generators to minimize rank
-  t := gens[min_rank_index];
-  while true do
-    im := ImageListOfPartialPerm(t);
-    reduced_rank := false;
-    for i in im do
-      if collapsible[positions[i]] then
-        t := t * EvaluateWord(gens, elts[positions[i]]);
-        reduced_rank := true;
-        break;
-      fi;
-    od;
-    if not reduced_rank then
-      break;
+  result := [];
+  for x in [1 .. M] do
+    if good[x] then 
+      UniteSet(result, labels[x]);
     fi;
   od;
 
-  return t;
+  # Minimal ideal contains an idempotent!
+  return PartialPermNC(result, result);
 end);
 
 InstallMethod(\<, "for partial perm semigroups",
