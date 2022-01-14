@@ -1016,8 +1016,8 @@ gap> L := [S1, S1, S1];;
 gap> H := [[m1, m2], [id], []];;
 gap> S := StrongSemilatticeOfSemigroups(D, L, H);;
 gap> SSSE(S, 10, IdentityTransformation);
-Error, expected second argument to be an integer between 1 and the size of the\
- semilattice, i.e. 3
+Error, expected 2nd argument to be an integer between 1 and the size of the se\
+milattice, i.e. 3
 gap> SSSE(S, 1, Transformation([3, 2, 1]));
 Error, where S, n and x are the 1st, 2nd and 3rd arguments respectively, expec\
 ted x to be an element of SemigroupsOfStrongSemilatticeOfSemigroups(S)[n]

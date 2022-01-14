@@ -29,7 +29,7 @@ InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
 BIPART_RIGHT_BLOCKS);
 
 # for backwards compatibility
-InstallGlobalFunction(BlocksNC, BLOCKS_NC); # TODO(now) remove this 
+InstallGlobalFunction(BlocksNC, BLOCKS_NC);  # TODO(now) remove this
 InstallMethod(ExtRepOfObj, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
 
 InstallMethod(ChooseHashFunction, "for blocks",

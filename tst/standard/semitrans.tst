@@ -356,7 +356,7 @@ true
 # isomorphism from fp semigroup to transformation semigroup
 gap> S := AsSemigroup(IsFpSemigroup, JonesMonoid(5));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5 ]>, 
+MappingByFunction( <fp semigroup with 5 generators and 28 relations>, 
 <transformation semigroup of degree 43 with 5 generators>
  , function( x ) ... end )
 gap> BruteForceIsoCheck(map);
@@ -663,7 +663,7 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 * s2, s2], [s2 ^ 2, s2], [s1 ^ 3, s1]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 3 relations>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 6 with 2 generators>
 gap> Size(S) = Size(T);
@@ -1124,7 +1124,7 @@ true
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
 gap> Size(S) = Size(T);
@@ -1459,7 +1459,7 @@ true
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 4 relations>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
 gap> Size(S) = Size(T);
@@ -1794,7 +1794,7 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);

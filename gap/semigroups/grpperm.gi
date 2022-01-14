@@ -190,12 +190,10 @@ function(S)
                         List(w, x -> gen2[x]));
   end;
 
-  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
   return MagmaIsomorphismByFunctionsNC(S, G, iso, inv);
 end);
 
-InstallMethod(IsomorphismPermGroup,
-"for a partial perm semigroup",
+InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
   local G, dom;
@@ -216,8 +214,7 @@ function(S)
                                        x -> AsPartialPerm(x, dom));
 end);
 
-InstallMethod(IsomorphismPermGroup,
-"for a transformation semigroup",
+InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   local G, id;
@@ -237,8 +234,7 @@ function(S)
                                        x -> id * x);
 end);
 
-InstallMethod(IsomorphismPermGroup,
-"for a perm bipartition group",
+InstallMethod(IsomorphismPermGroup, "for a perm bipartition group",
 [IsPermBipartitionGroup],
 1,  # to beat the method for IsBlockBijectionSemigroup
 function(S)
@@ -254,22 +250,18 @@ function(S)
                                        x -> AsBipartition(x, deg));
 end);
 
-InstallMethod(IsomorphismPermGroup,
-"for a bipartition semigroup",
+InstallMethod(IsomorphismPermGroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
   local iso, inv;
-
   if not IsBlockBijectionSemigroup(S) then
     TryNextMethod();
   elif not IsGroupAsSemigroup(S) then
     ErrorNoReturn("the argument (a bipartition semigroup) does ",
                   "not satisfy IsGroupAsSemigroup");
   fi;
-
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
   inv := InverseGeneralMapping(iso);
-
   return MagmaIsomorphismByFunctionsNC(S,
                                        Range(iso),
                                        x -> x ^ iso,

@@ -62,7 +62,6 @@ ReadPackage("semigroups", "gap/main/graded.gd");
 ReadPackage("semigroups", "gap/main/orbits.gd");
 
 ReadPackage("semigroups", "gap/semigroups/semigrp.gd");
-ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 ReadPackage("semigroups", "gap/semigroups/semirms.gd");
 ReadPackage("semigroups", "gap/semigroups/semibipart.gd");
 ReadPackage("semigroups", "gap/semigroups/semipperm.gd");

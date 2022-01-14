@@ -182,12 +182,15 @@ InstallMethod(McAlisterTripleSemigroupQuotientDigraph,
 "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup and IsWholeFamily],
 function(S)
-  local YY_XX, comps, gr;
+  local YY_XX, comps, D;
   YY_XX := McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap(S);
   # Convert components to vertices of Y, rather than their labels in X.
   comps := List(McAlisterTripleSemigroupComponents(S).comps, c -> YY_XX{c});
-  gr    := QuotientDigraph(McAlisterTripleSemigroupSemilattice(S), comps);
-  return DigraphRemoveAllMultipleEdges(gr);
+  D := DigraphMutableCopy(McAlisterTripleSemigroupSemilattice(S));
+  D := QuotientDigraph(D, comps);
+  DigraphRemoveAllMultipleEdges(D);
+  MakeImmutable(D);
+  return D;
 end);
 
 InstallMethod(McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap,
@@ -220,15 +223,16 @@ function(S)
   G := McAlisterTripleSemigroupGroup(S);
   X := McAlisterTripleSemigroupPartialOrder(S);
   Y := McAlisterTripleSemigroupSemilattice(S);
-  return Concatenation("McAlisterTripleSemigroup(", String(G), ", ",
-                       String(X), ", ", String(DigraphVertexLabels(Y)), ")");
+  return StringFormatted("McAlisterTripleSemigroup({}, {}, {})",
+                         String(G),
+                         String(X),
+                         String(DigraphVertexLabels(Y)));
 end);
 
 InstallMethod(PrintObj, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
 function(S)
   Print(String(S));
-  return;
 end);
 
 # TODO(later) Linebreak hints
@@ -238,7 +242,8 @@ InstallMethod(ViewString, "for a McAlister triple semigroup",
 function(S)
   local G;
   G := McAlisterTripleSemigroupGroup(S);
-  return Concatenation("<McAlister triple semigroup over ", ViewString(G), ">");
+  return StringFormatted("<McAlister triple semigroup over {}>",
+                         ViewString(G));
 end);
 
 InstallMethod(ViewString, "for a McAlister triple subsemigroup",
@@ -633,6 +638,7 @@ end);
 #############################################################################
 # Methods for McAlister triple elements
 #############################################################################
+
 InstallMethod(McAlisterTripleSemigroupElement,
 "for a McAlister triple semigroup, pos int, and perm",
 [IsMcAlisterTripleSemigroup, IsPosInt, IsMultiplicativeElementWithInverse],
@@ -866,11 +872,10 @@ SEMIGROUPS.PartialPermExtendToPerm := function(x, deg)
       image[i] := i;
     fi;
   od;
-  return(PartialPerm(dom, image));
+  return PartialPerm(dom, image);
 end;
 
-InstallMethod(EUnitaryInverseCover,
-"for a semigroup",
+InstallMethod(EUnitaryInverseCover, "for a semigroup",
 [IsSemigroup],
 function(S)
   local cov, iso, T;

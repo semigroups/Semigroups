@@ -316,30 +316,6 @@ function(filt, params)
                                         params[2]));
 end);
 
-InstallMethod(GroupOfUnits, "for a matrix over finite field semigroup",
-[IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  local r, g, e, U;
-
-  e := MultiplicativeNeutralElement(S);
-
-  if e = fail then
-    return fail;
-  fi;
-
-  r := GreensRClassOfElementNC(S, e);
-  g := SchutzenbergerGroup(r);
-
-  U := Monoid(GeneratorsOfGroup(g));
-
-  if not IsGroup(U) then
-    SetIsGroupAsSemigroup(U, true);
-  fi;
-  UseIsomorphismRelation(U, g);
-
-  return U;
-end);
-
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
 

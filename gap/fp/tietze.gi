@@ -152,7 +152,7 @@ end);
 # length of every word in the defining relations
 InstallMethod(Length, "for an stz presentation", [IsStzPresentation],
 function(stz)
-  local out, rels, rel;
+  local out, rel;
   out := Length(stz!.GeneratorsOfStzPresentation);
   for rel in RelationsOfStzPresentation(stz) do
     out := out + Length(rel[1]) + Length(rel[2]);

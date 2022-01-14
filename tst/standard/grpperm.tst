@@ -74,7 +74,7 @@ gap> S := F /
 > [F.2 * F.1 * F.2, F.1 * F.2],
 > [F.2 ^ 2 * F.1, F.2 * F.1],
 > [F.2 ^ 3, F.2]];
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 7 relations>
 gap> iso := IsomorphismPermGroup(S);
 Error, the argument (a semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := F /
@@ -87,7 +87,7 @@ gap> S := F /
 > [(F.1 ^ 2 * F.2) ^ 2, (F.2 * F.1) ^ 2],
 > [(F.2 * F.1 ^ 2) ^ 2, (F.1 * F.2) ^ 2],
 > [F.2 * (F.1 * F.2 * F.1) ^ 2, (F.1 * F.2 * F.1) ^ 2 * F.2]];
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 9 relations>
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true

@@ -42,15 +42,11 @@ function(filt, params)
                                                          params[2])));
 end);
 
-InstallMethod(RandomInverseSemigroupCons,
-"for IsBooleanMatSemigroup and list",
-[IsBooleanMatSemigroup, IsList],
-SEMIGROUPS.DefaultRandomInverseSemigroup);
+InstallMethod(RandomInverseSemigroupCons, "for IsBooleanMatSemigroup and list",
+[IsBooleanMatSemigroup, IsList], SEMIGROUPS.DefaultRandomInverseSemigroup);
 
-InstallMethod(RandomInverseMonoidCons,
-"for IsBooleanMatMonoid and list",
-[IsBooleanMatMonoid, IsList],
-SEMIGROUPS.DefaultRandomInverseMonoid);
+InstallMethod(RandomInverseMonoidCons, "for IsBooleanMatMonoid and list",
+[IsBooleanMatMonoid, IsList], SEMIGROUPS.DefaultRandomInverseMonoid);
 
 #############################################################################
 ## 1. Isomorphisms

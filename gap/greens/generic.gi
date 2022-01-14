@@ -253,8 +253,8 @@ InstallMethod(GreensJClassOfElementNC,
 
 InstallMethod(GreensRClassOfElement,
 "for a possibly finite semigroup and multiplicative element",
-[IsSemigroup, IsMultiplicativeElement], 
-RankFilter(IsFinite), # to beat the library method for IsSemigroup and IsFinite
+[IsSemigroup, IsMultiplicativeElement],
+RankFilter(IsFinite),  # to beat the library method for IsSemigroup and IsFinite
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -265,7 +265,7 @@ end);
 InstallMethod(GreensLClassOfElement,
 "for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite), # to beat the library method for IsSemigroup and IsFinite
+RankFilter(IsFinite),  # to beat the library method for IsSemigroup and IsFinite
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -276,7 +276,7 @@ end);
 InstallMethod(GreensHClassOfElement,
 "for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite), # to beat the library method for IsSemigroup and IsFinite
+RankFilter(IsFinite),  # to beat the library method for IsSemigroup and IsFinite
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();
@@ -287,7 +287,7 @@ end);
 InstallMethod(GreensDClassOfElement,
 "for a possibly finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
-RankFilter(IsFinite), # to beat the library method for IsSemigroup and IsFinite
+RankFilter(IsFinite),  # to beat the library method for IsSemigroup and IsFinite
 function(S, x)
   if not IsFinite(S) then
     TryNextMethod();

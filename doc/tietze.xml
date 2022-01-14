@@ -16,16 +16,15 @@
       A semigroup Tietze (Stz) object.
     </Returns>
     <Description>
-      If <A>s</A> is an fp semigroup
-      (<Ref Filt="IsFpSemigroup" BookName="ref"/>),
-      then this function returns a modifiable object representing the generators
-      and relations of <A>s</A>.
+      If <A>s</A> is an fp semigroup (<Ref Filt="IsFpSemigroup"
+      BookName="ref"/>), then this function returns a modifiable object
+        representing the generators and relations of <A>s</A>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");;
 gap> AssignGeneratorVariables(F);;
 gap> S := F / [[a * b, c], [b * c, a], [c * a, b]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 12>]]></Example>
@@ -41,13 +40,12 @@ gap> stz := StzPresentation(S);
     </Returns>
     <Description>
       Every semigroup Tietze object is an element of the category
-      <C>IsStzPresentation</C>. Internally, each Stz object contains a list
-      of generators (each represented as a string) and a list of relations
-      (each represented as a pair of <C>LetterRep</C> words, see
-      <Ref Oper="LetterRepAssocWord" BookName="ref"/>).
-      These generator and relation lists can be modified using Tietze
-      transformations
-      (<Ref Sect="Changing presentations"/>).
+      <C>IsStzPresentation</C>. Internally, each Stz object contains a list of
+      generators (each represented as a string) and a list of relations (each
+      represented as a pair of <C>LetterRep</C> words, see <Ref
+      Oper="LetterRepAssocWord" BookName="ref"/>).  These generator and
+      relation lists can be modified using Tietze transformations (<Ref
+        Sect="Changing presentations"/>).
       <P/>
 
       When a <C>IsStzPresentation</C> object <A>stz</A> is created from an fp
@@ -62,7 +60,7 @@ gap> stz := StzPresentation(S);
 gap> F := FreeSemigroup("a", "b", "c");;
 gap> AssignGeneratorVariables(F);;
 gap> S := F / [[a * b, c], [b * c, a], [c * a, b]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 12>
@@ -79,21 +77,19 @@ true]]></Example>
       A finitely presented semigroup.
     </Returns>
     <Description>
-      If <A>S</A> is an fp semigroup object
-      (<Ref Filt="IsFpSemigroup" BookName="ref"/>),
-      then <C>SimplifiedFpSemigroup</C> 
-      will return an FpSemigroup object <A>T</A> which is isomorphic to <A>S</A>
-      which has been reduced to minimise its length.
+      If <A>S</A> is an fp semigroup object (<Ref Filt="IsFpSemigroup"
+      BookName="ref"/>), then <C>SimplifiedFpSemigroup</C> will return an
+      FpSemigroup object <A>T</A> which is isomorphic to <A>S</A> which has
+      been reduced to minimise its length.
 
-      <C>SimplifiedFpSemigroup</C> applies
-      <Ref Oper="SimplifyFpSemigroup"/>
+      <C>SimplifiedFpSemigroup</C> applies <Ref Oper="SimplifyFpSemigroup"/>
       and assigns the <C>Range</C> of the isomorphism object which is returned
       to <A>T</A>, adding the isomorphism to <A>T</A> as an attribute. In this
       way, while <A>T</A> is a completely new FpSemigroup object, words in
       <A>S</A> can be mapped to <A>T</A> using the map obtained from the
       attribute <Ref Oper="FpTietzeIsomorphism"/>.<P/>
 
-      For more information on the mapping between the semigroups and how it is 
+      For more information on the mapping between the semigroups and how it is
       created, see
       <Ref Sect="Converting a modified presentation into a semigroup"/>.
 
@@ -200,23 +196,22 @@ gap> RelationsOfFpSemigroup(Range(map));
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
       <C>StzSimplifyOnce</C> will check the possible reductions in length for a
-      number of different possible Tietze transformations, and apply the choice 
-      which gives the least length. If a valid transformation was found then the 
-      function returns <K>true</K>, and if no transformation was performed
+      number of different possible Tietze transformations, and apply the choice
+      which gives the least length. If a valid transformation was found then
+      the function returns <K>true</K>, and if no transformation was performed
       because none would lead to a reduction in length, then the function
       returns <K>false</K>.<P/>
 
       There are four different possible transformations that
-      <C>StzSimplifyOnce</C> may apply. The function searches for redundant 
-      generators and checks if removing them would reduce the overall length
-      of the presentation, it 
-      checks whether substituting one side of each relation throughout the rest 
-      of the relations would reduce the length, it checks whether there are 
-      any trivial relations (of the form <A>w = w</A> for some word <A>w</A>)
-      or any duplicated relations (relations which are formed from precisely the
-      same words as another relation), and it checks whether any frequently
-      occurring subwords in the relations can be replaced with a new generator 
-      to reduce the length. For more details, see
+      <C>StzSimplifyOnce</C> may apply. The function searches for redundant
+      generators and checks if removing them would reduce the overall length of
+      the presentation, it checks whether substituting one side of each
+      relation throughout the rest of the relations would reduce the length, it
+      checks whether there are any trivial relations (of the form <A>w = w</A>
+      for some word <A>w</A>) or any duplicated relations (relations which are
+      formed from precisely the same words as another relation), and it checks
+      whether any frequently occurring subwords in the relations can be
+      replaced with a new generator to reduce the length. For more details, see
       <Ref Sect="Changing presentations"/><P/>
 
       At <C>InfoLevel</C> 2 (which is the default value, and which can be set
@@ -228,7 +223,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -248,9 +243,8 @@ gap> stz;
     <Description>
       If <A>stz</A> is an <C>StzPresentation</C> object, then
       <C>StzSimplifyPresentation</C> will repeatedly apply the best of a few
-      possible
-      reductions to <A>stz</A> until it can no longer reduce the length
-      of the presentation.<P/>
+      possible reductions to <A>stz</A> until it can no longer reduce the
+      length of the presentation.<P/>
       <Log><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
@@ -275,19 +269,15 @@ gap> RelationsOfStzPresentation(stz);
     </Returns>
     <Description>
       If <A>S</A> is an fp semigroup object that has been obtained through
-      calling
-      <Ref Oper="SimplifiedFpSemigroup"/>
-      on some fp semigroup <A>T</A>
-      then <C>UnreducedFpSemigroup</C> returns the original
-      semigroup object before simplification. These are unrelated semigroup 
-      objects, except that <A>S</A> will have a
-      <Ref Oper="FpTietzeIsomorphism"/>
-      attribute that returns an isomorphic mapping from <A>T</A> to <A>S</A>.
+      calling <Ref Oper="SimplifiedFpSemigroup"/> on some fp semigroup <A>T</A>
+      then <C>UnreducedFpSemigroup</C> returns the original semigroup object
+      before simplification. These are unrelated semigroup objects, except that
+      <A>S</A> will have a <Ref Oper="FpTietzeIsomorphism"/> attribute that
+        returns an isomorphic mapping from <A>T</A> to <A>S</A>.
       <P/>
 
-      If <Ref Oper="SimplifyFpSemigroup"/>
-      has been called on an fp semigroup <A>T</A>,
-      then <C>UnreducedFpSemigroup</C> can be used on the
+      If <Ref Oper="SimplifyFpSemigroup"/> has been called on an fp semigroup
+      <A>T</A>, then <C>UnreducedFpSemigroup</C> can be used on the
       <C>Range</C> of the resultant mapping to obtain the domain.
       <Log><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
@@ -319,11 +309,10 @@ true]]></Log>
     </Returns>
     <Description>
       If <A>S</A> is an fp semigroup object that has been obtained through
-      calling <Ref Oper="SimplifiedFpSemigroup"/>
-      on some fp semigroup <A>T</A>,
-      then <C>FpTietzeIsomorphism</C> returns an isomorphism from
-      <A>T</A> to <A>S</A>. Simplification produces an fp semigroup isomorphic 
-      to the original fp semigroup, and these two fp semigroup objects can 
+      calling <Ref Oper="SimplifiedFpSemigroup"/> on some fp semigroup
+      <A>T</A>, then <C>FpTietzeIsomorphism</C> returns an isomorphism from
+      <A>T</A> to <A>S</A>. Simplification produces an fp semigroup isomorphic
+      to the original fp semigroup, and these two fp semigroup objects can
       interact with each other through the mapping given by this function.
       <Log><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
@@ -362,30 +351,27 @@ true]]></Log>
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>GeneratorsOfStzPresentation</C> will return (as strings) the generators
-      of the fp semigroup that the presentation was created from. In the 
-      <Ref Oper="StzPresentation"/> object, it is only necessary to know how
-      many generators
-      there are, but for the purposes of representing generators and relations 
-      of the presentation object and building a new fp semigroup from the
-      object,
-      the strings representing the generators are stored.
-
+      <C>GeneratorsOfStzPresentation</C> will return (as strings) the
+      generators of the fp semigroup that the presentation was created from. In
+      the <Ref Oper="StzPresentation"/> object, it is only necessary to know
+      how many generators there are, but for the purposes of representing
+      generators and relations of the presentation object and building a new fp
+      semigroup from the object, the strings representing the generators are
+      stored.
       <P/>
 
       As Tietze transformations are performed on <A>stz</A>, the generators
-      will change, but the labels will remain as close to the original labels 
-      as possible, so that if a generator in the fp semigroup obtained from 
-      the presentation is the same as a generator in the original fp semigroup,
+      will change, but the labels will remain as close to the original labels
+      as possible, so that if a generator in the fp semigroup obtained from the
+      presentation is the same as a generator in the original fp semigroup,
       then they should have the same label.
       
-
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -405,20 +391,20 @@ gap> GeneratorsOfStzPresentation(stz);
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>RelationsOfStzPresentation</C> will return in letter rep form the 
-      current relations of the presentation object. When the presentation object
-      is first created, these will be the <C>LetterRep</C> forms of the relations
-      of 
-      the fp semigroup object that is used to create <A>stz</A>. As Tietze 
-      transformations are performed on the presentation object, the relations 
-      returned by this function will change to reflect the transformations.
+      <C>RelationsOfStzPresentation</C> will return in letter rep form the
+      current relations of the presentation object. When the presentation
+      object is first created, these will be the <C>LetterRep</C> forms of the
+      relations of the fp semigroup object that is used to create <A>stz</A>.
+      As Tietze transformations are performed on the presentation object, the
+      relations returned by this function will change to reflect the
+      transformations.
       
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -440,14 +426,13 @@ gap> RelationsOfStzPresentation(stz);
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
       <C>UnreducedFpSemigroup</C> will return the fp semigroup 
       that was used to create <A>stz</A> using <Ref Oper="StzPresentation"/>.
-      
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -462,17 +447,15 @@ true]]>
   <ManSection>
     <Oper Name="StzAddRelation" Arg="stz, pair"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and
-      <A>pair</A> is a list
-      containing two <C>LetterRep</C> words over the generators of <A>stz</A>,
-      then
-      <C>StzAddRelation</C> will perform a Tietze transformation of the first 
-      type and add a new relation to <A>stz</A>. This only happens if the
-      new relation that would 
-      be formed from <A>pair</A> can be constructed from the other existing
-      relations; that is, if we can perform elementary operations using the 
-      existing relations of <A>stz</A> to convert <C><A>pair</A>[1]</C> into
-      <C><A>pair</A>[2]</C>.
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>pair</A>
+      is a list containing two <C>LetterRep</C> words over the generators of
+      <A>stz</A>, then <C>StzAddRelation</C> will perform a Tietze
+      transformation of the first type and add a new relation to <A>stz</A>.
+      This only happens if the new relation that would be formed from
+      <A>pair</A> can be constructed from the other existing relations; that
+      is, if we can perform elementary operations using the existing relations
+        of <A>stz</A> to convert <C><A>pair</A>[1]</C> into
+        <C><A>pair</A>[2]</C>.
       <P/>
 
       If, instead, <A>pair</A> is a list containing two elements of the fp 
@@ -486,7 +469,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -510,21 +493,20 @@ words that are equal in the presentation <stz>]]>
   <ManSection>
     <Oper Name="StzRemoveRelation" Arg="stz, index"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object
-      and <A>index</A> is a positive
-      integer less than or equal to the number of relations of <A>stz</A>, then
-      <C>StzRemoveRelation</C> will perform a Tietze transformation of the
-      second type and remove the <A>index</A>th relation of <A>stz</A> if that
-      relation is such that one side of it can be obtained from the other by a 
-      sequence of elementary operations using only the other relations of
-      <A>stz</A>.
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>index</A>
+      is a positive integer less than or equal to the number of relations of
+      <A>stz</A>, then <C>StzRemoveRelation</C> will perform a Tietze
+      transformation of the second type and remove the <A>index</A>th relation
+      of <A>stz</A> if that relation is such that one side of it can be
+      obtained from the other by a sequence of elementary operations using only
+        the other relations of <A>stz</A>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -543,33 +525,31 @@ a relation that is redundant in the presentation <stz>]]>
   <ManSection>
     <Oper Name="StzAddGenerator" Arg="stz, word[, name]"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object
-      and <A>word</A> is a
-      <C>LetterRep</C> word over the generators of <A>stz</A>, then
-      <C>StzAddGenerator</C> will perform a Tietze transformation  
-      which adds a new generator to <A>stz</A> and a new relation of the form 
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>word</A>
+      is a <C>LetterRep</C> word over the generators of <A>stz</A>, then
+      <C>StzAddGenerator</C> will perform a Tietze transformation  which adds a
+      new generator to <A>stz</A> and a new relation of the form
       <C>newgenerator = <A>word</A></C>.
       <P/>
 
-      If, instead, <A>word</A> is a word over the fp semigroup <A>S</A> that was
-      used to create <A>stz</A>, then this function will add the new generator
-      and a new relation with the new generator equal to the <C>LetterRep</C>
-      of this
-      word as a new relation to <A>stz</A>.
+      If, instead, <A>word</A> is a word over the fp semigroup <A>S</A> that
+      was used to create <A>stz</A>, then this function will add the new
+      generator and a new relation with the new generator equal to the
+      <C>LetterRep</C> of this word as a new relation to <A>stz</A>.
       <P/>
 
       A new name for the generator is chosen and added automatically based on
-      the names of the existing generators to 
-      <Ref Oper="GeneratorsOfStzPresentation"/> if the argument <A>name</A> is 
-      not included. If it is, and if <A>name</A> is a string that is not equal
-      to an existing generator, then the string added to the list of generators
-      will be <A>name</A> instead.
+      the names of the existing generators to <Ref
+        Oper="GeneratorsOfStzPresentation"/> if the argument <A>name</A> is not
+        included. If it is, and if <A>name</A> is a string that is not equal to
+        an existing generator, then the string added to the list of generators
+        will be <A>name</A> instead.
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -592,7 +572,7 @@ gap> RelationsOfStzPresentation(stz);
       integer less than or equal to the number of generators of <A>stz</A>, then
       <C>StzRemoveGenerator</C> will perform a Tietze transformation which
       removes the <A>gen</A>th generator of <A>stz</A>.<P/>
-      
+
       The argument <A>stz</A>
       must contain a relation of the form <C><A>gen</A> = word</C> or
       <C>word = <A>gen</A></C>, where <C>word</C> contains no occurrences of
@@ -600,15 +580,15 @@ gap> RelationsOfStzPresentation(stz);
       from the presentation by replacing every instance of <A>gen</A> with a
       copy of <C>word</C>.<P/>
 
-      If the second argument is a string <A>genname</A> rather than a positive 
+      If the second argument is a string <A>genname</A> rather than a positive
       integer <A>gen</A>, then the function searches the generators of
-      <A>stz</A> for a generator with the same name and attempts to remove the 
+      <A>stz</A> for a generator with the same name and attempts to remove the
       generator if the same conditions as above are met.
       <P/>
 
-      If the argument <A>index</A> is included and is a positive integer less 
-      than or equal to the number of relations, then rather than searching the 
-      relations for the first to satisfy the necessary conditions, the function 
+      If the argument <A>index</A> is included and is a positive integer less
+      than or equal to the number of relations, then rather than searching the
+      relations for the first to satisfy the necessary conditions, the function
       checks the <A>index</A>th relation to see if it satisfies those
       conditions, and applies the Tietze transformation by removing this
       relation.
@@ -617,7 +597,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -633,18 +613,17 @@ gap> RelationsOfStzPresentation(stz);
   <ManSection>
     <Oper Name="StzSubstituteRelation" Arg="stz, index, side"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object
-      and <A>index</A> is a positive
-      integer less than or equal to the number of relations of <A>stz</A> and 
-      <A>side</A> is either 1 or 2, then
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>index</A>
+      is a positive integer less than or equal to the number of relations of
+      <A>stz</A> and <A>side</A> is either <C>1</C> or <C>2</C>, then
       <C>StzRemoveGenerator</C> will perform a sequence of Tietze
-      transformations in order to replace, for the <A>index</A>th relation
-      (say <C>[u, v]</C>), to replace all instances of the <A>side</A>th word of
-      the relation in all other relations by the other side (so, for
+      transformations in order to replace, for the <A>index</A>th relation (say
+      <C>[u, v]</C>), to replace all instances of the <A>side</A>th word of the
+      relation in all other relations by the other side (so, for
       <C><A>side</A>=1</C>, all instances of <C>u</C> in all other relations of
       <A>stz</A> are replaced by <C>v</C>). This requires two Tietze
-      transformations per relation containing <C>u</C>, one to add a new 
-      redundant relation with each <C>u</C> replaced by <C>v</C>, and another 
+      transformations per relation containing <C>u</C>, one to add a new
+      redundant relation with each <C>u</C> replaced by <C>v</C>, and another
       to remove the original (now redundant) relation.
 
       <Example><![CDATA[
@@ -652,7 +631,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -676,16 +655,15 @@ gap> RelationsOfStzPresentation(stz);
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then the
-      <C>Length</C> of the 
-      object is defined as the number of generators plus the lengths of each 
-      word in each relation of <A>stz</A>.
+      <C>Length</C> of the object is defined as the number of generators plus
+      the lengths of each word in each relation of <A>stz</A>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -700,17 +678,16 @@ gap> Length(stz);
   <ManSection>
     <Oper Name="StzPrintRelation" Arg="stz, int"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object,
-      then <C>StzPrintRelation</C>
-      calls <C>StzPrintRelations</C> with parameters <A>stz</A> and
-      <C>[<A>int</A>]</C>.
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
+      <C>StzPrintRelation</C> calls <C>StzPrintRelations</C> with parameters
+      <A>stz</A> and <C>[<A>int</A>]</C>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -725,15 +702,13 @@ gap> StzPrintRelation(stz, 2);
   <ManSection>
     <Oper Name="StzPrintRelations" Arg="stz[, list]"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and
-      <A>list</A> is a list 
-      of positive integers,
-      then <C>StzPrintRelations</C> prints for each <A>i</A> in
-      <A>list</A> the <A>i</A>th relation to the console in terms of the stored 
-      labels for the generators (that is, as words over the alphabet consisting
-      of the generators of <A>stz</A>).<P/>
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>list</A>
+      is a list of positive integers, then <C>StzPrintRelations</C> prints for
+      each <A>i</A> in <A>list</A> the <A>i</A>th relation to the console in
+      terms of the stored labels for the generators (that is, as words over the
+      alphabet consisting of the generators of <A>stz</A>).<P/>
 
-      If <A>list</A> is not specified then <C>StzPrintRelations</C> prints all 
+      If <A>list</A> is not specified then <C>StzPrintRelations</C> prints all
       relations of <A>stz</A> in order.
 
       <Example><![CDATA[
@@ -741,7 +716,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -761,14 +736,13 @@ gap> StzPrintRelations(stz);
   <ManSection>
     <Oper Name="StzPrintGenerators" Arg="stz[, list]"/>
     <Description>
-      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and
-      <A>list</A> is a list 
-      of positive integers,
-      then <C>StzPrintGenerators</C> for each <A>i</A> in
-      <A>list</A> the <A>i</A>th generator and the number of occurrences of that
-      generator in the relations is printed to the screen.<P/>
+      If <A>stz</A> is an <Ref Oper="StzPresentation"/> object and <A>list</A>
+      is a list of positive integers, then <C>StzPrintGenerators</C> for each
+      <A>i</A> in <A>list</A> the <A>i</A>th generator and the number of
+      occurrences of that generator in the relations is printed to the
+      screen.<P/>
 
-      If <A>list</A> is not specified then <C>StzPrintGenerators</C> prints all 
+      If <A>list</A> is not specified then <C>StzPrintGenerators</C> prints all
       generators of <A>stz</A> in order.
 
       <Example><![CDATA[
@@ -776,7 +750,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -797,18 +771,18 @@ gap> StzPrintGenerators(stz);
     <Oper Name="StzPrintPresentation" Arg="stz"/>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>StzPrintPresentation</C> prints a comprehensive overview of <A>stz</A>,
-      including the generators and number of occurrences of each generator in
-      the relations, the relations as words over the generators, and the forward
-      and backward maps that indicate how the unreduced semigroup maps to the 
-      semigroup currently described by <A>stz</A>.
+      <C>StzPrintPresentation</C> prints a comprehensive overview of
+      <A>stz</A>, including the generators and number of occurrences of each
+      generator in the relations, the relations as words over the generators,
+      and the forward and backward maps that indicate how the unreduced
+        semigroup maps to the semigroup currently described by <A>stz</A>.
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 3 relations>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -850,24 +824,21 @@ gap> StzPrintPresentation(stz);
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
       <C>TietzeForwardMap</C> returns a list of lists of positive integers.
-      There is an element of this list for every generator of the 
-      unreduced semigroup of the presentation (see 
-      <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
-      that indicates the 
-      word (in <C>LetterRep</C> form) in the semigroup object currently defined
-      by the
+      There is an element of this list for every generator of the unreduced
+      semigroup of the presentation (see <Ref Attr="UnreducedFpSemigroup"
+        Label="for a presentation"/>) that indicates the word (in
+      <C>LetterRep</C> form) in the semigroup object currently defined by the
       presentation that the generator maps to.<P/>
 
-      This mapping is updated as the presentation object is transformed. It 
+      This mapping is updated as the presentation object is transformed. It
       begins as a list of the form <C>[[1], [2], [3], . . ., [n]]</C> where
       <C>n</C> is the number of generators of the unreduced semigroup.
-      
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
@@ -888,23 +859,21 @@ gap> TietzeForwardMap(stz);
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
       <C>TietzeBackwardMap</C> returns a list of lists of positive integers.
-      There is an element of this list for every generator of the 
-      semigroup that the presentation currently defines that indicates the 
-      word (in <C>LetterRep</C> form) in the unreduced semigroup of the
-      presentation 
-      (see <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
-      that the generator maps to.<P/>
+      There is an element of this list for every generator of the semigroup
+      that the presentation currently defines that indicates the word (in
+      <C>LetterRep</C> form) in the unreduced semigroup of the presentation
+      (see <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>) that
+      the generator maps to.<P/>
 
-      This mapping is updated as the presentation object is transformed. It 
+      This mapping is updated as the presentation object is transformed. It
       begins as a list of the form <C>[[1], [2], [3], . . ., [n]]</C> where
       <C>n</C> is the number of generators of the unreduced semigroup.
-      
 
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
@@ -924,11 +893,11 @@ gap> TietzeBackwardMap(stz);
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>StzIsomorphism</C> returns a mapping object that maps the 
-      unreduced semigroup of the presentation (see
-      <Ref Attr="UnreducedFpSemigroup" Label="for a presentation"/>)
-      to an FpSemigroup object that is defined by the generators and relations 
-      of the semigroup presentation at the moment this function is ran.<P/>
+      <C>StzIsomorphism</C> returns a mapping object that maps the unreduced
+      semigroup of the presentation (see <Ref Attr="UnreducedFpSemigroup"
+        Label="for a presentation"/>) to an FpSemigroup object that is defined
+        by the generators and relations of the semigroup presentation at the
+      moment this function is ran.<P/>
 
       If a <C>StzIsomorphism</C> is generated from <A>stz</A>, and the
       presentation <A>stz</A> is further modified afterwards (for example by
@@ -937,28 +906,27 @@ gap> TietzeBackwardMap(stz);
       time will produce a different result consistent with the <E>new</E>
       generators and relations of <A>stz</A>.<P/>
 
-      This mapping is built from the <Ref Attr="TietzeForwardMap"/> and 
-      <Ref Attr="TietzeBackwardMap"/> attributes from the presentation object,
-      since if we know how to map the generators of the respective semigroups,
-      then we know how to map any element of that semigroup.<P/>
+      This mapping is built from the <Ref Attr="TietzeForwardMap"/> and <Ref
+      Attr="TietzeBackwardMap"/> attributes from the presentation object, since
+      if we know how to map the generators of the respective semigroups, then
+      we know how to map any element of that semigroup.<P/>
 
-      This function is the primary way to obtain the simplified semigroup from 
-      the presentation object, by applying <C>Range</C> to the mapping that this
-      function returns.
-      
+      This function is the primary way to obtain the simplified semigroup from
+      the presentation object, by applying <C>Range</C> to the mapping that
+      this function returns.
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup on the generators [ a, b, c ]>
+<fp semigroup with 3 generators and 2 relations>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
 gap> StzRemoveGenerator(stz, "a");
 gap> map := StzIsomorphism(stz);
-MappingByFunction( <fp semigroup on the generators 
-[ a, b, c ]>, <fp semigroup on the generators 
-[ b, c ]>, function( word ) ... end, function( word ) ... end )
+MappingByFunction( <fp semigroup with 3 generators and 2 relations>, <\
+fp semigroup with 2 generators and 1 relation>, function( word ) ... e\
+nd, function( word ) ... end )
 gap> S.1 ^ map;
 c^3]]>
 </Example>

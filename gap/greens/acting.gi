@@ -1656,7 +1656,7 @@ function(H)
     return StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
                                        x ^ InverseGeneralMapping(map));
   end;
-  return MappingByFunction(H, SchutzenbergerGroup(H), iso, inv);
+  return MappingByFunction(H, Range(map), iso, inv);
 end);
 
 # different method for regular/inverse/ideals

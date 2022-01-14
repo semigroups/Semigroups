@@ -90,16 +90,16 @@ end);
 # Trivial semigroup: other constructors
 
 for _IsXSemigroup in ["IsFpSemigroup",
-                     "IsFpMonoid",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup",
-                     "IsReesMatrixSemigroup",
-                     "IsReesZeroMatrixSemigroup"] do
+                      "IsFpMonoid",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup",
+                      "IsReesMatrixSemigroup",
+                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(TrivialSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and an integer"),
   [ValueGlobal(_IsXSemigroup), IsInt],
@@ -233,16 +233,16 @@ end);
 # Monogenic semigroup: other constructors
 
 for _IsXSemigroup in ["IsPBRSemigroup",
-                     "IsBooleanMatSemigroup",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup",
-                     "IsReesMatrixSemigroup",
-                     "IsReesZeroMatrixSemigroup"] do
+                      "IsBooleanMatSemigroup",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup",
+                      "IsReesMatrixSemigroup",
+                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(MonogenicSemigroupCons,
   Concatenation("for ", _IsXSemigroup, " and two positive integers"),
   [ValueGlobal(_IsXSemigroup), IsPosInt, IsPosInt],
@@ -395,13 +395,13 @@ end);
 # Rectangular band: other constructors
 
 for _IsXSemigroup in ["IsBooleanMatSemigroup",
-                     "IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup"] do
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(RectangularBandCons,
   Concatenation("for ", _IsXSemigroup, ", pos int, and pos int"),
   [ValueGlobal(_IsXSemigroup), IsPosInt, IsPosInt],
@@ -963,7 +963,7 @@ InstallMethod(SSSE,
 [IsStrongSemilatticeOfSemigroups, IsPosInt, IsAssociativeElement],
 function(S, n, x)
   if n > Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)) then
-    ErrorNoReturn("expected second argument to be an integer between 1 and ",
+    ErrorNoReturn("expected 2nd argument to be an integer between 1 and ",
                   "the size of the semilattice, i.e. ",
                   Size(SemigroupsOfStrongSemilatticeOfSemigroups(S)));
   elif not x in SemigroupsOfStrongSemilatticeOfSemigroups(S)[n] then

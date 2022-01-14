@@ -156,7 +156,7 @@ gap> rels := [[s1 ^ 2, s1], [s2 ^ 2, s2],
 >             [s1 * s2 * s1, s1 * s2],
 >             [s2 * s1 * s2, s1 * s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
 gap> Size(S) = Size(T);

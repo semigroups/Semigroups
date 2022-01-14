@@ -78,7 +78,7 @@ gap> rels := [[s1 ^ 2, s1],
 >         [s1 * s2 * s3, s3],
 >         [s2 * s1 * s2, s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 9 relations>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
 gap> Size(S) = Size(T);
@@ -560,7 +560,7 @@ gap> rels := [[s1 * s2, s1],
 >         [s1 ^ 3, s1],
 >         [s2 * s1 ^ 2, s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 9 relations>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
@@ -1013,7 +1013,7 @@ gap> rels := [[m1 ^ 2, One(F)],
 >         [m2 * m1, m2],
 >         [m2 ^ 2, m2]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
@@ -1331,7 +1331,7 @@ true
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1 ]>
+<fp monoid with 1 generator and 1 relation>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> Size(S) = Size(T);
@@ -1378,7 +1378,7 @@ true
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, One(F)]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1 ]>
+<fp monoid with 1 generator and 1 relation>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
@@ -1799,7 +1799,7 @@ true
 gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
 gap> rels := [];;
 gap> S := F / rels;
-<fp monoid on the generators [  ]>
+<trivial group with 0 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> Size(S) = Size(T);

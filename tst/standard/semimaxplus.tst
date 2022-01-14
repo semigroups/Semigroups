@@ -152,7 +152,7 @@ true
 gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 9, s1 ^ 8]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1 ]>
+<fp semigroup with 1 generator and 1 relation>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
 gap> Size(S) = Size(T);

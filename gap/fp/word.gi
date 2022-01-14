@@ -26,7 +26,6 @@ end);
 InstallMethod(RandomWord, "for two integers",
 [IsInt, IsInt],
 function(length, number_letters)
-  local word, i;
   if length < 0 then
     ErrorNoReturn("expected non-negative integer as 1st argument");
   elif number_letters < 0 then

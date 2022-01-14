@@ -26,18 +26,18 @@
     string that lists the equalities desired.
 
     <Example><![CDATA[
-gap> f := FreeSemigroup("x", "y", "z");;                           
+gap> f := FreeSemigroup("x", "y", "z");;
 gap> AssignGeneratorVariables(f);
-gap> ParseRelations([x, y, z], "  x=(y^2z) ^2x, y=xxx , z=y^3"); 
+gap> ParseRelations([x, y, z], "  x=(y^2z) ^2x, y=xxx , z=y^3");
 [ [ x, (y^2*z)^2*x ], [ y, x^3 ], [ z, y^3 ] ]
 gap> r := ParseRelations([x, y, z], "  x=(y^2z)^2x, y=xxx=z , z=y^3");
 [ [ x, (y^2*z)^2*x ], [ y, x^3 ], [ x^3, z ], [ z, y^3 ] ]
 gap> f / r;
-<fp semigroup on the generators [ x, y, z ]>
-gap> f2 := FreeSemigroup("a");                                     
+<fp semigroup with 3 generators and 4 relations>
+gap> f2 := FreeSemigroup("a");
 <free semigroup on the generators [ a ]>
 gap> f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");
-<fp semigroup on the generators [ a ]>]]></Example>
+<fp semigroup with 1 generator and 1 relation>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -61,7 +61,7 @@ gap> f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");
 gap> f := FreeSemigroup("x", "y");;
 gap> AssignGeneratorVariables(f);
 gap> s := f / [[x * x, x], [y * y, y]];
-<fp semigroup on the generators [ x, y ]>
+<fp semigroup with 2 generators and 2 relations>
 gap> a := ElementOfFpSemigroup(s, x * y);
 x*y
 gap> b := ElementOfFpSemigroup(s, x * y * y);

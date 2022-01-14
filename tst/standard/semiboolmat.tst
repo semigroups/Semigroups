@@ -71,7 +71,7 @@ true
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1], [m1 * m2, m2], [m2 * m1, m2], [m2 ^ 10, m2 ^ 4]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
 <monoid of size 11, 11x11 boolean matrices with 2 generators>
 gap> Size(S) = Size(T);
@@ -404,7 +404,7 @@ gap> rels := [[s1 ^ 3, s1 * s2],
 >             [s2 ^ 2 * s1, s1 ^ 2],
 >             [s2 ^ 4, s1 * s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 8 relations>
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
 <semigroup of 8x8 boolean matrices with 2 generators>
 gap> Size(S) = Size(T);
@@ -827,7 +827,7 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);
 <commutative monoid of size 2, 2x2 boolean matrices with 1 generator>
 gap> Size(S) = Size(T);
@@ -1192,7 +1192,7 @@ true
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 5, m1 ^ 4]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1 ]>
+<fp monoid with 1 generator and 1 relation>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);
 <commutative monoid of size 5, 5x5 boolean matrices with 1 generator>
 gap> Size(S) = Size(T);

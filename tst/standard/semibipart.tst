@@ -74,7 +74,7 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s1], [s2 ^ 2, s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of degree 3 with 2 generators>
 gap> Size(S) = Size(T);
@@ -381,7 +381,7 @@ gap> F := FreeMonoid(3);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1], [m1 * m2, m2], [m1 * m3, m3], [m2 * m1, m2],
 > [m2 ^ 2, m2], [m2 * m3, m3], [m3 * m1, m3], [m3 * m2, m2], [m3 ^ 2, m3]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2, m3 ]>
+<fp monoid with 3 generators and 9 relations>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 4, degree 4 with 3 generators>
 gap> Size(S) = Size(T);
@@ -715,7 +715,7 @@ gap> rels := [[s1 * s3, s3], [s2 * s1, s2], [s2 ^ 2, s2], [s3 * s1, s3],
 >             [s3 ^ 2, s3], [s1 ^ 3, s1], [s1 ^ 2 * s2, s2], [s2 * s3 * s2, s2],
 >             [s3 * s2 * s3, s3]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 9 relations>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
 gap> Size(S) = Size(T);
@@ -1220,7 +1220,7 @@ gap> rels := [[m1 ^ 2, m1],
 >         [m2 ^ 3, m2 ^ 2],
 >         [(m1 * m2) ^ 2, m1 * m2]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 4 relations>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
 gap> Size(S) = Size(T);

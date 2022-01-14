@@ -67,7 +67,7 @@ gap> rels := [[s2 ^ 2, s2],
 >         [s2 * s1 ^ 2, s2 * s1],
 >         [s2 * s1 * s2, s2]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
 <pbr semigroup of degree 9 with 2 generators>
 gap> Size(S) = Size(T);
@@ -518,7 +518,7 @@ gap> rels := [[m1 ^ 2, m1],
 >         [m3 * m2 * m3 ^ 2, m2 * m3 ^ 2],
 >         [m3 ^ 2 * m2 * m3, m3 * m2 * m3]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2, m3 ]>
+<fp monoid with 3 generators and 11 relations>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
 <pbr monoid of size 10, degree 10 with 3 generators>
 gap> Size(S) = Size(T);
@@ -957,7 +957,7 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
 gap> S := F / rels;
-<fp semigroup on the generators [ s1, s2 ]>
+<fp semigroup with 2 generators and 4 relations>
 gap> T := AsMonoid(IsPBRMonoid, S);
 <commutative pbr monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);
@@ -1328,7 +1328,7 @@ gap> rels := [[m2 ^ 2, m2],
 >         [m2 * m1 ^ 2, m2 * m1],
 >         [m2 * m1 * m2, m2]];;
 gap> S := F / rels;
-<fp monoid on the generators [ m1, m2 ]>
+<fp monoid with 2 generators and 5 relations>
 gap> T := AsMonoid(IsPBRMonoid, S);
 <pbr monoid of size 7, degree 7 with 2 generators>
 gap> Size(S) = Size(T);

@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# Many of the methods in this file should probably have the filter
+# HasRelationsOfFpMonoid/Semigroup added to their requirements, but for some
+# reason fp semigroups and monoids don't known their relations at creation.
+
 # All methods for fp semigroups and monoids go via the underlying congruence on
 # the free semigroup and free monoid.
 
@@ -32,12 +36,12 @@ end);
 InstallMethod(ElementOfFpSemigroup,
 "for an fp semigroup and an associative word",
 [IsFpSemigroup, IsAssocWord],
-{s, w} -> ElementOfFpSemigroup(FamilyObj(Representative(s)), w));
+{S, w} -> ElementOfFpSemigroup(FamilyObj(Representative(S)), w));
 
 InstallMethod(ElementOfFpMonoid,
 "for an fp monoid and an associative word",
 [IsFpMonoid, IsAssocWord],
-{m, w} -> ElementOfFpMonoid(FamilyObj(Representative(m)), w));
+{M, w} -> ElementOfFpMonoid(FamilyObj(Representative(M)), w));
 
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup],
 S -> NrEquivalenceClasses(UnderlyingCongruence(S)));
@@ -48,6 +52,60 @@ InstallMethod(Size, "for an fp semigroup with nice monomorphism",
 [IsFpSemigroup and HasNiceMonomorphism],
 function(S)
   return Size(Range(NiceMonomorphism(S)));
+end);
+
+InstallMethod(AsList, "for an fp semigroup with nice monomorphism",
+[IsFpSemigroup and HasNiceMonomorphism],
+function(S)
+  local map;
+  map := InverseGeneralMapping(NiceMonomorphism(S));
+  return List(Enumerator(Source(map)), x -> x ^ map);
+end);
+
+InstallMethod(Enumerator, "for an fp semigroup with nice monomorphism",
+[IsFpSemigroup and HasNiceMonomorphism],
+function(S)
+  local enum;
+  if HasAsList(S) then
+    return AsList(S);
+  fi;
+  enum := rec();
+
+  enum.map := NiceMonomorphism(S);
+
+  enum.NumberElement := function(enum, x)
+    return PositionSortedOp(Range(enum!.map), x ^ enum!.map);
+  end;
+
+  enum.ElementNumber := function(enum, nr)
+    return Enumerator(Range(enum!.map))[nr] ^ InverseGeneralMapping(enum!.map);
+  end;
+
+  enum.Length := enum -> Size(S);
+
+  enum.Membership := function(x, enum)
+    return x ^ enum!.map in Range(enum!.map);
+  end;
+
+  enum.IsBound\[\] := function(enum, nr)
+    return nr <= Size(S);
+  end;
+
+  enum := EnumeratorByFunctions(S, enum);
+  return enum;
+end);
+
+# TODO EnumeratorSorted
+
+InstallMethod(AsSSortedList, "for an fp semigroup with nice monomorphism",
+[IsFpSemigroup and HasNiceMonomorphism],
+22,
+function(S)
+  local map;
+  map := InverseGeneralMapping(NiceMonomorphism(S));
+  # EnumeratorCanonical returns the elements of the Range(NiceMonomorphism(S))
+  # in short-lex order, which is sorted.
+  return List(EnumeratorCanonical(Source(map)), x -> x ^ map);
 end);
 
 InstallMethod(Size, "for an fp monoid", [IsFpMonoid],
@@ -76,8 +134,14 @@ end);
 InstallMethod(\<, "for elements of an f.p. semigroup",
 IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
 function(x, y)
-  local C;
-  C := UnderlyingCongruence(FpSemigroupOfElementOfFpSemigroup(x));
+  local S, map, C;
+  S := FpSemigroupOfElementOfFpSemigroup(x);
+  if HasNiceMonomorphism(S) then
+    map := NiceMonomorphism(S);
+    return PositionCanonical(Range(map), x ^ map)
+      < PositionCanonical(Range(map), y ^ map);
+  fi;
+  C := UnderlyingCongruence(S);
   return CongruenceLessNC(C, UnderlyingElement(x), UnderlyingElement(y));
 end);
 
@@ -109,61 +173,66 @@ InstallMethod(ViewString, "for an f.p. semigroup element",
 InstallMethod(ViewString, "for an f.p. monoid element",
 [IsElementOfFpMonoid], String);
 
-# InstallMethod(ViewObj, "for an f.p. monoid",
-# [IsFpMonoid and HasGeneratorsOfMonoid],
-# function(M)
-#   Print(ViewString(M));
-# end);
-#
-# InstallMethod(ViewString, "for an f.p. monoid",
-# [IsFpMonoid and HasGeneratorsOfMonoid],
-# function(M)
-#   local str;
-#
-#   str := "<fp monoid with ";
-#   Append(str, String(Length(GeneratorsOfMonoid(M))));
-#   Append(str, " generator");
-#   if Length(GeneratorsOfMonoid(M)) > 1 then
-#     Append(str, "s");
-#   fi;
-#   Append(str, " and ");
-#   Append(str, String(Length(RelationsOfFpMonoid(M))));
-#   Append(str, " relation");
-#   if Length(RelationsOfFpMonoid(M)) > 1 then
-#     Append(str, "s");
-#   fi;
-#   Append(str, ">");
-#
-#   return PRINT_STRINGIFY(str);
-# end);
-#
-# InstallMethod(ViewObj, "for an f.p. semigroup",
-# [IsFpSemigroup and HasGeneratorsOfSemigroup],
-# function(M)
-#   Print(ViewString(M));
-# end);
-#
-# InstallMethod(ViewString, "for an f.p. semigroup",
-# [IsFpSemigroup and HasGeneratorsOfSemigroup],
-# function(M)
-#   local str;
-#
-#   str := "<fp monoid with ";
-#   Append(str, String(Length(GeneratorsOfSemigroup(M))));
-#   Append(str, " generator");
-#   if Length(GeneratorsOfSemigroup(M)) > 1 then
-#     Append(str, "s");
-#   fi;
-#   Append(str, " and ");
-#   Append(str, String(Length(RelationsOfFpSemigroup(M))));
-#   Append(str, " relation");
-#   if Length(RelationsOfFpSemigroup(M)) > 1 then
-#     Append(str, "s");
-#   fi;
-#   Append(str, ">");
-#
-#   return PRINT_STRINGIFY(str);
-# end);
+InstallMethod(ViewString, "for an f.p. monoid with known generators",
+[IsFpMonoid and HasGeneratorsOfMonoid],
+function(M)
+  local generators_plural, relations_plural;
+
+  if Length(GeneratorsOfMonoid(M)) = 1 then
+    generators_plural := "";
+  else
+    generators_plural := "s";
+  fi;
+  if Length(RelationsOfFpMonoid(M)) = 1 then
+    relations_plural := "";
+  else
+    relations_plural := "s";
+  fi;
+
+  return PRINT_STRINGIFY(
+    StringFormatted("<fp monoid with {} generator{} and {} relation{}>",
+                    Length(GeneratorsOfMonoid(M)),
+                    generators_plural,
+                    Length(RelationsOfFpMonoid(M)),
+                    relations_plural));
+end);
+
+InstallMethod(ViewObj, "for an f.p. monoid",
+[IsFpMonoid and HasGeneratorsOfMonoid],
+function(M)
+  Print(ViewString(M));
+end);
+
+InstallMethod(ViewString, "for an f.p. semigroup with known generators",
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+function(M)
+  local generators_plural, relations_plural;
+
+  if Length(GeneratorsOfSemigroup(M)) = 1 then
+    generators_plural := "";
+  else
+    generators_plural := "s";
+  fi;
+  if Length(RelationsOfFpSemigroup(M)) = 1 then
+    relations_plural := "";
+  else
+    relations_plural := "s";
+  fi;
+
+  return PRINT_STRINGIFY(
+    StringFormatted("<fp semigroup with {} generator{} and {} relation{}>",
+                    Length(GeneratorsOfSemigroup(M)),
+                    generators_plural,
+                    Length(RelationsOfFpSemigroup(M)),
+                    relations_plural));
+end);
+
+InstallMethod(ViewObj,
+"for an f.p. semigroup with known generators",
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  Print(ViewString(S));
+end);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsFpSemigroup, IsList],

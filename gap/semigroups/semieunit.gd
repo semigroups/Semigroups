@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  semieunit.gd
-##  Copyright (C) 2016                                    Christopher Russell
+##  Copyright (C) 2016                                 Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -92,21 +92,21 @@ DeclareSynonymAttr("MTSActionHomomorphism",
 DeclareAttribute("McAlisterTripleSemigroupUnderlyingAction",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSUnderlyingAction",
-                 McAlisterTripleSemigroupUnderlyingAction);
+                   McAlisterTripleSemigroupUnderlyingAction);
 DeclareAttribute("McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSSemilatticeVertexLabelInverseMap",
-                 McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap);
+                   McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap);
 DeclareAttribute("OneImmutable",
                  IsMcAlisterTripleSemigroup and IsWholeFamily and IsMonoid);
 DeclareAttribute("McAlisterTripleSemigroupComponents",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSComponents",
-                 McAlisterTripleSemigroupComponents);
+                   McAlisterTripleSemigroupComponents);
 DeclareAttribute("McAlisterTripleSemigroupQuotientDigraph",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSQuotientDigraph",
-                 McAlisterTripleSemigroupQuotientDigraph);
+                   McAlisterTripleSemigroupQuotientDigraph);
 
 # Operations for relating to McAlister triple semigroups
 DeclareAttribute("IsomorphismMcAlisterTripleSemigroup",
