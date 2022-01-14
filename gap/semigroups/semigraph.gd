@@ -29,7 +29,7 @@ DeclareOperation("IsVertex", [IsGraphInverseSemigroupElement]);
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsGraphInverseSemigroupElementCollection);
 
-# JDM: why are these required?
-DeclareAttribute("MultiplicativeZero", IsGraphInverseSemigroup);
+# The following are required because we use Zero in an unintended way (it's
+# supposed to be an additive zero).
 DeclareOperation("ZeroOp", [IsGraphInverseSemigroupElement]);
 DeclareProperty("IsZero", IsGraphInverseSemigroupElement);

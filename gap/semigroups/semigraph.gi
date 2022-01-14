@@ -15,33 +15,35 @@ InstallMethod(ViewString, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 RankFilter(IsGroupAsSemigroup),  # to beat library method for groups as semigrps
 function(S)
-  local n, str;
+  local D, finiteness, vert_suffix, edge_suffix;
 
-  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
-  str := "\><";
-  if IsAcyclicDigraph(GraphOfGraphInverseSemigroup(S)) then
-    Append(str, "\>finite \<");
+  D := GraphOfGraphInverseSemigroup(S);
+
+  if IsAcyclicDigraph(D) then
+    finiteness := "finite";
   else
-    Append(str, "\>infinite \<");
+    finiteness := "infinite";
   fi;
 
-  Append(str, "\>graph \<\>inverse \<\>semigroup\< \>with\< \>");
-  Append(str, String(n));
-  Append(str, "\< \>vert");
-  if n = 1 then
-    Append(str, "ex");
+  if DigraphNrVertices(D) = 1 then
+    vert_suffix := "ex";
   else
-    Append(str, "ices");
+    vert_suffix := "ices";
   fi;
-  Append(str, ",\< ");
-  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
-  Append(str, String(n));
-  Append(str, "\< \>edge");
-  if not n = 1 then
-    Append(str, "s");
+
+  if DigraphNrEdges(D) = 1 then
+    edge_suffix := "";
+  else
+    edge_suffix := "s";
   fi;
-  Append(str, "\<>\<");
-  return str;
+
+  return PRINT_STRINGIFY(
+    StringFormatted("<{} graph inverse semigroup with {} vert{}, {} edge{}>",
+    finiteness,
+    DigraphNrVertices(D),
+    vert_suffix,
+    DigraphNrEdges(D),
+    edge_suffix));
 end);
 
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",
@@ -96,7 +98,7 @@ function(x)
   return Length(x![1]) = 1 and AbsInt(x![1][1]) > Length(DigraphSource(x![2]));
 end);
 
-InstallOtherMethod(MultiplicativeZero, "for a graph inverse semigroup",
+InstallMethod(MultiplicativeZero, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 function(S)
   return Objectify(ElementsFamily(FamilyObj(S))!.type,
