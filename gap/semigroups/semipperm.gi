@@ -55,33 +55,29 @@ function(filt, params)
                             i -> RandomPartialPerm(params[2])));
 end);
 
-InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
-[IsPartialPermSemigroup, IsInt],
-function(S, rank)
-  return Filtered(Idempotents(S),
-                              x -> RankOfPartialPerm(x) = rank);
-end);
+#############################################################################
+## Operators
+#############################################################################
 
-# this should really be in the library
-
-InstallImmediateMethod(GeneratorsOfSemigroup,
-IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup,
-0,
-function(G)
-  if IsEmpty(GeneratorsOfGroup(G)) then
-    # WW: really this should be `return [One(G)];`, but this fails when running
-    #     GAP's `tst/testinstall.g` for some reason that I can't figure out.
-    TryNextMethod();
+InstallMethod(\<, "for partial perm semigroups",
+[IsPartialPermSemigroup, IsPartialPermSemigroup],
+function(S, T)
+  if DegreeOfPartialPermSemigroup(S)
+      <> DegreeOfPartialPermSemigroup(T)
+      or CodegreeOfPartialPermSemigroup(S)
+      <> CodegreeOfPartialPermSemigroup(T) then
+    return DegreeOfPartialPermSemigroup(S)
+      < DegreeOfPartialPermSemigroup(T) or
+      (DegreeOfPartialPermSemigroup(S)
+       = DegreeOfPartialPermSemigroup(T)
+       and CodegreeOfPartialPermSemigroup(S)
+       < CodegreeOfPartialPermSemigroup(T));
   fi;
-  return GeneratorsOfGroup(G);
+  TryNextMethod();
 end);
-
-InstallMethod(RankOfPartialPermSemigroup,
-"for a partial perm semigroup",
-[IsPartialPermSemigroup], RankOfPartialPermCollection);
 
 #############################################################################
-## ?. Isomorphisms
+## Isomorphisms
 #############################################################################
 
 InstallMethod(IsomorphismSemigroup,
@@ -228,252 +224,6 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
-# it just so happens that the MultiplicativeNeutralElement of a semigroup of
-# partial permutations has to coincide with the One. This is not the case for
-# transformation semigroups
-
-# same method for ideals
-
-InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
-[IsPartialPermSemigroup], One);
-
-# same method for ideals
-
-InstallMethod(GroupOfUnits, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(S)
-  local H, map, inv, G, U, iso;
-
-  if MultiplicativeNeutralElement(S) = fail then
-    return fail;
-  fi;
-
-  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  map := IsomorphismPermGroup(H);
-  inv := InverseGeneralMapping(map);
-  G := Range(map);
-
-  U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
-  SetIsGroupAsSemigroup(U, true);
-  UseIsomorphismRelation(U, G);
-
-  iso := MagmaIsomorphismByFunctionsNC(U,
-                                       G,
-                                       x -> x ^ map,
-                                       x -> x ^ inv);
-  SetIsomorphismPermGroup(U, iso);
-
-  return U;
-end);
-
-# the following method is required to beat the method for
-# IsPartialPermCollection in the library.
-
-InstallOtherMethod(One, "for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local pts, x;
-
-  if HasGeneratorsOfSemigroup(I) then
-    x := One(GeneratorsOfSemigroup(I));
-    if x in I then
-      return x;
-    else
-      return fail;
-    fi;
-  fi;
-
-  pts := Union(ComponentsOfPartialPermSemigroup(I));
-  x := PartialPermNC(pts, pts);
-
-  if x in I then
-    return x;
-  fi;
-  return fail;
-end);
-
-InstallMethod(FixedPointsOfPartialPermSemigroup,
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local n, gens;
-  n    := DegreeOfPartialPermSemigroup(S);
-  gens := GeneratorsOfSemigroup(S);
-  return Filtered([1 .. n], i -> ForAll(gens, x -> i ^ x = i));
-end);
-
-InstallMethod(FixedPointsOfPartialPermSemigroup,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local S, F;
-
-  S := SupersemigroupOfIdeal(I);
-  F := FixedPointsOfPartialPermSemigroup(S);
-  return Intersection(F, DomainOfPartialPermCollection(I));
-end);
-
-BindGlobal("_DomainImageOfPartialPermIdeal",
-function(I, DomainOrImage, InversesOrGenerators)
-  local O, S, hash, val, x, y;
-
-  O := DomainOrImage(GeneratorsOfSemigroupIdeal(I));
-  S := SupersemigroupOfIdeal(I);
-  if O = DomainOrImage(S) then
-    return O;
-  fi;
-  O := ShallowCopy(O);
-  hash := HashSet();
-  for x in O do
-    for y in InversesOrGenerators do
-      val := x ^ y;
-      if val <> 0 and not val in hash then
-        Add(O, val);
-        AddSet(hash, val);
-      fi;
-    od;
-  od;
-  return Set(O);
-end);
-
-InstallMethod(ImageOfPartialPermCollection,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local S;
-  S := SupersemigroupOfIdeal(I);
-  return _DomainImageOfPartialPermIdeal(I,
-                                        ImageOfPartialPermCollection,
-                                        GeneratorsOfSemigroup(S));
-end);
-
-InstallMethod(DomainOfPartialPermCollection,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local S;
-  S := SupersemigroupOfIdeal(I);
-  return _DomainImageOfPartialPermIdeal(I,
-                                        DomainOfPartialPermCollection,
-                                        List(GeneratorsOfSemigroup(S),
-                                             InverseOp));
-end);
-
-InstallMethod(DegreeOfPartialPermSemigroup,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local dom;
-  dom := DomainOfPartialPermCollection(I);
-  if IsEmpty(dom) then
-    return 0;
-  fi;
-  return Maximum(dom);
-end);
-
-InstallMethod(CodegreeOfPartialPermSemigroup,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  local im;
-  im := ImageOfPartialPermCollection(I);
-  if IsEmpty(im) then
-    return 0;
-  fi;
-  return Maximum(im);
-end);
-
-InstallMethod(RankOfPartialPermSemigroup,
-"for a partial perm semigroup ideal",
-[IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  return Length(DomainOfPartialPermCollection(I));
-end);
-
-InstallMethod(DisplayString,
-"for a partial perm semigroup ideal with generators",
-[IsPartialPermSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-ViewString);
-
-InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S),
-                                        CodegreeOfPartialPermSemigroup(S))));
-
-InstallMethod(DigraphOfActionOnPoints,
-"for a partial perm semigroup",
-[IsPartialPermSemigroup, IsInt],
-function(S, n)
-  local gens, out, range, i, x;
-
-  if n < 0 then
-    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
-  elif n = 0 then
-    return EmptyDigraph(0);
-  elif HasDigraphOfActionOnPoints(S)
-      and n = Maximum(DegreeOfPartialPermSemigroup(S),
-                      CodegreeOfPartialPermSemigroup(S)) then
-    return DigraphOfActionOnPoints(S);
-  fi;
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  out := List([1 .. n], x -> []);
-  for i in [1 .. n] do
-    for x in gens do
-      range := i ^ x;
-      if range > n then
-        return fail;
-      elif range > 0 then
-        Add(out[i], range);
-      fi;
-    od;
-  od;
-  return DigraphNC(out);
-end);
-
-InstallMethod(ComponentRepsOfPartialPermSemigroup,
-"for a partial perm semigroup", [IsPartialPermSemigroup],
-function(S)
-  local D, C;
-  D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
-  C := DigraphStronglyConnectedComponents(D).comps;
-  DigraphRemoveLoops(QuotientDigraph(D, C));
-  return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
-end);
-
-InstallMethod(ComponentsOfPartialPermSemigroup,
-"for a partial perm semigroup", [IsPartialPermSemigroup],
-function(S)
-  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
-end);
-
-InstallMethod(CyclesOfPartialPermSemigroup,
-"for a partial perm semigroup", [IsPartialPermSemigroup],
-function(S)
-  local D, C, F;
-  D := DigraphOfActionOnPoints(S);
-  C := DigraphStronglyConnectedComponents(D).comps;
-  C := Filtered(C, x -> Size(x) > 1);
-  F := FixedPointsOfPartialPermSemigroup(S);
-  Append(C, List(F, x -> [x]));
-  return C;
-end);
-
-InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(S)
-  if not IsInverseSemigroup(S) then
-    ErrorNoReturn("the argument is not an inverse semigroup");
-  fi;
-  return NaturalLeqPartialPerm;
-end);
-
 InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -586,6 +336,286 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
+#############################################################################
+## Algebraic attributes
+#############################################################################
+
+InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
+[IsPartialPermSemigroup, IsInt],
+function(S, rank)
+  return Filtered(Idempotents(S), x -> RankOfPartialPerm(x) = rank);
+end);
+
+# this should really be in the library
+
+InstallImmediateMethod(GeneratorsOfSemigroup,
+IsPartialPermSemigroup and IsGroup and HasGeneratorsOfGroup,
+0,
+function(G)
+  if IsEmpty(GeneratorsOfGroup(G)) then
+    # WW: really this should be `return [One(G)];`, but this fails when running
+    #     GAP's `tst/testinstall.g` for some reason that I can't figure out.
+    TryNextMethod();
+  fi;
+  return GeneratorsOfGroup(G);
+end);
+
+# it just so happens that the MultiplicativeNeutralElement of a semigroup of
+# partial permutations has to coincide with the One. This is not the case for
+# transformation semigroups
+
+# same method for ideals
+
+InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
+[IsPartialPermSemigroup], One);
+
+# same method for ideals
+
+InstallMethod(GroupOfUnits, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  local H, map, inv, G, U, iso;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    return fail;
+  fi;
+
+  H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  map := IsomorphismPermGroup(H);
+  inv := InverseGeneralMapping(map);
+  G := Range(map);
+
+  U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  iso := MagmaIsomorphismByFunctionsNC(U,
+                                       G,
+                                       x -> x ^ map,
+                                       x -> x ^ inv);
+  SetIsomorphismPermGroup(U, iso);
+
+  return U;
+end);
+
+# the following method is required to beat the method for
+# IsPartialPermCollection in the library.
+
+InstallOtherMethod(One, "for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local pts, x;
+
+  if HasGeneratorsOfSemigroup(I) then
+    x := One(GeneratorsOfSemigroup(I));
+    if x in I then
+      return x;
+    else
+      return fail;
+    fi;
+  fi;
+
+  pts := Union(ComponentsOfPartialPermSemigroup(I));
+  x := PartialPermNC(pts, pts);
+
+  if x in I then
+    return x;
+  fi;
+  return fail;
+end);
+
+InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  if not IsInverseSemigroup(S) then
+    ErrorNoReturn("the argument is not an inverse semigroup");
+  fi;
+  return NaturalLeqPartialPerm;
+end);
+
+#############################################################################
+## Degree, rank
+#############################################################################
+
+InstallMethod(DegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local dom;
+  dom := DomainOfPartialPermCollection(I);
+  if IsEmpty(dom) then
+    return 0;
+  fi;
+  return Maximum(dom);
+end);
+
+InstallMethod(CodegreeOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local im;
+  im := ImageOfPartialPermCollection(I);
+  if IsEmpty(im) then
+    return 0;
+  fi;
+  return Maximum(im);
+end);
+
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup], RankOfPartialPermCollection);
+
+InstallMethod(RankOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  return Length(DomainOfPartialPermCollection(I));
+end);
+
+#############################################################################
+## Domain, image
+#############################################################################
+
+BindGlobal("_DomainImageOfPartialPermIdeal",
+function(I, DomainOrImage, InversesOrGenerators)
+  local O, S, hash, val, x, y;
+
+  O := DomainOrImage(GeneratorsOfSemigroupIdeal(I));
+  S := SupersemigroupOfIdeal(I);
+  if O = DomainOrImage(S) then
+    return O;
+  fi;
+  O := ShallowCopy(O);
+  hash := HashSet();
+  for x in O do
+    for y in InversesOrGenerators do
+      val := x ^ y;
+      if val <> 0 and not val in hash then
+        Add(O, val);
+        AddSet(hash, val);
+      fi;
+    od;
+  od;
+  return Set(O);
+end);
+
+InstallMethod(ImageOfPartialPermCollection,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local S;
+  S := SupersemigroupOfIdeal(I);
+  return _DomainImageOfPartialPermIdeal(I,
+                                        ImageOfPartialPermCollection,
+                                        GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(DomainOfPartialPermCollection,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local S;
+  S := SupersemigroupOfIdeal(I);
+  return _DomainImageOfPartialPermIdeal(I,
+                                        DomainOfPartialPermCollection,
+                                        List(GeneratorsOfSemigroup(S),
+                                             InverseOp));
+end);
+
+#############################################################################
+## Action on points
+#############################################################################
+
+InstallMethod(FixedPointsOfPartialPermSemigroup,
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, gens;
+  n    := DegreeOfPartialPermSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  return Filtered([1 .. n], i -> ForAll(gens, x -> i ^ x = i));
+end);
+
+InstallMethod(FixedPointsOfPartialPermSemigroup,
+"for a partial perm semigroup ideal",
+[IsPartialPermSemigroup and IsSemigroupIdeal],
+function(I)
+  local S, F;
+
+  S := SupersemigroupOfIdeal(I);
+  F := FixedPointsOfPartialPermSemigroup(S);
+  return Intersection(F, DomainOfPartialPermCollection(I));
+end);
+
+InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S),
+                                        CodegreeOfPartialPermSemigroup(S))));
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a partial perm semigroup",
+[IsPartialPermSemigroup, IsInt],
+function(S, n)
+  local gens, out, range, i, x;
+
+  if n < 0 then
+    ErrorNoReturn("the 2nd argument (an integer) must be non-negative");
+  elif n = 0 then
+    return EmptyDigraph(0);
+  elif HasDigraphOfActionOnPoints(S)
+      and n = Maximum(DegreeOfPartialPermSemigroup(S),
+                      CodegreeOfPartialPermSemigroup(S)) then
+    return DigraphOfActionOnPoints(S);
+  fi;
+
+  if IsSemigroupIdeal(S) then
+    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
+  else
+    gens := GeneratorsOfSemigroup(S);
+  fi;
+
+  out := List([1 .. n], x -> []);
+  for i in [1 .. n] do
+    for x in gens do
+      range := i ^ x;
+      if range > n then
+        return fail;
+      elif range > 0 then
+        Add(out[i], range);
+      fi;
+    od;
+  od;
+  return DigraphNC(out);
+end);
+
+InstallMethod(ComponentRepsOfPartialPermSemigroup,
+"for a partial perm semigroup", [IsPartialPermSemigroup],
+function(S)
+  local D, C;
+  D := DigraphMutableCopy(DigraphOfActionOnPoints(S));
+  C := DigraphStronglyConnectedComponents(D).comps;
+  DigraphRemoveLoops(QuotientDigraph(D, C));
+  return List(DigraphSources(D), x -> DigraphVertexLabel(D, x)[1]);
+end);
+
+InstallMethod(ComponentsOfPartialPermSemigroup,
+"for a partial perm semigroup", [IsPartialPermSemigroup],
+function(S)
+  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
+end);
+
+InstallMethod(CyclesOfPartialPermSemigroup,
+"for a partial perm semigroup", [IsPartialPermSemigroup],
+function(S)
+  local D, C, F;
+  D := DigraphOfActionOnPoints(S);
+  C := DigraphStronglyConnectedComponents(D).comps;
+  C := Filtered(C, x -> Size(x) > 1);
+  F := FixedPointsOfPartialPermSemigroup(S);
+  Append(C, List(F, x -> [x]));
+  return C;
+end);
+
 InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
@@ -612,7 +642,7 @@ function(S)
       while Size(stack) > 0 do
         next := Pop(stack);
         if next < 0 then
-          # Postorder: all neighbours of -next already processed
+          # Postorder: all neighbours of -next already processed
           next := -next;
           if good[next]
               and ForAny(OutNeighboursOfVertex(Q, next), x -> not good[x]) then
@@ -642,23 +672,6 @@ function(S)
     fi;
   od;
 
-  # Minimal ideal contains an idempotent!
+  # Minimal ideal contains an idempotent!
   return PartialPermNC(result, result);
-end);
-
-InstallMethod(\<, "for partial perm semigroups",
-[IsPartialPermSemigroup, IsPartialPermSemigroup],
-function(S, T)
-  if DegreeOfPartialPermSemigroup(S)
-      <> DegreeOfPartialPermSemigroup(T)
-      or CodegreeOfPartialPermSemigroup(S)
-      <> CodegreeOfPartialPermSemigroup(T) then
-    return DegreeOfPartialPermSemigroup(S)
-      < DegreeOfPartialPermSemigroup(T) or
-      (DegreeOfPartialPermSemigroup(S)
-       = DegreeOfPartialPermSemigroup(T)
-       and CodegreeOfPartialPermSemigroup(S)
-       < CodegreeOfPartialPermSemigroup(T));
-  fi;
-  TryNextMethod();
 end);
