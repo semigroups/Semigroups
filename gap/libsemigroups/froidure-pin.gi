@@ -553,7 +553,6 @@ function(S)
 
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
-  SetIsSSortedList(enum, true);
 
   return enum;
 end);

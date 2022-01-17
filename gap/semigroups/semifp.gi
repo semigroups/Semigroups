@@ -345,7 +345,7 @@ function(S)
   map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
   result := MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
-  if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) 
+  if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)
       or IsBipartitionSemigroup(S) then
     SetNiceMonomorphism(Q, InverseGeneralMapping(result));
   fi;

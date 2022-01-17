@@ -13,38 +13,6 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-# SemiPPermTest1: NumberSubset
-gap> sets := Combinations([1 .. 10]);;
-gap> Sort(sets,
-> function(x, y)
->    if Length(x) <> Length(y) then
->      return Length(x) < Length(y);
->    fi;
->    return x < y;
->  end);
-gap> List(sets, x -> NumberSubset(x, 10)) = [1 .. 2 ^ 10];
-true
-
-# SemiPPermTest2: Enumerator for a symmetric inverse monoid
-gap> S := SymmetricInverseMonoid(3);;
-gap> enum := Enumerator(S);
-<enumerator of <symmetric inverse monoid of degree 3>>
-gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
-true
-gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
-true
-gap> Length(enum) = Size(S);
-true
-gap> ForAll(enum, x -> x in S);
-true
-gap> ForAll(S, x -> x in enum);
-true
-
-# SemiPPermTest3: NumberSubsetOfEqualSize
-gap> ForAll([1 .. 10], m -> List(Combinations([1 .. 10], m), x ->
-> NumberSubsetOfEqualSize(x, 10)) = [1 .. Binomial(10, m)]);
-true
-
 # SmallerDegreeTest5: SmallerDegreePartialPermRepresentation Issue 2:
 # Example where the degree being returned was greater than the original degree
 gap> f1 := PartialPerm([2, 1, 0, 0, 4]);;
@@ -1958,12 +1926,6 @@ gap> Idempotents(S, 3);
 # Test Enumerator for symmetric inverse monoid
 gap> en := Enumerator(SymmetricInverseMonoid(3));
 <enumerator of <symmetric inverse monoid of degree 3>>
-gap> en[1];
-<empty partial perm>
-gap> en[2];
-<identity partial perm on [ 1 ]>
-gap> en[34];
-(1,3)(2)
 gap> en[35];
 fail
 gap> Position(en, PartialPerm([1 .. 4]));
@@ -1972,10 +1934,6 @@ gap> ForAll(en, x -> x = en[Position(en, x)]);
 true
 gap> ForAll([1 .. Length(en)], i -> i = Position(en, en[i]));
 true
-
-# Test NumberSubsetOfEqualSize 
-gap> NumberSubsetOfEqualSize([], 10);
-1
 
 # Test IsomorphismPartialPermSemigroup
 gap> S := Semigroup([
