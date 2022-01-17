@@ -20,10 +20,6 @@ gap> RepresentativeOfMinimalIdeal(S);
 IdentityTransformation
 gap> IsSynchronizingSemigroup(S);
 false
-gap> IsSynchronizingSemigroup(S, 1);
-true
-gap> IsSynchronizingSemigroup(S, 2);
-false
 gap> ForAll([2 .. 10], x ->
 > IsSynchronizingSemigroup(FullTransformationMonoid(x)));
 true
@@ -50,8 +46,6 @@ gap> S := Semigroup([
 <transformation semigroup of degree 5 with 2 generators>
 gap> IsSynchronizingSemigroup(S);
 false
-gap> HasRepresentativeOfMinimalIdeal(S);
-false
 gap> S := Semigroup(S);;
 gap> RepresentativeOfMinimalIdeal(S);
 Transformation( [ 1, 1, 4, 3, 1 ] )
@@ -64,8 +58,6 @@ gap> S := Semigroup([
 <transformation semigroup of degree 10 with 3 generators>
 gap> IsSynchronizingSemigroup(S);
 true
-gap> HasRepresentativeOfMinimalIdeal(S);
-false
 gap> S := Semigroup(S);;
 gap> RepresentativeOfMinimalIdeal(S);
 Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 ] )
@@ -74,8 +66,6 @@ true
 gap> S := Semigroup(S);;
 gap> MultiplicativeZero(S);
 fail
-gap> HasRepresentativeOfMinimalIdeal(S);
-true
 gap> IsSynchronizingSemigroup(S);
 true
 gap> S := Semigroup([
@@ -85,8 +75,6 @@ gap> S := Semigroup([
 <transformation semigroup of degree 10 with 3 generators>
 gap> IsSynchronizingSemigroup(S);
 true
-gap> HasRepresentativeOfMinimalIdeal(S);
-false
 gap> S := Semigroup(S);;
 gap> RepresentativeOfMinimalIdeal(S);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
@@ -98,13 +86,6 @@ gap> S := Semigroup(S);;
 gap> MultiplicativeZero(S);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 gap> IsSynchronizingSemigroup(S);
-true
-gap> IsSynchronizingSemigroup(S, 9);
-true
-gap> IsSynchronizingSemigroup(S, 10);
-true
-gap> S := Semigroup(S);;
-gap> IsSynchronizingSemigroup(S, 9);
 true
 gap> S := Semigroup(Transformation([1, 2, 2, 3]));
 <commutative transformation semigroup of degree 4 with 1 generator>
@@ -165,9 +146,9 @@ gap> GeneratorsOfSemigroup(S ^ (1, 7, 8, 6, 10)(3, 9, 5, 4));
 # SemiTransTest6
 # DigraphOfActionOnPoints for a transformation semigroup (and a pos int)
 gap> gr := DigraphOfActionOnPoints(FullTransformationSemigroup(4));
-<immutable digraph with 4 vertices, 9 edges>
+<immutable multidigraph with 4 vertices, 16 edges>
 gap> OutNeighbours(gr);
-[ [ 1, 2 ], [ 1, 2, 3 ], [ 3, 4 ], [ 1, 4 ] ]
+[ [ 1, 2, 2, 1 ], [ 2, 3, 1, 2 ], [ 3, 4, 3, 3 ], [ 4, 1, 4, 1 ] ]
 gap> S := Semigroup([
 > Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
@@ -175,64 +156,20 @@ gap> S := Semigroup([
 gap> DigraphOfActionOnPoints(S, -1);
 Error, the 2nd argument (an integer) must be non-negative
 gap> DigraphOfActionOnPoints(S, 5);
-fail
+<immutable digraph with 5 vertices, 9 edges>
 gap> gr := DigraphOfActionOnPoints(S);
-<immutable digraph with 8 vertices, 22 edges>
+<immutable multidigraph with 8 vertices, 24 edges>
 gap> DigraphOfActionOnPoints(S, 0) = EmptyDigraph(0);
 true
 gap> DigraphOfActionOnPoints(S, 8) = gr;
 true
 gap> OutNeighbours(gr);
-[ [ 2, 3, 4 ], [ 3, 6, 8 ], [ 1, 2, 7 ], [ 2, 4, 7 ], [ 5, 6, 7 ], [ 1, 6 ], 
-  [ 1, 6, 7 ], [ 1, 5 ] ]
+[ [ 2, 4, 3 ], [ 6, 3, 8 ], [ 7, 2, 1 ], [ 2, 7, 4 ], [ 6, 7, 5 ], 
+  [ 1, 6, 6 ], [ 1, 6, 7 ], [ 5, 5, 1 ] ]
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(1));
 <immutable empty digraph with 0 vertices>
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(2), 1);
-fail
-
-# SemiTransTest7
-# SEMIGROUPS.SmallestElementRClass
-gap> x := Transformation([1, 1, 2]);;
-gap> S := Semigroup(x, rec(acting := true));
-<commutative transformation semigroup of degree 3 with 1 generator>
-gap> SEMIGROUPS.SmallestElementRClass(RClass(S, x)) = x;
-true
-gap> S := FullTransformationMonoid(5);;
-gap> S := Semigroup(S, rec(acting := true));;
-gap> R := RClass(S, Transformation([3, 2, 4, 2, 1]));
-<Green's R-class: Transformation( [ 3, 2, 4, 2, 1 ] )>
-gap> SEMIGROUPS.SmallestElementRClass(R);
-Transformation( [ 1, 2, 3, 2, 4 ] )
-gap> S := Semigroup([
-> Transformation([4, 4, 3, 6, 5, 1]),
->  Transformation([5, 4, 5, 4, 6, 6])]);;
-gap> S := Semigroup(S, rec(acting := true));;
-gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
-<Green's R-class: Transformation( [ 4, 4, 5, 6, 6, 5 ] )>
-gap> SEMIGROUPS.SmallestElementRClass(R);
-Transformation( [ 1, 1, 5, 4, 4, 5 ] )
-
-# SemiTransTest8
-# SEMIGROUPS.LargestElementRClass and SEMIGROUPS.SmallestElementRClass
-gap> x := Transformation([1, 1, 2]);;
-gap> S := Semigroup(x, rec(acting := true));
-<commutative transformation semigroup of degree 3 with 1 generator>
-gap> SEMIGROUPS.LargestElementRClass(RClass(S, x)) = x;
-true
-gap> S := FullTransformationMonoid(5);;
-gap> S := Semigroup(S, rec(acting := true));;
-gap> R := RClass(S, Transformation([4, 2, 4, 1, 2]));
-<Green's R-class: Transformation( [ 1, 3, 1, 2, 3 ] )>
-gap> SEMIGROUPS.LargestElementRClass(R);
-Transformation( [ 5, 4, 5, 3, 4 ] )
-gap> S := Semigroup([
-> Transformation([4, 4, 3, 6, 5, 1]),
->  Transformation([5, 4, 5, 4, 6, 6])]);;
-gap> S := Semigroup(S, rec(acting := true));;
-gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
-<Green's R-class: Transformation( [ 4, 4, 5, 6, 6, 5 ] )>
-gap> SEMIGROUPS.LargestElementRClass(R);
-Transformation( [ 6, 6, 5, 1, 1, 5 ] )
+<immutable multidigraph with 1 vertex, 2 edges>
 
 # SemiTransTest9
 # Idempotents for a transformation semigroup and a pos int
@@ -2481,7 +2418,7 @@ gap> S := FullTransformationMonoid(3);;
 gap> IsConnectedTransformationSemigroup(S);
 true
 
-# Test IsConnectedTransformationSemigroup
+#
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
 >                   Transformation([1, 1, 3, 3, 3]));;
 gap> IsTransitive(S);
@@ -2625,9 +2562,7 @@ gap> ComponentRepsOfTransformationSemigroup(S);
 gap> ComponentsOfTransformationSemigroup(S);
 [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 10, 11, 12 ] ]
 gap> CyclesOfTransformationSemigroup(S);
-[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], 
-  [ 11 ], [ 12 ], [ 1, 2 ], [ 1, 2, 3 ], [ 4, 5 ], [ 4, 5, 6 ], [ 7, 8 ], 
-  [ 7, 8, 9 ], [ 10, 11 ], [ 10, 11, 12 ] ]
+[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 10, 11, 12 ] ]
 gap> S := SemigroupIdeal(S, S.1);;
 gap> ComponentsOfTransformationSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound

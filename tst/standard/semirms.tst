@@ -2431,13 +2431,13 @@ gap> IsomorphismReesZeroMatrixSemigroup(S);;
 # IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
 gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 2]));;
 gap> IsomorphismReesMatrixSemigroup(S);
-Error, the argument (a semigroup) is not simple semigroup
+Error, the argument (a semigroup) is not simple
 
 # IsomorphismReesZeroMatrixSemigroup, bug 1/1
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
 <partial perm monoid of rank 1 with 2 generators>
 gap> IsomorphismReesMatrixSemigroup(S);
-Error, the argument (a semigroup) is not simple semigroup
+Error, the argument (a semigroup) is not simple
 gap> IsomorphismReesZeroMatrixSemigroup(S);;
 gap> Size(Range(last));
 2

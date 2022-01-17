@@ -1585,11 +1585,7 @@ false
 # Issue 286: Bug in IsSynchronizingSemigroup
 gap> S := FullTransformationMonoid(10);
 <full transformation monoid of degree 10>
-gap> IsSynchronizingSemigroup(S, 9);
-true
 gap> IsSynchronizingSemigroup(S);
-true
-gap> IsSynchronizingSemigroup(S, 9);
 true
 
 # Free semigroup congruence test from extreme/cong.tst

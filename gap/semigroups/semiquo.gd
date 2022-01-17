@@ -7,5 +7,6 @@
 ##
 #############################################################################
 ##
+
 DeclareAttribute("OneImmutable", IsQuotientSemigroup);
 DeclareOperation("\/", [IsSemigroup, IsSemigroupIdeal]);

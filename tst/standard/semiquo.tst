@@ -56,8 +56,9 @@ gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
 <semigroup of 2x2 tropical max-plus matrices with 3 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.1]);
-<semigroup congruence over <non-regular semigroup of size 9, 
- 2x2 tropical max-plus matrices with 3 generators> with 1 generating pairs>
+<semigroup congruence over <non-regular semigroup 
+ of size 9, 2x2 tropical max-plus matrices with 3 generators> with 
+1 generating pairs>
 gap> T := S / cong;;
 gap> AsList(T) * T.1;
 [ <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2, 2]], 2)>, 

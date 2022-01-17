@@ -552,8 +552,7 @@ InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
 S -> DigraphOfActionOnPoints(S, Maximum(DegreeOfPartialPermSemigroup(S),
                                         CodegreeOfPartialPermSemigroup(S))));
 
-InstallMethod(DigraphOfActionOnPoints,
-"for a partial perm semigroup",
+InstallMethod(DigraphOfActionOnPoints, "for a partial perm semigroup",
 [IsPartialPermSemigroup, IsInt],
 function(S, n)
   local gens, out, range, i, x;
@@ -578,9 +577,7 @@ function(S, n)
   for i in [1 .. n] do
     for x in gens do
       range := i ^ x;
-      if range > n then
-        return fail;
-      elif range > 0 then
+      if range <= n and range > 0 then
         Add(out[i], range);
       fi;
     od;

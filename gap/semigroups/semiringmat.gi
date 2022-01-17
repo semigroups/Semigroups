@@ -15,7 +15,7 @@ InstallMethod(SemigroupViewStringSuffix,
 [IsMatrixOverSemiringSemigroup],
 function(S)
   local n, type;
-  n := ViewString(DimensionOfMatrixOverSemiring(Representative(S)));
+  n    := DimensionOfMatrixOverSemiring(Representative(S));
   type := SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S));
-  return Concatenation("\>\>", n, "x", n, "\< \>", type, "\< matrices\< ");
+  return StringFormatted("{}x{} {} matrices ", n, n, type);
 end);

@@ -175,7 +175,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   elif not IsSimpleSemigroup(S) then
-    ErrorNoReturn("the argument (a semigroup) is not simple semigroup");
+    ErrorNoReturn("the argument (a semigroup) is not simple");
     # TODO(later) is there another method? I.e. can we turn
     # non-simple/non-0-simple semigroups into Rees (0-)matrix semigroups over
     # non-groups?

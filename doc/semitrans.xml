@@ -128,10 +128,7 @@ gap> S := Semigroup(
 > Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
 > Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> CyclesOfTransformationSemigroup(S);
-[ [ 12 ], [ 1, 11 ], [ 1, 11, 12, 5, 4, 6 ], 
-  [ 1, 11, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 6 ], 
-  [ 1, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 10, 9, 11 ], 
-  [ 11, 12, 5, 4, 10, 9 ], [ 12, 5, 4, 10, 7 ], [ 4, 10, 7 ] ]]]></Example>
+[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ], [ 2 ], [ 3 ], [ 8 ] ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -140,22 +137,14 @@ gap> CyclesOfTransformationSemigroup(S);
   <ManSection>
     <Prop Name = "IsSynchronizingSemigroup" Arg = "S"
       Label = "for a transformation semigroup" />
-    <Prop Name = "IsSynchronizingSemigroup" Arg = "S, n"
-      Label = "for a transformation semigroup and a positive integer" />
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      For a positive integer <A>n</A>,
-      <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations <A>S</A> contains a transformation with constant value on
-      <C>[1 .. <A>n</A>]</C>.
-      Note that this function will return true whenever <C><A>n</A> = 1</C>.
-      See also <Ref Oper = "ConstantTransformation" BookName = "ref"/>.
-      <P/>
-
-      If the optional second argument is not specified, then <A>n</A> will be
-      taken to be the value of
-      <Ref Oper = "DegreeOfTransformationSemigroup" BookName = "ref"/> for
-      <A>S</A>.
+      For a positive integer <A>n</A>, <C>IsSynchronizingSemigroup</C> returns
+      <K>true</K> if the semigroup of transformations <A>S</A> contains a
+        transformation with constant value on <C>[1 .. <A>n</A>]</C>
+          where <C>n</C> is the degree of the semigroup. 
+      See also
+      <Ref Oper = "ConstantTransformation" BookName = "ref"/>.
       <P/>
 
       Note that the semigroup consisting of the identity transformation is the
@@ -167,12 +156,12 @@ gap> CyclesOfTransformationSemigroup(S);
 gap> S := Semigroup(
 > Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]),
 > Transformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;
-gap> IsSynchronizingSemigroup(S, 10);
+gap> IsSynchronizingSemigroup(S);
 true
 gap> S := Semigroup(
 > Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]),
 > Transformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;
-gap> IsSynchronizingSemigroup(S, 10);
+gap> IsSynchronizingSemigroup(S);
 false
 gap> Representative(MinimalIdeal(S));
 Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
@@ -259,20 +248,17 @@ fail]]></Example>
       Label = "for a transformation semigroup" />
     <Attr Name = "DigraphOfActionOnPoints" Arg = "S, n"
       Label = "for a transformation semigroup and an integer" />
-    <Returns>A digraph, or <K>fail</K>.</Returns>
+    <Returns>A digraph.</Returns>
     <Description>
       If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
-      integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
-      <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns a digraph
-      representing the <Ref Func="OnPoints" BookName="ref"/> action of <A>S</A>
-      on the set <C>[1 ..  <A>n</A>]</C>.
+      integer, then <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns
+      a digraph representing the <Ref Func="OnPoints" BookName="ref"/> action
+      of <A>S</A> on the set <C>[1 ..  <A>n</A>]</C>.
       <P/>
 
       If the optional argument <A>n</A> is not specified, then by default the
       degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
-        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the
-      semigroup <A>S</A> does not act on <C>[1 ..  <A>n</A>]</C>, then
-      <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns <K>fail</K>.
+        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. 
       <P/>
 
       The digraph returned by <C>DigraphOfActionOnPoints</C> has <A>n</A>
@@ -283,28 +269,23 @@ fail]]></Example>
         Attr="GeneratorsOfSemigroup" BookName="ref" /> for further information.
       <P/>
 
-      Note that the digraph returned by <C>DigraphOfActionOnPoints</C> has no
-      multiple edges; see <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
-
       <Example><![CDATA[
-gap> x := Transformation([2, 4, 2, 4, 7, 1, 6]);;
-gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
-gap> S := Semigroup(x, y);
+gap> S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]), 
+>                   Transformation([3, 3, 2, 3, 5, 1, 5]));
 <transformation semigroup of degree 7 with 2 generators>
-gap> gr := DigraphOfActionOnPoints(S);
-<immutable digraph with 7 vertices, 12 edges>
-gap> OnPoints(2, x);
+gap> D1 := DigraphOfActionOnPoints(S);
+<immutable multidigraph with 7 vertices, 14 edges>
+gap> OnPoints(2, S.1);
 4
-gap> gr2 := DigraphOfActionOnPoints(S, 4);
-<immutable digraph with 4 vertices, 7 edges>
-gap> gr2 = InducedSubdigraph(gr, [1 .. 4]);
+gap> D2 := DigraphOfActionOnPoints(S, 4);
+<immutable multidigraph with 4 vertices, 8 edges>
+gap> D2 = InducedSubdigraph(D1, [1 .. 4]);
 true
 gap> DigraphOfActionOnPoints(S, 5);
-fail]]></Example>
+<immutable multidigraph with 5 vertices, 9 edges>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
 
 <#GAPDoc Label="IsConnectedTransformationSemigroup">
   <ManSection>
