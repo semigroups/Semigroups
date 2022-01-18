@@ -310,54 +310,6 @@ function(S, rank)
 end);
 
 #############################################################################
-## Iterators
-#############################################################################
-
-# TODO remove
-InstallMethod(IteratorSorted, "for an acting transformation semigroup",
-[IsTransformationSemigroup and IsActingSemigroup],
-function(S)
-  if HasAsSSortedList(S) then
-    return IteratorList(AsSSortedList(S));
-  fi;
-  return CallFuncList(IteratorSortedOp, List(RClasses(S), IteratorSorted));
-end);
-
-InstallMethod(IteratorSorted, "for an R-class",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(R)
-  local IterFunc, o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
-
-  IterFunc := SEMIGROUPS.IteratorSortedConjugateStabChain;
-
-  o := LambdaOrb(R);
-  m := LambdaOrbSCCIndex(R);
-  rep := Representative(R);
-  n := DegreeOfTransformationSemigroup(Parent(R));
-
-  scc := OrbSCC(o)[m];
-  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  out := [IteratorByIterator(IterFunc(S, ()),
-                             p -> rep * p, [IsIteratorSorted])];
-
-  for i in [2 .. Length(scc)] do
-    x := rep * EvaluateWord(o!.gens,
-                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    image := ImageListOfTransformation(x, n);
-    basei := DuplicateFreeList(image);
-    iter := IterFunc(S, MappingPermListList(base, basei));
-    out[i] := IteratorByIterator(iter,
-                                 function(iter, p)
-                                   return iter!.rep * p;
-                                 end,
-                                 [IsIteratorSorted], ReturnTrue,
-                                 rec(rep := Transformation(image)));
-  od;
-  return CallFuncList(IteratorSortedOp, out);
-end);
-
-#############################################################################
 ## Degree
 #############################################################################
 
@@ -860,8 +812,7 @@ end);
 # Endomorphisms of digraphs
 #############################################################################
 
-InstallMethod(EndomorphismMonoid, "for a digraph",
-[IsDigraph],
+InstallMethod(EndomorphismMonoid, "for a digraph", [IsDigraph],
 function(digraph)
   local hook, S;
 
@@ -877,9 +828,17 @@ function(digraph)
     S[1] := ClosureMonoid(S[1], f);
   end;
 
-  return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), [],
-                                    fail, fail)[1];
+  return HomomorphismDigraphsFinder(digraph,
+                                    digraph,
+                                    hook,
+                                    S,
+                                    infinity,
+                                    fail,
+                                    false,
+                                    DigraphVertices(digraph),
+                                    [],
+                                    fail,
+                                    fail)[1];
 end);
 
 InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",
