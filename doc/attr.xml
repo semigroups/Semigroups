@@ -533,9 +533,9 @@ gap> RepresentativeOfMinimalIdeal(B);
 gap> S := Semigroup(Transformation([5, 1, 6, 2, 2, 4]),
 >                   Transformation([3, 5, 5, 1, 6, 2]));;
 gap> RepresentativeOfMinimalDClass(S);
-Transformation( [ 1, 2, 2, 5, 5, 1 ] )
+Transformation( [ 5, 6, 6, 3, 3, 5 ] )
 gap> MinimalDClass(S);
-<Green's D-class: Transformation( [ 1, 2, 2, 5, 5, 1 ] )>]]></Example>
+<Green's D-class: Transformation( [ 5, 6, 6, 3, 3, 5 ] )>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

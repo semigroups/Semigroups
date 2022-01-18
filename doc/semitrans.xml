@@ -164,80 +164,58 @@ gap> S := Semigroup(
 gap> IsSynchronizingSemigroup(S);
 false
 gap> Representative(MinimalIdeal(S));
-Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
+Transformation( [ 8, 7, 7, 7, 8, 8, 7, 8, 8, 8 ] )]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="DigraphOfActionOnPairs">
+<#GAPDoc Label="DigraphOfAction">
   <ManSection>
-    <Attr Name = "DigraphOfActionOnPairs" Arg = "S"
-      Label = "for a transformation semigroup" />
-    <Attr Name = "DigraphOfActionOnPairs" Arg = "S, n"
-      Label = "for a transformation semigroup and an integer" />
+    <Oper Name = "DigraphOfAction" Arg = "S, list, act"
+      Label = "for a transformation semigroup, list, and action" />
     <Returns>A digraph, or <K>fail</K>.</Returns>
     <Description>
-      If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
-      integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
-      <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns a digraph
-      representing the <Ref Func="OnSets" BookName="ref"/> action of <A>S</A> on
-      the pairs of points in <C>[1 ..  <A>n</A>]</C>.
+      If <A>S</A> is a transformation semigroup and <A>list</A> is list such
+      that <A>S</A> acts on the items in <A>list</A> via the function
+      <A>act</A>, then <C>DigraphOfAction</C> returns a digraph representing
+      the action of <A>S</A> on the items in <A>list</A> and any further items 
+      output by <C><A>act</A>(<A>list</A>[i], <A>S</A>.j)</C>.<P/>
+
+      If <C><A>act</A>(<A>list</A>[i], <A>S</A>.j)</C> is the <C>k</C>-th item
+      in <A>list</A>, then in the output digraph there is an edge from the
+        vertex <C>i</C> to the vertex <C>k</C> labelled by <C>j</C>.
       <P/>
 
-      If the optional argument <A>n</A> is not specified, then by default the
-      degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
-        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the
-      semigroup <A>S</A> does not act on <C>[1 ..  <A>n</A>]</C>, then
-      <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns <K>fail</K>.
+      The values in <A>list</A> and the additional values generated are stored
+      in the vertex labels of the output digraph; see <Ref
+        Oper="DigraphVertexLabels" BookName="Digraphs" />, and the edge labels
+      are stored in the <Ref Oper="DigraphEdgeLabels" BookName="Digraphs" />
       <P/>
 
-      The digraph returned by <C>DigraphOfActionOnPairs</C> has <M><A>n</A> + {n
-        \choose 2}</M> vertices: the vertices <C>[1 .. <A>n</A>]</C> correspond
-      to the points in <C>[1 .. <A>n</A>]</C>, and the remaining vertices
-      correspond to the pairs of points in <C>[1 .. <A>n</A>]</C>. This
-      correspondence is stored in the vertex labels of the digraph; see <Ref
-        Oper="DigraphVertexLabels" BookName="Digraphs" />.
-      <P/>
-
-      The edges of the digraph are defined as follows. For each pair <C>{i,
-        j}</C> in <C>[1 .. <A>n</A>]</C>, and for each generator <C>f</C> in
-      <C>GeneratorsOfSemigroup(<A>S</A>)</C>, there is an edge from the vertex
-      corresponding to <C>{i, j}</C> to the vertex corresponding to <C>{i ^ f, j
-        ^ f}</C>.  Since <C>f</C> is a transformation, the set <C>{i ^ f, j ^
-        f}</C> may correspond to a pair (in the case that <C>i ^ f &lt;&gt; j ^
-        f</C>), or to a point (in the case that <C>i ^ f = j ^ f</C>).  The
-      label of an edge is the position of the first transformation within
-      <C>GeneratorsOfSemigroup(<A>S</A>)</C> that maps the pair corresponding to
-      the source vertex to the pair/point corresponding to the range vertex. See
-      <Ref Attr="GeneratorsOfSemigroup" BookName="ref" /> and <Ref
-        Oper="DigraphEdgeLabels" BookName="Digraphs" /> for further information.
-      <P/>
-
-      Note that the digraph returned by <C>DigraphOfActionOnPairs</C> has no
-      multiple edges; see <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
+      The digraph returned by <C>DigraphOfAction</C> has no multiple edges; see
+      <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
 
       <Example><![CDATA[
-gap> x := Transformation([2, 4, 3, 4, 7, 1, 6]);;
-gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
-gap> S := Semigroup(x, y);
+gap> S := Semigroup(Transformation([2, 4, 3, 4, 7, 1, 6]), 
+>                   Transformation([3, 3, 2, 3, 5, 1, 5]));
 <transformation semigroup of degree 7 with 2 generators>
-gap> gr := DigraphOfActionOnPairs(S);
-<immutable digraph with 28 vertices, 41 edges>
-gap> OnSets([2, 5], x);
+gap> list := Concatenation(List([1 .. 7], x -> [x]),
+>                          Combinations([1 .. 7], 2));
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 1, 2 ], 
+  [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 3 ], 
+  [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 4 ], [ 3, 5 ], 
+  [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 4, 7 ], [ 5, 6 ], 
+  [ 5, 7 ], [ 6, 7 ] ]
+gap> D := DigraphOfAction(S, list, OnSets);
+<immutable digraph with 28 vertices, 54 edges>
+gap> OnSets([2, 5], S.1);
 [ 4, 7 ]
-gap> DigraphVertexLabel(gr, 16);
-[ 2, 5 ]
-gap> DigraphVertexLabel(gr, 25);
+gap> Position(DigraphVertexLabels(D), [2, 5]);
+16
+gap> DigraphVertexLabel(D, 25);
 [ 4, 7 ]
-gap> DigraphEdgeLabel(gr, 16, 25);
-1
-gap> gr := DigraphOfActionOnPairs(S, 4);
-<immutable digraph with 10 vertices, 11 edges>
-gap> DigraphVertexLabels(gr);
-[ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], 
-  [ 3, 4 ] ]
-gap> DigraphOfActionOnPairs(S, 5);
-fail]]></Example>
+gap> DigraphEdgeLabel(D, 16, 25);
+1]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -274,15 +252,15 @@ gap> S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]),
 >                   Transformation([3, 3, 2, 3, 5, 1, 5]));
 <transformation semigroup of degree 7 with 2 generators>
 gap> D1 := DigraphOfActionOnPoints(S);
-<immutable multidigraph with 7 vertices, 14 edges>
+<immutable digraph with 7 vertices, 12 edges>
 gap> OnPoints(2, S.1);
 4
 gap> D2 := DigraphOfActionOnPoints(S, 4);
-<immutable multidigraph with 4 vertices, 8 edges>
+<immutable digraph with 4 vertices, 7 edges>
 gap> D2 = InducedSubdigraph(D1, [1 .. 4]);
 true
 gap> DigraphOfActionOnPoints(S, 5);
-<immutable multidigraph with 5 vertices, 9 edges>]]></Example>
+<immutable digraph with 5 vertices, 8 edges>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

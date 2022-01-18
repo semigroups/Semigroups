@@ -203,7 +203,7 @@
     <#Include Label = "ComponentRepsOfTransformationSemigroup">
     <#Include Label = "ComponentsOfTransformationSemigroup">
     <#Include Label = "CyclesOfTransformationSemigroup">
-    <#Include Label = "DigraphOfActionOnPairs">
+    <#Include Label = "DigraphOfAction">
     <#Include Label = "DigraphOfActionOnPoints">
     <#Include Label = "FixedPointsOfTransformationSemigroup">
     <#Include Label = "IsTransitive">

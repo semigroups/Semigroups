@@ -11,12 +11,13 @@
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPointsOfTransformationSemigroup",
                  IsTransformationSemigroup);
-DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
+
+DeclareOperation("DigraphOfAction",
+                 [IsTransformationCollection, IsList, IsFunction]);
+DeclareAttribute("DigraphOfActionOnPoints",
+                 IsTransformationCollection);
 DeclareOperation("DigraphOfActionOnPoints",
-                 [IsTransformationSemigroup, IsInt]);
-DeclareAttribute("DigraphOfActionOnPairs", IsTransformationSemigroup);
-DeclareOperation("DigraphOfActionOnPairs",
-                 [IsTransformationSemigroup, IsInt]);
+                 [IsTransformationCollection, IsInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
