@@ -694,17 +694,22 @@ InstallMethod(SmallestElementSemigroup,
 "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
-  local n, SmallestElementRClass;
+  local n, min, SmallestElementRClass;
 
   n := DegreeOfTransformationSemigroup(S);
   if n = 0 then
     return IdentityTransformation;
   elif HasAsSSortedList(S) then
     return AsSSortedList(S)[1];
-  elif HasEnumeratorSorted(S) or HasEnumeratorCanonical(S) then
+  elif HasEnumeratorSorted(S) then
     return EnumeratorSorted(S)[1];
-  elif ConstantTransformation(1, 1) in MinimalIdeal(S) then
-    return ConstantTransformation(1, 1);
+  fi;
+
+  min := Minimum(Union(List(GeneratorsOfSemigroup(S),
+                            x -> ImageSetOfTransformation(x, n))));
+
+  if ConstantTransformation(n, min) in MinimalIdeal(S) then
+    return ConstantTransformation(n, min);
   fi;
 
   SmallestElementRClass := R -> SEMIGROUPS.ElementRClass(R, false);
@@ -715,17 +720,22 @@ end);
 InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
-  local n, LargestElementRClass;
+  local n, max, LargestElementRClass;
 
   n := DegreeOfTransformationSemigroup(S);
   if n = 0 then
     return IdentityTransformation;
   elif HasAsSSortedList(S) then
     return AsSSortedList(S)[Size(S)];
-  elif HasEnumeratorSorted(S) or HasEnumeratorCanonical(S) then
+  elif HasEnumeratorSorted(S) then
     return EnumeratorSorted(S)[Size(S)];
-  elif ConstantTransformation(n, n) in MinimalIdeal(S) then
-    return ConstantTransformation(n, n);
+  fi;
+
+  max := Maximum(Union(List(GeneratorsOfSemigroup(S),
+                            x -> ImageSetOfTransformation(x, n))));
+
+  if ConstantTransformation(n, max) in MinimalIdeal(S) then
+    return ConstantTransformation(n, max);
   fi;
 
   LargestElementRClass := R -> SEMIGROUPS.ElementRClass(R, true);

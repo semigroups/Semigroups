@@ -11,65 +11,6 @@
 # In this file there are some methods for perm groups that were not found in
 # the library.
 
-# Returns an iterator of the sorted elements of the stab chain S ^ conj.
-
-SEMIGROUPS.IteratorSortedConjugateStabChain := function(S, conj)
-  local SortedStabChain, record, indices, T, iter;
-
-  # finds the element of the group with stab chain S corresponding to the tuple
-  # <indices>.
-  SortedStabChain := function(S, rep, indices, level)
-    local pnt, x, next, gen;
-
-    if Length(S.generators) = 0  then
-      return rep;
-    fi;
-
-    pnt := S.orbit[1];
-    x := conj * rep;
-    next := AsSet(OnTuples(S.orbit, x))[indices[level]] / x;
-
-    while next <> pnt do
-      gen := S.transversal[next];
-      rep := LeftQuotient(gen ^ conj, rep);
-      next := next ^ gen;
-    od;
-
-    return SortedStabChain(S.stabilizer, rep, indices, level + 1);
-  end;
-
-  record := rec();
-
-  # find the lengths of the orbits in the chain
-  indices := [];
-  T := S;
-
-  while Length(T.generators) <> 0 do
-    Add(indices, [1 .. Length(T.orbit)]);
-    T := T.stabilizer;
-  od;
-
-  record.indices := IteratorOfCartesianProduct(indices);
-  record.stabchain := S;
-
-  record.NextIterator := function(iter)
-    if IsDoneIterator(iter!.indices) then
-      return fail;
-    fi;
-    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices),
-                           1);
-  end;
-
-  record.ShallowCopy := function(iter)
-    return rec(indices := ShallowCopy(iter!.indices),
-               stabchain := iter!.stabchain);
-  end;
-
-  iter := IteratorByNextIterator(record);
-  SetFilterObj(iter, IsIteratorSorted);
-  return iter;
-end;
-
 # Finds the element p of the group G ^ conj with stab chain S ^ conj such that
 # the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically maximum. I.e.
 # this function returns the same value as:

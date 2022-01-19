@@ -406,14 +406,6 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# IteratorSortedConjugateStabChain
-gap> G := AlternatingGroup(5);;
-gap> S := StabChainImmutable(G);;
-gap> iter := SEMIGROUPS.IteratorSortedConjugateStabChain(S, (5, 10));
-<iterator>
-gap> ListIterator(iter) = AsSet(G ^ (5, 10));
-true
-
 # SEMIGROUPS.LargestElementConjugateStabChain, 1
 gap> conj := (3, 9);;
 gap> G1 := AlternatingGroup(5);;
