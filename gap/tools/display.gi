@@ -9,16 +9,21 @@
 ##
 
 #############################################################################
+
 SEMIGROUPS.GetTikzInit := function(opts)
-  local s;
-  s := Concatenation("%latex\n",
-                     "\\documentclass{minimal}\n",
-                     "\\usepackage{tikz}\n");
+  local extra;
   if IsBound(opts.extraInit) then
-    Append(s, opts.extraInit);
+    extra := opts.extraInit;
+  else
+    extra := "";
   fi;
-  Append(s, "\\begin{document}\n");
-  return s;
+  
+  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n", 
+                         "%latex",
+                         "\\documentclass{minimal}",
+                         "\\usepackage{tikz}",
+                         extra, 
+                         "\\begin{document}");
 end;
 
 SEMIGROUPS.TikzEnd := "\\end{document}";
