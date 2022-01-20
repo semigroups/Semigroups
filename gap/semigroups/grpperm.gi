@@ -9,7 +9,7 @@
 ##
 
 # In this file there are some methods for perm groups that were not found in
-# the library.
+# the GAP library.
 
 # Finds the element p of the group G ^ conj with stab chain S ^ conj such that
 # the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically maximum. I.e.
@@ -18,69 +18,38 @@
 # LargestElementStabChain(StabChainOp(G ^ conj,
 #                                     rec(base := BaseOfStabChain(S) ^ conj)));
 
-SEMIGROUPS.LargestElementConjugateStabChain := function(S, rep, conj)
-  local pnt, max, val, gen, i, lrep;
+# TODO doc
+InstallMethod(LargestElementConjugateStabChain,
+"for a stabilizer chain record and perm", [IsRecord, IsPerm],
+function(S, conj)
+  local Recurse;
 
-  if Length(S.generators) = 0  then
-    return rep ^ conj;
-  fi;
-
-  pnt := S.orbit[1];
-  max := 0;
-  val := 0;
-  lrep := rep ^ conj;
-
-  for i in S.orbit  do
-    if (i ^ conj) ^ lrep > val  then
-      max := i;
-      val := (i ^ conj) ^ lrep;
+  Recurse := function(S, rep, conj)
+    local pnt, max, val, lrep, gen, i;
+    if Length(S.generators) = 0  then
+      return rep ^ conj;
     fi;
-  od;
+    pnt := S.orbit[1];
+    max := 0;
+    val := 0;
+    lrep := rep ^ conj;
 
-  while pnt <> max  do
-    gen := S.transversal[max];
-    rep := LeftQuotient(gen, rep);
-    max := max ^ gen;
-  od;
-  return SEMIGROUPS.LargestElementConjugateStabChain(S.stabilizer,
-                                                     rep,
-                                                     conj);
-end;
+    for i in S.orbit  do
+      if (i ^ conj) ^ lrep > val  then
+        max := i;
+        val := (i ^ conj) ^ lrep;
+      fi;
+    od;
 
-# Finds the element p of the group G ^ conj with stab chain S ^ conj such that
-# the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically minimum.
-# Note that since the base of the stab chain can be anything, the return value
-# of this function is not always the identity perm.
-
-SEMIGROUPS.SmallestElementConjugateStabChain := function(S, rep, conj)
-  local pnt, min, val, lrep, gen, i;
-
-  if Length(S.generators) = 0  then
-    return rep ^ conj;
-  fi;
-
-  pnt := S.orbit[1];
-  min := 0;
-  val := infinity;
-  lrep := rep ^ conj;
-
-  for i in S.orbit  do
-    if (i ^ conj) ^ lrep < val  then
-      min := i;
-      val := (i ^ conj) ^ lrep;
-    fi;
-  od;
-
-  while pnt <> min  do
-    gen := S.transversal[min];
-    rep := LeftQuotient(gen, rep);
-    min := min ^ gen;
-  od;
-
-  return SEMIGROUPS.SmallestElementConjugateStabChain(S.stabilizer,
-                                                      rep,
-                                                      conj);
-end;
+    while pnt <> max  do
+      gen := S.transversal[max];
+      rep := LeftQuotient(gen, rep);
+      max := max ^ gen;
+    od;
+    return Recurse(S.stabilizer, rep, conj);
+  end;
+  return Recurse(S, (), conj);
+end);
 
 # fall back method, same method for ideals
 

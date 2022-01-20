@@ -643,58 +643,62 @@ end);
 ## Smallest, largest element
 #############################################################################
 
-SEMIGROUPS.ElementRClass := function(R, largest)
-  local o, m, rep, n, base1, S, GroupFunc, out, scc, y, base2, p, x, i;
+BindGlobal("SEMIGROUPS_SmallestLargestElementRClass",
+function(R, BaseModifier, Cmp)
+  local o, m, rep, n, base1, S, out, scc, gens, y, base2, p, x, i;
 
   if Size(R) = 1 then
     return Representative(R);
   fi;
 
-  o := LambdaOrb(R);
-  m := LambdaOrbSCCIndex(R);
-  rep := Representative(R);
-
-  n := DegreeOfTransformationSemigroup(Parent(R));
-  base1 := DuplicateFreeList(ImageListOfTransformation(rep, n));
-
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base1));
-  if largest then
-    GroupFunc := SEMIGROUPS.LargestElementConjugateStabChain;
-    out := rep * LargestElementStabChain(S, ());
-  else
-    GroupFunc := SEMIGROUPS.SmallestElementConjugateStabChain;
-    out := rep * GroupFunc(S, (), ());
-  fi;
-
-  scc := OrbSCC(o)[m];
+  o     := LambdaOrb(R);
+  m     := LambdaOrbSCCIndex(R);
+  rep   := Representative(R);
+  n     := DegreeOfTransformationSemigroup(Parent(R));
+  base1 := BaseModifier(DuplicateFreeList(ImageListOfTransformation(rep, n)));
+  S     := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base1));
+  out   := rep * LargestElementStabChain(S, ());
+  scc   := OrbSCC(o)[m];
+  gens  := o!.gens;
 
   for i in [2 .. Length(scc)] do
-    y := rep * EvaluateWord(o!.gens,
-                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    base2 := DuplicateFreeList(ImageListOfTransformation(y, n));
-    p := MappingPermListList(base1, base2);
+    y     := rep * EvaluateWord(gens,
+                                TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    base2 := BaseModifier(DuplicateFreeList(ImageListOfTransformation(y, n)));
+    p     := MappingPermListList(base1, base2);
 
-    if largest then
-      x := y * GroupFunc(S, (), p);
-      if x > out then
-        out := x;
-      fi;
-    else
-      x := y * GroupFunc(S, (), p);
-      if x < out then
-        out := x;
-      fi;
+    x := y * LargestElementConjugateStabChain(S, p);
+    if Cmp(x, out) then
+      out := x;
     fi;
   od;
 
   return out;
-end;
+end);
+
+InstallMethod(LargestElementRClass, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(R)
+  if not IsTransformationSemigroup(Parent(R)) then
+    TryNextMethod();
+  fi;
+  return SEMIGROUPS_SmallestLargestElementRClass(R, IdFunc, {x, y} -> x > y);
+end);
+
+InstallMethod(SmallestElementRClass, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(R)
+  if not IsTransformationSemigroup(Parent(R)) then
+    TryNextMethod();
+  fi;
+  return SEMIGROUPS_SmallestLargestElementRClass(R, Reversed, LT);
+end);
 
 InstallMethod(SmallestElementSemigroup,
 "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
-  local n, min, SmallestElementRClass;
+  local n, min;
 
   n := DegreeOfTransformationSemigroup(S);
   if n = 0 then
@@ -712,15 +716,13 @@ function(S)
     return ConstantTransformation(n, min);
   fi;
 
-  SmallestElementRClass := R -> SEMIGROUPS.ElementRClass(R, false);
-
   return Minimum(List(RClasses(S), SmallestElementRClass));
 end);
 
 InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
-  local n, max, LargestElementRClass;
+  local n, max;
 
   n := DegreeOfTransformationSemigroup(S);
   if n = 0 then
@@ -737,8 +739,6 @@ function(S)
   if ConstantTransformation(n, max) in MinimalIdeal(S) then
     return ConstantTransformation(n, max);
   fi;
-
-  LargestElementRClass := R -> SEMIGROUPS.ElementRClass(R, true);
 
   return Maximum(List(RClasses(S), LargestElementRClass));
 end);

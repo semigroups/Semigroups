@@ -406,7 +406,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 1
+# LargestElementConjugateStabChain, 1
 gap> conj := (3, 9);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
@@ -414,10 +414,8 @@ gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 2, 3 ], Orbit length 5, Size: 60>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (1,9,4,2,5)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(4,5,9)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 1, 2, 9 ], Orbit length 5, Size: 60>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -430,12 +428,8 @@ gap> OnTuples(base2, p1);
 [ 9, 5, 4 ]
 gap> OnTuples(base2, p2);
 [ 9, 5, 4 ]
-gap> OnTuples(base2, q1);
-[ 1, 2, 4 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 1, 2, 4 ]
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 2
+# LargestElementConjugateStabChain, 2
 gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
@@ -443,10 +437,8 @@ gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 2, 3 ], Orbit length 5, Size: 60>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 ()
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(1,10)(3,9)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 10, 9, 6 ], Orbit length 5, Size: 60>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -459,12 +451,8 @@ gap> OnTuples(base2, p1);
 [ 10, 9, 6 ]
 gap> OnTuples(base2, p2);
 [ 10, 9, 6 ]
-gap> OnTuples(base2, q1);
-[ 1, 3, 6 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 1, 3, 6 ]
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 3
+# LargestElementConjugateStabChain, 3
 gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(10);;
 gap> base1 := [1, 2, 3, 4, 5, 6, 7, 8];;
@@ -473,10 +461,8 @@ gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 2, 3, 4, 5, 6, 7, 8 ], Orbit length 
 10, Size: 1814400>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (1,6,8,2,5,3,7)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(1,5,8,10)(2,6,3,4,7,9)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 10, 9, 6, 3, 1, 2, 4, 5 ], Orbit length 
 10, Size: 1814400>
@@ -490,13 +476,8 @@ gap> OnTuples(base2, p1);
 [ 10, 9, 8, 7, 6, 5, 4, 3 ]
 gap> OnTuples(base2, p2);
 [ 10, 9, 8, 7, 6, 5, 4, 3 ]
-gap> OnTuples(base2, q1);
-[ 1, 2, 3, 4, 5, 6, 7, 8 ]
 
-#gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-#[ 1, 2, 3, 4, 5, 6, 7, 8 ]
-
-# SEMIGROUPS.LargestElementConjugateStabChain, 4
+# LargestElementConjugateStabChain, 4
 gap> conj := (1, 13, 6, 8, 4, 12, 7, 5, 2, 3, 11)(9, 10);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -505,10 +486,8 @@ gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 7, 6 ], Orbit length 5, Size: 100>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (5,10)(8,9)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(2,12,11,3,13)(4,10,9,8,5)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 13, 5, 8 ], Orbit length 5, Size: 100>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -521,12 +500,8 @@ gap> OnTuples(base2, p1);
 [ 13, 10, 9 ]
 gap> OnTuples(base2, p2);
 [ 13, 10, 9 ]
-gap> OnTuples(base2, q1);
-[ 2, 4, 5 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 2, 4, 5 ]
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 5
+# LargestElementConjugateStabChain, 5
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -535,10 +510,8 @@ gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 6, 7 ], Orbit length 5, Size: 100>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (1,12,11,3)(2,6)(8,9)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(2,10)(3,4,11,12)(6,9)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 10, 1, 12 ], Orbit length 5, Size: 100>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -551,12 +524,8 @@ gap> OnTuples(base2, p1);
 [ 10, 12, 11 ]
 gap> OnTuples(base2, p2);
 [ 10, 12, 11 ]
-gap> OnTuples(base2, q1);
-[ 2, 1, 3 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 2, 1, 3 ]
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 6
+# LargestElementConjugateStabChain, 6
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
 gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
 >               (6, 7, 8, 9, 10));;
@@ -565,10 +534,8 @@ gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 1, 2, 6, 7 ], Orbit length 5, Size: 100>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (1,12,3,11,4)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(2,10)(3,4,11,12)(6,9)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 10, 9, 1, 12 ], Orbit length 5, Size: 100>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -581,24 +548,18 @@ gap> OnTuples(base2, p1);
 [ 10, 9, 12, 3 ]
 gap> OnTuples(base2, p2);
 [ 10, 9, 12, 3 ]
-gap> OnTuples(base2, q1);
-[ 2, 6, 1, 3 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 2, 6, 1, 3 ]
 
-# SEMIGROUPS.LargestElementConjugateStabChain, 7
+# LargestElementConjugateStabChain, 7
 gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
-gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
+gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5),
 >               (6, 7, 8, 9, 10));;
 gap> base1 := [4, 5, 9, 10];;
 gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
 gap> S1 := StabChainOp(G1, rec(base := base1));
 <stabilizer chain record, Base [ 4, 5, 9, 10 ], Orbit length 5, Size: 100>
-gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+gap> p1 := LargestElementConjugateStabChain(S1, conj);
 (1,11,12,4,3)(2,10,6,8,9)
-gap> q1 := SEMIGROUPS.SmallestElementConjugateStabChain(S1, (), conj);
-(1,4,3,11)(6,8)(9,10)
 gap> S2 := StabChainOp(G2, rec(base := base2));
 <stabilizer chain record, Base [ 2, 8, 11, 4 ], Orbit length 5, Size: 100>
 gap> p2 := LargestElementStabChain(S2, ());
@@ -611,10 +572,6 @@ gap> OnTuples(base2, p1);
 [ 10, 9, 12, 3 ]
 gap> OnTuples(base2, p2);
 [ 10, 9, 12, 3 ]
-gap> OnTuples(base2, q1);
-[ 2, 6, 1, 3 ]
-gap> Minimum(List(G2, x -> OnTuples(base2, x)));
-[ 2, 6, 1, 3 ]
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

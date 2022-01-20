@@ -44,3 +44,6 @@ DeclareAttribute("DigraphCore", IsDigraph);
 DeclareOperation("WreathProduct",
                  [IsMultiplicativeElementCollection,
                   IsMultiplicativeElementCollection]);
+
+DeclareAttribute("SmallestElementRClass", IsGreensRClass);
+DeclareAttribute("LargestElementRClass", IsGreensRClass);
