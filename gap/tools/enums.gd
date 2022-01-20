@@ -8,6 +8,3 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("NumberArrangement");
-DeclareGlobalFunction("ArrangementNumber");
-DeclareGlobalFunction("EnumeratorOfArrangements");

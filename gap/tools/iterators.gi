@@ -83,27 +83,6 @@ function(arg)
   return fail;
 end);
 
-InstallGlobalFunction(IteratorOfArrangements,
-function(n, m)
-  local convert;
-
-  if not IsPosInt(n) then
-    ErrorNoReturn("the 1st argument <n> must be a positive integer");
-  elif not (IsInt(m) and m >= 0) then
-    ErrorNoReturn("the 2nd argument <m> must be a non-negative integer");
-  elif m > n then
-    ErrorNoReturn("the 2nd argument <m> must be no greater than the ",
-                  "1st argument <n>");
-  fi;
-
-  convert := function(iter, x)
-    return ArrangementNumber(x, m, n);
-  end;
-
-  return IteratorByIterator(IteratorList([1 .. NrArrangements([1 .. n], m)]),
-                            convert);
-end);
-
 # technical...
 
 # returns func(iter, pos) once at least position <pos> of the orbit <o> is
@@ -668,57 +647,6 @@ function(S)
                   Print("<iterator of semigroup>");
                   return;
                 end));
-  return iter;
-end);
-
-InstallMethod(Iterator, "for a symmetric inverse semigroup",
-[IsPartialPermSemigroup and IsSymmetricInverseSemigroup
- and HasGeneratorsOfSemigroup],
-function(s)
-  local deg, record, iter;
-
-  if HasAsSSortedList(s) or HasAsListCanonical(s) then
-    # This is much faster
-    TryNextMethod();
-  fi;
-
-  deg := DegreeOfPartialPermSemigroup(s);
-
-  record := rec(parent := s);
-
-  record.iter_doms := IteratorOfCombinations([1 .. deg]);
-
-  record.dom := fail;
-
-  record.iter_imgs := fail;
-
-  record.NextIterator := function(iter)
-    local img;
-
-    if iter!.iter_imgs = fail or IsDoneIterator(iter!.iter_imgs) then
-      if IsDoneIterator(iter!.iter_doms) then
-        return fail;
-      fi;
-      iter!.dom := NextIterator(iter!.iter_doms);
-      iter!.iter_imgs := IteratorOfArrangements(deg, Length(iter!.dom));
-    fi;
-
-    img := NextIterator(iter!.iter_imgs);
-    return PartialPermNC(iter!.dom, img);
-  end;
-
-  record.ShallowCopy := iter -> rec(parent := s,
-                                    iter_doms := IteratorOfCombinations([1 ..
-                                                                         deg]),
-                                    dom := fail,
-                                    iter_imgs := fail);
-
-  record.PrintObj := function(iter)
-                       Print("<iterator of semigroup>");
-                       return;
-                     end;
-
-  iter := IteratorByNextIterator(record);
   return iter;
 end);
 

@@ -2089,16 +2089,6 @@ MappingByFunction( <inverse partial perm monoid of size 25, rank 25 with 3
  generators>, <inverse partial perm semigroup of rank 6 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 
-# Iterator, for a symmetric inverse monoid
-gap> S := SymmetricInverseMonoid(4);;
-gap> y := Iterator(S);
-<iterator of semigroup>
-gap> for x in y do od;
-gap> S := SymmetricInverseMonoid(4);; Elements(S);;
-gap> y := Iterator(S);
-<iterator>
-gap> for x in y do od;
-
 #  GeneratorsOfGroup
 gap> S := Group([], PartialPerm([1, 2]));;
 gap> GeneratorsOfGroup(S);

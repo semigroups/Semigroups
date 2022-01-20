@@ -17,21 +17,36 @@ SEMIGROUPS.GetTikzInit := function(opts)
   else
     extra := "";
   fi;
-  
-  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n", 
+
+  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n",
                          "%latex",
                          "\\documentclass{minimal}",
                          "\\usepackage{tikz}",
-                         extra, 
+                         extra,
                          "\\begin{document}");
 end;
 
 SEMIGROUPS.TikzEnd := "\\end{document}";
 
-SEMIGROUPS.TikzColors := ["red", "green", "blue", "cyan", "magenta", "yellow",
-                          "black", "gray", "darkgray", "lightgray", "brown",
-                          "lime", "olive", "orange", "pink", "purple", "teal",
-                          "violet", "white"];
+SEMIGROUPS.TikzColors := ["red",
+                          "green",
+                          "blue",
+                          "cyan",
+                          "magenta",
+                          "yellow",
+                          "black",
+                          "gray",
+                          "darkgray",
+                          "lightgray",
+                          "brown",
+                          "lime",
+                          "olive",
+                          "orange",
+                          "pink",
+                          "purple",
+                          "teal",
+                          "violet",
+                          "white"];
 
 SEMIGROUPS.TikzPBRInit := Concatenation("\\usetikzlibrary{arrows}\n",
                                         "\\usetikzlibrary{arrows.meta}\n",
