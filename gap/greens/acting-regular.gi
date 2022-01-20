@@ -511,3 +511,60 @@ function(S)
      return;
    end));
 end);
+
+# different method for inverse
+
+InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(D)
+  local convert_out, convert_in, rho_scc, lambda_scc, enum;
+
+  if HasAsList(D) then
+    return AsList(D);
+  elif HasAsSSortedList(D) then
+    return AsSSortedList(D);
+  fi;
+
+  convert_out := function(enum, tuple)
+    local D, rep, act;
+    if tuple = fail then
+      return fail;
+    fi;
+    D := enum!.parent;
+    rep := Representative(D);
+    act := StabilizerAction(Parent(D));
+    return act(RhoOrbMult(RhoOrb(D), RhoOrbSCCIndex(D),
+               tuple[1])[1] * rep, tuple[2])
+           * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), tuple[3])[1];
+  end;
+
+  convert_in := function(enum, elt)
+    local D, S, k, l, f;
+
+    D := enum!.parent;
+    S := Parent(D);
+
+    k := Position(RhoOrb(D), RhoFunc(S)(elt));
+    if OrbSCCLookup(RhoOrb(D))[k] <> RhoOrbSCCIndex(D) then
+      return fail;
+    fi;
+
+    l := Position(LambdaOrb(D), LambdaFunc(S)(elt));
+
+    if OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
+      return fail;
+    fi;
+
+    f := RhoOrbMult(RhoOrb(D), RhoOrbSCCIndex(D), k)[2] * elt
+     * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), l)[2];
+
+    return [k, LambdaPerm(S)(Representative(D), f), l];
+  end;
+
+  rho_scc    := OrbSCC(RhoOrb(D))[RhoOrbSCCIndex(D)];
+  lambda_scc := OrbSCC(LambdaOrb(D))[LambdaOrbSCCIndex(D)];
+  enum := EnumeratorOfCartesianProduct(rho_scc,
+                                       SchutzenbergerGroup(D),
+                                       lambda_scc);
+  return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
+end);

@@ -371,6 +371,56 @@ SEMIGROUPS.IsRegularGreensClass := function(x, value, scc, o, onright)
   return false;
 end;
 
+# <convert_in> must return <fail> if it is not possible to convert
+# <convert_out> must check if its argument is <fail> and if it is, then it
+# should return <fail>, <convert_out> should have two arguments <enum> and <nr>
+# where <nr> refers to the position in <baseenum>.
+
+SEMIGROUPS.ActingGreensClassEnum := 
+function(obj, baseenum, convert_out, convert_in)
+  local record;
+
+  if not IsActingSemigroupGreensClass(obj) then
+    ErrorNoReturn("the 1st argument <obj> must be a Green's class of an ",
+                  "acting semigroup");
+  elif not IsList(baseenum) then
+    ErrorNoReturn("the 2nd argument <baseenum> must be a list ");
+  elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
+    ErrorNoReturn("the 3rd and 4th arguments <convert_out> and ",
+                  "<convert_in> must be functions");
+  fi;
+
+  record := rec();
+
+  record.baseenum    := baseenum;
+  record.convert_out := convert_out;
+  record.convert_in  := convert_in;
+  record.parent      := obj;
+
+  record.NumberElement := function(enum, elt)
+    local converted;
+    converted := enum!.convert_in(enum, elt);
+    if converted = fail then
+      return fail;
+    fi;
+    return Position(enum!.baseenum, converted);
+  end;
+
+  record.ElementNumber := function(enum, nr)
+    return enum!.convert_out(enum, enum!.baseenum[nr]);
+  end;
+
+  record.Length := enum -> Size(enum!.parent);
+
+  record.Membership := function(elt, enum)
+    return elt in enum!.parent;
+  end;
+
+  record.PrintObj := enum -> Print("<enumerator of Green's class>");
+
+  return EnumeratorByFunctions(obj, record);
+end;
+
 # Lambda-Rho stuff
 
 # same method for regular/inverse/ideals
@@ -2078,4 +2128,221 @@ function(S)
            Print("<iterator of D-classes>");
            return;
          end));
+end);
+
+# different method for regular/inverse
+
+InstallMethod(Enumerator, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(D)
+  local record, i;
+
+  if HasAsList(D) then
+    return AsList(D);
+  elif HasAsSSortedList(D) then
+    return AsSSortedList(D);
+  fi;
+
+  record := rec();
+
+  record.parent := D;
+
+  record.Length := enum -> Size(enum!.parent);
+
+  record.PrintObj := function(enum)
+    Print("<enumerator of Green's class>");
+  end;
+
+  record.underlying_enums := List(GreensRClasses(D), Enumerator);
+  record.lengths          := [];
+
+  for i in [1 .. NrRClasses(D)] do
+    record.lengths[i] := Sum(record.underlying_enums{[1 .. i]}, Length);
+  od;
+
+  record.ElementNumber := function(enum, pos)
+    local index;
+
+    if pos > Length(enum) then
+      return fail;
+    fi;
+    index := PositionSorted(enum!.lengths, pos);
+    if index > 1 then
+      pos := pos - enum!.lengths[index - 1];
+    fi;
+    return enum!.underlying_enums[index][pos];
+  end;
+
+  record.NumberElement := function(enum, elt)
+    local R, index, pos;
+
+    if not elt in enum!.parent then
+      return fail;
+    fi;
+
+    R     := GreensRClassOfElement(enum!.parent, elt);
+    index := Position(GreensRClasses(enum!.parent), R);
+    pos   := Position(enum!.underlying_enums[index], elt);
+    return pos + enum!.lengths[index - 1];
+  end;
+
+  return EnumeratorByFunctions(D, record);
+end);
+
+# same method for inverse/regular
+
+InstallMethod(Enumerator, "for an H-class of acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(H)
+  local record;
+
+  if HasAsList(H) then
+    return AsList(H);
+  elif HasAsSSortedList(H) then
+    return AsSSortedList(H);
+  fi;
+
+  record := rec();
+
+  record.parent := H;
+
+  record.ElementNumber := function(enum, pos)
+    local H, G;
+    if pos > Length(enum) then
+      return fail;
+    fi;
+    H := enum!.parent;
+    G := Enumerator(SchutzenbergerGroup(H));
+    return StabilizerAction(Parent(H))(Representative(H), G[pos]);
+  end;
+
+  record.Length := enum -> Size(enum!.parent);
+
+  record.Membership := function(elm, enum)
+    return elm in enum!.parent;
+  end;
+
+  record.NumberElement := function(enum, f)
+    local H, S, rep;
+
+    H   := enum!.parent;
+    S   := Parent(H);
+    rep := Representative(H);
+
+    if LambdaFunc(S)(f) <> LambdaFunc(S)(rep)
+        or RhoFunc(S)(f) <> RhoFunc(S)(rep) then
+      return fail;
+    fi;
+
+    return Position(Enumerator(SchutzenbergerGroup(H)),
+                    LambdaPerm(S)(rep, f));
+  end;
+
+  record.PrintObj := function(enum)
+    Print("<enumerator of H-class>");
+  end;
+
+  return EnumeratorByFunctions(H, record);
+end);
+
+# same method for regular, different method for inverse
+
+InstallMethod(Enumerator, "for L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(L)
+  local convert_out, convert_in, scc, enum;
+
+  if HasAsList(L) then
+    return AsList(L);
+  elif HasAsSSortedList(L) then
+    return AsSSortedList(L);
+  fi;
+
+  convert_out := function(enum, tuple)
+    local L, rep, act;
+
+    if tuple = fail then
+      return fail;
+    fi;
+    L := enum!.parent;
+    rep := Representative(L);
+    act := StabilizerAction(Parent(L));
+    return act(RhoOrbMult(RhoOrb(L), RhoOrbSCCIndex(L), tuple[1])[1]
+               * rep, tuple[2]);
+  end;
+
+  convert_in := function(enum, elt)
+    local L, S, i, f;
+
+    L := enum!.parent;
+    S := Parent(L);
+
+    if LambdaFunc(S)(elt) <> LambdaFunc(S)(Representative(L)) then
+      return fail;
+    fi;
+
+    i := Position(RhoOrb(L), RhoFunc(S)(elt));
+    if OrbSCCLookup(RhoOrb(L))[i] <> RhoOrbSCCIndex(L) then
+      return fail;
+    fi;
+
+    f := RhoOrbMult(RhoOrb(L), RhoOrbSCCIndex(L), i)[2] * elt;
+
+    return [i, LambdaPerm(S)(Representative(L), f)];
+  end;
+
+  scc  := OrbSCC(RhoOrb(L))[RhoOrbSCCIndex(L)];
+  enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(L));
+  return SEMIGROUPS.ActingGreensClassEnum(L, enum, convert_out, convert_in);
+end);
+
+# same method for regular/inverse
+
+InstallMethod(Enumerator, "for R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(R)
+  local convert_out, convert_in, scc, enum;
+
+  if HasAsList(R) then
+    return AsList(R);
+  elif HasAsSSortedList(R) then
+    return AsSSortedList(R);
+  fi;
+
+  convert_out := function(enum, tuple)
+    local R, rep;
+    if tuple = fail then
+      return fail;
+    fi;
+    R   := enum!.parent;
+    rep := Representative(R);
+    return StabilizerAction(Parent(R))(rep, tuple[1])
+     * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), tuple[2])[1];
+  end;
+
+  convert_in := function(enum, elt)
+    local R, S, i, f;
+
+    R := enum!.parent;
+    S := Parent(R);
+
+    if RhoFunc(S)(elt) <> RhoFunc(S)(Representative(R)) then
+      return fail;
+    fi;
+
+    i := Position(LambdaOrb(R), LambdaFunc(S)(elt));
+
+    if OrbSCCLookup(LambdaOrb(R))[i] <> LambdaOrbSCCIndex(R) then
+      return fail;
+    fi;
+
+    f := elt * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), i)[2];
+
+    return [LambdaPerm(S)(Representative(R), f), i];
+  end;
+
+  scc  := OrbSCC(LambdaOrb(R))[LambdaOrbSCCIndex(R)];
+  enum := EnumeratorOfCartesianProduct(SchutzenbergerGroup(R), scc);
+
+  return SEMIGROUPS.ActingGreensClassEnum(R, enum, convert_out, convert_in);
 end);

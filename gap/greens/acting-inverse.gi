@@ -651,3 +651,113 @@ function(S)
      return;
    end));
 end);
+
+InstallMethod(Enumerator, "for L-class of an inverse acting semigroup rep",
+[IsGreensLClass and IsInverseActingRepGreensClass
+ and IsActingSemigroupGreensClass],
+function(L)
+  local convert_out, convert_in, scc, enum;
+
+  if HasAsList(L) then
+    return AsList(L);
+  elif HasAsSSortedList(L) then
+    return AsSSortedList(L);
+  fi;
+
+  convert_out := function(enum, tuple)
+    local L, rep, act;
+    if tuple = fail then
+      return fail;
+    fi;
+    L := enum!.parent;
+    rep := Representative(L);
+    act := StabilizerAction(Parent(L));
+    return act(LambdaOrbMult(LambdaOrb(L),
+                             LambdaOrbSCCIndex(L),
+                             tuple[1])[2]
+               * rep, tuple[2]);
+  end;
+
+  convert_in := function(enum, elt)
+    local L, S, i, f;
+
+    L := enum!.parent;
+    S := Parent(L);
+
+    if LambdaFunc(S)(elt) <> LambdaFunc(S)(Representative(L)) then
+      return fail;
+    fi;
+
+    i := Position(LambdaOrb(L), RhoFunc(S)(elt));
+
+    if OrbSCCLookup(LambdaOrb(L))[i] <> LambdaOrbSCCIndex(L) then
+      return fail;
+    fi;
+
+    f := LambdaOrbMult(LambdaOrb(L), LambdaOrbSCCIndex(L), i)[1] * elt;
+
+    return [i, LambdaPerm(S)(Representative(L), f)];
+  end;
+
+  scc  := OrbSCC(LambdaOrb(L))[LambdaOrbSCCIndex(L)];
+  enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(L));
+
+  return SEMIGROUPS.ActingGreensClassEnum(L, enum, convert_out, convert_in);
+end);
+
+InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
+[IsGreensDClass and IsInverseActingRepGreensClass
+ and IsActingSemigroupGreensClass],
+function(D)
+  local convert_out, convert_in, scc, enum;
+
+  if HasAsList(D) then
+    return AsList(D);
+  elif HasAsSSortedList(D) then
+    return AsSSortedList(D);
+  fi;
+
+  Enumerate(LambdaOrb(D), infinity);
+
+  convert_out := function(enum, tuple)
+    local D, rep, act;
+    if tuple = fail then
+      return fail;
+    fi;
+    D   := enum!.parent;
+    rep := Representative(D);
+    act := StabilizerAction(Parent(D));
+    return act(LambdaOrbMult(LambdaOrb(D),
+                             LambdaOrbSCCIndex(D),
+                             tuple[1])[2] * rep,
+               tuple[2])
+             * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D),
+                             tuple[3])[1];
+  end;
+
+  convert_in := function(enum, elt)
+    local D, S, k, l, f;
+
+    D := enum!.parent;
+    S := Parent(D);
+
+    k := Position(LambdaOrb(D), RhoFunc(S)(elt));
+    if OrbSCCLookup(LambdaOrb(D))[k] <> LambdaOrbSCCIndex(D) then
+      return fail;
+    fi;
+    l := Position(LambdaOrb(D), LambdaFunc(S)(elt));
+    if OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
+      return fail;
+    fi;
+
+    f := LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), k)[1] * elt
+     * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), l)[2];
+
+    return [k, LambdaPerm(S)(Representative(D), f), l];
+  end;
+
+  scc := OrbSCC(LambdaOrb(D))[LambdaOrbSCCIndex(D)];
+  enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(D), scc);
+
+  return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
+end);
