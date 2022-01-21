@@ -2058,7 +2058,7 @@ function(S)
   end;
 
   record.ShallowCopy := iter -> rec(i := 1);
-    
+
   return IteratorByNextIterator(record);
 end);
 
@@ -2093,8 +2093,6 @@ function(S)
                                   return;
                                 end));
 end);
-
-# TODO(later) this should be improved at some point
 
 # different method for regular/inverse
 
@@ -2133,22 +2131,6 @@ function(S)
            Print("<iterator of D-classes>");
            return;
          end));
-end);
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfLClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(S)
-  local iter;
-
-  if HasGreensLClasses(S) then
-    iter := IteratorList(GreensLClasses(S));
-    return iter;
-  fi;
-
-  return IteratorByIterOfIters(rec(parent := S), IteratorOfDClasses(S),
-                               GreensLClasses, []);
 end);
 
 ########################################################################
@@ -2227,7 +2209,7 @@ function(d)
   fi;
 
   return IteratorByIterOfIters(rec(parent := Parent(d)),
-                               Iterator(GreensRClasses(d)), 
+                               Iterator(GreensRClasses(d)),
                                IdFunc,
                                []);
 end);
@@ -2476,46 +2458,3 @@ function(r)
                                   return;
                                 end));
 end);
-
-# HERE
-
-# different method for inverse
-
-
-
-# InstallMethod(Iterator,
-# "for a D-class of an inverse acting semigroup rep",
-# [IsGreensDClass and IsInverseActingRepGreensClass
-#  and IsActingSemigroupGreensClass],
-# function(d)
-#   local iter, scc, baseiter, convert;
-# 
-#   if HasAsSSortedList(d) then
-#     iter := IteratorList(AsSSortedList(d));
-#     return iter;
-#   fi;
-# 
-#   scc := OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
-#   baseiter := IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc);
-# 
-#   convert := function(x)
-#     return StabilizerAction(Parent(d))(LambdaOrbMult(LambdaOrb(d),
-#                                                      LambdaOrbSCCIndex(d),
-#                                                      x[1])[2]
-#                                        * Representative(d), x[2])
-#                                        * LambdaOrbMult(LambdaOrb(d),
-#                                                        LambdaOrbSCCIndex(d),
-#                                                        x[3])[1];
-#   end;
-# 
-#   return IteratorByIterator(baseiter,
-#                             convert,
-#                             [],
-#                             fail,
-#                             rec(PrintObj := function(iter)
-#                                   Print("<iterator of D-class>");
-#                                   return;
-#                                 end));
-# end);
-
-

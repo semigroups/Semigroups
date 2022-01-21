@@ -83,20 +83,6 @@ gap> SchutzenbergerGroup(l);
 Group(())
 gap> ForAll(l, x -> x in l);
 true
-gap> iter := IteratorOfLClasses(s);
-<iterator>
-gap> repeat l := NextIterator(iter); until Size(l) > 1;
-gap> l;
-<Green's L-class: [4,12]>
-gap> Size(l);
-11
-gap> Elements(l);
-[ [1,12], [2,12], [3,12], [4,12], [5,12], [6,12], [7,12], [8,12], [9,12], 
-  [11,12], <identity partial perm on [ 12 ]> ]
-gap> ForAll(last, x -> x in s);
-true
-gap> ForAll(last2, x -> x in l);
-true
 gap> d := DClassNC(s, f);
 <Green's D-class: [3,4,1][11,5,2]>
 gap> d := DClassNC(s, Representative(l));
@@ -560,124 +546,6 @@ gap> l := LClass(s, f);
 <Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
 gap> Size(l);
 1
-gap> iter := IteratorOfLClasses(s);
-<iterator>
-gap> repeat l := NextIterator(iter); until Size(l) > 1;
-gap> l;
-<Green's L-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>
-gap> Size(l);
-1494
-gap> Idempotents(l);
-[ Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 2, 2, 1, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 2, 1, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 2, 6, 6, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 2, 1, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 1, 6 ] ), 
-  Transformation( [ 1, 2, 6, 1, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 2, 2, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 1, 6 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 6, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 6, 1, 1, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 6, 6, 1, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 6, 1, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 2, 6, 6, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 6, 1, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 6, 6, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 6, 6, 6, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 1, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 6, 2, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 2, 2, 2, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 2, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 2, 2, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 2, 1, 1, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 2, 1, 1, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 2, 2, 6, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 2, 1, 1, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 1, 2, 1, 6, 1, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 1, 6, 1, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 6, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 2, 6, 1, 6 ] ), 
-  Transformation( [ 1, 2, 1, 2, 1, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 1, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 6, 2, 2, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 1, 6, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 2, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 6, 6, 2, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 1, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 6, 1, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 6, 1, 6, 1, 6 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 1, 2, 6, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 1, 2, 2, 6, 1, 6 ] ), 
-  Transformation( [ 1, 2, 6, 2, 2, 6, 6, 2 ] ), 
-  Transformation( [ 1, 2, 6, 6, 6, 6, 6, 2 ] ) ]
-gap> Length(last);
-82
-gap> NrIdempotents(l);
-82
-gap> ForAll(Idempotents(l), x -> x in l);
-true
-gap> IsDuplicateFree(Idempotents(l));
-true
-gap> ForAll(Idempotents(l), x -> x in s);
-true
-gap> ForAll(l, x -> x in s);
-true
-gap> IsRegularGreensClass(l);
-true
-gap> s := Monoid(gens);
-<transformation monoid of degree 8 with 4 generators>
-gap> l := LClass(s, f);
-<Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
-gap> IsRegularGreensClass(l);
-false
-gap> Size(l);
-1
-gap> f := Transformation([1, 2, 2, 1, 2, 6, 6, 1]);
-Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )
-gap> l := LClass(s, f);
-<Green's L-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )>
-gap> IsRegularGreensClass(l);
-true
 
 # MiscTest6
 gap> gens := [PartialPermNC([1, 2, 3], [1, 4, 3]),
@@ -777,38 +645,6 @@ gap> l := LClasses(s)[523];
 <Green's L-class: Transformation( [ 5, 5, 5, 1, 7, 3, 6 ] )>
 gap> Size(l);
 1
-gap> iter := IteratorOfLClasses(s);
-<iterator>
-gap> repeat l := NextIterator(iter); until Size(l) > 1;
-gap> l;
-<Green's L-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
-gap> Size(l);
-1872
-gap> NrHClasses(d);
-1
-gap> NrHClasses(l);
-78
-gap> Length(HClassReps(l));;
-gap> Length(HClassReps(l));
-78
-gap> ForAll(HClasses(l), x -> x in HClassReps(l));
-false
-gap> ForAll(HClasses(l), x -> Representative(x) in HClassReps(l));
-true
-gap> Size(l);
-1872
-gap> d := DClassOfLClass(l);
-<Green's D-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
-gap> Size(d);
-59904
-gap> ForAll(l, x -> x in d);
-true
-gap> Number(d, x -> x in l);
-1872
-gap> SchutzenbergerGroup(d);
-Group([ (1,6), (1,2), (1,5,6,2) ])
-gap> d;
-<Green's D-class: Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] )>
 
 # MiscTest8
 gap> gens := [PartialPermNC([1, 2, 3, 5], [5, 7, 3, 4]),

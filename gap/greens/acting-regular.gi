@@ -420,26 +420,6 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 ## 6.a. for all classes
 #############################################################################
 
-# different method for inverse
-
-InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  if HasGreensLClasses(S) then
-    return IteratorList(GreensLClasses(S));
-  fi;
-
-  return IteratorByIterator(IteratorOfLClassReps(S),
-                            x -> GreensLClassOfElementNC(S, x),
-                            [],
-                            fail,
-                            rec(PrintObj :=
-                                function(iter)
-                                  Print("<iterator of L-classes>");
-                                  return;
-                                end));
-end);
-
 # same method for inverse
 
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
@@ -495,7 +475,7 @@ end);
 InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local o, func, iter;
+  local o, func;
 
   o := RhoOrb(s);
 

@@ -645,7 +645,6 @@ false]]></Example>
 <#GAPDoc Label="IteratorOfXClasses">
   <ManSection><Heading>IteratorOfXClasses</Heading>
   <Oper Name = "IteratorOfDClasses" Arg = "S"/>
-  <Oper Name = "IteratorOfLClasses" Arg = "S"/>
   <Oper Name = "IteratorOfRClasses" Arg = "S"/>
   <Returns>
   An iterator.

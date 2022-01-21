@@ -210,11 +210,6 @@ gap> IteratorOfDClasses(S);
 gap> GreensDClasses(S);;
 gap> IteratorOfDClasses(S);
 <iterator>
-gap> IteratorOfLClasses(S);
-<iterator of L-classes>
-gap> GreensLClasses(S);;
-gap> IteratorOfLClasses(S);
-<iterator>
 
 #Test \< for Green's classes of a regular semigroup
 gap> S := SymmetricInverseMonoid(5);;

@@ -615,36 +615,23 @@ function(S)
   local o, func, iter, lookup;
 
   o := LambdaOrb(S);
-  if not IsClosedOrbit(o) then
-    func := function(iter, i)
-      local rep;
-      rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
-      # <rep> has rho val corresponding to <i> and lambda val in position 1 of
-      # GradedLambdaOrb(S, rep, false), if we use <true> as the last argument,
-      # then this is no longer the case, and this is would be more complicated.
+  lookup := OrbSCCLookup(o);
 
-      return [S, 1, GradedLambdaOrb(S, rep, false), rep, true];
-    end;
-    iter := IteratorByOrbFunc(o, func, 2);
-  else
-    lookup := OrbSCCLookup(o);
+  func := function(iter, i)
+    local rep;
 
-    func := function(iter, i)
-      local rep;
+    # <rep> has rho val corresponding to <i>
+    rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
-      # <rep> has rho val corresponding to <i>
-      rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
+    # rectify the lambda value of <rep>
+    rep := rep * LambdaOrbMult(o,
+                               lookup[i],
+                               Position(o, LambdaFunc(S)(rep)))[2];
 
-      # rectify the lambda value of <rep>
-      rep := rep * LambdaOrbMult(o,
-                                 lookup[i],
-                                 Position(o, LambdaFunc(S)(rep)))[2];
+    return [S, lookup[i], o, rep, false];
+  end;
 
-      return [S, lookup[i], o, rep, false];
-    end;
-
-    iter := IteratorByIterator(IteratorList([2 .. Length(o)]), func);
-  fi;
+  iter := IteratorByIterator(IteratorList([2 .. Length(o)]), func);
 
   return iter;
 end);
@@ -664,11 +651,9 @@ S -> IteratorByIterator(IteratorOfRClassData(S),
 # 5.b. for individual classes
 ########################################################################
 
-
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
-
 
 InstallMethod(Enumerator, "for L-class of an inverse acting semigroup rep",
 [IsGreensLClass and IsInverseActingRepGreensClass

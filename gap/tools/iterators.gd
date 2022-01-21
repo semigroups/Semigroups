@@ -14,8 +14,11 @@ DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
 
+# Keeper 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfLClasses", [IsSemigroup]);
+
+# Not get processed
+
 DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
 DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);

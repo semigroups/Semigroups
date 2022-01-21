@@ -813,9 +813,6 @@ gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 100, 100);;
 gap> iter := IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> for i in [1 .. 100] do NextIterator(iter); od;
-gap> iter := IteratorOfLClasses(s);
-<iterator of L-classes>
-gap> for i in [1 .. 100] do NextIterator(iter); od;
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 2, 20);;
 gap> iter := IteratorOfDClassReps(s);
 <iterator of D-class reps>
@@ -836,9 +833,6 @@ gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 100, 100);
 <inverse partial perm semigroup of rank 100 with 100 generators>
 gap> iter := IteratorOfRClasses(s);       
 <iterator of R-classes>
-gap> for i in [1 .. 100] do NextIterator(iter); od;
-gap> iter := IteratorOfLClasses(s);      
-<iterator of L-classes>
 gap> for i in [1 .. 100] do NextIterator(iter); od;
 
 # InverseTest17
