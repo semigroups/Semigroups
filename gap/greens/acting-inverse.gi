@@ -609,112 +609,21 @@ InstallMethod(NrIdempotents,
 # 5.a. for all classes
 ########################################################################
 
-InstallMethod(EnumeratorOfRClasses, "for an inverse acting semigroup rep",
-[IsInverseActingSemigroupRep],
-function(S)
-  Enumerate(LambdaOrb(S));
-  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
-
-    parent := S,
-
-    Length := enum -> NrRClasses(enum!.parent),
-
-    Membership := function(R, enum)
-      return Representative(R) in enum!.parent;
-    end,
-
-    NumberElement := function(enum, R)
-      local pos;
-      pos := Position(LambdaOrb(enum!.parent),
-       RhoFunc(enum!.parent)(Representative(R)));
-      if pos = fail then
-        return fail;
-      fi;
-      return pos - 1;
-    end,
-
-   ElementNumber := function(enum, nr)
-    local S, o, m;
-    S := enum!.parent;
-    o := LambdaOrb(S);
-    m := OrbSCCLookup(o)[nr + 1];
-    return
-      GreensRClassOfElementNC(S,
-                              LambdaOrbMult(o, m, nr + 1)[2] *
-                              RightOne(LambdaOrbRep(o, m)));
-    end,
-
-   PrintObj := function(enum)
-     Print("<enumerator of R-classes of ", ViewString(S), ">");
-     return;
-   end));
-end);
-
-InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
-[IsInverseActingSemigroupRep and IsRegularSemigroup],
-function(s)
-  local graded, record, o, scc, func;
-
-  if not IsClosedOrbit(LambdaOrb(s)) then
-    graded := IteratorOfGradedLambdaOrbs(s);
-    record := rec(m := 0, graded := graded, o := NextIterator(graded));
-    record.NextIterator := function(iter)
-      local m, o;
-      m := iter!.m;
-      if iter!.o = fail then
-        return fail;
-      elif m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1;
-        iter!.o := NextIterator(iter!.graded);
-        if iter!.o = fail then
-          return fail;
-        fi;
-      else
-        m := m + 1;
-      fi;
-      iter!.m := m;
-      o := iter!.o;
-
-      # rep has rectified lambda val and rho val.
-      # don't use trace schreier tree forward since often l=1 and so
-      # this returns the identity partial perm
-      return [s, m, o, fail, fail, RightOne(LambdaOrbRep(o, m)), false];
-    end;
-
-    record.ShallowCopy := iter -> rec(m := fail,
-                                      graded := IteratorOfGradedLambdaOrbs(s));
-    return IteratorByNextIterator(record);
-  else
-    o := LambdaOrb(s);
-    scc := OrbSCC(o);
-
-    func := function(iter, m)
-      local rep;
-      # rep has rectified lambda val and rho val.
-      rep := RightOne(EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])));
-
-      return [s, m, o, fail, fail, rep, false];
-    end;
-
-    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
-  fi;
-end);
-
 InstallMethod(IteratorOfRClassData, "for acting inverse semigroup rep",
 [IsInverseActingSemigroupRep],
-function(s)
+function(S)
   local o, func, iter, lookup;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   if not IsClosedOrbit(o) then
     func := function(iter, i)
       local rep;
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
-      # GradedLambdaOrb(s, rep, false), if we use <true> as the last argument,
+      # GradedLambdaOrb(S, rep, false), if we use <true> as the last argument,
       # then this is no longer the case, and this is would be more complicated.
 
-      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+      return [S, 1, GradedLambdaOrb(S, rep, false), rep, true];
     end;
     iter := IteratorByOrbFunc(o, func, 2);
   else
@@ -729,9 +638,9 @@ function(s)
       # rectify the lambda value of <rep>
       rep := rep * LambdaOrbMult(o,
                                  lookup[i],
-                                 Position(o, LambdaFunc(s)(rep)))[2];
+                                 Position(o, LambdaFunc(S)(rep)))[2];
 
-      return [s, lookup[i], o, rep, false];
+      return [S, lookup[i], o, rep, false];
     end;
 
     iter := IteratorByIterator(IteratorList([2 .. Length(o)]), func);

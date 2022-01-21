@@ -216,40 +216,6 @@ gap> GreensLClasses(S);;
 gap> IteratorOfLClasses(S);
 <iterator>
 
-# EnumeratorOfRClasses, for a regular acting semigroup, 1
-gap> S := RegularSemigroup([
-> Transformation([1, 2, 3, 3, 1]),
-> Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
-gap> e := EnumeratorOfRClasses(S);
-<enumerator of R-classes of <regular transformation semigroup of degree 5 
- with 3 generators>>
-gap> Length(e) = NrRClasses(S);
-true
-gap> e[1];
-<Green's R-class: Transformation( [ 1, 2, 3, 3, 1 ] )>
-gap> e[Length(e)];
-<Green's R-class: Transformation( [ 2, 3, 3, 3, 3 ] )>
-gap> e[Length(e) + 1];
-fail
-gap> Position(e, e[1]);
-1
-gap> Position(e, e[28]);
-28
-gap> Position(e,
-> RClass(FullTransformationMonoid(5),
->        Transformation([1, 2, 3, 3, 1])));
-1
-gap> Position(e,
-> RClass(FullTransformationMonoid(6),
->        Transformation([3, 1, 2, 6, 4, 5])));
-fail
-gap> RClass(FullTransformationMonoid(6),
-> Transformation([3, 1, 2, 6, 4, 5])) in e;
-false
-gap> e[1] in e;
-true
-
 #Test \< for Green's classes of a regular semigroup
 gap> S := SymmetricInverseMonoid(5);;
 gap> Set([DClass(S, S.2) < DClass(S, S.3), DClass(S, S.3) < DClass(S, S.2)]);

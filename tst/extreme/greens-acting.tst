@@ -1511,9 +1511,6 @@ gap> iter := IteratorOfDClassReps(s);
 gap> for i in [1 .. 8] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 true
-gap> iter2 := IteratorOfRClassReps(s);
-<iterator of R-class reps>
-gap> for i in [1 .. 500] do NextIterator(iter2); od;
 gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 >  Transformation([3, 4, 2, 2]),
@@ -1522,15 +1519,6 @@ gap> s := Semigroup(gens);;
 gap> iter := IteratorOfDClassReps(s);
 <iterator of D-class reps>
 gap> for i in [1 .. 15] do NextIterator(iter); od;
-gap> s := Semigroup(gens);;
-gap> iter1 := IteratorOfRClassReps(s);;
-gap> iter2 := IteratorOfRClassReps(s);;
-gap> NextIterator(iter1); NextIterator(iter2);
-Transformation( [ 1, 3, 2, 3 ] )
-Transformation( [ 1, 3, 2, 3 ] )
-gap> NextIterator(iter1); NextIterator(iter2);
-Transformation( [ 1, 4, 1, 2 ] )
-Transformation( [ 1, 4, 1, 2 ] )
 gap> s := FullTransformationSemigroup(10);;
 gap> f := Transformation([8, 10, 8, 5, 6, 10, 7, 2, 9, 9]);;
 gap> d := GreensDClassOfElementNC(s, f);;  # 1s with NC check efficiency here!

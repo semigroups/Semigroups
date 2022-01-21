@@ -1460,19 +1460,10 @@ gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0],
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ()]]);;
 gap> S := Semigroup(S, rec(acting := true));;
-gap> enum := EnumeratorOfRClasses(S);
-<enumerator of R-classes of <semigroup with 46 generators>>
-gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
-true
-gap> ForAll([1 .. Length(enum)], i -> Position(enum, enum[i]) = i);
-true
-gap> ForAll(enum, x -> x in enum);
-true
-gap> RClasses(S);;
 gap> iter := IteratorOfRClasses(S);
-<iterator>
+<iterator of R-classes>
 gap> iter := IteratorOfDClasses(S);
-<iterator>
+<iterator of D-classes>
 gap> S := Semigroup(S, rec(acting := true));;
 gap> iter := IteratorOfRClasses(S);
 <iterator of R-classes>

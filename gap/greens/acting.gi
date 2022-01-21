@@ -2062,35 +2062,7 @@ function(S)
   return IteratorByNextIterator(record);
 end);
 
-# Notes: the only purpose for this is the method for NumberElement.  Otherwise
-# use (if nothing much is known) IteratorOfRClasses or if everything is know
-# just use RClasses.
-
-# different method for regular/inverse
-
-InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(S)
-  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)),
-  rec(ElementNumber := function(enum, pos)
-        return GreensRClasses(S)[pos];
-      end,
-
-      NumberElement := function(enum, R)
-        return Position(SemigroupData(S), Representative(R)) - 1;
-      end,
-
-      Length := enum -> NrRClasses(S),
-
-      PrintObj := function(enum)
-        Print("<enumerator of R-classes of ", ViewString(S), ">");
-        return;
-      end));
-
-end);
-
 # same method for regular/inverse
-# KEEP
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],

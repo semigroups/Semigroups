@@ -661,9 +661,8 @@ false]]></Example>
     compute all of the &R;-classes.<P/>
 
     See also <Ref Meth = "GreensRClasses"/>,
-    <Ref Meth = "GreensRClasses" BookName = "ref"/>,
-    <Ref Attr = "NrRClasses"/>, and
-    <Ref Oper = "IteratorOfRClassReps"/>.<P/>
+    <Ref Meth = "GreensRClasses" BookName = "ref"/>, and
+    <Ref Attr = "NrRClasses"/>. <P/>
 
     The transformation semigroup in the example below has 25147892 elements but
     it only takes a fraction of a second to find a non-trivial &R;-class. The
@@ -748,7 +747,6 @@ gap> Size(R);
   See also <Ref Meth = "GreensRClasses"/>,
   <Ref Meth = "GreensRClasses" BookName = "ref"/>,
   <Ref Oper = "IteratorOfRClasses"/>, and
-  <Ref Oper = "IteratorOfRClassReps"/>.
 
   <Example><![CDATA[
 gap> S := Semigroup(

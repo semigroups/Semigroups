@@ -807,9 +807,6 @@ gap> for i in iter do od;
 gap> iter := IteratorOfDClassReps(s);
 <iterator of D-class reps>
 gap> for i in iter do od;
-gap> iter := IteratorOfRClassReps(s);
-<iterator of R-class reps>
-gap> for i in iter do od;
 
 # InverseTest16
 gap> s := RandomInverseSemigroup(IsPartialPermSemigroup, 100, 100);;
@@ -832,9 +829,6 @@ gap> iter := IteratorOfLClassReps(s);
 gap> for i in iter do od;
 gap> iter := IteratorOfDClassReps(s);
 <iterator of D-class reps>
-gap> for i in iter do od;
-gap> iter := IteratorOfRClassReps(s);
-<iterator of R-class reps>
 gap> for i in iter do od;
 
 # InverseTest16

@@ -67,7 +67,7 @@
       possible to compute the &R;-classes, the number of elements and test
       membership in a semigroup without computing all the elements; see, for
       example, <Ref Meth = "GreensRClasses"/>, <Ref Attr = "RClassReps"/>, <Ref
-        Oper = "IteratorOfRClassReps"/>, <Ref Oper = "IteratorOfRClasses"/>, or
+        Oper = "IteratorOfRClasses"/>, or
       <Ref Attr = "NrRClasses"/>.  This may be useful if you want to study a very
       large semigroup where computing all the elements of the semigroup is not
       feasible.<P/>

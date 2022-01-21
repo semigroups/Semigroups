@@ -3276,28 +3276,6 @@ gap> Number(HClassReps(d), x -> x in r);
 6
 gap> NrHClasses(r);
 6
-gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- degree 6 with 18 generators>>
-gap> enum[1];
-<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
-gap> s := Semigroup(gens);
-<transformation monoid of degree 6 with 18 generators>
-gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid of degree 6 with 18 
- generators>>
-gap> enum[1];
-<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
-gap> enum[2];
-<Green's R-class: Transformation( [ 5, 3, 3, 2, 4, 1 ] )>
-gap> Position(enum, enum[10]);
-10
-gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
-true
-gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
-true
-gap> NrHClasses(r);
-6
 
 # MiscTest35
 gap> gens := [PartialPermNC([1, 2, 4], [2, 5, 3]),
@@ -4259,27 +4237,6 @@ gap> HClassReps(d);
   Transformation( [ 2, 4, 2, 3, 4, 5 ] ) ]
 gap> Number(HClassReps(d), x -> x in r);
 6
-gap> NrHClasses(r);
-6
-gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <non-regular transformation monoid of size 7008, 
- degree 6 with 18 generators>>
-gap> enum[1];
-<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
-gap> s := Semigroup(gens);;
-gap> enum := EnumeratorOfRClasses(s);
-<enumerator of R-classes of <transformation monoid of degree 6 with 18 
- generators>>
-gap> enum[1];
-<Green's R-class: Transformation( [ 6, 4, 3, 2, 5, 1 ] )>
-gap> enum[2];
-<Green's R-class: Transformation( [ 5, 3, 3, 2, 4, 1 ] )>
-gap> Position(enum, enum[10]);
-10
-gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
-true
-gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
-true
 gap> NrHClasses(r);
 6
 

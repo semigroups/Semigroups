@@ -23,6 +23,5 @@ DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassReps", [IsSemigroup]);
 
 DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassData", [IsSemigroup]);

@@ -42,7 +42,6 @@ DeclareOperation("GreensRClassOfElement",
                  [IsGreensClass, IsMultiplicativeElement]);
 DeclareOperation("GreensRClassOfElementNC",
                  [IsCollection, IsMultiplicativeElement]);
-DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
 
 DeclareOperation("GreensHClassOfElement",
                  [IsGreensClass, IsMultiplicativeElement]);

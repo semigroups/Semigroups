@@ -459,111 +459,6 @@ function(S)
                                 end));
 end);
 
-# different method for inverse
-
-# Notes: the only purpose for this is the method for NumberElement.  Otherwise
-# use (if nothing much is known) IteratorOfRClasses or if everything is know
-# just use RClasses.
-
-# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
-# does not matter.
-
-InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
-
-    parent := S,
-
-    Length := enum -> NrRClasses(enum!.parent),
-
-    Membership := function(R, enum)
-      return Representative(R) in enum!.parent;
-    end,
-
-    NumberElement := function(enum, R)
-      local pos;
-      pos := Position(RhoOrb(enum!.parent),
-       RhoFunc(enum!.parent)(Representative(R)));
-      if pos = fail then
-        return fail;
-      fi;
-      return pos - 1;
-    end,
-
-   ElementNumber := function(enum, nr)
-    local S, o, m;
-    S := enum!.parent;
-    o := RhoOrb(S);
-    if nr + 1 > Length(OrbSCCLookup(o)) then
-      return fail;
-    fi;
-    m := OrbSCCLookup(o)[nr + 1];
-    return
-      GreensRClassOfElementNC(S,
-                              RhoOrbMult(o, m, nr + 1)[1] * RhoOrbRep(o, m));
-   end,
-
-   PrintObj := function(enum)
-     Print("<enumerator of R-classes of ", ViewString(S), ">");
-     return;
-   end));
-end);
-
-# different method for inverse
-
-InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-function(S)
-  local record, o, scc, func;
-
-  if not IsClosedOrbit(LambdaOrb(S)) then
-    record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(S));
-    record.NextIterator := function(iter)
-      local l, rep, m;
-
-      m := iter!.m;
-
-      if IsBound(iter!.o) and iter!.o = fail then
-        return fail;
-      fi;
-
-      if m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1;
-        l := 1;
-        iter!.o := NextIterator(iter!.graded);
-        if iter!.o = fail then
-          return fail;
-        fi;
-      else
-        m := m + 1;
-        l := OrbSCC(iter!.o)[m][1];
-      fi;
-      iter!.m := m;
-
-      # rep has rectified lambda val and rho val.
-      rep := LambdaOrbRep(iter!.o, m) * LambdaOrbMult(iter!.o, m, l)[2];
-      return [S, m, iter!.o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
-    end;
-
-    record.ShallowCopy := iter -> rec(m := fail,
-                                      graded := IteratorOfGradedLambdaOrbs(S));
-    return IteratorByNextIterator(record);
-  else
-    o := LambdaOrb(S);
-    scc := OrbSCC(o);
-
-    func := function(iter, m)
-      local rep;
-      # rep has rectified lambda val and rho val.
-      rep := EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
-      return [S, m, o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
-    end;
-
-    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
-  fi;
-end);
-
 # no method required for inverse (it's not used for anything)
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
@@ -624,18 +519,55 @@ end);
 
 InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  if HasDClassReps(s) then
-    return IteratorList(DClassReps(s));
+function(S)
+  local record, o, scc, func;
+
+  if HasDClassReps(S) then
+    return IteratorList(DClassReps(S));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s),
-                            x -> x[6],
-                            [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of D-class reps>");
-                                  return;
-                                end));
+
+  if not IsClosedOrbit(LambdaOrb(S)) then
+    record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(S));
+    record.NextIterator := function(iter)
+      local l, rep, m;
+
+      m := iter!.m;
+
+      if IsBound(iter!.o) and iter!.o = fail then
+        return fail;
+      fi;
+
+      if m = fail or m = Length(OrbSCC(iter!.o)) then
+        m := 1;
+        l := 1;
+        iter!.o := NextIterator(iter!.graded);
+        if iter!.o = fail then
+          return fail;
+        fi;
+      else
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
+      fi;
+      iter!.m := m;
+
+      # rep has rectified lambda val and rho val.
+      return LambdaOrbRep(iter!.o, m) * LambdaOrbMult(iter!.o, m, l)[2];
+    end;
+
+    record.ShallowCopy := iter -> rec(m := fail,
+                                      graded := IteratorOfGradedLambdaOrbs(S));
+    return IteratorByNextIterator(record);
+  else
+    o := LambdaOrb(S);
+    scc := OrbSCC(o);
+
+    func := function(iter, m)
+      # has rectified lambda val and rho val!
+      return EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
+    end;
+
+    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+  fi;
 end);
 
 # different method for inverse

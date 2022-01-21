@@ -440,32 +440,6 @@ gap> Idempotents(S, 4);
 gap> Idempotents(S, -1);
 Error, the 2nd argument (an int) is not non-negative
 
-# EnumeratorOfRClasses, for an acting inverse op semigroup
-gap> S := InverseSemigroup([
-> Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]),
-> Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
-> Bipartition([[1, -4], [2, -5], [3, 5, 6, -2, -3, -6], [4, -1]]),
-> Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],
-> rec(acting := true));;
-gap> e := EnumeratorOfRClasses(S);
-<enumerator of R-classes of <inverse block bijection semigroup of degree 6 
- with 4 generators>>
-gap> Length(e) = NrRClasses(S);
-true
-gap> e[1];
-<Green's R-class: <block bijection: [ 1, 2, 5, 6, -1, -2, -5, -6 ], 
-  [ 3, -3 ], [ 4, -4 ]>>
-gap> Position(e, e[1]);
-1
-gap> Position(e, RClass(PartitionMonoid(3),
-> Bipartition([[1, -2], [2], [3, -3], [-1]])));
-fail
-gap> RClass(PartitionMonoid(3),
-> Bipartition([[1, -2], [2], [3, -3], [-1]])) in e;
-false
-gap> e[1] in e;
-true
-
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(L);
