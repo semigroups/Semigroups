@@ -848,3 +848,11 @@ InstallMethod(\<, "for the universal fake one and a multiplicative element",
 
 InstallMethod(\<, "for a multiplicative element and the universal fake one",
 [IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);
+
+# same method for regular/inverse
+
+InstallMethod(Iterator, "for a trivial acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+function(S)
+  return TrivialIterator(GeneratorsOfSemigroup(S)[1]);
+end);

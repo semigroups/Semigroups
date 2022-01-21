@@ -877,3 +877,42 @@ function(D)
   x := RepresentativeOfMinimalIdeal(EndomorphismMonoid(D));
   return ImageSetOfTransformation(x, DigraphNrVertices(D));
 end);
+
+#############################################################################
+# Iterators 
+#############################################################################
+
+# This is faster than using the iterator method for CppFroidurePin for n = 7 or
+# so onwards
+
+InstallMethod(Iterator, "for a full transformation semigroup",
+[IsTransformationSemigroup and IsFullTransformationSemigroup and
+ HasGeneratorsOfSemigroup],
+function(S)
+  local iter;
+
+  if HasAsSSortedList(S) or HasAsListCanonical(S) then
+    # This is much faster
+    TryNextMethod();
+  fi;
+
+  iter := IteratorByFunctions(rec(
+    tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
+                             DegreeOfTransformationSemigroup(S)),
+    parent := S,
+
+    NextIterator := iter -> TransformationNC(NextIterator(iter!.tups)),
+
+    IsDoneIterator := iter -> IsDoneIterator(iter!.tups),
+
+    ShallowCopy := iter ->
+      rec(parent := S,
+          tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
+                                   DegreeOfTransformationSemigroup(S))),
+
+    PrintObj := function(iter)
+                  Print("<iterator of semigroup>");
+                  return;
+                end));
+  return iter;
+end);

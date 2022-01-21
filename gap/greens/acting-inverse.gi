@@ -605,15 +605,13 @@ InstallMethod(NrIdempotents,
 ## 5. Iterators and enumerators . . .
 #############################################################################
 
-# Notes: the only purpose for this is the method for NumberElement.  Otherwise
-# use (if nothing much is known) IteratorOfRClasses or if everything is know
-# just use RClasses.
+########################################################################
+# 5.a. for all classes
+########################################################################
 
-InstallMethod(EnumeratorOfRClasses,
-"for an inverse acting semigroup rep",
+InstallMethod(EnumeratorOfRClasses, "for an inverse acting semigroup rep",
 [IsInverseActingSemigroupRep],
 function(S)
-
   Enumerate(LambdaOrb(S));
   return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
 
@@ -651,6 +649,117 @@ function(S)
      return;
    end));
 end);
+
+InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
+[IsInverseActingSemigroupRep and IsRegularSemigroup],
+function(s)
+  local graded, record, o, scc, func;
+
+  if not IsClosedOrbit(LambdaOrb(s)) then
+    graded := IteratorOfGradedLambdaOrbs(s);
+    record := rec(m := 0, graded := graded, o := NextIterator(graded));
+    record.NextIterator := function(iter)
+      local m, o;
+      m := iter!.m;
+      if iter!.o = fail then
+        return fail;
+      elif m = fail or m = Length(OrbSCC(iter!.o)) then
+        m := 1;
+        iter!.o := NextIterator(iter!.graded);
+        if iter!.o = fail then
+          return fail;
+        fi;
+      else
+        m := m + 1;
+      fi;
+      iter!.m := m;
+      o := iter!.o;
+
+      # rep has rectified lambda val and rho val.
+      # don't use trace schreier tree forward since often l=1 and so
+      # this returns the identity partial perm
+      return [s, m, o, fail, fail, RightOne(LambdaOrbRep(o, m)), false];
+    end;
+
+    record.ShallowCopy := iter -> rec(m := fail,
+                                      graded := IteratorOfGradedLambdaOrbs(s));
+    return IteratorByNextIterator(record);
+  else
+    o := LambdaOrb(s);
+    scc := OrbSCC(o);
+
+    func := function(iter, m)
+      local rep;
+      # rep has rectified lambda val and rho val.
+      rep := RightOne(EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])));
+
+      return [s, m, o, fail, fail, rep, false];
+    end;
+
+    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+  fi;
+end);
+
+InstallMethod(IteratorOfRClassData, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
+function(s)
+  local o, func, iter, lookup;
+
+  o := LambdaOrb(s);
+  if not IsClosedOrbit(o) then
+    func := function(iter, i)
+      local rep;
+      rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
+      # <rep> has rho val corresponding to <i> and lambda val in position 1 of
+      # GradedLambdaOrb(s, rep, false), if we use <true> as the last argument,
+      # then this is no longer the case, and this is would be more complicated.
+
+      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+    end;
+    iter := IteratorByOrbFunc(o, func, 2);
+  else
+    lookup := OrbSCCLookup(o);
+
+    func := function(iter, i)
+      local rep;
+
+      # <rep> has rho val corresponding to <i>
+      rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
+
+      # rectify the lambda value of <rep>
+      rep := rep * LambdaOrbMult(o,
+                                 lookup[i],
+                                 Position(o, LambdaFunc(s)(rep)))[2];
+
+      return [s, lookup[i], o, rep, false];
+    end;
+
+    iter := IteratorByIterator(IteratorList([2 .. Length(o)]), func);
+  fi;
+
+  return iter;
+end);
+
+InstallMethod(IteratorOfLClassReps, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
+S -> IteratorByIterator(IteratorOfRClassData(S),
+                        x -> Inverse(x[4]),
+                        [],
+                        fail,
+                        rec(PrintObj := function(iter)
+                              Print("<iterator of L-class reps>");
+                              return;
+                            end)));
+
+########################################################################
+# 5.b. for individual classes
+########################################################################
+
+
+# Notes: the only purpose for this is the method for NumberElement.  Otherwise
+# use (if nothing much is known) IteratorOfRClasses or if everything is know
+# just use RClasses.
+
 
 InstallMethod(Enumerator, "for L-class of an inverse acting semigroup rep",
 [IsGreensLClass and IsInverseActingRepGreensClass
@@ -760,4 +869,36 @@ function(D)
   enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(D), scc);
 
   return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
+end);
+
+
+InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
+[IsInverseActingRepGreensClass and IsGreensLClass
+ and IsActingSemigroupGreensClass],
+function(L)
+  local iter, m, baseiter, convert;
+
+  if HasAsSSortedList(L) then
+    iter := IteratorList(AsSSortedList(L));
+    return iter;
+  fi;
+  m := LambdaOrbSCCIndex(L);
+  baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(L))[m],
+                                         Enumerator(SchutzenbergerGroup(L)));
+
+  convert := function(x)
+    return StabilizerAction(Parent(L))(LambdaOrbMult(LambdaOrb(L),
+                                                     LambdaOrbSCCIndex(L),
+                                                     x[1])[2]
+                                       * Representative(L), x[2]);
+  end;
+
+  return IteratorByIterator(baseiter,
+                            convert,
+                            [],
+                            fail,
+                            rec(PrintObj := function(iter)
+                                  Print("<iterator of L-class>");
+                                  return;
+                                end));
 end);

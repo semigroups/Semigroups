@@ -12,6 +12,16 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> ListIterator := function(it)
+>  local out, i, x;
+>  out := [];
+>  i := 0;
+>  for x in it do
+>    i := i + 1;
+>    out[i] := x;
+>  od;
+>  return out;
+> end;;
 
 # Test idempotents work with ClosureSemigroup
 gap> NrIdempotents(FullTransformationMonoid(6));
@@ -164,9 +174,7 @@ true
 gap> IsDoneIterator(it);
 true
 
-# gap> NextIterator(it);
-# Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
-# ed value in range [0, 247), got 247
+#
 gap> it := ShallowCopy(it);;
 gap> IsDoneIterator(it);
 true
@@ -181,9 +189,7 @@ true
 gap> IsDoneIterator(it);
 true
 
-# gap> NextIterator(it);
-#  Error, ./bin/include/libsemigroups/froidure-pin-impl.hpp:367:sorted_at: expect\
-#  ed value in range [0, 247), got 248
+#
 gap> ListIterator(it) = AsSet(S);  # it's done
 false
 gap> it := ShallowCopy(it);;

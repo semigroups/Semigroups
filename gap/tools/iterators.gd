@@ -8,17 +8,13 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("IteratorOfArrangements");
-
 # constructors for iterators
 DeclareGlobalFunction("IteratorByOrbFunc");
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
-DeclareGlobalFunction("ListIterator");
 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfLClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
@@ -31,6 +27,3 @@ DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
-
-DeclareFilter("IsIteratorSorted", IsIterator);
-DeclareGlobalFunction("IteratorSortedOp");

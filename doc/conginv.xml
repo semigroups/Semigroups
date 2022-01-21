@@ -58,7 +58,7 @@ gap> cong := SemigroupCongruence(I,
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> KernelOfSemigroupCongruence(cong);
-<inverse partial perm semigroup of rank 3 with 5 generators>
+<inverse partial perm semigroup of size 19, rank 3 with 5 generators>
 ]]></Example>
     </Description>
   </ManSection>
@@ -207,8 +207,8 @@ gap> S := InverseSemigroup([
 >   PartialPerm([5, 2, 0, 0, 1, 4]),
 >   PartialPerm([1, 4, 6, 3, 5, 0, 2])]);;
 gap> cong := MinimumGroupCongruence(S);
-<semigroup congruence over <inverse partial perm semigroup of rank 7 
- with 2 generators> with congruence pair (59,1)>
+<semigroup congruence over <inverse partial perm semigroup 
+ of size 101, rank 7 with 2 generators> with congruence pair (59,1)>
 gap> IsGroupAsSemigroup(S / cong);
 true]]></Example>
     </Description>

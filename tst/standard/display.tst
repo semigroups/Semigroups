@@ -331,95 +331,95 @@ de [above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below]\
 s and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1\
 $};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpic\
 ture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125)\
-;\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %bl\
-ock number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.\
-95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) n\
-ode [below] {$-1$};\n\n  %lines\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\
-\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node \
-[below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\b\
-egin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)\
-circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %li\
-nes\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\
-\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\dr\
-aw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.\
-2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) \
-and (2, 0.75) .. (2, 0.125);\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\
+;\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circl\
+e(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\
+\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\dra\
+w(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1\
+, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(1, 0.125) .. controls (1, 0.75)\
+ and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\\end{tikzpicture}\n\n\
 \n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices\
  and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) n\
-ode [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [abo\
-ve] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$}\
-;\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %l\
-ines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n \
- \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n  \\draw\
-(1, 2)--(1, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpic\
-ture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125)\
-;\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circl\
-e(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)circle(.125);\
-\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.875) .. co\
-ntrols (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(2, 2)--(2, 0);\n\n  %b\
-lock number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1\
-, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\b\
-igskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n \
- \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$\
-1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \
-\\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\
-\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\d\
-raw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 0\
-)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikz\
-picture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\
-\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.949999999999\
-99996, 2.2) node [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2\
-) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number\
- 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) n\
-ode [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n \
- \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\
+ode [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below\
+] {$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertic\
+es and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {\
+$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(1, 0)\
+circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzp\
+icture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n\
+  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999\
+996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n  %vertices an\
+d labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\
+\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %li\
+nes\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \
+\\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\
 \n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %blo\
 ck number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9\
-4999999999999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\d\
-raw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %b\
-lock number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1\
-.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices an\
-d labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\
-\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpictur\
-e}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n\
-  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.\
-125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \
-\\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. contro\
-ls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block\
- number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95,\
- 2.2) node [above] {$2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigs\
-kip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\\
-fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$}\
-;\n\n  %lines\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circ\
-le(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block num\
-ber 3\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) \
-node [below] {$-1$};\n\n  %lines\n\n  %block number 4\n  %vertices and labels\
-\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
-nes\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %\
-block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(\
-0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\
-\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) nod\
-e [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \
-\\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2,\
- 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw\
-(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpictu\
+4999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n \
+ %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [\
+above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-\
+1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n \
+ %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\
+\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\beg\
+in{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)ci\
+rcle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(\
+2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)cir\
+cle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.\
+875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(2, 2)--(2, 0\
+);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n\
+  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\\
+bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and\
+ labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node \
+[above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$\
+-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices a\
+nd labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$}\
+;\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)circ\
+le(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpictu\
 re}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %v\
 ertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996,\
- 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) no\
-de [above] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2\
-, 1.25) .. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(\
-1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\n  %b\
-lock number 3\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2\
-, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\b\
-igskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n \
- \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$\
-1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n\
-  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875)\
-;\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n \
- \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2\
-, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0\
-.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\
-\n\n\\end{center}\\end{document}"
+ 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node\
+ [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] \
+{$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) ..\
+ (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and la\
+bels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n\
+  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\
+\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\\
+draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block num\
+ber 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2\
+) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\
+\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %li\
+nes\n\n  %block number 4\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\
+\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices a\
+nd labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) nod\
+e [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
+] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
+\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.\
+875);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and labels\n \
+ \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\
+\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %blo\
+ck number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9\
+4999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n \
+ %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [\
+above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fi\
+ll(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)c\
+ircle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, \
+0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\
+\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vert\
+ices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.\
+2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node \
+[above] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1\
+.25) .. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, \
+0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\n  %bloc\
+k number 3\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -\
+0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigs\
+kip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\\
+fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$}\
+;\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %\
+lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n\
+\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\\
+draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -\
+0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75\
+) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\
+\\end{center}\\end{document}"
 
 # Test TikzString for a bipartition
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]));

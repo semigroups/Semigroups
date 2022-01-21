@@ -416,10 +416,11 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 ## 6. Iterators and enumerators . . .
 #############################################################################
 
-# different method for inverse
+#############################################################################
+## 6.a. for all classes
+#############################################################################
 
-# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
-# does not matter.
+# different method for inverse
 
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -440,9 +441,6 @@ function(S)
 end);
 
 # same method for inverse
-
-# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
-# does not matter.
 
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -514,6 +512,117 @@ end);
 
 # different method for inverse
 
+InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(S)
+  local record, o, scc, func;
+
+  o := LambdaOrb(S);
+  scc := OrbSCC(o);
+
+  func := function(iter, m)
+    local rep;
+    # rep has rectified lambda val and rho val.
+    rep := EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
+    return [S, m, o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
+  end;
+
+  return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+end);
+
+# no method required for inverse (it's not used for anything)
+
+InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o, func, iter;
+
+  o := LambdaOrb(s);
+
+  func := function(iter, i)
+    local rep;
+
+    # <rep> has lambda val corresponding to <i>
+    rep := EvaluateWord(o, TraceSchreierTreeForward(o, i));
+
+    # <rep> has rho val in position 1 of GradedRhoOrb(s, rep, false).
+    # We don't rectify the rho val of <rep> in <o> since we require to
+    # enumerate RhoOrb(s) to do this, if we use GradedRhoOrb(s, rep,
+    # true) then this get more complicated.
+    return [s, 1, GradedRhoOrb(s, rep, false)[1], rep, true];
+  end;
+
+  if not IsClosedOrbit(o) then
+    iter := IteratorByOrbFunc(o, func, 2);
+  else
+    return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
+  fi;
+
+  return iter;
+end);
+
+# different method for inverse
+
+InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o, func, iter;
+
+  o := RhoOrb(s);
+
+  func := function(iter, i)
+    local rep;
+
+    # <rep> has rho val corresponding to <i>
+    rep := EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
+
+    # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
+    # We don't rectify the lambda val of <rep> in <o> since we require to
+    # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
+    # true) then this gets more complicated.
+    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+  end;
+
+  return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
+end);
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasDClassReps(s) then
+    return IteratorList(DClassReps(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s),
+                            x -> x[6],
+                            [],
+                            fail,
+                            rec(PrintObj := function(iter)
+                                  Print("<iterator of D-class reps>");
+                                  return;
+                                end));
+end);
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+S -> IteratorByIterator(IteratorOfLClassData(S),
+                        x -> x[4],
+                        [],
+                        fail,
+                        rec(PrintObj := function(iter)
+                              Print("<iterator of L-class reps>");
+                              return;
+                            end)));
+
+########################################################################
+# 7.b. for individual classes
+########################################################################
+
+# different method for inverse
+
 InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
 [IsRegularDClass and IsActingSemigroupGreensClass],
 function(D)
@@ -568,3 +677,4 @@ function(D)
                                        lambda_scc);
   return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
 end);
+
