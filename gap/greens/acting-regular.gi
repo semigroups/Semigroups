@@ -517,17 +517,51 @@ InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 function(S)
   local record, o, scc, func;
 
-  o := LambdaOrb(S);
-  scc := OrbSCC(o);
+  if not IsClosedOrbit(LambdaOrb(S)) then
+    record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(S));
+    record.NextIterator := function(iter)
+      local l, rep, m;
 
-  func := function(iter, m)
-    local rep;
-    # rep has rectified lambda val and rho val.
-    rep := EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
-    return [S, m, o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
-  end;
+      m := iter!.m;
 
-  return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+      if IsBound(iter!.o) and iter!.o = fail then
+        return fail;
+      fi;
+
+      if m = fail or m = Length(OrbSCC(iter!.o)) then
+        m := 1;
+        l := 1;
+        iter!.o := NextIterator(iter!.graded);
+        if iter!.o = fail then
+          return fail;
+        fi;
+      else
+        m := m + 1;
+        l := OrbSCC(iter!.o)[m][1];
+      fi;
+      iter!.m := m;
+
+      # rep has rectified lambda val and rho val.
+      rep := LambdaOrbRep(iter!.o, m) * LambdaOrbMult(iter!.o, m, l)[2];
+      return [S, m, iter!.o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
+    end;
+
+    record.ShallowCopy := iter -> rec(m := fail,
+                                      graded := IteratorOfGradedLambdaOrbs(S));
+    return IteratorByNextIterator(record);
+  else
+    o := LambdaOrb(S);
+    scc := OrbSCC(o);
+
+    func := function(iter, m)
+      local rep;
+      # rep has rectified lambda val and rho val.
+      rep := EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
+      return [S, m, o, 1, GradedRhoOrb(S, rep, false)[1], rep, false];
+    end;
+
+    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+  fi;
 end);
 
 # no method required for inverse (it's not used for anything)

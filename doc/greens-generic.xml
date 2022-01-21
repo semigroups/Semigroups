@@ -627,7 +627,6 @@ false]]></Example>
   <Oper Name = "IteratorOfDClassReps" Arg = "S"/>
   <Oper Name = "IteratorOfHClassReps" Arg = "S"/>
   <Oper Name = "IteratorOfLClassReps" Arg = "S"/>
-  <Oper Name = "IteratorOfRClassReps" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
@@ -636,34 +635,9 @@ false]]></Example>
   in the semigroup <A>S</A>.  See <Ref Sect = "Iterators" BookName = "ref"/> for
   more information on iterators.<P/>
 
-
   See also <Ref Meth = "GreensRClasses" BookName = "ref"/>, <Ref
   Meth = "GreensRClasses"/>, and <Ref Oper = "IteratorOfRClasses"/>.<P/>
 
-  <Example><![CDATA[
-gap> S := Semigroup(Transformation([3, 2, 1, 5, 4]),
->                   Transformation([5, 4, 3, 2, 1]),
->                   Transformation([5, 4, 3, 2, 1]),
->                   Transformation([5, 5, 4, 5, 1]),
->                   Transformation([4, 5, 4, 3, 3]));;
-gap> iter := IteratorOfRClassReps(S);
-<iterator of R-class reps>
-gap> NextIterator(iter);
-Transformation( [ 3, 2, 1, 5, 4 ] )
-gap> NextIterator(iter);
-Transformation( [ 5, 5, 4, 5, 1 ] )
-gap> iter;
-<iterator of R-class reps>
-gap> file := PackageInfo("semigroups")[1]!.InstallationPath;;
-gap> file := Concatenation(file, "/data/doc/greens.pickle");;
-gap> S := InverseSemigroup(ReadGenerators(file, 1));
-<inverse partial perm semigroup of rank 983 with 2 generators>
-gap> NrMovedPoints(S);
-983
-gap> iter := IteratorOfLClassReps(S);
-<iterator of L-class reps>
-gap> NextIterator(iter);
-<partial perm on 634 pts with degree 1000, codegree 1000>]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
