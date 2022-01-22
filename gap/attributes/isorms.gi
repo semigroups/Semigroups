@@ -656,9 +656,7 @@ function(S, T)
       or Length(Columns(S)) <> Length(Columns(T))
       or Length(Rows(T)) <> Length(Rows(T)) then
     return fail;
-  fi;
-
-  if not (IsPermGroup(G) and IsPermGroup(H)) then
+  elif not (IsPermGroup(G) and IsPermGroup(H)) then
     TryNextMethod();
   fi;
 
@@ -946,9 +944,7 @@ function(x, y)
 
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
-  fi;
-
-  if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
+  elif x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
 
@@ -962,9 +958,7 @@ function(x, y)
 
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
     return false;
-  fi;
-
-  if x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
+  elif x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
     return true;
   fi;
 

@@ -577,9 +577,7 @@ function(x, y)
   if DimensionOfMatrixOverSemiring(x) <> DimensionOfMatrixOverSemiring(y)
       or BaseDomain(x) <> BaseDomain(y) then
     ErrorNoReturn("the degree or domain of the arguments do not match");
-  fi;
-
-  if DimensionOfMatrixOverSemiring(x) = 0 then
+  elif DimensionOfMatrixOverSemiring(x) = 0 then
     return x;
   fi;
 

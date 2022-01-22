@@ -565,9 +565,7 @@ function(S, n)
       and n = Maximum(DegreeOfPartialPermSemigroup(S),
                       CodegreeOfPartialPermSemigroup(S)) then
     return DigraphOfActionOnPoints(S);
-  fi;
-
-  if IsSemigroupIdeal(S) then
+  elif IsSemigroupIdeal(S) then
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
   else
     gens := GeneratorsOfSemigroup(S);

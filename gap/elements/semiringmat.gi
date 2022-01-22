@@ -110,8 +110,7 @@ IO_Unpicklers.MOSR := function(file)
   arg := IO_Unpickle(file);
   if arg = IO_Error then
     return IO_Error;
-  fi;
-  if arg[1] = IsBooleanMat then
+  elif arg[1] = IsBooleanMat then
     Perform(arg[2], ConvertToBlistRep);
   fi;
   return CallFuncList(MatrixNC, arg);
@@ -194,9 +193,7 @@ function(filter, mat, threshold, period)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("the 2nd argument must define a square matrix");
-  fi;
-
-  if filter <> IsNTPMatrix then
+  elif filter <> IsNTPMatrix then
     ErrorNoReturn("cannot create a matrix from the given arguments");
   fi;
 
@@ -223,9 +220,7 @@ function(filter, mat, threshold)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("the 2nd argument must define a square matrix");
-  fi;
-
-  if filter <> IsTropicalMaxPlusMatrix
+  elif filter <> IsTropicalMaxPlusMatrix
       and filter <> IsTropicalMinPlusMatrix then
     ErrorNoReturn("cannot create a matrix from the given arguments");
   fi;
@@ -251,14 +246,10 @@ function(filter, mat)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("the 2nd argument must define a square matrix");
-  fi;
-
-  if not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
+  elif not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
                     IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
     ErrorNoReturn("cannot create a matrix from the given arguments");
-  fi;
-
-  if filter = IsBooleanMat then
+  elif filter = IsBooleanMat then
     return BooleanMat(mat);
   fi;
 

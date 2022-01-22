@@ -138,16 +138,13 @@ function(arg)
   return S;
 end);
 
-InstallMethod(IsFreeBand, "for a semigroup",
-[IsSemigroup],
+InstallMethod(IsFreeBand, "for a semigroup", [IsSemigroup],
 function(S)
   local used, occurred, gens, max_d, g;
 
   if not IsBand(S) then
     return false;
-  fi;
-
-  if IsFreeBandSubsemigroup(S) then
+  elif IsFreeBandSubsemigroup(S) then
     gens := Generators(S);
     used := BlistList([1 .. Length(gens[1]!.cont)], []);
     occurred := BlistList([1 .. Length(gens[1]!.cont)], []);
@@ -518,8 +515,7 @@ function(w1_in, w2_in)
     local last, out, i;
     if not IsList(w) then
       ErrorNoReturn("expected a list, got ", w);
-    fi;
-    if Length(w) = 0 or Length(w) = 1 then
+    elif Length(w) = 0 or Length(w) = 1 then
       return w;
     fi;
 
@@ -563,9 +559,7 @@ function(w1_in, w2_in)
   od;
   if SizeBlist(check) <> c - 1 then
     return false;
-  fi;
-
-  if c = 2 then
+  elif c = 2 then
     return true;
   fi;
 

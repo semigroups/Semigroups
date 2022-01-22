@@ -243,9 +243,7 @@ function(lhop, rhop)
     Error("cannot form the join of congruences over different semigroups");
   elif lhop = rhop then
     return lhop;
-  fi;
-
-  if IsCongruenceCategory(lhop) then
+  elif IsCongruenceCategory(lhop) then
     Constructor := SemigroupCongruenceByGeneratingPairs;
   elif IsLeftCongruenceCategory(lhop) then
     Constructor := LeftSemigroupCongruenceByGeneratingPairs;

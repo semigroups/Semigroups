@@ -516,9 +516,7 @@ function(L)
   elif IsNaturalSymmetricGroup(G) and
       NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
     return true;
-  fi;
-
-  if IsPermGroup(G) then
+  elif IsPermGroup(G) then
     return StabChainImmutable(G);
   else  # if IsMatrixGroup(g)
     return G;
@@ -1683,9 +1681,7 @@ function(H)
 
   if not IsGroupHClass(H) then
     ErrorNoReturn("the argument (a Green's H-class) is not a group");
-  fi;
-
-  if not IsPermGroup(SchutzenbergerGroup(H)) then
+  elif not IsPermGroup(SchutzenbergerGroup(H)) then
     map := IsomorphismPermGroup(SchutzenbergerGroup(H));
   else
     map := IdentityMapping(SchutzenbergerGroup(H));
@@ -1807,9 +1803,7 @@ function(S, n)
     ErrorNoReturn("the 2nd argument (an integer) is not non-negative");
   elif n > Maximum(List(GeneratorsOfSemigroup(S), x -> ActionRank(S)(x))) then
     return [];
-  fi;
-
-  if HasIdempotents(S) or not IsRegularSemigroup(S) then
+  elif HasIdempotents(S) or not IsRegularSemigroup(S) then
     return Filtered(Idempotents(S), x -> ActionRank(S)(x) = n);
   fi;
 

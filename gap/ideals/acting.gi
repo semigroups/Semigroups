@@ -706,23 +706,17 @@ function(x, I)
 
   if IsInverseActingSemigroupRep(I) then
     TryNextMethod();
-  fi;
-
-  if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
+  elif ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(I)
           and ActionDegree(x) <> ActionDegree(I))
       or (ActionDegree(x) > ActionDegree(I)) then
     return false;
-  fi;
-
-  if ActionRank(I)(x) >
+  elif ActionRank(I)(x) >
       MaximumList(List(Generators(I), y -> ActionRank(I)(y))) then
     Info(InfoSemigroups, 2, "element has larger rank than any element of ",
          "semigroup.");
     return false;
-  fi;
-
-  if HasMinimalIdeal(I) then
+  elif HasMinimalIdeal(I) then
     if ActionRank(I)(x) < ActionRank(I)(Representative(MinimalIdeal(I))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
            "semigroup.");

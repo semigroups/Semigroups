@@ -231,9 +231,7 @@ function(coll)
 
   if nrgens = 1 then
     return gens;
-  fi;
-
-  if IsGeneratorsOfActingSemigroup(coll) then
+  elif IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
     Shuffle(coll);
     Sort(coll, function(x, y)
@@ -646,8 +644,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 function(D)
   if not IsRegularDClass(D) then
     ErrorNoReturn("the argument (a Green's D-class) is not regular");
-  fi;
-  if NrHClasses(D) = NrIdempotents(D) then
+  elif NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
   return SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
@@ -661,8 +658,7 @@ function(D)
 
   if not IsRegularDClass(D) then
     ErrorNoReturn("the argument (a Green's D-class) is not regular");
-  fi;
-  if NrHClasses(D) = NrIdempotents(D) then
+  elif NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
     iso2 := RMSNormalization(Range(iso1));
   else
@@ -812,8 +808,7 @@ function(S)
   gens := GeneratorsOfSemigroup(S);
   if Length(gens) = 1 then
     return fail;
-  fi;
-  if not zero in gens then
+  elif not zero in gens then
     return fail;
   fi;
 

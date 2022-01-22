@@ -73,14 +73,10 @@ function(G)
 
   if not IsGroupAsSemigroup(G) then
     ErrorNoReturn("the argument must be a group (as semigroup)");
-  fi;
-
-  if DimensionOfMatrixOverSemiringCollection(G) = 0 then
+  elif DimensionOfMatrixOverSemiringCollection(G) = 0 then
     H := TrivialGroup();
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
-  fi;
-
-  if HasGeneratorsOfGroup(G) then
+  elif HasGeneratorsOfGroup(G) then
     gens := GeneratorsOfGroup(G);
   else
     gens := GeneratorsOfSemigroup(G);

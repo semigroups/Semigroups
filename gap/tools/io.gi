@@ -234,9 +234,7 @@ function(arg)
 
   if not (mode = "a" or mode = "w") then
     ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
-  fi;
-
-  if IsString(name) then
+  elif IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
@@ -435,9 +433,7 @@ function(arg)
 
   if not (mode = "a" or mode = "w") then
     ErrorNoReturn("the 3rd argument is not \"a\" or \"w\"");
-  fi;
-
-  if IsString(name) then
+  elif IsString(name) then
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then

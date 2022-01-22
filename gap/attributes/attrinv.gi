@@ -194,9 +194,7 @@ function(S)
     ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsInverseSemigroup(S) then
     ErrorNoReturn("the argument (a semigroup) is not an inverse semigroup");
-  fi;
-
-  if MultiplicativeZero(S) = fail then
+  elif MultiplicativeZero(S) = fail then
     return Idempotents(MinimalIdeal(S));
   fi;
 

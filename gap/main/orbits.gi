@@ -299,9 +299,7 @@ function(o)
 
   if IsBound(o!.scc) then
     return o!.scc;
-  fi;
-
-  if not IsClosedOrbit(o) or not IsClosedData(o) then
+  elif not IsClosedOrbit(o) or not IsClosedData(o) then
     Enumerate(o, infinity);
   fi;
 
@@ -331,18 +329,14 @@ function(o, i)
   r := Length(OrbSCC(o));
 
   if i > r then
-    ErrorNoReturn("the orbit only has ", r, " strongly connected components,");
-  fi;
-
-  if not IsBound(o!.reverse) then
+    ErrorNoReturn("the orbit only has ", r, " strongly connected components");
+  elif not IsBound(o!.reverse) then
     o!.reverse := EmptyPlist(r);
   fi;
 
   if IsBound(o!.reverse[i]) then
     return o!.reverse[i];
-  fi;
-
-  if not IsBound(o!.rev) then
+  elif not IsBound(o!.rev) then
     o!.rev := [];
   fi;
 
@@ -424,9 +418,7 @@ function(o, i)
 
   if IsBound(o!.trees[i]) then
     return o!.trees[i];
-  fi;
-
-  if i = 1 then
+  elif i = 1 then
     o!.trees[i] := [o!.schreiergen, o!.schreierpos];
     return o!.trees[i];
   fi;

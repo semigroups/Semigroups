@@ -233,20 +233,16 @@ function(x, y)
 
   if IsZero(x) or IsZero(y) then
     return Zero(x);
-  fi;
-
-  if IsVertex(x) then
+  elif IsVertex(x) then
     if Source(y) = x then
       return y;
-    else
-      return Zero(x);
     fi;
+    return Zero(x);
   elif IsVertex(y) then
     if Range(x) = y then
       return x;
-    else
-      return Zero(x);
     fi;
+    return Zero(x);
   fi;
 
   xobj := x;

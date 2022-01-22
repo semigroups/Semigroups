@@ -24,20 +24,17 @@ function(filt, params)
     params[1] := Random(1, 100);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of rows) must be a positive integer";
-  fi;
-  if Length(params) < 2 then  # cols J
+  elif Length(params) < 2 then  # cols J
     params[2] := Random(1, 100);
   elif not IsPosInt(params[2]) then
     return "the 3rd argument (number of columns) must be a positive integer";
-  fi;
-  if Length(params) < 3 then  # group
+  elif Length(params) < 3 then  # group
     order := Random(1, 2047);
     i := Random(1, NumberSmallGroups(order));
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
   elif not IsPermGroup(params[3]) then
     return "the 4th argument must be a permutation group";
-  fi;
-  if Length(params) > 3 then
+  elif Length(params) > 3 then
     return Concatenation("expected at most 3 arguments, found ",
                          String(Length(params)));
   fi;
@@ -957,8 +954,7 @@ InstallMethod(IO_Pickle, "for a Rees matrix semigroup",
 function(file, x)
   if IO_Write(file, "RMSX") = fail then
     return IO_Error;
-  fi;
-  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  elif IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
@@ -978,8 +974,7 @@ InstallMethod(IO_Pickle, "for a Rees 0-matrix semigroup",
 function(file, x)
   if IO_Write(file, "RZMS") = fail then
     return IO_Error;
-  fi;
-  if IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  elif IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;

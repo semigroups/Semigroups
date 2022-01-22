@@ -59,9 +59,7 @@ function(partition)
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
     return FullTransformationMonoid(partition[1]);
-  fi;
-
-  if not IsSortedList(partition) then
+  elif not IsSortedList(partition) then
     partition := ShallowCopy(partition);
     Sort(partition);
   fi;

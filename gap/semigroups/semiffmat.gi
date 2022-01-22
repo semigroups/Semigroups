@@ -244,25 +244,20 @@ function(filt, params)
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of generators) is not a pos int,";
-  fi;
-  if Length(params) < 2 then  # dimension
+  elif Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
     return "the 3rd argument (matrix dimension) is not a pos int,";
-  fi;
-  if Length(params) < 3 then  # field
+  elif Length(params) < 3 then  # field
     params[3] := GF(Random(Primes), Random(1, 9));
   elif not IsField(params[3]) or not IsFinite(params[3]) then
     return "the 4th argument is not a finite field,";
-  fi;
-  if Length(params) < 4 then  # ranks
+  elif Length(params) < 4 then  # ranks
     params[4] := [1 .. params[2]];
   elif not IsList(params[4])
       or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then
     return "the 5th argument (matrix ranks) is not a list of pos ints,";
-  fi;
-
-  if Length(params) > 4 then
+  elif Length(params) > 4 then
     return "there must be at most five arguments,";
   fi;
 

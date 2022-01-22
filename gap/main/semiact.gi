@@ -423,11 +423,8 @@ function(Constructor, S, coll, opts)
     for x in coll do
       S := ClosureInverseSemigroupOrMonoidNC(Constructor, S, [x], opts);
     od;
-
     return S;
-  fi;
-
-  if coll[1] in S then
+  elif coll[1] in S then
     return S;
   fi;
 
@@ -610,9 +607,7 @@ function(x, S)
   elif HasAsSSortedList(S) then
     # This is currently unreachable
     return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
@@ -702,9 +697,7 @@ function(x, S)
     return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), x -> ActionRank(S)(x))) then

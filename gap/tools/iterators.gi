@@ -166,9 +166,7 @@ function(record, baseiter, convert, filts)
 
     if IsDoneIterator(iter) then
       return fail;
-    fi;
-
-    if IsDoneIterator(iter!.iterofiters) then
+    elif IsDoneIterator(iter!.iterofiters) then
       iter!.iterofiters := Iterator(convert(NextIterator(iter!.baseiter)));
     fi;
 

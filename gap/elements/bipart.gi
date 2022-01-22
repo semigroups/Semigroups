@@ -565,9 +565,7 @@ function(x)
 
   if DegreeOfBipartition(x) = 0 then
     return "\><empty bipartition>\<";
-  fi;
-
-  if IsBlockBijection(x) then
+  elif IsBlockBijection(x) then
     str := "\>\><block bijection:\< ";
   else
     str := "\>\><bipartition:\< ";

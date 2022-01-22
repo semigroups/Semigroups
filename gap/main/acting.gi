@@ -78,9 +78,7 @@ function(x, S)
     return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
-  fi;
-
-  if not (IsMonoid(S) and IsOne(x)) then
+  elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
         MaximumList(List(Generators(S), y -> ActionRank(S)(y))) then
@@ -251,14 +249,10 @@ function(x, S)
     od;
   elif new and HTValue(ht, x) <> fail then
     return true;
-  fi;
-
-  if IsClosedData(data) then
+  elif IsClosedData(data) then
     return false;
-  fi;
-
-  # enumerate until we find f or finish
-  if repslens[m][ind] < max then
+  elif repslens[m][ind] < max then
+    # enumerate until we find f or finish
     n := repslens[m][ind];
     lookahead_fail := false;
     lookfunc := function(data, x)
@@ -783,9 +777,7 @@ function(data)
 
   if not IsSemigroupData(data) then
     ErrorNoReturn("the argument must be a semigroup data object");
-  fi;
-
-  if not data!.init then
+  elif not data!.init then
     return 0;
   fi;
 

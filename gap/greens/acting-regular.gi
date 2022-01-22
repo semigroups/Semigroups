@@ -471,9 +471,7 @@ function(S)
 
   if HasDClassReps(S) then
     return IteratorList(DClassReps(S));
-  fi;
-
-  if not IsClosedOrbit(LambdaOrb(S)) then
+  elif not IsClosedOrbit(LambdaOrb(S)) then
     record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(S));
     record.NextIterator := function(iter)
       local m, l;
@@ -482,9 +480,7 @@ function(S)
 
       if IsBound(iter!.o) and iter!.o = fail then
         return fail;
-      fi;
-
-      if m = fail or m = Length(OrbSCC(iter!.o)) then
+      elif m = fail or m = Length(OrbSCC(iter!.o)) then
         m := 1;
         l := 1;
         iter!.o := NextIterator(iter!.graded);

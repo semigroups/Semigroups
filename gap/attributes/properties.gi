@@ -129,9 +129,7 @@ function(S)
 
   if Size(S) <= 2 then
     return true;
-  fi;
-
-  if MultiplicativeZero(S) <> fail then
+  elif MultiplicativeZero(S) <> fail then
     # CASE 1: S has zero
     if IsZeroSimpleSemigroup(S) then
       # Find an isomorphic RZMS
@@ -611,9 +609,7 @@ function(S)
   if ForAll(gens, IsIdempotent) then
     Info(InfoSemigroups, 2, "all the generators are idempotents");
     return true;
-  fi;
-
-  if HasIdempotentGeneratedSubsemigroup(S) or not IsActingSemigroup(S) then
+  elif HasIdempotentGeneratedSubsemigroup(S) or not IsActingSemigroup(S) then
     T := IdempotentGeneratedSubsemigroup(S);
   else
     ranks := List(gens, x -> ActionRank(S)(x));
@@ -823,9 +819,7 @@ function(S)
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
     Info(InfoSemigroups, 2, "the minimal ideal is a non-cyclic group.");
     return false;
-  fi;
-
-  if HasGreensDClasses(S) then
+  elif HasGreensDClasses(S) then
     i := NrDClasses(S);
     if not IsTrivial(I) then
       i := i - 1;
@@ -948,9 +942,7 @@ function(S)
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
     Info(InfoSemigroups, 2, "the minimal ideal is a non-cyclic group.");
     return false;
-  fi;
-
-  if HasGreensDClasses(S) then
+  elif HasGreensDClasses(S) then
     i := NrDClasses(S);
     if not IsTrivial(I) then
       i := i - 1;

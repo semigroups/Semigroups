@@ -270,8 +270,7 @@ function(gens, opts)
     if IsMultiplicativeElementWithOneCollection(gens)
         and Position(gens, One(gens)) <> fail then
       return InverseMonoidByGenerators(gens, opts);
-    fi;
-    if opts.small and Length(gens) > 1 then
+    elif opts.small and Length(gens) > 1 then
       # Try to find a smaller generating set
       opts := ShallowCopy(opts);
       opts.small := false;
@@ -799,9 +798,7 @@ function(S, func, limit)
 
   if not func(x) then
     return fail;  # should really return the empty semigroup
-  fi;
-
-  if CanComputeCppFroidurePin(S) then
+  elif CanComputeCppFroidurePin(S) then
     closure := {S, coll, opts} ->
                ClosureSemigroupOrMonoidNC(Semigroup, S, coll, opts);
   else
@@ -879,13 +876,11 @@ function(filt, params)
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of generators) must be a pos int,";
-  fi;
-  if Length(params) < 2 then  # degree / dimension
+  elif Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
     return "the third argument (degree or dimension) must be a pos int,";
-  fi;
-  if Length(params) > 2 then
+  elif Length(params) > 2 then
     return "there must be at most three arguments,";
   fi;
   return params;

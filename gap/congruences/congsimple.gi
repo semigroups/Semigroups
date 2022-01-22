@@ -98,8 +98,7 @@ function(S)
     TryNextMethod();
   elif IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
     return CongruencesOfSemigroup(S);
-  fi;
-  if IsSimpleSemigroup(S) then
+  elif IsSimpleSemigroup(S) then
     iso := IsomorphismReesMatrixSemigroup(S);
   else
     iso := IsomorphismReesZeroMatrixSemigroup(S);

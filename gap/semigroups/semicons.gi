@@ -176,9 +176,7 @@ function(filter, m, r)
 
   if m = 1 and r = 1 then
     return Semigroup(PartialPerm([], []));
-  fi;
-
-  if r = 1 then
+  elif r = 1 then
     cyclic_group := [];
     nilpotent_offset := 0;
   else
@@ -824,8 +822,7 @@ function(D, semigroups, homomorphisms)
   for i in [1 .. DigraphNrVertices(D)] do
     if not IsList(homomorphisms[i]) then
       ErrorNoReturn("expected a list of lists as third argument");
-    fi;
-    if Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
+    elif Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
       ErrorNoReturn("where D and homomorphisms are the 1st and 3rd arguments ",
                     "respectively, the length of homomorphisms[i] must be ",
                     "equal to OutNeighbours(D)[i]");
