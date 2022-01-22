@@ -612,7 +612,7 @@ InstallMethod(NrIdempotents,
 InstallMethod(IteratorOfRClassData, "for acting inverse semigroup rep",
 [IsInverseActingSemigroupRep],
 function(S)
-  local o, func, iter, lookup;
+  local o, lookup, func;
 
   o := LambdaOrb(S);
   lookup := OrbSCCLookup(o);
@@ -631,21 +631,8 @@ function(S)
     return [S, lookup[i], o, rep, false];
   end;
 
-  iter := IteratorByIterator(IteratorList([2 .. Length(o)]), func);
-
-  return iter;
+  return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
 end);
-
-InstallMethod(IteratorOfLClassReps, "for acting inverse semigroup rep",
-[IsInverseActingSemigroupRep],
-S -> IteratorByIterator(IteratorOfRClassData(S),
-                        x -> Inverse(x[4]),
-                        [],
-                        fail,
-                        rec(PrintObj := function(iter)
-                              Print("<iterator of L-class reps>");
-                              return;
-                            end)));
 
 ########################################################################
 # 5.b. for individual classes
@@ -765,7 +752,6 @@ function(D)
   return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
 end);
 
-
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
 [IsInverseActingRepGreensClass and IsGreensLClass
  and IsActingSemigroupGreensClass],
@@ -773,8 +759,7 @@ function(L)
   local iter, m, baseiter, convert;
 
   if HasAsSSortedList(L) then
-    iter := IteratorList(AsSSortedList(L));
-    return iter;
+    return IteratorList(AsSSortedList(L));
   fi;
   m := LambdaOrbSCCIndex(L);
   baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(L))[m],

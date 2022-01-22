@@ -1461,14 +1461,14 @@ gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ()]]);;
 gap> S := Semigroup(S, rec(acting := true));;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> iter := IteratorOfDClasses(S);
-<iterator of D-classes>
+<iterator>
 gap> S := Semigroup(S, rec(acting := true));;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> iter := IteratorOfDClasses(S);
-<iterator of D-classes>
+<iterator>
 gap> for x in iter do od;
 
 # RhoCosets, 1/3

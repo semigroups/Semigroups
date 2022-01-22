@@ -14,17 +14,9 @@ DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
 
-# Keeper 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
-
-# Not get processed
-
 DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
 DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
-DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
-DeclareOperation("IteratorOfHClassReps", [IsSemigroup]);
-
 DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
+DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);

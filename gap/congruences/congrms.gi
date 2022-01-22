@@ -199,8 +199,7 @@ function(S)
     # Concatenate these lists to produce complete partitions of the set
     l := List(l, Concatenation);
     # Finally sort each of these into the canonical order of its new classes
-    l := List(l, SSortedList);
-    return l;
+    return List(l, SSortedList);
   end;
 
   congs := [];
@@ -246,8 +245,7 @@ function(S)
     # Concatenate these lists to produce complete partitions of the set
     l := List(l, Concatenation);
     # Finally sort each of these into the canonical order of its new classes
-    l := List(l, SSortedList);
-    return l;
+    return List(l, SSortedList);
   end;
 
   congs := [];

@@ -2036,7 +2036,7 @@ end);
 
 # different method for regular/inverse
 
-InstallMethod(IteratorOfRClassData, "for an acting semigroup",
+InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local record;
@@ -2054,7 +2054,7 @@ function(S)
     if iter!.i > Length(data!.orbit) then
       return fail;
     fi;
-    return data[iter!.i];
+    return data[iter!.i][4];
   end;
 
   record.ShallowCopy := iter -> rec(i := 1);
@@ -2067,31 +2067,14 @@ end);
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter, CreateRClass, convert;
-
   if HasGreensRClasses(S) then
-    iter := IteratorList(GreensRClasses(S));
-    return iter;
+    return IteratorList(GreensRClasses(S));
   fi;
 
-  CreateRClass := SEMIGROUPS.CreateRClass;
-
-  convert := function(x)
-    local R;
-    # don't use GreensRClassOfElementNC since we don't need to rectify lambda
-    R := CreateRClass(S, x[4], false);
-    SetLambdaOrb(R, x[3]);
-    SetLambdaOrbSCCIndex(R, x[2]);
-    return R;
-  end;
-  return IteratorByIterator(IteratorOfRClassData(S),
-                            convert,
+  return IteratorByIterator(IteratorOfRClassReps(S),
+                            x -> GreensRClassOfElementNC(S, x),
                             [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of R-classes>");
-                                  return;
-                                end));
+                            fail);
 end);
 
 # different method for regular/inverse
@@ -2099,38 +2082,28 @@ end);
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local iter;
+  local iter, convert, isnew;
 
   if IsClosedData(SemigroupData(S)) then
-    iter := IteratorList(GreensDClasses(S));
-    return iter;
+    return IteratorList(GreensDClasses(S));
   fi;
-  return IteratorByIterator(
-    IteratorOfRClassData(S),  # baseiter
-    function(iter, x)         # convert
-      local D, convert;
-      convert := function(x)
-        local R;
-        # Don't use GreensRClassOfElementNC since we don't need to rectify
-        # lambda.
-        R := SEMIGROUPS.CreateRClass(S, x[4], false);
-        SetLambdaOrb(R, x[3]);
-        SetLambdaOrbSCCIndex(R, x[2]);
-        return R;
-      end;
-      D := DClassOfRClass(convert(x));
-      Add(iter!.classes, D);
-      return D;
-    end,
-    [],
-    function(iter, x)         # FIXME(later) ugh!!
-      return x = fail or ForAll(iter!.classes, D -> not x[4] in D);
-     end,
-     rec(classes := [],
-         PrintObj := function(iter)
-           Print("<iterator of D-classes>");
-           return;
-         end));
+
+  convert := function(iter, x)
+    local D;
+    D := DClassOfRClass(GreensRClassOfElementNC(S, x));
+    Add(iter!.classes, D);
+    return D;
+  end;
+
+  isnew := function(iter, x)
+    return x = fail or ForAll(iter!.classes, D -> not x in D);
+  end;
+
+  return IteratorByIterator(IteratorOfRClassReps(S),
+                            convert,
+                            [],
+                            isnew,
+                            rec(classes := []));
 end);
 
 ########################################################################
@@ -2201,11 +2174,9 @@ end);
 InstallMethod(Iterator, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local iter;
 
   if HasAsSSortedList(d) then
-    iter := IteratorList(AsSSortedList(d));
-    return iter;
+    return IteratorList(AsSSortedList(d));
   fi;
 
   return IteratorByIterOfIters(rec(parent := Parent(d)),
@@ -2275,11 +2246,10 @@ end);
 InstallMethod(Iterator, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local iter, s;
+  local s;
 
   if HasAsSSortedList(h) then
-    iter := IteratorList(AsSSortedList(h));
-    return iter;
+    return IteratorList(AsSSortedList(h));
   fi;
 
   s := Parent(h);
@@ -2292,7 +2262,6 @@ function(h)
                                   return;
                                 end));
 end);
-
 
 # same method for regular, different method for inverse
 
@@ -2350,11 +2319,10 @@ end);
 InstallMethod(Iterator, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local iter, baseiter, convert;
+  local baseiter, convert;
 
   if HasAsSSortedList(l) then
-    iter := IteratorList(AsSSortedList(l));
-    return iter;
+    return IteratorList(AsSSortedList(l));
   fi;
 
   baseiter := IteratorOfCartesianProduct(OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)],
@@ -2376,7 +2344,6 @@ function(l)
                                   return;
                                 end));
 end);
-
 
 # same method for regular/inverse
 
@@ -2438,8 +2405,7 @@ function(r)
   local iter, baseiter, convert;
 
   if HasAsSSortedList(r) then
-    iter := IteratorList(AsSSortedList(r));
-    return iter;
+    return IteratorList(AsSSortedList(r));
   fi;
   baseiter := IteratorOfCartesianProduct(Enumerator(SchutzenbergerGroup(r)),
                 OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);

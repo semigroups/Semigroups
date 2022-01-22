@@ -303,8 +303,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalLeftCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinLeftSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfRightCongruences,
@@ -314,8 +313,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalRightCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinRightSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfCongruences,
@@ -325,8 +323,7 @@ function(S, restriction)
   local poset;
   poset := PosetOfPrincipalCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinSemigroupCongruences);
-  poset := SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
-  return poset;
+  return SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
 end);
 
 InstallMethod(LeftCongruencesOfSemigroup,

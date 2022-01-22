@@ -71,7 +71,7 @@ gap> f := Transformation([8, 8, 1, 5, 8, 5, 8, 8]);;
 gap> f in SemigroupData(s);
 false
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )>

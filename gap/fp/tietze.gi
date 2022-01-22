@@ -191,7 +191,7 @@ function(stz)
 end);
 
 SEMIGROUPS.StzRelationDisplayString := function(stz, i)
-  local rels, f, gens, w1, w2, out;
+  local rels, f, gens, w1, w2;
   rels := RelationsOfStzPresentation(stz);
   if i > Length(rels) then
     return fail;
@@ -202,12 +202,11 @@ SEMIGROUPS.StzRelationDisplayString := function(stz, i)
     gens := GeneratorsOfSemigroup(f);
     w1   := Product(rels[i][1], x -> gens[x]);
     w2   := Product(rels[i][2], x -> gens[x]);
-    out  := Concatenation(PrintString(i),
-                          ". ",
-                          PrintString(w1),
-                          " = ",
-                          PrintString(w2));
-    return out;
+    return Concatenation(PrintString(i),
+                         ". ",
+                         PrintString(w1),
+                         " = ",
+                         PrintString(w2));
   fi;
 end;
 
@@ -1181,12 +1180,11 @@ end;
 
 # Converts an Stz presentation into an fp semigroup.
 SEMIGROUPS.StzConvertObjToFpSemigroup := function(stz)
-  local out, F, rels, gens;
+  local F, rels, gens;
   F    := FreeSemigroup(stz!.GeneratorsOfStzPresentation);
   rels := RelationsOfStzPresentation(stz);
   gens := GeneratorsOfSemigroup(F);
-  out  := F / List(rels, x -> List(x, y -> Product(List(y, z -> gens[z]))));
-  return out;
+  return F / List(rels, x -> List(x, y -> Product(List(y, z -> gens[z]))));
 end;
 
 ########################################################################

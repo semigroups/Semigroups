@@ -879,7 +879,7 @@ function(D)
 end);
 
 #############################################################################
-# Iterators 
+# Iterators
 #############################################################################
 
 # This is faster than using the iterator method for CppFroidurePin for n = 7 or

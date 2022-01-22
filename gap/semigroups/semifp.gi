@@ -91,8 +91,7 @@ function(S)
     return nr <= Size(S);
   end;
 
-  enum := EnumeratorByFunctions(S, enum);
-  return enum;
+  return EnumeratorByFunctions(S, enum);
 end);
 
 # TODO EnumeratorSorted
