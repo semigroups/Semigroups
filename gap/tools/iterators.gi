@@ -8,75 +8,18 @@
 #############################################################################
 ##
 
+# Not sure why this is here.
+
 MakeReadWriteGlobal("IsDoneIterator_List");
 UnbindGlobal("IsDoneIterator_List");
 BindGlobal("IsDoneIterator_List",
            iter -> (iter!.pos >= iter!.len));
 
-# No attempt has been made to get good test coverage for this file, since it
-# will hopefully be binned in the near future.
-
-# technical...
-
-# returns func(iter, pos) once at least position <pos> of the orbit <o> is
-# known, the starting value for <pos> is <start>. The idea is that this returns
-# something that depends on position <pos> of <o> being known but does not
-# depend on the entire orbit being known.
-
-InstallGlobalFunction(IteratorByOrbFunc,
-function(o, func, start)
-  local func2, record;
-
-  if not IsOrbit(o) then
-    ErrorNoReturn("the 1st argument <o> must be an orbit");
-  elif not IsFunction(func) then
-    ErrorNoReturn("the 2nd argument <func> must be a function");
-  fi;
-
-  # change 1 argument <func> to 2 argument
-  if NumberArgumentsFunction(func) = 1 then
-    func2 := function(iter, x)
-      return func(x);
-    end;
-  else
-    func2 := func;
-  fi;
-
-  record := rec();
-  record.pos := start - 1;
-
-  record.NextIterator := function(iter)
-    local pos;
-
-    pos := iter!.pos;
-
-    if IsClosedOrbit(o) and pos >= Length(o) then
-      return fail;
-    fi;
-
-    pos := pos + 1;
-
-    if pos > Length(o) then
-      Enumerate(o, pos);
-      if pos > Length(o) then
-        return fail;
-      fi;
-    fi;
-
-    iter!.pos := pos;
-    return func2(iter, pos);
-  end;
-
-  record.ShallowCopy := iter -> rec(pos := 1);
-
-  return IteratorByNextIterator(record);
-end);
-
 # NextIterator in <opts> must return fail if the iterator is finished.
 
 InstallGlobalFunction(IteratorByNextIterator,
 function(record)
-  local iter, comp, shallow;
+  local result, comp;
 
   if not (IsRecord(record) and IsBound(record.NextIterator)
                            and IsBound(record.ShallowCopy)) then
@@ -90,43 +33,47 @@ function(record)
                   "`next_value', or `IsDoneIterator'");
   fi;
 
-  iter := rec(last_called_by_is_done := false,
+  result := ShallowCopy(record);
 
-              next_value := fail,
+  result._NextIterator := record.NextIterator;
 
-              IsDoneIterator := function(iter)
-                if iter!.last_called_by_is_done then
-                  return iter!.next_value = fail;
-                fi;
-                iter!.last_called_by_is_done := true;
-                iter!.next_value := record!.NextIterator(iter);
-                if iter!.next_value = fail then
-                  return true;
-                fi;
-                return false;
-              end,
+  result._ShallowCopy  := record.ShallowCopy;
 
-              NextIterator := function(iter)
-                if not iter!.last_called_by_is_done then
-                  IsDoneIterator(iter);
-                fi;
-                iter!.last_called_by_is_done := false;
-                return iter!.next_value;
-              end);
+  result.last_called_by_is_done := false;
 
-  for comp in RecNames(record) do
-    if comp <> "NextIterator" then
-      iter.(comp) := record.(comp);
+  result.next_value := fail;
+
+  result.IsDoneIterator := function(iter)
+    if iter!.last_called_by_is_done then
+      return iter!.next_value = fail;
     fi;
+    iter!.last_called_by_is_done := true;
+    iter!.next_value := iter!._NextIterator(iter);
+    if iter!.next_value = fail then
+      return true;
+    fi;
+    return false;
+  end;
 
-  od;
-  shallow := record.ShallowCopy(iter);
-  shallow.last_called_by_is_done := false;
-  shallow.next_value := fail;
+  result.NextIterator := function(iter)
+    if not iter!.last_called_by_is_done then
+      IsDoneIterator(iter);
+    fi;
+    iter!.last_called_by_is_done := false;
+    return iter!.next_value;
+  end;
 
-  iter.ShallowCopy := iter -> shallow;
+  result.ShallowCopy := function(iter)
+    local copy;
+    copy := iter!._ShallowCopy(iter);
+    copy._NextIterator := iter!._NextIterator;
+    copy._ShallowCopy  := iter!._ShallowCopy;
+    copy.last_called_by_is_done := false;
+    copy.next_value := fail;
+    return copy;
+  end;
 
-  return IteratorByFunctions(iter);
+  return IteratorByFunctions(result);
 end);
 
 # <baseiter> should be an iterator where NextIterator(baseiter) has a method

@@ -69,3 +69,9 @@ DeclareOperation("GreensRClassOfElementNC",
                  [IsGreensClass, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
                  [IsGreensClass, IsMultiplicativeElement, IsBool]);
+
+DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
+DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
+
+DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
+DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);

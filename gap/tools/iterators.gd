@@ -9,14 +9,7 @@
 ##
 
 # constructors for iterators
-DeclareGlobalFunction("IteratorByOrbFunc");
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
 
-DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
-
-DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
-DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);

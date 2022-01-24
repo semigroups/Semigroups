@@ -439,7 +439,7 @@ end);
 
 # different method for inverse
 
-InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
+InstallMethod(IteratorOfRClassReps, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local o, func;
@@ -450,13 +450,11 @@ function(s)
     local rep;
 
     # <rep> has rho val corresponding to <i>
-    rep := EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
-
     # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
     # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
     # true) then this gets more complicated.
-    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+    return EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
   end;
 
   return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
