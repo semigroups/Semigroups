@@ -246,8 +246,11 @@ function(filter, mat)
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("the 2nd argument must define a square matrix");
-  elif not filter in [IsBooleanMat, IsMaxPlusMatrix, IsMinPlusMatrix,
-                    IsProjectiveMaxPlusMatrix, IsIntegerMatrix] then
+  elif not filter in [IsBooleanMat,
+                      IsMaxPlusMatrix,
+                      IsMinPlusMatrix,
+                      IsProjectiveMaxPlusMatrix,
+                      IsIntegerMatrix] then
     ErrorNoReturn("cannot create a matrix from the given arguments");
   elif filter = IsBooleanMat then
     return BooleanMat(mat);

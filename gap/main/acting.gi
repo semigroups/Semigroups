@@ -239,7 +239,6 @@ function(x, S)
 
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz <> false then
-
     # check if x already corresponds to an element of reps[m][ind]
     lambdaperm := LambdaPerm(S);
     for n in [1 .. repslens[m][ind]] do
@@ -249,7 +248,9 @@ function(x, S)
     od;
   elif new and HTValue(ht, x) <> fail then
     return true;
-  elif IsClosedData(data) then
+  fi;
+
+  if IsClosedData(data) then
     return false;
   elif repslens[m][ind] < max then
     # enumerate until we find f or finish

@@ -247,8 +247,12 @@ function(coll)
     i := i + 1;
     x := coll[i];
     if InfoLevel(InfoSemigroups) >= 3 then
-      Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund),
-            " redundant, \t", Length(out), " non-redundant\n");
+      PrintFormatted(
+        "at \t{} of \t{} with \t{} redundant, \t{} non-redundant\n",
+        i,
+        Length(coll),
+        Length(redund),
+        Length(out));
     fi;
 
     if not x in redund and not x in out then

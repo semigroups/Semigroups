@@ -103,11 +103,15 @@ _ProcessArgs1 := function(filt, params)
     return "the 2nd argument (number of generators) must be a pos int";
   elif Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
-  elif not IsPosInt(params[2]) then
+  fi;
+
+  if not IsPosInt(params[2]) then
     return "the 3rd argument (matrix dimension) must be a pos int";
   elif Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
-  elif not IsPosInt(params[3]) then
+  fi;
+
+  if not IsPosInt(params[3]) then
     return "the 4th argument (semiring threshold) must be a pos int";
   elif Length(params) > 3 then
     return "there must be at most four arguments";
