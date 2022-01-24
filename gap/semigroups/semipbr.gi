@@ -45,30 +45,6 @@ InstallMethod(RandomInverseSemigroupCons, "for IsPBRSemigroup and a list",
 InstallMethod(RandomInverseMonoidCons, "for IsPBRMonoid and a list",
 [IsPBRMonoid, IsList], SEMIGROUPS.DefaultRandomInverseMonoid);
 
-InstallMethod(FullPBRMonoid, "for a positive integer", [IsPosInt],
-function(n)
-  local gens;
-
-  gens := [[PBR([[]], [[1]]), PBR([[-1, 1]], [[1]]),
-            PBR([[-1]], [[]]), PBR([[-1]], [[1]]),
-            PBR([[-1]], [[-1, 1]])],
-
-           [PBR([[], [-1]], [[2], [-2, 1]]),
-            PBR([[-2, 1], [-1]], [[2], []]),
-            PBR([[-1, 2], [-2]], [[1], [2]]),
-            PBR([[-1], [-2]], [[1], [-2, 2]]),
-            PBR([[-2], [2]], [[1], [2]]),
-            PBR([[-2], [-1]], [[1], [1, 2]]),
-            PBR([[-2], [-1]], [[1], [2]]),
-            PBR([[-2], [-1]], [[1], [-2]]),
-            PBR([[-2], [-1]], [[2], [1]]),
-            PBR([[-2], [-2, -1]], [[1], [2]])]];
-
-  if n > 2 then
-    ErrorNoReturn("the argument (a pos. int.) must be at most 2");
-  fi;
-  return Monoid(gens[n]);
-end);
 
 InstallMethod(SemigroupViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");

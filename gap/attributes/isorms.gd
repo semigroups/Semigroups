@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  isorms.gd
-##  Copyright (C) 2014-15                                James D. Mitchell
+##  attributes/isorms.gd
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

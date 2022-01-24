@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  attr.gi
-##  Copyright (C) 2013-16                                James D. Mitchell
+##  attributes/attr.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

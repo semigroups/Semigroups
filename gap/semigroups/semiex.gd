@@ -22,6 +22,7 @@ DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
 
 # Partial perm semigroups
+DeclareSynonym("RookMonoid", SymmetricInverseMonoid);
 DeclareAttribute("MunnSemigroup", IsSemigroup);
 DeclareAttribute("GeneratorsOfMunnSemigroup", IsSemigroup);
 DeclareOperation("POI", [IsPosInt]);
@@ -73,7 +74,7 @@ DeclareOperation("SingularPlanarPartitionMonoid", [IsPosInt]);
 DeclareOperation("ModularPartitionMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("SingularModularPartitionMonoid", [IsPosInt, IsPosInt]);
 
-# Matrix over finite field semigroups MOVE THIS
+# Matrix over finite field semigroups
 
 DeclareOperation("GeneralLinearMonoid", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLM", GeneralLinearMonoid);
@@ -81,3 +82,23 @@ DeclareSynonym("FullMatrixMonoid", GeneralLinearMonoid);
 
 DeclareOperation("SpecialLinearMonoid", [IsPosInt, IsPosInt]);
 DeclareSynonym("SLM", SpecialLinearMonoid);
+
+# Boolean matrix monoids
+
+DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
+DeclareOperation("GossipMonoid", [IsPosInt]);
+DeclareOperation("UnitriangularBooleanMatMonoid", [IsPosInt]);
+DeclareOperation("TriangularBooleanMatMonoid", [IsPosInt]);
+
+DeclareOperation("ReflexiveBooleanMatMonoid", [IsPosInt]);
+DeclareOperation("HallMonoid", [IsPosInt]);
+DeclareOperation("FullBooleanMatMonoid", [IsPosInt]);
+
+# Tropical matrix monoids
+
+DeclareOperation("FullTropicalMaxPlusMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("FullTropicalMinPlusMonoid", [IsPosInt, IsPosInt]);
+
+# PBR monoids
+
+DeclareOperation("FullPBRMonoid", [IsPosInt]);

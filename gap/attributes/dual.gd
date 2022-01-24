@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  dual.gd
-##  Copyright (C) 2018-2021                              James D. Mitchell
+##  attributes/dual.gd
+##  Copyright (C) 2018-2022                              James D. Mitchell
 ##                                                              Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.

@@ -1262,3 +1262,320 @@ function(m, n)
   S := ModularPartitionMonoid(m, n);
   return SemigroupIdeal(S, x);
 end);
+
+#############################################################################
+## 2. Standard examples - known generators
+#############################################################################
+
+InstallMethod(RegularBooleanMatMonoid, "for a pos int",
+[IsPosInt],
+function(n)
+  local gens, i, j;
+
+  if n = 1 then
+    return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
+  elif n = 2 then
+    return Monoid(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [1, 1]]));
+  fi;
+
+  gens := [];
+
+  gens[2] := List([1 .. n], x -> BlistList([1 .. n], []));
+  for j in [1 .. n - 1] do
+    gens[2][j][j + 1] := true;
+  od;
+  gens[2][n][1] := true;
+
+  for i in [3, 4] do
+    gens[i] := List([1 .. n], x -> BlistList([1 .. n], []));
+    for j in [1 .. n - 1] do
+      gens[i][j][j] := true;
+    od;
+  od;
+  gens[3][n][1] := true;
+  gens[3][n][n] := true;
+
+  Apply(gens, BooleanMat);
+
+  gens[1] := AsBooleanMat((1, 2), n);
+
+  return Monoid(gens);
+end);
+
+InstallMethod(GossipMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, i, j, x, m;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      x[j][i] := true;
+      Add(gens, BooleanMat(x));
+    od;
+  od;
+
+  m := Monoid(gens);
+  SetNrIdempotents(m, Bell(n));
+  return m;
+end);
+
+InstallMethod(UnitriangularBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i, j;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      Add(gens, BooleanMat(x));
+    od;
+  od;
+
+  return Monoid(gens);
+end);
+
+InstallMethod(TriangularBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i;
+
+  if n = 1 then
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
+
+  gens := [];
+  for i in [1 .. n] do
+    x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+    x[i][i] := false;
+    Add(gens, BooleanMat(x));
+  od;
+
+  return Monoid(UnitriangularBooleanMatMonoid(n), gens);
+end);
+
+#############################################################################
+## 3. Standard examples - calculated generators
+#############################################################################
+
+InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex) then
+    SEMIGROUPS.GENERATORS.Reflex :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/reflex.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Reflex)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
+end);
+
+InstallMethod(HallMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall) then
+    SEMIGROUPS.GENERATORS.Hall :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/hall.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Hall)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
+end);
+
+InstallMethod(FullBooleanMatMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool) then
+    SEMIGROUPS.GENERATORS.FullBool :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/fullbool.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.FullBool)));
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);
+end);
+
+#############################################################################
+## Tropical matrix monoids
+#############################################################################
+
+InstallMethod(FullTropicalMaxPlusMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(dim, threshold)
+  local gens, i, j;
+
+  if dim <> 2 then
+    ErrorNoReturn("the 1st argument (dimension) must be 2");
+  fi;
+
+  gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [-infinity, -infinity]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [0, -infinity]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
+                                            [0, 0]],
+                                            threshold),
+           Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 1],
+                                            [0, -infinity]],
+                                            threshold)];
+
+  for i in [1 .. threshold] do
+    Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                     [[-infinity, 0], [0, i]],
+                     threshold));
+    for j in [1 .. i] do
+      Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                       [[0, j], [i, 0]],
+                       threshold));
+    od;
+  od;
+
+  return Monoid(gens);
+end);
+
+InstallMethod(FullTropicalMinPlusMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(dim, threshold)
+  local gens, i, j, k;
+
+  if dim = 2  then
+    gens := [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [0, infinity]],
+                                              threshold),
+             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [1, infinity]],
+                                              threshold),
+             Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                              [infinity, infinity]],
+                                              threshold)];
+    for i in [0 .. threshold] do
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, 0], [0, i]],
+                       threshold));
+    od;
+  elif dim = 3 then
+    gens := [Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [0, infinity, infinity],
+                     [infinity, 0, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [0, infinity, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [infinity, infinity, infinity]],
+                    threshold),
+             Matrix(IsTropicalMinPlusMatrix,
+                    [[infinity, infinity, 0],
+                     [infinity, 0, infinity],
+                     [1, infinity, infinity]],
+                    threshold)];
+
+    for i in [0 .. threshold] do
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, infinity, 0],
+                        [infinity, 0, infinity],
+                        [0, i, infinity]],
+                       threshold));
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, 0, i],
+                        [i, infinity, 0],
+                        [0, i, infinity]],
+                        threshold));
+      for j in [1 .. i] do
+        Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                         [[infinity, 0, 0],
+                          [0, infinity, i],
+                          [0, j, infinity]],
+                         threshold));
+      od;
+
+      for j in [1 .. threshold] do
+        Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                         [[infinity, 0, 0],
+                          [0, infinity, i],
+                          [j, 0, infinity]],
+                         threshold));
+      od;
+    od;
+
+    for i in [1 .. threshold] do
+      for j in [i .. threshold] do
+        for k in [1 .. j - 1] do
+          Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                           [[infinity, 0, i],
+                            [j, infinity, 0],
+                            [0, k, infinity]],
+                           threshold));
+        od;
+      od;
+    od;
+  else
+    ErrorNoReturn("the 1st argument (dimension) must be 2 or 3");
+  fi;
+
+  return Monoid(gens);
+end);
+
+########################################################################
+# PBR monoids
+########################################################################
+
+InstallMethod(FullPBRMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+
+  gens := [[PBR([[]], [[1]]), PBR([[-1, 1]], [[1]]),
+            PBR([[-1]], [[]]), PBR([[-1]], [[1]]),
+            PBR([[-1]], [[-1, 1]])],
+
+           [PBR([[], [-1]], [[2], [-2, 1]]),
+            PBR([[-2, 1], [-1]], [[2], []]),
+            PBR([[-1, 2], [-2]], [[1], [2]]),
+            PBR([[-1], [-2]], [[1], [-2, 2]]),
+            PBR([[-2], [2]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [1, 2]]),
+            PBR([[-2], [-1]], [[1], [2]]),
+            PBR([[-2], [-1]], [[1], [-2]]),
+            PBR([[-2], [-1]], [[2], [1]]),
+            PBR([[-2], [-2, -1]], [[1], [2]])]];
+
+  if n > 2 then
+    ErrorNoReturn("the argument (a pos. int.) must be at most 2");
+  fi;
+  return Monoid(gens[n]);
+end);

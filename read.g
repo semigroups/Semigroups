@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  read.g
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -71,16 +71,16 @@ ReadPackage("semigroups", "gap/greens/acting-regular.gi");
 ReadPackage("semigroups", "gap/greens/froidure-pin.gi");
 ReadPackage("semigroups", "gap/greens/generic.gi");
 
+ReadPackage("semigroups", "gap/attributes/acting.gi");
 ReadPackage("semigroups", "gap/attributes/attr.gi");
-ReadPackage("semigroups", "gap/attributes/attract.gi");
-ReadPackage("semigroups", "gap/attributes/attrfp.gi");
-ReadPackage("semigroups", "gap/attributes/attrinv.gi");
 ReadPackage("semigroups", "gap/attributes/dual.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
+ReadPackage("semigroups", "gap/attributes/inverse.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");
 ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/maximal.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
+ReadPackage("semigroups", "gap/attributes/semifp.gi");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");
 ReadPackage("semigroups", "gap/congruences/congrms.gi");

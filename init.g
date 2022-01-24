@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  init.g
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -38,17 +38,18 @@ SEMIGROUPS.PackageDir := GAPInfo.PackagesLoaded.semigroups[1];
 
 ReadPackage("semigroups", "gap/options.g");
 
+ReadPackage("semigroups", "gap/elements/semiringmat.gd");
 ReadPackage("semigroups", "gap/elements/star.gd");
-ReadPackage("semigroups", "gap/elements/pbr.gd");
+
 ReadPackage("semigroups", "gap/elements/bipart.gd");
 ReadPackage("semigroups", "gap/elements/blocks.gd");
-ReadPackage("semigroups", "gap/elements/semiringmat.gd");
-ReadPackage("semigroups", "gap/elements/maxplusmat.gd");
-ReadPackage("semigroups", "gap/elements/ffmat.gd");
 ReadPackage("semigroups", "gap/elements/boolmat.gd");
-ReadPackage("semigroups", "gap/elements/trans.gd");
 ReadPackage("semigroups", "gap/elements/elements.gd");
+ReadPackage("semigroups", "gap/elements/ffmat.gd");
+ReadPackage("semigroups", "gap/elements/maxplusmat.gd");
+ReadPackage("semigroups", "gap/elements/pbr.gd");
 ReadPackage("semigroups", "gap/elements/pperm.gd");
+ReadPackage("semigroups", "gap/elements/trans.gd");
 
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
@@ -81,46 +82,45 @@ ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
 ReadPackage("semigroups", "gap/semigroups/semieunit.gd");
 ReadPackage("semigroups", "gap/semigroups/semidp.gd");
 
-ReadPackage("semigroups", "gap/ideals/ideals.gd");
 ReadPackage("semigroups", "gap/ideals/acting.gd");
-ReadPackage("semigroups", "gap/ideals/lambda-rho.gd");
 ReadPackage("semigroups", "gap/ideals/froidure-pin.gd");
+ReadPackage("semigroups", "gap/ideals/ideals.gd");
+ReadPackage("semigroups", "gap/ideals/lambda-rho.gd");
 
-ReadPackage("semigroups", "gap/greens/generic.gd");
 ReadPackage("semigroups", "gap/greens/froidure-pin.gd");
+ReadPackage("semigroups", "gap/greens/generic.gd");
 ReadPackage("semigroups", "gap/greens/acting.gd");
 
 ReadPackage("semigroups", "gap/tools/display.gd");
 ReadPackage("semigroups", "gap/tools/io.gd");
-ReadPackage("semigroups", "gap/tools/utils.gd");
-ReadPackage("semigroups", "gap/tools/enums.gd");
 ReadPackage("semigroups", "gap/tools/iterators.gd");
+ReadPackage("semigroups", "gap/tools/utils.gd");
 
+ReadPackage("semigroups", "gap/attributes/acting.gd");
 ReadPackage("semigroups", "gap/attributes/attr.gd");
-ReadPackage("semigroups", "gap/attributes/attract.gd");
-ReadPackage("semigroups", "gap/attributes/attrinv.gd");
 ReadPackage("semigroups", "gap/attributes/dual.gd");
 ReadPackage("semigroups", "gap/attributes/factor.gd");
+ReadPackage("semigroups", "gap/attributes/inverse.gd");
 ReadPackage("semigroups", "gap/attributes/isomorph.gd");
 ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/maximal.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
 
 ReadPackage("semigroups", "gap/congruences/cong.gd");
-ReadPackage("semigroups", "gap/congruences/congpairs.gd");
-ReadPackage("semigroups", "gap/congruences/congrms.gd");
-ReadPackage("semigroups", "gap/congruences/conguniv.gd");
 ReadPackage("semigroups", "gap/congruences/conginv.gd");
-ReadPackage("semigroups", "gap/congruences/congsimple.gd");
-ReadPackage("semigroups", "gap/congruences/congrees.gd");
 ReadPackage("semigroups", "gap/congruences/conglatt.gd");
+ReadPackage("semigroups", "gap/congruences/congpairs.gd");
+ReadPackage("semigroups", "gap/congruences/congrees.gd");
+ReadPackage("semigroups", "gap/congruences/congrms.gd");
+ReadPackage("semigroups", "gap/congruences/congsimple.gd");
+ReadPackage("semigroups", "gap/congruences/conguniv.gd");
 
 ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
 
-ReadPackage("semigroups", "gap/fp/freeinverse.gd");
 ReadPackage("semigroups", "gap/fp/freeband.gd");
-ReadPackage("semigroups", "gap/fp/word.gd");
+ReadPackage("semigroups", "gap/fp/freeinverse.gd");
 ReadPackage("semigroups", "gap/fp/tietze.gd");
+ReadPackage("semigroups", "gap/fp/word.gd");
 
 ReadPackage("semigroups", "gap/obsolete.gd");
 

@@ -17,5 +17,3 @@ DeclareSynonym("IsPBRMonoid",
 InstallTrueMethod(IsFinite, IsPBRSemigroup);
 DeclareAttribute("DegreeOfPBRSemigroup",
                  IsPBRSemigroup);
-
-DeclareOperation("FullPBRMonoid", [IsPosInt]);

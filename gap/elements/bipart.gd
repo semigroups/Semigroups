@@ -48,20 +48,9 @@ DeclareOperation("IdentityBipartition", [IsPosInt]);
 DeclareOperation("IdentityBipartition", [IsZeroCyc]);
 DeclareOperation("BipartitionByIntRep", [IsList]);
 
-DeclareOperation("AsBipartition", [IsPerm, IsInt]);
-DeclareOperation("AsBipartition", [IsPerm]);
-DeclareOperation("AsBipartition", [IsTransformation, IsPosInt]);
-DeclareOperation("AsBipartition", [IsTransformation, IsZeroCyc]);
-DeclareOperation("AsBipartition", [IsTransformation]);
-DeclareOperation("AsBipartition", [IsPartialPerm, IsPosInt]);
-DeclareOperation("AsBipartition", [IsPartialPerm, IsZeroCyc]);
-DeclareOperation("AsBipartition", [IsPartialPerm]);
-DeclareOperation("AsBipartition", [IsBipartition, IsPosInt]);
-DeclareOperation("AsBipartition", [IsBipartition, IsZeroCyc]);
-DeclareOperation("AsBipartition", [IsBipartition]);
-DeclareOperation("AsBipartition", [IsPBR, IsPosInt]);
-DeclareOperation("AsBipartition", [IsPBR, IsZeroCyc]);
-DeclareOperation("AsBipartition", [IsPBR]);
+DeclareOperation("AsBipartition", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("AsBipartition", [IsAssociativeElement, IsZeroCyc]);
+DeclareOperation("AsBipartition", [IsAssociativeElement]);
 
 DeclareOperation("AsBlockBijection", [IsPartialPerm, IsPosInt]);
 DeclareOperation("AsBlockBijection", [IsPartialPerm]);

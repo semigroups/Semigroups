@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  isomorph.gi
-##  Copyright (C) 2014-20                                James D. Mitchell
+##  attributes/isomorph.gi
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

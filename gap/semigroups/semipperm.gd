@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-DeclareSynonym("RookMonoid", SymmetricInverseMonoid);
-
 DeclareAttribute("DigraphOfActionOnPoints", IsPartialPermSemigroup);
 DeclareOperation("DigraphOfActionOnPoints",
                  [IsPartialPermSemigroup, IsInt]);
@@ -25,9 +23,3 @@ DeclareAttribute("ComponentsOfPartialPermSemigroup",
 
 DeclareAttribute("SmallerDegreePartialPermRepresentation",
                  IsInverseSemigroup and IsPartialPermSemigroup);
-
-DeclareOperation("NumberPartialPerm", [IsPartialPerm, IsPosInt]);
-DeclareOperation("PartialPermNumber", [IsPosInt, IsPosInt]);
-DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt]);
-DeclareOperation("NumberSubset", [IsList, IsPosInt]);
-DeclareOperation("NumberSubsetOfEqualSize", [IsList, IsPosInt]);
