@@ -423,41 +423,39 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
+  local record;
+
   if HasGreensDClasses(S) then
     return IteratorList(GreensDClasses(S));
   fi;
-  return IteratorByIterator(IteratorOfDClassReps(S),
-                            x -> GreensDClassOfElementNC(S, x),
-                            [],
-                            fail,
-                            rec(PrintObj :=
-                                function(iter)
-                                  Print("<iterator of D-classes>");
-                                  return;
-                                end));
+
+  record          := rec();
+  record.parent   := S;
+
+  return WrappedIterator(IteratorOfDClassReps(S),
+                         {iter, x} -> GreensDClassOfElementNC(iter!.parent, x),
+                         record);
 end);
 
 # different method for inverse
 
 InstallMethod(IteratorOfRClassReps, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
-function(s)
+function(S)
   local o, func;
 
-  o := RhoOrb(s);
+  o := RhoOrb(S);
 
   func := function(iter, i)
-    local rep;
-
     # <rep> has rho val corresponding to <i>
-    # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
+    # <rep> has lambda val in position 1 of GradedLambdaOrb(S, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
-    # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
+    # enumerate LambdaOrb(S) to do this, if we use GradedLambdaOrb(S, rep,
     # true) then this gets more complicated.
     return EvaluateWord(o, Reversed(TraceSchreierTreeForward(o, i)));
   end;
 
-  return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
+  return WrappedIterator(IteratorList([2 .. Length(o)]), func);
 end);
 
 # same method for inverse
@@ -507,7 +505,7 @@ function(S)
       return EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
     end;
 
-    return IteratorByIterator(IteratorList([2 .. Length(scc)]), func);
+    return WrappedIterator(IteratorList([2 .. Length(scc)]), func);
   fi;
 end);
 

@@ -629,7 +629,7 @@ function(S)
                                 Position(o, LambdaFunc(S)(rep)))[2];
   end;
 
-  return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
+  return WrappedIterator(IteratorList([2 .. Length(o)]), func);
 end);
 
 ########################################################################
@@ -754,28 +754,27 @@ InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
 [IsInverseActingRepGreensClass and IsGreensLClass
  and IsActingSemigroupGreensClass],
 function(L)
-  local iter, m, baseiter, convert;
+  local m, iter, unwrap, record;
 
   if HasAsSSortedList(L) then
     return IteratorList(AsSSortedList(L));
   fi;
-  m := LambdaOrbSCCIndex(L);
-  baseiter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(L))[m],
-                                         Enumerator(SchutzenbergerGroup(L)));
 
-  convert := function(x)
+  m    := LambdaOrbSCCIndex(L);
+  iter := IteratorOfCartesianProduct(OrbSCC(LambdaOrb(L))[m],
+                                     Enumerator(SchutzenbergerGroup(L)));
+
+  unwrap := function(iter, x)
+    local L;
+    L := iter!.parent;
     return StabilizerAction(Parent(L))(LambdaOrbMult(LambdaOrb(L),
                                                      LambdaOrbSCCIndex(L),
                                                      x[1])[2]
                                        * Representative(L), x[2]);
   end;
 
-  return IteratorByIterator(baseiter,
-                            convert,
-                            [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of L-class>");
-                                  return;
-                                end));
+  record := rec();
+  record.parent := L;
+
+  return WrappedIterator(iter, unwrap, record);
 end);

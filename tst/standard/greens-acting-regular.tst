@@ -206,7 +206,7 @@ gap> S := RegularSemigroup([
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> IteratorOfDClasses(S);
-<iterator of D-classes>
+<iterator>
 gap> GreensDClasses(S);;
 gap> IteratorOfDClasses(S);
 <iterator>

@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  iterators.gi
-##  Copyright (C) 2013-15                                James D. Mitchell
+##  tools/iterators.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -19,7 +19,7 @@ BindGlobal("IsDoneIterator_List",
 
 InstallGlobalFunction(IteratorByNextIterator,
 function(record)
-  local result, comp;
+  local result;
 
   if not (IsRecord(record) and IsBound(record.NextIterator)
                            and IsBound(record.ShallowCopy)) then
@@ -79,102 +79,71 @@ end);
 # <baseiter> should be an iterator where NextIterator(baseiter) has a method
 # for Iterator. More specifically, if iter:=Iterator(x) where <x> is a
 # returned value of convert(NextIterator(baseiter)), then NextIterator of
-# IteratorByIterOfIters returns NextIterator(iter) until IsDoneIterator(iter)
+# ChainIterators returns NextIterator(iter) until IsDoneIterator(iter)
 
-InstallGlobalFunction(IteratorByIterOfIters,
-function(record, baseiter, convert, filts)
-  local iter, filt;
+InstallGlobalFunction(ChainIterators,
+function(chain)
+  local record;
 
-  if not IsRecord(record) or IsBound(record.baseiter)
-      or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
-      or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
-    ErrorNoReturn("the 1st argument <record> must be a record with ",
-                  "no components named: `baseiter', `iterofiters',",
-                  "`IsDoneIterator', `NextIterator', or `ShallowCopy'");
-  elif not IsIterator(baseiter) then
-    ErrorNoReturn("the 2nd argument <baseiter> must be an iterator");
-  elif not IsFunction(convert) then
-    ErrorNoReturn("the 3rd argument <convert> must be a function");
-  elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorNoReturn("the 4th argument <filts> must be a list of filters");
+  record := rec();
+
+  if IsList(chain) then
+    record.chain := Iterator(chain);
+  elif IsIterator(chain) then
+    record.chain := chain;
+  else
+    ErrorNoReturn("the argument <chain> must be an iterator or list");
   fi;
 
-  record.baseiter := baseiter;
-  record.iterofiters := Iterator(convert(NextIterator(baseiter)));
+  record.current := Iterator(NextIterator(record.chain));
 
-  #
   record.IsDoneIterator := function(iter)
-    return IsDoneIterator(iter!.baseiter) and
-           IsDoneIterator(iter!.iterofiters);
+    return IsDoneIterator(iter!.chain) and
+           IsDoneIterator(iter!.current);
   end;
 
-  #
   record.NextIterator := function(iter)
-
     if IsDoneIterator(iter) then
       return fail;
-    elif IsDoneIterator(iter!.iterofiters) then
-      iter!.iterofiters := Iterator(convert(NextIterator(iter!.baseiter)));
+    elif IsDoneIterator(iter!.current) then
+      iter!.current := Iterator(NextIterator(iter!.chain));
     fi;
-
-    return NextIterator(iter!.iterofiters);
+    return NextIterator(iter!.current);
   end;
 
-  #
-  record.ShallowCopy := iter -> rec(baseiter := baseiter,
-                                    iterofiters := fail);
+  record.ShallowCopy := iter -> rec(chain := ShallowCopy(iter!.chain),
+                                    current := Iterator(NextIterator(~.chain)));
 
-  iter := IteratorByFunctions(record);
-
-  for filt in filts do
-    SetFilterObj(iter, filt);
-  od;
-
-  return iter;
+  return IteratorByFunctions(record);
 end);
 
-# for: baseiter, convert[, list of filts, isnew, record]
+# for: baseiter, convert[, record, isnew]
 
-InstallGlobalFunction(IteratorByIterator,
+InstallGlobalFunction(WrappedIterator,
 function(arg)
-  local iter, filt, convert, isnew;
+  local iter;
 
-  # process incoming functions
-  if NumberArgumentsFunction(arg[2]) = 1 then
-    convert := function(iter, x)
-      return arg[2](x);
-    end;
-  else
-    convert := arg[2];
-  fi;
-
-  if not IsBound(arg[3]) then
-    arg[3] := [];
-  fi;
-
-  if IsBound(arg[4]) and IsFunction(arg[4]) then
-    if NumberArgumentsFunction(arg[4]) = 1 then
-      isnew := function(iter, x)
-        return arg[4](x);
-      end;
-    else
-      isnew := arg[4];
-    fi;
-  fi;
+  iter   := rec();
 
   # prepare iterator rec()
-  if IsBound(arg[5]) then
-    iter := arg[5];
-  else
-    iter := rec();
+  if IsBound(arg[3]) then
+    Assert(1, IsRecord(arg[3]));
+    iter := arg[3];
   fi;
 
   iter.baseiter := arg[1];
+  iter.unwrap   := arg[2];
 
-  iter.ShallowCopy := iter -> rec(baseiter := ShallowCopy(arg[1]));
+  if IsBound(arg[4]) then
+    Assert(1, IsFunction(arg[4]));
+    iter.isnew := arg[4];
+  fi;
+
+  iter.ShallowCopy := iter -> rec(baseiter := ShallowCopy(iter!.baseiter),
+                                  unwrap   := iter!.unwrap);
 
   # get NextIterator
-  if not IsBound(isnew) then
+  if not IsBound(iter.isnew) then
     iter.IsDoneIterator := iter -> IsDoneIterator(iter!.baseiter);
     iter.NextIterator := function(iter)
       local x;
@@ -182,28 +151,23 @@ function(arg)
       if x = fail then
         return fail;
       fi;
-      return convert(iter, x);
+      return iter!.unwrap(iter, x);
     end;
-    iter := IteratorByFunctions(iter);
-  else
-    iter.NextIterator := function(iter)
-      local baseiter, x;
-      baseiter := iter!.baseiter;
-      repeat
-        x := NextIterator(baseiter);
-      until IsDoneIterator(baseiter) or isnew(iter, x);
-
-      if x <> fail and isnew(iter, x) then
-        return convert(iter, x);
-      fi;
-      return fail;
-    end;
-    iter := IteratorByNextIterator(iter);
+    return IteratorByFunctions(iter);
   fi;
 
-  for filt in arg[3] do  # filters
-    SetFilterObj(iter, filt);
-  od;
+  iter.NextIterator := function(iter)
+    local baseiter, x;
+    baseiter := iter!.baseiter;
+    repeat
+      x := NextIterator(baseiter);
+    until IsDoneIterator(baseiter) or iter!.isnew(iter, x);
 
-  return iter;
+    if x <> fail and iter!.isnew(iter, x) then
+      return iter!.unwrap(iter, x);
+    fi;
+    return fail;
+  end;
+
+  return IteratorByNextIterator(iter);
 end);

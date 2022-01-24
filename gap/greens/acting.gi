@@ -2061,14 +2061,18 @@ end);
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
+  local record;
+
   if HasGreensRClasses(S) then
     return IteratorList(GreensRClasses(S));
   fi;
 
-  return IteratorByIterator(IteratorOfRClassReps(S),
-                            x -> GreensRClassOfElementNC(S, x),
-                            [],
-                            fail);
+  record := rec();
+  record.parent := S;
+
+  return WrappedIterator(IteratorOfRClassReps(S),
+                         {iter, x} -> GreensRClassOfElementNC(iter!.parent, x),
+                         record);
 end);
 
 # different method for regular/inverse
@@ -2093,11 +2097,10 @@ function(S)
     return x = fail or ForAll(iter!.classes, D -> not x in D);
   end;
 
-  return IteratorByIterator(IteratorOfRClassReps(S),
-                            convert,
-                            [],
-                            isnew,
-                            rec(classes := []));
+  return WrappedIterator(IteratorOfRClassReps(S),
+                         convert,
+                         rec(classes := []),
+                         isnew);
 end);
 
 ########################################################################
@@ -2167,16 +2170,12 @@ end);
 
 InstallMethod(Iterator, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
+function(D)
 
-  if HasAsSSortedList(d) then
-    return IteratorList(AsSSortedList(d));
+  if HasAsSSortedList(D) then
+    return IteratorList(AsSSortedList(D));
   fi;
-
-  return IteratorByIterOfIters(rec(parent := Parent(d)),
-                               Iterator(GreensRClasses(d)),
-                               IdFunc,
-                               []);
+  return ChainIterators(GreensRClasses(D));
 end);
 
 # same method for inverse/regular
@@ -2239,22 +2238,21 @@ end);
 
 InstallMethod(Iterator, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s;
+function(H)
+  local record;
 
-  if HasAsSSortedList(h) then
-    return IteratorList(AsSSortedList(h));
+  if HasAsSSortedList(H) then
+    return IteratorList(AsSSortedList(H));
   fi;
 
-  s := Parent(h);
-  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)),
-                            x -> StabilizerAction(s)(Representative(h), x),
-                            [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of H-class>");
-                                  return;
-                                end));
+  record        := rec();
+  record.parent := Parent(H);
+  record.rep    := Representative(H);
+
+  return WrappedIterator(Iterator(SchutzenbergerGroup(H)),
+                         {iter, x}
+                           -> StabilizerAction(iter!.parent)(iter!.rep, x),
+                         record);
 end);
 
 # same method for regular, different method for inverse
@@ -2312,31 +2310,29 @@ end);
 
 InstallMethod(Iterator, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local baseiter, convert;
+function(L)
+  local it, record, unwrap;
 
-  if HasAsSSortedList(l) then
-    return IteratorList(AsSSortedList(l));
+  if HasAsSSortedList(L) then
+    return IteratorList(AsSSortedList(L));
   fi;
 
-  baseiter := IteratorOfCartesianProduct(OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)],
-                                         Enumerator(SchutzenbergerGroup(l)));
+  it := IteratorOfCartesianProduct(OrbSCC(RhoOrb(L))[RhoOrbSCCIndex(L)],
+                                   Enumerator(SchutzenbergerGroup(L)));
 
-  convert := function(x)
-    return StabilizerAction(Parent(l))(RhoOrbMult(RhoOrb(l),
-                                                  RhoOrbSCCIndex(l),
+  record := rec();
+  record.parent := L;
+
+  unwrap := function(iter, x)
+    local L;
+    L := iter!.parent;
+    return StabilizerAction(Parent(L))(RhoOrbMult(RhoOrb(L),
+                                                  RhoOrbSCCIndex(L),
                                                   x[1])[1]
-                                       * Representative(l), x[2]);
+                                       * Representative(L), x[2]);
   end;
 
-  return IteratorByIterator(baseiter,
-                            convert,
-                            [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of L-class>");
-                                  return;
-                                end));
+  return WrappedIterator(it, unwrap, record);
 end);
 
 # same method for regular/inverse
@@ -2395,26 +2391,25 @@ end);
 
 InstallMethod(Iterator, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local iter, baseiter, convert;
+function(R)
+  local it, record, unwrap;
 
-  if HasAsSSortedList(r) then
-    return IteratorList(AsSSortedList(r));
+  if HasAsSSortedList(R) then
+    return IteratorList(AsSSortedList(R));
   fi;
-  baseiter := IteratorOfCartesianProduct(Enumerator(SchutzenbergerGroup(r)),
-                OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);
 
-  convert := function(x)
-    return StabilizerAction(Parent(r))(Representative(r), x[1])
-           * LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), x[2])[1];
+  it := IteratorOfCartesianProduct(Enumerator(SchutzenbergerGroup(R)),
+                                   OrbSCC(LambdaOrb(R))[LambdaOrbSCCIndex(R)]);
+
+  record        := rec();
+  record.parent := R;
+
+  unwrap := function(iter, x)
+    local R;
+    R := iter!.parent;
+    return StabilizerAction(Parent(R))(Representative(R), x[1])
+           * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), x[2])[1];
   end;
 
-  return IteratorByIterator(baseiter,
-                            convert,
-                            [],
-                            fail,
-                            rec(PrintObj := function(iter)
-                                  Print("<iterator of R-class>");
-                                  return;
-                                end));
+  return WrappedIterator(it, unwrap, record);
 end);
