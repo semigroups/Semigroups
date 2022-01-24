@@ -491,22 +491,21 @@ gap> OneMutable([IdentityBipartition(2)]);
 
 # bipartition: BipartitionByIntRep 1/5
 gap> BipartitionByIntRep([1, 2, 3]);
-Error, the length of the argument (a list) is not an even integer
+Error, src/bipart.cpp:177:validate: the degree of a bipartition must be even, \
+found 2
 
 # bipartition: BipartitionByIntRep 2/5
 gap> BipartitionByIntRep([1, 2, 3, "a"]);
-Error, the items in the argument (a list) must be positive integers not exceed\
-ing 4
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BipartitionByIntRep' on 1 arguments
 
 # bipartition: BipartitionByIntRep 3/5
 gap> BipartitionByIntRep([1, 2, 3, 5]);
-Error, the items in the argument (a list) must be positive integers not exceed\
-ing 4
+Error, src/bipart.cpp:188:validate: expected 3 but found 4, in position 3
 
 # bipartition: BipartitionByIntRep 4/5
 gap> BipartitionByIntRep([1, 3, 3, 5]);
-Error, the items in the argument (a list) must be positive integers not exceed\
-ing 4
+Error, src/bipart.cpp:188:validate: expected 1 but found 2, in position 1
 
 # bipartition: BipartitionByIntRep 5/5
 gap> BipartitionByIntRep([1, 2, 3, 1]);
@@ -514,9 +513,9 @@ gap> BipartitionByIntRep([1, 2, 3, 1]);
 
 # BipartitionByIntRep
 gap> BipartitionByIntRep([1, 3, 3, 4]);
-Error, expected 2 but found 3, in position 2 of the argument (a list)
+Error, src/bipart.cpp:188:validate: expected 1 but found 2, in position 1
 gap> BipartitionByIntRep([1, 2, 4, 4]);
-Error, expected 3 but found 4, in position 3 of the argument (a list)
+Error, src/bipart.cpp:188:validate: expected 2 but found 3, in position 2
 
 # bipartition: BIPART_LAMBDA_CONJ 1/2
 gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;

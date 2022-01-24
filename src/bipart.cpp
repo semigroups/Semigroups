@@ -39,6 +39,8 @@
 #include "libsemigroups/timer.hpp"   // for Timer
 #include "semigroups-config.hpp"     // for SEMIGROUPS_KERNEL_DEBUG
 
+#include "gapbind14/gapbind14.hpp"  // for GAPBIND14_TRY
+
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
 using libsemigroups::REPORTER;
@@ -161,7 +163,8 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
   }
 
   // construct C++ object
-  Bipartition* x = new Bipartition(blocks);
+  Bipartition* x;
+  GAPBIND14_TRY(x = new Bipartition(Bipartition::make(blocks));)
   x->set_number_of_left_blocks(nr_left_blocks);
   x->set_number_of_blocks(nr_blocks);
 

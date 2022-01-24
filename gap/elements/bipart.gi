@@ -103,8 +103,7 @@ function(classes)
   n := Sum(classes, Length) / 2;
 
   if n >= 2 ^ 29 then
-    ErrorNoReturn("the maximum degree of a bipartition ",
-                  "is 2 ^ 29 - 1");
+    ErrorNoReturn("the maximum degree of a bipartition is 2 ^ 29 - 1");
   elif not ForAll(classes, x -> ForAll(x,
                                        i -> (IsPosInt(i) or IsNegInt(i))
                                             and AbsInt(i) <= n)) then
@@ -138,35 +137,18 @@ function(classes)
   return BIPART_NC(copy);
 end);
 
-InstallMethod(BipartitionByIntRep, "for a list", [IsList],
+InstallMethod(BipartitionByIntRep, "for a list", [IsHomogeneousList],
 function(blocks)
-  local n, next, seen, i;
-
+  local n;
   n := Length(blocks);
-  if not IsEvenInt(n) then
-    ErrorNoReturn("the length of the argument (a list) is not an even ",
-                  "integer");
-  elif n >= 2 ^ 30 then
+  if n >= 2 ^ 30 then
     ErrorNoReturn("the length of the argument (a list) exceeds ",
                   "2 ^ 30 - 1");
-  elif not ForAll(blocks, i -> IsPosInt(i) and i <= n) then
+  elif not (IsEmpty(blocks) or IsPosInt(blocks[1])) then
     ErrorNoReturn("the items in the argument (a list) must be positive ",
-                  "integers not exceeding ", n, "");
+                  "integers");
   fi;
 
-  next := 0;
-  seen := BlistList([1 .. Maximum(blocks)], []);
-
-  for i in [1 .. n] do
-    if not seen[blocks[i]] then
-      next := next + 1;
-      if blocks[i] <> next then
-        ErrorNoReturn("expected ", next, " but found ", blocks[i],
-                      ", in position ", i, " of the argument (a list)");
-      fi;
-      seen[blocks[i]] := true;
-    fi;
-  od;
   return BIPART_NC(blocks);
 end);
 
