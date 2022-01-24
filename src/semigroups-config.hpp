@@ -100,7 +100,7 @@
 
 /* Define to the full name and version of this package. */
 #ifndef SEMIGROUPS_PACKAGE_STRING
-#define SEMIGROUPS_PACKAGE_STRING "semigroups 3.4.2"
+#define SEMIGROUPS_PACKAGE_STRING "semigroups 4.0.0"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -115,7 +115,7 @@
 
 /* Define to the version of this package. */
 #ifndef SEMIGROUPS_PACKAGE_VERSION
-#define SEMIGROUPS_PACKAGE_VERSION "3.4.2"
+#define SEMIGROUPS_PACKAGE_VERSION "4.0.0"
 #endif
 
 /* Define to necessary symbol if this constant uses a non-standard name on
@@ -136,7 +136,7 @@
 
 /* Version number of package */
 #ifndef SEMIGROUPS_VERSION
-#define SEMIGROUPS_VERSION "3.4.2"
+#define SEMIGROUPS_VERSION "4.0.0"
 #endif
  
 /* once: _SRC_SEMIGROUPS_CONFIG_HPP */

@@ -101,7 +101,9 @@ _ProcessArgs1 := function(filt, params)
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of generators) must be a pos int";
-  elif Length(params) < 2 then  # degree / dimension
+  fi;
+
+  if Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
   fi;
 
@@ -172,19 +174,23 @@ function(filt, params)
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of generators) must be a pos int";
-  elif Length(params) < 2 then  # dimension
+  fi;
+  if Length(params) < 2 then  # dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
     return "the 3rd argument (matrix dimension) must be a pos int";
-  elif Length(params) < 3 then  # threshold
+  fi;
+  if Length(params) < 3 then  # threshold
     params[3] := Random(1, 20);
   elif not IsPosInt(params[3]) then
     return "the 4th argument (semiring threshold) must be a pos int";
-  elif Length(params) < 4 then  # period
+  fi;
+  if Length(params) < 4 then  # period
     params[4] := Random(1, 20);
   elif not IsPosInt(params[4]) then
     return "the 5th argument (semiring period) must be a pos int";
-  elif Length(params) > 4 then
+  fi;
+  if Length(params) > 4 then
     return "there must be at most 5 arguments";
   fi;
 

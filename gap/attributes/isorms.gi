@@ -584,6 +584,24 @@ function(G)
   Print(">");
 end);
 
+# InstallMethod(ViewString,
+# "for the automorphism group of a Rees (0-)matrix semigroup",
+# [IsAutomorphismGroupOfRMSOrRZMS],
+# function(G)
+#   local plural;
+#
+#   plural := "";
+#   if Length(GeneratorsOfGroup(G)) > 1 then
+#     plural := "s";
+#   fi;
+#
+#   return StringFormatted(
+#     "<automorphism group of {!v} with {!v} generator{}>",
+#     Source(G.1),
+#     Length(GeneratorsOfGroup(G)),
+#     plural);
+# end);
+
 InstallMethod(IsomorphismPermGroup,
 "for the automorphism group of a Rees (0-)matrix semigroup",
 [IsAutomorphismGroupOfRMSOrRZMS],
@@ -1131,6 +1149,28 @@ function(map)
   return;
 end);
 
+# InstallMethod(PrintString, "for an object in `IsRMSIsoByTriple'",
+# [IsRMSIsoByTriple],
+# function(map)
+#   return StringFormatted("RMSIsoByTriple({}, {}, [{}, {}, {}])",
+#                          Source(map),
+#                          Range(map),
+#                          map[1],
+#                          map[2],
+#                          map[3]);
+# end);
+#
+# InstallMethod(PrintString, "for an object in `IsRZMSIsoByTriple'",
+# [IsRZMSIsoByTriple],
+# function(map)
+#   return StringFormatted("RZMSIsoByTriple({}, {}, [{}, {}, {}])",
+#                          Source(map),
+#                          Range(map),
+#                          map[1],
+#                          map[2],
+#                          map[3]);
+# end);
+
 InstallMethod(ViewObj, "for an object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
 function(map)
@@ -1142,6 +1182,18 @@ InstallMethod(ViewObj, "for object in `IsRZMSIsoByTriple'",
 function(map)
   Print("(", map[1], ", ", map[2], ", ", map[3], ")");
 end);
+
+# InstallMethod(ViewString, "for an object in `IsRMSIsoByTriple'",
+# [IsRMSIsoByTriple],
+# function(map)
+#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
+# end);
+#
+# InstallMethod(ViewString, "for object in `IsRZMSIsoByTriple'",
+# [IsRZMSIsoByTriple],
+# function(map)
+#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
+# end);
 
 InstallMethod(IsomorphismReesMatrixSemigroupOverPermGroup,
 "for a semigroup",

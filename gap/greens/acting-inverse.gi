@@ -609,7 +609,7 @@ InstallMethod(NrIdempotents,
 # 5.a. for all classes
 ########################################################################
 
-InstallMethod(IteratorOfRClassData, "for acting inverse semigroup rep",
+InstallMethod(IteratorOfRClassReps, "for acting inverse semigroup rep",
 [IsInverseActingSemigroupRep],
 function(S)
   local o, lookup, func;
@@ -624,11 +624,9 @@ function(S)
     rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
     # rectify the lambda value of <rep>
-    rep := rep * LambdaOrbMult(o,
-                               lookup[i],
-                               Position(o, LambdaFunc(S)(rep)))[2];
-
-    return [S, lookup[i], o, rep, false];
+    return  rep * LambdaOrbMult(o,
+                                lookup[i],
+                                Position(o, LambdaFunc(S)(rep)))[2];
   end;
 
   return IteratorByIterator(IteratorList([2 .. Length(o)]), func);

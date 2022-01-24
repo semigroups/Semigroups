@@ -199,6 +199,24 @@ function(S)
         ">");
 end);
 
+# InstallMethod(ViewString, "for dual semigroup elements",
+# [IsDualSemigroupElement], PrintString);
+#
+# InstallMethod(PrintString, "for dual semigroup elements",
+# [IsDualSemigroupElement],
+# function(x)
+#   return StringFormatted("<{!v} in the dual semigroup>", x![1]);
+# end);
+#
+# InstallMethod(ViewString, "for a dual semigroup",
+# [IsDualSemigroupRep], PrintString);
+#
+# InstallMethod(PrintString, "for a dual semigroup",
+# [IsDualSemigroupRep],
+# function(S)
+#   return StringFormatted("<dual semigroup of {!v}>", DualSemigroup(S));
+# end);
+
 InstallMethod(ChooseHashFunction, "for a dual semigroup element and int",
 [IsDualSemigroupElement, IsInt],
 function(x, data)

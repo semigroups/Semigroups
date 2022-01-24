@@ -24,17 +24,20 @@ function(filt, params)
     params[1] := Random(1, 100);
   elif not IsPosInt(params[1]) then
     return "the 2nd argument (number of rows) must be a positive integer";
-  elif Length(params) < 2 then  # cols J
+  fi;
+  if Length(params) < 2 then  # cols J
     params[2] := Random(1, 100);
   elif not IsPosInt(params[2]) then
     return "the 3rd argument (number of columns) must be a positive integer";
-  elif Length(params) < 3 then  # group
+  fi;
+  if Length(params) < 3 then  # group
     order := Random(1, 2047);
     i := Random(1, NumberSmallGroups(order));
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
   elif not IsPermGroup(params[3]) then
     return "the 4th argument must be a permutation group";
-  elif Length(params) > 3 then
+  fi;
+  if Length(params) > 3 then
     return Concatenation("expected at most 3 arguments, found ",
                          String(Length(params)));
   fi;

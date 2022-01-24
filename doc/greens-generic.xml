@@ -682,7 +682,7 @@ gap> gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
 >             Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;
 gap> S := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> for R in iter do
 >   if Size(R) > 1 then
 >     break;
@@ -714,12 +714,12 @@ gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20],
 >              [8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5]));;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> repeat
 >   R := NextIterator(iter);
 > until Size(R) > 1000;
 gap> R;
-<Green's R-class: [8,3][11,5][13,1][15,2][17,6][19,7]>
+<Green's R-class: [8,19,14][11,4][13,15,5][17,20]>
 gap> Size(R);
 10020240]]></Example>
   </Description>

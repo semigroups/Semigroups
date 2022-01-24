@@ -781,7 +781,7 @@ gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
 Error, the 5th argument (semiring period) must be a pos int
 gap> RandomSemigroup(IsTransformationSemigroup, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomSemigroup(IsReesMatrixSemigroup);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3);;
@@ -806,7 +806,7 @@ gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
 Error, the 5th argument (semiring period) must be a pos int
 gap> RandomMonoid(IsTransformationMonoid, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 
 # Test RandomInverseSemigroup 1
 gap> RandomInverseSemigroup(2, 4);;
@@ -821,7 +821,7 @@ gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
 Error, the 5th argument (semiring period) must be a pos int
 gap> RandomInverseSemigroup(IsTransformationSemigroup, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 
 # Test RandomInverseMonoid 1
 gap> RandomInverseMonoid(2, 4);;
@@ -836,7 +836,7 @@ gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
 Error, the 5th argument (semiring period) must be a pos int
 gap> RandomInverseMonoid(IsTransformationMonoid, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 
 # Test AsSemigroup 1
 gap> S := Monoid(Transformation([3, 4, 2, 4]), Transformation([2, 4, 1, 4]),
@@ -1029,9 +1029,9 @@ true
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 3, "a");
 Error, the 4th argument (semiring threshold) must be a pos int
 gap> RandomSemigroup(IsSemigroup, 3, 3, "a");
-Error, there must be at most three arguments,
+Error, there must be at most 3 arguments
 gap> RandomSemigroup(IsSemigroup, 3, "a");
-Error, the third argument (degree or dimension) must be a pos int,
+Error, the 3rd argument (degree or dimension) must be a pos int
 gap> RandomMonoid(IsMonoid);;
 
 # Test AsSemigroup for a filter, ring, and semigroup

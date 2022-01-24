@@ -2395,16 +2395,16 @@ gap> RandomSemigroup(IsTransformationSemigroup);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2, 2);;
 gap> RandomSemigroup(IsTransformationSemigroup, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomSemigroup(IsTransformationSemigroup, 2, "a");;
-Error, the third argument (degree or dimension) must be a pos int,
+Error, the 3rd argument (degree or dimension) must be a pos int
 gap> RandomMonoid(IsTransformationMonoid);;
 gap> RandomMonoid(IsTransformationMonoid, 2);;
 gap> RandomMonoid(IsTransformationMonoid, 2, 2);;
 gap> RandomMonoid(IsTransformationMonoid, "a");;
-Error, the 2nd argument (number of generators) must be a pos int,
+Error, the 2nd argument (number of generators) must be a pos int
 gap> RandomMonoid(IsTransformationMonoid, 2, "a");;
-Error, the third argument (degree or dimension) must be a pos int,
+Error, the 3rd argument (degree or dimension) must be a pos int
 
 # Test IsConnectedTransformationSemigroup
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),

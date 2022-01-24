@@ -875,13 +875,15 @@ function(filt, params)
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
   elif not IsPosInt(params[1]) then
-    return "the 2nd argument (number of generators) must be a pos int,";
-  elif Length(params) < 2 then  # degree / dimension
+    return "the 2nd argument (number of generators) must be a pos int";
+  fi;
+  if Length(params) < 2 then  # degree / dimension
     params[2] := Random(1, 20);
   elif not IsPosInt(params[2]) then
-    return "the third argument (degree or dimension) must be a pos int,";
-  elif Length(params) > 2 then
-    return "there must be at most three arguments,";
+    return "the 3rd argument (degree or dimension) must be a pos int";
+  fi;
+  if Length(params) > 2 then
+    return "there must be at most 3 arguments";
   fi;
   return params;
 end);
