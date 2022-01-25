@@ -37,9 +37,6 @@ function(S)
     ErrorNoReturn("the argument (a semigroup) is not finite");
   elif not IsInverseSemigroup(S) then
     ErrorNoReturn("the argument (a semigroup) is not an inverse semigroup");
-  elif IsPartialPermSemigroup(S) then
-    # Use the library method for partial perm inverse semigroups.
-    return NaturalPartialOrder(S);
   fi;
 
   Info(InfoWarning, 2, "NaturalPartialOrder: this method ",

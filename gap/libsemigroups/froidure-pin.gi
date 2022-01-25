@@ -363,8 +363,8 @@ InstallMethod(MinimalFactorization,
 [IsSemigroup and CanComputeCppFroidurePin, IsMultiplicativeElement],
 function(S, x)
   if not x in S then
-    Error("the 2nd argument (a mult. element) is not an element ",
-          "of the first argument (a semigroup)");
+    Error("the 2nd argument (a mult. elt.) must belong to the ",
+          "1st argument (a semigroup)");
   fi;
   return MinimalFactorization(S, PositionCanonical(S, x));
 end);

@@ -479,8 +479,8 @@ gap> S := FullTransformationMonoid(3);;
 gap> MinimalFactorization(S, Transformation([1, 1, 1]));
 [ 4, 2, 2, 4 ]
 gap> MinimalFactorization(S, Transformation([1, 1, 1, 1]));
-Error, the 2nd argument (a mult. element) is not an element of the first argum\
-ent (a semigroup)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # IsFinite
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;

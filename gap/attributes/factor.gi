@@ -26,7 +26,7 @@ function(S, x)
   local gens, pos, gr, verts, i, j, y;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   elif HasIndecomposableElements(S)
       and x in IndecomposableElements(S) then
@@ -61,7 +61,7 @@ function(S, x)
   local factorization, id, gens, data, pos, graph, j, i;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   elif HasIndecomposableElements(S)
       and x in IndecomposableElements(S) then
@@ -119,7 +119,7 @@ function(S, x)
   local pos;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   fi;
   pos := Position(GeneratorsOfSemigroup(S), x);
@@ -191,7 +191,7 @@ function(o, m, p)
   fi;
 
   if not p in G then
-    ErrorNoReturn("the third argument <p> does not belong to the ",
+    ErrorNoReturn("the 3rd argument <p> does not belong to the ",
                   "Schutzenberger group");
   elif IsEmpty(factors) then
     # No elt of the semigroup stabilizes the relevant lambda value.  Therefore
@@ -288,7 +288,7 @@ function(S, x)
   local pos, o, l, m, scc, data, rep, word1, word2, p;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
@@ -341,7 +341,7 @@ function(S, x)
   local pos, o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
@@ -399,7 +399,7 @@ function(S, x)
   local pos, o, gens, l, word1, rep, m, scc, k, word2, p;
 
   if not x in S then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) must belong to the ",
                   "1st argument (a semigroup)");
   else
     pos := Position(S, x);  # position in the current data structure if any
@@ -429,7 +429,7 @@ function(S, x)
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
   rep := rep * EvaluateWord(gens, word2);  # the R-class rep of the R-class of f
   Append(word1, word2);                    # and this word equals rep
-
+  
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);

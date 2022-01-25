@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/factor.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#W  standard/attributes/factor.tst
+#Y  Copyright (C) 2011-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/factor.tst");
+gap> START_TEST("Semigroups package: standard/attributes/factor.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -154,38 +154,38 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])], rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: Factorization, error, 2/5
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
 > Transformation([3, 1, 1, 3])]);;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> MinimalFactorization(S, x);
-Error, the 2nd argument (a mult. element) is not an element of the first argum\
-ent (a semigroup)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: Factorization, error, 3/5
 gap> S := DualSymmetricInverseMonoid(3);;
 gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: Factorization, error, 4/5
 gap> S := Semigroup(OrderEndomorphisms(3),
 >                   rec(acting := true, regular := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: Factorization, error, 5/5
 gap> S := Semigroup(OrderEndomorphisms(3), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
-Error, the third argument <p> does not belong to the Schutzenberger group
+Error, the 3rd argument <p> does not belong to the Schutzenberger group
 
 # factor: Factorization, () in SchutzenbergerGroup, fail, 1
 gap> S := Semigroup(Transformation([1, 1, 2, 3]), rec(acting := true));;
@@ -252,8 +252,8 @@ Error, no 1st choice method found for `NonTrivialFactorization' on 2 arguments
 # error, 1
 gap> S := FullPBRMonoid(1);;
 gap> NonTrivialFactorization(S, EmptyPartialPerm());
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: NonTrivialFactorization, for an CanComputeFroidurePin semigroup, 1
 
@@ -305,8 +305,8 @@ true
 gap> S := Semigroup(IdentityTransformation, rec(acting := true));
 <trivial transformation group of degree 0 with 1 generator>
 gap> NonTrivialFactorization(S, EmptyPBR(1));
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: NonTrivialFactorization, for an acting semigroup, 1
 gap> gens := [
@@ -542,8 +542,8 @@ true
 # factor: NonTrivialFactorization, for an inverse acting semigroup, error, 1
 gap> S := SymmetricInverseMonoid(1);;
 gap> NonTrivialFactorization(S, IdentityTransformation);
-Error, the 2nd argument (a mult. elt.) must belong to 1st argument (a semigrou\
-p)
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
 
 # factor: NonTrivialFactorization, for an inverse acting semigroup, 1
 gap> S := SymmetricInverseMonoid(4);
@@ -597,6 +597,31 @@ true
 gap> NonTrivialFactorization(S, gens[1] ^ 2) = Factorization(S, gens[1] ^ 2);
 true
 
+# Factorization for an inverse semigroup - code coverage
+gap> x := PartialPerm( [ 1, 2, 3, 6 ], [ 6, 4, 5, 1 ] );
+[2,4][3,5](1,6)
+gap> S := SymmetricInverseMonoid(5);
+<symmetric inverse monoid of degree 5>
+gap> Factorization(S, x);
+Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
+group)
+gap> S := AsSet(SymmetricInverseMonoid(3));;
+gap> T := InverseSemigroup(GeneratorsSmallest(SymmetricInverseMonoid(3)));
+<inverse partial perm monoid of rank 3 with 3 generators>
+gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(T), 
+>                                Factorization(T, x)) = x);
+true
+
+# Factorization for an regular semigroup - code coverage
+gap> U := FullTransformationMonoid(3);;
+gap> S := AsSet(U);;
+gap> T := Semigroup(GeneratorsSmallest(U));;
+gap> IsRegularSemigroup(T);
+true
+gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(T), 
+>                                Factorization(T, x)) = x);
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
@@ -608,4 +633,4 @@ gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/factor.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/factor.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/attrinv.tst
-#Y  Copyright (C) 2015                                      Wilf A. Wilson
+#W  standard/attributes/inverse.tst
+#Y  Copyright (C) 2015-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 #
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/attrinv.tst");
+gap> START_TEST("Semigroups package: standard/attributes/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -691,6 +691,8 @@ gap> foo(S.1, S.2);
 false
 gap> foo(S.2, S.1);
 true
+gap> foo(S.1, S.1);
+false
 
 # attrinv: PrimitiveIdempotents, inverse, 1/2
 gap> S := InverseSemigroup([PartialPerm([1, 2], [3, 1]),
@@ -1072,4 +1074,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/attrinv.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/inverse.tst");

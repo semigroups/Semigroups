@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  standard/dual.tst
-#Y  Copyright (C) 2018                                  Finn Smith
+#W  standard/attributes/dual.tst
+#Y  Copyright (C) 2018-2022                                     Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/dual.tst");
+gap> START_TEST("Semigroups package: standard/attributes/dual.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -312,4 +312,4 @@ gap> Unbind(T);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/dual.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/dual.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/attr.tst
+#W  standard/attributes/attr.tst
 #Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/attr.tst");
+gap> START_TEST("Semigroups package: standard/attributes/attr.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -2108,4 +2108,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/attr.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/attr.tst");

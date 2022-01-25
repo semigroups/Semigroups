@@ -185,7 +185,6 @@ SEMIGROUPS.TestDir := function(dir, arg)
     ErrorNoReturn("there must be no arguments, or the argument ",
                   "must be a record");
   fi;
-  PrintFormatted("\033[1mRunning tests in: {}\n\033[0m", dir);
   result := SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
   return result;
 end;
@@ -216,22 +215,6 @@ end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
-  local dir, contents, subdirs, subdir;
-
-  dir      := DirectoriesPackageLibrary("semigroups", "tst/standard/")[1];
-  contents := Filtered(DirectoryContents(dir), x -> not StartsWith(x, "."));
-  Apply(contents, x -> Filename(dir, x));
-
-  subdirs := Filtered(contents, IsDirectoryPath);
-
-  for subdir in subdirs do
-    contents := Filtered(DirectoryContents(subdir),
-                         x -> not StartsWith(x, "."));
-    if not IsEmpty(contents) and not SEMIGROUPS.TestDir(subdir, arg) then
-      return false;
-    fi;
-  od;
-
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
                                                       "tst/standard/")[1]![1],
                             arg);
