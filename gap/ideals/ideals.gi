@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  ideals.gi
-##  Copyright (C) 2013-18                                James D. Mitchell
+##  ideals/ideals.gi
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

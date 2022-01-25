@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  elements.gi
-##  Copyright (C) 2016-18                                   Wilf A. Wilson
+##  elements/elements.gi
+##  Copyright (C) 2016-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

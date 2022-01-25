@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  tietze.gd
-##  Copyright (C) 2021                                    Tom Conti-Leslie
+##  fp/tietze.gd
+##  Copyright (C) 2021-2022                               Tom Conti-Leslie
 ##                                                              Ben Spiers
 ##
 ##  Licensing information can be found in the README file of this package.

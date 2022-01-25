@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semifp.gd
-##  Copyright (C) 2020-2021                                   Luke Elliott
+##  semigroups/semifp.gd
+##  Copyright (C) 2020-2022                                   Luke Elliott
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

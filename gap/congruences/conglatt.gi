@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/conglatt.gi
-##  Copyright (C) 2016-2021                               Michael C. Young
+##  Copyright (C) 2016-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  congruences/conguniv.gd
-##  Copyright (C) 2015-2021                               Michael C. Young
+##  Copyright (C) 2015-2022                               Michael C. Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

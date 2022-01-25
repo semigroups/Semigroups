@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  semieunit.gi
-##  Copyright (C) 2017                                    Christopher Russell
+##  semigroups/semieunit.gi
+##  Copyright (C) 2017-2022                               Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

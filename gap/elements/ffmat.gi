@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  ffmat.gi
-##  Copyright (C) 2016                                   James D. Mitchell
+##  elements/ffmat.gi
+##  Copyright (C) 2016-2022                              James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.

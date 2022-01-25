@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  semicons.gi
-##  Copyright (C) 2015                                   James D. Mitchell
+##  semigroups/semicons.gi
+##  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.

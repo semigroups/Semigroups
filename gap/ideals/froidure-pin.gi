@@ -1,7 +1,7 @@
 ###########################################################################
 ##
 ##  ideals/froidure-pin.gi
-##  Copyright (C) 2014-21                                James D. Mitchell
+##  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

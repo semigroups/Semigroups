@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  word.gi
-##  Copyright (C) 2020                                      Maria Tsalakou
+##  fp/word.gi
+##  Copyright (C) 2020-2022                                 Maria Tsalakou
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

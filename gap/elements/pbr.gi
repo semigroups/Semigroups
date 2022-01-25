@@ -1,7 +1,7 @@
 ############################################################################
 ##
-##  pbr.gi
-##  Copyright (C) 2015                                   Attila Egri-Nagy
+##  elements/pbr.gi
+##  Copyright (C) 2015-2022                              Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

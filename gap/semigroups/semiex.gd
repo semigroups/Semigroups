@@ -1,7 +1,7 @@
 #############################################################################
 ##
-##  examples.gd
-##  Copyright (C) 2013-17                                 James D. Mitchell
+##  semigroups/semiex.gd
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
