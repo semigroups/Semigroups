@@ -301,7 +301,7 @@ gap> x([2, 4], PartialPerm([4, 3, 2, 0]));
 
 # Rho/LambdaAct, for a bipartition semigroup
 gap> S := PartitionMonoid(3);;
-gap> r := BlocksNC([[1, 2], [-3]]);;
+gap> r := BLOCKS_NC([[1, 2], [-3]]);;
 gap> s := Bipartition([[1], [2, -1, -2], [3, -3]]);;
 gap> x := LambdaAct(S);;
 gap> x(r, s);
@@ -598,11 +598,11 @@ gap> x([2, 3], PartialPerm([2, 3], [3, 2]));
 # Rho/LambdaInverse, for a bipartition semigroup
 gap> S := PartitionMonoid(4);;
 gap> x := LambdaInverse(S);;
-gap> x(BlocksNC([[1, 2], [3], [4]]),
+gap> x(BLOCKS_NC([[1, 2], [3], [4]]),
 >      Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]));
 <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>
 gap> x := RhoInverse(S);;
-gap> x(BlocksNC([[1, 2], [3], [4]]),
+gap> x(BLOCKS_NC([[1, 2], [3], [4]]),
 >      Bipartition([[1], [2, -1, -2], [3, -3], [4, -4]]));
 <bipartition: [ 1, 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ -1 ]>
 
@@ -886,11 +886,11 @@ gap> y([2, 3], [2, 3]);
 gap> S := PartitionMonoid(3);;
 gap> x := IdempotentTester(S);;
 gap> y := IdempotentCreator(S);;
-gap> x(BlocksNC([[1, 2], [-3]]), BlocksNC([[1, 2, 3, 4]]));
+gap> x(BLOCKS_NC([[1, 2], [-3]]), BLOCKS_NC([[1, 2, 3, 4]]));
 true
-gap> y(BlocksNC([[1, 2], [-3]]), BlocksNC([[1, 2, 3, 4]]));
+gap> y(BLOCKS_NC([[1, 2], [-3]]), BLOCKS_NC([[1, 2, 3, 4]]));
 <bipartition: [ 1, 2, 3, -1, -2 ], [ -3 ]>
-gap> x(BlocksNC([[1, 2], [3]]), BlocksNC([[1, 2, 3]]));
+gap> x(BLOCKS_NC([[1, 2], [3]]), BLOCKS_NC([[1, 2, 3]]));
 false
 
 # IdempotentTester and IdempotentCreator, for an RZMS

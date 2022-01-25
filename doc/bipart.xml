@@ -83,7 +83,7 @@ gap> LeftBlocks(x);
       <C>NrBlocks</C> returns the number of blocks in <A>blocks</A> or <A>f</A>,
       respectively.
       <Example><![CDATA[
-gap> blocks := BlocksNC([[-1, -2, -3, -4], [-5], [6]]);
+gap> blocks := BLOCKS_NC([[-1, -2, -3, -4], [-5], [6]]);
 <blocks: [ 1, 2, 3, 4 ], [ 5 ], [ 6* ]>
 gap> NrBlocks(blocks);
 3

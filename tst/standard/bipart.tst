@@ -65,8 +65,8 @@ gap> One(bp) * bp = bp;
 true
 
 # BipartitionTest8: check BlocksIdempotentTester, first a few little examples
-gap> l := BlocksNC([[-1], [-2], [-3, -4]]);;
-gap> r := BlocksNC([[-1], [-2, -3, -4]]);;
+gap> l := BLOCKS_NC([[-1], [-2], [-3, -4]]);;
+gap> r := BLOCKS_NC([[-1], [-2, -3, -4]]);;
 gap> BLOCKS_E_TESTER(l, r);
 true
 gap> e := BLOCKS_E_CREATOR(l, r);

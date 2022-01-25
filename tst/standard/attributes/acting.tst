@@ -8,20 +8,20 @@
 #############################################################################
 ##
 gap> START_TEST(Concatenation("Semigroups package: ",
->                             "standard/attract.tst"));
+>                             "standard/attributes/acting.tst"));
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-# attract: IsMultiplicativeZero
+# IsMultiplicativeZero
 gap> S := InverseSemigroup([PartialPerm([1, 2, 5], [2, 1, 5]),
 > PartialPerm([1, 2, 4, 5], [4, 2, 1, 3])]);;
 gap> IsMultiplicativeZero(S, PartialPerm([]));
 true
 
-# attract: IsGreensDGreaterThanFunc
+# IsGreensDGreaterThanFunc
 gap> S := Semigroup([PartialPerm([1, 2, 3], [4, 5, 1]),
 >                    PartialPerm([1, 2, 4], [1, 5, 4])]);;
 gap> x := PartialPerm([1, 3], [4, 1]);;
@@ -49,37 +49,37 @@ false
 gap> foo(y, z);
 true
 
-# attract: MaximalDClasses for non-regular semigroup
+# MaximalDClasses for non-regular semigroup
 gap> S := Monoid([Bipartition([[1, -2], [2, -1], [3, -3]]),
 > Bipartition([[1], [2], [3], [-1], [-2, -3]])]);;
 gap> MaximalDClasses(S);
 [ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]>> ]
 
-# attract: MaximalDClasses for regular semigroup
+# MaximalDClasses for regular semigroup
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
 gap> MaximalDClasses(S);
 [ <Green's D-class: IdentityTransformation> ]
 
-# attract: StructureDescriptionMaximalSubgroups
+# StructureDescriptionMaximalSubgroups
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3]),
 > Transformation([5, 5, 1, 1, 3])]);;
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2", "C3" ]
 
-# attract: IdempotentGeneratedSubsemigroup, for a semigroup
+# IdempotentGeneratedSubsemigroup, for a semigroup
 gap> S := Semigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 > PartialPerm([1, 2, 3, 4], [2, 4, 1, 5])]);;
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse partial perm monoid of rank 1 with 2 generators>
 
-# attract: IdempotentGeneratedSubsemigroup, for an inverse semigroup
+# IdempotentGeneratedSubsemigroup, for an inverse semigroup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [4, 3]),
 > PartialPerm([1, 2, 5], [1, 2, 4])]);;
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse partial perm semigroup of rank 5 with 5 generators>
 
-# attract: InjectionPrincipalFactor 1/6
+# InjectionPrincipalFactor 1/6
 gap> D := GreensDClassOfElement(
 >  Monoid([Bipartition([[1, 2, -2], [3, -3], [-1]]),
 >    Bipartition([[1, 2], [3], [-1, -3], [-2]]),
@@ -97,7 +97,7 @@ fail
 gap> Star(Bipartition([[1, 2, -2], [3, -3], [-1]])) ^ map;
 fail
 
-# attract: InjectionPrincipalFactor 2/6
+# InjectionPrincipalFactor 2/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
 gap> x := RMSElement(R, 9, (1, 3, 2, 4), 2);;
@@ -108,7 +108,7 @@ gap> D := DClass(S, RMSElement(R, 6, (1, 3, 4, 2), 5));;
 gap> InjectionPrincipalFactor(D);
 Error, the argument (a Green's D-class) is not regular
 
-# attract: InjectionPrincipalFactor 3/6
+# InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
 gap> x := RMSElement(R, 1, (1, 2, 3, 4), 1);;
@@ -121,7 +121,7 @@ true
 gap> Range(inj);
 <Rees matrix semigroup 1x1 over Group([ (1,2,3,4) ])>
 
-# attract: InjectionPrincipalFactor 4/6
+# InjectionPrincipalFactor 4/6
 gap> D := GreensDClassOfElement(
 > Semigroup([
 >   Transformation([1, 3, 4, 1, 3]),
@@ -135,7 +135,7 @@ gap> Range(inj);
 gap> Transformation([5, 1, 1, 1, 3]) ^ inj;
 fail
 
-# attract: InjectionPrincipalFactor 5/6
+# InjectionPrincipalFactor 5/6
 gap> D := GreensDClassOfElement(
 > Semigroup([
 >   Transformation([1, 3, 4, 1, 3]),
@@ -145,13 +145,13 @@ gap> map := InverseGeneralMapping(InjectionPrincipalFactor(D));;
 gap> MultiplicativeZero(Source(map)) ^ map;
 fail
 
-# attract: InjectionPrincipalFactor 6/6
+# InjectionPrincipalFactor 6/6
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [0, ()]]);;
 gap> S := Semigroup(RMSElement(S, 2, (), 2),
 >                   RMSElement(S, 1, (), 2));;
 gap> MaximalSubsemigroups(S);;
 
-# attract: InversesOfSemigroupElement, none, 1/2
+# InversesOfSemigroupElement, none, 1/2
 # This test gives the wrong result in Semigroups 2.7.1!!!
 gap> S := Semigroup([Bipartition([[1, 2, -2], [3, -3], [-1]]),
 > Bipartition([[1, -1, -2], [2, 3], [-3]])]);;
@@ -168,7 +168,7 @@ true
 gap> Set(Y) = Set(Filtered(AsList(S), y -> x * y * x = x and y * x * y = y));
 true
 
-# attract: InversesOfSemigroupElement, fail, 2/2
+# InversesOfSemigroupElement, fail, 2/2
 gap> S := Semigroup([PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 > PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 2, 4, 5], [2, 3, 1, 5]),
@@ -179,7 +179,7 @@ gap> InversesOfSemigroupElement(S, x);
 Error, the 2nd argument (a mult. element) must belong to the 1st argument (a s\
 emigroup)
 
-# attract: InversesOfSemigroupElementNC, closed rho orb
+# InversesOfSemigroupElementNC, closed rho orb
 gap> S := Semigroup([
 > Transformation([2, 2, 13, 14, 3, 4, 15, 19, 22, 17, 22, 22, 11, 12, 18, 22,
 >                 16, 16, 21, 22, 20, 22, 10]),
@@ -199,7 +199,7 @@ gap> InversesOfSemigroupElementNC(S, x);
       9, 9, 9, 1 ] ), Transformation( [ 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
      9, 9, 9, 9, 9, 9, 9, 9, 9, 9 ] ) ]
 
-# attract: InversesOfSemigroupElementNC, non-closed rho orb
+# InversesOfSemigroupElementNC, non-closed rho orb
 gap> S := Semigroup([
 > Transformation([2, 2, 13, 14, 3, 4, 15, 19, 22, 17, 22, 22, 11, 12, 18, 22,
 >                 16, 16, 21, 22, 20, 22, 10]),
@@ -218,36 +218,51 @@ gap> InversesOfSemigroupElementNC(S, x);
       9, 9, 9, 1 ] ), Transformation( [ 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
      9, 9, 9, 9, 9, 9, 9, 9, 9, 9 ] ) ]
 
-# attract: MultiplicativeNeutralElement, 1/4
+# InversesOfSemigroupElementNC non-regular element
+gap> S := Semigroup(Transformation([2, 4, 3, 4]),
+>                   Transformation([3, 3, 2, 3, 3]),
+>                   Transformation([5, 5, 5, 4, 4]),
+>                   Transformation([5, 1, 4, 1, 1]),
+>                   Transformation([5, 3, 3, 4, 5]));;
+gap> IsRegularSemigroup(S);
+false
+gap> x := Transformation([5, 1, 4, 1, 1]);
+Transformation( [ 5, 1, 4, 1, 1 ] )
+gap> IsRegularSemigroupElement(S, x);
+false
+gap> InversesOfSemigroupElementNC(S, x);
+[  ]
+
+# MultiplicativeNeutralElement, 1/4
 gap> S := Semigroup(Transformation([2, 3, 1]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
-# attract: MultiplicativeNeutralElement, 2/4
+# MultiplicativeNeutralElement, 2/4
 gap> S := Semigroup(Transformation([1, 2, 1]), Transformation([2, 2, 3]));;
 gap> MultiplicativeNeutralElement(S);
 fail
 
-# attract: MultiplicativeNeutralElement, 3/4
+# MultiplicativeNeutralElement, 3/4
 gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 > Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
 gap> MultiplicativeNeutralElement(S);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )
 
-# attract: MultiplicativeNeutralElement, 4/4
+# MultiplicativeNeutralElement, 4/4
 gap> S := Semigroup(Transformation([1, 1, 3]), Transformation([2, 2, 3]));
 <transformation semigroup of degree 2 with 2 generators>
 gap> MultiplicativeNeutralElement(S);
 fail
 
-# attract: MultiplicativeNeutralElement, 5
+# MultiplicativeNeutralElement, 5
 gap> S := SingularFactorisableDualSymmetricInverseMonoid(3);
 <inverse bipartition semigroup ideal of degree 3 with 1 generator>
 gap> IsMonoidAsSemigroup(S);
 false
 
-# attract: MultiplicativeNeutralElement, 6
+# MultiplicativeNeutralElement, 6
 gap> S := Semigroup([Transformation([3, 2, 3]),
 >                    Transformation([3, 4, 2, 5, 5])]);
 <transformation semigroup of degree 5 with 2 generators>
@@ -258,7 +273,7 @@ gap> S := SemigroupIdeal(S, S.1);
 gap> MultiplicativeNeutralElement(S);
 fail
 
-# attract: MultiplicativeNeutralElement, 7
+# MultiplicativeNeutralElement, 7
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
 gap> S := SemigroupIdeal(S, IdentityTransformation);
@@ -266,7 +281,7 @@ gap> S := SemigroupIdeal(S, IdentityTransformation);
 gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
-# attract: MultiplicativeNeutralElement, 8
+# MultiplicativeNeutralElement, 8
 gap> S := Semigroup([
 >  Transformation([2, 3, 1, 4, 4]),
 >  Transformation([2, 1, 3, 4, 4]),
@@ -279,12 +294,12 @@ gap> S := SemigroupIdeal(S, S.1);
 gap> MultiplicativeNeutralElement(S);
 Transformation( [ 1, 2, 3, 4, 4 ] )
 
-# attract: RepresentativeOfMinimalIdeal, 1/3
+# RepresentativeOfMinimalIdeal, 1/3
 gap> S := Semigroup(Transformation([1, 2, 1]), Transformation([2, 2, 3]));;
 gap> RepresentativeOfMinimalIdeal(S);
 Transformation( [ 2, 2, 2 ] )
 
-# attract: RepresentativeOfMinimalIdeal, 2/3
+# RepresentativeOfMinimalIdeal, 2/3
 gap> S := Semigroup(
 > Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5]]),
 > Bipartition([[1, -1], [2, -2], [3, -3], [4, -5], [5, -4]]),
@@ -297,7 +312,7 @@ gap> S := Semigroup(
 gap> RepresentativeOfMinimalIdeal(S);
 <bipartition: [ 1, 2, 4, 5, -1 ], [ 3, -3 ], [ -2 ], [ -4 ], [ -5 ]>
 
-# attract: RepresentativeOfMinimalIdeal, 3/3
+# RepresentativeOfMinimalIdeal, 3/3
 gap> S := Semigroup(
 > Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5]]),
 > Bipartition([[1, -1], [2, -2], [3, -3], [4, -5], [5, -4]]),
@@ -310,6 +325,58 @@ gap> S := Semigroup(
 gap> I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));;
 gap> RepresentativeOfMinimalIdeal(I);
 <bipartition: [ 1, 2, 4, 5, -1 ], [ 3, -3 ], [ -2 ], [ -4 ], [ -5 ]>
+
+# Left/RightIdentity
+gap> S := Semigroup(Transformation([2, 4, 3, 4]),
+>                   Transformation([3, 3, 2, 3, 3]),
+>                   Transformation([5, 5, 5, 4, 4]),
+>                   Transformation([5, 1, 4, 1, 1]),
+>                   Transformation([5, 3, 3, 4, 5]));;
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or x * RightIdentity(S, x) = x);
+true
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or RightIdentity(S, x) in S);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) * x = x);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) in S);
+true
+gap> L := Filtered(S, x -> LeftIdentity(S, x) = fail);
+[ Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 5, 5, 5, 4, 4 ] ), 
+  Transformation( [ 5, 1, 4, 1, 1 ] ), Transformation( [ 5, 2, 4, 2, 2 ] ), 
+  Transformation( [ 5, 4, 4, 4, 4 ] ), Transformation( [ 5, 3, 4, 3, 3 ] ) ]
+gap> Length(L) = 6;
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> R := Filtered(S, x -> RightIdentity(S, x) = fail);
+[ Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 5, 1, 4, 1, 1 ] ), 
+  Transformation( [ 5, 2, 4, 2, 2 ] ) ]
+gap> Length(R) = 3;
+true
+gap> ForAll(R, y -> ForAll(S, x -> y * x <> y));
+true
+gap> RightIdentity(S, Transformation([7, 6, 8, 10, 5, 5, 9, 2, 7, 8]));
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+semigroup)
+gap> LeftIdentity(S, Transformation([7, 6, 8, 10, 5, 5, 9, 2, 7, 8]));
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+semigroup)
+gap> S := Semigroup(Transformation([1, 2, 3, 3]), Transformation([2, 3, 1, 1]));
+<transformation semigroup of degree 4 with 2 generators>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> RightIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = MultiplicativeNeutralElement(S);
+true
+gap> LeftIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = MultiplicativeNeutralElement(S);
+true
+gap> S := Monoid(Transformation([1, 2, 3, 3]), Transformation([2, 3, 1, 1]));
+<transformation monoid of degree 4 with 2 generators>
+gap> RightIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = One(S);
+true
+gap> LeftIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = One(S);
+true
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
@@ -326,4 +393,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/attract.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/acting.tst");

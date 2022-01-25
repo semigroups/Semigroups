@@ -109,7 +109,9 @@ end;
 # Don't use ClosureSemigroup here since the order of the generators matters
 # and ClosureSemigroup shuffles the generators.
 
-BindGlobal("_GeneratorsSmallest",
+InstallMethod(GeneratorsSmallest,
+"for a semigroup with CanComputeFroidurePin",
+[CanComputeFroidurePin],
 function(S)
   local iter, gens, T, closure, x;
 
@@ -135,16 +137,6 @@ function(S)
   od;
   return gens;
 end);
-
-InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
-[IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
-
-InstallMethod(GeneratorsSmallest,
-"for a semigroup with CanComputeCppFroidurePin",
-[CanComputeFroidurePin], _GeneratorsSmallest);
-
-MakeReadWriteGlobal("_GeneratorsSmallest");
-Unbind(_GeneratorsSmallest);
 
 InstallMethod(SmallestElementSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -440,6 +432,11 @@ function(S)
   elif IsSemigroupIdeal(S) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
   elif not IsFinite(S) then
+    Info(InfoWarning,
+         1,
+         "may not be able to find the multiplicative zero, ",
+         "the semigroup is infinite");
+    # Cannot currently test this line, because the next method runs forever
     TryNextMethod();
   fi;
 
@@ -731,19 +728,6 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC,
-"for a semigroup with CanComputeFroidurePin",
-[IsSemigroup and CanComputeFroidurePin],
-function(S)
-  local comps;
-
-  # The first component (i.e. the inner most) of the strongly connected
-  # components of the right Cayley graph corresponds the minimal ideal.
-
-  comps := GreensRRelation(S)!.data.comps;
-  return EnumeratorCanonical(S)[comps[1][1]];
-end);
-
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a finite semigroup",
 [IsSemigroup and IsFinite],
 function(S)
@@ -864,34 +848,6 @@ _SemigroupSizeByIndexPeriod);
 
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
 Unbind(_SemigroupSizeByIndexPeriod);
-
-InstallMethod(MultiplicativeZero, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local gens, z;
-  # Does a generator act as a zero on all the other generators?
-  gens := GeneratorsOfSemigroup(S);
-  for z in gens do
-    if ForAll(gens, g -> z * g = z and g * z = z) then
-      return z;
-    fi;
-  od;
-  TryNextMethod();
-end);
-
-InstallMethod(MultiplicativeZero, "for a monoid with generators",
-[IsMonoid and HasGeneratorsOfMonoid],
-function(S)
-  local gens, z;
-  # Does a generator act as a zero on all the other generators?
-  gens := GeneratorsOfMonoid(S);
-  for z in gens do
-    if ForAll(gens, g -> z * g = z and g * z = z) then
-      return z;
-    fi;
-  od;
-  TryNextMethod();
-end);
 
 InstallMethod(IndecomposableElements, "for a semigroup", [IsSemigroup],
 function(S)

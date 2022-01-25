@@ -20,8 +20,6 @@ BindGlobal("TheTypeTBlocksObj",
                    IsBlocks and IsComponentObjectRep
                    and IsAttributeStoringRep));
 
-DeclareGlobalFunction("BlocksNC");
-
 DeclareAttribute("ProjectionFromBlocks", IsBlocks);
 DeclareAttribute("NrBlocks", IsBlocks);
 DeclareAttribute("RankOfBlocks", IsBlocks);

@@ -14,14 +14,14 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-# blocks: BlocksNC 1/1
-gap> x := BlocksNC([[1], [2], [-3]]);
+# blocks: BLOCKS_NC 1/1
+gap> x := BLOCKS_NC([[1], [2], [-3]]);
 <blocks: [ 1* ], [ 2* ], [ 3 ]>
 
 # blocks: PrintString 1/1
-gap> x := BlocksNC([[1, 6], [2], [3, 4], [-5]]);;
+gap> x := BLOCKS_NC([[1, 6], [2], [3, 4], [-5]]);;
 gap> PrintString(x);
-"BlocksNC([ [ 1, 6 ], [ 2 ], [ 3, 4 ], [ -5 ] ])"
+"BLOCKS_NC([ [ 1, 6 ], [ 2 ], [ 3, 4 ], [ -5 ] ])"
 
 # blocks: SEMIGROUPS.HashFunctionForBlocks 1/1
 gap> Size(Monoid([Bipartition([[1, 2, -1], [-2]]),
@@ -29,16 +29,16 @@ gap> Size(Monoid([Bipartition([[1, 2, -1], [-2]]),
 8
 
 # blocks: \< 1/1
-gap> a := BlocksNC([[1, 2], [3, 5], [4]]);;
-gap> b := BlocksNC([[1], [2, 3], [4], [-5]]);;
+gap> a := BLOCKS_NC([[1, 2], [3, 5], [4]]);;
+gap> b := BLOCKS_NC([[1], [2, 3], [4], [-5]]);;
 gap> a < b;
 true
 gap> b < a;
 false
 
 # blocks: \= 1/1
-gap> a := BlocksNC([[1, 2], [3, 5], [4]]);;
-gap> b := BlocksNC([[1], [2, 3], [4], [-5]]);;
+gap> a := BLOCKS_NC([[1, 2], [3, 5], [4]]);;
+gap> b := BLOCKS_NC([[1], [2, 3], [4], [-5]]);;
 gap> b = a;
 false
 gap> a = b;
@@ -47,7 +47,7 @@ gap> a = a;
 true
 
 # blocks: BlocksByIntRepNC 1/1
-#gap> x := BlocksNC([[1, 2, 3, 8], [-4, -9, -10], [5, 6], [7]]);;
+#gap> x := BLOCKS_NC([[1, 2, 3, 8], [-4, -9, -10], [5, 6], [7]]);;
 #gap> BlocksByIntRepNC(x!.blocks);
 #<blocks: [ 1, 2, 3, 8 ], [ -4, -9, -10 ], [ 5, 6 ], [ 7 ]>
 # blocks: ProjectionFromBlocks 1/1
@@ -81,14 +81,14 @@ gap> NrIdempotents(PartitionMonoid(3));
 114
 
 # blocks: BLOCKS_E_TESTER 2/3
-gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
-gap> y := BlocksNC([[1, 2, 3], [4], [-5, -6]]);;
+gap> x := BLOCKS_NC([[1, 4], [2, 3, 5]]);;
+gap> y := BLOCKS_NC([[1, 2, 3], [4], [-5, -6]]);;
 gap> BLOCKS_E_TESTER(x, y);
 false
 
 # blocks: BLOCKS_E_TESTER 3/3
-gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
-gap> y := BlocksNC([[1], [-2, -3, -4], [-5]]);;
+gap> x := BLOCKS_NC([[1, 4], [2, 3, 5]]);;
+gap> y := BLOCKS_NC([[1], [-2, -3, -4], [-5]]);;
 gap> BLOCKS_E_TESTER(x, y);
 false
 
@@ -106,7 +106,7 @@ gap> Set(Idempotents(PartitionMonoid(2)));
 # blocks: BLOCKS_RIGHT_ACT 1/1
 gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8],
 > [5, -5], [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
+gap> blocks := BLOCKS_NC([[-1, -10], [2], [-3, -4, -6, -8], [5],
 > [7, 9]]);;
 gap> BLOCKS_RIGHT_ACT(blocks, x) = blocks;
 true
@@ -114,7 +114,7 @@ true
 # blocks: BLOCKS_LEFT_ACT 1/1
 gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8],
 > [5, -5], [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
+gap> blocks := BLOCKS_NC([[-1, -10], [2], [-3, -4, -6, -8], [5],
 > [7, 9]]);;
 gap> BLOCKS_LEFT_ACT(blocks, Star(x)) = blocks;
 true
@@ -122,7 +122,7 @@ true
 # blocks: BLOCKS_INV_RIGHT, 1/1
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 > [6, -1], [-3], [-5, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -4, -5, -8], [-2, -3, -7], [6]]);;
+gap> blocks := BLOCKS_NC([[-1, -4, -5, -8], [-2, -3, -7], [6]]);;
 gap> RankOfBlocks(blocks);
 1
 gap> RankOfBlocks(BLOCKS_RIGHT_ACT(blocks, x));
@@ -134,7 +134,7 @@ gap> BLOCKS_INV_RIGHT(blocks, x);
 # blocks: BLOCKS_INV_LEFT, 1/1
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 > [6, -1], [-3], [-5, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -2, -6], [3, 4, 5], [-7, -8]]);;
+gap> blocks := BLOCKS_NC([[-1, -2, -6], [3, 4, 5], [-7, -8]]);;
 gap> RankOfBlocks(BLOCKS_LEFT_ACT(blocks, x));
 1
 gap> BLOCKS_INV_LEFT(blocks, x);
@@ -155,12 +155,12 @@ gap> CanonicalBlocks(blocks);
 <blocks: [ 1*, 2* ], [ 3*, 4* ], [ 5*, 6*, 7* ], [ 8*, 9*, 10* ], [ 11*, 12*, \
 13* ], [ 14, 15, 16 ], [ 17, 18, 19, 20 ]>
 gap> Print(last); "this string allows us to test the PrintObj method";
-BlocksNC([ [ 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ], [ 8, 9, 10 ], [ 11, 12, 13 ], [ -1\
-4, -15, -16 ], [ -17, -18, -19, -20 ] ])"this string allows us to test the Pri\
-ntObj method"
+BLOCKS_NC([ [ 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ], [ 8, 9, 10 ], [ 11, 12, 13 ], [ -\
+14, -15, -16 ], [ -17, -18, -19, -20 ] ])"this string allows us to test the Pr\
+intObj method"
 
 # Test empty blocks
-gap> BlocksNC([]);
+gap> BLOCKS_NC([]);
 <empty blocks>
 
 # SEMIGROUPS_UnbindVariables

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/attr.tst
-#Y  Copyright (C) 2015                                   James D. Mitchell
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -700,6 +700,14 @@ gap> S := Monoid(IdentityTransformation);;
 gap> StructureDescription(S);
 "1"
 
+# Issue 393: StructureDescription method in Semigroups inappropriately selected
+gap> F := FreeGroup("r", "s");;
+gap> r := F.1;;
+gap> s := F.2;;
+gap> G := F / [s * r * s ^ (- 1) * r ^ (- 1)];;
+gap> StructureDescription(G) in ["C0 x C0", "Z x Z"];
+true
+
 # attr: IsGreensDGreaterThanFunc
 gap> S := RegularBooleanMatMonoid(3);;
 gap> foo := IsGreensDGreaterThanFunc(S);
@@ -1361,6 +1369,16 @@ true
 gap> IsSet(GeneratorsSmallest(S));
 true
 
+# GeneratorsSmallest for CanComputeGapFroidurePin
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> Size(S);
+159
+gap> GeneratorsSmallest(S);
+[ x1, x2x1x2, x3x2x3x1x3x2x3, x3x2x3x1x3x2, x3x2x3x1x2x3, x3x2x3x1x2x3x2, 
+  x3x2x3x1x2x3x1x3, x3x2x3x1x2x1x3, x3x2x1x3x2x3, x3x1x3, x2x3x1x3x2x3, 
+  x2x3x2x1x3x2x3, x2, x3x2x3, x3 ]
+
 # Test SmallestElementSemigroup (for a semigroup)
 gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
@@ -1987,6 +2005,85 @@ gap> R := Filtered(S, x -> RightIdentity(S, x) = fail);
 gap> Length(R) = 3;
 true
 gap> ForAll(R, y -> ForAll(S, x -> y * x <> y));
+true
+
+# Non-acting example
+gap> S := Semigroup(
+> [ Matrix(IsBooleanMat, [[0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 0, 1]]), Matrix(IsBooleanMat, [[0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 1, 0, 0, 0],
+>       [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]]),
+>   Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 1, 0]]), Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [1, 0, 0, 0, 0], [0, 0, 0, 1, 0],
+>       [1, 0, 0, 0, 0], [1, 0, 0, 0, 0]]),
+>   Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 0, 1]]) ] );
+<semigroup of 5x5 boolean matrices with 5 generators>
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or x * RightIdentity(S, x) = x);
+true
+gap> ForAll(S, x -> RightIdentity(S, x) = fail or RightIdentity(S, x) in S);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) * x = x);
+true
+gap> ForAll(S, x -> LeftIdentity(S, x) = fail or LeftIdentity(S, x) in S);
+true
+gap> L := Filtered(S, x -> LeftIdentity(S, x) = fail);
+[ Matrix(IsBooleanMat, [[0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 1, 0, 0], 
+      [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], 
+      [0, 0, 0, 1, 0], [0, 0, 0, 1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [1, 0, 0, 0, 0], [0, 0, 0, 1, 0], 
+      [1, 0, 0, 0, 0], [1, 0, 0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 1, 0, 0, 0], [0, 0, 0, 1, 0], 
+      [0, 1, 0, 0, 0], [0, 1, 0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 0, 1, 0], [0, 0, 0, 1, 0], 
+      [0, 0, 0, 1, 0], [0, 0, 0, 1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0], 
+      [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]]) ]
+gap> Length(L) = 6;
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> ForAll(L, y -> ForAll(S, x -> x * y <> y));
+true
+gap> R := Filtered(S, x -> RightIdentity(S, x) = fail);
+[ Matrix(IsBooleanMat, [[0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 1, 0, 0], 
+      [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [1, 0, 0, 0, 0], [0, 0, 0, 1, 0], 
+      [1, 0, 0, 0, 0], [1, 0, 0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 1, 0, 0, 0], [0, 0, 0, 1, 0], 
+      [0, 1, 0, 0, 0], [0, 1, 0, 0, 0]]) ]
+gap> Length(R) = 3;
+true
+gap> ForAll(R, y -> ForAll(S, x -> y * x <> y));
+true
+gap> x := Matrix(IsBooleanMat, 
+> [[0, 0, 1, 0, 0], 
+>  [0, 1, 1, 0, 1], 
+>  [1, 0, 0, 1, 0], 
+>  [0, 1, 0, 0, 0], 
+>  [1, 1, 1, 1, 1]]);
+Matrix(IsBooleanMat, [[0, 0, 1, 0, 0], [0, 1, 1, 0, 1], [1, 0, 0, 1, 0], 
+  [0, 1, 0, 0, 0], [1, 1, 1, 1, 1]])
+gap> RightIdentity(S, x);
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+semigroup)
+gap> LeftIdentity(S, x);
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+semigroup)
+gap> S := Monoid(S);
+<monoid of 5x5 boolean matrices with 5 generators>
+gap> LeftIdentity(S, S.1) = One(S);
+true
+gap> RightIdentity(S, S.1) = One(S);
+true
+gap> S := Semigroup(Transformation([1, 2, 3, 3]), Transformation([2, 3, 1, 1]));;
+gap> S := AsSemigroup(IsBooleanMatSemigroup, S);
+<semigroup of 4x4 boolean matrices with 2 generators>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> RightIdentity(S, Matrix(IsBooleanMat, [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]])) = MultiplicativeNeutralElement(S);
+true
+gap> LeftIdentity(S, Matrix(IsBooleanMat, [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]])) = MultiplicativeNeutralElement(S);
 true
 
 # SEMIGROUPS_UnbindVariables

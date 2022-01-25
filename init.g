@@ -62,8 +62,6 @@ ReadPackage("semigroups", "gap/main/lambda-rho.gd");
 ReadPackage("semigroups", "gap/main/graded.gd");
 ReadPackage("semigroups", "gap/main/orbits.gd");
 
-ReadPackage("semigroups", "gap/semigroups/grpffmat.gd");
-ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 ReadPackage("semigroups", "gap/semigroups/semibipart.gd");
 ReadPackage("semigroups", "gap/semigroups/semiboolmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semicons.gd");
@@ -81,6 +79,9 @@ ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
 ReadPackage("semigroups", "gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semirms.gd");
 ReadPackage("semigroups", "gap/semigroups/semitrans.gd");
+
+ReadPackage("semigroups", "gap/semigroups/grpffmat.gd");
+ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 
 ReadPackage("semigroups", "gap/ideals/acting.gd");
 ReadPackage("semigroups", "gap/ideals/froidure-pin.gd");

@@ -140,8 +140,8 @@ SEMIGROUPS.RunTest := function(func)
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
 
   # Run tests with acting := true
-  Print("\033[40;38;5;82m");
-  Info(InfoWarning, 1, "Running tests with acting methods enabled . . .");
+  Print("\033[1m");
+  Print("==> with acting methods enabled <==\n");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   passed := func();
@@ -155,8 +155,8 @@ SEMIGROUPS.RunTest := function(func)
   fi;
 
   # Run tests with acting := false
-  Print("\033[40;38;5;82m");
-  Info(InfoWarning, 1, "Running tests with acting methods disabled . . .");
+  Print("\033[1m");
+  Print("==> with acting methods disabled <==\n");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := false;
   passed := func();
@@ -167,7 +167,8 @@ SEMIGROUPS.RunTest := function(func)
 end;
 
 SEMIGROUPS.TestDir := function(dir, arg)
-  local opts, name;
+  local opts, result, name;
+
   opts := rec(earlyStop   := true,
               testOptions := ShallowCopy(SEMIGROUPS.TestRec));
   opts.testOptions.showProgress := false;
@@ -184,7 +185,9 @@ SEMIGROUPS.TestDir := function(dir, arg)
     ErrorNoReturn("there must be no arguments, or the argument ",
                   "must be a record");
   fi;
-  return SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
+  PrintFormatted("\033[1mRunning tests in: {}\n\033[0m", dir);
+  result := SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
+  return result;
 end;
 
 #############################################################################
@@ -202,7 +205,7 @@ function(arg)
     od;
   elif Length(arg) <> 0 then
     ErrorNoReturn("there must be no arguments, or the argument ",
-                  "must be a opts");
+                  "must be a record");
   fi;
   return SEMIGROUPS.RunTest(function()
       return Test(Filename(DirectoriesPackageLibrary("semigroups",
@@ -213,8 +216,24 @@ end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
+  local dir, contents, subdirs, subdir;
+
+  dir      := DirectoriesPackageLibrary("semigroups", "tst/standard/")[1];
+  contents := Filtered(DirectoryContents(dir), x -> not StartsWith(x, "."));
+  Apply(contents, x -> Filename(dir, x));
+
+  subdirs := Filtered(contents, IsDirectoryPath);
+
+  for subdir in subdirs do
+    contents := Filtered(DirectoryContents(subdir),
+                         x -> not StartsWith(x, "."));
+    if not IsEmpty(contents) and not SEMIGROUPS.TestDir(subdir, arg) then
+      return false;
+    fi;
+  od;
+
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
-                                                      "tst/standard/"),
+                                                      "tst/standard/")[1]![1],
                             arg);
 end);
 
