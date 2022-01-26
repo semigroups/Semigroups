@@ -1137,6 +1137,7 @@ function(S)
   lookfunc := function(data, x)
     local rho, scc, i;
     if data!.repslens[x[2]][data!.orblookup1[x[6]]] > 1 then
+      Error();
       return true;
     elif IsActingSemigroupWithFixedDegreeMultiplication(S)
         and ActionRank(S)(x[4]) = ActionDegree(x[4]) then
@@ -1416,57 +1417,6 @@ function(S)
          and ForAll(gens, x -> gens[1] = x);
 end);
 
-# same method for ideals
-
-InstallMethod(IsUnitRegularMonoid, "for an acting semigroup",
-[IsActingSemigroup],
-function(S)
-  local G, H, o, scc, graded, tester, gens, rhofunc, dom, rho, rep, m, j;
-
-  if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)) then
-    TryNextMethod();
-  elif not IsRegularSemigroup(S) then
-    return false;
-  fi;
-
-  G := GroupOfUnits(S);
-
-  if G = fail then
-    return false;
-  elif IsTrivial(G) then
-    return IsBand(S);
-  fi;
-
-  H       := Range(IsomorphismPermGroup(G));
-  o       := LambdaOrb(S);
-  scc     := OrbSCC(o);
-  graded  := GradedLambdaOrbs(G);
-  tester  := IdempotentTester(S);
-  gens    := o!.gens;
-  rhofunc := RhoFunc(S);
-
-  for m in [2 .. Length(scc)] do
-    dom := Union(Orbits(H, o[scc[m][1]], OnPoints));
-    if not IsSubgroup(Action(H, dom),
-                      Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then
-      return false;
-    elif Length(scc[m]) > 1 then
-      rho := rhofunc(EvaluateWord(gens,
-                                  TraceSchreierTreeForward(o, scc[m][1])));
-      for j in scc[m] do
-        if not o[j] in graded then
-          rep := EvaluateWord(gens, TraceSchreierTreeForward(o, j));
-          if not ForAny(GradedLambdaOrb(G, rep, true), x -> tester(x, rho))
-              then
-            return false;
-          fi;
-        fi;
-      od;
-    fi;
-  od;
-  return true;
-end);
-
 InstallMethod(IsUnitRegularMonoid, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -1650,9 +1600,13 @@ function(S, T)
     and NrIdempotents(S) = NrIdempotents(T);
 end);
 
+# The filter IsActingSemigroup is added here because otherwise we don't know
+# that G and N in the loop in the method below act on the same set. 
+
 InstallMethod(IsNormalInverseSubsemigroup,
-"for an inverse semigroup and an inverse subsemigroup",
-[IsInverseSemigroup, IsInverseSemigroup],
+"for an inverse acting semigroup and subsemigroup",
+[IsInverseSemigroup and IsActingSemigroup, 
+ IsInverseSemigroup and IsActingSemigroup],
 function(S, T)
   local DS, G, N, p, DT;
 
@@ -1665,7 +1619,7 @@ function(S, T)
     G := Image(IsomorphismPermGroup(GroupHClass(DS)));
     N := Image(IsomorphismPermGroup(GroupHClass(DT)));
     if not IsSubset(MovedPoints(G), MovedPoints(N)) then
-      p := MappingPermListList(MovedPoints(G), MovedPoints(N));
+      p := MappingPermListList(MovedPoints(N), MovedPoints(G));
       N := N ^ p;
     fi;
     Assert(0, IsSubset(MovedPoints(G), MovedPoints(N)));

@@ -1,14 +1,14 @@
 ############################################################################
 ##
-#W  standard/maximal.tst
-#Y  Copyright (C) 2015-16                                James D. Mitchell
+#W  standard/attributes/maximal.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/maximal.tst");
+gap> START_TEST("Semigroups package: standard/attributes/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -857,5 +857,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/maximal.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/maximal.tst");

@@ -384,6 +384,12 @@ gap> G := AutomorphismGroup(S);
 <group with 2 generators>
 gap> StructureDescription(G);
 "S3"
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
+> [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
+<commutative semigroup of 3x3 max-plus matrices with 1 generator>
+gap> AutomorphismGroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

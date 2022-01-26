@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/properties.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#W  standard/attributes/properties.tst
+#Y  Copyright (C) 2011-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/properties.tst");
+gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -433,6 +433,10 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 4th choice method found for `IsEUnitaryInverseSemigroup' on 1 argume\
 nts
 
+# IsEUnitaryInverseSemigroup for a non-inverse semigroup
+gap> IsEUnitaryInverseSemigroup(FullBooleanMatMonoid(2));
+false
+
 # properties: IsFactorisableInverseMonoid, 1
 gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
@@ -495,6 +499,11 @@ true
 gap> IsLTrivial(I);
 true
 gap> IsRTrivial(I);
+true
+gap> S := IdempotentGeneratedSubsemigroup(SymmetricInverseMonoid(3));;
+gap> S := Semigroup(S);
+<partial perm monoid of rank 3 with 3 generators>
+gap> IsHTrivial(S);
 true
 
 # properties: IsXTrivial, trans, 2
@@ -875,6 +884,8 @@ gap> I := SemigroupIdeal(S, S.1);;
 gap> GeneratorsOfSemigroup(I);;
 gap> IsLeftZeroSemigroup(I);
 true
+gap> IsLeftZeroSemigroup(Semigroup(LeftZeroSemigroup(10), rec(acting := false)));
+true
 
 # properties: IsMonogenicSemigroup, 1
 gap> S := Semigroup(MonogenicSemigroup(10, 10));
@@ -950,6 +961,9 @@ gap> IsEmpty(S);
 true
 gap> IsMonogenicSemigroup(S);
 false
+gap> S := Semigroup(List([1 .. 10], x -> Transformation([2, 2, 1, 3])));;
+gap> HasIsMonogenicSemigroup(S) and IsMonogenicSemigroup(S);
+true
 
 # properties: IsMonogenicInverseSemigroup, 1
 gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup,
@@ -1049,6 +1063,15 @@ true
 gap> S := Monoid(Transformation([2, 1, 2, 3, 4]),
 >                Transformation([2, 1, 2, 3, 4]));;
 gap> HasIsMonogenicMonoid(S) and IsMonogenicMonoid(S);
+true
+
+# IsMonogenicMonoid repeated generators
+gap> S := FreeMonoid(1);;
+gap> S := Monoid(S.1, S.1, S.1);
+<infinite monoid with 3 generators>
+gap> HasIsMonogenicMonoid(S) and IsMonogenicMonoid(S);
+false
+gap> IsMonogenicMonoid(S);
 true
 
 # properties: IsMonogenicInverseMonoid, 1
@@ -1474,6 +1497,10 @@ gap> GeneratorsOfSemigroup(I);;
 gap> IsRightZeroSemigroup(I);
 true
 
+# IsRightZeroSemigroup, 5
+gap> IsRightZeroSemigroup(Semigroup(LeftZeroSemigroup(10), rec(acting := false)));
+false
+
 # properties: IsSemilattice, 1/?
 gap> T := Monoid([Transformation([6, 2, 3, 4, 6, 6]),
 >   Transformation([1, 6, 6, 4, 5, 6]),
@@ -1655,6 +1682,13 @@ true
 gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]),
 >                                      PartialPerm([], []), rec(acting :=
 >                                      false)));
+true
+
+# IsUnitRegularMonoid (for an acting semigroup with group of units)
+gap> S := Semigroup(Transformation( [ 2, 3, 1 ] ),
+>  Transformation( [ 1, 3, 4, 2 ] ),
+>  Transformation( [ 4, 3, 2, 2 ] ));;
+gap> IsUnitRegularMonoid(S);
 true
 
 # properties: IsZeroGroup, 1
@@ -1933,6 +1967,41 @@ gap> S := FullTransformationMonoid(3);;
 gap> IsSurjectiveSemigroup(S);
 true
 
+# IsSemigroupWithClosedIdempotents
+gap> S := FreeSemigroup(1);;
+gap> S := Semigroup(S.1, S.1);
+<infinite semigroup with 2 generators>
+gap> IsSemigroupWithClosedIdempotents(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsSemigroupWithClosedIdempotents' on 1 \
+arguments
+
+# IsFullInverseSubsemigroup and IsNormalInverseSubsemigroup
+gap> S := SymmetricInverseMonoid(3);;
+gap> S := InverseSemigroup(S, rec(acting := true));;
+gap> C := SemigroupCongruence(S, [[S.1, S.2]]);
+<semigroup congruence over <inverse partial perm monoid of size 34, rank 3 
+ with 3 generators> with 1 generating pairs>
+gap> K := KernelOfSemigroupCongruence(C);
+<inverse partial perm monoid of size 34, rank 3 with 5 generators>
+gap> K := InverseSemigroup(K, rec(acting := true));
+<inverse partial perm monoid of rank 3 with 5 generators>
+gap> IsFullInverseSubsemigroup(S, K);
+true
+gap> IsNormalInverseSubsemigroup(S, K);
+true
+gap> T := InverseSemigroup(SymmetricInverseMonoid(4), rec(acting := true));
+<inverse partial perm monoid of rank 4 with 3 generators>
+gap> IsNormalInverseSubsemigroup(S, T);
+false
+gap> G := AsSemigroup(IsPartialPermSemigroup, DihedralGroup(8));;
+gap> G := InverseSemigroup(G, rec(acting := true));;
+gap> H := InverseSemigroup(G.1, rec(acting := true));
+<partial perm group of rank 8 with 1 generator>
+gap> IsNormalInverseSubsemigroup(G,
+>                                InverseSemigroup(G.1, rec(acting := true)));
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);
@@ -1945,4 +2014,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/properties.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/properties.tst");

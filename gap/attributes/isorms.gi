@@ -260,10 +260,6 @@ function(R)
 
   aut_graph := AutomorphismGroup(RZMSDigraph(R), [[1 .. m], [m + 1 .. n + m]]);
 
-  if Length(GeneratorsOfGroup(aut_graph)) = 0 then
-    aut_graph := Group(());
-  fi;
-
   Info(InfoSemigroups, 2, "the graph has ", Size(aut_graph), " automorphisms");
 
   # stabiliser of the matrix under rearranging rows and columns by elements
@@ -474,9 +470,7 @@ function(R)
   aut_group := AutomorphismGroup(G);
   Info(InfoSemigroups,
        2,
-       "the underlying group has ",
-       Size(aut_group),
-       " automorphisms");
+       StringFormatted("there are {} group automorphisms", Size(aut_group)));
 
   # pointwise stabiliser of the entries in the matrix of R under the
   # automorphism group of the group
@@ -985,23 +979,17 @@ function(x, y)
 end);
 
 InstallMethod(\<, "for objects in `IsRMSIsoByTriple'",
+IsIdenticalObj,
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y)
-      or Source(x) = Source(y) and Range(x) < Range(y);
-  fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
          < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
 
 InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'",
+IsIdenticalObj,
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y)
-      or Source(x) = Source(y) and Range(x) < Range(y);
-  fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
          < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
