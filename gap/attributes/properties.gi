@@ -1137,7 +1137,6 @@ function(S)
   lookfunc := function(data, x)
     local rho, scc, i;
     if data!.repslens[x[2]][data!.orblookup1[x[6]]] > 1 then
-      Error();
       return true;
     elif IsActingSemigroupWithFixedDegreeMultiplication(S)
         and ActionRank(S)(x[4]) = ActionDegree(x[4]) then
@@ -1601,11 +1600,11 @@ function(S, T)
 end);
 
 # The filter IsActingSemigroup is added here because otherwise we don't know
-# that G and N in the loop in the method below act on the same set. 
+# that G and N in the loop in the method below act on the same set.
 
 InstallMethod(IsNormalInverseSubsemigroup,
 "for an inverse acting semigroup and subsemigroup",
-[IsInverseSemigroup and IsActingSemigroup, 
+[IsInverseSemigroup and IsActingSemigroup,
  IsInverseSemigroup and IsActingSemigroup],
 function(S, T)
   local DS, G, N, p, DT;

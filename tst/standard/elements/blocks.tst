@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  standard/blocks.tst
-#Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
+#W  standard/elements/blocks.tst
+#Y  Copyright (C) 2014-2022                               Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/blocks.tst");
+gap> START_TEST("Semigroups package: standard/elements/blocks.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -46,10 +46,6 @@ false
 gap> a = a;
 true
 
-# blocks: BlocksByIntRepNC 1/1
-#gap> x := BLOCKS_NC([[1, 2, 3, 8], [-4, -9, -10], [5, 6], [7]]);;
-#gap> BlocksByIntRepNC(x!.blocks);
-#<blocks: [ 1, 2, 3, 8 ], [ -4, -9, -10 ], [ 5, 6 ], [ 7 ]>
 # blocks: ProjectionFromBlocks 1/1
 gap> x :=
 > Bipartition([[1, 2, 3], [4, 7, 9], [5, 6, 10, -1], [8, -3, -5, -8],
@@ -173,4 +169,4 @@ gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/blocks.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/blocks.tst");

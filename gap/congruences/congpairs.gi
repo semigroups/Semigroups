@@ -60,11 +60,9 @@ function(S, pairs, filt)
     SetGeneratingPairsOfMagmaCongruence(C, pairs);
   elif IsLeftCongruenceCategory(C) then
     SetGeneratingPairsOfLeftMagmaCongruence(C, pairs);
-  elif IsRightCongruenceCategory(C) then
-    SetGeneratingPairsOfRightMagmaCongruence(C, pairs);
   else
-    Error("Something has gone wrong, should not have ",
-          "been able to reach here!");
+    Assert(0, IsRightCongruenceCategory(C));
+    SetGeneratingPairsOfRightMagmaCongruence(C, pairs);
   fi;
   return C;
 end);

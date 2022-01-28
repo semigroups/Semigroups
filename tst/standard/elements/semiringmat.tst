@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semiringmat.tst
-#Y  Copyright (C) 2015                                   James D. Mitchell
+#W  standard/elements/semiringmat.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semiringmat.tst");
+gap> START_TEST("Semigroups package: standard/elements/semiringmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -591,6 +591,28 @@ false
 gap> Matrix(GF(3), [[]]);
 [ [  ] ]
 
+# Pickling
+gap> filename := Concatenation(SEMIGROUPS.PackageDir,
+> "/tst/standard/elements/semiringmat.tst");;
+gap> f := IO_File(filename, "r");;
+gap> x := Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);
+Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10)
+gap> IO_Unpicklers.MOSR(f);
+IO_Error
+gap> IO_Pickle(f, x);
+IO_Error
+
+# RandomMatrix
+gap> RandomMatrix(Integers, -1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `RandomMatrix' on 2 arguments
+gap> RandomMatrix(Integers, -1, 2);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
+gap> RandomMatrix(Integers, -1, [2]);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(ht);
@@ -601,4 +623,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semiringmat.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/semiringmat.tst");

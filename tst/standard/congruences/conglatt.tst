@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  standard/conglatt.tst
-#Y  Copyright (C) 2014-16                                   Wilf A. Wilson
+#W  standard/congruences/conglatt.tst
+#Y  Copyright (C) 2014-2022                                 Wilf A. Wilson
 ##                                                          Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/conglatt.tst");
+gap> START_TEST("Semigroups package: standard/congruences/conglatt.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -485,4 +485,4 @@ gap> Unbind(restriction);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/conglatt.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/conglatt.tst");

@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  standard/congrms.tst
-#Y  Copyright (C) 2014-15                                   Michael Young
+#W  standard/congruences/congrms.tst
+#Y  Copyright (C) 2014-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congrms.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congrms.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -100,6 +100,8 @@ gap> EquivalenceRelationCanonicalLookup(cong2);
   3, 2, 3, 2, 3, 2, 3, 3, 3, 1, 3, 2, 3, 2, 3, 3, 2, 2, 2 ]
 gap> IsSubrelation(cong2, cong);
 Error, the 1st and 2nd arguments are congruences over different semigroups
+gap> IsUniversalSemigroupCongruence(cong2);
+false
 
 # ReesMatCongTest4: Testing membership
 gap> x := ReesMatrixSemigroupElement(S, 1, (2, 3), 2);;
@@ -131,6 +133,12 @@ gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(2,3,4),3)>
+gap> Representative(class1);
+(1,(2,3),2)
+gap> Representative(class2);
+(1,(1,4),1)
+gap> Representative(class3);
+(1,(2,3,4),3)
 gap> EquivalenceClassOfElement(cong, t);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a congruence)
@@ -262,7 +270,7 @@ gap> mat := [[(1, 3), (1, 2)(3, 4)],
 gap> S := ReesMatrixSemigroup(g, mat);;
 gap> x := RMSElement(S, 2, (1, 3)(2, 4), 3);;
 gap> y := RMSElement(S, 1, (), 3);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y], [x, x]]);
 <semigroup congruence over <Rees matrix semigroup 2x3 over Sym( [ 1 .. 4 ] )>
   with linked triple (S4,1,3)>
 
@@ -604,9 +612,11 @@ gap> mat := [[0, (4, 5), (3, 4), (1, 4, 3), 0],
 gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> x := RMSElement(S, 5, (3, 4), 2);;
 gap> y := RMSElement(S, 1, (), 4);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y], [x, x]]);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (S4,4,3)>
+gap> IsUniversalSemigroupCongruence(cong);
+false
 
 # IsLinkedTriple: bad input
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
@@ -639,6 +649,46 @@ gap> enum := Enumerator(class);
 [ Transformation( [ 2, 2, 2, 1, 2 ] ) ]
 gap> Size(enum);
 1
+
+# Code coverage
+gap> G := FreeGroup(1);
+<free group on the generators [ f1 ]>
+gap> S := ReesMatrixSemigroup(G, [[One(G)]]);
+<Rees matrix semigroup 1x1 over <free group on the generators [ f1 ]>>
+gap> IsLinkedTriple(S, G, [], []);
+Error, the 1st argument (a Rees matrix semigroup) is not finite
+gap> S := ReesZeroMatrixSemigroup(G, [[One(G)]]);
+<Rees 0-matrix semigroup 1x1 over <free group on the generators [ f1 ]>>
+gap> IsLinkedTriple(S, G, [], []);
+Error, the 1st argument (a Rees 0-matrix semigroup) is not finite
+
+# Representative for RZMSCongruenceClassByLinkedTriple 
+gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
+gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
+gap> rowBlocks := [[1], [2], [3]];;
+gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
+gap> Representative(RZMSCongruenceClassByLinkedTriple(cong,
+> RightCoset(N, (1, 5)), 2, 3));
+(2,(3,4),3)
+
+# Representative for RMSCongruenceClassByLinkedTriple
+gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
+gap> mat := [[(), (), (1, 4, 5), (), (), (1, 4, 3, 5)],
+>            [(), (), (), (), (3, 5), ()],
+>            [(), (), (), (3, 5), (), ()]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> colBlocks := [[1, 6], [2], [3], [4], [5]];
+[ [ 1, 6 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ]
+gap> rowBlocks := [[1], [2], [3]];;
+gap> cong := RMSCongruenceByLinkedTriple(S, G, colBlocks, rowBlocks);;
+gap> Representative(RMSCongruenceClassByLinkedTriple(cong,
+> RightCoset(G, (1, 5)), 2, 3));
+(2,(),3)
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
@@ -675,4 +725,4 @@ gap> Unbind(zero);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/congrms.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congrms.tst");

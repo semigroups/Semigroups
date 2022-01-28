@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/conguniv.tst
-#Y  Copyright (C) 2015                                      Michael Young
+#W  standard/congruences/conguniv.tst
+#Y  Copyright (C) 2015-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/conguniv.tst");
+gap> START_TEST("Semigroups package: standard/congruences/conguniv.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -268,4 +268,4 @@ gap> Unbind(uniT);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/conguniv.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/conguniv.tst");

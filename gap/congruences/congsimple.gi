@@ -232,26 +232,12 @@ function(C)
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
-InstallMethod(Representative,
-"for a (0-)simple semigroup congruence class",
-[IsSimpleSemigroupCongruenceClass],
-function(class)
-  return Representative(class!.rmsclass) ^ InverseGeneralMapping(class!.iso);
-end);
-
 InstallMethod(IsSubrelation,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(lhop, rhop)
   return IsSubrelation(lhop!.rmscong, rhop!.rmscong);
 end);
-
-# InstallMethod(EquivalenceRelationLookup,
-# "for a (0-)simple semigroup congruence",
-# [IsSimpleSemigroupCongruence],
-# function(C)
-#   return EquivalenceRelationLookup(C!.rmscong);
-# end);
 
 InstallMethod(EquivalenceRelationPartition,
 "for a (0-)simple semigroup congruence",

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/trans.tst
-#Y  Copyright (C) 2016                                   James D. Mitchell
+#W  standard/elements/trans.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/trans.tst");
+gap> START_TEST("Semigroups package: standard/elements/trans.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -56,4 +56,4 @@ gap> Unbind(M);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/trans.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/trans.tst");

@@ -153,9 +153,7 @@ end);
 ## K.G. Farlow, Max-plus Algebra, Thesis.
 ## https://tinyurl.com/zzs38s4
 
-InstallMethod(InverseOp,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(InverseOp, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(mat)
   local dim, seen_rows, seen_cols, out, row, col;
   dim := DimensionOfMatrixOverSemiring(mat);
@@ -182,9 +180,7 @@ end);
 ## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
 ## https://tinyurl.com/znhk52m
 
-InstallMethod(SpectralRadius,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(SpectralRadius, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(mat)
   local dim, cm, mk, k, max;
   # Check for -infinity case
@@ -205,8 +201,7 @@ function(mat)
   return Maximum(cm);
 end);
 
-InstallMethod(UnweightedPrecedenceDigraph,
-"for a max-plus matrix",
+InstallMethod(UnweightedPrecedenceDigraph, "for a max-plus matrix",
 [IsMaxPlusMatrix],
 function(mat)
   local adj;
@@ -227,9 +222,7 @@ end);
 ## K.G. Farlow, Max-plus Algebra, Thesis.
 ## https://tinyurl.com/zzs38s4
 
-InstallMethod(RadialEigenvector,
-"for a max-plus matrix",
-[IsMaxPlusMatrix],
+InstallMethod(RadialEigenvector, "for a max-plus matrix", [IsMaxPlusMatrix],
 function(m)
   local dim, pows, crit, out, n, i, k;
 

@@ -214,10 +214,8 @@ function(C)
   if not (IsSemigroup(S) and IsFinite(S)) then
     ErrorNoReturn("the range of the argument (an equivalence relation) ",
                   "is not a finite semigroup");
-  elif not CanComputeFroidurePin(S) then
-    # PositionCanonical requires CanComputeFroidurePin
-    TryNextMethod();
   fi;
+  Assert(1, CanComputeFroidurePin(S));
 
   lookup := [1 .. Size(S)];
   for class in NonTrivialEquivalenceClasses(C) do
@@ -237,9 +235,9 @@ function(C)
   if not (IsSemigroup(S) and IsFinite(S)) then
     ErrorNoReturn("the range of the argument (an equivalence relation) ",
                   "is not a finite semigroup");
-  elif not CanComputeFroidurePin(S) then
-    TryNextMethod();
   fi;
+  Assert(1, CanComputeFroidurePin(S));
+
   lookup := EquivalenceRelationLookup(C);
   max := Maximum(lookup);
   # We do not know whether the maximum is NrEquivalenceClasses(C)
@@ -271,11 +269,12 @@ function(C)
   local en, partition, lookup, i;
   if not IsFinite(Range(C)) then
     Error("the argument (a congruence) must have finite range");
-  elif not CanComputeFroidurePin(Range(C)) then
-    # This is required because EnumeratorCanonical is not a thing for other
-    # types of congruences.
-    TryNextMethod();
   fi;
+  # CanComputeFroidurePin is required because EnumeratorCanonical is not a
+  # thing for other types of congruences. There isn't a way of constructing an
+  # object in IsAnyCongruenceCategory where the range does not have
+  # CanComputeFroidurePin, so we just assert this for safety.
+  Assert(1, CanComputeFroidurePin(Range(C)));
   en        := EnumeratorCanonical(Range(C));
   partition := List([1 .. NrEquivalenceClasses(C)], x -> []);
   lookup    := EquivalenceRelationCanonicalLookup(C);
@@ -438,13 +437,6 @@ function(lhop, rhop)
   return EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop)
     and [Representative(lhop), Representative(rhop)]
     in EquivalenceClassRelation(lhop);
-end);
-
-InstallMethod(\<, "for two congruence classes",
-[IsAnyCongruenceClass, IsAnyCongruenceClass],
-function(lhop, rhop)
-  return EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop)
-    and RepresentativeSmallest(lhop) < RepresentativeSmallest(rhop);
 end);
 
 InstallMethod(\in,

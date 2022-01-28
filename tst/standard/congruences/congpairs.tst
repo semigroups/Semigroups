@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  standard/congpairs.tst
-#Y  Copyright (C) 2014-16                                   Wilf A. Wilson
+#W  standard/congruences/congpairs.tst
+#Y  Copyright (C) 2014-2022                                 Wilf A. Wilson
 ##                                                          Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congpairs.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congpairs.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -966,6 +966,38 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `JoinRightSemigroupCongruences' on 2 arg\
 uments
 
+# AsSemigroupCongruenceByGeneratingPairs
+gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(1, 2), ()], [(), (1, 3)]]);
+<Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
+gap> cong := RMSCongruenceByLinkedTriple(S, Group((1, 2, 3)),
+>                                        [[1], [2]], [[1, 2]]);;
+gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);;
+gap> C := UniversalSemigroupCongruence(S);;
+gap> AsSemigroupCongruenceByGeneratingPairs(C);
+<semigroup congruence over <Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
+  with linked triple (S3,1,1)>
+gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
+>                           PartialPerm([1, 2], [2, 3])]);;
+gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
+gap> C := SemigroupCongruence(S, pairs);
+<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
+ with 2 generators> with 1 generating pairs>
+gap> AsSemigroupCongruenceByGeneratingPairs(C);
+<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
+ with 2 generators> with 1 generating pairs>
+gap> C := RightSemigroupCongruence(S, pairs);
+<right semigroup congruence over <inverse partial perm semigroup of size 14, 
+ rank 3 with 2 generators> with 1 generating pairs>
+gap> AsRightSemigroupCongruenceByGeneratingPairs(C);
+<right semigroup congruence over <inverse partial perm semigroup of size 14, 
+ rank 3 with 2 generators> with 1 generating pairs>
+gap> C := LeftSemigroupCongruence(S, pairs);
+<left semigroup congruence over <inverse partial perm semigroup of size 14, 
+ rank 3 with 2 generators> with 1 generating pairs>
+gap> AsLeftSemigroupCongruenceByGeneratingPairs(C);
+<left semigroup congruence over <inverse partial perm semigroup of size 14, 
+ rank 3 with 2 generators> with 1 generating pairs>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(S);
@@ -995,4 +1027,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/congpairs.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congpairs.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/ffmat.tst
-#Y  Copyright (C) 2015                                     Markus Pfeiffer
+#W  standard/elements/ffmat.tst
+#Y  Copyright (C) 2015-2022                                Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/ffmat.tst");
+gap> START_TEST("Semigroups package: standard/elements/ffmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -411,9 +411,16 @@ gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(11), [])), true);;
 gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(7), [])), true);;
 gap> HTAdd(ht, RowSpaceBasis(x), true);;
 
+# TraceMat
+gap> x := Matrix(GF(2 ^ 2),
+> [[0 * Z(2), Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, Z(2 ^ 2) ^ 2, Z(2 ^ 2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2)]]);;
+gap> TraceMat(x);
+Z(2^2)^2
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/ffmat.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/ffmat.tst");

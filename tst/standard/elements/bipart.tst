@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  standard/bipart.tst
-#Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
+#W  standard/elements/bipart.tst
+#Y  Copyright (C) 2014-2022                               Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/bipart.tst");
+gap> START_TEST("Semigroups package: standard/elements/bipart.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -634,7 +634,7 @@ gap> TYPE_BIPART(3);;
 
 # Test pickling
 gap> filename := Concatenation(SEMIGROUPS.PackageDir,
-> "/tst/standard/bipart.p");;
+> "/tst/standard/elements/bipart.p");;
 gap> x := Bipartition(
 > [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
 > [-2], [-6], [-10]]);;
@@ -644,7 +644,7 @@ gap> x = ReadGenerators(filename)[1];
 true
 gap> Exec("rm ", filename);
 gap> filename := Concatenation(SEMIGROUPS.PackageDir,
-> "/tst/standard/bipart.tst");;
+> "/tst/standard/elements/bipart.tst");;
 gap> f := IO_File(filename, "r");;
 gap> IO_Unpicklers.BIPA(f);
 IO_Error
@@ -769,7 +769,11 @@ gap> Bipartition([[1, 2], [-1, 1]]);
 Error, the union of the argument <classes> is not [-2 .. -1, 1 .. 2]
 
 # AsBipartition, for a partial perm
-gap> AsBipartition(PartialPermNC([1 .. 100000]));;
+gap> AsBipartition(PartialPermNC([1 .. 10]));;
+
+# BipartitionByIntRep, bad input
+gap> BipartitionByIntRep(['a']);
+Error, the items in the argument (a list) must be positive integers
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
@@ -790,4 +794,4 @@ gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/bipart.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/bipart.tst");

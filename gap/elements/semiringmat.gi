@@ -99,10 +99,7 @@ function(file, mat)
     i := i + 1;
   od;
 
-  if IO_Pickle(file, pickle) = IO_Error then
-    return IO_Error;
-  fi;
-  return IO_OK;
+  return IO_Pickle(file, pickle);
 end);
 
 IO_Unpicklers.MOSR := function(file)

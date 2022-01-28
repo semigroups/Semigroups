@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/cong.tst
-#Y  Copyright (C) 2015                                      Michael Young
+#W  standard/congruences/cong.tst
+#Y  Copyright (C) 2015-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/cong.tst");
+gap> START_TEST("Semigroups package: standard/congruences/cong.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -230,8 +230,19 @@ gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
 gap> cong := LeftSemigroupCongruence(S, pairs);
 <left semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
-gap> EquivalenceClassOfElement(cong, Transformation([3, 4, 3, 3]));
+gap> C := EquivalenceClassOfElement(cong, Transformation([3, 4, 3, 3]));
 <left congruence class of Transformation( [ 3, 4, 3, 3 ] )>
+gap> Size(C);
+2
+gap> AsList(C);
+[ Transformation( [ 3, 4, 3, 3 ] ), Transformation( [ 3, 3, 3, 3 ] ) ]
+gap> C < C;
+false
+gap> EquivalenceClassOfElement(cong, Transformation([3, 4, 3, 3, 6, 6, 6]));
+Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
+ argument (a congruence)
+gap> Transformation([3, 4, 3, 3, 6, 6, 6]) in C;
+false
 
 # RightSemigroupCongruence: Pairs
 gap> S := Semigroup([Transformation([3, 3, 3]),
@@ -555,7 +566,60 @@ true
 # gap> EquivalenceRelationPartition(c);;
 # gap> IsReesCongruence(c);
 # false
-#
+
+# EquivalenceRelationPartitionWithSingletons non-finite
+gap> S := FreeSemigroup(2);
+<free semigroup on the generators [ s1, s2 ]>
+gap> C := SemigroupCongruence(S, [S.1, S.2]);
+<semigroup congruence over <free semigroup on the generators [ s1, s2 ]> with 
+1 generating pairs>
+gap> EquivalenceRelationPartitionWithSingletons(C);
+Error, the argument (a congruence) must have finite range
+
+# MeetSemigroupCongruences, error different ranges
+gap> S := FreeSemigroup(2);
+<free semigroup on the generators [ s1, s2 ]>
+gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                    Transformation([3, 4, 3, 4, 4]),
+>                    Transformation([3, 4, 3, 4, 3]),
+>                    Transformation([4, 3, 3, 4, 4])]);;
+gap> IsSimpleSemigroup(T);
+true
+gap> cong1 := SemigroupCongruence(T,
+> [[Transformation([1, 2, 1, 2, 2]),
+>   Transformation([2, 1, 2, 1, 2])],
+>  [Transformation([2, 1, 1, 2, 2]),
+>   Transformation([1, 2, 2, 1, 2])]]);;
+gap> cong2 := SemigroupCongruence(S, []);;
+gap> MeetSemigroupCongruences(cong1, cong2);
+Error, cannot form the meet of congruences over different semigroups
+
+# MeetSemigroupCongruences, contained
+gap> S := PartitionMonoid(3);;
+gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
+gap> pairs2 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, 3, -1, -2], [-3]])],
+>               [Bipartition([[1, 2, -1, -2], [3, -3]]),
+>                Bipartition([[1, 2, -3], [3, -1, -2]])]];;
+gap> cong1 := SemigroupCongruence(S, pairs1);;
+gap> cong2 := SemigroupCongruence(S, pairs2);;
+gap> cong3 := JoinSemigroupCongruences(cong1, cong2);
+<semigroup congruence over <regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators> with 3 generating pairs>
+gap> MeetSemigroupCongruences(cong1, cong3) = cong1;
+true
+gap> MeetSemigroupCongruences(cong2, cong3) = cong2;
+true
+gap> MeetSemigroupCongruences(cong3, cong1) = cong1;
+true
+gap> MeetSemigroupCongruences(cong3, cong2) = cong2;
+true
+gap> MeetSemigroupCongruences(cong1, cong2);
+<semigroup congruence with 0 generating pairs>
+gap> MeetSemigroupCongruences(cong3, cong3) = cong3;
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(I);
@@ -594,4 +658,4 @@ gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/cong.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/cong.tst");

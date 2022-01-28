@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/elements.tst
-#Y  Copyright (C) 2016                                      Wilf A. Wilson
+#W  standard/elements/elements.tst
+#Y  Copyright (C) 2016-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/elements.tst");
+gap> START_TEST("Semigroups package: standard/elements/elements.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -115,4 +115,4 @@ gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/elements.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/elements.tst");

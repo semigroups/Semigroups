@@ -61,10 +61,8 @@ InstallMethod(IO_Pickle, "for a PBR",
 function(file, x)
   if IO_Write(file, "PABR") = fail then
     return IO_Error;
-  elif IO_Pickle(file, List([1 .. 2 * x![1] + 1], i -> x![i])) = IO_Error then
-    return IO_Error;
   fi;
-  return IO_OK;
+  return IO_Pickle(file, List([1 .. 2 * x![1] + 1], i -> x![i]));
 end);
 
 IO_Unpicklers.PABR := function(file)

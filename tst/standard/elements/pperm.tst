@@ -1,13 +1,13 @@
 #############################################################################
 ##
-##  standard/pperm.tst
-#Y  Copyright (C) 2017                                      Wilf A. Wilson
+##  standard/elements/pperm.tst
+#Y  Copyright (C) 2017-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/pperm.tst");
+gap> START_TEST("Semigroups package: standard/elements/pperm.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -30,4 +30,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/pperm.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/pperm.tst");

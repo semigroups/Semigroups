@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/conginv.tst
-#Y  Copyright (C) 2014-16                                   Michael Young
+#W  standard/congruences/conginv.tst
+#Y  Copyright (C) 2014-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/conginv.tst");
+gap> START_TEST("Semigroups package: standard/congruences/conginv.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -144,6 +144,8 @@ gap> cong := InverseSemigroupCongruenceByKernelTrace(S, T, utrace);
 Error, not a valid congruence pair (C1)
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, S, ttrace);
 Error, not a valid congruence pair (C2)
+gap> InverseSemigroupCongruenceByKernelTrace(LeftZeroSemigroup(2), fail, fail);
+Error, the 1st argument is not an inverse semigroup with inverse op
 
 # ImagesElm: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2], [5, 2]),
@@ -306,4 +308,4 @@ gap> Unbind(z);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/conginv.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/conginv.tst");

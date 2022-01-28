@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/maxplusmat.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell
+#W  standard/elements/maxplusmat.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/maxplusmat.tst");
+gap> START_TEST("Semigroups package: standard/elements/maxplusmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -609,4 +609,4 @@ gap> Unbind(mat3);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/maxplusmat.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/maxplusmat.tst");

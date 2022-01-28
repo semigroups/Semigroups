@@ -962,8 +962,7 @@ end);
 
 InstallMethod(RZMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRZMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
+[IsRZMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
 function(C, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(C));
@@ -981,8 +980,7 @@ end);
 
 InstallMethod(RMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
+[IsRMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
 function(C, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(C));
@@ -997,8 +995,7 @@ end);
 
 InstallMethod(RZMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
-[IsRZMSCongruenceByLinkedTriple,
- IsRightCoset, IsPosInt, IsPosInt],
+[IsRZMSCongruenceByLinkedTriple, IsRightCoset, IsPosInt, IsPosInt],
 function(C, nCoset, colClass, rowClass)
   local fam, class;
   fam := FamilyObj(Range(C));
@@ -1160,10 +1157,15 @@ function(class)
   local C, S, mat, i, u, v, j, a;
   C := EquivalenceClassRelation(class);
   S := Range(C);
+  # Seems to be impossible that a class does not know its Representative at
+  # creation when nCoset is 0
+  Assert(0, class!.nCoset <> 0);
+
   # Special case for {0}
-  if class!.nCoset = 0 then
-    return MultiplicativeZero(S);
-  fi;
+  # if class!.nCoset = 0 then
+  #   return MultiplicativeZero(S);
+  # fi;
+  
   # Pick the first row and column from the classes
   i := C!.colBlocks[class!.colClass][1];
   u := C!.rowBlocks[class!.rowClass][1];

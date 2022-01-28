@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  standard/congrees.tst
-#Y  Copyright (C) 2015                                      Michael Young
+#W  standard/congruences/congrees.tst
+#Y  Copyright (C) 2015-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congrees.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congrees.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -272,6 +272,14 @@ true
 gap> EquivalenceRelationCanonicalLookup(cong) = [1 .. 34];
 true
 
+# IsReesCongruence for a right but not left congruence
+gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
+>                           PartialPerm([1, 2], [2, 3])]);;
+gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
+gap> C := RightSemigroupCongruence(S, pairs);;
+gap> IsReesCongruence(C);
+false
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(I);
 gap> Unbind(J);
@@ -308,4 +316,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/congrees.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congrees.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/pbr.tst
-#Y  Copyright (C) 2015                                Attila Egri-Nagy
+#W  standard/elements/pbr.tst
+#Y  Copyright (C) 2015-2022                           Attila Egri-Nagy
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/pbr.tst");
+gap> START_TEST("Semigroups package: standard/elements/pbr.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -27,6 +27,9 @@ Error, the arguments (dense lists) do not have equal length
 gap> PBR([["a", 1]], [[2]]);
 Error, expected a homogeneous list in position 
 1 of the 1st argument (a dense list)
+gap> PBR([[2]], [["a", 1]]);
+Error, expected a homogeneous list in position 
+1 of the 2nd argument (a dense list)
 
 # pbr: PBR, fails 3, 4/4
 gap> PBR([[0, 1], []], [[2, 1], []]);
@@ -488,6 +491,15 @@ Error, no 1st choice method found for `<' on 2 arguments
 gap> x = y;
 false
 
+# Pickling
+gap> filename := Concatenation(SEMIGROUPS.PackageDir,
+> "/tst/standard/elements/pbr.tst");;
+gap> f := IO_File(filename, "r");;
+gap> IO_Unpicklers.PABR(f);
+IO_Error
+gap> IO_Pickle(f, x);
+IO_Error
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(filename);
@@ -496,4 +508,4 @@ gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/pbr.tst");
+gap> STOP_TEST("Semigroups package: standard/elements/pbr.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/congsimple.tst
-#Y  Copyright (C) 2014-15                                   Michael Young
+#W  standard/congruences/congsimple.tst
+#Y  Copyright (C) 2014-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congsimple.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congsimple.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -113,6 +113,10 @@ gap> cong := SemigroupCongruence(S,
 >  [Transformation([2, 1, 1, 2, 2]),
 >   Transformation([1, 2, 2, 1, 2])]]);;
 gap> classes := EquivalenceClasses(cong);;
+gap> Size(classes[1]);
+4
+gap> Representative(classes[1]);
+Transformation( [ 1, 2, 2, 1, 2 ] )
 gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
@@ -274,6 +278,30 @@ gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
 3
 
+# ViewObj for a 0-simple semigroup congruence
+gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])], 
+> rec(acting := true));;
+gap> IsZeroSimpleSemigroup(S);
+true
+gap> C := SemigroupCongruence(S, [S.1, S.1 ^ 2]);
+<semigroup congruence over <0-simple transformation semigroup of degree 4 
+ with 2 generators> with linked triple (1,2,2)>
+
+# SemigroupCongruenceByGeneratingPairs for free group
+gap> SemigroupCongruenceByGeneratingPairs(FreeGroup(1), []);
+<semigroup congruence with 0 generating pairs>
+
+# CongruenceByIsomorphism, error
+gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])],
+> rec(acting := true));;
+gap> map := IsomorphismSemigroup(IsBooleanMatSemigroup, S);;
+gap> C := SemigroupCongruence(S, [S.1, S.2]);
+<universal semigroup congruence over <0-simple transformation semigroup of 
+ degree 4 with 2 generators>>
+gap> CongruenceByIsomorphism(map, C);
+Error, the range of the 1st argument (a general mapping) is not equal to the r\
+ange of the 2nd argument (a congruence)
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
@@ -300,4 +328,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/congsimple.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congsimple.tst");
