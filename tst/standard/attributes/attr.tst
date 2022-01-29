@@ -2009,14 +2009,16 @@ true
 
 # Non-acting example
 gap> S := Semigroup(
-> [ Matrix(IsBooleanMat, [[0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
->       [0, 0, 0, 0, 1]]), Matrix(IsBooleanMat, [[0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 1, 0, 0, 0],
+> [Matrix(IsBooleanMat, [[0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 0, 1]]),
+>  Matrix(IsBooleanMat, [[0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 1, 0, 0, 0],
 >       [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]]),
->   Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 1, 0],
->       [0, 0, 0, 1, 0]]), Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [1, 0, 0, 0, 0], [0, 0, 0, 1, 0],
+>  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 1, 0]]),
+>  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [1, 0, 0, 0, 0], [0, 0, 0, 1, 0],
 >       [1, 0, 0, 0, 0], [1, 0, 0, 0, 0]]),
->   Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
->       [0, 0, 0, 0, 1]]) ] );
+>  Matrix(IsBooleanMat, [[0, 0, 0, 0, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
+>       [0, 0, 0, 0, 1]])]);
 <semigroup of 5x5 boolean matrices with 5 generators>
 gap> ForAll(S, x -> RightIdentity(S, x) = fail or x * RightIdentity(S, x) = x);
 true

@@ -2239,7 +2239,7 @@ end);
 InstallMethod(Iterator, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
-  local record;
+  local record, unwrap;
 
   if HasAsSSortedList(H) then
     return IteratorList(AsSSortedList(H));
@@ -2249,10 +2249,11 @@ function(H)
   record.parent := Parent(H);
   record.rep    := Representative(H);
 
-  return WrappedIterator(Iterator(SchutzenbergerGroup(H)),
-                         {iter, x}
-                           -> StabilizerAction(iter!.parent)(iter!.rep, x),
-                         record);
+  unwrap := function(iter, x)
+    return StabilizerAction(iter!.parent)(iter!.rep, x);
+  end;
+
+  return WrappedIterator(Iterator(SchutzenbergerGroup(H)), unwrap, record);
 end);
 
 # same method for regular, different method for inverse

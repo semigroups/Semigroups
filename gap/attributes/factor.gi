@@ -429,7 +429,7 @@ function(S, x)
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
   rep := rep * EvaluateWord(gens, word2);  # the R-class rep of the R-class of f
   Append(word1, word2);                    # and this word equals rep
-  
+
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);

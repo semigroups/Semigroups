@@ -1,14 +1,14 @@
 #############################################################################
 ##
-##  standard/freeband.tst
-#Y  Copyright (C) 2013-15                                   Julius Jonusas
+##  standard/fp/freeband.tst
+#Y  Copyright (C) 2013-2022                                 Julius Jonusas
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/freeband.tst");
+gap> START_TEST("Semigroups package: standard/fp/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -278,4 +278,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/freeband.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/freeband.tst");

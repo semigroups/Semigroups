@@ -1160,12 +1160,11 @@ function(class)
   # Seems to be impossible that a class does not know its Representative at
   # creation when nCoset is 0
   Assert(0, class!.nCoset <> 0);
-
-  # Special case for {0}
+  # Old code retained in case the assertion above is not correct!
   # if class!.nCoset = 0 then
   #   return MultiplicativeZero(S);
   # fi;
-  
+
   # Pick the first row and column from the classes
   i := C!.colBlocks[class!.colClass][1];
   u := C!.rowBlocks[class!.rowClass][1];

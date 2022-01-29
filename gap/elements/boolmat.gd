@@ -44,7 +44,6 @@ DeclareGlobalFunction("NumberBlist");
 DeclareGlobalFunction("BlistNumber");
 
 DeclareAttribute("Successors", IsBooleanMat);
-DeclareGlobalFunction("BooleanMatBySuccessorsNC");
 
 DeclareProperty("IsRowTrimBooleanMat", IsBooleanMat);
 DeclareProperty("IsColTrimBooleanMat", IsBooleanMat);

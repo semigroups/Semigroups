@@ -9,11 +9,6 @@
 #############################################################################
 ##
 
-DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
-DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt]);
-DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt, IsList]);
-DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt, IsList]);
-
 DeclareSynonym("IsMatrixOverFiniteFieldSemigroup",
                IsMatrixOverFiniteFieldCollection and IsSemigroup);
 DeclareSynonym("IsMatrixOverFiniteFieldMonoid",

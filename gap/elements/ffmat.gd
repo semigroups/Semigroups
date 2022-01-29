@@ -77,16 +77,8 @@ DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
 DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
 
-# TODO(later) Implement
-# DeclareAttribute("ColSpaceBasis", IsMatrixOverFiniteField);
-# DeclareAttribute("ColSpaceTransformation", IsMatrixOverFiniteField);
-# DeclareAttribute("ColSpaceTransformationInv", IsMatrixOverFiniteField);
-
 DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
 DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-# TODO(later) Implement
-# DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
-# DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);

@@ -366,15 +366,15 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3]), Transformation([2, 3, 1, 1]));
 <transformation semigroup of degree 4 with 2 generators>
 gap> IsMonoidAsSemigroup(S);
 true
-gap> RightIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = MultiplicativeNeutralElement(S);
+gap> RightIdentity(S, Transformation([3, 1, 2, 2])) = MultiplicativeNeutralElement(S);
 true
-gap> LeftIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = MultiplicativeNeutralElement(S);
+gap> LeftIdentity(S, Transformation([3, 1, 2, 2])) = MultiplicativeNeutralElement(S);
 true
 gap> S := Monoid(Transformation([1, 2, 3, 3]), Transformation([2, 3, 1, 1]));
 <transformation monoid of degree 4 with 2 generators>
-gap> RightIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = One(S);
+gap> RightIdentity(S, Transformation([3, 1, 2, 2])) = One(S);
 true
-gap> LeftIdentity(S, Transformation( [ 3, 1, 2, 2 ] )) = One(S);
+gap> LeftIdentity(S, Transformation([3, 1, 2, 2])) = One(S);
 true
 
 # SEMIGROUPS_UnbindVariables

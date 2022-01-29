@@ -78,7 +78,6 @@ DeclareSynonym("RClassNC", GreensRClassOfElementNC);
 DeclareSynonym("HClassNC", GreensHClassOfElementNC);
 
 DeclareOperation("DClass", [IsGreensClass]);
-DeclareOperation("DClassNC", [IsGreensClass]);
 DeclareOperation("LClass", [IsGreensHClass]);
 DeclareOperation("RClass", [IsGreensHClass]);
 

@@ -167,7 +167,7 @@ SEMIGROUPS.RunTest := function(func)
 end;
 
 SEMIGROUPS.TestDir := function(dir, arg)
-  local opts, result, name;
+  local opts, name;
 
   opts := rec(earlyStop   := true,
               testOptions := ShallowCopy(SEMIGROUPS.TestRec));
@@ -185,8 +185,7 @@ SEMIGROUPS.TestDir := function(dir, arg)
     ErrorNoReturn("there must be no arguments, or the argument ",
                   "must be a record");
   fi;
-  result := SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
-  return result;
+  return SEMIGROUPS.RunTest({} -> TestDirectory(dir, opts));
 end;
 
 #############################################################################

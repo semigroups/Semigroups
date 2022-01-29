@@ -598,7 +598,7 @@ gap> NonTrivialFactorization(S, gens[1] ^ 2) = Factorization(S, gens[1] ^ 2);
 true
 
 # Factorization for an inverse semigroup - code coverage
-gap> x := PartialPerm( [ 1, 2, 3, 6 ], [ 6, 4, 5, 1 ] );
+gap> x := PartialPerm([1, 2, 3, 6], [6, 4, 5, 1]);
 [2,4][3,5](1,6)
 gap> S := SymmetricInverseMonoid(5);
 <symmetric inverse monoid of degree 5>

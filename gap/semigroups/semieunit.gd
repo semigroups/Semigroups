@@ -108,10 +108,6 @@ DeclareAttribute("McAlisterTripleSemigroupQuotientDigraph",
 DeclareSynonymAttr("MTSQuotientDigraph",
                    McAlisterTripleSemigroupQuotientDigraph);
 
-# Operations for relating to McAlister triple semigroups
-DeclareAttribute("IsomorphismMcAlisterTripleSemigroup",
-                 IsSemigroup);
-
 # Operations for creating McAlister triple semigroup elements
 DeclareOperation("McAlisterTripleSemigroupElement",
                  [IsMcAlisterTripleSemigroup,

@@ -1685,9 +1685,9 @@ gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]),
 true
 
 # IsUnitRegularMonoid (for an acting semigroup with group of units)
-gap> S := Semigroup(Transformation( [ 2, 3, 1 ] ),
->  Transformation( [ 1, 3, 4, 2 ] ),
->  Transformation( [ 4, 3, 2, 2 ] ));;
+gap> S := Semigroup(Transformation([2, 3, 1]),
+>  Transformation([1, 3, 4, 2]),
+>  Transformation([4, 3, 2, 2]));;
 gap> IsUnitRegularMonoid(S);
 true
 

@@ -45,7 +45,6 @@ InstallMethod(RandomInverseSemigroupCons, "for IsPBRSemigroup and a list",
 InstallMethod(RandomInverseMonoidCons, "for IsPBRMonoid and a list",
 [IsPBRMonoid, IsList], SEMIGROUPS.DefaultRandomInverseMonoid);
 
-
 InstallMethod(SemigroupViewStringPrefix, "for a pbr semigroup",
 [IsPBRSemigroup], S -> "\>pbr\< ");
 

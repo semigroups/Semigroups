@@ -12,9 +12,6 @@
 # semigroups. There are not very many specialised methods for acting semigroups
 # and so we only have a single file.
 
-# DeclareProperty("IsAbundantSemigroup", IsSemigroup);
-# DeclareProperty("IsAdequateSemigroup", IsSemigroup);
-
 DeclareProperty("IsBlockGroup", IsSemigroup);
 DeclareProperty("IsRTrivial", IsSemigroup);
 DeclareProperty("IsLTrivial", IsSemigroup);
