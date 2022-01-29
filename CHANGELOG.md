@@ -1,5 +1,5 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-21 [James D. Mitchell][] et al.
+Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
