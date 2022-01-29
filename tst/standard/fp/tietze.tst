@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/tietze.tst
-#Y  Copyright (C) 2021                                      Tom Conti-Leslie
-#Y                                                          Ben Spiers
+#W  standard/fp/tietze.tst
+#Y  Copyright (C) 2021-2022                               Tom Conti-Leslie
+#Y                                                              Ben Spiers
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: standard/tietze.tst");
+gap> START_TEST("Semigroups package: standard/fp/tietze.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Whenever Stz Print methods are tested, the previous InfoLevel for
@@ -801,4 +801,4 @@ gap> Unbind(t);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/tietze.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/tietze.tst");

@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-##  standard/freeinverse.tst 
-#Y  Copyright (C) 2011-15                                   Julius Jonusas
+##  standard/fp/freeinverse.tst 
+#Y  Copyright (C) 2011-2022                                 Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/freeinverse.tst");
+gap> START_TEST("Semigroups package: standard/fp/freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -152,4 +152,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/freeinverse.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/freeinverse.tst");

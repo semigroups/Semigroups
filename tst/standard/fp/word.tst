@@ -1,13 +1,13 @@
 #############################################################################
 ##
-##  standard/word.tst
-#Y  Copyright (C) 2020                                   Murray T. Whyte
+##  standard/fp/word.tst
+#Y  Copyright (C) 2020-2022                                Murray T. Whyte
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/word.tst");
+gap> START_TEST("Semigroups package: standard/fp/word.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -105,4 +105,4 @@ gap> Unbind(w);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/word.tst");
+gap> STOP_TEST("Semigroups package: standard/fp/word.tst");
