@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/froidure-pin.tst
-#Y  Copyright (C) 2016                                   James D. Mitchell
+#W  standard/main/froidure-pin.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/froidure-pin.tst");
+gap> START_TEST("Semigroups package: standard/main/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -505,4 +505,4 @@ false
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/froidure-pin.tst");
+gap> STOP_TEST("Semigroups package: standard/main/froidure-pin.tst");

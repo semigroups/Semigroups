@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/ideals-froidure-pin.tst
-#Y  Copyright (C) 2016-21                                James D. Mitchell
+#W  standard/ideals/froidure-pin.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/idealenum.tst");
+gap> START_TEST("Semigroups package: standard/ideals/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 
 # The tests in this file do not attempt to test every line in idealenum.gi
@@ -173,4 +173,4 @@ true
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/idealenum.tst");
+gap> STOP_TEST("Semigroups package: standard/ideals/froidure-pin.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/idealact.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#W  standard/ideals/acting.tst
+#Y  Copyright (C) 2011-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/idealact.tst");
+gap> START_TEST("Semigroups package: standard/ideals/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -281,4 +281,4 @@ gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/idealact.tst");
+gap> STOP_TEST("Semigroups package: standard/ideals/acting.tst");

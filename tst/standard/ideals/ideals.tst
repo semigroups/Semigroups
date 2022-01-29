@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/ideals.tst
-#Y  Copyright (C) 2016                                  James D. Mitchell
+#W  standard/ideals/ideals.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/ideals.tst");
+gap> START_TEST("Semigroups package: standard/ideals/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
 # The tests in this file do not attempt to test every line in ideals.gi
@@ -373,4 +373,4 @@ gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/ideals.tst");
+gap> STOP_TEST("Semigroups package: standard/ideals/ideals.tst");

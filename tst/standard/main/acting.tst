@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/acting.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#W  standard/main/acting.tst
+#Y  Copyright (C) 2011-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/acting.tst");
+gap> START_TEST("Semigroups package: standard/main/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -376,4 +376,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/acting.tst");
+gap> STOP_TEST("Semigroups package: standard/main/acting.tst");

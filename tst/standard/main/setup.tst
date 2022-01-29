@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  standard/setup.tst
-#Y  Copyright (C) 2016-17                                James D. Mitchell
+#W  standard/main/setup.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/setup.tst");
+gap> START_TEST("Semigroups package: standard/main/setup.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1155,4 +1155,4 @@ gap> Unbind(schutz);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/setup.tst");
+gap> STOP_TEST("Semigroups package: standard/main/setup.tst");

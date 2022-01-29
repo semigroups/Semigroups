@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semiact.tst
-#Y  Copyright (C) 2016                                   James D. Mitchell
+#W  standard/main/semiact.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semiact.tst");
+gap> START_TEST("Semigroups package: standard/main/semiact.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -178,4 +178,4 @@ true
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semiact.tst");
+gap> STOP_TEST("Semigroups package: standard/main/semiact.tst");
