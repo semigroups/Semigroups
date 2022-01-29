@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/greens-generic.tst
-#Y  Copyright (C) 2016-21                               James D. Mitchell
+#W  standard/greens/generic.tst
+#Y  Copyright (C) 2016-2022                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/greens-generic.tst");
+gap> START_TEST("Semigroups package: standard/greens/generic.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1423,4 +1423,4 @@ gap> PartialOrderOfDClasses(S);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/greens-generic.tst");
+gap> STOP_TEST("Semigroups package: standard/greens/generic.tst");

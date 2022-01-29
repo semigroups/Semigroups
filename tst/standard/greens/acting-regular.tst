@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/greens-acting-regular.tst
-#Y  Copyright (C) 2015                                      Wilf A. Wilson
+#W  standard/greens/acting-regular.tst
+#Y  Copyright (C) 2015-2022                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/greens-acting-regular.tst");
+gap> START_TEST("Semigroups package: standard/greens/acting-regular.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -306,4 +306,4 @@ gap> Unbind(e);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/greens-acting-regular.tst");
+gap> STOP_TEST("Semigroups package: standard/greens/acting-regular.tst");

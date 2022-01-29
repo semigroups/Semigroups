@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/greens-acting-inverse.tst
-#Y  Copyright (C) 2015-2021                                Wilf A. Wilson
+#W  standard/greens/acting-inverse.tst
+#Y  Copyright (C) 2015-2022                                Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/greens-acting-inverse.tst");
+gap> START_TEST("Semigroups package: standard/greens/acting-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -451,4 +451,4 @@ gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/greens-acting-inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/greens/acting-inverse.tst");
