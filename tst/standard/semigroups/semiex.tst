@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semiex.tst
-#Y  Copyright (C) 2016                                  James D. Mitchell
+#W  standard/semigroups/semiex.tst
+#Y  Copyright (C) 2016-2022                              James D. Mitchell
 ##                                                       
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semiex.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semiex.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1926,4 +1926,4 @@ gap> SingularDualSymmetricInverseMonoid(5);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semiex.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semiex.tst");

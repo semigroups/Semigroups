@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  standard/semigrp.tst
-#Y  Copyright (C) 2015                                   James D. Mitchell
+#W  standard/semigroups/semigrp.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semigrp.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semigrp.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1048,4 +1048,4 @@ gap> MinimalFactorization(S, S.3 * S.2);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semigrp.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semigrp.tst");

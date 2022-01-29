@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  standard/semicons.tst
-#Y  Copyright (C) 2015                                      Wilf A. Wilson
+#W  standard/semigroups/semicons.tst
+#Y  Copyright (C) 2015-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: standard/semicons.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semicons.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -1141,4 +1141,4 @@ gap> Unbind(S2);
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semicons.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semicons.tst");

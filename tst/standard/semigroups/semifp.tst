@@ -1,13 +1,13 @@
 #############################################################################
 ##
-##  standard/semifp.tst
-#Y  Copyright (C) 2015                                      Wilf A. Wilson
+##  standard/semigroups/semifp.tst
+#Y  Copyright (C) 2015-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semifp.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semifp.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -2222,4 +2222,4 @@ gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semifp.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semifp.tst");

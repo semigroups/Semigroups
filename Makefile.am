@@ -52,8 +52,8 @@ if WITH_INCLUDED_LIBSEMIGROUPS
 # the sources, or otherwise we should stop make installing into bin
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-5.3.0/include
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/includeS
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-8.0.1/include
+semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
 endif
 semigroups_la_CPPFLAGS += -DFMT_HEADER_ONLY
 

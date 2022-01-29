@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  standard/semidp.tst
-#Y  Copyright (C) 2017                                      Wilf A. Wilson
+#W  standard/semigroups/semidp.tst
+#Y  Copyright (C) 2017-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semidp.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semidp.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -748,4 +748,4 @@ gap> Unbind(gens);
 
 #E#
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semidp.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semidp.tst");

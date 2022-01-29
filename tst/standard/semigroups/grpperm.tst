@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/grpperm.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell
+#W  standard/semigroups/grpperm.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/grpperm.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/grpperm.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -587,4 +587,4 @@ gap> Unbind(map);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/grpperm.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/grpperm.tst");

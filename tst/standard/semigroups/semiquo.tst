@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semiquo.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell 
+#W  standard/semigroups/semiquo.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell 
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semiquo.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semiquo.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -100,4 +100,4 @@ gap> Unbind(pair);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semiquo.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semiquo.tst");

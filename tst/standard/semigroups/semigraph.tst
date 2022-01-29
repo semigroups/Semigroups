@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semigraph.tst
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+#W  standard/semigroups/semigraph.tst
+#Y  Copyright (C) 2014-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semigraph.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -130,4 +130,4 @@ gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semigraph.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semigraph.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semimaxplus.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell
+#W  standard/semigroups/semimaxplus.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semimaxplus.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semimaxplus.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -631,4 +631,4 @@ gap> Unbind(S);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semimaxplus.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semimaxplus.tst");

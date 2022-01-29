@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/grpffmat.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell
+#W  standard/semigroups/grpffmat.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/grpffmat.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/grpffmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -156,4 +156,4 @@ gap> G ^ Matrix(GF(3), []);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/grpffmat.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/grpffmat.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semiffmat.tst
-#Y  Copyright (C) 2015                                  James D. Mitchell
+#W  standard/semigroups/semiffmat.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                       
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semiffmat.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semiffmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -728,4 +728,4 @@ Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
 
 # 
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semiffmat.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semiffmat.tst");

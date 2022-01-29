@@ -1,7 +1,7 @@
 ############################################################################
 ##
-#W  standard/semirms.tst
-#Y  Copyright (C) 2015-16                                James D. Mitchell
+#W  standard/semigroups/semirms.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##                                                              Finn Smith
 ##
@@ -9,7 +9,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semirms.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semirms.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -2924,7 +2924,7 @@ infinity
 
 # Pickling
 gap> filename := Concatenation(SEMIGROUPS.PackageDir,
-> "/tst/standard/rms.p");;
+> "/tst/standard/semigroups/rms.p");;
 gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> WriteGenerators(filename, [R]);
@@ -2975,4 +2975,4 @@ gap> Unbind(zero);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semirms.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semirms.tst");

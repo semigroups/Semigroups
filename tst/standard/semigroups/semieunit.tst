@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/semieunit.tst
-#Y  Copyright (C) 2016                                    Christopher Russell
+#W  standard/semigroups/semieunit.tst
+#Y  Copyright (C) 2016-2022                            Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semieunit.tst");
+gap> START_TEST("Semigroups package: standard/semigroups/semieunit.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -377,4 +377,4 @@ gap> Unbind(y3);
 
 #E#
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/semieunit.tst");
+gap> STOP_TEST("Semigroups package: standard/semigroups/semieunit.tst");
