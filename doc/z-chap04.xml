@@ -2,7 +2,7 @@
   <Heading>
     Partitioned binary relations (PBRs)
   </Heading>
-  In this chapter we describe the functions in &Semigroups; for creating
+  In this chapter we describe the functions in &SEMIGROUPS; for creating
   and manipulating partitioned binary relations, henceforth referred to by
   their acronym PBRs. We begin by describing what these objects are.
   <P/>
@@ -10,12 +10,12 @@
   PBRs were introduced in the paper <Cite Key = "Martin2011aa"/> as, roughly
   speaking, the maximum generalization of bipartitions and related objects.
   Although, mathematically, bipartitions are a special type of PBR, in
-  &Semigroups; bipartitions and PBRs are currently distinct types of objects.
+  &SEMIGROUPS; bipartitions and PBRs are currently distinct types of objects.
   It is possible to change the representation from bipartition to PBR, and from
   PBR to bipartition, when appropriate; see Section
   <Ref Sect = "Changing the representation of a PBR"/> for more
   details. The reason for this distinct is largely historical, bipartition
-  appeared in the literature, and in the &Semigroups; package, before PBRs.
+  appeared in the literature, and in the &SEMIGROUPS; package, before PBRs.
 
   <!-- TODO(later) fill in more details here. -->
 
@@ -51,7 +51,7 @@
     <Heading>Changing the representation of a PBR</Heading>
     It  is  possible that a PBR can be represented as another type  of object,
     or that another type of &GAP; object can be represented as a PBR. In this
-    section, we describe the functions in the &Semigroups; package for changing
+    section, we describe the functions in the &SEMIGROUPS; package for changing
     the representation of PBR, or for changing the representation of another
     type of object to that of a PBR.
     <P/>
@@ -143,7 +143,7 @@
     bipartitions, the collection satisfies <C>IsGeneratorsOfInverseSemigroup</C>.
     <P/>
 
-    Note that every PBR semigroup in &Semigroups; is finite.
+    Note that every PBR semigroup in &SEMIGROUPS; is finite.
 
     <#Include Label = "IsPBRSemigroup">
     <#Include Label = "DegreeOfPBRSemigroup">

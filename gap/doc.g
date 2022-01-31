@@ -97,7 +97,7 @@ function(pkgdir)
   # still created if we explicitly say that we don't want a PDF
   if Filename(DirectoriesSystemPrograms(), "pdflatex") = fail then
     Add(args, "nopdf");
-  fi;
+fi;
   LoadPackage("GAPDoc");
   SetGapDocLaTeXOptions("utf8");
   CallFuncList(MakeGAPDocDoc, args);

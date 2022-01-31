@@ -3,7 +3,7 @@
     Free objects
   </Heading>
 
-  This chapter describes the functions in &Semigroups; for dealing with free
+  This chapter describes the functions in &SEMIGROUPS; for dealing with free
   inverse semigroups and free bands. This part of the manual and the functions
   described herein were written by Julius Jonu&#353;as.<P/>
   
@@ -35,7 +35,7 @@
       Groups, Monoids and Semigroups" BookName = "ref" />.
     <P/>
 
-    An element of a free inverse semigroup in &Semigroups; is displayed, by
+    An element of a free inverse semigroup in &SEMIGROUPS; is displayed, by
     default, as a shortest word corresponding to the element.  However, there
     might be more than one word of the minimum length. For example, if <M>x</M>
     and <M>y</M> are generators of a free inverse semigroups, then <Display>xyy

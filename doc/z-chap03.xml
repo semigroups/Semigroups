@@ -3,7 +3,7 @@
     Bipartitions and blocks
   </Heading>
 
-  In this chapter we describe the functions in &Semigroups; for creating and
+  In this chapter we describe the functions in &SEMIGROUPS; for creating and
   manipulating bipartitions and semigroups of bipartitions. We begin by
   describing what these objects are.
   <P/>
@@ -216,7 +216,7 @@
     <Heading>Changing the representation of a bipartition</Heading>
    It  is  possible that a bipartition can be represented as another
   type  of object, or that another type of &GAP; object can be represented as a
-  bipartition. In this section, we describe the functions in the &Semigroups;
+  bipartition. In this section, we describe the functions in the &SEMIGROUPS;
   package for changing the representation of bipartition, or for changing the
   representation of another type of object to that of a bipartition.<P/>
  
@@ -306,7 +306,7 @@
     right.
     <P/>
 
-    In this section, we describe the functions in the &Semigroups; package for
+    In this section, we describe the functions in the &SEMIGROUPS; package for
     creating and manipulating the left or right blocks of a bipartition.
 
     <#Include Label = "IsBlocks">
@@ -344,7 +344,7 @@
     block bijections or partial perm bipartions; see <Ref Prop =
       "IsBlockBijection"/> and <Ref Prop = "IsPartialPermBipartition"/>.
 
-    Note that every bipartition semigroup in &Semigroups; is finite.
+    Note that every bipartition semigroup in &SEMIGROUPS; is finite.
 
     <#Include Label = "IsBipartitionSemigroup">
     <#Include Label = "IsBlockBijectionSemigroup">

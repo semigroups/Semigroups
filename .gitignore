@@ -82,3 +82,7 @@ tags
 tmp
 tst/workspaces/test-output.w
 wiki/
+_AutoDocMainFile.xml
+_Chunks.xml
+main.xml
+title.xml

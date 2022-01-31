@@ -4,7 +4,7 @@
   </Heading>
 
   In this chapter we describe some standard examples of semigroups which are
-  available in the &Semigroups; package.
+  available in the &SEMIGROUPS; package.
   <P/>
 
   <!--**********************************************************************-->
@@ -15,7 +15,7 @@
       Transformation semigroups
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be
+    In this section, we describe the operations in &SEMIGROUPS; that can be
     used to create transformation semigroups belonging to several standard
     classes of example. See <Ref Chap = "Transformations" BookName = "ref" />
     for more information about transformations. 
@@ -34,7 +34,7 @@
       Semigroups of partial permutations
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be used
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
     to create semigroups of partial permutations belonging to several standard
     classes of example. See <Ref Chap = "Partial permutations" BookName = "ref"
       /> for more information about partial permutations.
@@ -51,7 +51,7 @@
       Semigroups of bipartitions
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be
+    In this section, we describe the operations in &SEMIGROUPS; that can be
     used to create bipartition semigroups belonging to several standard
     classes of example. See Chapter <Ref Chap = "Bipartitions and blocks"/> for
     more information about bipartitions.
@@ -76,7 +76,7 @@
       Standard PBR semigroups
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be used
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
     to create standard examples of semigroups of partitioned binary relations
     (PBRs).  See Chapter <Ref Chap = "Partitioned binary relations (PBRs)"/> for
     more information about PBRs.
@@ -90,7 +90,7 @@
     <Heading>
       Semigroups of matrices over a finite field
     </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
     to create semigroups of matrices over a finite field that belonging to
     several standard classes of example. See the section
     <Ref Sect = "Matrices over finite fields" Style="Text" /> for more
@@ -108,7 +108,7 @@
     <Heading>
       Semigroups of boolean matrices
     </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
     to create semigroups of boolean matrices belonging to several standard
     classes of example. See the section <Ref Sect = "Boolean matrices"
       Style="Text" /> for more information about boolean matrices.
@@ -127,7 +127,7 @@
     <Heading>
       Semigroups of matrices over a semiring
     </Heading>
-    In this section, we describe the operations in &Semigroups; that can be used
+    In this section, we describe the operations in &SEMIGROUPS; that can be used
     to create semigroups of matices over a semiring that belong to several
     standard classes of example.  See Chapter
     <Ref Chap = "Matrices over semirings" /> for more information about matrices

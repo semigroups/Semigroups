@@ -25,7 +25,7 @@
     <Filt Name="IsMatrixOverFiniteField" Arg="obj" Type="Category"/>
       <Returns><K>true</K> or <K>false</K>.</Returns>
       <Description>
-        This category contains &Semigroups; matrix object wrapper. The
+        This category contains &SEMIGROUPS; matrix object wrapper. The
         introduction of this filter was necessary to get around &GAP;
         limitations with regards to matrices and associative objects.<P/>
 

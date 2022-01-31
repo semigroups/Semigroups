@@ -175,7 +175,7 @@ true]]></Example>
     <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      Every matrix over a semiring in &Semigroups; is a member of the category
+      Every matrix over a semiring in &SEMIGROUPS; is a member of the category
       <C>IsMatrixOverSemiring</C>, which is a subcategory of
       <Ref Filt = "IsMultiplicativeElementWithOne" BookName = "ref"/>,
       <Ref Filt = "IsAssociativeElement" BookName = "ref"/>, and
@@ -183,7 +183,7 @@ true]]></Example>
       <Ref Sect = "Representation" BookName = "ref"/>.
       <P/>
 
-      Every matrix over a semiring in &Semigroups; is a square matrix.
+      Every matrix over a semiring in &SEMIGROUPS; is a square matrix.
       <P/>
 
       Basic operations for matrices over semirings are:
@@ -268,7 +268,7 @@ gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a matrix over
-      a semiring in &Semigroups;.
+      a semiring in &SEMIGROUPS;.
       <P/>
  
       In its first form, the first argument <A>filt</A> specifies the
@@ -385,7 +385,7 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a random matrix over a semiring
-      in &Semigroups;. The usage of <C>RandomMatrix</C> is similar to that of
+      in &SEMIGROUPS;. The usage of <C>RandomMatrix</C> is similar to that of
         <Ref Oper = "Matrix" Label = "for a filter and a matrix"/>.
       <P/>
  

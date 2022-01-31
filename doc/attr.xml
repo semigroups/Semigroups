@@ -351,7 +351,7 @@ gap> Length(SmallGeneratingSet(S));
     <Ref Func="Monoid" BookName="ref"/>.<P/>
 
     For many types of semigroup, it is not currently possible to find a
-    <C>MinimalXGeneratingSet</C> with the &Semigroups; package. <P/>
+    <C>MinimalXGeneratingSet</C> with the &SEMIGROUPS; package. <P/>
 
     See also <Ref Attr="SmallGeneratingSet"/> and <Ref
       Oper="IrredundantGeneratingSubset"/>.
@@ -1155,7 +1155,7 @@ fail]]>
     Two semigroups have the same set of elements if and only if
     their smallest generating sets are equal. However, due to the complexity of
     determining the <C>GeneratorsSmallest</C>, this is not the method used by
-    the &Semigroups; package when comparing semigroups.
+    the &SEMIGROUPS; package when comparing semigroups.
 
     <Example><![CDATA[
 gap> S := Monoid([

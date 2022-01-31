@@ -14,7 +14,7 @@
     <Returns>Nothing.</Returns>
     <Description>
       This function should be called with no argument to compile the
-      &Semigroups; documentation.
+      &SEMIGROUPS; documentation.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -42,8 +42,8 @@
       to run each file.</Returns>
     <Description>
       This function should be called with no argument to comprehensively test
-      that &Semigroups; is working correctly. These tests should take no more
-      than a few minutes to complete.  To quickly test that &Semigroups; is
+      that &SEMIGROUPS; is working correctly. These tests should take no more
+      than a few minutes to complete.  To quickly test that &SEMIGROUPS; is
       installed correctly use <Ref Func = "SemigroupsTestInstall"/>.<P/>
 
       Each test file is run twice, once when the methods for 
@@ -59,9 +59,9 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This function should be called with no argument to test your installation
-      of &Semigroups; is working correctly. These tests should take no more
+      of &SEMIGROUPS; is working correctly. These tests should take no more
       than a few seconds to complete.  To more comprehensively test
-      that &Semigroups; is installed correctly use
+      that &SEMIGROUPS; is installed correctly use
       <Ref Func = "SemigroupsTestStandard"/>.
     </Description>
   </ManSection>
@@ -74,9 +74,9 @@
       to run each file.</Returns>
     <Description>
       This function should be called with no argument to run some long-running
-      tests, which could be used to benchmark &Semigroups; or test your
+      tests, which could be used to benchmark &SEMIGROUPS; or test your
       hardware. These tests should take no more than around half an hour to
-      complete.  To quickly test that &Semigroups; is installed correctly use
+      complete.  To quickly test that &SEMIGROUPS; is installed correctly use
       <Ref Func = "SemigroupsTestInstall"/>, or to test all aspects of the
       package use <Ref Func = "SemigroupsTestStandard"/>.<P/>
 
@@ -93,7 +93,7 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This function should be called with no argument to compile the
-      &Semigroups; package's documentation, run the standard suite of tests, and
+      &SEMIGROUPS; package's documentation, run the standard suite of tests, and
       run all the examples from the documentation to ensure that their output is
       correct.  The value returned is <K>true</K> if all the tests succeed, and
       <K>false</K> otherwise.  The whole process should take no more than a few
@@ -109,7 +109,7 @@
   <ManSection>
     <InfoClass Name = "InfoSemigroups"/>
     <Description>
-    <C>InfoSemigroups</C> is the info class of the &Semigroups; package.  The
+    <C>InfoSemigroups</C> is the info class of the &SEMIGROUPS; package.  The
     info level is initially set to 0 and no info messages are displayed.  To
     increase the amount of information displayed during a computation increase
     the info level to 2 or 3. To stop all info messages from being displayed,

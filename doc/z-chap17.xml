@@ -1,7 +1,7 @@
 <Chapter Label = "Congruences">
   <Heading>Congruences</Heading>
 
-  Congruences in &Semigroups; can be described in several different ways:<P/>
+  Congruences in &SEMIGROUPS; can be described in several different ways:<P/>
 
   <List>
     <Item>
@@ -38,8 +38,8 @@
   functions.<P/>
 
   Please note that congruence objects made in &GAP; before loading the
-  &Semigroups; package may not behave correctly after &Semigroups; is loaded.
-  If &Semigroups; is loaded at the beginning of the session, or before any
+  &SEMIGROUPS; package may not behave correctly after &SEMIGROUPS; is loaded.
+  If &SEMIGROUPS; is loaded at the beginning of the session, or before any
   congruence work is done, then the objects should behave correctly.<P/>
 
   <Section><Heading>Semigroup congruence objects</Heading>
@@ -128,7 +128,7 @@
     <Heading>Congruences on Rees matrix semigroups</Heading>
 
     This section describes the implementation of congruences of simple and 0-simple
-    semigroups in the &Semigroups; package, and the functions associated with
+    semigroups in the &SEMIGROUPS; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael Young.
     Most of the theorems used in this chapter are from Section 3.5 of
     <Cite Key = "Howie1995aa"/>.<P/>
@@ -217,7 +217,7 @@
     </Heading>
 
     This section describes the implementation of congruences of inverse
-    semigroups in the &Semigroups; package, and the functions associated with
+    semigroups in the &SEMIGROUPS; package, and the functions associated with
     them.  This code and this part of the manual were written by Michael
     Young.  Most of the theorems used in this chapter are from Section 5.3 of
     <Cite Key = "Howie1995aa"/>.<P/>

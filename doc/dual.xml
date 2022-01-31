@@ -39,7 +39,7 @@ true]]></Example> </Description> </ManSection>
     <Description>
       The dual semigroup of <A>S</A> mathematically has the same underlying
       set as <A>S</A>, but is represented with a different set of elements in
-      &Semigroups;. This function returns a mapping which is an anti-isomorphism from
+      &SEMIGROUPS;. This function returns a mapping which is an anti-isomorphism from
       <A>S</A> to its dual.
       <Example>
 <![CDATA[

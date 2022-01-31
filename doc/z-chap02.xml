@@ -1,10 +1,10 @@
 <Chapter Label = "Installing Semigroups">
-  <Heading>Installing &Semigroups;</Heading>
+  <Heading>Installing &SEMIGROUPS;</Heading>
 
   <Section Label = "For those in a hurry">
     <Heading>For those in a hurry</Heading>
     In this section we give a brief description of how to start using
-    &Semigroups;.<P/>
+    &SEMIGROUPS;.<P/>
 
     It is assumed that you have a working copy of &GAP; with version number
     &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
@@ -12,39 +12,39 @@
     <URL>https://www.gap-system.org</URL>.<P/>
 
     The following is a summary of the steps that should lead to a
-    successful installation of &Semigroups;:
+    successful installation of &SEMIGROUPS;:
 
     <List>
 
       <Item>
         ensure that the &IO; package version &IOVERS; or higher is available.
-        &IO; must be compiled before &Semigroups; can be loaded.
+        &IO; must be compiled before &SEMIGROUPS; can be loaded.
       </Item>
 
       <Item>
-        ensure that the &Orb; package version &ORBVERS; or higher is available.
-        &Orb; and &Semigroups; both perform better if &Orb; is compiled.
+        ensure that the &ORB; package version &ORBVERS; or higher is available.
+        &ORB; and &SEMIGROUPS; both perform better if &ORB; is compiled.
       </Item>
       
       <Item>
-        ensure that the &datastructures; package version &DATASTRUCTURESVERS;
-        or higher is available.  &datastructures; must be compiled before
-          &Semigroups; can be loaded.
+        ensure that the &DATASTRUCTURES; package version &DATASTRUCTURESVERS;
+        or higher is available.  &DATASTRUCTURES; must be compiled before
+          &SEMIGROUPS; can be loaded.
       </Item>
 
       <Item>
-        ensure that the &Digraphs; package version &DIGRAPHSVERS; or higher is
-        available.  &Digraphs; must be compiled before &Semigroups; can be
+        ensure that the &DIGRAPHS; package version &DIGRAPHSVERS; or higher is
+        available.  &DIGRAPHS; must be compiled before &SEMIGROUPS; can be
         loaded.
       </Item>
 
       <Item>
-        ensure that the &genss; package version &GENSSVERS; or higher is
+        ensure that the &GENSS; package version &GENSSVERS; or higher is
         available.
       </Item>
       
       <Item>
-        ensure that the &images; package version &IMAGESVERS; or higher is
+        ensure that the &IMAGES; package version &IMAGESVERS; or higher is
         available.
       </Item>
 
@@ -65,8 +65,8 @@
       </Item>
 
       <Item>
-        from version 3.0.0, it is necessary to compile the &Semigroups; package.
-        &Semigroups; uses the 
+        from version 3.0.0, it is necessary to compile the &SEMIGROUPS; package.
+        &SEMIGROUPS; uses the 
         <URL Text =
           "libsemigroups">https://libsemigroups.github.io/libsemigroups/</URL>
         C++ library, which requires a compiler
@@ -88,7 +88,7 @@ make]]></Listing>
       </Item>
     </List>
 
-    <E><B>Please note that</B> from version 3.0.0: &Semigroups; can only be
+    <E><B>Please note that</B> from version 3.0.0: &SEMIGROUPS; can only be
       loaded if it has been compiled.</E><P/>
 
     If you want to check that the package is working correctly, you
@@ -106,12 +106,12 @@ make]]></Listing>
 
     <!-- TODO: update this -->
 
-    The &Semigroups; package is written in &GAP; and C++ and requires the
-    &Orb;, &IO;, &Digraphs;, &genss;, and &images; packages. The &Orb;
+    The &SEMIGROUPS; package is written in &GAP; and C++ and requires the
+    &ORB;, &IO;, &DIGRAPHS;, &GENSS;, and &IMAGES; packages. The &ORB;
     package is used to efficiently compute components of actions, which
-    underpin many of the features of &Semigroups;.  The &IO; package is used to
-    read and write elements of a semigroup to a file.  The &Digraphs; package
-    is used in a variety of ways in the &Semigroups; package, in particular, to
+    underpin many of the features of &SEMIGROUPS;.  The &IO; package is used to
+    read and write elements of a semigroup to a file.  The &DIGRAPHS; package
+    is used in a variety of ways in the &SEMIGROUPS; package, in particular, to
     apply standard graph theoretic algorithms to certain data structures, and
     in certain cases for finding isomorphisms or automorphisms of digraphs.
     <P/>
@@ -122,10 +122,10 @@ make]]></Listing>
 
   <Section Label = "Compiling the kernel module">
     <Heading>Compiling the kernel module</Heading>
-    As of version 3.0.0, the &Semigroups; package has a &GAP; kernel module
+    As of version 3.0.0, the &SEMIGROUPS; package has a &GAP; kernel module
     written in C/C++ and this must be compiled.  The kernel module contains
     low-level functions relating to the enumeration of certain types of
-    semigroups, and it is not possible to use the &Semigroups; package without
+    semigroups, and it is not possible to use the &SEMIGROUPS; package without
     compiling it.
     <P/>
 
@@ -137,9 +137,9 @@ make]]></Listing>
 make]]></Listing>
     <P/>
 
-    If you are using GCC to compile &Semigroups;, then version 5.0 or higher is
-    required. Trying to compile &Semigroups; with an earlier version of GCC
-    will result in an error at compile time. &Semigroups; supports GCC version
+    If you are using GCC to compile &SEMIGROUPS;, then version 5.0 or higher is
+    required. Trying to compile &SEMIGROUPS; with an earlier version of GCC
+    will result in an error at compile time. &SEMIGROUPS; supports GCC version
     5.0 or higher, and clang version 5.0 or higher.<P/>
 
     If you installed the package in another <F>pkg</F> directory other than the
@@ -166,7 +166,7 @@ make]]></Listing>
   <Section Label = "Rebuilding the documentation">
     <Heading>Rebuilding the documentation</Heading>
 
-    The &Semigroups; package comes complete with pdf, html, and text versions
+    The &SEMIGROUPS; package comes complete with pdf, html, and text versions
     of the documentation. However, you might find it necessary, at some point,
     to rebuild the documentation. To rebuild the documentation use the <Ref
       Func = "SemigroupsMakeDoc"/>.
@@ -180,8 +180,8 @@ make]]></Listing>
   <Section Label = "Testing your installation">
     <Heading>Testing your installation</Heading>
 
-    In this section we describe how to test that &Semigroups; is working as
-    intended.  To quickly test that &Semigroups; is installed correctly use
+    In this section we describe how to test that &SEMIGROUPS; is working as
+    intended.  To quickly test that &SEMIGROUPS; is installed correctly use
     <Ref Func = "SemigroupsTestInstall"/> - this will take a few seconds.
     For more extensive tests use <Ref Func = "SemigroupsTestStandard"/> - this
     may take several minutes.  Finally, for lengthy benchmarking tests use
@@ -189,7 +189,7 @@ make]]></Listing>
     hour. <P/>
 
     If something goes wrong, then please review the instructions in Section
-    <Ref Sect = "For those in a hurry"/> and ensure that &Semigroups; has been
+    <Ref Sect = "For those in a hurry"/> and ensure that &SEMIGROUPS; has been
     properly installed.  If you continue having problems, please use the 
     <URL Text = 
       "issue tracker">https://github.com/semigroups/Semigroups/issues</URL> 

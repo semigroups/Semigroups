@@ -4,7 +4,7 @@
   </Heading>
 
   In this chapter we describe some standard semigroup constructions which
-  are available in the &Semigroups; package.
+  are available in the &SEMIGROUPS; package.
   <P/>
 
   <!--**********************************************************************-->
@@ -15,7 +15,7 @@
       Standard constructions
     </Heading>
 
-    In this section, we describe the functions in &Semigroups; that can be used
+    In this section, we describe the functions in &SEMIGROUPS; that can be used
     to create standard semigroup constructions in various representations.
     For all of the constructions, the default representation is as a semigroup
     of transformations. In general, these functions do not return
@@ -37,7 +37,7 @@
       Strong semilattices of semigroups
     </Heading>
 
-    In this section, we describe how &Semigroups; can be used to create and
+    In this section, we describe how &SEMIGROUPS; can be used to create and
     manipulate strong semilattices of semigroups (SSSs).
     Strong semilattices of semigroups are described, for example, in Section
     4.1 of <Cite Key = "Howie1995aa"/>.

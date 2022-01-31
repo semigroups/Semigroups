@@ -19,7 +19,7 @@
       element of <C>S</C>, then <M>(ax,bx)</M> and <M>(xa,xb)</M> are both in
       <C>cong</C>. <P/>
 
-      The simplest way of creating a congruence in &Semigroups; is by a set of
+      The simplest way of creating a congruence in &SEMIGROUPS; is by a set of
       <E>generating pairs</E>.  See <Ref Func="SemigroupCongruence"/>.
 
       <Example><![CDATA[
@@ -51,7 +51,7 @@ true]]></Example>
       That is, if <M>(a,b)</M> is a pair in <C>cong</C>, and <M>x</M> is an
       element of <C>S</C>, then <M>(xa,xb)</M> is also in <C>cong</C>. <P/>
 
-      The simplest way of creating a left congruence in &Semigroups; is by a set
+      The simplest way of creating a left congruence in &SEMIGROUPS; is by a set
       of <E>generating pairs</E>.  See <Ref Func="LeftSemigroupCongruence"/>.
 
       <Example><![CDATA[
@@ -83,7 +83,7 @@ true]]></Example>
       That is, if <M>(a,b)</M> is a pair in <C>cong</C>, and <M>x</M> is an
       element of <C>S</C>, then <M>(ax,bx)</M> is also in <C>cong</C>. <P/>
 
-      The simplest way of creating a right congruence in &Semigroups; is by a set
+      The simplest way of creating a right congruence in &SEMIGROUPS; is by a set
       of <E>generating pairs</E>.  See <Ref Func="RightSemigroupCongruence"/>.
 
       <Example><![CDATA[

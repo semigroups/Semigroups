@@ -25,7 +25,7 @@
       information than there is available memory.<P/>
 
       If you want to get an iterator for a file written using
-      <C>WriteGenerators</C> from a version of &Semigroups; before version
+      <C>WriteGenerators</C> from a version of &SEMIGROUPS; before version
       3.0.0, then you can use <C>IteratorFromOldGeneratorsFile</C>.
     </Description>
   </ManSection>
@@ -67,11 +67,11 @@
         "ReadGenerators"/>.
       <P/>
 
-      From Version 3.0.0 onwards the &Semigroups; package used the &IO; package
+      From Version 3.0.0 onwards the &SEMIGROUPS; package used the &IO; package
       pickling functionality; see <Ref Sect="Pickling and unpickling"
         BookName="io"/> for more details. This approach is used because it is
       more general and more robust than the methods used by earlier versions of
-      &Semigroups;, although the performance is somewhat worse, and the
+      &SEMIGROUPS;, although the performance is somewhat worse, and the
       resulting files are somewhat larger. <P/>
     </Description>
   </ManSection>

@@ -3,7 +3,7 @@
     Green's relations
   </Heading>
 
-  In this chapter we describe the functions in &Semigroups; for
+  In this chapter we describe the functions in &SEMIGROUPS; for
   computing Green's classes and related properties of semigroups.
  
   <!--**********************************************************************-->
@@ -15,7 +15,7 @@
       Creating Green's classes and representatives
     </Heading>
  
-    In this section, we describe the methods in the &Semigroups; package for
+    In this section, we describe the methods in the &SEMIGROUPS; package for
     creating Green's classes.
     <P/>
 
@@ -43,7 +43,7 @@
       Iterators and enumerators of classes and representatives
     </Heading>
  
-    In this section, we describe the methods in the &Semigroups; package for
+    In this section, we describe the methods in the &SEMIGROUPS; package for
     incrementally determining Green's classes or their representatives.
     <P/>
 
@@ -62,7 +62,7 @@
     </Heading>
  
     In this section, we describe the properties and operators of Green's
-    classes that are available in the &Semigroups; package
+    classes that are available in the &SEMIGROUPS; package
     <P/>
  
     <#Include Label = "\&lt;">
@@ -81,7 +81,7 @@
     </Heading>
 
     In this section, we describe the attributes of Green's classes that are
-    available in the &Semigroups; package
+    available in the &SEMIGROUPS; package
     <P/>
 
     <#Include Label = "GroupHClass">

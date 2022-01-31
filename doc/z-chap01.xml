@@ -1,21 +1,21 @@
 <Chapter Label = "The Semigroups package">
   <Heading>
-    The &Semigroups; package
+    The &SEMIGROUPS; package
   </Heading>
-  <Index Key = "Semigroups">&Semigroups; package overview</Index>
+  <Index Key = "Semigroups">&SEMIGROUPS; package overview</Index>
 
   <Section Label = "Introduction">
     <Heading>
       Introduction
     </Heading>
 
-    This is the manual for the &Semigroups; package for &GAP; version &VERSION;.
-    &Semigroups; &VERSION; is a distant descendant of the
+    This is the manual for the &SEMIGROUPS; package for &GAP; version &VERSION;.
+    &SEMIGROUPS; &VERSION; is a distant descendant of the
     <URL Text = "Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.<P/>
 
-    &Semigroups; &VERSION; contains efficient methods for creating semigroups,
+    &SEMIGROUPS; &VERSION; contains efficient methods for creating semigroups,
     monoids, inverse semigroups and their ideals, calculating their Green's
     structure, size, elements, group of units, minimal ideal, and testing
     membership, finding the inverses of a regular element, and factorizing
@@ -34,24 +34,24 @@
         representations of the elements of certain semigroups. <P/>
 
     Many standard examples of semigroups and classes of semigroups are
-    provided; see Section <Ref Sect = "Standard examples"/>.  &Semigroups; also
+    provided; see Section <Ref Sect = "Standard examples"/>.  &SEMIGROUPS; also
     provides functions to read and write collections of elements of a semigroup
     to a file; see <Ref Func = "ReadGenerators"/> and <Ref Func =
       "WriteGenerators"/>.
     <P/>
 
-    There are functions in &Semigroups; to define and manipulate free
+    There are functions in &SEMIGROUPS; to define and manipulate free
     inverse semigroups and free bands; this part of the package was written
     by Julius Jonu&#353;as; see Chapters <Ref Chap = "Free objects"/>.
     <P/>
 
-    From Version 3.0.0, &Semigroups; includes a copy of the &libsemigroups; C++
+    From Version 3.0.0, &SEMIGROUPS; includes a copy of the &LIBSEMIGROUPS; C++
     library which contains an implementation of the Froidure-Pin Algorithm. 
     <P/>
 
-    <B>Minor note of caution</B>: &Semigroups; contains different methods for
+    <B>Minor note of caution</B>: &SEMIGROUPS; contains different methods for
     some &GAP; library functions, and so you might notice that &GAP; behaves
-    differently when &Semigroups; is loaded.  For more details about semigroups
+    differently when &SEMIGROUPS; is loaded.  For more details about semigroups
     in &GAP; or Green's relations in particular, see <Ref Sect = "Semigroups"
       BookName = "ref"/> or <Ref Sect = "Green's Relations" BookName = "ref"/>.
   </Section>
@@ -69,7 +69,7 @@
     <List>
       <Mark>Part I: generators</Mark> 
       <Item>
-        the different types of generators that are introduced in &Semigroups;
+        the different types of generators that are introduced in &SEMIGROUPS;
         are described in Chapters <Ref Chap = "Bipartitions and blocks"/>, 
         <Ref Chap = "Partitioned binary relations (PBRs)"/>, and 
         <Ref Chap = "Matrices over semirings"/>. These include 
@@ -109,7 +109,7 @@
 
       <Mark>Part V: the structure of a semigroup or monoid</Mark>
       <Item>
-        the functionality of the &Semigroups; package for determining various
+        the functionality of the &SEMIGROUPS; package for determining various
         structural properties of a given semigroup or monoid are described in
         Chapters <Ref Chap = "Green's relations"/>,  
         <Ref Chap = "Attributes and operations for semigroups"/>, 

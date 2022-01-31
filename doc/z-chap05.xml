@@ -6,7 +6,7 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  In this chapter we describe the functionality in &Semigroups; for creating
+  In this chapter we describe the functionality in &SEMIGROUPS; for creating
   matrices over semirings.  <B>Only square matrices are currently
     supported.</B> We use the term <B>matrix</B> to mean <B>square matrix</B>
   everywhere in this manual.
@@ -73,7 +73,7 @@
   </List>
 
   With the exception of matrices of finite fields, semigroups of matrices in
-  &Semigroups; are of the second type described in Section <Ref
+  &SEMIGROUPS; are of the second type described in Section <Ref
     Sect = "Introduction"/>.  In other words, a version of the Froidure-Pin
   Algorithm <Cite Key = "Froidure1997aa"/> is used to compute semigroups of
   these types, i.e it is possible that all of the elements of such a semigroup
@@ -85,7 +85,7 @@
   <Section Label = "Matrices over arbitrary semirings">
     <Heading>Creating matrices over semirings</Heading>
     In this section we describe the two main operations for creating matrices
-    over semirings in &Semigroups;, and the categories, attributes, and
+    over semirings in &SEMIGROUPS;, and the categories, attributes, and
     operations which apply to every matrix over one of the semirings given at
     the start of this chapter.<P/>
 
@@ -152,7 +152,7 @@
     </Heading>
 
     In this section we describe the operations, properties, and attributes in
-    &Semigroups; specifically for Boolean matrices.  These include:
+    &SEMIGROUPS; specifically for Boolean matrices.  These include:
 
     <List>
       <Item>
@@ -226,7 +226,7 @@
     </Heading>
 
     In this section we describe the operations, properties, and attributes in
-    &Semigroups; specifically for matrices over finite fields. These are in
+    &SEMIGROUPS; specifically for matrices over finite fields. These are in
     addition to those given elsewhere in this chapter for arbitrary matrices
     over semirings.
 
@@ -249,7 +249,7 @@
     </Heading>
 
     In this section we describe operations in
-    &Semigroups; specifically for integer matrices.
+    &SEMIGROUPS; specifically for integer matrices.
     These are in addition to those given elsewhere in this chapter for
     arbitrary matrices over semirings. These include:
     <List>
@@ -279,7 +279,7 @@
     </Heading>
 
     In this section we describe operations in
-    &Semigroups; specifically for max-plus and min-plus matrices.
+    &SEMIGROUPS; specifically for max-plus and min-plus matrices.
     These are in addition to those given elsewhere in this chapter for
     arbitrary matrices over semirings. These include:
 
@@ -313,7 +313,7 @@
     </Heading>
 
     In this section we describe operations and attributes in
-    &Semigroups; specifically for matrix semigroups. These are in addition to
+    &SEMIGROUPS; specifically for matrix semigroups. These are in addition to
     those given elsewhere in this chapter for arbitrary matrices over
     semirings. These include:
 
@@ -353,7 +353,7 @@
       <Heading>Matrix groups</Heading>
     
       For interfacing the semigroups code with &GAP;'s library code for
-      matrix groups, the &Semigroups; package implements matrix groups
+      matrix groups, the &SEMIGROUPS; package implements matrix groups
       that delegate to the &GAP; library. These functions include:
 
       <List>

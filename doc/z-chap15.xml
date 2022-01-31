@@ -3,7 +3,7 @@
     Properties of semigroups 
   </Heading>
 
-  In this chapter we decribe the methods that are available in &Semigroups; for
+  In this chapter we decribe the methods that are available in &SEMIGROUPS; for
   determining various properties of a semigroup.
 
   <!--**********************************************************************-->
@@ -15,7 +15,7 @@
     </Heading>
 
     In this section we describe the properties of a semigroup that can be
-    determined using the &Semigroups; package.
+    determined using the &SEMIGROUPS; package.
     <P/>
  
     <#Include Label = "IsBand">

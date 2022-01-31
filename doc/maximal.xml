@@ -156,7 +156,7 @@ gap> MaximalSubsemigroups(R, rec(types := [5],
     <P/>
 
     For more information about searching for maximal subsemigroups of a finite
-    semigroup in the &Semigroups; package, and for information about the options
+    semigroup in the &SEMIGROUPS; package, and for information about the options
     available to alter the search, see <Ref Oper="MaximalSubsemigroups"
       Label="for a finite semigroup and a record"/>. By supplying the additional
     option <C><A>opts</A>.number :=</C> <K>true</K>, the number of maximal

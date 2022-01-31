@@ -3,7 +3,7 @@
     Finitely presented semigroups and Tietze transformations
   </Heading>
 
-  In this chapter we describe the functions implemented in &Semigroups; that
+  In this chapter we describe the functions implemented in &SEMIGROUPS; that
   extend the features available in &GAP; for dealing with finitely presented
   semigroups and monoids.
 
@@ -43,7 +43,7 @@
    Label="Helper functions for creating semigroup and monoid presentations">
     <Heading> Helper functions for creating semigroup and monoid presentations
     </Heading>
-    This section describes operations implemented in &Semigroups; that are
+    This section describes operations implemented in &SEMIGROUPS; that are
     designed to interact with standard &GAP; methods for creating finitely
     presented semigroups and monoids (see <Ref
     Chap="Finitely Presented Semigroups and Monoids"
@@ -59,7 +59,7 @@
       Creating semigroup presentations
     </Heading>
     It is possible to use &GAP; to create finitely presented semigroups without
-    the &Semigroups; package, by creating a free semigroup, then
+    the &SEMIGROUPS; package, by creating a free semigroup, then
     quotienting by a list of relations. This is described in the reference
     manual
     (<Ref Chap="Finitely Presented Semigroups and Monoids" BookName="ref"/>).
