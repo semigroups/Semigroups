@@ -32,15 +32,19 @@
 *.top
 *.tui
 *.txt
+./libsemigroups/
 .dirstamp
 .libs
 Makefile
 Makefile.in
 Transitions*
+_AutoDocMainFile.xml
+_Chunks.xml
 aclocal.m4
 autom4te*
 autom4te.*
 autom4te.cache
+bibliography.xml.bib
 bin
 cnf
 config.log
@@ -62,7 +66,6 @@ doc/manual.pdf
 doc/manual.six
 gh-pages
 lcov*
-./libsemigroups/
 libtool
 libtool.m4
 ltmain.sh
@@ -70,6 +73,7 @@ ltoptions.m4
 ltsugar.m4
 ltversion.m4
 lt~obsolete.m4
+main.xml
 new_bibliography.xml.bib
 pkgconfig.h.in~
 semigroups-config.hpp
@@ -79,10 +83,7 @@ src/.libs
 src/_pkgconfig.h
 src/stamp-h1
 tags
+title.xml
 tmp
 tst/workspaces/test-output.w
 wiki/
-_AutoDocMainFile.xml
-_Chunks.xml
-main.xml
-title.xml
