@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups", "gap/doc.g");
-
 ReadPackage("semigroups", "gap/tools/display.gi");
 ReadPackage("semigroups", "gap/tools/io.gi");
 ReadPackage("semigroups", "gap/tools/utils.gi");

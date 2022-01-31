@@ -122,3 +122,15 @@ AutoDoc( rec(
     )
   )
 );
+
+Unbind(RemovePrefixVersion);
+Unbind(UrlEntity);
+Unbind(PackageEntity);
+Unbind(Greens);
+Unbind(MathOrCode);
+Unbind(XMLEntities);
+Unbind(PkgInfo);
+Unbind(Pkg);
+Unbind(ARCHIVENAME);
+Unbind(Files);
+Unbind(Includes);

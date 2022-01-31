@@ -249,15 +249,28 @@ end);
 # 2. Documentation - internal stuff
 ################################################################################
 
+BindGlobal("SEMIGROUPS_DocXMLFiles",
+function()
+  local dir;
+  dir := DirectoriesPackageLibrary("Semigroups", "doc")[1];
+  return Filtered(DirectoryContents(dir),
+                  x -> (not StartsWith(x, "."))
+                        and (not StartsWith(x, "z-"))
+                        and EndsWith(x, ".xml"));
+end);
+
 InstallGlobalFunction(SemigroupsMakeDoc,
 function()
-  # Compile the documentation of the currently-loaded version of Semigroups
-  SEMIGROUPS_MakeDoc(DirectoriesPackageLibrary("Semigroups", ""));
+  local fname;
+  fname := Filename(DirectoriesPackageLibrary("Semigroups", ""), "makedoc.g");
+  Read(fname);
 end);
 
 SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
-                         "main.xml", SEMIGROUPS_DocXMLFiles, "Single");
+                         "main.xml",
+                         SEMIGROUPS_DocXMLFiles(),
+                         "Single");
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
@@ -349,7 +362,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
     elif IsString(arg[1]) then
       doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                                "main.xml",
-                               SEMIGROUPS_DocXMLFiles,
+                               SEMIGROUPS_DocXMLFiles(),
                                true);
       tree := ParseTreeXMLString(doc[1]);
       CheckAndCleanGapDocTree(tree);
@@ -637,7 +650,7 @@ SEMIGROUPS.CheckManualConsistency := function()
 
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS_DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles(),
                            true);
   SEMIGROUPS.CheckDocCoverage(doc);
   return SEMIGROUPS.CheckManSectionTypes(doc, true);
@@ -647,7 +660,7 @@ SEMIGROUPS.DocumentedPackageVariables := function()
   local doc, r, x, out, mansect, record;
   doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                            "main.xml",
-                           SEMIGROUPS_DocXMLFiles,
+                           SEMIGROUPS_DocXMLFiles(),
                            true);
   r := ParseTreeXMLString(doc[1]);
   CheckAndCleanGapDocTree(r);
