@@ -686,7 +686,7 @@ function(L)
   scc  := OrbSCC(LambdaOrb(L))[LambdaOrbSCCIndex(L)];
   enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(L));
 
-  return SEMIGROUPS.ActingGreensClassEnum(L, enum, convert_out, convert_in);
+  return WrappedEnumerator(L, enum, convert_out, convert_in);
 end);
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
@@ -736,7 +736,7 @@ function(D)
   scc := OrbSCC(LambdaOrb(D))[LambdaOrbSCCIndex(D)];
   enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(D), scc);
 
-  return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
+  return WrappedEnumerator(D, enum, convert_out, convert_in);
 end);
 
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",

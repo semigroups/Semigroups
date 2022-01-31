@@ -348,7 +348,7 @@ true
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[(), ()], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
-gap> S := Semigroup(DClass(R, RMSElement(R, 1, (), 1)));
+gap> S := Semigroup(DClass(R, RMSElement(R, 1, (), 1)), rec(acting := true));
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 96 generators>
 gap> IsSimpleSemigroup(S);
 true
@@ -377,7 +377,7 @@ gap> x := Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2, -3 ] ] );
 gap> D := DClass(S, x);
 <Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>
 gap> en := Enumerator(D);
-<enumerator of Green's class>
+<enumerator of <Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>>
 gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);

@@ -70,7 +70,8 @@ od;
 
 # The files containing the xml of the doc
 
-Files := Filtered(DirectoryContents("doc"),
+DocDir := DirectoriesPackageLibrary("semigroups", "doc")[1];
+Files := Filtered(DirectoryContents(DocDir),
                   x -> (not StartsWith(x, "."))
                        and (not StartsWith(x, "z-"))
                        and EndsWith(x, ".xml"));
@@ -80,7 +81,7 @@ Sort(Files);
 
 # The scaffold files (chapters)
 
-Includes := Filtered(DirectoryContents("doc"),
+Includes := Filtered(DirectoryContents(DocDir),
                      x -> StartsWith(x, "z-") and EndsWith(x, ".xml"));
 Sort(Includes);
 
@@ -108,7 +109,7 @@ XMLEntities.bbN := """<Alt Not="Text"><M>\mathbb{N}</M></Alt>
 
 # The actual call to AutoDoc
 
-AutoDoc( rec(
+AutoDoc( "semigroups",  rec(
     gapdoc := rec(
         LaTeXOptions := rec( EarlyExtraPreamble := """
             \usepackage{a4wide}
@@ -134,5 +135,6 @@ Unbind(XMLEntities);
 Unbind(PkgInfo);
 Unbind(Pkg);
 Unbind(ARCHIVENAME);
+Unbind(DocDir);
 Unbind(Files);
 Unbind(Includes);

@@ -471,7 +471,7 @@ gap> x := PartialPerm([1, 2, 3, 5], [2, 4, 3, 5]);
 gap> L := LClass(S, x);
 <Green's L-class: [1,5](2)(3,4)>
 gap> en := Enumerator(L);
-<enumerator of Green's class>
+<enumerator of <Green's L-class: [1,5](2)(3,4)>>
 gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
@@ -499,7 +499,7 @@ gap> x := PartialPerm([1, 2, 3, 5], [2, 4, 3, 5]);
 gap> D := DClass(S, x);
 <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>
 gap> en := Enumerator(D);
-<enumerator of Green's class>
+<enumerator of <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>>
 gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
@@ -514,7 +514,7 @@ gap> x := PartialPerm([1, 2, 3]);
 gap> y := PartialPerm([1, 2, 4], [1, 2, 3]);
 [4,3](1)(2)
 gap> en := Enumerator(DClass(S, x));
-<enumerator of Green's class>
+<enumerator of <Green's D-class: <identity partial perm on [ 1, 2, 3 ]>>>
 gap> Position(en, y ^ -1);
 fail
 gap> Position(en, y);

@@ -8,7 +8,58 @@
 #############################################################################
 ##
 
-# Not sure why this is here.
+# <convert_in> must return <fail> if it is not possible to convert
+# <convert_out> must check if its argument is <fail> and if it is, then it
+# should return <fail>, <convert_out> should have two arguments <enum> and <nr>
+# where <nr> refers to the position in <baseenum>.
+
+InstallGlobalFunction(WrappedEnumerator,
+function(obj, baseenum, convert_out, convert_in)
+  local record;
+
+  if IsRecord(obj) and not IsBound(obj.parent) then
+    ErrorNoReturn("if the 1st argument is a record, it must have component ", 
+                  "named `parent`");
+  elif not IsList(baseenum) then
+    ErrorNoReturn("the 2nd argument <baseenum> must be a list ");
+  elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
+    ErrorNoReturn("the 3rd and 4th arguments <convert_out> and ",
+                  "<convert_in> must be functions");
+  fi;
+
+  if IsRecord(obj) then
+    record := obj;
+  else 
+    record := rec();
+    record.parent := obj;
+  fi;
+
+  record.baseenum    := baseenum;
+  record.convert_out := convert_out;
+  record.convert_in  := convert_in;
+
+  record.NumberElement := function(enum, elt)
+    local converted;
+    converted := enum!.convert_in(enum, elt);
+    if converted = fail then
+      return fail;
+    fi;
+    return Position(enum!.baseenum, converted);
+  end;
+
+  record.ElementNumber := function(enum, nr)
+    if nr > Length(enum) then
+      return fail;
+    fi;
+    return enum!.convert_out(enum, enum!.baseenum[nr]);
+  end;
+
+  record.Length := enum -> Size(enum!.parent);
+
+  return EnumeratorByFunctions(record.parent, record);
+end);
+
+# Helpers to replace the less helpful GAP library methods
 
 BindGlobal("SEMIGROUPS_IsDoneIterator_List",
            iter -> (iter!.pos >= iter!.len));

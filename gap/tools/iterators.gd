@@ -11,3 +11,4 @@
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("ChainIterators");
 DeclareGlobalFunction("WrappedIterator");
+DeclareGlobalFunction("WrappedEnumerator");

@@ -530,5 +530,5 @@ function(D)
   enum := EnumeratorOfCartesianProduct(rho_scc,
                                        SchutzenbergerGroup(D),
                                        lambda_scc);
-  return SEMIGROUPS.ActingGreensClassEnum(D, enum, convert_out, convert_in);
+  return WrappedEnumerator(D, enum, convert_out, convert_in);
 end);
