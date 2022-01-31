@@ -141,7 +141,7 @@ SEMIGROUPS.RunTest := function(func)
 
   # Run tests with acting := true
   Print("\033[1m");
-  Print("==> with acting methods enabled <==\n");
+  Info(InfoWarning, 1, "Running tests with acting methods enabled");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   passed := func();
@@ -156,7 +156,7 @@ SEMIGROUPS.RunTest := function(func)
 
   # Run tests with acting := false
   Print("\033[1m");
-  Print("==> with acting methods disabled <==\n");
+  Info(InfoWarning, 1, "Running tests with acting methods disabled");
   Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := false;
   passed := func();
