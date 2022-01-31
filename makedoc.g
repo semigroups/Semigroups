@@ -76,11 +76,13 @@ Files := Filtered(DirectoryContents("doc"),
                        and EndsWith(x, ".xml"));
 Apply(Files, x -> Concatenation("doc/", x));
 Add(Files, "PackageInfo.g");
+Sort(Files);
 
 # The scaffold files (chapters)
 
 Includes := Filtered(DirectoryContents("doc"),
                      x -> StartsWith(x, "z-") and EndsWith(x, ".xml"));
+Sort(Includes);
 
 # Hard coded entities
 
