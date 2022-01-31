@@ -10,10 +10,13 @@
 
 # Not sure why this is here.
 
-MakeReadWriteGlobal("IsDoneIterator_List");
-UnbindGlobal("IsDoneIterator_List");
-BindGlobal("IsDoneIterator_List",
+BindGlobal("SEMIGROUPS_IsDoneIterator_List",
            iter -> (iter!.pos >= iter!.len));
+           
+BindGlobal("SEMIGROUPS_ShallowCopy_List",
+    iter -> rec(list := iter!.list,
+                pos  := 0,
+                len  := iter!.len));
 
 # NextIterator in <opts> must return fail if the iterator is finished.
 
@@ -132,6 +135,12 @@ function(arg)
   fi;
 
   iter.baseiter := arg[1];
+  
+  if iter.baseiter!.ShallowCopy = ShallowCopy_List then
+    iter.baseiter!.ShallowCopy := SEMIGROUPS_ShallowCopy_List;
+    iter.baseiter!.IsDoneIterator := SEMIGROUPS_IsDoneIterator_List;
+  fi;
+
   iter.unwrap   := arg[2];
 
   if IsBound(arg[4]) then

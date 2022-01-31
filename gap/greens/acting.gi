@@ -416,7 +416,10 @@ function(obj, baseenum, convert_out, convert_in)
     return elt in enum!.parent;
   end;
 
-  record.PrintObj := enum -> Print("<enumerator of Green's class>");
+  record.PrintObj := function(enum)
+    Print("<enumerator of Green's class>");
+    return;
+  end;
 
   return EnumeratorByFunctions(obj, record);
 end;

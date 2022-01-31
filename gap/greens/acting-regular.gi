@@ -43,7 +43,7 @@
 #############################################################################
 
 InstallMethod(RhoCosets, "for a regular class of an acting semigroup",
-[IsRegularGreensClass and IsActingSemigroupGreensClass],
+[IsRegularActingRepGreensClass],
 function(C)
   local S;
   S := Parent(C);
@@ -51,20 +51,19 @@ function(C)
 end);
 
 InstallMethod(LambdaCosets, "for a regular class of an acting semigroup",
-[IsRegularGreensClass and IsActingSemigroupGreensClass], RhoCosets);
+[IsRegularActingRepGreensClass], RhoCosets);
 
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularActingRepGreensClass],
 D -> LambdaOrbSchutzGp(LambdaOrb(D), LambdaOrbSCCIndex(D)));
 
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup,
 "for H-class of regular acting semigroup rep",
-[IsRegularActingRepGreensClass and
- IsGreensHClass],
+[IsRegularActingRepGreensClass and IsGreensHClass],
 function(H)
   local S, rep, p;
   S := Parent(H);
@@ -83,10 +82,8 @@ end);
 
 InstallMethod(\<,
 "for Green's D-classes of a regular acting semigroup rep",
-[IsGreensDClass and IsActingSemigroupGreensClass and
- IsRegularActingRepGreensClass,
- IsGreensDClass and IsActingSemigroupGreensClass and
- IsRegularActingRepGreensClass],
+[IsGreensDClass and IsRegularActingRepGreensClass,
+ IsGreensDClass and IsRegularActingRepGreensClass],
 function(x, y)
   local S, scc;
   if Parent(x) <> Parent(y) or x = y then
@@ -131,7 +128,7 @@ end);
 #############################################################################
 
 InstallMethod(Size, "for a regular D-class of an acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularActingRepGreensClass],
 function(D)
   return Size(SchutzenbergerGroup(D)) * Length(LambdaOrbSCC(D))
    * Length(RhoOrbSCC(D));
@@ -372,6 +369,8 @@ function(S)
   return nr;
 end);
 
+# TODO(now) remove this method or find an example where it actually applies
+
 InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
  HasGeneratorsOfSemigroup],
@@ -444,7 +443,7 @@ InstallMethod(IteratorOfRClassReps, "for regular acting semigroup",
 function(S)
   local o, func;
 
-  o := RhoOrb(S);
+  o := Enumerate(RhoOrb(S));
 
   func := function(iter, i)
     # <rep> has rho val corresponding to <i>
@@ -467,46 +466,16 @@ function(S)
 
   if HasDClassReps(S) then
     return IteratorList(DClassReps(S));
-  elif not IsClosedOrbit(LambdaOrb(S)) then
-    record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(S));
-    record.NextIterator := function(iter)
-      local m, l;
-
-      m := iter!.m;
-
-      if IsBound(iter!.o) and iter!.o = fail then
-        return fail;
-      elif m = fail or m = Length(OrbSCC(iter!.o)) then
-        m := 1;
-        l := 1;
-        iter!.o := NextIterator(iter!.graded);
-        if iter!.o = fail then
-          return fail;
-        fi;
-      else
-        m := m + 1;
-        l := OrbSCC(iter!.o)[m][1];
-      fi;
-      iter!.m := m;
-
-      # rep has rectified lambda val and rho val.
-      return LambdaOrbRep(iter!.o, m) * LambdaOrbMult(iter!.o, m, l)[2];
-    end;
-
-    record.ShallowCopy := iter -> rec(m := fail,
-                                      graded := IteratorOfGradedLambdaOrbs(S));
-    return IteratorByNextIterator(record);
-  else
-    o := LambdaOrb(S);
-    scc := OrbSCC(o);
-
-    func := function(iter, m)
-      # has rectified lambda val and rho val!
-      return EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
-    end;
-
-    return WrappedIterator(IteratorList([2 .. Length(scc)]), func);
   fi;
+  o   := Enumerate(LambdaOrb(S));
+  scc := OrbSCC(o);
+
+  func := function(iter, m)
+    # has rectified lambda val and rho val!
+    return EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1]));
+  end;
+
+  return WrappedIterator(IteratorList([2 .. Length(scc)]), func);
 end);
 
 ########################################################################
@@ -516,15 +485,9 @@ end);
 # different method for inverse
 
 InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularActingRepGreensClass],
 function(D)
   local convert_out, convert_in, rho_scc, lambda_scc, enum;
-
-  if HasAsList(D) then
-    return AsList(D);
-  elif HasAsSSortedList(D) then
-    return AsSSortedList(D);
-  fi;
 
   convert_out := function(enum, tuple)
     local D, rep, act;
@@ -546,13 +509,13 @@ function(D)
     S := Parent(D);
 
     k := Position(RhoOrb(D), RhoFunc(S)(elt));
-    if OrbSCCLookup(RhoOrb(D))[k] <> RhoOrbSCCIndex(D) then
+    if k = fail or OrbSCCLookup(RhoOrb(D))[k] <> RhoOrbSCCIndex(D) then
       return fail;
     fi;
 
     l := Position(LambdaOrb(D), LambdaFunc(S)(elt));
 
-    if OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
+    if l = fail or OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
       return fail;
     fi;
 

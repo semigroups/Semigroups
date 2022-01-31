@@ -296,6 +296,97 @@ true
 gap> NrLClasses(D);
 1
 
+# IteratorOfRClassReps
+gap> S := PartitionMonoid(3);;
+gap> it := IteratorOfRClassReps(S);
+<iterator>
+gap> nr := 0;
+0
+gap> for x in it do
+> nr := nr + 1;
+> od;
+gap> nr = NrRClasses(S);
+true
+
+# IteratorOfDClassReps
+gap> S := PartitionMonoid(3);;
+gap> DClassReps(S);;
+gap> nr := 0;
+0
+gap> it := IteratorOfDClassReps(S);
+<iterator>
+gap> for x in it do
+> nr := nr + 1;
+> od;
+gap> nr = NrDClasses(S);
+true
+gap> S := PartitionMonoid(3);
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
+gap> Enumerate(LambdaOrb(S));;
+gap> nr := 0;
+0
+gap> it := IteratorOfDClassReps(S);
+<iterator>
+gap> for x in it do
+> nr := nr + 1;
+> od;
+gap> nr = NrDClasses(S);
+true
+gap> S := PartitionMonoid(3);
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
+gap> nr := 0;
+0
+gap> it := IteratorOfDClassReps(S);
+<iterator>
+gap> for x in it do
+> nr := nr + 1;
+> od;
+gap> nr = NrDClasses(S);
+true
+
+# IteratorOfDClassReps for an ideal
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(), ()], [(), ()]]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
+gap> S := Semigroup(DClass(R, RMSElement(R, 1, (), 1)));
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 96 generators>
+gap> IsSimpleSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> it := IteratorOfDClassReps(I);
+<iterator>
+gap> NextIterator(it);
+(1,(1,2,3,4),1)
+gap> NextIterator(it);
+Error, <iter> is exhausted
+gap> IsDoneIterator(it);
+true
+gap> it := ShallowCopy(it);
+<iterator>
+gap> NextIterator(it);
+(1,(1,2,3,4),1)
+gap> IsDoneIterator(it);
+true
+
+# Enumerator for a regular D-class of an acting semigroup
+gap> S := Monoid(PartitionMonoid(3), rec(acting := true, regular := true));
+<regular bipartition monoid of degree 3 with 4 generators>
+gap> x := Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2, -3 ] ] );
+<bipartition: [ 1, 3 ], [ 2, -1 ], [ -2, -3 ]>
+gap> D := DClass(S, x);
+<Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>
+gap> en := Enumerator(D);
+<enumerator of Green's class>
+gap> ForAll(en, x -> en[Position(en, x)] = x);
+true
+gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
+true
+gap> Position(en, Bipartition( [ [ 1, 2, 3, 4, -1, -2, -3, -4 ] ] ));
+fail
+gap> en[10000];
+fail
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(H);

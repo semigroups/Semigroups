@@ -243,8 +243,6 @@ function(dclass)
     return output;
   end;
 
-  #
-
   NextIterator_FreeBandDClassWithPrint := function(iter)
     local next_value;
 
@@ -257,8 +255,6 @@ function(dclass)
                      x -> GeneratorsOfSemigroup(iter!.semigroup)[x]));
     fi;
   end;
-
-  #
 
   NewIterator_FreeBandDClass := function(s, content)
     local record, first, tempcont, elem;
@@ -293,17 +289,17 @@ function(dclass)
     return record;
   end;
 
-  #
-
-  ShallowCopyLocal := record ->
-    rec(last_called_by_is_done := record!.last_called_by_is_done,
-        next_value := record!.next_value,
-        IsDoneIterator := record!.IsDoneIterator,
-        NextIterator := record!.NextIterator);
+  ShallowCopyLocal := function(it)
+    local record;
+    record := NewIterator_FreeBandDClass(s, content);
+    record.NextIterator := it!.NextIterator;
+    record.ShallowCopy := it!.ShallowCopy;
+    return record;
+  end;
 
   record := NewIterator_FreeBandDClass(s, content);
-  record!.NextIterator := NextIterator_FreeBandDClassWithPrint;
-  record!.ShallowCopy := ShallowCopyLocal;
+  record.NextIterator := NextIterator_FreeBandDClassWithPrint;
+  record.ShallowCopy := ShallowCopyLocal;
   return IteratorByNextIterator(record);
 end);
 
@@ -513,9 +509,10 @@ function(w1_in, w2_in)
 
   StripFreeBandString := function(w)
     local last, out, i;
-    if not IsList(w) then
-      ErrorNoReturn("expected a list, got ", w);
-    elif Length(w) = 0 or Length(w) = 1 then
+    # Empty lists are checked below
+    if not IsPosInt(w[1]) then
+      ErrorNoReturn("expected a list of pos. int.s, got ", TNAM_OBJ(w[1]));
+    elif Length(w) = 1 then
       return w;
     fi;
 
@@ -549,7 +546,7 @@ function(w1_in, w2_in)
   w := StandardiseWord(w);
 
   c     := w[l1 + 1];
-  check := ListWithIdenticalEntries(c, false);
+  check := BlistList([1 .. c], []);
   for i in [l1 + 2 .. l1 + 1 + l2] do
     if w[i] >= c then
       return false;

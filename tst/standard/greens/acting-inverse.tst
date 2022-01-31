@@ -440,6 +440,104 @@ gap> Idempotents(S, 4);
 gap> Idempotents(S, -1);
 Error, the 2nd argument (an int) is not non-negative
 
+# IteratorOfRClassReps
+gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
+> rec(acting := true));;
+gap> it := IteratorOfRClassReps(S);
+<iterator>
+gap> NextIterator(it);
+<identity partial perm on [ 1, 2, 3, 4, 5 ]>
+gap> NextIterator(it);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+gap> for x in it do od;
+gap> IsDoneIterator(it);
+true
+gap> RClassReps(S);;
+gap> it := IteratorOfRClassReps(S);
+<iterator>
+gap> NextIterator(it);
+<identity partial perm on [ 1, 2, 3, 4, 5 ]>
+gap> NextIterator(it);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+gap> for x in it do od;
+gap> IsDoneIterator(it);
+true
+
+# Enumerator for an L-class
+gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
+> rec(acting := true));;
+gap> x := PartialPerm([1, 2, 3, 5], [2, 4, 3, 5]);
+[1,2,4](3)(5)
+gap> L := LClass(S, x);
+<Green's L-class: [1,5](2)(3,4)>
+gap> en := Enumerator(L);
+<enumerator of Green's class>
+gap> ForAll(en, x -> en[Position(en, x)] = x);
+true
+gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
+true
+gap> Position(en, PartialPerm([1, 2, 3], [5, 2, 3]));
+fail
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3], [2, 3, 1]),
+> rec(acting := true));
+<partial perm group of rank 3 with 1 generator>
+gap> x := PartialPerm([1, 2, 3]);
+<identity partial perm on [ 1, 2, 3 ]>
+gap> y := PartialPerm([1, 2, 4], [1, 2, 3]);
+[4,3](1)(2)
+gap> en := Enumerator(LClass(S, x));;
+gap> Position(en, y);
+fail
+gap> en[10000];
+fail
+
+# Enumerator for a D-class
+gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
+> rec(acting := true));;
+gap> x := PartialPerm([1, 2, 3, 5], [2, 4, 3, 5]);
+[1,2,4](3)(5)
+gap> D := DClass(S, x);
+<Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>
+gap> en := Enumerator(D);
+<enumerator of Green's class>
+gap> ForAll(en, x -> en[Position(en, x)] = x);
+true
+gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
+true
+gap> Position(en, PartialPerm([1, 2, 3], [5, 2, 3]));
+fail
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3], [2, 3, 1]), 
+> rec(acting := true));
+<partial perm group of rank 3 with 1 generator>
+gap> x := PartialPerm([1, 2, 3]);
+<identity partial perm on [ 1, 2, 3 ]>
+gap> y := PartialPerm([1, 2, 4], [1, 2, 3]);
+[4,3](1)(2)
+gap> en := Enumerator(DClass(S, x));
+<enumerator of Green's class>
+gap> Position(en, y ^ -1);
+fail
+gap> Position(en, y);
+fail
+gap> en[10000];
+fail
+
+# Iterator for an L-class
+gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
+> rec(acting := true));;
+gap> x := PartialPerm([1, 2, 3, 5], [2, 4, 3, 5]);
+[1,2,4](3)(5)
+gap> L := LClass(S, x);
+<Green's L-class: [1,5](2)(3,4)>
+gap> it := Iterator(L);
+<iterator>
+gap> for x in it do Assert(0, x in L); od;
+gap> L := LClass(S, x);
+<Green's L-class: [1,2,5](3)(4)>
+gap> AsSSortedList(L);;
+gap> Iterator(L);
+<iterator>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(L);

@@ -614,6 +614,10 @@ InstallMethod(IteratorOfRClassReps, "for acting inverse semigroup rep",
 function(S)
   local o, lookup, func;
 
+  if HasRClassReps(S) then
+    return IteratorList(RClassReps(S));
+  fi;
+
   o := LambdaOrb(S);
   lookup := OrbSCCLookup(o);
 
@@ -641,16 +645,9 @@ end);
 # just use RClasses.
 
 InstallMethod(Enumerator, "for L-class of an inverse acting semigroup rep",
-[IsGreensLClass and IsInverseActingRepGreensClass
- and IsActingSemigroupGreensClass],
+[IsGreensLClass and IsInverseActingRepGreensClass],
 function(L)
   local convert_out, convert_in, scc, enum;
-
-  if HasAsList(L) then
-    return AsList(L);
-  elif HasAsSSortedList(L) then
-    return AsSSortedList(L);
-  fi;
 
   convert_out := function(enum, tuple)
     local L, rep, act;
@@ -677,8 +674,7 @@ function(L)
     fi;
 
     i := Position(LambdaOrb(L), RhoFunc(S)(elt));
-
-    if OrbSCCLookup(LambdaOrb(L))[i] <> LambdaOrbSCCIndex(L) then
+    if i = fail or OrbSCCLookup(LambdaOrb(L))[i] <> LambdaOrbSCCIndex(L) then
       return fail;
     fi;
 
@@ -694,16 +690,9 @@ function(L)
 end);
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
-[IsGreensDClass and IsInverseActingRepGreensClass
- and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsInverseActingRepGreensClass],
 function(D)
   local convert_out, convert_in, scc, enum;
-
-  if HasAsList(D) then
-    return AsList(D);
-  elif HasAsSSortedList(D) then
-    return AsSSortedList(D);
-  fi;
 
   Enumerate(LambdaOrb(D), infinity);
 
@@ -730,11 +719,11 @@ function(D)
     S := Parent(D);
 
     k := Position(LambdaOrb(D), RhoFunc(S)(elt));
-    if OrbSCCLookup(LambdaOrb(D))[k] <> LambdaOrbSCCIndex(D) then
+    if k = fail or OrbSCCLookup(LambdaOrb(D))[k] <> LambdaOrbSCCIndex(D) then
       return fail;
     fi;
     l := Position(LambdaOrb(D), LambdaFunc(S)(elt));
-    if OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
+    if l = fail or OrbSCCLookup(LambdaOrb(D))[l] <> LambdaOrbSCCIndex(D) then
       return fail;
     fi;
 
@@ -751,8 +740,7 @@ function(D)
 end);
 
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
-[IsInverseActingRepGreensClass and IsGreensLClass
- and IsActingSemigroupGreensClass],
+[IsInverseActingRepGreensClass and IsGreensLClass],
 function(L)
   local m, iter, unwrap, record;
 

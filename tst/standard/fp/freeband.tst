@@ -58,6 +58,22 @@ gap> NextIterator(iter);
 x2x3x1x3x2x3
 gap> NextIterator(iter);
 x3x2x1x3x2x3
+gap> S := FreeBand(2);
+<free band on the generators [ x1, x2 ]>
+gap> D := GreensDClassOfElement(S, S.1 * S.2);;
+gap> iter := Iterator(D);
+<iterator>
+gap> for x in iter do od;
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> D := GreensDClassOfElement(S, S.1 * S.2 * S.3 * S.2 * S.1);
+<Green's D-class: x1x2x3x2x1>
+gap> it := Iterator(D);
+<iterator>
+gap> for x in it do od;
+gap> it := ShallowCopy(it);
+<iterator>
+gap> for x in it do od;
 
 # FreeBandTest3: Free band iterator
 gap> S := FreeBand(10);
@@ -229,6 +245,8 @@ gap> ContentOfFreeBandElement(x);
 [ 1, 2, 3 ]
 gap> ContentOfFreeBandElement(S.2 * S.1);
 [ 1, 2 ]
+gap> ContentOfFreeBandElementCollection([S.2 * S.1, x]);
+[ 1, 2, 3 ]
 
 # Test ViewObj for large number of generators
 gap> FreeBand(100);
@@ -258,6 +276,31 @@ gap> y := "abcab";
 gap> EqualInFreeBand(x, y);
 true
 gap> EqualInFreeBand("abac", "abad");
+false
+gap> it := Iterator(FreeSemigroup("a", "b"));;
+gap> words := [];
+[  ]
+gap> for x in [1 .. 1000] do
+> Add(words, SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(NextIterator(it))));
+> od;
+gap> result := [];;
+> for i in [1 .. 1000] do
+> j := PositionProperty([1 .. 1000], k -> EqualInFreeBand(words[i], words[k]));
+> if j = i then
+> Add(result, words[i]);
+> fi;
+> od;
+> result;
+[ [ 1 ], [ 2 ], [ 2, 1 ], [ 1, 2 ], [ 1, 2, 1 ], [ 2, 1, 2 ] ]
+gap> EqualInFreeBand(["a"], [1]);
+Error, expected a list of pos. int.s, got list (string)
+gap> EqualInFreeBand([], [1]);
+false
+gap> EqualInFreeBand([], []);
+true
+gap> EqualInFreeBand([], ["a"]); # FIXME this should give an error
+false
+gap> EqualInFreeBand([1], [2, 2, 2]);
 false
 
 # SEMIGROUPS_UnbindVariables
