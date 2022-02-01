@@ -48,11 +48,12 @@ function(S)
   if DegreeOfTransformationSemigroup(S) <= 16
       and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.FroidurePinTransf16;
-  elif DegreeOfTransformationSemigroup(S) <= 65536 then
+  elif DegreeOfTransformationSemigroup(S) <= 2 ^ 16 then
     return libsemigroups.FroidurePinTransfUInt2;
-  elif DegreeOfTransformationSemigroup(S) <= 18446744073709551616 then
+  elif DegreeOfTransformationSemigroup(S) <= 2 ^ 32 then
     return libsemigroups.FroidurePinTransfUInt4;
   else
+    # Cannot currently test the next line
     Error("transformation degree is too high!");
   fi;
 end);
@@ -65,11 +66,12 @@ function(S)
                CodegreeOfPartialPermSemigroup(S));
   if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.FroidurePinPPerm16;
-  elif N <= 65536 then
+  elif N <= 2 ^ 16 then
     return libsemigroups.FroidurePinPPermUInt2;
-  elif N <= 18446744073709551616 then
+  elif N <= 2 ^ 32 then
     return libsemigroups.FroidurePinPPermUInt4;
   else
+    # Cannot currently test the next line
     Error("partial perm degree is too high!");
   fi;
 end);

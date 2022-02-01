@@ -95,42 +95,45 @@ function(H)
   return Idempotents(H)[1];
 end);
 
-InstallMethod(IsomorphismPermGroup, "for H-class of a semigroup",
-[IsGreensHClass],
-function(H)
-  local G, x, map, inv;
-
-  if not IsGroupHClass(H) then
-    ErrorNoReturn("the argument (a Green's H-class) is not a group");
-  fi;
-
-  G := Group(());
-  for x in H do
-    x := Permutation(x, AsSet(H), OnRight);
-    if not x in G then
-      G := ClosureGroup(G, x);
-      if Size(G) = Size(H) then
-        break;
-      fi;
-    fi;
-  od;
-  map := function(x)
-    if not x in H then
-      ErrorNoReturn("the argument does not belong to the domain of the ",
-                    "function");
-    fi;
-    return Permutation(x, AsSet(H), OnRight);
-  end;
-  inv := function(x)
-    if not x in G then
-      ErrorNoReturn("the argument does not belong to the domain of the ",
-                    "function");
-    fi;
-    # TODO(later) this currently sucks performancewise
-    return First(H, h -> map(h) = x);
-  end;
-  return MappingByFunction(H, G, map, inv);
-end);
+# The following method isn't tested anywhere, I can't think of an example to
+# test it on, and hence is currently commented out.
+#
+# InstallMethod(IsomorphismPermGroup, "for H-class of a semigroup",
+# [IsGreensHClass],
+# function(H)
+#   local G, x, map, inv;
+#
+#   if not IsGroupHClass(H) then
+#     ErrorNoReturn("the argument (a Green's H-class) is not a group");
+#   fi;
+#
+#   G := Group(());
+#   for x in H do
+#     x := Permutation(x, AsSet(H), OnRight);
+#     if not x in G then
+#       G := ClosureGroup(G, x);
+#       if Size(G) = Size(H) then
+#         break;
+#       fi;
+#     fi;
+#   od;
+#   map := function(x)
+#     if not x in H then
+#       ErrorNoReturn("the argument does not belong to the domain of the ",
+#                     "function");
+#     fi;
+#     return Permutation(x, AsSet(H), OnRight);
+#   end;
+#   inv := function(x)
+#     if not x in G then
+#       ErrorNoReturn("the argument does not belong to the domain of the ",
+#                     "function");
+#     fi;
+#     # This really sucks performancewise
+#     return First(H, h -> map(h) = x);
+#   end;
+#   return MappingByFunction(H, G, map, inv);
+# end);
 
 InstallMethod(StructureDescription, "for a Green's H-class",
 [IsGreensHClass],

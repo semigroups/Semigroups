@@ -1421,6 +1421,30 @@ true
 gap> PartialOrderOfDClasses(S);
 <immutable digraph with 5 vertices, 7 edges>
 
+# Test PartialOrderOfDClasses for a finite non-CanComputeFroidurePin,
+# non-acting semigroup
+gap> D := Digraph([[2, 3], [2], []]);;
+gap> S1 := FullTransformationMonoid(2);;
+gap> id := IdentityMapping(S1);;
+gap> m1 := MappingByFunction(S1, S1, function(x)
+>                                      return Transformation([1, 1]);
+>                                    end);;
+gap> m2 := MappingByFunction(S1, S1, function(x)
+>                                      return Transformation([2, 2]);
+>                                    end);;
+gap> L := [S1, S1, S1];;
+gap> H := [[m1, m2], [id], []];;
+gap> S := StrongSemilatticeOfSemigroups(D, L, H);
+<strong semilattice of 3 semigroups>
+gap> IsFinite(S);
+true
+gap> IsActingSemigroup(S);
+false
+gap> CanComputeFroidurePin(S);
+false
+gap> PartialOrderOfDClasses(S);
+<immutable digraph with 6 vertices, 7 edges>
+
 # 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/greens/generic.tst");

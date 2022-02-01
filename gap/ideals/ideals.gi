@@ -100,6 +100,7 @@ _ViewStringForSemigroupsIdeals);
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
 Unbind(_ViewStringForSemigroupsIdeals);
 
+# Can't currently test this
 InstallMethod(PrintObj,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

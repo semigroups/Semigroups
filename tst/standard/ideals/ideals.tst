@@ -350,15 +350,29 @@ gap> MultiplicativeZero(I);
 
 # IsMultiplicativeZero
 gap> S := SingularTransformationMonoid(3);;
+gap> S := Semigroup(S, rec(acting := false));
+<transformation semigroup of degree 3 with 5 generators>
 gap> IsMultiplicativeZero(S, IdentityTransformation);
 false
 gap> GeneratorsOfSemigroup(S);;
 gap> IsMultiplicativeZero(S, Transformation([1, 1, 1]));
 false
-gap> S := SemigroupIdeal(SymmetricInverseSemigroup(3), PartialPerm([2]));;
+gap> S := Semigroup(SymmetricInverseSemigroup(3), rec(acting := false));
+<partial perm monoid of rank 3 with 4 generators>
+gap> S := SemigroupIdeal(S, PartialPerm([2]),
+> rec(acting := false));;
 gap> GeneratorsOfSemigroup(S);;
 gap> IsMultiplicativeZero(S, EmptyPartialPerm());
 true
+gap> IsMultiplicativeZero(S, PartialPerm([1, 2, 3]));
+false
+gap> S := SemigroupIdeal(SymmetricInverseSemigroup(3), PartialPerm([2]));;
+gap> IsMultiplicativeZero(S, EmptyPartialPerm());
+true
+
+# SemigroupIdeal bad input
+gap> SemigroupIdeal("bananas", "bananas");
+Error, the 1st argument is not a semigroup
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(A);

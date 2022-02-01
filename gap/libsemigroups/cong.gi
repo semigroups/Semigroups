@@ -52,11 +52,12 @@ function(S)
   N := DegreeOfTransformationSemigroup(S);
   if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.Congruence.make_from_froidurepin_leasttransf;
-  elif N <= 65536 then
+  elif N <= 2 ^ 16 then
     return libsemigroups.Congruence.make_from_froidurepin_transfUInt2;
-  elif N <= 18446744073709551616 then
+  elif N <= 2 ^ 32 then
     return libsemigroups.Congruence.make_from_froidurepin_transfUInt4;
   else
+    # Cannot currently test the next line
     Error("transformation degree is too high!");
   fi;
 end);
@@ -70,11 +71,12 @@ function(S)
                CodegreeOfPartialPermSemigroup(S));
   if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.Congruence.make_from_froidurepin_leastpperm;
-  elif N <= 65536 then
+  elif N <= 2 ^ 16 then
     return libsemigroups.Congruence.make_from_froidurepin_ppermUInt2;
-  elif N <= 18446744073709551616 then
+  elif N <= 2 ^ 32 then
     return libsemigroups.Congruence.make_from_froidurepin_ppermUInt4;
   else
+    # Cannot currently test the next line
     Error("partial perm degree is too high!");
   fi;
 end);
@@ -121,6 +123,7 @@ function(C)
 
   if IsBound(C!.CppCongruence)
       and IsValidGapbind14Object(C!.CppCongruence) then
+      # Tested in workspace tests
     return C!.CppCongruence;
   fi;
   Unbind(C!.CppCongruence);
@@ -151,8 +154,8 @@ function(C)
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
   else
-    Error("Something has gone wrong, should not have ",
-          "been able to reach here!");
+    # Shouldn't be possible to reach the next line, and can't currently test it
+    Assert(0, false);
   fi;
   add_pair := libsemigroups.Congruence.add_pair;
   for pair in GeneratingPairsOfAnyCongruence(C) do
@@ -192,9 +195,6 @@ InstallMethod(CongruenceLessNC,
  [CanComputeCppCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
 function(C, elm1, elm2)
   local S, pos1, pos2, lookup, word1, word2, CC;
-  Assert(1, CanComputeCppCongruence(C));
-  Assert(1, IsMultiplicativeElement(elm1));
-  Assert(1, IsMultiplicativeElement(elm2));
 
   S := Range(C);
   if CanComputeFroidurePin(S) then
@@ -212,7 +212,8 @@ function(C, elm1, elm2)
     word1 := Factorization(S, elm1);
     word2 := Factorization(S, elm2);
   else
-    TryNextMethod();
+    # Cannot currently test the next line
+    Assert(0, false);
   fi;
   CC := CppCongruence(C);
   return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
@@ -257,7 +258,8 @@ function(C, elm1, elm2)
     word1 := Factorization(S, elm1);
     word2 := Factorization(S, elm2);
   else
-    TryNextMethod();
+    # Cannot currently test the next line
+    Assert(0, false);
   fi;
   CC := CppCongruence(C);
   return libsemigroups.Congruence.contains(CC, word1 - 1, word2 - 1);
@@ -283,9 +285,9 @@ function(C)
     # in this case libsemigroups.Congruence.ntc doesn't work
     return Filtered(EquivalenceRelationPartitionWithSingletons(C),
                     x -> Size(x) > 1);
-   else
-    Error("shouldn't have been able to reach here!");
   fi;
+  # Cannot currently test the next line
+  Assert(0, false);
 end);
 
 # Methods for congruence classes
@@ -352,7 +354,6 @@ function(C)
   return lookup;
 end);
 
-# Not sure if this needs to be here or not
 InstallMethod(ImagesElm,
 "for CanComputeCppCongruence and a multiplicative element",
 [CanComputeCppCongruence, IsMultiplicativeElement],
@@ -375,9 +376,9 @@ function(cong, elm)
       return [elm];  # singleton
     fi;
     return part[pos];  # non-singleton
-  else
-    Error("shouldn't have been able to reach here!");
   fi;
+  # Shouldn't be able to reach here
+  Assert(0, false);
 end);
 
 # These constructors exist so that the resulting congruences belong to the
