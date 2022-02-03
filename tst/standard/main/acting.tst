@@ -393,7 +393,7 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 gap> S := Semigroup(GeneratorsOfSemigroup(R), rec(acting := true));
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 5 generators>
 gap> AsSSortedList(S);;
-gap> RMSElement(R, 1, (2,3), 1) in S;
+gap> RMSElement(R, 1, (2, 3), 1) in S;
 true
 
 # \in for a semigroup with minimal ideal

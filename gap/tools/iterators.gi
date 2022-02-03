@@ -18,7 +18,7 @@ function(obj, baseenum, convert_out, convert_in)
   local record;
 
   if IsRecord(obj) and not IsBound(obj.parent) then
-    ErrorNoReturn("if the 1st argument is a record, it must have component ", 
+    ErrorNoReturn("if the 1st argument is a record, it must have component ",
                   "named `parent`");
   elif not IsList(baseenum) then
     ErrorNoReturn("the 2nd argument <baseenum> must be a list ");
@@ -29,7 +29,7 @@ function(obj, baseenum, convert_out, convert_in)
 
   if IsRecord(obj) then
     record := obj;
-  else 
+  else
     record := rec();
     record.parent := obj;
   fi;
@@ -63,7 +63,7 @@ end);
 
 BindGlobal("SEMIGROUPS_IsDoneIterator_List",
            iter -> (iter!.pos >= iter!.len));
-           
+
 BindGlobal("SEMIGROUPS_ShallowCopy_List",
     iter -> rec(list := iter!.list,
                 pos  := 0,
@@ -186,7 +186,7 @@ function(arg)
   fi;
 
   iter.baseiter := arg[1];
-  
+
   if iter.baseiter!.ShallowCopy = ShallowCopy_List then
     iter.baseiter!.ShallowCopy := SEMIGROUPS_ShallowCopy_List;
     iter.baseiter!.IsDoneIterator := SEMIGROUPS_IsDoneIterator_List;

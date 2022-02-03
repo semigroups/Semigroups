@@ -352,68 +352,66 @@ Keywords := ["transformation semigroups", "partial permutations",
 
 AutoDoc := rec(
     TitlePage := rec(
-        Copyright := Concatenation(
-    "&copyright; by J. D. Mitchell et al.<P/>",
-    "&Semigroups; is free software; you can redistribute it and/or modify it",
-    "under the terms of the GNU General Public License ",
-    "version 3 of the License, or (at your option) any later",
-    "version."),
-        Abstract :="""The &Semigroups; package is a &GAP; package containing
+        Copyright := """&copyright; by J. D. Mitchell et al.<P/>
+        &Semigroups; is free software; you can redistribute it and/or modify
+        it, under the terms of the GNU General Public License , version 3 of
+        the License, or (at your option) any later, version.""",
+        Abstract := """The &Semigroups; package is a &GAP; package containing
         methods for semigroups, monoids, and inverse semigroups.  There are
         particularly efficient methods for semigroups or ideals consisting of
         transformations, partial permutations, bipartitions, partitioned binary
         relations, subsemigroups of regular Rees 0-matrix semigroups, and
         matrices of various semirings including boolean matrices, matrices over
-        finite fields, and certain tropical matrices.  <P/>
-        &Semigroups; contains efficient methods for creating semigroups, monoids,
-        and inverse semigroup, calculating their Green's structure, ideals, size,
+        finite fields, and certain tropical matrices.  <P/> &Semigroups;
+        contains efficient methods for creating semigroups, monoids, and
+        inverse semigroup, calculating their Green's structure, ideals, size,
         elements, group of units, small generating sets, testing membership,
-        finding the inverses of a regular element, factorizing elements over the
-        generators, and so on. It is possible to test if a semigroup satisfies a
-        particular property, such as if it is regular, simple, inverse, completely
-        regular, and a variety of further properties.
+        finding the inverses of a regular element, factorizing elements over
+        the generators, and so on. It is possible to test if a semigroup
+        satisfies a particular property, such as if it is regular, simple,
+        inverse, completely regular, and a variety of further properties.
         <P/>
         There are methods for finding presentations for a semigroup, the
         congruences of a semigroup, the maximal subsemigroups of a finite
         semigroup, smaller degree partial permutation representations, and the
-        character tables of inverse semigroups. There are functions for producing
-        pictures of the Green's structure of a semigroup, and for drawing graphical
-        representations of certain types of elements.""",
+        character tables of inverse semigroups. There are functions for
+        producing pictures of the Green's structure of a semigroup, and for
+        drawing graphical representations of certain types of elements.""",
 
         Acknowledgements := """I would like to thank P. von Bunau and C.
         Nehaniv for their help and suggestions.  Special thanks go to J. Araujo
         for his mathematical suggestions and to M. Neunhoeffer for his
           invaluable help.<P/>
 
-        Stuart Burrell contributed methods for checking finiteness of semigroups of
-        matrices of the max-plus and min-plus semirings.<P/>
+        Stuart Burrell contributed methods for checking finiteness of
+        semigroups of matrices of the max-plus and min-plus semirings.<P/>
 
         Manuel Delgado and Attila Egri-Nagy contributed to the function
         <Ref Oper = "DotString"/>.<P/>
 
-        James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
-        the package relating to bipartitions. I would like to thank the University
-        of Western Sydney for their support of the development of this part of the
-        package.
+        James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the
+        part of the package relating to bipartitions. I would like to thank the
+        University of Western Sydney for their support of the development of
+        this part of the package.
         <P/>
 
         Nick Ham contributed many of the standard examples of bipartition
         semigroups.
         <P/>
 
-        Max Horn contributed many patches and fixes, in particular, to the kernel
-        module.
+        Max Horn contributed many patches and fixes, in particular, to the
+        kernel module.
         <P/>
 
-        Chris Jefferson contributed several patches and fixes to the build system.
-        <P/>
+        Chris Jefferson contributed several patches and fixes to the build
+        system.  <P/>
 
         Julius Jonu&#353;as contributed the part of the package relating to free
         inverse semigroups, and contributed to the code for ideals.
         <P/>
 
-        Zak Mesyan contributed to the code for graph inverse semigroups; see Chapter
-        <Ref Chap="GraphInverseSemigroups"/>.<P/>
+        Zak Mesyan contributed to the code for graph inverse semigroups; see
+        Chapter <Ref Chap="GraphInverseSemigroups"/>.<P/>
 
         Dima Pasechnik contributed to the build system of the kernel module.
         <P/>
@@ -428,28 +426,25 @@ AutoDoc := rec(
         Jhevon Smith and Ben Steinberg contributed the function
         <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
 
-        Michael Young contributed the part of the package relating to congruences.
-        <P/>
+        Michael Young contributed the part of the package relating to
+        congruences.  <P/>
 
         Murray Whyte was kind enough to update the bibliography in 2019.
         <P/>
 
         Wilf A. Wilson contributed to the part of the package relating maximal
         subsemigroups and smaller degree partial permutation representations of
-        inverse semigroups. We are also grateful to C. Donoven and R. Hancock for
-        their contribution to the development of the algorithms for maximal
-        subsemigroups and smaller degree partial permutation representations.
+        inverse semigroups. We are also grateful to C. Donoven and R. Hancock
+        for their contribution to the development of the algorithms for maximal
+          subsemigroups and smaller degree partial permutation representations.
         <P/>
 
         We would also like to acknowledge the support of: EPSRC grant number
         GR/S/56085/01; the Carnegie Trust for the Universities of Scotland
-        for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A. Wilson
-        when they worked on this project; the Engineering and Physical Sciences
-        Research Council (EPSRC) for funding the PhD scholarship of M. Young
-        when he worked on this project (EP/M506631/1)."""
-    )
-  )
-));
+        for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A.
+        Wilson when they worked on this project; the Engineering and Physical
+        Sciences Research Council (EPSRC) for funding the PhD scholarship of
+        M. Young when he worked on this project (EP/M506631/1)."""))));
 
 MakeReadWriteGlobal("_RecogsFunnyWWWURLFunction");
 MakeReadWriteGlobal("_RecogsFunnyNameFormatterFunction");

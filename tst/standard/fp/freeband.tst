@@ -298,7 +298,7 @@ gap> EqualInFreeBand([], [1]);
 false
 gap> EqualInFreeBand([], []);
 true
-gap> EqualInFreeBand([], ["a"]); # FIXME this should give an error
+gap> EqualInFreeBand([], ["a"]);  # FIXME this should give an error
 false
 gap> EqualInFreeBand([1], [2, 2, 2]);
 false

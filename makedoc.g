@@ -22,7 +22,7 @@ end;
 
 UrlEntity := function(name, url)
   return StringFormatted("""<Alt Not="Text"><URL Text="{1}">{2}</URL></Alt>
-  <Alt Only="Text"><Package>{1}</Package></Alt>""", name, url);
+    <Alt Only="Text"><Package>{1}</Package></Alt>""", name, url);
 end;
 
 PackageEntity := function(name)
@@ -30,15 +30,15 @@ PackageEntity := function(name)
 end;
 
 Greens := function(name)
-return StringFormatted("""<Alt Only="HTML">\(\mathscr{{{1}}}\)</Alt>
-  <Alt Only="Text"><E>{1}</E></Alt>
-  <Alt Only="LaTeX"><M>\mathcal{{{1}}}</M></Alt>""",
-  name);
+  return StringFormatted("""<Alt Only="HTML">\(\mathscr{{{1}}}\)</Alt>
+    <Alt Only="Text"><E>{1}</E></Alt>
+    <Alt Only="LaTeX"><M>\mathcal{{{1}}}</M></Alt>""",
+    name);
 end;
 
 MathOrCode := function(string)
   return StringFormatted("""<Alt Not="Text"><M>{1}</M></Alt>
-  <Alt Only="Text"><C>{1}</C></Alt>""", string);
+    <Alt Only="Text"><C>{1}</C></Alt>""", string);
 end;
 
 XMLEntities := rec();
@@ -109,22 +109,18 @@ XMLEntities.bbN := """<Alt Not="Text"><M>\mathbb{N}</M></Alt>
 
 # The actual call to AutoDoc
 
-AutoDoc( "semigroups",  rec(
+AutoDoc("semigroups", rec(
     gapdoc := rec(
-        LaTeXOptions := rec( EarlyExtraPreamble := """
+        LaTeXOptions := rec(EarlyExtraPreamble := """
             \usepackage{a4wide}
             \newcommand{\bbZ}{\mathbb{Z}}
-        """ ),
+        """),
         main := "main",
-        files := Files
-    ),
+        files := Files),
     scaffold := rec(
         includes := Includes,
         bib := "bibliography.xml",
-        entities := XMLEntities
-    )
-  )
-);
+        entities := XMLEntities)));
 
 Unbind(RemovePrefixVersion);
 Unbind(UrlEntity);

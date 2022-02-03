@@ -1617,8 +1617,10 @@ true
 # RhoOrbStabChain for an L-class of a matrix semigroup
 gap> S := GLM(4, 4); 
 <general linear monoid 4x4 over GF(2^2)>
-gap> x := Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)], [Z(2^2)^2, Z(2^2)^2, Z(2)^0, Z(2)^0],
->  [0*Z(2), Z(2)^0, 0*Z(2), Z(2^2)], [0*Z(2), Z(2^2)^2, Z(2^2)^2, Z(2^2)^2]]);
+gap> x := Matrix(GF(2 ^ 2), [[0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)], [Z(2 ^
+> 2) ^ 2, Z(2 ^ 2) ^ 2, Z(2) ^ 0, Z(2) ^ 0],
+>  [0 * Z(2), Z(2) ^ 0, 0 * Z(2), Z(2 ^ 2)], [0 * Z(2), Z(2 ^ 2) ^ 2, Z(2 ^ 2)
+> ^ 2, Z(2 ^ 2) ^ 2]]);
 Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)], 
   [Z(2^2)^2, Z(2^2)^2, Z(2)^0, Z(2)^0], [0*Z(2), Z(2)^0, 0*Z(2), Z(2^2)], 
   [0*Z(2), Z(2^2)^2, Z(2^2)^2, Z(2^2)^2]])
@@ -1632,8 +1634,9 @@ gap> RhoOrbStabChain(L);
 # SchutzenbergerGroup for a D-class of a matrix semigroup
 gap> S := GLM(4, 4); 
 <general linear monoid 4x4 over GF(2^2)>
-gap> x := Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)], [Z(2^2)^2, Z(2^2)^2, Z(2)^0, Z(2)^0],
->  [0*Z(2), Z(2)^0, 0*Z(2), Z(2^2)], [0*Z(2), Z(2^2)^2, Z(2^2)^2, Z(2^2)^2]]);
+gap> x := Matrix(GF(2 ^ 2), [[0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)], [Z(2 ^
+> 2) ^ 2, Z(2 ^ 2) ^ 2, Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0, 0 * Z(2),
+> Z(2 ^ 2)], [0 * Z(2), Z(2 ^ 2) ^ 2, Z(2 ^ 2) ^ 2, Z(2 ^ 2) ^ 2]]);
 Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)], 
   [Z(2^2)^2, Z(2^2)^2, Z(2)^0, Z(2)^0], [0*Z(2), Z(2)^0, 0*Z(2), Z(2^2)], 
   [0*Z(2), Z(2^2)^2, Z(2^2)^2, Z(2^2)^2]])
@@ -1643,11 +1646,11 @@ gap> D := DClass(S, x);
    [0*Z(2), Z(2^2)^2, Z(2^2)^2, Z(2^2)^2]])>
 gap> SchutzenbergerGroup(D);
 <group of 4x4 matrices over GF(2^2) with 3 generators>
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ],
-> rec( acting := true) );
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])],
+> rec(acting := true));
 <semigroup of 2x2 matrices over GF(3) with 2 generators>
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]);
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]);
 Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])
 gap> D := DClass(S, x);
 <Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])>
@@ -1655,10 +1658,10 @@ gap> SchutzenbergerGroup(D);
 <group of 2x2 matrices over GF(3) with 2 generators>
 
 # IsomorphismPermGroup for a group H-class of a matrix semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ] );
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])]);
 <semigroup of 2x2 matrices over GF(3) with 2 generators>
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]);
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]);
 Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])
 gap> D := DClass(S, x);
 <Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])>
@@ -1668,9 +1671,10 @@ gap> BruteForceInverseCheck(IsomorphismPermGroup(GroupHClass(D)));
 true
 
 # Enumerator for a D-class of an acting semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ] , rec( acting := true));;
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]);;
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])], rec(acting :=
+> true));;
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]);;
 gap> D := DClass(S, x);;
 gap> en := Enumerator(D);
 <enumerator of <Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], 
@@ -1681,15 +1685,15 @@ gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
 true
-gap> Position(en, Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])); 
+gap> Position(en, Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]])); 
 fail
 gap> en[10000];
 fail
 
 # Iterator for a D-class of an acting semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ] );;
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]);;
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])]);;
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]);;
 gap> D := DClass(S, x);;
 gap> it := Iterator(D);
 <iterator>
@@ -1750,10 +1754,10 @@ gap> nr = Size(D);
 true
 
 # Enumerator/Iterator for an H-class of an acting semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ],
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])],
 > rec(acting := true));;
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]);;
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]);;
 gap> H := HClass(S, x);;
 gap> en := Enumerator(H);
 <enumerator of <Green's H-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], 
@@ -1762,7 +1766,7 @@ gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
 true
-gap> Position(en, Matrix(GF(3), [[0*Z(3), Z(3)], [0*Z(3), Z(3)^0]]));
+gap> Position(en, Matrix(GF(3), [[0 * Z(3), Z(3)], [0 * Z(3), Z(3) ^ 0]]));
 fail
 gap> en[10000];
 fail
@@ -1776,10 +1780,10 @@ gap> nr = Size(H);
 true
 
 # Enumerator/Iterator for an L-class of an acting semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ],
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])],
 > rec(acting := true));;
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]);;
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]);;
 gap> L := LClass(S, x);;
 gap> en := Enumerator(L);
 <enumerator of <Green's L-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], 
@@ -1788,7 +1792,7 @@ gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
 true
-gap> Position(en, Matrix(GF(3), [[0*Z(3), Z(3)], [0*Z(3), Z(3)^0]]));
+gap> Position(en, Matrix(GF(3), [[0 * Z(3), Z(3)], [0 * Z(3), Z(3) ^ 0]]));
 fail
 gap> en[10000];
 fail
@@ -1806,37 +1810,50 @@ gap> nr := 0;
 gap> for x in Iterator(L) do nr := nr + 1; od;
 gap> nr = Size(L);
 true
-gap> S := Semigroup( [ Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [Z(3)^0, Z(3)^0, Z(3)^0], [Z(3), Z(3)^0, 0*Z(3)]]),
->  Matrix(GF(3), [[0*Z(3), Z(3), 0*Z(3)], [0*Z(3), Z(3), Z(3)^0], [0*Z(3), Z(3), 0*Z(3)]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3), Z(3)^0], [Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), 0*Z(3)]]) ],
+gap> S := Semigroup([Matrix(GF(3), [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [Z(3) ^ 0,
+> Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0, 0 * Z(3)]]),
+>  Matrix(GF(3), [[0 * Z(3), Z(3), 0 * Z(3)], [0 * Z(3), Z(3), Z(3) ^ 0], [0 *
+> Z(3), Z(3), 0 * Z(3)]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3), Z(3) ^ 0], [Z(3) ^ 0, 0 * Z(3), Z(3)],
+> [Z(3), 0 * Z(3), 0 * Z(3)]])],
 > rec(acting := true));
 <semigroup of 3x3 matrices over GF(3) with 3 generators>
-gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, Z(3)], [0*Z(3), Z(3)^0, Z(3)]]);
+gap> x := Matrix(GF(3), [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), Z(3) ^ 0, Z(3)], 
+> [0 * Z(3), Z(3) ^ 0, Z(3)]]);
 Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, Z(3)], 
   [0*Z(3), Z(3)^0, Z(3)]])
 gap> L := LClass(S, x);;
 gap> en := Enumerator(L);
 <enumerator of <Green's L-class: Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], 
    [0*Z(3), Z(3)^0, Z(3)], [0*Z(3), Z(3)^0, Z(3)]])>>
-gap> Position(en, Matrix(GF(3), [[0*Z(3), Z(3)^0, Z(3)], [0*Z(3), Z(3), Z(3)^0], [0*Z(3), Z(3), Z(3)^0]]));
+gap> Position(en, Matrix(GF(3), [[0 * Z(3), Z(3) ^ 0, Z(3)], [0 * Z(3), Z(3),
+> Z(3) ^ 0], [0 * Z(3), Z(3), Z(3) ^ 0]]));
 fail
 
 # Enumerator/Iterator for an R-Class
-gap> S := Semigroup( [ Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [Z(3)^0, Z(3)^0, Z(3)^0], [Z(3), Z(3)^0, 0*Z(3)]]),
->  Matrix(GF(3), [[0*Z(3), Z(3), 0*Z(3)], [0*Z(3), Z(3), Z(3)^0], [0*Z(3), Z(3), 0*Z(3)]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3), Z(3)^0], [Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), 0*Z(3)]]) ],
+gap> S := Semigroup([Matrix(GF(3), [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [Z(3) ^ 0,
+> Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0, 0 * Z(3)]]),
+>  Matrix(GF(3), [[0 * Z(3), Z(3), 0 * Z(3)], [0 * Z(3), Z(3), Z(3) ^ 0], [0 *
+> Z(3), Z(3), 0 * Z(3)]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3), Z(3) ^ 0], [Z(3) ^ 0, 0 * Z(3), Z(3)],
+> [Z(3),
+> 0 * Z(3), 0 * Z(3)]])],
 > rec(acting := true));
 <semigroup of 3x3 matrices over GF(3) with 3 generators>
-gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, Z(3)], [0*Z(3), Z(3)^0, Z(3)]]);
+gap> x := Matrix(GF(3), [[0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>                        [0 * Z(3), Z(3) ^ 0, Z(3)],
+>                        [0 * Z(3), Z(3) ^ 0, Z(3)]]);
 Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, Z(3)], 
   [0*Z(3), Z(3)^0, Z(3)]])
 gap> R := RClass(S, x);;
 gap> en := Enumerator(R);
 <enumerator of <Green's R-class: Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], 
    [0*Z(3), 0*Z(3), Z(3)^0], [0*Z(3), 0*Z(3), Z(3)^0]])>>
-gap> Position(en, Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [Z(3), Z(3)^0, Z(3)^0], [Z(3), Z(3)^0, Z(3)^0]]));
+gap> Position(en, Matrix(GF(3), [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [Z(3), Z(3) ^ 0,
+> Z(3) ^ 0], [Z(3), Z(3) ^ 0, Z(3) ^ 0]]));
 fail
-gap> Position(en, Matrix(GF(3), [[Z(3)^0, 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, 0*Z(3)], [0*Z(3), 0*Z(3), Z(3)^0]]));
+gap> Position(en, Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3), 0 * Z(3)], [0 * Z(3),
+> Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), 0 * Z(3), Z(3) ^ 0]]));
 fail
 gap> ForAll(en, x -> x in R);
 true

@@ -519,7 +519,7 @@ gap> ForAll(N, x -> x in N);
 true
 gap> ForAll([1 .. Length(N)], x -> IsBound(N[x]));
 true
-gap> IsBound(N[Length(N)+ 1]);
+gap> IsBound(N[Length(N) + 1]);
 false
 gap> S := SymmetricInverseMonoid(2);
 <symmetric inverse monoid of degree 2>
@@ -564,7 +564,7 @@ gap> ForAll(N, x -> x in N);
 true
 gap> ForAll([1 .. Length(N)], x -> IsBound(N[x]));
 true
-gap> IsBound(N[Length(N)+ 1]);
+gap> IsBound(N[Length(N) + 1]);
 false
 gap> N[Length(N) + 1];
 fail
@@ -588,7 +588,7 @@ gap> ForAll(N, x -> x in N);
 true
 gap> ForAll([1 .. Length(N)], x -> IsBound(N[x]));
 true
-gap> IsBound(N[Length(N)+ 1]);
+gap> IsBound(N[Length(N) + 1]);
 false
 gap> N[Length(N) + 1];
 Error, List Element: <list>[17] must have an assigned value
@@ -652,13 +652,13 @@ gap> S := ClosureSemigroupOrMonoidNC(Semigroup, S,
 gap> S := ClosureSemigroupOrMonoidNC(Semigroup, S,
 > [Transformation([1, 2, 1, 3])], opts);
 <transformation monoid of degree 4 with 6 generators>
-gap> S := Semigroup(PartialPerm( [1, 2, 4], [1, 2, 3]), 
->                   PartialPerm( [1, 3, 4], [3, 1, 2]), 
->                   PartialPerm( [1, 2], [1, 4]),
->                   PartialPerm( [1, 3, 4], [4, 2, 1]), opts);
+gap> S := Semigroup(PartialPerm([1, 2, 4], [1, 2, 3]),
+>                   PartialPerm([1, 3, 4], [3, 1, 2]),
+>                   PartialPerm([1, 2], [1, 4]),
+>                   PartialPerm([1, 3, 4], [4, 2, 1]), opts);
 <partial perm semigroup of rank 4 with 4 generators>
 gap> S := ClosureSemigroupOrMonoidNC(Semigroup, S,
-> [PartialPerm( [ 1, 2, 3, 4 ], [ 1, 3, 2, 4 ] )], opts);
+> [PartialPerm([1, 2, 3, 4], [1, 3, 2, 4])], opts);
 <partial perm semigroup of rank 4 with 5 generators>
 
 # RulesOfSemigroup

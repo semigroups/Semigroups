@@ -372,7 +372,7 @@ true
 # Enumerator for a regular D-class of an acting semigroup
 gap> S := Monoid(PartitionMonoid(3), rec(acting := true, regular := true));
 <regular bipartition monoid of degree 3 with 4 generators>
-gap> x := Bipartition( [ [ 1, 3 ], [ 2, -1 ], [ -2, -3 ] ] );
+gap> x := Bipartition([[1, 3], [2, -1], [-2, -3]]);
 <bipartition: [ 1, 3 ], [ 2, -1 ], [ -2, -3 ]>
 gap> D := DClass(S, x);
 <Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>
@@ -382,7 +382,7 @@ gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);
 true
-gap> Position(en, Bipartition( [ [ 1, 2, 3, 4, -1, -2, -3, -4 ] ] ));
+gap> Position(en, Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]]));
 fail
 gap> en[10000];
 fail

@@ -1681,10 +1681,11 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `GreensJClasses' on 1 arguments
 
 # IsomorphismPermGroup for a group H-class of a matrix semigroup
-gap> S :=  Semigroup( [ Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]),
->  Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ], rec(acting := false));
+gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
+>  Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]])], rec(acting :=
+> false));
 <semigroup of 2x2 matrices over GF(3) with 2 generators>
-gap> x := Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]]);
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]);
 Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])
 gap> D := DClass(S, x);
 <Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])>
@@ -1692,7 +1693,7 @@ gap> map := IsomorphismPermGroup(GroupHClass(D));
 MappingByFunction( <Green's H-class: Matrix(GF(3), [[Z(3)^0, 0*Z(3)], 
    [0*Z(3), Z(3)^0]])>, Group([ (1,2,3,4,5,6,7,8) 
  ]), function( x ) ... end, function( x ) ... end )
-gap> Matrix(GF(3), [[Z(3)^0, Z(3)^0], [0*Z(3), 0*Z(3)]]) ^ map;
+gap> Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]) ^ map;
 Error, the argument does not belong to the domain of the function
 gap> (1, 3, 2) ^ InverseGeneralMapping(map);
 Error, the argument does not belong to the domain of the function

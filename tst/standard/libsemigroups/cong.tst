@@ -86,7 +86,7 @@ gap> S := FullBooleanMatMonoid(2);
 gap> C := SemigroupCongruence(S, [[S.1, S.3]]);
 <semigroup congruence over <regular monoid of size 16, 2x2 boolean matrices 
  with 3 generators> with 1 generating pairs>
-gap> CppCongruence(C);; # Can't test output because it contains the memory address
+gap> CppCongruence(C);;  # Can't test output because it contains the memory address
 
 # CppCongruence for a congruence on a fp semigroup
 gap> S := FreeSemigroup(2);

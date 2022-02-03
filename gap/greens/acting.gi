@@ -2066,7 +2066,7 @@ function(D)
 
   record := rec();
 
-  record.parent           := D; # required by WrappedEnumerator
+  record.parent           := D;  # required by WrappedEnumerator
   record.underlying_enums := List(GreensRClasses(D), Enumerator);
   record.lengths          := [];
 

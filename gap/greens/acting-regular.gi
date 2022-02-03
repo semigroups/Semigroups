@@ -462,7 +462,7 @@ end);
 InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
-  local record, o, scc, func;
+  local o, scc, func;
 
   if HasDClassReps(S) then
     return IteratorList(DClassReps(S));
