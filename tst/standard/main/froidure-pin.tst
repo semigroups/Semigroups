@@ -155,7 +155,7 @@ gap> EnumeratorSorted(FreeBand(2));
 [ x1, x2x1x2, x2x1, x2, x1x2, x1x2x1 ]
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> EnumeratorSorted(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 
 # IteratorSorted
 gap> S := HallMonoid(3);;
@@ -221,7 +221,7 @@ gap> ForAll(AsListCanonical(I), x -> x in I);
 true
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> AsListCanonical(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 
 # Enumerator for CanComputeFroidurePin 
 gap> S := TriangularBooleanMatMonoid(3);;
@@ -368,7 +368,7 @@ gap> Idempotents(S);
   Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 1], [0, 0, 1]]) ]
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> Idempotents(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 
 # PositionCanonical, for wrong family, wrong degree
 gap> S := UnitriangularBooleanMatMonoid(3);;
@@ -412,9 +412,9 @@ Error, the 1st argument (a semigroup) is not finite
 # Left/RightCayleyDigraph, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> RightCayleyDigraph(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> LeftCayleyDigraph(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 
 # Left/RightCayleyGraphSemigroup
 gap> S := Semigroup(FullTransformationMonoid(3));;
@@ -440,7 +440,7 @@ gap> RightCayleyGraphSemigroup(S);
 # AsSet, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> AsSet(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 
 # Size, for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
@@ -450,7 +450,7 @@ infinity
 # MultiplicationTable
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> MultiplicationTable(S);
-Error, the first argument (a semigroup) must be finite,
+Error, the argument (a semigroup) must be finite
 gap> S := RegularBooleanMatMonoid(1);
 <commutative monoid of 1x1 boolean matrices with 1 generator>
 gap> MultiplicationTable(S);
@@ -459,7 +459,7 @@ gap> MultiplicationTable(S);
 # NrIdempotents
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
 gap> NrIdempotents(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> S := RegularBooleanMatMonoid(1);;
 gap> NrIdempotents(S);
 2

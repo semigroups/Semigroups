@@ -76,8 +76,6 @@ function(x, S)
     return true;
   elif HasFroidurePin(S) and IsEnumerated(S) then
     return false;
-  elif HasAsSSortedList(S) then
-    return x in AsSSortedList(S);
   elif not (IsMonoid(S) and IsOne(x)) then
     if Length(Generators(S)) > 0
         and ActionRank(S)(x) >
@@ -841,11 +839,3 @@ InstallMethod(\<, "for the universal fake one and a multiplicative element",
 
 InstallMethod(\<, "for a multiplicative element and the universal fake one",
 [IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);
-
-# same method for regular/inverse
-
-InstallMethod(Iterator, "for a trivial acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
-function(S)
-  return TrivialIterator(GeneratorsOfSemigroup(S)[1]);
-end);

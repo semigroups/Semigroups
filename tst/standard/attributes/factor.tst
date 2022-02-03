@@ -607,7 +607,7 @@ Error, the 2nd argument (a mult. elt.) must belong to the 1st argument (a semi\
 group)
 gap> S := AsSet(SymmetricInverseMonoid(3));;
 gap> T := InverseSemigroup(GeneratorsSmallest(SymmetricInverseMonoid(3)));
-<inverse partial perm monoid of rank 3 with 3 generators>
+<inverse partial perm monoid of rank 3 with 14 generators>
 gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(T), 
 >                                Factorization(T, x)) = x);
 true

@@ -217,6 +217,23 @@ InstallMethod(IsCliffordSemigroup, "for an inverse acting semigroup",
 [IsInverseSemigroup and IsActingSemigroup],
 S -> ForAll(OrbSCC(LambdaOrb(S)), x -> Length(x) = 1));
 
+InstallMethod(IsCliffordSemigroup, 
+"for an partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 100, # TODO
+function(S)
+  local x, y;
+
+  for x in GeneratorsOfSemigroup(S) do
+    for y in GeneratorsOfSemigroup(S) do
+      if Intersection(DomainOfPartialPerm(x), DomainOfPartialPerm(y)) <>
+        DomainOfPartialPerm(x * y) then 
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end);
+
 # different method for ideals
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",

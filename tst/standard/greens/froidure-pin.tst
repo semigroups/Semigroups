@@ -1669,13 +1669,13 @@ gap> GreensLClasses(D);
 # Test GreensXClasses for an infinite CanComputeFroidurePin semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, 2], [-1, 0]]));;
 gap> GreensLClasses(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> GreensRClasses(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> GreensHClasses(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> GreensDClasses(S);
-Error, the 1st argument (a semigroup) is not finite
+Error, the argument (a semigroup) is not finite
 gap> GreensJClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `GreensJClasses' on 1 arguments

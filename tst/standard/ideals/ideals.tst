@@ -350,8 +350,7 @@ gap> MultiplicativeZero(I);
 
 # IsMultiplicativeZero
 gap> S := SingularTransformationMonoid(3);;
-gap> S := Semigroup(S, rec(acting := false));
-<transformation semigroup of degree 3 with 5 generators>
+gap> S := Semigroup(S, rec(acting := false));;
 gap> IsMultiplicativeZero(S, IdentityTransformation);
 false
 gap> GeneratorsOfSemigroup(S);;
