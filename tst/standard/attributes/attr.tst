@@ -381,7 +381,7 @@ true
 
 # attr: RightCayleyDigraph, infinite
 gap> LeftCayleyDigraph(FreeInverseSemigroup(2));
-Error, the 1st argument (a semigroup) must be finite,
+Error, the argument (a semigroup) must be finite
 
 # attr: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(

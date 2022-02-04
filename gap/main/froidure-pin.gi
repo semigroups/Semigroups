@@ -82,14 +82,8 @@ IsSemigroupIdeal and IsReesMatrixSubsemigroup);
 InstallTrueMethod(CanComputeGapFroidurePin,
 IsSemigroupIdeal and IsReesZeroMatrixSubsemigroup);
 
-InstallImmediateMethod(CanComputeGapFroidurePin,
-IsDualSemigroupRep and HasGeneratorsOfSemigroup, 0,
-function(S)
-  local W;
-  # Get the whole family!
-  W := DualSemigroupOfFamily(ElementsFamily(FamilyObj(S)));
-  return CanComputeFroidurePin(W);
-end);
+# Objects in IsDualSemigroupRep also CanComputeGapFroidurePin but this is set
+# at creation in attr/dual.gi
 
 InstallMethod(GapFroidurePin, "for a semigroup with CanComputeGapFroidurePin",
 [IsSemigroup and CanComputeGapFroidurePin],

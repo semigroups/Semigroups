@@ -243,7 +243,11 @@ function(C, elm1, elm2)
   local S, pos1, pos2, lookup, word1, word2, CC;
 
   S    := Range(C);
-  if CanComputeFroidurePin(S) then
+  if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
+      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+    word1 := Factorization(S, elm1);
+    word2 := Factorization(S, elm2);
+  elif CanComputeFroidurePin(S) then
     pos1 := PositionCanonical(S, elm1);
     pos2 := PositionCanonical(S, elm2);
     if HasEquivalenceRelationLookup(C) then
@@ -253,10 +257,6 @@ function(C, elm1, elm2)
       word1 := MinimalFactorization(S, pos1);
       word2 := MinimalFactorization(S, pos2);
     fi;
-  elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
-      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
-    word1 := Factorization(S, elm1);
-    word2 := Factorization(S, elm2);
   else
     # Cannot currently test the next line
     Assert(0, false);

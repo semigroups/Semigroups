@@ -492,16 +492,67 @@ true
 
 # MultiplicationTable
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);;
+gap> GeneratorsOfSemigroup(S);
+[ (1,(1,2),1), (2,(),2) ]
+gap> S := Semigroup(S.1, S.2 ^ 2);
+<subsemigroup of 2x2 Rees matrix semigroup with 2 generators>
+gap> CanComputeGapFroidurePin(S);
+true
 gap> MultiplicationTable(S);
 [ [ 1, 2, 3, 4, 3, 4, 1, 2 ], [ 1, 2, 3, 4, 1, 2, 3, 4 ], 
   [ 3, 4, 1, 2, 1, 2, 3, 4 ], [ 3, 4, 1, 2, 3, 4, 1, 2 ], 
   [ 5, 6, 7, 8, 7, 8, 5, 6 ], [ 5, 6, 7, 8, 5, 6, 7, 8 ], 
   [ 7, 8, 5, 6, 5, 6, 7, 8 ], [ 7, 8, 5, 6, 7, 8, 5, 6 ] ]
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), 0]]);;
+gap> GeneratorsOfSemigroup(S);
+[ (1,(1,2),1), (1,(),2), (2,(),1) ]
+gap> S := Semigroup(S.1, S.2 ^ 2);
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators>
+gap> CanComputeGapFroidurePin(S);
+true
+gap> MultiplicationTable(S);
+[ [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ], [ 3, 4, 1, 2 ], [ 3, 4, 1, 2 ] ]
 
 # PositionCanonical (for a group)
 gap> G := Group((1, 2, 3), (1, 2));;
-gap> CanComputeCppFroidurePin(G);
-false
+gap> CanComputeGapFroidurePin(G);
+true
+
+# CanComputeGapFroidurePin for a dual semigroup
+gap> S := Semigroup([Transformation([1, 3, 2]), Transformation([1, 4, 4, 2])]);
+<transformation semigroup of degree 4 with 2 generators>
+gap> T := DualSemigroup(S);
+<dual semigroup of <transformation semigroup of degree 4 with 2 generators>>
+gap> CanComputeGapFroidurePin(T);
+true
+
+# GapFroidurePin, for a semigroup with identity in generators, and duplicate
+# generators
+gap> S := Group((1, 2, 3), (), ());
+Group([ (1,2,3), (), () ])
+gap> GapFroidurePin(S);
+rec( elts := [ (1,2,3), () ], final := [ 1, 2 ], first := [ 1, 2 ], 
+  found := false, gens := [ (1,2,3), (), () ], genslookup := [ 1, 2, 2 ], 
+  genstoapply := [ 1 .. 3 ], ht := <tree hash table len=12517 used=2 colls=
+    0 accs=5>, left := [ [  ], [  ] ], len := 1, lenindex := [ 1 ], nr := 2, 
+  nrrules := 1, one := 2, parent := Group([ (1,2,3), (), () ]), pos := 1, 
+  prefix := [ 0, 0 ], 
+  reduced := [ [ false, false, false ], [ false, false, false ] ], 
+  right := [ [  ], [  ] ], rules := [ [ [ 3 ], [ 2 ] ] ], stopper := false, 
+  suffix := [ 0, 0 ], words := [ [ 1 ], [ 2 ] ] )
+
+# AsListCanonical
+gap> S := FreeBand(2);
+<free band on the generators [ x1, x2 ]>
+gap> AsListCanonical(S);
+[ x1, x2, x1x2, x2x1, x1x2x1, x2x1x2 ]
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);;
+gap> AsListCanonical(S);
+[ (1,(1,2),1), (2,(),2), (1,(),1), (1,(),2), (2,(1,2),1), (1,(1,2),2), 
+  (2,(),1), (2,(1,2),2) ]
+gap> EnumeratorCanonical(S);
+[ (1,(1,2),1), (2,(),2), (1,(),1), (1,(),2), (2,(1,2),1), (1,(1,2),2), 
+  (2,(),1), (2,(1,2),2) ]
 
 #
 gap> SEMIGROUPS.StopTest();
