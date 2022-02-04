@@ -406,7 +406,7 @@ gap> rels := [[s1 ^ 3, s1 * s2],
 gap> S := F / rels;
 <fp semigroup with 2 generators and 8 relations>
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
-<semigroup of 8x8 boolean matrices with 2 generators>
+<semigroup of size 7, 8x8 boolean matrices with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

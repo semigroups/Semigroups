@@ -69,7 +69,7 @@ gap> rels := [[s2 ^ 2, s2],
 gap> S := F / rels;
 <fp semigroup with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
-<pbr semigroup of degree 9 with 2 generators>
+<pbr semigroup of size 8, degree 9 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

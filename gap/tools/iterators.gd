@@ -8,7 +8,19 @@
 #############################################################################
 ##
 
+#! @Chapter Tools for iterators and enumerators
+
+#! @Section Iterators
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("ChainIterators");
 DeclareGlobalFunction("WrappedIterator");
+
+#! @Arguments conv
+#! @Returns a toric variety
+#! @Description
+#!  Creates a toric variety out
+#!  of the convex object <A>conv</A>.
+DeclareGlobalFunction("IteratorFiniteList");
+
+#! @Section Enumerators
 DeclareGlobalFunction("WrappedEnumerator");

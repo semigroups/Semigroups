@@ -47,6 +47,7 @@ DeclareOperation("Position",
 
 DeclareOperation("Enumerate", [IsSemigroup and CanComputeFroidurePin, IsInt]);
 DeclareOperation("Enumerate", [IsSemigroup and CanComputeFroidurePin]);
+DeclareOperation("IsEnumerated", [IsSemigroup]);
 
 DeclareAttribute("LeftCayleyDigraph", IsSemigroup and CanComputeFroidurePin);
 DeclareAttribute("RightCayleyDigraph", IsSemigroup and CanComputeFroidurePin);

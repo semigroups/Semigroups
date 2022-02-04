@@ -69,6 +69,15 @@ BindGlobal("SEMIGROUPS_ShallowCopy_List",
                 pos  := 0,
                 len  := iter!.len));
 
+InstallGlobalFunction(IteratorFiniteList,
+function(list)
+  local it;
+  it                 := IteratorList(list);
+  it!.ShallowCopy    := SEMIGROUPS_ShallowCopy_List;
+  it!.IsDoneIterator := SEMIGROUPS_IsDoneIterator_List;
+  return it;
+end);
+
 # NextIterator in <opts> must return fail if the iterator is finished.
 
 InstallGlobalFunction(IteratorByNextIterator,

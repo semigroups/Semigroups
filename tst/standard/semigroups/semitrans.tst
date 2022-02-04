@@ -294,8 +294,8 @@ true
 gap> S := AsSemigroup(IsFpSemigroup, JonesMonoid(5));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <fp semigroup with 5 generators and 28 relations>, 
-<transformation semigroup of degree 43 with 5 generators>
- , function( x ) ... end )
+<transformation monoid of size 42, degree 42 with 4 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -602,7 +602,7 @@ gap> rels := [[s1 * s2, s2], [s2 ^ 2, s2], [s1 ^ 3, s1]];;
 gap> S := F / rels;
 <fp semigroup with 2 generators and 3 relations>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 6 with 2 generators>
+<transformation semigroup of size 5, degree 6 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

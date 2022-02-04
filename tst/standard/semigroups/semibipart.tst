@@ -76,7 +76,7 @@ gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s1], [s2 ^ 2, s2]];;
 gap> S := F / rels;
 <fp semigroup with 2 generators and 4 relations>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
-<bipartition semigroup of degree 3 with 2 generators>
+<bipartition semigroup of size 2, degree 3 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

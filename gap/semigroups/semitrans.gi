@@ -99,16 +99,15 @@ end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a semigroup with CanComputeFroidurePin",
-[CanComputeFroidurePin], 2,
+[CanComputeFroidurePin], 7,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
+# to beat the method in the library for IsFpSemigroup/Monoid
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;
   if IsTransformationSemigroup(S) then
     TryNextMethod();
   elif not IsFinite(S) then
-    # This is unreachable in tests, since there is no other method that
-    # terminates
-    TryNextMethod();
+    ErrorNoReturn("the argument (a semigroup) must be finite");
   fi;
 
   cay := OutNeighbours(RightCayleyDigraph(S));

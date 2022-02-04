@@ -78,6 +78,26 @@ Files := Filtered(DirectoryContents(DocDir),
 Apply(Files, x -> Concatenation("doc/", x));
 Add(Files, "PackageInfo.g");
 Sort(Files);
+# DocDir := DirectoriesPackageLibrary("semigroups", "gap")[1];
+# MoreFiles := [];
+# for thing1 in DirectoryContents(DocDir) do
+#   if not StartsWith(thing1, ".") then
+#     full_thing := Concatenation("semigroups/gap/", thing1);
+#     if IsDirectoryPath(full_thing) then
+#       SubDirContents := Filtered(DirectoryContents(full_thing),
+#                                   x -> (not StartsWith(x, "."))
+#                                         and IsDirectoryPath(x)
+#                                         or EndsWith(x, ".gd"));
+#       Apply(SubDirContents, x -> Concatenation(thing1, "/", x));
+#       Append(MoreFiles, SubDirContents);
+#     elif EndsWith(thing1, "gd") then
+#       Add(MoreFiles, thing1);
+#     fi;
+#   fi;
+# od;
+# Apply(MoreFiles, x -> Concatenation("gap/", x));
+# Sort(MoreFiles);
+# Append(Files, MoreFiles);
 
 # The scaffold files (chapters)
 
@@ -110,13 +130,15 @@ XMLEntities.bbN := """<Alt Not="Text"><M>\mathbb{N}</M></Alt>
 # The actual call to AutoDoc
 
 AutoDoc("semigroups", rec(
+    autodoc := rec(scan_dirs := ["gap/tools/"]),
     gapdoc := rec(
         LaTeXOptions := rec(EarlyExtraPreamble := """
             \usepackage{a4wide}
             \newcommand{\bbZ}{\mathbb{Z}}
         """),
         main := "main",
-        files := Files),
+        files := Files), 
+
     scaffold := rec(
         includes := Includes,
         bib := "bibliography.xml",

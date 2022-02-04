@@ -15,4 +15,3 @@ DeclareGlobalFunction("CppFroidurePin");
 
 DeclareProperty("CanComputeCppFroidurePin", IsSemigroup);
 DeclareOperation("HasCppFroidurePin", [IsSemigroup]);
-DeclareProperty("IsEnumerated", IsSemigroup);

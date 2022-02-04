@@ -154,7 +154,7 @@ gap> rels := [[s1 ^ 9, s1 ^ 8]];;
 gap> S := F / rels;
 <fp semigroup with 1 generator and 1 relation>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
-<commutative semigroup of 9x9 max-plus matrices with 1 generator>
+<commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

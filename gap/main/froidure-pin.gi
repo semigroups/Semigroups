@@ -27,10 +27,10 @@ InstallMethod(HasFroidurePin, "for a semigroup",
 
 InstallTrueMethod(CanComputeFroidurePin, CanComputeGapFroidurePin);
 
-for x in [IsFpSemigroup and IsFinite,
-          IsFpMonoid and IsFinite,
+for x in [IsFpSemigroup,
+          IsFpMonoid,
           IsMatrixOverFiniteFieldSemigroup,
-          IsGraphInverseSemigroup and IsFinite,
+          IsGraphInverseSemigroup,
           IsMcAlisterTripleSubsemigroup,
           IsSemigroup and IsFreeBandElementCollection,
           IsPermGroup,
@@ -86,7 +86,7 @@ IsSemigroupIdeal and IsReesZeroMatrixSubsemigroup);
 # at creation in attr/dual.gi
 
 InstallMethod(GapFroidurePin, "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
@@ -158,31 +158,31 @@ end);
 
 # This is a fallback method in case we don't know any better way to check this
 
-InstallMethod(IsFinite,
-"for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
-function(S)
-  return Size(S) < infinity;
-end);
+# InstallMethod(IsFinite,
+# "for a semigroup with CanComputeGapFroidurePin and known generators",
+# [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+# function(S)
+#   return Size(S) < infinity;
+# end);
 
 InstallMethod(AsSet,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the 1st argument (a semigroup) must be finite,");
+    ErrorNoReturn("the argument (a semigroup) must be finite");
   fi;
   return SortedList(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
 
 InstallMethod(AsList,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 AsListCanonical);
 
 InstallMethod(AsListCanonical,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) must be finite");
@@ -193,7 +193,7 @@ end);
 # For ideals and other generatorless semigroups
 
 InstallMethod(AsListCanonical, "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   GeneratorsOfSemigroup(S);
   return AsListCanonical(S);
@@ -201,7 +201,7 @@ end);
 
 InstallMethod(Enumerator,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if (IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S))
       and HasIsWholeFamily(S) and IsWholeFamily(S) then
@@ -210,9 +210,19 @@ function(S)
   return EnumeratorCanonical(S);
 end);
 
+InstallMethod(EnumeratorSorted,
+"for a semigroup with CanComputeGapFroidurePin and known generators",
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+function(S)
+  if not IsFinite(S) then
+    ErrorNoReturn("the argument (a semigroup) must be finite");
+  fi;
+  TryNextMethod();
+end);
+
 InstallMethod(EnumeratorCanonical,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   local enum;
 
@@ -236,9 +246,8 @@ function(S)
 
     if nr <= Length(fp.elts) and IsBound(fp.elts[nr]) then
       return fp.elts[nr];
-    else
-      return fail;
     fi;
+    return fail;
   end;
 
   enum.Length := enum -> Size(S);
@@ -262,32 +271,26 @@ end);
 
 InstallMethod(IteratorCanonical,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
-S -> IteratorList(EnumeratorCanonical(S)));
+[CanComputeGapFroidurePin],
+S -> IteratorFiniteList(EnumeratorCanonical(S)));
 
 InstallMethod(Iterator,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
-S -> IteratorList(Enumerator(S)));
+[CanComputeGapFroidurePin],
+S -> IteratorFiniteList(Enumerator(S)));
 
 InstallMethod(IteratorSorted,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
-S -> IteratorList(EnumeratorSorted(S)));
-
-InstallMethod(Iterator, "for semigroup enumerator sorted",
-[IsSemigroupEnumerator and IsSSortedList],
-enum -> IteratorSorted(UnderlyingCollection(enum)));
+[CanComputeGapFroidurePin],
+S -> IteratorFiniteList(EnumeratorSorted(S)));
 
 # different method for ideals
 
 InstallMethod(Size,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  if HasIsFinite(S) and not IsFinite(S) then
-    return infinity;
-  fi;
+  Assert(1, IsFinite(S));
   return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
 
@@ -296,7 +299,7 @@ end);
 InstallMethod(\in,
 "for mult. elt. and a semigroup with CanComputeGapFroidurePin + generators",
 [IsMultiplicativeElement,
- IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+ CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(x, S)
   return PositionCanonical(S, x) <> fail;
 end);
@@ -305,14 +308,17 @@ end);
 
 InstallMethod(Idempotents,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
+  if not IsFinite(S) then
+    ErrorNoReturn("the argument (a semigroup) must be finite");
+  fi;
   return EnumeratorCanonical(S){IdempotentsSubset(S, [1 .. Size(S)])};
 end);
 
 InstallMethod(PositionCanonical,
 "for a semigroup with CanComputeGapFroidurePin, generators, and mult. elt",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
   local fp, ht, nr, val, limit, pos;
@@ -347,12 +353,12 @@ end);
 
 InstallMethod(Position,
 "for a semigroup with CanComputeGapFroidurePin, mult. element, zero cyc",
-[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
+[CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
 PositionOp);
 
 InstallMethod(PositionOp,
 "for a semigroup with CanComputeGapFroidurePin, multi. element, zero cyc",
-[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
+[CanComputeGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
@@ -362,7 +368,7 @@ end);
 
 InstallMethod(PositionSortedOp,
 "for a semigroup with CanComputeGapFroidurePin, generators and mult. elt.",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
@@ -374,7 +380,7 @@ function(S, x)
 end);
 
 InstallMethod(IsEnumerated, "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   local fp;
   if HasGapFroidurePin(S) then
@@ -388,7 +394,7 @@ end);
 
 InstallMethod(Enumerate,
 "for a semigroup with CanComputeGapFroidurePin and known generators and pos int",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup, IsInt],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup, IsInt],
 function(S, limit)
   RUN_FROIDURE_PIN(GapFroidurePin(S), limit);
   return S;
@@ -396,7 +402,7 @@ end);
 
 InstallMethod(Enumerate,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   return Enumerate(S, -1);
 end);
@@ -405,14 +411,17 @@ end);
 
 InstallMethod(RightCayleyGraphSemigroup,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin], 3,
+[CanComputeGapFroidurePin], 3,
 function(S)
+  if not IsFinite(S) then
+    ErrorNoReturn("the argument (a semigroup) must be finite");
+  fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).right;
 end);
 
 InstallMethod(RightCayleyDigraph,
 "for a semigroup with CanComputeGapFroidurePin rep",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   local D;
   if not IsFinite(S) then
@@ -430,14 +439,17 @@ end);
 
 InstallMethod(LeftCayleyGraphSemigroup,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin], 3,
+[CanComputeGapFroidurePin], 3,
 function(S)
+  if not IsFinite(S) then
+    ErrorNoReturn("the argument (a semigroup) must be finite");
+  fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).left;
 end);
 
 InstallMethod(LeftCayleyDigraph,
 "for a semigroup with CanComputeGapFroidurePin rep",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   local D;
   if not IsFinite(S) then
@@ -451,18 +463,21 @@ function(S)
 end);
 
 InstallMethod(NrIdempotents, "for a semigroup with CanComputeGapFroidurePin rep",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
   if not IsFinite(S) then
-    TryNextMethod();
-  else
-    return Length(Idempotents(S));
+    Error("the argument (a semigroup) is not finite");
   fi;
+  return Length(Idempotents(S));
 end);
 
 InstallMethod(Factorization,
 "for a semigroup with CanComputeGapFroidurePin and a positive integer",
-[IsSemigroup and CanComputeGapFroidurePin, IsPosInt],
+[CanComputeGapFroidurePin, IsPosInt], MinimalFactorization);
+
+InstallMethod(MinimalFactorization,
+"for a semigroup with CanComputeGapFroidurePin and a pos. int.",
+[CanComputeGapFroidurePin, IsPosInt],
 function(S, i)
   local words;
 
@@ -471,59 +486,43 @@ function(S, i)
                   "than the size of the 1st argument (a semigroup)");
   fi;
 
-  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
+  words := RUN_FROIDURE_PIN(GapFroidurePin(S), i + 1).words;
   return ShallowCopy(words[i]);
 end);
 
 InstallMethod(MinimalFactorization,
 "for a semigroup with CanComputeGapFroidurePin and a multiplicative element",
-[IsSemigroup and CanComputeGapFroidurePin, IsMultiplicativeElement],
+[CanComputeGapFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local words;
-
   if not x in S then
     ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
                   "of the 1st argument (a semigroup)");
   fi;
-
-  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
-  return ShallowCopy(words[PositionCanonical(S, x)]);
+  return Factorization(S, PositionCanonical(S, x));
 end);
 
-InstallMethod(MinimalFactorization,
-"for a semigroup with CanComputeGapFroidurePin and a pos. int.",
-[IsSemigroup and CanComputeGapFroidurePin, IsPosInt],
-function(S, i)
-  local words;
-
-  if i > Size(S) then
-    ErrorNoReturn("expected a value in [1, ", Size(S), "] for ",
-                  "the 2nd argument, but found ", i);
-  fi;
-
-  words := RUN_FROIDURE_PIN(GapFroidurePin(S), -1).words;
-  return ShallowCopy(words[i]);
-end);
+InstallMethod(Factorization,
+"for a semigroup with CanComputeGapFroidurePin and a multiplicative element",
+[CanComputeGapFroidurePin, IsMultiplicativeElement], MinimalFactorization);
 
 InstallMethod(RulesOfSemigroup,
 "for a semigroup with CanComputeGapFroidurePin",
-[IsSemigroup and CanComputeGapFroidurePin],
+[CanComputeGapFroidurePin],
 function(S)
+  if not IsFinite(S) then
+    Error("the argument (a semigroup) is not finite");
+  fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).rules;
 end);
 
 InstallMethod(IdempotentsSubset,
 "for a semigroup with CanComputeGapFroidurePin + known generators, hom. list",
-[IsSemigroup and CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
+[CanComputeGapFroidurePin and HasGeneratorsOfSemigroup,
  IsHomogeneousList],
 function(S, list)
   local fp, left, final, prefix, elts, out, i, j, pos;
 
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), -1);
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), Maximum(list) + 1);
   left   := fp.left;
   final := fp.final;
   prefix := fp.prefix;
