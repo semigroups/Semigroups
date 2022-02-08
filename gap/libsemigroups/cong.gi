@@ -129,15 +129,15 @@ function(C)
   Unbind(C!.CppCongruence);
 
   S  := Range(C);
-  if CanComputeCppFroidurePin(S) then
-    CC := CppCongruenceConstructor(S)([AnyCongruenceString(C),
-                                       CppFroidurePin(S)]);
-    factor := MinimalFactorization;
-  elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
+  if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
     CC := libsemigroups.Congruence.make_from_fpsemigroup([AnyCongruenceString(C),
                                                           CppFpSemigroup(S)]);
     factor := Factorization;
+  elif CanComputeCppFroidurePin(S) then
+    CC := CppCongruenceConstructor(S)([AnyCongruenceString(C),
+                                       CppFroidurePin(S)]);
+    factor := MinimalFactorization;
   elif CanComputeGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
     tc := libsemigroups.ToddCoxeter.make([AnyCongruenceString(C)]);
