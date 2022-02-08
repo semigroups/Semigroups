@@ -87,3 +87,4 @@ title.xml
 tmp
 tst/workspaces/test-output.w
 wiki/
+_*.xml
