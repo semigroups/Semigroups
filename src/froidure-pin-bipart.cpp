@@ -34,3 +34,21 @@ void init_froidure_pin_bipart(gapbind14::Module& m) {
   using libsemigroups::Bipartition;
   bind_froidure_pin<Bipartition>(m, "FroidurePinBipart");
 }
+
+void init_froidure_pin_base(gapbind14::Module& m) {
+  using FroidurePin_ = std::shared_ptr<libsemigroups::FroidurePinBase>;
+  gapbind14::class_<FroidurePin_>(m, "FroidurePinBase")
+      .def("size", [](FroidurePin_ S) { return S->size(); });
+  // .def("enumerate", &FroidurePin_::enumerate)
+  // .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
+  // .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
+  // .def("factorisation",
+  //      gapbind14::overload_cast<size_t>(&FroidurePin_::factorisation))
+  // .def("position_to_sorted_position",
+  //      &FroidurePin_::position_to_sorted_position)
+  // .def("fast_product", &FroidurePin_::fast_product)
+  // .def("finished", &FroidurePin_::finished)
+  // .def("rules", [](FroidurePin_ S) {
+  //   return gapbind14::make_iterator(S->cbegin_rules(), S->cend_rules());
+  // });
+}

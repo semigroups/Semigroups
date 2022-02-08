@@ -60,6 +60,7 @@ namespace gapbind14 {
 
   template <>
   struct IsGapBind14Type<libsemigroups::Congruence &> : std::true_type {};
+
 }  // namespace gapbind14
 
 ////////////////////////////////////////////////////////////////////////
@@ -139,7 +140,12 @@ void init_cong(gapbind14::Module &m) {
            &Congruence::add_runner<libsemigroups::congruence::ToddCoxeter>)
       .def("is_quotient_obviously_infinite",
            &Congruence::is_quotient_obviously_infinite)
-      .def("ntc", [](Congruence &C) {
-        return gapbind14::make_iterator(C.cbegin_ntc(), C.cend_ntc());
-      });
+      .def("ntc",
+           [](Congruence &C) {
+             return gapbind14::make_iterator(C.cbegin_ntc(), C.cend_ntc());
+           })
+      .def("equal_to", &Congruence::operator==)
+      .def("less_WTF", &Congruence::operator<)
+      .def("quotient_froidure_pin",
+           [](Congruence &C) { return C.quotient_froidure_pin(); });
 }

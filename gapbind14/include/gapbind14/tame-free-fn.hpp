@@ -211,6 +211,15 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <size_t N, typename Wild, typename TSFINAE = Obj>
+  auto tame(Obj self) -> std::enable_if_t<!returns_void<Wild>::value
+                                              && arg_count<Wild>::value == 0,
+                                          TSFINAE> {
+    using to_gap_type
+        = gapbind14::to_gap<typename gapbind14::CppFunction<Wild>::return_type>;
+    GAPBIND14_TRY(return to_gap_type()(wild<Wild>(N)()));
+  }
+
+  template <size_t N, typename Wild, typename TSFINAE = Obj>
   auto tame(Obj self, Obj arg0)
       -> std::enable_if_t<!returns_void<Wild>::value
                               && arg_count<Wild>::value == 1,
