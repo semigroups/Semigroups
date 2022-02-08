@@ -35,20 +35,26 @@ void init_froidure_pin_bipart(gapbind14::Module& m) {
   bind_froidure_pin<Bipartition>(m, "FroidurePinBipart");
 }
 
+// TODO(now) move this to its own file
 void init_froidure_pin_base(gapbind14::Module& m) {
-  using FroidurePin_ = std::shared_ptr<libsemigroups::FroidurePinBase>;
+  using FroidurePin_ = libsemigroups::FroidurePinBase;
   gapbind14::class_<FroidurePin_>(m, "FroidurePinBase")
-      .def("size", [](FroidurePin_ S) { return S->size(); });
-  // .def("enumerate", &FroidurePin_::enumerate)
-  // .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
-  // .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
-  // .def("factorisation",
-  //      gapbind14::overload_cast<size_t>(&FroidurePin_::factorisation))
-  // .def("position_to_sorted_position",
-  //      &FroidurePin_::position_to_sorted_position)
-  // .def("fast_product", &FroidurePin_::fast_product)
-  // .def("finished", &FroidurePin_::finished)
-  // .def("rules", [](FroidurePin_ S) {
-  //   return gapbind14::make_iterator(S->cbegin_rules(), S->cend_rules());
-  // });
+      .def("enumerate", &FroidurePin_::enumerate)
+      .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
+      .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
+      .def("factorisation",
+           gapbind14::overload_cast<size_t>(&FroidurePin_::factorisation))
+      .def("minimal_factorisation",
+           gapbind14::overload_cast<size_t>(
+               &FroidurePin_::minimal_factorisation))
+      .def("product_by_reduction", &FroidurePin_::product_by_reduction)
+      .def("current_position",
+           gapbind14::overload_cast<libsemigroups::word_type const&>(
+               &FroidurePin_::current_position))
+      .def("current_size", &FroidurePin_::current_size)
+      .def("size", &FroidurePin_::size)
+      .def("finished", &FroidurePin_::finished)
+      .def("rules", [](FroidurePin_& S) {
+        return gapbind14::make_iterator(S.cbegin_rules(), S.cend_rules());
+      });
 }

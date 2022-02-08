@@ -44,6 +44,8 @@
 #include "libsemigroups/transf.hpp"        // for PPerm etc
 #include "libsemigroups/types.hpp"         // for word_type
 
+#include "libsemigroups/kbe.hpp"  // for KBE
+
 // Forward decls
 namespace libsemigroups {
   class FpSemigroup;
@@ -92,7 +94,6 @@ void init_cong(gapbind14::Module &m) {
   using libsemigroups::ProjMaxPlusMat;
   using libsemigroups::Transf;
 
-  // TODO(now) the other types of froidurepin i.e. IntMat etc
   gapbind14::class_<Congruence>(m, "Congruence")
       .def(gapbind14::init<congruence_kind, FroidurePin<Bipartition> const &>{},
            "make_from_froidurepin_bipartition")
@@ -146,6 +147,7 @@ void init_cong(gapbind14::Module &m) {
            })
       .def("equal_to", &Congruence::operator==)
       .def("less_WTF", &Congruence::operator<)
-      .def("quotient_froidure_pin",
-           [](Congruence &C) { return C.quotient_froidure_pin(); });
+      .def("quotient_froidure_pin", [](Congruence &C) -> FroidurePinBase & {
+        return *C.quotient_froidure_pin();
+      });
 }

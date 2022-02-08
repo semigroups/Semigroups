@@ -105,8 +105,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
       intval, stop, one;
 
   if (!IS_PREC(obj)) {
-    ErrorQuit("expected a plain record as "
-              "first argument, found %s",
+    ErrorQuit("expected a plain record as 1st argument, found %s",
               (Int) TNAM_OBJ(obj),
               0L);
   }  // TODO(now) other checks
@@ -126,7 +125,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
     return data;
   }
   int_limit = std::max(static_cast<UInt>(INT_INTOBJ(limit)), nr + batch_size);
-  SEMIGROUPS_REPORT_DEFAULT("limit = %llu", uint64_t(int_limit));
+  SEMIGROUPS_REPORT_DEFAULT("limit = %llu\n", uint64_t(int_limit));
 
   Timer timer;
 
@@ -207,8 +206,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
       b = INT_INTOBJ(ELM_PLIST(first, i));
       s = INT_INTOBJ(ELM_PLIST(suffix, i));
       RetypeBag(ELM_PLIST(right, i),
-                T_PLIST_CYC);  // from
-                               // T_PLIST_EMPTY
+                T_PLIST_CYC);  // from T_PLIST_EMPTY
       for (j = 1; j <= nrgens; j++) {
         if (s != 0 && ELM_PLIST2(reduced, s, j) == False) {
           r = INT_PLIST2(right, s, j);

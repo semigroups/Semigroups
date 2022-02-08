@@ -14,7 +14,9 @@
 
 InstallTrueMethod(CanComputeFroidurePin, CanComputeCppFroidurePin);
 
-for x in [IsTransformationSemigroup,
+for x in [IsFpSemigroup,
+          IsFpMonoid,
+          IsTransformationSemigroup,
           IsBooleanMatSemigroup,
           IsIntegerMatrixSemigroup,
           IsMaxPlusMatrixSemigroup,
@@ -119,18 +121,25 @@ S -> libsemigroups.FroidurePinProjMaxPlusMat);
 InstallMethod(FroidurePinMemFnRec, "for a pbr semigroup",
 [IsPBRSemigroup], S -> libsemigroups.FroidurePinPBR);
 
+InstallMethod(FroidurePinMemFnRec, "for an fp semigroup",
+[IsFpSemigroup], S -> libsemigroups.FroidurePinBase);
+
+InstallMethod(FroidurePinMemFnRec, "for an fp monoid",
+[IsFpMonoid], S -> libsemigroups.FroidurePinBase);
+
 BindGlobal("_GetElement",
 function(coll, x)
   Assert(1, IsMultiplicativeElementCollection(coll));
   Assert(1, IsMultiplicativeElement(x));
-  if not (IsPartialPermCollection(coll) or IsTransformationCollection(coll)) then
-    return x;
-  elif IsPartialPermCollection(coll) then
+  if IsPartialPermCollection(coll) then
     return [x, Maximum(DegreeOfPartialPermCollection(coll),
                        CodegreeOfPartialPermCollection(coll))];
-  else
+  elif IsTransformationCollection(coll) then
     return [x, DegreeOfTransformationCollection(coll)];
+  elif IsElementOfFpSemigroupCollection(coll) or IsElementOfFpMonoidCollection(coll) then
+    return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
   fi;
+  return x;
 end);
 
 ###########################################################################
@@ -149,11 +158,14 @@ InstallMethod(HasCppFroidurePin, "for a semigroup", [IsSemigroup], ReturnFalse);
 
 InstallGlobalFunction(CppFroidurePin,
 function(S)
-  local record, T, add_generator, coll, x;
+  local C, record, T, add_generator, coll, x;
   Assert(1, IsSemigroup(S));
   Assert(1, CanComputeCppFroidurePin(S));
   if HasCppFroidurePin(S) then
     return S!.CppFroidurePin;
+  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+    C := CppCongruence(UnderlyingCongruence(S));
+    return libsemigroups.Congruence.quotient_froidure_pin(C);
   fi;
   Unbind(S!.CppFroidurePin);
   record := FroidurePinMemFnRec(S);
@@ -240,7 +252,8 @@ InstallMethod(PositionCanonical,
 "for a semigroup with CanComputeCppFroidurePin and mult. element",
 [IsSemigroup and CanComputeCppFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local pos;
+  local T, record, word, pos;
+
   if IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)
         or CodegreeOfPartialPermSemigroup(S) < CodegreeOfPartialPerm(x) then
@@ -250,14 +263,26 @@ function(S, x)
     if DegreeOfTransformationSemigroup(S) < DegreeOfTransformation(x) then
       return fail;
     fi;
+  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+    if not x in S then
+      return fail;
+    fi;
+    T := CppFroidurePin(S);
+    record := FroidurePinMemFnRec(S);
+    word := _GetElement(S, x);
+    pos := record.current_position(T, word);
+    while pos < 0 do
+      record.enumerate(T, record.current_size(T) + 1);
+      pos := record.current_position(T, word);
+    od;
+    return pos + 1;
   fi;
 
   pos := FroidurePinMemFnRec(S).position(CppFroidurePin(S), _GetElement(S, x));
   if pos < 0 then
     return fail;
-  else
-    return pos + 1;
   fi;
+  return pos + 1;
 end);
 
 InstallMethod(Position,
@@ -521,13 +546,12 @@ InstallMethod(EnumeratorCanonical,
 "for a semigroup with CanComputeCppFroidurePin",
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
-  local at, T, enum;
+  local T, enum, factorisation, at;
 
   if HasAsListCanonical(S) then
     return AsListCanonical(S);
   fi;
 
-  at := FroidurePinMemFnRec(S).at;
   T := CppFroidurePin(S);
 
   enum := rec();
@@ -535,14 +559,25 @@ function(S)
   enum.NumberElement := function(enum, x)
     return PositionCanonical(S, x);
   end;
-
-  enum.ElementNumber := function(enum, nr)
-    if nr > Length(enum) then
-      return fail;
-    else
-      return at(T, nr - 1);
-    fi;
-  end;
+  
+  if IsFpSemigroup(S) or IsFpMonoid(S) then
+    factorisation := FroidurePinMemFnRec(S).minimal_factorisation;
+    enum.ElementNumber := function(enum, nr)
+      if nr > Length(enum) then
+        return fail;
+      fi;
+      return EvaluateWord(Generators(S), factorisation(T, nr - 1) + 1);
+    end;
+  else
+    at := FroidurePinMemFnRec(S).at;
+    enum.ElementNumber := function(enum, nr)
+      if nr > Length(enum) then
+        return fail;
+      else
+        return at(T, nr - 1);
+      fi;
+    end;
+  fi;
 
   enum.Length := function(enum)
     if not IsFinite(S) then

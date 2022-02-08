@@ -188,7 +188,8 @@ namespace gapbind14 {
             "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
-      delete reinterpret_cast<TClass *>(ADDR_OBJ(o)[1]);
+      // FIXME uncomment the next line
+      // delete reinterpret_cast<TClass *>(ADDR_OBJ(o)[1]);
     }
 
     void load(Obj o) override {
@@ -454,13 +455,14 @@ namespace gapbind14 {
     using cpp_type = TCppType;
     static gap_tnum_type const gap_type;
 
+    // TODO(now) the following is only meant to work for shared_ptr
     Obj operator()(TCppType obj) {
       Obj o = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
       ADDR_OBJ(o)
       [0] = reinterpret_cast<Obj>(get_module().subtype<TCppType>());
       // TODO(now) next line is not ok, both the shared_ptr, and the object o
       // will attempt to delete the thing pointed to by obj
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(std::addressof(*obj));
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(std::addressof(obj));
       CHANGED_BAG(o);
       return o;
     }

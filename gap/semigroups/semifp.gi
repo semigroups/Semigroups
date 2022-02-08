@@ -197,7 +197,7 @@ function(M)
 end);
 
 InstallMethod(ViewObj, "for an f.p. monoid",
-[IsFpMonoid and HasGeneratorsOfMonoid],
+[IsFpMonoid and HasGeneratorsOfMonoid], 100, # FIXME 
 function(M)
   Print(ViewString(M));
 end);
@@ -228,7 +228,7 @@ end);
 
 InstallMethod(ViewObj,
 "for an f.p. semigroup with known generators",
-[IsFpSemigroup and HasGeneratorsOfSemigroup],
+[IsFpSemigroup and HasGeneratorsOfSemigroup], 100, # FIXME  
 function(S)
   Print(ViewString(S));
 end);

@@ -27,9 +27,7 @@ InstallMethod(HasFroidurePin, "for a semigroup",
 
 InstallTrueMethod(CanComputeFroidurePin, CanComputeGapFroidurePin);
 
-for x in [IsFpSemigroup,
-          IsFpMonoid,
-          IsMatrixOverFiniteFieldSemigroup,
+for x in [IsMatrixOverFiniteFieldSemigroup,
           IsGraphInverseSemigroup,
           IsMcAlisterTripleSubsemigroup,
           IsSemigroup and IsFreeBandElementCollection,
