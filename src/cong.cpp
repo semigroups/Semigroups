@@ -147,7 +147,5 @@ void init_cong(gapbind14::Module &m) {
            })
       .def("equal_to", &Congruence::operator==)
       .def("less_WTF", &Congruence::operator<)
-      .def("quotient_froidure_pin", [](Congruence &C) -> FroidurePinBase & {
-        return *C.quotient_froidure_pin();
-      });
+      .def("quotient_froidure_pin", &Congruence::quotient_froidure_pin);
 }
