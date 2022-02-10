@@ -18,7 +18,7 @@ function(G, X, Y, act)
   local anti_act, hom, out_nbrs, orbs, min, fam, filt, M, x, y;
 
   if not IsFinite(G) then
-    ErrorNoReturn("the 1st argument (a group) must be finite");
+    ErrorNoReturn("the 1st argument (a group) is not finite");
   fi;
 
   anti_act := function(pt, g)

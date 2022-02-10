@@ -617,7 +617,7 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
 gap> MultiplicationTable(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 
 # ClosureSemigroupOrMonoidNC
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 0], [1, 1, 1]]));
@@ -677,7 +677,7 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
 gap> RulesOfSemigroup(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 
 # IdempotentsSubset
 gap> S := FullBooleanMatMonoid(2);
@@ -688,7 +688,7 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 <commutative semigroup of 3x3 max-plus matrices with 1 generator>
 gap> IdempotentsSubset(S, [666 .. 1000]);
-Error, the 1st argument (a semigroup) must be finite
+Error, the 1st argument (a semigroup) is not finite
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

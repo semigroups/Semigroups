@@ -67,7 +67,7 @@ true
 gap> G1 := FreeGroup(1);;
 gap> act := function(x, g) return x; end;;
 gap> McAlisterTripleSemigroup(G1, Digraph([[1]]), [1], act);
-Error, the 1st argument (a group) must be finite
+Error, the 1st argument (a group) is not finite
 gap> x1 := Digraph([[1], [1], [3], [3], [1, 3, 5]]);;
 gap> G1 := AutomorphismGroup(x1);;
 gap> McAlisterTripleSemigroup(G1, x1, [1, 2, 5]);;

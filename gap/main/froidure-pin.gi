@@ -168,7 +168,7 @@ InstallMethod(AsSet,
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   return SortedList(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
@@ -183,7 +183,7 @@ InstallMethod(AsListCanonical,
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts;
 end);
@@ -213,7 +213,7 @@ InstallMethod(EnumeratorSorted,
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   TryNextMethod();
 end);
@@ -309,7 +309,7 @@ InstallMethod(Idempotents,
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   return EnumeratorCanonical(S){IdempotentsSubset(S, [1 .. Size(S)])};
 end);
@@ -372,7 +372,7 @@ function(S, x)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   elif not IsFinite(S) then
-    ErrorNoReturn("the 1st argument (a semigroup) must be finite");
+    ErrorNoReturn("the 1st argument (a semigroup) is not finite");
   fi;
   return Position(AsSet(S), x);
 end);
@@ -412,7 +412,7 @@ InstallMethod(RightCayleyGraphSemigroup,
 [CanComputeGapFroidurePin], 3,
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).right;
 end);
@@ -423,7 +423,7 @@ InstallMethod(RightCayleyDigraph,
 function(S)
   local D;
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
 
   D := DigraphNC(MakeImmutable(RightCayleyGraphSemigroup(S)));
@@ -440,7 +440,7 @@ InstallMethod(LeftCayleyGraphSemigroup,
 [CanComputeGapFroidurePin], 3,
 function(S)
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).left;
 end);
@@ -451,7 +451,7 @@ InstallMethod(LeftCayleyDigraph,
 function(S)
   local D;
   if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
   D := DigraphNC(MakeImmutable(LeftCayleyGraphSemigroup(S)));
   SetFilterObj(D, IsCayleyDigraph);

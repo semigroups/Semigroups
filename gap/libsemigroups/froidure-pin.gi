@@ -136,7 +136,12 @@ function(coll, x)
                        CodegreeOfPartialPermCollection(coll))];
   elif IsTransformationCollection(coll) then
     return [x, DegreeOfTransformationCollection(coll)];
-  elif IsElementOfFpSemigroupCollection(coll) or IsElementOfFpMonoidCollection(coll) then
+  elif IsElementOfFpSemigroupCollection(coll) then
+    return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)) - 1;
+  elif IsElementOfFpMonoidCollection(coll) then
+    if IsOne(x) then
+      return [0];
+    fi;
     return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
   fi;
   return x;
@@ -211,9 +216,10 @@ function(S)
   local result, sorted_at, T, i;
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsPartialPermSemigroup(S) then
+  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S) then
     # Special case required because < for libsemigroups PartialPerms and < for
-    # GAP partial perms are different.
+    # GAP partial perms are different; and also for IsFpSemigroup and
+    # IsFpMonoid because there's no sorted_at
     return AsSet(AsList(S));
   fi;
   result := EmptyPlist(Size(S));
@@ -233,9 +239,13 @@ function(S)
   local result, at, T, i;
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
+  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+    at := {T, i} -> EvaluateWord(GeneratorsOfSemigroup(S),
+                                 FroidurePinMemFnRec(S).factorisation(T, i) + 1);
+  else
+    at := FroidurePinMemFnRec(S).at;
   fi;
   result := EmptyPlist(Size(S));
-  at := FroidurePinMemFnRec(S).at;
   T := CppFroidurePin(S);
   for i in [1 .. Size(S)] do
     result[i] := at(T, i - 1);
@@ -272,7 +282,7 @@ function(S, x)
     fi;
     T := CppFroidurePin(S);
     record := FroidurePinMemFnRec(S);
-    word := _GetElement(S, x) - 1;
+    word := _GetElement(S, x);
     pos := record.current_position(T, word);
     while pos < 0 do
       record.enumerate(T, record.current_size(T) + 1);
@@ -507,8 +517,8 @@ function(S)
 
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsPartialPermSemigroup(S) then
-    # Special case required because < for libsemigroups PartialPerms and < for
+  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S) then
+    # Special case required because < for libsemigroups ParialPerms and < for
     # GAP partial perms are different.
     return AsSet(S);
   fi;
@@ -624,7 +634,8 @@ function(enum, list)
   result := EmptyPlist(Length(list));
   if IsFpSemigroup(S) or IsFpMonoid(S) then
     factorisation := FroidurePinMemFnRec(S).minimal_factorisation;
-    at := {T, nr} -> EvaluateWord(Generators(S), factorisation(T, nr) + 1);
+    at := {T, nr} -> EvaluateWord(GeneratorsOfSemigroup(S),
+                                  factorisation(T, nr) + 1);
   else
     at := FroidurePinMemFnRec(S).at;
   fi;
@@ -663,7 +674,7 @@ InstallMethod(MultiplicationTable,
 function(S)
   local N, result, pos_to_pos_sorted, fast_product, T, next, k, i, j;
   if not IsFinite(S) then
-    Error("the argument (a semigroup) must be finite");
+    Error("the argument (a semigroup) is not finite");
   fi;
   N      := Size(S);
   result := List([1 .. N], x -> EmptyPlist(N));
@@ -771,7 +782,7 @@ InstallMethod(RulesOfSemigroup,
 [IsSemigroup and CanComputeCppFroidurePin],
 function(S)
   if not IsFinite(S) then
-    Error("the argument (a semigroup) must be finite");
+    Error("the argument (a semigroup) is not finite");
   fi;
   Enumerate(S);
   return FroidurePinMemFnRec(S).rules(CppFroidurePin(S)) + 1;
@@ -783,7 +794,7 @@ InstallMethod(IdempotentsSubset,
 function(S, list)
   local is_idempotent, T;
   if not IsFinite(S) then
-    Error("the 1st argument (a semigroup) must be finite");
+    Error("the 1st argument (a semigroup) is not finite");
   fi;
   if IsFpSemigroup(S) or IsFpMonoid(S) then
     is_idempotent := {T, x} -> FroidurePinMemFnRec(S).product_by_reduction(T, x, x) = x;

@@ -197,15 +197,15 @@ gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
 <fp semigroup with 2 generators and 1 relation>
 gap> AsSet(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> AsListCanonical(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> N := Enumerator(S);
 <enumerator of <fp semigroup with 2 generators and 1 relation>>
 gap> N[1];
 s1
 gap> EnumeratorSorted(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> N := EnumeratorCanonical(S);
 <enumerator of <fp semigroup with 2 generators and 1 relation>>
 gap> N[1];
@@ -227,7 +227,7 @@ gap> S := F / R;
 gap> NextIterator(Iterator(S));
 s1
 gap> IteratorSorted(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> NextIterator(IteratorCanonical(S));
 s1
 
@@ -261,7 +261,7 @@ gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
 <fp semigroup with 2 generators and 1 relation>
 gap> Idempotents(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> NrIdempotents(S);
 Error, the argument (a semigroup) is not finite
 
@@ -318,7 +318,7 @@ gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
 <fp semigroup with 2 generators and 1 relation>
 gap> PositionSorted(S, S.1);
-Error, the 1st argument (a semigroup) must be finite
+Error, the 1st argument (a semigroup) is not finite
 
 # IsEnumerated
 gap> S := Semigroup(FreeBand(2));;
@@ -351,13 +351,13 @@ gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
 <fp semigroup with 2 generators and 1 relation>
 gap> LeftCayleyGraphSemigroup(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> RightCayleyGraphSemigroup(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> LeftCayleyDigraph(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 gap> RightCayleyDigraph(S);
-Error, the argument (a semigroup) must be finite
+Error, the argument (a semigroup) is not finite
 
 # Minimal/Factorization
 gap> S := FreeBand(2);

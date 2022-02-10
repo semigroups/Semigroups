@@ -19,7 +19,7 @@ gap> FreeInverseSemigroup(\<);
 Error, FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> \
 [, name]),
 gap> FreeInverseSemigroup([]);
-Error, the number of generators of a free inverse semigroup must be non-zero,
+Error, the number of generators of a free inverse semigroup must be non-zero
 gap> FreeInverseSemigroup(1, 2);
 Error, FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> \
 [, name]),

@@ -42,7 +42,9 @@ gap> S := Semigroup(
 >   [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])]);;
 gap> map := IsomorphismPermGroup(S);;
 gap> Source(map);
+<group of size 3, 3x3 matrices over GF(2) with 1 generator>
 gap> Range(map);
+Group([ (1,2,3) ])
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);

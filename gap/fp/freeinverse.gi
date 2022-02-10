@@ -66,10 +66,7 @@ function(arg)
 
   if IsEmpty(names) then
     ErrorNoReturn("the number of generators of a free inverse semigroup must ",
-                  "be non-zero,");
-    # elif not IsFinite(names) then
-    #   ErrorNoReturn("the number of generators of a free inverse semigroup ",
-    #                 "must be finite,");
+                  "be non-zero");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",

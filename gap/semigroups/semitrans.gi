@@ -107,7 +107,7 @@ function(S)
   if IsTransformationSemigroup(S) then
     TryNextMethod();
   elif not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) must be finite");
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
 
   cay := OutNeighbours(RightCayleyDigraph(S));
