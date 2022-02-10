@@ -1031,10 +1031,10 @@ end);
 # and something else for semigroups of bipartitions.
 
 InstallMethod(StabilizerAction, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> PROD);
+[IsTransformationSemigroup], S -> OnRight);
 
 InstallMethod(StabilizerAction, "for a partial perm semigroup",
-[IsPartialPermSemigroup], S -> PROD);
+[IsPartialPermSemigroup], S -> OnRight);
 
 InstallMethod(StabilizerAction, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_STAB_ACTION);
