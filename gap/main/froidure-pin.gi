@@ -28,7 +28,7 @@ InstallMethod(HasFroidurePin, "for a semigroup",
 InstallTrueMethod(CanComputeFroidurePin, CanComputeGapFroidurePin);
 
 for x in [IsMatrixOverFiniteFieldSemigroup,
-          IsGraphInverseSemigroup,
+          IsGraphInverseSubsemigroup,
           IsMcAlisterTripleSubsemigroup,
           IsSemigroup and IsFreeBandElementCollection,
           IsPermGroup,
@@ -288,7 +288,6 @@ InstallMethod(Size,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  Assert(1, IsFinite(S));
   return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
 end);
 

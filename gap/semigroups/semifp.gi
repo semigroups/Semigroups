@@ -63,22 +63,20 @@ function(S)
 end);
 
 InstallMethod(Enumerator, "for an fp semigroup with nice monomorphism",
-[IsFpSemigroup and HasNiceMonomorphism],
+[IsFpSemigroup and HasNiceMonomorphism], 100,
 function(S)
   local enum;
-  if HasAsList(S) then
-    return AsList(S);
-  fi;
   enum := rec();
 
   enum.map := NiceMonomorphism(S);
 
   enum.NumberElement := function(enum, x)
-    return PositionSortedOp(Range(enum!.map), x ^ enum!.map);
+    return PositionCanonical(Range(enum!.map), x ^ enum!.map);
   end;
 
   enum.ElementNumber := function(enum, nr)
-    return Enumerator(Range(enum!.map))[nr] ^ InverseGeneralMapping(enum!.map);
+    return EnumeratorCanonical(Range(enum!.map))[nr]
+      ^ InverseGeneralMapping(enum!.map);
   end;
 
   enum.Length := enum -> Size(S);
@@ -197,7 +195,7 @@ function(M)
 end);
 
 InstallMethod(ViewObj, "for an f.p. monoid",
-[IsFpMonoid and HasGeneratorsOfMonoid], 100, # FIXME 
+[IsFpMonoid and HasGeneratorsOfMonoid], 100,  # FIXME
 function(M)
   Print(ViewString(M));
 end);
@@ -228,7 +226,7 @@ end);
 
 InstallMethod(ViewObj,
 "for an f.p. semigroup with known generators",
-[IsFpSemigroup and HasGeneratorsOfSemigroup], 100, # FIXME  
+[IsFpSemigroup and HasGeneratorsOfSemigroup], 100,  # FIXME
 function(S)
   Print(ViewString(S));
 end);
@@ -506,10 +504,6 @@ InstallMethod(IsomorphismFpSemigroup, "for a group",
 function(G)
   local iso1, inv1, iso2, inv2;
 
-  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then
-    TryNextMethod();
-  fi;
-
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);
   # TODO(later) the method for IsomorphismFpSemigroup uses the generators of G
@@ -527,10 +521,6 @@ InstallMethod(IsomorphismFpMonoid, "for a group",
 [IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
-
-  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then
-    TryNextMethod();
-  fi;
 
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);

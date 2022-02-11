@@ -561,6 +561,8 @@ gap> PrintString(GLM(3, 3));
 "GLM(3, 3 ^ 1)"
 gap> PrintString(GLM(3, 9));
 "GLM(3, 3 ^ 2)"
+gap> PrintObj(GLM(3, 9)); "this string";
+GLM(3, 3 ^ 2)"this string"
 
 # ViewObj
 gap> GLM(3, 9);

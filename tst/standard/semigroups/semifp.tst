@@ -12,6 +12,30 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> TestEnumerator := function(en)
+> return ForAll(en, x -> en[Position(en, x)] = x) 
+> and ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i)
+> and ForAll(en, x -> x in en)
+> and ForAll([1 .. Length(en)], i -> IsBound(en[i]))
+> and ForAll([Length(en) + 1 .. Length(en) + 10], i -> not IsBound(en[i]));
+> end;;
+gap> TestIterator := function(S, it)
+> local LoopIterator;
+> LoopIterator := function(it)
+>   local valid, len, x;
+>   valid := true;;
+>   len := 0;
+>   for x in it do 
+>     len := len + 1;
+>     if not x in S then 
+>       valid := false;
+>       break;
+>     fi;
+>   od;
+>   return valid and IsDoneIterator(it) and len = Size(S);
+> end;
+> return LoopIterator(it) and LoopIterator(ShallowCopy(it));
+> end;;
 
 # Test IsomorphismFpMonoid, 
 gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
@@ -2202,6 +2226,200 @@ gap> x * y = y * x;
 false
 gap> a = b;
 true
+
+# NiceMonomorphism
+gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
+>                Transformation([2, 4, 1, 5, 5]),
+>                Transformation([2, 5, 3, 5, 3]),
+>                Transformation([4, 1, 2, 2, 1]),
+>                Transformation([5, 5, 1, 1, 3]));;
+gap> map := IsomorphismFpSemigroup(S);
+MappingByFunction( <transformation monoid of degree 5 with 5 generators>
+ , <fp semigroup with 6 generators and 619 relations>, function( x ) ... end, \
+function( x ) ... end )
+gap> T := Range(map);
+<fp semigroup with 6 generators and 619 relations>
+gap> AsList(T);
+[ s1, s2, s3, s4, s5, s6, s2^2, s2*s3, s2*s4, s2*s5, s2*s6, s3*s2, s3^2, 
+  s3*s4, s3*s5, s3*s6, s4*s2, s4*s3, s4^2, s4*s5, s4*s6, s5*s2, s5*s3, s5*s4, 
+  s5^2, s5*s6, s6*s2, s6*s3, s6*s4, s6*s5, s6^2, s2^3, s2^2*s3, s2^2*s5, 
+  s2^2*s6, s2*s3*s2, s2*s3^2, s2*s3*s4, s2*s3*s6, s2*s4*s2, s2*s4*s3, 
+  s2*s4^2, s2*s4*s5, s2*s4*s6, s2*s5*s2, s2*s5*s3, s2*s5*s4, s2*s5^2, 
+  s2*s5*s6, s2*s6*s2, s2*s6*s3, s2*s6*s4, s2*s6*s5, s2*s6^2, s3*s2^2, 
+  s3*s2*s3, s3*s2*s4, s3*s2*s5, s3*s2*s6, s3^2*s2, s3^3, s3^2*s4, s3^2*s5, 
+  s3^2*s6, s3*s4*s2, s3*s4*s3, s3*s4^2, s3*s4*s5, s3*s4*s6, s3*s5*s2, 
+  s3*s5*s3, s3*s5*s4, s3*s5^2, s3*s5*s6, s3*s6*s2, s3*s6*s3, s3*s6*s4, 
+  s3*s6*s5, s3*s6^2, s4*s2^2, s4*s2*s3, s4*s2*s4, s4*s2*s5, s4*s3*s2, 
+  s4*s3^2, s4*s3*s4, s4*s3*s5, s4*s3*s6, s4^2*s2, s4^2*s3, s4^3, s4^2*s5, 
+  s4^2*s6, s4*s5*s2, s4*s5*s3, s4*s5*s4, s4*s6*s2, s4*s6*s3, s4*s6*s4, 
+  s4*s6*s5, s4*s6^2, s5*s2^2, s5*s2*s3, s5*s2*s4, s5*s2*s5, s5*s2*s6, 
+  s5*s3*s2, s5*s3^2, s5*s3*s4, s5*s3*s5, s5*s3*s6, s5*s4^2, s5^2*s3, s5^2*s4, 
+  s5^3, s5*s6*s3, s5*s6*s4, s5*s6*s5, s6*s2^2, s6*s2*s3, s6*s2*s4, s6*s2*s5, 
+  s6*s2*s6, s6*s3*s2, s6*s3^2, s6*s3*s4, s6*s3*s5, s6*s3*s6, s6*s4*s2, 
+  s6*s4^2, s6*s5*s2, s6*s5*s3, s6*s5*s4, s6*s5^2, s6^2*s2, s6^2*s3, s6^2*s4, 
+  s6^2*s5, s6^3, s2^3*s5, s2^2*s3^2, s2^2*s3*s4, s2^2*s5*s2, s2^2*s5^2, 
+  s2^2*s5*s6, s2^2*s6*s4, s2*s3*s2^2, s2*s3*s2*s5, s2*s3^2*s6, s2*s3*s4*s2, 
+  s2*s3*s4*s3, s2*s3*s4*s5, s2*s3*s4*s6, s2*s3*s6^2, s2*s4*s3*s2, 
+  s2*s4*s3*s5, s2*s4^2*s2, s2*s4^2*s5, s2*s4*s6*s2, s2*s4*s6*s3, s2*s4*s6*s5, 
+  s2*s5*s2*s4, s2*s5*s6*s3, s2*s5*s6*s5, s2*s6*s2*s5, s2*s6*s4*s2, 
+  s3*s2^2*s3, (s3*s2)^2, s3*s2*s4*s2, s3*s2*s4*s3, s3*s2*s4^2, s3*s2*s4*s5, 
+  s3*s2*s5*s3, s3*s2*s5*s6, s3*s2*s6*s4, s3*s2*s6^2, s3^2*s2^2, s3^2*s2*s5, 
+  s3^2*s4*s2, s3^2*s4*s3, s3^2*s4*s5, s3^2*s4*s6, s3^2*s5*s4, s3^2*s6*s2, 
+  s3^2*s6*s3, s3^2*s6*s5, s3^2*s6^2, s3*s4*s2^2, s3*s4*s2*s3, s3*s4*s2*s4, 
+  s3*s4*s3*s2, s3*s4*s3^2, (s3*s4)^2, s3*s4*s3*s5, s3*s4*s3*s6, s3*s4^2*s2, 
+  s3*s4^2*s3, s3*s4^2*s5, s3*s4*s5*s2, s3*s4*s5*s3, s3*s4*s5*s4, s3*s4*s6*s2, 
+  s3*s4*s6*s3, s3*s4*s6*s4, s3*s4*s6*s5, s3*s4*s6^2, s3*s5*s2^2, s3*s5*s2*s3, 
+  s3*s5*s2*s4, s3*s5*s2*s5, s3*s5*s2*s6, s3*s5*s3*s2, (s3*s5)^2, s3*s5*s3*s6, 
+  s3*s5^2*s3, s3*s5^2*s4, s3*s5^3, s3*s5*s6*s3, s3*s5*s6*s4, s3*s5*s6*s5, 
+  s3*s6*s2^2, s3*s6*s2*s3, s3*s6*s2*s4, s3*s6*s2*s5, s3*s6*s2*s6, 
+  s3*s6*s3*s2, s3*s6*s3^2, s3*s6*s3*s4, s3*s6*s3*s5, (s3*s6)^2, s3*s6*s4*s2, 
+  s3*s6*s4^2, s3*s6*s5*s3, s3*s6*s5*s4, s3*s6*s5^2, s3*s6^2*s2, s3*s6^2*s3, 
+  s3*s6^2*s5, s3*s6^3, s4*s2*s3*s4, s4*s2*s3*s6, (s4*s2)^2, s4*s2*s4*s5, 
+  s4*s3*s2^2, s4*s3*s2*s3, s4*s3*s2*s4, s4*s3*s2*s5, s4*s3*s2*s6, s4*s3^3, 
+  s4*s3*s4*s2, (s4*s3)^2, s4*s3*s4*s5, s4*s3*s5*s3, s4*s3*s5*s4, s4*s3*s5^2, 
+  s4*s3*s5*s6, s4*s3*s6*s2, s4*s3*s6*s3, s4*s3*s6*s5, s4*s3*s6^2, s4^2*s3*s4, 
+  s4^2*s5*s3, s4*s5*s2^2, s4*s5*s2*s5, s4*s5*s3*s2, s4*s5*s3^2, s4*s6*s2*s3, 
+  s4*s6*s2*s4, s4*s6*s3*s2, s4*s6*s3^2, s4*s6*s3*s4, s4*s6*s5*s3, s4*s6*s5^2, 
+  s4*s6^2*s2, s4*s6^2*s3, s4*s6^2*s4, s4*s6^2*s5, s4*s6^3, s5*s2^2*s3, 
+  s5*s2*s4*s2, s5*s2*s4*s3, s5*s2*s4^2, s5*s2*s5*s3, s5*s3*s4*s2, 
+  s5*s3*s6*s2, s5*s3*s6*s3, s5*s3*s6*s5, s5*s3*s6^2, s5*s4^2*s2, s5^3*s3, 
+  s5*s6*s3^2, s6*s2^2*s3, s6*s2^2*s5, s6*s2^2*s6, s6*s2*s3*s2, s6*s2*s3^2, 
+  s6*s2*s3*s4, s6*s2*s3*s6, s6*s2*s4*s2, s6*s2*s4*s3, s6*s2*s4*s5, 
+  s6*s2*s4*s6, s6*s2*s5*s3, s6*s3*s2^2, s6*s3*s2*s3, s6*s3*s2*s5, 
+  s6*s3*s2*s6, s6*s3^3, s6*s3^2*s6, s6*s3*s4*s3, s6*s3*s4^2, s6*s3*s5*s3, 
+  s6*s3*s5^2, s6*s3*s5*s6, s6*s5*s2*s3, s6*s5*s2*s4, s6*s5*s3^2, s6*s5*s3*s6, 
+  s6*s5*s4^2, s6*s5^2*s4, s6^2*s2*s3, s6^2*s2*s4, s6^2*s3*s4, s6^2*s4*s2, 
+  s6^2*s5*s3, s6^3*s2, s6^3*s3, s6^3*s4, s2^2*s5*s2*s4, s2*s3^2*s6*s3, 
+  s2*s3^2*s6*s5, s2*s3^2*s6^2, s2*s3*s4*s2^2, s2*(s3*s4)^2, s2*s3*s4*s3*s5, 
+  s2*s3*s4*s3*s6, s2*s3*s4*s5*s3, s2*s3*s4*s5*s4, s2*s3*s4*s6*s2, 
+  s2*s3*s4*s6*s3, s2*s3*s4*s6*s5, s2*s3*s4*s6^2, s2*s4*s3*s2*s4, 
+  s2*s4*s3*s2*s5, s2*s4*s3*s5*s3, s2*s4*s6*s2*s3, s2*s4*s6*s2*s4, 
+  s2*s4*s6*s3^2, s2*s4*s6*s5*s3, s2*s4*s6*s5^2, s2*s5*s6*s3^2, s3*s2^2*s3^2, 
+  (s3*s2)^2*s5, s3*s2*s6*s4*s2, s3^2*s2*s5*s3, s3^2*s4*s2*s3, s3^2*s4*s3^2, 
+  s3*(s3*s4)^2, s3^2*s4*s3*s5, s3^2*s4*s5*s2, s3^2*s4*s5*s3, s3^2*s6*s2*s3, 
+  s3^2*s6*s2*s4, s3^2*s6*s3^2, s3^2*s6*s3*s4, s3^2*s6*s5*s3, s3^2*s6*s5^2, 
+  s3^2*s6^2*s2, s3^2*s6^2*s3, s3^2*s6^2*s5, s3^2*s6^3, s3*s4*s2*s3*s4, 
+  s3*s4*s2*s3*s6, s3*(s4*s2)^2, s3*s4*s2*s4*s5, s3*s4*s3*s2*s3, 
+  s3*s4*s3*s2*s4, s3*s4*s3^3, (s3*s4)^2*s3, s3*s4*s3*s5*s3, s3*s4*s3*s5^2, 
+  s3*s4*s3*s5*s6, s3*s4*s3*s6*s2, s3*s4*s3*s6*s3, s3*s4*s3*s6*s5, 
+  s3*s4*s3*s6^2, s3*s4*s5*s2*s5, s3*s4*s5*s3^2, s3*s4*s6*s2*s3, 
+  s3*s4*s6*s2*s4, s3*s4*s6*s3^2, s3*s4*s6*s3*s4, s3*s4*s6*s5*s3, 
+  s3*s4*s6*s5^2, s3*s4*s6^2*s2, s3*s4*s6^2*s3, s3*s4*s6^2*s5, s3*s4*s6^3, 
+  s3*s5*s2^2*s3, s3*s5*s2*s4*s2, s3*s5*s2*s4*s3, s3*s5*s2*s4^2, 
+  s3*s5*s2*s5*s3, s3*s5*s3*s6*s2, s3*s5*s3*s6*s3, s3*s5*s3*s6*s5, 
+  s3*s5*s3*s6^2, s3*s5^3*s3, s3*s6*s2*s3^2, s3*s6*s2*s3*s4, s3*s6*s2*s4*s2, 
+  s3*s6*s2*s4*s3, s3*s6*s2*s4*s5, s3*s6*s2*s4*s6, s3*s6*s2*s5*s3, 
+  s3*s6*s3^2*s6, s3*s6*s3*s4*s3, s3*s6*s5*s3^2, s3*s6*s5*s3*s6, 
+  s3*s6^2*s2*s3, s3*s6^2*s2*s4, s3*s6^2*s3*s4, s3*s6^2*s5*s3, s3*s6^3*s2, 
+  s3*s6^3*s3, s3*s6^3*s4, s4*s3*s2^2*s3, s4*s3*s2*s4*s3, s4*s3*s2*s4^2, 
+  s4*s3*s2*s5*s3, s4*s3*s2*s5*s6, s4*s3*s2*s6^2, (s4*s3)^2*s6, 
+  s4*s3*s4*s5*s3, s4*s3*s5^2*s3, s4*s3*s6*s2*s3, s4*s3*s6*s3*s4, 
+  s4*s3*s6*s5*s3, s4*s3*s6^2*s2, s4*s3*s6^2*s3, s4*s6*s2*s3*s4, 
+  s4*s6*s2*s4*s3, s4*s6*s3*s4*s3, s4*s6^2*s4*s2, s4*s6^2*s5*s3, s4*s6^3*s2, 
+  s5*s3*s6*s2*s3, s5*s3*s6*s2*s4, s5*s3*s6*s3^2, s5*s3*s6*s3*s4, 
+  s5*s3*s6*s5*s3, s5*s3*s6*s5^2, s5*s3*s6^2*s2, s5*s3*s6^2*s3, s5*s3*s6^2*s5, 
+  s5*s3*s6^3, s6*s2^2*s3^2, s6*s2^2*s5*s6, s6*s2*s3*s2^2, s6*s2*s3*s2*s5, 
+  s6*s2*s3*s4*s2, s6*s2*s3*s4*s3, s6*s2*s4*s6*s2, s6*s2*s4*s6*s3, 
+  s6*s2*s4*s6*s5, s6*s3*s2*s5*s3, s6*s3^2*s6*s2, s6*s3^2*s6*s5, 
+  s6*s5*s3*s6*s2, s6*s5*s3*s6*s5, s6*s5*s4^2*s2, s6^2*s2*s3^2, s6^2*s2*s4*s3, 
+  s6^2*s3*s4*s3, s6^3*s3*s4, s2*s3^2*s6*s3*s4, s2*s3^2*s6*s5*s3, 
+  s2*s3^2*s6^2*s2, s2*s3^2*s6^2*s3, s2*(s3*s4)^2*s3, s2*s3*s4*s3*s5*s3, 
+  s2*s3*s4*s3*s6*s2, s2*s3*s4*s5*s3^2, s2*s3*s4*s6^2*s2, s2*s4*s6*s2*s3*s4, 
+  s2*s4*s6*s2*s4*s3, s3^2*s4*s3^3, s3^2*s4*s3*s5^2, s3^2*s6*s2*s3*s4, 
+  s3^2*s6*s2*s4*s3, s3^2*s6*s2*s4*s6, (s3^2*s6)^2, s3^2*s6*s3*s4*s3, 
+  s3^2*s6*s5*s3*s6, s3^2*s6^2*s2*s3, s3^2*s6^2*s2*s4, s3^2*s6^2*s3*s4, 
+  s3^2*s6^2*s5*s3, s3^2*s6^3*s2, s3^2*s6^3*s3, (s3*s4)^2*s3*s6, 
+  s3*s4*s3*s5^2*s3, s3*s4*s3*s6*s2*s3, s3*s4*s3*s6*s3*s4, s3*s4*s3*s6*s5*s3, 
+  s3*s4*s3*s6^2*s2, s3*s4*s3*s6^2*s3, s3*s4*s6*s2*s3*s4, s3*s4*s6*s2*s4*s3, 
+  s3*s4*s6*s3*s4*s3, s3*s4*s6^2*s5*s3, s3*s4*s6^3*s2, s3*s5*s3*s6*s2*s3, 
+  s3*s5*s3*s6*s2*s4, s3*s5*s3*s6*s3^2, s3*s5*s3*s6*s3*s4, s3*s5*s3*s6*s5*s3, 
+  s3*s5*s3*s6*s5^2, s3*s5*s3*s6^2*s2, s3*s5*s3*s6^2*s3, s3*s5*s3*s6^2*s5, 
+  s3*s5*s3*s6^3, s3*s6*s2*s3*s4*s3, s3*s6*s2*s4*s6*s2, s3*s6*s2*s4*s6*s3, 
+  s3*s6*s2*s4*s6*s5, s3*s6*s3^2*s6*s2, s3*s6*s3^2*s6*s5, s3*s6*s5*s3*s6*s2, 
+  (s3*s6*s5)^2, s3*s6^2*s2*s3^2, s3*s6^2*s2*s4*s3, s3*s6^2*s3*s4*s3, 
+  s3*s6^3*s3*s4, s4*s3*s2^2*s3^2, (s4*s3)^2*s6*s2, s4*s3*s6*s3*s4*s3, 
+  s4*s6*s2*s3*s4*s3, s5*s3*s6*s2*s3*s4, s5*s3*s6*s2*s4*s3, s5*s3*s6*s2*s4*s6, 
+  s5*s3*s6*s3^2*s6, s5*s3*s6*s3*s4*s3, (s5*s3*s6)^2, s5*s3*s6^2*s2*s3, 
+  s5*s3*s6^2*s2*s4, s5*s3*s6^2*s3*s4, s5*s3*s6^2*s5*s3, s5*s3*s6^3*s2, 
+  s5*s3*s6^3*s3, s6*s2*s4*s6*s3^2, s6^3*s3*s4*s3, s2*s3^2*s6*s3*s4*s3, 
+  s2*s4*s6*s2*s3*s4*s3, s3^2*s6*s2*s3*s4*s3, s3^2*s6*s2*s4*s6*s2, 
+  s3^2*s6*s2*s4*s6*s3, s3^2*s6*s2*s4*s6*s5, (s3^2*s6)^2*s2, (s3^2*s6)^2*s5, 
+  s3^2*s6*s5*s3*s6*s2, s3*(s3*s6*s5)^2, s3^2*s6^2*s2*s3^2, s3^2*s6^2*s2*s4*s3,
+  s3^2*s6^2*s3*s4*s3, s3^2*s6^3*s3*s4, (s3*s4)^2*s3*s6*s2, 
+  s3*s4*s3*s6*s3*s4*s3, s3*s4*s6*s2*s3*s4*s3, s3*s5*s3*s6*s2*s3*s4, 
+  s3*s5*s3*s6*s2*s4*s3, s3*s5*s3*s6*s2*s4*s6, s3*s5*s3*s6*s3^2*s6, 
+  s3*s5*s3*s6*s3*s4*s3, s3*(s5*s3*s6)^2, s3*s5*s3*s6^2*s2*s3, 
+  s3*s5*s3*s6^2*s2*s4, s3*s5*s3*s6^2*s3*s4, s3*s5*s3*s6^2*s5*s3, 
+  s3*s5*s3*s6^3*s2, s3*s5*s3*s6^3*s3, s3*s6*s2*s4*s6*s3^2, s3*s6^3*s3*s4*s3, 
+  s5*s3*s6*s2*s3*s4*s3, s5*s3*s6*s2*s4*s6*s2, s5*s3*s6*s2*s4*s6*s3, 
+  s5*s3*s6*s3^2*s6*s2, (s5*s3*s6)^2*s2, s5*s3*s6^2*s2*s4*s3, 
+  s5*s3*s6^2*s3*s4*s3, s5*s3*s6^3*s3*s4, s3^2*s6*s2*s4*s6*s3^2, 
+  s3^2*s6^3*s3*s4*s3, s3*s5*s3*s6*s2*s3*s4*s3, s3*s5*s3*s6*s2*s4*s6*s2, 
+  s3*s5*s3*s6*s2*s4*s6*s3, s3*s5*s3*s6*s3^2*s6*s2, s3*(s5*s3*s6)^2*s2, 
+  s3*s5*s3*s6^2*s2*s4*s3, s3*s5*s3*s6^2*s3*s4*s3, s3*s5*s3*s6^3*s3*s4, 
+  s5*s3*s6^3*s3*s4*s3, s3*s5*s3*s6^3*s3*s4*s3 ]
+gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
+>                Transformation([4, 1, 2, 2, 1]),
+>                Transformation([5, 5, 1, 1, 3]));;
+gap> map := IsomorphismFpSemigroup(S);
+MappingByFunction( <transformation monoid of degree 5 with 3 generators>
+ , <fp semigroup with 4 generators and 68 relations>, function( x ) ... end, f\
+unction( x ) ... end )
+gap> T := Range(map);
+<fp semigroup with 4 generators and 68 relations>
+gap> TestEnumerator(Enumerator(T));
+true
+gap> AsSSortedList(T);
+[ s1, s2, s3, s4, s2^2, s2*s3, s2*s4, s3*s2, s3^2, s3*s4, s4*s2, s4*s3, s4^2, 
+  s2^3, s2^2*s3, s2^2*s4, s2*s3*s2, s2*s3^2, s2*s3*s4, s2*s4*s2, s2*s4*s3, 
+  s2*s4^2, s3*s2^2, s3*s2*s3, s3*s2*s4, s3^2*s2, s3^3, s3*s4*s2, s3*s4*s3, 
+  s3*s4^2, s4*s2^2, s4*s2*s3, s4*s2*s4, s4*s3*s2, s4*s3^2, s4^2*s2, s4^2*s3, 
+  s4^3, s2^3*s3, s2^3*s4, s2^2*s3*s2, s2^2*s3^2, s2^2*s3*s4, s2^2*s4*s2, 
+  s2^2*s4^2, s2*s3*s4*s3, s2*s3*s4^2, s2*s4*s2*s3, s2*s4^2*s2, s3*s2*s3^2, 
+  s3*s2*s4*s2, s3*s2*s4^2, s3^2*s2*s3, s3*s4*s2^2, s3*s4*s2*s3, s3*s4*s2*s4, 
+  s3*s4^2*s2, s3*s4^2*s3, s4*s2^2*s3, s4*s2^2*s4, s4*s2*s3^2, s4*s2*s4*s3, 
+  s4*s2*s4^2, s4*s3*s2^2, s4*s3*s2*s3, s4*s3*s2*s4, s4^2*s2*s3, s4^2*s2*s4, 
+  s4^2*s3*s2, s4^3*s2, s2^3*s3^2, s2^3*s4*s2, s2^2*s3*s4*s3, s2^2*s3*s4^2, 
+  s2^2*s4*s2*s3, s2^2*s4^2*s2, s2*s3*s4^2*s2, s2*s3*s4^2*s3, s3*s2*s4^2*s2, 
+  s3*s4*s2*s3^2, s3*s4*s2*s4^2, s4*s2^2*s3^2, s4*s2^2*s3*s4, s4*s2^2*s4*s2, 
+  s4*s2^2*s4^2, s4*s2*s4^2*s2, s4*s3*s2*s3^2, s4*s3*s2*s4*s2, s4*s3*s2*s4^2, 
+  s4^2*s2*s3^2, s4^2*s2*s4*s3, s4^2*s2*s4^2, s4^3*s2*s3, s2^2*s3*s4^2*s2, 
+  s2^2*s3*s4^2*s3, s3*s4*s2*s4^2*s2, s4*s2^2*s3*s4*s3, s4*s2^2*s3*s4^2, 
+  s4*s2^2*s4^2*s2, s4*s3*s2*s4^2*s2, (s4^2*s2)^2, s4^3*s2*s3^2, 
+  s4*s2^2*s3*s4^2*s2 ]
+
+# \<
+gap> T.1 < T.2 * T.3;
+true
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
+gap> S := F / rels;
+<fp semigroup with 2 generators and 3 relations>
+gap> S.1 < S.2 * S.1;
+true
+gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
+gap> rels := [[m1 ^ 2, m1], [m2 ^ 2, m2], [m1 * m2 * m1, m1 * m2],
+> [m2 * m1 * m2, m1 * m2]];;
+gap> S := F / rels;
+<fp monoid with 2 generators and 4 relations>
+gap> S.1 < S.2 * S.1;
+true
+
+# IsomorphismFpSemigroup
+gap> F := FreeGroup(1);
+<free group on the generators [ f1 ]>
+gap> R := [F.1 ^ 2];
+[ f1^2 ]
+gap> IsomorphismFpSemigroup(F / R);
+MappingByFunction( <fp group on the generators 
+[ f1 
+ ]>, <fp semigroup with 3 generators and 8 relations>, function( x ) ... end, \
+function( x ) ... end )
+gap> IsomorphismFpMonoid(F / R);
+MappingByFunction( <fp group on the generators 
+[ f1 
+ ]>, <fp monoid with 2 generators and 3 relations>, function( x ) ... end, fun\
+ction( x ) ... end )
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

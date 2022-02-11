@@ -26,6 +26,8 @@ gap> S := Semigroup([PartialPerm([1, 2, 3], [4, 5, 1]),
 gap> x := PartialPerm([1, 3], [4, 1]);;
 gap> y := PartialPerm([1, 4], [1, 4]);;
 gap> foo := IsGreensDGreaterThanFunc(S);;
+gap> foo(x, x);
+false
 gap> foo(x, y);
 false
 gap> foo(y, x);
@@ -39,6 +41,8 @@ gap> foo(x, y);
 false
 gap> z := RepresentativeOfMinimalIdeal(S);
 <empty partial perm>
+gap> foo(x, x);
+false
 gap> foo(x, z);
 true
 gap> foo(z, x);

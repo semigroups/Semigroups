@@ -14,7 +14,7 @@ DeclareCategory("IsGraphInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsGraphInverseSemigroupElement");
 
 DeclareSynonymAttr("IsGraphInverseSubsemigroup",
-                   IsInverseSemigroup and IsSemigroup and
+                   IsSemigroup and
                    IsGraphInverseSemigroupElementCollection);
 
 DeclareSynonymAttr("IsGraphInverseSemigroup",

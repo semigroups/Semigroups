@@ -141,15 +141,26 @@ end);
 # Methods for McAlister triple semigroups
 #############################################################################
 
-InstallMethod(OneImmutable, "for a McAlister triple semigroup",
-[IsMcAlisterTripleSemigroup],
-function(S)
+InstallMethod(OneImmutable, "for a McAlister triple semigroup element",
+[IsMcAlisterTripleSemigroupElement],
+function(x)
+  return OneImmutable(MTSEParent(x));
+end);
+
+InstallMethod(OneImmutable,
+"for a McAlister triple semigroup element collection",
+[IsMcAlisterTripleSemigroupElementCollection],
+function(coll)
   local Y;
-  if not IsMonoid(S) then
+
+  if not IsSemigroup(coll) then
+    coll := MTSEParent(coll);
+  fi;
+  if not IsMonoid(coll) then
     return fail;
   fi;
-  Y := McAlisterTripleSemigroupSemilattice(S);
-  return MTSE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());
+  Y := McAlisterTripleSemigroupSemilattice(coll);
+  return MTSE(coll, DigraphSources(DigraphRemoveLoops(Y))[1], ());
 end);
 
 InstallMethod(McAlisterTripleSemigroupComponents,

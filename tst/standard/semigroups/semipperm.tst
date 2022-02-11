@@ -2112,6 +2112,8 @@ gap> T > S;
 false
 gap> T = S;
 false
+gap> T < T;
+false
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);

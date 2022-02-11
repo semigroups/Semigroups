@@ -662,6 +662,7 @@ function(x, S)
   pos_rho := Position(RhoOrb(S), RhoFunc(S)(rep));
 
   if OrbSCCLookup(RhoOrb(S))[pos_rho] <> n then
+    # Cannot currently find an example that enters here.
     return false;
   elif pos_rho <> OrbSCC(RhoOrb(S))[n][1] then
     rep := RhoOrbMult(RhoOrb(S), n, pos_rho)[2] * rep;

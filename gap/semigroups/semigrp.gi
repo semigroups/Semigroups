@@ -500,7 +500,8 @@ InstallMethod(ClosureSemigroupOrMonoidNC,
  IsMultiplicativeElementCollection and IsFinite and IsList,
  IsRecord],
 function(Constructor, S, coll, opts)
-  local n, T;
+  local n;
+
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
 
@@ -512,20 +513,12 @@ function(Constructor, S, coll, opts)
   coll := Shuffle(Set(coll));
   if IsGeneratorsOfActingSemigroup(coll) then
     n := ActionDegree(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
+    Sort(coll, {x, y} -> ActionRank(x, n) > ActionRank(y, n));
   elif Length(coll) < 120 then
     Sort(coll, IsGreensDGreaterThanFunc(Semigroup(coll)));
   fi;
 
-  T := Constructor(S, coll, opts);
-
-  if T = S then
-    return S;
-  else
-    return T;
-  fi;
+  return Constructor(S, coll, opts);
 end);
 
 # Both of these methods are required for ClosureSemigroup(NC) and an empty list
@@ -537,16 +530,12 @@ end);
 InstallMethod(ClosureSemigroup,
 "for a semigroup, empty list or collection, and record",
 [IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
-function(S, coll, opts)
-  return S;
-end);
+{S, coll, opts} -> S);
 
 InstallMethod(ClosureSemigroupOrMonoidNC,
 "for a function, a semigroup, empty list, and record",
 [IsFunction, IsSemigroup, IsList and IsEmpty, IsRecord],
-function(Constructor, S, coll, opts)
-  return S;
-end);
+{Construction, S, coll, opts} -> S);
 
 #############################################################################
 ## 5. ClosureInverseSemigroup
@@ -695,7 +684,7 @@ InstallMethod(ClosureInverseSemigroupOrMonoidNC,
  IsMultiplicativeElementCollection and IsFinite and IsList,
  IsRecord],
 function(Constructor, S, coll, opts)
-  local n, x, one, T, i;
+  local n, x, one, i;
   coll := Filtered(coll, x -> not x in S);
   if IsEmpty(coll) then
     return S;
@@ -714,12 +703,10 @@ function(Constructor, S, coll, opts)
     fi;
   od;
 
-  if Constructor = InverseMonoid then
-    if One(coll) <> One(GeneratorsOfSemigroup(S)) then
-      one := One(Concatenation(coll, GeneratorsOfSemigroup(S)));
-    else
-      one := One(coll);
-    fi;
+  if Constructor = InverseMonoid
+      and IsMultiplicativeElementWithOneCollection(S)
+      and IsMultiplicativeElementWithOneCollection(coll) then
+    one := One(Concatenation(coll, GeneratorsOfSemigroup(S)));
     if not one in coll and not one in S then
       AddSet(coll, one);
     fi;
@@ -729,21 +716,12 @@ function(Constructor, S, coll, opts)
   coll := Shuffle(coll);
   if IsGeneratorsOfActingSemigroup(coll) then
     n := ActionDegree(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
+    Sort(coll, {x, y} -> ActionRank(x, n) > ActionRank(y, n));
   elif Length(coll) < 120 then
-    # Currently there is no way to enter this clause
     Sort(coll, IsGreensDGreaterThanFunc(InverseSemigroup(coll)));
   fi;
 
-  T := ClosureSemigroupOrMonoidNC(Constructor, S, coll, opts);
-
-  if T = S then
-    return S;
-  else
-    return T;
-  fi;
+  return ClosureSemigroupOrMonoidNC(Constructor, S, coll, opts);
 end);
 
 # Both of these methods are required for ClosureInverseSemigroup(NC) and an
@@ -1286,8 +1264,6 @@ function(S, T)
   od;
 
   if IsDoneIterator(SS) and IsDoneIterator(TT) then
-    # This line is executed by the tests but does not show as such in the code
-    # coverage.
     return false;  # S = T
   fi;
   return IsDoneIterator(SS);

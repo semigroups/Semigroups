@@ -98,7 +98,7 @@ DeclareAttribute("McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap",
 DeclareSynonymAttr("MTSSemilatticeVertexLabelInverseMap",
                    McAlisterTripleSemigroupSemilatticeVertexLabelInverseMap);
 DeclareAttribute("OneImmutable",
-                 IsMcAlisterTripleSemigroup and IsWholeFamily and IsMonoid);
+                 IsMcAlisterTripleSemigroupElementCollection);
 DeclareAttribute("McAlisterTripleSemigroupComponents",
                  IsMcAlisterTripleSubsemigroup);
 DeclareSynonymAttr("MTSComponents",

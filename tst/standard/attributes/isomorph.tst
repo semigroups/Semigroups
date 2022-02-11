@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/isomorph.tst
-#Y  Copyright (C) 2015-17                               James D. Mitchell
+#W  standard/attributes/isomorph.tst
+#Y  Copyright (C) 2015-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/isomorph.tst");
+gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -397,4 +397,4 @@ gap> Unbind(T);
 
 #
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/isomorph.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/isomorph.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/attrfp.tst
-#Y  Copyright (C) 2017                                      Wilf A. Wilson
+#W  standard/attributes/semifp.tst
+#Y  Copyright (C) 2017-2022                                 Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/attrfp.tst");
+gap> START_TEST("Semigroups package: standard/attributes/semifp.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -52,4 +52,4 @@ gap> Unbind(S);
 
 #E#
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: standard/attrfp.tst");
+gap> STOP_TEST("Semigroups package: standard/attributes/semifp.tst");

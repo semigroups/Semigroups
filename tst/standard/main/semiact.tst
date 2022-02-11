@@ -133,6 +133,26 @@ gap> x in S;
 true
 gap> Size(S);
 1
+gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(3));;
+gap> S := DirectProduct(S, Semigroup(Transformation([1, 1, 1])));;
+gap> S := Semigroup(S, Transformation([1, 1, 2]), rec(acting := true, 
+> regular := true));
+<regular transformation semigroup of degree 6 with 3 generators>
+gap> Number(FullTransformationMonoid(3), x -> x in S);
+2
+gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(3));;
+gap> S := Semigroup(S, Transformation([1, 1, 2]), rec(acting := true, 
+> regular := true));
+<regular transformation semigroup of degree 3 with 2 generators>
+gap> Number(FullTransformationMonoid(3), x -> x in S);
+24
+gap> S := PartitionMonoid(3);;
+gap> T := Bipartition([[1, -2], [2], [3, -3], [-1]]);;
+gap> I := SemigroupIdeal(S, T);
+<regular bipartition *-semigroup ideal of degree 3 with 1 generator>
+gap> S := OrderEndomorphisms(7);;
+gap> Transformation([2, 4, 4, 4, 7, 7, 7]) in S;
+true
 
 # \in, for an inverse acting semigroup rep
 gap> S := InverseSemigroup(POPI(5));;

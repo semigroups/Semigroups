@@ -581,7 +581,8 @@ function(S)
       if nr > Length(enum) then
         return fail;
       fi;
-      return EvaluateWord(GeneratorsOfSemigroup(S), factorisation(T, nr - 1) + 1);
+      return EvaluateWord(GeneratorsOfSemigroup(S),
+                          factorisation(T, nr - 1) + 1);
     end;
   else
     at := FroidurePinMemFnRec(S).at;
@@ -792,12 +793,13 @@ InstallMethod(IdempotentsSubset,
 "for a semigroup with CanComputeCppFroidurePin and hom. list",
 [IsSemigroup and CanComputeCppFroidurePin, IsHomogeneousList],
 function(S, list)
-  local is_idempotent, T;
+  local product_by_reduction, is_idempotent, T;
   if not IsFinite(S) then
     Error("the 1st argument (a semigroup) is not finite");
   fi;
   if IsFpSemigroup(S) or IsFpMonoid(S) then
-    is_idempotent := {T, x} -> FroidurePinMemFnRec(S).product_by_reduction(T, x, x) = x;
+    product_by_reduction := FroidurePinMemFnRec(S).product_by_reduction;
+    is_idempotent := {T, x} -> product_by_reduction(T, x, x) = x;
   else
     is_idempotent := FroidurePinMemFnRec(S).is_idempotent;
   fi;

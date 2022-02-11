@@ -192,24 +192,18 @@ gap> Enumerator(S);
 <enumerator of Rees matrix semigroup>
 
 # AsListCanonical/AsSet for an infinite semigroup
-gap> F := FreeSemigroup(2);;
-gap> R := [[F.1 * F.2, F.2 * F.1]];;
-gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+gap> S := GraphInverseSemigroup(CycleDigraph(2));
+<infinite graph inverse semigroup with 2 vertices, 2 edges>
 gap> AsSet(S);
 Error, the argument (a semigroup) is not finite
 gap> AsListCanonical(S);
 Error, the argument (a semigroup) is not finite
-gap> N := Enumerator(S);
-<enumerator of <fp semigroup with 2 generators and 1 relation>>
-gap> N[1];
-s1
 gap> EnumeratorSorted(S);
 Error, the argument (a semigroup) is not finite
 gap> N := EnumeratorCanonical(S);
-<enumerator of <fp semigroup with 2 generators and 1 relation>>
+<enumerator of <infinite graph inverse semigroup with 2 vertices, 2 edges>>
 gap> N[1];
-s1
+e_1
 
 # Iterators
 gap> S := FreeBand(2);
@@ -256,10 +250,8 @@ gap> Idempotents(S);
 [ x1, x2, x1x2, x2x1, x1x2x1, x2x1x2 ]
 gap> NrIdempotents(S);
 6
-gap> F := FreeSemigroup(2);;
-gap> R := [[F.1 * F.2, F.2 * F.1]];;
-gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+gap> S := GraphInverseSemigroup(CycleDigraph(2));
+<infinite graph inverse semigroup with 2 vertices, 2 edges>
 gap> Idempotents(S);
 Error, the argument (a semigroup) is not finite
 gap> NrIdempotents(S);
@@ -313,10 +305,8 @@ gap> SortedList(list) = SortedList(list, {x, y} -> PositionSorted(S, x) <
 true
 gap> PositionSorted(S, 1);
 fail
-gap> F := FreeSemigroup(2);;
-gap> R := [[F.1 * F.2, F.2 * F.1]];;
-gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+gap> S := GraphInverseSemigroup(CycleDigraph(2));
+<infinite graph inverse semigroup with 2 vertices, 2 edges>
 gap> PositionSorted(S, S.1);
 Error, the 1st argument (a semigroup) is not finite
 
@@ -346,10 +336,8 @@ gap> LeftCayleyDigraph(S);
 <immutable digraph with 6 vertices, 12 edges>
 gap> RightCayleyDigraph(S);
 <immutable digraph with 6 vertices, 12 edges>
-gap> F := FreeSemigroup(2);;
-gap> R := [[F.1 * F.2, F.2 * F.1]];;
-gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+gap> S := GraphInverseSemigroup(CycleDigraph(2));
+<infinite graph inverse semigroup with 2 vertices, 2 edges>
 gap> LeftCayleyGraphSemigroup(S);
 Error, the argument (a semigroup) is not finite
 gap> RightCayleyGraphSemigroup(S);
@@ -387,10 +375,8 @@ gap> S := FreeBand(2);
 gap> RulesOfSemigroup(S);
 [ [ [ 1, 1 ], [ 1 ] ], [ [ 2, 2 ], [ 2 ] ], [ [ 1, 2, 1, 2 ], [ 1, 2 ] ], 
   [ [ 2, 1, 2, 1 ], [ 2, 1 ] ] ]
-gap> F := FreeSemigroup(2);;
-gap> R := [[F.1 * F.2, F.2 * F.1]];;
-gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+gap> S := GraphInverseSemigroup(CycleDigraph(2));
+<infinite graph inverse semigroup with 2 vertices, 2 edges>
 gap> RulesOfSemigroup(S);
 Error, the argument (a semigroup) is not finite
 

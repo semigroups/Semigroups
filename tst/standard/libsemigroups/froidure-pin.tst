@@ -375,6 +375,12 @@ gap> List(AsListCanonical(S), x -> PositionCanonical(S, x)) = [1 .. Size(S)];
 true
 gap> PositionCanonical(S, AsTransformation((1, 2, 3)));
 fail
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
+gap> S := F / rels;
+<fp semigroup with 2 generators and 3 relations>
+gap> PositionCanonical(S, 1);
+fail
 
 # Position
 gap> S := FullBooleanMatMonoid(2);
@@ -596,6 +602,13 @@ gap> S := FreeBand(2);
 <free band on the generators [ x1, x2 ]>
 gap> Enumerator(S){[3 .. 5]};
 [ x1x2, x2x1, x1x2x1 ]
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
+gap> S := F / rels;
+<fp semigroup with 2 generators and 3 relations>
+gap> EnumeratorCanonical(S)[4];
+fail
+gap> 
 
 # IteratorSorted
 gap> S := SymmetricInverseMonoid(2);

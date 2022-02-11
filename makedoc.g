@@ -117,7 +117,7 @@ AutoDoc("semigroups", rec(
             \newcommand{\bbZ}{\mathbb{Z}}
         """),
         main := "main",
-        files := Files), 
+        files := Files),
 
     scaffold := rec(
         includes := Includes,

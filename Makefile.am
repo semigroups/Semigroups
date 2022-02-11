@@ -21,8 +21,9 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 
 lib_LTLIBRARIES = semigroups.la
 
-semigroups_la_SOURCES =  src/bipart.cpp 
+semigroups_la_SOURCES =  src/bipart.cpp
 semigroups_la_SOURCES += src/cong.cpp
+semigroups_la_SOURCES += src/froidure-pin-base.cpp
 semigroups_la_SOURCES += src/froidure-pin-bipart.cpp
 semigroups_la_SOURCES += src/froidure-pin-bmat.cpp
 semigroups_la_SOURCES += src/froidure-pin-fallback.cpp
@@ -32,7 +33,7 @@ semigroups_la_SOURCES += src/froidure-pin-min-plus-mat.cpp
 semigroups_la_SOURCES += src/froidure-pin-pbr.cpp
 semigroups_la_SOURCES += src/froidure-pin-pperm.cpp
 semigroups_la_SOURCES += src/froidure-pin-transf.cpp
-semigroups_la_SOURCES += src/pkg.cpp 
+semigroups_la_SOURCES += src/pkg.cpp
 semigroups_la_SOURCES += src/to_gap.cpp
 semigroups_la_SOURCES += gapbind14/src/gapbind14.cpp
 
@@ -86,7 +87,7 @@ endif
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif
-	
+
 if KERNEL_DEBUG
 	@echo "SUCCESS (debug mode enabled)!"
 else
@@ -101,11 +102,11 @@ doc: doc/manual.six
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
-lint: 
+lint:
 	etc/gaplint.sh
 	etc/cpplint.sh
 
-format: 
+format:
 	clang-format -i src/*.hpp src/*.cpp
 
 superclean: distclean

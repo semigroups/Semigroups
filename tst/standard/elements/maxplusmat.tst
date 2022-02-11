@@ -12,6 +12,8 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> Matrix(IsNTPMatrix, [[1]], -1, 2);
+Error, the 2nd argument (a pos. int.) is not >= 0
 
 # maxplusmat: test max-plus matrix code, 1/1
 gap> mat := Matrix(IsMaxPlusMatrix, [[4, 0, -2],

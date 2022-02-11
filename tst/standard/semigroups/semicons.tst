@@ -1030,6 +1030,8 @@ gap> SSSE(S, 2, Transformation([2, 1])) * SSSE(S, 3, Transformation([1, 1]))
 true
 gap> S = UnderlyingSemilatticeOfSemigroups(SSSE(S, 2, Transformation([2, 1])));
 true
+gap> ViewString(SSSE(S, 1, Transformation([2, 2])));
+"SSSE(1, \>Transformation( [ \>2\<,\> 2\< ] )\<)"
 
 # constructions: strong semilattices of semigroups: full worked example (SLOW!)
 #
