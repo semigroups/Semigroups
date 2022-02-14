@@ -122,6 +122,16 @@ gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
 true
+gap> S := FreeBand(2);
+<free band on the generators [ x1, x2 ]>
+gap> IsomorphismSemigroup(IsTropicalMaxPlusMatrixSemigroup, S);
+MappingByFunction( <free band on the generators [ x1, x2 ]>, 
+<semigroup of size 6, 7x7 tropical max-plus matrices with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> IsomorphismSemigroup(IsNTPMatrixSemigroup, S);
+MappingByFunction( <free band on the generators [ x1, x2 ]>, 
+<semigroup of size 6, 7x7 ntp matrices with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
 
 # AsSemigroup:
 #   convert from IsPBRSemigroup to IsMaxPlusMatrixSemigroup
@@ -589,6 +599,20 @@ gap> map := IsomorphismMonoid(IsNTPMatrixMonoid, 3, 4,
 > Semigroup(Transformation([1, 2, 3, 3, 3])));;
 gap> Range(map);
 <trivial group of 1x1 ntp matrices with 1 generator>
+gap> S := Semigroup(Transformation([1, 2, 2, 2]));
+<commutative transformation semigroup of degree 4 with 1 generator>
+gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, S);
+<commutative semigroup of 4x4 tropical max-plus matrices with 1 generator>
+gap> map := IsomorphismMonoid(IsTropicalMaxPlusMatrixMonoid, S);
+MappingByFunction( <trivial group of 4x4 tropical max-plus matrices with
+  1 generator>, <trivial group of 1x1 tropical max-plus matrices with
+  1 generator>, function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismMonoid(IsTropicalMaxPlusMatrixMonoid,
+> Semigroup(Transformation([1, 2, 2, 2])));;
+gap> map := IsomorphismMonoid(IsNTPMatrixMonoid, FreeBand(1));
+MappingByFunction( <free band on the generators [ x1 ]>, 
+<trivial group of 1x1 ntp matrices with 1 generator>
+ , function( x ) ... end, function( x ) ... end )
 
 # FullTropicalMaxPlusMonoid
 gap> FullTropicalMaxPlusMonoid(3, 1);

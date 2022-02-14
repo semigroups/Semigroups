@@ -12,6 +12,24 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();;
+gap> Noop := 0;;
+gap> TestIterator := function(S, it)
+> local LoopIterator;
+> LoopIterator := function(it)
+>   local valid, len, x;
+>   valid := true;;
+>   len := 0;
+>   for x in it do 
+>     len := len + 1;
+>     if not x in S then 
+>       valid := false;
+>       break;
+>     fi;
+>   od;
+>   return valid and IsDoneIterator(it) and len = Size(S);
+> end;
+> return LoopIterator(it) and LoopIterator(ShallowCopy(it));
+> end;;
 
 # SemiTransTest1
 # RepresentativeOfMinimalIdeal and IsSynchronizingSemigroup for T_n
@@ -2527,6 +2545,20 @@ gap> SmallestElementSemigroup(S);
 Transformation( [ 1, 1, 1 ] )
 gap> LargestElementSemigroup(S);
 Transformation( [ 3, 3, 3 ] )
+gap> S := Semigroup(AsTransformation((2, 3, 4)),
+>                   Transformation([2, 2, 2, 2]));;
+gap> AsSet(S);;
+gap> SmallestElementSemigroup(S);
+IdentityTransformation
+gap> LargestElementSemigroup(S);
+Transformation( [ 4, 4, 4, 4 ] )
+gap> S := Semigroup(AsTransformation((2, 3, 4)),
+>                   Transformation([2, 2, 2, 2]));;
+gap> EnumeratorSorted(S);;
+gap> SmallestElementSemigroup(S);
+IdentityTransformation
+gap> LargestElementSemigroup(S);
+Transformation( [ 4, 4, 4, 4 ] )
 
 # Test IsomorphismTransformationSemigroup for an ideal
 gap> S := FullTransformationMonoid(3);
@@ -2585,6 +2617,10 @@ gap> T := Range(iso);
 gap> Size(T);
 16
 gap> IsMonoid(T);
+true
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
 true
 
 # IsomorphismTransformationSemigroup for an fp monoid
@@ -2650,6 +2686,9 @@ gap> S := FullTransformationMonoid(4);; Elements(S);;
 gap> y := Iterator(S);
 <iterator>
 gap> for x in y do od;
+gap> S := FullTransformationMonoid(3);;
+gap> TestIterator(S, Iterator(S));
+true
 
 # Tests wreath product of transf. semgp. and perm. group
 gap> T := FullTransformationMonoid(3);;
@@ -2663,8 +2702,6 @@ gap> IsSubsemigroup(TC, DP);
 true
 gap> C := Group((1, 2));;
 gap> TC := WreathProduct(T, C);;
-gap> Size(TC) = 1458;                 
-true
 gap> CC := AsMonoid(IsTransformationMonoid, C);;
 gap> DP := DirectProduct(T, CC);;
 gap> IsSubsemigroup(TC, DP);
@@ -2690,6 +2727,12 @@ true
 gap> Transformation([2, 1, 4, 3, 6, 5, 6, 5, 7, 8]) in WW;
 false
 
+# WreathProduct bad input
+gap> WreathProduct(FullTransformationMonoid(2),
+> SingularTransformationMonoid(2));
+Error, the 2nd argument (a transformation semigroup) should be a monoid (as se\
+migroup)
+
 # DigraphCore
 gap> D := CompleteBipartiteDigraph(4, 4);
 <immutable complete bipartite digraph with bicomponent sizes 4 and 4>
@@ -2702,6 +2745,22 @@ gap> D := CycleDigraph(10);
 gap> GeneratorsOfEndomorphismMonoid(D);;
 gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+
+# IsomorphismTransformationSemigroup
+gap> IsomorphismTransformationSemigroup(FullTransformationMonoid(2));
+IdentityMapping( <full transformation monoid of degree 2> )
+gap> IsomorphismTransformationSemigroup(GraphInverseSemigroup(CycleDigraph(2)));
+Error, the argument (a semigroup) is not finite
+gap> F := FreeMonoid(2);
+<free monoid on the generators [ m1, m2 ]>
+gap> R := [[F.1 ^ 2, F.1]];
+[ [ m1^2, m1 ] ]
+gap> IsomorphismTransformationSemigroup(F / R);
+Error, the argument (a semigroup) is not finite
+gap> IsomorphismTransformationSemigroup(MinimalIdeal(FreeBand(2)));
+MappingByFunction( <simple semigroup ideal of size 4, with 1 generator>, 
+<transformation semigroup of size 4, degree 5 with 4 generators>
+, function( x ) ... end, function( x ) ... end )
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

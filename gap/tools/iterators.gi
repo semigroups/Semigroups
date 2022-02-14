@@ -201,15 +201,26 @@ function(arg)
     iter.baseiter!.IsDoneIterator := SEMIGROUPS_IsDoneIterator_List;
   fi;
 
-  iter.unwrap   := arg[2];
+  iter.unwrap := arg[2];
 
   if IsBound(arg[4]) then
     Assert(1, IsFunction(arg[4]));
     iter.isnew := arg[4];
   fi;
 
-  iter.ShallowCopy := iter -> rec(baseiter := ShallowCopy(iter!.baseiter),
-                                  unwrap   := iter!.unwrap);
+  iter.ShallowCopy := function(iter)
+    local result, name;
+
+    result := rec();
+    result.baseiter := ShallowCopy(iter!.baseiter);
+    result.unwrap   := iter!.unwrap;
+    for name in NamesOfComponents(iter) do
+      if not name in ["baseiter", "unwrap"] then
+        result.(name) := iter!.(name);
+      fi;
+    od;
+    return result;
+  end;
 
   # get NextIterator
   if not IsBound(iter.isnew) then

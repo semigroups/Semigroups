@@ -2001,7 +2001,7 @@ function(S)
     return data[iter!.i][4];
   end;
 
-  record.ShallowCopy := iter -> rec(i := 1);
+  record.ShallowCopy := iter -> rec(i := 1, parent := iter!.parent);
 
   return IteratorByNextIterator(record);
 end);

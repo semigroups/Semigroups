@@ -79,7 +79,9 @@ Error, no 3rd choice method found for `*' on 2 arguments
 gap> S := Semigroup([Transformation([2, 3, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([3, 2, 3]), Transformation([1, 1, 1])];;
 gap> cong := SemigroupCongruence(S, [pair]);;
-gap> Q := S / cong;;
+gap> Q := S / cong;
+<quotient of <semigroup congruence over <transformation semigroup of degree 3 
+ with 2 generators> with 1 generating pairs>>
 gap> Size(Q);
 1
 gap> I := MinimalIdeal(S);

@@ -590,7 +590,7 @@ gap> a := f.1;; b := f.2;; c := f.3;;
 gap> s := f / [
 > [a ^ 2, a], [b ^ 2, b], [c ^ 2, c], [a * b, a], [b * a, b],
 > [a * c, a], [c * a, c], [b * c, b], [c * b, c]];
-<fp semigroup on the generators [ s1, s2, s3 ]>
+<fp semigroup with 3 generators and 9 relations>
 gap> Size(s);
 3
 gap> GreensLClassOfElement(s, s.1);
@@ -704,8 +704,8 @@ gap> f := Transformation(
 gap> f in s;
 false
 gap> GreensRClassOfElement(s, f);
-Error, Semigroups: GreensRClassOfElement: usage,
-the element does not belong to the semigroup,
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+semigroup)
 gap> f := Transformation([1, 33, 49, 57, 61, 63, 1, 59, 53, 51, 55, 39, 41,
 > 35, 37, 45, 43, 47, 11, 15, 17, 3, 13, 7, 5, 9, 23, 25, 19, 21, 29, 27, 31,
 > 3, 19, 27, 31, 33, 29, 21, 23, 25, 5, 9, 11, 7, 13, 15, 17, 35, 43, 47, 49,
@@ -759,7 +759,7 @@ gap> Size(s);
 gap> NrRClasses(s);
 200
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> r := NextIterator(iter);;
 gap> r := NextIterator(iter);
 <Green's R-class: Transformation( [ 4, 6, 3, 4, 2, 5 ] )>
@@ -972,7 +972,7 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 >   Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
 gap> s := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1;
 gap> repeat r := NextIterator(iter); until Size(r) > 1;
 gap> repeat r := NextIterator(iter); until Size(r) > 1;
@@ -981,15 +981,16 @@ true
 gap> Size(r);
 2640
 gap> enum := Enumerator(r);
-<enumerator of R-class>
+<enumerator of <Green's R-class: Transformation( [ 1, 5, 8, 8, 8, 1, 7, 2 ] )>
+ >
 gap> enum[1];
 Transformation( [ 1, 5, 8, 8, 8, 1, 7, 2 ] )
 gap> enum[2];
-Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] )
+Transformation( [ 6, 1, 3, 3, 3, 6, 4, 2 ] )
 gap> enum[43];
-Transformation( [ 1, 4, 2, 2, 2, 1, 6, 3 ] )
+Transformation( [ 2, 6, 3, 3, 3, 2, 1, 7 ] )
 gap> enum[1368];
-Transformation( [ 6, 5, 2, 2, 2, 6, 7, 3 ] )
+Transformation( [ 2, 1, 8, 8, 8, 2, 3, 6 ] )
 gap> Position(enum, last);
 1368
 gap> ForAll([1 .. 2640], x -> Position(enum, enum[x]) = x);
@@ -1042,7 +1043,8 @@ gap> r := GreensRClassOfElementNC(s, f);
 gap> Size(r);
 2640
 gap> enum := Enumerator(r);
-<enumerator of R-class>
+<enumerator of <Green's R-class: Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )>
+ >
 gap> enum[1];
 Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )
 gap> enum[1000];
@@ -1097,7 +1099,7 @@ gap> gens := [Transformation([12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2]),
 > Transformation([6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11])];;
 gap> s := Monoid(gens);;
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for r in iter do if Size(r) > 1000 then break; fi; od;
 gap> r;
 <Green's R-class: Transformation( [ 2, 2, 12, 1, 12, 1, 2, 2, 12, 10, 5,
@@ -1109,13 +1111,14 @@ gap> Length(AsList(r));
 2760
 gap> s := Monoid(gens);;
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for r in iter do if Size(r) > 1000 then break; fi; od;
 gap> r;
 <Green's R-class: Transformation( [ 2, 2, 12, 1, 12, 1, 2, 2, 12, 10, 5,
    10 ] )>
 gap> enum := Enumerator(r);
-<enumerator of R-class>
+<enumerator of <Green's R-class: Transformation( [ 2, 2, 12, 1, 12, 1, 2, 2,
+   12, 10, 5, 10 ] )>>
 gap> for i in enum do od;
 gap> s := Semigroup([
 >  Transformation([12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2]),
@@ -1243,7 +1246,7 @@ true
 gap> Size(r);
 30683520
 gap> iter := Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1 .. 100000] do NextIterator(iter); od;
 gap> gens := [Transformation([3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18,
 > 17, 8, 20, 10, 19, 12]),
@@ -1286,7 +1289,7 @@ gap> gens := [Transformation([3, 6, 9, 1, 4, 7, 2, 5, 8]),
 >   Transformation([9, 2, 2, 8, 5, 8, 8, 8, 5])];;
 gap> s := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )>
@@ -1304,7 +1307,7 @@ true
 gap> NextIterator(iter);
 <Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 5, 8, 8, 5 ] )>
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> NextIterator(iter);;
 gap> Representative(last) in s;
 true
@@ -1388,11 +1391,11 @@ gap> NrRClasses(s);
 gap> s := Semigroup(gens);
 <transformation semigroup of degree 9 with 5 generators>
 gap> iter1 := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> for i in iter1 do
 > od;
 gap> iter1 := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> j := 0;
 0
 gap> for i in iter1 do
@@ -1423,7 +1426,7 @@ gap> s := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(s);;
 gap> for i in [1 .. 1000] do NextIterator(iter); od;
 gap> iter := ShallowCopy(iter);
-<iterator of R-classes>
+<iterator>
 gap> out := [];;
 gap> for i in iter do Add(out, i); od;
 gap> Set(out) = Set(GreensRClasses(s));
@@ -1490,7 +1493,7 @@ gap> f := Transformation([1, 1, 2, 3, 4, 5, 6, 7]);;
 gap> Size(s);
 16777216
 gap> iter := IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> d := NextIterator(iter);;
 gap> d := NextIterator(iter);
 <Green's D-class: Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1 ] )>
@@ -1507,18 +1510,10 @@ gap> Sum(List(GreensDClasses(s), Size)); 8 ^ 8;
 16777216
 16777216
 gap> iter := IteratorOfDClassReps(s);
-<iterator of D-class reps>
+<iterator>
 gap> for i in [1 .. 8] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 true
-gap> gens := [Transformation([1, 3, 2, 3]),
-> Transformation([1, 4, 1, 2]),
->  Transformation([3, 4, 2, 2]),
->   Transformation([4, 1, 2, 1])];;
-gap> s := Semigroup(gens);;
-gap> iter := IteratorOfDClassReps(s);
-<iterator of D-class reps>
-gap> for i in [1 .. 15] do NextIterator(iter); od;
 gap> s := FullTransformationSemigroup(10);;
 gap> f := Transformation([8, 10, 8, 5, 6, 10, 7, 2, 9, 9]);;
 gap> d := GreensDClassOfElementNC(s, f);;  # 1s with NC check efficiency here!

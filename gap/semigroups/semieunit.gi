@@ -154,7 +154,7 @@ function(coll)
   local Y;
 
   if not IsSemigroup(coll) then
-    coll := MTSEParent(coll);
+    coll := MTSEParent(Representative(coll));
   fi;
   if not IsMonoid(coll) then
     return fail;

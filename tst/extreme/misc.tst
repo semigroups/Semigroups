@@ -86,13 +86,13 @@ true
 gap> d := DClassNC(s, f);
 <Green's D-class: [3,4,1][11,5,2]>
 gap> d := DClassNC(s, Representative(l));
-<Green's D-class: [4,12]>
+<Green's D-class: [3,4,1][11,5,2]>
 gap> ForAll(l, x -> x in d);
 true
 gap> Number(d, x -> x in l);
-11
+1
 gap> Number(s, x -> x in l);
-11
+1
 
 # MiscTest2
 gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
@@ -105,7 +105,7 @@ gap> f := Transformation([5, 2, 7, 2, 7, 2, 5, 8]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>
 gap> enum := Enumerator(l);
-<enumerator of L-class>
+<enumerator of <Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>>
 gap> enum[1];
 Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )
 gap> enum[2];
@@ -733,7 +733,7 @@ gap> RhoOrbSCC(d);
 gap> ForAll(d, x -> x in d);
 true
 gap> enum := Enumerator(d);
-<enumerator of D-class>
+<enumerator of <Green's D-class: [1,2][3,7,5][6,8]>>
 gap> enum[1];
 [1,2][3,7,5][6,8]
 gap> Length(enum);
@@ -747,7 +747,7 @@ gap> s := Semigroup(gens);
 gap> d := DClass(s, PartialPerm([1, 3, 6], [7, 4, 8]));
 <Green's D-class: [1,7][3,4][6,8]>
 gap> enum := Enumerator(d);
-<enumerator of D-class>
+<enumerator of <Green's D-class: [1,7][3,4][6,8]>>
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
 gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
@@ -839,7 +839,7 @@ gap> GreensHClasses(d);
 [ <Green's H-class: [12,98][27,3][37,84][40,99][46,100][50,21][51,70][53,89]> 
  ]
 gap> iter := IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d := NextIterator(iter); until Size(d) > 1;
 gap> d;
 <Green's D-class: [8,63][57,87]>
@@ -2013,7 +2013,7 @@ gap> d := DClassNC(s, f);
 gap> Size(d);
 1
 gap> iter := IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d := NextIterator(iter); until Size(d) > 1;
 gap> d;
 <Green's D-class: [74,16][84,34]>
@@ -2586,7 +2586,7 @@ gap> r := RClass(s, f);
 gap> Size(r);
 86
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
@@ -2595,7 +2595,8 @@ gap> Size(r);
 gap> SchutzenbergerGroup(r);
 Group([ (2,8), (1,8), (1,2,8,9) ])
 gap> enum := Enumerator(r);
-<enumerator of R-class>
+<enumerator of <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9,
+   8 ] )>>
 gap> ForAll(enum, x -> x in r);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
@@ -2620,46 +2621,39 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )>, 
   <Green's H-class: Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )>, 
   <Green's H-class: Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
-  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
-  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
-  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
-  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
   <Green's H-class: Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )>, 
   <Green's H-class: Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )>, 
   <Green's H-class: Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )>, 
   <Green's H-class: Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )>, 
   <Green's H-class: Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )>, 
   <Green's H-class: Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )>, 
-  <Green's H-class: Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )>, 
-  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )>, 
-  <Green's H-class: Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )>, 
-  <Green's H-class: Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )>, 
-  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
-  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
-  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
-  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 2, 4, 1, 8, 4, 1, 2, 2, 2, 1 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 4, 2, 3, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 5, 3, 1, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 9, 6, 5, 9, 3, 3, 3, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 4, 9, 1, 4, 3, 3, 3, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 10, 9, 5, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
   <Green's H-class: Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )>, 
   <Green's H-class: Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )>, 
   <Green's H-class: Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )>, 
   <Green's H-class: Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
-  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
-  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
-  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
-  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
-  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
-  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )>, 
-  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )>, 
   <Green's H-class: Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )>, 
   <Green's H-class: Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )>, 
@@ -2667,6 +2661,8 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )>, 
   <Green's H-class: Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )>, 
   <Green's H-class: Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )>, 
   <Green's H-class: Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )>, 
   <Green's H-class: Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )>, 
@@ -2675,6 +2671,8 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )>, 
   <Green's H-class: Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )>, 
   <Green's H-class: Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )>, 
   <Green's H-class: Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )>, 
   <Green's H-class: Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )>, 
@@ -2685,6 +2683,9 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )>, 
   <Green's H-class: Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )>, 
   <Green's H-class: Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )>, 
   <Green's H-class: Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )> ]
@@ -2822,7 +2823,7 @@ gap> r := GreensRClassOfElementNC(s, f);
 gap> Size(r);
 4
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: [1,4][9,3,5][10,7]>
@@ -2907,14 +2908,14 @@ false
 gap> ForAll(r, x -> x in s);
 true
 gap> iter := Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in iter do od;
 gap> Size(r);
 24
 gap> IsDoneIterator(iter);
 true
 gap> iter := Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1 .. 23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
@@ -3035,20 +3036,19 @@ gap> r := RClassOfHClass(h);
 gap> HClassReps(r);
 [ [3,2](1,6)(5) ]
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1;
 gap> r;
 <Green's R-class: [1,2,3,4]>
 gap> Size(r);
 114
 gap> HClassReps(r);
-[ [1,2,3,4], [2,3,6](1), [1,5](2)(3), [1,2,4][3,6], 
-  <identity partial perm on [ 1, 2, 3 ]>, [3,6](1)(2), [3,2,1,5], [1,3,2,6], 
-  [2,5](1,3), [1,2,6][3,5], [1,4][2,3,6], [2,6][3,1,4], [2,1,5][3,6], 
-  [1,6][2,5](3), [2,5][3,4](1), [1,3,5][2,4], [2,3,4](1), [1,4][3,2,5], 
-  [3,4](1,2) ]
+[ [1,2,3,4], [1,2,4][3,6], [2,3,6](1), [1,5](2)(3), [2,5](1,3), [3,2,1,5], 
+  <identity partial perm on [ 1, 2, 3 ]>, [1,3,2,6], [3,6](1)(2), 
+  [1,4][2,3,6], [1,3,5][2,4], [2,3,4](1), [2,1,5][3,6], [1,6][2,5](3), 
+  [1,2,6][3,5], [1,4][3,2,5], [3,4](1,2), [2,5][3,4](1), [2,6][3,1,4] ]
 gap> Size(DClass(r));
 2166
 gap> d := DClass(r);
@@ -3164,7 +3164,8 @@ true
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
 gap> Enumerator(h);
-<enumerator of H-class>
+<enumerator of <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
+ >
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
 gap> SchutzenbergerGroup(h);
@@ -3180,7 +3181,7 @@ IdentityTransformation
 gap> h := HClassNC(s, f);
 <Green's H-class: IdentityTransformation>
 gap> enum := Enumerator(h);
-<enumerator of H-class>
+<enumerator of <Green's H-class: IdentityTransformation>>
 gap> ForAll(enum, x -> x in h);
 true
 gap> ForAll(enum, x -> x in s);
@@ -3241,48 +3242,49 @@ false
 gap> Size(h);
 1
 gap> h;
-<Green's H-class: [3,2,5](1)>
+<Green's H-class: [1,5,6,4][2,3]>
 gap> Size(h);
-6
+1
 gap> enum := Enumerator(h);
-<enumerator of H-class>
+<enumerator of <Green's H-class: [1,5,6,4][2,3]>>
 gap> ForAll([1 .. Length(enum)], x -> Position(enum, enum[x]) = x);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
 gap> d := DClass(s, Representative(h));
-<Green's D-class: [3,2,5](1)>
+<Green's D-class: [1,6][2,3,5](4)>
 gap> f := Representative(h);
-[3,2,5](1)
+[1,5,6,4][2,3]
 gap> h := HClass(d, f);
-<Green's H-class: [3,2,5](1)>
+<Green's H-class: [1,5,6,4][2,3]>
 gap> h = HClass(s, f);
 true
 gap> Idempotents(h);
 [  ]
 gap> repeat h := NextIterator(iter); until Size(h) > 1;
 gap> h;
-<Green's H-class: [1,3,5](2)>
+<Green's R-class: [1,3](2)(4)>
 gap> Size(h);
-6
+114
 gap> f := Representative(h);
-[1,3,5](2)
+[1,3](2)(4)
 gap> r := RClassNC(d, f);
-<Green's R-class: [3,2,5](1)>
+<Green's R-class: [4,1,2,5]>
 gap> h := HClass(r, f);
-<Green's H-class: [1,3,5](2)>
+Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
+Green's class)
 gap> h = HClass(s, f);
-true
+false
 gap> Elements(h) = Elements(HClass(s, f));
-true
+false
 gap> l := LClass(s, f);
-<Green's L-class: [1,3,5](2)>
+<Green's L-class: [1,3,4](2)>
 gap> h := HClass(l, f);
-<Green's H-class: [1,3,5](2)>
+<Green's H-class: [1,3](2)(4)>
 gap> Elements(h) = Elements(HClass(s, f));
 true
 gap> h := HClass(l, f);
-<Green's H-class: [1,3,5](2)>
+<Green's H-class: [1,3](2)(4)>
 
 # MiscTest41
 gap> gens := [Transformation([1, 2, 5, 4, 3, 8, 7, 6]),
@@ -3322,11 +3324,11 @@ true
 gap> Number(r, x -> x in h);
 6
 gap> l;
-<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 6 ]>>
+<Green's L-class: [1,3,4](2)>
 gap> RhoOrbStabChain(l);
 true
 gap> g := SchutzenbergerGroup(l);
-Sym( [ 1, 2, 3, 5, 6 ] )
+Sym( [ 2 .. 4 ] )
 gap> IsSymmetricGroup(g);
 true
 gap> IsNaturalSymmetricGroup(g);
@@ -3389,7 +3391,7 @@ gap> r := RClass(s, f);
 gap> Size(r);
 86
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
@@ -3398,7 +3400,8 @@ gap> Size(r);
 gap> SchutzenbergerGroup(r);
 Group([ (2,8), (1,8), (1,2,8,9) ])
 gap> enum := Enumerator(r);
-<enumerator of R-class>
+<enumerator of <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9,
+   8 ] )>>
 gap> ForAll(enum, x -> x in r);
 true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
@@ -3423,46 +3426,39 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 10, 1, 4, 3, 1, 4, 10, 10, 10, 4 ] )>, 
   <Green's H-class: Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )>, 
   <Green's H-class: Transformation( [ 3, 2, 7, 1, 2, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
-  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
-  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
-  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
-  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
+  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
+  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
+  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
   <Green's H-class: Transformation( [ 1, 7, 3, 10, 7, 3, 1, 1, 1, 3 ] )>, 
   <Green's H-class: Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )>, 
   <Green's H-class: Transformation( [ 5, 8, 4, 2, 8, 4, 5, 5, 5, 4 ] )>, 
   <Green's H-class: Transformation( [ 10, 6, 5, 3, 6, 5, 10, 10, 10, 5 ] )>, 
   <Green's H-class: Transformation( [ 2, 3, 10, 1, 3, 10, 2, 2, 2, 10 ] )>, 
   <Green's H-class: Transformation( [ 3, 1, 2, 9, 1, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 1, 2, 8, 4, 2, 8, 1, 1, 1, 8 ] )>, 
-  <Green's H-class: Transformation( [ 3, 4, 2, 5, 4, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 1, 5, 3, 10, 5, 3, 1, 1, 1, 3 ] )>, 
-  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
-  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 9, 3, 6, 5, 3, 6, 9, 9, 9, 6 ] )>, 
-  <Green's H-class: Transformation( [ 4, 3, 9, 1, 3, 9, 4, 4, 4, 9 ] )>, 
-  <Green's H-class: Transformation( [ 10, 1, 9, 5, 1, 9, 10, 10, 10, 9 ] )>, 
-  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
-  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
-  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
-  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 10, 1, 9, 3, 1, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 2, 4, 1, 8, 4, 1, 2, 2, 2, 1 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 4, 2, 3, 4, 5, 5, 5, 4 ] )>, 
+  <Green's H-class: Transformation( [ 10, 1, 5, 3, 1, 5, 10, 10, 10, 5 ] )>, 
+  <Green's H-class: Transformation( [ 3, 5, 9, 6, 5, 9, 3, 3, 3, 9 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 4, 9, 1, 4, 3, 3, 3, 4 ] )>, 
+  <Green's H-class: Transformation( [ 1, 5, 10, 9, 5, 10, 1, 1, 1, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 7, 4, 10, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 8, 7, 10, 8, 3, 3, 3, 8 ] )>, 
+  <Green's H-class: Transformation( [ 1, 2, 6, 4, 2, 6, 1, 1, 1, 6 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 5, 8, 1, 5, 9, 9, 9, 5 ] )>, 
+  <Green's H-class: Transformation( [ 4, 1, 8, 10, 1, 8, 4, 4, 4, 8 ] )>, 
+  <Green's H-class: Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )>, 
   <Green's H-class: Transformation( [ 5, 9, 6, 2, 9, 6, 5, 5, 5, 6 ] )>, 
   <Green's H-class: Transformation( [ 1, 4, 9, 7, 4, 9, 1, 1, 1, 9 ] )>, 
   <Green's H-class: Transformation( [ 8, 4, 7, 10, 4, 7, 8, 8, 8, 7 ] )>, 
   <Green's H-class: Transformation( [ 3, 5, 7, 1, 5, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 1, 4, 7, 2, 4, 7, 1, 1, 1, 7 ] )>, 
-  <Green's H-class: Transformation( [ 5, 4, 7, 2, 4, 7, 5, 5, 5, 7 ] )>, 
-  <Green's H-class: Transformation( [ 10, 5, 4, 3, 5, 4, 10, 10, 10, 4 ] )>, 
-  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
-  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
-  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
-  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 4, 10, 9, 1, 10, 9, 4, 4, 4, 9 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 2, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 10, 6, 9, 3, 6, 9, 10, 10, 10, 9 ] )>, 
+  <Green's H-class: Transformation( [ 1, 10, 8, 7, 10, 8, 1, 1, 1, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 2, 6, 4, 2, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )>, 
-  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
-  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 10, 3, 1, 8, 3, 1, 10, 10, 10, 1 ] )>, 
   <Green's H-class: Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )>, 
   <Green's H-class: Transformation( [ 7, 10, 4, 9, 10, 4, 7, 7, 7, 4 ] )>, 
@@ -3470,6 +3466,8 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 7, 2, 4, 3, 2, 4, 7, 7, 7, 4 ] )>, 
   <Green's H-class: Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )>, 
   <Green's H-class: Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 5, 1, 8, 4, 1, 8, 5, 5, 5, 8 ] )>, 
+  <Green's H-class: Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )>, 
   <Green's H-class: Transformation( [ 10, 2, 5, 3, 2, 5, 10, 10, 10, 5 ] )>, 
   <Green's H-class: Transformation( [ 5, 10, 4, 2, 10, 4, 5, 5, 5, 4 ] )>, 
@@ -3478,6 +3476,8 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 3, 10, 9, 7, 10, 9, 3, 3, 3, 9 ] )>, 
   <Green's H-class: Transformation( [ 1, 2, 10, 4, 2, 10, 1, 1, 1, 10 ] )>, 
   <Green's H-class: Transformation( [ 3, 5, 2, 9, 5, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )>, 
+  <Green's H-class: Transformation( [ 9, 1, 4, 5, 1, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 3, 10, 8, 4, 10, 8, 3, 3, 3, 8 ] )>, 
   <Green's H-class: Transformation( [ 2, 1, 5, 6, 1, 5, 2, 2, 2, 5 ] )>, 
   <Green's H-class: Transformation( [ 7, 10, 1, 9, 10, 1, 7, 7, 7, 1 ] )>, 
@@ -3488,6 +3488,9 @@ gap> GreensHClasses(r);
   <Green's H-class: Transformation( [ 3, 4, 8, 7, 4, 8, 3, 3, 3, 8 ] )>, 
   <Green's H-class: Transformation( [ 1, 5, 6, 4, 5, 6, 1, 1, 1, 6 ] )>, 
   <Green's H-class: Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )>, 
+  <Green's H-class: Transformation( [ 3, 10, 2, 9, 10, 2, 3, 3, 3, 2 ] )>, 
+  <Green's H-class: Transformation( [ 2, 5, 10, 1, 5, 10, 2, 2, 2, 10 ] )>, 
+  <Green's H-class: Transformation( [ 9, 5, 4, 3, 5, 4, 9, 9, 9, 4 ] )>, 
   <Green's H-class: Transformation( [ 4, 1, 9, 6, 1, 9, 4, 4, 4, 9 ] )>, 
   <Green's H-class: Transformation( [ 9, 5, 6, 4, 5, 6, 9, 9, 9, 6 ] )>, 
   <Green's H-class: Transformation( [ 1, 5, 3, 6, 5, 3, 1, 1, 1, 3 ] )> ]
@@ -3627,7 +3630,7 @@ gap> r := GreensRClassOfElementNC(s, f);
 gap> Size(r);
 4
 gap> iter := IteratorOfRClasses(s);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: [1,4][9,3,5][10,7]>
@@ -3712,14 +3715,14 @@ false
 gap> ForAll(r, x -> x in s);
 true
 gap> iter := Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in iter do od;
 gap> Size(r);
 24
 gap> IsDoneIterator(iter);
 true
 gap> iter := Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1 .. 23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false

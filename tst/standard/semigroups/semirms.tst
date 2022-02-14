@@ -2249,7 +2249,7 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 gap> NrIdempotents(R);
 2
 gap> Idempotents(R);
-[ (1,(),1), 0 ]
+[ 0, (1,(),1) ]
 gap> AsSet(Idempotents(R)) = Elements(R);
 true
 gap> IsBand(R);
@@ -2261,8 +2261,8 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);;
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
-[ (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
-  (2,IdentityTransformation,2), 0 ]
+[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2) ]
 gap> ForAll(Idempotents(R), IsIdempotent);
 true
 gap> x := Transformation([1, 1, 2]);;
@@ -2553,6 +2553,7 @@ Error, the 4th argument must be a permutation group
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
 > Group(()), 1);
 Error, expected at most 3 arguments, found 4
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 3, 2);;
 
 # Test RMSElementNC
 gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
@@ -2679,6 +2680,14 @@ gap> Random(R) in R;
 true
 
 # Test ViewString for a Rees 0-matrix semigroup ideal
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(1), [[()]]);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> R := Semigroup(GeneratorsOfSemigroup(R));
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
+gap> IsTrivial(MinimalIdeal(R));
+true
+gap> MinimalIdeal(R);
+<trivial group>
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
 >  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
@@ -2778,9 +2787,9 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 >  [(3, 4), 0, (1, 2, 4, 3)],
 >  [(), (2, 4, 3), (1, 2)]]);;
 gap> Idempotents(R);
-[ (1,(),2), (1,(),4), (2,(),1), (1,(1,2,3),1), (1,(3,4),3), 0, 
-  (3,(1,4,3,2),2), (3,(1,2,4),1), (2,(2,3,4),4), (3,(1,3,4,2),3), 
-  (3,(1,2),4), (2,(1,3)(2,4),2) ]
+[ 0, (1,(1,2,3),1), (1,(),2), (1,(3,4),3), (1,(),4), (2,(),1), 
+  (2,(1,3)(2,4),2), (2,(2,3,4),4), (3,(1,2,4),1), (3,(1,4,3,2),2), 
+  (3,(1,3,4,2),3), (3,(1,2),4) ]
 gap> G := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(4));
 <transformation group of size 24, degree 4 with 2 generators>
 gap> R := ReesZeroMatrixSemigroup(G, [[IdentityTransformation,
@@ -2788,7 +2797,7 @@ gap> R := ReesZeroMatrixSemigroup(G, [[IdentityTransformation,
 <Rees 0-matrix semigroup 2x1 over <transformation group of size 24, 
   degree 4 with 2 generators>>
 gap> Idempotents(R);
-[ (1,IdentityTransformation,1), (2,IdentityTransformation,1), 0 ]
+[ 0, (1,IdentityTransformation,1), (2,IdentityTransformation,1) ]
 gap> R := ReesZeroMatrixSemigroup(ZeroSemigroup(2),
 > [[Transformation([1, 1, 2]), Transformation([1, 1, 2])]]);
 <Rees 0-matrix semigroup 2x1 over <commutative non-regular transformation 
@@ -2922,6 +2931,11 @@ gap> R := ReesMatrixSemigroup(S, [[S.1]]);
 gap> Size(R);
 infinity
 
+# Representative
+gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);;
+gap> Representative(R);
+(1,(),1)
+
 # Pickling
 gap> filename := Concatenation(SEMIGROUPS.PackageDir,
 > "/tst/standard/semigroups/rms.p");;
@@ -2945,7 +2959,57 @@ gap> Matrix(RR) = Matrix(R);
 true
 gap> UnderlyingSemigroup(RR) = UnderlyingSemigroup(R); 
 true
+gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
+<Rees matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> IO_Pickle(IO_File(filename, "r"), R);
+IO_Error
+gap> R := ReesZeroMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> IO_Pickle(IO_File(filename, "r"), R);
+IO_Error
 gap> Exec("rm ", filename);
+gap> filename := "bananas";
+"bananas"
+gap> IO_Unpicklers.RMSX(filename);
+IO_Error
+gap> IO_Unpicklers.RZMS(filename);
+IO_Error
+
+# Idempotents
+gap> mat := [[
+>  Transformation([2, 3, 1]),
+>  Transformation([2, 1]),
+>  Transformation([1, 2, 1])]];;
+gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(3), mat);
+<Rees 0-matrix semigroup 3x1 over <full transformation monoid of degree 3>>
+gap> Idempotents(R); 
+[ (1,Transformation( [ 1, 1, 1 ] ),1), (1,Transformation( [ 1, 1, 2 ] ),1), 
+  (1,Transformation( [ 2, 1, 2 ] ),1), (1,Transformation( [ 2, 2, 2 ] ),1), 
+  (1,Transformation( [ 3, 1, 1 ] ),1), (1,Transformation( [ 3, 1, 2 ] ),1), 
+  (1,Transformation( [ 3, 1, 3 ] ),1), (1,Transformation( [ 3, 2, 2 ] ),1), 
+  (1,Transformation( [ 3, 3, 2 ] ),1), (1,Transformation( [ 3, 3, 3 ] ),1), 
+  (2,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1 ] ),1), 
+  (2,Transformation( [ 2, 1, 1 ] ),1), (2,Transformation( [ 2, 1, 2 ] ),1), 
+  (2,Transformation( [ 2, 1 ] ),1), (2,Transformation( [ 2, 2, 2 ] ),1), 
+  (2,Transformation( [ 2, 2 ] ),1), (2,Transformation( [ 2, 3, 3 ] ),1), 
+  (2,Transformation( [ 3, 1, 3 ] ),1), (2,Transformation( [ 3, 3, 3 ] ),1), 
+  (3,Transformation( [ 1, 1, 1 ] ),1), (3,Transformation( [ 1, 2, 1 ] ),1), 
+  (3,Transformation( [ 1, 2, 2 ] ),1), (3,Transformation( [ 2, 2, 2 ] ),1), 
+  (3,Transformation( [ 3, 2, 2 ] ),1), (3,Transformation( [ 3, 2, 3 ] ),1), 
+  (3,Transformation( [ 3, 3, 3 ] ),1), 0 ]
+gap> NrIdempotents(R) = Length(Idempotents(R));
+true
+gap> NrIdempotents(R);
+28
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]),
+>                                 [[(1, 2), (1, 2)], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
+gap> Idempotents(S);
+[ 0, (1,(1,2),1), (2,(1,2),1), (2,(),2) ]
+gap> NrIdempotents(S) = Length(Idempotents(S));
+true
+gap> NrIdempotents(S);
+4
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

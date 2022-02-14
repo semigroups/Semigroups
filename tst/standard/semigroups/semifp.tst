@@ -12,6 +12,9 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+
+#
+gap> Noop := 0;;
 gap> TestEnumerator := function(en)
 > return ForAll(en, x -> en[Position(en, x)] = x) 
 > and ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i)
@@ -2408,8 +2411,7 @@ true
 # IsomorphismFpSemigroup
 gap> F := FreeGroup(1);
 <free group on the generators [ f1 ]>
-gap> R := [F.1 ^ 2];
-[ f1^2 ]
+gap> R := [F.1 ^ 2];;
 gap> IsomorphismFpSemigroup(F / R);
 MappingByFunction( <fp group on the generators 
 [ f1 

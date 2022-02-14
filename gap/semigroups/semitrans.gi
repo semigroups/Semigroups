@@ -104,9 +104,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 # to beat the method in the library for IsFpSemigroup/Monoid
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;
-  if IsTransformationSemigroup(S) then
-    TryNextMethod();
-  elif not IsFinite(S) then
+  if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
 
@@ -137,16 +135,13 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
-InstallMethod(IsomorphismTransformationSemigroup,
-"for an fp monoid",
+InstallMethod(IsomorphismTransformationSemigroup, "for an fp monoid",
 [IsFpMonoid],
 function(S)
   local cay, deg, gen, i, next, T, iso, inv;
 
   if not IsFinite(S) then
-    # This is unreachable in tests, since there is not other method that
-    # terminates
-    TryNextMethod();
+    ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
 
   cay := OutNeighbours(RightCayleyDigraph(S));
@@ -247,20 +242,6 @@ function(S)
                            x -> TransformationOpNC(x, pts, OnPoints),
                            x -> BinaryRelationOnPoints(List([1 .. n], i ->
                                                             pts[pos[i] ^ x])));
-end);
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local iso, inv, J;
-
-  iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-  UseIsomorphismRelation(I, J);
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 #############################################################################

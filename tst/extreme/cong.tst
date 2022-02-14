@@ -42,8 +42,8 @@ gap> [x, y, z] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [x, Transformation([1])] in cong;
 Error, the items in the 1st argument (a list) do not all belong to the range o\
-f the 2nd argument (a right semigroup congruence)
-gap> classes := CongruenceClasses(cong);;
+f the 2nd argument (a 2-sided semigroup congruence)
+gap> classes := EquivalenceClasses(cong);;
 gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> classx := EquivalenceClassOfElement(cong, x);;
@@ -123,24 +123,24 @@ gap> s := Semigroup(gens);;
 gap> gens := List(s, x -> [gens[1], x]);;
 gap> u := SemigroupCongruence(s, gens);  # universal congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 4 generating pairs>
+ of size 5, degree 10 with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(s);
 true
 gap> v := SemigroupCongruence(s, [gens[1], gens[1]]);  # trivial congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
- of degree 10 with 1 generator> with 0 generating pairs>
-gap> classes := Set(CongruenceClasses(v));
-[ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
-  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 
-  <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
+ of size 5, degree 10 with 1 generator> with 0 generating pairs>
+gap> classes := Set(EquivalenceClasses(v));
+[ <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
   <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
-  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )> ]
-gap> ForAny(CongruenceClasses(u), x -> x in classes);
+  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>, 
+  <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
+  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )> ]
+gap> ForAny(EquivalenceClasses(u), x -> x in classes);
 false
-gap> classes[1] * CongruenceClasses(u)[1];
-Error, the arguments are not classes of the same congruence
-gap> CongruenceClasses(u)[1] * classes[1];
-Error, the arguments are not classes of the same congruence
+gap> classes[1] * EquivalenceClasses(u)[1];
+Error, the arguments (cong. classes) are not classes of the same congruence
+gap> EquivalenceClasses(u)[1] * classes[1];
+Error, the arguments (cong. classes) are not classes of the same congruence
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
 gap> classes[4] * classes[3];

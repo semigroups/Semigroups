@@ -153,14 +153,14 @@ gap> s2 := Transformation([1, 2, 2]);;
 gap> S := Semigroup([s1, s2]);
 <transformation semigroup of degree 3 with 2 generators>
 gap> R := ReesZeroMatrixSemigroup(S, [[s1]]);  # 0-simple RZMS over non-gp
-<Rees 0-matrix semigroup 1x1 over <transformation semigroup of degree 3 with 
-  2 generators>>
+<Rees 0-matrix semigroup 1x1 over <transformation semigroup of size 2, 
+  degree 3 with 2 generators>>
 gap> IsReesZeroMatrixSemigroup(R);
 true
 gap> IsRegularSemigroup(R);
 true
 gap> G := UnderlyingSemigroup(R);
-<transformation semigroup of degree 3 with 2 generators>
+<transformation semigroup of size 2, degree 3 with 2 generators>
 gap> IsGroup(G);
 false
 gap> IsZeroSimpleSemigroup(R);
@@ -179,8 +179,8 @@ gap> IsGroup(T);
 false
 gap> mat := [[t2, t1], [t1, t2]];;
 gap> R3 := ReesZeroMatrixSemigroup(T, mat);  # a RZMS over a non-group semigroup
-<Rees 0-matrix semigroup 2x2 over <regular transformation semigroup of 
-  degree 4 with 2 generators>>
+<Rees 0-matrix semigroup 2x2 over <regular transformation semigroup 
+  of size 39, degree 4 with 2 generators>>
 gap> IsReesZeroMatrixSubsemigroup(R3);
 true
 gap> IsReesZeroMatrixSemigroup(R3);

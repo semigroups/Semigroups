@@ -2115,6 +2115,26 @@ false
 gap> T < T;
 false
 
+# CodegreeOfPartialPermSemigroup
+gap> S := MinimalIdeal(SymmetricInverseMonoid(3));
+<partial perm group of rank 0>
+gap> CodegreeOfPartialPermSemigroup(S);
+0
+gap> DegreeOfPartialPermSemigroup(S);
+0
+
+# DigraphOfActionOnPoints
+gap> S := SymmetricInverseMonoid(3);
+<symmetric inverse monoid of degree 3>
+gap> DigraphOfActionOnPoints(S, -1);
+Error, the 2nd argument (an integer) must be non-negative
+gap> DigraphOfActionOnPoints(S, 0);
+<immutable empty digraph with 0 vertices>
+gap> DigraphOfActionOnPoints(S);
+<immutable multidigraph with 3 vertices, 13 edges>
+gap> DigraphOfActionOnPoints(S, 3);
+<immutable multidigraph with 3 vertices, 13 edges>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);

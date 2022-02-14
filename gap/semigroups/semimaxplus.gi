@@ -435,15 +435,6 @@ _InstallIsomorphism1 := function(filter)
   end);
 
   InstallMethod(IsomorphismMonoid,
-  Concatenation("for ", IsXMonoid, ", and a semigroup in", IsXSemigroup),
-  [ValueGlobal(IsXMonoid), ValueGlobal(IsXSemigroup)],
-  function(filter, S)
-    return IsomorphismMonoid(filter,
-                             ThresholdTropicalMatrix(Representative(S)),
-                             S);
-  end);
-
-  InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", pos int, and a semigroup"),
   [ValueGlobal(IsXMonoid), IsPosInt, IsSemigroup],
   function(filter, threshold, S)
@@ -465,6 +456,15 @@ _InstallIsomorphism1 := function(filter)
   [ValueGlobal(IsXMonoid), IsSemigroup],
   function(filter, S)
     return IsomorphismMonoid(filter, 1, S);
+  end);
+
+  InstallMethod(IsomorphismMonoid,
+  Concatenation("for ", IsXMonoid, ", and a semigroup in ", IsXSemigroup),
+  [ValueGlobal(IsXMonoid), ValueGlobal(IsXSemigroup)],
+  function(filter, S)
+    return IsomorphismMonoid(filter,
+                             ThresholdTropicalMatrix(Representative(S)),
+                             S);
   end);
 
   InstallMethod(IsomorphismMonoid,
@@ -526,16 +526,6 @@ function(S)
 end);
 
 InstallMethod(IsomorphismMonoid,
-"for IsNTPMatrixMonoid and a ntp matrix semigroup",
-[IsNTPMatrixMonoid, IsNTPMatrixSemigroup],
-function(filter, S)
-  return IsomorphismMonoid(filter,
-                           ThresholdNTPMatrix(Representative(S)),
-                           PeriodNTPMatrix(Representative(S)),
-                           S);
-end);
-
-InstallMethod(IsomorphismMonoid,
 "for IsNTPMatrixMonoid, pos int, pos int, and a semigroup",
 [IsNTPMatrixMonoid, IsPosInt, IsPosInt, IsSemigroup],
 function(filter, threshold, period, S)
@@ -557,6 +547,16 @@ InstallMethod(IsomorphismMonoid,
 [IsNTPMatrixMonoid, IsSemigroup],
 function(filter, S)
   return IsomorphismMonoid(filter, 1, 1, S);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsNTPMatrixMonoid and a ntp matrix semigroup",
+[IsNTPMatrixMonoid, IsNTPMatrixSemigroup],
+function(filter, S)
+  return IsomorphismMonoid(filter,
+                           ThresholdNTPMatrix(Representative(S)),
+                           PeriodNTPMatrix(Representative(S)),
+                           S);
 end);
 
 InstallMethod(IsomorphismMonoid,

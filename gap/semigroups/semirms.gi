@@ -377,16 +377,11 @@ function(I)
 
   str := "\><";
 
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "\>commutative\< ");
-    fi;
+  if HasIsCommutative(I) and IsCommutative(I) then
+    Append(str, "\>commutative\< ");
   fi;
 
-  if HasIsTrivial(I) and IsTrivial(I) then
-  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+  if HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
     Append(str, "\>0-simple\< ");
   elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
     Append(str, "\>simple\< ");
@@ -606,7 +601,7 @@ InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 RankFilter(IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup) -
-RankFilter(IsReesZeroMatrixSubsemigroup) + 1,
+RankFilter(IsReesZeroMatrixSubsemigroup) + 2,
 function(R)
   local G, group, iso, inv, mat, out, k, i, j;
 
@@ -657,6 +652,8 @@ end);
 InstallMethod(NrIdempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
+RankFilter(IsSemigroup and CanComputeFroidurePin and HasGeneratorsOfSemigroup) -
+RankFilter(IsReesZeroMatrixSubsemigroup) + 2,
 function(R)
   local count, mat, i, j;
 
@@ -955,9 +952,8 @@ end);
 InstallMethod(IO_Pickle, "for a Rees matrix semigroup",
 [IsFile, IsReesMatrixSemigroup],
 function(file, x)
-  if IO_Write(file, "RMSX") = fail then
-    return IO_Error;
-  elif IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  if IO_Write(file, "RMSX") = fail
+      or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
@@ -975,9 +971,8 @@ end;
 InstallMethod(IO_Pickle, "for a Rees 0-matrix semigroup",
 [IsFile, IsReesZeroMatrixSemigroup],
 function(file, x)
-  if IO_Write(file, "RZMS") = fail then
-    return IO_Error;
-  elif IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
+  if IO_Write(file, "RZMS") = fail
+      or IO_Pickle(file, [UnderlyingSemigroup(x), Matrix(x)]) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
