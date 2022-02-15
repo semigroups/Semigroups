@@ -20,6 +20,7 @@
 #define SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
 
 #include <cstddef>      // for size_t
+#include <memory>       // for shared_ptr
 #include <string>       // for string
 #include <type_traits>  // for true_type
 #include <utility>      // for pair
