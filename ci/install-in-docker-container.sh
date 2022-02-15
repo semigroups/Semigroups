@@ -4,16 +4,14 @@
 set -e
 set -o pipefail
 
-# This script is intended to be run inside a docker container
+# This script is intended to be run inside a docker container, it uses the
+# required versions of the dependencies of the Semigroups package for GAP
 
 if [ -z "$GAP_HOME" ]; then
   echo -e "\nError, the environment variable \"GAP_HOME\" must be set"
   exit 1
 elif [ -z "$GAP_VERSION" ]; then
   echo -e "\nError, the environment variable \"GAP_VERSION\" must be set"
-  exit 1
-elif [ "$PACKAGES" != "required" ] && [ "$PACKAGES" != "latest" ]; then
-  echo -e "\nError, the environment variable \"PACKAGES\" must be \"required\" or \"latest\", found $PACKAGES"
   exit 1
 fi
 
@@ -62,11 +60,7 @@ for PKG in "${PKGS[@]}"; do
   cd $GAP_HOME/pkg
 
   # Get the relevant version number
-  if [ "$PACKAGES" == "latest" ]; then
-    VERSION=`$CURL -s "https://github.com/gap-packages/$PKG/releases/latest" | grep \<title\>Release | awk -F' ' '{print $2}'`
-  else
-    VERSION=`grep "\"$PKG\"" $GAP_HOME/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
-  fi
+  VERSION=`grep -i "\"$PKG\"" $GAP_HOME/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
 
   if [ -z $VERSION ]; then
     echo -e "\nCould not determine the version number of the package $PKG!! Aborting..."
@@ -76,11 +70,13 @@ for PKG in "${PKGS[@]}"; do
   # This can be removed when there is no GAPDoc special case for GAP 4.10.2
   if [ "$PKG" == "GAPDoc" ]; then
     URL="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/GAPDoc-$VERSION.tar.gz"
+  elif [ "$PKG" == "digraphs" ]; then
+    URL="https://github.com/digraphs/Digraphs/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
   else
     URL="https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz"
   fi
 
-  echo -e "\nDownloading $PKG-$VERSION ($PACKAGES version), from URL:\n$URL"
+  echo -e "\nDownloading $PKG-$VERSION (required version), from URL:\n$URL"
   $CURL "$URL" -o $PKG-$VERSION.tar.gz
   tar xf $PKG-$VERSION.tar.gz && rm $PKG-$VERSION.tar.gz
 
