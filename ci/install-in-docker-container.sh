@@ -49,7 +49,7 @@ CURL="curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 \
 # Install digraphs, genss, io, orb, images
 ################################################################################
 
-PKGS=( "digraphs" "genss" "io" "orb" "images" "datastructures")
+PKGS=( "digraphs" "genss" "io" "orb" "images" "datastructures" "autodoc")
 # We now need a newer GAPDoc than the one included in the Docker container for
 # GAP 4.10.2
 if [ "$GAP_VERSION" == "4.10.2" ]; then
