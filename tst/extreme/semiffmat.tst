@@ -71,7 +71,7 @@ gap> Size(S);
 gap> NrDClasses(S);
 1
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ] ]
+<immutable empty digraph with 1 vertex>
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "C7161" ]
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -103,11 +103,11 @@ gap> Size(S);
 gap> NrIdempotents(S);
 43844
 gap> PartialOrderOfDClasses(S);
-[ [ 1, 2 ], [ 2, 5 ], [ 3 ], [ 3, 4 ], [ 4, 5 ] ]
+<immutable digraph with 5 vertices, 4 edges>
 gap> S := Semigroup(GeneratorsOfSemigroup(S));
 <semigroup of 5x5 matrices over GF(3) with 2 generators>
 gap> PartialOrderOfDClasses(S);
-[ [ 1, 2 ], [ 2, 5 ], [ 3 ], [ 3, 4 ], [ 4, 5 ] ]
+<immutable digraph with 5 vertices, 4 edges>
 
 # MatrixSemigroupTest3: Create, Size, MinimalIdeal
 gap> S := Semigroup(
@@ -156,7 +156,7 @@ gap> upper := function(mat)
 gap> S := GeneralLinearMonoid(3, 3);
 <general linear monoid 3x3 over GF(3)>
 gap> T := SubsemigroupByProperty(S, upper);
-<monoid of size 729, 3x3 matrices over GF(3) with 12 generators>
+<monoid of size 729, 3x3 matrices over GF(3) with 21 generators>
 gap> Size(T);
 729
 
@@ -321,7 +321,7 @@ gap> NrLClasses(S);
 gap> SchutzenbergerGroup(DClasses(S)[1]);
 <group of 8x8 matrices over GF(2) with 3 generators>
 gap> PartialOrderOfDClasses(S);
-[ [ 1 ] ]
+<immutable empty digraph with 1 vertex>
 
 #FIXME(later)
 #gap> StructureDescriptionOfSchutzenbergerGroups(S); 

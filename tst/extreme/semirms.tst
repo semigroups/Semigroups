@@ -17,8 +17,8 @@ gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 # ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply
 gap> R := ReesZeroMatrixSemigroup(POI(5), [[0, 0, 0], [0, 0, 0]]);
-<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid of rank 5 with 
-  5 generators>>
+<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid of size 252, 
+  rank 5 with 5 generators>>
 gap> R := Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 1512 generators>
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[0, 0, 0], [0, 0, 0]]);
@@ -29,8 +29,8 @@ gap> R := Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 6 generators>
 gap> R := ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([], []), 0],
 > [0, PartialPerm([], [])]]);
-<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid of rank 5 with 
-  5 generators>>
+<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid of size 252, 
+  rank 5 with 5 generators>>
 gap> R := Semigroup(Generators(R));
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 1008 generators>
 
@@ -640,7 +640,7 @@ gap> mat := [[(), (), ()], [(), (1, 4, 3, 5, 2), ()], [(), (1, 3, 2, 4, 5), ()]]
 gap> R := ReesMatrixSemigroup(G, mat);;
 gap> l := (4, 6);
 (4,6)
-ga> g := GroupHomomorphismByImages(G, G, [(1, 4, 3, 5, 2)], [(1, 2, 5, 3, 4)]);
+gap> g := GroupHomomorphismByImages(G, G, [(1, 4, 3, 5, 2)], [(1, 2, 5, 3, 4)]);
 [ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ]
 gap> map := [(), (1, 5, 4, 2, 3), (), (), (), ()];
 [ (), (1,5,4,2,3), (), (), (), () ]
@@ -672,8 +672,8 @@ gap> T := Semigroup(Transformation([2, 1]));
 gap> IsGroupAsSemigroup(T);
 true
 gap> R := ReesZeroMatrixSemigroup(T, [[Transformation([2, 1])]]);
-<Rees 0-matrix semigroup 1x1 over <transformation group of degree 2 with
-   1 generator>>
+<Rees 0-matrix semigroup 1x1 over <transformation group of size 2, 
+  degree 2 with 1 generator>>
 gap> IsInverseSemigroup(R);
 true
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
@@ -686,7 +686,7 @@ gap> IsInverseSemigroup(T);
 false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
 <Rees 0-matrix semigroup 2x2 over <commutative non-regular transformation 
-  semigroup of degree 3 with 1 generator>>
+  semigroup of size 2, degree 3 with 1 generator>>
 gap> IsInverseSemigroup(R);
 false
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
@@ -740,8 +740,8 @@ gap> zero := MultiplicativeZero(S);
 
 # Non-square matrix
 gap> R := ReesZeroMatrixSemigroup(S, [[zero, id]]);
-<Rees 0-matrix semigroup 2x1 over <partial perm monoid of rank 5 with 4 
-  generators>>
+<Rees 0-matrix semigroup 2x1 over <partial perm monoid of size 1546, rank 5 
+  with 4 generators>>
 gap> IsInverseSemigroup(R);
 false
 
@@ -822,7 +822,7 @@ gap> x := Transformation([2, 1]);;
 gap> T := Semigroup(x);
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+<Rees 0-matrix semigroup 2x2 over <transformation group of size 2, 
   degree 2 with 1 generator>>
 gap> NrIdempotents(R);
 4
@@ -839,8 +839,8 @@ gap> x := Transformation([1, 1, 2]);;
 gap> T := Semigroup(x);
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
-  degree 3 with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
+  of size 2, degree 3 with 1 generator>>
 gap> NrIdempotents(R);
 3
 gap> Idempotents(R);
@@ -985,12 +985,12 @@ MappingByFunction( <Rees 0-matrix semigroup 1x1 over
 <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
  , function( x ) ... end, function( x ) ... end )
 gap> R := ReesZeroMatrixSemigroup(G, [[id]]);
-<Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
-   2 generators>>
+<Rees 0-matrix semigroup 1x1 over <transformation group of size 24, 
+  degree 4 with 2 generators>>
 gap> iso := RZMSNormalization(R);;
 gap> Range(iso);
-<Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
-   2 generators>>
+<Rees 0-matrix semigroup 1x1 over <transformation group of size 24, 
+  degree 4 with 2 generators>>
 gap> Matrix(Range(iso));
 [ [ IdentityTransformation ] ]
 gap> inv := InverseGeneralMapping(iso);;

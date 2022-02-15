@@ -381,7 +381,7 @@ gap> IsLeftZeroSemigroup(i);
 false
 gap> IsRightZeroSemigroup(i);
 true
-gap> IsSynchronizingSemigroup(i, 4);
+gap> IsSynchronizingSemigroup(i);
 true
 
 # PropertiesTest30
@@ -575,11 +575,11 @@ gap> s := FullTransformationSemigroup(3);;
 gap> j := 0;;
 gap> for f in s do
 > for g in s do
-> if IsSynchronizingSemigroup(Semigroup(f, g), 3) then j := j + 1; fi;
+> if IsSynchronizingSemigroup(Semigroup(f, g)) then j := j + 1; fi;
 > od;
 > od;
 gap> j;
-549
+561
 
 # PropertiesTest48
 gap> gens := [Transformation([4, 6, 5, 2, 1, 3]),
@@ -799,10 +799,10 @@ false
 gap> t := Transformation([1]);;
 gap> s := Semigroup(t);
 <trivial transformation group of degree 0 with 1 generator>
-gap> IsSynchronizingSemigroup(s, 2);
+gap> IsSynchronizingSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s, 1);
-true
+gap> IsSynchronizingSemigroup(s);
+false
 gap> IsSynchronizingSemigroup(s);
 false
 

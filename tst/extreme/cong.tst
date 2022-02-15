@@ -94,9 +94,9 @@ gap> t := Monoid(gens);;
 gap> u := UniversalSemigroupCongruence(s);
 <universal semigroup congruence over <trivial transformation group of 
  degree 0 with 1 generator>>
-gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);
-<semigroup congruence over <commutative non-regular transformation monoid of 
- degree 10 with 1 generator> with 0 generating pairs>
+gap> v := SemigroupCongruence(t, [gens[1], gens[1]]);;
+gap> v = SemigroupCongruence(t, []);
+true
 gap> NrEquivalenceClasses(v);
 6
 gap> Size(t);
@@ -120,6 +120,10 @@ gap> NrEquivalenceClasses(u);
 # PairsCongTest4: \* for two semigroups congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> s := Semigroup(gens);;
+gap> Size(s);
+5
+gap> IsRegularSemigroup(s);
+false
 gap> gens := List(s, x -> [gens[1], x]);;
 gap> u := SemigroupCongruence(s, gens);  # universal congruence
 <semigroup congruence over <commutative non-regular transformation semigroup 
@@ -167,6 +171,8 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(l));
   [ 52, 11 ], [ 51, 48 ], [ 38, 13, 49 ], [ 52, 19 ], [ 47, 41, 34 ] ]
 gap> S := Semigroup([
 > Transformation([1, 4, 3, 1, 4, 2]), Transformation([1, 6, 6, 3, 6, 6])]);;
+gap> IsRegularSemigroup(S);
+false
 gap> l := LatticeOfCongruences(S);
 <poset of 5 congruences over <non-regular transformation semigroup 
  of size 48, degree 6 with 2 generators>>
