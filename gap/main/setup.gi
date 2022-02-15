@@ -1136,7 +1136,7 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 
 # missing hash functions
 
-SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
+SEMIGROUPS.HashFunctionRZMSE := function(x, data, func)
   if x![1] = 0 then
     return 1;
   fi;
@@ -1144,11 +1144,8 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   if IsNBitsPcWordRep(x![2]) then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
       mod data[2] + 1;
-  elif dataishashlen then
-    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
-    ErrorNoReturn(
-                  "this shouldn't happen");
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   fi;
 end;
 
@@ -1156,7 +1153,7 @@ InstallMethod(ChooseHashFunction,
 "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)
-  local R, data, under, func, dataishashlen;
+  local R, data, under, func;
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
@@ -1169,16 +1166,12 @@ function(x, hashlen)
   else
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
-    if not data = hashlen then
-      ErrorNoReturn(
-                    "cannot hash RZMS elements over this ",
-                    "underlying semigroup");
-    fi;
   fi;
-  dataishashlen := data = hashlen;
-  func := function(x, hashlen)
-    return SEMIGROUPS.HashFunctionRZMSE(x, data, under, dataishashlen);
-  end;
+  if data = fail then
+    data := hashlen;
+  fi;
+
+  func := {x, hashlen} -> SEMIGROUPS.HashFunctionRZMSE(x, data, under);
 
   return rec(func := func, data := data);
 end);
@@ -1189,8 +1182,5 @@ InstallMethod(ChooseHashFunction, "for an object and an int",
 [IsObject, IsInt],
 1,
 function(p, hashlen)
-  return rec(func := function(v, data)
-                       return 1;
-                    end,
-              data := fail);
+  return rec(func := {v, data} -> 1, data := fail);
 end);

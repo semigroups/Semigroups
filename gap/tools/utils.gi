@@ -67,14 +67,18 @@ SEMIGROUPS.StartTest := function()
   record.InfoLevelInfoPackageLoading := InfoLevel(InfoPackageLoading);
 
   # store current user preferences
-  record.PartialPermDisplayLimit := UserPreference("PartialPermDisplayLimit");
-  record.TransformationDisplayLimit
-   := UserPreference("TransformationDisplayLimit");
-  record.NotationForPartialPerms := UserPreference("NotationForPartialPerms");
+  record.PartialPermDisplayLimit :=
+    UserPreference("PartialPermDisplayLimit");
+  record.TransformationDisplayLimit :=
+    UserPreference("TransformationDisplayLimit");
+  record.NotationForPartialPerms :=
+    UserPreference("NotationForPartialPerms");
   record.NotationForTransformations :=
-   UserPreference("NotationForTransformations");
+    UserPreference("NotationForTransformations");
   record.FreeInverseSemigroupElementDisplay :=
     UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
+  record.FpSemigroupView :=
+    UserPreference("semigroups", "FpSemigroupView");
 
   # store current default options
   record.SEMIGROUPS_DefaultOptionsRec :=
@@ -92,8 +96,12 @@ SEMIGROUPS.StartTest := function()
   SetUserPreference("TransformationDisplayLimit", 100);
   SetUserPreference("NotationForPartialPerms", "component");
   SetUserPreference("NotationForTransformations", "input");
-  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+  SetUserPreference("semigroups",
+                    "FreeInverseSemigroupElementDisplay",
                     "minimal");
+  SetUserPreference("semigroups",
+                    "FpSemigroupView",
+                    "semigroups-pkg");
 
   # set default options
   libsemigroups.set_report(false);
@@ -121,8 +129,12 @@ SEMIGROUPS.StopTest := function()
                     record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
                     record.NotationForTransformations);
-  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+  SetUserPreference("semigroups",
+                    "FreeInverseSemigroupElementDisplay",
                     record.FreeInverseSemigroupElementDisplay);
+  SetUserPreference("semigroups",
+                    "FpSemigroupView",
+                    record.FpSemigroupView);
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;

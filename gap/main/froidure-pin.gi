@@ -201,7 +201,7 @@ InstallMethod(Enumerator,
 "for a semigroup with CanComputeGapFroidurePin and known generators",
 [CanComputeGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  if (IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S))
+  if (IsReesMatrixSubsemigroup(S) or IsReesZeroMatrixSubsemigroup(S))
       and HasIsWholeFamily(S) and IsWholeFamily(S) then
     TryNextMethod();
   fi;

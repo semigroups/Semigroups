@@ -8,6 +8,14 @@
 #############################################################################
 ##
 
+DeclareUserPreference(rec(
+  name := "FpSemigroupView",
+  description := ["options for the display of fp semigroups and monoids"],
+  default := "gap-library",
+  values := ["semigroups-pkg", "gap-library"],
+  multi := false,
+  package := "semigroups"));
+
 DeclareOperation("ElementOfFpSemigroup", [IsFpSemigroup, IsAssocWord]);
 DeclareOperation("ElementOfFpMonoid", [IsFpMonoid, IsAssocWord]);
 DeclareOperation("ParseRelations", [IsDenseList, IsString]);

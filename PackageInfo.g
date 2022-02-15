@@ -308,7 +308,7 @@ Dependencies := rec(
                           ["Digraphs", ">=1.5.0"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.0"]],
-  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"], 
+  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
                              ["AutoDoc", ">=2020.08.11"]],
 
   ExternalConditions := []),

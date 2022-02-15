@@ -36,6 +36,10 @@ MakeReadWriteGlobal("SEMIGROUPS");
 SEMIGROUPS.GENERATORS := rec();
 SEMIGROUPS.PackageDir := GAPInfo.PackagesLoaded.semigroups[1];
 
+BindGlobal("LIBSEMIGROUPS_VERSION",
+           Chomp(StringFile(Concatenation(SEMIGROUPS.PackageDir,
+                                          "/.LIBSEMIGROUPS_VERSION"))));
+
 ReadPackage("semigroups", "gap/options.g");
 
 ReadPackage("semigroups", "gap/elements/semiringmat.gd");

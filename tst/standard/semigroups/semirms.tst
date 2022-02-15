@@ -2511,7 +2511,6 @@ gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> x := MultiplicativeZero(S);;
 gap> func := ChooseHashFunction(x, 25531).func;;
-Error, cannot hash RZMS elements over this underlying semigroup
 
 # RandomSemigroup
 gap> RandomSemigroup(IsReesMatrixSemigroup);;

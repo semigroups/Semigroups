@@ -1119,10 +1119,6 @@ Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 
 # ChooseHashFunction
 
-# SEMIGROUPS.HashFunctionRZMSE
-gap> SEMIGROUPS.HashFunctionRZMSE([1, (), 2], "bananas", ReturnFail, false);
-Error, this shouldn't happen
-
 # ChooseHashFunction, for an RZMS element and integer
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
 gap> ChooseHashFunction(MultiplicativeZero(R), 0);
@@ -1134,7 +1130,7 @@ rec( data := [ 101, 1000 ], func := function( x, hashlen ) ... end )
 gap> G := FullPBRMonoid(1);;
 gap> R := ReesZeroMatrixSemigroup(G, [[One(G)]]);;
 gap> x := ChooseHashFunction(RMSElement(R, 1, One(G), 1), 1);
-Error, cannot hash RZMS elements over this underlying semigroup
+rec( data := 1, func := function( x, hashlen ) ... end )
 
 # ChooseHashFunction, for an object and integer
 gap> x := ChooseHashFunction(fail, 0);
