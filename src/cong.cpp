@@ -145,7 +145,5 @@ void init_cong(gapbind14::Module &m) {
            [](Congruence &C) {
              return gapbind14::make_iterator(C.cbegin_ntc(), C.cend_ntc());
            })
-      .def("equal_to", &Congruence::operator==)
-      .def("less_WTF", &Congruence::operator<)
       .def("quotient_froidure_pin", &Congruence::quotient_froidure_pin);
 }

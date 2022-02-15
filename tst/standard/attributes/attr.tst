@@ -925,7 +925,8 @@ gap> F := FreeSemigroup(2);;
 gap> x := [[F.1 * F.1, F.1], [F.1 * F.2, F.1], [F.2 * F.1, F.1]];;
 gap> T := F / x;
 <fp semigroup with 2 generators and 3 relations>
-gap> SetIsFinite(T, false);
+gap> IsFinite(T);
+false
 gap> MultiplicativeZero(T);
 s1
 
