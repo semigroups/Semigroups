@@ -139,15 +139,31 @@ end);
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsHomogeneousList],
 function(blocks)
-  local n;
+  local n, next, seen, i;
   n := Length(blocks);
-  if n >= 2 ^ 30 then
+  if not IsEvenInt(n) then
+    ErrorNoReturn("the degree of a bipartition must be even, found ", n);
+  elif n >= 2 ^ 30 then
     ErrorNoReturn("the length of the argument (a list) exceeds ",
                   "2 ^ 30 - 1");
   elif not (IsEmpty(blocks) or IsPosInt(blocks[1])) then
     ErrorNoReturn("the items in the argument (a list) must be positive ",
                   "integers");
   fi;
+
+   next := 0;
+   seen := BlistList([1 .. Maximum(blocks)], []);
+
+   for i in [1 .. n] do
+     if not seen[blocks[i]] then
+       next := next + 1;
+       if blocks[i] <> next then
+         ErrorNoReturn("expected ", next, " but found ", blocks[i],
+                       ", in position ", i);
+       fi;
+       seen[blocks[i]] := true;
+    fi;
+  od;
 
   return BIPART_NC(blocks);
 end);

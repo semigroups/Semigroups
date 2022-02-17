@@ -152,7 +152,7 @@ gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
 > leSemig\\\nroup(SymmetricGroup( [ 2 .. 5 ] ), DigraphFromDigraph6String(\"&D`a\
 > cg_\"), [ 1 .\\\n. 4 ]), 1, (4,5)), MTSE(McAlisterTripleSemigroup(SymmetricGro\
 > up( [ 2 .. 5 ] ),\\\n DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ]), 1, \
-> (3,4)) ]");
+> (3,4)) ])");
 > else 
 > value := (s = 
 > "Semigroup([ MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digra\
@@ -161,7 +161,7 @@ gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
 > .. 5 ] ),\\\n Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4\
 >  ], [ 1, 5 ] \\\n] ), [ 1 .. 4 ]), 1, (4,5)), MTSE(McAlisterTripleSemigroup(Sy\
 > mmetricGroup( [ 2\\\n .. 5 ] ), Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ]\
-> , [ 1, 3 ], [ 1, 4 ],\\\n [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (3,4)) ]");
+> , [ 1, 3 ], [ 1, 4 ],\\\n [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (3,4)) ])");
 > fi;
 gap> value;
 true

@@ -229,7 +229,7 @@ RankFilter(IsInverseSemigroup and HasGeneratorsOfSemigroup),
 function(S)
   local G, X, Y;
   if not IsWholeFamily(S) then
-    return Concatenation("Semigroup(", String(GeneratorsOfSemigroup(S)));
+    return Concatenation("Semigroup(", String(GeneratorsOfSemigroup(S)), ")");
   fi;
   G := McAlisterTripleSemigroupGroup(S);
   X := McAlisterTripleSemigroupPartialOrder(S);

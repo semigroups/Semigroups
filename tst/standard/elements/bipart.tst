@@ -491,8 +491,7 @@ gap> OneMutable([IdentityBipartition(2)]);
 
 # bipartition: BipartitionByIntRep 1/5
 gap> BipartitionByIntRep([1, 2, 3]);
-Error, src/bipart.cpp:177:validate: the degree of a bipartition must be even, \
-found 2
+Error, the degree of a bipartition must be even, found 3
 
 # bipartition: BipartitionByIntRep 2/5
 gap> BipartitionByIntRep([1, 2, 3, "a"]);
@@ -501,11 +500,11 @@ Error, no 1st choice method found for `BipartitionByIntRep' on 1 arguments
 
 # bipartition: BipartitionByIntRep 3/5
 gap> BipartitionByIntRep([1, 2, 3, 5]);
-Error, src/bipart.cpp:188:validate: expected 3 but found 4, in position 3
+Error, expected 4 but found 5, in position 4
 
 # bipartition: BipartitionByIntRep 4/5
 gap> BipartitionByIntRep([1, 3, 3, 5]);
-Error, src/bipart.cpp:188:validate: expected 1 but found 2, in position 1
+Error, expected 2 but found 3, in position 2
 
 # bipartition: BipartitionByIntRep 5/5
 gap> BipartitionByIntRep([1, 2, 3, 1]);
@@ -513,9 +512,9 @@ gap> BipartitionByIntRep([1, 2, 3, 1]);
 
 # BipartitionByIntRep
 gap> BipartitionByIntRep([1, 3, 3, 4]);
-Error, src/bipart.cpp:188:validate: expected 1 but found 2, in position 1
+Error, expected 2 but found 3, in position 2
 gap> BipartitionByIntRep([1, 2, 4, 4]);
-Error, src/bipart.cpp:188:validate: expected 2 but found 3, in position 2
+Error, expected 3 but found 4, in position 3
 
 # bipartition: BIPART_LAMBDA_CONJ 1/2
 gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;
@@ -772,8 +771,10 @@ Error, the union of the argument <classes> is not [-2 .. -1, 1 .. 2]
 gap> AsBipartition(PartialPermNC([1 .. 10]));;
 
 # BipartitionByIntRep, bad input
-gap> BipartitionByIntRep(['a']);
+gap> BipartitionByIntRep(['a', 'a']);
 Error, the items in the argument (a list) must be positive integers
+gap> BipartitionByIntRep(['a']);
+Error, the degree of a bipartition must be even, found 1
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
