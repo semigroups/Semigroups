@@ -64,7 +64,7 @@ true
 # Test IsomorphismFpMonoid, infinite
 gap> IsomorphismFpMonoid(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsomorphismFpMonoid' on 1 arguments
+Error, no 2nd choice method found for `IsomorphismFpMonoid' on 1 arguments
 
 # Test IsomorphismFpSemigroup, infinite
 gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
@@ -112,8 +112,7 @@ gap> RelationsOfFpSemigroup(S);
 # AsFpMonoid 1: trivial semigroup
 gap> S := TrivialSemigroup();
 <trivial transformation group of degree 0 with 1 generator>
-gap> S := AsMonoid(IsFpMonoid, S);
-<trivial group with 0 generators>
+gap> S := AsMonoid(IsFpMonoid, S);;
 
 # AsFpMonoid 2: 2 element semilattice
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));
@@ -1992,8 +1991,7 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]));
 <commutative transformation semigroup of degree 5 with 1 generator>
 gap> S := AsSemigroup(IsFpSemigroup, S);
 <fp semigroup with 1 generator and 1 relation>
-gap> AsMonoid(S);
-<trivial group with 0 generators>
+gap> AsMonoid(S);;
 
 # Test IsomorphismFpMonoid, fail
 gap> S := SingularTransformationMonoid(3);

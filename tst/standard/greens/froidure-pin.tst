@@ -1689,10 +1689,9 @@ gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]);
 Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])
 gap> D := DClass(S, x);
 <Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])>
-gap> map := IsomorphismPermGroup(GroupHClass(D));
-MappingByFunction( <Green's H-class: Matrix(GF(3), [[Z(3)^0, 0*Z(3)], 
-   [0*Z(3), Z(3)^0]])>, Group([ (1,2,3,4,5,6,7,8) 
- ]), function( x ) ... end, function( x ) ... end )
+gap> map := IsomorphismPermGroup(GroupHClass(D));;
+gap> Range(map);
+Group([ (1,2,3,4,5,6,7,8) ])
 gap> Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]) ^ map;
 Error, the argument does not belong to the domain of the function
 gap> (1, 3, 2) ^ InverseGeneralMapping(map);

@@ -2747,8 +2747,11 @@ gap> DigraphCore(D);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 
 # IsomorphismTransformationSemigroup
-gap> IsomorphismTransformationSemigroup(FullTransformationMonoid(2));
-IdentityMapping( <full transformation monoid of degree 2> )
+gap> S := FullTransformationMonoid(2);
+<full transformation monoid of degree 2>
+gap> map := IsomorphismTransformationSemigroup(S);;
+gap> ForAll(S, x -> x ^ map = x);
+true
 gap> IsomorphismTransformationSemigroup(GraphInverseSemigroup(CycleDigraph(2)));
 Error, the argument (a semigroup) is not finite
 gap> F := FreeMonoid(2);

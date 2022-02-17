@@ -600,7 +600,7 @@ end);
 
 InstallMethod(IsFinite,
 "for a min-plus matrix semigroup",
-[IsMinPlusMatrixSemigroup], SUM_FLAGS + 1,
+[IsMinPlusMatrixSemigroup], SUM_FLAGS,
 function(S)
   local gens, id, mat, row, val;
 
@@ -645,7 +645,7 @@ end);
 
 InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
-[IsMaxPlusMatrixSemigroup], SUM_FLAGS + 1,
+[IsMaxPlusMatrixSemigroup], SUM_FLAGS,
 function(S)
   if IsEnumerated(Enumerate(S, 8192)) then
     return true;

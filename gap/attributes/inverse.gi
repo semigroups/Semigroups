@@ -706,7 +706,7 @@ end);
 InstallMethod(InversesOfSemigroupElementNC,
 "for an inverse semigroup and a multiplicative element",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
- IsMultiplicativeElement], SUM_FLAGS + 1,
+ IsMultiplicativeElement], SUM_FLAGS,
 function(S, elm)
   return [elm ^ -1];
 end);

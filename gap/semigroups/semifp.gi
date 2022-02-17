@@ -334,8 +334,9 @@ end);
 # We do not add CanComputeFroidurePin to the filters below because FpSemigroups
 # only satisfy this if they are finite and they know it.
 
-InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
-[IsSemigroup], 3,
+InstallMethod(IsomorphismFpSemigroup,
+"for a semigroup with CanComputeFroidurePin",
+[CanComputeFroidurePin],
 function(S)
   local rules, F, A, rels, Q, B, map, inv, result;
 
@@ -367,8 +368,8 @@ end);
 # We do not add CanComputeFroidurePin to the filters below because FpSemigroups
 # only satisfy this if they are finite and they know it.
 
-InstallMethod(IsomorphismFpMonoid, "for a semigroup",
-[IsSemigroup], 8,
+InstallMethod(IsomorphismFpMonoid, "for a semigroup with CanComputeFroidurePin",
+[CanComputeFroidurePin],
 function(S)
   local sgens, mgens, F, A, start, lookup, spos, mpos, pos, rules, rels,
   convert, word, is_redundant, Q, map, inv, i, rule;
@@ -516,6 +517,12 @@ InstallMethod(IsomorphismFpSemigroup, "for a group",
 [IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
+  # The next clause shouldn't be required, but for some reason in GAP 4.10 the
+  # rank of the method for IsomorphismFpMonoid for IsFpGroup is lower than this
+  # methods rank.
+  if IsFpGroup(G) then
+    TryNextMethod();
+  fi;
 
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);
@@ -534,7 +541,12 @@ InstallMethod(IsomorphismFpMonoid, "for a group",
 [IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
-
+  # The next clause shouldn't be required, but for some reason in GAP 4.10 the
+  # rank of the method for IsomorphismFpMonoid for IsFpGroup is lower than this
+  # methods rank.
+  if IsFpGroup(G) then
+    TryNextMethod();
+  fi;
   iso1 := IsomorphismFpGroup(G);
   inv1 := InverseGeneralMapping(iso1);
   # TODO(later) the method for IsomorphismFpMonoid uses the generators of G and

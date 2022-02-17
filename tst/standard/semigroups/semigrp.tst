@@ -27,8 +27,7 @@ gap> AsMonoid(T);
 <trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := AsSemigroup(IsFpSemigroup, S);
 <fp semigroup with 1 generator and 1 relation>
-gap> AsMonoid(S);
-<trivial group with 0 generators>
+gap> AsMonoid(S);;
 gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <trivial group of 1x1 max-plus matrices with 1 generator>
 gap> AsMonoid(S);
@@ -1053,7 +1052,7 @@ gap> M := McAlisterTripleSemigroup(G, x, [1, 2]);;
 gap> T := InverseSemigroup(M.4, M.5, rec(acting := false));
 <McAlister triple subsemigroup over Sym( [ 2 .. 5 ] )>
 gap> ClosureInverseSemigroupOrMonoidNC(InverseMonoid, T, [M.2, M.1], rec());
-<inverse monoid with 6 generators>
+<McAlister triple subsemigroup over Sym( [ 2 .. 5 ] )>
 
 # RandomSemigroup
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 3, "a");

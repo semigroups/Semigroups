@@ -250,6 +250,8 @@ end);
 
 InstallMethod(ViewString, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup],
+SUM_FLAGS,
+# to beat the library method for IsInverseSemigroup, or IsInverseMonoid
 function(S)
   local G;
   G := McAlisterTripleSemigroupGroup(S);
@@ -259,8 +261,13 @@ end);
 
 InstallMethod(ViewString, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
+SUM_FLAGS,
+# to beat the library method for IsInverseSemigroup, or IsInverseMonoid
 function(S)
   local G;
+  if HasIsMcAlisterTripleSemigroup(S) and IsMcAlisterTripleSemigroup(S) then
+    TryNextMethod();
+  fi;
   G := McAlisterTripleSemigroupGroup(S);
   return Concatenation("<McAlister triple subsemigroup over ",
                        ViewString(G), ">");

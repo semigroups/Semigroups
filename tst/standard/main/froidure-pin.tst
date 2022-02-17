@@ -310,8 +310,9 @@ fail
 # PositionSorted
 gap> S := Semigroup(FreeBand(2));;
 gap> list := AsListCanonical(S);;
-gap> SortedList(list) = SortedList(list, {x, y} -> PositionSorted(S, x) <
-> PositionSorted(S, y));
+gap> copy := ShallowCopy(list);;
+gap> Sort(copy, {x, y} -> PositionSorted(S, x) < PositionSorted(S, y));
+gap> SortedList(list) = copy;
 true
 gap> PositionSorted(S, 1);
 fail

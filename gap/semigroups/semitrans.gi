@@ -99,13 +99,15 @@ end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a semigroup with CanComputeFroidurePin",
-[CanComputeFroidurePin], 7,
-# to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
-# to beat the method in the library for IsFpSemigroup/Monoid
+[CanComputeFroidurePin],
+ToBeat([CanComputeFroidurePin], [IsFpMonoid]),
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
+  elif IsPartialPermSemigroup(S) or IsTransformationSemigroup(S) then
+    # Apparently this clause is required in GAP 4.10
+    TryNextMethod();
   fi;
 
   cay := OutNeighbours(RightCayleyDigraph(S));
@@ -135,42 +137,10 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
-InstallMethod(IsomorphismTransformationSemigroup, "for an fp monoid",
-[IsFpMonoid],
-function(S)
-  local cay, deg, gen, i, next, T, iso, inv;
-
-  if not IsFinite(S) then
-    ErrorNoReturn("the argument (a semigroup) is not finite");
-  fi;
-
-  cay := OutNeighbours(RightCayleyDigraph(S));
-  deg := Size(S);
-  gen := EmptyPlist(Length(cay[1]));
-
-  for i in [1 .. Length(cay[1])] do
-    next := List([1 .. deg], j -> cay[j][i]);
-    gen[i] := Transformation(next);
-  od;
-
-  T := Semigroup(gen);
-  UseIsomorphismRelation(S, T);
-
-  iso := function(x)
-    return EvaluateWord(gen, MinimalFactorization(S, x));
-  end;
-
-  inv := function(x)
-    return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
-  end;
-
-  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
-end);
-
 InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup with generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+SUM_FLAGS,
 function(S)
   local T, map, inv, n, pts, o, pos, i;
   n := Length(Representative(S)![1]);

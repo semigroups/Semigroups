@@ -423,8 +423,9 @@ gap> S := SymmetricInverseMonoid(2);;
 gap> list := AsListCanonical(S);
 [ <identity partial perm on [ 1, 2 ]>, (1,2), <identity partial perm on [ 1 ]>
     , [2,1], [1,2], <identity partial perm on [ 2 ]>, <empty partial perm> ]
-gap> SortedList(list) = SortedList(list, {x, y} -> PositionSorted(S, x) <
-> PositionSorted(S, y));
+gap> copy := ShallowCopy(list);;
+gap> Sort(copy, {x, y} -> PositionSorted(S, x) < PositionSorted(S, y));
+gap> SortedList(list) = copy;
 true
 gap> PositionSorted(S, PartialPerm([1 .. 3]));
 fail
@@ -432,8 +433,9 @@ gap> S := FullTransformationMonoid(2);;
 gap> list := AsListCanonical(S);
 [ IdentityTransformation, Transformation( [ 2, 1 ] ), 
   Transformation( [ 1, 1 ] ), Transformation( [ 2, 2 ] ) ]
-gap> SortedList(list) =
-> SortedList(list, {x, y} -> PositionSorted(S, x) < PositionSorted(S, y));
+gap> copy := ShallowCopy(list);;
+gap> Sort(copy, {x, y} -> PositionSorted(S, x) < PositionSorted(S, y));
+gap> SortedList(list) = copy;
 true
 gap> PositionSorted(S, AsTransformation((1, 2, 3)));
 fail

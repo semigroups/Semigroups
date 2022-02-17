@@ -1798,8 +1798,7 @@ true
 #   convert from IsFpMonoid to IsReesMatrixSemigroup
 gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
 gap> rels := [];;
-gap> S := F / rels;
-<trivial group with 0 generators>
+gap> S := F / rels;;
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> Size(S) = Size(T);
