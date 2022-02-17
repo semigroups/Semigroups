@@ -92,10 +92,14 @@ SEMIGROUPS.StartTest := function()
   SetInfoLevel(InfoPackageLoading, 0);
 
   # set user preferences
-  SetUserPreference("PartialPermDisplayLimit", 100);
-  SetUserPreference("TransformationDisplayLimit", 100);
-  SetUserPreference("NotationForPartialPerms", "component");
-  SetUserPreference("NotationForTransformations", "input");
+  SetUserPreference("PartialPermDisplayLimit",
+                    100);
+  SetUserPreference("TransformationDisplayLimit",
+                    100);
+  SetUserPreference("NotationForPartialPerms",
+                    "component");
+  SetUserPreference("NotationForTransformations",
+                    "input");
   SetUserPreference("semigroups",
                     "FreeInverseSemigroupElementDisplay",
                     "minimal");
@@ -279,6 +283,11 @@ function()
 end);
 
 SEMIGROUPS.ManualExamples := function()
+  if Filename(DirectoriesPackageLibrary("semigroups", "doc"),
+              "main.xml") = fail then
+    # The file main.xml only exists if AutoDoc has been run.
+    SemigroupsMakeDoc();
+  fi;
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
                          "main.xml",
                          SEMIGROUPS_DocXMLFiles(),
