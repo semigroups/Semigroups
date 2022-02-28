@@ -641,7 +641,7 @@ function(R)
   if not IsTransformationSemigroup(Parent(R)) then
     TryNextMethod();
   fi;
-  return SEMIGROUPS_SmallestLargestElementRClass(R, Reversed, LT);
+  return SEMIGROUPS_SmallestLargestElementRClass(R, Reversed, \<);
 end);
 
 InstallMethod(SmallestElementSemigroup,

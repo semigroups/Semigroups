@@ -457,7 +457,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
       end;
       opts.onlygradesdata := fail;
       for x in K do
-        list := AsList(Enumerate(Orb(GeneratorsOfSemigroup(S), x, POW, opts)));
+        list := Enumerate(Orb(GeneratorsOfSemigroup(S), x, OnPoints, opts));
+        list := AsList(list);
         T := ClosureInverseSemigroup(T, list);
       od;
     od;

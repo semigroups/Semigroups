@@ -719,7 +719,7 @@ function(R)
   fi;
 
   GT := function(x, y)
-    return LT(y, x);
+    return y < x;
   end;
 
   # Sort the connected components of <R> by size (#rows * #colums) descending.

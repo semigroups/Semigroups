@@ -937,7 +937,7 @@ function(img, ker)
 end);
 
 InstallMethod(IdempotentTester, "for a partial perm semigroup",
-[IsPartialPermSemigroup], S -> EQ);
+[IsPartialPermSemigroup], S -> \=);
 
 InstallMethod(IdempotentTester, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_E_TESTER);
@@ -1008,10 +1008,10 @@ end);
 # and something else for semigroups of bipartitions.
 
 InstallMethod(StabilizerAction, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> PROD);
+[IsTransformationSemigroup], S -> OnRight);
 
 InstallMethod(StabilizerAction, "for a partial perm semigroup",
-[IsPartialPermSemigroup], S -> PROD);
+[IsPartialPermSemigroup], S -> OnRight);
 
 InstallMethod(StabilizerAction, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_STAB_ACTION);

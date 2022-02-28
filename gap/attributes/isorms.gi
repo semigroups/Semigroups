@@ -605,7 +605,7 @@ function(G)
   R := Source(Representative(G));  # the Rees (0-)matrix semigroup
   H := [];
   for x in GeneratorsOfGroup(G) do
-    Add(H, Permutation(x, R, POW));
+    Add(H, Permutation(x, R, OnPoints));
   od;
   H := Group(H);
 

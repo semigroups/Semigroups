@@ -135,8 +135,8 @@ function(o, m, i)
         mults[i] := [one, one];
         return one;
       fi;
-      x := INV(gens[genpos[1][i]]) * trace(genpos[2][i]);
-      mults[i] := [INV(x), x];
+      x := InverseMutable(gens[genpos[1][i]]) * trace(genpos[2][i]);
+      mults[i] := [InverseMutable(x), x];
       return x;
     end;
   fi;

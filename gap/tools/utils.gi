@@ -324,7 +324,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         start_time := IO_gettimeofday();
         test := Test(s, rec(ignoreComments := false,
                             width := 72,
-                            EQ := EQ,
+                            EQ := \=,
                             reportDiff := Ignore,
                             showProgress := false));
         end_time := IO_gettimeofday();
@@ -347,7 +347,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 
         if test = false then
           for i in [1 .. Length(pex[1])] do
-            if EQ(pex[2][i], pex[4][i]) <> true then
+            if pex[2][i] <> pex[4][i] then
               Print("\033[31m########> Diff in:\n",
                     "# ", ex[2][1], ":", ex[2][2],
                     "\n# Input is:\n");
