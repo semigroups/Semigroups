@@ -64,6 +64,8 @@ doc/main.tex
 doc/main.toc
 doc/manual.pdf
 doc/manual.six
+doc/*.js
+doc/*.css
 gh-pages
 lcov*
 libsemigroups/
