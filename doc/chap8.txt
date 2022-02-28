@@ -1,950 +1,597 @@
   
-  [1X8 [33X[0;0YStandard examples[133X[101X
+  [1X8 [33X[0;0YStandard constructions[133X[101X
   
-  [33X[0;0YIn  this  chapter we describe some standard examples of semigroups which are
-  available in the [5XSemigroups[105X package.[133X
+  [33X[0;0YIn  this  chapter  we describe some standard ways of constructing semigroups
+  and  monoids  from  other  semigroups  that  are available in the [5XSemigroups[105X
+  package.[133X
   
   
-  [1X8.1 [33X[0;0YTransformation semigroups[133X[101X
+  [1X8.1 [33X[0;0YProducts of semigroups[133X[101X
   
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to create transformation semigroups belonging to several standard classes of
-  example.   See  [14X'Reference:  Transformations'[114X  for  more  information  about
-  transformations.[133X
+  [33X[0;0YIn this section, we describe the functions in [5XSemigroups[105X that can be used to
+  create various products of semigroups.[133X
   
-  [1X8.1-1 CatalanMonoid[101X
+  [1X8.1-1 DirectProduct[101X
   
-  [33X[1;0Y[29X[2XCatalanMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA transformation monoid.[133X
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XS[103X[, [3XT[103X, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDirectProductOp[102X( [3Xlist[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
   
-  [33X[0;0YIf  [3Xn[103X  is a positive integer, then this operation returns the Catalan monoid
-  of degree [3Xn[103X. The [13XCatalan monoid[113X is the semigroup of the order-preserving and
-  order-decreasing transformations of [10X[1 .. n][110X with the usual ordering.[133X
+  [33X[0;0YThe  function  [10XDirectProduct[110X  takes  an  arbitrary positive number of finite
+  semigroups,  and  returns  a  semigroup  that  is isomorphic to their direct
+  product.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := CatalanMonoid(6);[127X[104X
-    [4X[28X<transformation monoid of degree 6 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X132[128X[104X
-  [4X[32X[104X
+  [33X[0;0YIf  these finite semigroups are all partial perm semigroups, all bipartition
+  semigroups, or all PBR semigroups, then [10XDirectProduct[110X returns a semigroup of
+  the same type. Otherwise, [10XDirectProduct[110X returns a transformation semigroup.[133X
   
-  [1X8.1-2 EndomorphismsPartition[101X
+  [33X[0;0YThe  operation  [10XDirectProductOp[110X  is  included  for  consistency with the [5XGAP[105X
+  library (see [2XDirectProductOp[102X ([14XReference: DirectProductOp[114X)). It takes exactly
+  two  arguments,  namely a non-empty list [3Xlist[103X of semigroups and one of these
+  semigroups,  [3XS[103X,  and  returns the same result as [10XCallFuncList(DirectProduct,
+  [3Xlist[103X[10X)[110X.[133X
   
-  [33X[1;0Y[29X[2XEndomorphismsPartition[102X( [3Xlist[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA transformation monoid.[133X
-  
-  [33X[0;0YIf  [3Xlist[103X is a list of positive integers, then [10XEndomorphismsPartition[110X returns
-  a  monoid of endomorphisms preserving a partition of [10X[1 .. Sum([3Xlist[103X[10X)][110X with a
-  part  of  length [10X[3Xlist[103X[10X[i][110X for every [10Xi[110X. For example, if [10X[3Xlist[103X[10X = [1, 2, 3][110X, then
-  [10XEndomorphismsPartition[110X  returns the monoid of endomorphisms of the partition
-  [10X[[1], [2, 3], [4, 5, 6]][110X.[133X
-  
-  [33X[0;0YIf  [10Xf[110X  is  a  transformation  of  [10X[1  .. n][110X, then it is an [12Xendomorphism[112X of a
-  partition [10XP[110X on [10X[1 .. n][110X if [10X(i, j)[110X in [10XP[110X implies that [10X(i ^ f, j ^ f)[110X is in [10XP[110X.[133X
-  
-  [33X[0;0Y[10XEndomorphismsPartition[110X  returns a monoid with a minimal size generating set,
-  as described in [ABMS15].[133X
+  [33X[0;0YIf  [10XD[110X is the direct product of a collection of semigroups, then an embedding
+  of  the  [10Xi[110Xth factor into [10XD[110X can be accessed with the command [10XEmbedding(D, i)[110X,
+  and  a  projection of [10XD[110X onto its [10Xi[110Xth factor can be accessed with the command
+  [10XProjection(D,  i)[110X;  see  [2XEmbedding[102X  ([14XReference:  Embedding[114X)  and  [2XProjection[102X
+  ([14XReference: Projection[114X) for more information.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := EndomorphismsPartition([3, 3, 3]);[127X[104X
-    [4X[28X<transformation semigroup of degree 9 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X531441[128X[104X
-  [4X[32X[104X
-  
-  [1X8.1-3 PartialTransformationMonoid[101X
-  
-  [33X[1;0Y[29X[2XPartialTransformationMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA transformation monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  this function returns a semigroup of
-  transformations  on  [10X[3Xn[103X[10X  +  1[110X  points  which  is  isomorphic to the semigroup
-  consisting  of  all partial transformation on [3Xn[103X points. This monoid has [10X([3Xn[103X[10X +
-  1) ^ [3Xn[103X[10X[110X elements.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PartialTransformationMonoid(5);[127X[104X
-    [4X[28X<regular transformation monoid of degree 6 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X7776[128X[104X
-  [4X[32X[104X
-  
-  [1X8.1-4 SingularTransformationSemigroup[101X
-  
-  [33X[1;0Y[29X[2XSingularTransformationSemigroup[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularTransformationMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YThe semigroup of non-invertible transformations.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is a integer greater than 1, then this function returns the semigroup
-  of  non-invertible  transformations,  which  is  generated  by  the [10X[3Xn[103X[10X([3Xn[103X[10X - 1)[110X
-  idempotents of degree [3Xn[103X and rank [10X[3Xn[103X[10X - 1[110X and has [22Xn ^ n - n![122X elements.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SingularTransformationSemigroup(4);[127X[104X
-    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X232[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X8.1-5 [33X[0;0YSemigroups of order-preserving transformations[133X[101X
-  
-  [33X[1;0Y[29X[2XOrderEndomorphisms[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularOrderEndomorphisms[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XOrderAntiEndomorphisms[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPartialOrderEndomorphisms[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPartialOrderAntiEndomorphisms[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA semigroup of transformations related to a linear order.[133X
-  
-  [8X[10XOrderEndomorphisms([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XOrderEndomorphisms([3Xn[103X[10X)[110X  returns  the  monoid  of  transformations  that
-        preserve  the  usual  order  on  [22X{1, 2, ..., n}[122X, where [3Xn[103X is a positive
-        integer.[133X
-  
-  [8X[10XSingularOrderEndomorphisms([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XSingularOrderEndomorphisms([3Xn[103X[10X)[110X      returns      the      ideal      of
-        [10XOrderEndomorphisms([3Xn[103X[10X)[110X  consisting of the non-invertible elements, when
-        [3Xn[103X  is at least [10X2[110X. The only invertible element in [10XOrderEndomorphisms([3Xn[103X[10X)[110X
-        is the identity transformation.[133X
-  
-  [8X[10XOrderAntiEndomorphisms([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XOrderAntiEndomorphisms([3Xn[103X[10X)[110X  returns  the monoid of transformations that
-        preserve  or  reverse  the usual order on [22X{1, 2, ..., n}[122X, where [3Xn[103X is a
-        positive   integer.  [10XOrderAntiEndomorphisms([3Xn[103X[10X)[110X  is  generated  by  the
-        generators   of   [10XOrderEndomorphisms([3Xn[103X[10X)[110X   along   with  the  bijective
-        transformation  that  reverses the order on [22X{1, 2, ..., n}[122X. The monoid
-        [10XOrderAntiEndomorphisms([3Xn[103X[10X)[110X has [22X2n-1choose n-1 - n[122X elements.[133X
-  
-  [8X[10XPartialOrderEndomorphisms([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPartialOrderEndomorphisms([3Xn[103X[10X)[110X  returns a monoid of transformations on [10X[3Xn[103X[10X
-        +  1[110X points that is isomorphic to the monoid consisting of all partial
-        transformations that preserve the usual order on [22X{1, 2, ..., n}[122X.[133X
-  
-  [8X[10XPartialOrderAntiEndomorphisms([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPartialAntiOrderEndomorphisms([3Xn[103X[10X)[110X  returns  a monoid of transformations
-        on  [10X[3Xn[103X[10X  +  1[110X  points that is isomorphic to the monoid consisting of all
-        partial  transformations  that  preserve or reverse the usual order on
-        [22X{1, 2, ..., n}[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(5);[127X[104X
-    [4X[28X<regular transformation monoid of degree 5 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsIdempotentGenerated(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(S) = Binomial(2 * 5 - 1, 5 - 1);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XDifference(S, SingularOrderEndomorphisms(5));[127X[104X
-    [4X[28X[ IdentityTransformation ][128X[104X
-    [4X[25Xgap>[125X [27XSingularOrderEndomorphisms(10);[127X[104X
-    [4X[28X<regular transformation semigroup ideal of degree 10 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XT := OrderAntiEndomorphisms(4);[127X[104X
-    [4X[28X<regular transformation monoid of degree 4 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XTransformation([4, 2, 2, 1]) in T;[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XU := PartialOrderEndomorphisms(6);[127X[104X
-    [4X[28X<regular transformation monoid of degree 7 with 12 generators>[128X[104X
-    [4X[25Xgap>[125X [27XV := PartialOrderAntiEndomorphisms(6);[127X[104X
-    [4X[28X<regular transformation monoid of degree 7 with 13 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(V, U);[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([PartialPerm([2, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := InverseMonoid([PartialPerm([1, 2, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, T);[127X[104X
+    [4X[28X<commutative inverse partial perm monoid of rank 5 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(D);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5 ]>, (1,2)(3)(4)(5) ][128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(2);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, S, S);; IsRegularSemigroup(D);; D;[127X[104X
+    [4X[28X<regular bipartition monoid of size 3375, degree 6 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([PartialPerm([2, 5, 0, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X                   PartialPerm([5, 2, 4, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct(S, T);[127X[104X
+    [4X[28X<transformation semigroup of size 122, degree 9 with 63 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(D) = Size(S) * Size(T);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X8.1-2 WreathProduct[101X
   
-  [1X8.2 [33X[0;0YSemigroups of partial permutations[133X[101X
+  [33X[1;0Y[29X[2XWreathProduct[102X( [3XM[103X, [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
   
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  semigroups of partial permutations belonging to several standard
-  classes   of   example.  See  [14X'Reference:  Partial  permutations'[114X  for  more
-  information about partial permutations.[133X
-  
-  [1X8.2-1 MunnSemigroup[101X
-  
-  [33X[1;0Y[29X[2XMunnSemigroup[102X( [3XS[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YThe Munn semigroup of a semilattice.[133X
-  
-  [33X[0;0YIf  [3XS[103X  is a semilattice, then [10XMunnSemigroup[110X returns the inverse semigroup of
-  partial  permutations  of  isomorphisms of principal ideals of [3XS[103X; called the
-  [13XMunn semigroup[113X of [3XS[103X.[133X
-  
-  [33X[0;0YThis  function  was  written  jointly  by  J.  D. Mitchell, Yann Péresse (St
-  Andrews), Yanhui Wang (York).[133X
+  [33X[0;0YIf  [3XM[103X is a transformation monoid (or a permutation group) of degree [10Xm[110X, and [3XS[103X
+  is  a  transformation  semigroup  (or  permutation  group)  of degree [10Xs[110X, the
+  operation  [10XWreathProduct([3XM[103X[10X,  [3XS[103X[10X)[110X  returns  the  wreath product of [3XM[103X and [3XS[103X, in
+  terms of an embedding in the full transformation monoid of degree [10Xm * s[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
-    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 7, 10], [4, 6, 7, 3, 8, 2, 9, 5]),[127X[104X
-    [4X[25X>[125X [27XPartialPerm([1, 2, 7, 9], [5, 6, 4, 3])]);[127X[104X
-    [4X[28X<inverse partial perm semigroup of rank 10 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XT := IdempotentGeneratedSubsemigroup(S);;[127X[104X
-    [4X[25Xgap>[125X [27XM := MunnSemigroup(T);[127X[104X
-    [4X[28X<inverse partial perm semigroup of rank 60 with 7 generators>[128X[104X
-    [4X[25Xgap>[125X [27XNrIdempotents(M);[127X[104X
-    [4X[28X60[128X[104X
-    [4X[25Xgap>[125X [27XNrIdempotents(S);[127X[104X
-    [4X[28X60[128X[104X
-  [4X[32X[104X
-  
-  [1X8.2-2 RookMonoid[101X
-  
-  [33X[1;0Y[29X[2XRookMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse monoid of partial permutations.[133X
-  
-  [33X[0;0Y[10XRookMonoid[110X    is    a   synonym   for   [2XSymmetricInverseMonoid[102X   ([14XReference:
-  SymmetricInverseMonoid[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := RookMonoid(4);[127X[104X
-    [4X[28X<symmetric inverse monoid of degree 4>[128X[104X
-    [4X[25Xgap>[125X [27XS = SymmetricInverseMonoid(4);[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := FullTransformationMonoid(3);;[127X[104X
+    [4X[25Xgap>[125X [27XC := Group((1, 3));;[127X[104X
+    [4X[25Xgap>[125X [27XW := WreathProduct(T, C);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(W);[127X[104X
+    [4X[28X39366[128X[104X
+    [4X[25Xgap>[125X [27XWW := WreathProduct(C, T);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(WW);[127X[104X
+    [4X[28X216[128X[104X
   [4X[32X[104X
   
   
-  [1X8.2-3 [33X[0;0YInverse monoids of order-preserving partial permutations[133X[101X
+  [1X8.2 [33X[0;0YDual semigroups[133X[101X
   
-  [33X[1;0Y[29X[2XPOI[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPODI[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPOPI[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPORI[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YAn  inverse  monoid  of  partial  permutations related to a linear
-            order.[133X
+  [33X[0;0YThe  [13Xdual  semigroup[113X  of  a  semigroup  [10XS[110X  is  the  semigroup  with the same
+  underlying  set  of  elements  but  with  reversed  multiplication;  this is
+  anti-isomorphic to [10XS[110X. In [5XSemigroups[105X a semigroup and its dual are represented
+  with disjoint sets of elements.[133X
   
-  [8X[10XPOI([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPOI([3Xn[103X[10X)[110X  returns  the  inverse  monoid  of  partial  permutations  that
-        preserve  the  usual  order  on  [22X{1, 2, ..., n}[122X, where [3Xn[103X is a positive
-        integer.[133X
+  [1X8.2-1 DualSemigroup[101X
   
-  [8X[10XPODI([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPODI([3Xn[103X[10X)[110X  returns  the  inverse  monoid  of  partial  permutations that
-        preserve  or  reverse  the usual order on [22X{1, 2, ..., n}[122X, where [3Xn[103X is a
-        positive  integer.  [10XPODI([3Xn[103X[10X)[110X  is generated by the generators of [10XPOI([3Xn[103X[10X)[110X,
-        along  with  the  permutation  that reverses the usual order on [22X{1, 2,
-        ..., n}[122X.[133X
+  [33X[1;0Y[29X[2XDualSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe dual semigroup of the given semigroup.[133X
   
-  [8X[10XPOPI([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPOPI([3Xn[103X[10X)[110X  returns  the  inverse  monoid  of  partial  permutations that
-        preserve  the  orientation  of  [22X{1,2,...,  n}[122X,  where  [22Xn[122X is a positive
-        integer.[133X
-  
-  [8X[10XPORI([3Xn[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Y[10XPORI([3Xn[103X[10X)[110X  returns  the  inverse  monoid  of  partial  permutations that
-        preserve  or  reverse  the orientation of [22X{1, 2, ..., n}[122X, where [22Xn[122X is a
-        positive  integer.  [10XPORI([3Xn[103X[10X)[110X is generated by the generators of [10XPOPI([3Xn[103X[10X)[110X,
-        along  with  the  permutation  that reverses the usual order on [22X{1, 2,
-        ..., n}[122X.[133X
+  [33X[0;0YThe  dual  semigroup  of  a  semigroup  [3XS[103X  is  the  semigroup  with the same
+  underlying   set   as   [3XS[103X,   but   with  multiplication  reversed;  this  is
+  anti-isomorphic  to  [3XS[103X. This attribute returns a semigroup isomorphic to the
+  dual semigroup of [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PORI(10);[127X[104X
-    [4X[28X<inverse partial perm monoid of rank 10 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS := POPI(10);[127X[104X
-    [4X[28X<inverse partial perm monoid of rank 10 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S) = 1 + 5 * Binomial(20, 10);[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 2, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 4, 4, 1, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X generators>>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S) = Size(D);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := PODI(10);[127X[104X
-    [4X[28X<inverse partial perm monoid of rank 10 with 11 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS := POI(10);[127X[104X
-    [4X[28X<inverse partial perm monoid of rank 10 with 10 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S) = Binomial(20, 10);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(PORI(10), PODI(10))[127X[104X
-    [4X[25X>[125X [27Xand IsSubsemigroup(PORI(10), POPI(10))[127X[104X
-    [4X[25X>[125X [27Xand IsSubsemigroup(PODI(10), POI(10))[127X[104X
-    [4X[25X>[125X [27Xand IsSubsemigroup(POPI(10), POI(10));[127X[104X
+    [4X[25Xgap>[125X [27XNrDClasses(S) = NrDClasses(D);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X8.2-2 IsDualSemigroupRep[101X
   
-  [1X8.3 [33X[0;0YSemigroups of bipartitions[133X[101X
+  [33X[1;0Y[29X[2XIsDualSemigroupRep[102X( [3Xsgrp[103X ) [32X Category[133X
+  [6XReturns:[106X  [33X[0;10YReturns [9Xtrue[109X if [3Xsgrp[103X is represented as a dual semigroup.[133X
   
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  bipartition  semigroups belonging to several standard classes of
-  example. See Chapter [14X3[114X for more information about bipartitions.[133X
-  
-  [1X8.3-1 PartitionMonoid[101X
-  
-  [33X[1;0Y[29X[2XPartitionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRookPartitionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularPartitionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a non-negative integer, then this operation returns the partition
-  monoid  of  degree  [3Xn[103X.  The  [13Xpartition  monoid  of  degree  [3Xn[103X[113X  is the monoid
-  consisting of all the bipartitions of degree [3Xn[103X.[133X
-  
-  [33X[0;0Y[10XSingularPartitionMonoid[110X returns the ideal of the partition monoid consisting
-  of  the non-invertible elements (i.e. those not in the group of units), when
-  [3Xn[103X is positive.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  positive,  then  [10XRookPartitionMonoid[110X  returns  submonoid  of  the
-  partition monoid of degree [10X[3Xn[103X[10X + 1[110X consisting of those bipartitions with [10X[3Xn[103X[10X + 1[110X
-  and [10X-[3Xn[103X[10X - 1[110X in the same block; see [HR05], [Gro06], and [Eas19].[133X
+  [33X[0;0YSemigroups   created   using   [2XDualSemigroup[102X   ([14X8.2-1[114X)  normally  have  this
+  representation. The exception is semigroups which are the dual of semigroups
+  already  lying in this category. That is, a semigroup has the representation
+  [2XIsDualSemigroupRep[102X if and only if the corresponding dual semigroup does not.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4 [128X[104X
-    [4X[28X generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X4140[128X[104X
-    [4X[25Xgap>[125X [27XT := SingularPartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 4 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S) - Size(T) = Factorial(4);[127X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 5, 1, 1, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([1, 2, 4, 4, 3])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X generators>>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(D);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := RookPartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 5 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X21147[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-2 BrauerMonoid[101X
-  
-  [33X[1;0Y[29X[2XBrauerMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPartialBrauerMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularBrauerMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a  non-negative  integer,  then this operation returns the Brauer
-  monoid  of  degree  [3Xn[103X.  The  [13XBrauer monoid[113X is the submonoid of the partition
-  monoid consisiting of those bipartitions where the size of every block is 2.[133X
-  
-  [33X[0;0Y[10XPartialBrauerMonoid[110X   returns  the  partial  Brauer  monoid,  which  is  the
-  submonoid of the partition monoid consisting of those bipartitions where the
-  size  of  every  block  is [13Xat most[113X 2. The partial Brauer monoid contains the
-  Brauer monoid as a submonoid.[133X
-  
-  [33X[0;0Y[10XSingularBrauerMonoid[110X  returns  the  ideal of the Brauer monoid consisting of
-  the  non-invertible  elements (i.e. those not in the group of units), when [3Xn[103X
-  is at least 2.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := BrauerMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(S, JonesMonoid(4));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X105[128X[104X
-    [4X[25Xgap>[125X [27XSingularBrauerMonoid(8);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 8 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XS := PartialBrauerMonoid(3);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 3 with 8 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(S, BrauerMonoid(3));[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X76[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-3 JonesMonoid[101X
-  
-  [33X[1;0Y[29X[2XJonesMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XTemperleyLiebMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularJonesMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf [3Xn[103X is a non-negative integer, then this operation returns the Jones monoid
-  of  degree  [3Xn[103X.  The  [13XJones  monoid[113X  is the subsemigroup of the Brauer monoid
-  consisting  of those bipartitions that are planar; see [2XPlanarPartitionMonoid[102X
-  ([14X8.3-9[114X).  The  Jones  monoid  is sometimes referred to as the [12XTemperley-Lieb
-  monoid[112X.[133X
-  
-  [33X[0;0Y[10XSingularJonesMonoid[110X  returns the ideal of the Jones monoid consisting of the
-  non-invertible elements (i.e. those not in the group of units), when [3Xn[103X is at
-  least 2.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := JonesMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS = TemperleyLiebMonoid(4);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSingularJonesMonoid(8);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 8 with 1 generator>[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-4 PartialJonesMonoid[101X
-  
-  [33X[1;0Y[29X[2XPartialJonesMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X is a non-negative integer, then [10XPartialJonesMonoid[110X returns the partial
-  Jones  monoid of degree [3Xn[103X. The [13Xpartial Jones monoid[113X is a subsemigroup of the
-  partial  Brauer monoid. An element of the partial Brauer monoid is contained
-  in  the  partial Jones monoid if the partition that it defines is finer than
-  the  partition  defined by some element of the Jones monoid. In other words,
-  an  element of the partial Jones monoid can be formed from some element [10Xx[110X of
-  the  Jones  monoid  by replacing some blocks [10X[a, b][110X of [10Xx[110X by singleton blocks
-  [10X[a], [b][110X.[133X
-  
-  [33X[0;0YNote  that,  in  general,  the  partial Jones monoid of degree [3Xn[103X is strictly
-  contained in the Motzkin monoid of the same degree.[133X
-  
-  [33X[0;0YSee  [2XPartialBrauerMonoid[102X  ([14X8.3-2[114X),  [2XJonesMonoid[102X  ([14X8.3-3[114X),  and [2XMotzkinMonoid[102X
-  ([14X8.3-6[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PartialJonesMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 7 generators>[128X[104X
-    [4X[25Xgap>[125X [27XT := JonesMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XU := MotzkinMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 8 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(U, S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(S, T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(U);[127X[104X
-    [4X[28X323[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X143[128X[104X
-    [4X[25Xgap>[125X [27XSize(T);[127X[104X
-    [4X[28X14[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-5 AnnularJonesMonoid[101X
-  
-  [33X[1;0Y[29X[2XAnnularJonesMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X is a non-negative integer, then [10XAnnularJonesMonoid[110X returns the annular
-  Jones  monoid  of  degree [3Xn[103X. The [13Xannular Jones monoid[113X is the subsemigroup of
-  the  partition  monoid  consisting  of all annular bipartitions whose blocks
-  have   size   2  (annular  bipartitions  are  defined  in  Chapter  [14X3[114X).  See
-  [2XBrauerMonoid[102X ([14X8.3-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := AnnularJonesMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 2 generators>[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-6 MotzkinMonoid[101X
-  
-  [33X[1;0Y[29X[2XMotzkinMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a  non-negative  integer, then this operation returns the Motzkin
-  monoid  of  degree  [3Xn[103X. The [13XMotzkin monoid[113X is the subsemigroup of the partial
-  Brauer  monoid  consisting  of  those  bipartitions  that are planar (planar
-  bipartitions are defined in Chapter [14X3[114X).[133X
-  
-  [33X[0;0YNote  that  the Motzkin monoid of degree [3Xn[103X contains the partial Jones monoid
-  of   degree   [3Xn[103X,   but   in  general,  these  monoids  are  not  equal;  see
-  [2XPartialJonesMonoid[102X ([14X8.3-4[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := MotzkinMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 8 generators>[128X[104X
-    [4X[25Xgap>[125X [27XT := PartialJonesMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 4 with 7 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(S, T);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X323[128X[104X
-    [4X[25Xgap>[125X [27XSize(T);[127X[104X
-    [4X[28X143[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-7 DualSymmetricInverseSemigroup[101X
-  
-  [33X[1;0Y[29X[2XDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPartialDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse bipartition monoid.[133X
-  
-  [33X[0;0YIf     [3Xn[103X     is     a     positive     integer,    then    the    operations
-  [10XDualSymmetricInverseSemigroup[110X and [10XDualSymmetricInverseMonoid[110X return the dual
-  symmetric  inverse  monoid  of  degree  [3Xn[103X,  which is the subsemigroup of the
-  partition monoid consisting of the block bijections of degree [3Xn[103X.[133X
-  
-  [33X[0;0Y[10XSingularDualSymmetricInverseMonoid[110X  returns  the ideal of the dual symmetric
-  inverse  monoid consisting of the non-invertible elements (i.e. those not in
-  the group of units), when [3Xn[103X is at least 2.[133X
-  
-  [33X[0;0Y[10XPartialDualSymmetricInverseMonoid[110X   returns   the   submonoid  of  the  dual
-  symmetric  inverse  monoid  of  degree  [10X[3Xn[103X[10X  +  1[110X  consisting  of  those block
-  bijections with [10X[3Xn[103X[10X + 1[110X and [10X-[3Xn[103X[10X - 1[110X in the same block; see [KM11] and [KMU15].[133X
-  
-  [33X[0;0YSee [2XIsBlockBijection[102X ([14X3.5-16[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsBlockBijection);[127X[104X
-    [4X[28X25[128X[104X
-    [4X[25Xgap>[125X [27XS := DualSymmetricInverseSemigroup(3);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X25[128X[104X
-    [4X[25Xgap>[125X [27XS := PartialDualSymmetricInverseMonoid(5);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 6 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X29072[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-8 UniformBlockBijectionMonoid[101X
-  
-  [33X[1;0Y[29X[2XUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XFactorisableDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPartialUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularFactorisableDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPlanarUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularPlanarUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YAn inverse bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a positive integer, then this operation returns the uniform block
-  bijection  monoid  of  degree  [3Xn[103X.  The [13Xuniform block bijection monoid[113X is the
-  submonoid  of  the  partition  monoid  consisting of the block bijections of
-  degree  [10Xn[110X where the number of positive integers in a block equals the number
-  of  negative  integers  in that block. The uniform block bijection monoid is
-  also referred to as the [13Xfactorisable dual symmetric inverse monoid[113X.[133X
-  
-  [33X[0;0Y[10XSingularUniformBlockBijectionMonoid[110X  returns  the ideal of the uniform block
-  bijection  monoid  consisting of the non-invertible elements (i.e. those not
-  in the group of units), when [3Xn[103X is at least 2.[133X
-  
-  [33X[0;0Y[10XPlanarUniformBlockBijectionMonoid[110X returns the submonoid of the uniform block
-  bijection monoid consisting of the planar elements (i.e. those in the planar
-  partition monoid, see [2XPlanarPartitionMonoid[102X ([14X8.3-9[114X)).[133X
-  
-  [33X[0;0Y[10XSingularPlanarUniformBlockBijectionMonoid[110X  returns  the  ideal of the planar
-  uniform  block  bijection  monoid  consisting of the non-invertible elements
-  (i.e. those not in the group of units), when [3Xn[103X is at least 2.[133X
-  
-  [33X[0;0Y[10XPartialUniformBlockBijectionMonoid[110X  returns  the  submonoid  of  the uniform
-  block  bijection  monoid  of  degree [10X[3Xn[103X[10X + 1[110X consisting of those uniform block
-  bijection with [10X[3Xn[103X[10X + 1[110X and [10X-[3Xn[103X[10X - 1[110X in the same block.[133X
-  
-  [33X[0;0YSee [2XIsUniformBlockBijection[102X ([14X3.5-17[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := UniformBlockBijectionMonoid(4);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(PlanarUniformBlockBijectionMonoid(8));[127X[104X
-    [4X[28X128[128X[104X
-    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[25Xgap>[125X [27XR := DualSemigroup(D);[127X[104X
+    [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(R);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := UniformBlockBijectionMonoid(4);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[25Xgap>[125X [27XR = S;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := AsSemigroup(IsBipartitionSemigroup,[127X[104X
-    [4X[25X>[125X [27X                    SymmetricInverseMonoid(5));[127X[104X
-    [4X[28X<inverse bipartition monoid of degree 5 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS := PartialUniformBlockBijectionMonoid(5);[127X[104X
-    [4X[28X<inverse block bijection monoid of degree 6 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XNrIdempotents(S);[127X[104X
-    [4X[28X203[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-9 PlanarPartitionMonoid[101X
-  
-  [33X[1;0Y[29X[2XPlanarPartitionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularPlanarPartitionMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf [3Xn[103X is a positive integer, then this operation returns the planar partition
-  monoid  of  degree  [3Xn[103X  which  is  the  monoid  consisting  of all the planar
-  bipartitions of degree [3Xn[103X (planar bipartitions are defined in Chapter [14X3[114X).[133X
-  
-  [33X[0;0Y[10XSingularPlanarPartitionMonoid[110X  returns  the  ideal  of  the planar partition
-  monoid  consisting  of  the  non-invertible  elements (i.e. those not in the
-  group of units).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := PlanarPartitionMonoid(3);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 3 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X132[128X[104X
-    [4X[25Xgap>[125X [27XT := SingularPlanarPartitionMonoid(3);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 3 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(T);[127X[104X
-    [4X[28X131[128X[104X
-    [4X[25Xgap>[125X [27XDifference(S, T);[127X[104X
-    [4X[28X[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]> ][128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-10 ModularPartitionMonoid[101X
-  
-  [33X[1;0Y[29X[2XModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPlanarModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularPlanarModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xm[103X and [3Xn[103X are positive integers, then this operation returns the modular-[3Xm[103X
-  partition  monoid  of  degree  [3Xn[103X.  The  [13Xmodular-[113X[3Xm[103X  [13Xpartition  monoid[113X  is the
-  submonoid  of  the  partition  monoid  such that the numbers of positive and
-  negative integers contained in each block are congruent mod [3Xm[103X.[133X
-  
-  [33X[0;0Y[10XSingularModularPartitionMonoid[110X  returns  the  ideal of the modular partition
-  monoid  consisting  of  the  non-invertible  elements (i.e. those not in the
-  group of units), when either [3Xm = n = 1[103X or [3Xm, n > 1[103X.[133X
-  
-  [33X[0;0Y[10XPlanarModularPartitionMonoid[110X   returns   the   submonoid  of  the  modular-[3Xm[103X
-  partition monoid consisting of the planar elements (i.e. those in the planar
-  partition monoid, see [2XPlanarPartitionMonoid[102X ([14X8.3-9[114X)).[133X
-  
-  [33X[0;0Y[10XSingularPlanarModularPartitionMonoid[110X returns the ideal of the planar modular
-  partition  monoid  consisting of the non-invertible elements (i.e. those not
-  in the group of units), when either [3Xm = n = 1[103X or [3Xm, n > 1[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ModularPartitionMonoid(3, 6);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 6 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X36243[128X[104X
-    [4X[25Xgap>[125X [27XS := SingularModularPartitionMonoid(1, 1);[127X[104X
-    [4X[28X<commutative inverse bipartition semigroup ideal of degree 1 with[128X[104X
-    [4X[28X  1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(SingularModularPartitionMonoid(2, 4));[127X[104X
-    [4X[28X355[128X[104X
-    [4X[25Xgap>[125X [27XS := PlanarModularPartitionMonoid(4, 9);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 9 with 14 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X1795[128X[104X
-    [4X[25Xgap>[125X [27XS := SingularPlanarModularPartitionMonoid(3, 5);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 5 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XSize(SingularPlanarModularPartitionMonoid(1, 2));[127X[104X
-    [4X[28X13[128X[104X
-  [4X[32X[104X
-  
-  [1X8.3-11 ApsisMonoid[101X
-  
-  [33X[1;0Y[29X[2XApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCrossedApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSingularCrossedApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
-  
-  [33X[0;0YIf  [3Xm[103X  and  [3Xn[103X are positive integers, then this operation returns the [3Xm[103X-apsis
-  monoid  of  degree  [3Xn[103X.  The  [3Xm[103X[13X-apsis  monoid[113X  is  the monoid of bipartitions
-  generated  when  the  diapses in generators of the Jones monoid are replaced
-  with  [3Xm[103X-apses.  Note  that  an  [3Xm[103X[13X-apsis[113X is a block that contains precisely [3Xm[103X
-  consecutive integers.[133X
-  
-  [33X[0;0Y[10XSingularApsisMonoid[110X  returns the ideal of the apsis monoid consisting of the
-  non-invertible elements (i.e. those not in the group of units), when [3Xm[103X [22X≤[122X [3Xn[103X.[133X
-  
-  [33X[0;0Y[10XCrossedApsisGeneratedMonoid[110X returns the semigroup generated by the symmetric
-  group of degree [3Xn[103X and the [3Xm[103X-apsis monoid of degree [3Xn[103X.[133X
-  
-  [33X[0;0Y[10XSingularCrossedApsisMonoid[110X  returns  the  ideal  of the crossed apsis monoid
-  consisting  of  the  non-invertible elements (i.e. those not in the group of
-  units), when [3Xm <= n[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ApsisMonoid(3, 7);[127X[104X
-    [4X[28X<regular bipartition *-monoid of degree 7 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X320[128X[104X
-    [4X[25Xgap>[125X [27XT := SingularApsisMonoid(3, 7);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 7 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XDifference(S, T) = [One(S)];[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(CrossedApsisMonoid(2, 5));[127X[104X
-    [4X[28X945[128X[104X
-    [4X[25Xgap>[125X [27XSingularCrossedApsisMonoid(4, 6);[127X[104X
-    [4X[28X<regular bipartition *-semigroup ideal of degree 6 with 1 generator>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X8.4 [33X[0;0YStandard PBR semigroups[133X[101X
-  
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  standard  examples of semigroups of partitioned binary relations
-  (PBRs). See Chapter [14X4[114X for more information about PBRs.[133X
-  
-  [1X8.4-1 FullPBRMonoid[101X
-  
-  [33X[1;0Y[29X[2XFullPBRMonoid[102X( [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA PBR monoid.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is a positive integer not greater than [10X2[110X, then this operation returns
-  the  monoid  consisting of all of the partitioned binary relations (PBRs) of
-  degree  [3Xn[103X;  called  the [13Xfull PBR monoid[113X. There are [10X2 ^ ((2 * n) ^ 2)[110X PBRs of
-  degree  [3Xn[103X. The full PBR monoid of degree [3Xn[103X is currently too large to compute
-  when [22X[3Xn[103X ≥ 3[122X.[133X
-  
-  [33X[0;0YThe full PBR monoid is not regular in general.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullPBRMonoid(1);[127X[104X
-    [4X[28X<pbr monoid of degree 1 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS := FullPBRMonoid(2);[127X[104X
-    [4X[28X<pbr monoid of degree 2 with 10 generators>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X8.5 [33X[0;0YSemigroups of matrices over a finite field[133X[101X
-  
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  semigroups  of  matrices  over  a finite field that belonging to
-  several  standard  classes of example. See the section [14X'[33X[0;0YMatrices over finite
-  fields[133X'[114X for more information about matrices over a finite field.[133X
-  
-  [1X8.5-1 FullMatrixMonoid[101X
-  
-  [33X[1;0Y[29X[2XFullMatrixMonoid[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XGeneralLinearMonoid[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XGLM[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA matrix monoid.[133X
-  
-  [33X[0;0YThese  operations  return the full matrix monoid of [3Xd[103X by [3Xd[103X matrices over the
-  field  with  [3Xq[103X  elements.  The [13Xfull matrix monoid[113X, also known as the [13Xgeneral
-  linear monoid[113X, with these parameters, is the monoid consisting of all [3Xd[103X by [3Xd[103X
-  matrices  with  entries  from  the  field [10XGF([3Xq[103X[10X)[110X. This monoid has [10X[3Xq[103X[10X ^ ([3Xd[103X[10X ^ 2)[110X
-  elements.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullMatrixMonoid(2, 4);[127X[104X
-    [4X[28X<general linear monoid 2x2 over GF(2^2)>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X256[128X[104X
-    [4X[25Xgap>[125X [27XS = GeneralLinearMonoid(2, 4);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XGLM(2, 2);[127X[104X
-    [4X[28X<general linear monoid 2x2 over GF(2)>[128X[104X
-  [4X[32X[104X
-  
-  [1X8.5-2 SpecialLinearMonoid[101X
-  
-  [33X[1;0Y[29X[2XSpecialLinearMonoid[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSLM[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA matrix monoid.[133X
-  
-  [33X[0;0YThese  operations  return  the special linear monoid of [3Xd[103X by [3Xd[103X matrices over
-  the  field  with  [3Xq[103X  elements.  The  [13Xspecial  linear  monoid[113X  is  the monoid
-  consisting  of  all  [3Xd[103X  by [3Xd[103X matrices with entries from the field [10XGF([3Xq[103X[10X)[110X that
-  have determinant [10X0[110X or [10X1[110X. In other words, the special linear monoid is formed
-  from the general linear monoid of the same parameters by replacing its group
-  of units (the general linear group) by the special linear group.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := SpecialLinearMonoid(2, 4);[127X[104X
-    [4X[28X<regular monoid of 2x2 matrices over GF(2^2) with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS = SLM(2, 4);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X136[128X[104X
-  [4X[32X[104X
-  
-  [1X8.5-3 IsFullMatrixMonoid[101X
-  
-  [33X[1;0Y[29X[2XIsFullMatrixMonoid[102X( [3XS[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsGeneralLinearMonoid[102X( [3XS[103X ) [32X property[133X
-  
-  [33X[0;0Y[10XIsFullMatrixMonoid[110X  and [10XIsGeneralLinearMonoid[110X return [9Xtrue[109X if the semigroup [10XS[110X
-  was  created  using  either  of  the  commands  [2XFullMatrixMonoid[102X  ([14X8.5-1[114X) or
-  [2XGeneralLinearMonoid[102X ([14X8.5-1[114X) and [9Xfalse[109X otherwise.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := RandomSemigroup(IsTransformationSemigroup, 4, 4);;[127X[104X
-    [4X[25Xgap>[125X [27XIsFullMatrixMonoid(S);[127X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismTransformationSemigroup(D));[127X[104X
+    [4X[28X<transformation semigroup of size 16, degree 17 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(T);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS := GeneralLinearMonoid(3, 3);[127X[104X
-    [4X[28X<general linear monoid 3x3 over GF(3)>[128X[104X
-    [4X[25Xgap>[125X [27XIsFullMatrixMonoid(S);[127X[104X
+    [4X[25Xgap>[125X [27Xx := Representative(D);[127X[104X
+    [4X[28X<Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup>[128X[104X
+    [4X[25Xgap>[125X [27XV := Semigroup(x);[127X[104X
+    [4X[28X<dual semigroup of <commutative transformation semigroup of degree 5 [128X[104X
+    [4X[28X with 1 generator>>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupRep(V);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X8.2-3 IsDualSemigroupElement[101X
   
-  [1X8.6 [33X[0;0YSemigroups of boolean matrices[133X[101X
+  [33X[1;0Y[29X[2XIsDualSemigroupElement[102X( [3Xelt[103X ) [32X Category[133X
+  [6XReturns:[106X  [33X[0;10YReturns  [9Xtrue[109X  if  [3Xelt[103X  has the representation of a dual semigroup
+            element.[133X
   
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  semigroups  of  boolean  matrices  belonging to several standard
-  classes  of example. See the section [14X'[33X[0;0YBoolean matrices[133X'[114X for more information
-  about boolean matrices.[133X
-  
-  [1X8.6-1 FullBooleanMatMonoid[101X
-  
-  [33X[1;0Y[29X[2XFullBooleanMatMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YThe monoid of all boolean matrices of dimension [3Xd[103X.[133X
-  
-  [33X[0;0YIf  [3Xd[103X  is  a  positive  integer less than or equal to [10X5[110X, then this operation
-  returns  the  full  boolean  matrix  monoid of dimension [3Xd[103X. The [13Xfull boolean
-  matrix  monoid of dimension [3Xd[103X[113X is the monoid consisting of all [3Xd[103X by [3Xd[103X boolean
-  matrices, and has [10X2 ^ ([3Xn[103X[10X ^ 2)[110X matrices.[133X
-  
-  [33X[0;0Y[10XFullBooleanMatMonoid[110X  returns a monoid with a generating set that is minimal
-  in size. These generating sets are pre-computed.[133X
+  [33X[0;0YElements  of  a  dual  semigroup obtained using [2XAntiIsomorphismDualSemigroup[102X
+  ([14X8.2-4[114X) normally lie in this category. The exception is elements obtained by
+  applying the map [2XAntiIsomorphismDualSemigroup[102X ([14X8.2-4[114X) to elements already in
+  this  category.  That  is,  the  elements of a semigroup lie in the category
+  [2XIsDualSemigroupElement[102X if and only if the elements of the corresponding dual
+  semigroup do not.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullBooleanMatMonoid(3);[127X[104X
-    [4X[28X<monoid of 3x3 boolean matrices with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X512[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := SingularPartitionMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DualSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xs := GeneratorsOfSemigroup(S)[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualSemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xt := s ^ map;[127X[104X
+    [4X[28X<<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[28X  in the dual semigroup>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupElement(t);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(map);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := t ^ inv;[127X[104X
+    [4X[28X<block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsDualSemigroupElement(x);[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X8.6-2 RegularBooleanMatMonoid[101X
+  [1X8.2-4 AntiIsomorphismDualSemigroup[101X
   
-  [33X[1;0Y[29X[2XRegularBooleanMatMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of boolean matrices.[133X
+  [33X[1;0Y[29X[2XAntiIsomorphismDualSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn anti-isomorphism from [3XS[103X to the corresponding dual semigroup.[133X
   
-  [33X[0;0YIf  [3Xd[103X is a positive integer, then [10XRegularBooleanMatMonoid[110X returns the monoid
-  generated  by  the regular [3Xd[103X by [3Xd[103X boolean matrices. Note that this monoid is
-  [13Xnot[113X  regular in general. [10XRegularBooleanMatMonoid([3Xd[103X[10X)[110X is generated by the four
-  boolean matrices [10XA, B, C, D[110X, whose [9Xtrue[109X entries are:[133X
-  
-  [30X    [33X[0;6Y[10XA[i][i + 1][110X and [10XA[n][1][110X, for [22Xi ∈ {1, ..., n - 1}[122X;[133X
-  
-  [30X    [33X[0;6Y[10XB[1][2][110X, [10XB[2][1][110X, and [10XB[i][i][110X for [22Xi ∈ {3, ..., n}[122X;[133X
-  
-  [30X    [33X[0;6Y[10XC[1][2][110X and [10XC[i][i][110X, for [22Xi ∈ {2, ..., n - 1}[122X; and[133X
-  
-  [30X    [33X[0;6Y[10XD[1][2][110X, [10XD[i][i][110X, for [22Xi ∈ {2, ..., n}[122X, and [10XD[n][1][110X.[133X
-  
-  [33X[0;0YThis monoid has nearly [10X2 ^ (n ^ 2)[110X elements.[133X
-  
-  [1X8.6-3 ReflexiveBooleanMatMonoid[101X
-  
-  [33X[1;0Y[29X[2XReflexiveBooleanMatMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of boolean matrices.[133X
-  
-  [33X[0;0YIf  [3Xd[103X  is  a  positive  integer less than or equal to [10X5[110X, then this operation
-  returns  the  monoid  consisting of all reflexive [3Xd[103X by [3Xd[103X boolean matrices. A
-  boolean  matrix  [10Xmat[110X  is  [13Xreflexive[113X if each entry of its leading diagonal is
-  [9Xtrue[109X, i.e. if [10Xmat[i][i][110X is [9Xtrue[109X for all [22Xi ∈ {1, ..., d}[122X.[133X
-  
-  [33X[0;0YThe  generating  sets  for the monoids returned by [10XReflexiveBooleanMatMonoid[110X
-  are  pre-computed, and read from a file. Small generating sets are not known
-  for [22X[3Xd[103X ≥ 6[122X.[133X
+  [33X[0;0YThe dual semigroup of [3XS[103X mathematically has the same underlying set as [3XS[103X, but
+  is represented with a different set of elements in [5XSemigroups[105X. This function
+  returns a mapping which is an anti-isomorphism from [3XS[103X to its dual.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := ReflexiveBooleanMatMonoid(3);[127X[104X
-    [4X[28X<monoid of 3x3 boolean matrices with 8 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X64[128X[104X
-  [4X[32X[104X
-  
-  [1X8.6-4 HallMonoid[101X
-  
-  [33X[1;0Y[29X[2XHallMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of boolean matrices.[133X
-  
-  [33X[0;0YIf  [3Xd[103X  is  a  positive  integer less than or equal to [10X5[110X, then this operation
-  returns  the monoid consisting Hall matrices of degree [3Xd[103X. A [13XHall matrix[113X is a
-  boolean  matrix  in  which  every column and every row contains at least one
-  [9Xtrue[109X  entry. Equivalently, a Hall matrix is a boolean matrix than contains a
-  permutation.[133X
-  
-  [33X[0;0YA  Hall  matrix  of dimension [3Xd[103X corresponds to a solution to Hall's Marriage
-  Problem,  when  there  are  two  collection  of [3Xd[103X people. Thus the number of
-  solutions  to  Hall's  Marriage  Problem  in  this instance is the number of
-  elements of [10XHallMonoid([3Xd[103X[10X)[110X.[133X
-  
-  [33X[0;0YThe  operation  [10XHallMonoid[110X  returns  a  monoid with a generating set that is
-  minimal  in  size.  These  generating  sets  are pre-computed, and a minimal
-  generating set is not known for larger dimensions.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := HallMonoid(3);[127X[104X
-    [4X[28X<monoid of 3x3 boolean matrices with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X247[128X[104X
-  [4X[32X[104X
-  
-  [1X8.6-5 GossipMonoid[101X
-  
-  [33X[1;0Y[29X[2XGossipMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of boolean matrices.[133X
-  
-  [33X[0;0YIf  [3Xd[103X  is  a positive integer, then this operation returns the [3Xd[103X by [3Xd[103X gossip
-  monoid.  The  [13Xgossip  monoid[113X  is  defined  to be the monoid generated by the
-  collection  of  all  [3Xd[103X  by  [3Xd[103X  boolean  matrices  that define an equivalence
-  relation; see [2XIsEquivalenceBooleanMat[102X ([14X5.3-16[114X).[133X
-  
-  [33X[0;0YFor  [22X[3Xd[103X ≥ 2[122X, [10XGossipMonoid([3Xd[103X[10X)[110X returns a monoid with [22Xd choose 2[122X generators. The
-  generating  set  is  the  collection  of  boolean  matrices  that  define an
-  equivalence  relation that has one equivalence class of size [10X2[110X, and no other
-  non-trivial  equivalence  classes. Note that this generating set is strictly
-  contained   within  the  collection  of  all  equivalence  relation  boolean
-  matrices.[133X
-  
-  [33X[0;0YThe  number of elements of [10XGossipMonoid([3Xd[103X[10X)[110X is known for some small values of
-  [3Xd[103X  —  see [BDF15] for more information about the gossip monoid, and its size
-  for [22X[3Xd[103X ≤ 9[122X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := GossipMonoid(3);[127X[104X
-    [4X[28X<monoid of 3x3 boolean matrices with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X11[128X[104X
-  [4X[32X[104X
-  
-  [1X8.6-6 TriangularBooleanMatMonoid[101X
-  
-  [33X[1;0Y[29X[2XTriangularBooleanMatMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XUnitriangularBooleanMatMonoid[102X( [3Xd[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of boolean matrices.[133X
-  
-  [33X[0;0YIf  [3Xd[103X  is  a  positive  integer, then [10XTriangularBooleanMatMonoid[110X returns the
-  monoid consisting of the upper-triangular [3Xd[103X by [3Xd[103X boolean matrices. A boolean
-  matrix is [13Xupper-triangular[113X if the entry in row [10Xi[110X, column [10Xj[110X is [9Xfalse[109X whenever
-  [10Xi > j[110X.[133X
-  
-  [33X[0;0Y[10XUnitriangularBooleanMatMonoid[110X    returns    the    subsemigroup    of    the
-  [10XTriangularBooleanMatMonoid[110X   that  consists  of  reflexive  upper-triangular
-  boolean matrices; see [2XReflexiveBooleanMatMonoid[102X ([14X8.6-3[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := TriangularBooleanMatMonoid(3);[127X[104X
-    [4X[28X<monoid of 3x3 boolean matrices with 6 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X64[128X[104X
-    [4X[25Xgap>[125X [27XT := UnitriangularBooleanMatMonoid(4);[127X[104X
-    [4X[28X<monoid of 4x4 boolean matrices with 6 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(T);[127X[104X
-    [4X[28X64[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualSemigroup(S);[127X[104X
+    [4X[28XMappingByFunction( <regular bipartition *-monoid of size 203, [128X[104X
+    [4X[28X degree 3 with 4 generators>, <dual semigroup of [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
+    [4X[28X >, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(map);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, -2], [2, -3], [3, -1]]);[127X[104X
+    [4X[28X<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xy := Bipartition([[1], [2, -2], [3, -3], [-1]]);[127X[104X
+    [4X[28X<bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27X(x ^ map) * (y ^ map) = (y * x) ^ map;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx ^ map;[127X[104X
+    [4X[28X<<block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>[128X[104X
+    [4X[28X  in the dual semigroup>[128X[104X
   [4X[32X[104X
   
   
-  [1X8.7 [33X[0;0YSemigroups of matrices over a semiring[133X[101X
+  [1X8.3 [33X[0;0YStrong semilattices of semigroups[133X[101X
   
-  [33X[0;0YIn  this  section, we describe the operations in [5XSemigroups[105X that can be used
-  to  create  semigroups  of  matices  over  a semiring that belong to several
-  standard  classes  of  example.  See  Chapter  [14X5[114X  for more information about
-  matrices over a semiring.[133X
+  [33X[0;0YIn  this  section,  we  describe  how  [5XSemigroups[105X  can be used to create and
+  manipulate  strong semilattices of semigroups (SSSs). Strong semilattices of
+  semigroups  are  described,  for  example,  in  Section 4.1 of [How95]. They
+  consist  of  a  meet-semilattice [22XY[122X along with a collection of semigroups [22XS_a[122X
+  for each [22Xa[122X in [22XY[122X, and a collection of homomorphisms [22Xf_ab : S_a → S_b[122X for each
+  [22Xa[122X and [22Xb[122X in [22XY[122X such that [22Xa ≥ b[122X.[133X
   
-  [1X8.7-1 FullTropicalMaxPlusMonoid[101X
+  [33X[0;0YThe  product  of  two  elements  [22Xx  ∈  S_a, y ∈ S_b[122X is defined to lie in the
+  semigroup [22XS_c[122X, corresponding to the meet [22Xc[122X of [22Xa, b ∈ Y[122X. The exact element of
+  [22XS_c[122X  equal to the product is obtained using the homomorphisms of the SSS: [22Xxy
+  = (x f_ac) (y f_bc)[122X.[133X
   
-  [33X[1;0Y[29X[2XFullTropicalMaxPlusMonoid[102X( [3Xd[103X, [3Xt[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of tropical max plus matrices.[133X
+  [1X8.3-1 StrongSemilatticeOfSemigroups[101X
   
-  [33X[0;0YIf [10X[3Xd[103X[10X = 2[110X and [3Xt[103X is a positive integer, then [10XFullTropicalMaxPlusMonoid[110X returns
-  the  monoid consisting of all [3Xd[103X by [3Xd[103X matrices with entries from the tropical
-  max-plus semiring with threshold [3Xt[103X. A small generating set for larger values
-  of [3Xd[103X is not currently known.[133X
+  [33X[1;0Y[29X[2XStrongSemilatticeOfSemigroups[102X( [3XD[103X, [3XL[103X, [3XH[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA strong semilattice of semigroups.[133X
   
-  [33X[0;0YThis monoid contains [10X([3Xt[103X[10X + 2) ^ ([3Xd[103X[10X ^ 2)[110X elements.[133X
+  [33X[0;0YIf  [3XD[103X  is  a digraph, [3XL[103X is a list of semigroups, and [3XH[103X is a list of lists of
+  maps,      then      this      function      returns     a     corresponding
+  [10XIsStrongSemilatticeOfSemigroups[110X  object.  The format of the arguments is not
+  required   to  be  exactly  analogous  to  Howie's  description  above,  but
+  consistency amongst the arguments is required:[133X
+  
+  [30X    [33X[0;6Y[3XD[103X must be a digraph whose [2XDigraphReflexiveTransitiveClosure[102X ([14XDigraphs:
+        DigraphReflexiveTransitiveClosure[114X) is a meet-semilattice. For example,
+        [10XDigraph([2,  3],  [4],  [4],  []])[110X is valid and produces a semilattice
+        where  the  meet  of  [10X2[110X  and  [10X3[110X  is  [10X1[110X.  See  [2XIsMeetSemilatticeDigraph[102X
+        ([14XDigraphs: IsMeetSemilatticeDigraph[114X).[133X
+  
+  [30X    [33X[0;6Y[3XL[103X must contain as many semigroups as there are vertices in [3XD[103X.[133X
+  
+  [30X    [33X[0;6Y[3XH[103X  must  be  a  list with as many elements as there are vertices in [3XD[103X.
+        Each  element of [3XH[103X must itself be a (possibly empty) list with as many
+        entries as the corresponding vertex of [3XD[103X has out-edges. The entries of
+        each  sublist must be the corresponding homomorphisms: for example, if
+        [3XD[103X  is  entered  as  above, then [10XH[1][2][110X must be the homomorphism [22Xf_31[122X,
+        i.e. [10XH[1][2][110X is an [10XIsMapping[110X object whose domain is a superset of [10XL[3][110X
+        and whose range is a subset of [10XL[1][110X.[133X
+  
+  [33X[0;0YNote that in the example above, the edge [22X1 → 4[122X is not entered as part of the
+  argument  [3XD[103X,  but it is still an edge in the reflexive transitive closure of
+  [3XD[103X.  When creating the object, [5XGAP[105X creates the homomorphism [22Xf_41[122X by composing
+  the  mappings  along  paths that lead from 4 to 1, and checks that composing
+  along all possible paths produces the same result.[133X
+  
+  [1X8.3-2 SSSE[101X
+  
+  [33X[1;0Y[29X[2XSSSE[102X( [3XSSS[103X, [3Xn[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn element of a strong semilattice of semigroups.[133X
+  
+  [33X[0;0YIf  [3Xn[103X is a vertex of the underlying semilattice of the strong semilattice of
+  semigroups  [3XSSS[103X,  and  if  [3Xx[103X is an element of the [3Xn[103Xth semigroup of [3XSSS[103X, then
+  this  function  returns  the element of [3XSSS[103X which lies in semigroup number [3Xn[103X
+  and which corresponds to the element [3Xx[103X in that semigroup.[133X
+  
+  [33X[0;0YThis  function  returns an [2XIsSSSE[102X ([14X8.3-3[114X) object. SSSEs from the same strong
+  semilattice of semigroups can be compared and multiplied.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullTropicalMaxPlusMonoid(2, 5);[127X[104X
-    [4X[28X<monoid of 2x2 tropical max-plus matrices with 24 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X2401[128X[104X
-    [4X[25Xgap>[125X [27X(5 + 2) ^ (2 ^ 2);[127X[104X
-    [4X[28X2401[128X[104X
+    [4X[25Xgap>[125X [27XD := Digraph([[2, 3], [4], [4], []]);;[127X[104X
+    [4X[25Xgap>[125X [27XS4 := FullTransformationMonoid(2);;[127X[104X
+    [4X[25Xgap>[125X [27XS3 := FullTransformationMonoid(3);;[127X[104X
+    [4X[25Xgap>[125X [27Xpairs := [[Transformation([1, 2]), Transformation([2, 1])]];;[127X[104X
+    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S4, pairs);;[127X[104X
+    [4X[25Xgap>[125X [27XS2 := S4 / cong;;[127X[104X
+    [4X[25Xgap>[125X [27XS1 := TrivialSemigroup();;[127X[104X
+    [4X[25Xgap>[125X [27XL := [S1, S2, S3, S4];;[127X[104X
+    [4X[25Xgap>[125X [27Xidfn := function(t) return IdentityTransformation; end;;[127X[104X
+    [4X[25Xgap>[125X [27Xf21 := MappingByFunction(S2, S1, idfn);;[127X[104X
+    [4X[25Xgap>[125X [27Xf31 := MappingByFunction(S3, S1, idfn);;[127X[104X
+    [4X[25Xgap>[125X [27Xf42 := HomomorphismQuotientSemigroup(cong);;[127X[104X
+    [4X[25Xgap>[125X [27Xf43 := IdentityMapping(S4);;[127X[104X
+    [4X[25Xgap>[125X [27XH := [[f21, f31], [f42], [f43], []];;[127X[104X
+    [4X[25Xgap>[125X [27XSSS := StrongSemilatticeOfSemigroups(D, L, H);[127X[104X
+    [4X[28X<strong semilattice of 4 semigroups>[128X[104X
+    [4X[25Xgap>[125X [27XSize(SSS);[127X[104X
+    [4X[28X34[128X[104X
+    [4X[25Xgap>[125X [27Xx := SSSE(SSS, 3, Elements(S3)[10]);[127X[104X
+    [4X[28XSSSE(3, Transformation( [ 2, 1, 1 ] ))[128X[104X
+    [4X[25Xgap>[125X [27Xy := SSSE(SSS, 4, Elements(S4)[1]);[127X[104X
+    [4X[28XSSSE(4, Transformation( [ 1, 1 ] ))[128X[104X
+    [4X[25Xgap>[125X [27Xx * y;[127X[104X
+    [4X[28XSSSE(3, Transformation( [ 1, 1, 1 ] ))[128X[104X
   [4X[32X[104X
   
-  [1X8.7-2 FullTropicalMinPlusMonoid[101X
+  [1X8.3-3 IsSSSE[101X
   
-  [33X[1;0Y[29X[2XFullTropicalMinPlusMonoid[102X( [3Xd[103X, [3Xt[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA monoid of tropical min plus matrices.[133X
+  [33X[1;0Y[29X[2XIsSSSE[102X( [3Xobj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf   [3Xd[103X   is   equal   to  [10X2[110X  or  [10X3[110X,  and  [3Xt[103X  is  a  positive  integer,  then
-  [10XFullTropicalMinPlusMonoid[110X  returns  the  monoid  consisting  of  all  [3Xd[103X by [3Xd[103X
-  matrices  with entries from the tropical min-plus semiring with threshold [3Xt[103X.
-  A small generating set for larger values of [3Xd[103X is not currently known.[133X
+  [33X[0;0YAll  elements  of  an  SSS  belong  in  the  category  [10XIsSSSE[110X  (for  "Strong
+  Semilattice of Semigroups Element").[133X
   
-  [33X[0;0YThis monoid contains [10X([3Xt[103X[10X + 2) ^ ([3Xd[103X[10X ^ 2)[110X elements.[133X
+  [1X8.3-4 IsStrongSemilatticeOfSemigroups[101X
+  
+  [33X[1;0Y[29X[2XIsStrongSemilatticeOfSemigroups[102X( [3Xobj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YEvery  Strong  Semilattice  of  Semigroups  in  [5XGAP[105X  belongs to the category
+  [10XIsStrongSemilatticeOfSemigroups[110X. Basic operations in this category allow the
+  user   to   recover   the   three  essential  elements  of  an  SSS  object:
+  [2XSemilatticeOfStrongSemilatticeOfSemigroups[102X                          ([14X8.3-5[114X),
+  [2XSemigroupsOfStrongSemilatticeOfSemigroups[102X            ([14X8.3-6[114X),            and
+  [2XHomomorphismsOfStrongSemilatticeOfSemigroups[102X ([14X8.3-7[114X).[133X
+  
+  [1X8.3-5 SemilatticeOfStrongSemilatticeOfSemigroups[101X
+  
+  [33X[1;0Y[29X[2XSemilatticeOfStrongSemilatticeOfSemigroups[102X( [3XSSS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA meet-semilattice digraph.[133X
+  
+  [33X[0;0YIf  [3XSSS[103X  is  a  strong  semilattice of semigroups, this function returns the
+  underlying  semilattice  structure  as  a digraph. Note that this may not be
+  equal to the digraph passed as input when [3XSSS[103X was created: rather, it is the
+  reflexive transitive closure of the input digraph.[133X
+  
+  [1X8.3-6 SemigroupsOfStrongSemilatticeOfSemigroups[101X
+  
+  [33X[1;0Y[29X[2XSemigroupsOfStrongSemilatticeOfSemigroups[102X( [3XSSS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of semigroups.[133X
+  
+  [33X[0;0YIf [3XSSS[103X is a strong semilattice of semigroups, this function returns the list
+  of  semigroups  that  make  up  [3XSSS[103X. The position of a semigroup in the list
+  corresponds to the node of the semilattice where that semigroup lies.[133X
+  
+  [1X8.3-7 HomomorphismsOfStrongSemilatticeOfSemigroups[101X
+  
+  [33X[1;0Y[29X[2XHomomorphismsOfStrongSemilatticeOfSemigroups[102X( [3XSSS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of lists of mappings.[133X
+  
+  [33X[0;0YIf [3XSSS[103X is a strong semilattice of [22Xn[122X semigroups, this function returns an [22Xn ×
+  n[122X  list  where  the  [22X(i,  j)[122Xth  entry  of the list is the homomorphism [22Xf_ji[122X,
+  provided  [22Xi ≤ j[122X in the semilattice. If this last condition is not true, then
+  the entry is [9Xfail[109X.[133X
+  
+  
+  [1X8.4 [33X[0;0YMcAlister triple semigroups[133X[101X
+  
+  [33X[0;0YIn this section, we describe the functions in [5XGAP[105X for creating and computing
+  with   McAlister   triple   semigroups   and   their   subsemigroups.   This
+  implementation  is  based on the section in Chapter 5 of [How95] but differs
+  from  the  treatment  in  Howie by using right actions instead of left. Some
+  definitions found in the documentation are changed for this reason.[133X
+  
+  [33X[0;0YThe importance of the McAlister triple semigroups lies in the fact that they
+  are  exactly  the E-unitary inverse semigroups, which are an important class
+  in the study of inverse semigroups.[133X
+  
+  [33X[0;0YFirst  we  define E-unitary inverse semigroups. It is standard to denote the
+  subsemigroup  of a semigroup consisting of its idempotents by [10XE[110X. A semigroup
+  [10XS[110X is said to be [13XE-unitary[113X if for all [10Xe[110X in [10XE[110X and for all [10Xs[110X in [10XS[110X:[133X
+  
+  [30X    [33X[0;6Y[10Xes[110X [22X∈[122X [10XE[110X implies [10Xs[110X [22X∈[122X [10XE[110X,[133X
+  
+  [30X    [33X[0;6Y[10Xse[110X [22X∈[122X [10XE[110X implies [10Xs[110X [22X∈[122X [10XE[110X.[133X
+  
+  [33X[0;0YFor  inverse  semigroups  these  two  conditions are equivalent. We are only
+  interested in [13XE-unitary inverse semigroups[113X. Before defining McAlister triple
+  semigroups  we  define  a  McAlister  triple. A [13XMcAlister triple[113X is a triple
+  [10X(G,X,Y)[110X which consists of:[133X
+  
+  [30X    [33X[0;6Ya partial order [10XX[110X,[133X
+  
+  [30X    [33X[0;6Ya subset [10XY[110X of [10XX[110X,[133X
+  
+  [30X    [33X[0;6Ya  group [10XG[110X which acts on [10XX[110X, on the right, by order automorphisms. That
+        means for all [10XA,B[110X [22X∈[122X [10XX[110X and for all [10Xg[110X [22X∈[122X [10XG[110X: [10XA[110X [22X≤[122X [10XB[110X if and only if [10XAg[110X [22X≤[122X [10XBg[110X.[133X
+  
+  [33X[0;0YFurthermore,  [10X(G,X,Y)[110X  must  satisfy  the  following four properties to be a
+  McAlister triple:[133X
+  
+  [8X M1 [108X
+        [33X[0;6Y[10XY[110X  is  a  subset  of  [10XX[110X  which is a join-semilattice together with the
+        restriction of the order relation of [10XX[110X to [10XY[110X.[133X
+  
+  [8X M2 [108X
+        [33X[0;6Y[10XY[110X  is an order ideal of [10XX[110X. That is to say, for all [10XA[110X [22X∈[122X [10XX[110X and for all [10XB[110X
+        [22X∈[122X [10XY[110X: if [10XA[110X [22X≤[122X [10XB[110X, then [10XA[110X [22X∈[122X [10XY[110X.[133X
+  
+  [8X M3 [108X
+        [33X[0;6YEvery  element  of  [10XX[110X  is  the  image of some element in [10XY[110X moved by an
+        element of [10XG[110X. That is to say, for every [10XA[110X [22X∈[122X [10XX[110X, there exists some [10XB[110X [22X∈[122X [10XY[110X
+        and there exists [10Xg[110X [22X∈[122X [10XG[110X such that [10XA[110X = [10XBg[110X.[133X
+  
+  [8X M4 [108X
+        [33X[0;6YFinally,  for  all  [10Xg[110X  [22X∈[122X  [10XG[110X,  the  intersection  [10X{yg  :  y [110X[22X∈[122X[10X Y}[110X [22X∩[122X [10XY[110X is
+        non-empty.[133X
+  
+  [33X[0;0YWe may define an E-unitary inverse semigroup using a McAlister triple. Given
+  [10X(G,X,Y)[110X  let  [10XM(G,X,Y)[110X  be  the  set of all pairs [10X(A,g)[110X in [10XY x G[110X such that [10XA[110X
+  acted on by the inverse of [10Xg[110X is in [10XY[110X together with multiplication defined by[133X
+  
+  [33X[0;0Y[10X(A,g)*(B,h) = (Join(A,Bg^-1),hg)[110X[133X
+  
+  [33X[0;0Ywhere  [10XJoin[110X  is the natural join operation of the semilattice and [10XBg^-1[110X is [10XB[110X
+  acted  on  by the inverse of [10Xg[110X. With this operation, [10XM(G,X,Y)[110X is a semigroup
+  which  we  call  a  [13XMcAlister  triple  semigroup[113X over [10X(G,X,Y)[110X. In fact every
+  McAlister  triple  semigroup  is  an  E-unitary  inverse semigroup and every
+  E-unitary   inverse   semigroup  is  isomorphic  to  some  McAlister  triple
+  semigroup.  Note  that there need not be a unqiue McAlister triple semigroup
+  for  a particular McAlister triple because in general there is more than one
+  way for a group to act on a partial order.[133X
+  
+  [1X8.4-1 IsMcAlisterTripleSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsMcAlisterTripleSemigroup[102X( [3XS[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis function returns [9Xtrue[109X if [3XS[103X is a McAlister triple semigroup. A [13XMcAlister
+  triple  semigroup[113X  is  a  special  representation  of  an  E-unitary inverse
+  semigroup      [2XIsEUnitaryInverseSemigroup[102X      ([14X12.2-3[114X)      created      by
+  [2XMcAlisterTripleSemigroup[102X ([14X8.4-2[114X).[133X
+  
+  [1X8.4-2 McAlisterTripleSemigroup[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroup[102X( [3XG[103X, [3XX[103X, [3XY[103X[, [3Xact[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA McAlister triple semigroup.[133X
+  
+  [33X[0;0YThe  following  documentation  covers  the  technical  information needed to
+  create McAlister triple semigroups in GAP, the underlying theory can be read
+  in the introduction to Chapter [14X8.4[114X.[133X
+  
+  [33X[0;0YIn  this  implementation  the  partial  order  [10XX[110X  of  a  McAlister triple is
+  represented   by  a  [2XDigraph[102X  ([14XDigraphs:  Digraph[114X)  object  [3XX[103X.  The  digraph
+  represents  a  partial  order in the sense that vertices are the elements of
+  the  partial order and the order relation is defined by [10XA[110X [22X≤[122X [10XB[110X if and only if
+  there  is  an  edge  from  [10XB[110X to [10XA[110X. The semilattice [10XY[110X of the McAlister triple
+  should  be  an  induced  subdigraph  [3XY[103X  of  [3XX[103X  and  the  [2XDigraphVertexLabels[102X
+  ([14XDigraphs:  DigraphVertexLabels[114X)  must  correspond  to  the vertices of [3XX[103X on
+  which [3XY[103X is induced. That means that the following:[133X
+  
+  [33X[0;0Y[10X[3XY[103X[10X = InducedSubdigraph([3XX[103X[10X, DigraphVertexLabels([3XY[103X[10X)) [110X[133X
+  
+  [33X[0;0Ymust  return  [9Xtrue[109X.  Herein if we say that a vertex [10XA[110X of [3XX[103X is 'in' [3XY[103X then we
+  mean  there  is a vertex of [3XY[103X whose label is [10XA[110X. Alerternatively the user may
+  choose to give the argument [3XY[103X as the vertices of [3XX[103X on which [3XY[103X is the induced
+  subdigraph.[133X
+  
+  [33X[0;0YA  McAlister  triple  semigroup  is  created from a quadruple [10X([3XG[103X[10X, [3XX[103X[10X, [3XY[103X[10X, [3Xact[103X[10X)[110X
+  where:[133X
+  
+  [30X    [33X[0;6Y[3XG[103X is a finite group.[133X
+  
+  [30X    [33X[0;6Y[3XX[103X   is   a   digraph   satisfying   [2XIsPartialOrderDigraph[102X   ([14XDigraphs:
+        IsPartialOrderDigraph[114X).[133X
+  
+  [30X    [33X[0;6Y[3XY[103X   is   a   digraph  satisfying  [2XIsJoinSemilatticeDigraph[102X  ([14XDigraphs:
+        IsJoinSemilatticeDigraph[114X)   which   is  an  induced  subdigraph  of  [3XX[103X
+        satisfying  the  aforementioned  labeling  criteria.  Furthermore  the
+        [2XOutNeighbours[102X  ([14XDigraphs:  OutNeighbours[114X) of each vertex of [3XX[103X which is
+        in [3XY[103X must contain only vertices which are in [3XY[103X.[133X
+  
+  [30X    [33X[0;6Y[3Xact[103X  is  a  function which takes as its first argument a vertex of the
+        digraph  [3XX[103X, its second argument should be an element of [3XG[103X, and it must
+        return  a  vertex  of  [3XX[103X.  [3Xact[103X  must  be  a right action, meaning that
+        [3Xact[103X[10X(A,gh)=[3Xact[103X[10X([3Xact[103X[10X(A,g),h)[110X   holds  for  all  [10XA[110X  in  [3XX[103X  and  [10Xg,h[110X  [22X∈[122X  [3XG[103X.
+        Furthermore  the  permutation  represenation  of this action must be a
+        subgroup  of  the  automorphism  group of [3XX[103X. That means we require the
+        following to return [9Xtrue[109X:[133X
+  
+        [33X[0;6Y[10XIsSubgroup(AutomorphismGroup([110X[3XX[103X[10X),           Image(ActionHomomorphism([110X[3XG[103X[10X,
+        DigraphVertices([110X[3XX[103X[10X), [110X[3Xact[103X[10X));[110X[133X
+  
+        [33X[0;6YFurthermore every vertex of [3XX[103X must be in the orbit of some vertex of [3XX[103X
+        which  is  in  [3XY[103X.  Finally,  [3Xact[103X must fix the vertex of [3XX[103X which is the
+        minimal  vertex  of  [3XY[103X,  i.e.  the  unique  vertex  of  [3XY[103X  whose  only
+        out-neighbour is itself.[133X
+  
+  [33X[0;0YFor     user     convienience,    there    are    multiple    versions    of
+  [10XMcAlisterTripleSemigroup[110X. When the argument [3Xact[103X is ommitted it is assumed to
+  be  [2XOnPoints[102X ([14XReference: OnPoints[114X). Additionally, the semilattice argument [3XY[103X
+  may be replaced by a homogeneous list [3Xsub_ver[103X of vertices of [3XX[103X. When [3Xsub_ver[103X
+  is   provided,   [10XMcAlisterTripleSemigroup[110X   is   called   with  [3XY[103X  equalling
+  [10XInducedSubdigraph([3XX[103X[10X, [3Xsub_ver[103X[10X)[110X with the appropriate labels.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := FullTropicalMinPlusMonoid(2, 3);[127X[104X
-    [4X[28X<monoid of 2x2 tropical min-plus matrices with 7 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X625[128X[104X
-    [4X[25Xgap>[125X [27X(3 + 2) ^ (2 ^ 2);[127X[104X
-    [4X[28X625[128X[104X
+    [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
+    [4X[28X<immutable digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 4, 5]);[127X[104X
+    [4X[28X<immutable digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[25Xgap>[125X [27XDigraphVertexLabels(y);[127X[104X
+    [4X[28X[ 1, 4, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
+    [4X[28XGroup([ (2,4)(3,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XS := McAlisterTripleSemigroup(A, x, y, OnPoints);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XT := McAlisterTripleSemigroup(A, x, y);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XS = T;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X8.4-3 McAlisterTripleSemigroupGroup[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupGroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA group.[133X
+  
+  [33X[0;0YReturns  the  group  used  to  create  the  McAlister triple semigroup [3XS[103X via
+  [2XMcAlisterTripleSemigroup[102X ([14X8.4-2[114X).[133X
+  
+  [1X8.4-4 McAlisterTripleSemigroupPartialOrder[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupPartialOrder[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA partial order digraph.[133X
+  
+  [33X[0;0YReturns  the [2XIsPartialOrderDigraph[102X ([14XDigraphs: IsPartialOrderDigraph[114X) used to
+  create   the  McAlister  triple  semigroup  [3XS[103X  via  [2XMcAlisterTripleSemigroup[102X
+  ([14X8.4-2[114X).[133X
+  
+  [1X8.4-5 McAlisterTripleSemigroupSemilattice[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupSemilattice[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA join-semilattice digraph.[133X
+  
+  [33X[0;0YReturns  the  [2XIsJoinSemilatticeDigraph[102X  ([14XDigraphs: IsJoinSemilatticeDigraph[114X)
+  used to create the McAlister triple semigroup [3XS[103X via [2XMcAlisterTripleSemigroup[102X
+  ([14X8.4-2[114X).[133X
+  
+  [1X8.4-6 McAlisterTripleSemigroupAction[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupAction[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA function.[133X
+  
+  [33X[0;0YReturns  the  action  used  to  create  the McAlister triple semigroup [3XS[103X via
+  [2XMcAlisterTripleSemigroup[102X ([14X8.4-2[114X).[133X
+  
+  [1X8.4-7 IsMcAlisterTripleSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XIsMcAlisterTripleSemigroupElement[102X( [3Xx[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsMTSE[102X( [3Xx[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3Xx[103X  is  an  element  of  a  McAlister triple semigroup; in
+  particular,    this    returns    [9Xtrue[109X    if   [3Xx[103X   has   been   created   by
+  [2XMcAlisterTripleSemigroupElement[102X    ([14X8.4-8[114X).   The   functions   [10XIsMTSE[110X   and
+  [10XIsMcAlisterTripleSemigroupElement[110X are synonyms. The mathematical description
+  of these objects can be found in the introduction to Chapter [14X8.4[114X.[133X
+  
+  [1X8.4-8 McAlisterTripleSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupElement[102X( [3XS[103X, [3XA[103X, [3Xg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMTSE[102X( [3XS[103X, [3XA[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA McAlister triple semigroup element.[133X
+  
+  [33X[0;0YReturns  the  [13XMcAlister  triple  semigroup  element[113X  of the McAlister triple
+  semigroup   [3XS[103X  which  corresponds  to  a  label  [3XA[103X  of  a  vertex  from  the
+  [2XMcAlisterTripleSemigroupSemilattice[102X  ([14X8.4-5[114X)  of  [3XS[103X and a group element [3Xg[103X of
+  the   [2XMcAlisterTripleSemigroupGroup[102X  ([14X8.4-3[114X)  of  [3XS[103X.  The  pair  [3X(A,g)[103X  only
+  represents an element of [3XS[103X if the following holds: [3XA[103X acted on by the inverse
+  of  [3Xg[103X  (via  [2XMcAlisterTripleSemigroupAction[102X  ([14X8.4-6[114X))  is  a  vertex  of the
+  join-semilattice of [3XS[103X.[133X
+  
+  [33X[0;0YThe functions [10XMTSE[110X and [10XMcAlisterTripleSemigroupElement[110X are synonyms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
+    [4X[28X<immutable digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 2, 3]);[127X[104X
+    [4X[28X<immutable digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
+    [4X[28XGroup([ (2,4)(3,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XS := McAlisterTripleSemigroup(A, x, y, OnPoints);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XT := McAlisterTripleSemigroup(A, x, y);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XS = T;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa := MTSE(S, 1, (2, 4)(3, 5));[127X[104X
+    [4X[28X(1, (2,4)(3,5))[128X[104X
+    [4X[25Xgap>[125X [27Xb := MTSE(S, 2, ());[127X[104X
+    [4X[28X(2, ())[128X[104X
+    [4X[25Xgap>[125X [27Xa * a;[127X[104X
+    [4X[28X(1, ())[128X[104X
+    [4X[25Xgap>[125X [27XIsMTSE(a * a);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa = MTSE(T, 1, (2, 4)(3, 5));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xa * b;[127X[104X
+    [4X[28X(1, (2,4)(3,5))[128X[104X
   [4X[32X[104X
   

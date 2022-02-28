@@ -4,43 +4,14 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 3.4.2.
-  [5XSemigroups[105X  3.4.2  is  a  distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 4.0.0.
+  [5XSemigroups[105X  4.0.0  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   
-  [33X[0;0Y[5XSemigroups[105X   3.4.2  contains  efficient  methods  for  creating  semigroups,
-  monoids,  inverse  semigroups  and  their  ideals, calculating their Green's
-  structure,  size,  elements,  group  of  units,  minimal  ideal, and testing
-  membership,  finding  the  inverses  of  a  regular element, and factorizing
-  elements over the generators, and much more; see below for more details.[133X
-  
-  [33X[0;0YThere  are methods for finding: congruences of semigroups, the normalizer of
-  a  semigroup  in  a  permutation group (using the method from [ABMN10]), the
-  maximal  subsemigroups of a finite semigroup (based on [GGR68] and described
-  in  [DMW18]),  smaller  degree partial permutation representations (based on
-  [Sch92])  and  the  character  table  of  an  inverse  semigroup.  There are
-  functions  for  producing  pictures  of the Green's structure of a semigroup
-  (inspired  by  [5Xsgpviz[105X),  and  for  drawing  graphical representations of the
-  elements of certain semigroups.[133X
-  
-  [33X[0;0YMany standard examples of semigroups and classes of semigroups are provided;
-  see  Section  [14X8[114X.  [5XSemigroups[105X  also  provides  functions  to  read  and write
-  collections  of  elements  of  a  semigroup  to  a  file; see [2XReadGenerators[102X
-  ([14X20.1-1[114X) and [2XWriteGenerators[102X ([14X20.1-2[114X).[133X
-  
-  [33X[0;0YThere  are  functions  in  [5XSemigroups[105X  to define and manipulate free inverse
-  semigroups  and  free  bands; this part of the package was written by Julius
-  Jonušas; see Chapters [14X10[114X.[133X
-  
   [33X[0;0YFrom  Version  3.0.0,  [5XSemigroups[105X  includes  a copy of the [5Xlibsemigroups[105X C++
-  library which contains an implementation of the Froidure-Pin Algorithm.[133X
-  
-  [33X[0;0Y[12XMinor  note  of  caution[112X: [5XSemigroups[105X contains different methods for some [5XGAP[105X
-  library functions, and so you might notice that [5XGAP[105X behaves differently when
-  [5XSemigroups[105X  is  loaded.  For more details about semigroups in [5XGAP[105X or Green's
-  relations  in particular, see [14X'Reference: Semigroups'[114X or [14X'Reference: Green's
-  Relations'[114X.[133X
+  library  which  contains  implementations of the Froidure-Pin, Todd-Coxeter,
+  and Knuth-Bendix algorithms (among others) that [5XSemigroups[105X utilises.[133X
   
   [33X[0;0YIf  you  find  a  bug  or  an issue with the package, please visit the issue
   tracker ([7Xhttps://github.com/semigroups/Semigroups/issues[107X).[133X
@@ -50,42 +21,39 @@
   
   [33X[0;0YThis manual is organised as follows:[133X
   
-  [8XPart I: generators[108X
-        [33X[0;6Ythe  different  types  of generators that are introduced in [5XSemigroups[105X
-        are  described  in  Chapters  [14X3[114X,  [14X4[114X,  and [14X5[114X. These include [2XBipartition[102X
-        ([14X3.2-1[114X),  [2XPBR[102X  ([14X4.2-1[114X),  and  [2XMatrix[102X  ([14X5.1-5[114X),  which supplement those
-        already defined in the [5XGAP[105X library, such as [2XTransformation[102X ([14XReference:
+  [8XPart I: elements[108X
+        [33X[0;6Ythe  different types of elements that are introduced in [5XSemigroups[105X are
+        described  in Chapters [14X3[114X, [14X4[114X, and [14X5[114X. These include [2XBipartition[102X ([14X3.2-1[114X),
+        [2XPBR[102X  ([14X4.2-1[114X),  and  [2XMatrix[102X  ([14X5.1-5[114X),  which  supplement  those already
+        defined  in  the  [5XGAP[105X  library,  such  as  [2XTransformation[102X  ([14XReference:
         Transformation   for   an   image  list[114X)  or  [2XPartialPerm[102X  ([14XReference:
         PartialPerm for a domain and image[114X).[133X
   
-  [8XPart II: semigroups and ideals[108X
-        [33X[0;6Yfunctions  and  operations for creating semigroups, monoids, and their
-        ideals,  in  general, and various options, are described in Chapters [14X6[114X
-        and [14X7[114X.[133X
+  [8XPart II: semigroups and monoids defined by generating sets[108X
+        [33X[0;6Yfunctions  and  operations for creating semigroups and monoids defined
+        by  generating  sets (of the type descibed in Part I) are described in
+        Chapter [14X6[114X.[133X
   
   [8XPart III: standard examples and constructions[108X
-        [33X[0;6Ystandard  examples of semigroups, such as [2XFullBooleanMatMonoid[102X ([14X8.6-1[114X)
-        or  [2XUniformBlockBijectionMonoid[102X  ([14X8.3-8[114X),  are described in Chapter [14X8[114X,
-        and   standard   constructions,   such  as  [2XTrivialSemigroup[102X  ([14X9.1-1[114X),
-        [2XRightZeroSemigroup[102X ([14X9.1-5[114X), are described in Chapter [14X9[114X.[133X
+        [33X[0;6Ystandard  examples of semigroups, such as [2XFullBooleanMatMonoid[102X ([14X7.6-1[114X)
+        or  [2XUniformBlockBijectionMonoid[102X  ([14X7.3-8[114X),  are described in Chapter [14X7[114X,
+        and standard constructions, such as [2XDirectProduct[102X ([14X8.1-1[114X) are given in
+        Chapter [14X8[114X.[133X
   
-  [8XPart IV: further classes of semigroups and monoids[108X
-        [33X[0;6Yfree  objects  in the categories of inverse semigroups, and bands, are
-        described  in  Chapter  [14X10[114X,  and graph inverse semigroups, which are a
-        generalisation of polycyclic monoids, are described in Chapter [14X11[114X.[133X
+  [8XPart IV: the structure of a semigroup or monoid[108X
+        [33X[0;6Ythe  functionality  for determining various structural properties of a
+        given semigroup or monoid are described in Chapters [14X9[114X, [14X10[114X, [14X11[114X, and [14X12[114X.[133X
   
-  [8XPart V: the structure of a semigroup or monoid[108X
-        [33X[0;6Ythe  functionality  of  the [5XSemigroups[105X package for determining various
-        structural  properties of a given semigroup or monoid are described in
-        Chapters [14X13[114X, [14X14[114X, and [14X15[114X. Attributes and properties specific to inverse
-        semigroups are described in Chapter [14X16[114X.[133X
-  
-  [8XPart VI: congruences, quotients, and homomorphisms[108X
+  [8XPart V: congruences, quotients, and homomorphisms[108X
         [33X[0;6Ymethods  for  creating  and manipulating congruences and homomorphisms
-        are described by Chapters [14X17[114X and [14X18[114X.[133X
+        are described by Chapters [14X13[114X and [14X14[114X.[133X
+  
+  [8XPart VI: finitely presented semigroups and monoids[108X
+        [33X[0;6Ymethods  for finitely presented semigroups and monoids, in particular,
+        for Tietze transformations can be found in Chapters [14X15[114X.[133X
   
   [8XPart VII: utilities and helper functions[108X
         [33X[0;6Yfunctions  for  reading and writing semigroups and their elements, and
         for  visualising  semigroups, and some of their elements, can be found
-        in Chapters [14X19[114X and [14X20[114X.[133X
+        in Chapters [14X16[114X and [14X17[114X.[133X
   

@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (semigroups) - Chapter 5: 
+<title>GAP (Semigroups) - Chapter 5: 
     Matrices over semirings
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -20,7 +20,7 @@
 <body class="chap5"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -131,7 +131,7 @@
     Matrices over semirings
   </span></h3>
 
-<p>In this chapter we describe the functionality in <strong class="pkg">Semigroups</strong> for creating matrices over semirings. <strong class="button">Only square matrices are currently supported.</strong> We use the term <strong class="button">matrix</strong> to mean <strong class="button">square matrix</strong> everywhere in this manual.</p>
+<p>In this chapter we describe the functionality in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating matrices over semirings. <strong class="button">Only square matrices are currently supported.</strong> We use the term <strong class="button">matrix</strong> to mean <strong class="button">square matrix</strong> everywhere in this manual.</p>
 
 <p>For reference, matrices over the following semirings are currently supported:</p>
 
@@ -170,13 +170,13 @@
 
 </dd>
 </dl>
-<p>With the exception of matrices of finite fields, semigroups of matrices in <strong class="pkg">Semigroups</strong> are of the second type described in Section <a href="chap1_mj.html#X7DFB63A97E67C0A1"><span class="RefLink">1.1</span></a>. In other words, a version of the Froidure-Pin Algorithm <a href="chapBib_mj.html#biBFroidure1997aa">[FP97]</a> is used to compute semigroups of these types, i.e it is possible that all of the elements of such a semigroup are enumerated and stored in the memory of your computer.</p>
+<p>With the exception of matrices of finite fields, semigroups of matrices in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> are of the second type described in Section <a href="chap6_mj.html#X7A19D22B7A05CC2F"><span class="RefLink">6.1</span></a>. In other words, a version of the Froidure-Pin Algorithm <a href="chapBib_mj.html#biBFroidure1997aa">[FP97]</a> is used to compute semigroups of these types, i.e it is possible that all of the elements of such a semigroup are enumerated and stored in the memory of your computer.</p>
 
 <p><a id="X7ECF673C7BE2384D" name="X7ECF673C7BE2384D"></a></p>
 
 <h4>5.1 <span class="Heading">Creating matrices over semirings</span></h4>
 
-<p>In this section we describe the two main operations for creating matrices over semirings in <strong class="pkg">Semigroups</strong>, and the categories, attributes, and operations which apply to every matrix over one of the semirings given at the start of this chapter.</p>
+<p>In this section we describe the two main operations for creating matrices over semirings in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> , and the categories, attributes, and operations which apply to every matrix over one of the semirings given at the start of this chapter.</p>
 
 <p>There are several special methods for boolean matrices, which can be found in Section <a href="chap5_mj.html#X844A32A184E5EB75"><span class="RefLink">5.3</span></a>. There are also several special methods for finite fields, which can be found in section <a href="chap5_mj.html#X873822B6830CE367"><span class="RefLink">5.4</span></a>.</p>
 
@@ -187,9 +187,9 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverSemiring</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of the category <code class="code">IsMatrixOverSemiring</code>, which is a subcategory of <code class="func">IsMultiplicativeElementWithOne</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X82BC294F7D388AE8"><span class="RefLink">Reference: IsMultiplicativeElementWithOne</span></a>), <code class="func">IsAssociativeElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>), and <code class="code">IsPositionalObjectRep</code>; see <a href="https://www.gap-system.org/Manuals/doc/ref/chap13_mj.html#X8698205F8648EB33"><span class="RefLink">Reference: Representation</span></a>.</p>
+<p>Every matrix over a semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is a member of the category <code class="code">IsMatrixOverSemiring</code>, which is a subcategory of <code class="func">IsMultiplicativeElementWithOne</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X82BC294F7D388AE8"><span class="RefLink">Reference: IsMultiplicativeElementWithOne</span></a>), <code class="func">IsAssociativeElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>), and <code class="code">IsPositionalObjectRep</code>; see <a href="https://www.gap-system.org/Manuals/doc/ref/chap13_mj.html#X8698205F8648EB33"><span class="RefLink">Reference: Representation</span></a>.</p>
 
-<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a square matrix.</p>
+<p>Every matrix over a semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is a square matrix.</p>
 
 <p>Basic operations for matrices over semirings are: <code class="func">DimensionOfMatrixOverSemiring</code> (<a href="chap5_mj.html#X7C1CDA817CE076FD"><span class="RefLink">5.1-3</span></a>), <code class="func">TransposedMat</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap24_mj.html#X7C52A38C79C36C35"><span class="RefLink">Reference: TransposedMat</span></a>), and <code class="func">One</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>).</p>
 
@@ -253,7 +253,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">semiring</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over semiring.</p>
 
-<p>This operation can be used to construct a matrix over a semiring in <strong class="pkg">Semigroups</strong>.</p>
+<p>This operation can be used to construct a matrix over a semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> .</p>
 
 <p>In its first form, the first argument <var class="Arg">filt</var> specifies the filter to be used to create the matrix, the second argument <var class="Arg">mat</var> is a <strong class="pkg">GAP</strong> matrix (i.e. a list of lists) compatible with <var class="Arg">filt</var>, the third and fourth arguments <var class="Arg">threshold</var> and <var class="Arg">period</var> (if required) must be positive integers.</p>
 
@@ -424,7 +424,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrix</code>( <var class="Arg">semiring</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix over semiring.</p>
 
-<p>This operation can be used to construct a random matrix over a semiring in <strong class="pkg">Semigroups</strong>. The usage of <code class="code">RandomMatrix</code> is similar to that of <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>).</p>
+<p>This operation can be used to construct a random matrix over a semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> . The usage of <code class="code">RandomMatrix</code> is similar to that of <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>).</p>
 
 <p>In its first form, the first argument <var class="Arg">filt</var> specifies the filter to be used to create the matrix, the second argument <var class="Arg">dim</var> is dimension of the matrix, the third and fourth arguments <var class="Arg">threshold</var> and <var class="Arg">period</var> (if required) must be positive integers.</p>
 
@@ -487,7 +487,7 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of one of these categories, which are subcategory of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
+<p>Every matrix over a semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is a member of one of these categories, which are subcategory of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5_mj.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
 
 <p><code class="code">IsTropicalMatrix</code> is a supercategory of <code class="code">IsTropicalMaxPlusMatrix</code> and <code class="code">IsTropicalMinPlusMatrix</code>.</p>
 
@@ -518,9 +518,9 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every collection of matrices over the same semiring in <strong class="pkg">Semigroups</strong> belongs to one of the categories above. For example, semigroups of boolean matrices belong to <code class="code">IsBooleanMatCollection</code>.</p>
+<p>Every collection of matrices over the same semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> belongs to one of the categories above. For example, semigroups of boolean matrices belong to <code class="code">IsBooleanMatCollection</code>.</p>
 
-<p>Similarly, every collection of collections of matrices over the same semiring in <strong class="pkg">Semigroups</strong> belongs to one of the categories above.</p>
+<p>Similarly, every collection of collections of matrices over the same semiring in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> belongs to one of the categories above.</p>
 
 <p><a id="X8289FCCC8274C89D" name="X8289FCCC8274C89D"></a></p>
 
@@ -647,7 +647,7 @@ Matrix(IsNTPMatrix, [[2, 1, 3], [0, 5, 1], [4, 1, 0]], 3, 4)
       Boolean matrices
     </span></h4>
 
-<p>In this section we describe the operations, properties, and attributes in <strong class="pkg">Semigroups</strong> specifically for Boolean matrices. These include:</p>
+<p>In this section we describe the operations, properties, and attributes in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> specifically for Boolean matrices. These include:</p>
 
 
 <ul>
@@ -1264,7 +1264,7 @@ true</pre></div>
       Matrices over finite fields
     </span></h4>
 
-<p>In this section we describe the operations, properties, and attributes in <strong class="pkg">Semigroups</strong> specifically for matrices over finite fields. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings.</p>
+<p>In this section we describe the operations, properties, and attributes in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> specifically for matrices over finite fields. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings.</p>
 
 <p><a id="X84F281347ECB62B7" name="X84F281347ECB62B7"></a></p>
 
@@ -1417,7 +1417,7 @@ Matrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0],
       Integer Matrices
     </span></h4>
 
-<p>In this section we describe operations in <strong class="pkg">Semigroups</strong> specifically for integer matrices. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
+<p>In this section we describe operations in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> specifically for integer matrices. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
 
 
 <ul>
@@ -1509,7 +1509,7 @@ infinity
       Max-plus and min-plus matrices
     </span></h4>
 
-<p>In this section we describe operations in <strong class="pkg">Semigroups</strong> specifically for max-plus and min-plus matrices. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
+<p>In this section we describe operations in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> specifically for max-plus and min-plus matrices. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
 
 
 <ul>
@@ -1599,7 +1599,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
       Matrix semigroups
     </span></h4>
 
-<p>In this section we describe operations and attributes in <strong class="pkg">Semigroups</strong> specifically for matrix semigroups. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
+<p>In this section we describe operations and attributes in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> specifically for matrix semigroups. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
 
 
 <ul>
@@ -1616,9 +1616,9 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 
 </li>
 </ul>
-<p>Random matrix semigroups can be created by using the function <code class="func">RandomSemigroup</code> (<a href="chap6_mj.html#X789DE9AB79FCFEB5"><span class="RefLink">6.7-1</span></a>). We can also create a matrix semigroup isomorphic to a given semigroup by using <code class="func">IsomorphismSemigroup</code> (<a href="chap6_mj.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) and <code class="func">AsSemigroup</code> (<a href="chap6_mj.html#X80ED104F85AE5134"><span class="RefLink">6.6-3</span></a>). These functions require a filter, and accept any of the filters in Section <a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>.</p>
+<p>Random matrix semigroups can be created by using the function <code class="func">RandomSemigroup</code> (<a href="chap6_mj.html#X789DE9AB79FCFEB5"><span class="RefLink">6.6-1</span></a>). We can also create a matrix semigroup isomorphic to a given semigroup by using <code class="func">IsomorphismSemigroup</code> (<a href="chap6_mj.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) and <code class="func">AsSemigroup</code> (<a href="chap6_mj.html#X80ED104F85AE5134"><span class="RefLink">6.5-3</span></a>). These functions require a filter, and accept any of the filters in Section <a href="chap5_mj.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>.</p>
 
-<p>There are corresponding functions which can be used for matrix monoids: <code class="func">RandomMonoid</code> (<a href="chap6_mj.html#X789DE9AB79FCFEB5"><span class="RefLink">6.7-1</span></a>), <code class="func">IsomorphismMonoid</code> (<a href="chap6_mj.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>), and <code class="func">AsMonoid</code> (<a href="chap6_mj.html#X7B22038F832B9C0F"><span class="RefLink">6.6-4</span></a>). These can be used with the filters in Section <a href="chap5_mj.html#X8616225581BC7414"><span class="RefLink">5.7-2</span></a>.</p>
+<p>There are corresponding functions which can be used for matrix monoids: <code class="func">RandomMonoid</code> (<a href="chap6_mj.html#X789DE9AB79FCFEB5"><span class="RefLink">6.6-1</span></a>), <code class="func">IsomorphismMonoid</code> (<a href="chap6_mj.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>), and <code class="func">AsMonoid</code> (<a href="chap6_mj.html#X7B22038F832B9C0F"><span class="RefLink">6.5-4</span></a>). These can be used with the filters in Section <a href="chap5_mj.html#X8616225581BC7414"><span class="RefLink">5.7-2</span></a>.</p>
 
 <p><a id="X7DC6EB0680B3E4DD" name="X7DC6EB0680B3E4DD"></a></p>
 
@@ -1729,7 +1729,7 @@ false
 
 <h5>5.7-6 <span class="Heading">Matrix groups</span></h5>
 
-<p>For interfacing the semigroups code with <strong class="pkg">GAP</strong>'s library code for matrix groups, the <strong class="pkg">Semigroups</strong> package implements matrix groups that delegate to the <strong class="pkg">GAP</strong> library. These functions include:</p>
+<p>For interfacing the semigroups code with <strong class="pkg">GAP</strong>'s library code for matrix groups, the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package implements matrix groups that delegate to the <strong class="pkg">GAP</strong> library. These functions include:</p>
 
 
 <ul>
@@ -1755,7 +1755,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5_mj.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
+<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5_mj.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1834,7 +1834,7 @@ Group(
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

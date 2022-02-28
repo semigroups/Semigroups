@@ -5,8 +5,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 9: 
-    Standard constructions
+<title>GAP (Semigroups) - Chapter 9: 
+    Ideals
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -17,355 +17,195 @@
 <body class="chap9"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap9_mj.html">[MathJax on]</a></p>
-<p><a id="X86EE8DC987BA646E" name="X86EE8DC987BA646E"></a></p>
-<div class="ChapSects"><a href="chap9.html#X86EE8DC987BA646E">9 <span class="Heading">
-    Standard constructions
+<p><a id="X83629803819C4A6F" name="X83629803819C4A6F"></a></p>
+<div class="ChapSects"><a href="chap9.html#X83629803819C4A6F">9 <span class="Heading">
+    Ideals
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X86EE8DC987BA646E">9.1 <span class="Heading">
-      Standard constructions
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X82D4D9A578A56A8D">9.1 <span class="Heading">
+      Creating ideals
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82B07E907B3A55F0">9.1-1 TrivialSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8411EBD97A220921">9.1-2 MonogenicSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E4DFDE27BF8B8F7">9.1-3 RectangularBand</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X801FC1D97D832A6F">9.1-4 ZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8672CFA47CA620B2">9.1-5 LeftZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E2B20C77D47F7FB">9.1-6 BrandtSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X78E15B0184A1DC14">9.1-1 SemigroupIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7AF9B33881D185C6">9.1-2 Ideals</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X85D4E72B787B1C49">9.2 <span class="Heading">
+      Attributes of ideals
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X87BB45DB844D41BC">9.2-1 GeneratorsOfSemigroupIdeal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8777E71A82C2BAF9">9.2-2 MinimalIdealGeneratingSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DB8699784FA4114">9.2-3 SupersemigroupOfIdeal</a></span>
 </div></div>
 </div>
 
 <h3>9 <span class="Heading">
-    Standard constructions
+    Ideals
   </span></h3>
 
-<p>In this chapter we describe some standard semigroup constructions which are available in the <strong class="pkg">Semigroups</strong> package.</p>
+<p>In this chapter we describe the various ways that an ideal of a semigroup can be created and manipulated in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> .</p>
 
-<p><a id="X86EE8DC987BA646E" name="X86EE8DC987BA646E"></a></p>
+<p>We write <em>ideal</em> to mean two-sided ideal everywhere in this chapter.</p>
+
+<p>The methods in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package apply to any ideal of a semigroup that is created using the function <code class="func">SemigroupIdeal</code> (<a href="chap9.html#X78E15B0184A1DC14"><span class="RefLink">9.1-1</span></a>) or <code class="code">SemigroupIdealByGenerators</code>. Anything that can be calculated for a semigroup defined by a generating set can also be found for an ideal. This works particularly well for regular ideals, since such an ideal can be represented using a similar data structure to that used to represent a semigroup defined by a generating set but without the necessity to find a generating set for the ideal. Many methods for non-regular ideals rely on first finding a generating set for the ideal, which can be costly (but not nearly as costly as an exhaustive enumeration of the elements of the ideal). We plan to improve the functionality of <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for non-regular ideals in the future.</p>
+
+<p><a id="X82D4D9A578A56A8D" name="X82D4D9A578A56A8D"></a></p>
 
 <h4>9.1 <span class="Heading">
-      Standard constructions
+      Creating ideals
     </span></h4>
 
-<p>In this section, we describe the functions in <strong class="pkg">Semigroups</strong> that can be used to create standard semigroup constructions in various representations. For all of the constructions, the default representation is as a semigroup of transformations. In general, these functions do not return a representation of minimal degree.</p>
+<p><a id="X78E15B0184A1DC14" name="X78E15B0184A1DC14"></a></p>
 
-<p><a id="X82B07E907B3A55F0" name="X82B07E907B3A55F0"></a></p>
+<h5>9.1-1 SemigroupIdeal</h5>
 
-<h5>9.1-1 TrivialSemigroup</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupIdeal</code>( <var class="Arg">S</var>, <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">..</var>, <var class="Arg">.</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: An ideal of a semigroup.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSemigroup</code>( [<var class="Arg">filt</var>, ][<var class="Arg">deg</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: A trivial semigroup.</p>
+<p>If <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, .. . are (any combination) of elements of the semigroup <var class="Arg">S</var> or collections of elements of <var class="Arg">S</var> (including subsemigroups and ideals of <var class="Arg">S</var>), then <code class="code">SemigroupIdeal</code> returns the 2-sided ideal of the semigroup <var class="Arg">S</var> generated by the union of <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, .. ..</p>
 
-<p>A <strong class="button">trivial</strong> semigroup is a semigroup with precisely one element. This function returns a trivial semigroup in the representation given by the filter <var class="Arg">filter</var>, and (if possible) with the degree of the representation given by the non-negative integer <var class="Arg">deg</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPBRSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBooleanMatSemigroup</code>.</p>
-
-</li>
-</ul>
-<p>If the optional argument <var class="Arg">deg</var> is not specified, then the smallest possible degree will be used.</p>
+<p>The <code class="func">Parent</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X7BC856CC7F116BB0"><span class="RefLink">Reference: Parent</span></a>) of the ideal returned by this function is <var class="Arg">S</var>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup();</span>
-&lt;trivial transformation group of degree 0 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup(3);</span>
-&lt;trivial transformation group of degree 3 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup(IsBipartitionSemigroup, 2);</span>
-&lt;trivial block bijection group of degree 2 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
-[ &lt;block bijection: [ 1, 2, -1, -2 ]&gt; ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(10);</span>
+&lt;symmetric inverse monoid of degree 10&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S, PartialPerm([1, 2]));</span>
+&lt;inverse partial perm semigroup ideal of rank 10 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(I);</span>
+4151
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S, I, Idempotents(S));</span>
+&lt;inverse partial perm semigroup ideal of rank 10 with 1025 generators&gt;</pre></div>
 
-<p><a id="X8411EBD97A220921" name="X8411EBD97A220921"></a></p>
+<p><a id="X7AF9B33881D185C6" name="X7AF9B33881D185C6"></a></p>
 
-<h5>9.1-2 MonogenicSemigroup</h5>
+<h5>9.1-2 Ideals</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonogenicSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: A monogenic semigroup with index <var class="Arg">m</var> and period <var class="Arg">r</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Ideals</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: An list of ideals.</p>
 
-<p>If <var class="Arg">m</var> and <var class="Arg">r</var> are positive integers, then this function returns a monogenic semigroup <code class="code">S</code> with index <var class="Arg">m</var> and period <var class="Arg">r</var> in the representation given by the filter <var class="Arg">filt</var>.</p>
+<p>If <var class="Arg">S</var> is a finite non-empty semigroup, then this attribute returns a list of the non-empty two-sided ideals of <var class="Arg">S</var>.</p>
 
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPBRSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBooleanMatSemigroup</code>.</p>
-
-</li>
-</ul>
-<p>The semigroup <code class="code">S</code> is generated by a single element, <span class="SimpleMath">f</span>. <code class="code">S</code> consists of the elements <span class="SimpleMath">f, f ^ 2, ..., f ^ m, ..., f ^ m + r - 1</span>. The minimal ideal of <code class="code">S</code> consists of the elements <span class="SimpleMath">f ^ m, ..., f ^ m + r - 1</span> and is isomorphic to the cyclic group of order <span class="SimpleMath">r</span>.</p>
-
-<p>See <code class="func">IsMonogenicSemigroup</code> (<a href="chap15.html#X79D46BAB7E327AD1"><span class="RefLink">15.1-11</span></a>) for more information about monogenic semigroups.</p>
+<p>The ideals are returned in no particular order, and each ideal uses the minimum possible number of generators (see <code class="func">GeneratorsOfSemigroupIdeal</code> (<a href="chap9.html#X87BB45DB844D41BC"><span class="RefLink">9.2-1</span></a>)).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(5, 3);</span>
-&lt;commutative non-regular transformation semigroup of size 7, degree 8 
- with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := MinimalIdeal(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(I);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(I);</span>
-"C3"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);</span>
-&lt;commutative non-regular block bijection semigroup of size 9, 
- degree 10 with 1 generator&gt;</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([4, 3, 4, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([4, 3, 2, 2])]);</span>
+&lt;transformation semigroup of degree 4 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ideals(S);</span>
+[ &lt;non-regular transformation semigroup ideal of degree 4 with
+      1 generator&gt;, 
+ &lt;non-regular transformation semigroup ideal of degree 4 with
+     1 generator&gt;, 
+&lt;non-regular transformation semigroup ideal of degree 4 with
+    2 generators&gt;, 
+&lt;regular transformation semigroup ideal of degree 4 with 1 generator&gt;,
+&lt;non-regular transformation semigroup ideal of degree 4 with
+  1 generator&gt;, 
+&lt;regular transformation semigroup ideal of degree 4 with 1 generator&gt; 
+]
+</pre></div>
 
-<p><a id="X7E4DFDE27BF8B8F7" name="X7E4DFDE27BF8B8F7"></a></p>
+<p><a id="X85D4E72B787B1C49" name="X85D4E72B787B1C49"></a></p>
 
-<h5>9.1-3 RectangularBand</h5>
+<h4>9.2 <span class="Heading">
+      Attributes of ideals
+    </span></h4>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RectangularBand</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: An <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band.</p>
+<p><a id="X87BB45DB844D41BC" name="X87BB45DB844D41BC"></a></p>
 
-<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this function returns a semigroup isomorphic to an <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band, in the representation given by the filter <var class="Arg">filt</var>.</p>
+<h5>9.2-1 GeneratorsOfSemigroupIdeal</h5>
 
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfSemigroupIdeal</code>( <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: The generators of an ideal of a semigroup.</p>
 
+<p>This function returns the generators of the two-sided ideal <var class="Arg">I</var>, which were used to defined <var class="Arg">I</var> when it was created.</p>
 
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+<p>If <var class="Arg">I</var> is an ideal of a semigroup, then <var class="Arg">I</var> is defined to be the least 2-sided ideal of a semigroup <code class="code">S</code> containing a set <code class="code">J</code> of elements of <code class="code">S</code>. The set <code class="code">J</code> is said to <em>generate</em> <var class="Arg">I</var>.</p>
 
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPBRSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsReesMatrixSemigroup</code>.</p>
-
-</li>
-</ul>
-<p>See <code class="func">IsRectangularBand</code> (<a href="chap15.html#X7E9B674D781B072C"><span class="RefLink">15.1-15</span></a>) for more information about rectangular bands.</p>
+<p>The notion of the generators of an ideal is distinct from the notion of the generators of a semigroup or monoid. In particular, the semigroup generated by the generators of an ideal is not, in general, equal to that ideal. Use <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>) to obtain a semigroup generating set for an ideal, but beware that this can be very costly.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(5, 6);</span>
-&lt;regular transformation semigroup of size 30, degree 10 with 6 
- generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(T);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsReesMatrixSemigroup, 4, 8);</span>
-&lt;Rees matrix semigroup 4x8 over Group(())&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelySimpleSemigroup(S) and IsHTrivial(S);</span>
-true</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, 4, -1], [-2, -4], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -3], [4], [-1], [-2, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 3, -2], [2, 4], [-1, -3, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1], [2, 3, 4], [-1, -3, -4], [-2]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1], [2, 4, -2], [3, -4], [-1], [-3]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S, S.1 * S.2 * S.5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroupIdeal(I);</span>
+[ &lt;bipartition: [ 1, 2, 3, 4, -4 ], [ -1 ], [ -2 ], [ -3 ]&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I = Semigroup(GeneratorsOfSemigroupIdeal(I));</span>
+false</pre></div>
 
-<p><a id="X801FC1D97D832A6F" name="X801FC1D97D832A6F"></a></p>
+<p><a id="X8777E71A82C2BAF9" name="X8777E71A82C2BAF9"></a></p>
 
-<h5>9.1-4 ZeroSemigroup</h5>
+<h5>9.2-2 MinimalIdealGeneratingSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: A zero semigroup of order <var class="Arg">n</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalIdealGeneratingSet</code>( <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A minimal set ideal generators of an ideal.</p>
 
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns a zero semigroup of order <var class="Arg">n</var> in the representation given by the filter <var class="Arg">filt</var>.</p>
+<p>This function returns a minimal set of elements of the parent of the semigroup ideal <var class="Arg">I</var> required to generate <var class="Arg">I</var> as an ideal.</p>
 
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPBRSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsReesZeroMatrixSemigroup</code> (provided that <code class="code"><var class="Arg">n</var> &gt; 1</code>).</p>
-
-</li>
-</ul>
-<p>See <code class="func">IsZeroSemigroup</code> (<a href="chap15.html#X81A1882181B75CC9"><span class="RefLink">15.1-27</span></a>) for more information about zero semigroups.</p>
+<p>The notion of the generators of an ideal is distinct from the notion of the generators of a semigroup or monoid. In particular, the semigroup generated by the generators of an ideal is not, in general, equal to that ideal. Use <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>) to obtain a semigroup generating set for an ideal, but beware that this can be very costly.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(5);</span>
-&lt;commutative non-regular transformation semigroup of size 5, degree 5 
- with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(IsPartialPermSemigroup, 15);</span>
-&lt;commutative non-regular partial perm semigroup of size 15, rank 14 
- with 14 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-15
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := MultiplicativeZero(S);</span>
-&lt;empty partial perm&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(S, x -&gt; ForAll(S, y -&gt; x * y = z));</span>
-true</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -2], [4], [-1, -4], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 4, -2, -4], [2, -1, -3], [3]])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S, S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalIdealGeneratingSet(I);</span>
+[ &lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ]&gt; ]</pre></div>
 
-<p><a id="X8672CFA47CA620B2" name="X8672CFA47CA620B2"></a></p>
+<p><a id="X7DB8699784FA4114" name="X7DB8699784FA4114"></a></p>
 
-<h5>9.1-5 LeftZeroSemigroup</h5>
+<h5>9.2-3 SupersemigroupOfIdeal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: A left zero (or right zero) semigroup of order <var class="Arg">n</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SupersemigroupOfIdeal</code>( <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: An ideal of a semigroup.</p>
 
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns a left zero (or right zero, as appropriate) semigroup of order <var class="Arg">n</var> in the representation given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not specified then the default representation is <code class="code">IsTransformationSemigroup</code>.</p>
+<p>The <code class="func">Parent</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X7BC856CC7F116BB0"><span class="RefLink">Reference: Parent</span></a>) of an ideal is the semigroup in which the ideal was created, i.e. the first argument of <code class="func">SemigroupIdeal</code> (<a href="chap9.html#X78E15B0184A1DC14"><span class="RefLink">9.1-1</span></a>) or <code class="code">SemigroupIdealByGenerators</code>. This function returns the semigroup containing the generators of the semigroup (i.e. <code class="func">GeneratorsOfSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>)) which are used to compute the ideal.</p>
 
-<p>The function <code class="code">LeftZeroSemigroup([<var class="Arg">filt</var>,] <var class="Arg">n</var>)</code> simply calls <code class="code">RectangularBand([<var class="Arg">filt</var>,] <var class="Arg">n</var>, 1)</code> and the function <code class="code">RightZeroSemigroup([<var class="Arg">filt</var>,] <var class="Arg">n</var>)</code> simply calls <code class="code">RectangularBand([<var class="Arg">filt</var>,] 1, <var class="Arg">n</var>)</code>.</p>
+<p>For a regular semigroup ideal, <code class="code">SupersemigroupOfIdeal</code> will always be the top most semigroup used to create any of the predecessors of the current ideal. For example, if <code class="code">S</code> is a semigroup, <code class="code">I</code> is a regular ideal of <code class="code">S</code>, and <code class="code">J</code> is an ideal of <code class="code">I</code>, then <code class="code">Parent(J)</code> is <code class="code">I</code> and <code class="code">SupersemigroupOfIdeal(J)</code> is <code class="code">S</code>. This is to avoid computing a generating set for <code class="code">I</code>, in this example, which is expensive and unnecessary since <code class="code">I</code> is regular (in which case the Green's relations of <code class="code">I</code> are just restrictions of the Green's relations on <code class="code">S</code>).</p>
 
-<p>For more information about <code class="code">RectangularBand</code>, including its permitted values of <var class="Arg">filt</var>, see <code class="func">RectangularBand</code> (<a href="chap9.html#X7E4DFDE27BF8B8F7"><span class="RefLink">9.1-3</span></a>). See <code class="func">IsLeftZeroSemigroup</code> (<a href="chap15.html#X7E9261367C8C52C0"><span class="RefLink">15.1-10</span></a>) and <code class="func">IsRightZeroSemigroup</code> (<a href="chap15.html#X7CB099958658F979"><span class="RefLink">15.1-18</span></a>) for more information about left zero and right zero semigroups.</p>
+<p>If <code class="code">S</code> is a semigroup, <code class="code">I</code> is a non-regular ideal of <code class="code">S</code>, <code class="code">J</code> is an ideal of <code class="code">I</code>, then <code class="code">SupersemigroupOfIdeal(J)</code> is <code class="code">I</code>, since we currently have to use <code class="code">GeneratorsOfSemigroup(I)</code> to compute anything about <code class="code">I</code> other than its size and membership.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := LeftZeroSemigroup(20);</span>
-&lt;transformation semigroup of degree 6 with 20 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftZeroSemigroup(S);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(8);</span>
+&lt;full transformation monoid of degree 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([2, 6, 7, 2, 6, 1, 1, 5]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S, x);</span>
+&lt;Green's D-class: Transformation( [ 6, 3, 4, 6, 3, 5, 5, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PrincipalFactor(D);</span>
+&lt;Rees 0-matrix semigroup 1050x56 over Group([ (2,8,7,4,3), (3,4) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(List([1 .. 10], x -&gt; Random(R)));</span>
+&lt;subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S, MultiplicativeZero(S));</span>
+&lt;regular Rees 0-matrix semigroup ideal with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SupersemigroupOfIdeal(I);</span>
+&lt;subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">J := SemigroupIdeal(I, Representative(MinimalDClass(S)));</span>
+&lt;regular Rees 0-matrix semigroup ideal with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent(J) = I;</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(Tuples(S, 2), p -&gt; p[1] * p[2] = p[1]);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RightZeroSemigroup(IsBipartitionSemigroup, 5);</span>
-&lt;regular bipartition semigroup of size 5, degree 3 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
-true</pre></div>
-
-<p><a id="X7E2B20C77D47F7FB" name="X7E2B20C77D47F7FB"></a></p>
-
-<h5>9.1-6 BrandtSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrandtSemigroup</code>( [[<var class="Arg">filt</var>, ]<var class="Arg">G</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: An <var class="Arg">n</var> by <var class="Arg">n</var> Brandt semigroup over the group <var class="Arg">G</var>.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns an <var class="Arg">n</var> by <var class="Arg">n</var> Brandt semigroup over the group <var class="Arg">G</var> in the representation given by the filter <var class="Arg">filt</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> can be any of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsPartialPermSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsReesZeroMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsTransformationSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPBRSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsNTPMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsMaxPlusMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsMinPlusMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsTropicalMaxPlusMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsTropicalMinPlusMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsProjectiveMaxPlusMatrixSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsIntegerMatrixSemigroup.</code></p>
-
-</li>
-</ul>
-<p>The optional argument <var class="Arg">G</var> defaults to a trivial permutation group. If present <var class="Arg">G</var> must be a permutation group, unless <var class="Arg">filt</var> is <code class="code">IsReesZeroMatrixSemigroup</code> when <var class="Arg">G</var> may be any type of finite group.</p>
-
-<p>See <code class="func">IsBrandtSemigroup</code> (<a href="chap16.html#X7EFDBA687DCDA6FA"><span class="RefLink">16.2-2</span></a>) for more information about Brandt semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrandtSemigroup(5);</span>
-&lt;0-simple inverse partial perm semigroup of rank 5 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBrandtSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrandtSemigroup(IsTransformationSemigroup, 15);</span>
-&lt;0-simple transformation semigroup of degree 16 with 28 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-226
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
-Transformation( [ 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-  16, 16, 16 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrandtSemigroup(Group((1, 2)), 3);</span>
-&lt;0-simple inverse partial perm semigroup of rank 6 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);</span>
-&lt;0-simple transformation semigroup of degree 7 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrandtSemigroup(IsReesZeroMatrixSemigroup, </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                        DihedralGroup(4), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                        2);</span>
-&lt;Rees 0-matrix semigroup 2x2 over &lt;pc group of size 4 with 
- 2 generators&gt;&gt;</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SupersemigroupOfIdeal(J) = I;</span>
+false</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

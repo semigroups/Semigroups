@@ -8,8 +8,9 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (semigroups) - Chapter 1: 
-    The Semigroups package
+<title>GAP (Semigroups) - Chapter 1: 
+    The Semigroups
+     package
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -20,14 +21,15 @@
 <body class="chap1"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
 <p><a id="X7D8D6DB37A0326BE" name="X7D8D6DB37A0326BE"></a></p>
 <div class="ChapSects"><a href="chap1_mj.html#X7D8D6DB37A0326BE">1 <span class="Heading">
-    The <strong class="pkg">Semigroups</strong> package
+    The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span>
+     package
   </span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7DFB63A97E67C0A1">1.1 <span class="Heading">
       Introduction
@@ -42,7 +44,8 @@
 </div>
 
 <h3>1 <span class="Heading">
-    The <strong class="pkg">Semigroups</strong> package
+    The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span>
+     package
   </span></h3>
 
 <p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
@@ -51,21 +54,11 @@
       Introduction
     </span></h4>
 
-<p>This is the manual for the <strong class="pkg">Semigroups</strong> package for <strong class="pkg">GAP</strong> version 3.4.2. <strong class="pkg">Semigroups</strong> 3.4.2 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.</p>
+<p>This is the manual for the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for <strong class="pkg">GAP</strong> version 4.0.0. <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> 4.0.0 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.</p>
 
-<p><strong class="pkg">Semigroups</strong> 3.4.2 contains efficient methods for creating semigroups, monoids, inverse semigroups and their ideals, calculating their Green's structure, size, elements, group of units, minimal ideal, and testing membership, finding the inverses of a regular element, and factorizing elements over the generators, and much more; see below for more details.</p>
+<p>From Version 3.0.0, <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> includes a copy of the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library which contains implementations of the Froidure-Pin, Todd-Coxeter, and Knuth-Bendix algorithms (among others) that <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> utilises.</p>
 
-<p>There are methods for finding: congruences of semigroups, the normalizer of a semigroup in a permutation group (using the method from <a href="chapBib_mj.html#biBAraujo2010aa">[ABMN10]</a>), the maximal subsemigroups of a finite semigroup (based on <a href="chapBib_mj.html#biBGraham1968aa">[GGR68]</a> and described in <a href="chapBib_mj.html#biBDonoven2018aa">[DMW18]</a>), smaller degree partial permutation representations (based on <a href="chapBib_mj.html#biBSchein1992aa">[Sch92]</a>) and the character table of an inverse semigroup. There are functions for producing pictures of the Green's structure of a semigroup (inspired by <span class="URL"><a href="https://www.gap-system.org/Packages/sgpviz.html">sgpviz</a></span>), and for drawing graphical representations of the elements of certain semigroups.</p>
-
-<p>Many standard examples of semigroups and classes of semigroups are provided; see Section <a href="chap8_mj.html#X7C76D1DC7DAF03D3"><span class="RefLink">8</span></a>. <strong class="pkg">Semigroups</strong> also provides functions to read and write collections of elements of a semigroup to a file; see <code class="func">ReadGenerators</code> (<a href="chap20_mj.html#X8728096E8427EDE8"><span class="RefLink">20.1-1</span></a>) and <code class="func">WriteGenerators</code> (<a href="chap20_mj.html#X78041E8F87EFDE62"><span class="RefLink">20.1-2</span></a>).</p>
-
-<p>There are functions in <strong class="pkg">Semigroups</strong> to define and manipulate free inverse semigroups and free bands; this part of the package was written by Julius Jonušas; see Chapters <a href="chap10_mj.html#X7C778F007FE3503E"><span class="RefLink">10</span></a>.</p>
-
-<p>From Version 3.0.0, <strong class="pkg">Semigroups</strong> includes a copy of the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library which contains an implementation of the Froidure-Pin Algorithm.</p>
-
-<p><strong class="button">Minor note of caution</strong>: <strong class="pkg">Semigroups</strong> contains different methods for some <strong class="pkg">GAP</strong> library functions, and so you might notice that <strong class="pkg">GAP</strong> behaves differently when <strong class="pkg">Semigroups</strong> is loaded. For more details about semigroups in <strong class="pkg">GAP</strong> or Green's relations in particular, see <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80AF5F307DBDC2B4"><span class="RefLink">Reference: Semigroups</span></a> or <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80C6C718801855E9"><span class="RefLink">Reference: Green's Relations</span></a>.</p>
-
-<p>If you find a bug or an issue with the package, please visit the <span class="URL"><a href="https://github.com/semigroups/Semigroups/issues">issue tracker</a></span>.</p>
+<p>If you find a bug or an issue with the package, please visit the <span class="URL"><a href=" https://github.com/semigroups/Semigroups/issues ">issue tracker</a></span>.</p>
 
 <p><a id="X8389AD927B74BA4A" name="X8389AD927B74BA4A"></a></p>
 
@@ -77,32 +70,32 @@
 
 
 <dl>
-<dt><strong class="Mark">Part I: generators</strong></dt>
-<dd><p>the different types of generators that are introduced in <strong class="pkg">Semigroups</strong> are described in Chapters <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>, <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>, and <a href="chap5_mj.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>. These include <code class="func">Bipartition</code> (<a href="chap3_mj.html#X7E052E6378A5B758"><span class="RefLink">3.2-1</span></a>), <code class="func">PBR</code> (<a href="chap4_mj.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), and <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>), which supplement those already defined in the <strong class="pkg">GAP</strong> library, such as <code class="func">Transformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X86ADBDE57A20E323"><span class="RefLink">Reference: Transformation for an image list</span></a>) or <code class="func">PartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X8538BAE77F2FB2F8"><span class="RefLink">Reference: PartialPerm for a domain and image</span></a>).</p>
+<dt><strong class="Mark">Part I: elements</strong></dt>
+<dd><p>the different types of elements that are introduced in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> are described in Chapters <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>, <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>, and <a href="chap5_mj.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>. These include <code class="func">Bipartition</code> (<a href="chap3_mj.html#X7E052E6378A5B758"><span class="RefLink">3.2-1</span></a>), <code class="func">PBR</code> (<a href="chap4_mj.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), and <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>), which supplement those already defined in the <strong class="pkg">GAP</strong> library, such as <code class="func">Transformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X86ADBDE57A20E323"><span class="RefLink">Reference: Transformation for an image list</span></a>) or <code class="func">PartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X8538BAE77F2FB2F8"><span class="RefLink">Reference: PartialPerm for a domain and image</span></a>).</p>
 
 </dd>
-<dt><strong class="Mark">Part II: semigroups and ideals</strong></dt>
-<dd><p>functions and operations for creating semigroups, monoids, and their ideals, in general, and various options, are described in Chapters <a href="chap6_mj.html#X79A4C070831D989D"><span class="RefLink">6</span></a> and <a href="chap7_mj.html#X83629803819C4A6F"><span class="RefLink">7</span></a>.</p>
+<dt><strong class="Mark">Part II: semigroups and monoids defined by generating sets</strong></dt>
+<dd><p>functions and operations for creating semigroups and monoids defined by generating sets (of the type descibed in Part I) are described in Chapter <a href="chap6_mj.html#X7995B4F18672DDB0"><span class="RefLink">6</span></a>.</p>
 
 </dd>
 <dt><strong class="Mark">Part III: standard examples and constructions</strong></dt>
-<dd><p>standard examples of semigroups, such as <code class="func">FullBooleanMatMonoid</code> (<a href="chap8_mj.html#X7B20103D84E010EF"><span class="RefLink">8.6-1</span></a>) or <code class="func">UniformBlockBijectionMonoid</code> (<a href="chap8_mj.html#X8301C61384168D6F"><span class="RefLink">8.3-8</span></a>), are described in Chapter <a href="chap8_mj.html#X7C76D1DC7DAF03D3"><span class="RefLink">8</span></a>, and standard constructions, such as <code class="func">TrivialSemigroup</code> (<a href="chap9_mj.html#X82B07E907B3A55F0"><span class="RefLink">9.1-1</span></a>), <code class="func">RightZeroSemigroup</code> (<a href="chap9_mj.html#X8672CFA47CA620B2"><span class="RefLink">9.1-5</span></a>), are described in Chapter <a href="chap9_mj.html#X86EE8DC987BA646E"><span class="RefLink">9</span></a>.</p>
+<dd><p>standard examples of semigroups, such as <code class="func">FullBooleanMatMonoid</code> (<a href="chap7_mj.html#X7B20103D84E010EF"><span class="RefLink">7.6-1</span></a>) or <code class="func">UniformBlockBijectionMonoid</code> (<a href="chap7_mj.html#X8301C61384168D6F"><span class="RefLink">7.3-8</span></a>), are described in Chapter <a href="chap7_mj.html#X7C76D1DC7DAF03D3"><span class="RefLink">7</span></a>, and standard constructions, such as <code class="func">DirectProduct</code> (<a href="chap8_mj.html#X861BA02C7902A4F4"><span class="RefLink">8.1-1</span></a>) are given in Chapter <a href="chap8_mj.html#X86EE8DC987BA646E"><span class="RefLink">8</span></a>.</p>
 
 </dd>
-<dt><strong class="Mark">Part IV: further classes of semigroups and monoids</strong></dt>
-<dd><p>free objects in the categories of inverse semigroups, and bands, are described in Chapter <a href="chap10_mj.html#X7C778F007FE3503E"><span class="RefLink">10</span></a>, and graph inverse semigroups, which are a generalisation of polycyclic monoids, are described in Chapter <a href="chap11_mj.html#X850B10D783053100"><span class="RefLink">11</span></a>.</p>
+<dt><strong class="Mark">Part IV: the structure of a semigroup or monoid</strong></dt>
+<dd><p>the functionality for determining various structural properties of a given semigroup or monoid are described in Chapters <a href="chap9_mj.html#X83629803819C4A6F"><span class="RefLink">9</span></a>, <a href="chap10_mj.html#X80C6C718801855E9"><span class="RefLink">10</span></a>, <a href="chap11_mj.html#X7C75B1DB81C7779B"><span class="RefLink">11</span></a>, and <a href="chap12_mj.html#X78274024827F306D"><span class="RefLink">12</span></a>.</p>
 
 </dd>
-<dt><strong class="Mark">Part V: the structure of a semigroup or monoid</strong></dt>
-<dd><p>the functionality of the <strong class="pkg">Semigroups</strong> package for determining various structural properties of a given semigroup or monoid are described in Chapters <a href="chap13_mj.html#X80C6C718801855E9"><span class="RefLink">13</span></a>, <a href="chap14_mj.html#X7C75B1DB81C7779B"><span class="RefLink">14</span></a>, and <a href="chap15_mj.html#X78274024827F306D"><span class="RefLink">15</span></a>. Attributes and properties specific to inverse semigroups are described in Chapter <a href="chap16_mj.html#X796DBFAB84B62673"><span class="RefLink">16</span></a>.</p>
+<dt><strong class="Mark">Part V: congruences, quotients, and homomorphisms</strong></dt>
+<dd><p>methods for creating and manipulating congruences and homomorphisms are described by Chapters <a href="chap13_mj.html#X82BD951079E3C349"><span class="RefLink">13</span></a> and <a href="chap14_mj.html#X861935DB81A478C2"><span class="RefLink">14</span></a>.</p>
 
 </dd>
-<dt><strong class="Mark">Part VI: congruences, quotients, and homomorphisms</strong></dt>
-<dd><p>methods for creating and manipulating congruences and homomorphisms are described by Chapters <a href="chap17_mj.html#X82BD951079E3C349"><span class="RefLink">17</span></a> and <a href="chap18_mj.html#X861935DB81A478C2"><span class="RefLink">18</span></a>.</p>
+<dt><strong class="Mark">Part VI: finitely presented semigroups and monoids</strong></dt>
+<dd><p>methods for finitely presented semigroups and monoids, in particular, for Tietze transformations can be found in Chapters <a href="chap15_mj.html#X7F11EF307D4F409B"><span class="RefLink">15</span></a>.</p>
 
 </dd>
 <dt><strong class="Mark">Part VII: utilities and helper functions</strong></dt>
-<dd><p>functions for reading and writing semigroups and their elements, and for visualising semigroups, and some of their elements, can be found in Chapters <a href="chap19_mj.html#X80E82C6785300A86"><span class="RefLink">19</span></a> and <a href="chap20_mj.html#X80CDCB927B3E5BB9"><span class="RefLink">20</span></a>.</p>
+<dd><p>functions for reading and writing semigroups and their elements, and for visualising semigroups, and some of their elements, can be found in Chapters <a href="chap16_mj.html#X80E82C6785300A86"><span class="RefLink">16</span></a> and <a href="chap17_mj.html#X80CDCB927B3E5BB9"><span class="RefLink">17</span></a>.</p>
 
 </dd>
 </dl>
@@ -110,7 +103,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chap20_mj.html">20</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 3: 
+<title>GAP (Semigroups) - Chapter 3: 
     Bipartitions and blocks
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -17,7 +17,7 @@
 <body class="chap3"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -86,7 +86,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D77092078EC860C">3.6-1 IsBlocks</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D6C636785C2E8E0">3.6-2 BlocksNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81302B217DCAAE6F">3.6-2 BLOCKS_NC</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D2CB12279623CE2">3.6-3 ExtRepOfObj</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X787D22AE7FA69239">3.6-4 RankOfBlocks</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8527DC6A8771C2BE">3.6-5 DegreeOfBlocks</a></span>
@@ -115,29 +115,29 @@
     Bipartitions and blocks
   </span></h3>
 
-<p>In this chapter we describe the functions in <strong class="pkg">Semigroups</strong> for creating and manipulating bipartitions and semigroups of bipartitions. We begin by describing what these objects are.</p>
+<p>In this chapter we describe the functions in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating and manipulating bipartitions and semigroups of bipartitions. We begin by describing what these objects are.</p>
 
-<p>A <em>partition</em> of a set <span class="SimpleMath">X</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">X</span> whose union is <span class="SimpleMath">X</span>. A partition of <span class="SimpleMath">X</span> is the collection of equivalence classes of an equivalence relation on <span class="SimpleMath">X</span>, and vice versa.</p>
+<p>A <em>partition</em> of a set <span class="SimpleMath">X</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">X</span> whose union is <span class="SimpleMath">X</span> . A partition of <span class="SimpleMath">X</span> is the collection of equivalence classes of an equivalence relation on <span class="SimpleMath">X</span> , and vice versa.</p>
 
-<p>Let <span class="SimpleMath">n∈</span><span class="SimpleMath">N</span>, let <span class="SimpleMath">mathbfn</span><span class="SimpleMath">= {1, 2, ..., n}</span>, and let <span class="SimpleMath">-</span><span class="SimpleMath">mathbfn</span><span class="SimpleMath">= {-1, -2, ..., -n}</span>.</p>
+<p>Let <span class="SimpleMath">n∈</span><span class="SimpleMath">N</span> , let <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">= {1, 2, ..., n}</span>, and let <span class="SimpleMath">-</span><span class="SimpleMath">mathbfn</span> <span class="SimpleMath">= {-1, -2, ..., -n}</span>.</p>
 
-<p>The <em>partition monoid</em> of degree <span class="SimpleMath">n</span> is the set of all partitions of <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> with a multiplication we describe below. To avoid conflict with other uses of the word "partition" in <strong class="pkg">GAP</strong>, and to reflect their definition, we have opted to refer to the elements of the partition monoid as <em>bipartitions</em> of degree <span class="SimpleMath">n</span>; we will do so from this point on.</p>
+<p>The <em>partition monoid</em> of degree <span class="SimpleMath">n</span> is the set of all partitions of <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> with a multiplication we describe below. To avoid conflict with other uses of the word "partition" in <strong class="pkg">GAP</strong>, and to reflect their definition, we have opted to refer to the elements of the partition monoid as <em>bipartitions</em> of degree <span class="SimpleMath">n</span> ; we will do so from this point on.</p>
 
-<p>Let <span class="SimpleMath">x</span> be any bipartition of degree <span class="SimpleMath">n</span>. Then <span class="SimpleMath">x</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> whose union is <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span>; these subsets are called the <em>blocks</em> of <span class="SimpleMath">x</span>. A block containing elements of both <span class="SimpleMath">mathbfn</span> and -<span class="SimpleMath">mathbfn</span> is called a <em>transverse block</em>. If <span class="SimpleMath">i</span>, <span class="SimpleMath">j</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> belong to the same block of a bipartition <span class="SimpleMath">x</span>, then we write (<span class="SimpleMath">i</span>, <span class="SimpleMath">j</span>)<span class="SimpleMath">∈</span><span class="SimpleMath">x</span>.</p>
+<p>Let <span class="SimpleMath">x</span> be any bipartition of degree <span class="SimpleMath">n</span> . Then <span class="SimpleMath">x</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> whose union is <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> ; these subsets are called the <em>blocks</em> of <span class="SimpleMath">x</span> . A block containing elements of both <span class="SimpleMath">mathbfn</span> and -<span class="SimpleMath">mathbfn</span> is called a <em>transverse block</em>. If <span class="SimpleMath">i</span> , <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> belong to the same block of a bipartition <span class="SimpleMath">x</span> , then we write (<span class="SimpleMath">i</span> , <span class="SimpleMath">j</span> )<span class="SimpleMath">∈</span><span class="SimpleMath">x</span> .</p>
 
-<p>Let <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> be bipartitions of degree <span class="SimpleMath">n</span>. Their product <span class="SimpleMath">x</span><span class="SimpleMath">y</span> can be described as follows. Define <span class="SimpleMath">mathbfn</span>'<span class="SimpleMath">= {1', 2', ..., n'}</span>. From <span class="SimpleMath">x</span>, create a partition <span class="SimpleMath">x</span>' of the set <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span><span class="SimpleMath">mathbfn</span>' by replacing each negative point -<span class="SimpleMath">i</span> in a block of <span class="SimpleMath">x</span> by the point <span class="SimpleMath">i</span>', and create from <span class="SimpleMath">y</span> a partition <span class="SimpleMath">y</span>' of the set <span class="SimpleMath">mathbfn</span>'<span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> by replacing each positive point <span class="SimpleMath">i</span> in a block of <span class="SimpleMath">y</span> by the point <span class="SimpleMath">i</span>'. Then define a relation on the set <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span><span class="SimpleMath">mathbfn</span>'<span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span>, where <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> are related if they are related in either <span class="SimpleMath">x</span>' or <span class="SimpleMath">y</span>', and let <span class="SimpleMath">p</span> be the transitive closure of this relation. Finally, define <span class="SimpleMath">x</span><span class="SimpleMath">y</span> to be the bipartition of degree <span class="SimpleMath">n</span> defined by the restriction of the equivalence relation <span class="SimpleMath">p</span> to the set <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span>.</p>
+<p>Let <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> be bipartitions of degree <span class="SimpleMath">n</span> . Their product <span class="SimpleMath">x</span> <span class="SimpleMath">y</span> can be described as follows. Define <span class="SimpleMath">mathbfn</span> '<span class="SimpleMath">= {1', 2', ..., n'}</span>. From <span class="SimpleMath">x</span> , create a partition <span class="SimpleMath">x</span> ' of the set <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span><span class="SimpleMath">mathbfn</span> ' by replacing each negative point -<span class="SimpleMath">i</span> in a block of <span class="SimpleMath">x</span> by the point <span class="SimpleMath">i</span> ', and create from <span class="SimpleMath">y</span> a partition <span class="SimpleMath">y</span> ' of the set <span class="SimpleMath">mathbfn</span> '<span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> by replacing each positive point <span class="SimpleMath">i</span> in a block of <span class="SimpleMath">y</span> by the point <span class="SimpleMath">i</span> '. Then define a relation on the set <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span><span class="SimpleMath">mathbfn</span> '<span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> , where <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> are related if they are related in either <span class="SimpleMath">x</span> ' or <span class="SimpleMath">y</span> ', and let <span class="SimpleMath">p</span> be the transitive closure of this relation. Finally, define <span class="SimpleMath">x</span> <span class="SimpleMath">y</span> to be the bipartition of degree <span class="SimpleMath">n</span> defined by the restriction of the equivalence relation <span class="SimpleMath">p</span> to the set <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> .</p>
 
-<p>Equivalently, the product <span class="SimpleMath">x</span><span class="SimpleMath">y</span> is defined to be the bipartition where <span class="SimpleMath">i</span>,<span class="SimpleMath">j</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> (we assume without loss of generality that <span class="SimpleMath">i</span><span class="SimpleMath">≥</span><span class="SimpleMath">j</span>) belong to the same block of <span class="SimpleMath">x</span><span class="SimpleMath">y</span> if either:</p>
+<p>Equivalently, the product <span class="SimpleMath">x</span> <span class="SimpleMath">y</span> is defined to be the bipartition where <span class="SimpleMath">i</span> ,<span class="SimpleMath">j</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> (we assume without loss of generality that <span class="SimpleMath">i</span> <span class="SimpleMath">≥</span><span class="SimpleMath">j</span> ) belong to the same block of <span class="SimpleMath">x</span> <span class="SimpleMath">y</span> if either:</p>
 
 
 <ul>
-<li><p><span class="SimpleMath">i</span><code class="code">=</code><span class="SimpleMath">j</span>,</p>
+<li><p><span class="SimpleMath">i</span> <code class="code">=</code><span class="SimpleMath">j</span> ,</p>
 
 </li>
-<li><p><span class="SimpleMath">i</span>, <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span> <span class="SimpleMath">mathbfn</span> and <span class="SimpleMath">(</span><span class="SimpleMath">i</span>,<span class="SimpleMath">j</span><span class="SimpleMath">)</span><span class="SimpleMath">∈</span> <span class="SimpleMath">x</span>, or</p>
+<li><p><span class="SimpleMath">i</span> , <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span> <span class="SimpleMath">mathbfn</span> and <span class="SimpleMath">(</span><span class="SimpleMath">i</span> ,<span class="SimpleMath">j</span> <span class="SimpleMath">)</span><span class="SimpleMath">∈</span> <span class="SimpleMath">x</span> , or</p>
 
 </li>
-<li><p><span class="SimpleMath">i</span>, <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span> -<span class="SimpleMath">mathbfn</span> and <span class="SimpleMath">(</span><span class="SimpleMath">i</span>,<span class="SimpleMath">j</span><span class="SimpleMath">)</span><span class="SimpleMath">∈</span> <span class="SimpleMath">y</span>;</p>
+<li><p><span class="SimpleMath">i</span> , <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span> -<span class="SimpleMath">mathbfn</span> and <span class="SimpleMath">(</span><span class="SimpleMath">i</span> ,<span class="SimpleMath">j</span> <span class="SimpleMath">)</span><span class="SimpleMath">∈</span> <span class="SimpleMath">y</span> ;</p>
 
 </li>
 </ul>
@@ -145,30 +145,30 @@
 
 
 <ul>
-<li><p><span class="SimpleMath">r=2s-1</span> for some <span class="SimpleMath">s≥ 1</span> , <span class="SimpleMath">i</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span>, <span class="SimpleMath">j</span><span class="SimpleMath">∈</span> -<span class="SimpleMath">mathbfn</span> and</p>
+<li><p><span class="SimpleMath">r=2s-1</span> for some <span class="SimpleMath">s≥ 1</span> , <span class="SimpleMath">i</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> , <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span> -<span class="SimpleMath">mathbfn</span> and</p>
 
 <p class="pcenter">(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\
           \ldots,\qquad</p>
 
-<p class="pcenter">\qquad\ldots,\ (-k(2s-2),-k(2s-1))\in x,\ 
+<p class="pcenter">\qquad\ldots,\ (-k(2s-2),-k(2s-1))\in x,\
           (k(2s-1),j)\in y;</p>
 
 </li>
-<li><p><span class="SimpleMath">r=2s</span> for some <span class="SimpleMath">s≥ 1</span> , and either <span class="SimpleMath">i</span>,<span class="SimpleMath">j</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span>, and</p>
+<li><p><span class="SimpleMath">r=2s</span> for some <span class="SimpleMath">s≥ 1</span> , and either <span class="SimpleMath">i</span> ,<span class="SimpleMath">j</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> , and</p>
 
 <p class="pcenter">(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,
           (k(2s-1), k(2s))\in y,\ (-k(2s), j)\in x,</p>
 
-<p>or <span class="SimpleMath">i</span>,<span class="SimpleMath">j</span><span class="SimpleMath">∈</span>-<span class="SimpleMath">mathbfn</span>, and</p>
+<p>or <span class="SimpleMath">i</span> ,<span class="SimpleMath">j</span> <span class="SimpleMath">∈</span>-<span class="SimpleMath">mathbfn</span> , and</p>
 
 <p class="pcenter">(i,k(1))\in y,\ (-k(1),-k(2))\in x,\ (k(2),k(3))\in y,\ \ldots,
           (-k(2s-1), -k(2s))\in x,\ (k(2s), j)\in y.</p>
 
 </li>
 </ul>
-<p>This multiplication can be shown to be associative, and so the collection of all bipartitions of any particular degree is a monoid; the identity element of the partition monoid of degree <span class="SimpleMath">n</span> is the bipartition <span class="SimpleMath">{{i,-i}:i∈mathbfn}</span>. A bipartition is a unit if and only if each block is of the form <span class="SimpleMath">{</span><span class="SimpleMath">i</span>,-<span class="SimpleMath">j</span><span class="SimpleMath">}</span> for some <span class="SimpleMath">i</span>, <span class="SimpleMath">j</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span>. Hence the group of units is isomorphic to the symmetric group on <span class="SimpleMath">mathbfn</span>.</p>
+<p>This multiplication can be shown to be associative, and so the collection of all bipartitions of any particular degree is a monoid; the identity element of the partition monoid of degree <span class="SimpleMath">n</span> is the bipartition <span class="SimpleMath">{{i,-i}:i∈mathbfn}</span>. A bipartition is a unit if and only if each block is of the form <span class="SimpleMath">{</span><span class="SimpleMath">i</span> ,-<span class="SimpleMath">j</span> <span class="SimpleMath">}</span> for some <span class="SimpleMath">i</span> , <span class="SimpleMath">j</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> . Hence the group of units is isomorphic to the symmetric group on <span class="SimpleMath">mathbfn</span> .</p>
 
-<p>Let <span class="SimpleMath">x</span> be a bipartition of degree <span class="SimpleMath">n</span>. Then we define <span class="SimpleMath">x</span><span class="SimpleMath">^*</span> to be the bipartition obtained from <span class="SimpleMath">x</span> by replacing <span class="SimpleMath">i</span> by -<span class="SimpleMath">i</span> and -<span class="SimpleMath">i</span> by <span class="SimpleMath">i</span> in every block of <span class="SimpleMath">x</span> for all <span class="SimpleMath">i</span><span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span>. It is routine to verify that if <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> are arbitrary bipartitions of equal degree, then</p>
+<p>Let <span class="SimpleMath">x</span> be a bipartition of degree <span class="SimpleMath">n</span> . Then we define <span class="SimpleMath">x</span> <span class="SimpleMath">^*</span> to be the bipartition obtained from <span class="SimpleMath">x</span> by replacing <span class="SimpleMath">i</span> by -<span class="SimpleMath">i</span> and -<span class="SimpleMath">i</span> by <span class="SimpleMath">i</span> in every block of <span class="SimpleMath">x</span> for all <span class="SimpleMath">i</span> <span class="SimpleMath">∈</span><span class="SimpleMath">mathbfn</span> . It is routine to verify that if <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> are arbitrary bipartitions of equal degree, then</p>
 
 <p class="pcenter">
       (x^*)^*=x,\quad xx^*x=x,\quad x^*xx^*=x^*,\quad (xy)^*=y^*x^*.
@@ -176,9 +176,9 @@
 
 <p>In this way, the partition monoid is a <em>regular *-semigroup</em>.</p>
 
-<p>A bipartition <span class="SimpleMath">x</span> of degree <span class="SimpleMath">n</span> is called <em>planar</em> if there do not exist distinct blocks <span class="SimpleMath">A, U ∈</span> <span class="SimpleMath">x</span>, along with <span class="SimpleMath">a, b ∈ A</span> and <span class="SimpleMath">u, v ∈ U</span>, such that <span class="SimpleMath">a &lt; u &lt; b &lt; v</span>. Define <span class="SimpleMath">p</span> to be the bipartition of degree <span class="SimpleMath">n</span> with blocks <span class="SimpleMath">{{i, -(i+1)}:i∈{1,...,n-1}}</span> and <span class="SimpleMath">{n,-1}</span> . Note that <span class="SimpleMath">p</span> is a unit. A bipartition <span class="SimpleMath">x</span> of degree <span class="SimpleMath">n</span> is called <em>annular</em> if <span class="SimpleMath">x = p^i y p^j</span> for some planar bipartition <span class="SimpleMath">y</span> of degree <span class="SimpleMath">n</span>, and some integers <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span>.</p>
+<p>A bipartition <span class="SimpleMath">x</span> of degree <span class="SimpleMath">n</span> is called <em>planar</em> if there do not exist distinct blocks <span class="SimpleMath">A, U ∈</span> <span class="SimpleMath">x</span> , along with <span class="SimpleMath">a, b ∈ A</span> and <span class="SimpleMath">u, v ∈ U</span>, such that <span class="SimpleMath">a &lt; u &lt; b &lt; v</span>. Define <span class="SimpleMath">p</span> to be the bipartition of degree <span class="SimpleMath">n</span> with blocks <span class="SimpleMath">{{i, -(i+1)}:i∈{1,...,n-1}}</span> and <span class="SimpleMath">{n,-1}</span> . Note that <span class="SimpleMath">p</span> is a unit. A bipartition <span class="SimpleMath">x</span> of degree <span class="SimpleMath">n</span> is called <em>annular</em> if <span class="SimpleMath">x = p^i y p^j</span> for some planar bipartition <span class="SimpleMath">y</span> of degree <span class="SimpleMath">n</span> , and some integers <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span> .</p>
 
-<p>From a graphical perspective, as on Page 873 in <a href="chapBib.html#biBHalverson2005PartitionAlgebras">[HR05]</a>, a bipartition of degree <span class="SimpleMath">n</span> is planar if it can be represented as a graph without edges crossing inside of the rectangle formed by its vertices <span class="SimpleMath">mathbfn</span><span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span>. Similarly, as shown in Figure 2 in <a href="chapBib.html#biBauinger2012krohn">[Aui12]</a>, a bipartition of degree <span class="SimpleMath">n</span> is annular if it can be represented as a graph without edges crossing inside an annulus.</p>
+<p>From a graphical perspective, as on Page 873 in <a href="chapBib.html#biBHalverson2005PartitionAlgebras">[HR05]</a>, a bipartition of degree <span class="SimpleMath">n</span> is planar if it can be represented as a graph without edges crossing inside of the rectangle formed by its vertices <span class="SimpleMath">mathbfn</span> <span class="SimpleMath">∪</span>-<span class="SimpleMath">mathbfn</span> . Similarly, as shown in Figure 2 in <a href="chapBib.html#biBauinger2012krohn">[Aui12]</a>, a bipartition of degree <span class="SimpleMath">n</span> is annular if it can be represented as a graph without edges crossing inside an annulus.</p>
 
 <p><a id="X7850845886902FBF" name="X7850845886902FBF"></a></p>
 
@@ -376,7 +376,7 @@ true</pre></div>
 
 <h4>3.3 <span class="Heading">Changing the representation of a bipartition</span></h4>
 
-<p>It is possible that a bipartition can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a bipartition. In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for changing the representation of bipartition, or for changing the representation of another type of object to that of a bipartition.</p>
+<p>It is possible that a bipartition can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a bipartition. In this section, we describe the functions in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for changing the representation of bipartition, or for changing the representation of another type of object to that of a bipartition.</p>
 
 <p>The operations <code class="func">AsPermutation</code> (<a href="chap3.html#X7C684CD38405DBEF"><span class="RefLink">3.3-5</span></a>), <code class="func">AsPartialPerm</code> (<a href="chap3.html#X7C5212EF7A200E63"><span class="RefLink">3.3-4</span></a>), <code class="func">AsTransformation</code> (<a href="chap3.html#X7CE91D0C83865214"><span class="RefLink">3.3-3</span></a>) can be used to convert bipartitions into permutations, partial permutations, or transformations where appropriate.</p>
 
@@ -497,9 +497,8 @@ true</pre></div>
  [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(x, 10);</span>
-Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
-the 2nd argument must be strictly greater than the maximum of the
-degree and codegree of the 1st argument,
+Error, the 2nd argument (a pos. int.) is less than or equal to the max\
+imum of the degree and codegree of the 1st argument (a partial perm)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(x, 11);</span>
 &lt;block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
  [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
@@ -534,8 +533,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [3, 6, 7, -1, -2], [9, -4, -6, -9],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [-3, -5], [-7, -8], [-10]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation(x);</span>
-Error, Semigroups: AsTransformation (for a bipartition):
-the argument does not define a transformation,</pre></div>
+Error, the argument (a bipartition) does not define a transformation</pre></div>
 
 <p><a id="X7C5212EF7A200E63" name="X7C5212EF7A200E63"></a></p>
 
@@ -563,8 +561,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(x);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPartialPerm(x);</span>
-Error, Semigroups: AsPartialPerm (for a bipartition):
-the argument does not define a partial perm,</pre></div>
+Error, the argument (a bipartition) does not define a partial perm</pre></div>
 
 <p><a id="X7C684CD38405DBEF" name="X7C684CD38405DBEF"></a></p>
 
@@ -784,7 +781,7 @@ true
 
 <p>The right blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right, and are not simply a list of blocks of <var class="Arg">x</var>; see <a href="chap3.html#X87684C148592F831"><span class="RefLink">3.6</span></a> for more information.</p>
 
-<p>The significance of this notion lies in the fact that bipartitions <var class="Arg">x</var> and <code class="code">y</code> are \(\mathscr{L}\)-related in the partition monoid if and only if they have equal right blocks.</p>
+<p>The significance of this notion lies in the fact that bipartitions <var class="Arg">x</var> and <code class="code">y</code> are <em>L</em>-related in the partition monoid if and only if they have equal right blocks.</p>
 
 
 <div class="example"><pre>
@@ -808,7 +805,7 @@ true
 
 <p>The left blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right, and are not simply a list of blocks of <var class="Arg">x</var>; see <a href="chap3.html#X87684C148592F831"><span class="RefLink">3.6</span></a> for more information.</p>
 
-<p>The significance of this notion lies in the fact that bipartitions <var class="Arg">x</var> and <code class="code">y</code> are \(\mathscr{R}\)-related in the partition monoid if and only if they have equal left blocks.</p>
+<p>The significance of this notion lies in the fact that bipartitions <var class="Arg">x</var> and <code class="code">y</code> are <em>R</em>-related in the partition monoid if and only if they have equal left blocks.</p>
 
 
 <div class="example"><pre>
@@ -867,7 +864,7 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BlocksNC([[-1, -2, -3, -4], [-5], [6]]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BLOCKS_NC([[-1, -2, -3, -4], [-5], [6]]);</span>
 &lt;blocks: [ 1, 2, 3, 4 ], [ 5 ], [ 6* ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrBlocks(blocks);</span>
 3
@@ -1064,7 +1061,7 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := BlocksNC([[-1, -3], [2, 4, 7], [5, 6]]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := BLOCKS_NC([[-1, -3], [2, 4, 7], [5, 6]]);</span>
 &lt;blocks: [ 1, 3 ], [ 2*, 4*, 7* ], [ 5*, 6* ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalBlocks(B);</span>
 &lt;blocks: [ 1*, 2* ], [ 3*, 4*, 5* ], [ 6, 7 ]&gt;</pre></div>
@@ -1073,9 +1070,9 @@ false</pre></div>
 
 <h4>3.6 <span class="Heading">Creating blocks and their attributes</span></h4>
 
-<p>As described above the left and right blocks of a bipartition characterise Green's \(\mathscr{R}\)- and \(\mathscr{L}\)-relation of the partition monoid; see <code class="func">LeftBlocks</code> (<a href="chap3.html#X7B9B364379D8F4E8"><span class="RefLink">3.5-6</span></a>) and <code class="func">RightBlocks</code> (<a href="chap3.html#X86A10B138230C2A4"><span class="RefLink">3.5-5</span></a>). The left or right blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right.</p>
+<p>As described above the left and right blocks of a bipartition characterise Green's <em>R</em>- and <em>L</em>-relation of the partition monoid; see <code class="func">LeftBlocks</code> (<a href="chap3.html#X7B9B364379D8F4E8"><span class="RefLink">3.5-6</span></a>) and <code class="func">RightBlocks</code> (<a href="chap3.html#X86A10B138230C2A4"><span class="RefLink">3.5-5</span></a>). The left or right blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right.</p>
 
-<p>In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for creating and manipulating the left or right blocks of a bipartition.</p>
+<p>In this section, we describe the functions in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for creating and manipulating the left or right blocks of a bipartition.</p>
 
 <p><a id="X7D77092078EC860C" name="X7D77092078EC860C"></a></p>
 
@@ -1086,22 +1083,22 @@ false</pre></div>
 
 <p>Every blocks object in <strong class="pkg">GAP</strong> belongs to the category <code class="code">IsBlocks</code>. Basic operations for blocks are <code class="func">ExtRepOfObj</code> (<a href="chap3.html#X7D2CB12279623CE2"><span class="RefLink">3.6-3</span></a>), <code class="func">RankOfBlocks</code> (<a href="chap3.html#X787D22AE7FA69239"><span class="RefLink">3.6-4</span></a>), <code class="func">DegreeOfBlocks</code> (<a href="chap3.html#X8527DC6A8771C2BE"><span class="RefLink">3.6-5</span></a>), <code class="func">OnRightBlocks</code> (<a href="chap3.html#X7B701DA37F75E77B"><span class="RefLink">3.7-1</span></a>), and <code class="func">OnLeftBlocks</code> (<a href="chap3.html#X7A5A4AF57BEA2313"><span class="RefLink">3.7-2</span></a>).</p>
 
-<p><a id="X7D6C636785C2E8E0" name="X7D6C636785C2E8E0"></a></p>
+<p><a id="X81302B217DCAAE6F" name="X81302B217DCAAE6F"></a></p>
 
-<h5>3.6-2 BlocksNC</h5>
+<h5>3.6-2 BLOCKS_NC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlocksNC</code>( <var class="Arg">classes</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BLOCKS_NC</code>( <var class="Arg">classes</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A blocks.</p>
 
 <p>This function makes it possible to create a <strong class="pkg">GAP</strong> object corresponding to the left or right blocks of a bipartition without reference to any bipartitions.</p>
 
-<p><code class="code">BlocksNC</code> returns the blocks with equivalence classes <var class="Arg">classes</var>, which should be a list of duplicate-free lists consisting solely of positive or negative integers, where the union of the absolute values of the lists is <code class="code">[1 .. n]</code> for some <code class="code">n</code>. The blocks with positive entries correspond to transverse blocks and the classes with negative entries correspond to non-transverse blocks.</p>
+<p><code class="code">BLOCKS_NC</code> returns the blocks with equivalence classes <var class="Arg">classes</var>, which should be a list of duplicate-free lists consisting solely of positive or negative integers, where the union of the absolute values of the lists is <code class="code">[1 .. n]</code> for some <code class="code">n</code>. The blocks with positive entries correspond to transverse blocks and the classes with negative entries correspond to non-transverse blocks.</p>
 
 <p>This method function does not check that its arguments are valid, and should be used with caution.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BlocksNC([[1], [2], [-3, -6], [-4, -5]]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BLOCKS_NC([[1], [2], [-3, -6], [-4, -5]]);</span>
 &lt;blocks: [ 1* ], [ 2* ], [ 3, 6 ], [ 4, 5 ]&gt;</pre></div>
 
 <p><a id="X7D2CB12279623CE2" name="X7D2CB12279623CE2"></a></p>
@@ -1115,7 +1112,7 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BlocksNC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BLOCKS_NC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExtRepOfObj(blocks);</span>
 [ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]</pre></div>
 
@@ -1133,7 +1130,7 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BlocksNC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BLOCKS_NC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                       [8], [9], [-11]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBlocks(blocks);</span>
 4</pre></div>
@@ -1149,7 +1146,7 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BlocksNC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := BLOCKS_NC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                       [12]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBlocks(blocks);</span>
 12</pre></div>
@@ -1230,9 +1227,9 @@ false</pre></div>
       Semigroups of bipartitions
     </span></h4>
 
-<p>Semigroups and monoids of bipartitions can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) and <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>); see Chapter <a href="chap6.html#X79A4C070831D989D"><span class="RefLink">6</span></a> for more details.</p>
+<p>Semigroups and monoids of bipartitions can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) and <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>); see Chapter <a href="chap6.html#X7995B4F18672DDB0"><span class="RefLink">6</span></a> for more details.</p>
 
-<p>It is possible to create inverse semigroups and monoids of bipartitions using <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of block bijections or partial perm bipartions; see <code class="func">IsBlockBijection</code> (<a href="chap3.html#X829494DF7FD6CFEC"><span class="RefLink">3.5-16</span></a>) and <code class="func">IsPartialPermBipartition</code> (<a href="chap3.html#X87C771D37B1FE95C"><span class="RefLink">3.5-15</span></a>). Note that every bipartition semigroup in <strong class="pkg">Semigroups</strong> is finite.</p>
+<p>It is possible to create inverse semigroups and monoids of bipartitions using <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of block bijections or partial perm bipartions; see <code class="func">IsBlockBijection</code> (<a href="chap3.html#X829494DF7FD6CFEC"><span class="RefLink">3.5-16</span></a>) and <code class="func">IsPartialPermBipartition</code> (<a href="chap3.html#X87C771D37B1FE95C"><span class="RefLink">3.5-15</span></a>). Note that every bipartition semigroup in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is finite.</p>
 
 <p><a id="X810BFF647C4E191E" name="X810BFF647C4E191E"></a></p>
 
@@ -1335,7 +1332,7 @@ false</pre></div>
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -5,97 +5,97 @@
   [10X*[110X (for bipartitions) 3.4 
   [10X * [110X (for PBRs) 4.4 
   [10X*[110X (for matrices over a semiring) 5.2 
-  [10X * [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 18.2-7 
+  [10X * [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.2-7 
   [10X<[110X (for bipartitions) 3.4 
   [10X<[110X (for PBRs) 4.4 
   [10X<[110X (for matrices over a semiring) 5.2 
-  [10X<[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 18.2-7 
+  [10X<[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.2-7 
   [10X=[110X (for bipartitions) 3.4 
   [10X=[110X (for PBRs) 4.4 
   [10X=[110X (for matrices over a semiring) 5.2 
-  [10X = [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 18.2-7 
-  [2X\<[102X, for Green's classes 13.3-1 
+  [10X = [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.2-7 
+  [2X\<[102X, for Green's classes 10.3-1 
   [2X\^[102X, for a matrix over finite field group and matrix over finite field 5.7-8 
   [2X\in[102X 5.3-3 
-  [10X ^ [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 18.2-7 
-  [2XAnnularJonesMonoid[102X 8.3-5 
-  [2XAntiIsomorphismDualSemigroup[102X 6.5-4 
-  [2XApsisMonoid[102X 8.3-11 
+  [10X ^ [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.2-7 
+  [2XAnnularJonesMonoid[102X 7.3-5 
+  [2XAntiIsomorphismDualSemigroup[102X 8.2-4 
+  [2XApsisMonoid[102X 7.3-11 
   [2XAsBipartition[102X 3.3-1 
   [2XAsBlockBijection[102X 3.3-2 
   [2XAsBooleanMat[102X 5.3-2 
-  [2XAsInverseSemigroupCongruenceByKernelTrace[102X 17.7-3 
+  [2XAsCongruenceByWangPair[102X 13.8-3 
+  [2XAsInverseSemigroupCongruenceByKernelTrace[102X 13.7-3 
   [2XAsList[102X 5.1-10 
-  [2XAsListCanonical[102X 14.1-1 
+  [2XAsListCanonical[102X 11.1-1 
   [2XAsMatrix[102X, for a filter and a matrix 5.1-6 
       for a filter, matrix, and threshold 5.1-6 
       for a filter, matrix, threshold, and period 5.1-6 
   [2XAsMatrixGroup[102X 5.7-10 
-  [2XAsMonoid[102X 6.6-4 
+  [2XAsMonoid[102X 6.5-4 
   [2XAsMutableList[102X 5.1-10 
   [2XAsPartialPerm[102X, for a bipartition 3.3-4 
       for a PBR 4.3-3 
   [2XAsPBR[102X 4.3-1 
   [2XAsPermutation[102X, for a bipartition 3.3-5 
       for a PBR 4.3-4 
-  [2XAsRMSCongruenceByLinkedTriple[102X 17.6-8 
-  [2XAsRZMSCongruenceByLinkedTriple[102X 17.6-8 
-  [2XAsSemigroup[102X 6.6-3 
-  [2XAsSemigroupCongruenceByGeneratingPairs[102X 17.6-7 
+  [2XAsSemigroup[102X 6.5-3 
+  [2XAsSemigroupCongruenceByGeneratingPairs[102X 13.6-6 
   [2XAsTransformation[102X, for a bipartition 3.3-3 
       for a PBR 4.3-2 
-  [2XAutomorphismGroup[102X, for a semigroup 18.1-7 
+  [2XAutomorphismGroup[102X, for a semigroup 14.1-7 
   [2XBaseDomain[102X, for a matrix over finite field 5.4-7 
   [2XBipartition[102X 3.2-1 
   [2XBipartitionByIntRep[102X 3.2-2 
   [2XBlistNumber[102X 5.3-7 
-  [2XBlocksNC[102X 3.6-2 
+  [2XBLOCKS_NC[102X 3.6-2 
   [2XBooleanMat[102X 5.3-1 
   [2XBooleanMatNumber[102X 5.3-6 
-  [2XBrandtSemigroup[102X 9.1-6 
-  [2XBrauerMonoid[102X 8.3-2 
+  [2XBrandtSemigroup[102X 7.8-6 
+  [2XBrauerMonoid[102X 7.3-2 
   [2XCanonicalBlocks[102X 3.5-18 
   [2XCanonicalBooleanMat[102X 5.3-8 
       for a perm group and boolean matrix 5.3-8 
       for a perm group, perm group and boolean matrix 5.3-8 
-  [2XCanonicalForm[102X, for a free inverse semigroup element 10.3-1 
-  [2XCanonicalMultiplicationTable[102X 18.1-3 
-  [2XCanonicalMultiplicationTablePerm[102X 18.1-4 
-  [2XCanonicalReesMatrixSemigroup[102X 18.2-6 
-  [2XCanonicalReesZeroMatrixSemigroup[102X 18.2-6 
-  [2XCanonicalRepresentative[102X 17.6-6 
-  [2XCanonicalTransformation[102X 14.12-9 
-  [2XCatalanMonoid[102X 8.1-1 
-  [2XCharacterTableOfInverseSemigroup[102X 16.1-10 
+  [2XCanonicalForm[102X, for a free inverse semigroup element 7.11-6 
+  [2XCanonicalMultiplicationTable[102X 14.1-3 
+  [2XCanonicalMultiplicationTablePerm[102X 14.1-4 
+  [2XCanonicalReesMatrixSemigroup[102X 14.2-6 
+  [2XCanonicalReesZeroMatrixSemigroup[102X 14.2-6 
+  [2XCanonicalTransformation[102X 11.11-9 
+  [2XCanUseFroidurePin[102X 6.1-4 
+  [2XCanUseGapFroidurePin[102X 6.1-4 
+  [2XCanUseLibsemigroupsFroidurePin[102X 6.1-4 
+  [2XCatalanMonoid[102X 7.1-1 
+  [2XCharacterTableOfInverseSemigroup[102X 11.14-10 
   [2XClosureInverseMonoid[102X 6.4-1 
   [2XClosureInverseSemigroup[102X 6.4-1 
   [2XClosureMonoid[102X 6.4-1 
   [2XClosureSemigroup[102X 6.4-1 
   [2XCodomainOfBipartition[102X 3.5-11 
-  [2XComponentRepsOfPartialPermSemigroup[102X 14.13-1 
-  [2XComponentRepsOfTransformationSemigroup[102X 14.12-1 
-  [2XComponentsOfPartialPermSemigroup[102X 14.13-2 
-  [2XComponentsOfTransformationSemigroup[102X 14.12-2 
-  [2XCompositionMapping2[102X, for IsRMSIsoByTriple 18.2-4 
-      for IsRZMSIsoByTriple 18.2-4 
-  [2XCongruenceClasses[102X 17.3-5 
-  [2XCongruenceClassOfElement[102X 17.3-4 
-  [2XCongruencesOfPoset[102X 17.4-7 
-  [2XCongruencesOfSemigroup[102X, for a semigroup 17.4-1 
-      for a semigroup and a multiplicative element collection 17.4-1 
-  [2XContentOfFreeBandElement[102X 10.4-7 
-  [2XContentOfFreeBandElementCollection[102X 10.4-7 
-  [2XCrossedApsisMonoid[102X 8.3-11 
-  [2XCyclesOfPartialPerm[102X 14.13-3 
-  [2XCyclesOfPartialPermSemigroup[102X 14.13-4 
-  [2XCyclesOfTransformationSemigroup[102X 14.12-3 
-  [2XDClass[102X 13.1-2 
-  [2XDClasses[102X 13.1-4 
-  [2XDClassNC[102X 13.1-3 
-  [2XDClassOfHClass[102X 13.1-1 
-  [2XDClassOfLClass[102X 13.1-1 
-  [2XDClassOfRClass[102X 13.1-1 
-  [2XDClassReps[102X 13.1-5 
+  [2XComponentRepsOfPartialPermSemigroup[102X 11.12-1 
+  [2XComponentRepsOfTransformationSemigroup[102X 11.11-1 
+  [2XComponentsOfPartialPermSemigroup[102X 11.12-2 
+  [2XComponentsOfTransformationSemigroup[102X 11.11-2 
+  [2XCompositionMapping2[102X, for IsRMSIsoByTriple 14.2-4 
+      for IsRZMSIsoByTriple 14.2-4 
+  [2XCongruenceByWangPair[102X 13.8-2 
+  [2XCongruencesOfPoset[102X 13.4-7 
+  [2XCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
+      for a semigroup and a multiplicative element collection 13.4-1 
+  [2XContentOfFreeBandElement[102X 7.9-7 
+  [2XContentOfFreeBandElementCollection[102X 7.9-7 
+  [2XCrossedApsisMonoid[102X 7.3-11 
+  [2XCyclesOfPartialPerm[102X 11.12-3 
+  [2XCyclesOfPartialPermSemigroup[102X 11.12-4 
+  [2XCyclesOfTransformationSemigroup[102X 11.11-3 
+  [2XDClass[102X 10.1-2 
+  [2XDClasses[102X 10.1-4 
+  [2XDClassNC[102X 10.1-3 
+  [2XDClassOfHClass[102X 10.1-1 
+  [2XDClassOfLClass[102X 10.1-1 
+  [2XDClassOfRClass[102X 10.1-1 
+  [2XDClassReps[102X 10.1-5 
   [2XDegreeOfBipartition[102X 3.5-1 
   [2XDegreeOfBipartitionCollection[102X 3.5-1 
   [2XDegreeOfBipartitionSemigroup[102X 3.8-5 
@@ -103,113 +103,120 @@
   [2XDegreeOfPBR[102X 4.5-2 
   [2XDegreeOfPBRCollection[102X 4.5-2 
   [2XDegreeOfPBRSemigroup[102X 4.6-2 
-  [2XDigraphOfActionOnPairs[102X, for a transformation semigroup 14.12-4 
-      for a transformation semigroup and an integer 14.12-4 
-  [2XDigraphOfActionOnPoints[102X, for a transformation semigroup 14.12-5 
-      for a transformation semigroup and an integer 14.12-5 
+  [2XDigraphOfAction[102X, for a transformation semigroup, list, and action 11.11-4 
+  [2XDigraphOfActionOnPoints[102X, for a transformation semigroup 11.11-5 
+      for a transformation semigroup and an integer 11.11-5 
   [2XDimensionOfMatrixOverSemiring[102X 5.1-3 
   [2XDimensionOfMatrixOverSemiringCollection[102X 5.1-4 
-  [2XDirectProduct[102X 6.4-4 
-  [2XDirectProductOp[102X 6.4-4 
+  [2XDirectProduct[102X 8.1-1 
+  [2XDirectProductOp[102X 8.1-1 
   [2XDomainOfBipartition[102X 3.5-10 
-  [2XDotLeftCayleyDigraph[102X 19.1-4 
-  [2XDotRightCayleyDigraph[102X 19.1-4 
-  [2XDotSemilatticeOfIdempotents[102X 19.1-3 
-  [2XDotString[102X 19.1-1 
-      for a Cayley digraph 19.1-2 
-  [2XDualSemigroup[102X 6.5-1 
-  [2XDualSymmetricInverseMonoid[102X 8.3-7 
-  [2XDualSymmetricInverseSemigroup[102X 8.3-7 
-  [10XELM_LIST[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 18.2-7 
-  [2XELM_LIST[102X, for IsRMSIsoByTriple 18.2-3 
+  [2XDotLeftCayleyDigraph[102X 16.1-4 
+  [2XDotRightCayleyDigraph[102X 16.1-4 
+  [2XDotSemilatticeOfIdempotents[102X 16.1-3 
+  [2XDotString[102X 16.1-1 
+      for a Cayley digraph 16.1-2 
+  [2XDualSemigroup[102X 8.2-1 
+  [2XDualSymmetricInverseMonoid[102X 7.3-7 
+  [2XDualSymmetricInverseSemigroup[102X 7.3-7 
+  [2XElementOfFpMonoid[102X 15.2-3 
+  [2XElementOfFpSemigroup[102X 15.2-2 
+  [10XELM_LIST[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.2-7 
+  [2XELM_LIST[102X, for IsRMSIsoByTriple 14.2-3 
   [2XEmptyPBR[102X 4.2-3 
-  [2XEndomorphismMonoid[102X, for a digraph 6.8-1 
-      for a digraph and vertex coloring 6.8-1 
-  [2XEndomorphismsPartition[102X 8.1-2 
-  [2XEnumerate[102X 14.1-3 
-  [2XEnumeratorCanonical[102X 14.1-1 
-  [2XEquivalenceRelationCanonicalLookup[102X 17.3-11 
-  [2XEquivalenceRelationCanonicalPartition[102X 17.3-12 
-  [2XEquivalenceRelationLookup[102X 17.3-10 
-  [2XEUnitaryInverseCover[102X 16.1-11 
-  [2XEvaluateWord[102X 14.5-1 
+  [2XEndomorphismMonoid[102X, for a digraph 7.1-6 
+      for a digraph and vertex coloring 7.1-6 
+  [2XEndomorphismsPartition[102X 7.1-2 
+  [2XEnumerate[102X 11.1-3 
+  [2XEnumeratorCanonical[102X 11.1-1 
+  [2XEqualInFreeBand[102X 7.9-8 
+  [2XEquivalenceRelationCanonicalLookup[102X, for an equivalence relation over a finite semigroup 13.3-6 
+  [2XEquivalenceRelationCanonicalPartition[102X 13.3-7 
+  [2XEquivalenceRelationLookup[102X, for an equivalence relation over a finite semigroup 13.3-5 
+  [2XEUnitaryInverseCover[102X 11.14-11 
+  [2XEvaluateWord[102X 11.5-1 
   [2XExtRepOfObj[102X, for a bipartition 3.5-3 
       for a blocks 3.6-3 
       for a PBR 4.5-3 
-  [2XFactorisableDualSymmetricInverseMonoid[102X 8.3-8 
-  [2XFactorization[102X 14.5-2 
-  [2XFixedPointsOfTransformationSemigroup[102X, for a transformation semigroup 14.12-6 
-  [2XFreeBand[102X, for a given rank 10.4-1 
-      for a list of names 10.4-1 
-      for various names 10.4-1 
-  [2XFreeInverseSemigroup[102X, for a given rank 10.1-1 
-      for a list of names 10.1-1 
-      for various names 10.1-1 
-  [2XFullBooleanMatMonoid[102X 8.6-1 
-  [2XFullMatrixMonoid[102X 8.5-1 
-  [2XFullPBRMonoid[102X 8.4-1 
-  [2XFullTropicalMaxPlusMonoid[102X 8.7-1 
-  [2XFullTropicalMinPlusMonoid[102X 8.7-2 
-  [2XGeneralLinearMonoid[102X 8.5-1 
-  [2XGeneratingPairsOfLeftSemigroupCongruence[102X 17.2-4 
-  [2XGeneratingPairsOfRightSemigroupCongruence[102X 17.2-4 
-  [2XGeneratingPairsOfSemigroupCongruence[102X 17.2-4 
-  [2XGenerators[102X 14.6-1 
-  [2XGeneratorsOfSemigroupIdeal[102X 7.2-1 
-  [2XGeneratorsSmallest[102X, for a semigroup 14.6-5 
-  [2XGLM[102X 8.5-1 
-  [2XGossipMonoid[102X 8.6-5 
-  [2XGraphInverseSemigroup[102X 11.1-1 
-  [2XGraphOfGraphInverseSemigroup[102X 11.1-5 
-  [2XGreensDClasses[102X 13.1-4 
-  [2XGreensDClassOfElement[102X 13.1-2 
-      for a free band and element 10.5-1 
-  [2XGreensDClassOfElementNC[102X 13.1-3 
-  [2XGreensHClasses[102X 13.1-4 
-  [2XGreensHClassOfElement[102X 13.1-2 
-      for a Rees matrix semigroup 13.1-2 
-  [2XGreensHClassOfElementNC[102X 13.1-3 
-  [2XGreensJClasses[102X 13.1-4 
-  [2XGreensLClasses[102X 13.1-4 
-  [2XGreensLClassOfElement[102X 13.1-2 
-  [2XGreensLClassOfElementNC[102X 13.1-3 
-  [2XGreensRClasses[102X 13.1-4 
-  [2XGreensRClassOfElement[102X 13.1-2 
-  [2XGreensRClassOfElementNC[102X 13.1-3 
-  [2XGroupHClass[102X 13.4-1 
-  [2XGroupOfUnits[102X 14.8-1 
-  [2XHallMonoid[102X 8.6-4 
-  [2XHClass[102X 13.1-2 
-      for a Rees matrix semigroup 13.1-2 
-  [2XHClasses[102X 13.1-4 
-  [2XHClassNC[102X 13.1-3 
-  [2XHClassReps[102X 13.1-5 
-  [2XIdeals[102X, for a semigroup 7.1-2 
-  [2XIdempotentGeneratedSubsemigroup[102X 14.9-3 
-  [2XIdempotents[102X 14.9-1 
+  [2XFactorisableDualSymmetricInverseMonoid[102X 7.3-8 
+  [2XFactorization[102X 11.5-2 
+  [2XFixedPointsOfTransformationSemigroup[102X, for a transformation semigroup 11.11-6 
+  [2XFpTietzeIsomorphism[102X 15.8-4 
+  [2XFreeBand[102X, for a given rank 7.9-1 
+      for a list of names 7.9-1 
+      for various names 7.9-1 
+  [2XFreeInverseSemigroup[102X, for a given rank 7.11-1 
+      for a list of names 7.11-1 
+      for various names 7.11-1 
+  [2XFullBooleanMatMonoid[102X 7.6-1 
+  [2XFullMatrixMonoid[102X 7.5-1 
+  [2XFullPBRMonoid[102X 7.4-1 
+  [2XFullTropicalMaxPlusMonoid[102X 7.7-1 
+  [2XFullTropicalMinPlusMonoid[102X 7.7-2 
+  [2XGeneralLinearMonoid[102X 7.5-1 
+  [2XGeneratingCongruencesOfLattice[102X 13.8-4 
+  [2XGeneratingPairsOfLeftSemigroupCongruence[102X 13.2-4 
+  [2XGeneratingPairsOfRightSemigroupCongruence[102X 13.2-4 
+  [2XGeneratingPairsOfSemigroupCongruence[102X 13.2-4 
+  [2XGenerators[102X 11.6-1 
+  [2XGeneratorsOfSemigroupIdeal[102X 9.2-1 
+  [2XGeneratorsOfStzPresentation[102X 15.3-3 
+  [2XGeneratorsSmallest[102X, for a semigroup 11.6-5 
+  [2XGLM[102X 7.5-1 
+  [2XGossipMonoid[102X 7.6-5 
+  [2XGraphInverseSemigroup[102X 7.10-1 
+  [2XGraphOfGraphInverseSemigroup[102X 7.10-5 
+  [2XGreensDClasses[102X 10.1-4 
+  [2XGreensDClassOfElement[102X 10.1-2 
+      for a free band and element 7.9-9 
+  [2XGreensDClassOfElementNC[102X 10.1-3 
+  [2XGreensHClasses[102X 10.1-4 
+  [2XGreensHClassOfElement[102X 10.1-2 
+      for a Rees matrix semigroup 10.1-2 
+  [2XGreensHClassOfElementNC[102X 10.1-3 
+  [2XGreensJClasses[102X 10.1-4 
+  [2XGreensLClasses[102X 10.1-4 
+  [2XGreensLClassOfElement[102X 10.1-2 
+  [2XGreensLClassOfElementNC[102X 10.1-3 
+  [2XGreensRClasses[102X 10.1-4 
+  [2XGreensRClassOfElement[102X 10.1-2 
+  [2XGreensRClassOfElementNC[102X 10.1-3 
+  [2XGroupHClass[102X 10.4-1 
+  [2XGroupOfUnits[102X 11.8-1 
+  [2XHallMonoid[102X 7.6-4 
+  [2XHClass[102X 10.1-2 
+      for a Rees matrix semigroup 10.1-2 
+  [2XHClasses[102X 10.1-4 
+  [2XHClassNC[102X 10.1-3 
+  [2XHClassReps[102X 10.1-5 
+  [2XHomomorphismsOfStrongSemilatticeOfSemigroups[102X 8.3-7 
+  [2XIdeals[102X, for a semigroup 9.1-2 
+  [2XIdempotentGeneratedSubsemigroup[102X 11.9-3 
+  [2XIdempotents[102X 11.9-1 
   [2XIdentityBipartition[102X 3.2-3 
   [2XIdentityMatrixOverFiniteField[102X, for a finite field and a pos int 5.4-2 
       for a matrix over finite field and pos int 5.4-2 
   [2XIdentityPBR[102X 4.2-4 
-  [2XImagesElm[102X, for IsRMSIsoByTriple 18.2-5 
-  [2XImagesRepresentative[102X, for IsRMSIsoByTriple 18.2-5 
-  [2XIndecomposableElements[102X 14.6-6 
-  [2XIndexPeriodOfSemigroupElement[102X 14.4-1 
-  [2XInfoSemigroups[102X 2.6-1 
-  [2XInjectionNormalizedPrincipalFactor[102X 13.4-7 
-  [2XInjectionPrincipalFactor[102X 13.4-7 
+  [2XImagesElm[102X, for IsRMSIsoByTriple 14.2-5 
+  [2XImagesRepresentative[102X, for IsRMSIsoByTriple 14.2-5 
+  [2XIndecomposableElements[102X 11.6-6 
+  [2XIndexOfVertexOfGraphInverseSemigroup[102X 7.10-9 
+  [2XIndexPeriodOfSemigroupElement[102X 11.4-1 
+  [2XInfoSemigroups[102X 2.5-1 
+  [2XInjectionNormalizedPrincipalFactor[102X 10.4-7 
+  [2XInjectionPrincipalFactor[102X 10.4-7 
   [2XIntRepOfBipartition[102X 3.5-4 
   [2XInverseMonoidByGenerators[102X 6.2-1 
   [2XInverseOp[102X 5.6-1 
       for an integer matrix 5.5-1 
   [2XInverseSemigroupByGenerators[102X 6.2-1 
-  [2XInverseSemigroupCongruenceByKernelTrace[102X 17.7-2 
+  [2XInverseSemigroupCongruenceByKernelTrace[102X 13.7-2 
   [2XInverseSubsemigroupByProperty[102X 6.4-3 
-  [2XIrredundantGeneratingSubset[102X 14.6-3 
-  [2XIsActingSemigroup[102X 6.1-3 
+  [2XIrredundantGeneratingSubset[102X 11.6-3 
+  [2XIsActingSemigroup[102X 6.1-2 
   [2XIsAntiSymmetricBooleanMat[102X 5.3-13 
-  [2XIsAperiodicSemigroup[102X 15.1-19 
-  [2XIsBand[102X 15.1-1 
+  [2XIsAperiodicSemigroup[102X 12.1-19 
+  [2XIsBand[102X 12.1-1 
   [2XIsBipartition[102X 3.1-1 
   [2XIsBipartitionCollColl[102X 3.1-2 
   [2XIsBipartitionCollection[102X 3.1-2 
@@ -220,75 +227,75 @@
   [2XIsBlockBijectionMonoid[102X 3.8-2 
   [2XIsBlockBijectionPBR[102X 4.5-8 
   [2XIsBlockBijectionSemigroup[102X 3.8-2 
-  [2XIsBlockGroup[102X 15.1-2 
+  [2XIsBlockGroup[102X 12.1-2 
   [2XIsBlocks[102X 3.6-1 
   [2XIsBooleanMat[102X 5.1-8 
   [2XIsBooleanMatCollColl[102X 5.1-9 
   [2XIsBooleanMatCollection[102X 5.1-9 
   [2XIsBooleanMatMonoid[102X 5.7-2 
   [2XIsBooleanMatSemigroup[102X 5.7-1 
-  [2XIsBrandtSemigroup[102X 16.2-2 
-  [2XIsCliffordSemigroup[102X 16.2-1 
+  [2XIsBrandtSemigroup[102X 12.2-2 
+  [2XIsCliffordSemigroup[102X 12.2-1 
   [2XIsColTrimBooleanMat[102X 5.3-9 
-  [2XIsCombinatorialSemigroup[102X 15.1-19 
-  [2XIsCommutativeSemigroup[102X 15.1-3 
-  [2XIsCompletelyRegularSemigroup[102X 15.1-4 
-  [2XIsCompletelySimpleSemigroup[102X 15.1-22 
-  [2XIsCongruenceClass[102X 17.3-1 
-  [2XIsCongruenceFreeSemigroup[102X 15.1-5 
-  [2XIsCongruencePoset[102X 17.4-4 
-  [2XIsConnectedTransformationSemigroup[102X, for a transformation semigroup 14.12-10 
-  [2XIsDTrivial[102X 15.1-19 
-  [2XIsDualSemigroupElement[102X 6.5-3 
-  [2XIsDualSemigroupRep[102X 6.5-2 
+  [2XIsCombinatorialSemigroup[102X 12.1-19 
+  [2XIsCommutativeSemigroup[102X 12.1-3 
+  [2XIsCompletelyRegularSemigroup[102X 12.1-4 
+  [2XIsCompletelySimpleSemigroup[102X 12.1-22 
+  [2XIsCongruenceByWangPair[102X 13.8-1 
+  [2XIsCongruenceClass[102X 13.3-1 
+  [2XIsCongruenceFreeSemigroup[102X 12.1-5 
+  [2XIsCongruencePoset[102X 13.4-4 
+  [2XIsConnectedTransformationSemigroup[102X, for a transformation semigroup 11.11-10 
+  [2XIsDTrivial[102X 12.1-19 
+  [2XIsDualSemigroupElement[102X 8.2-3 
+  [2XIsDualSemigroupRep[102X 8.2-2 
   [2XIsDualTransBipartition[102X 3.5-13 
   [2XIsDualTransformationPBR[102X 4.5-10 
   [2XIsEmptyPBR[102X 4.5-5 
-  [2XIsEnumerableSemigroupRep[102X 6.1-4 
+  [2XIsEnumerated[102X 11.1-4 
   [2XIsEquivalenceBooleanMat[102X 5.3-16 
-  [2XIsEUnitaryInverseSemigroup[102X 16.2-3 
-  [2XIsFactorisableInverseMonoid[102X 16.2-6 
+  [2XIsEUnitaryInverseSemigroup[102X 12.2-3 
+  [2XIsFactorisableInverseMonoid[102X 12.2-6 
   [2XIsFinite[102X 5.7-3 
-  [2XIsFInverseMonoid[102X 16.2-5 
-  [2XIsFInverseSemigroup[102X 16.2-4 
-  [2XIsFreeBand[102X, for a given semigroup 10.4-3 
-  [2XIsFreeBandCategory[102X 10.4-2 
-  [2XIsFreeBandElement[102X 10.4-4 
-  [2XIsFreeBandElementCollection[102X 10.4-5 
-  [2XIsFreeBandSubsemigroup[102X 10.4-6 
-  [2XIsFreeInverseSemigroup[102X 10.1-3 
-  [2XIsFreeInverseSemigroupCategory[102X 10.1-2 
-  [2XIsFreeInverseSemigroupElement[102X 10.1-4 
-  [2XIsFreeInverseSemigroupElementCollection[102X 10.1-5 
-  [2XIsFullMatrixMonoid[102X 8.5-3 
-  [2XIsFullyEnumerated[102X 14.1-4 
-  [2XIsGeneralLinearMonoid[102X 8.5-3 
-  [2XIsGraphInverseSemigroup[102X 11.1-4 
-  [2XIsGraphInverseSemigroupElement[102X 11.1-4 
-  [2XIsGraphInverseSemigroupElementCollection[102X 11.1-6 
-  [2XIsGraphInverseSubsemigroup[102X 11.1-7 
-  [2XIsGreensClassNC[102X 13.3-3 
-  [2XIsGreensDGreaterThanFunc[102X 13.1-12 
-  [2XIsGroupAsSemigroup[102X 15.1-7 
-  [2XIsHTrivial[102X 15.1-19 
-  [2XIsIdempotentGenerated[102X 15.1-8 
+  [2XIsFInverseMonoid[102X 12.2-5 
+  [2XIsFInverseSemigroup[102X 12.2-4 
+  [2XIsFreeBand[102X, for a given semigroup 7.9-3 
+  [2XIsFreeBandCategory[102X 7.9-2 
+  [2XIsFreeBandElement[102X 7.9-4 
+  [2XIsFreeBandElementCollection[102X 7.9-5 
+  [2XIsFreeBandSubsemigroup[102X 7.9-6 
+  [2XIsFreeInverseSemigroup[102X 7.11-3 
+  [2XIsFreeInverseSemigroupCategory[102X 7.11-2 
+  [2XIsFreeInverseSemigroupElement[102X 7.11-4 
+  [2XIsFreeInverseSemigroupElementCollection[102X 7.11-5 
+  [2XIsFullMatrixMonoid[102X 7.5-3 
+  [2XIsGeneralLinearMonoid[102X 7.5-3 
+  [2XIsGraphInverseSemigroup[102X 7.10-4 
+  [2XIsGraphInverseSemigroupElement[102X 7.10-4 
+  [2XIsGraphInverseSemigroupElementCollection[102X 7.10-6 
+  [2XIsGraphInverseSubsemigroup[102X 7.10-7 
+  [2XIsGreensClassNC[102X 10.3-3 
+  [2XIsGreensDGreaterThanFunc[102X 10.1-12 
+  [2XIsGroupAsSemigroup[102X 12.1-7 
+  [2XIsHTrivial[102X 12.1-19 
+  [2XIsIdempotentGenerated[102X 12.1-8 
   [2XIsIdentityPBR[102X 4.5-6 
   [2XIsIntegerMatrix[102X 5.1-8 
   [2XIsIntegerMatrixCollColl[102X 5.1-9 
   [2XIsIntegerMatrixCollection[102X 5.1-9 
   [2XIsIntegerMatrixMonoid[102X 5.7-2 
   [2XIsIntegerMatrixSemigroup[102X 5.7-1 
-  [2XIsInverseSemigroupCongruenceByKernelTrace[102X 17.7-1 
-  [2XIsInverseSemigroupCongruenceClassByKernelTrace[102X 17.7-6 
-  [2XIsIsomorphicSemigroup[102X 18.1-1 
-  [2XIsJoinIrreducible[102X 16.2-7 
-  [2XIsLeftCongruenceClass[102X 17.3-2 
-  [2XIsLeftSemigroupCongruence[102X 17.1-2 
-  [2XIsLeftSimple[102X 15.1-9 
-  [2XIsLeftZeroSemigroup[102X 15.1-10 
-  [2XIsLinkedTriple[102X 17.6-5 
-  [2XIsLTrivial[102X 15.1-19 
-  [2XIsMajorantlyClosed[102X 16.2-8 
+  [2XIsInverseSemigroupCongruenceByKernelTrace[102X 13.7-1 
+  [2XIsInverseSemigroupCongruenceClassByKernelTrace[102X 13.7-6 
+  [2XIsIsomorphicSemigroup[102X 14.1-1 
+  [2XIsJoinIrreducible[102X 12.2-7 
+  [2XIsLeftCongruenceClass[102X 13.3-2 
+  [2XIsLeftSemigroupCongruence[102X 13.1-2 
+  [2XIsLeftSimple[102X 12.1-9 
+  [2XIsLeftZeroSemigroup[102X 12.1-10 
+  [2XIsLinkedTriple[102X 13.6-5 
+  [2XIsLTrivial[102X 12.1-19 
+  [2XIsMajorantlyClosed[102X 12.2-8 
   [2XIsMatrixOverFiniteField[102X 5.1-8 
   [2XIsMatrixOverFiniteFieldCollColl[102X 5.1-9 
   [2XIsMatrixOverFiniteFieldCollection[102X 5.1-9 
@@ -300,42 +307,42 @@
   [2XIsMatrixOverSemiringCollection[102X 5.1-2 
   [2XIsMatrixOverSemiringMonoid[102X 5.7-2 
   [2XIsMatrixOverSemiringSemigroup[102X 5.7-1 
-  [2XIsMaximalSubsemigroup[102X 14.10-3 
+  [2XIsMaximalSubsemigroup[102X 11.10-3 
   [2XIsMaxPlusMatrix[102X 5.1-8 
   [2XIsMaxPlusMatrixCollColl[102X 5.1-9 
   [2XIsMaxPlusMatrixCollection[102X 5.1-9 
   [2XIsMaxPlusMatrixMonoid[102X 5.7-2 
   [2XIsMaxPlusMatrixSemigroup[102X 5.7-1 
-  [2XIsMcAlisterTripleSemigroup[102X 12.1-1 
-  [2XIsMcAlisterTripleSemigroupElement[102X 12.1-7 
+  [2XIsMcAlisterTripleSemigroup[102X 8.4-1 
+  [2XIsMcAlisterTripleSemigroupElement[102X 8.4-7 
   [2XIsMinPlusMatrix[102X 5.1-8 
   [2XIsMinPlusMatrixCollColl[102X 5.1-9 
   [2XIsMinPlusMatrixCollection[102X 5.1-9 
   [2XIsMinPlusMatrixMonoid[102X 5.7-2 
   [2XIsMinPlusMatrixSemigroup[102X 5.7-1 
-  [2XIsMonogenicInverseMonoid[102X 16.2-10 
-  [2XIsMonogenicInverseSemigroup[102X 16.2-9 
-  [2XIsMonogenicMonoid[102X 15.1-12 
-  [2XIsMonogenicSemigroup[102X 15.1-11 
-  [2XIsMonoidAsSemigroup[102X 15.1-13 
-  [2XIsMTSE[102X 12.1-7 
+  [2XIsMonogenicInverseMonoid[102X 12.2-10 
+  [2XIsMonogenicInverseSemigroup[102X 12.2-9 
+  [2XIsMonogenicMonoid[102X 12.1-12 
+  [2XIsMonogenicSemigroup[102X 12.1-11 
+  [2XIsMonoidAsSemigroup[102X 12.1-13 
+  [2XIsMTSE[102X 8.4-7 
   [2XIsNTPMatrix[102X 5.1-8 
   [2XIsNTPMatrixCollColl[102X 5.1-9 
   [2XIsNTPMatrixCollection[102X 5.1-9 
   [2XIsNTPMatrixMonoid[102X 5.7-2 
   [2XIsNTPMatrixSemigroup[102X 5.7-1 
   [2XIsomorphismMatrixGroup[102X 5.7-9 
-  [2XIsomorphismMonoid[102X 6.6-2 
-  [2XIsomorphismPermGroup[102X 6.6-5 
-  [2XIsomorphismReesMatrixSemigroup[102X, for a D-class 13.4-7 
-      for a semigroup 14.15-1 
-  [2XIsomorphismReesMatrixSemigroupOverPermGroup[102X 14.15-1 
-  [2XIsomorphismReesZeroMatrixSemigroup[102X 14.15-1 
-  [2XIsomorphismReesZeroMatrixSemigroupOverPermGroup[102X 14.15-1 
-  [2XIsomorphismSemigroup[102X 6.6-1 
-  [2XIsomorphismSemigroups[102X 18.1-6 
+  [2XIsomorphismMonoid[102X 6.5-2 
+  [2XIsomorphismPermGroup[102X 6.5-5 
+  [2XIsomorphismReesMatrixSemigroup[102X, for a D-class 10.4-7 
+      for a semigroup 6.5-8 
+  [2XIsomorphismReesMatrixSemigroupOverPermGroup[102X 6.5-8 
+  [2XIsomorphismReesZeroMatrixSemigroup[102X 6.5-8 
+  [2XIsomorphismReesZeroMatrixSemigroupOverPermGroup[102X 6.5-8 
+  [2XIsomorphismSemigroup[102X 6.5-1 
+  [2XIsomorphismSemigroups[102X 14.1-6 
   [2XIsOntoBooleanMat[102X 5.3-14 
-  [2XIsOrthodoxSemigroup[102X 15.1-14 
+  [2XIsOrthodoxSemigroup[102X 12.1-14 
   [2XIsPartialOrderBooleanMat[102X 5.3-15 
   [2XIsPartialPermBipartition[102X 3.5-15 
   [2XIsPartialPermBipartitionMonoid[102X 3.8-3 
@@ -349,35 +356,37 @@
   [2XIsPermBipartition[102X 3.5-14 
   [2XIsPermBipartitionGroup[102X 3.8-4 
   [2XIsPermPBR[102X 4.5-12 
-  [2XIsRectangularBand[102X 15.1-15 
-  [2XIsRectangularGroup[102X 15.1-16 
-  [2XIsReesCongruenceClass[102X 17.8-2 
+  [2XIsRectangularBand[102X 12.1-15 
+  [2XIsRectangularGroup[102X 12.1-16 
+  [2XIsReesCongruenceClass[102X 13.9-2 
   [2XIsReflexiveBooleanMat[102X 5.3-11 
-  [2XIsRegularGreensClass[102X 13.3-2 
-  [2XIsRegularSemigroup[102X 15.1-17 
-  [2XIsRightCongruenceClass[102X 17.3-3 
-  [2XIsRightSemigroupCongruence[102X 17.1-3 
-  [2XIsRightSimple[102X 15.1-9 
-  [2XIsRightZeroSemigroup[102X 15.1-18 
-  [2XIsRMSCongruenceByLinkedTriple[102X 17.6-1 
-  [2XIsRMSCongruenceClassByLinkedTriple[102X 17.6-3 
-  [2XIsRMSIsoByTriple[102X 18.2-1 
+  [2XIsRegularGreensClass[102X 10.3-2 
+  [2XIsRegularSemigroup[102X 12.1-17 
+  [2XIsRightCongruenceClass[102X 13.3-3 
+  [2XIsRightSemigroupCongruence[102X 13.1-3 
+  [2XIsRightSimple[102X 12.1-9 
+  [2XIsRightZeroSemigroup[102X 12.1-18 
+  [2XIsRMSCongruenceByLinkedTriple[102X 13.6-1 
+  [2XIsRMSCongruenceClassByLinkedTriple[102X 13.6-3 
+  [2XIsRMSIsoByTriple[102X 14.2-1 
   [2XIsRowTrimBooleanMat[102X 5.3-9 
-  [2XIsRTrivial[102X 15.1-19 
-  [2XIsRZMSCongruenceByLinkedTriple[102X 17.6-1 
-  [2XIsRZMSCongruenceClassByLinkedTriple[102X 17.6-3 
-  [2XIsRZMSIsoByTriple[102X 18.2-1 
-  [2XIsSemiband[102X 15.1-8 
-  [2XIsSemigroupCongruence[102X 17.1-1 
-  [2XIsSemigroupWithAdjoinedZero[102X 15.1-20 
-  [2XIsSemilattice[102X 15.1-21 
-  [2XIsSimpleSemigroup[102X 15.1-22 
-  [2XIsSubrelation[102X 17.5-1 
-  [2XIsSuperrelation[102X 17.5-2 
-  [2XIsSurjectiveSemigroup[102X 15.1-6 
+  [2XIsRTrivial[102X 12.1-19 
+  [2XIsRZMSCongruenceByLinkedTriple[102X 13.6-1 
+  [2XIsRZMSCongruenceClassByLinkedTriple[102X 13.6-3 
+  [2XIsRZMSIsoByTriple[102X 14.2-1 
+  [2XIsSemiband[102X 12.1-8 
+  [2XIsSemigroupCongruence[102X 13.1-1 
+  [2XIsSemigroupWithAdjoinedZero[102X 12.1-20 
+  [2XIsSemilattice[102X 12.1-21 
+  [2XIsSimpleSemigroup[102X 12.1-22 
+  [2XIsSSSE[102X 8.3-3 
+  [2XIsStrongSemilatticeOfSemigroups[102X 8.3-4 
+  [2XIsStzPresentation[102X 15.3-2 
+  [2XIsSubrelation[102X 13.5-1 
+  [2XIsSuperrelation[102X 13.5-2 
+  [2XIsSurjectiveSemigroup[102X 12.1-6 
   [2XIsSymmetricBooleanMat[102X 5.3-10 
-  [2XIsSynchronizingSemigroup[102X, for a transformation semigroup 15.1-23 
-      for a transformation semigroup and a positive integer 15.1-23 
+  [2XIsSynchronizingSemigroup[102X, for a transformation semigroup 12.1-23 
   [2XIsTorsion[102X 5.7-4 
       for an integer matrix 5.5-2 
   [2XIsTotalBooleanMat[102X 5.3-14 
@@ -385,9 +394,9 @@
   [2XIsTransformationBooleanMat[102X 5.3-17 
   [2XIsTransformationPBR[102X 4.5-9 
   [2XIsTransitive[102X, for a transformation
-      semigroup and a pos int 14.12-7 
+      semigroup and a pos int 11.11-7 
       for a transformation
-      semigroup and a set 14.12-7 
+      semigroup and a set 11.11-7 
   [2XIsTransitiveBooleanMat[102X 5.3-12 
   [2XIsTrimBooleanMat[102X 5.3-9 
   [2XIsTropicalMatrix[102X 5.1-8 
@@ -405,128 +414,117 @@
   [2XIsTropicalMinPlusMatrixMonoid[102X 5.7-2 
   [2XIsTropicalMinPlusMatrixSemigroup[102X 5.7-1 
   [2XIsUniformBlockBijection[102X 3.5-17 
-  [2XIsUnitRegularMonoid[102X 15.1-24 
+  [2XIsUnitRegularMonoid[102X 12.1-24 
   [2XIsUniversalPBR[102X 4.5-7 
-  [2XIsUniversalSemigroupCongruence[102X 17.9-1 
-  [2XIsUniversalSemigroupCongruenceClass[102X 17.9-2 
-  [2XIsVertex[102X, for a graph inverse semigroup element 11.1-3 
-  [2XIsZeroGroup[102X 15.1-25 
-  [2XIsZeroRectangularBand[102X 15.1-26 
-  [2XIsZeroSemigroup[102X 15.1-27 
-  [2XIsZeroSimpleSemigroup[102X 15.1-28 
-  [2XIteratorCanonical[102X 14.1-1 
-  [2XIteratorFromGeneratorsFile[102X 20.1-3 
-  [2XIteratorFromMultiplicationTableFile[102X 20.2-3 
-  [2XIteratorOfDClasses[102X 13.2-2 
-  [2XIteratorOfDClassReps[102X 13.2-1 
-  [2XIteratorOfHClasses[102X 13.2-2 
-  [2XIteratorOfHClassReps[102X 13.2-1 
-  [2XIteratorOfLClasses[102X 13.2-2 
-  [2XIteratorOfLClassReps[102X 13.2-1 
-  [2XIteratorOfRClasses[102X 13.2-2 
-  [2XIteratorOfRClassReps[102X 13.2-1 
-  [2XJClasses[102X 13.1-4 
-  [2XJoinIrreducibleDClasses[102X 16.1-2 
-  [2XJoinLeftSemigroupCongruences[102X 17.5-4 
-  [2XJoinRightSemigroupCongruences[102X 17.5-4 
-  [2XJoinSemigroupCongruences[102X 17.5-4 
-  [2XJoinSemilatticeOfCongruences[102X, for a congruence poset and a function 17.4-10 
-      for a list or collection and a function 17.4-10 
-  [2XJonesMonoid[102X 8.3-3 
-  [2XKernelOfSemigroupCongruence[102X 17.7-4 
-  [2XLargestElementSemigroup[102X 14.12-8 
-  [2XLatticeOfCongruences[102X, for a semigroup 17.4-5 
-      for a semigroup and a multiplicative element collection 17.4-5 
-  [2XLatticeOfLeftCongruences[102X, for a semigroup 17.4-5 
-      for a semigroup and a multiplicative element collection 17.4-5 
-  [2XLatticeOfRightCongruences[102X, for a semigroup 17.4-5 
-      for a semigroup and a multiplicative element collection 17.4-5 
-  [2XLClass[102X 13.1-2 
-  [2XLClasses[102X 13.1-4 
-  [2XLClassNC[102X 13.1-3 
-  [2XLClassOfHClass[102X 13.1-1 
-  [2XLClassReps[102X 13.1-5 
+  [2XIsUniversalSemigroupCongruence[102X 13.10-1 
+  [2XIsUniversalSemigroupCongruenceClass[102X 13.10-2 
+  [2XIsVertex[102X, for a graph inverse semigroup element 7.10-3 
+  [2XIsZeroGroup[102X 12.1-25 
+  [2XIsZeroRectangularBand[102X 12.1-26 
+  [2XIsZeroSemigroup[102X 12.1-27 
+  [2XIsZeroSimpleSemigroup[102X 12.1-28 
+  [2XIteratorCanonical[102X 11.1-1 
+  [2XIteratorFromGeneratorsFile[102X 17.1-3 
+  [2XIteratorFromMultiplicationTableFile[102X 17.2-3 
+  [2XIteratorOfDClasses[102X 10.2-2 
+  [2XIteratorOfDClassReps[102X 10.2-1 
+  [2XIteratorOfHClassReps[102X 10.2-1 
+  [2XIteratorOfLClassReps[102X 10.2-1 
+  [2XIteratorOfRClasses[102X 10.2-2 
+  [2XJClasses[102X 10.1-4 
+  [2XJoinIrreducibleDClasses[102X 11.14-2 
+  [2XJoinLeftSemigroupCongruences[102X 13.5-4 
+  [2XJoinRightSemigroupCongruences[102X 13.5-4 
+  [2XJoinSemigroupCongruences[102X 13.5-4 
+  [2XJoinSemilatticeOfCongruences[102X, for a congruence poset and a function 13.4-10 
+      for a list or collection and a function 13.4-10 
+  [2XJonesMonoid[102X 7.3-3 
+  [2XKernelOfSemigroupCongruence[102X 13.7-4 
+  [2XLargestElementSemigroup[102X 11.11-8 
+  [2XLatticeOfCongruences[102X, for a semigroup 13.4-5 
+      for a semigroup and a multiplicative element collection 13.4-5 
+  [2XLatticeOfLeftCongruences[102X, for a semigroup 13.4-5 
+      for a semigroup and a multiplicative element collection 13.4-5 
+  [2XLatticeOfRightCongruences[102X, for a semigroup 13.4-5 
+      for a semigroup and a multiplicative element collection 13.4-5 
+  [2XLClass[102X 10.1-2 
+  [2XLClasses[102X 10.1-4 
+  [2XLClassNC[102X 10.1-3 
+  [2XLClassOfHClass[102X 10.1-1 
+  [2XLClassReps[102X 10.1-5 
   [2XLeftBlocks[102X 3.5-6 
-  [2XLeftCayleyDigraph[102X 14.2-1 
-  [2XLeftCongruenceClasses[102X 17.3-5 
-  [2XLeftCongruenceClassOfElement[102X 17.3-4 
-  [2XLeftCongruencesOfSemigroup[102X, for a semigroup 17.4-1 
-      for a semigroup and a multiplicative element collection 17.4-1 
+  [2XLeftCayleyDigraph[102X 11.2-1 
+  [2XLeftCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
+      for a semigroup and a multiplicative element collection 13.4-1 
   [2XLeftInverse[102X, for a matrix over finite field 5.4-6 
   [2XLeftOne[102X, for a bipartition 3.2-4 
   [2XLeftProjection[102X 3.2-4 
-  [2XLeftSemigroupCongruence[102X 17.2-2 
-  [2XLeftZeroSemigroup[102X 9.1-5 
-  [2XLengthOfLongestDClassChain[102X 13.1-11 
-  [2XMajorantClosure[102X 16.1-3 
+  [2XLeftSemigroupCongruence[102X 13.2-2 
+  [2XLeftZeroSemigroup[102X 7.8-5 
+  [2XLength[102X 15.3-6 
+  [2XLengthOfLongestDClassChain[102X 10.1-11 
+  [2XMajorantClosure[102X 11.14-3 
   [2XMatrix[102X, for a filter and a matrix 5.1-5 
       for a semiring and a matrix 5.1-5 
-  [2XMaximalDClasses[102X 13.1-7 
-  [2XMaximalSubsemigroups[102X, for a finite semigroup 14.10-1 
-      for a finite semigroup and a record 14.10-1 
-  [2XMcAlisterTripleSemigroup[102X 12.1-2 
-  [2XMcAlisterTripleSemigroupAction[102X 12.1-6 
-  [2XMcAlisterTripleSemigroupElement[102X 12.1-8 
-  [2XMcAlisterTripleSemigroupGroup[102X 12.1-3 
-  [2XMcAlisterTripleSemigroupPartialOrder[102X 12.1-4 
-  [2XMcAlisterTripleSemigroupSemilattice[102X 12.1-5 
-  [2XMeetSemigroupCongruences[102X 17.5-3 
-  [2XMinimalCongruences[102X, for a congruence poset 17.4-11 
-      for a list or collection 17.4-11 
-  [2XMinimalCongruencesOfSemigroup[102X, for a semigroup 17.4-2 
-      for a semigroup and a multiplicative element collection 17.4-2 
-  [2XMinimalDClass[102X 13.1-6 
-  [2XMinimalFactorization[102X 14.5-3 
-  [2XMinimalIdeal[102X 14.7-1 
-  [2XMinimalIdealGeneratingSet[102X 7.2-2 
-  [2XMinimalLeftCongruencesOfSemigroup[102X, for a semigroup 17.4-2 
-      for a semigroup and a multiplicative element collection 17.4-2 
-  [2XMinimalMonoidGeneratingSet[102X 14.6-4 
-  [2XMinimalRightCongruencesOfSemigroup[102X, for a semigroup 17.4-2 
-      for a semigroup and a multiplicative element collection 17.4-2 
-  [2XMinimalSemigroupGeneratingSet[102X 14.6-4 
-  [2XMinimalWord[102X, for free inverse semigroup element 10.3-2 
-  [2XMinimumGroupCongruence[102X 17.7-7 
-  [2XMinorants[102X 16.1-4 
-  [2XModularPartitionMonoid[102X 8.3-10 
-  [2XMonogenicSemigroup[102X 9.1-2 
-  [2XMotzkinMonoid[102X 8.3-6 
-  [2XMTSE[102X 12.1-8 
-  [2XMultiplicativeNeutralElement[102X, for an H-class 13.4-5 
-  [2XMultiplicativeZero[102X 14.7-3 
-  [2XMunnSemigroup[102X 8.2-1 
-  [2XNambooripadLeqRegularSemigroup[102X 14.16-1 
-  [2XNambooripadPartialOrder[102X 14.16-2 
+  [2XMaximalDClasses[102X 10.1-7 
+  [2XMaximalSubsemigroups[102X, for a finite semigroup 11.10-1 
+      for a finite semigroup and a record 11.10-1 
+  [2XMcAlisterTripleSemigroup[102X 8.4-2 
+  [2XMcAlisterTripleSemigroupAction[102X 8.4-6 
+  [2XMcAlisterTripleSemigroupElement[102X 8.4-8 
+  [2XMcAlisterTripleSemigroupGroup[102X 8.4-3 
+  [2XMcAlisterTripleSemigroupPartialOrder[102X 8.4-4 
+  [2XMcAlisterTripleSemigroupSemilattice[102X 8.4-5 
+  [2XMeetSemigroupCongruences[102X 13.5-3 
+  [2XMinimalCongruences[102X, for a congruence poset 13.4-11 
+      for a list or collection 13.4-11 
+  [2XMinimalCongruencesOfSemigroup[102X, for a semigroup 13.4-2 
+      for a semigroup and a multiplicative element collection 13.4-2 
+  [2XMinimalDClass[102X 10.1-6 
+  [2XMinimalFactorization[102X 11.5-3 
+  [2XMinimalIdeal[102X 11.7-1 
+  [2XMinimalIdealGeneratingSet[102X 9.2-2 
+  [2XMinimalInverseMonoidGeneratingSet[102X 11.6-4 
+  [2XMinimalInverseSemigroupGeneratingSet[102X 11.6-4 
+  [2XMinimalLeftCongruencesOfSemigroup[102X, for a semigroup 13.4-2 
+      for a semigroup and a multiplicative element collection 13.4-2 
+  [2XMinimalMonoidGeneratingSet[102X 11.6-4 
+  [2XMinimalRightCongruencesOfSemigroup[102X, for a semigroup 13.4-2 
+      for a semigroup and a multiplicative element collection 13.4-2 
+  [2XMinimalSemigroupGeneratingSet[102X 11.6-4 
+  [2XMinimalWord[102X, for free inverse semigroup element 7.11-7 
+  [2XMinimumGroupCongruence[102X 13.7-7 
+  [2XMinorants[102X 11.14-4 
+  [2XModularPartitionMonoid[102X 7.3-10 
+  [2XMonogenicSemigroup[102X 7.8-2 
+  [2XMotzkinMonoid[102X 7.3-6 
+  [2XMTSE[102X 8.4-8 
+  [2XMultiplicativeNeutralElement[102X, for an H-class 10.4-5 
+  [2XMultiplicativeZero[102X 11.7-3 
+  [2XMunnSemigroup[102X 7.2-1 
+  [2XNambooripadLeqRegularSemigroup[102X 11.15-1 
+  [2XNambooripadPartialOrder[102X 11.15-2 
   [2XNaturalLeqBlockBijection[102X 3.4-3 
-  [2XNaturalLeqInverseSemigroup[102X 16.1-1 
+  [2XNaturalLeqInverseSemigroup[102X 11.14-1 
   [2XNaturalLeqPartialPermBipartition[102X 3.4-2 
   [2XNewIdentityMatrixOverFiniteField[102X 5.4-3 
   [2XNewMatrixOverFiniteField[102X, for a filter, a field, an integer, and a list 5.4-1 
   [2XNewZeroMatrixOverFiniteField[102X 5.4-3 
-  [2XNonTrivialCongruenceClasses[102X 17.3-7 
-  [2XNonTrivialEquivalenceClasses[102X 17.3-6 
-  [2XNonTrivialFactorization[102X 14.5-4 
-  [2XNonTrivialLeftCongruenceClasses[102X 17.3-7 
-  [2XNonTrivialRightCongruenceClasses[102X 17.3-7 
-  [2XNormalizedPrincipalFactor[102X 13.4-8 
-  [2XNormalizer[102X, for a perm group, semigroup, record 14.11-1 
-      for a semigroup, record 14.11-1 
+  [2XNonTrivialEquivalenceClasses[102X 13.3-4 
+  [2XNonTrivialFactorization[102X 11.5-4 
+  [2XNormalizedPrincipalFactor[102X 10.4-8 
   [2XNormalizeSemigroup[102X 5.7-5 
   [2XNrBlocks[102X, for a bipartition 3.5-9 
       for blocks 3.5-9 
-  [2XNrCongruenceClasses[102X 17.3-9 
-  [2XNrDClasses[102X 13.1-9 
-  [2XNrEquivalenceClasses[102X 17.3-8 
-  [2XNrHClasses[102X 13.1-9 
-  [2XNrIdempotents[102X 14.9-2 
-  [2XNrLClasses[102X 13.1-9 
+  [2XNrDClasses[102X 10.1-9 
+  [2XNrHClasses[102X 10.1-9 
+  [2XNrIdempotents[102X 11.9-2 
+  [2XNrLClasses[102X 10.1-9 
   [2XNrLeftBlocks[102X 3.5-7 
-  [2XNrLeftCongruenceClasses[102X 17.3-9 
-  [2XNrMaximalSubsemigroups[102X 14.10-2 
-  [2XNrRClasses[102X 13.1-9 
-  [2XNrRegularDClasses[102X 13.1-8 
+  [2XNrMaximalSubsemigroups[102X 11.10-2 
+  [2XNrRClasses[102X 10.1-9 
+  [2XNrRegularDClasses[102X 10.1-8 
   [2XNrRightBlocks[102X 3.5-8 
-  [2XNrRightCongruenceClasses[102X 17.3-9 
   [2XNrTransverseBlocks[102X, for a bipartition 3.5-2 
       for blocks 3.6-4 
   [2XNumberBlist[102X 5.3-7 
@@ -534,180 +532,208 @@
   [2XNumberPBR[102X 4.5-4 
   [2XOnBlist[102X 5.3-4 
   [2XOnLeftBlocks[102X 3.7-2 
-  [2XOnLeftCongruenceClasses[102X 17.3-13 
-  [2XOnMultiplicationTable[102X 18.1-5 
+  [2XOnLeftCongruenceClasses[102X 13.3-8 
+  [2XOnMultiplicationTable[102X 14.1-5 
   [2XOnRightBlocks[102X 3.7-1 
-  [2XOnRightCongruenceClasses[102X 17.3-14 
+  [2XOnRightCongruenceClasses[102X 13.3-9 
   [2XOrder[102X 5.5-3 
-  [2XOrderAntiEndomorphisms[102X 8.1-5 
-  [2XOrderEndomorphisms[102X, monoid of order preserving transformations 8.1-5 
-  [2XPartialBrauerMonoid[102X 8.3-2 
-  [2XPartialDualSymmetricInverseMonoid[102X 8.3-7 
-  [2XPartialJonesMonoid[102X 8.3-4 
-  [2XPartialOrderAntiEndomorphisms[102X 8.1-5 
-  [2XPartialOrderEndomorphisms[102X 8.1-5 
-  [2XPartialOrderOfDClasses[102X 13.1-10 
+  [2XOrderAntiEndomorphisms[102X 7.1-5 
+  [2XOrderEndomorphisms[102X, monoid of order preserving transformations 7.1-5 
+  [2XParseRelations[102X 15.2-1 
+  [2XPartialBrauerMonoid[102X 7.3-2 
+  [2XPartialDualSymmetricInverseMonoid[102X 7.3-7 
+  [2XPartialJonesMonoid[102X 7.3-4 
+  [2XPartialOrderAntiEndomorphisms[102X 7.1-5 
+  [2XPartialOrderEndomorphisms[102X 7.1-5 
+  [2XPartialOrderOfDClasses[102X 10.1-10 
   [2XPartialPermLeqBipartition[102X 3.4-1 
-  [2XPartialTransformationMonoid[102X 8.1-3 
-  [2XPartialUniformBlockBijectionMonoid[102X 8.3-8 
-  [2XPartitionMonoid[102X 8.3-1 
+  [2XPartialTransformationMonoid[102X 7.1-3 
+  [2XPartialUniformBlockBijectionMonoid[102X 7.3-8 
+  [2XPartitionMonoid[102X 7.3-1 
   [2XPBR[102X 4.2-1 
   [2XPBRNumber[102X 4.5-4 
   [2XPeriodNTPMatrix[102X 5.1-12 
   [2XPermLeftQuoBipartition[102X 3.4-4 
-  [2XPlanarModularPartitionMonoid[102X 8.3-10 
-  [2XPlanarPartitionMonoid[102X 8.3-9 
-  [2XPlanarUniformBlockBijectionMonoid[102X 8.3-8 
-  [2XPODI[102X, monoid of order preserving or reversing partial perms 8.2-3 
-  [2XPOI[102X, monoid of order preserving partial perms 8.2-3 
-  [2XPOPI[102X, monoid of orientation preserving partial perms 8.2-3 
-  [2XPORI[102X, monoid of orientation preserving or reversing partial perms 8.2-3 
-  [2XPosetOfCongruences[102X 17.4-9 
-  [2XPosetOfPrincipalCongruences[102X, for a semigroup 17.4-6 
-      for a semigroup and a multiplicative element collection 17.4-6 
-  [2XPosetOfPrincipalLeftCongruences[102X, for a semigroup 17.4-6 
-      for a semigroup and a multiplicative element collection 17.4-6 
-  [2XPosetOfPrincipalRightCongruences[102X, for a semigroup 17.4-6 
-      for a semigroup and a multiplicative element collection 17.4-6 
-  [2XPositionCanonical[102X 14.1-2 
-  [2XPrimitiveIdempotents[102X 16.1-5 
-  [2XPrincipalCongruencesOfSemigroup[102X, for a semigroup 17.4-3 
-      for a semigroup and a multiplicative element collection 17.4-3 
-  [2XPrincipalFactor[102X 13.4-8 
-  [2XPrincipalLeftCongruencesOfSemigroup[102X, for a semigroup 17.4-3 
-      for a semigroup and a multiplicative element collection 17.4-3 
-  [2XPrincipalRightCongruencesOfSemigroup[102X, for a semigroup 17.4-3 
-      for a semigroup and a multiplicative element collection 17.4-3 
+  [2XPlanarModularPartitionMonoid[102X 7.3-10 
+  [2XPlanarPartitionMonoid[102X 7.3-9 
+  [2XPlanarUniformBlockBijectionMonoid[102X 7.3-8 
+  [2XPODI[102X, monoid of order preserving or reversing partial perms 7.2-3 
+  [2XPOI[102X, monoid of order preserving partial perms 7.2-3 
+  [2XPOPI[102X, monoid of orientation preserving partial perms 7.2-3 
+  [2XPORI[102X, monoid of orientation preserving or reversing partial perms 7.2-3 
+  [2XPosetOfCongruences[102X 13.4-9 
+  [2XPosetOfPrincipalCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a multiplicative element collection 13.4-6 
+  [2XPosetOfPrincipalLeftCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a multiplicative element collection 13.4-6 
+  [2XPosetOfPrincipalRightCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a multiplicative element collection 13.4-6 
+  [2XPositionCanonical[102X 11.1-2 
+  [2XPrimitiveIdempotents[102X 11.14-5 
+  [2XPrincipalCongruencesOfSemigroup[102X, for a semigroup 13.4-3 
+      for a semigroup and a multiplicative element collection 13.4-3 
+  [2XPrincipalFactor[102X 10.4-8 
+  [2XPrincipalLeftCongruencesOfSemigroup[102X, for a semigroup 13.4-3 
+      for a semigroup and a multiplicative element collection 13.4-3 
+  [2XPrincipalRightCongruencesOfSemigroup[102X, for a semigroup 13.4-3 
+      for a semigroup and a multiplicative element collection 13.4-3 
   [2XProjectionFromBlocks[102X 3.6-6 
   [2XRadialEigenvector[102X 5.6-2 
-  [2XRandom[102X, for a semigroup 14.3-1 
+  [2XRandom[102X, for a semigroup 11.3-1 
   [2XRandomBipartition[102X 3.2-7 
   [2XRandomBlockBijection[102X 3.2-7 
-  [2XRandomInverseMonoid[102X 6.7-1 
-  [2XRandomInverseSemigroup[102X 6.7-1 
+  [2XRandomInverseMonoid[102X 6.6-1 
+  [2XRandomInverseSemigroup[102X 6.6-1 
   [2XRandomMatrix[102X, for a filter and a matrix 5.1-7 
       for a semiring and a matrix 5.1-7 
-  [2XRandomMonoid[102X 6.7-1 
+  [2XRandomMonoid[102X 6.6-1 
   [2XRandomPBR[102X 4.2-2 
-  [2XRandomSemigroup[102X 6.7-1 
-  [2XRange[102X, for a graph inverse semigroup element 11.1-2 
+  [2XRandomSemigroup[102X 6.6-1 
+  [2XRandomWord[102X, for two integers 15.1-2 
+  [2XRange[102X, for a graph inverse semigroup element 7.10-2 
   [2XRankOfBipartition[102X 3.5-2 
   [2XRankOfBlocks[102X 3.6-4 
-  [2XRClass[102X 13.1-2 
-  [2XRClasses[102X 13.1-4 
-  [2XRClassNC[102X 13.1-3 
-  [2XRClassOfHClass[102X 13.1-1 
-  [2XRClassReps[102X 13.1-5 
-  [2XReadGenerators[102X 20.1-1 
-  [2XReadMultiplicationTable[102X 20.2-1 
-  [2XRectangularBand[102X 9.1-3 
-  [2XReflexiveBooleanMatMonoid[102X 8.6-3 
-  [2XRegularBooleanMatMonoid[102X 8.6-2 
-  [2XRegularDClasses[102X 13.1-8 
-  [2XRepresentativeOfMinimalDClass[102X 14.7-2 
-  [2XRepresentativeOfMinimalIdeal[102X 14.7-2 
+  [2XRClass[102X 10.1-2 
+  [2XRClasses[102X 10.1-4 
+  [2XRClassNC[102X 10.1-3 
+  [2XRClassOfHClass[102X 10.1-1 
+  [2XRClassReps[102X 10.1-5 
+  [2XReadGenerators[102X 17.1-1 
+  [2XReadMultiplicationTable[102X 17.2-1 
+  [2XRectangularBand[102X 7.8-3 
+  [2XReflexiveBooleanMatMonoid[102X 7.6-3 
+  [2XRegularBooleanMatMonoid[102X 7.6-2 
+  [2XRegularDClasses[102X 10.1-8 
+  [2XRelationsOfStzPresentation[102X 15.3-4 
+  [2XRepresentativeOfMinimalDClass[102X 11.7-2 
+  [2XRepresentativeOfMinimalIdeal[102X 11.7-2 
   [2XRightBlocks[102X 3.5-5 
-  [2XRightCayleyDigraph[102X 14.2-1 
-  [2XRightCongruenceClasses[102X 17.3-5 
-  [2XRightCongruenceClassOfElement[102X 17.3-4 
-  [2XRightCongruencesOfSemigroup[102X, for a semigroup 17.4-1 
-      for a semigroup and a multiplicative element collection 17.4-1 
-  [2XRightCosetsOfInverseSemigroup[102X 16.1-6 
+  [2XRightCayleyDigraph[102X 11.2-1 
+  [2XRightCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
+      for a semigroup and a multiplicative element collection 13.4-1 
+  [2XRightCosetsOfInverseSemigroup[102X 11.14-6 
   [2XRightInverse[102X, for a matrix over finite field 5.4-6 
   [2XRightOne[102X, for a bipartition 3.2-5 
   [2XRightProjection[102X 3.2-5 
-  [2XRightSemigroupCongruence[102X 17.2-3 
-  [2XRightZeroSemigroup[102X 9.1-5 
-  [2XRMSCongruenceByLinkedTriple[102X 17.6-2 
-  [2XRMSCongruenceClassByLinkedTriple[102X 17.6-4 
-  [2XRMSIsoByTriple[102X 18.2-2 
-  [2XRMSNormalization[102X 6.6-7 
-  [2XRookMonoid[102X 8.2-2 
-  [2XRookPartitionMonoid[102X 8.3-1 
+  [2XRightSemigroupCongruence[102X 13.2-3 
+  [2XRightZeroSemigroup[102X 7.8-5 
+  [2XRMSCongruenceByLinkedTriple[102X 13.6-2 
+  [2XRMSCongruenceClassByLinkedTriple[102X 13.6-4 
+  [2XRMSIsoByTriple[102X 14.2-2 
+  [2XRMSNormalization[102X 6.5-7 
+  [2XRookMonoid[102X 7.2-2 
+  [2XRookPartitionMonoid[102X 7.3-1 
   [2XRowRank[102X, for a matrix over finite field 5.4-5 
   [2XRowSpaceBasis[102X, for a matrix over finite field 5.4-4 
   [2XRowSpaceTransformation[102X, for a matrix over finite field 5.4-4 
   [2XRowSpaceTransformationInv[102X, for a matrix over finite field 5.4-4 
-  [2XRZMSCongruenceByLinkedTriple[102X 17.6-2 
-  [2XRZMSCongruenceClassByLinkedTriple[102X 17.6-4 
-  [2XRZMSConnectedComponents[102X 14.14-2 
-  [2XRZMSDigraph[102X 14.14-1 
-  [2XRZMSIsoByTriple[102X 18.2-2 
-  [2XRZMSNormalization[102X 6.6-6 
-  [2XSameMinorantsSubgroup[102X 16.1-7 
-  [2XSchutzenbergerGroup[102X 13.4-2 
-  [2XSemigroupCongruence[102X 17.2-1 
-  [2XSemigroupIdeal[102X 7.1-1 
-  [2XSemigroupIdealOfReesCongruence[102X 17.8-1 
+  [2XRZMSCongruenceByLinkedTriple[102X 13.6-2 
+  [2XRZMSCongruenceClassByLinkedTriple[102X 13.6-4 
+  [2XRZMSConnectedComponents[102X 11.13-2 
+  [2XRZMSDigraph[102X 11.13-1 
+  [2XRZMSIsoByTriple[102X 14.2-2 
+  [2XRZMSNormalization[102X 6.5-6 
+  [2XSameMinorantsSubgroup[102X 11.14-7 
+  [2XSchutzenbergerGroup[102X 10.4-2 
+  [2XSemigroupCongruence[102X 13.2-1 
+  [2XSemigroupIdeal[102X 9.1-1 
+  [2XSemigroupIdealOfReesCongruence[102X 13.9-1 
   [5XSemigroups[105X package overview 1. 
   [2XSEMIGROUPS.DefaultOptionsRec[102X 6.3-1 
-  [2XSemigroupsMakeDoc[102X 2.4-1 
-  [2XSemigroupsTestAll[102X 2.5-4 
-  [2XSemigroupsTestExtreme[102X 2.5-3 
-  [2XSemigroupsTestInstall[102X 2.5-1 
-  [2XSemigroupsTestStandard[102X 2.5-2 
-  [2XSingularApsisMonoid[102X 8.3-11 
-  [2XSingularBrauerMonoid[102X 8.3-2 
-  [2XSingularCrossedApsisMonoid[102X 8.3-11 
-  [2XSingularDualSymmetricInverseMonoid[102X 8.3-7 
-  [2XSingularFactorisableDualSymmetricInverseMonoid[102X 8.3-8 
-  [2XSingularJonesMonoid[102X 8.3-3 
-  [2XSingularModularPartitionMonoid[102X 8.3-10 
-  [2XSingularOrderEndomorphisms[102X 8.1-5 
-  [2XSingularPartitionMonoid[102X 8.3-1 
-  [2XSingularPlanarModularPartitionMonoid[102X 8.3-10 
-  [2XSingularPlanarPartitionMonoid[102X 8.3-9 
-  [2XSingularPlanarUniformBlockBijectionMonoid[102X 8.3-8 
-  [2XSingularTransformationMonoid[102X 8.1-4 
-  [2XSingularTransformationSemigroup[102X 8.1-4 
-  [2XSingularUniformBlockBijectionMonoid[102X 8.3-8 
-  [2XSLM[102X 8.5-2 
-  [2XSmallerDegreePartialPermRepresentation[102X 16.1-8 
-  [2XSmallestElementSemigroup[102X 14.12-8 
-  [2XSmallestIdempotentPower[102X 14.4-2 
-  [2XSmallestMultiplicationTable[102X 18.1-2 
-  [2XSmallGeneratingSet[102X 14.6-2 
-  [2XSmallInverseMonoidGeneratingSet[102X 14.6-2 
-  [2XSmallInverseSemigroupGeneratingSet[102X 14.6-2 
-  [2XSmallMonoidGeneratingSet[102X 14.6-2 
-  [2XSmallSemigroupGeneratingSet[102X 14.6-2 
-  [2XSource[102X, for a graph inverse semigroup element 11.1-2 
-  [2XSpecialLinearMonoid[102X 8.5-2 
+  [2XSemigroupsOfStrongSemilatticeOfSemigroups[102X 8.3-6 
+  [2XSemigroupsTestAll[102X 2.4-4 
+  [2XSemigroupsTestExtreme[102X 2.4-3 
+  [2XSemigroupsTestInstall[102X 2.4-1 
+  [2XSemigroupsTestStandard[102X 2.4-2 
+  [2XSemilatticeOfStrongSemilatticeOfSemigroups[102X 8.3-5 
+  [2XSimplifiedFpSemigroup[102X 15.8-2 
+  [2XSimplifyFpSemigroup[102X 15.8-1 
+  [2XSingularApsisMonoid[102X 7.3-11 
+  [2XSingularBrauerMonoid[102X 7.3-2 
+  [2XSingularCrossedApsisMonoid[102X 7.3-11 
+  [2XSingularDualSymmetricInverseMonoid[102X 7.3-7 
+  [2XSingularFactorisableDualSymmetricInverseMonoid[102X 7.3-8 
+  [2XSingularJonesMonoid[102X 7.3-3 
+  [2XSingularModularPartitionMonoid[102X 7.3-10 
+  [2XSingularOrderEndomorphisms[102X 7.1-5 
+  [2XSingularPartitionMonoid[102X 7.3-1 
+  [2XSingularPlanarModularPartitionMonoid[102X 7.3-10 
+  [2XSingularPlanarPartitionMonoid[102X 7.3-9 
+  [2XSingularPlanarUniformBlockBijectionMonoid[102X 7.3-8 
+  [2XSingularTransformationMonoid[102X 7.1-4 
+  [2XSingularTransformationSemigroup[102X 7.1-4 
+  [2XSingularUniformBlockBijectionMonoid[102X 7.3-8 
+  [2XSLM[102X 7.5-2 
+  [2XSmallerDegreePartialPermRepresentation[102X 11.14-8 
+  [2XSmallestElementSemigroup[102X 11.11-8 
+  [2XSmallestIdempotentPower[102X 11.4-2 
+  [2XSmallestMultiplicationTable[102X 14.1-2 
+  [2XSmallGeneratingSet[102X 11.6-2 
+  [2XSmallInverseMonoidGeneratingSet[102X 11.6-2 
+  [2XSmallInverseSemigroupGeneratingSet[102X 11.6-2 
+  [2XSmallMonoidGeneratingSet[102X 11.6-2 
+  [2XSmallSemigroupGeneratingSet[102X 11.6-2 
+  [2XSource[102X, for a graph inverse semigroup element 7.10-2 
+  [2XSpecialLinearMonoid[102X 7.5-2 
   [2XSpectralRadius[102X 5.6-3 
+  [2XSSSE[102X 8.3-2 
+  [2XStandardiseWord[102X 15.1-3 
+  [2XStandardizeWord[102X 15.1-3 
   [2XStar[102X, for a bipartition 3.2-6 
       for a PBR 4.5-1 
   [2XStarOp[102X, for a bipartition 3.2-6 
       for a PBR 4.5-1 
-  [2XStructureDescription[102X, for an H-class 13.4-6 
-  [2XStructureDescriptionMaximalSubgroups[102X 13.4-4 
-  [2XStructureDescriptionSchutzenbergerGroups[102X 13.4-3 
+  [2XStringToWord[102X, for a string 15.1-4 
+  [2XStrongSemilatticeOfSemigroups[102X 8.3-1 
+  [2XStructureDescription[102X, for an H-class 10.4-6 
+  [2XStructureDescriptionMaximalSubgroups[102X 10.4-4 
+  [2XStructureDescriptionSchutzenbergerGroups[102X 10.4-3 
+  [2XStzAddGenerator[102X 15.5-3 
+  [2XStzAddRelation[102X 15.5-1 
+  [2XStzIsomorphism[102X 15.6-3 
+  [2XStzPresentation[102X 15.3-1 
+  [2XStzPrintGenerators[102X 15.4-3 
+  [2XStzPrintPresentation[102X 15.4-4 
+  [2XStzPrintRelation[102X 15.4-2 
+  [2XStzPrintRelations[102X 15.4-1 
+  [2XStzRemoveGenerator[102X 15.5-4 
+  [2XStzRemoveRelation[102X 15.5-2 
+  [2XStzSimplifyOnce[102X 15.7-1 
+  [2XStzSimplifyPresentation[102X 15.7-2 
+  [2XStzSubstituteRelation[102X 15.5-5 
   [2XSubsemigroupByProperty[102X, for a semigroup and function 6.4-2 
       for a semigroup, function, and limit on the size of the subsemigroup 6.4-2 
   [2XSuccessors[102X 5.3-5 
-  [2XSupersemigroupOfIdeal[102X 7.2-3 
-  [2XTemperleyLiebMonoid[102X 8.3-3 
-  [2XTexString[102X 19.2-1 
+  [2XSupersemigroupOfIdeal[102X 9.2-3 
+  [2XTemperleyLiebMonoid[102X 7.3-3 
+  [2XTexString[102X 16.2-1 
   [2XThresholdNTPMatrix[102X 5.1-12 
   [2XThresholdTropicalMatrix[102X 5.1-11 
-  [2XTikzLeftCayleyDigraph[102X 19.3-2 
-  [2XTikzRightCayleyDigraph[102X 19.3-2 
-  [2XTikzString[102X 19.3-1 
-  [2XTraceOfSemigroupCongruence[102X 17.7-5 
+  [2XTietzeBackwardMap[102X 15.6-2 
+  [2XTietzeForwardMap[102X 15.6-1 
+  [2XTikzLeftCayleyDigraph[102X 16.3-2 
+  [2XTikzRightCayleyDigraph[102X 16.3-2 
+  [2XTikzString[102X 16.3-1 
+  [2XTraceOfSemigroupCongruence[102X 13.7-5 
   [2XTransposedMatImmutable[102X, for a matrix over finite field 5.4-8 
-  [2XTriangularBooleanMatMonoid[102X 8.6-6 
-  [2XTrivialSemigroup[102X 9.1-1 
-  [2XUnderlyingSemigroupOfCongruencePoset[102X 17.4-8 
-  [2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X 14.7-4 
-  [2XUniformBlockBijectionMonoid[102X 8.3-8 
-  [2XUnitriangularBooleanMatMonoid[102X 8.6-6 
+  [2XTriangularBooleanMatMonoid[102X 7.6-6 
+  [2XTrivialSemigroup[102X 7.8-1 
+  [2XUnderlyingSemigroupOfCongruencePoset[102X 13.4-8 
+  [2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X 11.7-4 
+  [2XUniformBlockBijectionMonoid[102X 7.3-8 
+  [2XUnitriangularBooleanMatMonoid[102X 7.6-6 
   [2XUniversalPBR[102X 4.2-5 
-  [2XUniversalSemigroupCongruence[102X 17.9-3 
+  [2XUniversalSemigroupCongruence[102X 13.10-3 
+  [2XUnreducedFpSemigroup[102X, for a presentation 15.3-5 
+      for a semigroup 15.8-3 
   [2XUnweightedPrecedenceDigraph[102X 5.6-4 
-  [2XVagnerPrestonRepresentation[102X 16.1-9 
-  [2XWreathProduct[102X 6.4-5 
-  [2XWriteGenerators[102X 20.1-2 
-  [2XWriteMultiplicationTable[102X 20.2-2 
-  [2XZeroSemigroup[102X 9.1-4 
+  [2XVagnerPrestonRepresentation[102X 11.14-9 
+  [2XVerticesOfGraphInverseSemigroup[102X 7.10-8 
+  [2XWordToString[102X, for a string and a list 15.1-1 
+  [2XWreathProduct[102X 8.1-2 
+  [2XWriteGenerators[102X 17.1-2 
+  [2XWriteMultiplicationTable[102X 17.2-2 
+  [2XZeroSemigroup[102X 7.8-4 
   
   
   -------------------------------------------------------

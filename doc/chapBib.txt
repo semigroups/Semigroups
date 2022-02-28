@@ -2,13 +2,12 @@
   
   [1XReferences[101X
   
-  [[20XABMN10[120X]  [16XAraújo,  J.,  Bünau,  P.  V.,  Mitchell, J. D. and Neunhöffer, M.[116X,
-  [17XComputing  automorphisms  of  semigroups[117X,  [18XJ.  Symbolic  Computation[118X,  [19X45[119X, 3
-  (2010), 373–392.
-  
   [[20XABMS15[120X]  [16XAraújo, J., Bentz, W., Mitchell, J. D. and Schneider, C.[116X, [17XThe rank
   of the semigroup of transformations stabilising a partition of a finite set[117X,
   [18XMath. Proc. Camb. Phil. Soc.[118X, [19X159[119X (2015), 339 - 353.
+  
+  [[20XAMM21[120X]  [16XAnagnostopoulou-Merkouri,  M.  and  Mitchell,  J. D.[116X, [17XProperties of
+  Congruence Lattices of Finite Graph Inverse Semigroups[117X (2021).
   
   [[20XAui12[120X]  [16XAuinger,  K.[116X,  [17XKrohn–Rhodes  complexity  of Brauer type semigroups[117X,
   [18XPortugaliae Mathematica[118X, [19X69[119X, 4 (2012), 341–360.
@@ -81,12 +80,21 @@
   [[20XMM16[120X]  [16XMesyan,  Z.  and  Mitchell,  J. D.[116X, [17XThe structure of a graph inverse
   semigroup[117X, [18XSemigroup Forum[118X, Springer Nature, [19X93[119X, 1 (2016), 111–130.
   
+  [[20XRR10[120X] [16XRadoszewski, J. and Rytter, W.[116X ([1m[31mvan Leeuwen, J., Muscholl, A., Peleg,
+  D.,  Pokorný,  J.  and Rumpe, B.[15X, Eds.), [17XEfficient Testing of Equivalence of
+  Words  in  a  Free Idempotent Semigroup[117X, [18XSOFSEM 2010: Theory and Practice of
+  Computer  Science[118X,  Springer  Berlin  Heidelberg, Berlin, Heidelberg (2010),
+  663--671.
+  
   [[20XSch92[120X]  [16XSchein,  B.  M.[116X,  [17XThe minimal degree of a finite inverse semigroup[117X,
   [18XTrans. Amer. Math. Soc.[118X, [19X333[119X, 2 (1992), 877–888.
   
   [[20XSim78[120X]  [16XSimon,  I.[116X, [17XLimited Subsets of a Free Monoid[117X, in Proceedings of the
   19th  Annual  Symposium  on  Foundations  of Computer Science, IEEE Computer
   Society, SFCS '78, Washington, DC, USA (1978), 143–150.
+  
+  [[20XWan19[120X]  [16XWang,  Z.-P.[116X,  [17XCongruences  on Graph Inverse Semigroups[117X, [18XJournal of
+  Algebra[118X, Elsevier {BV}, [19X534[119X (2019), 51--64.
   
   
   

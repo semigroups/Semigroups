@@ -9,54 +9,54 @@
   whose  union is [10XX[110X. A partition of [10XX[110X is the collection of equivalence classes
   of an equivalence relation on [10XX[110X, and vice versa.[133X
   
-  [33X[0;0YLet [22Xn∈[122X[13XN[113X, let [13Xn[113X[22X= {1, 2, ..., n}[122X, and let [22X-[122X[13Xn[113X[22X= {-1, -2, ..., -n}[122X.[133X
+  [33X[0;0YLet [22Xn∈[122X [13XN[113X, let [13Xn[113X[22X= {1, 2, ..., n}[122X, and let [22X-[122X [13Xn[113X[22X= {-1, -2, ..., -n}[122X.[133X
   
-  [33X[0;0YThe [13Xpartition monoid[113X of degree [10Xn[110X is the set of all partitions of [13Xn[113X[22X∪[122X-[13Xn[113X with a
-  multiplication  we  describe below. To avoid conflict with other uses of the
+  [33X[0;0YThe  [13Xpartition monoid[113X of degree [10Xn[110X is the set of all partitions of [13Xn[113X[22X∪[122X- [13Xn[113X with
+  a multiplication we describe below. To avoid conflict with other uses of the
   word  "partition"  in [5XGAP[105X, and to reflect their definition, we have opted to
   refer  to  the elements of the partition monoid as [13Xbipartitions[113X of degree [10Xn[110X;
   we will do so from this point on.[133X
   
   [33X[0;0YLet  [10Xx[110X  be any bipartition of degree [10Xn[110X. Then [10Xx[110X is a set of pairwise disjoint
-  non-empty  subsets of [13Xn[113X[22X∪[122X-[13Xn[113X whose union is [13Xn[113X[22X∪[122X-[13Xn[113X; these subsets are called the
-  [13Xblocks[113X  of  [10Xx[110X.  A  block  containing  elements  of both [13Xn[113X and -[13Xn[113X is called a
-  [13Xtransverse  block[113X. If [10Xi[110X, [10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X belong to the same block of a bipartition [10Xx[110X,
-  then we write ([10Xi[110X, [10Xj[110X)[22X∈[122X[10Xx[110X.[133X
+  non-empty  subsets  of  [13Xn[113X[22X∪[122X- [13Xn[113X whose union is [13Xn[113X[22X∪[122X- [13Xn[113X; these subsets are called
+  the  [13Xblocks[113X  of [10Xx[110X. A block containing elements of both [13Xn[113X and - [13Xn[113X is called a
+  [13Xtransverse  block[113X.  If [10Xi[110X, [10Xj[110X[22X∈[122X [13Xn[113X[22X∪[122X- [13Xn[113X belong to the same block of a bipartition
+  [10Xx[110X, then we write ( [10Xi[110X, [10Xj[110X)[22X∈[122X [10Xx[110X.[133X
   
-  [33X[0;0YLet  [10Xx[110X  and [10Xy[110X be bipartitions of degree [10Xn[110X. Their product [10Xx[110X[10Xy[110X can be described
+  [33X[0;0YLet  [10Xx[110X and [10Xy[110X be bipartitions of degree [10Xn[110X. Their product [10Xx[110X [10Xy[110X can be described
   as  follows.  Define [13Xn[113X'[22X= {1', 2', ..., n'}[122X. From [10Xx[110X, create a partition [10Xx[110X' of
-  the  set  [13Xn[113X[22X∪[122X[13Xn[113X'  by  replacing  each negative point -[10Xi[110X in a block of [10Xx[110X by the
-  point  [10Xi[110X',  and  create  from [10Xy[110X a partition [10Xy[110X' of the set [13Xn[113X'[22X∪[122X-[13Xn[113X by replacing
+  the  set  [13Xn[113X[22X∪[122X  [13Xn[113X' by replacing each negative point - [10Xi[110X in a block of [10Xx[110X by the
+  point  [10Xi[110X',  and  create from [10Xy[110X a partition [10Xy[110X' of the set [13Xn[113X'[22X∪[122X- [13Xn[113X by replacing
   each  positive  point  [10Xi[110X  in  a  block  of  [10Xy[110X by the point [10Xi[110X'. Then define a
-  relation  on  the set [13Xn[113X[22X∪[122X[13Xn[113X'[22X∪[122X-[13Xn[113X, where [10Xi[110X and [10Xj[110X are related if they are related
+  relation on the set [13Xn[113X[22X∪[122X [13Xn[113X'[22X∪[122X- [13Xn[113X, where [10Xi[110X and [10Xj[110X are related if they are related
   in  either  [10Xx[110X'  or [10Xy[110X', and let [10Xp[110X be the transitive closure of this relation.
-  Finally,  define  [10Xx[110X[10Xy[110X  to  be  the  bipartition  of  degree  [10Xn[110X defined by the
-  restriction of the equivalence relation [10Xp[110X to the set [13Xn[113X[22X∪[122X-[13Xn[113X.[133X
+  Finally,  define  [10Xx[110X  [10Xy[110X  to  be  the  bipartition  of degree [10Xn[110X defined by the
+  restriction of the equivalence relation [10Xp[110X to the set [13Xn[113X[22X∪[122X- [13Xn[113X.[133X
   
-  [33X[0;0YEquivalently, the product [10Xx[110X[10Xy[110X is defined to be the bipartition where [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X
-  (we  assume without loss of generality that [10Xi[110X[22X≥[122X[10Xj[110X) belong to the same block of
-  [10Xx[110X[10Xy[110X if either:[133X
+  [33X[0;0YEquivalently,  the  product [10Xx[110X [10Xy[110X is defined to be the bipartition where [10Xi[110X, [10Xj[110X[22X∈[122X
+  [13Xn[113X[22X∪[122X-  [13Xn[113X  (we  assume without loss of generality that [10Xi[110X[22X≥[122X [10Xj[110X) belong to the same
+  block of [10Xx[110X [10Xy[110X if either:[133X
   
-  [30X    [33X[0;6Y[10Xi[110X[10X=[110X[10Xj[110X,[133X
+  [30X    [33X[0;6Y[10Xi[110X[10X=[110X [10Xj[110X,[133X
   
-  [30X    [33X[0;6Y[10Xi[110X, [10Xj[110X [22X∈[122X [13Xn[113X and [22X([122X[10Xi[110X,[10Xj[110X[22X)[122X[22X∈[122X [10Xx[110X, or[133X
+  [30X    [33X[0;6Y[10Xi[110X, [10Xj[110X [22X∈[122X [13Xn[113X and [22X([122X [10Xi[110X, [10Xj[110X[22X)[122X[22X∈[122X [10Xx[110X, or[133X
   
-  [30X    [33X[0;6Y[10Xi[110X, [10Xj[110X [22X∈[122X -[13Xn[113X and [22X([122X[10Xi[110X,[10Xj[110X[22X)[122X[22X∈[122X [10Xy[110X;[133X
+  [30X    [33X[0;6Y[10Xi[110X, [10Xj[110X [22X∈[122X - [13Xn[113X and [22X([122X [10Xi[110X, [10Xj[110X[22X)[122X[22X∈[122X [10Xy[110X;[133X
   
-  [33X[0;0Yor  there  exists  [22Xr∈[122X[13XN[113X  and  [10Xk(1),k(2)[110X,[22X...[122X,[10Xk(r)[110X[22X∈[122X[13Xn[113X , and one of the following
+  [33X[0;0Yor  there  exists  [22Xr∈[122X  [13XN[113X and [10Xk(1),k(2)[110X,[22X...[122X,[10Xk(r)[110X[22X∈[122X[13Xn[113X , and one of the following
   holds:[133X
   
-  [30X    [33X[0;6Y[10Xr=2s-1[110X for some [10Xs[110X[22X≥[122X[10X1[110X , [10Xi[110X[22X∈[122X[13Xn[113X, [10Xj[110X[22X∈[122X -[13Xn[113X and[133X
+  [30X    [33X[0;6Y[10Xr=2s-1[110X for some [10Xs[110X[22X≥[122X[10X1[110X , [10Xi[110X[22X∈[122X [13Xn[113X, [10Xj[110X[22X∈[122X - [13Xn[113X and[133X
   
         [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,        [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,        [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X,        [22X...[122X,
         [10X(-k(2s-2),-k(2s-1))[110X[22X∈[122X[10Xx[110X, [10X(k(2s-1),j)[110X[22X∈[122X[10Xy[110X;[133X
   
-  [30X    [33X[0;6Y[10Xr=2s[110X for some [10Xs[110X[22X≥[122X[10X1[110X , and either [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X, and[133X
+  [30X    [33X[0;6Y[10Xr=2s[110X for some [10Xs[110X[22X≥[122X[10X1[110X , and either [10Xi[110X, [10Xj[110X[22X∈[122X [13Xn[113X, and[133X
   
         [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,  [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,  [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X, [22X...[122X, [10X(k(2s-1),k(2s))[110X[22X∈[122X[10Xx[110X,
         [10X(-k(2s),j)[110X[22X∈[122X[10Xy[110X,[133X
   
-        [33X[0;6Yor [10Xi[110X,[10Xj[110X[22X∈[122X-[13Xn[113X, and[133X
+        [33X[0;6Yor [10Xi[110X, [10Xj[110X[22X∈[122X- [13Xn[113X, and[133X
   
         [33X[0;6Y[10X(i,k(1))[110X[22X∈[122X[10Xy[110X,  [10X(-k(1),-k(2))[110X[22X∈[122X[10Xx[110X, [10X(k(2),k(3))[110X[22X∈[122X[10Xy[110X, [22X...[122X, [10X(-k(2s-1),-k(2s))[110X[22X∈[122X[10Xy[110X,
         [10X(k(2s),j)[110X[22X∈[122X[10Xx[110X.[133X
@@ -64,14 +64,14 @@
   [33X[0;0YThis multiplication can be shown to be associative, and so the collection of
   all  bipartitions of any particular degree is a monoid; the identity element
   of  the  partition  monoid  of  degree [22Xn[122X is the bipartition {{[22Xi[122X,-[22Xi[122X}:[22Xi ∈[122X[13Xn[113X}. A
-  bipartition  is  a  unit if and only if each block is of the form [22X{[122X[10Xi[110X,-[10Xj[110X[22X}[122X for
-  some  [10Xi[110X,  [10Xj[110X[22X∈[122X[13Xn[113X. Hence the group of units is isomorphic to the symmetric group
+  bipartition  is a unit if and only if each block is of the form [22X{[122X [10Xi[110X,- [10Xj[110X[22X}[122X for
+  some  [10Xi[110X, [10Xj[110X[22X∈[122X [13Xn[113X. Hence the group of units is isomorphic to the symmetric group
   on [13Xn[113X.[133X
   
   [33X[0;0YLet [10Xx[110X be a bipartition of degree [10Xn[110X. Then we define [10Xx[110X[22X^*[122X to be the bipartition
-  obtained from [10Xx[110X by replacing [10Xi[110X by -[10Xi[110X and -[10Xi[110X by [10Xi[110X in every block of [10Xx[110X for all
-  [10Xi[110X[22X∈[122X[13Xn[113X.  It  is routine to verify that if [10Xx[110X and [10Xy[110X are arbitrary bipartitions of
-  equal degree, then[133X
+  obtained  from  [10Xx[110X by replacing [10Xi[110X by - [10Xi[110X and - [10Xi[110X by [10Xi[110X in every block of [10Xx[110X for
+  all [10Xi[110X[22X∈[122X [13Xn[113X. It is routine to verify that if [10Xx[110X and [10Xy[110X are arbitrary bipartitions
+  of equal degree, then[133X
   
   [33X[0;0Y[10X(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.[110X[133X
   
@@ -86,7 +86,7 @@
   
   [33X[0;0YFrom  a  graphical  perspective,  as on Page 873 in [HR05], a bipartition of
   degree  [10Xn[110X  is  planar  if  it  can  be  represented as a graph without edges
-  crossing  inside of the rectangle formed by its vertices [13Xn[113X[22X∪[122X-[13Xn[113X. Similarly, as
+  crossing inside of the rectangle formed by its vertices [13Xn[113X[22X∪[122X- [13Xn[113X. Similarly, as
   shown in Figure 2 in [Aui12], a bipartition of degree [10Xn[110X is annular if it can
   be represented as a graph without edges crossing inside an annulus.[133X
   
@@ -446,9 +446,8 @@
     [4X[28X [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], [128X[104X
     [4X[28X [ -3 ], [ -4 ], [ -10 ], [ -11 ]>[128X[104X
     [4X[25Xgap>[125X [27XAsBlockBijection(x, 10);[127X[104X
-    [4X[28XError, Semigroups: AsBlockBijection (for a partial perm and pos int):[128X[104X
-    [4X[28Xthe 2nd argument must be strictly greater than the maximum of the[128X[104X
-    [4X[28Xdegree and codegree of the 1st argument,[128X[104X
+    [4X[28XError, the 2nd argument (a pos. int.) is less than or equal to the max\[128X[104X
+    [4X[28Ximum of the degree and codegree of the 1st argument (a partial perm)[128X[104X
     [4X[25Xgap>[125X [27XAsBlockBijection(x, 11);[127X[104X
     [4X[28X<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [128X[104X
     [4X[28X [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], [128X[104X
@@ -484,8 +483,7 @@
     [4X[25X>[125X [27X                     [3, 6, 7, -1, -2], [9, -4, -6, -9],[127X[104X
     [4X[25X>[125X [27X                     [-3, -5], [-7, -8], [-10]]);;[127X[104X
     [4X[25Xgap>[125X [27XAsTransformation(x);[127X[104X
-    [4X[28XError, Semigroups: AsTransformation (for a bipartition):[128X[104X
-    [4X[28Xthe argument does not define a transformation,[128X[104X
+    [4X[28XError, the argument (a bipartition) does not define a transformation[128X[104X
   [4X[32X[104X
   
   [1X3.3-4 AsPartialPerm[101X
@@ -513,8 +511,7 @@
     [4X[25Xgap>[125X [27XIsPartialPermBipartition(x);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XAsPartialPerm(x);[127X[104X
-    [4X[28XError, Semigroups: AsPartialPerm (for a bipartition):[128X[104X
-    [4X[28Xthe argument does not define a partial perm,[128X[104X
+    [4X[28XError, the argument (a bipartition) does not define a partial perm[128X[104X
   [4X[32X[104X
   
   [1X3.3-5 AsPermutation[101X
@@ -829,7 +826,7 @@
   number of blocks in [3Xblocks[103X or [3Xf[103X, respectively.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := BlocksNC([[-1, -2, -3, -4], [-5], [6]]);[127X[104X
+    [4X[25Xgap>[125X [27Xblocks := BLOCKS_NC([[-1, -2, -3, -4], [-5], [6]]);[127X[104X
     [4X[28X<blocks: [ 1, 2, 3, 4 ], [ 5 ], [ 6* ]>[128X[104X
     [4X[25Xgap>[125X [27XNrBlocks(blocks);[127X[104X
     [4X[28X3[128X[104X
@@ -1035,7 +1032,7 @@
   degree of [3Xblocks[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XB := BlocksNC([[-1, -3], [2, 4, 7], [5, 6]]);[127X[104X
+    [4X[25Xgap>[125X [27XB := BLOCKS_NC([[-1, -3], [2, 4, 7], [5, 6]]);[127X[104X
     [4X[28X<blocks: [ 1, 3 ], [ 2*, 4*, 7* ], [ 5*, 6* ]>[128X[104X
     [4X[25Xgap>[125X [27XCanonicalBlocks(B);[127X[104X
     [4X[28X<blocks: [ 1*, 2* ], [ 3*, 4*, 5* ], [ 6, 7 ]>[128X[104X
@@ -1061,15 +1058,15 @@
   operations   for  blocks  are  [2XExtRepOfObj[102X  ([14X3.6-3[114X),  [2XRankOfBlocks[102X  ([14X3.6-4[114X),
   [2XDegreeOfBlocks[102X ([14X3.6-5[114X), [2XOnRightBlocks[102X ([14X3.7-1[114X), and [2XOnLeftBlocks[102X ([14X3.7-2[114X).[133X
   
-  [1X3.6-2 BlocksNC[101X
+  [1X3.6-2 BLOCKS_NC[101X
   
-  [33X[1;0Y[29X[2XBlocksNC[102X( [3Xclasses[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBLOCKS_NC[102X( [3Xclasses[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA blocks.[133X
   
   [33X[0;0YThis  function makes it possible to create a [5XGAP[105X object corresponding to the
   left or right blocks of a bipartition without reference to any bipartitions.[133X
   
-  [33X[0;0Y[10XBlocksNC[110X  returns  the blocks with equivalence classes [3Xclasses[103X, which should
+  [33X[0;0Y[10XBLOCKS_NC[110X  returns the blocks with equivalence classes [3Xclasses[103X, which should
   be  a list of duplicate-free lists consisting solely of positive or negative
   integers,  where  the  union of the absolute values of the lists is [10X[1 .. n][110X
   for some [10Xn[110X. The blocks with positive entries correspond to transverse blocks
@@ -1079,7 +1076,7 @@
   be used with caution.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XBlocksNC([[1], [2], [-3, -6], [-4, -5]]);[127X[104X
+    [4X[25Xgap>[125X [27XBLOCKS_NC([[1], [2], [-3, -6], [-4, -5]]);[127X[104X
     [4X[28X<blocks: [ 1* ], [ 2* ], [ 3, 6 ], [ 4, 5 ]>[128X[104X
   [4X[32X[104X
   
@@ -1093,7 +1090,7 @@
   of duplicate-free lists.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := BlocksNC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xblocks := BLOCKS_NC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;[127X[104X
     [4X[25Xgap>[125X [27XExtRepOfObj(blocks);[127X[104X
     [4X[28X[ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ][128X[104X
   [4X[32X[104X
@@ -1111,7 +1108,7 @@
   [33X[0;0Y[10XNrTransverseBlocks[110X is a synonym of [10XRankOfBlocks[110X in this context.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := BlocksNC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],[127X[104X
+    [4X[25Xgap>[125X [27Xblocks := BLOCKS_NC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],[127X[104X
     [4X[25X>[125X [27X                       [8], [9], [-11]]);;[127X[104X
     [4X[25Xgap>[125X [27XRankOfBlocks(blocks);[127X[104X
     [4X[28X4[128X[104X
@@ -1127,7 +1124,7 @@
   value of every element.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := BlocksNC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],[127X[104X
+    [4X[25Xgap>[125X [27Xblocks := BLOCKS_NC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],[127X[104X
     [4X[25X>[125X [27X                       [12]]);;[127X[104X
     [4X[25Xgap>[125X [27XDegreeOfBlocks(blocks);[127X[104X
     [4X[28X12[128X[104X

@@ -5,8 +5,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 16: 
-    Properties and attributes specific to inverse semigroups
+<title>GAP (Semigroups) - Chapter 16: 
+    Visualising semigroups and elements
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -17,774 +17,342 @@
 <body class="chap16"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap16_mj.html">[MathJax on]</a></p>
-<p><a id="X796DBFAB84B62673" name="X796DBFAB84B62673"></a></p>
-<div class="ChapSects"><a href="chap16.html#X796DBFAB84B62673">16 <span class="Heading">
-    Properties and attributes specific to inverse semigroups
+<p><a id="X80E82C6785300A86" name="X80E82C6785300A86"></a></p>
+<div class="ChapSects"><a href="chap16.html#X80E82C6785300A86">16 <span class="Heading">
+    Visualising semigroups and elements
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X8670EB0B7B1974AC">16.1 <span class="Heading">
-      Attributes specific to inverse semigroups
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X82E16CAB874A1D84">16.1 <span class="Heading">
+      <code class="code">dot</code> pictures
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7A75A6C486F1DC71">16.1-1 NaturalLeqInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X85CDF93C805AF82A">16.1-2 JoinIrreducibleDClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X801CC67E80898608">16.1-3 MajorantClosure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X84A3DB79816374DB">16.1-4 Minorants</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X80C0C6C37C4A2ABD">16.1-5 PrimitiveIdempotents</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7B5D89A585F8B5EA">16.1-6 RightCosetsOfInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X83298E9E86A343FF">16.1-7 SameMinorantsSubgroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X786D4E397EA4445D">16.1-8 SmallerDegreePartialPermRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7BC49C3487384364">16.1-9 VagnerPrestonRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7C83DF9A7973AF6D">16.1-10 CharacterTableOfInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X8383E6747D02D975">16.1-11 EUnitaryInverseCover</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7F51F3CD7E13D199">16.1-1 DotString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X853B81B385E2CF36">16.1-2 DotString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7C22E8D17D6C23EA">16.1-3 DotSemilatticeOfIdempotents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7E38369D7E8BEA4C">16.1-4 DotLeftCayleyDigraph</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X7BA0CE3E82ABEE4E">16.2 <span class="Heading">
-      Properties of inverse semigroups
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X83152CA78114E2BD">16.2 <span class="Heading">
+      <code class="code">tex</code> output
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X81DE11987BB81017">16.2-1 IsCliffordSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7EFDBA687DCDA6FA">16.2-2 IsBrandtSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X843EA0E37C968BBF">16.2-3 IsEUnitaryInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X86F942F48158DAC3">16.2-4 IsFInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X864F1906858BB8CF">16.2-5 IsFInverseMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X8440E22681BD1EE6">16.2-6 IsFactorisableInverseMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X817F9F3984FC842C">16.2-7 IsJoinIrreducible</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X81E6D24F852A7937">16.2-8 IsMajorantlyClosed</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7D2641AD830DEC1C">16.2-9 IsMonogenicInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7EDFA6CA86645DBE">16.2-10 IsMonogenicInverseMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X80FBF08180F7F181">16.2-1 TexString</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X7BDDE0FE80D09887">16.3 <span class="Heading">
+      <code class="code">tikz</code> pictures
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7F0971F678B4FC66">16.3-1 TikzString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X81EF7F777EEF69C1">16.3-2 TikzLeftCayleyDigraph</a></span>
 </div></div>
 </div>
 
 <h3>16 <span class="Heading">
-    Properties and attributes specific to inverse semigroups
+    Visualising semigroups and elements
   </span></h3>
 
-<p>In this chapter we describe the attributes which are specific to inverse semigroups that can be determined using <strong class="pkg">Semigroups</strong>.</p>
+<p>There are two operations <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) and opening the resulting pdf file.</p>
 
-<p>The functions</p>
-
-
-<ul>
-<li><p><code class="func">IsJoinIrreducible</code> (<a href="chap16.html#X817F9F3984FC842C"><span class="RefLink">16.2-7</span></a>)</p>
-
-</li>
-<li><p><code class="func">IsMajorantlyClosed</code> (<a href="chap16.html#X81E6D24F852A7937"><span class="RefLink">16.2-8</span></a>)</p>
-
-</li>
-<li><p><code class="func">JoinIrreducibleDClasses</code> (<a href="chap16.html#X85CDF93C805AF82A"><span class="RefLink">16.1-2</span></a>)</p>
-
-</li>
-<li><p><code class="func">MajorantClosure</code> (<a href="chap16.html#X801CC67E80898608"><span class="RefLink">16.1-3</span></a>)</p>
-
-</li>
-<li><p><code class="func">Minorants</code> (<a href="chap16.html#X84A3DB79816374DB"><span class="RefLink">16.1-4</span></a>)</p>
-
-</li>
-<li><p><code class="func">RightCosetsOfInverseSemigroup</code> (<a href="chap16.html#X7B5D89A585F8B5EA"><span class="RefLink">16.1-6</span></a>)</p>
-
-</li>
-<li><p><code class="func">SmallerDegreePartialPermRepresentation</code> (<a href="chap16.html#X786D4E397EA4445D"><span class="RefLink">16.1-8</span></a>)</p>
-
-</li>
-<li><p><code class="func">VagnerPrestonRepresentation</code> (<a href="chap16.html#X7BC49C3487384364"><span class="RefLink">16.1-9</span></a>)</p>
-
-</li>
-</ul>
-<p>were written by Wilf A. Wilson and Robert Hancock.</p>
-
-<p>The function <code class="func">CharacterTableOfInverseSemigroup</code> (<a href="chap16.html#X7C83DF9A7973AF6D"><span class="RefLink">16.1-10</span></a>) was written by Jhevon Smith and Ben Steinberg.</p>
-
-<p><a id="X8670EB0B7B1974AC" name="X8670EB0B7B1974AC"></a></p>
+<p><a id="X82E16CAB874A1D84" name="X82E16CAB874A1D84"></a></p>
 
 <h4>16.1 <span class="Heading">
-      Attributes specific to inverse semigroups
+      <code class="code">dot</code> pictures
     </span></h4>
 
-<p><a id="X7A75A6C486F1DC71" name="X7A75A6C486F1DC71"></a></p>
+<p>In this section, we describe the operations in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating pictures in <code class="code">dot</code> format.</p>
 
-<h5>16.1-1 NaturalLeqInverseSemigroup</h5>
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalLeqInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An function.</p>
+<p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
 
-<p><code class="code">NaturalLeqInverseSemigroup</code> returns a function that, when given two elements <code class="code">x, y</code> of the inverse semigroup <var class="Arg">S</var>, returns <code class="keyw">true</code> if <code class="code">x</code> is less than or equal to <code class="code">y</code> in the natural partial order on <var class="Arg">S</var>.</p>
+<h5>16.1-1 DotString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the <em>D</em>-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each <em>D</em>-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
+
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+
+<p>The <em>D</em>-classes are shown as eggbox diagrams with <em>L</em>-classes as rows and <em>R</em>-classes as columns; group <em>H</em>-classes are shaded gray and contain an asterisk. The <em>L</em>-classes and <em>R</em>-classes within a <em>D</em>-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). The <em>D</em>-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one <em>D</em>-class to another indicates that the higher <em>D</em>-class is greater than the lower one in the <em>D</em>-order on <var class="Arg">S</var>.</p>
+
+<p>If the optional second argument <var class="Arg">options</var> is present, it can be used to specify some options for output.</p>
+
+
+<dl>
+<dt><strong class="Mark">number</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.number</code> is <code class="keyw">false</code>, then the <em>D</em>-classes in the diagram are not numbered according to their index in the list of <em>D</em>-classes of <var class="Arg">S</var>. The default value for this option is <code class="keyw">true</code>.</p>
+
+</dd>
+<dt><strong class="Mark">maximal</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.maximal</code> is <code class="keyw">true</code>, then the structure description of the group <em>H</em>-classes is displayed; see <code class="func">StructureDescription</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>). Setting this attribute to <code class="keyw">true</code> can adversely affect the performance of <code class="code">DotString</code>. The default value for this option is <code class="keyw">false</code>.</p>
+
+</dd>
+<dt><strong class="Mark">normal</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">false</code>, then the <em>L</em>- and <em>R</em>-classes within each <em>D</em>-class arranged to correspond to <code class="func">PrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). If <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">true</code>, they are instead arranged to correspond to <code class="func">NormalizedPrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). Setting this attribute to <code class="keyw">false</code> may improve the performance of <code class="code">DotString</code> as it avoids the computation of <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap10.html#X7EBB4F1981CC2AE9"><span class="RefLink">10.4-7</span></a>). The default value for this option is <code class="keyw">true</code>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(3);</span>
+&lt;full transformation monoid of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotString(S);</span>
+"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=blac\
+k,arrowhead=none]\n1 [shape=box style=invisible label=&lt;\n&lt;TABLE BORDE\
+R=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+1\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BORDER = \"0\" &gt; 1&lt;/TD&gt;&lt;/TR&gt;\
+&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n2 [shape=box style\
+=invisible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\
+\"10\" CELLSPACING=\"0\" PORT=\"2\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"\
+3\" BORDER = \"0\" &gt; 2&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BG\
+COLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLO\
+R=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/T\
+D&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;T\
+D BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n3 [shape=box style=invis\
+ible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
+ CELLSPACING=\"0\" PORT=\"3\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BO\
+RDER = \"0\" &gt; 3&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;\
+TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\
+\n&lt;/TABLE&gt;&gt;];\n1 -&gt; 2\n2 -&gt; 3\n }"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FileString("t3.dot", DotString(S));</span>
+1040</pre></div>
+
+<p><a id="X853B81B385E2CF36" name="X853B81B385E2CF36"></a></p>
+
+<h5>16.1-2 DotString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">digraph</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>If <var class="Arg">digraph</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">DotString</code> returns a graphical representation of <var class="Arg">digraph</var>. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
+
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+
+<p>See also <code class="func">DotLeftCayleyDigraph</code> (<a href="chap16.html#X7E38369D7E8BEA4C"><span class="RefLink">16.1-4</span></a>) and <code class="func">TikzLeftCayleyDigraph</code> (<a href="chap16.html#X81EF7F777EEF69C1"><span class="RefLink">16.3-2</span></a>).</p>
+
+<p><a id="X7C22E8D17D6C23EA" name="X7C22E8D17D6C23EA"></a></p>
+
+<h5>16.1-3 DotSemilatticeOfIdempotents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>). The idempotents are grouped by the <em>D</em>-class they belong to.</p>
+
+<p>The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(Transformation([1, 3, 4, 4]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([1, 4, 2, 4]));</span>
-&lt;transformation monoid of degree 4 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-6
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalPartialOrder(S);</span>
-[ [ 2, 5, 6 ], [ 6 ], [ 6 ], [ 6 ], [ 6 ], [  ] ]</pre></div>
-
-<p><a id="X85CDF93C805AF82A" name="X85CDF93C805AF82A"></a></p>
-
-<h5>16.1-2 JoinIrreducibleDClasses</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinIrreducibleDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of \(\mathscr{D}\)-classes.</p>
-
-<p><code class="code">JoinIrreducibleDClasses</code> returns a list of the join irreducible \(\mathscr{D}\)-classes of the inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var>.</p>
-
-<p>A <em>join irreducible \(\mathscr{D}\)-class</em> is a \(\mathscr{D}\)-class containing only join irreducible elements. See <code class="func">IsJoinIrreducible</code> (<a href="chap16.html#X817F9F3984FC842C"><span class="RefLink">16.2-7</span></a>). If a \(\mathscr{D}\)-class contains one join irreducible element, then all of the elements in the \(\mathscr{D}\)-class are join irreducible.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(3);</span>
-&lt;symmetric inverse monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinIrreducibleDClasses(S);</span>
-[ &lt;Green's D-class: &lt;identity partial perm on [ 2 ]&gt;&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1, 2, 4, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([0, 2])]);</span>
-&lt;inverse partial perm semigroup of rank 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinIrreducibleDClasses(T);</span>
-[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 1 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 2 ]&gt;&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSymmetricInverseSemigroup(3);</span>
-&lt;inverse block bijection monoid of degree 3 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinIrreducibleDClasses(D);</span>
-[ &lt;Green's D-class: &lt;block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]&gt;&gt; ]</pre></div>
-
-<p><a id="X801CC67E80898608" name="X801CC67E80898608"></a></p>
-
-<h5>16.1-3 MajorantClosure</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MajorantClosure</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A majorantly closed list of elements.</p>
-
-<p><code class="code">MajorantClosure</code> returns a majorantly closed subset of an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions, <var class="Arg">S</var>, as a list. See <code class="func">IsMajorantlyClosed</code> (<a href="chap16.html#X81E6D24F852A7937"><span class="RefLink">16.2-8</span></a>).</p>
-
-<p>The result contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var> (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>)). In particular, the result is a superset of <var class="Arg">T</var>.</p>
-
-<p>Note that <var class="Arg">T</var> can be a subset of <var class="Arg">S</var> or a subsemigroup of <var class="Arg">S</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(4);</span>
-&lt;symmetric inverse monoid of degree 4&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := [PartialPerm([1, 0, 3, 0])];</span>
-[ &lt;identity partial perm on [ 1, 3 ]&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := MajorantClosure(S, T);</span>
-[ &lt;identity partial perm on [ 1, 3 ]&gt;, 
-  &lt;identity partial perm on [ 1, 2, 3 ]&gt;, [2,4](1)(3), [4,2](1)(3), 
-  &lt;identity partial perm on [ 1, 3, 4 ]&gt;, 
-  &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2,4)(3) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, -3], [2, -4], [3, -2], [4, -1], [5, -5]])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := [Bipartition([[1, -2], [2, 3, 5, -1, -3, -5], [4, -4]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, -4], [2, 3, 5, -1, -3, -5], [4, -2]])];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(B, T);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MajorantClosure(B, T);</span>
-[ &lt;block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]&gt;, 
-  &lt;block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]&gt;, 
-  &lt;block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]&gt;
-    , &lt;block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], 
-     [ 4, -4 ]&gt;, 
-  &lt;block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], [ 3, -1 ], [ 4, -2 ]&gt;
-    , &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ], 
-     [ 4, -2 ]&gt;, &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], 
-     [ 4, -2 ], [ 5, -5 ]&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(B, last);</span>
-true
-</pre></div>
-
-<p><a id="X84A3DB79816374DB" name="X84A3DB79816374DB"></a></p>
-
-<h5>16.1-4 Minorants</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Minorants</code>( <var class="Arg">S</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A list of elements.</p>
-
-<p><code class="code">Minorants</code> takes an element <var class="Arg">f</var> from an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var>, and returns a list of the minorants of <var class="Arg">f</var> in <var class="Arg">S</var>.</p>
-
-<p>A <em>minorant</em> of <var class="Arg">f</var> is an element of <var class="Arg">S</var> which is strictly less than <var class="Arg">f</var> in the natural partial order of <var class="Arg">S</var>. See <code class="func">NaturalLeqPartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(3);</span>
-&lt;symmetric inverse monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Elements(S)[13];</span>
-[1,3](2)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Minorants(S, x);</span>
-[ &lt;empty partial perm&gt;, [1,3], &lt;identity partial perm on [ 2 ]&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([3, 2, 4, 0]);</span>
-[1,3,4](2)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(x);</span>
-&lt;inverse partial perm semigroup of rank 4 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Minorants(S, x);</span>
-[ &lt;identity partial perm on [ 2 ]&gt;, [1,3](2), [3,4](2) ]</pre></div>
-
-<p><a id="X80C0C6C37C4A2ABD" name="X80C0C6C37C4A2ABD"></a></p>
-
-<h5>16.1-5 PrimitiveIdempotents</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of elements.</p>
-
-<p>An idempotent in an inverse semigroup <var class="Arg">S</var> is <em>primitive</em> if it is non-zero and minimal with respect to the <code class="func">NaturalPartialOrder</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7EA51F087CF7621F"><span class="RefLink">Reference: NaturalPartialOrder</span></a>) on <var class="Arg">S</var>. <code class="code">PrimitiveIdempotents</code> returns the list of primitive idempotents in the inverse semigroup <var class="Arg">S</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1], [4]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3], [2, 1, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3], [3, 1, 2]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
-&lt;empty partial perm&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(PrimitiveIdempotents(S));</span>
-[ &lt;identity partial perm on [ 1 ]&gt;, &lt;identity partial perm on [ 2 ]&gt;, 
-  &lt;identity partial perm on [ 3 ]&gt;, &lt;identity partial perm on [ 4 ]&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);</span>
 &lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(PrimitiveIdempotents(S));</span>
-[ &lt;block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]&gt;, 
-  &lt;block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]&gt;, 
-  &lt;block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]&gt;, 
-  &lt;block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]&gt; ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotSemilatticeOfIdempotents(S);</span>
+"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \
+cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
+ cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\
+ -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\
+\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \
+6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
+ -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"</pre></div>
 
-<p><a id="X7B5D89A585F8B5EA" name="X7B5D89A585F8B5EA"></a></p>
+<p><a id="X7E38369D7E8BEA4C" name="X7E38369D7E8BEA4C"></a></p>
 
-<h5>16.1-6 RightCosetsOfInverseSemigroup</h5>
+<h5>16.1-4 DotLeftCayleyDigraph</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCosetsOfInverseSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A list of lists of elements.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotLeftCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotRightCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
 
-<p><code class="code">RightCosetsOfInverseSemigroup</code> takes a majorantly closed inverse subsemigroup <var class="Arg">T</var> of an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var>. See <code class="func">IsMajorantlyClosed</code> (<a href="chap16.html#X81E6D24F852A7937"><span class="RefLink">16.2-8</span></a>). The result is a list of the right cosets of <var class="Arg">T</var> in <var class="Arg">S</var>.</p>
+<p>If <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), then <code class="code">DotLeftCayleyDigraph</code> is simply short for <code class="code">DotString(LeftCayleyDigraph(<var class="Arg">S</var>))</code>.</p>
 
-<p>For <span class="SimpleMath">s ∈ S</span>, the right coset <span class="SimpleMath">overlineTs</span> is defined if and only if <span class="SimpleMath">ss^-1 ∈ T</span>, in which case it is defined to be the majorant closure of the set <span class="SimpleMath">Ts</span>. See <code class="func">MajorantClosure</code> (<a href="chap16.html#X801CC67E80898608"><span class="RefLink">16.1-3</span></a>). Distinct cosets are disjoint but do not necessarily partition <var class="Arg">S</var>.</p>
+<p><code class="code">DotRightCayleyDigraph</code> can be used to produce a dot string for the right Cayley graph of <var class="Arg">S</var>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(3);</span>
-&lt;symmetric inverse monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));</span>
-&lt;inverse partial perm monoid of rank 3 with 6 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(S, T);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RC := RightCosetsOfInverseSemigroup(S, T);</span>
-[ [ &lt;identity partial perm on [ 1 ]&gt;, 
-      &lt;identity partial perm on [ 1, 2 ]&gt;, [2,3](1), [3,2](1), 
-      &lt;identity partial perm on [ 1, 3 ]&gt;, 
-      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3) ], 
-  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], 
-  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ]</pre></div>
-
-<p><a id="X83298E9E86A343FF" name="X83298E9E86A343FF"></a></p>
-
-<h5>16.1-7 SameMinorantsSubgroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SameMinorantsSubgroup</code>( <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of elements of the group \(\mathscr{H}\)-class <var class="Arg">H</var>.</p>
-
-<p>Given a group \(\mathscr{H}\)-class <var class="Arg">H</var> in an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <code class="code">S</code>, <code class="code">SameMinorantsSubgroup</code> returns a list of the elements of <var class="Arg">H</var> which have the same strict minorants as the identity element of <var class="Arg">H</var>. A <em>strict minorant</em> of <code class="code">x</code> in <var class="Arg">H</var> is an element of <code class="code">S</code> which is less than <code class="code">x</code> (with respect to the natural partial order), but is not equal to <code class="code">x</code>.</p>
-
-<p>The returned list of elements of <var class="Arg">H</var> describe a subgroup of <var class="Arg">H</var>.</p>
+<p>See <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) for more details, and see also <code class="func">TikzLeftCayleyDigraph</code> (<a href="chap16.html#X81EF7F777EEF69C1"><span class="RefLink">16.3-2</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(3);</span>
-&lt;symmetric inverse monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := GroupHClass(DClass(S, PartialPerm([1, 2, 3])));</span>
-&lt;Green's H-class: &lt;identity partial perm on [ 1, 2, 3 ]&gt;&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(H);</span>
-[ &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2)(3), 
-  (1,2,3), (1,3,2), (1,3)(2) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SameMinorantsSubgroup(H);</span>
-[ &lt;identity partial perm on [ 1, 2, 3 ]&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4], [1, 2, 4, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1], [1]), PartialPerm([2], [2]));</span>
-&lt;inverse partial perm semigroup of rank 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(T);</span>
-[ &lt;empty partial perm&gt;, &lt;identity partial perm on [ 1 ]&gt;, 
-  &lt;identity partial perm on [ 2 ]&gt;, 
-  &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := GroupHClass(DClass(T, PartialPerm([1, 2, 3, 4])));</span>
-&lt;Green's H-class: &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(x);</span>
-[ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(SameMinorantsSubgroup(x));</span>
-[ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4) ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotLeftCayleyDigraph(Semigroup(IdentityTransformation));</span>
+"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n1 -&gt; 1\n}\
+\n"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotRightCayleyDigraph(Semigroup(IdentityTransformation));</span>
+"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n1 -&gt; 1\n}\
+\n"</pre></div>
 
-<p><a id="X786D4E397EA4445D" name="X786D4E397EA4445D"></a></p>
-
-<h5>16.1-8 SmallerDegreePartialPermRepresentation</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallerDegreePartialPermRepresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An isomorphism.</p>
-
-<p><code class="code">SmallerDegreePartialPermRepresentation</code> attempts to find an isomorphism from the inverse semigroup <var class="Arg">S</var> to an inverse semigroup of partial permutations with small degree. If <var class="Arg">S</var> is already a partial permutation semigroup, and the function cannot reduce the degree, the identity mapping is returned.</p>
-
-<p>There is no guarantee that the smallest possible degree representation is returned. For more information see <a href="chapBib.html#biBSchein1992aa">[Sch92]</a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));</span>
-&lt;partial perm group of rank 8 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
-[ &lt;identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]&gt;, 
-  (1,2)(3,4)(5,6)(7,8) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SmallerDegreePartialPermRepresentation(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso) = S;</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Range(iso);</span>
-&lt;partial perm group of rank 2 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(R);</span>
-[ &lt;identity partial perm on [ 1, 2 ]&gt;, (1,2) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));</span>
-&lt;inverse partial perm monoid of size 6721, rank 6721 with 3 
- generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreePartialPermRepresentation(T);</span>
-MappingByFunction( &lt;inverse partial perm monoid of size 6721, 
- rank 6721 with 3 generators&gt;, &lt;inverse partial perm semigroup of 
- rank 30 with 3 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
-
-<p><a id="X7BC49C3487384364" name="X7BC49C3487384364"></a></p>
-
-<h5>16.1-9 VagnerPrestonRepresentation</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VagnerPrestonRepresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An isomorphism to an inverse semigroup of partial permutations.</p>
-
-<p><code class="code">VagnerPrestonRepresentation</code> returns an isomorphism from an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>), to the inverse semigroup of partial permutations <var class="Arg">T</var> of degree equal to the size of <var class="Arg">S</var>, which is obtained using the Vagner-Preston Representation Theorem.</p>
-
-<p>More precisely, if <span class="SimpleMath">f:S-&gt; T</span> is the isomorphism returned by <code class="code">VagnerPrestonRepresentation(<var class="Arg">S</var>)</code> and <span class="SimpleMath">x</span> is in <var class="Arg">S</var>, then <span class="SimpleMath">f(x)</span> is the partial permutation with domain <span class="SimpleMath">Sx^-1</span> and range <span class="SimpleMath">Sx^-1x</span> defined by <span class="SimpleMath">f(x): sx^-1↦ sx^-1x</span>.</p>
-
-<p>In many cases, it is possible to find a smaller degree representation than that provided by <code class="code">VagnerPrestonRepresentation</code> using <code class="func">IsomorphismPartialPermSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7FE18EBE79B9C17C"><span class="RefLink">Reference: IsomorphismPartialPermSemigroup</span></a>) or <code class="func">SmallerDegreePartialPermRepresentation</code> (<a href="chap16.html#X786D4E397EA4445D"><span class="RefLink">16.1-8</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(2);</span>
-&lt;symmetric inverse monoid of degree 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-7
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := VagnerPrestonRepresentation(S);</span>
-MappingByFunction( &lt;symmetric inverse monoid of degree 2&gt;, 
-&lt;inverse partial perm monoid of rank 7 with 2 generators&gt;
- , function( x ) ... end, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RespectsMultiplication(iso);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(iso);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(S, x -&gt; (x ^ iso) ^ inv = x);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -4], [2, -1], [3, -5], [4], [5], [-2], [-3]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -5], [2, -1], [3, -3], [4], [5], [-2], [-4]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -2], [2, -4], [3, -5], [4, -1], [5, -3]]));</span>
-&lt;inverse bipartition semigroup of degree 5 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(V);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">VagnerPrestonRepresentation(V);</span>
-MappingByFunction( &lt;inverse bipartition semigroup of size 394, 
- degree 5 with 3 generators&gt;, &lt;inverse partial perm semigroup of 
- rank 394 with 5 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
-
-<p><a id="X7C83DF9A7973AF6D" name="X7C83DF9A7973AF6D"></a></p>
-
-<h5>16.1-10 CharacterTableOfInverseSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableOfInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: The character table of the inverse semigroup <var class="Arg">S</var> and a list of conjugacy class representatives of <var class="Arg">S</var>.</p>
-
-<p>Returns a list with two entries: the first entry being the character table of the inverse semigroup <var class="Arg">S</var> as a matrix, while the second entry is a list of conjugacy class representatives of <var class="Arg">S</var>.</p>
-
-<p>The order of the columns in the character table matrix follows the order of the conjugacy class representatives list. The conjugacy representatives are grouped by \(\mathscr{D}\)-class and then sorted by rank. Also, as is typical of character tables, the rows of the matrix correspond to the irreducible characters and the columns correspond to the conjugacy classes.</p>
-
-<p>This function was contributed by Jhevon Smith and Ben Steinberg.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1, 2], [3, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [1, 3, 4]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [2, 4, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 4], [3, 4, 1])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterTableOfInverseSemigroup(S);</span>
-[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], 
-      [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],
-      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, 
-      &lt;identity partial perm on [ 1, 3, 4 ]&gt;, (1,3,4), (1,4,3), 
-      &lt;identity partial perm on [ 1, 3 ]&gt;, (1,3), 
-      &lt;identity partial perm on [ 3 ]&gt;, &lt;empty partial perm&gt; ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterTableOfInverseSemigroup(S);</span>
-[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ], 
-      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], 
-      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4), 
-      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), 
-      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2,3), 
-      &lt;identity partial perm on [ 2, 3 ]&gt;, (2,3), 
-      &lt;identity partial perm on [ 1 ]&gt;, &lt;empty partial perm&gt; ] ]</pre></div>
-
-<p><a id="X8383E6747D02D975" name="X8383E6747D02D975"></a></p>
-
-<h5>16.1-11 EUnitaryInverseCover</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EUnitaryInverseCover</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A homomorphism between semigroups.</p>
-
-<p>If the argument <var class="Arg">S</var> is an inverse semigroup then this function returns a finite E-unitary inverse cover of <var class="Arg">S</var>. A finite E-unitary cover of <var class="Arg">S</var> is a surjective idempotent separating homomorphism from a finite semigroup satisfying <code class="func">IsEUnitaryInverseSemigroup</code> (<a href="chap16.html#X843EA0E37C968BBF"><span class="RefLink">16.2-3</span></a>) to <var class="Arg">S</var>. A semigroup homomorphism is said to be idempotent separating if no two idempotents are mapped to the same element of the image.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([PartialPermNC([1, 2], [2, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1], [1])]);</span>
-&lt;inverse partial perm semigroup of rank 2 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cov := EUnitaryInverseCover(S);</span>
-MappingByFunction( &lt;inverse partial perm semigroup of rank 4 with 2 
- generators&gt;, &lt;inverse partial perm semigroup of rank 2 with 2 
- generators&gt;, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(Source(cov));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = Range(cov);</span>
-true</pre></div>
-
-<p><a id="X7BA0CE3E82ABEE4E" name="X7BA0CE3E82ABEE4E"></a></p>
+<p><a id="X83152CA78114E2BD" name="X83152CA78114E2BD"></a></p>
 
 <h4>16.2 <span class="Heading">
-      Properties of inverse semigroups
+      <code class="code">tex</code> output
     </span></h4>
 
-<p><a id="X81DE11987BB81017" name="X81DE11987BB81017"></a></p>
+<p>In this section, we describe the operations in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap16.html#X7BDDE0FE80D09887"><span class="RefLink">16.3</span></a>.</p>
 
-<h5>16.2-1 IsCliffordSemigroup</h5>
+<p><a id="X80FBF08180F7F181" name="X80FBF08180F7F181"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCliffordSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+<h5>16.2-1 TexString</h5>
 
-<p><code class="code">IsCliffordSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is regular and its idempotents are central, and <code class="keyw">false</code> if it is not.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 4, 5, 6, 2, 7, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 5, 3, 6, 8, 4, 4]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCliffordSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCliffordSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := IdempotentGeneratedSubsemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCliffordSemigroup(T);</span>
-true</pre></div>
-
-<p><a id="X7EFDBA687DCDA6FA" name="X7EFDBA687DCDA6FA"></a></p>
-
-<h5>16.2-2 IsBrandtSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBrandtSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p><code class="code">IsBrandtSemigroup</code> return <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a finite 0-simple inverse semigroup, and <code class="keyw">false</code> if it is not. See also <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap15.html#X8193A60F839C064E"><span class="RefLink">15.1-28</span></a>) and <code class="func">IsInverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseSemigroup</span></a>).</p>
+<p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional paramater <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 8, 8, 8, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 8, 8, 8, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 3, 8, 8, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 6, 8, 8, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 8, 1, 8, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 8, 8, 1, 8, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 8, 8, 8, 4, 8, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 8, 8, 8, 8, 7, 8, 8]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([8, 8, 8, 8, 8, 8, 2, 8]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBrandtSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBrandtSemigroup(T);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := InjectionPrincipalFactor(D);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PreImages(R, GeneratorsOfSemigroup(Range(R))));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBrandtSemigroup(S);</span>
-true</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([6, 2, 4, 3, 6, 4]));</span>
+"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 \\\\\n  6 &amp; 2 &amp; 4 &amp; 3 &amp; 6 &amp;\
+ 4\n\\end{pmatrix}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([1, 2, 1, 3]), 5);</span>
+"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 \\\\\n  1 &amp; 2 &amp; 1 &amp; 3 &amp; 5\n\\en\
+d{pmatrix}"</pre></div>
 
-<p><a id="X843EA0E37C968BBF" name="X843EA0E37C968BBF"></a></p>
+<p><a id="X7BDDE0FE80D09887" name="X7BDDE0FE80D09887"></a></p>
 
-<h5>16.2-3 IsEUnitaryInverseSemigroup</h5>
+<h4>16.3 <span class="Heading">
+      <code class="code">tikz</code> pictures
+    </span></h4>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEUnitaryInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+<p>In this section, we describe the operations in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating pictures in <code class="code">tikz</code> format.</p>
 
-<p>As described in Section 5.9 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>, an inverse semigroup <var class="Arg">S</var> with semilattice of idempotents <var class="Arg">E</var> is <em>E-unitary</em> if for</p>
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
-<p class="pcenter">
-        s \in S\textrm{ and }e \in E\textrm{: }es \in E \Rightarrow s \in E.
-      </p>
+<p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
 
-<p>Equivalently, <var class="Arg">S</var> is <em>E-unitary</em> if <var class="Arg">E</var> is closed in the natural partial order (see Proposition 5.9.1 in <a href="chapBib.html#biBHowie1995aa">[How95]</a>):</p>
+<h5>16.3-1 TikzString</h5>
 
-<p class="pcenter">
-        \textrm{for } s \in S\textrm{ and }e \in E\textrm{: }e \le s \Rightarrow s
-        \in E.
-      </p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
 
-<p>This condition is equivalent to <var class="Arg">E</var> being majorantly closed in <var class="Arg">S</var>. See <code class="func">IdempotentGeneratedSubsemigroup</code> (<a href="chap14.html#X83970D028143B79B"><span class="RefLink">14.9-3</span></a>) and <code class="func">IsMajorantlyClosed</code> (<a href="chap16.html#X81E6D24F852A7937"><span class="RefLink">16.2-8</span></a>). Hence an inverse semigroup of partial permutations, block bijections or partial permutation bipartitions is <em>E-unitary</em> if and only if the idempotent semilattice is majorantly closed.</p>
+<p>This function produces a graphical representation of the object <var class="Arg">obj</var> using the <code class="code">tikz</code> package for LaTeX. More precisely, this operation outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">obj</var>.</p>
+
+<p>Currently the following types of objects are supported:</p>
+
+
+<dl>
+<dt><strong class="Mark">blocks</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is the left or right blocks of a bipartition, then <code class="code">TikzString</code> returns a graphical representation of these blocks; see Section <a href="chap3.html#X87684C148592F831"><span class="RefLink">3.6</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">bipartitions</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is a bipartition, then <code class="code">TikzString</code> returns a graphical representation of <var class="Arg">obj</var>.</p>
+
+<p>If the optional second argument <var class="Arg">options</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">f</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">obj</var> is less than 20. See Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more details about bipartitions.</p>
+
+</dd>
+<dt><strong class="Mark">pbrs</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is a <code class="func">PBR</code> (<a href="chap4.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), then <code class="code">TikzString</code> returns a graphical representation <var class="Arg">obj</var>; see Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Cayley graphs</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">TikzString</code> returns a picture of <var class="Arg">obj</var>. No attempt is made whatsoever to produce a sensible picture of the digraph <var class="Arg">obj</var>, in fact, the vertices are all given the same coordinates. Human intervention is required to produce a meaningful picture from the value returned by this method. It is intended to make the task of drawing such a Cayley graph more straightforward by providing everything except the final layout of the graph. Please use <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) if you want an automatically laid out diagram of the digraph <var class="Arg">obj</var>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(RightBlocks(x));</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
+\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\
+aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
+.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \
+ \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
+raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
+.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
+ and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(x);</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
+fill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \
+ \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\
+\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\
+,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\
+.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\
+le(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\
+ircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\
+)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\
+\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \
+\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\
+aw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\
+circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
+,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\
+(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\
+ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
+\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
+ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
+%lines\n\\end{tikzpicture}\n\n\\end{document}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(UniversalPBR(2));</span>
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{docume\
+nt}\n\\usetikzlibrary{arrows}\n\\usetikzlibrary{arrows.meta}\n\\newco\
+mmand{\\arc}{\\draw[semithick, -{&gt;[width = 1.5mm, length = 2.5mm]}]}\
+\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, i\
+nner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = \
+0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110}\
+,\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % \
+vertices and labels\n  \\foreach \\i in {1,...,2} {\n    \\node [vert\
+ex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\
+\n  }\n\n  \\foreach \\i in {1,...,2} {\n    \\node [vertex] at (\\i/\
+1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  \
+% arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \
+\\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666666\
+66667, 2.125) and (0.93333333333333324, 2.125) .. (2);\n\n  % arcs fr\
+om vertex -1\n  \\arc (-1) .. controls (1.0666666666666667, 0.875) an\
+d (0.93333333333333324, 0.875) .. (-2);\n  \\arc (-1) edge [botloop] \
+(-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % arcs from ve\
+rtex 2\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. co\
+ntrols (0.93333333333333324, 2.125) and (1.0666666666666667, 2.125) .\
+. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n \
+ \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.9333333\
+3333333324, 0.875) and (1.0666666666666667, 0.875) .. (-1);\n  \\arc \
+(-2) to (1);\n  \\arc (-2) to (2);\n\n\\end{tikzpicture}\n\\end{docum\
+ent}"</pre></div>
+
+<p><a id="X81EF7F777EEF69C1" name="X81EF7F777EEF69C1"></a></p>
+
+<h5>16.3-2 TikzLeftCayleyDigraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzLeftCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzRightCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), then <code class="code">TikzLeftCayleyDigraph</code> is simply short for <code class="code">TikzString(LeftCayleyDigraph(<var class="Arg">S</var>))</code>.</p>
+
+<p><code class="code">TikzRightCayleyDigraph</code> can be used to produce a tikz string for the right Cayley graph of <var class="Arg">S</var>.</p>
+
+<p>See <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) for more details, and see also <code class="func">DotLeftCayleyDigraph</code> (<a href="chap16.html#X7E38369D7E8BEA4C"><span class="RefLink">16.1-4</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4], [2, 3, 1, 6]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5], [3, 2, 1, 6]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := IdempotentGeneratedSubsemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(Difference(S, e), x -&gt; not ForAny(e, y -&gt; y * x in e));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 4, 6, 8], [2, 5, 10, 7, 9]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 8, 9, 2, 10, 1, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5, 6, 7, 9], [9, 8, 4, 1, 6, 7, 2])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(T);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(U);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(U);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(U);</span>
-"S5"</pre></div>
-
-<p><a id="X86F942F48158DAC3" name="X86F942F48158DAC3"></a></p>
-
-<h5>16.2-4 IsFInverseSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>This functions determines whether a given semigroup is an F-inverse semigroup. An F-inverse semigroup is a semigroup which satisfies <code class="func">IsEUnitaryInverseSemigroup</code> (<a href="chap16.html#X843EA0E37C968BBF"><span class="RefLink">16.2-3</span></a>) as well as being isomorphic to some <code class="func">McAlisterTripleSemigroup</code> (<a href="chap12.html#X7B5FF3A27BB057F2"><span class="RefLink">12.1-2</span></a>) where the <code class="func">McAlisterTripleSemigroupPartialOrder</code> (<a href="chap12.html#X8046966B7F9A1ED5"><span class="RefLink">12.1-4</span></a>) satisfies <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>). McAlister triple semigroups are a represenation of E-unitary inverse semigroups and more can be read about them in Chapter <a href="chap12.html#X7BFF628F87B6A20C"><span class="RefLink">12</span></a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid([PartialPermNC([1, 2], [1, 2]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1, 2, 3], [1, 2, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1, 2, 4], [1, 2, 4]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1, 2], [2, 1]), PartialPermNC([1, 2, 3], [2, 1, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1, 2, 4], [2, 1, 4])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFInverseSemigroup(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFInverseSemigroup(IdempotentGeneratedSubsemigroup(S));</span>
-true</pre></div>
-
-<p><a id="X864F1906858BB8CF" name="X864F1906858BB8CF"></a></p>
-
-<h5>16.2-5 IsFInverseMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>This function determines whether a given semigroup is an F-inverse monoid. A semigroup is an F-inverse monoid when it satisfies <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsFInverseSemigroup</code> (<a href="chap16.html#X86F942F48158DAC3"><span class="RefLink">16.2-4</span></a>).</p>
-
-<p><a id="X8440E22681BD1EE6" name="X8440E22681BD1EE6"></a></p>
-
-<h5>16.2-6 IsFactorisableInverseMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFactorisableInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>An inverse monoid is <em>factorisable</em> if every element is the product of an element of the group of units and an idempotent; see also <code class="func">GroupOfUnits</code> (<a href="chap14.html#X811AEDD88280C277"><span class="RefLink">14.8-1</span></a>) and <code class="func">Idempotents</code> (<a href="chap14.html#X7C651C9C78398FFF"><span class="RefLink">14.9-1</span></a>). Hence an inverse semigroup of partial permutations is factorisable if and only if each of its generators is the restriction of some element in the group of units.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 4], [3, 1, 4]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 5], [4, 1, 5, 2]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(SymmetricInverseSemigroup(5));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(DualSymmetricInverseMonoid(5));</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FactorisableDualSymmetricInverseMonoid(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
-true</pre></div>
-
-<p><a id="X817F9F3984FC842C" name="X817F9F3984FC842C"></a></p>
-
-<h5>16.2-7 IsJoinIrreducible</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsJoinIrreducible</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p><code class="code">IsJoinIrreducible</code> determines whether an element <var class="Arg">x</var> of an inverse semigroup <var class="Arg">S</var> of partial permutations, block bijections or partial permutation bipartitions is join irreducible.</p>
-
-<p>An element <var class="Arg">x</var> is <em>join irreducible</em> when it is not the least upper bound (with respect to the natural partial order <code class="func">NaturalLeqPartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>)) of any subset of <var class="Arg">S</var> not containing <var class="Arg">x</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(3);</span>
-&lt;symmetric inverse monoid of degree 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3]);</span>
-&lt;identity partial perm on [ 1, 2, 3 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsJoinIrreducible(S, x);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 4, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([0, 2])]);</span>
-&lt;inverse partial perm semigroup of rank 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := PartialPerm([1, 2, 3, 4]);</span>
-&lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsJoinIrreducible(T, y);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := InverseSemigroup([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [1, -5], [2, -2], [3, 5, 6, 7, -1, -4, -6, -7], [4, -3]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [1, -1], [2, -3], [3, -4], [4, 5, 7, -2, -6, -7], [6, -5]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [1, -2], [2, -4], [3, -6], [4, -1], [5, 7, -3, -7], [6, -5]]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [1, -5], [2, -1], [3, -6], [4, 5, 7, -2, -4, -7], [6, -3]])]);</span>
-&lt;inverse block bijection semigroup of degree 7 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7], [4, -1]]);</span>
-&lt;block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
- [ 4, -1 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsJoinIrreducible(B, x);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsJoinIrreducible(B, B.1);</span>
-false</pre></div>
-
-<p><a id="X81E6D24F852A7937" name="X81E6D24F852A7937"></a></p>
-
-<h5>16.2-8 IsMajorantlyClosed</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMajorantlyClosed</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p><code class="code">IsMajorantlyClosed</code> determines whether the subset <var class="Arg">T</var> of the inverse semigroup of partial permutations, block bijections or partial permutation bipartitions <var class="Arg">S</var> is majorantly closed in <var class="Arg">S</var>. See also <code class="func">MajorantClosure</code> (<a href="chap16.html#X801CC67E80898608"><span class="RefLink">16.1-3</span></a>).</p>
-
-<p>We say that <var class="Arg">T</var> is <em>majorantly closed</em> in <var class="Arg">S</var> if it contains all elements of <var class="Arg">S</var> which are greater than or equal to any element of <var class="Arg">T</var>, with respect to the natural partial order. See <code class="func">NaturalLeqPartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">Reference: NaturalLeqPartialPerm</span></a>).</p>
-
-<p>Note that <var class="Arg">T</var> can be a subset of <var class="Arg">S</var> or a subsemigroup of <var class="Arg">S</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(2);</span>
-&lt;symmetric inverse monoid of degree 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := [Elements(S)[2]];</span>
-[ &lt;identity partial perm on [ 1 ]&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(S, T);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := [Elements(S)[2], Elements(S)[6]];</span>
-[ &lt;identity partial perm on [ 1 ]&gt;, &lt;identity partial perm on [ 1, 2 ]
-    &gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(S, U);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSymmetricInverseSemigroup(3);</span>
-&lt;inverse block bijection monoid of degree 3 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, -2], [2, -3], [3, -1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(D, [x]);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Bipartition([[1, 2, -1, -2], [3, -3]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(D, [x, y]);</span>
-false
-</pre></div>
-
-<p><a id="X7D2641AD830DEC1C" name="X7D2641AD830DEC1C"></a></p>
-
-<h5>16.2-9 IsMonogenicInverseSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonogenicInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p><code class="code">IsMonogenicInverseSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a monogenic inverse semigroup and it returns <code class="keyw">false</code> if it is not.</p>
-
-<p>A inverse semigroup is <em>monogenic</em> if it is generated as an inverse semigroup by a single element. See also <code class="func">IsMonogenicSemigroup</code> (<a href="chap15.html#X79D46BAB7E327AD1"><span class="RefLink">15.1-11</span></a>) and <code class="func">IsMonogenicInverseMonoid</code> (<a href="chap16.html#X7EDFA6CA86645DBE"><span class="RefLink">16.2-10</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(x, x ^ 2, x ^ 3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := RandomBlockBijection(100);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(x, x ^ 2, x ^ 20);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseSemigroup(S);</span>
-false</pre></div>
-
-<p><a id="X7EDFA6CA86645DBE" name="X7EDFA6CA86645DBE"></a></p>
-
-<h5>16.2-10 IsMonogenicInverseMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonogenicInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p><code class="code">IsMonogenicInverseMonoid</code> returns <code class="keyw">true</code> if the monoid <var class="Arg">S</var> is a monogenic inverse monoid and it returns <code class="keyw">false</code> if it is not.</p>
-
-<p>A inverse monoid is <em>monogenic</em> if it is generated as an inverse monoid by a single element. See also <code class="func">IsMonogenicInverseSemigroup</code> (<a href="chap16.html#X7D2641AD830DEC1C"><span class="RefLink">16.2-9</span></a>) and <code class="func">IsMonogenicMonoid</code> (<a href="chap15.html#X790DC9F4798DBB09"><span class="RefLink">15.1-12</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid(x, x ^ 2, x ^ 3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicMonoid(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseSemigroup(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseMonoid(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := RandomBlockBijection(100);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid(x, x ^ 2, x ^ 20);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseMonoid(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicInverseMonoid(S);</span>
-false</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzLeftCayleyDigraph(Semigroup(IdentityTransformation));</span>
+"\\begin{tikzpicture}[scale=1, auto, \n  vertex/.style={c\
+ircle, draw, thick, fill=white, minimum size=0.65cm},\n  \
+edge/.style={arrows={-angle 90}, thick},\n  loop/.style={\
+min distance=5mm,looseness=5,arrows={-angle 90},thick}]\n\
+\n  % Vertices . . .\n  \\node [vertex] (a) at (0, 0) {};\
+\n  \\node at (0, 0) {$a$};\n\n  % Edges . . .\n  \\path[\
+-&gt;] (a) edge [loop]\n           node {$a$} (a);\n\\end{ti\
+kzpicture}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzRightCayleyDigraph(Semigroup(IdentityTransformation));</span>
+"\\begin{tikzpicture}[scale=1, auto, \n  vertex/.style={c\
+ircle, draw, thick, fill=white, minimum size=0.65cm},\n  \
+edge/.style={arrows={-angle 90}, thick},\n  loop/.style={\
+min distance=5mm,looseness=5,arrows={-angle 90},thick}]\n\
+\n  % Vertices . . .\n  \\node [vertex] (a) at (0, 0) {};\
+\n  \\node at (0, 0) {$a$};\n\n  % Edges . . .\n  \\path[\
+-&gt;] (a) edge [loop]\n           node {$a$} (a);\n\\end{ti\
+kzpicture}"</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

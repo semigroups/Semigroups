@@ -15,45 +15,45 @@
   [33X[0;0YThe  following  is  a  summary of the steps that should lead to a successful
   installation of [5XSemigroups[105X:[133X
   
-  [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.5.1 or higher is available. [5XIO[105X
-        must be compiled before [5XSemigroups[105X can be loaded.[133X
-  
-  [30X    [33X[0;6Yensure  that the [5XOrb[105X package version 4.8.2 or higher is available. [5XOrb[105X
-        and [5XSemigroups[105X both perform better if [5XOrb[105X is compiled.[133X
-  
   [30X    [33X[0;6Yensure  that  the  [5Xdatastructures[105X  package  version 0.2.5 or higher is
         available.  [5Xdatastructures[105X  must  be compiled before [5XSemigroups[105X can be
         loaded.[133X
   
-  [30X    [33X[0;6Yensure that the [5XDigraphs[105X package version 1.2.0 or higher is available.
+  [30X    [33X[0;6Yensure that the [5XDigraphs[105X package version 1.5.0 or higher is available.
         [5XDigraphs[105X must be compiled before [5XSemigroups[105X can be loaded.[133X
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.6.5 or higher is available.[133X
   
   [30X    [33X[0;6Yensure that the [5Ximages[105X package version 1.3.0 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-3.4.2.tar.gz[111X  from  the
+  [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.5.1 or higher is available. [5XIO[105X
+        must be compiled before [5XSemigroups[105X can be loaded.[133X
+  
+  [30X    [33X[0;6Yensure  that the [5Xorb[105X package version 4.8.2 or higher is available. [5Xorb[105X
+        and [5XSemigroups[105X both perform better if [5Xorb[105X is compiled.[133X
+  
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-4.0.0.tar.gz[111X  from  the
         Semigroups package webpage ([7Xhttps://semigroups.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.4.2[111X.[133X
+        [11Xsemigroups-4.0.0[111X.[133X
   
-  [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-3.4.2[111X
-        into the [11Xpkg[111X directory.[133X
+  [30X    [33X[0;6Ylocate your [5XGAP[105X directory, the one containing the directories [11Xlib[111X, [11Xdoc[111X
+        and  so  on.  Move  the directory [11Xsemigroups-4.0.0.tar.gz[111X into the [11Xpkg[111X
+        subdirectory of your [5XGAP[105X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://libsemigroups.github.io/libsemigroups/[107X)  C++  library,  which
-        requires  a  compiler  implementing  the  C++11  standard.  Inside the
-        [11Xpkg/semigroups-3.4.2[111X directory, type[133X
+        requires  a  compiler  implementing  the  C++14  standard.  Inside the
+        [11Xpkg/semigroups-4.0.0[111X directory, in your terminal type[133X
   
   [4X      [32X[104X
-          [4X./configure[104X
-          [4Xmake[104X
+          [4X./configure && make[104X
+          [4X        [104X
         [4X[32X[104X
   
-        [33X[0;6YFurther information about this step can be found in Section [14X2.3[114X.[133X
+        [33X[0;6YFurther information about this step can be found in Section [14X2.2[114X.[133X
   
   [30X    [33X[0;6Ystart [5XGAP[105X in the usual way (i.e. type [10Xgap[110X at the command line).[133X
   
@@ -63,49 +63,34 @@
   been compiled.[113X[133X
   
   [33X[0;0YIf  you  want to check that the package is working correctly, you should run
-  some of the tests described in Section [14X2.5[114X.[133X
+  some of the tests described in Section [14X2.4[114X.[133X
   
   
-  [1X2.2 [33X[0;0YPackage dependencies[133X[101X
+  [1X2.2 [33X[0;0YCompiling the kernel module[133X[101X
   
-  [33X[0;0YThe  [5XSemigroups[105X  package is written in [5XGAP[105X and C++ and requires the [5XOrb[105X, [5XIO[105X,
-  [5XDigraphs[105X, [5Xgenss[105X, and [5Ximages[105X packages. The [5XOrb[105X package is used to efficiently
-  compute  components  of  actions,  which  underpin  many  of the features of
-  [5XSemigroups[105X. The [5XIO[105X package is used to read and write elements of a semigroup
-  to  a  file. The [5Xgenss[105X package is used in a non-deterministic version of the
-  operation  [2XNormalizer[102X  ([14X14.11-1[114X) and in calculating the stabiliser of a Rees
-  0-matrix  semigroup's  matrix.  The [5XDigraphs[105X package is used in a variety of
-  ways  in  the  [5XSemigroups[105X  package,  in  particular, to apply standard graph
-  theoretic  algorithms  to  certain data structures, and in certain cases for
-  finding isomorphisms or automorphisms of digraphs.[133X
+  [33X[0;0YAs  of  version 3.0.0, the [5XSemigroups[105X package has a kernel module written in
+  C++  and  this must be compiled. The kernel module contains the interface to
+  the  C++  library  [5Xlibsemigroups[105X.  It  is not possible to use the [5XSemigroups[105X
+  package without compiling it.[133X
   
-  
-  [1X2.3 [33X[0;0YCompiling the kernel module[133X[101X
-  
-  [33X[0;0YAs  of version 3.0.0, the [5XSemigroups[105X package has a [5XGAP[105X kernel module written
-  in  C/C++  and  this  must be compiled. The kernel module contains low-level
-  functions relating to the enumeration of certain types of semigroups, and it
-  is not possible to use the [5XSemigroups[105X package without compiling it.[133X
-  
-  [33X[0;0YTo  compile  the kernel component inside the [11Xpkg/semigroups-3.4.2[111X directory,
-  type[133X
+  [33X[0;0YTo  compile  the  kernel  component  inside  the [11Xpkg/semigroups-4.0.0.tar.gz[111X
+  directory, type[133X
   
   [4X[32X[104X
-    [4X[104X
-    [4X./configure[104X
-    [4Xmake[104X
+    [4X./configure && make[104X
+    [4X    [104X
   [4X[32X[104X
   
   [33X[0;0YIf  you  are  using GCC to compile [5XSemigroups[105X, then version 5.0 or higher is
   required.  Trying  to compile [5XSemigroups[105X with an earlier version of GCC will
-  result  in  an error at compile time. [5XSemigroups[105X supports GCC version 5.0 or
-  higher, and clang version 5.0 or higher.[133X
+  result in an error at compile time. [5XSemigroups[105X only supports GCC version 5.0
+  or higher, and clang version 5.0 or higher.[133X
   
-  [33X[0;0YIf  you  installed  the  package  in  another  [11Xpkg[111X  directory other than the
-  standard  [11Xpkg[111X  directory  in  your [5XGAP[105X installation, then you have to do two
-  things.   Firstly   during   compilation   you   have   to  use  the  option
-  [10X--with-gaproot=PATH[110X of the [10Xconfigure[110X script where [10XPATH[110X is a path to the main
-  [5XGAP[105X root directory (if not given the default [10X../..[110X is assumed).[133X
+  [33X[0;0YIf  you installed the package in a [11Xpkg[111X directory other than the standard [11Xpkg[111X
+  directory  in your [5XGAP[105X installation, then you have to do two things. Firstly
+  during  compilation  you  have  to use the option [10X--with-gaproot=PATH[110X of the
+  [10Xconfigure[110X script where [10XPATH[110X is a path to the main [5XGAP[105X root directory (if not
+  given the default [10X../..[110X is assumed).[133X
   
   [33X[0;0YIf  you  installed  [5XGAP[105X  on  several  architectures,  you  must  execute the
   configure/make  step  for  each of the architectures. You can either do this
@@ -118,30 +103,28 @@
   correctly![133X
   
   
-  [1X2.4 [33X[0;0YRebuilding the documentation[133X[101X
+  [1X2.3 [33X[0;0YRebuilding the documentation[133X[101X
   
   [33X[0;0YThe  [5XSemigroups[105X  package comes complete with pdf, html, and text versions of
   the  documentation.  However, you might find it necessary, at some point, to
-  rebuild   the   documentation.   To   rebuild   the  documentation  use  the
-  [2XSemigroupsMakeDoc[102X ([14X2.4-1[114X).[133X
+  rebuild  the  documentation.  To  rebuild  the  documentation the [5XGAPDoc[105X and
+  [5XAutoDoc[105X packages are required. To rebuild the documentation type:[133X
   
-  [1X2.4-1 SemigroupsMakeDoc[101X
+  [4X[32X[104X
+    [4Xgap makedoc.g[104X
+    [4X    [104X
+  [4X[32X[104X
   
-  [33X[1;0Y[29X[2XSemigroupsMakeDoc[102X(  ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10YNothing.[133X
-  
-  [33X[0;0YThis  function  should  be called with no argument to compile the [5XSemigroups[105X
-  documentation.[133X
+  [33X[0;0Ywhen you're inside the [11Xpkg/semigroups-4.0.0[111X directory.[133X
   
   
-  [1X2.5 [33X[0;0YTesting your installation[133X[101X
+  [1X2.4 [33X[0;0YTesting your installation[133X[101X
   
   [33X[0;0YIn  this  section  we  describe  how  to  test that [5XSemigroups[105X is working as
   intended.  To  quickly  test  that  [5XSemigroups[105X  is  installed  correctly use
-  [2XSemigroupsTestInstall[102X  ([14X2.5-1[114X)  -  this  will  take  a few seconds. For more
-  extensive  tests  use [2XSemigroupsTestStandard[102X ([14X2.5-2[114X) - this may take several
-  minutes.  Finally,  for lengthy benchmarking tests use [2XSemigroupsTestExtreme[102X
-  ([14X2.5-3[114X) - this may take more than half an hour.[133X
+  [2XSemigroupsTestInstall[102X    ([14X2.4-1[114X).    For    more    extensive    tests   use
+  [2XSemigroupsTestStandard[102X  ([14X2.4-2[114X). Finally, for lengthy benchmarking tests use
+  [2XSemigroupsTestExtreme[102X ([14X2.4-3[114X).[133X
   
   [33X[0;0YIf  something goes wrong, then please review the instructions in Section [14X2.1[114X
   and  ensure  that  [5XSemigroups[105X  has  been properly installed. If you continue
@@ -149,7 +132,7 @@
   ([7Xhttps://github.com/semigroups/Semigroups/issues[107X)  to  report the issues you
   are having.[133X
   
-  [1X2.5-1 SemigroupsTestInstall[101X
+  [1X2.4-1 SemigroupsTestInstall[101X
   
   [33X[1;0Y[29X[2XSemigroupsTestInstall[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -157,9 +140,9 @@
   [33X[0;0YThis function should be called with no argument to test your installation of
   [5XSemigroups[105X  is working correctly. These tests should take no more than a few
   seconds  to  complete.  To  more  comprehensively  test  that  [5XSemigroups[105X is
-  installed correctly use [2XSemigroupsTestStandard[102X ([14X2.5-2[114X).[133X
+  installed correctly use [2XSemigroupsTestStandard[102X ([14X2.4-2[114X).[133X
   
-  [1X2.5-2 SemigroupsTestStandard[101X
+  [1X2.4-2 SemigroupsTestStandard[101X
   
   [33X[1;0Y[29X[2XSemigroupsTestStandard[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA  list indicating which tests passed and failed and the time take
@@ -168,12 +151,12 @@
   [33X[0;0YThis function should be called with no argument to comprehensively test that
   [5XSemigroups[105X  is working correctly. These tests should take no more than a few
   minutes  to complete. To quickly test that [5XSemigroups[105X is installed correctly
-  use [2XSemigroupsTestInstall[102X ([14X2.5-1[114X).[133X
+  use [2XSemigroupsTestInstall[102X ([14X2.4-1[114X).[133X
   
   [33X[0;0YEach  test  file  is  run twice, once when the methods for [2XIsActingSemigroup[102X
-  ([14X6.1-3[114X) are enabled and once when they are disabled.[133X
+  ([14X6.1-2[114X) are enabled and once when they are disabled.[133X
   
-  [1X2.5-3 SemigroupsTestExtreme[101X
+  [1X2.4-3 SemigroupsTestExtreme[101X
   
   [33X[1;0Y[29X[2XSemigroupsTestExtreme[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA  list indicating which tests passed and failed and the time take
@@ -183,13 +166,13 @@
   tests,  which  could  be used to benchmark [5XSemigroups[105X or test your hardware.
   These  tests  should  take  no more than around half an hour to complete. To
   quickly    test    that    [5XSemigroups[105X    is    installed    correctly    use
-  [2XSemigroupsTestInstall[102X  ([14X2.5-1[114X),  or  to  test all aspects of the package use
-  [2XSemigroupsTestStandard[102X ([14X2.5-2[114X).[133X
+  [2XSemigroupsTestInstall[102X  ([14X2.4-1[114X),  or  to  test all aspects of the package use
+  [2XSemigroupsTestStandard[102X ([14X2.4-2[114X).[133X
   
   [33X[0;0YEach test file is run twice, once when the methods for semigroups satisfying
-  [2XIsActingSemigroup[102X ([14X6.1-3[114X) are enabled and once when they are disabled.[133X
+  [2XIsActingSemigroup[102X ([14X6.1-2[114X) are enabled and once when they are disabled.[133X
   
-  [1X2.5-4 SemigroupsTestAll[101X
+  [1X2.4-4 SemigroupsTestAll[101X
   
   [33X[1;0Y[29X[2XSemigroupsTestAll[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -200,12 +183,12 @@
   value  returned  is  [9Xtrue[109X if all the tests succeed, and [9Xfalse[109X otherwise. The
   whole process should take no more than a few minutes.[133X
   
-  [33X[0;0YSee [2XSemigroupsMakeDoc[102X ([14X2.4-1[114X) and [2XSemigroupsTestStandard[102X ([14X2.5-2[114X).[133X
+  [33X[0;0YSee [2XSemigroupsTestStandard[102X ([14X2.4-2[114X).[133X
   
   
-  [1X2.6 [33X[0;0YMore information during a computation[133X[101X
+  [1X2.5 [33X[0;0YMore information during a computation[133X[101X
   
-  [1X2.6-1 InfoSemigroups[101X
+  [1X2.5-1 InfoSemigroups[101X
   
   [33X[1;0Y[29X[2XInfoSemigroups[102X [32X info class[133X
   

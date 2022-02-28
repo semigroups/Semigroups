@@ -5,8 +5,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 6: 
-    Creating semigroups and monoids
+<title>GAP (Semigroups) - Chapter 6: 
+    Semigroups and monoids defined by generating sets
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -17,26 +17,26 @@
 <body class="chap6"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
-<p><a id="X79A4C070831D989D" name="X79A4C070831D989D"></a></p>
-<div class="ChapSects"><a href="chap6.html#X79A4C070831D989D">6 <span class="Heading">
-    Creating semigroups and monoids
+<p><a id="X7995B4F18672DDB0" name="X7995B4F18672DDB0"></a></p>
+<div class="ChapSects"><a href="chap6.html#X7995B4F18672DDB0">6 <span class="Heading">
+    Semigroups and monoids defined by generating sets
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X781630C482B40F33">6.1 <span class="Heading">Underlying algorithms and related representations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A19D22B7A05CC2F">6.1 <span class="Heading">Underlying algorithms</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A3AC74C7FF85825">6.1-1 <span class="Heading">
         Acting semigroups
       </span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7D5133C97A5AB1DC">6.1-2 <span class="Heading">Enumerable semigroups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F69D8FC7D578A0C">6.1-2 IsActingSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E2DE9767D5D82F7">6.1-3 <span class="Heading">The Froidure-Pin Algorithm</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F69D8FC7D578A0C">6.1-3 IsActingSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X874E25727FDF82B4">6.1-4 IsEnumerableSemigroupRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7FEE8CFA87E7B872">6.1-4 CanUseFroidurePin</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X79BD00A682BDED7A">6.2 <span class="Heading">Semigroups represented by generators</span></a>
 </span>
@@ -48,59 +48,43 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X78CF5DCC7C697BB3">6.3-1 SEMIGROUPS.DefaultOptionsRec</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A5CFD4F8607CBF7">6.4 <span class="Heading">New semigroups from old</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X87AA2EB6810B4631">6.4 <span class="Heading">Subsemigroups and supersemigroups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7BE36790862AE26F">6.4-1 ClosureSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E5B4C5A82F9E0E0">6.4-2 SubsemigroupByProperty</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X832AEDCC7BA9E5F5">6.4-3 InverseSubsemigroupByProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X861BA02C7902A4F4">6.4-4 DirectProduct</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8786EFBC78D7D6ED">6.4-5 WreathProduct</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7F035EC07AA7CD97">6.5 <span class="Heading"> Dual semigroups </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X82CCC1A781650878">6.5 <span class="Heading">Changing the representation of a semigroup</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79F2643C8642A3B0">6.5-1 DualSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83403224821CD079">6.5-2 IsDualSemigroupRep</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79BAAA397FC1FA2E">6.5-3 IsDualSemigroupElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7CB64FA378EC715B">6.5-4 AntiIsomorphismDualSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X838F18E87F765697">6.5-1 IsomorphismSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83D03BE678C9974F">6.5-2 IsomorphismMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80ED104F85AE5134">6.5-3 AsSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B22038F832B9C0F">6.5-4 AsMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80B7B1C783AA1567">6.5-5 IsomorphismPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X870210EA7912B52A">6.5-6 RZMSNormalization</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80DE617E841E5BA0">6.5-7 RMSNormalization</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E2ECC577A1CF7CA">6.5-8 IsomorphismReesMatrixSemigroup</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X82CCC1A781650878">6.6 <span class="Heading">Changing the representation of a semigroup</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.6 <span class="Heading">Random semigroups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X838F18E87F765697">6.6-1 IsomorphismSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X83D03BE678C9974F">6.6-2 IsomorphismMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80ED104F85AE5134">6.6-3 AsSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B22038F832B9C0F">6.6-4 AsMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80B7B1C783AA1567">6.6-5 IsomorphismPermGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X870210EA7912B52A">6.6-6 RZMSNormalization</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80DE617E841E5BA0">6.6-7 RMSNormalization</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.7 <span class="Heading">Random semigroups</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789DE9AB79FCFEB5">6.7-1 RandomSemigroup</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X803B115984A81A8F">6.8 <span class="Heading">
-      Endomorphism monoid of a digraph
-    </span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X868955247F2AFAA5">6.8-1 EndomorphismMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789DE9AB79FCFEB5">6.6-1 RandomSemigroup</a></span>
 </div></div>
 </div>
 
 <h3>6 <span class="Heading">
-    Creating semigroups and monoids
+    Semigroups and monoids defined by generating sets
   </span></h3>
 
-<p>In this chapter we describe the various ways that semigroups and monoids can be created in <strong class="pkg">Semigroups</strong>, and the options that are available at the time of creation.</p>
+<p>In this chapter we describe the various ways that semigroups and monoids defined by generating sets can be created in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> ; where the generators are, for example, those elements described in earlier chapters of this manual.</p>
 
-<p><a id="X781630C482B40F33" name="X781630C482B40F33"></a></p>
+<p><a id="X7A19D22B7A05CC2F" name="X7A19D22B7A05CC2F"></a></p>
 
-<h4>6.1 <span class="Heading">Underlying algorithms and related representations</span></h4>
+<h4>6.1 <span class="Heading">Underlying algorithms</span></h4>
 
-<p>Computing the Green's structure of a semigroup is fundamental to almost every other algorithm for semigroups. There are two fundamental algorithms in the <strong class="pkg">Semigroups</strong> package for computing the Green's structure of a semigroup, which are described in the next two subsections.</p>
+<p>Computing the Green's structure of a semigroup or monoid is a fundamental step in almost every algorithm for semigroups. There are two fundamental algorithms in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for computing the Green's structure of a semigroup defined by a set of generators. In the next two subsections we briefly describe these two algorithms.</p>
 
 <p><a id="X7A3AC74C7FF85825" name="X7A3AC74C7FF85825"></a></p>
 
@@ -108,29 +92,49 @@
         Acting semigroups
       </span></h5>
 
-<p>The first type of fundamental algorithms are those described in <a href="chapBib.html#biBMitchell2019aa">[EENMP19]</a>, which when applied to a semigroup with relatively large subgroups are the most efficient methods in the <strong class="pkg">Semigroups</strong> package. For example, the complexity of computing, say, the size of a transformation semigroup that happens to be a group, is the same as the complexity of the Schreier-Sims Algorithm (polynomial in the number of points acted on by the transformations) for a permutation group.</p>
+<p>The first of the fundamental algorithms for computing a semigroup defined by a generating set is described in <a href="chapBib.html#biBMitchell2019aa">[EENMP19]</a>. When applied to a semigroup or monoid with relatively large subgroups, or <em>D</em>-classes, these are the most efficient methods in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package. For example, the complexity of computing, say, the size of a transformation semigroup that happens to be a group, is the same as the complexity of the Schreier-Sims Algorithm (polynomial in the number of points acted on by the transformations) for a permutation group.</p>
 
-<p>In theory, these algorithms can be applied to compute any subsemigroup of a regular semigroup; but so far in the <strong class="pkg">Semigroups</strong> package they are only implemented for semigroups of: transformations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), subsemigroups of regular Rees 0-matrix semigroups over permutation groups (see Chapter <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>), and matrices over a finite field (see Section <a href="chap5.html#X873822B6830CE367"><span class="RefLink">5.4</span></a>).</p>
+<p>In theory, these algorithms can be applied to compute any subsemigroup of a regular semigroup; but so far in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package they are only implemented for semigroups of: transformations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), matrices over a finite field (see Section <a href="chap5.html#X873822B6830CE367"><span class="RefLink">5.4</span></a>); subsemigroups of regular Rees 0-matrix semigroups over permutation groups (see Chapter <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>), and subsemigroups of McAlister triples (see Section <a href="chap8.html#X7CC4F6FE87AFE638"><span class="RefLink">8.4</span></a>).</p>
 
-<p>We refer to semigroups to which the algorithms in <a href="chapBib.html#biBMitchell2019aa">[EENMP19]</a> can be applied as <em>acting semigroups</em>, and such semigroups belong to the category <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-3</span></a>).</p>
+<p>We refer to semigroups to which the algorithms in <a href="chapBib.html#biBMitchell2019aa">[EENMP19]</a> can be applied as <em>acting semigroups</em>, and such semigroups belong to the category <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-2</span></a>).</p>
 
-<p>If you know <em>a priori</em> that the semigroup you want to compute is large and \(\mathscr{J}\)-trivial, then you can disable the special methods for acting semigroups when you create the semigroups; see Section <a href="chap6.html#X799EBA2F819D8867"><span class="RefLink">6.3</span></a> for more details.</p>
+<p>If you know <em>a priori</em> that the semigroup you want to compute is large and <em>J</em>-trivial, then you can disable the special methods for acting semigroups when you create the semigroups; see Section <a href="chap6.html#X799EBA2F819D8867"><span class="RefLink">6.3</span></a> for more details.</p>
 
-<p>It is harder for the acting semigroup algorithms to compute Green's \(\mathscr{L}\)- and \(\mathscr{H}\)-classes of a transformation semigroup and the methods used to compute with Green's \(\mathscr{R}\)- and \(\mathscr{D}\)-classes are the most efficient in <strong class="pkg">Semigroups</strong>. Thus, if you are computing with a transformation semigroup, wherever possible, it is advisable to use the commands relating to Green's \(\mathscr{R}\)- or \(\mathscr{D}\)-classes rather than those relating to Green's \(\mathscr{L}\)- or \(\mathscr{H}\)-classes. No such difficulties are present when computing with the other types of acting semigroups in <strong class="pkg">Semigroups</strong>.</p>
+<p>It is harder for the acting semigroup algorithms to compute Green's <em>L</em>- and <em>H</em>-classes of a transformation semigroup and the methods used to compute with Green's <em>R</em>- and <em>D</em>-classes are the most efficient in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> . Thus, if you are computing with a transformation semigroup, wherever possible, it is advisable to use the commands relating to Green's <em>R</em>- or <em>D</em>-classes rather than those relating to Green's <em>L</em>- or <em>H</em>-classes. No such difficulties are present when computing with the other types of acting semigroups in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> .</p>
 
-<p>There are methods in <strong class="pkg">Semigroups</strong> for computing individual Green's classes of an acting semigroup without computing the entire data structure of the underlying semigroup; see <code class="func">GreensRClassOfElementNC</code> (<a href="chap13.html#X7B44317786571F8B"><span class="RefLink">13.1-3</span></a>). It is also possible to compute the \(\mathscr{R}\)-classes, the number of elements and test membership in a semigroup without computing all the elements; see, for example, <code class="func">GreensRClasses</code> (<a href="chap13.html#X7D51218A80234DE5"><span class="RefLink">13.1-4</span></a>), <code class="func">RClassReps</code> (<a href="chap13.html#X865387A87FAAC395"><span class="RefLink">13.1-5</span></a>), <code class="func">IteratorOfRClassReps</code> (<a href="chap13.html#X8566F84A7F6D4193"><span class="RefLink">13.2-1</span></a>), <code class="func">IteratorOfRClasses</code> (<a href="chap13.html#X867D7B8982915960"><span class="RefLink">13.2-2</span></a>), or <code class="func">NrRClasses</code> (<a href="chap13.html#X7E45FD9F7BADDFBD"><span class="RefLink">13.1-9</span></a>). This may be useful if you want to study a very large semigroup where computing all the elements of the semigroup is not feasible.</p>
+<p>There are methods in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for computing individual Green's classes of an acting semigroup without computing the entire data structure of the underlying semigroup; see <code class="func">GreensRClassOfElementNC</code> (<a href="chap10.html#X7B44317786571F8B"><span class="RefLink">10.1-3</span></a>). It is also possible to compute the <em>R</em>-classes, the number of elements and test membership in a semigroup without computing all the elements; see, for example, <code class="func">GreensRClasses</code> (<a href="chap10.html#X7D51218A80234DE5"><span class="RefLink">10.1-4</span></a>), <code class="func">RClassReps</code> (<a href="chap10.html#X865387A87FAAC395"><span class="RefLink">10.1-5</span></a>), <code class="func">IteratorOfRClasses</code> (<a href="chap10.html#X867D7B8982915960"><span class="RefLink">10.2-2</span></a>), or <code class="func">NrRClasses</code> (<a href="chap10.html#X7E45FD9F7BADDFBD"><span class="RefLink">10.1-9</span></a>). This may be useful if you want to study a very large semigroup where computing all the elements of the semigroup is not feasible.</p>
 
-<p><a id="X7D5133C97A5AB1DC" name="X7D5133C97A5AB1DC"></a></p>
+<p><a id="X7F69D8FC7D578A0C" name="X7F69D8FC7D578A0C"></a></p>
 
-<h5>6.1-2 <span class="Heading">Enumerable semigroups</span></h5>
+<h5>6.1-2 IsActingSemigroup</h5>
 
-<p>The second fundamental algorithm is the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a>. The <strong class="pkg">Semigroups</strong> package contains two implementations of the Froidure-Pin Algorithm: one in the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library and the other within the <strong class="pkg">Semigroups</strong> package kernel module.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsActingSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Every acting semigroup, as defined in Section <a href="chap6.html#X7A3AC74C7FF85825"><span class="RefLink">6.1-1</span></a>, belongs to this category.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsActingSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanUseFroidurePin(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeSemigroup(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsActingSemigroup(S);</span>
+false</pre></div>
+
+<p><a id="X7E2DE9767D5D82F7" name="X7E2DE9767D5D82F7"></a></p>
+
+<h5>6.1-3 <span class="Heading">The Froidure-Pin Algorithm</span></h5>
+
+<p>The second fundamental algorithm for computing finite semigroups is the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a>. The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package contains two implementations of the Froidure-Pin Algorithm: one in the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library and the other within the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package kernel module.</p>
 
 <p>Both implementations outperform the algorithms for acting semigroups when applied to semigroups with small (trivial) subgroups. This method is also used to determine the structure of a semigroup when the algorithms described in <a href="chapBib.html#biBMitchell2019aa">[EENMP19]</a> do not apply. It is possible to specify which methods should be applied to a given semigroup; see Section <a href="chap6.html#X799EBA2F819D8867"><span class="RefLink">6.3</span></a>.</p>
 
-<p>We refer to semigroups to which the Froidure-Pin Algorithm can be applied in <strong class="pkg">GAP</strong> as <em>enumerable semigroups</em>, and such semigroups should belong to the representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>). Every acting semigroup in <strong class="pkg">Semigroups</strong> is an enumerable semigroup since the acting semigroup data structure does not readily admit computation of certain properties or attributes.</p>
+<p>A semigroup to which the Froidure-Pin Algorithm can be applied in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> satisfy <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>). Every acting semigroup in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> satisfies <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) and the Froidure-Pin Algorithm is used to compute certain properties or attributes.</p>
 
-<p>Currently, the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> implementation of the Froidure-Pin Algorithm can be applied to semigroups consisting of the following types of elements: transformations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), partitioned binary relations (see Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>) as defined in <a href="chapBib.html#biBMartin2011aa">[MM13]</a>; and matrices over the following semirings:</p>
+<p>Currently, the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> implementation of the Froidure-Pin Algorithm can be applied to semigroups consisting of the following types of elements: transformations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a>), partial permutations (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a>), bipartitions (see Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>), partitioned binary relations (see Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>) as defined in <a href="chapBib.html#biBMartin2011aa">[MM13]</a>; and matrices over the following semirings:</p>
 
 
 <ul>
@@ -158,54 +162,36 @@
 </ul>
 <p>(see Chapter <a href="chap5.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>).</p>
 
-<p>The version of the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a> written in C within the <strong class="pkg">Semigroups</strong> package kernel module can be used to compute any other semigroup in <strong class="pkg">GAP</strong> with representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>). In theory, any finite semigroup can be computed using this algorithm. However, the condition that the semigroup has representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>) is imposed to avoid this method being used when it is inappropriate (such as for finitely presented semigroups which happen to be finite). If implementing a new type of semigroup in <strong class="pkg">GAP</strong>, then simply do</p>
+<p>The version of the Froidure-Pin Algorithm <a href="chapBib.html#biBFroidure1997aa">[FP97]</a> written in C within the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package kernel module can be used to compute any other semigroup in <strong class="pkg">GAP</strong> which satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>). In theory, any finite semigroup can be computed using this algorithm. However, the condition that the semigroup has satisfies <code class="func">CanUseGapFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) is imposed to avoid this method being used when it is inappropriate. If implementing a new type of semigroup in <strong class="pkg">GAP</strong>, then simply do</p>
 
 
-<div class="example"><pre>InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+<div class="example"><pre>InstallTrueMethod(CanUseGapFroidurePin,
                        MyNewSemigroupType);</pre></div>
 
-<p>to make your new semigroup type <code class="code">MyNewSemigroupType</code> use this version of the Froidure-Pin Algorithm.</p>
+<p>to make your new semigroup type <code class="code">MyNewSemigroupType</code> use this version of the Froidure-Pin Algorithm. To make this work efficiently it is necessary that a hash function is implemented for the elements of <code class="code">MyNewSemigroupType</code>; more details will be included in a future edition of this manual.</p>
 
-<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span>. This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroup to which it applies. From a usage perspective there is no difference between those enumerable semigroups that are representable in <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> and those that are not, except that the latter has superior performance.</p>
+<p>Mostly due to the way that <strong class="pkg">GAP</strong> handles memory, this implementation is approximately 4 times slower than the implementation in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> . This version of the Froidure-Pin Algorithm is included because it applies to a wider class of semigroups than those currently implemented in <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> and it is more straightforward to extend the classes of semigroup to which it applies.</p>
 
-<p><a id="X7F69D8FC7D578A0C" name="X7F69D8FC7D578A0C"></a></p>
+<p><a id="X7FEE8CFA87E7B872" name="X7FEE8CFA87E7B872"></a></p>
 
-<h5>6.1-3 IsActingSemigroup</h5>
+<h5>6.1-4 CanUseFroidurePin</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsActingSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanUseFroidurePin</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanUseGapFroidurePin</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanUseLibsemigroupsFroidurePin</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every acting semigroup, as defined in Section <a href="chap6.html#X7A3AC74C7FF85825"><span class="RefLink">6.1-1</span></a>, belongs to this category.</p>
+<p>Every semigroup satisfying <code class="code">CanUseFroidurePin</code> is a valid input for the Froidure-Pin algorithm; see Section <a href="chap6.html#X7E2DE9767D5D82F7"><span class="RefLink">6.1-3</span></a> for more details.</p>
+
+<p>Basic operations for semigroups satisfying <code class="code">CanUseFroidurePin</code> are: <code class="func">AsListCanonical</code> (<a href="chap11.html#X7AC3FAA5826516AD"><span class="RefLink">11.1-1</span></a>), <code class="func">EnumeratorCanonical</code> (<a href="chap11.html#X7AC3FAA5826516AD"><span class="RefLink">11.1-1</span></a>), <code class="func">IteratorCanonical</code> (<a href="chap11.html#X7AC3FAA5826516AD"><span class="RefLink">11.1-1</span></a>), <code class="func">PositionCanonical</code> (<a href="chap11.html#X7B4B10AE81602D4E"><span class="RefLink">11.1-2</span></a>), <code class="func">Enumerate</code> (<a href="chap11.html#X7BCD5342793C7A7E"><span class="RefLink">11.1-3</span></a>), and <code class="func">IsEnumerated</code> (<a href="chap11.html#X877FAAA67F834897"><span class="RefLink">11.1-4</span></a>).</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsActingSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEnumerableSemigroupRep(S);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanUseFroidurePin(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeSemigroup(3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsActingSemigroup(S);</span>
-false</pre></div>
-
-<p><a id="X874E25727FDF82B4" name="X874E25727FDF82B4"></a></p>
-
-<h5>6.1-4 IsEnumerableSemigroupRep</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEnumerableSemigroupRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>Every semigroup with this representation can have the Froidure-Pin algorithm applied to it; see Section <a href="chap6.html#X7D5133C97A5AB1DC"><span class="RefLink">6.1-2</span></a> for more details.</p>
-
-<p>Basic operations for enumerable semigroups are <code class="func">AsListCanonical</code> (<a href="chap14.html#X7AC3FAA5826516AD"><span class="RefLink">14.1-1</span></a>), <code class="func">EnumeratorCanonical</code> (<a href="chap14.html#X7AC3FAA5826516AD"><span class="RefLink">14.1-1</span></a>), <code class="func">IteratorCanonical</code> (<a href="chap14.html#X7AC3FAA5826516AD"><span class="RefLink">14.1-1</span></a>), <code class="func">PositionCanonical</code> (<a href="chap14.html#X7B4B10AE81602D4E"><span class="RefLink">14.1-2</span></a>), <code class="func">Enumerate</code> (<a href="chap14.html#X7BCD5342793C7A7E"><span class="RefLink">14.1-3</span></a>), and <code class="func">IsFullyEnumerated</code> (<a href="chap14.html#X7FA42CA97917C8A6"><span class="RefLink">14.1-4</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEnumerableSemigroupRep(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeSemigroup(3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEnumerableSemigroupRep(S);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanUseFroidurePin(S);</span>
 false
 </pre></div>
 
@@ -263,7 +249,7 @@ false
 <li><p><code class="func">ClosureInverseMonoid</code> (<a href="chap6.html#X7BE36790862AE26F"><span class="RefLink">6.4-1</span></a>),</p>
 
 </li>
-<li><p><code class="func">SemigroupIdeal</code> (<a href="chap7.html#X78E15B0184A1DC14"><span class="RefLink">7.1-1</span></a>)</p>
+<li><p><code class="func">SemigroupIdeal</code> (<a href="chap9.html#X78E15B0184A1DC14"><span class="RefLink">9.1-1</span></a>)</p>
 
 </li>
 </ul>
@@ -274,13 +260,13 @@ false
 
 <dl>
 <dt><strong class="Mark"><code class="code">acting</code></strong></dt>
-<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. Roughly speaking, there are two types of methods in the <strong class="pkg">Semigroups</strong> package: those for semigroups which have to be fully enumerated, and those for semigroups that do not; see Section <a href="chap1.html#X7DFB63A97E67C0A1"><span class="RefLink">1.1</span></a>. In order for a semigroup to use the latter methods in <strong class="pkg">Semigroups</strong> it must satisfy <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-3</span></a>). By default any semigroup or monoid of transformations, partial permutations, Rees 0-matrix elements, or bipartitions satisfies <code class="code">IsActingSemigroup</code>.</p>
+<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. Roughly speaking, there are two types of methods in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package: those for semigroups which have to be fully enumerated, and those for semigroups that do not; see Section <a href="chap1.html#X7DFB63A97E67C0A1"><span class="RefLink">1.1</span></a>. In order for a semigroup to use the latter methods in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> it must satisfy <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-2</span></a>). By default any semigroup or monoid of transformations, partial permutations, Rees 0-matrix elements, or bipartitions satisfies <code class="code">IsActingSemigroup</code>.</p>
 
-<p>There are cases (such as when it is known <em>a priori</em> that the semigroup is \(\mathscr{D}\)-trivial), when it might be preferable to use the methods that involve fully enumerating a semigroup. In other words, it might be desirable to disable the more sophisticated methods for acting semigroups. If this is the case, then the value of this component can be set <code class="keyw">false</code> when the semigroup is created. Following this none of the special methods for acting semigroup will be used to compute anything about the semigroup.</p>
+<p>There are cases (such as when it is known <em>a priori</em> that the semigroup is <em>D</em>-trivial), when it might be preferable to use the methods that involve fully enumerating a semigroup. In other words, it might be desirable to disable the more sophisticated methods for acting semigroups. If this is the case, then the value of this component can be set <code class="keyw">false</code> when the semigroup is created. Following this none of the special methods for acting semigroup will be used to compute anything about the semigroup.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">regular</code></strong></dt>
-<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. If it is known <em>a priori</em> that the semigroup <code class="code">S</code> being created is a regular semigroup, then this component can be set to <code class="keyw">true</code>. In this case, <code class="code">S</code> knows it is a regular semigroup and can take advantage of the methods for regular semigroups in <strong class="pkg">Semigroups</strong>. It is usually much more efficient to compute with a regular semigroup that to compute with a non-regular semigroup.</p>
+<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. If it is known <em>a priori</em> that the semigroup <code class="code">S</code> being created is a regular semigroup, then this component can be set to <code class="keyw">true</code>. In this case, <code class="code">S</code> knows it is a regular semigroup and can take advantage of the methods for regular semigroups in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> . It is usually much more efficient to compute with a regular semigroup that to compute with a non-regular semigroup.</p>
 
 <p>If this option is set to <code class="keyw">true</code> when the semigroup being defined is <strong class="button">not</strong> regular, then the results might be unpredictable.</p>
 
@@ -288,31 +274,19 @@ false
 
 </dd>
 <dt><strong class="Mark"><code class="code">hashlen</code></strong></dt>
-<dd><p>this component should be a positive integer, which roughly specifies the lengths of the hash tables used internally by <strong class="pkg">Semigroups</strong>. <strong class="pkg">Semigroups</strong> uses hash tables in several fundamental methods. The lengths of these tables are a compromise between performance and memory usage; larger tables provide better performance for large computations but use more memory. Note that it is unlikely that you will need to specify this option unless you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly or that the performance of <strong class="pkg">Semigroups</strong> is poorer than expected. If you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly, or you plan to do a large number of computations with relatively small semigroups (say with tens of thousands of elements), then you might consider setting <code class="code">hashlen</code> to be less than the default value of <code class="code">12517</code> for each of these semigroups. If you find that the performance of <strong class="pkg">Semigroups</strong> is unexpectedly poor, or you plan to do a computation with a very large semigroup (say, more than 10 million elements), then you might consider setting <code class="code">hashlen</code> to be greater than the default value of <code class="code">12517</code>.</p>
+<dd><p>this component should be a positive integer, which roughly specifies the lengths of the hash tables used internally by <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> . <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> uses hash tables in several fundamental methods. The lengths of these tables are a compromise between performance and memory usage; larger tables provide better performance for large computations but use more memory. Note that it is unlikely that you will need to specify this option unless you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly or that the performance of <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is poorer than expected. If you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly, or you plan to do a large number of computations with relatively small semigroups (say with tens of thousands of elements), then you might consider setting <code class="code">hashlen</code> to be less than the default value of <code class="code">12517</code> for each of these semigroups. If you find that the performance of <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is unexpectedly poor, or you plan to do a computation with a very large semigroup (say, more than 10 million elements), then you might consider setting <code class="code">hashlen</code> to be greater than the default value of <code class="code">12517</code>.</p>
 
-<p>You might find it useful to set the info level of the info class <code class="code">InfoOrb</code> to 2 or higher since this will indicate when hash tables used by <strong class="pkg">Semigroups</strong> are being grown; see <code class="func">SetInfoLevel</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap7_mj.html#X7B2ADC37783104B9"><span class="RefLink">Reference: InfoLevel</span></a>).</p>
+<p>You might find it useful to set the info level of the info class <code class="code">InfoOrb</code> to 2 or higher since this will indicate when hash tables used by <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> are being grown; see <code class="func">SetInfoLevel</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap7_mj.html#X7B2ADC37783104B9"><span class="RefLink">Reference: InfoLevel</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">small</code></strong></dt>
-<dd><p>if this component is set to <code class="keyw">true</code>, then <strong class="pkg">Semigroups</strong> will compute a small subset of <var class="Arg">gens</var> that generates <var class="Arg">S</var> at the time that <var class="Arg">S</var> is created. This will increase the amount of time required to create <var class="Arg">S</var> substantially, but may decrease the amount of time required for subsequent calculations with <var class="Arg">S</var>. If this component is set to <code class="keyw">false</code>, then <strong class="pkg">Semigroups</strong> will return the semigroup generated by <var class="Arg">gens</var> without modifying <var class="Arg">gens</var>. The default value for this component is <code class="keyw">false</code>.</p>
+<dd><p>if this component is set to <code class="keyw">true</code>, then <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> will compute a small subset of <var class="Arg">gens</var> that generates <var class="Arg">S</var> at the time that <var class="Arg">S</var> is created. This will increase the amount of time required to create <var class="Arg">S</var> substantially, but may decrease the amount of time required for subsequent calculations with <var class="Arg">S</var>. If this component is set to <code class="keyw">false</code>, then <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> will return the semigroup generated by <var class="Arg">gens</var> without modifying <var class="Arg">gens</var>. The default value for this component is <code class="keyw">false</code>.</p>
 
 <p>This option is ignored when passed to <code class="func">ClosureSemigroup</code> (<a href="chap6.html#X7BE36790862AE26F"><span class="RefLink">6.4-1</span></a>) or <code class="func">ClosureInverseSemigroup</code> (<a href="chap6.html#X7BE36790862AE26F"><span class="RefLink">6.4-1</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">cong_by_ker_trace_threshold</code></strong></dt>
-<dd><p>this should be a positive integer, which specifies a semigroup size. If <var class="Arg">S</var> is a semigroup with inverse op, and <var class="Arg">S</var> has a size greater than or equal to this threshold, then any congruence defined on it may use the "kernel and trace" method to perform calculations. If its size is less than the threshold, then other methods will be used instead. The "kernel and trace" method has better complexity than the generic method, but has large overheads which make it a poor choice for small semigroups. The default value for this component is <code class="code">10 ^ 5</code>. See Section <a href="chap17.html#X7BFDC38178940AE6"><span class="RefLink">17.7</span></a> for more information about the "kernel and trace" method.</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">report</code></strong></dt>
-<dd><p>this component should be either <code class="keyw">true</code> or <code class="keyw">false</code>. If this component is set to <code class="keyw">true</code>, then some additional information will be provided during computations performed by the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library.</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">batch_size</code></strong></dt>
-<dd><p>this component should be a positive integer. If <var class="Arg">S</var> is a semigroup with representation <code class="func">IsEnumerableSemigroupRep</code> (<a href="chap6.html#X874E25727FDF82B4"><span class="RefLink">6.1-4</span></a>), then when certain computations are performed with <var class="Arg">S</var> using the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library, then the computations will be executed in batches of size at least <code class="code">batch_size</code>. This value of this component changes the performance of the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library — you may wish to tweak this parameter if you experience sub-optimal performance.</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">nr_threads</code></strong></dt>
-<dd><p>this component should be a positive integer. This number sets the maximum number of threads that can be used by computations in the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/">libsemigroups</a></span> C++ library.</p>
+<dd><p>this should be a positive integer, which specifies a semigroup size. If <var class="Arg">S</var> is a semigroup with inverse op, and <var class="Arg">S</var> has a size greater than or equal to this threshold, then any congruence defined on it may use the "kernel and trace" method to perform calculations. If its size is less than the threshold, then other methods will be used instead. The "kernel and trace" method has better complexity than the generic method, but has large overheads which make it a poor choice for small semigroups. The default value for this component is <code class="code">10 ^ 5</code>. See Section <a href="chap13.html#X7BFDC38178940AE6"><span class="RefLink">13.7</span></a> for more information about the "kernel and trace" method.</p>
 
 </dd>
 </dl>
@@ -329,7 +303,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="code">semigroups/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-4.0.0/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
@@ -340,9 +314,9 @@ true</pre></div>
 
 <p>The value of <code class="code">SEMIGROUPS.DefaultOptionsRec</code> is defined in the file <code class="code">semigroups/gap/options.g</code>.</p>
 
-<p><a id="X7A5CFD4F8607CBF7" name="X7A5CFD4F8607CBF7"></a></p>
+<p><a id="X87AA2EB6810B4631" name="X87AA2EB6810B4631"></a></p>
 
-<h4>6.4 <span class="Heading">New semigroups from old</span></h4>
+<h4>6.4 <span class="Heading">Subsemigroups and supersemigroups</span></h4>
 
 <p><a id="X7BE36790862AE26F" name="X7BE36790862AE26F"></a></p>
 
@@ -480,194 +454,15 @@ function( x ) ... end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 142</pre></div>
 
-<p><a id="X861BA02C7902A4F4" name="X861BA02C7902A4F4"></a></p>
-
-<h5>6.4-4 DirectProduct</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">S</var>[, <var class="Arg">T</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductOp</code>( <var class="Arg">list</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A transformation semigroup.</p>
-
-<p>The function <code class="code">DirectProduct</code> takes an arbitrary positive number of finite semigroups, and returns a semigroup that is isomorphic to their direct product.</p>
-
-<p>If these finite semigroups are all partial perm semigroups, all bipartition semigroups, or all PBR semigroups, then <code class="code">DirectProduct</code> returns a semigroup of the same type. Otherwise, <code class="code">DirectProduct</code> returns a transformation semigroup.</p>
-
-<p>The operation <code class="code">DirectProductOp</code> is included for consistency with the <strong class="pkg">GAP</strong> library (see <code class="func">DirectProductOp</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap49_mj.html#X861BA02C7902A4F4"><span class="RefLink">Reference: DirectProductOp</span></a>)). It takes exactly two arguments, namely a non-empty list <var class="Arg">list</var> of semigroups and one of these semigroups, <var class="Arg">S</var>, and returns the same result as <code class="code">CallFuncList(DirectProduct, <var class="Arg">list</var>)</code>.</p>
-
-<p>If <code class="code">D</code> is the direct product of a collection of semigroups, then an embedding of the <code class="code">i</code>th factor into <code class="code">D</code> can be accessed with the command <code class="code">Embedding(D, i)</code>, and a projection of <code class="code">D</code> onto its <code class="code">i</code>th factor can be accessed with the command <code class="code">Projection(D, i)</code>; see <code class="func">Embedding</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">Reference: Embedding</span></a>) and <code class="func">Projection</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">Reference: Projection</span></a>) for more information.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid([PartialPerm([2, 1])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseMonoid([PartialPerm([1, 2, 3])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, T);</span>
-&lt;commutative inverse partial perm monoid of rank 5 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(D);</span>
-[ &lt;identity partial perm on [ 1, 2, 3, 4, 5 ]&gt;, (1,2)(3)(4)(5) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, S, S);; IsRegularSemigroup(D);; D;</span>
-&lt;regular bipartition monoid of size 3375, degree 6 with 9 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([PartialPerm([2, 5, 0, 1, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   PartialPerm([5, 2, 4, 3])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, T);</span>
-&lt;transformation semigroup of size 122, degree 9 with 63 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D) = Size(S) * Size(T);</span>
-true</pre></div>
-
-<p><a id="X8786EFBC78D7D6ED" name="X8786EFBC78D7D6ED"></a></p>
-
-<h5>6.4-5 WreathProduct</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProduct</code>( <var class="Arg">M</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A transformation semigroup.</p>
-
-<p>If <var class="Arg">M</var> is a transformation monoid (or a permutation group) of degree <code class="code">m</code>, and <var class="Arg">S</var> is a transformation semigroup (or permutation group) of degree <code class="code">s</code>, the operation <code class="code">WreathProduct(<var class="Arg">M</var>, <var class="Arg">S</var>)</code> returns the wreath product of <var class="Arg">M</var> and <var class="Arg">S</var>, in terms of an embedding in the full transformation monoid of degree <code class="code">m * s</code>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FullTransformationMonoid(3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Group((1, 3));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W := WreathProduct(T, C);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(W);</span>
-39366
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WW := WreathProduct(C, T);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(WW);</span>
-216
-</pre></div>
-
-<p><a id="X7F035EC07AA7CD97" name="X7F035EC07AA7CD97"></a></p>
-
-<h4>6.5 <span class="Heading"> Dual semigroups </span></h4>
-
-<p>The <em>dual semigroup</em> of a semigroup <code class="code">S</code> is the semigroup with the same underlying set of elements but with reversed multiplication; this is anti-isomorphic to <code class="code">S</code>. In <strong class="pkg">Semigroups</strong> a semigroup and its dual are represented with disjoint sets of elements.</p>
-
-<p><a id="X79F2643C8642A3B0" name="X79F2643C8642A3B0"></a></p>
-
-<h5>6.5-1 DualSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: The dual semigroup of the given semigroup.</p>
-
-<p>The dual semigroup of a semigroup <var class="Arg">S</var> is the semigroup with the same underlying set as <var class="Arg">S</var>, but with multiplication reversed; this is anti-isomorphic to <var class="Arg">S</var>. This attribute returns a semigroup isomorphic to the dual semigroup of <var class="Arg">S</var>.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 2, 2]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 4, 4, 1, 2])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
-&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
- generators&gt;&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = Size(D);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S) = NrDClasses(D);</span>
-true</pre></div>
-
-<p><a id="X83403224821CD079" name="X83403224821CD079"></a></p>
-
-<h5>6.5-2 IsDualSemigroupRep</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupRep</code>( <var class="Arg">sgrp</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">sgrp</var> is represented as a dual semigroup.</p>
-
-<p>Semigroups created using <code class="func">DualSemigroup</code> (<a href="chap6.html#X79F2643C8642A3B0"><span class="RefLink">6.5-1</span></a>) normally have this representation. The exception is semigroups which are the dual of semigroups already lying in this category. That is, a semigroup has the representation <code class="func">IsDualSemigroupRep</code> if and only if the corresponding dual semigroup does not.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 5, 1, 1, 2]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 2, 4, 4, 3])]);</span>
-&lt;transformation semigroup of degree 5 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
-&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
- generators&gt;&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(D);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := DualSemigroup(D);</span>
-&lt;transformation semigroup of degree 5 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(R);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R = S;</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismTransformationSemigroup(D));</span>
-&lt;transformation semigroup of size 16, degree 17 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(T);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Representative(D);</span>
-&lt;Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := Semigroup(x);</span>
-&lt;dual semigroup of &lt;commutative transformation semigroup of degree 5 
- with 1 generator&gt;&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(V);</span>
-true</pre></div>
-
-<p><a id="X79BAAA397FC1FA2E" name="X79BAAA397FC1FA2E"></a></p>
-
-<h5>6.5-3 IsDualSemigroupElement</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupElement</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">elt</var> has the representation of a dual semigroup element.</p>
-
-<p>Elements of a dual semigroup obtained using <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap6.html#X7CB64FA378EC715B"><span class="RefLink">6.5-4</span></a>) normally lie in this category. The exception is elements obtained by applying the map <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap6.html#X7CB64FA378EC715B"><span class="RefLink">6.5-4</span></a>) to elements already in this category. That is, the elements of a semigroup lie in the category <code class="func">IsDualSemigroupElement</code> if and only if the elements of the corresponding dual semigroup do not.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularPartitionMonoid(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := GeneratorsOfSemigroup(S)[1];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := s ^ map;</span>
-&lt;&lt;block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]&gt;
-  in the dual semigroup&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupElement(t);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(map);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := t ^ inv;</span>
-&lt;block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupElement(x);</span>
-false</pre></div>
-
-<p><a id="X7CB64FA378EC715B" name="X7CB64FA378EC715B"></a></p>
-
-<h5>6.5-4 AntiIsomorphismDualSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismDualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An anti-isomorphism from <var class="Arg">S</var> to the corresponding dual semigroup.</p>
-
-<p>The dual semigroup of <var class="Arg">S</var> mathematically has the same underlying set as <var class="Arg">S</var>, but is represented with a different set of elements in <strong class="pkg">Semigroups</strong>. This function returns a mapping which is an anti-isomorphism from <var class="Arg">S</var> to its dual.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(3);</span>
-&lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualSemigroup(S);</span>
-MappingByFunction( &lt;regular bipartition *-monoid of size 203, 
- degree 3 with 4 generators&gt;, &lt;dual semigroup of 
-&lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
- &gt;, function( x ) ... end, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(map);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, -2], [2, -3], [3, -1]]);</span>
-&lt;block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Bipartition([[1], [2, -2], [3, -3], [-1]]);</span>
-&lt;bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ -1 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(x ^ map) * (y ^ map) = (y * x) ^ map;</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x ^ map;</span>
-&lt;&lt;block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]&gt;
-  in the dual semigroup&gt;</pre></div>
-
 <p><a id="X82CCC1A781650878" name="X82CCC1A781650878"></a></p>
 
-<h4>6.6 <span class="Heading">Changing the representation of a semigroup</span></h4>
+<h4>6.5 <span class="Heading">Changing the representation of a semigroup</span></h4>
 
-<p>The <strong class="pkg">Semigroups</strong> package provides two convenient constructors <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) and <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) for changing the representation of a given semigroup or monoid. These methods can be used to find an isomorphism from any semigroup to a semigroup of any other type, provided such an isomorphism exists.</p>
+<p>The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package provides two convenient constructors <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) and <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) for changing the representation of a given semigroup or monoid. These methods can be used to find an isomorphism from any semigroup to a semigroup of any other type, provided such an isomorphism exists.</p>
 
-<p>Note that at present neither <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) nor <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) can be used to determine whether two given semigroups, or monoids, are isomorphic.</p>
+<p>Note that at present neither <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) nor <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) can be used to determine whether two given semigroups, or monoids, are isomorphic.</p>
 
-<p>Some methods for <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) and <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) are based on methods for the <strong class="pkg">GAP</strong> library operations:</p>
+<p>Some methods for <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) and <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) are based on methods for the <strong class="pkg">GAP</strong> library operations:</p>
 
 
 <ul>
@@ -687,7 +482,7 @@ true
 
 </li>
 </ul>
-<p>The operation <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) can be used to return an isomorphism from a semigroup which is mathematically a monoid (but does not below to the category of monoids in <strong class="pkg">GAP</strong> <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>)) into a monoid. This is the primary purpose of the operation <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>). Either <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) or <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) can be used to change the representation of a monoid, but only the latter is guaranteed to return an object in the category of monoids.</p>
+<p>The operation <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) can be used to return an isomorphism from a semigroup which is mathematically a monoid (but does not below to the category of monoids in <strong class="pkg">GAP</strong> <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>)) into a monoid. This is the primary purpose of the operation <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>). Either <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) or <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) can be used to change the representation of a monoid, but only the latter is guaranteed to return an object in the category of monoids.</p>
 
 
 <div class="example"><pre>
@@ -715,18 +510,18 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSemigroup(IsPBRSemigroup, M);</span>
 &lt;pbr semigroup of size 163, degree 8 with 4 generators&gt;</pre></div>
 
-<p>There are some further methods in <strong class="pkg">Semigroups</strong> for obtaining an isomorphism from a Rees matrix, or 0-matrix, semigroup to another such semigroup with particular properties; <code class="func">RMSNormalization</code> (<a href="chap6.html#X80DE617E841E5BA0"><span class="RefLink">6.6-7</span></a>) and <code class="func">RZMSNormalization</code> (<a href="chap6.html#X870210EA7912B52A"><span class="RefLink">6.6-6</span></a>).</p>
+<p>There are some further methods in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for obtaining an isomorphism from a Rees matrix, or 0-matrix, semigroup to another such semigroup with particular properties; <code class="func">RMSNormalization</code> (<a href="chap6.html#X80DE617E841E5BA0"><span class="RefLink">6.5-7</span></a>) and <code class="func">RZMSNormalization</code> (<a href="chap6.html#X870210EA7912B52A"><span class="RefLink">6.5-6</span></a>).</p>
 
 <p><a id="X838F18E87F765697" name="X838F18E87F765697"></a></p>
 
-<h5>6.6-1 IsomorphismSemigroup</h5>
+<h5>6.5-1 IsomorphismSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroup</code>( <var class="Arg">filt</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism of semigroups.</p>
 
 <p><code class="code">IsomorphismSemigroup</code> can be used to find an isomorphism from a given semigroup to a semigroup of another type, provided such an isomorphism exists.</p>
 
-<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXSemigroup</code>, for example, <code class="func">IsTransformationSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationSemigroup</span></a>), <code class="func">IsFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>), and <code class="func">IsPBRSemigroup</code> (<a href="chap4.html#X8554A3F878A4DC73"><span class="RefLink">4.6-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXMonoid</code>; see <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>). The second argument <var class="Arg">S</var> should be a semigroup.</p>
+<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXSemigroup</code>, for example, <code class="func">IsTransformationSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationSemigroup</span></a>), <code class="func">IsFpSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpSemigroup</span></a>), and <code class="func">IsPBRSemigroup</code> (<a href="chap4.html#X8554A3F878A4DC73"><span class="RefLink">4.6-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXMonoid</code>; see <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>). The second argument <var class="Arg">S</var> should be a semigroup.</p>
 
 <p><code class="code">IsomorphismSemigroup</code> returns an isomorphism from <var class="Arg">S</var> to a semigroup <var class="Arg">T</var> of the type described by <var class="Arg">filt</var>, if such an isomorphism exists. More precisely, if <code class="code">T</code> is the range of the returned isomorphism, then <code class="code"><var class="Arg">filt</var>(T)</code> will return <code class="keyw">true</code>. For example, if <var class="Arg">filt</var> is <code class="code">IsTransformationSemigroup</code>, then the range of the returned isomorphism will be a transformation semigroup.</p>
 
@@ -754,8 +549,9 @@ MappingByFunction( &lt;bipartition semigroup of size 11, degree 6 with 2
  generators&gt;, function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsFpSemigroup, S);</span>
 MappingByFunction( &lt;bipartition semigroup of size 11, degree 6 with 2 
- generators&gt;, &lt;fp semigroup on the generators 
-[ s1, s2 ]&gt;, function( x ) ... end, function( x ) ... end )
+ generators&gt;
+ , &lt;fp semigroup with 2 generators and 5 relations&gt;, function( x ) ...\
+ end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 6, 8, 10],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [2, 6, 7, 9, 1, 5]),</span>
@@ -782,14 +578,14 @@ MappingByFunction( &lt;partial perm semigroup of rank 3 with 2
 
 <p><a id="X83D03BE678C9974F" name="X83D03BE678C9974F"></a></p>
 
-<h5>6.6-2 IsomorphismMonoid</h5>
+<h5>6.5-2 IsomorphismMonoid</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMonoid</code>( <var class="Arg">filt</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism of monoids.</p>
 
 <p><code class="code">IsomorphismMonoid</code> can be used to find an isomorphism from a given semigroup which is mathematically a monoid (but might not belong to the category of monoids in <strong class="pkg">GAP</strong>) to a monoid, provided such an isomorphism exists.</p>
 
-<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXMonoid</code>, for example, <code class="func">IsTransformationMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationMonoid</span></a>), <code class="func">IsFpMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpMonoid</span></a>), and <code class="func">IsBipartitionMonoid</code> (<a href="chap3.html#X810BFF647C4E191E"><span class="RefLink">3.8-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXSemigroup</code>; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>). The second argument <var class="Arg">S</var> should be a semigroup which is mathematically a monoid but which may or may not belong to the category <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) of monoids in <strong class="pkg">GAP</strong>, i.e. <var class="Arg">S</var> must satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap15.html#X7E4DEECD7CD9886D"><span class="RefLink">15.1-13</span></a>).</p>
+<p>The first argument <var class="Arg">filt</var> must be of the form <code class="code">IsXMonoid</code>, for example, <code class="func">IsTransformationMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X7EAF835D7FE4026F"><span class="RefLink">Reference: IsTransformationMonoid</span></a>), <code class="func">IsFpMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X8239EF2B853411E9"><span class="RefLink">Reference: IsFpMonoid</span></a>), and <code class="func">IsBipartitionMonoid</code> (<a href="chap3.html#X810BFF647C4E191E"><span class="RefLink">3.8-1</span></a>) are some possible values for <var class="Arg">filt</var>. Note that <var class="Arg">filt</var> should not be of the form <code class="code">IsXSemigroup</code>; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>). The second argument <var class="Arg">S</var> should be a semigroup which is mathematically a monoid but which may or may not belong to the category <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) of monoids in <strong class="pkg">GAP</strong>, i.e. <var class="Arg">S</var> must satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>).</p>
 
 <p><code class="code">IsomorphismMonoid</code> returns a monoid isomorphism from <var class="Arg">S</var> to a semigroup <var class="Arg">T</var> of the type described by <var class="Arg">filt</var>, if such an isomorphism exists. In this context, a <em>monoid isomorphism</em> is a semigroup isomorphism that maps the <code class="func">MultiplicativeNeutralElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>) of <var class="Arg">S</var> to the <code class="func">One</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of <var class="Arg">T</var>. If <code class="code">T</code> is the range of the returned isomorphism, then <code class="code"><var class="Arg">filt</var>(T)</code> will return <code class="keyw">true</code>. For example, if <var class="Arg">filt</var> is <code class="code">IsTransformationMonoid</code>, then the range of the returned isomorphism will be a transformation monoid.</p>
 
@@ -812,17 +608,18 @@ MappingByFunction( &lt;transformation semigroup of degree 10 with 2
  , function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismMonoid(IsFpMonoid, S);</span>
 MappingByFunction( &lt;transformation semigroup of degree 10 with 2 
- generators&gt;, &lt;fp monoid on the generators 
-[ m1, m2 ]&gt;, function( x ) ... end, function( x ) ... end )</pre></div>
+ generators&gt;
+ , &lt;fp monoid with 2 generators and 17 relations&gt;, function( x ) ... e\
+nd, function( x ) ... end )</pre></div>
 
 <p><a id="X80ED104F85AE5134" name="X80ED104F85AE5134"></a></p>
 
-<h5>6.6-3 AsSemigroup</h5>
+<h5>6.5-3 AsSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroup</code>( <var class="Arg">filt</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup.</p>
 
-<p><code class="code">AsSemigroup(<var class="Arg">filt</var>, <var class="Arg">S</var>)</code> is just shorthand for <code class="code">Range(IsomorphismSemigroup(<var class="Arg">filt</var>, <var class="Arg">S</var>))</code>, when <var class="Arg">S</var> is a semigroup; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.6-1</span></a>) for more details.</p>
+<p><code class="code">AsSemigroup(<var class="Arg">filt</var>, <var class="Arg">S</var>)</code> is just shorthand for <code class="code">Range(IsomorphismSemigroup(<var class="Arg">filt</var>, <var class="Arg">S</var>))</code>, when <var class="Arg">S</var> is a semigroup; see <code class="func">IsomorphismSemigroup</code> (<a href="chap6.html#X838F18E87F765697"><span class="RefLink">6.5-1</span></a>) for more details.</p>
 
 <p>Note that if the argument <var class="Arg">S</var> belongs to the category of monoids <code class="func">IsMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>), then <code class="code">AsSemigroup</code> will often, but not always, return a monoid. A monoid is not returned if there is not a good monoid isomorphism from <var class="Arg">S</var> to a monoid of the required type, but there is a good semigroup isomorphism.</p>
 
@@ -856,16 +653,16 @@ MappingByFunction( &lt;transformation semigroup of degree 10 with 2
 
 <p><a id="X7B22038F832B9C0F" name="X7B22038F832B9C0F"></a></p>
 
-<h5>6.6-4 AsMonoid</h5>
+<h5>6.5-4 AsMonoid</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMonoid</code>( [<var class="Arg">filt</var>, ]<var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A monoid or <code class="keyw">fail</code>.</p>
 
-<p><code class="code">AsMonoid(<var class="Arg">filt</var>, <var class="Arg">S</var>)</code> is just shorthand for <code class="code">Range(IsomorphismMonoid(<var class="Arg">filt</var>, <var class="Arg">S</var>))</code>, when <var class="Arg">S</var> is a semigroup or monoid; see <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.6-2</span></a>) for more details.</p>
+<p><code class="code">AsMonoid(<var class="Arg">filt</var>, <var class="Arg">S</var>)</code> is just shorthand for <code class="code">Range(IsomorphismMonoid(<var class="Arg">filt</var>, <var class="Arg">S</var>))</code>, when <var class="Arg">S</var> is a semigroup or monoid; see <code class="func">IsomorphismMonoid</code> (<a href="chap6.html#X83D03BE678C9974F"><span class="RefLink">6.5-2</span></a>) for more details.</p>
 
 <p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is mathematically a monoid which does not belong to the category of monoids in <strong class="pkg">GAP</strong>, then <code class="code">AsMonoid</code> returns a monoid (in the category of monoids) isomorphic to <var class="Arg">S</var> and of the same type as <var class="Arg">S</var>. If <var class="Arg">S</var> is already in the category of monoids and the first argument <var class="Arg">filt</var> is omitted, then <var class="Arg">S</var> is returned.</p>
 
-<p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is not a monoid, i.e. it does not satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap15.html#X7E4DEECD7CD9886D"><span class="RefLink">15.1-13</span></a>), then <code class="keyw">fail</code> is returned.</p>
+<p>If the first argument <var class="Arg">filt</var> is omitted and the semigroup <var class="Arg">S</var> is not a monoid, i.e. it does not satisfy <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>), then <code class="keyw">fail</code> is returned.</p>
 
 
 <div class="example"><pre>
@@ -887,12 +684,12 @@ MappingByFunction( &lt;transformation semigroup of degree 10 with 2
 
 <p><a id="X80B7B1C783AA1567" name="X80B7B1C783AA1567"></a></p>
 
-<h5>6.6-5 IsomorphismPermGroup</h5>
+<h5>6.5-5 IsomorphismPermGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
-<p>If the semigroup <var class="Arg">S</var> is mathematically a group, so that it satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap15.html#X852F29E8795FA489"><span class="RefLink">15.1-7</span></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism to a permutation group.</p>
+<p>If the semigroup <var class="Arg">S</var> is mathematically a group, so that it satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism to a permutation group.</p>
 
 <p>If <var class="Arg">S</var> is not a group then an error is given.</p>
 
@@ -928,7 +725,7 @@ true</pre></div>
 
 <p><a id="X870210EA7912B52A" name="X870210EA7912B52A"></a></p>
 
-<h5>6.6-6 RZMSNormalization</h5>
+<h5>6.5-6 RZMSNormalization</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSNormalization</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
@@ -939,7 +736,7 @@ true</pre></div>
 <ul>
 <li><p>The matrix <span class="SimpleMath">Q</span> is in block diagonal form, and the blocks are ordered by decreasing size along the leading diagonal (the size of a block is defined to be the number of rows it contains multiplied by the number of columns it contains).</p>
 
-<p>If the index sets <span class="SimpleMath">I</span> and <span class="SimpleMath">Λ</span> are partitioned into <span class="SimpleMath">k</span> parts according to the <code class="func">RZMSConnectedComponents</code> (<a href="chap14.html#X79B062917AB34542"><span class="RefLink">14.14-2</span></a>) of <span class="SimpleMath">S</span>, giving a disjoint union <span class="SimpleMath">I=I_1∪...∪ I_k</span> and <span class="SimpleMath">Λ=Λ_1∪...∪Λ_k</span>, then the <span class="SimpleMath">r</span>th block corresponds to the sub-matrix <span class="SimpleMath">Q_r</span> of <span class="SimpleMath">Q</span> defined by <span class="SimpleMath">I_r</span> and <span class="SimpleMath">Λ_r</span>.</p>
+<p>If the index sets <span class="SimpleMath">I</span> and <span class="SimpleMath">Λ</span> are partitioned into <span class="SimpleMath">k</span> parts according to the <code class="func">RZMSConnectedComponents</code> (<a href="chap11.html#X79B062917AB34542"><span class="RefLink">11.13-2</span></a>) of <span class="SimpleMath">S</span>, giving a disjoint union <span class="SimpleMath">I=I_1∪...∪ I_k</span> and <span class="SimpleMath">Λ=Λ_1∪...∪Λ_k</span>, then the <span class="SimpleMath">r</span>th block corresponds to the sub-matrix <span class="SimpleMath">Q_r</span> of <span class="SimpleMath">Q</span> defined by <span class="SimpleMath">I_r</span> and <span class="SimpleMath">Λ_r</span>.</p>
 
 </li>
 <li><p>The first non-zero entry in a row occurs no sooner than the first non-zero entry in any previous row.</p>
@@ -952,7 +749,7 @@ true</pre></div>
 
 </li>
 </ul>
-<p>Furthermore, if <span class="SimpleMath">T</span> is a group (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap15.html#X852F29E8795FA489"><span class="RefLink">15.1-7</span></a>) returns <code class="keyw">true</code>), then the non-zero entries of the structure matrix <span class="SimpleMath">Q</span> are chosen such that the following hold:</p>
+<p>Furthermore, if <span class="SimpleMath">T</span> is a group (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>) returns <code class="keyw">true</code>), then the non-zero entries of the structure matrix <span class="SimpleMath">Q</span> are chosen such that the following hold:</p>
 
 
 <ul>
@@ -1000,12 +797,12 @@ MappingByFunction( &lt;Rees 0-matrix semigroup 3x3 over Group(())&gt;,
 
 <p><a id="X80DE617E841E5BA0" name="X80DE617E841E5BA0"></a></p>
 
-<h5>6.6-7 RMSNormalization</h5>
+<h5>6.5-7 RMSNormalization</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSNormalization</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
-<p>If <var class="Arg">R</var> is a Rees matrix semigroup over a group <code class="code">G</code> (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap15.html#X852F29E8795FA489"><span class="RefLink">15.1-7</span></a>) returns <code class="keyw">true</code>), then <code class="code">RMSNormalization</code> returns an isomorphism from <var class="Arg">R</var> to a <em>normalized</em> Rees matrix semigroup <code class="code">S</code> over <code class="code">G</code>.</p>
+<p>If <var class="Arg">R</var> is a Rees matrix semigroup over a group <code class="code">G</code> (i.e. a semigroup for which <code class="func">IsGroupAsSemigroup</code> (<a href="chap12.html#X852F29E8795FA489"><span class="RefLink">12.1-7</span></a>) returns <code class="keyw">true</code>), then <code class="code">RMSNormalization</code> returns an isomorphism from <var class="Arg">R</var> to a <em>normalized</em> Rees matrix semigroup <code class="code">S</code> over <code class="code">G</code>.</p>
 
 <p>The semigroup <code class="code">S</code> is normalized in the sense that the first entry of each row and column of the <code class="func">Matrix</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X879384D479EB1D82"><span class="RefLink">Reference: Matrix</span></a>) of <code class="code">S</code> is the identity element of <code class="code">G</code>.</p>
 
@@ -1026,13 +823,43 @@ MappingByFunction( &lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt;
 [ [ (), (), () ], [ (), (1,2), (1,4,2,3) ], [ (), (1,4,2,3), (2,4) ] ]
 </pre></div>
 
+<p><a id="X7E2ECC577A1CF7CA" name="X7E2ECC577A1CF7CA"></a></p>
+
+<h5>6.5-8 IsomorphismReesMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: An isomorphism.</p>
+
+<p>If the semigroup <var class="Arg">S</var> is finite and simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over some group (usually a permutation group), and <code class="code">IsomorphismReesMatrixSemigroupOverPermGroup</code> returns an isomorphism to a Rees matrix semigroup over a permutation group.</p>
+
+<p>If <var class="Arg">S</var> is finite and 0-simple, then <code class="code">IsomorphismReesZeroMatrixSemigroup</code> returns an isomorphism to a Rees 0-matrix semigroup over some group (usually a permutation group), and <code class="code">IsomorphismReesZeroMatrixSemigroupOverPermGroup</code> returns an isomorphism to a Rees 0-matrix semigroup over a permutation group.</p>
+
+<p>See also <code class="func">InjectionPrincipalFactor</code> (<a href="chap10.html#X7EBB4F1981CC2AE9"><span class="RefLink">10.4-7</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1]));</span>
+&lt;trivial partial perm group of rank 1 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismReesMatrixSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso) = S;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(iso);</span>
+&lt;Rees matrix semigroup 1x1 over Group(())&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1]), PartialPerm([]));</span>
+&lt;partial perm monoid of rank 1 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(IsomorphismReesZeroMatrixSemigroup(S));</span>
+&lt;Rees 0-matrix semigroup 1x1 over Group(())&gt;</pre></div>
+
 <p><a id="X7C3F130B8362D55A" name="X7C3F130B8362D55A"></a></p>
 
-<h4>6.7 <span class="Heading">Random semigroups</span></h4>
+<h4>6.6 <span class="Heading">Random semigroups</span></h4>
 
 <p><a id="X789DE9AB79FCFEB5" name="X789DE9AB79FCFEB5"></a></p>
 
-<h5>6.7-1 RandomSemigroup</h5>
+<h5>6.6-1 RandomSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomSemigroup</code>( <var class="Arg">arg...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMonoid</code>( <var class="Arg">arg...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -1122,60 +949,11 @@ Matrix(IsNTPMatrix, [[2]], 3, 4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMonoid(IsBooleanMatMonoid);</span>
 &lt;monoid of 11x11 boolean matrices with 19 generators&gt;</pre></div>
 
-<p><a id="X803B115984A81A8F" name="X803B115984A81A8F"></a></p>
-
-<h4>6.8 <span class="Heading">
-      Endomorphism monoid of a digraph
-    </span></h4>
-
-<p><a id="X868955247F2AFAA5" name="X868955247F2AFAA5"></a></p>
-
-<h5>6.8-1 EndomorphismMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismMonoid</code>( <var class="Arg">digraph</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismMonoid</code>( <var class="Arg">digraph</var>, <var class="Arg">colors</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A monoid.</p>
-
-<p>An endomorphism of <var class="Arg">digraph</var> is a homomorphism <code class="func">DigraphHomomorphism</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap7_mj.html#X85E9B019877AD7FE"><span class="RefLink">Digraphs: DigraphHomomorphism</span></a>) from <var class="Arg">digraph</var> back to itself.</p>
-
-<p><code class="code">EndomorphismMonoid</code>, called with a single argument, returns the monoid of all endomorphisms of <var class="Arg">digraph</var>.</p>
-
-<p>If the <var class="Arg">colors</var> argument is specified, then it will return the monoid of endomorphisms which respect the given colouring. The colouring <var class="Arg">colors</var> can be in one of two forms:</p>
-
-
-<ul>
-<li><p>A list of positive integers of size the number of vertices of <var class="Arg">digraph</var>, where <var class="Arg">colors</var><code class="code">[i]</code> is the colour of vertex <code class="code">i</code>.</p>
-
-</li>
-<li><p>A list of lists, such that <var class="Arg">colors</var><code class="code">[i]</code> is a list of all vertices with colour <code class="code">i</code>.</p>
-
-</li>
-</ul>
-<p>See also <code class="func">GeneratorsOfEndomorphismMonoid</code> (<a href="https://digraphs.github.io/Digraphs/doc//chap7_mj.html#X7E93B268823F6478"><span class="RefLink">Digraphs: GeneratorsOfEndomorphismMonoid</span></a>) since the former incrementally adds newly discovered endomorphisms to the monoid using <code class="func">ClosureMonoid</code> (<a href="chap6.html#X7BE36790862AE26F"><span class="RefLink">6.4-1</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph(List([1 .. 3], x -&gt; [1 .. 3]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndomorphismMonoid(gr);</span>
-&lt;transformation monoid of degree 3 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := CompleteDigraph(3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndomorphismMonoid(gr);</span>
-&lt;transformation group of size 6, degree 3 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [1, 2, 2]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-2
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [[1], [2, 3]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismMonoid(gr, [1, 2, 2]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
-true</pre></div>
-
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chap20.html">20</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

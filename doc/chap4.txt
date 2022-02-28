@@ -250,8 +250,7 @@
     [4X[28XTransformation( [ 3, 3, 2 ] )[128X[104X
     [4X[25Xgap>[125X [27Xx := PBR([[1], [1, 2]], [[-2, -1], [-2, -1]]);;[127X[104X
     [4X[25Xgap>[125X [27XAsTransformation(x);[127X[104X
-    [4X[28XError, Semigroups: AsTransformation: usage,[128X[104X
-    [4X[28Xthe argument <x> must be a transformation PBR,[128X[104X
+    [4X[28XError, the argument (a pbr) does not define a transformation[128X[104X
   [4X[32X[104X
   
   [1X4.3-3 AsPartialPerm[101X
@@ -592,7 +591,7 @@
   [33X[0;0YWith  this  definition,  [2XAsPBR[102X  ([14X4.3-1[114X)  and  [2XAsPermutation[102X  ([14X4.3-4[114X)  define
   mutually  inverse  isomorphisms  from the symmetric group of degree [10Xn[110X to the
   subgroup  of  the full PBR monoid of degree [10Xn[110X consisting of all the elements
-  satisfying  [10XIsPermPBR[110X (i.e. the [2XGroupOfUnits[102X ([14X14.8-1[114X) of the full PBR monoid
+  satisfying  [10XIsPermPBR[110X (i.e. the [2XGroupOfUnits[102X ([14X11.8-1[114X) of the full PBR monoid
   of degree [10Xn[110X).[133X
   
   [4X[32X  Example  [32X[104X
