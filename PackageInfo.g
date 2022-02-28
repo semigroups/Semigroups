@@ -37,7 +37,7 @@ SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
 Version := "4.0.0",
-Date := "27/02/2022",  # dd/mm/yyyy format
+Date := "28/02/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
