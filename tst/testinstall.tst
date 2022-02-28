@@ -1760,6 +1760,12 @@ gap> Matrix(GF(4), One(S));;
 gap> Size(Elements(S));
 16
 
+# Issue 800, Quotient semigroup elements are not associative
+gap> T := FullTransformationMonoid(2);;
+gap> cong := SemigroupCongruence(T, []);;
+gap> IsAssociativeElement(Elements(T / cong)[1]);
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

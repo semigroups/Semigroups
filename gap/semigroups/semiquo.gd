@@ -10,3 +10,5 @@
 
 DeclareAttribute("OneImmutable", IsQuotientSemigroup);
 DeclareOperation("\/", [IsSemigroup, IsSemigroupIdeal]);
+
+InstallTrueMethod(IsAssociativeElement, IsCongruenceClass);
