@@ -124,12 +124,6 @@ GAPBIND14_MODULE(libsemigroups, m) {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-#if !defined(SIZEOF_VOID_P)
-#error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
-#elif SIZEOF_VOID_P == 4
-#define SYSTEM_IS_32_BIT
-#endif
-
 Obj SEMIGROUPS;
 
 Obj TheTypeTBlocksObj;
