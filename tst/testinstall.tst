@@ -1760,6 +1760,19 @@ gap> Matrix(GF(4), One(S));;
 gap> Size(Elements(S));
 16
 
+# Issue 764, InjectionPrincipalFactor can error for D-classes of semigroups of
+# matrices over finite fields
+gap> S := Semigroup(
+> [Matrix(GF(3),
+>    [[Z(3), Z(3), Z(3) ^ 0],
+>      [0 * Z(3), Z(3), Z(3)],
+>      [Z(3), 0 * Z(3), Z(3) ^ 0]]),
+>   Matrix(GF(3),
+>    [[Z(3), Z(3), 0 * Z(3)],
+>      [Z(3) ^ 0, Z(3) ^ 0, 0 * Z(3)],
+>      [Z(3) ^ 0, Z(3) ^ 0, 0 * Z(3)]])]);;
+gap> InjectionPrincipalFactor(DClass(S, S.1));;
+
 # Issue 800, Quotient semigroup elements are not associative
 gap> T := FullTransformationMonoid(2);;
 gap> cong := SemigroupCongruence(T, []);;
