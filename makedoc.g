@@ -30,10 +30,23 @@ PackageEntity := function(name)
 end;
 
 Greens := function(name)
-  return StringFormatted("""<Alt Only="HTML">\(\mathscr{{{1}}}\)</Alt>
-    <Alt Only="Text"><E>{1}</E></Alt>
-    <Alt Only="LaTeX"><M>\mathcal{{{1}}}</M></Alt>""",
-    name);
+  local result;
+  # Note that we don't use a multiline string to define the alternatives
+  # because then they contain spaces like H -class.
+  # Also we use multiline strings in StringFormatted, because otherwise the "
+  # inside get mangled.
+  result := StringFormatted
+              ("""<Alt Only="HTML MathJax">\(\mathscr{{{1}}}\)</Alt>""", name);
+  Append(result,
+         StringFormatted("""<Alt Only="HTML noMathJax"><E>{1}</E></Alt>""",
+                         name));
+  Append(result,
+         StringFormatted("""<Alt Only="Text"><E>{1}</E></Alt>""",
+                         name));
+  Append(result,
+         StringFormatted("""<Alt Only="LaTeX"><M>\mathcal{{{1}}}</M></Alt>""",
+                         name));
+  return result;
 end;
 
 MathOrCode := function(string)
