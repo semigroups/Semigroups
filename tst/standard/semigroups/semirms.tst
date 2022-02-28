@@ -2935,8 +2935,7 @@ gap> Representative(R);
 (1,(),1)
 
 # Pickling
-gap> filename := Concatenation(SEMIGROUPS.PackageDir,
-> "/tst/standard/semigroups/rms.p");;
+gap> filename := Filename(DirectoryTemporary(), "rms.p");;
 gap> R := ReesMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> WriteGenerators(filename, [R]);
@@ -2965,7 +2964,6 @@ gap> R := ReesZeroMatrixSemigroup(Group((1, 2)), [[(), (1, 2)], [(1, 2), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> IO_Pickle(IO_File(filename, "r"), R);
 IO_Error
-gap> Exec("rm ", filename);
 gap> filename := "bananas";
 "bananas"
 gap> IO_Unpicklers.RMSX(filename);

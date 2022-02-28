@@ -8,10 +8,7 @@
 #############################################################################
 ##
 
-# Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
-# > "transform.tst"));
-# around 2.3s.
-gap> START_TEST("Semigroups Package: extreme/transform.tst");
+gap> START_TEST("Semigroups package: extreme/transform.tst");
 gap> LoadPackage("semigroups", false);;
 
 #

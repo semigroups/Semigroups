@@ -425,7 +425,7 @@ Error, the position is greater than the dimension of the matrix
 # semiringmat, pickling
 gap> S := FullTropicalMaxPlusMonoid(2, 10);
 <monoid of 2x2 tropical max-plus matrices with 69 generators>
-gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/fulltrop.gz");;
+gap> filename := Filename(DirectoryTemporary(), "fulltrop.gz");;
 gap> WriteGenerators(filename, [S]);
 IO_OK
 gap> S = Semigroup(ReadGenerators(filename)[1]);
@@ -434,7 +434,7 @@ true
 # semiringmat, unpickling boolean mats
 gap> S := FullBooleanMatMonoid(4);
 <monoid of 4x4 boolean matrices with 7 generators>
-gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/fulltrop.gz");;
+gap> filename := Filename(DirectoryTemporary(), "fulltrop.gz");;
 gap> WriteGenerators(filename, [S]);
 IO_OK
 gap> S = Semigroup(ReadGenerators(filename)[1]);

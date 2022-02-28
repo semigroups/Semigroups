@@ -428,12 +428,11 @@ gap> x := PBR([[-82, -53, -35, 44, 53, 69], [4, 30, 34, 47, 76], [94], [],
 >      [-20, 71], [11, 57], [-91, -32, 51, 95], [98], [75], [-14],
 >      [], [], [-87], [-61, -33], [98], [-5, 3, 76, 85],
 >      [-81, 86, 92], [37], [-10, 72]]);;
-gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/pbr.gz");;
+gap> filename := Filename(DirectoryTemporary(), "pbr.gz");;
 gap> WriteGenerators(filename, [x]);
 IO_OK
 gap> x = ReadGenerators(filename)[1];
 true
-gap> Exec("rm ", filename);
 
 # Test for no side effects in PBRNC (Issue #193)
 gap> A := [[2, 3], [-3, -2, -1, 2], [-3, -2, 2]];;

@@ -69,6 +69,7 @@ true
 # Test WriteGenerators
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/testdata");;
 gap> gens := ReadGenerators(name);;
+gap> name := Filename(DirectoryTemporary(), "testdata");;
 gap> WriteGenerators(name, gens);
 IO_OK
 gap> WriteGenerators(name, gens, "w");
@@ -84,12 +85,11 @@ gap> IO_Close(file);
 true
 gap> WriteGenerators(3, gens);
 Error, the 1st argument is not a string or a file
-gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/tmpfile");;
+gap> name := Filename(DirectoryTemporary(), "tmpfile");; 
 gap> WriteGenerators(name, [FullTransformationMonoid(3)]);
 IO_OK
 gap> Length(ReadGenerators(name)[1]);
 4
-gap> Exec("rm ", name);
 gap> WriteGenerators(name, gens, 1);
 Error, the 3rd argument is not a string or a function
 gap> WriteGenerators(1, 2, 3, 4, 5);
@@ -316,9 +316,7 @@ gap> ReadGenerators(Filename(DirectoriesPackageLibrary("semigroups",
   [ Transformation( [ 2, 3, 1 ] ) ] ]
 
 # Test write using old format
-gap> fname := Filename(DirectoriesPackageLibrary("semigroups",
->                                                "data/tst/")[1], 
->                      "tmpfile");;
+gap> fname := Filename(DirectoryTemporary(), "tmpfile");;
 gap> WriteGenerators(fname,
 >                    [FullTransformationMonoid(3)],
 >                    SEMIGROUPS.WriteGeneratorsLine);
@@ -348,7 +346,6 @@ gap> WriteGenerators(fname,
 >                    "w",
 >                    SEMIGROUPS.WriteGeneratorsLine);
 Error, the 2nd argument is incompatible with the file format
-gap> Exec("rm ", fname);
 
 #
 gap> SEMIGROUPS.StopTest();

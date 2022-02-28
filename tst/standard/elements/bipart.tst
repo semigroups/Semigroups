@@ -632,8 +632,7 @@ gap> TYPE_BIPART(3);;
 gap> TYPE_BIPART(3);;
 
 # Test pickling
-gap> filename := Concatenation(SEMIGROUPS.PackageDir,
-> "/tst/standard/elements/bipart.p");;
+gap> filename := Filename(DirectoryTemporary(), "bipart.p");;
 gap> x := Bipartition(
 > [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
 > [-2], [-6], [-10]]);;
