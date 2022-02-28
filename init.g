@@ -117,6 +117,7 @@ ReadPackage("semigroups", "gap/congruences/conglatt.gd");
 ReadPackage("semigroups", "gap/congruences/congpairs.gd");
 ReadPackage("semigroups", "gap/congruences/congrees.gd");
 ReadPackage("semigroups", "gap/congruences/congrms.gd");
+ReadPackage("semigroups", "gap/congruences/congsemigraph.gd");
 ReadPackage("semigroups", "gap/congruences/congsimple.gd");
 ReadPackage("semigroups", "gap/congruences/conguniv.gd");
 

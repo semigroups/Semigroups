@@ -233,7 +233,9 @@
     graphs. <P/>
 
     The functionality in &SEMIGROUPS; for graph inverse semigroups was written
-    jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews).
+    jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews). The
+    functionality for graph inverse semigroup congruences was written by Marina
+    Anagnostopoulou-Merkouri (St Andrews).
     <P/>
 
     <#Include Label = "GraphInverseSemigroup">
@@ -243,6 +245,9 @@
     <#Include Label = "GraphOfGraphInverseSemigroup">
     <#Include Label = "IsGraphInverseSemigroupElementCollection">
     <#Include Label = "IsGraphInverseSubsemigroup">
+    <#Include Label = "VerticesOfGraphInverseSemigroup">
+    <#Include Label = "IndexOfVertexOfGraphInverseSemigroup">
+
   </Section>
   
   <!--**********************************************************************-->

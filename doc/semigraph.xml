@@ -223,3 +223,53 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+
+<#GAPDoc Label="VerticesOfGraphInverseSemigroup">
+<ManSection>
+  <Attr Name="VerticesOfGraphInverseSemigroup" Arg="S"/>
+  <Returns>A list.</Returns>
+  <Description>
+    If <A>S</A> is a graph inverse semigroup (i.e. it satisfies
+    <Ref Filt="IsGraphInverseSemigroup"/>), then this attribute returns the
+    list of vertices of <A>S</A>.
+
+    <Example><![CDATA[
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> VerticesOfGraphInverseSemigroup(S);
+[ v_1, v_2, v_3, v_4 ]
+gap> D := ChainDigraph(12);
+<immutable chain digraph with 12 vertices>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 12 vertices, 11 edges>
+gap> VerticesOfGraphInverseSemigroup(S);
+[ v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12 ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IndexOfVertexOfGraphInverseSemigroup">
+<ManSection>
+  <Attr Name="IndexOfVertexOfGraphInverseSemigroup" Arg="v"/>
+  <Returns>A positive integer.</Returns>
+  <Description>
+    If <A>v</A> is a vertex of a graph inverse semigroup (i.e. it satisfies
+    <Ref Filt="IsGraphInverseSemigroup"/>), then this attribute returns the
+    index of this vertex in <A>S</A>.<P/>
+
+    <Example><![CDATA[
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> IndexOfVertexOfGraphInverseSemigroup(v_1);
+1
+gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
+3]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

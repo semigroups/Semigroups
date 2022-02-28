@@ -123,6 +123,24 @@ e_2^-1e_1^-1
 gap> x * y;
 e_3
 
+# VerticesOfGraphInverseSemigroup and IndexOfVertexOfGraphInverseSemigroup
+gap> D := Digraph([[3, 4], [3, 4], [4], []]);
+<immutable digraph with 4 vertices, 5 edges>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 4 vertices, 5 edges>
+gap> VerticesOfGraphInverseSemigroup(S);
+[ v_1, v_2, v_3, v_4 ]
+gap> IndexOfVertexOfGraphInverseSemigroup(v_1);
+1
+gap> IndexOfVertexOfGraphInverseSemigroup(v_3);
+3
+gap> D := ChainDigraph(12);
+<immutable chain digraph with 12 vertices>
+gap> S := GraphInverseSemigroup(D);
+<finite graph inverse semigroup with 12 vertices, 11 edges>
+gap> VerticesOfGraphInverseSemigroup(S);
+[ v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12 ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(gr);

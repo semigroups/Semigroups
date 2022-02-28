@@ -79,7 +79,7 @@
         <Ref Oper="EquivalenceClassOfElement" BookName="ref"/>
       </Item>
     </List>
-    
+
     <#Include Label = "IsCongruenceClass">
     <#Include Label = "IsLeftCongruenceClass">
     <#Include Label = "IsRightCongruenceClass">
@@ -154,7 +154,7 @@
 
     <List>
       <Item>
-	<C>N</C> is a normal subgroup of the underlying group <C>G</C>,
+  <C>N</C> is a normal subgroup of the underlying group <C>G</C>,
       </Item>
       <Item>
         <C>S</C> is an equivalence relation on the columns of <C>P</C>,
@@ -169,11 +169,11 @@
     <List>
       <Item>
         a pair of <C>S</C>-related columns must contain zeroes in
-	precisely the same rows,
+  precisely the same rows,
       </Item>
       <Item>
-	a pair of <C>T</C>-related rows must contain zeroes in precisely
-	the same columns,
+  a pair of <C>T</C>-related rows must contain zeroes in precisely
+  the same columns,
       </Item>
       <Item>
         if <C>i</C> and <C>j</C> are <C>S</C>-related, <C>k</C> and
@@ -228,9 +228,9 @@
 
     <List>
       <Item>
-	<C>N</C> is a normal subsemigroup of <C>S</C> -- that is, a
-	self-conjugate subsemigroup which contains all the idempotents of
-	<C>S</C>,
+        <C>N</C> is a normal subsemigroup of <C>S</C> -- that is, a
+        self-conjugate subsemigroup which contains all the idempotents of
+        <C>S</C>,
       </Item>
       <Item>
         <C>t</C> is a normal congruence on <C>E</C>, the subsemigroup of all
@@ -275,6 +275,18 @@
     <#Include Label = "TraceOfSemigroupCongruence">
     <#Include Label = "IsInverseSemigroupCongruenceClassByKernelTrace">
     <#Include Label = "MinimumGroupCongruence">
+  </Section>
+
+  <Section>
+    <Heading>
+      Congruences on graph inverse semigroups
+    </Heading>
+
+    <#Include Label = "IsCongruenceByWangPair">
+    <#Include Label = "CongruenceByWangPair">
+    <#Include Label = "AsCongruenceByWangPair">
+    <#Include Label = "GeneratingCongruencesOfLattice">
+
   </Section>
 
   <Section>

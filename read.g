@@ -84,6 +84,7 @@ ReadPackage("semigroups", "gap/congruences/congpairs.gi");
 ReadPackage("semigroups", "gap/congruences/congrms.gi");
 ReadPackage("semigroups", "gap/congruences/conguniv.gi");
 ReadPackage("semigroups", "gap/congruences/conginv.gi");
+ReadPackage("semigroups", "gap/congruences/congsemigraph.gi");
 ReadPackage("semigroups", "gap/congruences/congsimple.gi");
 ReadPackage("semigroups", "gap/congruences/congrees.gi");
 ReadPackage("semigroups", "gap/congruences/cong.gi");

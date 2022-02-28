@@ -656,6 +656,6 @@ gap> Unbind(rmscong);
 gap> Unbind(trc);
 gap> Unbind(x);
 
-# 
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congruences/cong.tst");
