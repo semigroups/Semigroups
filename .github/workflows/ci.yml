@@ -19,7 +19,6 @@ jobs:
         os:
           - ubuntu
         gap-branch:
-          - master
           - stable-4.11
         ABI:
           - 64
@@ -32,7 +31,7 @@ jobs:
             os: ubuntu
             ABI: 64
           # macOS job
-          - gap-branch: master
+          - gap-branch: stable-4.11
             # to ensure datastructures>= v0.2.6
             pkgs-to-clone: "datastructures"
             os: macos
