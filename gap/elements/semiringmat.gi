@@ -35,10 +35,10 @@ SEMIGROUPS.TropicalizeMat := function(mat, threshold)
   mat[n + 1] := threshold;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if IsInt(mat[i][j]) then
-        mat[i][j] := AbsInt(mat[i][j]);
-        if mat[i][j] > threshold then
-          mat[i][j] := threshold;
+      if IsInt(mat[i, j]) then
+        mat[i, j] := AbsInt(mat[i, j]);
+        if mat[i, j] > threshold then
+          mat[i, j] := threshold;
         fi;
       fi;
     od;
@@ -54,9 +54,9 @@ SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
   x[n + 2] := period;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      x[i][j] := AbsInt(x[i][j]);
-      if x[i][j] > threshold then
-        x[i][j] := threshold + (x[i][j] - threshold) mod period;
+      x[i, j] := AbsInt(x[i, j]);
+      if x[i, j] > threshold then
+        x[i, j] := threshold + (x[i, j] - threshold) mod period;
       fi;
     od;
   od;
@@ -82,7 +82,7 @@ SEMIGROUPS.MatrixTrans := function(x, dim, zero, one)
 
   mat := List([1 .. dim], x -> ShallowCopy([1 .. dim] * 0 + zero));
   for i in [1 .. dim] do
-    mat[i][i ^ x] := one;
+    mat[i, i ^ x] := one;
   od;
   return mat;
 end;
@@ -102,7 +102,7 @@ function(file, mat)
   pickle := [SEMIGROUPS_FilterOfMatrixOverSemiring(mat), []];
   i := 1;
   while IsBound(mat![i]) do
-    pickle[2][i] := mat![i];
+    pickle[2, i] := mat![i];
     i := i + 1;
   od;
 
@@ -385,11 +385,11 @@ function(mat)
   one := One(mat);
   dim := DimensionOfMatrixOverSemiring(mat);
   if Union(AsList(mat)) <> Union(AsList(one))
-      or ForAny([1 .. dim], i -> Number(mat[i], j -> j = one[1][1]) <> 1) then
+      or ForAny([1 .. dim], i -> Number(mat[i], j -> j = one[1, 1]) <> 1) then
     return fail;
   fi;
 
-  one := one[1][1];
+  one := one[1, 1];
   return Transformation(List([1 .. dim], i -> Position(mat[i], one)));
 end);
 
@@ -473,7 +473,7 @@ function(x)
   for i in [1 .. n] do
     y[i] := [];
     for j in [1 .. n] do
-      y[i][j] := x[j][i];
+      y[i, j] := x[j, i];
     od;
   od;
 
@@ -570,12 +570,12 @@ function(x)
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if x[i][j] = infinity then
+      if x[i, j] = infinity then
         length := 1;
-      elif x[i][j] = -infinity then
+      elif x[i, j] = -infinity then
         length := 2;
       else
-        length := Length(String(x[i][j]));
+        length := Length(String(x[i, j]));
       fi;
       if length > max then
         max := length;
@@ -602,7 +602,7 @@ function(x)
   str := "";
   for i in [1 .. n] do
     for j in [1 .. n] do
-      Append(str, pad(x[i][j]));
+      Append(str, pad(x[i, j]));
     od;
     Remove(str, Length(str));
     Append(str, "\n");
@@ -665,13 +665,13 @@ function(x)
     Append(str, "\>\>[");
     for j in [1 .. n] do
       if IsBooleanMat(x) then
-        if x[i][j] then
+        if x[i, j] then
           Append(str, String(1));
         else
           Append(str, String(0));
         fi;
       else
-        Append(str, String(x[i][j]));
+        Append(str, String(x[i, j]));
       fi;
 
       Append(str, ", ");

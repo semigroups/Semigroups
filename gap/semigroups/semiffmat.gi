@@ -438,7 +438,7 @@ function(S, x, y)
     row := 1;
 
     while col <= deg do
-      while IsZero(eqs[row][col]) and col <= deg do
+      while IsZero(eqs[row, col]) and col <= deg do
         col := col + 1;
       od;
       if col <= deg then
