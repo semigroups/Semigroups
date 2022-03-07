@@ -25,7 +25,7 @@ UrlEntity := function(name, url)
 end;
 
 PackageEntity := function(name)
-  if LoadPackage(name, false) <> fail then
+  if TestPackageAvailability(name) <> fail then
     return UrlEntity(PackageInfo(name)[1].PackageName,
                      PackageInfo(name)[1].PackageWWWHome);
   fi;
