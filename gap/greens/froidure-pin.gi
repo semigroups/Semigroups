@@ -566,11 +566,11 @@ end);
 InstallMethod(PartialOrderOfLClasses, "for a finite enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local gr, comps, enum, canon, actual, perm;
+  local D, comps, enum, canon, actual, perm;
 
-  gr := LeftCayleyDigraph(S);
-  comps := DigraphStronglyConnectedComponents(gr).comps;
-  gr := QuotientDigraph(gr, comps);
+  D := DigraphMutableCopy(LeftCayleyDigraph(S));
+  comps := DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)).comps;
+  QuotientDigraph(D, comps);
   if not IsBound(GreensLRelation(S)!.data) then
     # Rectify the ordering of the Green's classes, if necessary
     enum := EnumeratorCanonical(S);
@@ -578,20 +578,24 @@ function(S)
     actual := SortingPerm(GreensLClasses(S));
     perm := canon / actual;
     if not IsOne(perm) then
-      gr := OnDigraphs(gr, perm);
+      D := OnDigraphs(D, perm);
     fi;
   fi;
-  return List(OutNeighbours(gr), Set);
+  DigraphRemoveLoops(D);
+  Apply(OutNeighbours(D), Set);
+  MakeImmutable(D);
+  return D;
 end);
 
 InstallMethod(PartialOrderOfRClasses, "for a finite enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
-  local gr, comps, enum, canon, actual, perm;
+  local D, comps, enum, canon, actual, perm;
 
-  gr := RightCayleyDigraph(S);
-  comps := DigraphStronglyConnectedComponents(gr).comps;
-  gr := QuotientDigraph(gr, comps);
+  D := DigraphMutableCopy(RightCayleyDigraph(S));
+  comps := DigraphStronglyConnectedComponents(RightCayleyDigraph(S)).comps;
+  QuotientDigraph(D, comps);
+
   if not IsBound(GreensRRelation(S)!.data) then
     # Rectify the ordering of the Green's classes, if necessary
     enum := EnumeratorCanonical(S);
@@ -599,10 +603,13 @@ function(S)
     actual := SortingPerm(GreensRClasses(S));
     perm := canon / actual;
     if not IsOne(perm) then
-      gr := OnDigraphs(gr, perm);
+      D := OnDigraphs(D, perm);
     fi;
   fi;
-  return List(OutNeighbours(gr), Set);
+  DigraphRemoveLoops(D);
+  Apply(OutNeighbours(D), Set);
+  MakeImmutable(D);
+  return D;
 end);
 
 #############################################################################

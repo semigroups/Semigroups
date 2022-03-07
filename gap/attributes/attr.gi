@@ -549,27 +549,23 @@ S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 InstallMethod(MaximalLClasses, "for an enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
-  local gr;
 
   if NrLClasses(S) = 1 then
     return LClasses(S);
   fi;
 
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfLClasses(S)));
-  return LClasses(S){DigraphSources(gr)};
+  return LClasses(S){DigraphSources(PartialOrderOfLClasses(S))};
 end);
 
 InstallMethod(MaximalRClasses, "for an enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
-  local gr;
 
   if NrRClasses(S) = 1 then
     return RClasses(S);
   fi;
 
-  gr := DigraphRemoveLoops(Digraph(PartialOrderOfRClasses(S)));
-  return RClasses(S){DigraphSources(gr)};
+  return RClasses(S){DigraphSources(PartialOrderOfRClasses(S))};
 end);
 
 # same method for ideals

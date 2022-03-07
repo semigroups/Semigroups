@@ -1706,23 +1706,20 @@ gap> S := Semigroup([
 >  PBR([[-1], [1]], [[-1], [-2]])]);
 <pbr semigroup of degree 2 with 3 generators>
 gap> PartialOrderOfLClasses(S);
-[ [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 3, 4 ], [ 5 ], [ 5, 6 ], [ 5, 6 ], [ 8 ] ]
+<immutable digraph with 8 vertices, 8 edges>
 gap> PartialOrderOfRClasses(S);
-[ [ 1 ], [ 1, 2 ], [ 3 ], [ 2, 3, 4 ], [ 5 ], [ 5, 6 ], [ 7 ], [ 6, 7, 8 ], 
-  [ 6, 7, 8 ], [ 10 ] ]
+<immutable digraph with 10 vertices, 9 edges>
 
 # PartialOrderOfL/RClasses: 1
 gap> S := FullTransformationMonoid(3);
 <full transformation monoid of degree 3>
-gap> gr := PartialOrderOfLClasses(S);;
-gap> gr := DigraphReflexiveTransitiveReduction(Digraph(gr));
-<digraph with 7 vertices, 9 edges>
-gap> IsIsomorphicDigraph(gr, DigraphFromDigraph6String("+F?OGC@OoK?"));
+gap> D := PartialOrderOfLClasses(S);
+<immutable digraph with 7 vertices, 9 edges>
+gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+F?OGC@OoK?"));
 true
-gap> gr := PartialOrderOfRClasses(S);;
-gap> gr := DigraphReflexiveTransitiveReduction(Digraph(gr));
-<digraph with 5 vertices, 6 edges>
-gap> IsIsomorphicDigraph(gr, DigraphFromDigraph6String("+D[CGO?"));
+gap> D := PartialOrderOfRClasses(S);
+<immutable digraph with 5 vertices, 6 edges>
+gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+D[CGO?"));
 true
 
 # SEMIGROUPS_UnbindVariables
