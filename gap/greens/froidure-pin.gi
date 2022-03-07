@@ -564,7 +564,7 @@ function(S)
 end);
 
 InstallMethod(PartialOrderOfLClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local gr, comps, enum, canon, actual, perm;
 
@@ -585,7 +585,7 @@ function(S)
 end);
 
 InstallMethod(PartialOrderOfRClasses, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local gr, comps, enum, canon, actual, perm;
 

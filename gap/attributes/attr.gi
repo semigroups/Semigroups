@@ -547,7 +547,7 @@ InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
 S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
 InstallMethod(MaximalLClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanUseFroidurePin],
 function(S)
   local gr;
 
@@ -560,7 +560,7 @@ function(S)
 end);
 
 InstallMethod(MaximalRClasses, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep],
+[IsSemigroup and CanUseFroidurePin],
 function(S)
   local gr;
 
