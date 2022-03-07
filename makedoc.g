@@ -9,7 +9,6 @@
 ##
 
 LoadPackage("AutoDoc");
-LoadPackage("semigroups");
 
 # Helper functions
 
@@ -26,7 +25,11 @@ UrlEntity := function(name, url)
 end;
 
 PackageEntity := function(name)
-  return UrlEntity(name, PackageInfo(name)[1].PackageWWWHome);
+  if TestPackageAvailability(name) <> fail then
+    return UrlEntity(PackageInfo(name)[1].PackageName,
+                     PackageInfo(name)[1].PackageWWWHome);
+  fi;
+  return StringFormatted("<Package>{1}</Package>", name);
 end;
 
 Greens := function(name)
@@ -77,9 +80,8 @@ XMLEntities.SEMIGROUPS := PackageEntity("Semigroups");
 
 for Pkg in Concatenation(PkgInfo.Dependencies.NeededOtherPackages,
                          PkgInfo.Dependencies.SuggestedOtherPackages) do
-  pkg_name := PackageInfo(Pkg[1])[1].PackageName;
-  entity_name := UppercaseString(pkg_name);
-  XMLEntities.(entity_name) := PackageEntity(pkg_name);
+  entity_name := UppercaseString(Pkg[1]);
+  XMLEntities.(entity_name) := PackageEntity(Pkg[1]);
 od;
 
 # The files containing the xml of the doc
