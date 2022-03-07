@@ -27,8 +27,8 @@ gap> cong := SemigroupCongruence(S,
  rank 5 with 4 generators> with congruence pair (41,16)>
 gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
 >  [[PartialPerm([4], [4]), PartialPerm([2], [1])]]);
-<semigroup congruence over <inverse partial perm semigroup of size 206, 
- rank 5 with 4 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 206, rank 5 with 4 generators> with 1 generating pairs>
 gap> KernelOfSemigroupCongruence(ccong) = cong!.kernel;
 true
 gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
@@ -72,7 +72,7 @@ gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 
 # Congruence classes
 gap> classx := EquivalenceClassOfElement(cong, x);
-<congruence class of [1,2]>
+<2-sided congruence class of [1,2]>
 gap> classy := EquivalenceClassOfElement(cong, y);;
 gap> classz := EquivalenceClassOfElement(cong, z);;
 gap> classx = classy;
@@ -103,8 +103,8 @@ gap> ccong := SemigroupCongruence(S, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of size 206, 
- rank 5 with 4 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 206, rank 5 with 4 generators> with 1 generating pairs>
 gap> [x, y] in ccong;
 false
 gap> [x, z] in ccong;
@@ -171,7 +171,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `in' on 2 arguments
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 
 # Congruence Class Multiplication: Bad Input
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),

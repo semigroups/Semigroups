@@ -21,7 +21,7 @@
 
 #include "compiled.h"  // for Obj
 
-Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit);
+Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit, Obj report);
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
 Obj FIND_HCLASSES(Obj, Obj, Obj);
 

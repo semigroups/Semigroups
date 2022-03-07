@@ -12,11 +12,16 @@
 ## congruences/reesmat.gd/gi.
 
 DeclareCategory("IsSimpleSemigroupCongruence",
-                IsCongruenceCategory and IsAttributeStoringRep and IsFinite);
+                IsSemigroupCongruence
+                and IsMagmaCongruence
+                and CanComputeEquivalenceRelationPartition
+                and IsAttributeStoringRep
+                and IsFinite);
 
 DeclareCategory("IsSimpleSemigroupCongruenceClass",
-                IsAnyCongruenceClass and IsCongruenceClass and
-                IsAttributeStoringRep and IsAssociativeElement);
+                IsCongruenceClass
+                and IsAttributeStoringRep
+                and IsAssociativeElement);
 
 DeclareOperation("CongruenceByIsomorphism",
 [IsGeneralMapping, IsSemigroupCongruence]);

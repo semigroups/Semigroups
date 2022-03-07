@@ -24,3 +24,6 @@ DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareOperation("RhoOrbStabChain", [IsOrbit, IsPosInt]);
+
+DeclareOperation("RelativeLambdaOrb",
+                 [IsActingSemigroup, IsActingSemigroup]);

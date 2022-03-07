@@ -170,7 +170,8 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
-  return SortedList(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
+  return SortedList(RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                                     InfoLevel(InfoSemigroups) > 0).elts);
 end);
 
 InstallMethod(AsList,
@@ -185,7 +186,8 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
-  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts;
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                          InfoLevel(InfoSemigroups) > 0).elts;
 end);
 
 # For ideals and other generatorless semigroups
@@ -239,7 +241,7 @@ function(S)
     fp := GapFroidurePin(S);
     if not (IsBound(fp.elts) and nr < Length(fp.elts) and IsBound(fp.elts[nr]))
         then
-      fp := RUN_FROIDURE_PIN(fp, nr);
+      fp := RUN_FROIDURE_PIN(fp, nr, InfoLevel(InfoSemigroups) > 0);
     fi;
 
     if nr <= Length(fp.elts) and IsBound(fp.elts[nr]) then
@@ -288,7 +290,8 @@ InstallMethod(Size,
 "for a semigroup with CanUseGapFroidurePin and known generators",
 [CanUseGapFroidurePin and HasGeneratorsOfSemigroup],
 function(S)
-  return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1).elts);
+  return Length(RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                                 InfoLevel(InfoSemigroups) > 0).elts);
 end);
 
 # different method for ideals
@@ -333,7 +336,7 @@ function(S, x)
       return val;
     fi;
     limit := nr + 1;
-    fp := RUN_FROIDURE_PIN(fp, limit);
+    fp := RUN_FROIDURE_PIN(fp, limit, InfoLevel(InfoSemigroups) > 0);
     pos := fp.pos;
     nr := fp.nr;
   until pos > nr;
@@ -393,7 +396,7 @@ InstallMethod(Enumerate,
 "for a semigroup with CanUseGapFroidurePin and known generators and pos int",
 [CanUseGapFroidurePin and HasGeneratorsOfSemigroup, IsInt],
 function(S, limit)
-  RUN_FROIDURE_PIN(GapFroidurePin(S), limit);
+  RUN_FROIDURE_PIN(GapFroidurePin(S), limit, InfoLevel(InfoSemigroups) > 0);
   return S;
 end);
 
@@ -413,7 +416,8 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
-  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).right;
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                          InfoLevel(InfoSemigroups) > 0).right;
 end);
 
 InstallMethod(RightCayleyDigraph,
@@ -441,7 +445,8 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   fi;
-  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).left;
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                          InfoLevel(InfoSemigroups) > 0).left;
 end);
 
 InstallMethod(LeftCayleyDigraph,
@@ -483,7 +488,9 @@ function(S, i)
                   "than the size of the 1st argument (a semigroup)");
   fi;
 
-  words := RUN_FROIDURE_PIN(GapFroidurePin(S), i + 1).words;
+  words := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                            i + 1,
+                            InfoLevel(InfoSemigroups) > 0).words;
   return ShallowCopy(words[i]);
 end);
 
@@ -509,7 +516,8 @@ function(S)
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
   fi;
-  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1).rules;
+  return RUN_FROIDURE_PIN(GapFroidurePin(S), -1,
+                          InfoLevel(InfoSemigroups) > 0).rules;
 end);
 
 InstallMethod(IdempotentsSubset,
@@ -519,7 +527,9 @@ InstallMethod(IdempotentsSubset,
 function(S, list)
   local fp, left, final, prefix, elts, out, i, j, pos;
 
-  fp := RUN_FROIDURE_PIN(GapFroidurePin(S), Maximum(list) + 1);
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                         Maximum(list) + 1,
+                         InfoLevel(InfoSemigroups) > 0);
   left   := fp.left;
   final := fp.final;
   prefix := fp.prefix;

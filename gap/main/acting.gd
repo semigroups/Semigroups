@@ -12,6 +12,7 @@ DeclareCategory("IsSemigroupData", IsList and IsComponentObjectRep);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
+DeclareOperation("SemigroupData", [IsActingSemigroup, IsLambdaOrb]);
 
 DeclareOperation("Enumerate", [IsSemigroupData]);
 DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);

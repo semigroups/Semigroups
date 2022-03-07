@@ -156,7 +156,7 @@ gap> rowBlocks := [[1], [2], [3]];;
 gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;
 gap> class := RZMSCongruenceClassByLinkedTriple(cong,
 > RightCoset(N, (1, 5)), 2, 3);
-<congruence class of (2,(3,4),3)>]]></Example>
+<2-sided congruence class of (2,(3,4),3)>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

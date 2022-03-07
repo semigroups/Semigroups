@@ -17,14 +17,14 @@ gap> SEMIGROUPS.StartTest();
 gap> S := PartitionMonoid(4);
 <regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.4]);
-<semigroup congruence over <regular bipartition *-monoid of size 4140, 
- degree 4 with 4 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <regular bipartition *-monoid 
+ of size 4140, degree 4 with 4 generators> with 1 generating pairs>
 gap> T := S / cong;;
 gap> Size(T);
 25
 gap> One(T);
-<congruence class of <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], 
- [ 4, -4 ]>>
+<2-sided congruence class of <block bijection: [ 1, -1 ], [ 2, -2 ], 
+ [ 3, -3 ], [ 4, -4 ]>>
 
 # quotients, GeneratorsOfSemigroup
 gap> S := JonesMonoid(5);
@@ -38,7 +38,7 @@ gap> T := I / J;;
 gap> HasGeneratorsOfMagma(T);
 false
 gap> GeneratorsOfSemigroup(T);
-[ <congruence class of <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, 4 ], 
+[ <2-sided congruence class of <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, 4 ], 
      [ 5, -5 ], [ -1, -2 ]>> ]
 
 # quotients, Rees quotient
@@ -56,18 +56,24 @@ gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
 <semigroup of 2x2 tropical max-plus matrices with 3 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.1]);
-<semigroup congruence over <non-regular semigroup 
+<2-sided semigroup congruence over <non-regular semigroup 
  of size 9, 2x2 tropical max-plus matrices with 3 generators> with 
 1 generating pairs>
 gap> T := S / cong;;
 gap> AsList(T) * T.1;
-[ <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2, 2]], 2)>, 
-  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 0]], 2)>, 
-  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [2, 2]], 2)> ]
+[ <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[1, 1], [2, 2]], 2)>, 
+  <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[2, 2], [0, 0]], 2)>, 
+  <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[2, 2], [2, 2]], 2)> ]
 gap> T.1 * AsList(T);
-[ <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2, 2]], 2)>, 
-  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [2, 2]], 2)>, 
-  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [2, 2]], 2)> ]
+[ <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[1, 1], [2, 2]], 2)>, 
+  <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[1, 2], [2, 2]], 2)>, 
+  <2-sided congruence class of Matrix(IsTropicalMaxPlusMatrix, 
+     [[2, 2], [2, 2]], 2)> ]
 gap> GreensRClasses(S) * T.1;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `*' on 2 arguments
@@ -80,8 +86,8 @@ gap> S := Semigroup([Transformation([2, 3, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([3, 2, 3]), Transformation([1, 1, 1])];;
 gap> cong := SemigroupCongruence(S, [pair]);;
 gap> Q := S / cong;
-<quotient of <semigroup congruence over <transformation semigroup of degree 3 
- with 2 generators> with 1 generating pairs>>
+<quotient of <2-sided semigroup congruence over <transformation semigroup of 
+ degree 3 with 2 generators> with 1 generating pairs>>
 gap> Size(Q);
 1
 gap> I := MinimalIdeal(S);

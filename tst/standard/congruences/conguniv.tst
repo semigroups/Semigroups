@@ -138,12 +138,12 @@ gap> ImagesElm(uni, Transformation([1, 3, 2]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a congruence)
 gap> classes := EquivalenceClasses(uni);
-[ <congruence class of [2,1,3]> ]
+[ <2-sided congruence class of [2,1,3]> ]
 gap> EquivalenceClassOfElement(uni, Transformation([1, 3, 2]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 gap> class := EquivalenceClassOfElement(uni, PartialPerm([1, 2, 3], [1, 3, 4]));
-<congruence class of [2,3,4](1)>
+<2-sided congruence class of [2,3,4](1)>
 gap> PartialPerm([2], [3]) in class;
 true
 gap> PartialPerm([1, 2, 4], [3, 2, 1]) in class;
