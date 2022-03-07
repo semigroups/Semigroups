@@ -121,11 +121,11 @@ gap> Size(classes) = NrEquivalenceClasses(cong);
 true
 gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 gap> classx := EquivalenceClassOfElement(cong, x);;
 gap> classy := EquivalenceClassOfElement(cong, y);;
 gap> classz := EquivalenceClassOfElement(cong, z);
-<congruence class of Transformation( [ 2, 1, 2, 1, 1 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 2, 1, 1 ] )>
 gap> elms := ImagesElm(cong, x);
 [ Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 1, 2, 1 ] ), 
   Transformation( [ 1, 2, 2, 1, 1 ] ), Transformation( [ 2, 1, 1, 2, 2 ] ) ]
@@ -289,7 +289,8 @@ gap> C := SemigroupCongruence(S, [S.1, S.1 ^ 2]);
 
 # SemigroupCongruenceByGeneratingPairs for free group
 gap> SemigroupCongruenceByGeneratingPairs(FreeGroup(1), []);
-<semigroup congruence with 0 generating pairs>
+<2-sided semigroup congruence over <free group on the generators [ f1 ]> with 
+0 generating pairs>
 
 # CongruenceByIsomorphism, error
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])],

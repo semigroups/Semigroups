@@ -80,15 +80,16 @@ ReadPackage("semigroups", "gap/attributes/maximal.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
 ReadPackage("semigroups", "gap/attributes/semifp.gi");
 
+ReadPackage("semigroups", "gap/congruences/cong.gi");
+ReadPackage("semigroups", "gap/congruences/congpart.gi");
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");
-ReadPackage("semigroups", "gap/congruences/congrms.gi");
-ReadPackage("semigroups", "gap/congruences/conguniv.gi");
 ReadPackage("semigroups", "gap/congruences/conginv.gi");
+ReadPackage("semigroups", "gap/congruences/conglatt.gi");
+ReadPackage("semigroups", "gap/congruences/congrees.gi");
+ReadPackage("semigroups", "gap/congruences/congrms.gi");
 ReadPackage("semigroups", "gap/congruences/congsemigraph.gi");
 ReadPackage("semigroups", "gap/congruences/congsimple.gi");
-ReadPackage("semigroups", "gap/congruences/congrees.gi");
-ReadPackage("semigroups", "gap/congruences/cong.gi");
-ReadPackage("semigroups", "gap/congruences/conglatt.gi");
+ReadPackage("semigroups", "gap/congruences/conguniv.gi");
 
 ReadPackage("semigroups", "gap/fp/freeinverse.gi");
 ReadPackage("semigroups", "gap/fp/freeband.gi");

@@ -19,9 +19,9 @@ InstallMethod(SemigroupData, "for an acting inverse semigroup rep",
 
 # different method for ideals
 
-InstallMethod(SemigroupData, "for an acting semigroup",
-[IsActingSemigroup],
-function(S)
+InstallMethod(SemigroupData, "for an acting semigroup and lambda orb",
+[IsActingSemigroup, IsLambdaOrb],
+function(S, lambda_orb)
   local gens, data;
 
   gens := GeneratorsOfSemigroup(S);
@@ -32,6 +32,7 @@ function(S)
               ht := HTCreate(gens[1], rec(treehashsize :=
                                           SEMIGROUPS.OptionsRec(S).hashlen)),
               init := false,
+              lambda_orb := lambda_orb,
               lambdarhoht := [],
               lenreps := [0],
               orbit := [[,,, FakeOne(gens)]],
@@ -51,6 +52,12 @@ function(S)
   Objectify(NewType(FamilyObj(S), IsSemigroupData), data);
 
   return data;
+end);
+
+InstallMethod(SemigroupData, "for an acting semigroup",
+[IsActingSemigroup],
+function(S)
+  return SemigroupData(S, LambdaOrb(S));
 end);
 
 # different method for regular ideals, regular/inverse semigroups, same method
@@ -382,7 +389,7 @@ function(data, limit, lookfunc)
   lambda := LambdaFunc(s);
   lambdaperm := LambdaPerm(s);
 
-  o := LambdaOrb(s);
+  o := data!.lambda_orb;
   oht := o!.ht;
   scc := OrbSCC(o);
   lookup := o!.scc_lookup;
@@ -651,7 +658,7 @@ function(data, x, n)
   membership, lambdaperm;
 
   S := data!.parent;
-  o := LambdaOrb(S);
+  o := data!.lambda_orb;
   l := Position(o, LambdaFunc(S)(x));
 
   if l = fail then

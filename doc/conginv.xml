@@ -25,7 +25,7 @@ gap> I := InverseSemigroup([
 gap> cong := SemigroupCongruence(I,
 > [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
 >  [PartialPerm([]), PartialPerm([1, 2])]]);
-<semigroup congruence over <inverse partial perm semigroup 
+<2-sided semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> TraceOfSemigroupCongruence(cong);
 [ [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
@@ -55,7 +55,7 @@ gap> I := InverseSemigroup([
 gap> cong := SemigroupCongruence(I,
 > [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
 >  [PartialPerm([]), PartialPerm([1, 2])]]);
-<semigroup congruence over <inverse partial perm semigroup 
+<2-sided semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> KernelOfSemigroupCongruence(cong);
 <inverse partial perm semigroup of size 19, rank 3 with 5 generators>
@@ -84,8 +84,8 @@ gap> I := InverseSemigroup([
 gap> cong := SemigroupCongruenceByGeneratingPairs(I,
 > [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
 >  [PartialPerm([]), PartialPerm([1, 2])]]);
-<semigroup congruence over <inverse partial perm semigroup of rank 3 
- with 2 generators> with 2 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup of 
+ rank 3 with 2 generators> with 2 generating pairs>
 gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with congruence pair (19,1)>]]></Example>

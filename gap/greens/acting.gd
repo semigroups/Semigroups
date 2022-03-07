@@ -75,3 +75,7 @@ DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 
 DeclareOperation("IteratorOfDClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
+
+DeclareOperation("RelativeDClassReps", [IsActingSemigroup, IsActingSemigroup]);
+DeclareOperation("RelativeLClassReps", [IsActingSemigroup, IsActingSemigroup]);
+DeclareOperation("RelativeRClassReps", [IsActingSemigroup, IsActingSemigroup]);

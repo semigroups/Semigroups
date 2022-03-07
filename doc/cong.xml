@@ -204,47 +204,49 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="GeneratingPairsOfSemigroupCongruence">
-  <ManSection>
+  <!--
+    <#GAPDoc Label="GeneratingPairsOfSemigroupCongruence">
+    <ManSection>
     <Attr Name = "GeneratingPairsOfSemigroupCongruence" Arg = "cong"/>
     <Attr Name = "GeneratingPairsOfLeftSemigroupCongruence" Arg = "cong"/>
     <Attr Name = "GeneratingPairsOfRightSemigroupCongruence" Arg = "cong"/>
     <Returns>A list of lists.</Returns>
     <Description>
-      If <A>cong</A> is a semigroup congruence, then
-      <C>GeneratingPairsOfSemigroupCongruence</C> returns a list of pairs of
-      elements from <C>Range(<A>cong</A>)</C> that <E>generates</E> the
-      congruence; i.e. <A>cong</A> is the least congruence on the semigroup
-      which contains all the pairs in the list. <P/>
+    If <A>cong</A> is a semigroup congruence, then
+    <C>GeneratingPairsOfSemigroupCongruence</C> returns a list of pairs of
+    elements from <C>Range(<A>cong</A>)</C> that <E>generates</E> the
+    congruence; i.e. <A>cong</A> is the least congruence on the semigroup
+    which contains all the pairs in the list. <P/>
 
-      If <A>cong</A> is a left or right semigroup congruence, then
-      <C>GeneratingPairsOfLeft/RightSemigroupCongruence</C> will instead give a
-      list of pairs which generate it as a left or right congruence.  Note that,
-      although a congruence is also a left and right congruence, its generating
-      pairs as a left or right congruence may differ from its generating pairs
-      as a two-sided congruence. <P/>
+    If <A>cong</A> is a left or right semigroup congruence, then
+    <C>GeneratingPairsOfLeft/RightSemigroupCongruence</C> will instead give a
+    list of pairs which generate it as a left or right congruence.  Note that,
+    although a congruence is also a left and right congruence, its generating
+    pairs as a left or right congruence may differ from its generating pairs
+    as a two-sided congruence. <P/>
 
-      A congruence can be defined using a set of generating pairs: see
-      <Ref Func = "SemigroupCongruence"/>,
-      <Ref Func = "LeftSemigroupCongruence"/>, and
-      <Ref Func = "RightSemigroupCongruence"/>. <P/>
+    A congruence can be defined using a set of generating pairs: see
+    <Ref Func = "SemigroupCongruence"/>,
+    <Ref Func = "LeftSemigroupCongruence"/>, and
+    <Ref Func = "RightSemigroupCongruence"/>. <P/>
 
-      <Example><![CDATA[
-gap> S := Semigroup([Transformation([3, 3, 2, 3]),
->                    Transformation([3, 4, 4, 1])]);;
-gap> pairs :=
->     [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], 
->      [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;
-gap> cong := SemigroupCongruence(S, pairs);;
-gap> GeneratingPairsOfSemigroupCongruence(cong);
-[ [ Transformation( [ 1, 1, 1, 1 ] ), 
-      Transformation( [ 2, 2, 2, 3 ] ) ], 
-  [ Transformation( [ 2, 2, 3, 2 ] ), 
-      Transformation( [ 3, 3, 2, 3 ] ) ] ]
-]]></Example>
+    <Example><![CDATA[
+    gap> S := Semigroup([Transformation([3, 3, 2, 3]),
+    >                    Transformation([3, 4, 4, 1])]);;
+    gap> pairs :=
+    >     [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], 
+    >      [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;
+    gap> cong := SemigroupCongruence(S, pairs);;
+    gap> GeneratingPairsOfSemigroupCongruence(cong);
+    [ [ Transformation( [ 1, 1, 1, 1 ] ), 
+    Transformation( [ 2, 2, 2, 3 ] ) ], 
+    [ Transformation( [ 2, 2, 3, 2 ] ), 
+    Transformation( [ 3, 3, 2, 3 ] ) ] ]
+    ]]></Example>
     </Description>
-  </ManSection>
-<#/GAPDoc>
+    </ManSection>
+    <#/GAPDoc>
+-->
 
 <#GAPDoc Label="CongruencesOfSemigroup">
   <ManSection>
@@ -331,7 +333,7 @@ gap> congs[pos];
 gap> S := Semigroup(Transformation([1, 3, 2]),
 >                   Transformation([3, 1, 3]));;
 gap> min := MinimalCongruencesOfSemigroup(S);
-[ <semigroup congruence over <transformation semigroup of size 13, 
+[ <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs> ]
 gap> minl := MinimalLeftCongruencesOfSemigroup(S);
 [ <left semigroup congruence over <transformation semigroup 
@@ -389,15 +391,15 @@ gap> minl := MinimalLeftCongruencesOfSemigroup(S);
 gap> S := Semigroup(Transformation([1, 3, 2]),
 >                   Transformation([3, 1, 3]));;
 gap> congs := PrincipalCongruencesOfSemigroup(S);
-[ <semigroup congruence over <transformation semigroup of size 13, 
+[ <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs>, 
-  <semigroup congruence over <transformation semigroup of size 13, 
+  <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs>, 
-  <semigroup congruence over <transformation semigroup of size 13, 
+  <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs>, 
-  <semigroup congruence over <transformation semigroup of size 13, 
+  <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs>, 
-  <semigroup congruence over <transformation semigroup of size 13, 
+  <2-sided semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs> ]
 ]]></Example>
     </Description>
@@ -552,11 +554,11 @@ gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1]),
 >                                    Transformation([2, 1, 2])]);;
 gap> classes := NonTrivialEquivalenceClasses(cong);;
 gap> Set(classes);
-[ <congruence class of Transformation( [ 1, 2, 2 ] )>, 
-  <congruence class of Transformation( [ 3, 1, 3 ] )>, 
-  <congruence class of Transformation( [ 3, 1, 1 ] )>, 
-  <congruence class of Transformation( [ 2, 1, 2 ] )>, 
-  <congruence class of Transformation( [ 3, 3, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 1, 2, 2 ] )>, 
+  <2-sided congruence class of Transformation( [ 3, 1, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 3, 1, 1 ] )>, 
+  <2-sided congruence class of Transformation( [ 2, 1, 2 ] )>, 
+  <2-sided congruence class of Transformation( [ 3, 3, 3 ] )> ]
 gap> cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),
 >                                         Transformation([2, 1, 2])]);;
 gap> classes := NonTrivialEquivalenceClasses(cong);;
@@ -583,7 +585,7 @@ gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1]),
 >                                    Transformation([2, 1, 2])]);;
 gap> class := EquivalenceClassOfElement(cong,
 >                                       Transformation([3, 1, 1]));
-<congruence class of Transformation( [ 3, 1, 1 ] )>
+<2-sided congruence class of Transformation( [ 3, 1, 1 ] )>
 gap> IsCongruenceClass(class);
 true]]></Example>
     </Description>

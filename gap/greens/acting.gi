@@ -1253,6 +1253,44 @@ function(S)
   return out;
 end);
 
+InstallMethod(RelativeDClassReps, "for an acting semigroup and subsemigroup",
+[IsActingSemigroup, IsActingSemigroup],
+function(S, T)
+  local data, D, gens, genstoapply, x, i, j;
+
+  if not IsSubsemigroup(S, T) then
+    ErrorNoReturn("the 2nd argument (an acting semigroup) must be ",
+                  "a subsemigroup of the 1st argument (an acting semigroup)");
+  fi;
+
+  data := Enumerate(SemigroupData(S, RelativeLambdaOrb(S, T)));
+  D    := List([1 .. Length(data)], x -> []);
+  gens := GeneratorsOfSemigroup(T);
+  genstoapply := [1 .. Length(gens)];
+  for i in [2 .. Length(data)] do
+    x := data[i][4];
+    for j in genstoapply do
+      Add(D[i], Position(data, gens[j] * x));
+    od;
+  od;
+  D := DigraphStronglyConnectedComponents(Digraph(D)).comps;
+  D := List(D, x -> x[1]){[2 .. Length(D)]};
+  return List(data{D}, x -> x[4]);
+end);
+
+InstallMethod(RelativeRClassReps, "for an acting semigroup and subsemigroup",
+[IsActingSemigroup, IsActingSemigroup],
+function(S, T)
+  local data;
+  if not IsSubsemigroup(S, T) then
+    ErrorNoReturn("the 2nd argument (an acting semigroup) must be ",
+                  "a subsemigroup of the 1st argument (an acting semigroup)");
+  fi;
+
+  data := Enumerate(SemigroupData(S, RelativeLambdaOrb(S, T)));
+  return List(data, x -> x[4]);
+end);
+
 # different method for regular/inverse/ideals
 
 InstallMethod(GreensDClasses, "for an acting semigroup",

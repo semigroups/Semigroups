@@ -1980,8 +1980,8 @@ arguments
 gap> S := SymmetricInverseMonoid(3);;
 gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> C := SemigroupCongruence(S, [[S.1, S.2]]);
-<semigroup congruence over <inverse partial perm monoid of size 34, rank 3 
- with 3 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm monoid of size 34, 
+ rank 3 with 3 generators> with 1 generating pairs>
 gap> K := KernelOfSemigroupCongruence(C);
 <inverse partial perm monoid of size 34, rank 3 with 5 generators>
 gap> K := InverseSemigroup(K, rec(acting := true));

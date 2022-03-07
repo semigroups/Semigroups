@@ -41,16 +41,16 @@ end);
 SEMIGROUPS.TestRec := rec();
 
 SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, time)
-  Print("\033[31m######## > Diff in:\n");
+  Print("######## > Diff in:\n");
   if IsStream(fnam)  then
     Print("test stream, line ", line, "\n");
   else
     Print(fnam, ":", line, "\n");
   fi;
   Print("# Input is:\n", inp);
-  Print("# Expected output:\n", expout);
-  Print("# But found:\n", found);
-  Print("########\033[0m\n");
+  Print("# Expected output:\n\033[30;42m", Chomp(expout), "\033[0m\n");
+  Print("# But found:\n\033[30;41m", Chomp(found), "\033[0m\n");
+  Print("########\n");
   return;
 end;
 
@@ -294,18 +294,18 @@ SEMIGROUPS.ManualExamples := function()
                          "Single");
 end;
 
-SEMIGROUPS.RunExamples := function(exlists, excluded)
-  local oldscr, passed, pad, total, l, sp, bad, s, start_time, test, end_time,
-  elapsed, pex, j, ex, i;
+SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
+  local oldscr, pad, total, num_fails, l, sp, bad, s, start_time, test,
+  end_time, elapsed, pex, j, ex, i;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
-  passed := true;
   pad := function(nr)
-    nr := Length(String(Length(exlists))) - Length(String(nr)) + 1;
+    nr := Length(String(Maximum(nums))) - Length(String(nr)) + 1;
     return List([1 .. nr], x -> ' ');
   end;
   total := 0;
+  num_fails := 0;
   for j in [1 .. Length(exlists)] do
     if j in excluded then
       Print("\033[44m# Skipping example ",
@@ -314,7 +314,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
             " . . .\033[0m\n");
     else
       l := exlists[j];
-      Print("# Running example ", j, pad(j), " . . .");
+      Print("# Running example ", nums[j], pad(nums[j]), " . . .");
       START_TEST("");
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
@@ -342,22 +342,22 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                 " in ",
                 ex[2]{[1 .. 3]},
                 "\033[0m\n");
-          passed := false;
+          num_fails := num_fails + 1;
         fi;
 
         if test = false then
           for i in [1 .. Length(pex[1])] do
             if pex[2][i] <> pex[4][i] then
-              Print("\033[31m########> Diff in:\n",
+              Print("########> Diff in:\n",
                     "# ", ex[2][1], ":", ex[2][2],
                     "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
-              Print("# Expected output:\n");
-              PrintFormattedString(pex[2][i]);
-              Print("# But found:\n");
-              PrintFormattedString(pex[4][i]);
-              Print("########\033[0m\n");
-              passed := false;
+              Print("# Expected output:\n\033[30;42m");
+              PrintFormattedString(Chomp(pex[2][i]));
+              Print("\033[0m\n# But found:\n\033[30;41m");
+              PrintFormattedString(Chomp(pex[4][i]));
+              Print("\033[0m\n########\n");
+              num_fails := num_fails + 1;
             fi;
           od;
         fi;
@@ -366,20 +366,29 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
   od;
   SizeScreen(oldscr);
   if Length(exlists) > 1 then
+    PrintFormatted("{} failures in {} examples\n",
+                   num_fails,
+                   Sum(exlists, Length));
     Print("Total: ", total, " msecs\n");
   fi;
-  return passed;
+  return num_fails = 0;
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local ex, doc, tree, tester, omit, acting, passed, str;
+  local ex, nums, doc, tree, mansect, tester, actual, omit, acting, passed,
+  str;
+
   ex := SEMIGROUPS.ManualExamples();
-  if Length(arg) = 1 then
+  if Length(arg) = 0 then
+    nums := [1 .. Length(ex)];
+  elif Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
       ex := [ex[arg[1]]];
+      nums := [arg[1]];
     elif IsHomogeneousList(arg[1])
         and ForAll(arg[1], x -> IsPosInt(x) and x <= Length(ex)) then
-      ex := SEMIGROUPS.ManualExamples(){arg};
+      ex := SEMIGROUPS.ManualExamples(){arg[1]};
+      nums := arg[1];
     elif IsString(arg[1]) then
       doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
                                "main.xml",
@@ -387,16 +396,18 @@ SEMIGROUPS.TestManualExamples := function(arg)
                                true);
       tree := ParseTreeXMLString(doc[1]);
       CheckAndCleanGapDocTree(tree);
-      ex := XMLElements(tree, "ManSection");
+      mansect := XMLElements(tree, "ManSection");
       tester := function(record)
         return IsBound(record.content[1].attributes.Name)
             and record.content[1].attributes.Name = arg[1];
       end;
-      ex := First(ex, tester);
-      if ex = fail then
+      mansect := First(mansect, tester);
+      if mansect = fail then
         ErrorNoReturn("did not find a man section named ", arg[1]);
       fi;
-      ex := ExtractExamplesXMLTree(ex, "Single");
+      actual := ExtractExamplesXMLTree(mansect, "Single");
+      nums := [PositionProperty(ex, x -> x[1][1] = actual[1][1][1])];
+      ex := actual;
     else
       ErrorNoReturn("the argument must be a pos int or list of pos ints");
     fi;
@@ -422,7 +433,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
 
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   SEMIGROUPS.StartTest();
-  passed := SEMIGROUPS.RunExamples(ex, []);
+  passed := SEMIGROUPS.RunExamples(ex, nums, []);
   SEMIGROUPS.StopTest();
 
   SEMIGROUPS.DefaultOptionsRec.acting := acting;

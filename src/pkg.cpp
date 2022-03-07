@@ -335,7 +335,10 @@ static StructGVarFunc GVarFuncs[] = {
                2,
                "scc1, scc2"),
     GVAR_ENTRY("froidure-pin-fallback.cpp", FIND_HCLASSES, 2, "left, right"),
-    GVAR_ENTRY("froidure-pin-fallback.cpp", RUN_FROIDURE_PIN, 2, "obj, limit"),
+    GVAR_ENTRY("froidure-pin-fallback.cpp",
+               RUN_FROIDURE_PIN,
+               3,
+               "obj, limit, report"),
 
     GVAR_ENTRY("bipart.cpp", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cpp", BIPART_EXT_REP, 1, "x"),

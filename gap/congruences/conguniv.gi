@@ -18,7 +18,10 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
   C := Objectify(NewType(fam,
-                         IsCongruenceCategory and IsAttributeStoringRep),
+                         IsSemigroupCongruence
+                         and IsMagmaCongruence
+                         and CanComputeEquivalenceRelationPartition
+                         and IsAttributeStoringRep),
                     rec());
   SetSource(C, S);
   SetRange(C, S);
@@ -187,7 +190,7 @@ function(C, x)
   fam := CollectionsFamily(FamilyObj(x));
   class := Objectify(NewType(fam,
                              IsUniversalSemigroupCongruenceClass
-                             and IsAnyCongruenceClass),
+                             and IsLeftRightOrTwoSidedCongruenceClass),
                      rec());
 
   SetParentAttr(class, Range(C));
@@ -204,7 +207,7 @@ function(x, class)
   return x in Parent(class);
 end);
 
-# TODO more \* methods for universal and non-universal congruences??
+# TODO(later) more \* methods for universal and non-universal congruences??
 InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
