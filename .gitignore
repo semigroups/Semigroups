@@ -68,7 +68,7 @@ doc/*.js
 doc/*.css
 gh-pages
 lcov*
-libsemigroups/
+./libsemigroups/
 libtool
 libtool.m4
 ltmain.sh
