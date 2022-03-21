@@ -189,9 +189,9 @@ function(filter, mat, threshold, period)
   local checker, row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("the 2nd argument must define a square matrix");
+    TryNextMethod();
   elif filter <> IsNTPMatrix then
-    ErrorNoReturn("cannot create a matrix from the given arguments");
+    TryNextMethod();
   fi;
 
   checker := SEMIGROUPS_MatrixOverSemiringEntryCheckerCons(filter,
@@ -212,6 +212,8 @@ end);
 InstallMethod(Matrix,
 "for a filter, homogeneous list, and pos int",
 [IsOperation, IsHomogeneousList, IsPosInt],
+20,  # WORKAROUND for a similar ranking offset in GAP master
+     # TODO: remove this once GAP master has adjusted
 function(filter, mat, threshold)
   local checker, row;
 
@@ -238,17 +240,19 @@ end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",
 [IsOperation, IsHomogeneousList],
+20,  # WORKAROUND for a similar ranking offset in GAP master
+     # TODO: remove this once GAP master has adjusted
 function(filter, mat)
   local row;
 
   if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("the 2nd argument must define a square matrix");
+    TryNextMethod();
   elif not filter in [IsBooleanMat,
                       IsMaxPlusMatrix,
                       IsMinPlusMatrix,
                       IsProjectiveMaxPlusMatrix,
                       IsIntegerMatrix] then
-    ErrorNoReturn("cannot create a matrix from the given arguments");
+    TryNextMethod();
   elif filter = IsBooleanMat then
     return BooleanMat(mat);
   fi;
@@ -269,7 +273,7 @@ SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
 
   if not IsEmpty(mat)
       and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
-    ErrorNoReturn("the 2nd argument <mat> does not give a rectangular table");
+    TryNextMethod();
   elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
     TryNextMethod();
   elif IsField(semiring) and IsFinite(semiring) then
@@ -297,10 +301,14 @@ end;
 
 InstallMethod(Matrix, "for a semiring and homogenous list",
 [IsSemiring, IsHomogeneousList],
+20,  # WORKAROUND for a similar ranking offset in GAP master
+     # TODO: remove this once GAP master has adjusted
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 InstallMethod(Matrix, "for a semiring and a matrix obj",
 [IsSemiring, IsMatrixObj],
+20,  # WORKAROUND for a similar ranking offset in GAP master
+     # TODO: remove this once GAP master has adjusted
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 Unbind(SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
