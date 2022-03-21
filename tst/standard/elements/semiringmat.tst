@@ -91,14 +91,17 @@ Matrix(IsTropicalMaxPlusMatrix, [[0, -infinity], [-infinity, 0]], 5)
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 1/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [2]], 3, 3);
-Error, the 2nd argument must define a square matrix
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 4 arguments
 gap> Matrix(IsNTPMatrix, [[1, 1, 3], [1, 2, 3]], 3, 3);
-Error, the 2nd argument must define a square matrix
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 4 arguments
 
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 2/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, 2]], 3, 3);
-Error, cannot create a matrix from the given arguments
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 4 arguments
 
 # semiringmat: Matrix, for a filter, homogeneous list, pos int, and pos int,
 # 3/3
@@ -123,13 +126,16 @@ alMinPlusMatrix
 
 # semiringmat: Matrix, for a filter and homogeneous list, 1/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2]]);
-Error, the 2nd argument must define a square matrix
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 2 arguments
 gap> Matrix(IsIntegerMatrix, [[1, 1, 3], [1, 2, 3]]);
-Error, the 2nd argument must define a square matrix
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 2 arguments
 
 # semiringmat: Matrix, for a filter and homogeneous list, 2/3
 gap> Matrix(IsNTPMatrix, [[1, 1], [1, 2]]);
-Error, cannot create a matrix from the given arguments
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `Matrix' on 2 arguments
 
 # semiringmat: Matrix, for a filter and homogeneous list, 3/3
 gap> Matrix(IsIntegerMatrix, [[1, 1], [2, E(8)]]);
@@ -137,8 +143,10 @@ Error, the entries in the 2nd argument do not define a matrix of type IsIntege\
 rMatrix
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 1/3
-gap> Matrix(Integers, [[1, 1], [2]]);
-Error, the 2nd argument <mat> does not give a rectangular table
+# WORKAROUND: disabled until https://github.com/gap-system/gap/issues/4814
+# is fully resolved
+#gap> Matrix(Integers, [[1, 1], [2]]);
+#Error, the 2nd argument <mat> does not give a rectangular table
 
 # semiringmat: Matrix, for a semiring and homogeneous list, 2/3
 gap> Matrix(Rationals, [[1, 1], [2, 2]]);
