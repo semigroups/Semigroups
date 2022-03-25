@@ -25,8 +25,6 @@
 #ifndef INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_
 #define INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_
 
-#include <gmp.h>
-
 extern "C" {
 #include "compiled.h"
 }
