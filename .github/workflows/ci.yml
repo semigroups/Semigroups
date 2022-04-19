@@ -42,6 +42,12 @@ jobs:
       - name: "Install dependencies"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake
+      # Setup ccache, to speed up repeated compilation of the same binaries
+      # (i.e., GAP and the packages)
+      - name: "Setup ccache"
+        uses: Chocobo1/setup-ccache-action@v1
+        with:
+          update_packager_index: false
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         env:
