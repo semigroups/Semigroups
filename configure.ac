@@ -82,17 +82,6 @@ AC_MSG_RESULT([$enable_debug])
 
 AM_CONDITIONAL([KERNEL_DEBUG], [test "x$enable_debug" = xyes])
 
-AC_ARG_WITH([march-native],
-            [AS_HELP_STRING([--without-march-native], 
-                            [do not use compile flag -march=native even if available])]
-           )
-
-AS_IF([test "x$with_march_native" == "xno" ],
-      [AC_MSG_NOTICE([the compile flag -march=native will not be used even if available])])
-
-AS_IF([test "x$with_march_native" != "xno"],
-      [AX_CHECK_COMPILE_FLAG(-march=native, AX_APPEND_FLAG(-march=native))])
-
 # Check if HPCombi is enable, and available
 AX_CHECK_HPCOMBI()
 
