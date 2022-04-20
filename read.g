@@ -73,6 +73,7 @@ ReadPackage("semigroups", "gap/attributes/acting.gi");
 ReadPackage("semigroups", "gap/attributes/attr.gi");
 ReadPackage("semigroups", "gap/attributes/dual.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
+ReadPackage("semigroups", "gap/attributes/homomorph.gi");
 ReadPackage("semigroups", "gap/attributes/inverse.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");
 ReadPackage("semigroups", "gap/attributes/isorms.gi");

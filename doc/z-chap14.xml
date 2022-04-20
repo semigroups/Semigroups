@@ -4,8 +4,43 @@
   </Heading>
 
   In this chapter we describe the various ways to define a homomorphism from a
-  semigroup to another semigroup.
-  <P/>
+  semigroup to another semigroup. <P/>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Homomorphisms of arbitrary semigroups
+    </Heading>
+    <#Include Label = "SemigroupHomomorphismByImages">
+    <#Include Label = "SemigroupHomomorphismByFunction">
+    The following methods can be applied to Semigroup homomorphisms by images or
+    by function:
+    <Ref Attr = "Range" BookName = "ref"/>,
+    <Ref Attr = "Image" BookName = "ref"/>,
+    <Ref Attr = "Images" BookName = "ref"/>,
+    <Ref Attr = "ImageElm" BookName = "ref"/>,
+    <Ref Attr = "PreImage" BookName = "ref"/>,
+    <Ref Attr = "PreImages" BookName = "ref"/>,
+    <Ref Attr = "PreImagesRepresentative" BookName = "ref"/>,
+    <Ref Attr = "PreImagesRange" BookName = "ref"/>,
+    <Ref Attr = "PreImagesElm" BookName = "ref"/>,
+    <Ref Attr = "PreImagesSet" BookName = "ref"/>,
+    <Ref Attr = "IsSurjective" BookName = "ref"/>,
+    <Ref Attr = "IsInjective" BookName = "ref"/>,
+    <Ref Attr = "IsBijective" BookName = "ref"/>,
+    <Ref Attr = "Source" BookName = "ref"/>,
+    <Ref Attr = "Range" BookName = "ref"/>,
+    <Ref Attr = "ImagesSource" BookName = "ref"/>,
+    <Ref Attr = "KernelOfSemigroupHomomorphism"/>
+    <#Include Label = "IsSemigroupHomomorphismByImages">
+    <#Include Label = "IsSemigroupHomomorphismByFunction">
+    <#Include Label = "AsSemigroupHomomorphismByImages">
+    <#Include Label = "AsSemigroupHomomorphismByFunction">
+    <#Include Label = "KernelOfSemigroupHomomorphism">
+
+  </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
@@ -22,6 +57,10 @@
     <#Include Label = "OnMultiplicationTable">
     <#Include Label = "IsomorphismSemigroups">
     <#Include Label = "AutomorphismGroup">
+    <#Include Label = "SemigroupIsomorphismByImages">
+    <#Include Label = "SemigroupIsomorphismByFunction">
+    <#Include Label = "IsSemigroupIsomorphismByFunction">
+    <#Include Label = "AsSemigroupIsomorphismByFunction">
 
   </Section>
 

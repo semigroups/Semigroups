@@ -177,7 +177,7 @@ function(S)
   U := Semigroup(List(GeneratorsOfGroup(Range(map)),
                       x -> x ^ InverseGeneralMapping(map)));
 
-  iso := MappingByFunction(U,
+  iso := SemigroupIsomorphismByFunctionNC(U,
                            Range(map),
                            x -> x ^ map,
                            x -> x ^ InverseGeneralMapping(map));

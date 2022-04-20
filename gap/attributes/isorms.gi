@@ -1208,7 +1208,7 @@ function(S)
   invG := InverseGeneralMapping(isoG);
   s := ReesMatrixSemigroup(Range(isoG),
                           List(Matrix(S), x -> OnTuples(x, isoG)));
-  return MagmaIsomorphismByFunctionsNC(S, s,
+  return SemigroupIsomorphismByFunctionNC(S, s,
            x -> RMSElement(s, x![1], x![2] ^ isoG, x![3]),
            x -> RMSElement(S, x![1], x![2] ^ invG, x![3]));
 end);
@@ -1247,7 +1247,7 @@ function(S)
                                List(Matrix(S),
                                     x -> List(x, y -> func(y, isoG))));
 
-  return MagmaIsomorphismByFunctionsNC(S, s,
+  return SemigroupIsomorphismByFunctionNC(S, s,
            function(x)
              if x![1] = 0 then
                return MultiplicativeZero(s);
