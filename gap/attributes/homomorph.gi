@@ -245,9 +245,10 @@ InstallMethod(SemigroupIsomorphismByFunctionNC,
 function(S, T, f, g)
   local iso;
   iso := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-                                               ElementsFamily(FamilyObj(T))),
-                         IsSemigroupIsomorphismByFunction), rec(fun := f,
-                         invFun := g));
+                                                 ElementsFamily(FamilyObj(T))),
+                           IsSemigroupIsomorphismByFunction),
+                           rec(fun    := f,
+                               invFun := g));
   SetSource(iso, S);
   SetRange(iso, T);
   return iso;
@@ -259,8 +260,8 @@ InstallMethod(AsSemigroupHomomorphismByImages,
 [IsSemigroupHomomorphismByFunction],
 function(hom)
   local S, T, gens, imgs;
-  S := Source(hom);
-  T := Range(hom);
+  S    := Source(hom);
+  T    := Range(hom);
   gens := GeneratorsOfSemigroup(S);
   imgs := List(gens, x -> x ^ hom);
   return SemigroupHomomorphismByImages(S, T, gens, imgs);
