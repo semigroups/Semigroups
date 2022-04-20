@@ -1377,11 +1377,20 @@ function(n)
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/reflex.pickle.gz"));
   fi;
+  
+  if n = 6 and not IsBound(SEMIGROUPS.GENERATORS.Reflex[6]) then
+    Info(InfoSemigroups, 2, "reading generators; this may take some time");
+    Add(SEMIGROUPS.GENERATORS.Reflex,
+        ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/reflex-6.pickle.gz")));
+  fi;
 
   if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
-    ErrorNoReturn("generators for this monoid are only known up to dimension ",
-                  String(Length(SEMIGROUPS.GENERATORS.Reflex)));
+    ErrorNoReturn("Semigroups: ReflexiveBooleanMatMonoid:\n",
+                  "generators for this monoid are only provided up to ",
+                  "dimension 6,");
   fi;
+  
 
   return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
 end);
@@ -1389,15 +1398,26 @@ end);
 InstallMethod(HallMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
+  local gens, p;
+
   if not IsBound(SEMIGROUPS.GENERATORS.Hall) then
     SEMIGROUPS.GENERATORS.Hall :=
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/hall.pickle.gz"));
   fi;
-
+  
+  if n = 8 then
+    gens := GeneratorsOfSemigroup(FullBooleanMatMonoid(8));
+    p := PositionProperty(gens,
+                           x -> ListWithIdenticalEntries(8, false)
+                                in AsList(x));
+    return Monoid(gens{[1 .. p - 1]}, gens{[p + 1 .. Length(gens)]});
+  fi;
+  
   if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
-    ErrorNoReturn("generators for this monoid are only known up to dimension ",
-                  String(Length(SEMIGROUPS.GENERATORS.Hall)));
+    ErrorNoReturn("Semigroups: HallMonoid:\n",
+                  "generators for this monoid are only known up to dimension ",
+                  "8,");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
@@ -1411,14 +1431,23 @@ function(n)
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/fullbool.pickle.gz"));
   fi;
+  
+  if n = 8 and not IsBound(SEMIGROUPS.GENERATORS.FullBool[8]) then
+    Info(InfoSemigroups, 2, "reading generators; this may take some time");
+    Add(SEMIGROUPS.GENERATORS.FullBool,
+        ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/fullbool-8.pickle.gz")));
+  fi;
 
   if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
-    ErrorNoReturn("generators for this monoid are only known up to dimension ",
-                  String(Length(SEMIGROUPS.GENERATORS.FullBool)));
+    ErrorNoReturn("Semigroups: FullBooleanMatMonoid:\n",
+                  "generators for this monoid are only known up to dimension ",
+                  "8,");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);
 end);
+
 
 #############################################################################
 ## Tropical matrix monoids
