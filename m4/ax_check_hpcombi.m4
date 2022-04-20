@@ -6,11 +6,11 @@ dnl to handle the other checks as to whether or not HPCombi can be used.
 AC_DEFUN([AX_CHECK_HPCOMBI], [
   m4_define([ax_hpcombi_cxxflags_variable],[HPCOMBI_CXXFLAGS])
 
-  dnl # Check if the flags required for HPCombi are supported 
-  AX_CHECK_COMPILE_FLAG(-march=native, 
-                        AX_APPEND_FLAG(-march=native,
+  dnl # Check if the flags required for HPCombi are supported
+  AX_CHECK_COMPILE_FLAG(-march=avx,
+                        AX_APPEND_FLAG(-march=avx,
                                        [ax_hpcombi_cxxflags_variable]),
-                        [AC_MSG_WARN([flag -march=native not supported])
+                        [AC_MSG_WARN([flag -march=avx not supported])
                          enable_hpcombi=no])
 
   AX_CHECK_COMPILE_FLAG(-flax-vector-conversions, 
