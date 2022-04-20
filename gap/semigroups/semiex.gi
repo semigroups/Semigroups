@@ -1386,8 +1386,7 @@ function(n)
   fi;
 
   if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
-    ErrorNoReturn(
-                  "generators for this monoid are only provided up to ",
+    ErrorNoReturn("generators for this monoid are only provided up to ",
                   "dimension 6");
   fi;
 
@@ -1414,9 +1413,8 @@ function(n)
   fi;
 
   if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
-    ErrorNoReturn(
-                  "generators for this monoid are only known up to dimension 8");
-                 
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  "8");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
@@ -1439,9 +1437,8 @@ function(n)
   fi;
 
   if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
-    ErrorNoReturn(
-                  "generators for this monoid are only known up to dimension 8");
-            
+    ErrorNoReturn("generators for this monoid are only known up to dimension ",
+                  "8");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);

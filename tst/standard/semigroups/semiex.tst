@@ -2014,8 +2014,7 @@ gap> S := ReflexiveBooleanMatMonoid(3);
 gap> S := ReflexiveBooleanMatMonoid(5);
 <monoid of 5x5 boolean matrices with 1414 generators>
 gap> S := ReflexiveBooleanMatMonoid(7);
-Error, Semigroups: ReflexiveBooleanMatMonoid:
-generators for this monoid are only provided up to dimension 6,
+Error, generators for this monoid are only provided up to dimension 6
 
 # Test HallMonoid
 gap> HallMonoid(1);
@@ -2031,8 +2030,7 @@ gap> S := HallMonoid(6);
 gap> S := HallMonoid(7);
 <monoid of 7x7 boolean matrices with 2141 generators>
 gap> S := HallMonoid(9);
-Error, Semigroups: HallMonoid:
-generators for this monoid are only known up to dimension 8,
+Error, generators for this monoid are only known up to dimension 8
 
 # Test FullBooleanMatMonoid
 gap> FullBooleanMatMonoid(1);
@@ -2048,8 +2046,7 @@ gap> S := FullBooleanMatMonoid(6);
 gap> S := FullBooleanMatMonoid(7);
 <monoid of 7x7 boolean matrices with 2142 generators>
 gap> S := FullBooleanMatMonoid(9);
-Error, Semigroups: FullBooleanMatMonoid:
-generators for this monoid are only known up to dimension 8,
+Error, generators for this monoid are only known up to dimension 8
 
 # 
 gap> SEMIGROUPS.StopTest();
