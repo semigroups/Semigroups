@@ -60,11 +60,5 @@ jobs:
           ABI: ${{ matrix.ABI }}
       - name: "Run tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
-        with:
-          # This is the test file that is specified in our PackageInfo.g file.
-          # This Action is *supposed* to use that file by default, but this is
-          # not yet implemented, and instead the default is tst/testall.g.
-          # Therefore we temporarily have to specify tst/teststandard.g here.
-          GAP_TESTFILE: "tst/teststandard.g"
       - uses: gap-actions/process-coverage@v2
       - uses: codecov/codecov-action@v2
