@@ -1377,7 +1377,7 @@ function(n)
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/reflex.pickle.gz"));
   fi;
-  
+
   if n = 6 and not IsBound(SEMIGROUPS.GENERATORS.Reflex[6]) then
     Info(InfoSemigroups, 2, "reading generators; this may take some time");
     Add(SEMIGROUPS.GENERATORS.Reflex,
@@ -1390,7 +1390,6 @@ function(n)
                   "generators for this monoid are only provided up to ",
                   "dimension 6,");
   fi;
-  
 
   return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
 end);
@@ -1405,7 +1404,7 @@ function(n)
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/hall.pickle.gz"));
   fi;
-  
+
   if n = 8 then
     gens := GeneratorsOfSemigroup(FullBooleanMatMonoid(8));
     p := PositionProperty(gens,
@@ -1413,7 +1412,7 @@ function(n)
                                 in AsList(x));
     return Monoid(gens{[1 .. p - 1]}, gens{[p + 1 .. Length(gens)]});
   fi;
-  
+
   if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
     ErrorNoReturn("Semigroups: HallMonoid:\n",
                   "generators for this monoid are only known up to dimension ",
@@ -1431,7 +1430,7 @@ function(n)
       ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
                                    "/data/gens/fullbool.pickle.gz"));
   fi;
-  
+
   if n = 8 and not IsBound(SEMIGROUPS.GENERATORS.FullBool[8]) then
     Info(InfoSemigroups, 2, "reading generators; this may take some time");
     Add(SEMIGROUPS.GENERATORS.FullBool,
