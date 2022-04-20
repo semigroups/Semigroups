@@ -2013,10 +2013,10 @@ gap> S := ReflexiveBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 8 generators>
 gap> S := ReflexiveBooleanMatMonoid(5);
 <monoid of 5x5 boolean matrices with 1414 generators>
-gap> S := ReflexiveBooleanMatMonoid(6);
-Error, generators for this monoid are only known up to dimension 5
+gap> S := ReflexiveBooleanMatMonoid(7);
+Error, generators for this monoid are only provided up to dimension 6
 
-# Test HallBooleanMatMonoid
+# Test HallMonoid
 gap> HallMonoid(1);
 <trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := HallMonoid(3);
@@ -2026,9 +2026,13 @@ gap> Size(S);
 gap> S := HallMonoid(5);
 <monoid of 5x5 boolean matrices with 12 generators>
 gap> S := HallMonoid(6);
-Error, generators for this monoid are only known up to dimension 5
+<monoid of 6x6 boolean matrices with 67 generators>
+gap> S := HallMonoid(7);
+<monoid of 7x7 boolean matrices with 2141 generators>
+gap> S := HallMonoid(9);
+Error, generators for this monoid are only known up to dimension 8
 
-# Test FullBooleanMatBooleanMatMonoid
+# Test FullBooleanMatMonoid
 gap> FullBooleanMatMonoid(1);
 <commutative monoid of 1x1 boolean matrices with 1 generator>
 gap> S := FullBooleanMatMonoid(3);
@@ -2038,7 +2042,11 @@ true
 gap> S := FullBooleanMatMonoid(5);
 <monoid of 5x5 boolean matrices with 13 generators>
 gap> S := FullBooleanMatMonoid(6);
-Error, generators for this monoid are only known up to dimension 5
+<monoid of 6x6 boolean matrices with 68 generators>
+gap> S := FullBooleanMatMonoid(7);
+<monoid of 7x7 boolean matrices with 2142 generators>
+gap> S := FullBooleanMatMonoid(9);
+Error, generators for this monoid are only known up to dimension 8
 
 # 
 gap> SEMIGROUPS.StopTest();
