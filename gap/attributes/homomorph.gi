@@ -10,15 +10,6 @@
 ##
 
 # This file contains a method for finding a homomorphism between semigroups
-# TODO for chin:
-# look at code coverage
-# look at linting
-# docs
-# make category semigrouphomomorphismbyimagesorfunction
-
-#
-# TODO for Artemis:
-# Docs
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
