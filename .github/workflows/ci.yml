@@ -58,6 +58,7 @@ jobs:
         uses: gap-actions/build-pkg@v1
         with:
           ABI: ${{ matrix.ABI }}
+          CONFIGFLAGS: --disable-hpcombi
       - name: "Run tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
         with:
