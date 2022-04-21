@@ -58,7 +58,6 @@
     <#Include Label = "SemigroupCongruence">
     <#Include Label = "LeftSemigroupCongruence">
     <#Include Label = "RightSemigroupCongruence">
-    <#Include Label = "GeneratingPairsOfSemigroupCongruence">
 
   </Section>
 

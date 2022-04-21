@@ -493,7 +493,7 @@ function(C)
 end);
 
 InstallMethod(ViewString, "for a Green's relation",
-[IsGreensRelation], 2,  # to beat the method for congruences
+[IsGreensRelation], 11,  # to beat the method for congruences
 function(rel)
   local str;
 
@@ -517,7 +517,7 @@ function(rel)
 end);
 
 InstallMethod(ViewObj, "for a Green's relation",
-[IsGreensRelation], 2,  # to beat the method for congruences
+[IsGreensRelation], 11,  # to beat the method for congruences
 function(rel)
   Print(ViewString(rel));
   return;

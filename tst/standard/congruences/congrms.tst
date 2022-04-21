@@ -132,7 +132,7 @@ true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
-<congruence class of (1,(2,3,4),3)>
+<2-sided congruence class of (1,(2,3,4),3)>
 gap> Representative(class1);
 (1,(2,3),2)
 gap> Representative(class2);
@@ -141,7 +141,7 @@ gap> Representative(class3);
 (1,(2,3,4),3)
 gap> EquivalenceClassOfElement(cong, t);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),
 >                                        RMSElement(S, 2, (), 2)],
 >                                       [RMSElement(S, 1, (1, 3), 1),
@@ -410,7 +410,7 @@ gap> ims := ImagesElm(cong, zero);
 
 # ReesZeroMatCongTest5: Equivalence classes
 gap> class0 := EquivalenceClassOfElement(cong, zero);
-<congruence class of 0>
+<2-sided congruence class of 0>
 gap> class0!.nCoset;
 0
 gap> HasSize(class0);
@@ -425,10 +425,10 @@ true
 gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := EquivalenceClassOfElement(cong, y);;
 gap> class3 := EquivalenceClassOfElement(cong, z);
-<congruence class of (1,(1,3,5),2)>
+<2-sided congruence class of (1,(1,3,5),2)>
 gap> EquivalenceClassOfElement(cong, t);
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
 >                                        RMSElement(S, 5, (3, 5), 2)],
 >                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
@@ -541,7 +541,7 @@ gap> Length(EquivalenceClasses(uni)) = 1 and
 >   RMSElement(S, 1, (), 1));  # the first is after 4.7.7 the latter before
 true
 gap> eq := EquivalenceClassOfElement(uni, y);
-<congruence class of (6,(1,3,5),1)>
+<2-sided congruence class of (6,(1,3,5),1)>
 gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true

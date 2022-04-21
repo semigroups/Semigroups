@@ -8,14 +8,10 @@
 #############################################################################
 ##
 ## This file contains functions for any semigroup congruence with generating
-## pairs.
+## pairs; regardless of representation.
 
-DeclareAttribute("GeneratingPairsOfAnyCongruence", IsAnyCongruenceCategory);
-
-DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
-               GeneratingPairsOfLeftMagmaCongruence);
-DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
-               GeneratingPairsOfRightMagmaCongruence);
+DeclareAttribute("GeneratingPairsOfLeftRightOrTwoSidedCongruence",
+                 IsLeftRightOrTwoSidedCongruence);
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
@@ -23,8 +19,3 @@ DeclareOperation("AsRightSemigroupCongruenceByGeneratingPairs",
                  [IsRightSemigroupCongruence]);
 DeclareOperation("AsLeftSemigroupCongruenceByGeneratingPairs",
                  [IsLeftSemigroupCongruence]);
-
-# Internal detail
-
-DeclareOperation("_AnyCongruenceByGeneratingPairs",
-                 [IsSemigroup, IsHomogeneousList, IsFunction]);

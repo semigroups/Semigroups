@@ -18,40 +18,49 @@
 
 DeclareCategory("IsCongruencePoset", IsDigraph);
 
-DeclareAttribute("CongruencesOfPoset", IsCongruencePoset);
 DeclareAttribute("UnderlyingSemigroupOfCongruencePoset", IsCongruencePoset);
+DeclareAttribute("PosetOfPrincipalCongruences", IsCongruencePoset);
+DeclareOperation("JoinSemilatticeOfCongruences",
+                 [IsCongruencePoset, IsFunction]);
+DeclareAttribute("MinimalCongruences", IsCongruencePoset);
 
-DeclareAttribute("LatticeOfCongruences", IsSemigroup);
-DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
-DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
-DeclareOperation("LatticeOfCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("LatticeOfLeftCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
-DeclareOperation("LatticeOfRightCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareAttribute("CongruencesOfPoset", IsCongruencePoset);
+
+# Constructs the poset object consisting of the congruences given in the
+# argument.
+DeclareOperation("PosetOfCongruences", [IsListOrCollection]);
+
+DeclareAttribute("GeneratingPairsOfPrincipalCongruences", IsSemigroup);
+DeclareAttribute("GeneratingPairsOfPrincipalLeftCongruences", IsSemigroup);
+DeclareAttribute("GeneratingPairsOfPrincipalRightCongruences", IsSemigroup);
 
 DeclareAttribute("PosetOfPrincipalCongruences", IsSemigroup);
 DeclareAttribute("PosetOfPrincipalLeftCongruences", IsSemigroup);
 DeclareAttribute("PosetOfPrincipalRightCongruences", IsSemigroup);
+
 DeclareOperation("PosetOfPrincipalCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("PosetOfPrincipalLeftCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("PosetOfPrincipalRightCongruences",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 
-DeclareOperation("PosetOfCongruences", [IsListOrCollection]);
+DeclareAttribute("LatticeOfCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
 
-DeclareOperation("JoinSemilatticeOfCongruences",
-                 [IsListOrCollection, IsFunction]);
-DeclareOperation("JoinSemilatticeOfCongruences",
-                 [IsCongruencePoset, IsFunction]);
-
-DeclareAttribute("MinimalCongruences", IsListOrCollection);
-DeclareAttribute("MinimalCongruences", IsCongruencePoset);
-
-DeclareAttribute("Size", IsCongruencePoset);
+DeclareOperation("LatticeOfCongruences",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("LatticeOfCongruencesNC",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("LatticeOfLeftCongruences",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("LatticeOfLeftCongruencesNC",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("LatticeOfRightCongruences",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("LatticeOfRightCongruencesNC",
+                 [IsSemigroup, IsListOrCollection]);
 
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
@@ -62,19 +71,22 @@ DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
 
 DeclareOperation("MinimalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("MinimalCongruencesOfSemigroup",
+                 [IsSemigroup, IsIterator]);
+
 DeclareOperation("MinimalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("MinimalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 
 DeclareAttribute("PrincipalCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("PrincipalLeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("PrincipalRightCongruencesOfSemigroup", IsSemigroup);
 
 DeclareOperation("PrincipalCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("PrincipalRightCongruencesOfSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);

@@ -61,8 +61,8 @@ ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 ReadPackage("semigroups", "gap/main/froidure-pin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");
 ReadPackage("semigroups", "gap/main/setup.gd");
-ReadPackage("semigroups", "gap/main/acting.gd");
 ReadPackage("semigroups", "gap/main/lambda-rho.gd");
+ReadPackage("semigroups", "gap/main/acting.gd");
 ReadPackage("semigroups", "gap/main/graded.gd");
 ReadPackage("semigroups", "gap/main/orbits.gd");
 
@@ -112,6 +112,7 @@ ReadPackage("semigroups", "gap/attributes/maximal.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
 
 ReadPackage("semigroups", "gap/congruences/cong.gd");
+ReadPackage("semigroups", "gap/congruences/congpart.gd");
 ReadPackage("semigroups", "gap/congruences/conginv.gd");
 ReadPackage("semigroups", "gap/congruences/conglatt.gd");
 ReadPackage("semigroups", "gap/congruences/congpairs.gd");

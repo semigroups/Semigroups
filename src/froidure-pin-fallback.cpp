@@ -43,16 +43,6 @@ using libsemigroups::detail::Timer;
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 
-#define SEMIGROUPS_REPORT(...)                                             \
-  (libsemigroups::REPORTER.report() ? libsemigroups::REPORTER(__VA_ARGS__) \
-                                    : libsemigroups::REPORTER)
-
-#define SEMIGROUPS_REPORT_DEFAULT(...) SEMIGROUPS_REPORT(__VA_ARGS__).flush();
-
-#define SEMIGROUPS_REPORT_TIME(var) \
-  SEMIGROUPS_REPORT_DEFAULT(        \
-      "elapsed time (%s): %s\n", __func__, var.string().c_str());
-
 static Int RNam_batch_size        = 0;
 static Int RNam_DefaultOptionsRec = 0;
 static Int RNam_opts              = 0;
@@ -95,7 +85,7 @@ static inline size_t get_batch_size(Obj so) {
 //
 // Assumes the length of data!.elts is at most 2 ^ 28.
 
-Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
+Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit, Obj report) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
       empty, oldword, x, data, parent, stopper;
@@ -123,7 +113,9 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
     return data;
   }
   int_limit = std::max(static_cast<UInt>(INT_INTOBJ(limit)), nr + batch_size);
-  SEMIGROUPS_REPORT_DEFAULT("limit = %llu\n", uint64_t(int_limit));
+  if (report == True) {
+    std::cout << "#I  limit = " << int_limit << std::endl;
+  }
 
   Timer timer;
 
@@ -333,24 +325,21 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit) {
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
-    if (i <= nr) {
-      SEMIGROUPS_REPORT_DEFAULT("found %llu elements, %llu "
-                                "rules, max word length %llu, so "
-                                "far\n",
-                                uint64_t(nr),
-                                uint64_t(nrrules),
-                                uint64_t(len - 1));
-    } else {
-      SEMIGROUPS_REPORT_DEFAULT("found %llu elements, %llu "
-                                "rules, max word length %llu, "
-                                "finished!\n",
-                                uint64_t(nr),
-                                uint64_t(nrrules),
-                                uint64_t(len - 1));
+    if (report == True) {
+      std::cout << "#I  found " << nr << " elements, " << nrrules
+                << " rules, max word length " << len - 1 << ", ";
+      if (i <= nr) {
+        std::cout << "so far";
+      } else {
+        std::cout << "finished!";
+      }
+      std::cout << std::endl;
     }
   }
 
-  SEMIGROUPS_REPORT_TIME(timer);
+  if (report == True) {
+    std::cout << "#I  elapsed time: " << timer << std::endl;
+  }
   AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));
   AssPRec(data, RNamName("nrrules"), INTOBJ_INT(nrrules));
   AssPRec(data, RNamName("one"), ((one != 0) ? INTOBJ_INT(one) : False));
@@ -441,13 +430,10 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   return out;
 }
 
-// <right> and <left> should be scc data
-// structures for the right and left Cayley
-// graphs of a semigroup, as produced by
-// DigraphStronglyConnectedComponents. This
-// function find the H-classes of the
-// semigroup from <right> and <left>. The
-// method used is that described in:
+// <right> and <left> should be scc data structures for the right and left
+// Cayley graphs of a semigroup, as produced by
+// DigraphStronglyConnectedComponents. This function find the H-classes of the
+// semigroup from <right> and <left>. The method used is that described in:
 // https://www.irif.fr/~jep//PDF/Exposes/StAndrews.pdf
 
 Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {

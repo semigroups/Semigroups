@@ -460,3 +460,64 @@ function(o, m)
   fi;
   return G;
 end);
+
+InstallMethod(RelativeLambdaOrb,
+"for acting semigroup and subsemigroup",
+[IsActingSemigroup, IsActingSemigroup],
+function(S, T)
+  local o, D, act, schreiergen, schreierpos, genstoapply, gens, x, pos, i, j,
+  m;
+
+  if not IsSubsemigroup(S, T) then
+    ErrorNoReturn("the 2nd argument (an acting semigroup) must be ",
+                  "a subsemigroup of the 1st argument (an acting semigroup)");
+  fi;
+  Info(InfoSemigroups, 1, "Computing relative lambda orb . . ");
+
+  o   := StructuralCopy(Enumerate(LambdaOrb(S)));
+  o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(S))];
+
+  Unbind(o!.scc);
+  Unbind(o!.trees);
+  Unbind(o!.scc_lookup);
+  Unbind(o!.mults);
+  Unbind(o!.schutz);
+  Unbind(o!.reverse);
+  Unbind(o!.rev);
+  Unbind(o!.schutzstab);
+  Unbind(o!.factorgroups);
+  Unbind(o!.factors);
+
+  D   := List([1 .. Length(o)], x -> []);
+  act := LambdaAct(S);
+  schreiergen := ListWithIdenticalEntries(Length(o), fail);
+  schreierpos := ListWithIdenticalEntries(Length(o), fail);
+  genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
+  gens := GeneratorsOfSemigroup(T);
+
+  for i in [1 .. Length(o)] do
+    x := o[i];
+    for j in genstoapply do
+      pos := Position(o, act(x, gens[j]));
+      Add(D[i], pos);
+      if i < pos and schreiergen[pos] = fail then
+        schreiergen[pos] := j;
+        schreierpos[pos] := i;
+      fi;
+    od;
+  od;
+  o!.orbitgraph := D;
+  # Compute scc wrt to the new orbit graph, but scc reps using the old Schreier
+  # tree.
+  for m in [2 .. Length(OrbSCC(o))] do
+    LambdaOrbRep(o, m);
+  od;
+
+  o!.gens        := GeneratorsOfSemigroup(T);
+  o!.schreierpos := schreierpos;
+  o!.schreiergen := schreiergen;
+  Info(InfoSemigroups,
+       1,
+       StringFormatted("found {} lambda values!", Length(o)));
+  return o;
+end);

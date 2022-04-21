@@ -17,4 +17,4 @@ DeclareCategory("IsReesCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsMultiplicativeElement);
 
-DeclareProperty("IsReesCongruence", IsAnyCongruenceCategory);
+DeclareProperty("IsReesCongruence", IsLeftRightOrTwoSidedCongruence);

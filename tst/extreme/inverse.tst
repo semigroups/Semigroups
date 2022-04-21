@@ -898,8 +898,8 @@ gap> s := InverseSemigroup([PartialPerm([1, 2, 3, 5], [2, 7, 3, 4]),
 >  PartialPerm([1, 2, 3, 6], [7, 3, 4, 2])]);;
 gap> cong := SemigroupCongruence(s,
 >  [PartialPerm([4], [7]), PartialPerm([2], [1])]);
-<semigroup congruence over <inverse partial perm semigroup of size 4165, 
- rank 7 with 7 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 4165, rank 7 with 7 generators> with 1 generating pairs>
 
 # InverseCongTest3: Try some methods
 gap> x := PartialPerm([4], [5]);;
@@ -914,7 +914,7 @@ false
 
 # InverseCongTest4: Congruence classes
 gap> classx := EquivalenceClassOfElement(cong, x);
-<congruence class of [4,5]>
+<2-sided congruence class of [4,5]>
 gap> classy := EquivalenceClassOfElement(cong, y);;
 gap> classz := EquivalenceClassOfElement(cong, z);;
 gap> classx = classy;
@@ -944,8 +944,8 @@ gap> ccong := SemigroupCongruence(s, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of size 4165, 
- rank 7 with 7 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 4165, rank 7 with 7 generators> with 1 generating pairs>
 gap> [x, y] in ccong;
 false
 gap> [x, z] in ccong;

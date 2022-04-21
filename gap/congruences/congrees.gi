@@ -11,8 +11,17 @@
 ## defined by a two-sided ideal.  See Howie 1.7
 ##
 
+#############################################################################
+# Testers + fundamental representation specific attributes
+#############################################################################
+
+# The following requires CanComputeEquivalenceRelationPartition, because
+# otherwise, it applies to other congruences, which don't have a method for
+# NrEquivalenceClasses.
+
 InstallMethod(IsReesCongruence, "for a semigroup congruence",
-[IsAnyCongruenceCategory],
+[CanComputeEquivalenceRelationPartition],
+9,  # to beat the library method
 function(C)
   local S, classes, nontrivial, i, class, I;
   if not IsSemigroupCongruence(C) then
@@ -63,7 +72,11 @@ function(I)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  type := NewType(fam, IsCongruenceCategory and IsAttributeStoringRep);
+  type := NewType(fam,
+                  IsSemigroupCongruence
+                  and IsMagmaCongruence
+                  and IsAttributeStoringRep
+                  and CanComputeEquivalenceRelationPartition);
   C := Objectify(type, rec());
   # Set some attributes
   SetSource(C, S);
@@ -71,38 +84,6 @@ function(I)
   SetSemigroupIdealOfReesCongruence(C, I);
   SetIsReesCongruence(C, true);
   return C;
-end);
-
-InstallMethod(ViewObj, "for a Rees congruence",
-[IsReesCongruence],
-function(C)
-  Print("<Rees congruence of ");
-  ViewObj(SemigroupIdealOfReesCongruence(C));
-  Print(" over ");
-  ViewObj(Range(C));
-  Print(">");
-end);
-
-InstallMethod(PrintObj, "for a Rees congruence",
-[IsReesCongruence],
-function(C)
-  Print("ReesCongruenceOfSemigroupIdeal( ");
-  Print(SemigroupIdealOfReesCongruence(C));
-  Print(" )");
-end);
-
-InstallMethod(ImagesElm,
-"for a Rees congruence and a multiplicative element",
-[IsReesCongruence, IsMultiplicativeElement],
-function(C, x)
-  if not x in Range(C) then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
-                  "the range of the 1st argument (a Rees congruence)");
-  elif x in SemigroupIdealOfReesCongruence(C) then
-    return Elements(SemigroupIdealOfReesCongruence(C));
-  else
-    return [x];
-  fi;
 end);
 
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs, "for a Rees congruence",
@@ -132,11 +113,62 @@ function(C)
   return GeneratingPairsOfSemigroupCongruence(C);
 end);
 
+InstallMethod(ViewObj, "for a Rees congruence",
+[IsReesCongruence],
+function(C)
+  Print("<Rees congruence of ");
+  ViewObj(SemigroupIdealOfReesCongruence(C));
+  Print(" over ");
+  ViewObj(Range(C));
+  Print(">");
+end);
+
+InstallMethod(PrintObj, "for a Rees congruence",
+[IsReesCongruence],
+function(C)
+  Print("ReesCongruenceOfSemigroupIdeal( ");
+  Print(SemigroupIdealOfReesCongruence(C));
+  Print(" )");
+end);
+
+#############################################################################
+# The mandatory things that must be implemented for
+# congruences belonging to CanComputeEquivalenceRelationPartition
+#############################################################################
+
 InstallMethod(EquivalenceRelationPartition, "for a Rees congruence",
 [IsReesCongruence], C -> [AsList(SemigroupIdealOfReesCongruence(C))]);
 
+InstallMethod(ImagesElm,
+"for a Rees congruence and a multiplicative element",
+[IsReesCongruence, IsMultiplicativeElement],
+function(C, x)
+  if not x in Range(C) then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) does not belong to ",
+                  "the range of the 1st argument (a Rees congruence)");
+  elif x in SemigroupIdealOfReesCongruence(C) then
+    return Elements(SemigroupIdealOfReesCongruence(C));
+  else
+    return [x];
+  fi;
+end);
+
+InstallMethod(CongruenceTestMembershipNC,
+"for Rees congruence and two multiplicative elements",
+[IsReesCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+function(C, lhop, rhop)
+  local I;
+  I := SemigroupIdealOfReesCongruence(C);
+  return (lhop = rhop) or (lhop in I and rhop in I);
+end);
+
 ########################################################################
-# Operators for congruences
+# The non-mandatory things where we have a superior method for this particular
+# representation.
+########################################################################
+
+########################################################################
+# Operators
 ########################################################################
 
 InstallMethod(\=, "for two Rees congruences",
@@ -158,15 +190,6 @@ function(lhop, rhop)
   I1 := SemigroupIdealOfReesCongruence(lhop);
   I2 := SemigroupIdealOfReesCongruence(rhop);
   return ForAll(GeneratorsOfSemigroupIdeal(I2), gen -> gen in I1);
-end);
-
-InstallMethod(CongruenceTestMembershipNC,
-"for Rees congruence and two multiplicative elements",
-[IsReesCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
-function(C, lhop, rhop)
-  local I;
-  I := SemigroupIdealOfReesCongruence(C);
-  return (lhop = rhop) or (lhop in I and rhop in I);
 end);
 
 InstallMethod(JoinSemigroupCongruences, "for two Rees congruences",
@@ -235,7 +258,7 @@ function(C, x)
   fam := CollectionsFamily(FamilyObj(x));
   class := Objectify(NewType(fam,
                              IsReesCongruenceClass
-                             and IsAnyCongruenceClass),
+                             and IsLeftRightOrTwoSidedCongruenceClass),
                      rec());
   if is_ideal_class then
     SetSize(class, Size(SemigroupIdealOfReesCongruence(C)));
@@ -248,17 +271,6 @@ function(C, x)
   return class;
 end);
 
-InstallMethod(Enumerator, "for a Rees congruence class",
-[IsReesCongruenceClass],
-function(class)
-  local C;
-  if Size(class) > 1 then
-    C := EquivalenceClassRelation(class);
-    return Enumerator(SemigroupIdealOfReesCongruence(C));
-  fi;
-  return [Representative(class)];
-end);
-
 ########################################################################
 # Operators for classes
 ########################################################################
@@ -267,8 +279,8 @@ InstallMethod(\*, "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(lhop, rhop)
   if not EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop) then
-    ErrorNoReturn("the arguments (classes of Rees congruences) do not ",
-                  "belong to the same congruence");
+    ErrorNoReturn("the arguments (cong. classes) are not classes of the same ",
+                  "congruence");
   elif Size(lhop) > 1 then
     return lhop;
   elif Size(rhop) > 1 then
@@ -282,7 +294,8 @@ end);
 InstallMethod(\=, "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(lhop, rhop)
-  return (Representative(lhop) = Representative(rhop))
+  return EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop)
+    and (Representative(lhop) = Representative(rhop))
          or (Size(lhop) > 1 and Size(rhop) > 1);
 end);
 

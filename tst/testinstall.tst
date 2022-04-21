@@ -627,13 +627,13 @@ true
 gap> Size(T);
 169
 gap> u := Image(hom, Transformation([1, 1, 1, 1]));
-<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
+<2-sided congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t := Image(hom, Transformation([2, 1, 2, 3]));
-<congruence class of Transformation( [ 2, 1, 2, 3 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 2, 3 ] )>
 gap> u * t;
-<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
+<2-sided congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> t * u;
-<congruence class of Transformation( [ 1, 2, 2, 2 ] )>
+<2-sided congruence class of Transformation( [ 1, 2, 2, 2 ] )>
 gap> S := Semigroup(u, t);
 <semigroup with 2 generators>
 gap> Size(S);
@@ -886,9 +886,12 @@ gap> R := PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x6 over Group(())>
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, []);;
 gap> EquivalenceClasses(cong);
-[ <congruence class of (1,(),1)>, <congruence class of (1,(),2)>, 
-  <congruence class of (1,(),3)>, <congruence class of (1,(),4)>, 
-  <congruence class of (1,(),5)>, <congruence class of (1,(),6)> ]
+[ <2-sided congruence class of (1,(),1)>, 
+  <2-sided congruence class of (1,(),2)>, 
+  <2-sided congruence class of (1,(),3)>, 
+  <2-sided congruence class of (1,(),4)>, 
+  <2-sided congruence class of (1,(),5)>, 
+  <2-sided congruence class of (1,(),6)> ]
 
 # TestInstall61: Issue 95:
 # No zero class in semigroup congruence EquivalenceClasses (generating pairs)
@@ -901,28 +904,48 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <congruence class of 0>, <congruence class of (1,(),1)>, 
-  <congruence class of (1,(),2)>, <congruence class of (1,(),3)>, 
-  <congruence class of (1,(),4)>, <congruence class of (1,(),5)>, 
-  <congruence class of (1,(),6)>, <congruence class of (2,(),1)>, 
-  <congruence class of (2,(),2)>, <congruence class of (2,(),3)>, 
-  <congruence class of (2,(),4)>, <congruence class of (2,(),5)>, 
-  <congruence class of (2,(),6)>, <congruence class of (3,(),1)>, 
-  <congruence class of (3,(),2)>, <congruence class of (3,(),3)>, 
-  <congruence class of (3,(),4)>, <congruence class of (3,(),5)>, 
-  <congruence class of (3,(),6)>, <congruence class of (4,(),1)>, 
-  <congruence class of (4,(),2)>, <congruence class of (4,(),3)>, 
-  <congruence class of (4,(),4)>, <congruence class of (4,(),5)>, 
-  <congruence class of (4,(),6)>, <congruence class of (5,(),1)>, 
-  <congruence class of (5,(),2)>, <congruence class of (5,(),3)>, 
-  <congruence class of (5,(),4)>, <congruence class of (5,(),5)>, 
-  <congruence class of (5,(),6)>, <congruence class of (6,(),1)>, 
-  <congruence class of (6,(),2)>, <congruence class of (6,(),3)>, 
-  <congruence class of (6,(),4)>, <congruence class of (6,(),5)>, 
-  <congruence class of (6,(),6)>, <congruence class of (7,(),1)>, 
-  <congruence class of (7,(),2)>, <congruence class of (7,(),3)>, 
-  <congruence class of (7,(),4)>, <congruence class of (7,(),5)>, 
-  <congruence class of (7,(),6)> ]
+[ <2-sided congruence class of 0>, <2-sided congruence class of (1,(),1)>, 
+  <2-sided congruence class of (1,(),2)>, 
+  <2-sided congruence class of (1,(),3)>, 
+  <2-sided congruence class of (1,(),4)>, 
+  <2-sided congruence class of (1,(),5)>, 
+  <2-sided congruence class of (1,(),6)>, 
+  <2-sided congruence class of (2,(),1)>, 
+  <2-sided congruence class of (2,(),2)>, 
+  <2-sided congruence class of (2,(),3)>, 
+  <2-sided congruence class of (2,(),4)>, 
+  <2-sided congruence class of (2,(),5)>, 
+  <2-sided congruence class of (2,(),6)>, 
+  <2-sided congruence class of (3,(),1)>, 
+  <2-sided congruence class of (3,(),2)>, 
+  <2-sided congruence class of (3,(),3)>, 
+  <2-sided congruence class of (3,(),4)>, 
+  <2-sided congruence class of (3,(),5)>, 
+  <2-sided congruence class of (3,(),6)>, 
+  <2-sided congruence class of (4,(),1)>, 
+  <2-sided congruence class of (4,(),2)>, 
+  <2-sided congruence class of (4,(),3)>, 
+  <2-sided congruence class of (4,(),4)>, 
+  <2-sided congruence class of (4,(),5)>, 
+  <2-sided congruence class of (4,(),6)>, 
+  <2-sided congruence class of (5,(),1)>, 
+  <2-sided congruence class of (5,(),2)>, 
+  <2-sided congruence class of (5,(),3)>, 
+  <2-sided congruence class of (5,(),4)>, 
+  <2-sided congruence class of (5,(),5)>, 
+  <2-sided congruence class of (5,(),6)>, 
+  <2-sided congruence class of (6,(),1)>, 
+  <2-sided congruence class of (6,(),2)>, 
+  <2-sided congruence class of (6,(),3)>, 
+  <2-sided congruence class of (6,(),4)>, 
+  <2-sided congruence class of (6,(),5)>, 
+  <2-sided congruence class of (6,(),6)>, 
+  <2-sided congruence class of (7,(),1)>, 
+  <2-sided congruence class of (7,(),2)>, 
+  <2-sided congruence class of (7,(),3)>, 
+  <2-sided congruence class of (7,(),4)>, 
+  <2-sided congruence class of (7,(),5)>, 
+  <2-sided congruence class of (7,(),6)> ]
 gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
 
@@ -1034,7 +1057,7 @@ gap> I := SemigroupIdeal(FullTransformationSemigroup(3),
 >                        Transformation([1, 1, 2]));;
 gap> T := S / I;;
 gap> One(T);
-<congruence class of IdentityTransformation>
+<2-sided congruence class of IdentityTransformation>
 
 # TestInstall66: Second bug in Issue #131
 gap> I := SemigroupIdeal(FullTransformationSemigroup(3),
@@ -1356,8 +1379,8 @@ gap> AsList(JonesMonoid(1));
 # Kernel-trace methods should only be selected for semigroups with inverse op
 gap> S := HallMonoid(2);;
 gap> latt := LatticeOfCongruences(S);;
-gap> InNeighbours(latt);
-[ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3, 4 ], [ 1, 4 ] ]
+gap> IsIsomorphicDigraph(latt, DigraphFromDigraph6String("&C|E["));
+true
 gap> IsPartialOrderDigraph(latt);
 true
 
@@ -1593,15 +1616,15 @@ gap> F := FreeSemigroup(1);;
 gap> x := GeneratorsOfSemigroup(F)[1];;
 gap> pair := [x ^ 2, x ^ 4];;
 gap> cong := SemigroupCongruence(F, pair);
-<semigroup congruence over <free semigroup on the generators [ s1 ]> with 
-1 generating pairs>
+<2-sided semigroup congruence over <free semigroup on the generators 
+[ s1 ]> with 1 generating pairs>
 gap> pair in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, the argument (a congruence) must have finite range
+Error, the argument (a 2-sided congruence) must have finite range
 gap> EquivalenceClasses(cong);
-[ <congruence class of s1>, <congruence class of s1^2>, 
-  <congruence class of s1^3> ]
+[ <2-sided congruence class of s1>, <2-sided congruence class of s1^2>, 
+  <2-sided congruence class of s1^3> ]
 gap> NrEquivalenceClasses(cong);
 3
 
@@ -1745,14 +1768,14 @@ gap> s1 := F.1;; s2 := F.2;;
 gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
 gap> cong := SemigroupCongruence(F, rels);
-<semigroup congruence over <free semigroup on the generators [ s1, s2 ]> with 
-1 generating pairs>
+<2-sided semigroup congruence over <free semigroup on the generators 
+[ s1, s2 ]> with 1 generating pairs>
 gap> NrEquivalenceClasses(cong);
 infinity
 gap> EquivalenceRelationPartitionWithSingletons(cong);
 Error, the argument (a congruence) must have finite range
 gap> EquivalenceRelationLookup(cong);
-Error, the argument (a congruence) must have finite range
+Error, the argument (a 2-sided congruence) must have finite range
 
 # Issue 788
 gap> S := GLM(2, 2);;

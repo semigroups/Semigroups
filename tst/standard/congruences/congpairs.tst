@@ -22,8 +22,8 @@ s1
 gap> gens := [x ^ 2, x ^ 4];
 [ s1^2, s1^4 ]
 gap> cong := SemigroupCongruence(S, gens);
-<semigroup congruence over <free semigroup on the generators [ s1 ]> with 
-1 generating pairs>
+<2-sided semigroup congruence over <free semigroup on the generators 
+[ s1 ]> with 1 generating pairs>
 
 # The next test is now valid (but would run forever)
 #gap> NonTrivialEquivalenceClasses(cong);
@@ -33,7 +33,7 @@ gap> cong := SemigroupCongruence(S, gens);
 gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-Error, the argument (a congruence) must have finite range
+Error, the argument (a 2-sided congruence) must have finite range
 gap> NrEquivalenceClasses(cong);
 3
 gap> class := EquivalenceClassOfElement(cong, x);;
@@ -71,8 +71,8 @@ gap> u = v;
 false
 gap> gens := List(T, x -> [gens[1], x]);;
 gap> v := SemigroupCongruence(T, gens);
-<semigroup congruence over <commutative non-regular transformation monoid 
- of size 6, degree 10 with 1 generator> with 5 generating pairs>
+<2-sided semigroup congruence over <commutative non-regular transformation 
+ monoid of size 6, degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
 gap> NrEquivalenceClasses(u);
@@ -95,11 +95,13 @@ true
 gap> Size(GeneratingPairsOfSemigroupCongruence(v));
 0
 gap> classes := Set(EquivalenceClasses(v));
-[ <congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )>, 
-  <congruence class of Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] )>, 
-  <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>, 
-  <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
-  <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1,
+      5 ] )>, <2-sided congruence class of Transformation( [ 6, 9, 9, 6, 9, 1,
+     1, 2, 2, 6 ] )>, <2-sided congruence class of Transformation( [ 9, 1, 1,
+      9, 1, 2, 2, 6, 6, 9 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9,
+      1 ] )>, <2-sided congruence class of Transformation( [ 2, 6, 6, 2, 6, 9,
+     9, 1, 1, 2 ] )> ]
 gap> EquivalenceClasses(u)[1] in classes;
 false
 gap> classes[1] * EquivalenceClasses(u)[1];
@@ -107,9 +109,11 @@ Error, the arguments (cong. classes) are not classes of the same congruence
 gap> EquivalenceClasses(u)[1] * classes[1];
 Error, the arguments (cong. classes) are not classes of the same congruence
 gap> classes[3] * classes[4];
-<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
+<2-sided congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6,
+  9 ] )>
 gap> classes[4] * classes[3];
-<congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>
+<2-sided congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6,
+  9 ] )>
 gap> EquivalenceClassOfElement(v, Representative(classes[5] * classes[2])) =
 > EquivalenceClassOfElement(v, 
 >                          Representative(classes[5]) *
@@ -154,10 +158,10 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialEquivalenceClasses(cong);
-[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
 gap> classes := EquivalenceClasses(cong);
-[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
-  <congruence class of Transformation( [ 1, 3, 4, 1, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 3, 4, 1, 3 ] )> ]
 gap> ImagesElm(cong, Transformation([1, 3, 4, 1, 3]));
 [ Transformation( [ 1, 3, 4, 1, 3 ] ) ]
 gap> cong = JoinSemigroupCongruences(cong, cong);
@@ -170,17 +174,17 @@ gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
 gap> cong2 := SemigroupCongruence(T, pair1, pair2);;
 gap> EquivalenceClassOfElement(cong, Transformation([2, 3, 2, 2, 3, 1]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 gap> JoinSemigroupCongruences(cong, cong2);
 Error, cannot form the join of congruences over different semigroups
 gap> IsSubrelation(cong, cong2);
-Error, the 1st and 2nd arguments are congruences over different semigroups
+false
 gap> cong := LeftSemigroupCongruence(S, pair1, pair2);;
 gap> IsSubrelation(cong2, cong);
-Error, the 1st and 2nd arguments are congruences over different semigroups
+false
 gap> cong := RightSemigroupCongruence(S, pair1, pair2);;
 gap> IsSubrelation(cong2, cong);
-Error, the 1st and 2nd arguments are congruences over different semigroups
+false
 
 # A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
@@ -430,7 +434,7 @@ gap> pairs2 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
 gap> cong1 := SemigroupCongruence(S, pairs1);;
 gap> cong2 := SemigroupCongruence(S, pairs2);;
 gap> cong3 := JoinSemigroupCongruences(cong1, cong2);
-<semigroup congruence over <regular bipartition *-monoid of size 203, 
+<2-sided semigroup congruence over <regular bipartition *-monoid of size 203, 
  degree 3 with 4 generators> with 3 generating pairs>
 gap> pairs1[1] in cong3;
 true
@@ -495,8 +499,8 @@ false
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> cong := SemigroupCongruence(S, [S.1, S.1 * S.2]);
-<semigroup congruence over <free band on the generators [ x1, x2, x3 ]> with 
-1 generating pairs>
+<2-sided semigroup congruence over <free band on the generators 
+[ x1, x2, x3 ]> with 1 generating pairs>
 gap> [S.1, S.1] in cong;
 true
 
@@ -546,7 +550,7 @@ gap> S := Semigroup(
 >     Matrix(IsMaxPlusMatrix, [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> pairs := [[S.1, S.2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, pairs);
-<semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
+<2-sided semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
  generators> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
 <left semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
@@ -648,8 +652,8 @@ true
 gap> F := FreeMonoid(2);;
 gap> S := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
-<semigroup congruence over <fp monoid with 2 generators and 2 relations> with 
-1 generating pairs>
+<2-sided semigroup congruence over <fp monoid with 2 generators and 2 relation\
+s> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(F, [[F.1, F.2]]);
 <left semigroup congruence over <free monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
@@ -689,7 +693,7 @@ Error, the items in the 1st argument (a list) do not all belong to the range o\
 f the 2nd argument (a 2-sided semigroup congruence)
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
- argument (a congruence)
+ argument (a 2-sided congruence)
 
 # A 2-sided example
 gap> F := FreeMonoid(2);;
@@ -706,8 +710,8 @@ gap> (M.2 * M.1) ^ 2 * M.2 * M.1 ^ 2 = M.1 ^ 3;
 true
 gap> pair := [M.1 ^ 2 * M.2 * M.1, M.1 * M.2 * M.1];;
 gap> cong := SemigroupCongruence(M, pair);
-<semigroup congruence over <fp monoid with 2 generators and 5 relations> with 
-1 generating pairs>
+<2-sided semigroup congruence over <fp monoid with 2 generators and 5 relation\
+s> with 1 generating pairs>
 gap> NrEquivalenceClasses(cong);
 3
 gap> [M.2, M.2 * M.1] in cong;
@@ -980,11 +984,11 @@ gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >                           PartialPerm([1, 2], [2, 3])]);;
 gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> C := SemigroupCongruence(S, pairs);
-<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
- with 2 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 14, rank 3 with 2 generators> with 1 generating pairs>
 gap> AsSemigroupCongruenceByGeneratingPairs(C);
-<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
- with 2 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <inverse partial perm semigroup 
+ of size 14, rank 3 with 2 generators> with 1 generating pairs>
 gap> C := RightSemigroupCongruence(S, pairs);
 <right semigroup congruence over <inverse partial perm semigroup of size 14, 
  rank 3 with 2 generators> with 1 generating pairs>
