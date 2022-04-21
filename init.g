@@ -132,3 +132,4 @@ ReadPackage("semigroups", "gap/fp/word.gd");
 ReadPackage("semigroups", "gap/obsolete.gd");
 
 DeclareInfoClass("InfoSemigroups");
+
