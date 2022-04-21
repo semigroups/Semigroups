@@ -219,43 +219,6 @@
     [4X[28X degree 5 with 4 generators> with 2 generating pairs>[128X[104X
   [4X[32X[104X
   
-  [1X13.2-4 GeneratingPairsOfSemigroupCongruence[101X
-  
-  [33X[1;0Y[29X[2XGeneratingPairsOfSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGeneratingPairsOfLeftSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGeneratingPairsOfRightSemigroupCongruence[102X( [3Xcong[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
-  
-  [33X[0;0YIf [3Xcong[103X is a semigroup congruence, then [10XGeneratingPairsOfSemigroupCongruence[110X
-  returns  a  list  of  pairs  of elements from [10XRange([3Xcong[103X[10X)[110X that [13Xgenerates[113X the
-  congruence;  i.e.  [3Xcong[103X  is  the  least  congruence  on  the semigroup which
-  contains all the pairs in the list.[133X
-  
-  [33X[0;0YIf    [3Xcong[103X    is    a    left    or   right   semigroup   congruence,   then
-  [10XGeneratingPairsOfLeft/RightSemigroupCongruence[110X  will  instead give a list of
-  pairs which generate it as a left or right congruence. Note that, although a
-  congruence  is  also  a left and right congruence, its generating pairs as a
-  left or right congruence may differ from its generating pairs as a two-sided
-  congruence.[133X
-  
-  [33X[0;0YA   congruence  can  be  defined  using  a  set  of  generating  pairs:  see
-  [2XSemigroupCongruence[102X    ([14X13.2-1[114X),   [2XLeftSemigroupCongruence[102X   ([14X13.2-2[114X),   and
-  [2XRightSemigroupCongruence[102X ([14X13.2-3[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([3, 3, 2, 3]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([3, 4, 4, 1])]);;[127X[104X
-    [4X[25Xgap>[125X [27Xpairs :=[127X[104X
-    [4X[25X>[125X [27X    [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], [127X[104X
-    [4X[25X>[125X [27X     [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;[127X[104X
-    [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, pairs);;[127X[104X
-    [4X[25Xgap>[125X [27XGeneratingPairsOfSemigroupCongruence(cong);[127X[104X
-    [4X[28X[ [ Transformation( [ 1, 1, 1, 1 ] ), [128X[104X
-    [4X[28X      Transformation( [ 2, 2, 2, 3 ] ) ], [128X[104X
-    [4X[28X  [ Transformation( [ 2, 2, 3, 2 ] ), [128X[104X
-    [4X[28X      Transformation( [ 3, 3, 2, 3 ] ) ] ][128X[104X
-  [4X[32X[104X
-  
   
   [1X13.3 [33X[0;0YCongruence classes[133X[101X
   
@@ -283,7 +246,7 @@
     [4X[25X>[125X [27X                                   Transformation([2, 1, 2])]);;[127X[104X
     [4X[25Xgap>[125X [27Xclass := EquivalenceClassOfElement(cong,[127X[104X
     [4X[25X>[125X [27X                                      Transformation([3, 1, 1]));[127X[104X
-    [4X[28X<congruence class of Transformation( [ 3, 1, 1 ] )>[128X[104X
+    [4X[28X<2-sided congruence class of Transformation( [ 3, 1, 1 ] )>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruenceClass(class);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
@@ -347,11 +310,11 @@
     [4X[25X>[125X [27X                                   Transformation([2, 1, 2])]);;[127X[104X
     [4X[25Xgap>[125X [27Xclasses := NonTrivialEquivalenceClasses(cong);;[127X[104X
     [4X[25Xgap>[125X [27XSet(classes);[127X[104X
-    [4X[28X[ <congruence class of Transformation( [ 1, 2, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 3 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 1, 1 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 2, 1, 2 ] )>, [128X[104X
-    [4X[28X  <congruence class of Transformation( [ 3, 3, 3 ] )> ][128X[104X
+    [4X[28X[ <2-sided congruence class of Transformation( [ 1, 2, 2 ] )>, [128X[104X
+    [4X[28X  <2-sided congruence class of Transformation( [ 3, 1, 3 ] )>, [128X[104X
+    [4X[28X  <2-sided congruence class of Transformation( [ 3, 1, 1 ] )>, [128X[104X
+    [4X[28X  <2-sided congruence class of Transformation( [ 2, 1, 2 ] )>, [128X[104X
+    [4X[28X  <2-sided congruence class of Transformation( [ 3, 3, 3 ] )> ][128X[104X
     [4X[25Xgap>[125X [27Xcong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),[127X[104X
     [4X[25X>[125X [27X                                        Transformation([2, 1, 2])]);;[127X[104X
     [4X[25Xgap>[125X [27Xclasses := NonTrivialEquivalenceClasses(cong);;[127X[104X
@@ -597,7 +560,7 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
     [4X[25Xgap>[125X [27Xmin := MinimalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X[ <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
     [4X[25Xgap>[125X [27Xminl := MinimalLeftCongruencesOfSemigroup(S);[127X[104X
     [4X[28X[ <left semigroup congruence over <transformation semigroup [128X[104X
@@ -641,15 +604,15 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
     [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X[ <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <semigroup congruence over <transformation semigroup of size 13, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
     [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
   [4X[32X[104X
   
@@ -677,21 +640,23 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
     [4X[25Xgap>[125X [27Xposet := LatticeOfCongruences(S);[127X[104X
-    [4X[28X<poset of 4 congruences over <symmetric inverse monoid of degree 2>>[128X[104X
+    [4X[28X<lattice of 4 two-sided congruences over [128X[104X
+    [4X[28X <symmetric inverse monoid of degree 2>>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruencePoset(poset);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsDigraph(poset);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XOutNeighbours(poset);[127X[104X
-    [4X[28X[ [ 1 .. 4 ], [ 2, 3, 4 ], [ 3 ], [ 3, 4 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 2 ], [ 2, 3 ], [ 2, 3, 4 ] ][128X[104X
     [4X[25Xgap>[125X [27XT := FullTransformationMonoid(3);;[127X[104X
     [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(T);;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := JoinSemilatticeOfCongruences(congs,[127X[104X
-    [4X[25X>[125X [27X                                         JoinSemigroupCongruences);[127X[104X
-    [4X[28X<poset of 6 congruences over <full transformation monoid of degree 3>>[128X[104X
+    [4X[25Xgap>[125X [27Xposet := JoinSemilatticeOfCongruences(PosetOfCongruences(congs),[127X[104X
+    [4X[25X>[125X [27X                                         WrappedTwoSidedCongruence);[127X[104X
+    [4X[28X<lattice of 6 two-sided congruences over [128X[104X
+    [4X[28X <full transformation monoid of degree 3>>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruencePoset(poset);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XSize(poset);[127X[104X
+    [4X[25Xgap>[125X [27XDigraphNrVertices(poset);[127X[104X
     [4X[28X6[128X[104X
   [4X[32X[104X
   
@@ -722,22 +687,23 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
     [4X[25Xgap>[125X [27XLatticeOfCongruences(S);[127X[104X
-    [4X[28X<poset of 3 congruences over <regular transformation monoid [128X[104X
-    [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
+    [4X[28X<lattice of 3 two-sided congruences over <regular transformation [128X[104X
+    [4X[28X monoid of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XLatticeOfLeftCongruences(S);[127X[104X
-    [4X[28X<poset of 3 congruences over <regular transformation monoid [128X[104X
+    [4X[28X<lattice of 3 left congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XLatticeOfRightCongruences(S);[127X[104X
-    [4X[28X<poset of 5 congruences over <regular transformation monoid [128X[104X
+    [4X[28X<lattice of 5 right congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XOutNeighbours(LatticeOfRightCongruences(S));[127X[104X
-    [4X[28X[ [ 1 .. 5 ], [ 2, 5 ], [ 3, 5 ], [ 4, 5 ], [ 5 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4, 5 ], [ 2 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ] ][128X[104X
     [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
     [4X[25Xgap>[125X [27Xrestriction := [Transformation([1, 1, 1, 1]),[127X[104X
     [4X[25X>[125X [27X                   Transformation([1, 1, 1, 2]),[127X[104X
     [4X[25X>[125X [27X                   Transformation([1, 1, 1, 3])];;[127X[104X
-    [4X[25Xgap>[125X [27Xlatt := LatticeOfCongruences(S, restriction);[127X[104X
-    [4X[28X<poset of 2 congruences over <full transformation monoid of degree 4>>[128X[104X
+    [4X[25Xgap>[125X [27Xlatt := LatticeOfCongruences(S, Combinations(restriction, 2));[127X[104X
+    [4X[28X<lattice of 2 two-sided congruences over [128X[104X
+    [4X[28X <full transformation monoid of degree 4>>[128X[104X
   [4X[32X[104X
   
   [1X13.4-6 PosetOfPrincipalCongruences[101X
@@ -766,20 +732,21 @@
   ([14X13.4-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 3, 1]),[127X[104X
-    [4X[25X>[125X [27X                   Transformation([2, 3, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 3, 3]));;[127X[104X
     [4X[25Xgap>[125X [27XPosetOfPrincipalLeftCongruences(S);[127X[104X
-    [4X[28X<poset of 12 congruences over <transformation semigroup of size 11, [128X[104X
-    [4X[28X degree 3 with 2 generators>>[128X[104X
+    [4X[28X<poset of 12 left congruences over <transformation semigroup [128X[104X
+    [4X[28X of size 11, degree 3 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XPosetOfPrincipalCongruences(S);[127X[104X
-    [4X[28X<poset of 3 congruences over <transformation semigroup of size 11, [128X[104X
-    [4X[28X degree 3 with 2 generators>>[128X[104X
+    [4X[28X<lattice of 3 two-sided congruences over <transformation semigroup [128X[104X
+    [4X[28X of size 11, degree 3 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27Xrestriction := [Transformation([3, 2, 3]),[127X[104X
     [4X[25X>[125X [27X                   Transformation([3, 1, 3]),[127X[104X
     [4X[25X>[125X [27X                   Transformation([2, 2, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := PosetOfPrincipalRightCongruences(S, restriction);[127X[104X
-    [4X[28X<poset of 3 congruences over <transformation semigroup of size 11, [128X[104X
-    [4X[28X degree 3 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27Xposet := PosetOfPrincipalRightCongruences(S, [127X[104X
+    [4X[25X>[125X [27XCombinations(restriction, 2));[127X[104X
+    [4X[28X<poset of 3 right congruences over <transformation semigroup [128X[104X
+    [4X[28X of size 11, degree 3 with 2 generators>>[128X[104X
   [4X[32X[104X
   
   [1X13.4-7 CongruencesOfPoset[101X
@@ -797,7 +764,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
     [4X[25Xgap>[125X [27Xlatt := LatticeOfRightCongruences(S);[127X[104X
-    [4X[28X<poset of 5 congruences over <regular transformation monoid [128X[104X
+    [4X[28X<lattice of 5 right congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XCongruencesOfPoset(latt);[127X[104X
     [4X[28X[ <right semigroup congruence over <regular transformation monoid [128X[104X
@@ -824,7 +791,7 @@
     [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);[127X[104X
     [4X[28X<regular transformation monoid of degree 2 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27Xlatt := LatticeOfRightCongruences(S);[127X[104X
-    [4X[28X<poset of 5 congruences over <regular transformation monoid [128X[104X
+    [4X[28X<lattice of 5 right congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XUnderlyingSemigroupOfCongruencePoset(latt) = S;[127X[104X
     [4X[28Xtrue[128X[104X
@@ -851,8 +818,8 @@
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, [])];;[127X[104X
     [4X[25Xgap>[125X [27Xposet := PosetOfCongruences(coll);[127X[104X
-    [4X[28X<poset of 3 congruences over <regular transformation monoid of [128X[104X
-    [4X[28X degree 2 with 2 generators>>[128X[104X
+    [4X[28X<poset of 3 right congruences over <regular transformation monoid [128X[104X
+    [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XOutNeighbours(poset);[127X[104X
     [4X[28X[ [ 1 ], [ 2 ], [ 1, 2, 3 ] ][128X[104X
   [4X[32X[104X
@@ -879,13 +846,15 @@
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
     [4X[25Xgap>[125X [27Xpair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;[127X[104X
     [4X[25Xgap>[125X [27Xpair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;[127X[104X
-    [4X[25Xgap>[125X [27Xpair3 := [PartialPerm([1, 2], [1, 2]), [127X[104X
+    [4X[25Xgap>[125X [27Xpair3 := [PartialPerm([1, 2], [1, 2]),[127X[104X
     [4X[25X>[125X [27X             PartialPerm([1, 2], [2, 1])];;[127X[104X
     [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair3)];;[127X[104X
-    [4X[25Xgap>[125X [27XJoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);[127X[104X
-    [4X[28X<poset of 4 congruences over <symmetric inverse monoid of degree 2>>[128X[104X
+    [4X[25Xgap>[125X [27XJoinSemilatticeOfCongruences(PosetOfCongruences(coll),[127X[104X
+    [4X[25X>[125X [27XWrappedRightCongruence);[127X[104X
+    [4X[28X<poset of 4 right congruences over [128X[104X
+    [4X[28X <symmetric inverse monoid of degree 2>>[128X[104X
   [4X[32X[104X
   
   [1X13.4-11 MinimalCongruences[101X
@@ -916,16 +885,17 @@
     [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair3)];;[127X[104X
-    [4X[25Xgap>[125X [27XMinimalCongruences(coll);[127X[104X
+    [4X[25Xgap>[125X [27XMinimalCongruences(PosetOfCongruences(coll));[127X[104X
     [4X[28X[ <right semigroup congruence over <symmetric inverse monoid of degree\[128X[104X
     [4X[28X 2> with 1 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <symmetric inverse monoid of degree\[128X[104X
     [4X[28X 2> with 1 generating pairs> ][128X[104X
     [4X[25Xgap>[125X [27Xposet := LatticeOfCongruences(S);[127X[104X
-    [4X[28X<poset of 4 congruences over <symmetric inverse monoid of degree 2>>[128X[104X
+    [4X[28X<lattice of 4 two-sided congruences over [128X[104X
+    [4X[28X <symmetric inverse monoid of degree 2>>[128X[104X
     [4X[25Xgap>[125X [27XMinimalCongruences(poset);[127X[104X
-    [4X[28X[ <semigroup congruence over <symmetric inverse monoid of degree 2> wi\[128X[104X
-    [4X[28Xth 0 generating pairs> ][128X[104X
+    [4X[28X[ <2-sided semigroup congruence over <symmetric inverse monoid of degr\[128X[104X
+    [4X[28Xee 2> with 0 generating pairs> ][128X[104X
   [4X[32X[104X
   
   
@@ -1203,7 +1173,7 @@
     [4X[25Xgap>[125X [27Xcong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;[127X[104X
     [4X[25Xgap>[125X [27Xclass := RZMSCongruenceClassByLinkedTriple(cong,[127X[104X
     [4X[25X>[125X [27XRightCoset(N, (1, 5)), 2, 3);[127X[104X
-    [4X[28X<congruence class of (2,(3,4),3)>[128X[104X
+    [4X[28X<2-sided congruence class of (2,(3,4),3)>[128X[104X
   [4X[32X[104X
   
   [1X13.6-5 IsLinkedTriple[101X
@@ -1360,8 +1330,8 @@
     [4X[25Xgap>[125X [27Xcong := SemigroupCongruenceByGeneratingPairs(I,[127X[104X
     [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
     [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup of rank 3 [128X[104X
-    [4X[28X with 2 generators> with 2 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <inverse partial perm semigroup of [128X[104X
+    [4X[28X rank 3 with 2 generators> with 2 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27Xcong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);[127X[104X
     [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
     [4X[28X of size 19, rank 3 with 2 generators> with congruence pair (19,1)>[128X[104X
@@ -1383,7 +1353,7 @@
     [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(I,[127X[104X
     [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
     [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
+    [4X[28X<2-sided semigroup congruence over <inverse partial perm semigroup [128X[104X
     [4X[28X of size 19, rank 3 with 2 generators> with 2 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XKernelOfSemigroupCongruence(cong);[127X[104X
     [4X[28X<inverse partial perm semigroup of size 19, rank 3 with 5 generators>[128X[104X
@@ -1406,7 +1376,7 @@
     [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(I,[127X[104X
     [4X[25X>[125X [27X[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],[127X[104X
     [4X[25X>[125X [27X [PartialPerm([]), PartialPerm([1, 2])]]);[127X[104X
-    [4X[28X<semigroup congruence over <inverse partial perm semigroup [128X[104X
+    [4X[28X<2-sided semigroup congruence over <inverse partial perm semigroup [128X[104X
     [4X[28X of size 19, rank 3 with 2 generators> with 2 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XTraceOfSemigroupCongruence(cong);[127X[104X
     [4X[28X[ [ <empty partial perm>, <identity partial perm on [ 1 ]>, [128X[104X
@@ -1492,8 +1462,8 @@
     [4X[25Xgap>[125X [27Xe_3 := S.3;[127X[104X
     [4X[28Xe_3[128X[104X
     [4X[25Xgap>[125X [27Xcong := SemigroupCongruence(S, [[e_1, e_3]]);[127X[104X
-    [4X[28X<semigroup congruence over <finite graph inverse semigroup with 4 vert\[128X[104X
-    [4X[28Xices, 5 edges> with 1 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <finite graph inverse semigroup wit\[128X[104X
+    [4X[28Xh 4 vertices, 5 edges> with 1 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruenceByWangPair(cong);[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
@@ -1544,15 +1514,15 @@
     [4X[25Xgap>[125X [27XCongruenceByWangPair(S, [4], [2]);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>[128X[104X
     [4X[25Xgap>[125X [27Xcong := AsSemigroupCongruenceByGeneratingPairs(last);[127X[104X
-    [4X[28X<semigroup congruence over <finite graph inverse semigroup with 4 vert\[128X[104X
-    [4X[28Xices, 4 edges> with 2 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <finite graph inverse semigroup wit\[128X[104X
+    [4X[28Xh 4 vertices, 4 edges> with 2 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XAsCongruenceByWangPair(cong);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>[128X[104X
     [4X[25Xgap>[125X [27XCongruenceByWangPair(S, [3, 4], [1]);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>[128X[104X
     [4X[25Xgap>[125X [27Xcong := AsSemigroupCongruenceByGeneratingPairs(last);[127X[104X
-    [4X[28X<semigroup congruence over <finite graph inverse semigroup with 4 vert\[128X[104X
-    [4X[28Xices, 4 edges> with 3 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <finite graph inverse semigroup wit\[128X[104X
+    [4X[28Xh 4 vertices, 4 edges> with 3 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XAsCongruenceByWangPair(cong);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>[128X[104X
   [4X[32X[104X
@@ -1576,15 +1546,15 @@
     [4X[25Xgap>[125X [27XCongruenceByWangPair(S, [4], [2]);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>[128X[104X
     [4X[25Xgap>[125X [27Xcong := AsSemigroupCongruenceByGeneratingPairs(last);[127X[104X
-    [4X[28X<semigroup congruence over <finite graph inverse semigroup with 4 vert\[128X[104X
-    [4X[28Xices, 4 edges> with 2 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <finite graph inverse semigroup wit\[128X[104X
+    [4X[28Xh 4 vertices, 4 edges> with 2 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XAsCongruenceByWangPair(cong);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>[128X[104X
     [4X[25Xgap>[125X [27XCongruenceByWangPair(S, [3, 4], [1]);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>[128X[104X
     [4X[25Xgap>[125X [27Xcong := AsSemigroupCongruenceByGeneratingPairs(last);[127X[104X
-    [4X[28X<semigroup congruence over <finite graph inverse semigroup with 4 vert\[128X[104X
-    [4X[28Xices, 4 edges> with 3 generating pairs>[128X[104X
+    [4X[28X<2-sided semigroup congruence over <finite graph inverse semigroup wit\[128X[104X
+    [4X[28Xh 4 vertices, 4 edges> with 3 generating pairs>[128X[104X
     [4X[25Xgap>[125X [27XAsCongruenceByWangPair(cong);[127X[104X
     [4X[28X<graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>[128X[104X
   [4X[32X[104X

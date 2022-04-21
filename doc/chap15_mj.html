@@ -114,7 +114,7 @@
     Finitely presented semigroups and Tietze transformations
   </span></h3>
 
-<p>In this chapter we describe the functions implemented in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> that extend the features available in <strong class="pkg">GAP</strong> for dealing with finitely presented semigroups and monoids.</p>
+<p>In this chapter we describe the functions implemented in <strong class="pkg">Semigroups</strong> that extend the features available in <strong class="pkg">GAP</strong> for dealing with finitely presented semigroups and monoids.</p>
 
 <p>Section <a href="chap15_mj.html#X87CDF7DF7E47F8FB"><span class="RefLink">15.1</span></a> (written by Maria Tsalakou and Murray Whyte) and Section <a href="chap15_mj.html#X7BD4785D8488BAD5"><span class="RefLink">15.2</span></a> (written by Luke Elliott) demonstrate a number of helper functions that allow the user to convert between different representations of words and relations.</p>
 
@@ -215,7 +215,7 @@
       Helper functions
     </span></h4>
 
-<p>This section describes operations implemented in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> that are designed to interact with standard <strong class="pkg">GAP</strong> methods for creating finitely presented semigroups and monoids (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
+<p>This section describes operations implemented in <strong class="pkg">Semigroups</strong> that are designed to interact with standard <strong class="pkg">GAP</strong> methods for creating finitely presented semigroups and monoids (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
 
 <p><a id="X7C2FCCA487DFC84C" name="X7C2FCCA487DFC84C"></a></p>
 
@@ -286,7 +286,7 @@ true</pre></div>
       Creating Tietze transformation objects
     </span></h4>
 
-<p>It is possible to use <strong class="pkg">GAP</strong> to create finitely presented semigroups without the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, by creating a free semigroup, then quotienting by a list of relations. This is described in the reference manual (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
+<p>It is possible to use <strong class="pkg">GAP</strong> to create finitely presented semigroups without the <strong class="pkg">Semigroups</strong> package, by creating a free semigroup, then quotienting by a list of relations. This is described in the reference manual (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X7DE7C52A7C4BDADE"><span class="RefLink">Reference: Finitely Presented Semigroups and Monoids</span></a>).</p>
 
 <p>However, finitely presented semigroups do not allow for their relations to be simplified, so in the following sections, we describe how to create and modify the semigroup Tietze (<code class="func">IsStzPresentation</code> (<a href="chap15_mj.html#X7B86C70F84BCF8BD"><span class="RefLink">15.3-2</span></a>)) object associated with an fp semigroup. This object can be automatically simplified, or the user can manually apply Tietze transformations to add or remove relations or generators in the presentation.</p>
 

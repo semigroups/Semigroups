@@ -75,7 +75,7 @@
     Standard constructions
   </span></h3>
 
-<p>In this chapter we describe some standard ways of constructing semigroups and monoids from other semigroups that are available in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package.</p>
+<p>In this chapter we describe some standard ways of constructing semigroups and monoids from other semigroups that are available in the <strong class="pkg">Semigroups</strong> package.</p>
 
 <p><a id="X79546641809113CE" name="X79546641809113CE"></a></p>
 
@@ -83,7 +83,7 @@
      Products of semigroups
     </span></h4>
 
-<p>In this section, we describe the functions in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> that can be used to create various products of semigroups.</p>
+<p>In this section, we describe the functions in <strong class="pkg">Semigroups</strong> that can be used to create various products of semigroups.</p>
 
 <p><a id="X861BA02C7902A4F4" name="X861BA02C7902A4F4"></a></p>
 
@@ -145,7 +145,7 @@ true</pre></div>
 
 <h4>8.2 <span class="Heading"> Dual semigroups </span></h4>
 
-<p>The <em>dual semigroup</em> of a semigroup <code class="code">S</code> is the semigroup with the same underlying set of elements but with reversed multiplication; this is anti-isomorphic to <code class="code">S</code>. In <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> a semigroup and its dual are represented with disjoint sets of elements.</p>
+<p>The <em>dual semigroup</em> of a semigroup <code class="code">S</code> is the semigroup with the same underlying set of elements but with reversed multiplication; this is anti-isomorphic to <code class="code">S</code>. In <strong class="pkg">Semigroups</strong> a semigroup and its dual are represented with disjoint sets of elements.</p>
 
 <p><a id="X79F2643C8642A3B0" name="X79F2643C8642A3B0"></a></p>
 
@@ -241,7 +241,7 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismDualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An anti-isomorphism from <var class="Arg">S</var> to the corresponding dual semigroup.</p>
 
-<p>The dual semigroup of <var class="Arg">S</var> mathematically has the same underlying set as <var class="Arg">S</var>, but is represented with a different set of elements in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> . This function returns a mapping which is an anti-isomorphism from <var class="Arg">S</var> to its dual.</p>
+<p>The dual semigroup of <var class="Arg">S</var> mathematically has the same underlying set as <var class="Arg">S</var>, but is represented with a different set of elements in <strong class="pkg">Semigroups</strong>. This function returns a mapping which is an anti-isomorphism from <var class="Arg">S</var> to its dual.</p>
 
 
 <div class="example"><pre>
@@ -270,7 +270,7 @@ true
       Strong semilattices of semigroups
     </span></h4>
 
-<p>In this section, we describe how <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> can be used to create and manipulate strong semilattices of semigroups (SSSs). Strong semilattices of semigroups are described, for example, in Section 4.1 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>. They consist of a meet-semilattice <span class="SimpleMath">Y</span> along with a collection of semigroups <span class="SimpleMath">S_a</span> for each <span class="SimpleMath">a</span> in <span class="SimpleMath">Y</span>, and a collection of homomorphisms <span class="SimpleMath">f_ab : S_a → S_b</span> for each <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> in <span class="SimpleMath">Y</span> such that <span class="SimpleMath">a ≥ b</span>.</p>
+<p>In this section, we describe how <strong class="pkg">Semigroups</strong> can be used to create and manipulate strong semilattices of semigroups (SSSs). Strong semilattices of semigroups are described, for example, in Section 4.1 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>. They consist of a meet-semilattice <span class="SimpleMath">Y</span> along with a collection of semigroups <span class="SimpleMath">S_a</span> for each <span class="SimpleMath">a</span> in <span class="SimpleMath">Y</span>, and a collection of homomorphisms <span class="SimpleMath">f_ab : S_a → S_b</span> for each <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> in <span class="SimpleMath">Y</span> such that <span class="SimpleMath">a ≥ b</span>.</p>
 
 <p>The product of two elements <span class="SimpleMath">x ∈ S_a, y ∈ S_b</span> is defined to lie in the semigroup <span class="SimpleMath">S_c</span>, corresponding to the meet <span class="SimpleMath">c</span> of <span class="SimpleMath">a, b ∈ Y</span>. The exact element of <span class="SimpleMath">S_c</span> equal to the product is obtained using the homomorphisms of the SSS: <span class="SimpleMath">xy = (x f_ac) (y f_bc)</span>.</p>
 

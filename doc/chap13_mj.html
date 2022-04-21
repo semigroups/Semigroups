@@ -40,7 +40,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X85CE56AC84FA5D33">13.2-1 SemigroupCongruence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X8757DB087BE7E55A">13.2-2 LeftSemigroupCongruence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7D01176B788FEE60">13.2-3 RightSemigroupCongruence</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X870EE0BF868D1892">13.2-4 GeneratingPairsOfSemigroupCongruence</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13_mj.html#X7D65BB067A762CD6">13.3 <span class="Heading">
       Congruence classes
@@ -134,7 +133,7 @@
 
 <h3>13 <span class="Heading">Congruences</span></h3>
 
-<p>Congruences in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> can be described in several different ways:</p>
+<p>Congruences in <strong class="pkg">Semigroups</strong> can be described in several different ways:</p>
 
 
 <ul>
@@ -160,7 +159,7 @@
 
 <p>We can also create left congruences and right congruences, using the <code class="func">LeftSemigroupCongruence</code> (<a href="chap13_mj.html#X8757DB087BE7E55A"><span class="RefLink">13.2-2</span></a>) and <code class="func">RightSemigroupCongruence</code> (<a href="chap13_mj.html#X7D01176B788FEE60"><span class="RefLink">13.2-3</span></a>) functions.</p>
 
-<p>Please note that congruence objects made in <strong class="pkg">GAP</strong> before loading the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package may not behave correctly after <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is loaded. If <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is loaded at the beginning of the session, or before any congruence work is done, then the objects should behave correctly.</p>
+<p>Please note that congruence objects made in <strong class="pkg">GAP</strong> before loading the <strong class="pkg">Semigroups</strong> package may not behave correctly after <strong class="pkg">Semigroups</strong> is loaded. If <strong class="pkg">Semigroups</strong> is loaded at the beginning of the session, or before any congruence work is done, then the objects should behave correctly.</p>
 
 <p><a id="X784770137D98FEB9" name="X784770137D98FEB9"></a></p>
 
@@ -175,7 +174,7 @@
 
 <p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((ax,bx)\)</span> and <span class="SimpleMath">\((xa,xb)\)</span> are both in <code class="code">cong</code>.</p>
 
-<p>The simplest way of creating a congruence in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is by a set of <em>generating pairs</em>. See <code class="func">SemigroupCongruence</code> (<a href="chap13_mj.html#X85CE56AC84FA5D33"><span class="RefLink">13.2-1</span></a>).</p>
+<p>The simplest way of creating a congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">SemigroupCongruence</code> (<a href="chap13_mj.html#X85CE56AC84FA5D33"><span class="RefLink">13.2-1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -203,7 +202,7 @@ true</pre></div>
 
 <p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((xa,xb)\)</span> is also in <code class="code">cong</code>.</p>
 
-<p>The simplest way of creating a left congruence in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is by a set of <em>generating pairs</em>. See <code class="func">LeftSemigroupCongruence</code> (<a href="chap13_mj.html#X8757DB087BE7E55A"><span class="RefLink">13.2-2</span></a>).</p>
+<p>The simplest way of creating a left congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">LeftSemigroupCongruence</code> (<a href="chap13_mj.html#X8757DB087BE7E55A"><span class="RefLink">13.2-2</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -231,7 +230,7 @@ true</pre></div>
 
 <p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((ax,bx)\)</span> is also in <code class="code">cong</code>.</p>
 
-<p>The simplest way of creating a right congruence in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is by a set of <em>generating pairs</em>. See <code class="func">RightSemigroupCongruence</code> (<a href="chap13_mj.html#X7D01176B788FEE60"><span class="RefLink">13.2-3</span></a>).</p>
+<p>The simplest way of creating a right congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">RightSemigroupCongruence</code> (<a href="chap13_mj.html#X7D01176B788FEE60"><span class="RefLink">13.2-3</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -343,36 +342,6 @@ true</pre></div>
 &lt;right semigroup congruence over &lt;transformation semigroup of 
  degree 5 with 4 generators&gt; with 2 generating pairs&gt;</pre></div>
 
-<p><a id="X870EE0BF868D1892" name="X870EE0BF868D1892"></a></p>
-
-<h5>13.2-4 GeneratingPairsOfSemigroupCongruence</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfLeftSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfRightSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of lists.</p>
-
-<p>If <var class="Arg">cong</var> is a semigroup congruence, then <code class="code">GeneratingPairsOfSemigroupCongruence</code> returns a list of pairs of elements from <code class="code">Range(<var class="Arg">cong</var>)</code> that <em>generates</em> the congruence; i.e. <var class="Arg">cong</var> is the least congruence on the semigroup which contains all the pairs in the list.</p>
-
-<p>If <var class="Arg">cong</var> is a left or right semigroup congruence, then <code class="code">GeneratingPairsOfLeft/RightSemigroupCongruence</code> will instead give a list of pairs which generate it as a left or right congruence. Note that, although a congruence is also a left and right congruence, its generating pairs as a left or right congruence may differ from its generating pairs as a two-sided congruence.</p>
-
-<p>A congruence can be defined using a set of generating pairs: see <code class="func">SemigroupCongruence</code> (<a href="chap13_mj.html#X85CE56AC84FA5D33"><span class="RefLink">13.2-1</span></a>), <code class="func">LeftSemigroupCongruence</code> (<a href="chap13_mj.html#X8757DB087BE7E55A"><span class="RefLink">13.2-2</span></a>), and <code class="func">RightSemigroupCongruence</code> (<a href="chap13_mj.html#X7D01176B788FEE60"><span class="RefLink">13.2-3</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 3, 2, 3]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([3, 4, 4, 1])]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pairs :=</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">    [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, pairs);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratingPairsOfSemigroupCongruence(cong);</span>
-[ [ Transformation( [ 1, 1, 1, 1 ] ), 
-      Transformation( [ 2, 2, 2, 3 ] ) ], 
-  [ Transformation( [ 2, 2, 3, 2 ] ), 
-      Transformation( [ 3, 3, 2, 3 ] ) ] ]
-</pre></div>
-
 <p><a id="X7D65BB067A762CD6" name="X7D65BB067A762CD6"></a></p>
 
 <h4>13.3 <span class="Heading">
@@ -408,7 +377,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := EquivalenceClassOfElement(cong,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      Transformation([3, 1, 1]));</span>
-&lt;congruence class of Transformation( [ 3, 1, 1 ] )&gt;
+&lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceClass(class);</span>
 true</pre></div>
 
@@ -469,11 +438,11 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
-[ &lt;congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
-  &lt;congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
-  &lt;congruence class of Transformation( [ 3, 1, 1 ] )&gt;, 
-  &lt;congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
-  &lt;congruence class of Transformation( [ 3, 3, 3 ] )&gt; ]
+[ &lt;2-sided congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 1, 1 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
+  &lt;2-sided congruence class of Transformation( [ 3, 3, 3 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                        Transformation([2, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
@@ -685,7 +654,7 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 1, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">min := MinimalCongruencesOfSemigroup(S);</span>
-[ &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+[ &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">minl := MinimalLeftCongruencesOfSemigroup(S);</span>
 [ &lt;left semigroup congruence over &lt;transformation semigroup 
@@ -722,15 +691,15 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 1, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := PrincipalCongruencesOfSemigroup(S);</span>
-[ &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+[ &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
-  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+  &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
-  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+  &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
-  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+  &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
-  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+  &lt;2-sided semigroup congruence over &lt;transformation semigroup of 
      degree 3 with 2 generators&gt; with 1 generating pairs&gt; ]
 </pre></div>
 
@@ -751,21 +720,23 @@ false</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := LatticeOfCongruences(S);</span>
-&lt;poset of 4 congruences over &lt;symmetric inverse monoid of degree 2&gt;&gt;
+&lt;lattice of 4 two-sided congruences over 
+ &lt;symmetric inverse monoid of degree 2&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruencePoset(poset);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDigraph(poset);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OutNeighbours(poset);</span>
-[ [ 1 .. 4 ], [ 2, 3, 4 ], [ 3 ], [ 3, 4 ] ]
+[ [ 1, 2, 3, 4 ], [ 2 ], [ 2, 3 ], [ 2, 3, 4 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FullTransformationMonoid(3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := PrincipalCongruencesOfSemigroup(T);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := JoinSemilatticeOfCongruences(congs,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                         JoinSemigroupCongruences);</span>
-&lt;poset of 6 congruences over &lt;full transformation monoid of degree 3&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := JoinSemilatticeOfCongruences(PosetOfCongruences(congs),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                         WrappedTwoSidedCongruence);</span>
+&lt;lattice of 6 two-sided congruences over 
+ &lt;full transformation monoid of degree 3&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruencePoset(poset);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(poset);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DigraphNrVertices(poset);</span>
 6
 </pre></div>
 
@@ -793,22 +764,23 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfCongruences(S);</span>
-&lt;poset of 3 congruences over &lt;regular transformation monoid 
- of size 3, degree 2 with 2 generators&gt;&gt;
+&lt;lattice of 3 two-sided congruences over &lt;regular transformation 
+ monoid of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfLeftCongruences(S);</span>
-&lt;poset of 3 congruences over &lt;regular transformation monoid 
+&lt;lattice of 3 left congruences over &lt;regular transformation monoid 
  of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfRightCongruences(S);</span>
-&lt;poset of 5 congruences over &lt;regular transformation monoid 
+&lt;lattice of 5 right congruences over &lt;regular transformation monoid 
  of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OutNeighbours(LatticeOfRightCongruences(S));</span>
-[ [ 1 .. 5 ], [ 2, 5 ], [ 3, 5 ], [ 4, 5 ], [ 5 ] ]
+[ [ 1, 2, 3, 4, 5 ], [ 2 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">restriction := [Transformation([1, 1, 1, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([1, 1, 1, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([1, 1, 1, 3])];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfCongruences(S, restriction);</span>
-&lt;poset of 2 congruences over &lt;full transformation monoid of degree 4&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfCongruences(S, Combinations(restriction, 2));</span>
+&lt;lattice of 2 two-sided congruences over 
+ &lt;full transformation monoid of degree 4&gt;&gt;
 </pre></div>
 
 <p><a id="X83ACF2C0789F621B" name="X83ACF2C0789F621B"></a></p>
@@ -831,20 +803,21 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 3, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([2, 3, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 3, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PosetOfPrincipalLeftCongruences(S);</span>
-&lt;poset of 12 congruences over &lt;transformation semigroup of size 11, 
- degree 3 with 2 generators&gt;&gt;
+&lt;poset of 12 left congruences over &lt;transformation semigroup 
+ of size 11, degree 3 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PosetOfPrincipalCongruences(S);</span>
-&lt;poset of 3 congruences over &lt;transformation semigroup of size 11, 
- degree 3 with 2 generators&gt;&gt;
+&lt;lattice of 3 two-sided congruences over &lt;transformation semigroup 
+ of size 11, degree 3 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">restriction := [Transformation([3, 2, 3]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([3, 1, 3]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([2, 2, 2])];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := PosetOfPrincipalRightCongruences(S, restriction);</span>
-&lt;poset of 3 congruences over &lt;transformation semigroup of size 11, 
- degree 3 with 2 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := PosetOfPrincipalRightCongruences(S, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Combinations(restriction, 2));</span>
+&lt;poset of 3 right congruences over &lt;transformation semigroup 
+ of size 11, degree 3 with 2 generators&gt;&gt;
 </pre></div>
 
 <p><a id="X7B2E2CEE8626FBC3" name="X7B2E2CEE8626FBC3"></a></p>
@@ -862,7 +835,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfRightCongruences(S);</span>
-&lt;poset of 5 congruences over &lt;regular transformation monoid 
+&lt;lattice of 5 right congruences over &lt;regular transformation monoid 
  of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruencesOfPoset(latt);</span>
 [ &lt;right semigroup congruence over &lt;regular transformation monoid 
@@ -891,7 +864,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);</span>
 &lt;regular transformation monoid of degree 2 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfRightCongruences(S);</span>
-&lt;poset of 5 congruences over &lt;regular transformation monoid 
+&lt;lattice of 5 right congruences over &lt;regular transformation monoid 
  of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSemigroupOfCongruencePoset(latt) = S;</span>
 true
@@ -917,8 +890,8 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, [])];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := PosetOfCongruences(coll);</span>
-&lt;poset of 3 congruences over &lt;regular transformation monoid of 
- degree 2 with 2 generators&gt;&gt;
+&lt;poset of 3 right congruences over &lt;regular transformation monoid 
+ of size 3, degree 2 with 2 generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OutNeighbours(poset);</span>
 [ [ 1 ], [ 2 ], [ 1, 2, 3 ] ]
 </pre></div>
@@ -942,13 +915,15 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(2);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair3 := [PartialPerm([1, 2], [1, 2]), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair3 := [PartialPerm([1, 2], [1, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             PartialPerm([1, 2], [2, 1])];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coll := [RightSemigroupCongruence(S, pair1),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair3)];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);</span>
-&lt;poset of 4 congruences over &lt;symmetric inverse monoid of degree 2&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemilatticeOfCongruences(PosetOfCongruences(coll),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">WrappedRightCongruence);</span>
+&lt;poset of 4 right congruences over 
+ &lt;symmetric inverse monoid of degree 2&gt;&gt;
 </pre></div>
 
 <p><a id="X780E2B3F8509CE32" name="X780E2B3F8509CE32"></a></p>
@@ -975,16 +950,17 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coll := [RightSemigroupCongruence(S, pair1),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair3)];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalCongruences(coll);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalCongruences(PosetOfCongruences(coll));</span>
 [ &lt;right semigroup congruence over &lt;symmetric inverse monoid of degree\
  2&gt; with 1 generating pairs&gt;, 
   &lt;right semigroup congruence over &lt;symmetric inverse monoid of degree\
  2&gt; with 1 generating pairs&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := LatticeOfCongruences(S);</span>
-&lt;poset of 4 congruences over &lt;symmetric inverse monoid of degree 2&gt;&gt;
+&lt;lattice of 4 two-sided congruences over 
+ &lt;symmetric inverse monoid of degree 2&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalCongruences(poset);</span>
-[ &lt;semigroup congruence over &lt;symmetric inverse monoid of degree 2&gt; wi\
-th 0 generating pairs&gt; ]
+[ &lt;2-sided semigroup congruence over &lt;symmetric inverse monoid of degr\
+ee 2&gt; with 0 generating pairs&gt; ]
 </pre></div>
 
 <p><a id="X857D750579B87DBF" name="X857D750579B87DBF"></a></p>
@@ -1083,7 +1059,7 @@ true</pre></div>
 
 <h4>13.6 <span class="Heading">Congruences on Rees matrix semigroups</span></h4>
 
-<p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, and the functions associated with them. This code and this part of the manual were written by Michael Young. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
+<p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Young. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
 
 <p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">\(S\)</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
 
@@ -1235,7 +1211,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := RZMSCongruenceClassByLinkedTriple(cong,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">RightCoset(N, (1, 5)), 2, 3);</span>
-&lt;congruence class of (2,(3,4),3)&gt;</pre></div>
+&lt;2-sided congruence class of (2,(3,4),3)&gt;</pre></div>
 
 <p><a id="X7B19CACF7A37ADBC" name="X7B19CACF7A37ADBC"></a></p>
 
@@ -1283,7 +1259,7 @@ true</pre></div>
       Congruences on inverse semigroups
     </span></h4>
 
-<p>This section describes the implementation of congruences of inverse semigroups in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, and the functions associated with them. This code and this part of the manual were written by Michael Young. Most of the theorems used in this chapter are from Section 5.3 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
+<p>This section describes the implementation of congruences of inverse semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Young. Most of the theorems used in this chapter are from Section 5.3 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
 
 <p>The congruences of an inverse semigroup are in 1-1 correspondence with its <em>congruence pairs</em>. A congruence pair is a pair <code class="code">(N, t)</code> such that:</p>
 
@@ -1383,8 +1359,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruenceByGeneratingPairs(I,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
-&lt;semigroup congruence over &lt;inverse partial perm semigroup of rank 3 
- with 2 generators&gt; with 2 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;inverse partial perm semigroup of 
+ rank 3 with 2 generators&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);</span>
 &lt;semigroup congruence over &lt;inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators&gt; with congruence pair (19,1)&gt;</pre></div>
@@ -1405,7 +1381,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(I,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
-&lt;semigroup congruence over &lt;inverse partial perm semigroup 
+&lt;2-sided semigroup congruence over &lt;inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KernelOfSemigroupCongruence(cong);</span>
 &lt;inverse partial perm semigroup of size 19, rank 3 with 5 generators&gt;
@@ -1427,7 +1403,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(I,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
-&lt;semigroup congruence over &lt;inverse partial perm semigroup 
+&lt;2-sided semigroup congruence over &lt;inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceOfSemigroupCongruence(cong);</span>
 [ [ &lt;empty partial perm&gt;, &lt;identity partial perm on [ 1 ]&gt;, 
@@ -1513,8 +1489,8 @@ e_1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e_3 := S.3;</span>
 e_3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, [[e_1, e_3]]);</span>
-&lt;semigroup congruence over &lt;finite graph inverse semigroup with 4 vert\
-ices, 5 edges&gt; with 1 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;finite graph inverse semigroup wit\
+h 4 vertices, 5 edges&gt; with 1 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceByWangPair(cong);</span>
 false
 </pre></div>
@@ -1562,15 +1538,15 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceByWangPair(S, [4], [2]);</span>
 &lt;graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := AsSemigroupCongruenceByGeneratingPairs(last);</span>
-&lt;semigroup congruence over &lt;finite graph inverse semigroup with 4 vert\
-ices, 4 edges&gt; with 2 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;finite graph inverse semigroup wit\
+h 4 vertices, 4 edges&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCongruenceByWangPair(cong);</span>
 &lt;graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceByWangPair(S, [3, 4], [1]);</span>
 &lt;graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := AsSemigroupCongruenceByGeneratingPairs(last);</span>
-&lt;semigroup congruence over &lt;finite graph inverse semigroup with 4 vert\
-ices, 4 edges&gt; with 3 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;finite graph inverse semigroup wit\
+h 4 vertices, 4 edges&gt; with 3 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCongruenceByWangPair(cong);</span>
 &lt;graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]&gt;
 </pre></div>
@@ -1593,15 +1569,15 @@ ices, 4 edges&gt; with 3 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceByWangPair(S, [4], [2]);</span>
 &lt;graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := AsSemigroupCongruenceByGeneratingPairs(last);</span>
-&lt;semigroup congruence over &lt;finite graph inverse semigroup with 4 vert\
-ices, 4 edges&gt; with 2 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;finite graph inverse semigroup wit\
+h 4 vertices, 4 edges&gt; with 2 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCongruenceByWangPair(cong);</span>
 &lt;graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceByWangPair(S, [3, 4], [1]);</span>
 &lt;graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := AsSemigroupCongruenceByGeneratingPairs(last);</span>
-&lt;semigroup congruence over &lt;finite graph inverse semigroup with 4 vert\
-ices, 4 edges&gt; with 3 generating pairs&gt;
+&lt;2-sided semigroup congruence over &lt;finite graph inverse semigroup wit\
+h 4 vertices, 4 edges&gt; with 3 generating pairs&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCongruenceByWangPair(cong);</span>
 &lt;graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]&gt;
 </pre></div>

@@ -118,7 +118,7 @@
     Bipartitions and blocks
   </span></h3>
 
-<p>In this chapter we describe the functions in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating and manipulating bipartitions and semigroups of bipartitions. We begin by describing what these objects are.</p>
+<p>In this chapter we describe the functions in <strong class="pkg">Semigroups</strong> for creating and manipulating bipartitions and semigroups of bipartitions. We begin by describing what these objects are.</p>
 
 <p>A <em>partition</em> of a set <span class="SimpleMath">\(X\)</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">\(X\)</span> whose union is <span class="SimpleMath">\(X\)</span> . A partition of <span class="SimpleMath">\(X\)</span> is the collection of equivalence classes of an equivalence relation on <span class="SimpleMath">\(X\)</span> , and vice versa.</p>
 
@@ -379,7 +379,7 @@ true</pre></div>
 
 <h4>3.3 <span class="Heading">Changing the representation of a bipartition</span></h4>
 
-<p>It is possible that a bipartition can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a bipartition. In this section, we describe the functions in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for changing the representation of bipartition, or for changing the representation of another type of object to that of a bipartition.</p>
+<p>It is possible that a bipartition can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a bipartition. In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for changing the representation of bipartition, or for changing the representation of another type of object to that of a bipartition.</p>
 
 <p>The operations <code class="func">AsPermutation</code> (<a href="chap3_mj.html#X7C684CD38405DBEF"><span class="RefLink">3.3-5</span></a>), <code class="func">AsPartialPerm</code> (<a href="chap3_mj.html#X7C5212EF7A200E63"><span class="RefLink">3.3-4</span></a>), <code class="func">AsTransformation</code> (<a href="chap3_mj.html#X7CE91D0C83865214"><span class="RefLink">3.3-3</span></a>) can be used to convert bipartitions into permutations, partial permutations, or transformations where appropriate.</p>
 
@@ -1075,7 +1075,7 @@ false</pre></div>
 
 <p>As described above the left and right blocks of a bipartition characterise Green's \(\mathscr{R}\)- and \(\mathscr{L}\)-relation of the partition monoid; see <code class="func">LeftBlocks</code> (<a href="chap3_mj.html#X7B9B364379D8F4E8"><span class="RefLink">3.5-6</span></a>) and <code class="func">RightBlocks</code> (<a href="chap3_mj.html#X86A10B138230C2A4"><span class="RefLink">3.5-5</span></a>). The left or right blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right.</p>
 
-<p>In this section, we describe the functions in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for creating and manipulating the left or right blocks of a bipartition.</p>
+<p>In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for creating and manipulating the left or right blocks of a bipartition.</p>
 
 <p><a id="X7D77092078EC860C" name="X7D77092078EC860C"></a></p>
 
@@ -1232,7 +1232,7 @@ false</pre></div>
 
 <p>Semigroups and monoids of bipartitions can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) and <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>); see Chapter <a href="chap6_mj.html#X7995B4F18672DDB0"><span class="RefLink">6</span></a> for more details.</p>
 
-<p>It is possible to create inverse semigroups and monoids of bipartitions using <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of block bijections or partial perm bipartions; see <code class="func">IsBlockBijection</code> (<a href="chap3_mj.html#X829494DF7FD6CFEC"><span class="RefLink">3.5-16</span></a>) and <code class="func">IsPartialPermBipartition</code> (<a href="chap3_mj.html#X87C771D37B1FE95C"><span class="RefLink">3.5-15</span></a>). Note that every bipartition semigroup in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is finite.</p>
+<p>It is possible to create inverse semigroups and monoids of bipartitions using <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of block bijections or partial perm bipartions; see <code class="func">IsBlockBijection</code> (<a href="chap3_mj.html#X829494DF7FD6CFEC"><span class="RefLink">3.5-16</span></a>) and <code class="func">IsPartialPermBipartition</code> (<a href="chap3_mj.html#X87C771D37B1FE95C"><span class="RefLink">3.5-15</span></a>). Note that every bipartition semigroup in <strong class="pkg">Semigroups</strong> is finite.</p>
 
 <p><a id="X810BFF647C4E191E" name="X810BFF647C4E191E"></a></p>
 

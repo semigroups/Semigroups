@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     4.0.0
+                                     4.0.1
   
   
-                                28 February 2022
+                                 21 April 2022
   
   
                                  James Mitchell
@@ -578,7 +578,6 @@
       13.2-1 SemigroupCongruence
       13.2-2 LeftSemigroupCongruence
       13.2-3 RightSemigroupCongruence
-      13.2-4 GeneratingPairsOfSemigroupCongruence
     13.3 [33X[0;0YCongruence classes[133X
       13.3-1 IsCongruenceClass
       13.3-2 IsLeftCongruenceClass

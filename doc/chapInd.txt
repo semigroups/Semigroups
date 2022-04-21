@@ -155,9 +155,6 @@
   [2XFullTropicalMinPlusMonoid[102X 7.7-2 
   [2XGeneralLinearMonoid[102X 7.5-1 
   [2XGeneratingCongruencesOfLattice[102X 13.8-4 
-  [2XGeneratingPairsOfLeftSemigroupCongruence[102X 13.2-4 
-  [2XGeneratingPairsOfRightSemigroupCongruence[102X 13.2-4 
-  [2XGeneratingPairsOfSemigroupCongruence[102X 13.2-4 
   [2XGenerators[102X 11.6-1 
   [2XGeneratorsOfSemigroupIdeal[102X 9.2-1 
   [2XGeneratorsOfStzPresentation[102X 15.3-3 

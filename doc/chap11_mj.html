@@ -183,7 +183,7 @@
     Attributes and operations for semigroups
   </span></h3>
 
-<p>In this chapter we decribe the methods that are available in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for determining the attributes of a semigroup, and the operations which can be applied to a semigroup.</p>
+<p>In this chapter we decribe the methods that are available in <strong class="pkg">Semigroups</strong> for determining the attributes of a semigroup, and the operations which can be applied to a semigroup.</p>
 
 <p><a id="X7AE0630287B8A757" name="X7AE0630287B8A757"></a></p>
 
@@ -399,7 +399,7 @@ true</pre></div>
       Expressing semigroup elements as words in generators
     </span></h4>
 
-<p>It is possible to express an element of a semigroup as a word in the generators of that semigroup. This section describes how to accomplish this in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> .</p>
+<p>It is possible to express an element of a semigroup as a word in the generators of that semigroup. This section describes how to accomplish this in <strong class="pkg">Semigroups</strong>.</p>
 
 <p><a id="X799D2F3C866B9AED" name="X799D2F3C866B9AED"></a></p>
 
@@ -788,7 +788,7 @@ fail</pre></div>
 
 <p>where <code class="code">X</code> is one of <code class="func">Semigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>), <code class="func">Monoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>), <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>), or <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>).</p>
 
-<p>For many types of semigroup, it is not currently possible to find a <code class="code">MinimalXGeneratingSet</code> with the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package.</p>
+<p>For many types of semigroup, it is not currently possible to find a <code class="code">MinimalXGeneratingSet</code> with the <strong class="pkg">Semigroups</strong> package.</p>
 
 <p>See also <code class="func">SmallGeneratingSet</code> (<a href="chap11_mj.html#X814DBABC878D5232"><span class="RefLink">11.6-2</span></a>) and <code class="func">IrredundantGeneratingSubset</code> (<a href="chap11_mj.html#X7F88DA9487720D2B"><span class="RefLink">11.6-3</span></a>).</p>
 
@@ -821,7 +821,7 @@ true
 
 <p>It can be difficult to find the set of generators <code class="code">X</code>, and it might contain a substantial proportion of the elements of <var class="Arg">S</var>.</p>
 
-<p>Two semigroups have the same set of elements if and only if their smallest generating sets are equal. However, due to the complexity of determining the <code class="code">GeneratorsSmallest</code>, this is not the method used by the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package when comparing semigroups.</p>
+<p>Two semigroups have the same set of elements if and only if their smallest generating sets are equal. However, due to the complexity of determining the <code class="code">GeneratorsSmallest</code>, this is not the method used by the <strong class="pkg">Semigroups</strong> package when comparing semigroups.</p>
 
 
 <div class="example"><pre>
@@ -903,7 +903,7 @@ true
       Minimal ideals and multiplicative zeros
     </span></h4>
 
-<p>In this section we describe the attributes of a semigroup that can be found using the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package.</p>
+<p>In this section we describe the attributes of a semigroup that can be found using the <strong class="pkg">Semigroups</strong> package.</p>
 
 <p><a id="X7BC68589879C3BE9" name="X7BC68589879C3BE9"></a></p>
 
@@ -1265,9 +1265,9 @@ true</pre></div>
       Maximal subsemigroups
     </span></h4>
 
-<p>The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package provides methods to calculate the maximal subsemigroups of a finite semigroup, subject to various conditions. A <em>maximal subsemigroup</em> of a semigroup is a proper subsemigroup that is contained in no other proper subsemigroup of the semigroup.</p>
+<p>The <strong class="pkg">Semigroups</strong> package provides methods to calculate the maximal subsemigroups of a finite semigroup, subject to various conditions. A <em>maximal subsemigroup</em> of a semigroup is a proper subsemigroup that is contained in no other proper subsemigroup of the semigroup.</p>
 
-<p>When computing the maximal subsemigroups of a regular Rees (0-)matrix semigroup over a group, additional functionality is available. As described in <a href="chapBib_mj.html#biBGraham1968aa">[GGR68]</a>, a maximal subsemigroup of a finite regular Rees (0-)matrix semigroup over a group is one of 6 possible types. Using the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, it is possible to search for only those maximal subsemigroups of certain types.</p>
+<p>When computing the maximal subsemigroups of a regular Rees (0-)matrix semigroup over a group, additional functionality is available. As described in <a href="chapBib_mj.html#biBGraham1968aa">[GGR68]</a>, a maximal subsemigroup of a finite regular Rees (0-)matrix semigroup over a group is one of 6 possible types. Using the <strong class="pkg">Semigroups</strong> package, it is possible to search for only those maximal subsemigroups of certain types.</p>
 
 <p>A maximal subsemigroup of such a Rees (0-)matrix semigroup <code class="code">R</code> over a group <code class="code">G</code> is either:</p>
 
@@ -1379,7 +1379,7 @@ true</pre></div>
 
 <p>Unless the maximal subsemigroups of <var class="Arg">S</var> are already known, the command <code class="code">NrMaximalSubsemigroups(<var class="Arg">S</var>)</code> simply calls the command <code class="code">MaximalSubsemigroups(<var class="Arg">S</var>, rec(number := true))</code>.</p>
 
-<p>For more information about searching for maximal subsemigroups of a finite semigroup in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, and for information about the options available to alter the search, see <code class="func">MaximalSubsemigroups</code> (<a href="chap11_mj.html#X860A10E387C19150"><span class="RefLink">11.10-1</span></a>). By supplying the additional option <code class="code"><var class="Arg">opts</var>.number :=</code> <code class="keyw">true</code>, the number of maximal subsemigroups will be returned rather than the subsemigroups themselves.</p>
+<p>For more information about searching for maximal subsemigroups of a finite semigroup in the <strong class="pkg">Semigroups</strong> package, and for information about the options available to alter the search, see <code class="func">MaximalSubsemigroups</code> (<a href="chap11_mj.html#X860A10E387C19150"><span class="RefLink">11.10-1</span></a>). By supplying the additional option <code class="code"><var class="Arg">opts</var>.number :=</code> <code class="keyw">true</code>, the number of maximal subsemigroups will be returned rather than the subsemigroups themselves.</p>
 
 
 <div class="example"><pre>

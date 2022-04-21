@@ -82,9 +82,9 @@
     Partitioned binary relations (PBRs)
   </span></h3>
 
-<p>In this chapter we describe the functions in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> for creating and manipulating partitioned binary relations, henceforth referred to by their acronym PBRs. We begin by describing what these objects are.</p>
+<p>In this chapter we describe the functions in <strong class="pkg">Semigroups</strong> for creating and manipulating partitioned binary relations, henceforth referred to by their acronym PBRs. We begin by describing what these objects are.</p>
 
-<p>PBRs were introduced in the paper <a href="chapBib.html#biBMartin2011aa">[MM13]</a> as, roughly speaking, the maximum generalization of bipartitions and related objects. Although, mathematically, bipartitions are a special type of PBR, in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> bipartitions and PBRs are currently distinct types of objects. It is possible to change the representation from bipartition to PBR, and from PBR to bipartition, when appropriate; see Section <a href="chap4.html#X86B714987C01895F"><span class="RefLink">4.3</span></a> for more details. The reason for this distinct is largely historical, bipartition appeared in the literature, and in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package, before PBRs.</p>
+<p>PBRs were introduced in the paper <a href="chapBib.html#biBMartin2011aa">[MM13]</a> as, roughly speaking, the maximum generalization of bipartitions and related objects. Although, mathematically, bipartitions are a special type of PBR, in <strong class="pkg">Semigroups</strong> bipartitions and PBRs are currently distinct types of objects. It is possible to change the representation from bipartition to PBR, and from PBR to bipartition, when appropriate; see Section <a href="chap4.html#X86B714987C01895F"><span class="RefLink">4.3</span></a> for more details. The reason for this distinct is largely historical, bipartition appeared in the literature, and in the <strong class="pkg">Semigroups</strong> package, before PBRs.</p>
 
 <p><a id="X7C40DA67826FF873" name="X7C40DA67826FF873"></a></p>
 
@@ -221,7 +221,7 @@ true</pre></div>
 
 <h4>4.3 <span class="Heading">Changing the representation of a PBR</span></h4>
 
-<p>It is possible that a PBR can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a PBR. In this section, we describe the functions in the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for changing the representation of PBR, or for changing the representation of another type of object to that of a PBR.</p>
+<p>It is possible that a PBR can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a PBR. In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for changing the representation of PBR, or for changing the representation of another type of object to that of a PBR.</p>
 
 <p>The operations <code class="func">AsPermutation</code> (<a href="chap4.html#X86786B297FBCD064"><span class="RefLink">4.3-4</span></a>), <code class="func">AsPartialPerm</code> (<a href="chap4.html#X795B1C16819905E8"><span class="RefLink">4.3-3</span></a>), <code class="func">AsTransformation</code> (<a href="chap4.html#X8407F516825A514A"><span class="RefLink">4.3-2</span></a>), <code class="func">AsBipartition</code> (<a href="chap3.html#X855126D98583C181"><span class="RefLink">3.3-1</span></a>), <code class="func">AsBooleanMat</code> (<a href="chap5.html#X7DA524567E0E7E16"><span class="RefLink">5.3-2</span></a>) can be used to convert PBRs into permutations, partial permutations, transformations, bipartitions, and boolean matrices where appropriate.</p>
 
@@ -676,7 +676,7 @@ true
 
 <p>It is possible to create inverse semigroups and monoids of PBRs using <code class="func">InverseSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of PBRs satisfying <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and when considered as bipartitions, the collection satisfies <code class="code">IsGeneratorsOfInverseSemigroup</code>.</p>
 
-<p>Note that every PBR semigroup in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> is finite.</p>
+<p>Note that every PBR semigroup in <strong class="pkg">Semigroups</strong> is finite.</p>
 
 <p><a id="X8554A3F878A4DC73" name="X8554A3F878A4DC73"></a></p>
 

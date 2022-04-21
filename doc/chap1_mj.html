@@ -9,8 +9,7 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (Semigroups) - Chapter 1: 
-    The Semigroups
-     package
+    The Semigroups package
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -28,8 +27,7 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
 <p><a id="X7D8D6DB37A0326BE" name="X7D8D6DB37A0326BE"></a></p>
 <div class="ChapSects"><a href="chap1_mj.html#X7D8D6DB37A0326BE">1 <span class="Heading">
-    The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span>
-     package
+    The <strong class="pkg">Semigroups</strong> package
   </span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7DFB63A97E67C0A1">1.1 <span class="Heading">
       Introduction
@@ -44,8 +42,7 @@
 </div>
 
 <h3>1 <span class="Heading">
-    The <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span>
-     package
+    The <strong class="pkg">Semigroups</strong> package
   </span></h3>
 
 <p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
@@ -54,9 +51,9 @@
       Introduction
     </span></h4>
 
-<p>This is the manual for the <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> package for <strong class="pkg">GAP</strong> version 4.0.0. <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> 4.0.0 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.</p>
+<p>This is the manual for the <strong class="pkg">Semigroups</strong> package for <strong class="pkg">GAP</strong> version 4.0.1. <strong class="pkg">Semigroups</strong> 4.0.1 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.</p>
 
-<p>From Version 3.0.0, <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> includes a copy of the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library which contains implementations of the Froidure-Pin, Todd-Coxeter, and Knuth-Bendix algorithms (among others) that <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> utilises.</p>
+<p>From Version 3.0.0, <strong class="pkg">Semigroups</strong> includes a copy of the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library which contains implementations of the Froidure-Pin, Todd-Coxeter, and Knuth-Bendix algorithms (among others) that <strong class="pkg">Semigroups</strong> utilises.</p>
 
 <p>If you find a bug or an issue with the package, please visit the <span class="URL"><a href=" https://github.com/semigroups/Semigroups/issues ">issue tracker</a></span>.</p>
 
@@ -71,7 +68,7 @@
 
 <dl>
 <dt><strong class="Mark">Part I: elements</strong></dt>
-<dd><p>the different types of elements that are introduced in <span class="URL"><a href="https://semigroups.github.io/Semigroups">Semigroups</a></span> are described in Chapters <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>, <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>, and <a href="chap5_mj.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>. These include <code class="func">Bipartition</code> (<a href="chap3_mj.html#X7E052E6378A5B758"><span class="RefLink">3.2-1</span></a>), <code class="func">PBR</code> (<a href="chap4_mj.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), and <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>), which supplement those already defined in the <strong class="pkg">GAP</strong> library, such as <code class="func">Transformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X86ADBDE57A20E323"><span class="RefLink">Reference: Transformation for an image list</span></a>) or <code class="func">PartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X8538BAE77F2FB2F8"><span class="RefLink">Reference: PartialPerm for a domain and image</span></a>).</p>
+<dd><p>the different types of elements that are introduced in <strong class="pkg">Semigroups</strong> are described in Chapters <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>, <a href="chap4_mj.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>, and <a href="chap5_mj.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>. These include <code class="func">Bipartition</code> (<a href="chap3_mj.html#X7E052E6378A5B758"><span class="RefLink">3.2-1</span></a>), <code class="func">PBR</code> (<a href="chap4_mj.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), and <code class="func">Matrix</code> (<a href="chap5_mj.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>), which supplement those already defined in the <strong class="pkg">GAP</strong> library, such as <code class="func">Transformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X86ADBDE57A20E323"><span class="RefLink">Reference: Transformation for an image list</span></a>) or <code class="func">PartialPerm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap54_mj.html#X8538BAE77F2FB2F8"><span class="RefLink">Reference: PartialPerm for a domain and image</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">Part II: semigroups and monoids defined by generating sets</strong></dt>
