@@ -212,8 +212,6 @@ end);
 InstallMethod(Matrix,
 "for a filter, homogeneous list, and pos int",
 [IsOperation, IsHomogeneousList, IsPosInt],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 function(filter, mat, threshold)
   local checker, row;
 
@@ -240,8 +238,6 @@ end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",
 [IsOperation, IsHomogeneousList],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 function(filter, mat)
   local row;
 
@@ -301,14 +297,10 @@ end;
 
 InstallMethod(Matrix, "for a semiring and homogenous list",
 [IsSemiring, IsHomogeneousList],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 InstallMethod(Matrix, "for a semiring and a matrix obj",
 [IsSemiring, IsMatrixObj],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
 SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 Unbind(SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
