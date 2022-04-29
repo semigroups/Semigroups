@@ -64,8 +64,7 @@ Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so comp
 
 * from version 3.0.0, it is necessary to compile the [Semigroups][] package.
   [Semigroups][] uses the [libsemigroups][] C++ library, which requires a compiler
-
-  implementing the C++11 standard.
+  implementing the C++14 standard.
 
   You may either build [libsemigroups][] along with [Semigroups][], or have it
   installed at a custom or standard location, as explained in its
