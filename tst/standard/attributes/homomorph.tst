@@ -354,7 +354,7 @@ true
 # Tests with the same group
 gap> S := FullTransformationMonoid(3);;
 gap> gens := GeneratorsOfSemigroup(S);;
-gap> imgs := List([1 .. 4], x -> ConstantTransformation(3, 1));;
+gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom1 := SemigroupHomomorphismByImages(S, S, gens, imgs);;
 gap> BruteForceHomoCheck(hom1);
 true
@@ -398,7 +398,7 @@ fail
 gap> S := FullTransformationMonoid(3);;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> J := FullTransformationMonoid(4);;
-gap> imgs := List([1 .. 4], x -> ConstantTransformation(3, 1));;
+gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
 [ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), 
   Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] -> 
