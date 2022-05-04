@@ -14,7 +14,7 @@
     <Oper Name = "SemigroupHomomorphismByImages" Arg = "S, T, gens, imgs" Label = "for two semigroups and two lists"/> 
     <Oper Name = "SemigroupHomomorphismByImages" Arg = "S, T, imgs" Label = "for two semigroups and a list"/> 
     <Oper Name = "SemigroupHomomorphismByImages" Arg = "S, T" Label = "for two semigroups"/> 
-    <Oper Name = "SemigroupHomomorphismByImages" Arg = "S, gens, imgs" Label = "for a semigroup and two list"/> 
+    <Oper Name = "SemigroupHomomorphismByImages" Arg = "S, gens, imgs" Label = "for a semigroup and two lists"/> 
     <Returns>
       A semigroup homomorphism, or <K>fail</K>.
     </Returns>
