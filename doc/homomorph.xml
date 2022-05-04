@@ -82,7 +82,7 @@ gap> iso := SemigroupIsomorphismByImages(S, T);
   <ManSection>
     <Oper Name = "SemigroupHomomorphismByFunction" Arg = "S, T, fun"/>
     <Returns>
-      A semigroup homomorphism
+      A semigroup homomorphism.
     </Returns>
     <Description>
       This operation returns a semigroup homomorphism with source <A>S</A> and 
