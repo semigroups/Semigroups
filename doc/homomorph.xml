@@ -289,13 +289,12 @@ d of degree 3>]]></Example>
   <ManSection>
     <Attr Name = "KernelOfSemigroupHomomorphism" Arg = "hom"/>
     <Returns>
-        The kernel of the semigroup homomorphism, or <K>fail</K>. Returns a 
-        semigroup congruence over the semigroup <C>Source(<A>hom</A>)</C>.
+        A semigroup congruence or <K>fail</K>.
     </Returns>
     <Description>
-	The kernel of a semigroup homomorphism <A>hom</A> is a semigroup 
-        congruence relating pairs of elements mapping to the same element under 
-        <A>hom</A>.
+	      The kernel of a semigroup homomorphism <A>hom</A> is a semigroup
+        congruence relating pairs of elements in <C>Source(<A>hom</A>)</C>
+        mapping to the same element under <A>hom</A>.
       <Example><![CDATA[
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >       Transformation([1, 1, 1, 5, 3]),
@@ -305,7 +304,7 @@ gap> cong := congs[3];;
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
-gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens, images);;
+gap> hom1 := SemigroupHomomorphismByImages(S, T, gens, images);;
 gap> cong = KernelOfSemigroupHomomorphism(hom1);
 true]]></Example>
     </Description>

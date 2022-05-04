@@ -9,7 +9,8 @@
 #############################################################################
 ##
 
-# This file contains a method for finding a homomorphism between semigroups
+# This file contains various methods for representing homomorphisms between
+# semigroups
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
