@@ -15,7 +15,7 @@
     </Heading>
     <#Include Label = "SemigroupHomomorphismByImages">
     <#Include Label = "SemigroupHomomorphismByFunction">
-    The following methods can be applied to Semigroup homomorphisms by images or
+    The following methods relate to semigroup homomorphisms by images or
     by function:
     <Ref Attr = "Range" BookName = "ref"/>,
     <Ref Attr = "Image" BookName = "ref"/>,
