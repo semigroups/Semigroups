@@ -15,7 +15,7 @@
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
-  local map, R, rel, original_gens;
+  local map, R, rel, original_gens, U;
 
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 3rd argument (a list) must consist of elements ",
@@ -34,10 +34,11 @@ function(S, T, gens, imgs)
   # in case of different generators, do:
   # gens -> original generators (as passed to Semigroup function)
   # imgs -> images of original generators
+  U := Semigroup(gens, rec(acting := true));
   original_gens := GeneratorsOfSemigroup(S);
   if original_gens <> gens then
     imgs := List(original_gens,
-      x -> EvaluateWord(imgs, Factorization(Semigroup(gens), x)));
+      x -> EvaluateWord(imgs, Factorization(U, x)));
     gens := original_gens;
   fi;
 
@@ -64,7 +65,7 @@ InstallMethod(SemigroupHomomorphismByImages,
     IsTransformationCollection and IsList,
     IsTransformationCollection and IsList],
 function(S, T, gens, imgs)
-  local K, SxT, embS, embT, S1, T1, i, original_gens;
+  local K, SxT, embS, embT, S1, T1, i, original_gens, U;
 
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 3rd argument (a list) must consist of elements ",
@@ -84,9 +85,10 @@ function(S, T, gens, imgs)
   # gens -> original generators (as passed to Semigroup function)
   # imgs -> images of original generators
   original_gens := GeneratorsOfSemigroup(S);
+  U := Semigroup(gens, rec(acting := true));
   if original_gens <> gens then
     imgs := List(original_gens,
-      x -> EvaluateWord(imgs, Factorization(Semigroup(gens), x)));
+      x -> EvaluateWord(imgs, Factorization(U, x)));
     gens := original_gens;
   fi;
 
