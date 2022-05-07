@@ -746,8 +746,7 @@ false
 # Test with quotient semigroup
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >       Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
-gap> congs := CongruencesOfSemigroup(S);;
-gap> cong := congs[3];;
+gap> cong := SemigroupCongruence(S, [[ Transformation([1, 1, 1, 1, 1]), Transformation([1, 1, 1, 3, 3])]]);
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
