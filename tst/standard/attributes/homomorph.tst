@@ -747,6 +747,8 @@ false
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >       Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
 gap> cong := SemigroupCongruence(S, [[ Transformation([1, 1, 1, 1, 1]), Transformation([1, 1, 1, 3, 3])]]);
+<2-sided semigroup congruence over <transformation semigroup of degree 5 with 
+ 3 generators> with 1 generating pairs>
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
@@ -754,9 +756,9 @@ gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens, images);;
 gap> BruteForceHomoCheck(hom1);
 true
 gap> gens[1] ^ hom1;              
-<congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
 gap> ImageElm(hom1, gens[1]);
-<congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
 gap> IsSurjective(hom1);
 true
 gap> IsInjective(hom1);
@@ -793,15 +795,42 @@ gap> hom2 := SemigroupHomomorphismByImages(S, K, gens, images2);;
 gap> BruteForceHomoCheck(hom2);
 true
 gap> ImagesSource(hom2);
-<transformation semigroup of degree 7 with 3 generators>
+<transformation semigroup of degree 6 with 3 generators>
 gap> PreImagesRange(hom2);
 <transformation semigroup of size 59, degree 5 with 3 generators>
 gap> PreImagesRepresentative(hom2, images2[2]);
 Transformation( [ 1, 1, 1, 5, 3 ] )
 gap> PreImagesSet(hom2, images2{[2 .. 3]});
-[ Transformation( [ 1, 1, 1, 5, 3 ] ), Transformation( [ 2, 5, 3, 5, 3 ] ) ]
+[ Transformation( [ 1, 1, 1, 5, 3 ] ), Transformation( [ 1, 1, 3, 1, 3 ] ), 
+  Transformation( [ 2, 2, 2, 5, 5 ] ), Transformation( [ 1, 1, 1, 3, 1 ] ), 
+  Transformation( [ 2, 2, 2, 3, 3 ] ), Transformation( [ 1, 5, 5, 5, 5 ] ), 
+  Transformation( [ 1, 3, 1, 3, 1 ] ), Transformation( [ 5, 3, 3, 3, 3 ] ), 
+  Transformation( [ 2, 2, 5, 2, 5 ] ), Transformation( [ 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 2, 2, 3, 2, 3 ] ), Transformation( [ 5, 1, 5, 1, 5 ] ), 
+  Transformation( [ 3, 1, 1, 1, 1 ] ), Transformation( [ 3, 5, 3, 5, 3 ] ), 
+  Transformation( [ 1, 1, 1, 5, 5 ] ), Transformation( [ 1, 1, 1, 3, 3 ] ), 
+  Transformation( [ 5, 5, 5, 3, 3 ] ), Transformation( [ 2, 2, 2, 5, 2 ] ), 
+  Transformation( [ 2, 2, 2, 3, 2 ] ), Transformation( [ 2, 5, 5, 5, 5 ] ), 
+  Transformation( [ 1, 3, 3, 3, 3 ] ), Transformation( [ 2, 3, 3, 3, 3 ] ), 
+  Transformation( [ 2, 5, 2, 5, 2 ] ), Transformation( [ 2, 3, 2, 3, 2 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ), 
+  Transformation( [ 1, 1, 5, 1, 5 ] ), Transformation( [ 5, 5, 3, 5, 3 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2 ] ), Transformation( [ 5, 2, 5, 2, 5 ] ), 
+  Transformation( [ 3, 1, 3, 1, 3 ] ), Transformation( [ 3, 2, 3, 2, 3 ] ), 
+  Transformation( [ 5, 2, 2, 2, 2 ] ), Transformation( [ 3, 2, 2, 2, 2 ] ), 
+  Transformation( [ 3, 3, 3, 1, 1 ] ), Transformation( [ 1, 1, 1, 5, 1 ] ), 
+  Transformation( [ 5, 5, 5, 3, 5 ] ), Transformation( [ 1, 5, 1, 5, 1 ] ), 
+  Transformation( [ 5, 3, 5, 3, 5 ] ), Transformation( [ 3, 3, 1, 3, 1 ] ), 
+  Transformation( [ 5, 1, 1, 1, 1 ] ), Transformation( [ 3, 5, 5, 5, 5 ] ), 
+  Transformation( [ 5, 5, 5, 2, 2 ] ), Transformation( [ 3, 3, 3, 2, 2 ] ), 
+  Transformation( [ 3, 3, 3, 1, 3 ] ), Transformation( [ 5, 5, 2, 5, 2 ] ), 
+  Transformation( [ 3, 3, 2, 3, 2 ] ), Transformation( [ 5, 5, 5, 1, 1 ] ), 
+  Transformation( [ 3, 3, 3, 5, 5 ] ), Transformation( [ 5, 5, 5, 2, 5 ] ), 
+  Transformation( [ 3, 3, 3, 2, 3 ] ), Transformation( [ 5, 5, 1, 5, 1 ] ), 
+  Transformation( [ 3, 3, 5, 3, 5 ] ), Transformation( [ 5, 5, 5, 1, 5 ] ), 
+  Transformation( [ 3, 3, 3, 5, 3 ] ), Transformation( [ 2, 5, 3, 5, 3 ] ) ]
 gap> ImageElm(hom2, gens[1]);
-Transformation( [ 4, 5, 5, 1, 5, 5, 1 ] )
+Transformation( [ 4, 2, 2, 1, 2, 1 ] )
 gap> IsSurjective(hom2);
 true
 gap> IsInjective(hom2);
@@ -821,27 +850,26 @@ true
 gap> Print(hom3, "\n");
 SemigroupHomomorphismByImages( Semigroup( [ Transformation( [ 2, 5, 3, 5, 3 ] \
 ), Transformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ) ] \
-), Semigroup( [ Transformation( [ 6, 5, 5, 3, 5, 5, 3 ] ), Transformation( [ 4\
-, 5, 5, 1, 5, 5, 1 ] ), Transformation( [ 5, 5, 5, 5, 5, 5, 2 ] ) ] ), [ Trans\
-formation( [ 2, 5, 3, 5, 3 ] ), Transformation( [ 2, 1, 5, 1, 5 ] ), Transform\
-ation( [ 1, 1, 1, 5, 3 ] ) ], [ Transformation( [ 6, 5, 5, 3, 5, 5, 3 ] ), Tra\
-nsformation( [ 4, 5, 5, 1, 5, 5, 1 ] ), Transformation( [ 5, 5, 5, 5, 5, 5, 2 \
-] ) ] )
+), Semigroup( [ Transformation( [ 5, 2, 2, 3, 2, 3 ] ), Transformation( [ 4, 2\
+, 2, 1, 2, 1 ] ), Transformation( [ 2, 2, 2, 2, 2, 2 ] ) ] ), [ Transformation\
+( [ 2, 5, 3, 5, 3 ] ), Transformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ \
+1, 1, 1, 5, 3 ] ) ], [ Transformation( [ 5, 2, 2, 3, 2, 3 ] ), Transformation(\
+ [ 4, 2, 2, 1, 2, 1 ] ), Transformation( [ 2, 2, 2, 2, 2, 2 ] ) ] )
 gap> hom1bf := AsSemigroupHomomorphismByFunction(hom1);
 <transformation semigroup of size 59, degree 5 with 3 generators>
-  -> <quotient of <semigroup congruence over <transformation semigroup 
- of size 59, degree 5 with 3 generators> with 1 generating pairs>>
+  -> <quotient of <2-sided semigroup congruence over <transformation 
+ semigroup of size 59, degree 5 with 3 generators> with 1 generating pairs>>
 gap> KernelOfSemigroupHomomorphism(hom1bf);
-<semigroup congruence over <transformation semigroup of size 59, degree 5 
- with 3 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <transformation semigroup of size 59, 
+ degree 5 with 3 generators> with 1 generating pairs>
 gap> BruteForceHomoCheck(hom1bf);
 true
 gap> hom1bfbi := AsSemigroupHomomorphismByImages(hom1bf);
 [ Transformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ), 
   Transformation( [ 2, 5, 3, 5, 3 ] ) ] -> 
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )> ]
 gap> hom1bfbi = hom1;
 true
 gap> IsSemigroupHomomorphismByImages(hom1bf);
@@ -881,12 +909,12 @@ gap> hom1 := SemigroupHomomorphismByFunction(S, T, x -> EquivalenceClassOfElemen
 gap> BruteForceHomoCheck(hom1);
 true
 gap> KernelOfSemigroupHomomorphism(hom1);
-<semigroup congruence over <transformation semigroup of size 59, degree 5 
- with 3 generators> with 1 generating pairs>
+<2-sided semigroup congruence over <transformation semigroup of size 59, 
+ degree 5 with 3 generators> with 1 generating pairs>
 gap> gens[1] ^ hom1;              
-<congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
 gap> ImageElm(hom1, gens[1]);
-<congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
 gap> IsSurjective(hom1);
 true
 gap> IsInjective(hom1);
@@ -907,45 +935,42 @@ true
 gap> IsMapping(hom1);
 true
 gap> Range(hom1);
-<quotient of <semigroup congruence over <transformation semigroup of size 59, 
- degree 5 with 3 generators> with 1 generating pairs>>
+<quotient of <2-sided semigroup congruence over <transformation semigroup 
+ of size 59, degree 5 with 3 generators> with 1 generating pairs>>
 gap> Source(hom1);
 <transformation semigroup of size 59, degree 5 with 3 generators>
 gap> UnderlyingRelation(hom1);
 <object>
 gap> ImagesSource(hom1);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 3, 1, 3 ] )>, 
-  <congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
 gap> ImagesElm(hom1, gens[1]);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
 gap> ImagesSet(hom1, [gens[1]]);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
 gap> Image(hom1);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 3, 1, 3 ] )>, 
-  <congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
 gap> Image(hom1, gens[1]);
-<congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
 gap> Image(hom1, [gens[1]]);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
 gap> Images(hom1);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
-  <congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
-  <congruence class of Transformation( [ 1, 1, 3, 1, 3 ] )>, 
-  <congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )>, 
+  <2-sided congruence class of Transformation( [ 1, 2, 5, 2, 5 ] )>, 
+  <2-sided congruence class of Transformation( [ 5, 2, 3, 2, 3 ] )> ]
 gap> Images(hom1, gens[1]);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
 gap> Images(hom1, [gens[1]]);
-[ <congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
 gap> PreImagesRange(hom1);
 <transformation semigroup of size 59, degree 5 with 3 generators>
 
@@ -996,26 +1021,25 @@ gap> gens2 := [gens1[3], gens1[1], gens1[2]];
 [ Transformation( [ 2, 5, 3, 5, 3 ] ), Transformation( [ 2, 1, 5, 1, 5 ] ), 
   Transformation( [ 1, 1, 1, 5, 3 ] ) ]
 gap> images2 := [images2[3], images2[1], images2[2]];
-[ Transformation( [ 6, 5, 5, 3, 5, 5, 3 ] ), 
-  Transformation( [ 4, 5, 5, 1, 5, 5, 1 ] ), 
-  Transformation( [ 5, 5, 5, 5, 5, 5, 2 ] ) ]
+[ Transformation( [ 5, 2, 2, 3, 2, 3 ] ), 
+  Transformation( [ 4, 2, 2, 1, 2, 1 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2 ] ) ]
 gap> hom3 := SemigroupHomomorphismByImages(S, K, gens2, images2);
 [ Transformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ), 
   Transformation( [ 2, 5, 3, 5, 3 ] ) ] -> 
-[ Transformation( [ 4, 5, 5, 1, 5, 5, 1 ] ), 
-  Transformation( [ 5, 5, 5, 5, 5, 5, 2 ] ), 
-  Transformation( [ 6, 5, 5, 3, 5, 5, 3 ] ) ]
+[ Transformation( [ 4, 2, 2, 1, 2, 1 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2 ] ), 
+  Transformation( [ 5, 2, 2, 3, 2, 3 ] ) ]
 gap> BruteForceHomoCheck(hom3);
 true
 gap> String(hom3);
 "SemigroupHomomorphismByImages( Semigroup( [ Transformation( [ 2, 1, 5, 1, 5 ]\
  ), Transformation( [ 1, 1, 1, 5, 3 ] ), Transformation( [ 2, 5, 3, 5, 3 ] ) ]\
- ), Semigroup( [ Transformation( [ 4, 5, 5, 1, 5, 5, 1 ] ), Transformation( [ \
-5, 5, 5, 5, 5, 5, 2 ] ), Transformation( [ 6, 5, 5, 3, 5, 5, 3 ] ) ] ), [ Tran\
-sformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ), Transfor\
-mation( [ 2, 5, 3, 5, 3 ] ) ], [ Transformation( [ 4, 5, 5, 1, 5, 5, 1 ] ), Tr\
-ansformation( [ 5, 5, 5, 5, 5, 5, 2 ] ), Transformation( [ 6, 5, 5, 3, 5, 5, 3\
- ] ) ] )"
+ ), Semigroup( [ Transformation( [ 4, 2, 2, 1, 2, 1 ] ), Transformation( [ 2, \
+2, 2, 2, 2, 2 ] ), Transformation( [ 5, 2, 2, 3, 2, 3 ] ) ] ), [ Transformatio\
+n( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ), Transformation( [\
+ 2, 5, 3, 5, 3 ] ) ], [ Transformation( [ 4, 2, 2, 1, 2, 1 ] ), Transformation\
+( [ 2, 2, 2, 2, 2, 2 ] ), Transformation( [ 5, 2, 2, 3, 2, 3 ] ) ] )"
 
 # Test with FP Semigroup with relations added
 gap> S := AsSemigroup(IsFpSemigroup, Semigroup([Transformation([2, 1, 5, 1, 5]),
