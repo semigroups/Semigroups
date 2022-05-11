@@ -752,10 +752,10 @@ gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
 gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens, images);;
 gap> BruteForceHomoCheck(hom1);
 true
-gap> gens[1] ^ hom1;              
-<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
-gap> ImageElm(hom1, gens[1]);
-<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+gap> gens[1] ^ hom1 = images[1];              
+true
+gap> ImageElm(hom1, gens[1]) = images[1];
+true
 gap> IsSurjective(hom1);
 true
 gap> IsInjective(hom1);
@@ -873,10 +873,10 @@ true
 gap> KernelOfSemigroupHomomorphism(hom1);
 <2-sided semigroup congruence over <transformation semigroup of size 59, 
  degree 5 with 3 generators> with 1 generating pairs>
-gap> gens[1] ^ hom1;              
-<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
-gap> ImageElm(hom1, gens[1]);
-<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
+gap> gens[1] ^ hom1 = imgs[1];              
+true
+gap> ImageElm(hom1, gens[1]) = imgs[1];
+true
 gap> IsSurjective(hom1);
 true
 gap> IsInjective(hom1);
@@ -896,33 +896,32 @@ gap> IsSingleValued(hom1);
 true
 gap> IsMapping(hom1);
 true
-gap> Range(hom1);
-<quotient of <2-sided semigroup congruence over <transformation semigroup 
- of size 59, degree 5 with 3 generators> with 1 generating pairs>>
-gap> Source(hom1);
-<transformation semigroup of size 59, degree 5 with 3 generators>
+gap> Range(hom1) = T;
+true
+gap> Source(hom1) = S;
+true
 gap> UnderlyingRelation(hom1);
 <object>
 gap> ImagesSource(hom1) = T;
 true
-gap> ImagesElm(hom1, gens[1]);
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
-gap> ImagesSet(hom1, [gens[1]]);
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+gap> ImagesElm(hom1, gens[1]) = [imgs[1]];
+true
+gap> ImagesSet(hom1, [gens[1]]) = [imgs[1]];
+true
 gap> Image(hom1) = T;
 true
-gap> Image(hom1, gens[1]);
-<2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>
-gap> Image(hom1, [gens[1]]);
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
+gap> Image(hom1, gens[1]) = imgs[1];
+true
+gap> Image(hom1, [gens[1]]) = [imgs[1]];
+true
 gap> Images(hom1) = T;
 true
-gap> Images(hom1, gens[1]);
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
-gap> Images(hom1, [gens[1]]);
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )> ]
-gap> PreImagesRange(hom1);
-<transformation semigroup of size 59, degree 5 with 3 generators>
+gap> Images(hom1, gens[1]) = [imgs[1]];
+true
+gap> Images(hom1, [gens[1]]) = [imgs[1]];
+true
+gap> PreImagesRange(hom1) = S;
+true
 
 # TODO: When Semigroups requires GAP version 411 or higher uncomment this
 # gap> PreImageElm(hom1, imgs[1]);
