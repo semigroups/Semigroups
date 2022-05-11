@@ -39,7 +39,8 @@
 gap> S := FullTransformationMonoid(3);;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> J := FullTransformationMonoid(4);;
-gap> imgs := ListWithIdenticalEntries(4,  ConstantTransformation(3, 1));;
+gap> imgs := ListWithIdenticalEntries(4,
+> ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
 [ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), 
   Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] -> 
@@ -114,7 +115,7 @@ gap> hom := SemigroupHomomorphismByFunction(g, h,
   <ManSection>
     <Oper Name = "SemigroupIsomorphismByFunction" Arg = "S, T, fun, invFun"/>
     <Returns>
-      A semigroup isomorphism
+      A semigroup isomorphism.
     </Returns>
     <Description>
       This operation returns a semigroup isomorphism with source <A>S</A> and 
@@ -125,7 +126,7 @@ gap> hom := SemigroupHomomorphismByFunction(g, h,
 
       No test is performed on whether the function actually gives an 
       isomorphism, and so it is possible for this function to return 
-      non-semigroup-homomorphisms.<P/>
+      non-semigroup-isomorphisms.<P/>
       <Example><![CDATA[
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 3, 2);;
 gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);;
@@ -146,7 +147,7 @@ gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
   <ManSection>
     <Filt Name = "IsSemigroupHomomorphismByImages" Arg = "hom"/>
     <Returns>
-      <K>true</K> or <K>false</K>
+      <K>true</K> or <K>false</K>.
     </Returns>
     <Description>
       <C>IsSemigroupHomomorphismByImages</C> returns <K>true</K> if <A>hom</A>
@@ -175,7 +176,7 @@ true]]></Example>
   <ManSection>
     <Filt Name = "IsSemigroupHomomorphismByFunction" Arg = "hom"/>
     <Returns>
-      <K>true</K> or <K>false</K>
+      <K>true</K> or <K>false</K>.
     </Returns>
     <Description>
       <C>IsSemigroupHomomorphismByFunction</C> returns <K>true</K> if <A>hom</A>
@@ -203,7 +204,7 @@ true]]></Example>
   <ManSection>
     <Filt Name = "IsSemigroupIsomorphismByFunction" Arg = "iso"/>
     <Returns>
-      <K>true</K> or <K>false</K>
+      <K>true</K> or <K>false</K>.
     </Returns>
     <Description>
       <C>IsSemigroupIsomorphismByFunction</C> returns <K>true</K> if <A>hom</A>
@@ -243,6 +244,13 @@ true]]></Example>
       This operation takes <A>hom</A>, a semigroup homomorphism, and returns 
       the same mapping but represented internally using the generators of  
       <C>Source(<A>hom</A>)</C> and their images in <C>Range(<A>hom</A>)</C>.
+      If <A>hom</A> not a semigroup homomorphism, then <K>fail</K> is 
+      returned. For example, this could happen if <A>hom</A> was created using 
+      <Ref Oper="SemigroupIsomorphismByFunction"/> and a function which did not 
+      give a homomorphism. Furthemore, if <A>hom</A> does not satisfy either 
+      <Ref Oper="IsSemigroupHomomorphismByImages"/>, or 
+      <Ref Oper="IsSemigroupHomomorphismByFunction"/>, then <K>fail</K> is 
+      returned.<P/>
       <Example><![CDATA[
 gap> S := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> T := Semigroup([(1, 2, 3), (1, 2)]);;
@@ -263,7 +271,11 @@ gap> hom := SemigroupHomomorphismByFunction(S, T,
     <Description>
       This operation takes <A>hom</A>, a semigroup homomorphism, and returns 
       the same mapping but described by a &GAP; function mapping elements of 
-      <C>Source(<A>hom</A>)</C> to their images in <C>Range(<A>hom</A>)</C>.<P/>
+      <C>Source(<A>hom</A>)</C> to their images in <C>Range(<A>hom</A>)</C>.
+      If <A>hom</A> does not satisfy either 
+      <Ref Oper="IsSemigroupHomomorphismByImages"/>, or 
+      <Ref Oper="IsSemigroupHomomorphismByFunction"/>, then <K>fail</K> is 
+      returned.<P/>
       <Example><![CDATA[
 gap> T := TrivialSemigroup();;
 gap> S := GLM(2, 2);;

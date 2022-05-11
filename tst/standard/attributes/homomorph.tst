@@ -406,7 +406,6 @@ gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
   Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 1 ] ) ]
 gap> BruteForceHomoCheck(hom);
 true
-gap> J := FullTransformationMonoid(2);;
 gap> ImagesSource(hom);
 <transformation semigroup of degree 3 with 4 generators>
 gap> PreImagesElm(hom, Transformation([1, 1, 1]));
@@ -571,8 +570,6 @@ SemigroupHomomorphismByFunction( Monoid( [ Transformation( [ 2, 3, 1 ] ), Tran\
 sformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ), Monoid( [ Transform\
 ation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 3\
 , 1 ] ) ] ), function ( x ) return ImageElm( hom, x ); end )
-gap> KernelOfSemigroupHomomorphism(hom);
-<universal semigroup congruence over <full transformation monoid of degree 3>>
 gap> EvalString(String(hom)) = hom;
 true
 gap> IsSurjective(hom);
@@ -745,8 +742,8 @@ false
 
 # Test with quotient semigroup
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
->       Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
-gap> cong := SemigroupCongruence(S, [[ Transformation([1, 1, 1, 1, 1]), Transformation([1, 1, 1, 3, 3])]]);
+> Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
+gap> cong := SemigroupCongruence(S, [[Transformation([1, 1, 1, 1, 1]), Transformation([1, 1, 1, 3, 3])]]);
 <2-sided semigroup congruence over <transformation semigroup of degree 5 with 
  3 generators> with 1 generating pairs>
 gap> T := S / cong;;
