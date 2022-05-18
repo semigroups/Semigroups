@@ -33,7 +33,9 @@ DeclareOperation("SemigroupIsomorphismByImages",
 DeclareOperation("SemigroupIsomorphismByImages",
         [IsSemigroup, IsList, IsList]);
 
-DeclareOperation("SemigroupHomomorphismByImagesNC2",
+# This operation is not called SemigroupHomomorphismByImagesNC because that
+# name is used in the main GAP library
+DeclareOperation("SemigroupHomomorphismByImages_NC",
         [IsSemigroup, IsSemigroup, IsList, IsList]);
 
 DeclareOperation("SemigroupHomomorphismByFunction",

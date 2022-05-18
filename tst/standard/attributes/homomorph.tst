@@ -390,9 +390,6 @@ Transformation( [ 1, 1 ] )
 gap> imgs2 := [gens[2], gens[2], gens[1], gens[3]];;
 gap> hom3 := SemigroupHomomorphismByImages(S, S, gens, imgs2);
 fail
-gap> hom3 := SemigroupHomomorphismByImagesNC2(S, S, gens, imgs2);;
-gap> KernelOfSemigroupHomomorphism(hom3);
-fail
 
 # Tests with semigroups of different sizes, testing every single function
 gap> S := FullTransformationMonoid(3);;
@@ -749,7 +746,7 @@ gap> cong := SemigroupCongruence(S, [[Transformation([1, 1, 1, 1, 1]), Transform
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
-gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens, images);;
+gap> hom1 := SemigroupHomomorphismByImages_NC(S, T, gens, images);;
 gap> BruteForceHomoCheck(hom1);
 true
 gap> gens[1] ^ hom1 = images[1];              
@@ -782,7 +779,7 @@ gap> cong := congs[3];;
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
-gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens, images);;
+gap> hom1 := SemigroupHomomorphismByImages_NC(S, T, gens, images);;
 gap> BruteForceHomoCheck(hom1);
 true
 gap> map := IsomorphismTransformationSemigroup(ImagesSource(hom1));;
@@ -954,7 +951,7 @@ gap> congs := CongruencesOfSemigroup(S);;
 gap> cong := congs[3];;
 gap> T := S / cong;;
 gap> images1 := List(gens1, gen -> EquivalenceClassOfElement(cong, gen));;
-gap> hom1 := SemigroupHomomorphismByImagesNC2(S, T, gens1, images1);;
+gap> hom1 := SemigroupHomomorphismByImages_NC(S, T, gens1, images1);;
 gap> BruteForceHomoCheck(hom1);
 true
 gap> map := IsomorphismTransformationSemigroup(ImagesSource(hom1));;

@@ -55,7 +55,7 @@ function(S, T, gens, imgs)
     fi;
   od;
 
-  return SemigroupHomomorphismByImagesNC2(S, T, gens, imgs);
+  return SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
 end);
 
 InstallMethod(SemigroupHomomorphismByImages,
@@ -118,7 +118,7 @@ function(S, T, gens, imgs)
   if Size(K) <> Size(S) then
     return fail;
   else
-    return SemigroupHomomorphismByImagesNC2(S, T, gens, imgs);
+    return SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
   fi;
 end);
 
@@ -189,7 +189,7 @@ function(S, gens, imgs)
   return SemigroupIsomorphismByImages(S, T, gens, imgs);
 end);
 
-InstallMethod(SemigroupHomomorphismByImagesNC2,
+InstallMethod(SemigroupHomomorphismByImages_NC,
 "for two semigroups and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
@@ -403,7 +403,7 @@ function(hom)
       fi;
     od;
   od;
-  return fail;
+  return cong;
 end);
 
 InstallMethod(ViewObj, "for SHBI",
