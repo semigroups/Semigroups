@@ -109,14 +109,8 @@ e size
 gap> gens := [gens[2], gens[1]];;
 gap> imgs := [imgs[2], imgs[1]];;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-[ Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4), 
-  Matrix(IsNTPMatrix, [[1, 1, 0], [4, 1, 1], [0, 0, 0]], 9, 4) ] -> 
-[ Transformation( [ 3, 5, 7, 9, 11, 13, 15, 15, 18, 19, 21, 21, 24, 26, 19,
-      19, 15, 19, 15, 19, 28, 28, 21, 30, 30, 32, 34, 21, 21, 24, 24, 36, 36,
-      38, 40, 32, 32, 42, 42, 28, 44, 38, 38, 24, 26, 34, 1 ] ), 
-  Transformation( [ 4, 6, 8, 10, 12, 14, 16, 17, 16, 20, 22, 23, 25, 27, 17,
-      16, 17, 17, 16, 16, 29, 22, 29, 31, 25, 33, 35, 22, 29, 25, 31, 37, 33,
-      39, 41, 33, 37, 43, 39, 29, 45, 39, 43, 25, 46, 35, 2 ] ) ]
+<semigroup of size 46, 3x3 ntp matrices with 2 generators> -> <transformation 
+ semigroup of size 46, degree 47 with 2 generators>
 gap> ImageElm(hom, 2);
 Error, the 2nd argument is not an element of the source of the 1st argument (s\
 emigroup homom. by images)
@@ -203,15 +197,15 @@ gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);
  generator>
 gap> imgs := GeneratorsOfSemigroup(T);;
 gap> hom := SemigroupHomomorphismByImages(S, T);
-[ Transformation( [ 2, 1, 2, 3, 4 ] ) ] -> 
-[ <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 4, -3, -6 ], [ 5, -4 ], 
-     [ 6, -5 ]> ]
+<commutative non-regular transformation semigroup of size 4, degree 5 with 1 
+ generator> -> <commutative non-regular block bijection semigroup of size 4, 
+ degree 6 with 1 generator>
 gap> BruteForceHomoCheck(hom);
 true
 gap> iso := SemigroupIsomorphismByImages(S, gens, imgs);
-[ Transformation( [ 2, 1, 2, 3, 4 ] ) ] -> 
-[ <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 4, -3, -6 ], [ 5, -4 ], 
-     [ 6, -5 ]> ]
+<commutative non-regular transformation semigroup of size 4, degree 5 with 1 
+ generator> -> <commutative block bijection semigroup of size 4, degree 6 
+ with 1 generator>
 gap> BruteForceIsoCheck(iso);
 true
 gap> BruteForceInverseCheck(iso);
@@ -330,12 +324,8 @@ gap> T := AsMonoid(IsPBRMonoid, S);
 <pbr monoid of size 27, degree 3 with 3 generators>
 gap> imgs := GeneratorsOfSemigroup(T);;
 gap> hom := SemigroupHomomorphismByImages(S, gens, imgs);
-[ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), 
-  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] -> 
-[ PBR([ [ -1 ], [ -2 ], [ -3 ] ], [ [ 1 ], [ 2 ], [ 3 ] ]), 
-  PBR([ [ -2 ], [ -3 ], [ -1 ] ], [ [ 3 ], [ 1 ], [ 2 ] ]), 
-  PBR([ [ -2 ], [ -1 ], [ -3 ] ], [ [ 2 ], [ 1 ], [ 3 ] ]), 
-  PBR([ [ -1 ], [ -2 ], [ -1 ] ], [ [ 1, 3 ], [ 2 ], [  ] ]) ]
+<full transformation monoid of degree 3> -> <pbr monoid of degree 3 with 3 
+ generators>
 gap> BruteForceHomoCheck(hom);
 true
 gap> Print(hom, "\n");
@@ -397,10 +387,8 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> J := FullTransformationMonoid(4);;
 gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
-[ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), 
-  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] -> 
-[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 1 ] ) ]
+<full transformation monoid of degree 3> -> <full transformation monoid of deg\
+ree 4>
 gap> BruteForceHomoCheck(hom);
 true
 gap> ImagesSource(hom);
@@ -692,12 +680,8 @@ gap> imgs := ListX(gens, x -> IdentityTransformation);
 [ IdentityTransformation, IdentityTransformation, IdentityTransformation, 
   IdentityTransformation ]
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-[ Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2)]]) ] -> 
-[ IdentityTransformation, IdentityTransformation, IdentityTransformation, 
-  IdentityTransformation ]
+<general linear monoid 2x2 over GF(2)> -> <trivial transformation group of 
+ degree 0 with 1 generator>
 gap> BruteForceHomoCheck(hom);
 true
 gap> PreImagesElm(hom, IdentityTransformation);
@@ -730,10 +714,8 @@ gap> imgs := ListX(gens, x -> IdentityTransformation);
 [ IdentityTransformation, IdentityTransformation, IdentityTransformation, 
   IdentityTransformation ]
 gap> hom2 := SemigroupHomomorphismByImages(S, T, gens, imgs);
-[ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), 
-  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] -> 
-[ IdentityTransformation, IdentityTransformation, IdentityTransformation, 
-  IdentityTransformation ]
+<full transformation monoid of degree 3> -> <trivial transformation group of 
+ degree 0 with 1 generator>
 gap> hom = hom2;
 false
 
@@ -824,11 +806,9 @@ gap> KernelOfSemigroupHomomorphism(hom1bf);
 gap> BruteForceHomoCheck(hom1bf);
 true
 gap> hom1bfbi := AsSemigroupHomomorphismByImages(hom1bf);
-[ Transformation( [ 2, 1, 5, 1, 5 ] ), Transformation( [ 1, 1, 1, 5, 3 ] ), 
-  Transformation( [ 2, 5, 3, 5, 3 ] ) ] -> 
-[ <2-sided congruence class of Transformation( [ 2, 1, 5, 1, 5 ] )>, 
-  <2-sided congruence class of Transformation( [ 1, 1, 1, 5, 3 ] )>, 
-  <2-sided congruence class of Transformation( [ 2, 5, 3, 5, 3 ] )> ]
+<transformation semigroup of size 59, degree 5 with 3 generators>
+  -> <quotient of <2-sided semigroup congruence over <transformation 
+ semigroup of size 59, degree 5 with 3 generators> with 1 generating pairs>>
 gap> hom1bfbi = hom1;
 true
 gap> IsSemigroupHomomorphismByImages(hom1bf);
@@ -981,7 +961,8 @@ gap> relations := [[gens[1], gens[2]]];;
 gap> T := S / relations;;
 gap> imgs := GeneratorsOfSemigroup(T);;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-[ s1, s2, s3 ] -> [ s1, s2, s3 ]
+<fp semigroup with 3 generators and 34 relations> -> <fp semigroup with 3 gene\
+rators and 35 relations>
 gap> gens[1] ^ hom;
 s1
 gap> gens[2] ^ hom;
@@ -994,9 +975,7 @@ lations>>
 gap> S := Semigroup(FullTransformationMonoid(9), rec(acting := true));;
 gap> T := Semigroup(FullTransformationMonoid(1), rec(acting := true));;
 gap> hom := SemigroupHomomorphismByImages(S, T, GeneratorsOfSemigroup(S), List(GeneratorsOfSemigroup(S), x -> T.1));
-[ IdentityTransformation, Transformation( [ 2, 3, 4, 5, 6, 7, 8, 9, 1 ] ), 
-  Transformation( [ 2, 1 ] ), Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 1 ] ) 
- ] -> [ IdentityTransformation, IdentityTransformation, 
-  IdentityTransformation, IdentityTransformation ]
+<transformation monoid of size 387420489, degree 9 with 3 generators> -> 
+<trivial transformation group of degree 0 with 1 generator>
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attributes/homomorph.tst");

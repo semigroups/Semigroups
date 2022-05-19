@@ -24,6 +24,9 @@ DeclareOperation("SemigroupHomomorphismByImages",
 DeclareOperation("SemigroupIsomorphismByImages",
         [IsSemigroup, IsSemigroup, IsList, IsList]);
 
+DeclareOperation("SemigroupIsomorphismByImagesNC",
+        [IsSemigroup, IsSemigroup, IsList, IsList]);
+
 DeclareOperation("SemigroupIsomorphismByImages",
         [IsSemigroup, IsSemigroup, IsList]);
 

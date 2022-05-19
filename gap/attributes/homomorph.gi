@@ -153,15 +153,24 @@ function(S, T, gens, imgs)
   local hom, iso;
   hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
   if IsBijective(hom) then
-    iso := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-                                                 ElementsFamily(FamilyObj(T))),
-                           IsSemigroupHomomorphismByImages and IsBijective),
-                           rec());
-    SetSource(iso, S);
-    SetRange(iso, T);
-    SetMappingGeneratorsImages(iso, [Immutable(gens), Immutable(imgs)]);
-    return iso;
+    return hom;
   fi;
+  return fail;
+end);
+
+InstallMethod(SemigroupIsomorphismByImagesNC, "for two semigroup and two lists",
+[IsSemigroup, IsSemigroup, IsList, IsList],
+function(S, T, gens, imgs)
+  local hom, iso;
+  hom := SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
+  iso := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                                               ElementsFamily(FamilyObj(T))),
+                         IsSemigroupHomomorphismByImages and IsBijective),
+                         rec());
+  SetSource(iso, S);
+  SetRange(iso, T);
+  SetMappingGeneratorsImages(iso, [Immutable(gens), Immutable(imgs)]);
+  return iso;
 end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroups and one list",
@@ -230,7 +239,7 @@ function(S, T, f)
 end);
 
 InstallMethod(SemigroupIsomorphismByFunction,
-"for two semigroups and a function",
+"for two semigroups and two functions",
 [IsSemigroup, IsSemigroup, IsFunction, IsFunction],
 function(S, T, f, g)
   local hom;
@@ -243,7 +252,7 @@ function(S, T, f, g)
 end);
 
 InstallMethod(SemigroupIsomorphismByFunctionNC,
-"for two semigroups and a function",
+"for two semigroups and two functions",
 [IsSemigroup, IsSemigroup, IsFunction, IsFunction],
 function(S, T, f, g)
   local iso;
@@ -259,7 +268,7 @@ end);
 
 # methods for converting between SHBI and SHBF
 InstallMethod(AsSemigroupHomomorphismByImages,
-"for semigroup homomorphism by function",
+"for a semigroup homomorphism by function",
 [IsSemigroupHomomorphismByFunction],
 function(hom)
   local S, T, gens, imgs;
@@ -271,26 +280,26 @@ function(hom)
 end);
 
 InstallMethod(AsSemigroupHomomorphismByFunction,
-"for semigroup homomorphism by images",
+"for a semigroup homomorphism by images",
 [IsSemigroupHomomorphismByImages],
 hom -> SemigroupHomomorphismByFunction(Source(hom),
                       Range(hom), x -> ImageElm(hom, x)));
 
 InstallMethod(AsSemigroupIsomorphismByFunction,
-"for semigroup homomorphism by images",
+"for a semigroup homomorphism by images",
 [IsSemigroupHomomorphismByImages],
 hom -> SemigroupIsomorphismByFunction(Source(hom),
                       Range(hom), x -> ImageElm(hom, x),
                       y -> PreImages(hom, y)));
 
 # Methods for SHBI/SIBI/SHBF
-InstallMethod(IsSurjective, "for semigroup homomorphism",
+InstallMethod(IsSurjective, "for a semigroup homomorphism",
   [IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)
   return Size(ImagesSource(hom)) = Size(Range(hom));
 end);
 
-InstallMethod(IsInjective, "for semigroup homomorphism",
+InstallMethod(IsInjective, "for a semigroup homomorphism",
   [IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)
   return Size(Source(hom)) = Size(ImagesSource(hom));
@@ -373,7 +382,7 @@ function(hom, elms)
   return preim;
 end);
 
-InstallMethod(KernelOfSemigroupHomomorphism, "for semigroup homomorphism",
+InstallMethod(KernelOfSemigroupHomomorphism, "for a semigroup homomorphism",
 [IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)
   local S, cong, enum, x, y, pairs, i, j;
@@ -409,14 +418,12 @@ end);
 InstallMethod(ViewObj, "for SHBI",
     [IsSemigroupHomomorphismByImages],
 function(hom)
-  local mapi;
-  mapi := MappingGeneratorsImages(hom);
-  View(mapi[1]);
+  ViewObj(Source(hom));
   Print(" -> ");
-  View(mapi[2]);
+  ViewObj(Range(hom));
 end);
 
-InstallMethod(String, "for semigroup homom. by images",
+InstallMethod(String, "for a semigroup homom. by images",
   [IsSemigroupHomomorphismByImages],
 function(hom)
   local mapi;
@@ -426,14 +433,14 @@ function(hom)
           String(mapi[1]), ", ", String(mapi[2]), " )");
 end);
 
-InstallMethod(PrintObj, "for semigroup homom. by images",
+InstallMethod(PrintObj, "for a semigroup homom. by images",
   [IsSemigroupHomomorphismByImages],
 function(hom)
   Print(String(hom));
   return;
 end);
 
-InstallMethod(String, "for semigroup isom. by images",
+InstallMethod(String, "for a semigroup isom. by images",
   [IsSemigroupHomomorphismByImages and IsBijective],
 function(iso)
   local mapi;
@@ -457,7 +464,6 @@ function(hom1, hom2)
   return hom1[2] = List(hom1[1], i -> ImageElm(hom2, i));
 end);
 
-# Methods for SHBF/SIBF
 InstallMethod(ViewObj, "for SHBF",
     [IsSemigroupHomomorphismByFunction],
 function(hom)
@@ -466,7 +472,7 @@ function(hom)
   ViewObj(Range(hom));
 end);
 
-InstallMethod(String, "for semigroup homom. by function",
+InstallMethod(String, "for a semigroup homom. by function",
   [IsSemigroupHomomorphismByFunction],
 function(hom)
   return Concatenation("SemigroupHomomorphismByFunction( ",
@@ -474,14 +480,29 @@ function(hom)
           String(hom!.fun), " )");
 end);
 
-InstallMethod(PrintObj, "for semigroup homom. by function",
+InstallMethod(PrintObj, "for a semigroup homom. by function",
   [IsSemigroupHomomorphismByFunction],
 function(hom)
   Print(String(hom));
   return;
 end);
 
-InstallMethod(String, "for semigroup isom. by function",
+InstallMethod(String, "for a semigroup isom. by function",
+  [IsSemigroupHomomorphismByFunction and IsBijective],
+function(hom)
+  return Concatenation("SemigroupIsomorphismByFunction( ",
+          String(Source(hom)), ", ", String(Range(hom)), ", ",
+          String(hom!.fun), " )");
+end);
+
+InstallMethod(PrintObj, "for a semigroup isom. by function",
+  [IsSemigroupHomomorphismByFunction and IsBijective],
+function(hom)
+  Print(String(hom));
+  return;
+end);
+
+InstallMethod(String, "for a semigroup isom. by function",
   [IsSemigroupIsomorphismByFunction],
 function(iso)
   return Concatenation("SemigroupIsomorphismByFunction( ",
@@ -490,7 +511,7 @@ function(iso)
           String(iso!.invFun), " )");
 end);
 
-InstallMethod(PrintObj, "for semigroup isom. by function",
+InstallMethod(PrintObj, "for a semigroup isom. by function",
   [IsSemigroupIsomorphismByFunction],
 function(iso)
   Print(String(iso));
