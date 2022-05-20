@@ -300,7 +300,8 @@ function(gen_congs, WrappedXCongruence)
   poset := DigraphReflexiveTransitiveClosure(PartialOrderOfDClasses(S));
   Info(InfoSemigroups, 1, StringFormatted("Found {} congruences in total!",
        Size(S)));
-  all_congs := List(AsList(S), x -> x![1]);
+  all_congs := List(DClasses(S), x -> Representative(x)![1]);
+
   SetCongruencesOfPoset(poset, all_congs);
   SetDigraphVertexLabels(poset, all_congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, U);

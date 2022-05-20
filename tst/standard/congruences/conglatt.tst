@@ -353,17 +353,17 @@ gap> Print(l, "\n");
 PosetOfCongruences( 
 [ RightSemigroupCongruence( InverseMonoid( 
     [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] ] ), 
-  RightSemigroupCongruence( InverseMonoid( 
-    [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ), 
+    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ], 
+      [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ), 
   RightSemigroupCongruence( InverseMonoid( 
     [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
     [ [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), PartialPerm( [ 1, 2 ], [ 2, 1 ] ) 
          ] ] ), RightSemigroupCongruence( InverseMonoid( 
     [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ], 
-      [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ) 
+    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] ] ), 
+  RightSemigroupCongruence( InverseMonoid( 
+    [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
+    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ) 
  ] )
 gap> MinimalCongruences(poset);
 [ <2-sided semigroup congruence over <symmetric inverse monoid of degree 2> wi\
@@ -405,6 +405,16 @@ gap> IsIsomorphicDigraph(l, DigraphByInNeighbours(
 > [[1], [1, 2], [1, 3], [1, 4], [1, 2, 3, 4, 5, 6],
 > [1, 2, 3, 4, 6]]));
 true
+
+# Test for correct ordering of congruences and lattice nodes
+gap> S := InverseSemigroup(PartialPerm([1, 3], [2, 4]),
+>                          PartialPerm([1], [1]));;
+gap> D := DigraphReflexiveTransitiveReduction(LatticeOfRightCongruences(S));
+<immutable digraph with 22 vertices, 49 edges>
+gap> x := DigraphSinks(D)[1];
+2
+gap> NrEquivalenceClasses(RightCongruencesOfSemigroup(S)[x]);
+1
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

@@ -193,13 +193,13 @@ gap> CongruencesOfPoset(latt);
 [ <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 0 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
+     of size 3, degree 2 with 2 generators> with 2 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
   <right semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 2 generating pairs> ]
+     of size 3, degree 2 with 2 generators> with 1 generating pairs> ]
 ]]></Example>
     </Description>
   </ManSection>
