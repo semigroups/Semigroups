@@ -150,7 +150,7 @@ end);
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroup and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
-  local hom, iso;
+  local hom;
   hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
   if IsBijective(hom) then
     return hom;
@@ -161,8 +161,7 @@ end);
 InstallMethod(SemigroupIsomorphismByImagesNC, "for two semigroup and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
-  local hom, iso;
-  hom := SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
+  local iso;
   iso := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                                ElementsFamily(FamilyObj(T))),
                          IsSemigroupHomomorphismByImages and IsBijective),
@@ -482,21 +481,6 @@ end);
 
 InstallMethod(PrintObj, "for a semigroup homom. by function",
   [IsSemigroupHomomorphismByFunction],
-function(hom)
-  Print(String(hom));
-  return;
-end);
-
-InstallMethod(String, "for a semigroup isom. by function",
-  [IsSemigroupHomomorphismByFunction and IsBijective],
-function(hom)
-  return Concatenation("SemigroupIsomorphismByFunction( ",
-          String(Source(hom)), ", ", String(Range(hom)), ", ",
-          String(hom!.fun), " )");
-end);
-
-InstallMethod(PrintObj, "for a semigroup isom. by function",
-  [IsSemigroupHomomorphismByFunction and IsBijective],
 function(hom)
   Print(String(hom));
   return;
