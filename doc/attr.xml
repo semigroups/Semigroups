@@ -192,13 +192,17 @@ gap> MinimalDClass(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="MaximalDClasses">
+<#GAPDoc Label="MaximalXClasses">
   <ManSection>
+    <Heading>MaximalXClasses</Heading>
     <Attr Name="MaximalDClasses" Arg="S"/>
-    <Returns>The maximal &D;-classes of a semigroup.</Returns>
+    <Attr Name="MaximalLClasses" Arg="S"/>
+    <Attr Name="MaximalRClasses" Arg="S"/>
+    <Returns>The maximal &D;, &L;, or &R;-classes of a semigroup.</Returns>
     <Description>
-      <C>MaximalDClasses</C> returns the maximal &D;-classes with respect to
-      the partial order of &D;-classes. <P/>
+      Let <C>X</C> be one of Green's &D;-, &L;-, or &R;-relations. Then
+      <C>MaximalXClasses</C> returns the maximal Green's <C>X</C>-classes with
+      respect to the partial order of <C>X</C>-classes. <P/>
 
       See also <Ref Attr="PartialOrderOfDClasses"/>,
       <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and

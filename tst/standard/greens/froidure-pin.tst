@@ -1699,6 +1699,29 @@ Error, the argument does not belong to the domain of the function
 gap> () ^ InverseGeneralMapping(map);
 Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
 
+# PartialOrderOfL/RClasses: 1
+gap> S := Semigroup([
+>  PBR([[-1], []], [[], [-2, -1, 1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 2]], [[-2, -1], [-2, 1, 2]]),
+>  PBR([[-1], [1]], [[-1], [-2]])]);
+<pbr semigroup of degree 2 with 3 generators>
+gap> PartialOrderOfLClasses(S);
+<immutable digraph with 8 vertices, 8 edges>
+gap> PartialOrderOfRClasses(S);
+<immutable digraph with 10 vertices, 9 edges>
+
+# PartialOrderOfL/RClasses: 1
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> D := PartialOrderOfLClasses(S);
+<immutable digraph with 7 vertices, 9 edges>
+gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+F?OGC@OoK?"));
+true
+gap> D := PartialOrderOfRClasses(S);
+<immutable digraph with 5 vertices, 6 edges>
+gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+D[CGO?"));
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);
