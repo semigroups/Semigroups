@@ -225,6 +225,16 @@ function(S)
 end);
 
 InstallMethod(SmallerDegreePartialPermRepresentation,
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
+function(S)
+  local map1, map2;
+  map1 := IsomorphismPartialPermSemigroup(S);
+  map2 := SmallerDegreePartialPermRepresentation(Range(map1));
+  return CompositionMapping(map2, map1);
+end);
+
+InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)

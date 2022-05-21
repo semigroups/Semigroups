@@ -2135,6 +2135,19 @@ gap> DigraphOfActionOnPoints(S);
 gap> DigraphOfActionOnPoints(S, 3);
 <immutable multidigraph with 3 vertices, 13 edges>
 
+# SmallerDegreePartialPermRepresentation for a non-partial perm semigroup
+gap> S := UniformBlockBijectionMonoid(4);
+<inverse block bijection monoid of degree 4 with 3 generators>
+gap> map := SmallerDegreePartialPermRepresentation(S);
+CompositionMapping( MappingByFunction( <inverse partial perm monoid 
+ of size 131, rank 131 with 3 generators>, <inverse partial perm semigroup of 
+ rank 10 with 3 generators>, function( x ) ... end, function( x ) ... end ),
+ MappingByFunction( <inverse block bijection monoid of size 131, degree 4 
+ with 3 generators>, <inverse partial perm monoid of size 131, rank 131 with 
+ 3 generators>, function( x ) ... end ) )
+gap> S.1 ^ map in Range(map);
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);

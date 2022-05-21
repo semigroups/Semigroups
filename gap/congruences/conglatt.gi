@@ -294,7 +294,6 @@ function(gen_congs, WrappedXCongruence)
 
   gens := List(CongruencesOfPoset(gen_congs), WrappedXCongruence);
   U := Range(gens[1]![1]);
-  # Add(gens, WrappedXCongruence(RightSemigroupCongruence(U, [])));
 
   S := Semigroup(List(CongruencesOfPoset(gen_congs), WrappedXCongruence));
   poset := DigraphReflexiveTransitiveClosure(PartialOrderOfDClasses(S));
