@@ -508,7 +508,12 @@ end);
 
 InstallMethod(LatticeOfCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  return LatticeOfCongruencesNC(S, GeneratingPairsOfPrincipalCongruences(S));
+  local poset;
+  # Although this duplicates code from LatticeOfCongruencesNC above, it avoids
+  # recomputation of the PosetOfPrincipalCongruences if it's already known.
+  poset := PosetOfPrincipalCongruences(S);
+  poset := JoinSemilatticeOfCongruences(poset, WrappedTwoSidedCongruence);
+  return SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfRightCongruencesNC,
@@ -531,8 +536,13 @@ end);
 
 InstallMethod(LatticeOfRightCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  return LatticeOfRightCongruencesNC(S,
-           GeneratingPairsOfPrincipalRightCongruences(S));
+  local poset;
+  # Although this duplicates code from LatticeOfRightCongruencesNC above, it
+  # avoids recomputation of the PosetOfPrincipalCongruences if it's already
+  # known.
+  poset := PosetOfPrincipalRightCongruences(S);
+  poset := JoinSemilatticeOfCongruences(poset, WrappedRightCongruence);
+  return SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
 end);
 
 InstallMethod(LatticeOfLeftCongruencesNC,
@@ -555,8 +565,13 @@ end);
 
 InstallMethod(LatticeOfLeftCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  return LatticeOfLeftCongruencesNC(S,
-           GeneratingPairsOfPrincipalLeftCongruences(S));
+  local poset;
+  # Although this duplicates code from LatticeOfLeftCongruencesNC above, it
+  # avoids recomputation of the PosetOfPrincipalCongruences if it's already
+  # known.
+  poset := PosetOfPrincipalLeftCongruences(S);
+  poset := JoinSemilatticeOfCongruences(poset, WrappedLeftCongruence);
+  return SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
 end);
 
 ########################################################################
