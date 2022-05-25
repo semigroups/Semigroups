@@ -242,7 +242,7 @@ function(S)
   sigmainv, enum, orbits, cosets, stabpp, psi, rho, rhoinv, stab, nrcosets, j,
   reps, gen, offset, rep, box, subbox, T, map, inv, d, k, i, m;
 
-  oldgens := Generators(S);
+  oldgens := GeneratorsOfSemigroup(S);
   newgens := List(oldgens, x -> []);
   D := JoinIrreducibleDClasses(S);
 
@@ -330,8 +330,8 @@ function(S)
       od;
     od;
   od;
-
-  T := InverseSemigroup(List(newgens, x -> PartialPermNC(x)));
+  Apply(newgens, PartialPermNC);
+  T := InverseSemigroup(newgens);
 
   # Return identity mapping if nothing has been accomplished; else the result.
   if NrMovedPoints(T) > NrMovedPoints(S)
@@ -340,8 +340,8 @@ function(S)
     return IdentityMapping(S);
   fi;
 
-  map := x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x));
-  inv := x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
+  map := x -> EvaluateWord(newgens, Factorization(S, x));
+  inv := x -> EvaluateWord(oldgens, Factorization(T, x));
 
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
