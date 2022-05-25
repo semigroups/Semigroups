@@ -458,7 +458,7 @@ gap> T := Range(IsomorphismPartialPermSemigroup(S));
  generators>
 gap> SmallerDegreePartialPermRepresentation(T);
 MappingByFunction( <inverse partial perm monoid of size 6721, 
- rank 6721 with 3 generators>, <inverse partial perm semigroup of 
+ rank 6721 with 3 generators>, <inverse partial perm monoid of 
  rank 30 with 3 generators>
  , function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
