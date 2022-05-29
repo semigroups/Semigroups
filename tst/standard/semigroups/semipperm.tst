@@ -2086,7 +2086,7 @@ gap> S := Semigroup(S, rec(acting := false));
 <partial perm monoid of rank 25 with 3 generators>
 gap> SmallerDegreePartialPermRepresentation(S);
 MappingByFunction( <inverse partial perm monoid of size 25, rank 25 with 3 
- generators>, <inverse partial perm semigroup of rank 6 with 3 generators>
+ generators>, <inverse partial perm monoid of rank 6 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 
 #  GeneratorsOfGroup
@@ -2134,6 +2134,39 @@ gap> DigraphOfActionOnPoints(S);
 <immutable multidigraph with 3 vertices, 13 edges>
 gap> DigraphOfActionOnPoints(S, 3);
 <immutable multidigraph with 3 vertices, 13 edges>
+
+# SmallerDegreePartialPermRepresentation for a non-partial perm semigroup
+gap> S := UniformBlockBijectionMonoid(4);
+<inverse block bijection monoid of degree 4 with 3 generators>
+gap> map := SmallerDegreePartialPermRepresentation(S);
+CompositionMapping( MappingByFunction( <inverse partial perm monoid 
+ of size 131, rank 131 with 3 generators>, <inverse partial perm monoid of 
+ rank 10 with 3 generators>, function( x ) ... end, function( x ) ... end ),
+ MappingByFunction( <inverse block bijection monoid of size 131, degree 4 
+ with 3 generators>, <inverse partial perm monoid of size 131, rank 131 with 
+ 3 generators>, function( x ) ... end ) )
+gap> S.1 ^ map in Range(map);
+true
+
+# Issue 817
+gap> S := DualSymmetricInverseMonoid(4);
+<inverse block bijection monoid of degree 4 with 3 generators>
+gap> C := SemigroupCongruence(S,
+> [Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]]),
+>  Bipartition([[1, -1], [2, -2], [3, -3], [4, -4]])]);
+<2-sided semigroup congruence over <inverse block bijection monoid 
+ of size 339, degree 4 with 3 generators> with 1 generating pairs>
+gap> map := SmallerDegreePartialPermRepresentation(Source(C));
+CompositionMapping( MappingByFunction( <inverse partial perm monoid 
+ of size 339, rank 339 with 3 generators>, <inverse partial perm monoid of 
+ rank 14 with 3 generators>, function( x ) ... end, function( x ) ... end ),
+ MappingByFunction( <inverse block bijection monoid of size 339, degree 4 
+ with 3 generators>, <inverse partial perm monoid of size 339, rank 339 with 
+ 3 generators>, function( x ) ... end ) )
+gap> List(GeneratingPairsOfSemigroupCongruence(C), x -> OnTuples(x, map));
+[ [ <empty partial perm>, 
+      <identity partial perm on 
+        [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]> ] ]
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
