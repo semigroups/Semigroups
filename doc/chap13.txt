@@ -770,13 +770,13 @@
     [4X[28X[ <right semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 0 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
+    [4X[28X     of size 3, degree 2 with 2 generators> with 2 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 2 generating pairs> ][128X[104X
+    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs> ][128X[104X
   [4X[32X[104X
   
   [1X13.4-8 UnderlyingSemigroupOfCongruencePoset[101X
