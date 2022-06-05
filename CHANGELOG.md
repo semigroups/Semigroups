@@ -3,6 +3,21 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 4.0.2 (released 05/06/2022)
+
+This is a minor release that includes a number of minor fixes:
+
+* conglatt: fix ordering issue by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/829
+* Add support for partial orders of L/R-classes by @wilfwilson in
+  https://github.com/semigroups/Semigroups/pull/415
+* conglatt: avoid recomputing principal congs by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/832
+* semipperm: allow SmallerDegree for other types by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/833
+* semipperm: resolve issue 817 by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/834
+
 ### Version 4.0.1 (released 21/04/2022)
 
 This is a minor release that includes a number of changes:
