@@ -705,6 +705,13 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 gap> IdempotentsSubset(S, [666 .. 1000]);
 Error, the 1st argument (a semigroup) is not finite
 
+# MultiplicationTable for fp semigroup/monoid
+gap> F := FreeMonoid("a", "b");;
+gap> R := [[F.1 ^ 3, F.1], [F.2 ^ 2, F.2], [F.1 * F.2 * F.1 * F.2, F.1]];;
+gap> S := F / R;;
+gap> MultiplicationTable(S);
+[ [ 1, 2, 3, 4 ], [ 2, 2, 2, 2 ], [ 3, 4, 3, 4 ], [ 4, 4, 4, 4 ] ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
