@@ -690,20 +690,27 @@ InstallMethod(MultiplicationTable,
 "for a semigroup with CanUseLibsemigroupsFroidurePin",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin],
 function(S)
-  local N, result, pos_to_pos_sorted, fast_product, T, next, k, i, j;
+  local N, result, pos_to_pos_sorted, product, T, next, k, i, j;
+
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
   fi;
   N      := Size(S);
   result := List([1 .. N], x -> EmptyPlist(N));
-  pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
-  fast_product := FroidurePinMemFnRec(S).fast_product;
   T := LibsemigroupsFroidurePin(S);
+  if IsFpSemigroup(S) or IsFpMonoid(S) then
+    pos_to_pos_sorted := {T, i} -> i;
+    product := FroidurePinMemFnRec(S).product_by_reduction;
+    FroidurePinMemFnRec(S).enumerate(T, N);
+  else
+    pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
+    product := FroidurePinMemFnRec(S).fast_product;
+  fi;
   for i in [0 .. N - 1] do
     next := result[pos_to_pos_sorted(T, i) + 1];
     for j in [0 .. N - 1] do
       k := pos_to_pos_sorted(T, j) + 1;
-      next[k] := pos_to_pos_sorted(T, fast_product(T, i, j)) + 1;
+      next[k] := pos_to_pos_sorted(T, product(T, i, j)) + 1;
     od;
   od;
   return result;
