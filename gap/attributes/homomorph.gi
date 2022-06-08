@@ -414,14 +414,6 @@ function(hom)
   return cong;
 end);
 
-InstallMethod(ViewObj, "for SHBI",
-    [IsSemigroupHomomorphismByImages],
-function(hom)
-  ViewObj(Source(hom));
-  Print(" -> ");
-  ViewObj(Range(hom));
-end);
-
 InstallMethod(String, "for a semigroup homom. by images",
   [IsSemigroupHomomorphismByImages],
 function(hom)
@@ -463,8 +455,8 @@ function(hom1, hom2)
   return hom1[2] = List(hom1[1], i -> ImageElm(hom2, i));
 end);
 
-InstallMethod(ViewObj, "for SHBF",
-    [IsSemigroupHomomorphismByFunction],
+InstallMethod(ViewObj, "for SHBI/SHBF",
+    [IsSemigroupHomomorphismByImagesOrFunction], 2,
 function(hom)
   ViewObj(Source(hom));
   Print(" -> ");
