@@ -757,7 +757,7 @@ true
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >       Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
 gap> congs := CongruencesOfSemigroup(S);;
-gap> cong := congs[3];;
+gap> cong := congs[4];;
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> images := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
@@ -840,7 +840,7 @@ fail
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >       Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])]);;
 gap> congs := CongruencesOfSemigroup(S);;
-gap> cong := congs[3];;
+gap> cong := congs[4];;
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
