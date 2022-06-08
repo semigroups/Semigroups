@@ -1,7 +1,7 @@
 #############################################################################
 ##
 # W  rms-translat.gi
-# Y  Copyright (C) 2016-18                                         Finn Smith
+# Y  Copyright (C) 2016-22                                         Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -128,15 +128,15 @@ SEMIGROUPS.IsNormalRMSOverGroup := function(S)
 end;
 
 # Hash translations by their underlying transformations
-  SEMIGROUPS.HashFunctionForRMSTranslations := function(x, data)
-    return ORB_HashFunctionForTransformations(x![2], data);
-  end;
+SEMIGROUPS.HashFunctionForRMSTranslations := function(x, data)
+  return ORB_HashFunctionForTransformations(x![2], data);
+end;
 
 # Hash linked pairs as sum of hashes
-  SEMIGROUPS.HashFunctionForRMSBitranslations := function(x, data)
-      return (SEMIGROUPS.HashFunctionForRMSTranslations(x![1], data)
-        + SEMIGROUPS.HashFunctionForRMSTranslations(x![2], data)) mod data + 1;
-  end;
+SEMIGROUPS.HashFunctionForRMSBitranslations := function(x, data)
+    return (SEMIGROUPS.HashFunctionForRMSTranslations(x![1], data)
+      + SEMIGROUPS.HashFunctionForRMSTranslations(x![2], data)) mod data + 1;
+end;
 
 # Finds the transformations on the indices of a finite 0-simple semigroup
 # which are candidates for translations, when combined with a function from
@@ -1001,7 +1001,7 @@ function(x, hashlen)
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction, "for a translational hull element and int",
+InstallMethod(ChooseHashFunction, "for a bitranslation and int",
 [IsBitranslationOfNormalRMS, IsInt],
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForRMSBitranslations,

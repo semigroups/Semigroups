@@ -68,8 +68,6 @@ DeclareAttribute("TranslationalHull",
                   IsEnumerableSemigroupRep and IsFinite);
 DeclareAttribute("InnerTranslationalHull",
                   IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("NrBitranslations",
-                  IsEnumerableSemigroupRep and IsFinite);
 DeclareAttribute("TranslationalElements",
                   IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements",
