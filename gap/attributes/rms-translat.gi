@@ -563,7 +563,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1] ^ t,
             x[2], x[3]);
       end;
-      Add(gens, LeftTranslation(S, CompositionMapping(
+      Add(gens, LeftTranslation(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     else
       f := function(x)
@@ -573,7 +573,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1],
           x[2], x[3] ^ t);
       end;
-      Add(gens, RightTranslation(S, CompositionMapping(
+      Add(gens, RightTranslation(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     fi;
   od;
@@ -593,7 +593,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1],
             fa(x[1]) * x[2], x[3]);
       end;
-      Add(gens, LeftTranslationNC(S, CompositionMapping(
+      Add(gens, LeftTranslationNC(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     else
       f := function(x)
@@ -603,7 +603,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1],
           x[2] * fa(x[3]), x[3]);
       end;
-      Add(gens, RightTranslationNC(S, CompositionMapping(
+      Add(gens, RightTranslationNC(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     fi;
   od;

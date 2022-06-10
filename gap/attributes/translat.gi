@@ -74,9 +74,13 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
 end;
 
 # Choose how to calculate the elements of a translational hull
-SEMIGROUPS.Bitranslations := function(S)
+# TODO: make the arguments for RMS funcs consistent
+SEMIGROUPS.Bitranslations := function(H)
+  local S;
+
+  S := UnderlyingSemigroup(H);
   if IsRectangularBand(S) then
-    return Semigroup(GeneratorsOfSemigroup(TranslationalHull(S)));
+    return Semigroup(GeneratorsOfSemigroup(H));
   elif IsReesZeroMatrixSemigroup(S) then
     return SEMIGROUPS.BitranslationsOfRZMS(S);
   elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
@@ -144,7 +148,8 @@ SEMIGROUPS.AutoBitranslations := function(mult_table, gens_pos)
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
-  return SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S, GeneratorsOfSemigroup(S));
+  return SEMIGROUPS.LeftTranslationsBacktrackDataWithGens(S,
+          GeneratorsOfSemigroup(S));
 end;
 
 SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
@@ -278,7 +283,8 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackData := function(S)
-  return SEMIGROUPS.RightTranslationsBacktrackDataWithGens(S, GeneratorsOfSemigroup(S));
+  return SEMIGROUPS.RightTranslationsBacktrackDataWithGens(S,
+          GeneratorsOfSemigroup(S));
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
@@ -313,7 +319,7 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   l_class_inv_map := List(l_classes,
                           x -> PositionCanonical(S, Representative(x)));
   l_classes_below := List([1 .. m],
-                          i -> Set(l_class_map{transpose_multsets[genspos[i]]}));
+                      i -> Set(l_class_map{transpose_multsets[genspos[i]]}));
   max_L_intersects := List([1 .. m], x -> []);
   
   for i in [1 .. m - 1] do
@@ -322,9 +328,9 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
       reps := l_class_inv_map{intersect};
 
       max_L_intersects[i][j] := Filtered(reps,
-                                         x -> not ForAny(reps, 
-                                                         y -> x <> y and
-                                                           x in transpose_multsets[y]));
+                                  x -> not ForAny(reps, 
+                                            y -> x <> y and
+                                                 x in transpose_multsets[y]));
 
       max_L_intersects[j][i] := max_L_intersects[i][j];
     od;
@@ -384,7 +390,8 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
       for a in transpose_multsets[genspos[i]] do
         B := right_inverses_by_gen[a][i];
         sb := transpose_multtable[s][B[1]];
-        if transpose_multtable[s]{B} <> ListWithIdenticalEntries(Size(B), sb) then
+        if transpose_multtable[s]{B} <> ListWithIdenticalEntries(Size(B), sb)
+         then
           keep := false;
           break;
         fi;
@@ -477,7 +484,8 @@ SEMIGROUPS.RightTranslationsBacktrackDataF := function(data, j, a, s)
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackDataG := function(data, i, j, s)
-  local right_canon_inverse_by_gen, transpose_multtable, left_inverses, G, l, x, a;
+  local right_canon_inverse_by_gen, transpose_multtable, left_inverses, G, l, x,
+  a;
 
   if IsBound(data.G[i][j][s]) then
     return data.G[i][j][s];
@@ -566,11 +574,13 @@ SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens, opt...)
 end;
 
 SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
-  return SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens(UnderlyingSemigroup(L),
-          GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
+  return SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens(
+                        UnderlyingSemigroup(L),
+                        GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
 end;
 
-SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens, opt...)
+SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens :=
+function(S, gens, opt...)
   local n, m, genspos, omega_stack, possiblefgenvals, stabs, stab_thresh,
   coset_reps, multtable, data, U, aut, add_stabilised_lambda, bt, lambda, out,
   nr, i, nr_only;
@@ -752,7 +762,7 @@ SEMIGROUPS.RightTranslationsBacktrack := function(S, gens, opt...)
   return out;
 end;
 
-SEMIGROUPS.BitranslationsAlternatingBacktrack := function(S, opt...)
+SEMIGROUPS.BitranslationsBacktrack := function(S, opt...)
   local n, gens, m, genspos, l_omega_stack, r_omega_stack, multtable,
   left_data, right_data, U, W, left_inverses_by_gen, G, T,
   right_inverses_by_gen, bt, lambda, rho, out, L, R, i, j, s,
@@ -874,7 +884,7 @@ end;
 #############################################################################
 
 InstallMethod(LeftTranslations, "for a finite enumerable semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, L, type;
 
@@ -914,7 +924,7 @@ function(S)
 end);
 
 InstallMethod(RightTranslations, "for a finite enumerable semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, type, R;
 
@@ -954,7 +964,7 @@ function(S)
 end);
 
 InstallMethod(TranslationalHull, "for a finite enumerable semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, type, H;
 
@@ -987,7 +997,7 @@ end);
 
 # Create and calculate the semigroup of inner left translations
 InstallMethod(InnerLeftTranslations, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local A, I, L, l, s;
 
@@ -1008,7 +1018,7 @@ end);
 
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local A, I, R, r, s;
 
@@ -1210,7 +1220,7 @@ end);
 # Creates the ideal of the translational hull consisting of
 # all inner bitranslations
 InstallMethod(InnerTranslationalHull, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local A, I, H, L, R, l, r, s;
 

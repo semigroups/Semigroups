@@ -56,16 +56,26 @@ DeclareAttribute("TypeRightTranslationsSemigroupElements",
                  IsRightTranslationsSemigroup);
 DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 
-DeclareAttribute("LeftTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("InnerLeftTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("RightTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("InnerRightTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("TranslationalHull", IsSemigroup and IsFinite);
-DeclareAttribute("InnerTranslationalHull", IsSemigroup and IsFinite);
+DeclareAttribute("LeftTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("InnerLeftTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("RightTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("InnerRightTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("TranslationalHull",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("InnerTranslationalHull",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
 DeclareAttribute("TranslationalElements",
                   IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements",
                   IsBitranslationsSemigroup and IsWholeFamily);
+
+InstallTrueMethod(IsFinite, IsLeftTranslationsSemigroup);
+InstallTrueMethod(IsFinite, IsRightTranslationsSemigroup);
+InstallTrueMethod(IsFinite, IsBitranslationsSemigroup);
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
 DeclareAttribute("UnderlyingGenerators", IsBitranslationsSemigroup);
