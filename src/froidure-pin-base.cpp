@@ -60,5 +60,13 @@ void init_froidure_pin_base(gapbind14::Module& m) {
       .def("finished", [](FroidurePin_ S) { return S->finished(); })
       .def("rules", [](FroidurePin_& S) {
         return gapbind14::make_iterator(S->cbegin_rules(), S->cend_rules());
-      });
+      })
+      .def("first_letter",
+           [](FroidurePin_ S, size_t i) { return S->first_letter(i); })
+      .def("final_letter",
+           [](FroidurePin_ S, size_t i) { return S->final_letter(i); })
+      .def("prefix",
+           [](FroidurePin_ S, size_t i) { return S->prefix(i); })
+      .def("suffix",
+           [](FroidurePin_ S, size_t i) { return S->suffix(i); });
 }
