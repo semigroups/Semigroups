@@ -507,7 +507,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L)
           GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
 end;
 
-SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens, opts..)
+SEMIGROUPS.LeftTranslationsBacktrackWithGens := function(S, gens, opt...)
   local n, m, genspos, omega_stack, possiblefgenvals, multtable, data, U, bt,
   lambda, out, i, nr, nr_only;
 
@@ -570,7 +570,7 @@ SEMIGROUPS.LeftTranslationsStabilisedBacktrack := function(L)
           GeneratorsOfSemigroup(UnderlyingSemigroup(L)));
 end;
 
-SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens, opts..)
+SEMIGROUPS.LeftTranslationsStabilisedBacktrackWithGens := function(S, gens, opt...)
   local n, m, genspos, omega_stack, possiblefgenvals, stabs, stab_thresh,
   coset_reps, multtable, data, U, aut, add_stabilised_lambda, bt, lambda, out,
   nr, i, nr_only;
@@ -689,12 +689,11 @@ SEMIGROUPS.RightTranslationsBacktrack := function(R)
           GeneratorsOfSemigroup(UnderlyingSemigroup(R)));
 end;
 
-SEMIGROUPS.RightTranslationsBacktrack := function(S, gens, opts..)
-  local n, gens, m, genspos, omega_stack, multtable, data, G, T,
+SEMIGROUPS.RightTranslationsBacktrack := function(S, gens, opt...)
+  local n, m, genspos, omega_stack, multtable, data, G, T,
   possiblegenvals, bt, rho, out, i, j, s, nr, nr_only;
 
   n           := Size(S);
-  gens        := GeneratorsOfSemigroup(S);
   m           := Size(gens);
   genspos     := List(gens, x -> PositionCanonical(S, x));
   omega_stack := List([1 .. m], i -> List([1 .. m], j -> []));
@@ -875,14 +874,14 @@ end;
 #############################################################################
 
 InstallMethod(LeftTranslations, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local fam, L, type;
 
-  if not IsEnumerableSemigroupRep(S) then
+  if not IsSemigroup(S) then
     ErrorNoReturn("Semigroups: LeftTranslations: \n",
                   "the semigroup must have representation ",
-                  "IsEnumerableSemigroupRep,");
+                  "IsSemigroup,");
   fi;
 
   if HasLeftTranslations(S) then
@@ -915,14 +914,14 @@ function(S)
 end);
 
 InstallMethod(RightTranslations, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local fam, type, R;
 
-  if not IsEnumerableSemigroupRep(S) then
+  if not IsSemigroup(S) then
     ErrorNoReturn("Semigroups: RightTranslations: \n",
                   "the semigroup must have representation ",
-                  "IsEnumerableSemigroupRep,");
+                  "IsSemigroup,");
   fi;
 
   if HasRightTranslations(S) then
@@ -955,7 +954,7 @@ function(S)
 end);
 
 InstallMethod(TranslationalHull, "for a finite enumerable semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local fam, type, H;
 
@@ -988,7 +987,7 @@ end);
 
 # Create and calculate the semigroup of inner left translations
 InstallMethod(InnerLeftTranslations, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local A, I, L, l, s;
 
@@ -1009,7 +1008,7 @@ end);
 
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local A, I, R, r, s;
 
@@ -1211,7 +1210,7 @@ end);
 # Creates the ideal of the translational hull consisting of
 # all inner bitranslations
 InstallMethod(InnerTranslationalHull, "for a semigroup",
-[IsEnumerableSemigroupRep and IsFinite],
+[IsSemigroup and IsFinite],
 function(S)
   local A, I, H, L, R, l, r, s;
 

@@ -1,21 +1,21 @@
 ############################################################################
 ##
 # W  translat.gd
-# Y  Copyright (C) 2015-17                      James D. Mitchell, Finn Smith
+# Y  Copyright (C) 2015-22                      James D. Mitchell, Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-DeclareCategory("IsTranslationsSemigroupElement", IsAssociativeElement and
-                  IsMultiplicativeElementWithOne);
+DeclareCategory("IsTranslationsSemigroupElement",
+                IsAssociativeElement and IsMultiplicativeElementWithOne);
 DeclareCategory("IsLeftTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
 DeclareCategory("IsRightTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
-DeclareCategory("IsBitranslation", IsAssociativeElement and
-                  IsMultiplicativeElementWithOne);
+DeclareCategory("IsBitranslation",
+                IsAssociativeElement and IsMultiplicativeElementWithOne);
 
 DeclareCategoryCollections("IsTranslationsSemigroupElement");
 DeclareCategoryCollections("IsLeftTranslationsSemigroupElement");
@@ -34,14 +34,14 @@ DeclareGlobalFunction("TranslationalHullSemigroup");
 DeclareGlobalFunction("LeftPartOfBitranslation");
 DeclareGlobalFunction("RightPartOfBitranslation");
 
-DeclareSynonym("IsLeftTranslationsSemigroup", IsSemigroup and
-                  IsLeftTranslationsSemigroupElementCollection);
-DeclareSynonym("IsRightTranslationsSemigroup", IsSemigroup and
-                  IsRightTranslationsSemigroupElementCollection);
-DeclareSynonym("IsTranslationsSemigroup", IsSemigroup and
-                  IsTranslationsSemigroupElementCollection);
-DeclareSynonym("IsBitranslationsSemigroup", IsSemigroup and
-                  IsBitranslationCollection);
+DeclareSynonym("IsLeftTranslationsSemigroup",
+               IsSemigroup and IsLeftTranslationsSemigroupElementCollection);
+DeclareSynonym("IsRightTranslationsSemigroup",
+               IsSemigroup and IsRightTranslationsSemigroupElementCollection);
+DeclareSynonym("IsTranslationsSemigroup",
+               IsSemigroup and IsTranslationsSemigroupElementCollection);
+DeclareSynonym("IsBitranslationsSemigroup",
+               IsSemigroup and IsBitranslationCollection);
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
 DeclareAttribute("UnderlyingSemigroup", IsBitranslationsSemigroup);
@@ -56,18 +56,12 @@ DeclareAttribute("TypeRightTranslationsSemigroupElements",
                  IsRightTranslationsSemigroup);
 DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 
-DeclareAttribute("LeftTranslations",
-                  IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerLeftTranslations",
-                  IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("RightTranslations",
-                  IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerRightTranslations",
-                  IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("TranslationalHull",
-                  IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerTranslationalHull",
-                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("LeftTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("InnerLeftTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("RightTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("InnerRightTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("TranslationalHull", IsSemigroup and IsFinite);
+DeclareAttribute("InnerTranslationalHull", IsSemigroup and IsFinite);
 DeclareAttribute("TranslationalElements",
                   IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements",

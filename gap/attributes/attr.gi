@@ -1104,3 +1104,27 @@ function(S, x)
   result := EvaluateWord(GeneratorsOfSemigroup(S), p[2]);
   return result ^ SmallestIdempotentPower(result);
 end);
+
+InstallMethod(MultiplicationTableWithCanonicalPositions,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
+function(S)
+  local n, slist, sortedlist, t, tinv, M;
+  n           := Size(S);
+  slist       := AsListCanonical(S);
+  sortedlist  := AsSortedList(S);
+
+  t    := Transformation(List([1 .. n],
+                         i -> PositionCanonical(S, sortedlist[i])));
+  tinv := InverseOfTransformation(t);
+  M    := MultiplicationTable(S);
+
+  return List([1 .. n], i -> List([1 .. n], j -> M[i ^ tinv][j ^ tinv] ^ t));
+end);
+
+InstallMethod(TransposedMultiplicationTableWithCanonicalPositions,
+"for a semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
+function(S)
+  return TransposedMat(MultiplicationTableWithCanonicalPositions(S));
+end);
