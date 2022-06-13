@@ -117,7 +117,7 @@ gap> hom := SemigroupHomomorphismByFunction(g, h,
       where <A>fun</A> is a &GAP; function, and <A>invFun</A> its inverse, 
       mapping <A>fun</A><C>(s)</C> back to <C>s</C>. <P/>
 
-      No test is performed on whether the function actually gives an 
+      No test is performed on whether the given functions actually define an 
       isomorphism, and so it is possible for this function to return 
       a mapping from <A>S</A> to <A>T</A> that is not an isomorphism.
       <Example><![CDATA[
