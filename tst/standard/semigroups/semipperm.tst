@@ -2157,8 +2157,9 @@ gap> C := SemigroupCongruence(S,
 <2-sided semigroup congruence over <inverse block bijection monoid 
  of size 339, degree 4 with 3 generators> with 1 generating pairs>
 gap> map := SmallerDegreePartialPermRepresentation(Source(C));
-CompositionMapping( <inverse partial perm monoid of size 339, rank 339 with 3 
- generators> -> <inverse partial perm monoid of rank 14 with 3 generators>,
+CompositionMapping( MappingByFunction( <inverse partial perm monoid 
+ of size 339, rank 339 with 3 generators>, <inverse partial perm monoid of 
+ rank 14 with 3 generators>, function( x ) ... end, function( x ) ... end ),
  MappingByFunction( <inverse block bijection monoid of size 339, degree 4 
  with 3 generators>, <inverse partial perm monoid of size 339, rank 339 with 
  3 generators>, function( x ) ... end ) )
