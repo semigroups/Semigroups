@@ -119,7 +119,7 @@ gap> hom := SemigroupHomomorphismByFunction(g, h,
 
       No test is performed on whether the function actually gives an 
       isomorphism, and so it is possible for this function to return 
-      non-semigroup-isomorphisms.<P/>
+      a mapping from <A>S</A> to <A>T</A> that is not an isomorphism.
       <Example><![CDATA[
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 3, 2);;
 gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);;
