@@ -35,7 +35,6 @@
       <A>imgs</A>, resulting in the mapping being surjective.
       See also 
       <Ref Oper = "SemigroupIsomorphismByImages" Label = "for two semigroups and two lists"/>.
-      <P/>
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
 gap> gens := GeneratorsOfSemigroup(S);;
