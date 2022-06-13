@@ -91,7 +91,7 @@ gap> iso := SemigroupIsomorphismByImages(S, T);
 
       No test is performed on whether the function actually gives a 
       homomorphism, and so it is possible for this operation to return
-      non-semigroup-homomorphisms.<P/>
+      mappings from <A>S</A> to <A>T</A> that are not homomorphisms.
       <Example><![CDATA[
 gap> g := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> h := Semigroup([(1, 2, 3), (1, 2)]);;
