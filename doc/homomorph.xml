@@ -113,7 +113,7 @@ gap> hom := SemigroupHomomorphismByFunction(g, h,
     <Description>
       <C>SemigroupIsomorphismByFunction</C> returns a semigroup isomorphism 
       with source <A>S</A> and range <A>T</A>, such that each element 
-      <C>s</C> in <A>S</A> is mapped to the element <A>fun</A><C>(s)</C>), 
+      <C>s</C> in <A>S</A> is mapped to the element <A>fun</A><C>(s)</C>, 
       where <A>fun</A> is a &GAP; function, and <A>invFun</A> its inverse, 
       mapping <A>fun</A><C>(s)</C> back to <C>s</C>. <P/>
 
