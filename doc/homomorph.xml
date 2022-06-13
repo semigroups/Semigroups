@@ -64,7 +64,6 @@ d of degree 4>]]></Example>
       isomorphism is returned, and if not, then <K>fail</K> is returned. 
       An isomorphism is a bijective homomorphism. See also 
       <Ref Oper = "SemigroupHomomorphismByImages" Label = "for two semigroups and two lists"/>.
-      <P/>
       <Example><![CDATA[
 gap> S := Semigroup([
 >  Matrix(IsNTPMatrix, [[0, 1, 2], [4, 3, 0], [0, 2, 0]], 9, 4),
