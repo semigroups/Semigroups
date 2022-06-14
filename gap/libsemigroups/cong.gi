@@ -10,8 +10,6 @@
 
 ## This file contains the interface to libsemigroups Congruence objects.
 
-# TODO: A method for MeetXSemigroupCongruences
-
 ###########################################################################
 # Categories + properties + true methods
 ###########################################################################
@@ -33,7 +31,6 @@
 
 InstallImmediateMethod(CanUseLibsemigroupsCongruence,
                        IsLeftRightOrTwoSidedCongruence
-                       and HasGeneratingPairsOfLeftRightOrTwoSidedCongruence
                        and HasRange,
                        0,
                        C -> CanUseFroidurePin(Range(C))
@@ -43,32 +40,12 @@ InstallImmediateMethod(CanUseLibsemigroupsCongruence,
                        or (HasIsFreeMonoid(Range(C))
                            and IsFreeMonoid(Range(C))));
 
-InstallImmediateMethod(CanUseLibsemigroupsCongruence,
-                       IsRMSCongruenceByLinkedTriple,
-                       0,
-                       ReturnFalse);
-
-InstallImmediateMethod(CanUseLibsemigroupsCongruence,
-                       IsRZMSCongruenceByLinkedTriple,
-                       0,
-                       ReturnFalse);
-
-InstallImmediateMethod(CanUseLibsemigroupsCongruence,
-                       IsSimpleSemigroupCongruence,
-                       0,
-                       ReturnFalse);
-
-InstallImmediateMethod(CanUseLibsemigroupsCongruence,
-                       IsInverseSemigroupCongruenceByKernelTrace,
-                       0,
-                       ReturnFalse);
-
 InstallMethod(CanUseLibsemigroupsCongruence,
 "for a left, right, or 2-sided congruence that can compute partition",
 [CanComputeEquivalenceRelationPartition],
 ReturnFalse);
 
-# TODO(now) remove CanUseLibsemigroupsCongruences?
+# TODO(later) remove CanUseLibsemigroupsCongruences?
 
 # A semigroup satisfies this property if its congruences should belong to
 # CanUseLibsemigroupsCongruence.
@@ -84,6 +61,8 @@ InstallTrueMethod(CanUseLibsemigroupsCongruences,
                   HasIsFreeSemigroup and IsFreeSemigroup);
 InstallTrueMethod(CanUseLibsemigroupsCongruences,
                   HasIsFreeMonoid and IsFreeMonoid);
+InstallTrueMethod(CanUseLibsemigroupsCongruence,
+                  IsInverseSemigroupCongruenceByKernelTrace);
 
 ###########################################################################
 # Functions/methods that are declared in this file and that use the
@@ -164,6 +143,13 @@ function(S)
   return libsemigroups.Congruence.make_from_froidurepin_pbr;
 end);
 
+InstallMethod(LibsemigroupsCongruenceConstructor,
+"for a quotient semigroup and CanUseLibsemigroupsCongruences",
+[IsQuotientSemigroup and CanUseLibsemigroupsCongruences],
+function(S)
+  return libsemigroups.Congruence.make_from_froidurepinbase;
+end);
+
 # Get the libsemigroups::Congruence object associated to a GAP object
 
 BindGlobal("LibsemigroupsCongruence",
@@ -205,6 +191,7 @@ function(C)
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
   else
+    # TODO(QUOTIENT): What about if IsQuotientSemigroup(Range(C))?
     # Shouldn't be possible to reach the next line, and can't currently test it
     TryNextMethod();
   fi;
@@ -242,10 +229,10 @@ end);
 ########################################################################
 
 InstallMethod(CongruenceLessNC,
- "for CanUseLibsemigroupsCongruence and two mult. elements",
- [CanUseLibsemigroupsCongruence,
-  IsMultiplicativeElement,
-  IsMultiplicativeElement],
+"for CanUseLibsemigroupsCongruence and two mult. elements",
+[CanUseLibsemigroupsCongruence,
+ IsMultiplicativeElement,
+ IsMultiplicativeElement],
 function(C, elm1, elm2)
   local S, pos1, pos2, lookup, word1, word2, CC;
 
@@ -261,7 +248,8 @@ function(C, elm1, elm2)
       word2 := MinimalFactorization(S, pos2);
     fi;
   elif IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
-      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
+      or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S))
+      or IsQuotientSemigroup(S) then
     word1 := Factorization(S, elm1);
     word2 := Factorization(S, elm2);
   else
@@ -277,8 +265,10 @@ end);
 # libsemigroups object directly
 ###########################################################################
 
-InstallMethod(NrEquivalenceClasses, "for CanUseLibsemigroupsCongruence",
-[CanUseLibsemigroupsCongruence],
+InstallMethod(NrEquivalenceClasses,
+"for CanUseLibsemigroupsCongruence with known generating pairs",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
   local number_of_classes, result;
   number_of_classes := libsemigroups.Congruence.number_of_classes;
@@ -290,8 +280,9 @@ function(C)
 end);
 
 InstallMethod(CongruenceTestMembershipNC,
-"for CanUseLibsemigroupsCongruence and two mult. elements",
-[CanUseLibsemigroupsCongruence,
+"for CanUseLibsemigroupsCongruence with known gen. pairs and 2 mult. elts",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence,
  IsMultiplicativeElement,
  IsMultiplicativeElement],
 100,
@@ -321,8 +312,10 @@ function(C, elm1, elm2)
   return libsemigroups.Congruence.contains(CC, word1 - 1, word2 - 1);
 end);
 
-InstallMethod(EquivalenceRelationPartition, "for CanUseLibsemigroupsCongruence",
-[CanUseLibsemigroupsCongruence],
+InstallMethod(EquivalenceRelationPartition,
+"for CanUseLibsemigroupsCongruence with known generating pairs",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
   local S, CC, ntc, gens, class, i, j;
   S := Range(C);
@@ -357,10 +350,11 @@ function(class1, class2)
   local C, word1, word2, CC;
 
   C := EquivalenceClassRelation(class1);
-  if C <> EquivalenceClassRelation(class2) then
-    return false;
-  elif not CanUseLibsemigroupsCongruence(C) then
+  if not CanUseLibsemigroupsCongruence(C)
+      or not HasGeneratingPairsOfLeftRightOrTwoSidedCongruence(C) then
     TryNextMethod();
+  elif C <> EquivalenceClassRelation(class2) then
+    return false;
   fi;
 
   word1 := Factorization(Range(C), Representative(class1));
@@ -369,8 +363,10 @@ function(class1, class2)
   return libsemigroups.Congruence.less(CC, word1 - 1, word2 - 1);
 end);
 
-InstallMethod(EquivalenceClasses, "for CanUseLibsemigroupsCongruence",
-[CanUseLibsemigroupsCongruence],
+InstallMethod(EquivalenceClasses,
+"for CanUseLibsemigroupsCongruence with known generating pairs",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
   local result, CC, gens, class_index_to_word, rep, i;
 
@@ -396,7 +392,9 @@ end);
 ###########################################################################
 
 InstallMethod(EquivalenceRelationPartitionWithSingletons,
-"for CanUseLibsemigroupsCongruence", [CanUseLibsemigroupsCongruence],
+"for CanUseLibsemigroupsCongruence with known generating pairs",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
   local part, i, x;
   if not IsFinite(Range(C)) then
@@ -416,8 +414,9 @@ function(C)
 end);
 
 InstallMethod(ImagesElm,
-"for CanUseLibsemigroupsCongruence and a multiplicative element",
-[CanUseLibsemigroupsCongruence, IsMultiplicativeElement],
+"for CanUseLibsemigroupsCongruence with known gen. pairs and a mult. elt.",
+[CanUseLibsemigroupsCongruence and
+ HasGeneratingPairsOfLeftRightOrTwoSidedCongruence, IsMultiplicativeElement],
 function(cong, elm)
   local lookup, id, part, pos;
 
@@ -429,7 +428,8 @@ function(cong, elm)
   elif IsFpSemigroup(Range(cong))
       or (HasIsFreeSemigroup(Range(cong)) and IsFreeSemigroup(Range(cong)))
       or IsFpMonoid(Range(cong))
-      or (HasIsFreeSemigroup(Range(cong)) and IsFreeMonoid(Range(cong))) then
+      or (HasIsFreeSemigroup(Range(cong)) and IsFreeMonoid(Range(cong)))
+      or IsQuotientSemigroup(Range(cong)) then
     part := EquivalenceRelationPartition(cong);
     pos := PositionProperty(part, l -> [elm, l[1]] in cong);
     if pos = fail then

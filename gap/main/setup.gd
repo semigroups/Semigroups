@@ -12,7 +12,7 @@
 # belonging to IsActingSemigroup...
 
 DeclareProperty("IsGeneratorsOfActingSemigroup",
-                IsMultiplicativeElementCollection);
+                IsListOrCollection);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
                 IsActingSemigroup);
 

@@ -55,11 +55,9 @@ function(S, I)
   return S / ReesCongruenceOfSemigroupIdeal(I);
 end);
 
-InstallMethod(Size, "for a quotient semigroup",
-[IsQuotientSemigroup and IsFinite], 3,
-# to beat the CanUseGapFroidurePin method
-function(q)
-  local cong;
-  cong := QuotientSemigroupCongruence(q);
-  return NrEquivalenceClasses(cong);
-end);
+# InstallMethod(Size, "for a quotient semigroup",
+# [IsQuotientSemigroup and IsFinite], 3,
+# # to beat the CanUseGapFroidurePin method
+# function(q)
+#   return NrEquivalenceClasses(QuotientSemigroupCongruence(q));
+# end);

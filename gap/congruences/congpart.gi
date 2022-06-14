@@ -281,8 +281,8 @@ end);
 # This is declared only for CanComputeEquivalenceRelationPartition because no
 # other types of congruence have CongruenceTestMembershipNC implemented.
 InstallMethod(\in,
-"for pair of mult. elt. and left, right, or 2-sided congruence",
-[IsMultiplicativeElementCollection, CanComputeEquivalenceRelationPartition],
+"for pair of elements and left, right, or 2-sided congruence",
+[IsListOrCollection, CanComputeEquivalenceRelationPartition],
 function(pair, C)
   local S, string;
 
