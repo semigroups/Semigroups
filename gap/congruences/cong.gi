@@ -37,6 +37,13 @@ InstallMethod(CongruenceHandednessString, "for a left congruence",
 InstallMethod(CongruenceHandednessString, "for a 2-sided congruence",
 [IsMagmaCongruence and IsSemigroupCongruence], C -> "2-sided");
 
+# This is required for QuotientSemigroups and their subsemigroups.
+InstallImmediateMethod(CanEasilyCompareElements,
+IsCongruenceClass and HasEquivalenceClassRelation, 0,
+function(C)
+  return CanUseLibsemigroupsCongruence(EquivalenceClassRelation(C));
+end);
+
 ########################################################################
 # Flexible functions for creating congruences
 ########################################################################

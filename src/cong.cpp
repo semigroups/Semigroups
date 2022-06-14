@@ -19,6 +19,7 @@
 #include "cong.hpp"
 
 #include <exception>    // for exception
+#include <memory>       // for shared_ptr
 #include <type_traits>  // for true_type
 #include <vector>       // for vector
 
@@ -125,6 +126,8 @@ void init_cong(gapbind14::Module &m) {
            "make_from_froidurepin_ppermUInt4")
       .def(gapbind14::init<congruence_kind, FpSemigroup &>{},
            "make_from_fpsemigroup")
+      .def(gapbind14::init<congruence_kind, std::shared_ptr<FroidurePinBase>>{},
+           "make_from_froidurepinbase")
       .def(gapbind14::init<congruence_kind, Congruence::options::runners>{},
            "make_from_table")
       .def("set_number_of_generators", &Congruence::set_number_of_generators)

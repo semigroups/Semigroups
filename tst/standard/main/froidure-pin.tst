@@ -60,11 +60,11 @@ true
 # CanUseGapFroidurePin for a quotient semigroup
 gap> S := FullTransformationMonoid(4);;
 gap> cong := SemigroupCongruence(S, [S.2, S.3]);;
-gap> CanUseGapFroidurePin(S / cong);
+gap> CanUseLibsemigroupsFroidurePin(S / cong);
 true
 gap> S := Semigroup(SEMIGROUPS.UniversalFakeOne);;
 gap> cong := SemigroupCongruence(S, [[S.1, S.1]]);;
-gap> CanUseGapFroidurePin(S / cong);
+gap> CanUseLibsemigroupsFroidurePin(S / cong);
 false
 
 # CanUseGapFroidurePin for a free band

@@ -38,6 +38,10 @@ od;
 InstallMethod(CanUseLibsemigroupsFroidurePin, "for a semigroup", [IsSemigroup],
 ReturnFalse);
 
+InstallImmediateMethod(CanUseLibsemigroupsFroidurePin,
+IsQuotientSemigroup and HasQuotientSemigroupCongruence, 0,
+Q -> CanUseLibsemigroupsCongruence(QuotientSemigroupCongruence(Q)));
+
 ###########################################################################
 ## Function for getting the correct record from the `libsemigroups` record.
 ###########################################################################
@@ -127,6 +131,9 @@ InstallMethod(FroidurePinMemFnRec, "for an fp semigroup",
 InstallMethod(FroidurePinMemFnRec, "for an fp monoid",
 [IsFpMonoid], S -> libsemigroups.FroidurePinBase);
 
+InstallMethod(FroidurePinMemFnRec, "for quotient semigroup",
+[IsQuotientSemigroup], S -> libsemigroups.FroidurePinBase);
+
 BindGlobal("_GetElement",
 function(coll, x)
   Assert(1, IsMultiplicativeElementCollection(coll));
@@ -175,6 +182,13 @@ function(S)
   elif IsFpSemigroup(S) or IsFpMonoid(S) then
     C := LibsemigroupsCongruence(UnderlyingCongruence(S));
     return libsemigroups.Congruence.quotient_froidure_pin(C);
+  elif IsQuotientSemigroup(S) then
+    C := QuotientSemigroupCongruence(S);
+    if not HasGeneratingPairsOfMagmaCongruence(C) then
+      GeneratingPairsOfMagmaCongruence(C);
+    fi;
+    C := LibsemigroupsCongruence(C);
+    return libsemigroups.Congruence.quotient_froidure_pin(C);
   fi;
   Unbind(S!.LibsemigroupsFroidurePin);
   record := FroidurePinMemFnRec(S);
@@ -204,7 +218,7 @@ end);
 InstallMethod(IsFinite, "for a semigroup with CanUseLibsemigroupsFroidurePin",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin],
 function(S)
-  if IsFpSemigroup(S) or IsFpMonoid(S) then
+  if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     TryNextMethod();
   fi;
   return FroidurePinMemFnRec(S).size(LibsemigroupsFroidurePin(S)) < infinity;
@@ -220,10 +234,11 @@ function(S)
   local result, sorted_at, T, i;
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S) then
+  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S)
+      or IsQuotientSemigroup(S) then
     # Special case required because < for libsemigroups PartialPerms and < for
     # GAP partial perms are different; and also for IsFpSemigroup and
-    # IsFpMonoid because there's no sorted_at
+    # IsFpMonoid and IsQuotientSemigroup because there's no sorted_at
     return AsSet(AsList(S));
   fi;
   result := EmptyPlist(Size(S));
@@ -243,7 +258,7 @@ function(S)
   local result, at, T, i;
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+  elif IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     at := {T, i} -> EvaluateWord(GeneratorsOfSemigroup(S),
                                  FroidurePinMemFnRec(S).factorisation(T, i) + 1);
   else
@@ -269,7 +284,7 @@ InstallMethod(PositionCanonical,
 "for a semigroup with CanUseLibsemigroupsFroidurePin and mult. element",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin, IsMultiplicativeElement],
 function(S, x)
-  local T, record, word, pos;
+  local T, record, word, pos, C;
 
   if IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)
@@ -293,6 +308,10 @@ function(S, x)
       pos := record.current_position(T, word);
     od;
     return pos + 1;
+  elif IsQuotientSemigroup(S) then
+    T := QuotientSemigroupPreimage(S);
+    C := QuotientSemigroupCongruence(S);
+    return CongruenceWordToClassIndex(C, Factorization(T, Representative(x)));
   fi;
 
   pos := FroidurePinMemFnRec(S).position(LibsemigroupsFroidurePin(S),
@@ -386,7 +405,7 @@ function(S)
   local F;
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+  elif IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     return Length(IdempotentsSubset(S, [1 .. Size(S)]));
   fi;
   F := LibsemigroupsFroidurePin(S);
@@ -534,7 +553,8 @@ function(S)
 
   if not IsFinite(S) then
     Error("the argument (a semigroup) is not finite");
-  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S) then
+  elif IsPartialPermSemigroup(S) or IsFpSemigroup(S) or IsFpMonoid(S)
+      or IsQuotientSemigroup(S) then
     # Special case required because < for libsemigroups ParialPerms and < for
     # GAP partial perms are different.
     return AsSet(S);
@@ -592,7 +612,7 @@ function(S)
     return PositionCanonical(S, x);
   end;
 
-  if IsFpSemigroup(S) or IsFpMonoid(S) then
+  if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     factorisation := FroidurePinMemFnRec(S).minimal_factorisation;
     enum.ElementNumber := function(enum, nr)
       if nr > Length(enum) then
@@ -650,7 +670,7 @@ function(enum, list)
     TryNextMethod();
   fi;
   result := EmptyPlist(Length(list));
-  if IsFpSemigroup(S) or IsFpMonoid(S) then
+  if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     factorisation := FroidurePinMemFnRec(S).minimal_factorisation;
     at := {T, nr} -> EvaluateWord(GeneratorsOfSemigroup(S),
                                   factorisation(T, nr) + 1);
@@ -698,7 +718,7 @@ function(S)
   N      := Size(S);
   result := List([1 .. N], x -> EmptyPlist(N));
   T := LibsemigroupsFroidurePin(S);
-  if IsFpSemigroup(S) or IsFpMonoid(S) then
+  if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     pos_to_pos_sorted := {T, i} -> i;
     product := FroidurePinMemFnRec(S).product_by_reduction;
     FroidurePinMemFnRec(S).enumerate(T, N);
@@ -724,10 +744,10 @@ end);
 # not copy then closure.
 
 InstallMethod(ClosureSemigroupOrMonoidNC,
-"for fn, CanUseLibsemigroupsFroidurePin, finite mult. elt list, and record",
+"for fn, CanUseLibsemigroupsFroidurePin, finite list, and record",
 [IsFunction,
  IsSemigroup and CanUseLibsemigroupsFroidurePin,
- IsMultiplicativeElementCollection and IsFinite and IsList,
+ IsFinite and IsList,
  IsRecord],
 function(Constructor, S, coll, opts)
   local n, R, M, N, CppT, add_generator, generator, T, x, i;
@@ -820,7 +840,7 @@ function(S, list)
   local product_by_reduction, is_idempotent, T;
   if not IsFinite(S) then
     Error("the 1st argument (a semigroup) is not finite");
-  elif IsFpSemigroup(S) or IsFpMonoid(S) then
+  elif IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     product_by_reduction := FroidurePinMemFnRec(S).product_by_reduction;
     is_idempotent := {T, x} -> product_by_reduction(T, x, x) = x;
   else

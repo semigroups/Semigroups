@@ -17,8 +17,14 @@
 
 InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 
+# We use IsListOrCollection here because some collections of semigroup
+# generators (such as elements/congruence classes in a quotient semigroup) do
+# not satisfy IsMultiplicativeElementCollection (although the classes
+# themselves do satisfy IsMultiplicativeElement).
 DeclareOperation("SemigroupByGenerators",
-                 [IsMultiplicativeElementCollection, IsRecord]);
+                 [IsListOrCollection]);
+DeclareOperation("SemigroupByGenerators",
+                 [IsListOrCollection, IsRecord]);
 DeclareOperation("MonoidByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("InverseMonoidByGenerators",
@@ -69,10 +75,14 @@ DeclareOperation("ClosureInverseMonoid",
 DeclareOperation("ClosureInverseSemigroupOrMonoidNC",
                  [IsFunction, IsSemigroup, IsList and IsFinite, IsRecord]);
 
+# We use IsListOrCollection here because some collections of semigroup
+# generators (such as elements/congruence classes in a quotient semigroup) do
+# not satisfy IsMultiplicativeElementCollection (although the classes
+# themselves do satisfy IsMultiplicativeElement).
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord]);
+                 [IsSemigroup, IsListOrCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsMultiplicativeElementCollection]);
+                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsListOrCollection and IsEmpty, IsRecord]);
 DeclareOperation("ClosureSemigroup",
