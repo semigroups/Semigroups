@@ -420,7 +420,9 @@ function(S, coll, opts)
   # coll is copied here to avoid doing it repeatedly in
   # ClosureSemigroupOrMonoidNC
 
-  if IsSemigroup(coll) then
+  if IsEmpty(coll) then
+    return S;
+  elif IsSemigroup(coll) then
     coll := GeneratorsOfSemigroup(coll);
   elif not IsList(coll) then
     coll := AsList(coll);
@@ -437,7 +439,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
-                  "(a mult. elt. coll.) cannot be used to ",
+                  "(a list or coll.) cannot be used to ",
                   "generate a semigroup");
   fi;
 
@@ -517,22 +519,6 @@ function(Constructor, S, coll, opts)
 
   return Constructor(S, coll, opts);
 end);
-
-# Both of these methods are required for ClosureSemigroup(NC) and an empty list
-# because ClosureSemigroup might be called with an empty list, it might be that
-# all of the elements in the collection passed to ClosureSemigroup already
-# belong to the semigroup, in which case we call ClosureSemigroupNC with an
-# empty list.
-
-InstallMethod(ClosureSemigroup,
-"for a semigroup, empty list or collection, and record",
-[IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
-{S, coll, opts} -> S);
-
-InstallMethod(ClosureSemigroupOrMonoidNC,
-"for a function, a semigroup, empty list, and record",
-[IsFunction, IsSemigroup, IsList and IsEmpty, IsRecord],
-{Construction, S, coll, opts} -> S);
 
 #############################################################################
 ## 5. ClosureInverseSemigroup

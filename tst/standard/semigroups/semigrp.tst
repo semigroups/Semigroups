@@ -150,12 +150,12 @@ gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 1, 0],
 gap> S := Semigroup(gens);
 <semigroup of 5x5 boolean matrices with 5 generators>
 gap> ClosureSemigroup(S, [x], SEMIGROUPS.OptionsRec(S));
-Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
-) cannot be used to generate a semigroup
+Error, the 1st argument (a semigroup) and the 2nd argument (a list or coll.) c\
+annot be used to generate a semigroup
 gap> ClosureSemigroup(S, [IdentityTransformation],
 > SEMIGROUPS.OptionsRec(S));
-Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
-) cannot be used to generate a semigroup
+Error, the 1st argument (a semigroup) and the 2nd argument (a list or coll.) c\
+annot be used to generate a semigroup
 
 # ClosureSemigroup 2
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
@@ -670,8 +670,8 @@ true
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
 >                   Bipartition([[1, -3], [2, 3, -1], [-2]]));;
 gap> T := ClosureSemigroup(S, IdentityBipartition(4));
-Error, the 1st argument (a semigroup) and the 2nd argument (a mult. elt. coll.\
-) cannot be used to generate a semigroup
+Error, the 1st argument (a semigroup) and the 2nd argument (a list or coll.) c\
+annot be used to generate a semigroup
 
 # ClosureSemigroup 4
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
