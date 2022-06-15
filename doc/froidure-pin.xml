@@ -1,13 +1,12 @@
 #############################################################################
 ##
 #W  froidure-pin.xml
-#Y  Copyright (C) 2017                                      Michael Young
+#Y  Copyright (C) 2017-2022                                 Michael Young
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
 
 <#GAPDoc Label="CanUseFroidurePin">
   <ManSection>
@@ -118,24 +117,24 @@ gap> Length(en);
       If the optional second argument <A>limit</A> is not given, then the
       semigroup is enumerated until all of its elements have been found. <P/>
 
-      <Log><![CDATA[
+      <Example><![CDATA[
 gap> S := FullTransformationMonoid(7);
 <full transformation monoid of degree 7>
 gap> Enumerate(S, 1000);
 <full transformation monoid of degree 7>
 gap> Display(S);
 <partially enumerated semigroup with 8197 elements, 
-224 rules, max word length 11>]]></Log>
+224 rules, max word length 11>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsEnumerated">
   <ManSection>
-    <Oper Name="IsEnumerated" Arg="S"/> 
+    <Oper Name="IsEnumerated" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      If <A>S</A> is a semigroup with representation 
+      If <A>S</A> is a semigroup with representation
       <Ref Prop="CanUseFroidurePin"/>, then this operation returns
       <K>true</K> if the Froidure-Pin Algorithm has been run to completion
       (i.e. all of the elements of <A>S</A> have been found) and <K>false</K>
@@ -146,17 +145,17 @@ gap> Display(S);
 
 <#GAPDoc Label="PositionCanonical">
   <ManSection>
-    <Oper Name="PositionCanonical" Arg="S, x"/> 
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Oper Name="PositionCanonical" Arg="S, x"/>
+    <Returns>A positive integer or <K>fail</K>.</Returns>
     <Description>
-      When the argument <A>S</A> is a semigroup satisfying 
+      When the argument <A>S</A> is a semigroup satisfying
       <Ref Prop="CanUseFroidurePin"/> and <A>x</A> is an element of
       <A>S</A>, <C>PositionCanonical</C>
-      returns the position of <A>x</A> in <C>AsListCanonical(<A>S</A>)</C> or 
+      returns the position of <A>x</A> in <C>AsListCanonical(<A>S</A>)</C> or
       equivalently the position of <A>x</A> in
       <C>EnumeratorCanonical(<A>S</A>)</C>.<P/>
 
-      See also <Ref Attr="AsListCanonical"/> and 
+      See also <Ref Attr="AsListCanonical"/> and
       <Ref Attr="EnumeratorCanonical"/>.
       <Example><![CDATA[
 gap> S := FullTropicalMaxPlusMonoid(2, 3);
@@ -173,20 +172,20 @@ true]]></Example>
 
 <#GAPDoc Label="RightCayleyDigraph">
   <ManSection>
-    <Attr Name="RightCayleyDigraph" Arg="S"/> 
-    <Attr Name="LeftCayleyDigraph" Arg="S"/> 
-    <Returns>A list of lists of positive integers.</Returns>
+    <Attr Name="RightCayleyDigraph" Arg="S"/>
+    <Attr Name="LeftCayleyDigraph" Arg="S"/>
+    <Returns>A digraph.</Returns>
     <Description>
-      When the argument <A>S</A> is a semigroup satisfying 
-      <Ref Prop="CanUseFroidurePin"/>, 
+      When the argument <A>S</A> is a semigroup satisfying
+      <Ref Prop="CanUseFroidurePin"/>,
       <C>RightCayleyDigraph</C> returns the right
-      Cayley graphs of <A>S</A>, as a <Ref Oper="Digraph" BookName="digraphs"/>
-      <C>digraph</C> where vertex <C>OutNeighbours(digraph)[i][j]</C> is 
+      Cayley graph of <A>S</A>, as a <Ref Oper="Digraph" BookName="digraphs"/>
+      <C>digraph</C> where vertex <C>OutNeighbours(digraph)[i][j]</C> is
       <C>PositionCanonical(<A>S</A>, AsListCanonical(<A>S</A>)[i] *
         GeneratorsOfSemigroup(<A>S</A>)[j])</C>.
       The digraph returned by <C>LeftCayleyDigraph</C> is defined analogously.<P/>
 
-      The digraph returned by this attribute belongs to the category 
+      The digraph returned by this attribute belongs to the category
       <Ref Filt="IsCayleyDigraph" BookName="digraphs"/>, the semigroup <A>S</A>
       and the generators used to create the digraph can be recovered from the
       digraph using  <Ref Attr="SemigroupOfCayleyDigraph" BookName="digraphs"/>
