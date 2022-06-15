@@ -540,10 +540,10 @@ a relation that is redundant in the presentation <stz>]]>
 
       A new name for the generator is chosen and added automatically based on
       the names of the existing generators to <Ref
-        Oper="GeneratorsOfStzPresentation"/> if the argument <A>name</A> is not
-        included. If it is, and if <A>name</A> is a string that is not equal to
-        an existing generator, then the string added to the list of generators
-        will be <A>name</A> instead.
+        Attr="GeneratorsOfStzPresentation"/> if the argument <A>name</A> is not
+      included. If it is, and if <A>name</A> is a string that is not equal to
+      an existing generator, then the string added to the list of generators
+      will be <A>name</A> instead.
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>

@@ -61,6 +61,11 @@ gap> Size(S);
       </Item>
     </List>
     This monoid has nearly <C>2 ^ (n ^ 2)</C> elements. 
+      <Example><![CDATA[
+gap> S := RegularBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
+gap> Size(S);
+506]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

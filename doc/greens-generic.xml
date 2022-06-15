@@ -898,18 +898,19 @@ gap> AsSet(RegularDClasses(S));
   <Attr Name = "PartialOrderOfDClasses" Arg = "S"/>
   <Attr Name = "PartialOrderOfLClasses" Arg = "S"/>
   <Attr Name = "PartialOrderOfRClasses" Arg = "S"/>
-  <Returns>The partial order of the &D;, &L;, or &R;-classes of <A>S</A>.
+  <Returns>
+    A digraph.
   </Returns>
   <Description>
-    <!-- TODO(5.0) Should return a digraph, as it now does for D classes -->
     Let <C>X</C> be one of Green's &D;-, &L;-, or &R;-relations. Then
-    <C>PartialOrderOfXClasses</C> returns a list <C>list</C> where
-    <C>list[i]</C> contains every <C>j</C> such that <C>GreensXClasses(S)[j]</C>
-    is immediately less than <C>GreensXClasses(S)[i]</C> in the partial order of
-    <C>X</C>-classes of <A>S</A>. There might be other indices in <C>list</C>,
-    and it may or may not include <C>i</C>.  The reflexive transitive closure of
-    the relation defined by <C>list</C> is the partial order of <C>X</C>-classes
-    of <A>S</A>. <P/>
+    <C>PartialOrderOfXClasses</C> returns a digraph <C>D</C> where
+    <C>OutNeighbours(D)[i]</C> contains every <C>j</C> such that
+    <C>GreensXClasses(S)[j]</C> is immediately less than
+    <C>GreensXClasses(S)[i]</C> in the partial order of <C>X</C>-classes of
+    <A>S</A>. The reflexive transitive closure of the digraph <C>D</C> is the
+    partial order of <C>X</C>-classes of <A>S</A> (in the sense of the
+      &DIGRAPHS; package). 
+    <P/>
 
     The partial order on the <C>X</C>-classes is defined as follows.
     <List>
