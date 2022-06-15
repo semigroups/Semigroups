@@ -30,6 +30,25 @@ InstallImmediateMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
                        0,
                        GeneratingPairsOfRightMagmaCongruence);
 
+# Some types of congruences (such as CongruenceByKernelAndTrace) do not know
+# their generating pairs by default, and hence we require the following methods
+# in addition to the immediate methods above.
+
+InstallMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+GeneratingPairsOfRightMagmaCongruence);
+
+InstallMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+GeneratingPairsOfLeftMagmaCongruence);
+
+InstallMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+GeneratingPairsOfMagmaCongruence);
+
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for semigroup congruence",
 [IsSemigroupCongruence],

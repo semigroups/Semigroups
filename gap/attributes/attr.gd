@@ -27,8 +27,12 @@ DeclareAttribute("NormalizedPrincipalFactor", IsGreensDClass);
 DeclareAttribute("MultiplicativeZero", IsSemigroup);
 DeclareAttribute("LengthOfLongestDClassChain", IsSemigroup);
 
+# We use IsListOrCollection here because some collections of semigroup
+# generators (such as elements/congruence classes in a quotient semigroup) do
+# not satisfy IsMultiplicativeElementCollection (although the classes
+# themselves do satisfy IsMultiplicativeElement).
 DeclareAttribute("SmallSemigroupGeneratingSet",
-                 IsMultiplicativeElementCollection);
+                 IsListOrCollection);
 DeclareAttribute("SmallMonoidGeneratingSet",
                  IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",

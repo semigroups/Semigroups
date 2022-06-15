@@ -146,15 +146,15 @@ InstallMethod(MagmaByGenerators,
 [IsAssociativeElementCollection and IsFinite], SemigroupByGenerators);
 
 InstallMethod(SemigroupByGenerators,
-"for a finite multiplicative element collection",
-[IsMultiplicativeElementCollection and IsFinite],
+"for a finite list or collection",
+[IsListOrCollection and IsFinite],
 function(coll)
   return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 InstallMethod(SemigroupByGenerators,
-"for a finite multiplicative element collection and record",
-[IsMultiplicativeElementCollection and IsFinite, IsRecord],
+"for a finite list or collection and record",
+[IsListOrCollection and IsFinite, IsRecord],
 function(gens, opts)
   local filts, S;
 
@@ -373,8 +373,8 @@ end);
 #############################################################################
 
 InstallMethod(ClosureSemigroup,
-"for a semigroup and finite multiplicative element collection",
-[IsSemigroup, IsMultiplicativeElementCollection and IsFinite],
+"for a semigroup and finite list or collection",
+[IsSemigroup, IsListOrCollection and IsFinite],
 function(S, coll)
   return ClosureSemigroup(S, coll, SEMIGROUPS.OptionsRec(S));
 end);
@@ -413,14 +413,16 @@ function(S, x, opts)
 end);
 
 InstallMethod(ClosureSemigroup,
-"for a semigroup, finite multiplicative element collection, and record",
-[IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
+"for a semigroup, finite list or collection, and record",
+[IsSemigroup, IsListOrCollection and IsFinite, IsRecord],
 function(S, coll, opts)
 
   # coll is copied here to avoid doing it repeatedly in
   # ClosureSemigroupOrMonoidNC
 
-  if IsSemigroup(coll) then
+  if IsEmpty(coll) then
+    return S;
+  elif IsSemigroup(coll) then
     coll := GeneratorsOfSemigroup(coll);
   elif not IsList(coll) then
     coll := AsList(coll);
@@ -437,7 +439,7 @@ function(S, coll, opts)
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
     ErrorNoReturn("the 1st argument (a semigroup) and the 2nd argument ",
-                  "(a mult. elt. coll.) cannot be used to ",
+                  "(a list or coll.) cannot be used to ",
                   "generate a semigroup");
   fi;
 
@@ -494,11 +496,8 @@ function(S, coll, opts)
 end);
 
 InstallMethod(ClosureSemigroupOrMonoidNC,
-"for a function, semigroup, finite mult. element collection, and record",
-[IsFunction,
- IsSemigroup,
- IsMultiplicativeElementCollection and IsFinite and IsList,
- IsRecord],
+"for a function, semigroup, finite list, and record",
+[IsFunction, IsSemigroup, IsList and IsFinite, IsRecord],
 function(Constructor, S, coll, opts)
   local n;
 
@@ -520,22 +519,6 @@ function(Constructor, S, coll, opts)
 
   return Constructor(S, coll, opts);
 end);
-
-# Both of these methods are required for ClosureSemigroup(NC) and an empty list
-# because ClosureSemigroup might be called with an empty list, it might be that
-# all of the elements in the collection passed to ClosureSemigroup already
-# belong to the semigroup, in which case we call ClosureSemigroupNC with an
-# empty list.
-
-InstallMethod(ClosureSemigroup,
-"for a semigroup, empty list or collection, and record",
-[IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
-{S, coll, opts} -> S);
-
-InstallMethod(ClosureSemigroupOrMonoidNC,
-"for a function, a semigroup, empty list, and record",
-[IsFunction, IsSemigroup, IsList and IsEmpty, IsRecord],
-{Construction, S, coll, opts} -> S);
 
 #############################################################################
 ## 5. ClosureInverseSemigroup

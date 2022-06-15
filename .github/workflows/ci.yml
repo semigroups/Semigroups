@@ -45,9 +45,12 @@ jobs:
       # Setup ccache, to speed up repeated compilation of the same binaries
       # (i.e., GAP and the packages)
       - name: "Setup ccache"
+        if: ${{ runner.os != 'Windows' }}
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
+          override_cache_key: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         env:

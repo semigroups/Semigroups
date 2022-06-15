@@ -70,9 +70,17 @@ function(R)
   return CanUseFroidurePin(ParentAttr(R));
 end);
 
+# The next method is supposed to catch proper subsemigroups of quotient
+# semigroups
 InstallImmediateMethod(CanUseGapFroidurePin,
-IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
-S -> CanUseFroidurePin(QuotientSemigroupPreimage(S)));
+IsAssociativeElementCollColl and HasGeneratorsOfSemigroup, 0,
+function(S)
+  if IsEmpty(GeneratorsOfSemigroup(S)) then
+    return false;
+  fi;
+  return (not IsQuotientSemigroup(S))
+    and IsCongruenceClass(GeneratorsOfSemigroup(S)[1]);
+end);
 
 InstallTrueMethod(CanUseGapFroidurePin,
 IsSemigroupIdeal and IsReesMatrixSubsemigroup);

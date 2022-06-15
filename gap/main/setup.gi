@@ -15,8 +15,8 @@
 # IsGeneratorsOfActingSemigroup
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for a multiplicative element collection",
-[IsMultiplicativeElementCollection], ReturnFalse);
+"for a list or collection",
+[IsListOrCollection], ReturnFalse);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.

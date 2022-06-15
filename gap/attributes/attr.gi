@@ -288,9 +288,8 @@ InstallMethod(NormalizedPrincipalFactor, "for a Green's D-class",
 
 # different method for ideals, not yet implemented
 
-InstallMethod(SmallSemigroupGeneratingSet,
-"for a multiplicative element collection",
-[IsMultiplicativeElementCollection],
+InstallMethod(SmallSemigroupGeneratingSet, "for a list or collection",
+[IsListOrCollection],
 function(coll)
   if Length(coll) < 2 then
     return coll;

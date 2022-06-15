@@ -561,3 +561,27 @@ function(S)
 
   return InverseSemigroupCongruenceByKernelTraceNC(S, ker, traceBlocks);
 end);
+
+# TODO(later) this is a completely generic version implementation, surely we
+# can do better than this!
+
+InstallMethod(GeneratingPairsOfMagmaCongruence,
+"for inverse semigroup congruence by kernel and trace",
+[IsInverseSemigroupCongruenceByKernelTrace],
+function(C)
+  local CC, pairs, class, i, j;
+
+  CC := SemigroupCongruenceByGeneratingPairs(Source(C), []);
+  for class in EquivalenceRelationPartition(C) do
+    for i in [1 .. Length(class) - 1] do
+      for j in [i + 1 .. Length(class)] do
+        if not [class[i], class[j]] in CC then
+          pairs := GeneratingPairsOfSemigroupCongruence(CC);
+          pairs := Concatenation(pairs, [[class[i], class[j]]]);
+          CC := SemigroupCongruenceByGeneratingPairs(Source(C), pairs);
+        fi;
+      od;
+    od;
+  od;
+  return pairs;
+end);

@@ -237,6 +237,30 @@ function(cong1, cong2)
   return CongruenceByWangPair(S, Union(H, X), Difference(W, Union(H, X)));
 end);
 
+InstallMethod(MeetSemigroupCongruences,
+"for two congruences by Wang pair",
+[IsCongruenceByWangPair, IsCongruenceByWangPair],
+function(cong1, cong2)
+  local out, H1, H2, W1, W2, H, V0, v;
+  out := OutNeighbours(GraphOfGraphInverseSemigroup(Source(cong1)));
+  H1 := cong1!.H;
+  H2 := cong2!.H;
+  W1 := cong1!.W;
+  W2 := cong2!.W;
+  H := Union(H1, H2);
+  V0 := [];
+  for v in Difference(Union(W1, W2), H) do
+    if ForAll(out[v], w -> w in H) then
+      Add(V0, v);
+    fi;
+  od;
+  return CongruenceByWangPair(Source(cong1),
+                              Intersection(H1, H2),
+                              Union(Intersection(W1, H2),
+                                    Intersection(W2, H1),
+                                    Difference(Intersection(W1, W2), V0)));
+end);
+
 InstallMethod(IsSubrelation,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],

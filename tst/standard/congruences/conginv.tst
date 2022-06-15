@@ -167,8 +167,8 @@ gap> cong := SemigroupCongruence(S,
 gap> [2] in cong;
 Error, the 1st argument (a list) does not have length 2
 gap> [PartialPerm([4], [4]), 42] in cong;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `in' on 2 arguments
+Error, the items in the 1st argument (a list) do not all belong to the range o\
+f the 2nd argument (a 2-sided semigroup congruence)
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
 Error, the 2nd argument (a mult. elt.) does not belong to the range of the 1st\
  argument (a 2-sided congruence)

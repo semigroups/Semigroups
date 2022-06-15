@@ -26,12 +26,10 @@ function(re)
   fi;
 end);
 
-_STANDREWS := Concatenation(["Mathematical Institute, ",
-                             "North Haugh, ",
-                             "St Andrews, ",
-                             "Fife, ",
-                             "KY16 9SS, ",
-                             "Scotland"]);
+_STANDREWSMATHS := Concatenation(["Mathematical Institute, North Haugh, ",
+                                  "St Andrews, Fife, KY16 9SS, Scotland"]);
+_STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
+                               "St Andrews, Fife, KY16 9SX, Scotland"]);
 
 SetPackageInfo(rec(
 PackageName := "Semigroups",
@@ -64,45 +62,61 @@ Persons := [
     IsMaintainer  := true,
     Email         := "jdm3@st-andrews.ac.uk",
     WWWHome       := "https://jdbm.me",
-    PostalAddress := _STANDREWS,
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
   rec(
-    LastName     := "Burrell",
+    LastName      := "Anagnostopoulou-Merkouri",
+    FirstNames    := "Marina",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mam49@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews",
+    WWWHome       := "https://github.com/marinaanagno"),
+
+  rec(
+    LastName      := "Burrell",
     FirstNames    := "Stuart",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "sb235@st-andrews.ac.uk ",
-    WWWHome       := "https://stuartburrell.github.io",
-    PostalAddress := _STANDREWS,
+    WWWHome       := "https://stuartburrell.github.io"),
+
+  rec(
+    LastName      := "Cirpons",
+    FirstNames    := "Reinis",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "rc234@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    Institution   := "University of St Andrews",
+    WWWHome       := "https://reinisc.id.lv/"),
 
   rec(
-    LastName      := "Delgado",
-    FirstNames    := "Manuel",
-    IsAuthor      := false,
+    LastName      := "Conti-Leslie",
+    FirstNames    := "Tom",
+    IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "mdelgado@fc.up.pt",
-    WWWHome       := "https://cmup.fc.up.pt/cmup/mdelgado/",
-    Place         := "Porto",
-    Institution   := "Universidade do Porto"),
+    WWWHome       := "https://tomcontileslie.com/"),
 
   rec(
-    LastName      := "East",
-    FirstNames    := "James",
-    IsAuthor      := false,
+    LastName      := "Edwards",
+    FirstNames    := "Joe",
+    IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "j.east@uws.edu.au",
-    WWWHome       := "https://goo.gl/MuiJu5",
-    Place         := "Sydney",
-    Institution   := "Western Sydney University"),
+    Email         := "jde1@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews",
+    WWWHome       := "https://github.com/Joseph-Edwards"),
 
   rec(
     LastName      := "Egri-Nagy",
     FirstNames    := "Attila",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "attila@egri-nagy.hu",
     WWWHome       := "http://www.egri-nagy.hu",
@@ -112,18 +126,25 @@ Persons := [
   rec(
     LastName      := "Elliott",
     FirstNames    := "Luke",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "le27@st-andrews.ac.uk",
     WWWHome       := "https://le27.github.io/Luke-Elliott/",
-    PostalAddress := _STANDREWS,
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
   rec(
+    LastName      := "Flores Brito",
+    FirstNames    := "Fernando",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "https://github.com/ffloresbrito"),
+
+  rec(
     LastName      := "Ham",
     FirstNames    := "Nicholas",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "nicholas.charles.ham@gmail.com",
     WWWHome       := "https://n-ham.github.io",
@@ -131,9 +152,16 @@ Persons := [
     Institution   := "University of Tasmania"),
 
   rec(
+    LastName      := "Hancock",
+    FirstNames    := "Robert",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "https://sites.google.com/view/robert-hancock/"),
+
+  rec(
     LastName      := "Horn",
     FirstNames    := "Max",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "horn@mathematik.uni-kl.de",
     WWWHome       := "https://www.quendi.de/math",
@@ -149,30 +177,38 @@ Persons := [
   rec(
     LastName      := "Jefferson",
     FirstNames    := "Christopher",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "caj21@st-andrews.ac.uk",
     WWWHome       := "https://caj.host.cs.st-andrews.ac.uk/",
+    PostalAddress := _STANDREWSCS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
   rec(
     LastName      := "Jonusas",
     FirstNames    := "Julius",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "julius.jonusas@tuwien.ac.at",
     WWWHome       := "http://julius.jonusas.work",
-    PostalAddress := Concatenation([
-                       "Institut für Diskrete Mathematik und Geometrie, ",
-                       "Wiedner Hauptstrasse 8-10, 1040 Wien, Austria"]),
-    Place         := "Wien, Austria",
-    Institution   := "TU Wien"),
+    Place         := "Brussels, Belgium"),
+
+  rec(
+    LastName      := "Konovalov",
+    FirstNames    := "Olexandr",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "obk1@st-andrews.ac.uk",
+    WWWHome       :=
+      "https://www.st-andrews.ac.uk/computer-science/people/obk1/",
+    PostalAddress := _STANDREWSCS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
 
   rec(
     LastName      := "Pasechnik",
     FirstNames    := "Dima V.",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "dmitrii.pasechnik@cs.ox.ac.uk",
     WWWHome       := "http://users.ox.ac.uk/~coml0531/",
@@ -183,86 +219,102 @@ Persons := [
     Place         := "Oxford",
     Institution   := "University of Oxford"),
 
-   rec(
+  rec(
     LastName      := "Pfeiffer",
     FirstNames    := "Markus",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
-    WWWHome       := "https://www.morphism.de/~markusp/",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    WWWHome       := "https://www.morphism.de/~markusp/"),
 
   rec(
     LastName      := "Russell",
     FirstNames    := "Christopher",
-    IsAuthor      := false,
-    IsMaintainer  := false,
-    Email         := "cr66@st-andrews.ac.uk",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    IsAuthor      := true,
+    IsMaintainer  := false),
 
   rec(
-    LastName      := "Steinberg",
-    FirstNames    := "Benjamin",
-    IsAuthor      := false,
+    LastName      := "Schmidt",
+    FirstNames    := "Jack",
+    IsAuthor      := true,
     IsMaintainer  := false,
-    WWWHome       := "https://bsteinberg.ccny.cuny.edu/Webpage/"),
+    Email         := "jack.schmidt@uky.edu",
+    WWWHome       := "https://www.ms.uky.edu/~jack/"),
+
+  rec(
+    LastName      := "Siccha",
+    FirstNames    := "Sergio",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "sergio.siccha@gmail.com"),
 
   rec(
     LastName      := "Smith",
     FirstNames    := "Finn",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "fls3@st-andrews.ac.uk",
-    PostalAddress := _STANDREWS,
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
-    Institution   := "University of St Andrews"),
+    Institution   := "University of St Andrews",
+    WWWHome       := "https://flsmith.github.io/"),
 
   rec(
-    LastName      := "Smith",
-    FirstNames    := "Jhevon",
-    IsAuthor      := false,
+    LastName      := "Spiers",
+    FirstNames    := "Ben",
+    IsAuthor      := true,
     IsMaintainer  := false,
-    WWWHome       := "https://math.sci.ccny.cuny.edu/person/jhevon-smith/"),
+    Email         := "bspiers972@outlook.com"),
+
+  rec(
+    LastName      := "Thiéry",
+    FirstNames    := "Nicolas",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "nthiery@users.sf.net",
+    WWWHome       := "https://nicolas.thiery.name/",
+    Place         := "Paris",
+    Institution   := "Université Paris Sud"),
 
   rec(
     LastName      := "Tsalakou",
     FirstNames    := "Maria",
-    IsAuthor      := false,
+    IsAuthor      := true,
     IsMaintainer  := false,
-    WWWHome       := "https://mariatsalakou.github.io/"),
-
-  rec(
-    LastName      := "Whyte",
-    FirstNames    := "Murray",
-    IsAuthor      := false,
-    IsMaintainer  := false,
-    Email         := "mw231@st-andrews.ac.uk",
-    PostalAddress := _STANDREWS,
+    Email         := "mt200@st-andrews.ac.uk",
+    WWWHome       := "https://mariatsalakou.github.io/",
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
-  rec(
-    LastName      := "Wilson",
-    FirstNames    := "Wilf A.",
-    IsAuthor      := false,
-    IsMaintainer  := false,
-    Email         := "gap@wilf-wilson.net",
-    WWWHome       := "https://wilf.me"),
+   rec(
+     LastName      := "Whyte",
+     FirstNames    := "Murray",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "mw231@st-andrews.ac.uk",
+     PostalAddress := _STANDREWSMATHS,
+     Place         := "St Andrews",
+     Institution   := "University of St Andrews"),
 
-  rec(
-    LastName      := "Young",
-    FirstNames    := "Michael",
-    IsAuthor      := false,
-    IsMaintainer  := false,
-    Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "https://mct25.host.cs.st-andrews.ac.uk",
-    PostalAddress := _STANDREWS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews")],
+   rec(
+     LastName      := "Wilson",
+     FirstNames    := "Wilf A.",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "gap@wilf-wilson.net",
+     WWWHome       := "https://wilf.me"),
+
+   rec(
+     LastName      := "Young",
+     FirstNames    := "Michael",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "mct25@st-and.ac.uk",
+     WWWHome       := "https://mtorpey.github.io/",
+     PostalAddress := _STANDREWSCS,
+     Place         := "St Andrews",
+     Institution   := "University of St Andrews")],
 
 Status := "deposited",
 
@@ -359,87 +411,63 @@ AutoDoc := rec(
           drawing graphical representations of certain types of elements.""",
 
         Acknowledgements := """
-        I would like to thank:
-
+        The authors of the &SEMIGROUPS; package would like to thank:
         <List>
           <Mark>
-            Stuart Burrell
-          </Mark>
-          <Item>
-            who contributed methods for checking finiteness of semigroups of
-            matrices of the max-plus and min-plus semirings.
-          </Item>
-          <Mark>
-            Manuel Delgado and Attila Egri-Nagy
+            Manuel Delgado
           </Mark>
           <Item>
             who contributed to the function <Ref Oper = "DotString"/>.
           </Item>
+
           <Mark>
-            James East, Attila Egri-Nagy, and Markus Pfeiffer
+            Casey Donoven and Rhiannon Dougall
+          </Mark>
+          <Item>
+            for their contribution to the development of the algorithms for
+            maximal subsemigroups and smaller degree partial permutation
+            representations.
+          </Item>
+
+          <Mark>
+            James East
           </Mark>
           <Item>
             who contributed to the part of the package relating to
-            bipartitions. I would like to thank the University of Western
-            Sydney for their support of the development of this part of the
-            package.
+            bipartitions. We also thank the University of Western Sydney for
+            their support of the development of this part of the package.
           </Item>
+
           <Mark>
-            Nick Ham
+            Zak Mesyan
           </Mark>
           <Item>
-            who contributed many of the standard examples of bipartition
-            semigroups.
+            who contributed to the code for graph inverse semigroups; see
+            Section <Ref Sect="Graph inverse semigroups"/>.
+          </Item>
+
+          <Mark>
+            Yann P&#233;resse and Yanhui Wang
+          </Mark>
+          <Item>
+            who contributed to the attribute <Ref Attr = "MunnSemigroup"/>.
+          </Item>
+
+          <Mark>
+            Jhevon Smith and Ben Steinberg
+          </Mark>
+          <Item>
+            who contributed the function
+            <Ref Attr = "CharacterTableOfInverseSemigroup"/>.
           </Item>
         </List>
-
-        Max Horn contributed many patches and fixes, in particular, to the
-        kernel module.
-        <P/>
-
-        Chris Jefferson contributed several patches and fixes to the build
-        system.  <P/>
-
-        Julius Jonu&#353;as contributed the part of the package relating to
-        free inverse semigroups, free bands, and contributed to the code for
-        ideals.
-        <P/>
-
-        Zak Mesyan contributed to the code for graph inverse semigroups; see
-        Section <Ref Sect="Graph inverse semigroups"/>.<P/>
-
-        Dima Pasechnik contributed to the build system of the kernel module.
-        <P/>
-
-        Markus Pfeiffer contributed the majority of the code relating to
-        semigroups of matrices over finite fields.
-        <P/>
-
-        Yann P&#233;resse and Yanhui Wang contributed to the attribute
-        <Ref Attr = "MunnSemigroup"/>.<P/>
-
-        Jhevon Smith and Ben Steinberg contributed the function
-        <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
-
-        Michael Young contributed the part of the package relating to
-        congruences.  <P/>
-
-        Murray Whyte was kind enough to update the bibliography in 2019.
-        <P/>
-
-        Wilf A. Wilson contributed to the part of the package relating maximal
-        subsemigroups and smaller degree partial permutation representations of
-        inverse semigroups. We are also grateful to C. Donoven and R. Hancock
-        for their contribution to the development of the algorithms for maximal
-          subsemigroups and smaller degree partial permutation representations.
-        <P/>
-
         We would also like to acknowledge the support of: EPSRC grant number
         GR/S/56085/01; the Carnegie Trust for the Universities of Scotland
         for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A.
         Wilson when they worked on this project; the Engineering and Physical
-        Sciences Research Council (EPSRC) for funding the PhD scholarship of
-        M. Young when he worked on this project (EP/M506631/1).""")),
+        Sciences Research Council (EPSRC) for funding the PhD scholarships of
+        F. Smith (EP/N509759/1) and M. Young (EP/M506631/1) when they worked on
+        this project.""")),
 
         AbstractHTML := ~.AutoDoc.TitlePage.Abstract));
 
