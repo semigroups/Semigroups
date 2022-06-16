@@ -100,9 +100,8 @@ end;
 SEMIGROUPS.LeftTransToNormalRMSTuple := function(S, x)
   local I, G, one, gpfunc, trans, s, t, i;
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("SEMIGROUPS.LeftTransToNormalRMSTuple: \n",
-                  "the first argument should be a normalised RMS over a",
-                  " group,");
+    ErrorNoReturn("the first argument should be a normalised RMS over a ",
+                  "group");
   fi;
 
   I       := Rows(S);
@@ -126,9 +125,8 @@ SEMIGROUPS.LeftTransToNormalRMSTuple := function(S, x)
       gpfunc[i] := t![2];
     od;
   else
-    ErrorNoReturn("SEMIGROUPS.LeftTransToNormalRMSTuple: \n",
-                  "the second argument should be a transformation on the",
-                  " indices of the semigroup or a mapping on the semigroup,");
+    ErrorNoReturn("the second argument should be a transformation on the ",
+                  "indices of the semigroup or a mapping on the semigroup");
   fi;
   return [gpfunc, Transformation(trans)];
 end;
@@ -136,9 +134,8 @@ end;
 SEMIGROUPS.RightTransToNormalRMSTuple := function(S, x)
   local J, G, one, gpfunc, trans, s, t, j;
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("SEMIGROUPS.RightTransToNormalRMSTuple: \n",
-                  "the first argument should be a normalised RMS over a",
-                  " group,");
+    ErrorNoReturn("the first argument should be a normalised RMS over a ",
+                  "group");
   fi;
 
   J       := Columns(S);
@@ -162,9 +159,8 @@ SEMIGROUPS.RightTransToNormalRMSTuple := function(S, x)
       gpfunc[j] := t![2];
     od;
   else
-    ErrorNoReturn("SEMIGROUPS.RightTransToNormalRMSTuple: \n",
-                  "the second argument should be a transformation on the",
-                  " indices of the semigroup or a mapping on the semigroup,");
+    ErrorNoReturn("the second argument should be a transformation on the ",
+                  "indices of the semigroup or a mapping on the semigroup");
   fi;
   return [gpfunc, Transformation(trans)];
 end;
@@ -441,11 +437,11 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
                                                        c, d_inv, a, x, y)
   local I, M, tau, sigma, bt, out;
 
-  I := Rows(S);
-  M := Columns(S);
-  
-  tau := [x];
-  sigma := List(I, i -> List(M, mu -> ShallowCopy(M)));
+  I           := Rows(S);
+  M           := Columns(S); 
+  tau         := [x];
+  sigma       := List(I, i -> List(M, mu -> ShallowCopy(M)));
+  sigma[1][1] := [y];
 
   bt := function(k) 
     local g_pos, consistent, j, mu, tup;
@@ -480,8 +476,8 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
 end;
 
 SEMIGROUPS.NormalRMSLinkedTriples := function(S)
-  local I, M, iso, inv, G, mat, mat_inv_rows, params, b, d_inv, c, out, i, mu,
-  a, x, y, p, func_pair;
+  local I, M, iso, inv, G, mat, mat_inv_rows, out, b, d_inv, c, triple, i, mu,
+  a, x, y, func_pair, func;
 
   I := Rows(S);
   M := Columns(S);
@@ -500,30 +496,25 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
     od;
   od;
 
-  params := [];
+  out := [];
   for a in G do
     b := AsPermutation(a) ^ inv;
     for x in I do
       d_inv := List(M, mu -> (mat[mu][x] * a) ^ -1);
       for y in M do
         c := List(I, i -> a * mat[y][i]);
-        AddSet(params, [a, b, x, y, d_inv, c]);
+        for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
+                                                                    G,
+                                                                    mat,
+                                                                    mat_inv_rows,
+                                                                    c,
+                                                                    d_inv,
+                                                                    a,
+                                                                    x,
+                                                                    y) do
+          Add(out, Concatenation([b], func_pair));
+        od;
       od;
-    od;
-  od;
-  
-  out := [];
-  for p in params do
-    for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
-                                                                G,
-                                                                mat,
-                                                                mat_inv_rows,
-                                                                p[6],
-                                                                p[5],
-                                                                p[1],
-                                                                p[3],
-                                                                p[4]) do
-      Add(out, Concatenation([p[2]], func_pair));
     od;
   od;
   return out;
@@ -532,7 +523,7 @@ end;
 SEMIGROUPS.BitranslationsOfNormalRMS := function(S)
   local out, H, triple;
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("Usage: the argument must be a normalised RMS over a group");
+    ErrorNoReturn("the argument must be a normalised RMS over a group");
   fi;
   out := [];
   H   := TranslationalHull(S);
@@ -587,8 +578,12 @@ SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, triple)
   leftgpfunc  := List(I, i -> triple[1] * P[1 ^ triple[3]][i]);
   rightgpfunc := List(M, mu -> P[mu][1 ^ triple[2]] * triple[1]);
 
-  l := LeftTranslationOfNormalRMS(S, leftgpfunc, triple[2]);
-  r := RightTranslationOfNormalRMS(S, rightgpfunc, triple[3]);
+  l := LeftTranslationOfNormalRMSNC(LeftTranslations(S),
+                                    leftgpfunc,
+                                    triple[2]);
+  r := RightTranslationOfNormalRMSNC(RightTranslations(S),
+                                     rightgpfunc,
+                                     triple[3]);
 
   return BitranslationOfNormalRMSNC(H, l, r);
 end;
@@ -718,7 +713,7 @@ function(T)
   for t in GeneratorsOfSemigroup(FullTransformationMonoid(n)) do
     if L then
       if IsNRMS then
-        Add(gens, LeftTranslationOfNormalRMS(S, idgpfunc, t));
+        Add(gens, LeftTranslationOfNormalRMS(T, idgpfunc, t));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1] ^ t,
@@ -732,7 +727,7 @@ function(T)
       fi;
     else
       if IsNRMS then
-        Add(gens, RightTranslationOfNormalRMS(S, idgpfunc, t));
+        Add(gens, RightTranslationOfNormalRMS(T, idgpfunc, t));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1],
@@ -756,7 +751,7 @@ function(T)
     end;
     if L then
       if IsNRMS then
-        Add(gens, LeftTranslationOfNormalRMS(S,
+        Add(gens, LeftTranslationOfNormalRMS(T,
                                              List([1 .. n], i -> fa(i)),
                                              IdentityTransformation));
       else
@@ -772,9 +767,9 @@ function(T)
       fi;
     else
       if IsNRMS then
-        Add(gens, RightTranslationOfNormalRMS(S,
-                                             List([1 .. n], i -> fa(i)),
-                                             IdentityTransformation));
+        Add(gens, RightTranslationOfNormalRMS(T,
+                                              List([1 .. n], i -> fa(i)),
+                                              IdentityTransformation));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1],
@@ -834,12 +829,15 @@ end);
 # gpfunc should be a function (represented as a list) from I to G
 # t should be a transformation of I
 InstallGlobalFunction(LeftTranslationOfNormalRMS,
-function(S, gpfunc, t)
-  local G;
+function(L, gpfunc, t)
+  local S, G;
 
-  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: usage:\n",
-                    "the first argument must be a normalised RMS over ",
+  S := UnderlyingSemigroup(L);
+
+  if not (IsLeftTranslationsSemigroup(L) and 
+         SEMIGROUPS.IsNormalRMSOverGroup(S)) then
+      ErrorNoReturn("the first argument must be a semigroups of left ",
+                    "translations over a normalised RMS over ",
                     "a group");
   fi;
 
@@ -848,25 +846,24 @@ function(S, gpfunc, t)
   if not (IsList(gpfunc) and
           ForAll(gpfunc, x -> x in G) and
           Size(gpfunc) = Size(Matrix(S)[1])) then
-    ErrorNoReturn("Semigroups: LeftTranslationOfNormalRMS: usage:\n",
-                  "the second argument must be a list of group elements ",
-                  "of length equal to the number of rows of the first ",
-                  "argument,");
+    ErrorNoReturn("the second argument must be a list of group elements ",
+                  "of length equal to the number of rows of the underlying ",
+                  "semigroup of the first argument");
   fi;
 
   if not (IsTransformation(t) and
           DegreeOfTransformation(t) <= Size(Matrix(S)[1])) then
-    ErrorNoReturn("Semigroups: LeftTranslationOfNormalRMS: usage:\n",
-                  "the third argument must be a transformation on ",
-                  "the number of rows of the first argument,");
+    ErrorNoReturn("the third argument must be a transformation on ",
+                  "the number of rows of the underlying semigroup of the ",
+                  "first argument");
   fi;
 
-  return LeftTranslationOfNormalRMSNC(S, gpfunc, t);
+  return LeftTranslationOfNormalRMSNC(L, gpfunc, t);
 end);
 
 InstallGlobalFunction(LeftTranslationOfNormalRMSNC,
-function(S, gpfunc, t)
-  return Objectify(TypeLeftTranslationsSemigroupElements(LeftTranslations(S)),
+function(L, gpfunc, t)
+  return Objectify(TypeLeftTranslationsSemigroupElements(L),
                    [gpfunc, t]);
 end);
 
@@ -875,12 +872,15 @@ end);
 # gpfunc should be a function (represented as a list) from J to G
 # t should be a transformation of J
 InstallGlobalFunction(RightTranslationOfNormalRMS,
-function(S, gpfunc, t)
-  local G;
+function(R, gpfunc, t)
+  local S, G;
 
-  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: usage:\n",
-                    "the first argument must be a normalised RMS over ",
+  S := UnderlyingSemigroup(R);
+
+  if not (IsRightTranslationsSemigroup(R) and 
+          SEMIGROUPS.IsNormalRMSOverGroup(S)) then
+      ErrorNoReturn("the first argument must be a semigroups of right ",
+                    "translations over a normalised RMS over ",
                     "a group");
   fi;
 
@@ -889,25 +889,24 @@ function(S, gpfunc, t)
   if not (IsList(gpfunc) and
           ForAll(gpfunc, x -> x in G) and
           Size(gpfunc) = Size(MatrixOfReesMatrixSemigroup(S))) then
-    ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: usage:\n",
-                  "the second argument must be a list of group elements ",
-                  "of length equal to the number of columns of the first ",
-                  "argument,");
+    ErrorNoReturn("the second argument must be a list of group elements ",
+                  "of length equal to the number of rows of the underlying ",
+                  "semigroup of the first argument");
   fi;
 
   if not (IsTransformation(t) and
           DegreeOfTransformation(t) <= Size(Matrix(S))) then
-      ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: usage:\n",
-                  "the third argument must be a transformation on ",
-                  "the number of columns of the first argument,");
+    ErrorNoReturn("the third argument must be a transformation on ",
+                  "the number of columns of the underlying semigroup of the ",
+                  "first argument");
   fi;
 
-  return RightTranslationOfNormalRMSNC(S, gpfunc, t);
+  return RightTranslationOfNormalRMSNC(R, gpfunc, t);
 end);
 
 InstallGlobalFunction(RightTranslationOfNormalRMSNC,
-function(S, gpfunc, t)
-  return Objectify(TypeRightTranslationsSemigroupElements(RightTranslations(S)),
+function(R, gpfunc, t)
+  return Objectify(TypeRightTranslationsSemigroupElements(R),
                    [gpfunc, t]);
 end);
 
@@ -915,10 +914,10 @@ InstallGlobalFunction(BitranslationOfNormalRMS,
 function(H, l, r)
   local S, i, I, j, J, lf, lt, P, rf, rt;
 
-  S := UnderlyingSemigroup(S);
+  S := UnderlyingSemigroup(H);
 
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      ErrorNoReturn("Usage: the first argument must be a normalised RMS over ",
+      ErrorNoReturn("the first argument must be a normalised RMS over ",
                     "a group");
   fi;
 
@@ -931,11 +930,11 @@ function(H, l, r)
   rf := r![1];
   rt := r![2];
 
-  for i in [1 .. I] do
-    for j in [1 .. J] do
+  for i in I do
+    for j in J do
       if not P[j][i ^ lt] * lf[i] = rf[j] * P[j ^ rt][i] then
-        ErrorNoReturn("Usage: the second and third arguments must be a ",
-                      "linked left and right translation, respectively,");
+        ErrorNoReturn("the second and third arguments must be a ",
+                      "linked left and right translation, respectively");
       fi;
     od;
   od;
@@ -982,7 +981,7 @@ function(H)
   L := LeftTranslations(S);
   R := RightTranslations(S);
 
-  return BitranslationOfNormalRMS(S, Representative(L), Representative(R));
+  return BitranslationOfNormalRMS(H, Representative(L), Representative(R));
 end);
 
 InstallMethod(\*, "for left translations of a normalised RMS",

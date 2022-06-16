@@ -322,10 +322,13 @@ gap> Size(LS) = Size(L);
 true
 gap> Size(RS) = Size(R);
 true
+gap> Size(HS) = Size(H);
+true
 gap> Size(H);
 444
 gap> GeneratorsOfSemigroup(L);
 [ <left translation on <simple semigroup of size 96, with 6 generators>>, 
+  <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
@@ -336,12 +339,12 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>> ]
 gap> Size(L) = Size(Semigroup(GeneratorsOfSemigroup(L)));
 true
 gap> x := Representative(H);
-<linked pair of translations on <simple semigroup of size 96, with 6 
- generators>>
+<bitranslation on <simple semigroup of size 96, with 6 generators>>
 gap> l := LeftTranslation(L, MappingByFunction(T, T, x -> x));;
 gap> r := RightTranslation(R, MappingByFunction(T, T, x -> x));;
 gap> Bitranslation(H, l, r) = One(x);
@@ -491,7 +494,7 @@ gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
 gap> Bitranslation(H, l, r);
 Error, Semigroups: Bitranslation: 
-the translations given must form a linked pair,
+the translations given must satisfy the linking condition,
 gap> r := Representative(RT);;
 gap> Bitranslation(H, l, r);
 Error, Semigroups: Bitranslation: 
@@ -506,17 +509,14 @@ gap> L := LeftTranslations(T);;
 gap> LS := LeftTranslations(S);;
 gap> lgpfunc := [G.1 * G.3 * G.3, G.2];;
 gap> LeftTranslationOfNormalRMS(LS, lgpfunc, IdentityTransformation);
-Error, Semigroups: LeftTranslationOfNormalRMS: 
-the first argument must be a semigroup of left translations over a normalised \
-Rees matrix semigroup over a group,
+Error, the first argument must be a semigroups of left translations over a nor\
+malised RMS over a group
 gap> LeftTranslationOfNormalRMS(L, [G.1, G.1, G.2], IdentityTransformation);
-Error, Semigroups: LeftTranslationOfNormalRMS: 
-the second argument must be a list of group elements of length equal to the nu\
-mber of rows of the underlying semigroup of the first argument,
+Error, the second argument must be a list of group elements of length equal to\
+ the number of rows of the underlying semigroup of the first argument
 gap> LeftTranslationOfNormalRMS(L, lgpfunc, Transformation([1, 3, 2]));
-Error, Semigroups: LeftTranslationOfNormalRMS: 
-the third argument must be a transformation on the number of rows of the under\
-lying semigroup of the first argument,
+Error, the third argument must be a transformation on the number of rows of th\
+e underlying semigroup of the first argument
 
 #T# Error Testing - right translations over normalised RMS
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
@@ -527,17 +527,14 @@ gap> R := RightTranslations(T);;
 gap> RS := RightTranslations(S);;
 gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2, G.1];;
 gap> RightTranslationOfNormalRMS(RS, rgpfunc, IdentityTransformation);
-Error, Semigroups: RightTranslationOfNormalRMS: 
-the first argument must be a semigroup of right translations of a normalised R\
-ees matrix semigroup over a group,
+Error, the first argument must be a semigroups of right translations over a no\
+rmalised RMS over a group
 gap> RightTranslationOfNormalRMS(R, [G.1, G.2], IdentityTransformation);
-Error, Semigroups: RightTranslationOfNormalRMS: 
-the second argument must be a list of group elements of length equal to the nu\
-mber of columns of the underlying semigroup of the first argument,
+Error, the second argument must be a list of group elements of length equal to\
+ the number of rows of the underlying semigroup of the first argument
 gap> RightTranslationOfNormalRMS(R, rgpfunc, Transformation([1, 3, 2, 5, 4]));
-Error, Semigroups: RightTranslationOfNormalRMS: 
-the third argument must be a transformation on the number of columns of the un\
-derlying semigroup of the first argument,
+Error, the third argument must be a transformation on the number of columns of\
+ the underlying semigroup of the first argument
 
 #T# Error testing - bitranslations over normalised RMS
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
@@ -556,16 +553,13 @@ gap> rt := Transformation([3, 3, 3]);;
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
 gap> r := RightTranslationOfNormalRMS(R, rgpfunc, rt);;
 gap> h := BitranslationOfNormalRMS(H, l, r);
-<linked pair of translations on <simple semigroup with 5 generators>>
+<bitranslation on <simple semigroup with 5 generators>>
 gap> h := BitranslationOfNormalRMS(HS, l, r);
-Error, Semigroups: BitranslationOfNormalRMS: 
-the first argument must be a semigroup of bitranslations over a normalised RMS\
-,
+Error, the first argument must be a normalised RMS over a group
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, IdentityTransformation);;
 gap> h := BitranslationOfNormalRMS(H, l, r);
-Error, Semigroups: BitranslationOfNormalRMS: 
-the second and third arguments must be a linked left and right translation, re\
-spectively,
+Error, the second and third arguments must be a linked left and right translat\
+ion, respectively
 
 #T# Hashing translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 
