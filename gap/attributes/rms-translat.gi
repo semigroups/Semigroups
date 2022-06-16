@@ -30,6 +30,8 @@
 
 # TODO: have zero-simple semigroups compute their translations using this code
 
+# TODO: swap Rows/Columns if one is smaller
+
 #############################################################################
 # 1. Internal Functions
 #############################################################################
@@ -435,7 +437,7 @@ end;
 
 SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
                                                        c, d_inv, a, x, y)
-  local I, M, tau, sigma, bt, out;
+  local I, M, tau, sigma, g_pos, bt, out, mu;
 
   I           := Rows(S);
   M           := Columns(S); 
@@ -443,8 +445,22 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
   sigma       := List(I, i -> List(M, mu -> ShallowCopy(M)));
   sigma[1][1] := [y];
 
+  for mu in [2 .. Length(M)] do
+    g_pos := PositionCanonical(G, d_inv[mu] * mat[mu][x] * c[1]);
+    sigma[1][mu] := mat_inv_rows[1][g_pos];
+    if IsEmpty(sigma[1][mu]) then
+      return [];
+    fi;
+  od;
+
   bt := function(k) 
     local g_pos, consistent, j, mu, tup;
+    if k = Length(I) + 1 then
+      for tup in EnumeratorOfCartesianProduct(sigma[k-1]) do
+        Add(out, [ShallowCopy(tau), ShallowCopy(tup)]);
+      od;
+      return;
+    fi;
     for j in I do
       consistent := true;
       tau[k] := j;
@@ -458,26 +474,19 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
         fi;
       od;
       if consistent then
-        if k = Length(I) then
-          for tup in EnumeratorOfCartesianProduct(sigma[k]) do
-            Add(out, [ShallowCopy(tau), ShallowCopy(tup)]);
-          od;
-        else
-          bt(k + 1);
-        fi;
+        bt(k + 1);
       fi;
     od;
   end;
 
   out := [];
-  # TODO: deal with |I| = 1
   bt(2);
   return out;
 end;
 
 SEMIGROUPS.NormalRMSLinkedTriples := function(S)
-  local I, M, iso, inv, G, mat, mat_inv_rows, out, b, d_inv, c, triple, i, mu,
-  a, x, y, func_pair, func;
+  local I, M, iso, inv, G, mat, inv_rows, out, b, d_inv, c, i, mu, a, x, y,
+  func_pair;
 
   I := Rows(S);
   M := Columns(S);
@@ -489,10 +498,10 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
   mat := StructuralCopy(MatrixOfReesMatrixSemigroup(S));
   mat := List(mat, row -> List(row, x -> AsTransformation(x ^ iso)));
 
-  mat_inv_rows := List(I, x -> List(G, y -> []));
+  inv_rows := List(I, x -> List(G, y -> []));
   for i in I do
     for mu in M do
-      Add(mat_inv_rows[i][PositionCanonical(G, mat[mu][i])], mu);
+      Add(inv_rows[i][PositionCanonical(G, mat[mu][i])], mu);
     od;
   od;
 
@@ -506,7 +515,7 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
         for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
                                                                     G,
                                                                     mat,
-                                                                    mat_inv_rows,
+                                                                    inv_rows,
                                                                     c,
                                                                     d_inv,
                                                                     a,

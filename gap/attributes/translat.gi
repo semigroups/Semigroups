@@ -12,11 +12,7 @@
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls.
 ##
-## Left/Right translations are stored internally as transformations on the
-## indices of the underlying semigroup (determined by AsListCanonical). Hence,
-## only finite semigroups are supported.
-##
-## Much of the implementation in this file was based on the implementation of
+## Some of the implementation in this file was based on the implementation of
 ## RMS in reesmatsemi.gi in the GAP library - in particular, the creation of
 ## the semigroups and their relation to their elements.
 ##
