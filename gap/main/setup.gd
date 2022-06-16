@@ -17,7 +17,7 @@ DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
                 IsActingSemigroup);
 
 DeclareAttribute("ActionDegree", IsMultiplicativeElement);
-DeclareAttribute("ActionDegree", IsMultiplicativeElementCollection);
+DeclareAttribute("ActionDegree", IsListOrCollection);
 DeclareAttribute("ActionRank", IsSemigroup);
 DeclareOperation("ActionRank", [IsMultiplicativeElement, IsInt]);
 DeclareAttribute("MinActionRank", IsSemigroup);
@@ -53,3 +53,8 @@ DeclareAttribute("StabilizerAction", IsSemigroup);
 DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsCollection]);
+
+DeclareOperation("ConvertToInternalElement",
+                 [IsActingSemigroup, IsMultiplicativeElement]);
+DeclareOperation("ConvertToExternalElement",
+                 [IsActingSemigroup, IsMultiplicativeElement]);

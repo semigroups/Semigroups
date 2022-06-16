@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  semimaxplus.xml
-#Y  Copyright (C) 2016                                  Stuart A. Burrell
+#Y  Copyright (C) 2016-2022                              Stuart A. Burrell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -50,8 +50,6 @@
       The above are the currently supported types of matrix monoids.  They
       correspond to the matrix semigroup types in
       Section <Ref Sect = "IsXMatrixSemigroup"/>.
-      For matrix semigroups over finite fields there is also 
-      <Ref Filt = "IsMatrixOverFiniteFieldGroup"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -104,7 +102,7 @@ true
       <K>false</K> otherwise. This method is based on
       <Cite Key="Gaubert1996aa"/> and draws on <Cite Key="Burrell2016aa"/>,
       <Cite Key="Bacelli1992aa"/> and <Cite Key="Kacie2009aa"/>.
- 
+
       <Example><![CDATA[
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
 >                              [[0, -3],

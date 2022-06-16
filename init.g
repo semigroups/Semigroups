@@ -87,7 +87,6 @@ ReadPackage("semigroups", "gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups", "gap/semigroups/semirms.gd");
 ReadPackage("semigroups", "gap/semigroups/semitrans.gd");
 
-ReadPackage("semigroups", "gap/semigroups/grpffmat.gd");
 ReadPackage("semigroups", "gap/semigroups/grpperm.gd");
 
 ReadPackage("semigroups", "gap/ideals/acting.gd");

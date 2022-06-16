@@ -285,10 +285,10 @@ gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
 # MultiplicativeNeutralElement, 8
-gap> S := Semigroup([
+gap> S := Semigroup(
 >  Transformation([2, 3, 1, 4, 4]),
 >  Transformation([2, 1, 3, 4, 4]),
->  Transformation([1, 2, 1, 4, 4])]);
+>  Transformation([1, 2, 1, 4, 4]));
 <transformation semigroup of degree 5 with 3 generators>
 gap> MultiplicativeNeutralElement(S);
 Transformation( [ 1, 2, 3, 4, 4 ] )

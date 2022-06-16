@@ -209,7 +209,7 @@ function(arg)
 
   elif (IsMultiplicativeElement(arg[2])
         and IsGeneratorsOfSemigroup([arg[2]]))
-      or (IsMultiplicativeElementCollection(arg[2])
+      or (IsListOrCollection(arg[2])
           and IsGeneratorsOfSemigroup(arg[2]))
       or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
     # generators and collections of generators
@@ -243,15 +243,15 @@ function(arg)
 end);
 
 InstallMethod(SemigroupIdealByGenerators,
-"for a semigroup, multiplicative element collection",
-[IsSemigroup, IsMultiplicativeElementCollection],
+"for a semigroup and list or collections",
+[IsSemigroup, IsListOrCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S));
 end);
 
 InstallMethod(SemigroupIdealByGenerators,
-"for semigroup, multiplicative element collection, and record",
-[IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
+"for semigroup, list or collection, and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 2nd argument (a mult. elt. coll.) do not all ",
@@ -261,8 +261,8 @@ function(S, gens, opts)
 end);
 
 InstallMethod(SemigroupIdealByGeneratorsNC,
-"for semigroup, multiplicative element collection, and record",
-[IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
+"for a semigroup, list or collections, and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
@@ -276,6 +276,12 @@ function(S, gens, opts)
     if opts.regular then
       filts := filts and IsRegularActingSemigroupRep;
     fi;
+  fi;
+
+  if IsIntegerMatrixSemigroup(S) then
+    filts := filts and IsIntegerMatrixSemigroup;
+  elif IsMatrixOverFiniteFieldSemigroup(S) then
+    filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

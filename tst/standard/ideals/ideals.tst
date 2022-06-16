@@ -138,9 +138,9 @@ gap> S := RegularBooleanMatMonoid(1);;
 gap> SemigroupIdeal(S);
 Error, there must be 2 or more arguments
 gap> S := Semigroup([[Z(2)]]);
-<commutative semigroup with 1 generator>
+<trivial group with 1 generator>
 gap> SemigroupIdeal(S, S.1);
-<commutative semigroup ideal with 1 generator>
+<commutative inverse semigroup ideal with 1 generator>
 gap> S := RegularBooleanMatMonoid(2);;
 gap> I := SemigroupIdeal(S, [S.1, S.2]);
 <semigroup ideal of 2x2 boolean matrices with 2 generators>

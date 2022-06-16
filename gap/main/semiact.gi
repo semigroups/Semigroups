@@ -78,21 +78,15 @@ function(Constructor, S, coll, opts)
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
-
+    Sort(coll, {x, y} -> ActionRank(x, n) > ActionRank(y, n));
     for x in coll do
       S := ClosureSemigroupOrMonoidNC(Constructor, S, [x], opts);
     od;
     return S;
-  fi;
-
-  # Size(coll) = 1 . . .
-
-  if coll[1] in S then
+  elif coll[1] in S then
     return S;
   fi;
+  # Size(coll) = 1 . . .
 
   # init the semigroup or monoid
   t := Constructor(S, coll, opts);
@@ -114,6 +108,8 @@ function(Constructor, S, coll, opts)
       SEMIGROUPS.ChangeDegreeOfTransformationSemigroup(rho_o, old_deg, t);
     fi;
   fi;
+
+  coll[1] := ConvertToInternalElement(S, coll[1]);
 
   AddGeneratorsToOrbit(o, coll);
 
@@ -234,8 +230,8 @@ function(Constructor, S, coll, opts)
 
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
-  # JDM: this is mainly used to update the orbit graph of the R-rep orbit, but
-  # I think this could also be done during the main loop below.
+  # TODO(later): this is mainly used to update the orbit graph of the R-rep
+  # orbit, but I think this could also be done during the main loop below.
 
   old_to_new := EmptyPlist(old_nr);
   old_to_new[1] := 1;
@@ -416,9 +412,7 @@ function(Constructor, S, coll, opts)
   if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
+    Sort(coll, {x, y} -> ActionRank(x, n) > ActionRank(y, n));
 
     for x in coll do
       S := ClosureInverseSemigroupOrMonoidNC(Constructor, S, [x], opts);
@@ -440,6 +434,7 @@ function(Constructor, S, coll, opts)
   fi;
 
   o := StructuralCopy(LambdaOrb(S));
+  coll[1] := ConvertToInternalElement(S, coll[1]);
   AddGeneratorsToOrbit(o, coll);
 
   # Remove everything related to strongly connected components
@@ -455,7 +450,7 @@ function(Constructor, S, coll, opts)
   Unbind(o!.factors);
 
   o!.parent := T;
-  o!.scc_reps := [FakeOne(Generators(T))];
+  o!.scc_reps := [FakeOne(o!.gens)];
 
   SetLambdaOrb(T, o);
   return T;
@@ -500,7 +495,9 @@ function(rs, s)
 
   g := Random(rs, LambdaOrbSchutzGp(o, m));
   i := Random(rs, OrbSCC(o)[m]);
-  return StabilizerAction(s)(rep, g) * LambdaOrbMult(o, m, i)[1];
+  return ConvertToExternalElement(s,
+                                  StabilizerAction(s)(rep, g)
+                                  * LambdaOrbMult(o, m, i)[1]);
 end);
 
 # different method for inverse, same method for ideals
@@ -535,14 +532,15 @@ function(rs, S)
   o := LambdaOrb(S);
   i := Random(rs, 2, Length(o));
   m := OrbSCCLookup(o)[i];
-  x := LambdaOrbRep(o, m) * Random(rs, LambdaOrbSchutzGp(o, m))
-   * LambdaOrbMult(o, m, i)[1];
+  x := LambdaOrbRep(o, m)
+       * Random(rs, LambdaOrbSchutzGp(o, m))
+       * LambdaOrbMult(o, m, i)[1];
 
   o := RhoOrb(S);
   m := OrbSCCLookup(o)[Position(o, RhoFunc(S)(x))];
   i := Random(rs, OrbSCC(o)[m]);
 
-  return RhoOrbMult(o, m, i)[1] * x;
+  return ConvertToExternalElement(S, RhoOrbMult(o, m, i)[1] * x);
 end);
 
 # same method for inverse ideals
@@ -577,12 +575,13 @@ function(rs, S)
   o := LambdaOrb(S);
   i := Random(rs, 2, Length(o));
   m := OrbSCCLookup(o)[i];
-  x := LambdaOrbRep(o, m) * Random(rs, LambdaOrbSchutzGp(o, m))
-   * LambdaOrbMult(o, m, i)[1];
+  x := LambdaOrbRep(o, m)
+       * Random(rs, LambdaOrbSchutzGp(o, m))
+       * LambdaOrbMult(o, m, i)[1];
 
   i := Random(rs, OrbSCC(o)[m]);
 
-  return LambdaOrbMult(o, m, i)[2] * x;
+  return ConvertToExternalElement(S, LambdaOrbMult(o, m, i)[2] * x);
 end);
 
 #############################################################################
@@ -625,6 +624,7 @@ function(x, S)
     fi;
   fi;
 
+  x := ConvertToInternalElement(S, x);
   pos_lambda := Position(Enumerate(LambdaOrb(S)), LambdaFunc(S)(x));
 
   if pos_lambda = fail then
@@ -715,6 +715,8 @@ function(x, S)
       return false;
     fi;
   fi;
+
+  x := ConvertToInternalElement(S, x);
 
   o := LambdaOrb(S);
   Enumerate(o);

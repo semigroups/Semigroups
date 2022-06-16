@@ -162,7 +162,8 @@ function(gens, opts)
 
   if CanEasilyCompareElements(gens) then
     # Check if the One of the generators is a generator
-    if IsMultiplicativeElementWithOneCollection(gens)
+    if (IsMultiplicativeElementWithOneCollection(gens)
+        or (IsFFECollCollColl(gens) and IsGeneratorsOfSemigroup(gens)))
         and Position(gens, One(gens)) <> fail then
       return MonoidByGenerators(gens, opts);
     fi;
@@ -184,9 +185,13 @@ function(gens, opts)
     filts := filts and IsActingSemigroup;
   fi;
 
-  if IsMatrixObj(Representative(gens))
-      and BaseDomain(Representative(gens)) = Integers then
-    filts := filts and IsIntegerMatrixSemigroup;
+  if IsMatrixObj(Representative(gens)) then
+    if BaseDomain(Representative(gens)) = Integers then
+      filts := filts and IsIntegerMatrixSemigroup;
+    elif IsField(BaseDomain(Representative(gens)))
+        and IsFinite(BaseDomain(Representative(gens))) then
+      filts := filts and IsMatrixOverFiniteFieldSemigroup;
+    fi;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -218,8 +223,8 @@ function(gens, opts)
       opts.small   := false;
       opts.regular := false;
       return ClosureMonoid(Monoid(One(gens), opts), gens, opts);
-    elif IsMultiplicativeElementWithOneCollection(gens)
-        and Length(gens) > 1 then
+    elif (IsMultiplicativeElementWithOneCollection(gens)
+        or IsFFECollCollColl(gens)) and Length(gens) > 1 then
       pos := Position(gens, One(gens));
       if pos <> fail and
           (not IsPartialPermCollection(gens) or One(gens) =
@@ -237,10 +242,14 @@ function(gens, opts)
   elif opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
   fi;
-  if IsMatrixObj(Representative(gens))
-      and BaseDomain(Representative(gens)) = Integers then
+  if IsMatrixObj(Representative(gens)) then
     one := One(Representative(gens));
-    filts := filts and IsIntegerMatrixMonoid;
+    if BaseDomain(Representative(gens)) = Integers then
+      filts := filts and IsIntegerMatrixMonoid;
+    elif IsField(BaseDomain(Representative(gens)))
+        and IsFinite(BaseDomain(Representative(gens))) then
+      filts := filts and IsMatrixOverFiniteFieldMonoid;
+    fi;
   else
     one := One(gens);
   fi;

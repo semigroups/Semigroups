@@ -36,7 +36,6 @@ SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
 
   G := Range(map);
   mat := [];
-
   rep := MultiplicativeNeutralElement(GroupHClass(D));
   R := HClassReps(LClass(D, rep));
   L := HClassReps(RClass(D, rep));
@@ -864,7 +863,7 @@ _SemigroupSizeByIndexPeriod);
 InstallMethod(Size,
 "for a monogenic semigroup of matrices over finite field with minimal gen set",
 [IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
- IsMatrixOverFiniteFieldCollection],
+ IsMatrixOverFiniteFieldSemigroup],
 _SemigroupSizeByIndexPeriod);
 
 MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");

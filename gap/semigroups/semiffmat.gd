@@ -9,13 +9,15 @@
 #############################################################################
 ##
 
-DeclareSynonym("IsMatrixOverFiniteFieldSemigroup",
-               IsMatrixOverFiniteFieldCollection and IsSemigroup);
+DeclareCategory("IsMatrixOverFiniteFieldSemigroup", IsSemigroup);
 DeclareSynonym("IsMatrixOverFiniteFieldMonoid",
-               IsMatrixOverFiniteFieldCollection and IsMonoid);
+               IsMonoid and IsMatrixOverFiniteFieldSemigroup);
 
 InstallTrueMethod(CanComputeSize, IsMatrixOverFiniteFieldSemigroup);
 InstallTrueMethod(IsFinite, IsMatrixOverFiniteFieldSemigroup);
+
+DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldSemigroup);
+DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldMonoid);
 
 # (mp) This is defined for groups, and already difficult there, so I
 # guess close to impossible to do in matrix semigroups

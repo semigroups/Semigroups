@@ -225,45 +225,43 @@
       Matrices over finite fields
     </Heading>
 
-    In this section we describe the operations, properties, and attributes in
-    &SEMIGROUPS; specifically for matrices over finite fields. These are in
-    addition to those given elsewhere in this chapter for arbitrary matrices
-    over semirings.
+    In this section we describe some operations in &SEMIGROUPS; for matrices
+    over finite fields that are required for such matrices to form semigroups
+    satisfying <Ref Filt="IsActingSemigroup"/>. <P/>
 
-    <#Include Label="NewMatrixOverFiniteField"/>
-    <#Include Label="IdentityMatrixOverFiniteField"/>
-    <#Include Label="NewIdentityMatrixOverFiniteField"/>
+    From v5.0.0, &SEMIGROUPS; uses the &GAP; library implementation of matrices
+    over finite fields belonging to the category <Ref Filt="IsMatrixObj"
+    BookName="ref"/> rather than the previous implementation in the
+    &SEMIGROUPS; package. This means that from v5.0.0, matrices over a finite
+    field no longer belong to the category <Ref
+    Filt="IsMatrixOverSemiring"/>.
+    <P/>
+
+    The following methods are implemented in &SEMIGROUPS; for matrix objects
+    over finite fields.
     <#Include Label="RowSpaceBasis"/>
-    <#Include Label="RowRank"/>
     <#Include Label="RightInverse"/>
-    <#Include Label="BaseDomain"/>
-    <#Include Label="TransposedMatImmutable"/>
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label = "Integer Matrices">
+  <Section Label = "Matrices over the integers">
     <Heading>
-      Integer Matrices
+      Matrices over the integers
     </Heading>
+    In this section we describe operations in &SEMIGROUPS; specifically for
+    integer matrices. <P/>
 
-    In this section we describe operations in
-    &SEMIGROUPS; specifically for integer matrices.
-    These are in addition to those given elsewhere in this chapter for
-    arbitrary matrices over semirings. These include:
-    <List>
-      <Item>
-        <Ref Oper = "InverseOp" Label = "for an integer matrix"/>
-      </Item>
-      <Item>
-        <Ref Attr = "IsTorsion" Label = "for an integer matrix"/>
-      </Item>
-      <Item>
-        <Ref Attr = "Order"/>
-      </Item>
-    </List>
+    From v5.0.0, &SEMIGROUPS; uses the &GAP; library implementation of matrices
+    over the intergers belonging to the category <Ref Filt="IsMatrixObj"
+    BookName="ref"/> rather than the previous implementation in the
+    &SEMIGROUPS; package. This means that from v5.0.0, matrices over the
+    integers no longer belong to the category <Ref
+    Filt="IsMatrixOverSemiring"/>.<P/>
 
+    The following methods are implemented in &SEMIGROUPS; for matrix objects
+    over the integers.
 
     <#Include Label = "IntInverseOp">
     <#Include Label = "IntIsTorsion">
@@ -278,10 +276,10 @@
       Max-plus and min-plus matrices
     </Heading>
 
-    In this section we describe operations in
-    &SEMIGROUPS; specifically for max-plus and min-plus matrices.
-    These are in addition to those given elsewhere in this chapter for
-    arbitrary matrices over semirings. These include:
+    In this section we describe operations in &SEMIGROUPS; specifically for
+    max-plus and min-plus matrices. These are in addition to those given
+    elsewhere in this chapter for arbitrary matrices over semirings. These
+    include:
 
     <List>
       <Item>
@@ -348,38 +346,6 @@
     <#Include Label = "IsFinite">
     <#Include Label = "IsTorsion">
     <#Include Label = "NormalizeSemigroup">
-
-    <Subsection Label = "Semigroups matrix groups">
-      <Heading>Matrix groups</Heading>
-
-      For interfacing the semigroups code with &GAP;'s library code for
-      matrix groups, the &SEMIGROUPS; package implements matrix groups
-      that delegate to the &GAP; library. These functions include:
-
-      <List>
-        <Item>
-          <Ref Filt = "IsMatrixOverFiniteFieldGroup"/>
-        </Item>
-        <Item>
-          <Ref Oper = "\^" Label = "for a matrix over finite field group and matrix over finite field"/>
-        </Item>
-        <Item>
-          <Ref Attr = "IsomorphismMatrixGroup"/>
-        </Item>
-        <Item>
-          <Ref Attr = "AsMatrixGroup"/>
-        </Item>
-      </List>
-
-      This type of group only applies to matrices over finite fields
-      (see <Ref Filt = "IsMatrixOverFiniteFieldSemigroup"/>).
-
-    </Subsection>
-
-    <#Include Label="IsMatrixOverFiniteFieldGroup"/>
-    <#Include Label="MatrixGroupOperation"/>
-    <#Include Label="IsomorphismMatrixGroup"/>
-    <#Include Label="AsMatrixGroup"/>
 
   </Section>
 

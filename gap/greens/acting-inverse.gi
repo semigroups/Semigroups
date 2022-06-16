@@ -78,8 +78,7 @@ function(L)
 
   if not IsGreensClassNC(L) then
     # go from the lambda-value in scc 1 to the lambda value of the rep of <l>
-    p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)),
-                                     Representative(L));
+    p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)), L!.rep);
     return LambdaOrbSchutzGp(o, m) ^ p;
   fi;
   return LambdaOrbSchutzGp(o, m);
@@ -198,7 +197,7 @@ function(x, D)
   local S, rep, m, o, scc, l, schutz;
 
   S := Parent(D);
-  rep := Representative(D);
+  rep := D!.rep;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(S) and
@@ -228,7 +227,7 @@ function(x, D)
   schutz := LambdaOrbStabChain(o, m);
   if schutz = true then
     return true;
-  elif x = rep then
+  elif x = D!.rep then
     return true;
   elif schutz = false then
     return false;
@@ -268,6 +267,8 @@ function(x, L)
   elif l <> scc[m][1] then
     x := LambdaOrbMult(o, m, l)[1] * x;
   fi;
+
+  rep := L!.rep;
 
   if x = rep then
     return true;
@@ -365,17 +366,18 @@ InstallMethod(HClassReps,
 "for an L-class of an inverse acting semigroup rep",
 [IsInverseActingRepGreensClass and IsGreensLClass],
 function(L)
-  local o, m, scc, mults, rep, out, nr, i;
+  local S, o, m, scc, mults, rep, out, nr, i;
+  S := Parent(L);
   o := LambdaOrb(L);
   m := LambdaOrbSCCIndex(L);
   scc := OrbSCC(o)[m];
   mults := LambdaOrbMults(o, m);
-  rep := Representative(L);
+  rep := L!.rep;
   out := EmptyPlist(Length(scc));
   nr := 0;
   for i in scc do
     nr := nr + 1;
-    out[nr] := mults[i][2] * rep;
+    out[nr] := ConvertToExternalElement(S, mults[i][2] * rep);
   od;
   return out;
 end);
@@ -387,8 +389,7 @@ function(C)
   local reps, out, setter, CreateHClass, CopyLambda, i;
 
   if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
-    ErrorNoReturn("the argument is not a Green's L-, R-,",
-                  "or D-class");
+    ErrorNoReturn("the argument is not a Green's L-, R-, or D-class");
   fi;
 
   reps := HClassReps(C);
@@ -454,7 +455,7 @@ InstallMethod(GroupHClassOfGreensDClass,
 [IsInverseActingRepGreensClass and IsGreensDClass],
 function(D)
   local H;
-  H := GreensHClassOfElementNC(D, Representative(D));
+  H := GreensHClassOfElementNC(D, D!.rep);
   SetIsGroupHClass(H, true);
   return H;
 end);
@@ -478,6 +479,7 @@ function(S)
   for i in [1 .. n] do
     for x in gens do
       for y in RClassReps(D[i]) do
+        y := ConvertToInternalElement(S, y);
         AddSet(out[i], lookup[Position(o, lambdafunc(x * y))] - 1);
         AddSet(out[i], lookup[Position(o, lambdafunc(Inverse(y) * x))] - 1);
       od;
@@ -510,7 +512,7 @@ function(S)
   out := EmptyPlist(r - 1);
 
   for i in [2 .. r] do
-    out[i - 1] := creator(o[i], o[i]);
+    out[i - 1] := ConvertToExternalElement(S, creator(o[i], o[i]));
   od;
   return out;
 end);
@@ -529,12 +531,7 @@ function(S, n)
     return Filtered(Idempotents(S), x -> ActionRank(S)(x) = n);
   fi;
 
-  o := LambdaOrb(S);
-
-  if not IsClosedOrbit(o) then
-    Enumerate(o, infinity);
-  fi;
-
+  o := Enumerate(LambdaOrb(S));
   creator := IdempotentCreator(S);
   out := EmptyPlist(Length(o) - 1);
   rank := LambdaRank(S);
@@ -543,7 +540,7 @@ function(S, n)
   for i in [2 .. Length(o)] do
     if rank(o[i]) = n then
       nr := nr + 1;
-      out[nr] := creator(o[i], o[i]);
+      out[nr] := ConvertToExternalElement(S, creator(o[i], o[i]));
     fi;
   od;
   return out;
@@ -555,10 +552,12 @@ InstallMethod(Idempotents,
 "for a D-class of an inverse acting semigroup rep",
 [IsInverseActingRepGreensClass and IsGreensDClass],
 function(D)
-  local creator, o;
+  local S, creator, o;
+  S := Parent(D);
   creator := IdempotentCreator(Parent(D));
   o := LambdaOrb(D);
-  return List(LambdaOrbSCC(D), x -> creator(o[x], o[x]));
+  return List(LambdaOrbSCC(D),
+              x -> ConvertToExternalElement(S, creator(o[x], o[x])));
 end);
 
 # same method for inverse ideals
@@ -612,28 +611,29 @@ InstallMethod(NrIdempotents,
 InstallMethod(IteratorOfRClassReps, "for acting inverse semigroup rep",
 [IsInverseActingSemigroupRep],
 function(S)
-  local o, lookup, func;
+  local record, unwrap, o;
 
   if HasRClassReps(S) then
     return IteratorList(RClassReps(S));
   fi;
 
-  o := LambdaOrb(S);
-  lookup := OrbSCCLookup(o);
+  record := rec();
+  record.parent := S;
 
-  func := function(iter, i)
-    local rep;
-
+  unwrap := function(iter, i)
+    local S, o, rep, pos, mult;
+    S      := iter!.parent;
+    o      := LambdaOrb(S);
     # <rep> has rho val corresponding to <i>
     rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));
 
     # rectify the lambda value of <rep>
-    return  rep * LambdaOrbMult(o,
-                                lookup[i],
-                                Position(o, LambdaFunc(S)(rep)))[2];
+    pos := Position(o, LambdaFunc(S)(rep));
+    mult := LambdaOrbMult(o, OrbSCCLookup(o)[i], pos)[2];
+    return  ConvertToExternalElement(S, rep * mult);
   end;
-
-  return WrappedIterator(IteratorList([2 .. Length(o)]), func);
+  o := Enumerate(LambdaOrb(S));
+  return WrappedIterator(IteratorList([2 .. Length(o)]), unwrap, record);
 end);
 
 ########################################################################
@@ -650,24 +650,28 @@ function(L)
   local convert_out, convert_in, scc, enum;
 
   convert_out := function(enum, tuple)
-    local L, rep, act;
+    local L, S, act, result;
+
     if tuple = fail then
       return fail;
     fi;
     L := enum!.parent;
-    rep := Representative(L);
-    act := StabilizerAction(Parent(L));
-    return act(LambdaOrbMult(LambdaOrb(L),
-                             LambdaOrbSCCIndex(L),
-                             tuple[1])[2]
-               * rep, tuple[2]);
+    S := Parent(L);
+    act := StabilizerAction(S);
+
+    result := act(LambdaOrbMult(LambdaOrb(L),
+                                LambdaOrbSCCIndex(L),
+                                tuple[1])[2] * L!.rep,
+                  tuple[2]);
+    return ConvertToExternalElement(S, result);
   end;
 
   convert_in := function(enum, elt)
     local L, S, i, f;
 
-    L := enum!.parent;
-    S := Parent(L);
+    L   := enum!.parent;
+    S   := Parent(L);
+    elt := ConvertToInternalElement(S, elt);
 
     if LambdaFunc(S)(elt) <> LambdaFunc(S)(Representative(L)) then
       return fail;
@@ -680,43 +684,44 @@ function(L)
 
     f := LambdaOrbMult(LambdaOrb(L), LambdaOrbSCCIndex(L), i)[1] * elt;
 
-    return [i, LambdaPerm(S)(Representative(L), f)];
+    return [i, LambdaPerm(S)(L!.rep, f)];
   end;
 
   scc  := OrbSCC(LambdaOrb(L))[LambdaOrbSCCIndex(L)];
   enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(L));
-
   return WrappedEnumerator(L, enum, convert_out, convert_in);
 end);
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseActingRepGreensClass],
 function(D)
-  local convert_out, convert_in, scc, enum;
-
-  Enumerate(LambdaOrb(D), infinity);
+  local convert_out, convert_in, o, scc, enum;
 
   convert_out := function(enum, tuple)
-    local D, rep, act;
+    local D, S, act, result;
+
     if tuple = fail then
       return fail;
     fi;
     D   := enum!.parent;
-    rep := Representative(D);
-    act := StabilizerAction(Parent(D));
-    return act(LambdaOrbMult(LambdaOrb(D),
-                             LambdaOrbSCCIndex(D),
-                             tuple[1])[2] * rep,
-               tuple[2])
-             * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D),
-                             tuple[3])[1];
+    S   := Parent(D);
+    act := StabilizerAction(S);
+    result := act(LambdaOrbMult(LambdaOrb(D),
+                                LambdaOrbSCCIndex(D),
+                                tuple[1])[2] * D!.rep,
+                                tuple[2]);
+    result := result * LambdaOrbMult(LambdaOrb(D),
+                                     LambdaOrbSCCIndex(D),
+                                     tuple[3])[1];
+    return ConvertToExternalElement(S, result);
   end;
 
   convert_in := function(enum, elt)
     local D, S, k, l, f;
 
-    D := enum!.parent;
-    S := Parent(D);
+    D   := enum!.parent;
+    S   := Parent(D);
+    elt := ConvertToInternalElement(S, elt);
 
     k := Position(LambdaOrb(D), RhoFunc(S)(elt));
     if k = fail or OrbSCCLookup(LambdaOrb(D))[k] <> LambdaOrbSCCIndex(D) then
@@ -730,10 +735,11 @@ function(D)
     f := LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), k)[1] * elt
      * LambdaOrbMult(LambdaOrb(D), LambdaOrbSCCIndex(D), l)[2];
 
-    return [k, LambdaPerm(S)(Representative(D), f), l];
+    return [k, LambdaPerm(S)(D!.rep, f), l];
   end;
 
-  scc := OrbSCC(LambdaOrb(D))[LambdaOrbSCCIndex(D)];
+  o    := Enumerate(LambdaOrb(D));
+  scc  := OrbSCC(o)[LambdaOrbSCCIndex(D)];
   enum := EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(D), scc);
 
   return WrappedEnumerator(D, enum, convert_out, convert_in);
@@ -753,12 +759,15 @@ function(L)
                                      Enumerator(SchutzenbergerGroup(L)));
 
   unwrap := function(iter, x)
-    local L;
+    local L, S, result;
     L := iter!.parent;
-    return StabilizerAction(Parent(L))(LambdaOrbMult(LambdaOrb(L),
-                                                     LambdaOrbSCCIndex(L),
-                                                     x[1])[2]
-                                       * Representative(L), x[2]);
+    S := Parent(L);
+    result := StabilizerAction(S)(LambdaOrbMult(LambdaOrb(L),
+                                                LambdaOrbSCCIndex(L),
+                                                x[1])[2]
+                                  * L!.rep,
+                                  x[2]);
+    return ConvertToExternalElement(S, result);
   end;
 
   record := rec();

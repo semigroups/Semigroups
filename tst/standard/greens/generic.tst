@@ -24,7 +24,7 @@ gap> S := Semigroup(
 >  Matrix(GF(5), [[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]])]);;
 gap> D := GreensDClassOfElement(S,
 > Matrix(GF(5), [[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]]));
-<Green's D-class: Matrix(GF(5), [[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]])>
+<Green's D-class: <matrix object of dimensions 2x2 over GF(5)>>
 gap> IsHTrivial(D);
 false
 gap> IsLTrivial(D);
