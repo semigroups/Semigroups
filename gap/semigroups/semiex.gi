@@ -299,13 +299,10 @@ InstallMethod(GeneralLinearMonoid, "for pos int and pos int",
 function(d, q)
   local gens, x, S;
   gens := GeneratorsOfGroup(GL(d, q));
+  gens := List(gens, x -> Matrix(GF(q), x));
   x := OneMutable(gens[1]);
   x[d][d] := Z(q) * 0;
-  gens := List(gens, x ->
-               NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                        GF(q),
-                                        x));
-  Add(gens, AsMatrix(IsMatrixOverFiniteField, gens[1], x));
+  Add(gens, x);
   S := Monoid(gens);
   SetSize(S, q ^ (d * d));
   SetIsGeneralLinearMonoid(S, true);
@@ -320,11 +317,8 @@ function(d, q)
   gens := GeneratorsOfGroup(SL(d, q));
   x := OneMutable(gens[1]);
   x[d][d] := Z(q) * 0;
-  gens := List(gens, x ->
-               NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                        GF(q),
-                                        x));
-  Add(gens, AsMatrix(IsMatrixOverFiniteField, gens[1], x));
+  gens := List(gens, x -> Matrix(GF(q), x));
+  Add(gens, x);
   S := Monoid(gens);
   SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;

@@ -80,6 +80,7 @@ function(arg)
     ErrorNoReturn("the third argument <global> must be a boolean");
   fi;
 
+  x := ConvertToInternalElement(S, x);
   lambda := LambdaFunc(S)(x);
 
   if global then
@@ -115,8 +116,6 @@ function(arg)
   fi;
 
   orb := ShallowCopy(LambdaOrbOpts(S));
-  # TODO(later) include as much of the following as appropriate in
-  # LambdaOrbOpts
   orb.parent := S;
   orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   orb.schreier := true;
@@ -133,6 +132,8 @@ function(arg)
   else
     gens := GeneratorsOfSemigroup(S);
   fi;
+
+  gens := List(gens, x -> ConvertToInternalElement(S, x));
 
   o := Orb(gens, lambda, LambdaAct(S), orb);
   SetFilterObj(o, IsGradedLambdaOrb);
@@ -181,6 +182,7 @@ function(arg)
     ErrorNoReturn("the third argument <opt> must be a boolean");
   fi;
 
+  x := ConvertToInternalElement(S, x);
   rho := RhoFunc(S)(x);
 
   if global then
@@ -194,14 +196,10 @@ function(arg)
       return graded[pos[1]][pos[2]];
     fi;
 
-    gradingfunc := function(o, x)
-                     return [RhoRank(S)(x), x];
-                   end;
+    gradingfunc := {o, x} -> [RhoRank(S)(x), x];
 
-    onlygrades := function(x, data_ht)
-                    return x[1] = RhoRank(S)(rho)
-                     and HTValue(data_ht, x[2]) = fail;
-                  end;
+    onlygrades := {x, data_ht} -> x[1]
+                  = RhoRank(S)(rho) and HTValue(data_ht, x[2]) = fail;
 
     onlygradesdata := GradedRhoHT(S);
   else  # local
@@ -232,6 +230,8 @@ function(arg)
     gens := GeneratorsOfSemigroup(S);
   fi;
 
+  gens := List(gens, x -> ConvertToInternalElement(S, x));
+
   o := Orb(gens, rho, RhoAct(S), orb);
   SetFilterObj(o, IsGradedRhoOrb);
 
@@ -258,11 +258,16 @@ end);
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local fam;
+  local degree, fam;
+
+  degree := ActionDegree(S) + 1;
+  if IsMatrixOverFiniteFieldSemigroup(S) then
+    degree := degree + 1;
+  fi;
   fam := CollectionsFamily(FamilyObj(LambdaFunc(S)(Representative(S))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs),
-                   rec(orbits := List([1 .. ActionDegree(S) + 1], x -> []),
-                       lens := [1 .. ActionDegree(S) + 1] * 0,
+                   rec(orbits := List([1 .. degree], x -> []),
+                       lens := [1 .. degree] * 0,
                        parent := S));
 end);
 
@@ -271,9 +276,17 @@ end);
 InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
+  local degree;
+
+  # TODO: Why is this funciton not the direct analogue of GradedLambdaOrbs?
+  # Where's fam here?
+  degree := ActionDegree(S) + 1;
+  if IsMatrixOverFiniteFieldSemigroup(S) then
+    degree := degree + 1;
+  fi;
   return Objectify(NewType(FamilyObj(S), IsGradedRhoOrbs),
-                   rec(orbits := List([1 .. ActionDegree(S) + 1], x -> []),
-                       lens := [1 .. ActionDegree(S) + 1] * 0,
+                   rec(orbits := List([1 .. degree], x -> []),
+                       lens := [1 .. degree] * 0,
                        parent := S));
 end);
 

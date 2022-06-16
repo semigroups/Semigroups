@@ -280,43 +280,11 @@ end);
 InstallMethod(Matrix, "for a semiring and empty list",
 [IsSemiring, IsList and IsEmpty],
 function(semiring, mat)
-  if IsField(semiring) and IsFinite(semiring) then
-    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                    semiring, mat);
-  elif IsIntegers(semiring) then
+  if IsIntegers(semiring) then
     return Matrix(Integers, mat);
   fi;
   TryNextMethod();
 end);
-
-# TODO MatrixObj is this required?
-SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc := function(semiring, mat)
-  if IsHomogeneousList(mat) then
-    if not (IsList(mat) and  IsEmpty(mat))
-        and not ForAll(mat, x -> IsList(x) and Length(x) = Length(mat[1])) then
-      TryNextMethod();
-    elif not IsEmpty(mat) and Length(mat) <> Length(mat[1]) then
-      TryNextMethod();
-    elif IsField(semiring) and IsFinite(semiring) then
-      return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                      semiring,
-                                      mat);
-    elif not IsIntegers(semiring) then
-      TryNextMethod();
-    fi;
-  else
-    TryNextMethod();
-  fi;
-  return Matrix(Integers, mat);
-end;
-
-InstallMethod(Matrix, "for a semiring and homogenous list",
-[IsField and IsFinite, IsHomogeneousList],
-20,  # WORKAROUND for a similar ranking offset in GAP master
-     # TODO: remove this once GAP master has adjusted
-SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
-
-Unbind(SEMIGROUPS_MatrixForIsSemiringIsHomogenousListFunc);
 
 InstallMethod(Matrix, "for a semiring and matrix over semiring",
 [IsSemiring, IsMatrixOverSemiring],
@@ -629,15 +597,7 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
   str := "\>\>Matrix(\<\>";
-  if IsMatrixOverFiniteField(x) then
-    Append(str, String(BaseDomain(x)));
-    if n = 0 then
-      Append(str, "\<, \>[]\<)\<");
-      return str;
-    fi;
-  else
-    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
-  fi;
+  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
   Append(str, "\<, \>[");
   for i in [1 .. n] do
     Append(str, "\>\>[");
@@ -687,11 +647,7 @@ function(x)
   local str;
 
   str := "Matrix(";
-  if IsMatrixOverFiniteField(x) then
-    Append(str, String(BaseDomain(x)));
-  else
-    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
-  fi;
+  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
   Append(str, ", ");
   Append(str, String(AsList(x)));
 

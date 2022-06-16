@@ -24,7 +24,7 @@ InstallMethod(SemigroupData, "for an acting semigroup and lambda orb",
 function(S, lambda_orb)
   local gens, data;
 
-  gens := GeneratorsOfSemigroup(S);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
 
   data := rec(gens := gens,
               genstoapply := [1 .. Length(gens)],
@@ -94,6 +94,8 @@ function(x, S)
       return false;
     fi;
   fi;
+
+  x := ConvertToInternalElement(S, x);
 
   data := SemigroupData(S);
   ht := data!.ht;
@@ -658,6 +660,7 @@ function(data, x, n)
   membership, lambdaperm;
 
   S := data!.parent;
+  x := ConvertToInternalElement(S, x);
   o := data!.lambda_orb;
   l := Position(o, LambdaFunc(S)(x));
 

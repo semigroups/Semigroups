@@ -54,7 +54,6 @@ ReadPackage("semigroups", "gap/semigroups/semiex.gi");
 ReadPackage("semigroups", "gap/semigroups/semicons.gi");
 ReadPackage("semigroups", "gap/semigroups/semigraph.gi");
 ReadPackage("semigroups", "gap/semigroups/semiffmat.gi");
-ReadPackage("semigroups", "gap/semigroups/grpffmat.gi");
 ReadPackage("semigroups", "gap/semigroups/semiquo.gi");
 ReadPackage("semigroups", "gap/semigroups/semieunit.gi");
 ReadPackage("semigroups", "gap/semigroups/semidp.gi");

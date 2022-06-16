@@ -37,6 +37,8 @@ function(S)
     if x = y then
       return false;
     fi;
+    x := ConvertToInternalElement(S, x);
+    y := ConvertToInternalElement(S, y);
     u := OrbSCCLookup(data)[Position(data, x)] - 1;
     v := OrbSCCLookup(data)[Position(data, y)] - 1;
     return u <> v and IsReachable(D, u, v);
@@ -68,14 +70,15 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and multiplicative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts,
-    grades, rho_x, lambdarank, creator, inv, out, k, y, i, name, rho;
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, gens, grades,
+  rho_x, lambdarank, creator, inv, out, k, y, i, name, rho;
 
   regular := IsRegularSemigroup(S);
   if not (regular or IsRegularSemigroupElementNC(S, x)) then
     return [];
   fi;
 
+  x := ConvertToInternalElement(S, x);
   lambda := LambdaFunc(S)(x);
   rank := LambdaRank(S)(LambdaFunc(S)(x));
   rhorank := RhoRank(S);
@@ -93,17 +96,18 @@ function(S, x)
       fi;
     od;
   else
-    opts := rec(treehashsize := SEMIGROUPS.OptionsRec(S).hashlen,
-                gradingfunc := function(o, x) return rhorank(x); end,
-                onlygrades := function(x, y) return x >= rank; end,
+    opts := rec(treehashsize   := SEMIGROUPS.OptionsRec(S).hashlen,
+                gradingfunc    := {o, x} -> rhorank(x),
+                onlygrades     := {x, y} -> x >= rank,
                 onlygradesdata := fail);
 
     for name in RecNames(LambdaOrbOpts(S)) do
       opts.(name) := LambdaOrbOpts(S).(name);
     od;
+    gens := List(GeneratorsOfSemigroup(S),
+                 x -> ConvertToInternalElement(S, x));
 
-    o := Orb(GeneratorsOfSemigroup(S), RhoOrbSeed(S), RhoAct(S), opts);
-    Enumerate(o, infinity);
+    o := Enumerate(Orb(gens, RhoOrbSeed(S), RhoAct(S), opts));
 
     grades := Grades(o);
     rhos := EmptyPlist(Length(o));
@@ -133,7 +137,7 @@ function(S, x)
         y := creator(lambda, rho) * inv(o[i], x);
         if regular or y in S then
           k := k + 1;
-          out[k] := y;
+          out[k] := ConvertToExternalElement(S, y);
         fi;
       od;
     fi;
@@ -146,7 +150,7 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local gens, rank, lambda, max, rep, r, e, lo, ro, lact, ract;
+  local gens, rank, lambda, max, rep, r, e, lo, ro, lact, ract, ie;
 
   gens := Generators(S);
   rank := LambdaRank(S);
@@ -162,7 +166,9 @@ function(S)
     fi;
   od;
 
-  if max = ActionDegree(S) and IsMultiplicativeElementWithOneCollection(S) then
+  if max = ActionDegree(S)
+      and (IsMultiplicativeElementWithOneCollection(S)
+           or IsFFECollCollColl(S)) then
     return One(S);
   fi;
 
@@ -188,11 +194,12 @@ function(S)
   ro := RhoOrb(S);
   lact := LambdaAct(S);
   ract := RhoAct(S);
+  ie := ConvertToInternalElement(S, e);
 
   # S is an ideal without GeneratorsOfSemigroup
   if ForAll(gens, x -> x * e = x and e * x = x)
-      and ForAll([2 .. Length(Enumerate(lo))], i -> lact(lo[i], e) = lo[i])
-      and ForAll([2 .. Length(Enumerate(ro))], i -> ract(ro[i], e) = ro[i]) then
+      and ForAll([2 .. Length(Enumerate(lo))], i -> lact(lo[i], ie) = lo[i])
+      and ForAll([2 .. Length(Enumerate(ro))], i -> ract(ro[i], ie) = ro[i]) then
     return e;
   fi;
   return fail;
@@ -202,14 +209,11 @@ InstallMethod(RepresentativeOfMinimalIdealNC,
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local rank, o, pos, min, len, m, i;
+  local rank, o, pos, min, len, m, result, i;
 
   rank := LambdaRank(S);
   o := LambdaOrb(S);
-
-  pos := LookForInOrb(o, function(o, x)
-                           return rank(x) = MinActionRank(S);
-                         end, 2);
+  pos := LookForInOrb(o, {o, x} -> rank(x) = MinActionRank(S), 2);
 
   if pos = false then
     min := rank(o[2]);
@@ -224,7 +228,8 @@ function(S)
     od;
   fi;
 
-  return EvaluateWord(o, TraceSchreierTreeForward(o, pos));
+  result := EvaluateWord(o, TraceSchreierTreeForward(o, pos));
+  return ConvertToExternalElement(S, result);
 end);
 
 InstallMethod(RightIdentity,
@@ -244,6 +249,7 @@ function(S, x)
     return x;
   fi;
 
+  x := ConvertToInternalElement(S, x);
   o := Enumerate(LambdaOrb(S));
   l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
@@ -251,13 +257,13 @@ function(S, x)
 
   if l <> scc[1] then
     f := LambdaOrbMult(o, m, l);
-    return f[2] * f[1];
+    return ConvertToExternalElement(S, f[2] * f[1]);
   else
     p := Factorization(o, m, LambdaIdentity(S)(true));
     if p = fail then
       return fail;
     else
-      return EvaluateWord(o!.gens, p);
+      return ConvertToExternalElement(S, EvaluateWord(o!.gens, p));
     fi;
   fi;
 end);
@@ -279,6 +285,7 @@ function(S, x)
     return x;
   fi;
 
+  x := ConvertToInternalElement(S, x);
   l := Position(Enumerate(RhoOrb(S)), RhoFunc(S)(x));
   D := Digraph(OrbitGraph(RhoOrb(S)));
   p := DigraphPath(D, l, l);
@@ -286,5 +293,6 @@ function(S, x)
     return fail;
   fi;
   result := EvaluateWord(RhoOrb(S)!.gens, Reversed(p[2]));
+  result := ConvertToExternalElement(S, result);
   return result ^ SmallestIdempotentPower(result);
 end);

@@ -94,15 +94,13 @@ gap> ActionDegree([MultiplicativeZero(R)]);
 0
 
 # ActionDegree, for an MTS element collection
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]), Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3]),
+> Digraph([[1], [1, 2], [1, 3]]), [1, 2]);;
 gap> ActionDegree(Generators(M));
 0
 
-# ActionDegree, for a matrix object collection
-gap> ActionDegree([Matrix(GF(2),
->                         [[0 * Z(2), 0 * Z(2)], [0 * Z(2), 0 * Z(2)]]),
->                  Matrix(GF(2),
->                         [[Z(2) ^ 0, Z(2) ^ 0], [Z(2) ^ 0, 0 * Z(2)]])]);
+# ActionDegree for MatrixOverFiniteFieldSemigroup
+gap> ActionDegree(SLM(2, 2));
 2
 
 # ActionDegree, for a transformation semigroup
@@ -427,9 +425,9 @@ gap> RhoOrbSeed(M);
 
 # Rho/LambdaOrbSeed, for a matrix over FF semigroup
 gap> LambdaOrbSeed(GLM(2, 2));
-<rowbasis of rank 3 over GF(2)>
+<rowbasis of rank 4 over GF(2)>
 gap> RhoOrbSeed(SLM(2, 2));
-<rowbasis of rank 3 over GF(2)>
+<rowbasis of rank 4 over GF(2)>
 
 # Rho/LambdaFunc
 
@@ -642,10 +640,10 @@ gap> x(2, MTSE(M, 2, (2, 3)));
 gap> S := GLM(2, 2);;
 gap> x := LambdaInverse(S);;
 gap> x(RowSpaceBasis(S.2), S.2);
-Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]])
+<a 2x2 matrix over GF2>
 gap> x := RhoInverse(S);;
 gap> x(RowSpaceBasis(S.2), S.2);
-Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]])
+<an immutable 2x2 matrix over GF2>
 
 # Rho/LambdaBound
 
@@ -760,9 +758,9 @@ gap> RhoIdentity(M)(2);
 # Rho/LambdaIdentity, for a matrix over FF semigroup
 gap> S := SLM(2, 2);;
 gap> LambdaIdentity(S)(2);
-Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+[ <a GF2 vector of length 2>, <a GF2 vector of length 2> ]
 gap> RhoIdentity(S)(2);
-Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+[ <a GF2 vector of length 2>, <a GF2 vector of length 2> ]
 
 # LambdaPerm
 
@@ -802,7 +800,7 @@ gap> x(MTSE(M, 2, ()), MTSE(M, 2, (2, 3)));
 gap> x := LambdaPerm(GLM(2, 3));;
 gap> x(Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [0 * Z(3), 0 * Z(3)]]),
 >      Matrix(GF(3), [[Z(3), Z(3)], [0 * Z(3), 0 * Z(3)]]));
-Matrix(GF(3), [[Z(3)]])
+[ [ Z(3) ] ]
 
 # LambdaConjugator
 
@@ -842,7 +840,7 @@ gap> x(MTSE(M, 3, ()), MTSE(M, 2, (2, 3)));
 gap> x := LambdaConjugator(GLM(2, 3));;
 gap> x(Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3) ^ 0]]),
 >      Matrix(GF(3), [[Z(3), 0 * Z(3)], [Z(3), Z(3)]]));
-Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
+[ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ]
 
 # IdempotentTester and IdempotentCreator
 
@@ -949,7 +947,7 @@ gap> x(NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
 >                                 [[0 * Z(3), 0 * Z(3), 0 * Z(3)],
 >                                  [0 * Z(3), 0 * Z(3), 0 * Z(3)],
 >                                  [0 * Z(3), 0 * Z(3), 0 * Z(3)]]));
-false
+Error, Assertion failure
 gap> x(NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
 >                                 [[0 * Z(3), Z(3) ^ 0]]),
 >      NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
@@ -959,7 +957,7 @@ gap> y(NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
 >                                 [[0 * Z(3), Z(3) ^ 0]]),
 >      NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep, GF(3),
 >                                 [[0 * Z(3), Z(3) ^ 0]]));
-Matrix(GF(3), [[0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0]])
+[ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ]
 
 # StabilizerAction
 
@@ -1000,7 +998,7 @@ gap> x(MTSE(M, 3, ()), (2, 4, 3));
 gap> S := GLM(2, 3);;
 gap> x := StabilizerAction(S);;
 gap> x(One(S), Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3) ^ 0]]));
-Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
+[ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ]
 
 # IsActingSemigroupWithFixedDegreeMultiplication
 
@@ -1073,7 +1071,7 @@ gap> SchutzGpMembership(R)(schutz, ());
 true
 
 # SchutzGpMembership, for an MTS
-gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]), 
+gap> M := McAlisterTripleSemigroup(SymmetricGroup([2, 3, 4]),
 > Digraph([[1], [1, 2], [1, 3], [1, 4]]), [1, 2, 3]);;
 gap> M := Semigroup(MTSE(M, 2, (2, 3)), MTSE(M, 3, (2, 3)));;
 gap> o := LambdaOrb(M);; Enumerate(o);;
@@ -1086,9 +1084,9 @@ gap> S := Monoid([
 >  Matrix(GF(2), [[0 * Z(2), Z(2) ^ 0], [0 * Z(2), 0 * Z(2)]]),
 >  Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, 0 * Z(2)]]),
 >  Matrix(GF(2), [[Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0]])]);;
-gap> o := LambdaOrb(S);; Enumerate(o);;
+gap> o := Enumerate(LambdaOrb(S));; 
 gap> schutz := LambdaOrbStabChain(o, 2);;
-gap> SchutzGpMembership(S)(schutz, LambdaIdentity(S)(2));
+gap> SchutzGpMembership(S)(schutz, LambdaIdentity(S)(3));
 true
 
 # FakeOne
@@ -1115,7 +1113,7 @@ gap> FakeOne(McAlisterTripleSemigroup(Group(()), Digraph([[1]]), [1]));
 
 # FakeOne, for a matrix over FF semigroup
 gap> FakeOne(GLM(2, 2));
-Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+<an immutable 2x2 matrix over GF2>
 
 # ChooseHashFunction
 

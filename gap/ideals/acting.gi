@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  ideals/acting.gi
-##  Copyright (C) 2013-2022                               James D. Mitchell
+##  Copyright (C) 2013-2022                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -283,9 +283,13 @@ end);
 InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local gens, data, filt;
+  local S, gens, data, filt;
 
-  gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
+  S := SupersemigroupOfIdeal(I);
+  gens := GeneratorsOfSemigroup(S);
+  if IsActingSemigroup(S) then
+    gens := List(gens, x -> ConvertToInternalElement(S, x));
+  fi;
 
   data := rec();
   data.gens := gens;
@@ -559,12 +563,17 @@ function(data, limit, record)
     fi;
 
     nr_d := nr_d + 1;
-    d[nr_d] := rec();
-    ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
-                            EquivalenceClassRelation, drel, IsGreensClassNC,
-                            false, Representative, x, LambdaOrb, lambdao,
-                            LambdaOrbSCCIndex, m, RhoOrb, rhoo, RhoOrbSCCIndex,
-                            mm, RhoOrbSCC, rhoscc[mm]);
+    d[nr_d] := rec(rep := x);
+    ObjectifyWithAttributes(d[nr_d], dtype,
+                            ParentAttr, I,
+                            EquivalenceClassRelation, drel,
+                            IsGreensClassNC, false,
+                            Representative, x,
+                            LambdaOrb, lambdao,
+                            LambdaOrbSCCIndex, m,
+                            RhoOrb, rhoo,
+                            RhoOrbSCCIndex, mm,
+                            RhoOrbSCC, rhoscc[mm]);
     regular[nr_d] := false;
 
     # install the point in the poset
@@ -1032,12 +1041,17 @@ function(data, limit, record)
     fi;
 
     nr_d := nr_d + 1;
-    d[nr_d] := rec();
-    ObjectifyWithAttributes(d[nr_d], dtype, ParentAttr, I,
-                            EquivalenceClassRelation, drel, IsGreensClassNC,
-                            false, Representative, x, LambdaOrb, lambdao,
-                            LambdaOrbSCCIndex, m, RhoOrb, rhoo, RhoOrbSCCIndex,
-                            mm, RhoOrbSCC, rhoscc[mm]);
+    d[nr_d] := rec(rep := x);
+    ObjectifyWithAttributes(d[nr_d], dtype,
+                            ParentAttr, I,
+                            EquivalenceClassRelation, drel,
+                            IsGreensClassNC, false,
+                            Representative, x,
+                            LambdaOrb, lambdao,
+                            LambdaOrbSCCIndex, m,
+                            RhoOrb, rhoo,
+                            RhoOrbSCCIndex, mm,
+                            RhoOrbSCC, rhoscc[mm]);
 
     # install the point in the poset
     if pos <> fail  then

@@ -1,4 +1,4 @@
-############################################################################
+#############################################################################
 ##
 ##  main/lambda-rho.gi
 ##  Copyright (C) 2013-2022                              James D. Mitchell
@@ -11,10 +11,9 @@
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local record, o;
+  local record, gens, o;
 
   record := ShallowCopy(LambdaOrbOpts(S));
-  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(S))];
 
   record.schreier     := true;
   record.orbitgraph   := true;
@@ -23,7 +22,11 @@ function(S)
   record.parent       := S;
   record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
 
-  o := Orb(GeneratorsOfSemigroup(S), LambdaOrbSeed(S), LambdaAct(S), record);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
+
+  record.scc_reps := [FakeOne(gens)];
+
+  o := Orb(gens, LambdaOrbSeed(S), LambdaAct(S), record);
 
   SetFilterObj(o, IsLambdaOrb);
 
@@ -108,9 +111,7 @@ function(o, m, i)
     # It would be better to use the SchreierTree here not the
     # ReverseSchreierTree
     genpos := ReverseSchreierTreeOfSCC(o, m);
-    inv := function(lambda, x)
-             return LambdaInverse(o!.parent)(lambda, x);
-           end;
+    inv := LambdaInverse(o!.parent);
 
     trace := function(i)
       local x;
@@ -209,17 +210,6 @@ function(o, m)
   one := LambdaIdentity(s)(rank);
   bound := LambdaBound(s)(rank);
 
-  if rank = 0 then
-    # The group is the symmetric group
-    # if rank = 0
-    # mpf: Is this the correct fix? if we put false
-    #      here, PartialOrderOfDClasses fails because
-    #      mults are not defined
-    o!.schutzstab[m] := true;
-    o!.schutz[m] := Group(one);
-    return o!.schutz[m];
-  fi;
-
   g := Group(one);
 
   stop := false;
@@ -287,22 +277,26 @@ end);
 
 InstallMethod(RhoOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local record, o;
+function(S)
+  local record, gens, o;
 
-  record := ShallowCopy(RhoOrbOpts(s));
+  record := ShallowCopy(RhoOrbOpts(S));
   record.schreier := true;
   record.orbitgraph := true;
   record.storenumbers := true;
   record.log := true;
-  record.parent := s;
-  record.treehashsize := SEMIGROUPS.OptionsRec(s).hashlen;
-  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
+  record.parent := S;
+  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
 
-  o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
+
+  record.scc_reps := [FakeOne(gens)];
+
+  o := Orb(gens, RhoOrbSeed(S), RhoAct(S), record);
 
   SetFilterObj(o, IsRhoOrb);
-  if IsInverseActingSemigroupRep(s) then
+
+  if IsInverseActingSemigroupRep(S) then
     SetFilterObj(o, IsInverseOrb);
   fi;
   return o;

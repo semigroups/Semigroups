@@ -9,138 +9,63 @@
 ############################################################################
 ##
 
-############################################################################
-#
-# In the best spirit of GAP development we implement our own matrix methods.
-#
-# We declare our own representation so we do not interfere with the GAP library
-# or other libraries and dispatch to things we know to work.
-#
-# This code is based on the IsPlistMatrixRep code from the GAP library.
-#
-# There is almost no hope whatsoever that we will ever be able to use MatrixObj
-# in general for semigroups, because of MatrixObjs being in CategoryCollections
-# of their entries and this leading to conflicts when checking for
-# IsAssociativeElementCollection (which is false for collections of
-# IsMatrixObj).
-#
-############################################################################
+# This file contains some minimal declarations that allow us to use the
+# features of IsActingSemigroup with MatrixObj's of finite fields from the GAP
+# library.
+
+# We often need to detect whether or not a given mult. elt. is a MatrixObj with
+# entries in a finite field, so we have the following property that answers
+# this question.
+DeclareProperty("IsMatrixObjOverFiniteField", IsMultiplicativeElement);
 
 #############################################################################
-## Specializations of declarations for MatrixOverSemiring
+# Declarations specifically for finite field vectors
 #############################################################################
 
-DeclareCategory("IsMatrixOverFiniteField", IsMatrixOverSemiring);
+# The following relate to LambdaOrb and RhoOrb of a semigroup or monoid of
+# matrices over IsMatrixObjOverFiniteField. We do not use GAP library vectors
+# here (if they even exist) because these are essentially internal and are not
+# expected to be created or manipulated directly by the user.
 
-DeclareCategoryCollections("IsMatrixOverFiniteField");
-DeclareCategoryCollections("IsMatrixOverFiniteFieldCollection");
-
-DeclareAttribute("AsList", IsPlistMatrixRep);
-DeclareOperation("AsMutableList", [IsMatrix]);
-
-#############################################################################
-## Declarations specifically for finite field vectors
-#############################################################################
+# Note that because matrices of dimension 0 are not permitted in the GAP
+# library (possibly for good reasons, such as Is8BitMatrixRep not storing their
+# base domain but using their entries to compute the base domain, which
+# obviously doesn't work for 0-dim matrices which have no entries), everything
+# inside the "acting" data structures (SemigroupData, LambdaOrb, RhoOrb etc)
+# for a semigroup of matrices over a finite field use matrices and row bases
+# etc of dimension 1 greater than the dimension of the matrices that are user
+# facing.
 
 DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
 DeclareCategoryCollections("IsRowBasisOverFiniteField");
 DeclareConstructor("NewRowBasisOverFiniteField",
                    [IsRowBasisOverFiniteField, IsRing, IsList]);
 
-DeclareAttribute("BaseDomain", IsRowBasisOverFiniteField);
-
-#############################################################################
-## Declarations specifically for finite field matrices
-#############################################################################
-
-DeclareConstructor("NewMatrixOverFiniteField",
-                   [IsMatrixOverFiniteField, IsRing, IsList]);
-DeclareConstructor("NewMatrixOverFiniteField",
-                   [IsMatrixOverFiniteField, IsRing, IsInt, IsPlistMatrixRep]);
-
-# TODO(later) make these cons/opers/attributes for MatrixOverSemiring
-DeclareConstructor("NewIdentityMatrixOverFiniteField",
-                   [IsMatrixOverFiniteField, IsRing, IsInt]);
-DeclareConstructor("NewZeroMatrixOverFiniteField",
-                   [IsMatrixOverFiniteField, IsRing, IsInt]);
-DeclareOperation("IdentityMatrixOverFiniteField",
-                 [IsField and IsFinite, IsPosInt]);
-DeclareOperation("IdentityMatrixOverFiniteField",
-                 [IsField and IsFinite, IsZeroCyc]);
-DeclareOperation("IdentityMatrixOverFiniteField",
-                 [IsMatrixOverFiniteField, IsPosInt]);
-DeclareOperation("IdentityMatrixOverFiniteField",
-                 [IsMatrixOverFiniteField, IsZeroCyc]);
-
-# These bases are in normal form
-DeclareAttribute("RowSpaceBasis", IsMatrixOverFiniteField);
-DeclareAttribute("RowSpaceTransformation", IsMatrixOverFiniteField);
-DeclareAttribute("RowSpaceTransformationInv", IsMatrixOverFiniteField);
-
-DeclareAttribute("RightInverse", IsMatrixOverFiniteField);
-DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
-
-DeclareAttribute("RowRank", IsMatrixOverFiniteField);
-DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
-
-# TODO(later) shouldn't this be IsMultiplicativeZero??
-DeclareProperty("IsZero", IsMatrixOverFiniteField);
-
-#############################################################################
-## Declarations specifically for finite field matrices collections
-#############################################################################
-
-# TODO(later) make these cons/opers/attributes for MatrixOverSemiring
-DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
-
-#############################################################################
-## Declaration of representations of vectors and matrices
-#############################################################################
-
-# We need to wrap vector collections to circumvent problems with zero spaces.
-
-# Here come two concrete implementations of VectorOverFiniteFields and
-# MatricesOverFiniteField
-#
-# We might want to store transforming matrices for ColSpaceBasis/RowSpaceBasis?
-# We also need operations for acting on Row/Column spaces.
-
-# For the time being we are "happy" with the PlistMatrixRep representation as
-# showcased in the library code. Of course we implement our own variant of it
-# just to be sure that we duplicate enough code
-#
-# Do the rows of our SPlistMatrixRep need to be SPlistRowVectorRep? Or is
-# it good enough to allow IsPlistRowVectorRep?
-#
-# What about AttributeStoringRep? Is it desirable to just store RowSpaceBasis
-# ColumnSpaceBasis as Attributes?
-
-# Vectors and matrices stored as GAP Plists
-
 DeclareRepresentation("IsPlistRowBasisOverFiniteFieldRep",
                       IsRowBasisOverFiniteField and IsComponentObjectRep and
                       IsAttributeStoringRep, ["rows"]);
-BindGlobal("PlistRowBasisOverFiniteFieldFamily",
-           NewFamily("PlistRowBasisOverFiniteFieldFamily",
-           IsRowBasisOverFiniteField, CanEasilyCompareElements));
-BindGlobal("PlistRowBasisOverFiniteFieldType",
-           NewType(PlistRowBasisOverFiniteFieldFamily,
-                   IsRowBasisOverFiniteField
-                   and IsPlistRowBasisOverFiniteFieldRep));
 
-DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",
-                      IsMatrixOverFiniteField and IsComponentObjectRep and
-                      IsAttributeStoringRep, ["mat"]);
-BindGlobal("PlistMatrixOverFiniteFieldFamily",
-           NewFamily("PlistMatrixOverFiniteFieldFamily",
-                     IsMatrixOverFiniteField, CanEasilyCompareElements));
-BindGlobal("PlistMatrixOverFiniteFieldType",
-           NewType(PlistMatrixOverFiniteFieldFamily,
-                   IsMatrixOverFiniteField and
-                   IsPlistMatrixOverFiniteFieldRep));
+DeclareAttribute("BaseDomain", IsRowBasisOverFiniteField);
 
 #############################################################################
-## Helper functions
+# Declarations specifically for finite field matrices
+#############################################################################
+
+# We require a number of operations for IsMatrixObjOverFiniteField that are not
+# provided by the GAP library AFAIK at time of writing in June 2022.
+
+# These bases are in normal form
+DeclareAttribute("RowSpaceBasis", IsMatrixObj);
+DeclareAttribute("RowSpaceTransformation", IsMatrixObj);
+DeclareAttribute("RowSpaceTransformationInv", IsMatrixObj);
+
+DeclareAttribute("RightInverse", IsMatrixObj);
+DeclareAttribute("LeftInverse", IsMatrixObj);
+
+DeclareOperation("OneMutable", [IsFFECollCollColl]);
+
+#############################################################################
+# Helper functions
 #############################################################################
 
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");

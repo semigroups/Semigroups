@@ -1686,9 +1686,9 @@ gap> S := Semigroup([Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]),
 > false));
 <semigroup of 2x2 matrices over GF(3) with 2 generators>
 gap> x := Matrix(GF(3), [[Z(3) ^ 0, Z(3) ^ 0], [Z(3), Z(3) ^ 0]]);
-Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])
+[ [ Z(3)^0, Z(3)^0 ], [ Z(3), Z(3)^0 ] ]
 gap> D := DClass(S, x);
-<Green's D-class: Matrix(GF(3), [[Z(3)^0, Z(3)^0], [Z(3), Z(3)^0]])>
+<Green's D-class: <matrix object of dimensions 2x2 over GF(3)>>
 gap> map := IsomorphismPermGroup(GroupHClass(D));;
 gap> Range(map);
 Group([ (1,2,3,4,5,6,7,8) ])
@@ -1697,7 +1697,7 @@ Error, the argument does not belong to the domain of the function
 gap> (1, 3, 2) ^ InverseGeneralMapping(map);
 Error, the argument does not belong to the domain of the function
 gap> () ^ InverseGeneralMapping(map);
-Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
+[ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ]
 
 # PartialOrderOfL/RClasses: 1
 gap> S := Semigroup([

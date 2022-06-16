@@ -56,7 +56,7 @@
 ##   3. Rectify the lambda/rho value of the representative. The representative
 ##      of an R-class, for example, must have its lambda-value in the first
 ##      position of the scc containing it. Representatives of L-classes must
-##      have the rho-value must be in the first position of the scc containing
+##      have the rho-value in the first position of the scc containing
 ##      it, D-class reps must have both lambda- and rho-values in the
 ##      respective first positions, the lambda- and rho-values of H-class reps
 ##      must not be modified. The functions SEMIGROUPS.RectifyLambda/Rho can
@@ -80,10 +80,11 @@
 # same method for regular/different for inverse
 
 SEMIGROUPS.CreateXClass := function(args, type, rel)
-  local S, nc, rep, C;
+  local S, nc, rep, irep, erep, C;
 
   if Length(args) = 1 then  # arg is a Green's class
     # for creating bigger classes containing smaller ones
+    Assert(1, IsActingSemigroupGreensClass(args[1]));
     S := Parent(args[1]);
     nc := IsGreensClassNC(args[1]);
     rep := Representative(args[1]);
@@ -98,11 +99,15 @@ SEMIGROUPS.CreateXClass := function(args, type, rel)
     nc := args[3];
   fi;
 
-  C := rec(rep := rep);
+  irep := ConvertToInternalElement(S, rep);
+  erep := ConvertToExternalElement(S, rep);
+
+  C := rec(rep := irep);
   ObjectifyWithAttributes(C, type(S),
                           ParentAttr, S,
                           IsGreensClassNC, nc,
-                          EquivalenceClassRelation, rel(S));
+                          EquivalenceClassRelation, rel(S),
+                          Representative, erep);
 
   if IsInverseActingSemigroupRep(S) then
     SetFilterObj(C, IsInverseActingRepGreensClass);
@@ -184,6 +189,7 @@ end;
 
 SEMIGROUPS.RectifyLambda := function(C)
   local o, i, m;
+  Assert(1, not IsGreensHClass(C));
 
   o := LambdaOrb(C);
 
@@ -205,7 +211,7 @@ end;
 
 SEMIGROUPS.RectifyRho := function(C)
   local o, i, m;
-
+  Assert(1, not IsGreensHClass(C));
   o := RhoOrb(C);
 
   if not IsBound(C!.RhoPos) then
@@ -229,6 +235,7 @@ end;
 
 SEMIGROUPS.Idempotents := function(x, value, scc, o, onright)
   local S, out, j, tester, creator, i;
+  Assert(1, IsActingSemigroupGreensClass(x));
 
   if HasIsRegularGreensClass(x) and not IsRegularGreensClass(x) then
     return [];
@@ -238,8 +245,7 @@ SEMIGROUPS.Idempotents := function(x, value, scc, o, onright)
 
   if IsActingSemigroupWithFixedDegreeMultiplication(S)
       and IsMultiplicativeElementWithOneCollection(S)
-      and ActionRank(S)(Representative(x))
-          = ActionDegree(Representative(x)) then
+      and ActionRank(S)(x!.rep) = ActionDegree(x!.rep) then
     return [One(S)];
   fi;
 
@@ -252,14 +258,14 @@ SEMIGROUPS.Idempotents := function(x, value, scc, o, onright)
     for i in scc do
       if tester(o[i], value) then
         j := j + 1;
-        out[j] := creator(o[i], value);
+        out[j] := ConvertToExternalElement(S, creator(o[i], value));
       fi;
     od;
   else
     for i in scc do
       if tester(value, o[i]) then
         j := j + 1;
-        out[j] := creator(value, o[i]);
+        out[j] := ConvertToExternalElement(S, creator(value, o[i]));
       fi;
     od;
   fi;
@@ -298,7 +304,7 @@ SEMIGROUPS.NrIdempotents := function(x, value, scc, o, onright)
 
   # is r the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-      ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+      ActionRank(S)(x!.rep) = ActionDegree(x!.rep) then
     return 1;
   fi;
 
@@ -348,7 +354,7 @@ SEMIGROUPS.IsRegularGreensClass := function(x, value, scc, o, onright)
 
   # is x the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(S) and
-      ActionRank(S)(Representative(x)) = ActionDegree(Representative(x)) then
+      ActionRank(S)(x!.rep) = ActionDegree(x!.rep) then
     return true;
   fi;
 
@@ -406,7 +412,7 @@ function(D)
   S := Parent(D);
   return RightTransversal(RhoOrbSchutzGp(o, m) ^
                           LambdaConjugator(S)(RhoOrbRep(o, m),
-                                              Representative(D)),
+                                              D!.rep),
                           SchutzenbergerGroup(D));
 end);
 
@@ -434,14 +440,14 @@ function(L)
     return [LambdaIdentity(S)(LambdaRank(S)(o[OrbSCC(o)[m][1]]))];
   fi;
 
-  rep := Representative(L);
+  rep := L!.rep;
   pos := Position(o, LambdaFunc(S)(rep));
 
   if pos = OrbSCC(o)[m][1] then
     return RhoCosets(D);
   else
     x := rep * LambdaOrbMult(o, m, pos)[2];
-    conj := LambdaConjugator(S)(x, rep) * LambdaPerm(S)(x, Representative(D));
+    conj := LambdaConjugator(S)(x, rep) * LambdaPerm(S)(x, D!.rep);
     return List(RhoCosets(D), x -> x ^ conj);
   fi;
 end);
@@ -464,7 +470,7 @@ function(L)
   if IsTrivial(G) then
     return false;
   elif IsNaturalSymmetricGroup(G) and
-      NrMovedPoints(G) = ActionRank(Parent(L))(Representative(L)) then
+      NrMovedPoints(G) = ActionRank(Parent(L))(L!.rep) then
     return true;
   elif IsPermGroup(G) then
     return StabChainImmutable(G);
@@ -511,7 +517,8 @@ function(D)
     return rho_schutz;
   fi;
 
-  p := LambdaConjugator(Parent(D))(RhoOrbRep(o, m), Representative(D));
+  # Use D!.rep because it might be different that Representative(D)
+  p := LambdaConjugator(Parent(D))(RhoOrbRep(o, m), D!.rep);
   rho_schutz := rho_schutz ^ p;
 
   if IsPermGroup(rho_schutz) then
@@ -547,7 +554,7 @@ function(L)
   local o, m, p;
   o := RhoOrb(L);
   m := RhoOrbSCCIndex(L);
-  p := LambdaConjugator(Parent(L))(RhoOrbRep(o, m), Representative(L));
+  p := LambdaConjugator(Parent(L))(RhoOrbRep(o, m), L!.rep);
   return RhoOrbSchutzGp(o, m) ^ p;
 end);
 
@@ -578,7 +585,7 @@ function(H)
   fi;
 
   S := Parent(H);
-  rep := Representative(H);
+  rep := H!.rep;
 
   lambda_mult := LambdaOrbMult(lambda_o,
                                lambda_m,
@@ -595,10 +602,6 @@ function(H)
   # the points acted on by RhoSchutzGp mapped to the corresponding points for
   # rep (the rho value mapped through the rep so that it is on the right)
   rho_p := LambdaConjugator(S)(RhoOrbRep(rho_o, rho_m), rho_mult * rep);
-
-  # if lambda_stab = true then
-  #   return rho_schutz ^ rho_p;
-  # fi;
 
   return Intersection(lambda_schutz ^ lambda_p, rho_schutz ^ rho_p);
 end);
@@ -637,10 +640,6 @@ end);
 
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass], IsRegularGreensClass);
-
-InstallMethod(Representative,
-"for an acting semigroup Green's class",
-[IsActingSemigroupGreensClass], C -> C!.rep);
 
 # different method for regular/inverse
 
@@ -1079,6 +1078,9 @@ function(x, D)
     return false;
   fi;
 
+  x := ConvertToInternalElement(S, x);
+  rep := D!.rep;
+
   o := LambdaOrb(D);
   m := LambdaOrbSCCIndex(D);
   scc := OrbSCC(o);
@@ -1144,6 +1146,9 @@ function(x, L)
     return false;
   fi;
 
+  x := ConvertToInternalElement(S, x);
+  rep := L!.rep;
+
   o := RhoOrb(L);
   m := RhoOrbSCCIndex(L);
   scc := OrbSCC(o);
@@ -1184,6 +1189,9 @@ function(x, R)
       or RhoFunc(S)(x) <> RhoFunc(S)(rep) then
     return false;
   fi;
+
+  x := ConvertToInternalElement(S, x);
+  rep := R!.rep;
 
   o := LambdaOrb(R);
   m := LambdaOrbSCCIndex(R);
@@ -1226,6 +1234,9 @@ function(x, H)
       or LambdaFunc(S)(x) <> LambdaFunc(S)(rep) then
     return false;
   fi;
+
+  x := ConvertToInternalElement(S, x);
+  rep := H!.rep;
 
   return LambdaPerm(S)(rep, x) in SchutzenbergerGroup(H);
 end);
@@ -1343,7 +1354,7 @@ function(D)
   scc := LambdaOrbSCC(D);
   mults := LambdaOrbMults(LambdaOrb(D), LambdaOrbSCCIndex(D));
   cosets := LambdaCosets(D);
-  rep := Representative(D);
+  rep := D!.rep;
   act := StabilizerAction(Parent(D));
   out := EmptyPlist(Length(scc) * Length(cosets));
   nr := 0;
@@ -1430,7 +1441,7 @@ function(D)
   scc := RhoOrbSCC(D);
   mults := RhoOrbMults(RhoOrb(D), RhoOrbSCCIndex(D));
   cosets := RhoCosets(D);
-  rep := Representative(D);
+  rep := D!.rep;
   act := StabilizerAction(Parent(D));
   out := EmptyPlist(Length(scc) * Length(cosets));
   nr := 0;
@@ -1501,7 +1512,7 @@ function(R)
   scc := LambdaOrbSCC(R);
   mults := LambdaOrbMults(LambdaOrb(R), LambdaOrbSCCIndex(R));
   cosets := LambdaCosets(DClassOfRClass(R));
-  rep := Representative(R);
+  rep := R!.rep;
   act := StabilizerAction(Parent(R));
   out := EmptyPlist(Length(scc) * Length(cosets));
   nr := 0;
@@ -1510,7 +1521,7 @@ function(R)
     x := act(rep, p);
     for i in scc do
       nr := nr + 1;
-      out[nr] := x * mults[i][1];
+      out[nr] := ConvertToExternalElement(Parent(R), x * mults[i][1]);
     od;
   od;
   return out;
@@ -1546,7 +1557,7 @@ function(L)
   # These are the rho cosets of the D-class containing L rectified so that they
   # correspond to the lambda value of the rep of L and not the lambda value of
   # the rep of the D-class.
-  rep := Representative(L);
+  rep := L!.rep;
   act := StabilizerAction(Parent(L));
   out := EmptyPlist(Length(scc) * Length(cosets));
   nr := 0;
@@ -1555,7 +1566,7 @@ function(L)
     x := act(rep, p);
     for i in scc do
       nr := nr + 1;
-      out[nr] := mults[i][1] * x;
+      out[nr] := ConvertToExternalElement(Parent(L), mults[i][1] * x);
     od;
   od;
   return out;
@@ -1621,14 +1632,14 @@ InstallMethod(GroupHClassOfGreensDClass,
 "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
-  local S, rho, o, scc, tester, i;
+  local S, rho, o, scc, tester, rep, i;
 
   if HasIsRegularGreensClass(D) and not IsRegularGreensClass(D) then
     return fail;
   fi;
 
   S := Parent(D);
-  rho := RhoFunc(S)(Representative(D));
+  rho := RhoFunc(S)(D!.rep);
   o := LambdaOrb(D);
   scc := LambdaOrbSCC(D);
   tester := IdempotentTester(S);
@@ -1638,8 +1649,8 @@ function(D)
       if not HasIsRegularGreensClass(D) then
         SetIsRegularGreensClass(D, true);
       fi;
-      return GreensHClassOfElementNC(D, IdempotentCreator(S)(o[i], rho),
-                                     IsGreensClassNC(D));
+      rep := ConvertToExternalElement(S, IdempotentCreator(S)(o[i], rho));
+      return GreensHClassOfElementNC(D, rep, IsGreensClassNC(D));
     fi;
   od;
 
@@ -1656,7 +1667,7 @@ InstallMethod(IsGroupHClass, "for an H-class of an acting semigroup",
 function(H)
   local S, x;
   S := Parent(H);
-  x := Representative(H);
+  x := H!.rep;
   return IdempotentTester(S)(LambdaFunc(S)(x), RhoFunc(S)(x));
 end);
 
@@ -1665,7 +1676,7 @@ end);
 InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
-  local map, iso, inv;
+  local map, id, iso, inv;
 
   if not IsGroupHClass(H) then
     ErrorNoReturn("the argument (a Green's H-class) is not a group");
@@ -1675,20 +1686,26 @@ function(H)
     map := IdentityMapping(SchutzenbergerGroup(H));
   fi;
 
+  id := ConvertToInternalElement(Parent(H), MultiplicativeNeutralElement(H));
+
   iso := function(x)
     if not x in H then
       ErrorNoReturn("the argument does not belong to the domain of the ",
                     "function");
     fi;
-    return LambdaPerm(Parent(H))(MultiplicativeNeutralElement(H), x) ^ map;
+    x := ConvertToInternalElement(Parent(H), x);
+    return LambdaPerm(Parent(H))(id, x) ^ map;
   end;
   inv := function(x)
+    local S, act;
     if not x in Image(map) then
       ErrorNoReturn("the argument does not belong to the domain of the ",
                     "function");
     fi;
-    return StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
-                                       x ^ InverseGeneralMapping(map));
+    S := Parent(H);
+    act := StabilizerAction(S);
+    return ConvertToExternalElement(S,
+                                    act(id, x ^ InverseGeneralMapping(map)));
   end;
   return MappingByFunction(H, Range(map), iso, inv);
 end);
@@ -1844,15 +1861,21 @@ end);
 
 InstallMethod(Idempotents, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-L -> SEMIGROUPS.Idempotents(L, LambdaFunc(Parent(L))(Representative(L)),
-                            RhoOrbSCC(L), RhoOrb(L), false));
+L -> SEMIGROUPS.Idempotents(L,
+                            LambdaFunc(Parent(L))(L!.rep),
+                            RhoOrbSCC(L),
+                            RhoOrb(L),
+                            false));
 
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(Idempotents, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-R -> SEMIGROUPS.Idempotents(R, RhoFunc(Parent(R))(Representative(R)),
-                            LambdaOrbSCC(R), LambdaOrb(R), true));
+R -> SEMIGROUPS.Idempotents(R,
+                            RhoFunc(Parent(R))(R!.rep),
+                            LambdaOrbSCC(R),
+                            LambdaOrb(R),
+                            true));
 
 # same method for regular/inverse/ideals
 
@@ -1866,8 +1889,10 @@ function(H)
   fi;
 
   S := Parent(H);
-  x := Representative(H);
-  return [IdempotentCreator(S)(LambdaFunc(S)(x), RhoFunc(S)(x))];
+  x := H!.rep;
+  return [ConvertToExternalElement(S,
+                                   IdempotentCreator(S)(LambdaFunc(S)(x),
+                                                        RhoFunc(S)(x)))];
 end);
 
 # Number of idempotents . . .
@@ -1923,15 +1948,21 @@ D -> Sum(List(GreensRClasses(D), NrIdempotents)));
 
 InstallMethod(NrIdempotents, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-L -> SEMIGROUPS.NrIdempotents(L, LambdaFunc(Parent(L))(Representative(L)),
-                              RhoOrbSCC(L), RhoOrb(L), false));
+L -> SEMIGROUPS.NrIdempotents(L,
+                              LambdaFunc(Parent(L))(L!.rep),
+                              RhoOrbSCC(L),
+                              RhoOrb(L),
+                              false));
 
 # same method for regular/ideals, different method inverse
 
 InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-R -> SEMIGROUPS.NrIdempotents(R, RhoFunc(Parent(R))(Representative(R)),
-                              LambdaOrbSCC(R), LambdaOrb(R), true));
+R -> SEMIGROUPS.NrIdempotents(R,
+                              RhoFunc(Parent(R))(R!.rep),
+                              LambdaOrbSCC(R),
+                              LambdaOrb(R),
+                              true));
 
 # same method for regular/inverse/ideals
 
@@ -1953,24 +1984,30 @@ end);
 InstallMethod(IsRegularGreensClass, "for an D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 D -> SEMIGROUPS.IsRegularGreensClass(D,
-                                     RhoFunc(Parent(D))(Representative(D)),
-                                     LambdaOrbSCC(D), LambdaOrb(D), true));
+                                     RhoFunc(Parent(D))(D!.rep),
+                                     LambdaOrbSCC(D),
+                                     LambdaOrb(D),
+                                     true));
 
 # not required for regular/inverse, same for ideals
 
 InstallMethod(IsRegularGreensClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 L -> SEMIGROUPS.IsRegularGreensClass(L,
-                                     LambdaFunc(Parent(L))(Representative(L)),
-                                     RhoOrbSCC(L), RhoOrb(L), false));
+                                     LambdaFunc(Parent(L))(L!.rep),
+                                     RhoOrbSCC(L),
+                                     RhoOrb(L),
+                                     false));
 
 # not required for regular/inverse, same for ideals
 
 InstallMethod(IsRegularGreensClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 R -> SEMIGROUPS.IsRegularGreensClass(R,
-                                     RhoFunc(Parent(R))(Representative(R)),
-                                     LambdaOrbSCC(R), LambdaOrb(R), true));
+                                     RhoFunc(Parent(R))(R!.rep),
+                                     LambdaOrbSCC(R),
+                                     LambdaOrb(R),
+                                     true));
 
 # same method for regular/inverse, same method for ideals
 
@@ -2127,7 +2164,7 @@ function(D)
       return fail;
     fi;
     R     := GreensRClassOfElement(enum!.parent, elt);
-    index := Position(GreensRClasses(enum!.parent), R);
+    index := Position(GreensRClasses(D), R);
     pos   := Position(enum!.underlying_enums[index], elt);
     if index <> 1 then
       return pos + enum!.lengths[index - 1];
@@ -2162,7 +2199,8 @@ function(H)
     local H, S, rep;
     H   := enum!.parent;
     S   := Parent(H);
-    rep := Representative(H);
+    rep := H!.rep;
+    elt := ConvertToInternalElement(S, elt);
 
     if LambdaFunc(S)(elt) <> LambdaFunc(S)(rep)
         or RhoFunc(S)(elt) <> RhoFunc(S)(rep) then
@@ -2172,9 +2210,11 @@ function(H)
   end;
 
   convert_out := function(enum, perm)
-    local H;
+    local H, S;
     H := enum!.parent;
-    return StabilizerAction(Parent(H))(Representative(H), perm);
+    S := Parent(H);
+    return ConvertToExternalElement(S,
+                                    StabilizerAction(S)(H!.rep, perm));
   end;
 
   return WrappedEnumerator(H,
@@ -2195,11 +2235,14 @@ function(H)
   fi;
 
   record        := rec();
-  record.parent := Parent(H);
-  record.rep    := Representative(H);
+  record.parent := H;
+  record.rep    := H!.rep;
 
   unwrap := function(iter, x)
-    return StabilizerAction(iter!.parent)(iter!.rep, x);
+    local S, rep;
+    S   := Parent(iter!.parent);
+    rep := iter!.rep;
+    return ConvertToExternalElement(S, StabilizerAction(S)(rep, x));
   end;
 
   return WrappedIterator(Iterator(SchutzenbergerGroup(H)), unwrap, record);
@@ -2212,23 +2255,15 @@ InstallMethod(Enumerator, "for L-class of an acting semigroup",
 function(L)
   local convert_out, convert_in, scc, enum;
 
-  convert_out := function(enum, tuple)
-    local L, rep, act;
-
-    L := enum!.parent;
-    rep := Representative(L);
-    act := StabilizerAction(Parent(L));
-    return act(RhoOrbMult(RhoOrb(L), RhoOrbSCCIndex(L), tuple[1])[1]
-               * rep, tuple[2]);
-  end;
-
   convert_in := function(enum, elt)
     local L, S, i, f;
 
     L := enum!.parent;
     S := Parent(L);
 
-    if LambdaFunc(S)(elt) <> LambdaFunc(S)(Representative(L)) then
+    elt := ConvertToInternalElement(S, elt);
+
+    if LambdaFunc(S)(elt) <> LambdaFunc(S)(L!.rep) then
       return fail;
     fi;
 
@@ -2239,7 +2274,22 @@ function(L)
 
     f := RhoOrbMult(RhoOrb(L), RhoOrbSCCIndex(L), i)[2] * elt;
 
-    return [i, LambdaPerm(S)(Representative(L), f)];
+    return [i, LambdaPerm(S)(L!.rep, f)];
+  end;
+
+  convert_out := function(enum, tuple)
+    local L, S, rep, act, result;
+
+    L   := enum!.parent;
+    S   := Parent(L);
+    rep := L!.rep;
+    act := StabilizerAction(S);
+
+    result := act(RhoOrbMult(RhoOrb(L),
+                             RhoOrbSCCIndex(L),
+                             tuple[1])[1] * rep,
+                  tuple[2]);
+    return ConvertToExternalElement(S, result);
   end;
 
   scc  := OrbSCC(RhoOrb(L))[RhoOrbSCCIndex(L)];
@@ -2265,12 +2315,15 @@ function(L)
   record.parent := L;
 
   unwrap := function(iter, x)
-    local L;
-    L := iter!.parent;
-    return StabilizerAction(Parent(L))(RhoOrbMult(RhoOrb(L),
-                                                  RhoOrbSCCIndex(L),
-                                                  x[1])[1]
-                                       * Representative(L), x[2]);
+    local L, S, rep, result;
+    L   := iter!.parent;
+    S   := Parent(L);
+    rep := L!.rep;
+    result := StabilizerAction(S)(RhoOrbMult(RhoOrb(L),
+                                             RhoOrbSCCIndex(L),
+                                             x[1])[1] * rep,
+                                  x[2]);
+    return ConvertToExternalElement(S, result);
   end;
 
   return WrappedIterator(it, unwrap, record);
@@ -2283,21 +2336,15 @@ InstallMethod(Enumerator, "for R-class of an acting semigroup",
 function(R)
   local convert_out, convert_in, scc, enum;
 
-  convert_out := function(enum, tuple)
-    local R, rep;
-    R   := enum!.parent;
-    rep := Representative(R);
-    return StabilizerAction(Parent(R))(rep, tuple[1])
-     * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), tuple[2])[1];
-  end;
-
   convert_in := function(enum, elt)
     local R, S, i, f;
 
     R := enum!.parent;
     S := Parent(R);
 
-    if RhoFunc(S)(elt) <> RhoFunc(S)(Representative(R)) then
+    elt := ConvertToInternalElement(S, elt);
+
+    if RhoFunc(S)(elt) <> RhoFunc(S)(R!.rep) then
       return fail;
     fi;
 
@@ -2306,15 +2353,26 @@ function(R)
     if i = fail or OrbSCCLookup(LambdaOrb(R))[i] <> LambdaOrbSCCIndex(R) then
       return fail;
     fi;
-
     f := elt * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), i)[2];
 
-    return [LambdaPerm(S)(Representative(R), f), i];
+    return [LambdaPerm(S)(R!.rep, f), i];
+  end;
+
+  convert_out := function(enum, tuple)
+    local R, S, rep, act, result;
+
+    R   := enum!.parent;
+    S := Parent(R);
+    rep := R!.rep;
+    act := StabilizerAction(S);
+    result := act(rep, tuple[1]) * LambdaOrbMult(LambdaOrb(R),
+                                                 LambdaOrbSCCIndex(R),
+                                                 tuple[2])[1];
+    return ConvertToExternalElement(S, result);
   end;
 
   scc  := OrbSCC(LambdaOrb(R))[LambdaOrbSCCIndex(R)];
   enum := EnumeratorOfCartesianProduct(SchutzenbergerGroup(R), scc);
-
   return WrappedEnumerator(R, enum, convert_out, convert_in);
 end);
 
@@ -2337,10 +2395,13 @@ function(R)
   record.parent := R;
 
   unwrap := function(iter, x)
-    local R;
+    local R, S, rep, result;
     R := iter!.parent;
-    return StabilizerAction(Parent(R))(Representative(R), x[1])
-           * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), x[2])[1];
+    S := Parent(R);
+    rep := R!.rep;
+    result := StabilizerAction(S)(rep, x[1])
+              * LambdaOrbMult(LambdaOrb(R), LambdaOrbSCCIndex(R), x[2])[1];
+    return ConvertToExternalElement(S, result);
   end;
 
   return WrappedIterator(it, unwrap, record);

@@ -134,7 +134,7 @@ gap> S := FullTransformationSemigroup(8);
 <full transformation monoid of degree 8>
 gap> x := Transformation([2, 6, 7, 2, 6, 1, 1, 5]);;
 gap> D := DClass(S, x);
-<Green's D-class: Transformation( [ 6, 3, 4, 6, 3, 5, 5, 1 ] )>
+<Green's D-class: Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )>
 gap> R := PrincipalFactor(D);
 <Rees 0-matrix semigroup 1050x56 over Group([ (2,8,7,4,3), (3,4) ])>
 gap> S := Semigroup(List([1 .. 10], x -> Random(R)));

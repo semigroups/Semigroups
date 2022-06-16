@@ -14,8 +14,7 @@
 
 # IsGeneratorsOfActingSemigroup
 
-InstallMethod(IsGeneratorsOfActingSemigroup,
-"for a list or collection",
+InstallMethod(IsGeneratorsOfActingSemigroup, "for a list or collection",
 [IsListOrCollection], ReturnFalse);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
@@ -56,8 +55,17 @@ function(coll)
 end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for a matrix over finite field collection",
-[IsMatrixOverFiniteFieldCollection], IsGeneratorsOfSemigroup);
+"for an ffe coll coll coll",
+# TODO(MatrixObj-later) is this the best way to recognise a collection of
+# MatrixObj?
+[IsFFECollCollColl],
+function(coll)
+  return IsGeneratorsOfSemigroup(coll)
+    and (IsEmpty(coll) or ForAll(coll, IsMatrixObjOverFiniteField));
+end);
+
+InstallTrueMethod(IsGeneratorsOfActingSemigroup,
+IsMatrixOverFiniteFieldSemigroup);
 
 # the largest point involved in the action
 
@@ -86,8 +94,13 @@ function(x)
   return 0;
 end);
 
-InstallMethod(ActionDegree, "for a matrix over finite field object",
-[IsMatrixOverFiniteField], DimensionOfMatrixOverSemiring);
+InstallMethod(ActionDegree, "for a matrix obj", [IsMatrixObj],
+function(m)
+  if not IsMatrixObjOverFiniteField(m) then
+    TryNextMethod();
+  fi;
+  return NrRows(m);
+end);
 
 InstallMethod(ActionDegree, "for a transformation collection",
 [IsTransformationCollection], DegreeOfTransformationCollection);
@@ -110,10 +123,11 @@ function(coll)
   return 0;
 end);
 
-InstallMethod(ActionDegree, "for a matrix object collection",
-[IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
+InstallMethod(ActionDegree, "for a ffe coll coll coll",
+[IsFFECollCollColl],
 function(coll)
-  return DimensionOfMatrixOverSemiring(coll[1]);
+  Assert(1, ForAll(coll, IsMatrixObjOverFiniteField));
+  return NrRows(Representative(coll));
 end);
 
 InstallMethod(ActionDegree, "for a McAlister semigroup element collection",
@@ -234,8 +248,11 @@ function(S)
 end);
 
 InstallMethod(ActionRank, "for a matrix object and integer",
-[IsMatrixOverFiniteField, IsInt],
-function(x, i)
+[IsMatrixObj, IsInt],
+function(x, _)
+  if not IsMatrixObjOverFiniteField(x) then
+    TryNextMethod();
+  fi;
   return Rank(RowSpaceBasis(x));
 end);
 
@@ -350,7 +367,7 @@ function(S)
   end;
 end);
 
-InstallMethod(LambdaAct, "for a matrix semigroup",
+InstallMethod(LambdaAct, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 S -> function(vsp, mat)
   return MatrixOverFiniteFieldRowSpaceRightAction(S, vsp, mat);
@@ -434,11 +451,12 @@ InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 InstallMethod(LambdaOrbSeed, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S -> 0);
 
-InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
+InstallMethod(LambdaOrbSeed,
+"for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
     local deg;
-    deg := DimensionOfMatrixOverSemiringCollection(S) + 1;
+    deg := NrRows(Representative(S)) + 2;
     return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
                                       BaseDomain(S),
                                       NullMat(deg, deg, BaseDomain(S)));
@@ -599,10 +617,10 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x -> BLOCKS_RANK);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> LambdaRank(R));
+[IsReesZeroMatrixSubsemigroup], LambdaRank);
 
 InstallMethod(RhoRank, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], S -> LambdaRank(S));
+[IsMatrixOverFiniteFieldSemigroup], LambdaRank);
 
 InstallMethod(RhoRank, "for a McAlister subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S ->
@@ -766,7 +784,7 @@ function(r)
   if r = 0 then
     return 1;
   elif r < 100 then
-    return Size(GL(DimensionOfMatrixOverSemiringCollection(S), BaseDomain(S)));
+    return Size(GL(NrRows(Representative(S)), BaseDomain(S)));
   else
     return infinity;
   fi;
@@ -841,13 +859,13 @@ InstallMethod(RhoIdentity, "for a McAlister triple subsemigroup",
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
-  return IdentityMatrixOverFiniteField(Representative(S), r);
+  return IdentityMat(r, BaseDomain(Representative(S)));
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
-  return IdentityMatrixOverFiniteField(Representative(S), r);
+  return IdentityMat(r, BaseDomain(Representative(S)));
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
@@ -1132,7 +1150,12 @@ S -> SEMIGROUPS.UniversalFakeOne);
 
 # Matrix semigroup elements
 InstallMethod(FakeOne, "for an FFE coll coll coll",
-[IsFFECollCollColl], One);
+[IsFFECollCollColl],
+function(coll)
+  Assert(1, ForAll(coll, IsMatrixObjOverFiniteField));
+  Assert(1, ForAll(coll, x -> NrRows(x) = NrRows(Representative(coll))));
+  return One(Representative(coll));
+end);
 
 # missing hash functions
 
@@ -1183,4 +1206,51 @@ InstallMethod(ChooseHashFunction, "for an object and an int",
 1,
 function(p, hashlen)
   return rec(func := {v, data} -> 1, data := fail);
+end);
+
+InstallMethod(ConvertToInternalElement,
+"for an acting semigroup and mult. elt.",
+[IsActingSemigroup, IsMultiplicativeElement],
+{S, x} -> x);
+
+InstallMethod(ConvertToExternalElement,
+"for an acting semigroup and mult. elt.",
+[IsActingSemigroup, IsMultiplicativeElement],
+{S, x} -> x);
+
+InstallMethod(ConvertToInternalElement,
+"for an acting matrix over ff semigroup and matrix obj",
+[IsActingSemigroup and IsMatrixOverFiniteFieldSemigroup, IsMatrixObj],
+function(S, mat)
+  local bd, n;
+
+  Assert(1, IsMatrixObjOverFiniteField(mat));
+  if NrRows(mat) = NrRows(Representative(S)) + 1 then
+    return mat;
+  fi;
+  Assert(1, NrRows(mat) = NrRows(Representative(S)));
+
+  bd  := BaseDomain(mat);
+  n   := NrRows(mat);
+  mat := List([1 .. n],
+              i -> Concatenation(MutableCopyMat(mat[i]), [Zero(bd)]));
+  Add(mat, ZeroMatrix(bd, 1, n + 1)[1]);
+  mat[n + 1, n + 1] := One(bd);
+  return Matrix(bd, mat);
+end);
+
+InstallMethod(ConvertToExternalElement,
+"for an acting matrix over ff semigroup and matrix obj",
+[IsActingSemigroup and IsMatrixOverFiniteFieldSemigroup, IsMatrixObj],
+function(S, mat)
+  local n;
+
+  Assert(1, IsMatrixObjOverFiniteField(mat));
+  if NrRows(mat) = NrRows(Representative(S)) then
+    return mat;
+  fi;
+  Assert(1, NrRows(mat) = NrRows(Representative(S)) + 1);
+
+  n := NrRows(mat) - 1;
+  return Matrix(Unpack(mat){[1 .. n]}{[1 .. n]}, mat);
 end);

@@ -94,7 +94,7 @@ gap> S := RegularSemigroup([
 gap> GreensDClasses(S);
 [ <Green's D-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 3, 5, 5 ] )>, 
-  <Green's D-class: Transformation( [ 1, 2, 2, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 2, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 5, 5, 5, 5, 5 ] )> ]
 gap> GreensRClasses(S);
 [ <Green's R-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
@@ -375,9 +375,10 @@ gap> S := Monoid(PartitionMonoid(3), rec(acting := true, regular := true));
 gap> x := Bipartition([[1, 3], [2, -1], [-2, -3]]);
 <bipartition: [ 1, 3 ], [ 2, -1 ], [ -2, -3 ]>
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>
+<Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1 ], [ -2, -3 ]>>
 gap> en := Enumerator(D);
-<enumerator of <Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1, -2, -3 ]>>>
+<enumerator of <Green's D-class: <bipartition: [ 1, 3 ], [ 2, -1 ], 
+  [ -2, -3 ]>>>
 gap> ForAll(en, x -> en[Position(en, x)] = x);
 true
 gap> ForAll([1 .. Length(en)], i -> Position(en, en[i]) = i);

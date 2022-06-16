@@ -187,9 +187,9 @@ gap> S := Semigroup(Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9]),
 gap> x := Transformation([7, 7, 4, 2, 1, 8, 8, 9, 5]);;
 gap> D := DClass(S, Transformation([1, 8, 6, 2, 7, 8, 8, 9, 5]));;
 gap> L := LClass(D, x);
-<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
+<Green's L-class: Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] )>
 gap> LL := LClass(S, x);
-<Green's L-class: Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )>
+<Green's L-class: Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] )>
 gap> List(HClassReps(LL), x -> x in LL);
 [ true, true, true, true ]
 gap> List(HClassReps(L), x -> x in L);
@@ -1008,9 +1008,9 @@ gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0],
 >                     [Z(2 ^ 2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0]]]);
-<semigroup with 3 generators>
+<monoid with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of size 21, degree 22 with 3 generators>
+<transformation monoid of size 21, degree 21 with 2 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));;
@@ -1781,7 +1781,7 @@ Error, the argument (a 2-sided congruence) must have finite range
 gap> S := GLM(2, 2);
 <general linear monoid 2x2 over GF(2)>
 gap> Matrix(GF(4), One(S));
-Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+[ [ Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0 ] ]
 gap> Size(Elements(S));
 16
 
