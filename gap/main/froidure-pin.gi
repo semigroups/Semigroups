@@ -572,7 +572,7 @@ function(S, i)
 
   fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
                          i + 1,
-                         InfoLevel(InfoSemigroups) > 0).fp;
+                         InfoLevel(InfoSemigroups) > 0);
   return fp.first[i];
 end);
 
@@ -600,7 +600,7 @@ function(S, i)
 
   fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
                          i + 1,
-                         InfoLevel(InfoSemigroups) > 0).fp;
+                         InfoLevel(InfoSemigroups) > 0);
   return fp.final[i];
 end);
 
@@ -628,7 +628,7 @@ function(S, i)
 
   fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
                          i + 1,
-                         InfoLevel(InfoSemigroups) > 0).fp;
+                         InfoLevel(InfoSemigroups) > 0);
   return fp.prefix[i];
 end);
 
@@ -656,7 +656,7 @@ function(S, i)
 
   fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
                          i + 1,
-                         InfoLevel(InfoSemigroups) > 0).fp;
+                         InfoLevel(InfoSemigroups) > 0);
   return fp.suffix[i];
 end);
 

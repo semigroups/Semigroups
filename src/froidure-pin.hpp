@@ -93,7 +93,11 @@ void bind_froidure_pin(gapbind14::Module &m, std::string name) {
       .def("idempotents", [](FroidurePin_ &S) {
         return gapbind14::make_iterator(S.cbegin_idempotents(),
                                         S.cend_idempotents());
-      });
+      })
+      .def("first_letter", &FroidurePin_::first_letter)
+      .def("final_letter", &FroidurePin_::final_letter)
+      .def("prefix", &FroidurePin_::prefix)
+      .def("suffix", &FroidurePin_::suffix);
 }
 
 namespace semigroups {

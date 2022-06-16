@@ -39,15 +39,15 @@
 #############################################################################
 
 # Hash translations by their underlying transformations
-  SEMIGROUPS.HashFunctionForTranslations := function(x, data)
-    return ORB_HashFunctionForPlainFlatList(x![1], data);
-  end;
+SEMIGROUPS.HashFunctionForTranslations := function(x, data)
+  return ORB_HashFunctionForPlainFlatList(x![1], data);
+end;
 
 # Hash bitranslations as sum of underlying transformation hashes
-  SEMIGROUPS.HashFunctionForBitranslations := function(x, data)
-      return (SEMIGROUPS.HashFunctionForTranslations(x![1], data)
-        + SEMIGROUPS.HashFunctionForTranslations(x![2], data)) mod data + 1;
-  end;
+SEMIGROUPS.HashFunctionForBitranslations := function(x, data)
+    return (SEMIGROUPS.HashFunctionForTranslations(x![1], data)
+      + SEMIGROUPS.HashFunctionForTranslations(x![2], data)) mod data + 1;
+end;
 
 # Choose how to calculate the elements of a translations semigroup
 # TODO: why am I returning a semigroup sometimes and a list other times?
@@ -75,7 +75,7 @@ end;
 
 # Choose how to calculate the elements of a translational hull
 # TODO: make the arguments for RMS funcs consistent
-SEMIGROUPS.Bitranslations := function(H)
+SEMIGROUPS.BitranslationsElements := function(H)
   local S;
 
   S := UnderlyingSemigroup(H);
@@ -205,7 +205,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
   # for all s in S, store the elements t such that gens[i] * t = s for each i
   left_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
-    for t in [1 .. n + 1] do
+    for t in [1 .. id] do
       x := multtable[genspos[i]][t];
       Add(left_inverses_by_gen[x][i], t);
       if not IsBound(left_canon_inverse_by_gen[x][i]) then
@@ -217,7 +217,7 @@ SEMIGROUPS.LeftTranslationsBacktrackDataWithGens := function(S, gens)
   # for each t in the left inverses of some a in max_R_intersects[i][j] by 
   # gens[j], compute the right inverses of each s in S under t
   right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. n + 1], x -> false);
+  seen := List([1 .. id], x -> false);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -291,7 +291,7 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   local n, m, id, genspos, transpose_multtable, transpose_multsets, l_classes,
   l_class_map, l_class_inv_map, l_classes_below, max_L_intersects, intersect,
   reps, right_canon_inverse_by_gen, right_inverses_by_gen, x, left_inverses,
-  seen, s, multsets, T, Ti, keep, B, sb, r, i, j, t, a, u;
+  seen, s, multsets, T, Ti, keep, B, sb, r, i, j, t, a, u, multtable;
   
   n           := Size(S);
   m           := Size(gens);
@@ -306,6 +306,8 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   od;
   Add(transpose_multtable, [1 .. id]);
   transpose_multsets := List(transpose_multtable, Set);
+
+  multtable := TransposedMat(transpose_multtable);  # For the added identity
 
   l_classes := LClasses(S);
   l_class_map := [];
@@ -341,9 +343,9 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   # for all s in S, store the elements t such that t * gens[i] = s for each i
   right_inverses_by_gen := List([1 .. n], x -> List([1 .. m], y -> []));
   for i in [1 .. m] do
-    for t in [1 .. n] do
+    for t in [1 .. id] do
       x := transpose_multtable[genspos[i]][t];
-      Add(right_inverses_by_gen[transpose_multtable[genspos[i]][t]][i], t);
+      Add(right_inverses_by_gen[x][i], t);
       if not IsBound(right_canon_inverse_by_gen[x][i]) then
         right_canon_inverse_by_gen[x][i] := t;
       fi;
@@ -353,7 +355,7 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
   # for each t in the right inverses of some a in max_L_intersects[i][j] by 
   # gens[j], compute the left inverses of each s in S under t
   left_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. n], x -> false);
+  seen := List([1 .. id], x -> false);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -377,7 +379,7 @@ SEMIGROUPS.RightTranslationsBacktrackDataWithGens := function(S, gens)
     od;
   od;
 
-  multsets := List(MultiplicationTableWithCanonicalPositions(S), Set);
+  multsets := List(multtable, Set);
 
   T := [];
   for i in [1 .. m] do
@@ -690,16 +692,17 @@ function(S, gens, opt...)
   if nr_only then
     return nr;
   fi;
-  Apply(out, x -> LeftTranslationNC(S, x));
+  Apply(out, x -> LeftTranslationNC(LeftTranslations(S), x));
   return out;
 end;
 
+# TODO: pass through an opt argument
 SEMIGROUPS.RightTranslationsBacktrack := function(R)
   return SEMIGROUPS.RightTranslationsBacktrackWithGens(UnderlyingSemigroup(R),
           GeneratorsOfSemigroup(UnderlyingSemigroup(R)));
 end;
 
-SEMIGROUPS.RightTranslationsBacktrack := function(S, gens, opt...)
+SEMIGROUPS.RightTranslationsBacktrackWithGens := function(S, gens, opt...)
   local n, m, genspos, omega_stack, multtable, data, G, T,
   possiblegenvals, bt, rho, out, i, j, s, nr, nr_only;
 
@@ -758,7 +761,7 @@ SEMIGROUPS.RightTranslationsBacktrack := function(S, gens, opt...)
   if nr_only then
     return nr; 
   fi;
-  Apply(out, x -> RightTranslationNC(S, x));
+  Apply(out, x -> RightTranslationNC(RightTranslations(S), x));
   return out;
 end;
 
@@ -1054,6 +1057,7 @@ function(L, l)
   gens := UnderlyingGenerators(L);
 
   # TODO allow general mapping from gens to S
+  # In fact, insist on it? Or document that other values are ignored
   if IsGeneralMapping(l) then
     if not (S = Source(l) and Source(l) = Range(l)) then
       ErrorNoReturn("Semigroups: LeftTranslation (from Mapping): \n",
@@ -1525,7 +1529,7 @@ end);
 InstallMethod(AsList, "for a translational hull",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
-  return Immutable(AsList(SEMIGROUPS.Bitranslations(H)));
+  return Immutable(AsList(SEMIGROUPS.BitranslationsElements(H)));
 end);
 
 # TODO: use the nr_only options here
@@ -1624,7 +1628,7 @@ end);
 InstallMethod(PrintObj, "for a subsemigroup of a translational hull",
 [IsBitranslationsSemigroup],
 function(H)
-  Print("<semigroups of translational hull elements over ",
+  Print("<semigroup of translational hull elements over ",
         ViewString(UnderlyingSemigroup(H)), ">");
 end);
 

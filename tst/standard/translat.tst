@@ -96,9 +96,11 @@ gap> GeneratorsOfSemigroup(L);
   <left translation on <0-simple regular semigroup with 4 generators>>, 
   <left translation on <0-simple regular semigroup with 4 generators>>, 
   <left translation on <0-simple regular semigroup with 4 generators>>, 
+  <left translation on <0-simple regular semigroup with 4 generators>>, 
   <left translation on <0-simple regular semigroup with 4 generators>> ]
 gap> GeneratorsOfSemigroup(R);
 [ <right translation on <0-simple regular semigroup with 4 generators>>, 
+  <right translation on <0-simple regular semigroup with 4 generators>>, 
   <right translation on <0-simple regular semigroup with 4 generators>>, 
   <right translation on <0-simple regular semigroup with 4 generators>>, 
   <right translation on <0-simple regular semigroup with 4 generators>>, 
@@ -280,7 +282,8 @@ gap> a := G.1;; b := G.2;;
 gap> mat := [[a, 0],
 > [b, a]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> IsSemigroup(S) and IsFinite(S) and IsZeroSimpleSemigroup(S);;
+gap> IsSemigroup(S) and IsFinite(S) and IsZeroSimpleSemigroup(S);
+true
 gap> L := LeftTranslations(S);;
 gap> R := RightTranslations(S);;
 gap> H := TranslationalHull(S);;
@@ -290,17 +293,8 @@ gap> One(R) = RightTranslation(R, MappingByFunction(S, S, x -> x));
 true
 gap> OneOp(Representative(H)) = Bitranslation(H, One(L), One(R));
 true
-gap> Semigroup(SEMIGROUPS.BitranslationsBacktrack(H)) = H;
+gap> Semigroup(AsList(H)) = H;
 true
-
-#T# TranslationalHull for semigroups which are not IsEnumerableSemigroupRep
-gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);;
-gap> S := AsSemigroup(IsFpSemigroup, S);;
-gap> IsEnumerableSemigroupRep(S);
-false
-gap> H := TranslationalHull(S);;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `TranslationalHull' on 1 arguments
 
 #T# Methods for non-normalised RMS
 gap> G := Range(IsomorphismPermGroup(SmallGroup(8, 2)));;

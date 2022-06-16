@@ -22,11 +22,73 @@
 ## Journal of Algebra, Volume 46, Issue 2, 1977, Pages 462-480,
 ## http://dx.doi.org/10.1016/0021-8693(77)90383-0.
 #############################################################################
-# TODO: make sure you can't mix translations of different types in one semigroup
+
+# TODO: make sure you can't mix translations of different types in one
+# semigroup
+
+# TODO: have the functions in this file accept an optional number_only arg
+
+# TODO: have zero-simple semigroups compute their translations using this code
 
 #############################################################################
 # 1. Internal Functions
 #############################################################################
+
+# Converts a pair of lists to a left translation without validation
+SEMIGROUPS.RZMSTupleToLeftTranslation := function(S, idx_list, gp_list)
+  local zero, L, foo;
+
+  zero := MultiplicativeZero(S);
+  L    := LeftTranslations(S);
+
+  foo := function(x)
+    if x = zero then
+      return zero;
+    fi;
+    if idx_list[x[1]] <> 0 then
+      return RMSElement(S,
+                        idx_list[x[1]],
+                        gp_list[x[1]] * x[2],
+                        x[3]);
+    else
+      return zero;
+    fi;
+  end;
+  return LeftTranslationNC(L, MappingByFunction(S, S, foo));
+end;
+
+# Converts a pair of lists to a right translation without validation
+SEMIGROUPS.RZMSTupleToRightTranslation := function(S, idx_list, gp_list)
+  local zero, R, foo;
+
+  zero := MultiplicativeZero(S);
+  R    := RightTranslations(S);
+
+  foo := function(x)
+    if x = zero then
+      return zero;
+    fi;
+    if idx_list[x[3]] <> 0 then
+      return RMSElement(S,
+                        x[1],
+                        x[2] * gp_list[x[3]],
+                        idx_list[x[3]]);
+    else
+      return zero;
+    fi;
+  end;
+  return RightTranslationNC(R, MappingByFunction(S, S, foo));
+end;
+
+# Converts a pair of pairs of lists to a bitranslation without validation
+SEMIGROUPS.RZMSTupleToBitranslation := function(S, x)
+  local l, r;
+
+  l := SEMIGROUPS.RZMSTupleToLeftTranslation(S, x[1][1], x[1][2]);
+  r := SEMIGROUPS.RZMSTupleToRightTranslation(S, x[2][1], x[2][2]);
+
+  return BitranslationNC(TranslationalHull(S), l, r);
+end;
 
 # Converts the transformation underlying a left translation into the arguments
 # required for the LeftTranslationsOfNormalRMS function.
@@ -350,7 +412,7 @@ SEMIGROUPS.RZMSLinkedGroupFunctions := function(S, tau, sigma)
 end;
 
 SEMIGROUPS.BitranslationsOfRZMS := function(S)
-  local out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
+  local H, out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
 
   out := [];
   idx_funcs := SEMIGROUPS.RZMSLinkedIndexFuncs(S);
@@ -365,9 +427,12 @@ SEMIGROUPS.BitranslationsOfRZMS := function(S)
       od;
     od;
   od;
+
   empty_bitrans := [[List(Rows(S), x -> 0), []],
                     [List(Columns(S), x -> 0), []]];
   Add(out, empty_bitrans);
+
+  Apply(out, x -> SEMIGROUPS.RZMSTupleToBitranslation(S, x));
                   
   return out;
 end;
@@ -415,8 +480,8 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
 end;
 
 SEMIGROUPS.NormalRMSLinkedTriples := function(S)
-  local I, M, iso, inv, G, mat, mat_inv_rows, out, b, d_inv, c, triple, i, mu,
-  a, x, y, func_pair, func;
+  local I, M, iso, inv, G, mat, mat_inv_rows, params, b, d_inv, c, out, i, mu,
+  a, x, y, p, func_pair;
 
   I := Rows(S);
   M := Columns(S);
@@ -435,40 +500,46 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
     od;
   od;
 
-  out := [];
+  params := [];
   for a in G do
     b := AsPermutation(a) ^ inv;
     for x in I do
       d_inv := List(M, mu -> (mat[mu][x] * a) ^ -1);
       for y in M do
         c := List(I, i -> a * mat[y][i]);
-        for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
-                                                                    G,
-                                                                    mat,
-                                                                    mat_inv_rows,
-                                                                    c,
-                                                                    d_inv,
-                                                                    a,
-                                                                    x,
-                                                                    y) do
-          Add(out, Concatenation([b], func_pair));
-        od;
+        AddSet(params, [a, b, x, y, d_inv, c]);
       od;
+    od;
+  od;
+  
+  out := [];
+  for p in params do
+    for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
+                                                                G,
+                                                                mat,
+                                                                mat_inv_rows,
+                                                                p[6],
+                                                                p[5],
+                                                                p[1],
+                                                                p[3],
+                                                                p[4]) do
+      Add(out, Concatenation([p[2]], func_pair));
     od;
   od;
   return out;
 end;
 
 SEMIGROUPS.BitranslationsOfNormalRMS := function(S)
-  local out, triple;
+  local out, H, triple;
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
     ErrorNoReturn("Usage: the argument must be a normalised RMS over a group");
   fi;
   out := [];
+  H   := TranslationalHull(S);
   for triple in SEMIGROUPS.NormalRMSLinkedTriples(S) do
     triple := Concatenation([triple[1]],
                             List(triple{[2, 3]}, Transformation));
-    Add(out, SEMIGROUPS.BitranslationOfNormalRMSByTripleNC(S, triple));
+    Add(out, SEMIGROUPS.BitranslationOfNormalRMSByTripleNC(H, triple));
   od;
   return out;
 end;
@@ -503,9 +574,10 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   return fam;
 end;
 
-SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(S, triple)
-  local L, R, P, I, M, leftgpfunc, rightgpfunc, l, r;
+SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, triple)
+  local S, L, R, P, I, M, leftgpfunc, rightgpfunc, l, r;
 
+  S := UnderlyingSemigroup(H);
   L := LeftTranslations(S);
   R := RightTranslations(S);
   P := Matrix(S);
@@ -518,7 +590,7 @@ SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(S, triple)
   l := LeftTranslationOfNormalRMS(S, leftgpfunc, triple[2]);
   r := RightTranslationOfNormalRMS(S, rightgpfunc, triple[3]);
 
-  return BitranslationOfNormalRMSNC(S, l, r);
+  return BitranslationOfNormalRMSNC(H, l, r);
 end;
 
 #############################################################################
@@ -652,7 +724,7 @@ function(T)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1] ^ t,
                                             x[2], x[3]);
         end;
-        Add(gens, LeftTranslation(S, CompositionMapping(
+        Add(gens, LeftTranslation(T, CompositionMapping(
                                         inv,
                                         MappingByFunction(reesMatSemi,
                                                           reesMatSemi, f),
@@ -666,7 +738,7 @@ function(T)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1],
             x[2], x[3] ^ t);
         end;
-        Add(gens, RightTranslation(S, CompositionMapping(
+        Add(gens, RightTranslation(T, CompositionMapping(
                                         inv,
                                         MappingByFunction(reesMatSemi,
                                                           reesMatSemi, f),
@@ -692,7 +764,7 @@ function(T)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1],
               fa(x[1]) * x[2], x[3]);
         end;
-        Add(gens, LeftTranslation(S, CompositionMapping(
+        Add(gens, LeftTranslation(T, CompositionMapping(
                                         inv,
                                         MappingByFunction(reesMatSemi,
                                                           reesMatSemi, f),
@@ -708,7 +780,7 @@ function(T)
           return ReesMatrixSemigroupElement(reesMatSemi, x[1],
             x[2] * fa(x[3]), x[3]);
         end;
-        Add(gens, RightTranslation(S, CompositionMapping(
+        Add(gens, RightTranslation(T, CompositionMapping(
                                         inv,
                                         MappingByFunction(reesMatSemi,
                                                           reesMatSemi, f),
@@ -840,8 +912,10 @@ function(S, gpfunc, t)
 end);
 
 InstallGlobalFunction(BitranslationOfNormalRMS,
-function(S, l, r)
-  local i, I, j, J, lf, lt, P, rf, rt;
+function(H, l, r)
+  local S, i, I, j, J, lf, lt, P, rf, rt;
+
+  S := UnderlyingSemigroup(S);
 
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
       ErrorNoReturn("Usage: the first argument must be a normalised RMS over ",
@@ -866,12 +940,12 @@ function(S, l, r)
     od;
   od;
 
-  return BitranslationOfNormalRMSNC(S, l, r);
+  return BitranslationOfNormalRMSNC(H, l, r);
 end);
 
 InstallGlobalFunction(BitranslationOfNormalRMSNC,
-function(S, l, r)
-  return Objectify(TypeBitranslations(TranslationalHull(S)), [l, r]);
+function(H, l, r)
+  return Objectify(TypeBitranslations(H), [l, r]);
 end);
 
 ############################################################################
