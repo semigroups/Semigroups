@@ -8,18 +8,18 @@
 #############################################################################
 ##
 
-DeclareCategory("IsTranslationsSemigroupElement",
+DeclareCategory("IsSemigroupTranslation",
                 IsAssociativeElement and IsMultiplicativeElementWithOne);
-DeclareCategory("IsLeftTranslationsSemigroupElement",
-                IsTranslationsSemigroupElement);
-DeclareCategory("IsRightTranslationsSemigroupElement",
-                IsTranslationsSemigroupElement);
+DeclareCategory("IsLeftTranslation",
+                IsSemigroupTranslation);
+DeclareCategory("IsRightTranslation",
+                IsSemigroupTranslation);
 DeclareCategory("IsBitranslation",
                 IsAssociativeElement and IsMultiplicativeElementWithOne);
 
-DeclareCategoryCollections("IsTranslationsSemigroupElement");
-DeclareCategoryCollections("IsLeftTranslationsSemigroupElement");
-DeclareCategoryCollections("IsRightTranslationsSemigroupElement");
+DeclareCategoryCollections("IsSemigroupTranslation");
+DeclareCategoryCollections("IsLeftTranslation");
+DeclareCategoryCollections("IsRightTranslation");
 DeclareCategoryCollections("IsBitranslation");
 
 DeclareGlobalFunction("LeftTranslation");
@@ -35,11 +35,11 @@ DeclareGlobalFunction("LeftPartOfBitranslation");
 DeclareGlobalFunction("RightPartOfBitranslation");
 
 DeclareSynonym("IsLeftTranslationsSemigroup",
-               IsSemigroup and IsLeftTranslationsSemigroupElementCollection);
+               IsSemigroup and IsLeftTranslationCollection);
 DeclareSynonym("IsRightTranslationsSemigroup",
-               IsSemigroup and IsRightTranslationsSemigroupElementCollection);
+               IsSemigroup and IsRightTranslationCollection);
 DeclareSynonym("IsTranslationsSemigroup",
-               IsSemigroup and IsTranslationsSemigroupElementCollection);
+               IsSemigroup and IsSemigroupTranslationCollection);
 DeclareSynonym("IsBitranslationsSemigroup",
                IsSemigroup and IsBitranslationCollection);
 
@@ -83,4 +83,4 @@ InstallTrueMethod(CanUseGapFroidurePin, IsBitranslationsSemigroup);
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
 
-DeclareOperation("ImageOfTranslation", [IsTranslationsSemigroupElement]);
+DeclareOperation("ImageOfTranslation", [IsSemigroupTranslation]);

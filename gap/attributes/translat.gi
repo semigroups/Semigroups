@@ -868,8 +868,8 @@ function(S)
     type  := fam!.type;
   else
     fam       := NewFamily("LeftTranslationsSemigroupElementsFamily",
-                      IsLeftTranslationsSemigroupElement);
-    type      := NewType(fam, IsLeftTranslationsSemigroupElement);
+                      IsLeftTranslation);
+    type      := NewType(fam, IsLeftTranslation);
     fam!.type := type;
   fi;
 
@@ -902,8 +902,8 @@ function(S)
     type  := fam!.type;
   else
     fam       := NewFamily("RightTranslationsSemigroupElementsFamily",
-                      IsRightTranslationsSemigroupElement);
-    type      := NewType(fam, IsRightTranslationsSemigroupElement);
+                      IsRightTranslation);
+    type      := NewType(fam, IsRightTranslation);
     fam!.type := type;
   fi;
 
@@ -1199,8 +1199,8 @@ function(H, l, r)
     ErrorNoReturn("the first argument must be a translational hull");
   fi;
 
-  if not (IsLeftTranslationsSemigroupElement(l) and
-            IsRightTranslationsSemigroupElement(r)) then
+  if not (IsLeftTranslation(l) and
+            IsRightTranslation(r)) then
     ErrorNoReturn("the second argument must be a left translation ",
                   "and the third argument must be a right translation");
     return;
@@ -1556,13 +1556,13 @@ function(T)
 end);
 
 InstallMethod(ViewObj, "for a translation",
-[IsTranslationsSemigroupElement], PrintObj);
+[IsSemigroupTranslation], PrintObj);
 
 InstallMethod(PrintObj, "for a translation",
-[IsTranslationsSemigroupElement],
+[IsSemigroupTranslation],
 function(t)
   local L, S;
-  L := IsLeftTranslationsSemigroupElement(t);
+  L := IsLeftTranslation(t);
   if L then
     S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
     Print("<left ");
@@ -1604,7 +1604,7 @@ end);
 # Note the order of multiplication
 InstallMethod(\*, "for left translations of a semigroup",
 IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+[IsLeftTranslation, IsLeftTranslation],
 function(x, y)
   local L, S, prod, i;
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
@@ -1618,14 +1618,14 @@ end);
 
 InstallMethod(\=, "for left translations of a semigroup",
 IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+[IsLeftTranslation, IsLeftTranslation],
 function(x, y)
   return x![1] = y![1];
 end);
 
 InstallMethod(\<, "for left translations of a semigroup",
 IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+[IsLeftTranslation, IsLeftTranslation],
 function(x, y)
   return x![1] < y![1];
 end);
@@ -1633,7 +1633,7 @@ end);
 # Different order of multiplication
 InstallMethod(\*, "for right translations of a semigroup",
 IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+[IsRightTranslation, IsRightTranslation],
 function(x, y)
   local R, S, prod, i;
   R := RightTranslationsSemigroupOfFamily(FamilyObj(x));
@@ -1647,20 +1647,20 @@ end);
 
 InstallMethod(\=, "for right translations of a semigroup",
 IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+[IsRightTranslation, IsRightTranslation],
 function(x, y)
   return x![1] = y![1];
 end);
 
 InstallMethod(\<, "for right translations of a semigroup",
 IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+[IsRightTranslation, IsRightTranslation],
 function(x, y)
   return x![1] < y![1];
 end);
 
 InstallMethod(\^, "for a semigroup element and a left translation",
-[IsAssociativeElement, IsLeftTranslationsSemigroupElement],
+[IsAssociativeElement, IsLeftTranslation],
 function(x, t)
   local L, S, gens, enum, g, s;
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
@@ -1682,7 +1682,7 @@ function(x, t)
 end);
 
 InstallMethod(\^, "for a semigroup element and a right translation",
-[IsAssociativeElement, IsRightTranslationsSemigroupElement],
+[IsAssociativeElement, IsRightTranslation],
 function(x, t)
   local R, S, gens, enum, g, s;
   R := RightTranslationsSemigroupOfFamily(FamilyObj(t));
@@ -1705,7 +1705,7 @@ end);
 
 SEMIGROUPS.ImagePositionsOfTranslation := function(x)
   local T, S, tab, images, g;
-  if IsLeftTranslationsSemigroupElement(x) then
+  if IsLeftTranslation(x) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
     S := UnderlyingSemigroup(T);
     tab := MultiplicationTableWithCanonicalPositions(S);
@@ -1722,10 +1722,10 @@ SEMIGROUPS.ImagePositionsOfTranslation := function(x)
 end;
 
 InstallMethod(ImageOfTranslation, "for a left or right translation",
-[IsTranslationsSemigroupElement],
+[IsSemigroupTranslation],
 function(x)
   local T, S, enum;
-  if IsLeftTranslationsSemigroupElement(x) then
+  if IsLeftTranslation(x) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
     S := UnderlyingSemigroup(T);
   else
@@ -1781,7 +1781,7 @@ function(H)
 end);
 
 InstallMethod(ChooseHashFunction, "for a left or right translation and int",
-[IsTranslationsSemigroupElement, IsInt],
+[IsSemigroupTranslation, IsInt],
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForTranslations,
              data := hashlen);
@@ -1808,10 +1808,10 @@ function(h)
 end);
 
 InstallMethod(OneOp, "for a semigroup of translations",
-[IsTranslationsSemigroupElement],
+[IsSemigroupTranslation],
 function(t)
   local S, T;
-  if IsLeftTranslationsSemigroupElement(t) then
+  if IsLeftTranslation(t) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
     return LeftTranslation(T, MappingByFunction(S, S, x -> x));
@@ -1840,12 +1840,12 @@ function(h)
 end);
 
 InstallMethod(IsWholeFamily, "for a collection of translations",
-[IsTranslationsSemigroupElementCollection],
+[IsSemigroupTranslationCollection],
 function(C)
   local L, S, T, t;
 
   t := Representative(C);
-  L := IsLeftTranslationsSemigroupElement(t);
+  L := IsLeftTranslation(t);
 
   if L then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));

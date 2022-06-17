@@ -8,14 +8,11 @@
 #############################################################################
 ##
 
-DeclareCategory("IsTranslationOfNormalRMS",
-                IsTranslationsSemigroupElement);
+DeclareCategory("IsTranslationOfNormalRMS", IsSemigroupTranslation);
 DeclareCategory("IsLeftTranslationOfNormalRMS",
-                IsTranslationOfNormalRMS and
-                IsLeftTranslationsSemigroupElement);
+                IsTranslationOfNormalRMS and IsLeftTranslation);
 DeclareCategory("IsRightTranslationOfNormalRMS",
-                IsTranslationOfNormalRMS and
-                IsRightTranslationsSemigroupElement);
+                IsTranslationOfNormalRMS and IsRightTranslation);
 DeclareCategory("IsBitranslationOfNormalRMS", IsBitranslation);
 
 DeclareCategoryCollections("IsTranslationOfNormalRMS");

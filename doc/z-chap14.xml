@@ -233,7 +233,7 @@
     <#Include Label = "IsXTranslationsSemigroupElement">
     <#Include Label = "IsBitranslation">
     <#Include Label = "IsXTranslationsSemigroup">
-    <#Include Label = "IsTranslationalHull">
+    <#Include Label = "IsBitranslationsSemigroup">
     <#Include Label = "UnderlyingSemigroup">
     <#Include Label = "XTranslationsSemigroupOfFamily">
     <#Include Label = "TranslationalHullOfFamily">
