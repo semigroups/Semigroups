@@ -34,6 +34,26 @@
 # 1. Internal Functions
 #############################################################################
 
+SEMIGROUPS.HasEasyTranslationsGenerators := function(T)
+  local S;
+
+  S := UnderlyingSemigroup(T);
+  return IsZeroSimpleSemigroup(S) or
+         IsRectangularBand(S) or
+         IsSimpleSemigroup(S) or
+         SEMIGROUPS.IsNormalRMSOverGroup(S) or
+         IsMonogenicSemigroup(S) or
+         IsMonoid(S);
+end;
+
+SEMIGROUPS.HasEasyBitranslationsGenerators := function(T)
+  local S;
+
+  S := UnderlyingSemigroup(T);
+  return IsRectangularBand(S) or
+         IsMonogenicSemigroup(S);
+end;
+
 # Hash translations by their underlying transformations
 SEMIGROUPS.HashFunctionForTranslations := function(x, data)
   return ORB_HashFunctionForPlainFlatList(x![1], data);
@@ -43,47 +63,6 @@ end;
 SEMIGROUPS.HashFunctionForBitranslations := function(x, data)
     return (SEMIGROUPS.HashFunctionForTranslations(x![1], data)
       + SEMIGROUPS.HashFunctionForTranslations(x![2], data)) mod data + 1;
-end;
-
-# Choose how to calculate the elements of a translations semigroup
-# TODO: why am I returning a semigroup sometimes and a list other times?
-SEMIGROUPS.TranslationsSemigroupElements := function(T)
-  local S;
-  S := UnderlyingSemigroup(T);
-  if IsZeroSimpleSemigroup(S) or
-      IsRectangularBand(S) or
-      IsSimpleSemigroup(S) or
-      SEMIGROUPS.IsNormalRMSOverGroup(S) or
-      IsMonogenicSemigroup(S) or
-      IsMonoid(S) then
-    return Semigroup(GeneratorsOfSemigroup(T));
-  elif HasGeneratorsOfSemigroup(S) then
-    if IsLeftTranslationsSemigroup(T) then
-      return SEMIGROUPS.LeftTranslationsBacktrack(T);
-    else
-      # TODO: dual or backtrack?
-      return SEMIGROUPS.RightTranslationsBacktrack(T);
-    fi;
-  fi;
-  Error("Semigroups: TranslationsSemigroupElements: \n",
-        "no method of calculating this translations semigroup is known,");
-end;
-
-# Choose how to calculate the elements of a translational hull
-# TODO: make the arguments for RMS funcs consistent
-SEMIGROUPS.BitranslationsElements := function(H)
-  local S;
-
-  S := UnderlyingSemigroup(H);
-  if IsRectangularBand(S) then
-    return Semigroup(GeneratorsOfSemigroup(H));
-  elif IsReesZeroMatrixSemigroup(S) then
-    return SEMIGROUPS.BitranslationsOfRZMS(S);
-  elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    return SEMIGROUPS.BitranslationsOfNormalRMS(S);
-  else
-    return SEMIGROUPS.BitranslationsBacktrack(S);
-  fi;
 end;
 
 SEMIGROUPS.LeftAutoTranslations := function(mult_table, gens_pos)
@@ -887,12 +866,6 @@ InstallMethod(LeftTranslations, "for a finite enumerable semigroup",
 function(S)
   local fam, L, type;
 
-  if not IsSemigroup(S) then
-    ErrorNoReturn("Semigroups: LeftTranslations: \n",
-                  "the semigroup must have representation ",
-                  "IsSemigroup,");
-  fi;
-
   if HasLeftTranslations(S) then
     return LeftTranslations(S);
   fi;
@@ -926,12 +899,6 @@ InstallMethod(RightTranslations, "for a finite enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, type, R;
-
-  if not IsSemigroup(S) then
-    ErrorNoReturn("Semigroups: RightTranslations: \n",
-                  "the semigroup must have representation ",
-                  "IsSemigroup,");
-  fi;
 
   if HasRightTranslations(S) then
     return RightTranslations(S);
@@ -1046,8 +1013,8 @@ function(L, l)
   reps  := [];
 
   if not (IsLeftTranslationsSemigroup(L)) then
-    ErrorNoReturn("Semigroups: LeftTranslation: \n",
-          "the first argument must be a semigroup of left translations,");
+    ErrorNoReturn("the first argument must be a semigroup of left ",
+                  "translations");
   fi;
 
   gens := UnderlyingGenerators(L);
@@ -1056,26 +1023,22 @@ function(L, l)
   # In fact, insist on it? Or document that other values are ignored
   if IsGeneralMapping(l) then
     if not (S = Source(l) and Source(l) = Range(l)) then
-      ErrorNoReturn("Semigroups: LeftTranslation (from Mapping): \n",
-            "the domain and range of the second argument must be ",
-            "the underlying semigroup of the first,");
+      ErrorNoReturn("the domain and range of the second argument must be ",
+                    "the underlying semigroup of the first");
     fi;
     if ForAny(gens, s -> ForAny(S, t -> (s ^ l) * t <> (s * t) ^ l)) then
-      ErrorNoReturn("Semigroups: LeftTranslation: \n",
-             "the mapping given must define a left translation,");
+      ErrorNoReturn("the mapping given must define a left translation");
     fi;
   elif IsDenseList(l) then
     if not Size(l) = Size(gens) then
-      ErrorNoReturn("Semigroups: LeftTranslation: \n",
-                    "the second argument must map indices of generators to ",
+      ErrorNoReturn("the second argument must map indices of generators to ",
                     "indices of elements of the semigroup of the first ",
-                    "argument,");
+                    "argument");
     fi;
     if not ForAll(l, y -> IsInt(y) and y <= Size(S)) then
-      ErrorNoReturn("Semigroups: LeftTranslation: \n",
-                    "the second argument must map indices of generators to ",
+      ErrorNoReturn("the second argument must map indices of generators to ",
                     "indices of elements of the semigroup of the first ",
-                    "argument,");
+                    "argument");
     fi;
     # TODO store and use MultiplicationTableWithCanonicalPositions and
     # LeftTranslationsBacktrackData
@@ -1091,18 +1054,17 @@ function(L, l)
           full_lambda[x] := y;
         fi;
         if full_lambda[x] <> y then
-          ErrorNoReturn("Semigroups: LeftTranslation: \n",
-                        "the transformation given must define a left ",
-                        "translation,");
+          ErrorNoReturn("the transformation given must define a left ",
+                        "translation");
         fi;
       od;
     od;
   else
-    ErrorNoReturn("Semigroups: LeftTranslation: \n",
-          "the first argument should be a left translations semigroup, and ",
-          "the second argument should be a mapping on the underlying ",
-          "semigroup of the first argument, or a list of indices of values ",
-          "of the generators under the translation,");
+    ErrorNoReturn("the first argument should be a left translations ",
+                  "semigroup, and the second argument should be a mapping ",
+                  "on the underlying semigroup of the first argument, or a ",
+                  "list of indices of values of the generators under the ",
+                  "translation");
   fi;
   return LeftTranslationNC(L, l);
 end);
@@ -1136,8 +1098,8 @@ function(R, r)
   reps  := [];
 
   if not (IsRightTranslationsSemigroup(R)) then
-    ErrorNoReturn("Semigroups: RightTranslation: \n",
-          "the first argument must be a semigroup of right translations,");
+    ErrorNoReturn("the first argument must be a semigroup of right ",
+                  "translations");
   fi;
 
   gens := UnderlyingGenerators(R);
@@ -1145,26 +1107,22 @@ function(R, r)
   # TODO allow general mapping from gens to S
   if IsGeneralMapping(r) then
     if not (S = Source(r) and Source(r) = Range(r)) then
-      ErrorNoReturn("Semigroups: RightTranslation (from Mapping): \n",
-            "the domain and range of the second argument must be ",
-            "the underlying semigroup of the first,");
+      ErrorNoReturn("the domain and range of the second argument must be ",
+                    "the underlying semigroup of the first");
     fi;
     if ForAny(gens, s -> ForAny(S, t -> s * (t ^ r) <> (s * t) ^ r)) then
-      ErrorNoReturn("Semigroups: RightTranslation: \n",
-             "the mapping given must define a right translation,");
+      ErrorNoReturn("the mapping given must define a right translation");
     fi;
   elif IsDenseList(r) then
     if not Size(r) = Size(gens) then
-      ErrorNoReturn("Semigroups: RightTranslation: \n",
-                    "the second argument must map indices of generators to ",
+      ErrorNoReturn("the second argument must map indices of generators to ",
                     "indices of elements of the semigroup of the first ",
-                    "argument,");
+                    "argument");
     fi;
     if not ForAll(r, y -> IsInt(y) and y <= Size(S)) then
-      ErrorNoReturn("Semigroups: RightTranslation: \n",
-                    "the second argument must map indices of generators to ",
+      ErrorNoReturn("the second argument must map indices of generators to ",
                     "indices of elements of the semigroup of the first ",
-                    "argument,");
+                    "argument");
     fi;
     # TODO store and use MultiplicationTableWithCanonicalPositions and
     # RightTranslationsBacktrackData
@@ -1180,18 +1138,17 @@ function(R, r)
           full_rho[x] := y;
         fi;
         if full_rho[x] <> y then
-          ErrorNoReturn("Semigroups: RightTranslation: \n",
-                        "the transformation given must define a right ",
-                        "translation,");
+          ErrorNoReturn("the transformation given must define a right ",
+                        "translation");
         fi;
       od;
     od;
   else
-    ErrorNoReturn("Semigroups: RightTranslation: \n",
-          "the first argument should be a right translations semigroup, and ",
-          "the second argument should be a mapping on the underlying ",
-          "semigroup of the first argument, or a list of indices of values ",
-          "of the generators under the translation,");
+    ErrorNoReturn("the first argument should be a right translations ",
+                  "semigroup, and the second argument should be a mapping ",
+                  "on the underlying semigroup of the first argument, or a ",
+                  "list of indices of values of the generators under the ",
+                  "translation");
   fi;
   return RightTranslationNC(R, r);
 end);
@@ -1248,15 +1205,13 @@ function(H, l, r)
   local S, L, R, gens;
 
   if not IsBitranslationsSemigroup(H) then
-    ErrorNoReturn("Semigroups: Bitranslation: \n",
-          "the first argument must be a translational hull,");
+    ErrorNoReturn("the first argument must be a translational hull");
   fi;
 
   if not (IsLeftTranslationsSemigroupElement(l) and
             IsRightTranslationsSemigroupElement(r)) then
-    ErrorNoReturn("Semigroups: Bitranslation: \n",
-          "the second argument must be a left translation ",
-          "and the third argument must be a right translation,");
+    ErrorNoReturn("the second argument must be a left translation ",
+                  "and the third argument must be a right translation");
     return;
   fi;
 
@@ -1267,13 +1222,12 @@ function(H, l, r)
   gens := GeneratorsOfSemigroup(S);
 
   if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
-      ErrorNoReturn("Semigroups: Bitranslation: \n",
-            "each argument must have the same underlying semigroup,");
+      ErrorNoReturn("each argument must have the same underlying semigroup");
   fi;
 
   if ForAny(gens, t -> ForAny(gens, s -> s * (t ^ l) <> (s ^ r) * t)) then
-     ErrorNoReturn("Semigroups: Bitranslation: \n",
-           "the translations given must satisfy the linking condition,");
+     ErrorNoReturn("the translations given must satisfy the linking ",
+                   "condition");
   fi;
 
   return BitranslationNC(H, l, r);
@@ -1516,16 +1470,37 @@ end);
 InstallMethod(AsList, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  if HasGeneratorsOfSemigroup(T) then
-    return Immutable(AsList(Semigroup(GeneratorsOfSemigroup(T))));
+  local S;
+
+  S := UnderlyingSemigroup(T);
+ 
+  # Just use the AsList for semigroups if generators are known
+  if SEMIGROUPS.HasEasyTranslationsGenerators(T) then
+    TryNextMethod();
   fi;
-  return Immutable(AsList(SEMIGROUPS.TranslationsSemigroupElements(T)));
+
+  if IsLeftTranslationsSemigroup(T) then
+    return SEMIGROUPS.LeftTranslationsBacktrack(T);
+  else
+    return SEMIGROUPS.RightTranslationsBacktrack(T);
+  fi;
 end);
 
 InstallMethod(AsList, "for a translational hull",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
-  return Immutable(AsList(SEMIGROUPS.BitranslationsElements(H)));
+  local S;
+
+  S := UnderlyingSemigroup(H);
+  if SEMIGROUPS.HasEasyBitranslationsGenerators(H) then
+    TryNextMethod();
+  elif IsReesZeroMatrixSemigroup(S) then
+    return SEMIGROUPS.BitranslationsOfRZMS(S);
+  elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    return SEMIGROUPS.BitranslationsOfNormalRMS(S);
+  else
+    return SEMIGROUPS.BitranslationsBacktrack(S);
+  fi;
 end);
 
 # TODO: use the nr_only options here
@@ -1624,14 +1599,14 @@ end);
 InstallMethod(PrintObj, "for a subsemigroup of a translational hull",
 [IsBitranslationsSemigroup],
 function(H)
-  Print("<semigroup of translational hull elements over ",
+  Print("<semigroup of bitranslations over ",
         ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
-InstallMethod(ViewObj, "for a translational hull element",
+InstallMethod(ViewObj, "for a bitranslation",
 [IsBitranslation], PrintObj);
 
-InstallMethod(PrintObj, "for a translational hull element",
+InstallMethod(PrintObj, "for a bitranslation",
 [IsBitranslation],
 function(t)
   local H;
@@ -1704,9 +1679,8 @@ function(x, t)
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
   S := UnderlyingSemigroup(L);
   if not x in S then
-    ErrorNoReturn("Semigroups: ^ for a semigroup element and left translation:",
-                  "\n the first argument must be an element of the domain of ",
-                  "the second,");
+    ErrorNoReturn("the first argument must be an element of the domain of ",
+                  "the second");
   fi;
   gens := UnderlyingGenerators(L);
   enum := EnumeratorCanonical(S);
@@ -1727,9 +1701,8 @@ function(x, t)
   R := RightTranslationsSemigroupOfFamily(FamilyObj(t));
   S := UnderlyingSemigroup(R);
   if not x in S then
-    ErrorNoReturn("Semigroups: ^ for a semigroup element and right translation:",
-                  "\n the first argument must be an element of the domain of ",
-                  "the second,");
+    ErrorNoReturn("the first argument must be an element of the domain of ",
+                  "the second");
   fi;
   gens := UnderlyingGenerators(R);
   enum := EnumeratorCanonical(S);
@@ -1784,14 +1757,14 @@ function(x, y)
   return Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]);
 end);
 
-InstallMethod(\=, "for translational hull elements (bitranslations)",
+InstallMethod(\=, "for bitranslations",
 IsIdenticalObj,
 [IsBitranslation, IsBitranslation],
 function(x, y)
   return x![1] = y![1] and x![2] = y![2];
 end);
 
-InstallMethod(\<, "for translational hull elements (bitranslations)",
+InstallMethod(\<, "for bitranslations",
 IsIdenticalObj,
 [IsBitranslation, IsBitranslation],
 function(x, y)
@@ -1828,7 +1801,7 @@ function(x, hashlen)
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction, "for a translational hull element and int",
+InstallMethod(ChooseHashFunction, "for a bitranslation and int",
 [IsBitranslation, IsInt],
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForBitranslations,
@@ -1867,8 +1840,7 @@ end);
 InstallGlobalFunction(LeftPartOfBitranslation,
 function(h)
   if not IsBitranslation(h) then
-     ErrorNoReturn("Semigroups: LeftPartOfBitranslation: \n",
-                    "the argument must be a bitranslation,");
+     ErrorNoReturn("the argument must be a bitranslation");
   fi;
   return h![1];
 end);
@@ -1876,8 +1848,7 @@ end);
 InstallGlobalFunction(RightPartOfBitranslation,
 function(h)
   if not IsBitranslation(h) then
-     ErrorNoReturn("Semigroups: RightPartOfBitranslation: \n",
-                    "the argument must be a bitranslation,");
+     ErrorNoReturn("the argument must be a bitranslation");
   fi;
   return h![2];
 end);

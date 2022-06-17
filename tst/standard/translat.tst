@@ -418,28 +418,22 @@ gap> R := RightTranslations(S);;
 gap> f := MappingByFunction(S, S, x -> S.1);;
 gap> g := MappingByFunction(S, T, x -> T.1);;
 gap> LeftTranslation(L, f);
-Error, Semigroups: LeftTranslation: 
-the mapping given must define a left translation,
+Error, the mapping given must define a left translation
 gap> LeftTranslation(R, f);
-Error, Semigroups: LeftTranslation: 
-the first argument must be a semigroup of left translations,
+Error, the first argument must be a semigroup of left translations
 gap> LeftTranslation(L, (1, 4)(2, 3));
-Error, Semigroups: LeftTranslation: 
-the first argument should be a left translations semigroup, and the second arg\
-ument should be a mapping on the underlying semigroup of the first argument, o\
-r a list of indices of values of the generators under the translation,
+Error, the first argument should be a left translations semigroup, and the sec\
+ond argument should be a mapping on the underlying semigroup of the first argu\
+ment, or a list of indices of values of the generators under the translation
 gap> LeftTranslation(L, g);
-Error, Semigroups: LeftTranslation (from Mapping): 
-the domain and range of the second argument must be the underlying semigroup o\
-f the first,
+Error, the domain and range of the second argument must be the underlying semi\
+group of the first
 gap> x := [1, Size(S) + 1];;
 gap> LeftTranslation(L, x);
-Error, Semigroups: LeftTranslation: 
-the second argument must map indices of generators to indices of elements of t\
-he semigroup of the first argument,
+Error, the second argument must map indices of generators to indices of elemen\
+ts of the semigroup of the first argument
 gap> l := LeftTranslation(L, [4, 6]);
-Error, Semigroups: LeftTranslation: 
-the transformation given must define a left translation,
+Error, the transformation given must define a left translation
 
 #T# Error Testing - Right Translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
@@ -451,28 +445,22 @@ gap> R := RightTranslations(S);;
 gap> f := MappingByFunction(S, S, x -> S.1);;
 gap> g := MappingByFunction(S, T, x -> T.1);;
 gap> RightTranslation(R, f);
-Error, Semigroups: RightTranslation: 
-the mapping given must define a right translation,
+Error, the mapping given must define a right translation
 gap> RightTranslation(L, f);
-Error, Semigroups: RightTranslation: 
-the first argument must be a semigroup of right translations,
+Error, the first argument must be a semigroup of right translations
 gap> RightTranslation(R, (1, 4)(2, 3));
-Error, Semigroups: RightTranslation: 
-the first argument should be a right translations semigroup, and the second ar\
-gument should be a mapping on the underlying semigroup of the first argument, \
-or a list of indices of values of the generators under the translation,
+Error, the first argument should be a right translations semigroup, and the se\
+cond argument should be a mapping on the underlying semigroup of the first arg\
+ument, or a list of indices of values of the generators under the translation
 gap> RightTranslation(R, g);
-Error, Semigroups: RightTranslation (from Mapping): 
-the domain and range of the second argument must be the underlying semigroup o\
-f the first,
+Error, the domain and range of the second argument must be the underlying semi\
+group of the first
 gap> x := [1, Size(S) + 1];;
 gap> RightTranslation(R, x);
-Error, Semigroups: RightTranslation: 
-the second argument must map indices of generators to indices of elements of t\
-he semigroup of the first argument,
+Error, the second argument must map indices of generators to indices of elemen\
+ts of the semigroup of the first argument
 gap> r := RightTranslation(R, [6, 3]);
-Error, Semigroups: RightTranslation: 
-the transformation given must define a right translation,
+Error, the transformation given must define a right translation
 
 #T# Error Testing - Translational Hull Elements
 gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);;
@@ -484,21 +472,17 @@ gap> H := TranslationalHull(S);;
 gap> l := Representative(L);;
 gap> r := Representative(R);;
 gap> Bitranslation(L, l, r);
-Error, Semigroups: Bitranslation: 
-the first argument must be a translational hull,
+Error, the first argument must be a translational hull
 gap> Bitranslation(H, r, l);
-Error, Semigroups: Bitranslation: 
-the second argument must be a left translation and the third argument must be \
-a right translation,
+Error, the second argument must be a left translation and the third argument m\
+ust be a right translation
 gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
 gap> Bitranslation(H, l, r);
-Error, Semigroups: Bitranslation: 
-the translations given must satisfy the linking condition,
+Error, the translations given must satisfy the linking condition
 gap> r := Representative(RT);;
 gap> Bitranslation(H, l, r);
-Error, Semigroups: Bitranslation: 
-each argument must have the same underlying semigroup,
+Error, each argument must have the same underlying semigroup
 
 #T# Error Testing - left translations over normalised RMS
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
