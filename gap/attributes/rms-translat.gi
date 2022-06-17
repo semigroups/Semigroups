@@ -201,7 +201,6 @@ end;
 # Finds the transformations on the indices of a finite 0-simple semigroup
 # which are candidates for translations, when combined with a function from
 # the index sets to the group.
-# TODO: swap rows/columns if more convenient.
 SEMIGROUPS.RZMSLinkedIndexFuncs := function(S)
   local mat, I, M, Li, bt, tau, sigma, out;
 

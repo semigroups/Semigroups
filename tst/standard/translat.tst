@@ -392,6 +392,22 @@ gap> Size(TranslationalHull(T));
 40
 gap> Size(Semigroup(TranslationalHull(T)));
 40
+gap> G := Range(IsomorphismPermGroup(SmallGroup(24, 3)));;
+gap> mat := [[G.1, G.2, G.2*G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> LS := LeftTranslations(S);;
+gap> RS := RightTranslations(S);;
+gap> HS := TranslationalHull(S);;
+gap> L := LeftTranslations(T);;
+gap> R := RightTranslations(T);;
+gap> H := TranslationalHull(T);;
+gap> Size(LS) = Size(L);
+true
+gap> Size(RS) = Size(R);
+true
+gap> Size(HS) = Size(H);
+true
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1, 1, 2, 4]), Transformation([3, 1, 3])]);;
