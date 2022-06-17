@@ -211,7 +211,7 @@ SEMIGROUPS.RZMSLinkedIndexFuncs := function(S)
   Li := List(I, i -> PositionsProperty(mat, row -> row[i] <> 0));
 
   bt := function(k)
-    local failed, j, mu, s;
+    local failed, j, mu;
     for j in Union([0], I) do
       tau[k] := j;
       sigma[k + 1] := [];
@@ -285,19 +285,18 @@ SEMIGROUPS.RZMSLinkingGraph := function(S, tau, sigma)
 end;
 
 SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
-  local D, sccs, reps, r, c, rep, dive, mat, conditions, row_definitions,
+  local D, sccs, reps, r, rep, dive, mat, conditions, row_definitions,
   column_definitions, e, cc;
-  
+
   D := SEMIGROUPS.RZMSLinkingGraph(S, tau, sigma);
   sccs := DigraphStronglyConnectedComponents(D);
   reps := [];
 
-  r := Size(Rows(S));
-  c := Size(Columns(S));
+  r := Length(Rows(S));
 
   for cc in Filtered(sccs.comps, x -> Size(x) > 1) do
     rep := cc[1];
-    if rep > r then 
+    if rep > r then
       rep := OutNeighboursOfVertex(D, rep)[1];
     fi;
     Add(reps, rep);
@@ -329,7 +328,7 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
       fi;
     od;
   end;
-  
+
   mat := MatrixOfReesZeroMatrixSemigroup(S);
   conditions := List([1 .. r], x -> []);
   row_definitions := [];
@@ -349,12 +348,11 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
 end;
 
 SEMIGROUPS.RZMSLinkedGroupFunctions := function(S, tau, sigma)
-  local r, c, conds, conditions, allowed_vals, reps, vals, keep, sccs, comps,
+  local r, conds, conditions, allowed_vals, reps, vals, keep, sccs, comps,
   ids, row_definitions, column_definitions, out, phi, psi, rep, z, cond, g, tup,
   i, v;
 
-  r := Size(Rows(S));
-  c := Size(Columns(S));
+  r := Length(Rows(S));
 
   conds := SEMIGROUPS.RZMSGroupLinkingConditions(S, tau, sigma);
   conditions := conds.conditions;
@@ -409,7 +407,7 @@ SEMIGROUPS.RZMSLinkedGroupFunctions := function(S, tau, sigma)
 end;
 
 SEMIGROUPS.BitranslationsOfRZMS := function(S)
-  local H, out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
+  local out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
 
   out := [];
   idx_funcs := SEMIGROUPS.RZMSLinkedIndexFuncs(S);
@@ -430,7 +428,7 @@ SEMIGROUPS.BitranslationsOfRZMS := function(S)
   Add(out, empty_bitrans);
 
   Apply(out, x -> SEMIGROUPS.RZMSTupleToBitranslation(S, x));
-                  
+
   return out;
 end;
 
@@ -439,7 +437,7 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
   local I, M, tau, sigma, g_pos, bt, out, mu;
 
   I           := Rows(S);
-  M           := Columns(S); 
+  M           := Columns(S);
   tau         := [x];
   sigma       := List(I, i -> List(M, mu -> ShallowCopy(M)));
   sigma[1][1] := [y];
@@ -452,10 +450,10 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
     fi;
   od;
 
-  bt := function(k) 
+  bt := function(k)
     local g_pos, consistent, j, mu, tup;
     if k = Length(I) + 1 then
-      for tup in EnumeratorOfCartesianProduct(sigma[k-1]) do
+      for tup in EnumeratorOfCartesianProduct(sigma[k - 1]) do
         Add(out, [ShallowCopy(tau), ShallowCopy(tup)]);
       od;
       return;
@@ -465,7 +463,7 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
       tau[k] := j;
       for mu in M do
         g_pos := PositionCanonical(G, d_inv[mu] * mat[mu][j] * c[k]);
-        sigma[k][mu] := Intersection(sigma[k - 1][mu], 
+        sigma[k][mu] := Intersection(sigma[k - 1][mu],
                                      mat_inv_rows[k][g_pos]);
         if IsEmpty(sigma[k][mu]) then
           consistent := false;
@@ -574,11 +572,9 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
 end;
 
 SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, triple)
-  local S, L, R, P, I, M, leftgpfunc, rightgpfunc, l, r;
+  local S, P, I, M, leftgpfunc, rightgpfunc, l, r;
 
   S := UnderlyingSemigroup(H);
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
   P := Matrix(S);
   I := Rows(S);
   M := Columns(S);
@@ -844,7 +840,7 @@ function(L, gpfunc, t)
 
   S := UnderlyingSemigroup(L);
 
-  if not (IsLeftTranslationsSemigroup(L) and 
+  if not (IsLeftTranslationsSemigroup(L) and
          SEMIGROUPS.IsNormalRMSOverGroup(S)) then
       ErrorNoReturn("the first argument must be a semigroups of left ",
                     "translations over a normalised RMS over ",
@@ -887,7 +883,7 @@ function(R, gpfunc, t)
 
   S := UnderlyingSemigroup(R);
 
-  if not (IsRightTranslationsSemigroup(R) and 
+  if not (IsRightTranslationsSemigroup(R) and
           SEMIGROUPS.IsNormalRMSOverGroup(S)) then
       ErrorNoReturn("the first argument must be a semigroups of right ",
                     "translations over a normalised RMS over ",

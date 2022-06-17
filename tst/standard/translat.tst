@@ -393,7 +393,7 @@ gap> Size(TranslationalHull(T));
 gap> Size(Semigroup(TranslationalHull(T)));
 40
 gap> G := Range(IsomorphismPermGroup(SmallGroup(24, 3)));;
-gap> mat := [[G.1, G.2, G.2*G.3]];;
+gap> mat := [[G.1, G.2, G.2 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
 gap> LS := LeftTranslations(S);;

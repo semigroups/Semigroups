@@ -1109,9 +1109,8 @@ InstallMethod(MultiplicationTableWithCanonicalPositions,
 "for a semigroup with CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
-  local n, slist, sortedlist, t, tinv, M;
+  local n, sortedlist, t, tinv, M;
   n           := Size(S);
-  slist       := AsListCanonical(S);
   sortedlist  := AsSortedList(S);
 
   t    := Transformation(List([1 .. n],

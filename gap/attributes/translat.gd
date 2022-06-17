@@ -82,6 +82,5 @@ InstallTrueMethod(CanUseGapFroidurePin, IsRightTranslationsSemigroup);
 InstallTrueMethod(CanUseGapFroidurePin, IsBitranslationsSemigroup);
 
 DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
-#DeclareAttribute("UnderlyingGenerators", IsBitranslationsSemigroup);
 
 DeclareOperation("ImageOfTranslation", [IsTranslationsSemigroupElement]);
