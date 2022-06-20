@@ -81,6 +81,6 @@ InstallTrueMethod(CanUseGapFroidurePin, IsLeftTranslationsSemigroup);
 InstallTrueMethod(CanUseGapFroidurePin, IsRightTranslationsSemigroup);
 InstallTrueMethod(CanUseGapFroidurePin, IsBitranslationsSemigroup);
 
-DeclareAttribute("UnderlyingGenerators", IsTranslationsSemigroup);
+DeclareAttribute("UnderlyingRepresentatives", IsTranslationsSemigroup);
 
 DeclareOperation("ImageOfTranslation", [IsSemigroupTranslation]);

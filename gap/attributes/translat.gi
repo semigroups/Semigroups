@@ -883,7 +883,7 @@ function(S)
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
 
-  SetUnderlyingGenerators(L, GeneratorsOfSemigroup(S));
+  SetUnderlyingRepresentatives(L, GeneratorsOfSemigroup(S));
 
   return L;
 end);
@@ -917,7 +917,7 @@ function(S)
   SetUnderlyingSemigroup(R, S);
   SetRightTranslations(S, R);
 
-  SetUnderlyingGenerators(R, GeneratorsOfSemigroup(S));
+  SetUnderlyingRepresentatives(R, GeneratorsOfSemigroup(S));
 
   return R;
 end);
@@ -1009,7 +1009,7 @@ function(L, l)
   fi;
 
   S    := UnderlyingSemigroup(L);
-  gens := UnderlyingGenerators(L);
+  gens := UnderlyingRepresentatives(L);
 
   # TODO allow general mapping from gens to S
   # In fact, insist on it? Or document that other values are ignored
@@ -1073,7 +1073,7 @@ function(L, l)
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [l]);
   fi;
   # l is a mapping on UnderlyingSemigroup(S)
-  gens := UnderlyingGenerators(L);
+  gens := UnderlyingRepresentatives(L);
   map_as_list  := [];
   for i in [1 .. Length(gens)] do
     map_as_list[i] := PositionCanonical(S, gens[i] ^ l);
@@ -1093,7 +1093,7 @@ function(R, r)
   fi;
 
   S    := UnderlyingSemigroup(R);
-  gens := UnderlyingGenerators(R);
+  gens := UnderlyingRepresentatives(R);
 
   # TODO allow general mapping from gens to S
   if IsGeneralMapping(r) then
@@ -1156,7 +1156,7 @@ function(R, r)
     return Objectify(TypeRightTranslationsSemigroupElements(R), [r]);
   fi;
   # r is a mapping on UnderlyingSemigroup(S)
-  gens := UnderlyingGenerators(R);
+  gens := UnderlyingRepresentatives(R);
   map_as_list  := [];
   for i in [1 .. Length(gens)] do
     map_as_list[i] := PositionCanonical(S, gens[i] ^ r);
@@ -1528,31 +1528,27 @@ end);
 InstallMethod(ViewObj, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  Print("<the semigroup of");
-  if IsLeftTranslationsSemigroup(T) then Print(" left");
-    else Print(" right");
+  Print("<the semigroup of ");
+  if IsLeftTranslationsSemigroup(T) then Print("left ");
+    else Print("right ");
   fi;
-  Print(" translations of ", ViewString(UnderlyingSemigroup(T)), ">");
+  Print("translations of ", ViewString(UnderlyingSemigroup(T)), ">");
 end);
 
 InstallMethod(ViewObj, "for a semigroup of translations",
 [IsTranslationsSemigroup], PrintObj);
 
 InstallMethod(PrintObj, "for a semigroup of translations",
-[IsTranslationsSemigroup and HasGeneratorsOfSemigroup],
+[IsTranslationsSemigroup],
 function(T)
-  Print("<semigroup of ");
-  if IsLeftTranslationsSemigroup(T) then Print("left ");
-  else Print("right ");
+  if IsLeftTranslationsSemigroup(T) then
+    Print("<left ");
+  else
+    Print("<right ");
   fi;
-  Print("translations of ", ViewString(UnderlyingSemigroup(T)), " with ",
-    Length(GeneratorsOfSemigroup(T)),
-    " generator");
-  if Length(GeneratorsOfSemigroup(T)) > 1 then
-    Print("s");
-  fi;
-  Print(">");
-  return;
+  Print("translations semigroup over ",
+        ViewString(UnderlyingSemigroup(T)),
+        ">");
 end);
 
 InstallMethod(ViewObj, "for a translation",
@@ -1610,7 +1606,7 @@ function(x, y)
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(x));
   S := UnderlyingSemigroup(L);
   prod := [];
-  for i in [1 .. Size(UnderlyingGenerators(L))] do
+  for i in [1 .. Size(UnderlyingRepresentatives(L))] do
     prod[i] := PositionCanonical(S, EnumeratorCanonical(S)[y![1][i]] ^ x);
   od;
   return Objectify(FamilyObj(x)!.type, [prod]);
@@ -1639,7 +1635,7 @@ function(x, y)
   R := RightTranslationsSemigroupOfFamily(FamilyObj(x));
   S := UnderlyingSemigroup(R);
   prod := [];
-  for i in [1 .. Size(UnderlyingGenerators(R))] do
+  for i in [1 .. Size(UnderlyingRepresentatives(R))] do
     prod[i] := PositionCanonical(S, EnumeratorCanonical(S)[x![1][i]] ^ y);
   od;
   return Objectify(FamilyObj(x)!.type, [prod]);
@@ -1669,7 +1665,7 @@ function(x, t)
     ErrorNoReturn("the first argument must be an element of the domain of ",
                   "the second");
   fi;
-  gens := UnderlyingGenerators(L);
+  gens := UnderlyingRepresentatives(L);
   enum := EnumeratorCanonical(S);
   x := PositionCanonical(S, x);
   g := Position(gens, enum[FirstLetter(S, x)]);
@@ -1691,7 +1687,7 @@ function(x, t)
     ErrorNoReturn("the first argument must be an element of the domain of ",
                   "the second");
   fi;
-  gens := UnderlyingGenerators(R);
+  gens := UnderlyingRepresentatives(R);
   enum := EnumeratorCanonical(S);
   x := PositionCanonical(S, x);
   g := Position(gens, enum[FinalLetter(S, x)]);
@@ -1715,7 +1711,7 @@ SEMIGROUPS.ImagePositionsOfTranslation := function(x)
     tab := TransposedMultiplicationTableWithCanonicalPositions(S);
   fi;
   images := [];
-  for g in UnderlyingGenerators(T) do
+  for g in UnderlyingRepresentatives(T) do
     UniteSet(images, tab[PositionCanonical(S, g ^ x)]);
   od;
   return images;
