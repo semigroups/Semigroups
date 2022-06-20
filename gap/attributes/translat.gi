@@ -752,38 +752,52 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
   for i in [1 .. r_m] do
     IntersectSet(r_omega_stack[1][i], T[i]);
   od;
+  
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
 
   l_bt := function(i)
     local r_finished, consistent, W, s, j;
+
     r_finished := i > r_m;
+
     for s in l_omega_stack[i][i] do
-      consistent            := true;
-      lambda[i]             := s;
+      lambda[i] := s;
+
       if r_finished and i = l_m then
-        Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
+#        Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
+
+        Add(out, Bitranslation(H,
+                               LeftTranslation(L, lambda),
+                               RightTranslation(R, rho)));
         continue;
       fi;
 
+      consistent            := true;
       l_omega_stack[i + 1]  := [];
       r_omega_stack[i + 1]  := [];
+
       # make sure to take care of linking condition
       # x_i * lambda(x_i) = (x_i)rho * x_i
-      for j in [i .. l_m] do
-        if (j > i) then
+      for j in [i .. Maximum(l_m, r_m)] do
+        if (j > i and j <= l_m) then
           W := SEMIGROUPS.LeftTranslationsBacktrackDataW(left_data, i, j, s);
           l_omega_stack[i + 1][j] := Intersection(l_omega_stack[i][j], W);
         fi;
-        if not r_finished then
+
+        if j <= r_m then
           r_omega_stack[i + 1][j] :=
             Intersection(r_omega_stack[i][j],
                          right_inverses_by_rep[multtable[r_repspos[j]][s]][i]);
         fi;
-        if ((j > i and IsEmpty(l_omega_stack[i + 1][j])) or
-            (not r_finished and IsEmpty(r_omega_stack[i + 1][j]))) then
+
+        if ((j > i and j <= l_m and IsEmpty(l_omega_stack[i + 1][j])) or
+            (j <= r_m and IsEmpty(r_omega_stack[i + 1][j]))) then
           consistent := false;
           break;
         fi;
       od;
+
       if consistent then
         if r_finished then
           l_bt(i + 1);
@@ -796,30 +810,43 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
 
   r_bt := function(i)
     local l_finished, consistent, G, s, j;
+
     l_finished := i >= l_m;
+
     for s in r_omega_stack[i][i] do
       rho[i] := s;
+
       if l_finished and i = r_m then
-        Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
+        #Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
+        Add(out, Bitranslation(H,
+                               LeftTranslation(L, lambda),
+                               RightTranslation(R, rho)));
         continue;
       fi;
+
       consistent := true;
       l_omega_stack[i + 1] := [];
       r_omega_stack[i + 1] := [];
-      for j in [i + 1 .. r_m] do
-        G := SEMIGROUPS.RightTranslationsBacktrackDataG(right_data, i, j, s);
-        r_omega_stack[i + 1][j] := Intersection(r_omega_stack[i][j], G);
-        if not l_finished then
+
+      for j in [i + 1 .. Maximum(r_m, l_m)] do
+        if j <= r_m then
+          G := SEMIGROUPS.RightTranslationsBacktrackDataG(right_data, i, j, s);
+          r_omega_stack[i + 1][j] := Intersection(r_omega_stack[i][j], G);
+        fi;
+
+        if j <= l_m then
           l_omega_stack[i + 1][j] :=
             Intersection(l_omega_stack[i][j],
                         left_inverses_by_rep[multtable[s][l_repspos[j]]][i]);
         fi;
-        if ((not l_finished and IsEmpty(l_omega_stack[i + 1][j])) or
-            IsEmpty(r_omega_stack[i + 1][j])) then
+
+        if ((j <= l_m and IsEmpty(l_omega_stack[i + 1][j])) or
+            (j <= r_m and IsEmpty(r_omega_stack[i + 1][j]))) then
           consistent := false;
           break;
         fi;
       od;
+
       if consistent then
         if l_finished then
           r_bt(i + 1);
@@ -908,7 +935,7 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
 
   L := LeftTranslations(S);
   R := RightTranslations(S);
-  Apply(out, x -> BitranslationNC(TranslationalHull(S),
+  Apply(out, x -> BitranslationNC(H,
                                   LeftTranslationNC(L, x[1]),
                                   RightTranslationNC(R, x[2])));
   return out;
