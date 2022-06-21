@@ -284,11 +284,11 @@ true
 gap> S := Semigroup([Transformation([2, 2, 3, 1]), 
 > Transformation([1, 4, 3, 3])]);;
 gap> L := InnerLeftTranslations(S);
-<semigroup of left translations of <transformation semigroup of 
- degree 4 with 2 generators> with 2 generators>
+<left translations semigroup over <transformation semigroup of 
+ degree 4 with 2 generators>>
 gap> R := InnerRightTranslations(S);
-<semigroup of right translations of <transformation semigroup of 
- degree 4 with 2 generators> with 2 generators>
+<right translations semigroup over <transformation semigroup 
+ of size 24, degree 4 with 2 generators>>
 gap> Size(L) = Size(S);
 true
 gap> Size(L) = Size(R);
@@ -312,8 +312,8 @@ true
 gap> S := Semigroup([Transformation([2, 2, 3, 1]), 
 > Transformation([1, 4, 3, 3])]);;
 gap> InnerTranslationalHull(S);
-<semigroup of bitranslations over <transformation semigroup of 
- degree 4 with 2 generators>>
+<semigroup of bitranslations over <transformation semigroup 
+ of size 24, degree 4 with 2 generators>>
 ]]></Example>
     </Description>
   </ManSection>

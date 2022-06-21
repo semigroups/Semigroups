@@ -1776,7 +1776,7 @@ function(x, y)
   return x![1] < y![1];
 end);
 
-InstallMethod(\^, "for a semigroup element and a left translation",
+InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsSemigroupTranslation],
 function(x, t)
   local T, S, M, enum, y;
