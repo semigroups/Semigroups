@@ -253,6 +253,44 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   return r;
 end;
 
+SEMIGROUPS.RightInversesLeftReps := function(S)
+  local n, reps, m, multtable, out, k, x, i, t;
+
+  n         := Size(S);
+  reps      := UnderlyingRepresentatives(LeftTranslations(S));
+  m         := Size(reps);
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+  out       := List([1 .. n], x -> List([1 .. m], y -> []));
+
+  for i in [1 .. m] do
+    k := PositionCanonical(S, reps[i]);
+    for t in [1 .. n] do
+      x := multtable[t][k];
+      Add(out[x][i], t);
+    od;
+  od;
+  return out;
+end;
+
+SEMIGROUPS.LeftInversesRightReps := function(S)
+  local n, reps, m, multtable, out, k, x, i, t;
+
+  n         := Size(S);
+  reps      := UnderlyingRepresentatives(RightTranslations(S));
+  m         := Size(reps);
+  multtable := MultiplicationTableWithCanonicalPositions(S);
+  out       := List([1 .. n], x -> List([1 .. m], y -> []));
+
+  for i in [1 .. m] do
+    k := PositionCanonical(S, reps[i]);
+    for t in [1 .. n] do
+      x := multtable[k][t];
+      Add(out[x][i], t);
+    od;
+  od;
+  return out;
+end;
+
 SEMIGROUPS.RightTranslationsBacktrackData := function(S)
   local n, m, id, repspos, transpose_multtable, transpose_multsets, l_classes,
   l_class_map, l_class_inv_map, l_classes_below, max_L_intersects, intersect,
@@ -504,6 +542,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L, opt...)
 
   bt := function(i)
     local consistent, W, s, j;
+
     for s in omega_stack[i][i] do
       lambda[i] := s;
       if i = m then
@@ -717,8 +756,8 @@ end;
 SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
   local S, n, l_reps, r_reps, l_m, r_m, l_repspos, r_repspos, l_omega_stack,
   r_omega_stack, nr_only, nr, multtable, left_data, right_data,
-  left_inverses_by_rep, right_inverses_by_rep, U, T, l_bt, r_bt, lambda, rho,
-  out, L, R, i;
+  left_inverses_by_right_rep, right_inverses_by_left_rep, U, T, L, R, l_bt,
+  r_bt, lambda, rho, out, i;
 
   S             := UnderlyingSemigroup(H);
   n             := Size(S);
@@ -735,10 +774,11 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
 
   multtable := MultiplicationTableWithCanonicalPositions(S);
 
-  left_data := SEMIGROUPS.LeftTranslationsBacktrackData(S);
-  right_data := SEMIGROUPS.RightTranslationsBacktrackData(S);
-  left_inverses_by_rep := left_data.left_inverses_by_rep;
-  right_inverses_by_rep := right_data.right_inverses_by_rep;
+  left_data                   := SEMIGROUPS.LeftTranslationsBacktrackData(S);
+  right_data                  := SEMIGROUPS.RightTranslationsBacktrackData(S);
+  left_inverses_by_right_rep  := SEMIGROUPS.LeftInversesRightReps(S);
+  right_inverses_by_left_rep  := SEMIGROUPS.RightInversesLeftReps(S);
+
   U := left_data.U;
   T := right_data.T;
 
@@ -747,52 +787,58 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
 
   # restrict via the T_{i} and U_{i}
   for i in [1 .. l_m] do
-    IntersectSet(l_omega_stack[1][i], U[i]);
+    l_omega_stack[1][i] := U[i];
   od;
   for i in [1 .. r_m] do
-    IntersectSet(r_omega_stack[1][i], T[i]);
+    r_omega_stack[1][i] := T[i];
   od;
-  
+
   L := LeftTranslations(S);
   R := RightTranslations(S);
 
   l_bt := function(i)
-    local r_finished, consistent, W, s, j;
+    local depth, r_finished, consistent, W, x, s, j;
+
+    if i <= r_m then
+      depth := 2 * i - 1;
+    else
+      depth := r_m + i;
+    fi;
 
     r_finished := i > r_m;
 
-    for s in l_omega_stack[i][i] do
+    for s in l_omega_stack[depth][i] do
       lambda[i] := s;
 
       if r_finished and i = l_m then
-#        Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
-
-        Add(out, Bitranslation(H,
-                               LeftTranslation(L, lambda),
-                               RightTranslation(R, rho)));
+        Add(out, BitranslationNC(H,
+                                 LeftTranslationNC(L, lambda),
+                                 RightTranslationNC(R, rho)));
         continue;
       fi;
 
-      consistent            := true;
-      l_omega_stack[i + 1]  := [];
-      r_omega_stack[i + 1]  := [];
+      consistent                := true;
+      l_omega_stack[depth + 1]  := [];
+      r_omega_stack[depth + 1]  := [];
 
       # make sure to take care of linking condition
       # x_i * lambda(x_i) = (x_i)rho * x_i
       for j in [i .. Maximum(l_m, r_m)] do
         if (j > i and j <= l_m) then
           W := SEMIGROUPS.LeftTranslationsBacktrackDataW(left_data, i, j, s);
-          l_omega_stack[i + 1][j] := Intersection(l_omega_stack[i][j], W);
+          l_omega_stack[depth + 1][j] := Intersection(l_omega_stack[depth][j],
+                                                      W);
         fi;
 
         if j <= r_m then
-          r_omega_stack[i + 1][j] :=
-            Intersection(r_omega_stack[i][j],
-                         right_inverses_by_rep[multtable[r_repspos[j]][s]][i]);
+          x := multtable[r_repspos[j]][s];
+          r_omega_stack[depth + 1][j] :=
+              Intersection(r_omega_stack[depth][j],
+                           right_inverses_by_left_rep[x][i]);
         fi;
 
-        if ((j > i and j <= l_m and IsEmpty(l_omega_stack[i + 1][j])) or
-            (j <= r_m and IsEmpty(r_omega_stack[i + 1][j]))) then
+        if ((j > i and j <= l_m and IsEmpty(l_omega_stack[depth + 1][j])) or
+            (j <= r_m and IsEmpty(r_omega_stack[depth + 1][j]))) then
           consistent := false;
           break;
         fi;
@@ -802,46 +848,54 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
         if r_finished then
           l_bt(i + 1);
         else
-          r_bt(i); # this i is intentional, we go LRLRLR...
+          # this i is intentional, we go LRLRLR...
+          r_bt(i);
         fi;
       fi;
     od;
   end;
 
   r_bt := function(i)
-    local l_finished, consistent, G, s, j;
+    local depth, l_finished, consistent, G, x, s, j;
+
+    if i <= l_m then
+      depth := 2 * i;
+    else
+      depth := l_m + i;
+    fi;
 
     l_finished := i >= l_m;
 
-    for s in r_omega_stack[i][i] do
+    for s in r_omega_stack[depth][i] do
       rho[i] := s;
 
       if l_finished and i = r_m then
-        #Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
-        Add(out, Bitranslation(H,
-                               LeftTranslation(L, lambda),
-                               RightTranslation(R, rho)));
+        Add(out, BitranslationNC(H,
+                                 LeftTranslationNC(L, lambda),
+                                 RightTranslationNC(R, rho)));
         continue;
       fi;
 
       consistent := true;
-      l_omega_stack[i + 1] := [];
-      r_omega_stack[i + 1] := [];
+      l_omega_stack[depth + 1] := [];
+      r_omega_stack[depth + 1] := [];
 
       for j in [i + 1 .. Maximum(r_m, l_m)] do
         if j <= r_m then
           G := SEMIGROUPS.RightTranslationsBacktrackDataG(right_data, i, j, s);
-          r_omega_stack[i + 1][j] := Intersection(r_omega_stack[i][j], G);
+          r_omega_stack[depth + 1][j] := Intersection(r_omega_stack[depth][j],
+                                                      G);
         fi;
 
         if j <= l_m then
-          l_omega_stack[i + 1][j] :=
-            Intersection(l_omega_stack[i][j],
-                        left_inverses_by_rep[multtable[s][l_repspos[j]]][i]);
+          x := multtable[s][l_repspos[j]];
+          l_omega_stack[depth + 1][j] :=
+              Intersection(l_omega_stack[depth][j],
+                           left_inverses_by_right_rep[x][i]);
         fi;
 
-        if ((j <= l_m and IsEmpty(l_omega_stack[i + 1][j])) or
-            (j <= r_m and IsEmpty(r_omega_stack[i + 1][j]))) then
+        if ((j <= l_m and IsEmpty(l_omega_stack[depth + 1][j])) or
+            (j <= r_m and IsEmpty(r_omega_stack[depth + 1][j]))) then
           consistent := false;
           break;
         fi;
@@ -857,87 +911,18 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
     od;
   end;
 
-#  bt := function(i, side)
-#    local k, consistent, s, j;
-#    # i represents the combined depth in l and r, which alternate in the
-#    # backtrack
-#    # k represents the generator number we are defining the value of l or r for
-#    # now
-#
-#    if (i mod 2 = 1) then
-#      # we are dealing with the left translation
-#      k := (i + 1) / 2;
-#      for s in l_omega_stack[i][k] do
-#        consistent := true;
-#        lambda[k] := s;
-#        l_omega_stack[i + 1] := [];
-#        r_omega_stack[i + 1] := [];
-#        # make sure to take care of linking condition
-#        # x_i * lambda(x_i) = (x_i)rho * x_i
-#        for j in [k .. m] do
-#          if (j > k) then
-#            W := SEMIGROUPS.LeftTranslationsBacktrackDataW(left_data, k, j, s);
-#            l_omega_stack[i + 1][j] := Intersection(l_omega_stack[i][j], W);
-#          fi;
-#          r_omega_stack[i + 1][j] :=
-#            Intersection(r_omega_stack[i][j],
-#                         right_inverses_by_rep[multtable[repspos[j]][s]][k]);
-#
-#          if ((j > k and IsEmpty(l_omega_stack[i + 1][j])) or
-#              IsEmpty(r_omega_stack[i + 1][j])) then
-#            consistent := false;
-#            break;
-#          fi;
-#        od;
-#        if consistent then
-#          bt(i + 1);
-#        fi;
-#      od;
-#    else
-#      # we are dealing with the right translation
-#      k := i / 2;
-#      for s in r_omega_stack[i][k] do
-#        rho[k] := s;
-#        if (k = m) then
-#          Add(out, [ShallowCopy(lambda), ShallowCopy(rho)]);
-#          continue;
-#        fi;
-#        consistent := true;
-#        l_omega_stack[i + 1] := [];
-#        r_omega_stack[i + 1] := [];
-#        for j in [k + 1 .. m] do
-#          G := SEMIGROUPS.RightTranslationsBacktrackDataG(right_data, k, j, s);
-#          r_omega_stack[i + 1][j] := Intersection(r_omega_stack[i][j], G);
-#          l_omega_stack[i + 1][j] :=
-#            Intersection(l_omega_stack[i][j],
-#                         left_inverses_by_rep[multtable[s][repspos[j]]][k]);
-#          if (IsEmpty(l_omega_stack[i + 1][j]) or
-#              IsEmpty(r_omega_stack[i + 1][j])) then
-#            consistent := false;
-#            break;
-#          fi;
-#        od;
-#        if consistent then
-#          bt(i + 1);
-#        fi;
-#      od;
-#    fi;
-#  end;
-
   lambda := [];
   rho := [];
   out := [];
+  # Warning: it is assumed that the alternation starts with L; otherwise
+  # the depth calculation in l_bt and r_bt must be altered, and some of the
+  # logic changed
   l_bt(1);
 
   if nr_only then
     return nr;
   fi;
 
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-  Apply(out, x -> BitranslationNC(H,
-                                  LeftTranslationNC(L, x[1]),
-                                  RightTranslationNC(R, x[2])));
   return out;
 end;
 
@@ -1159,7 +1144,8 @@ function(L, l)
     return LeftTranslationOfNormalRMSNC(L, tup[1], tup[2]);
   fi;
   if IsDenseList(l) then
-    return Objectify(TypeLeftTranslationsSemigroupElements(L), [l]);
+    return Objectify(TypeLeftTranslationsSemigroupElements(L),
+                    [ShallowCopy(l)]);
   fi;
   # l is a mapping on UnderlyingSemigroup(S)
   reps := UnderlyingRepresentatives(L);
@@ -1242,7 +1228,8 @@ function(R, r)
     return RightTranslationOfNormalRMSNC(R, tup[1], tup[2]);
   fi;
   if IsDenseList(r) then
-    return Objectify(TypeRightTranslationsSemigroupElements(R), [r]);
+    return Objectify(TypeRightTranslationsSemigroupElements(R),
+                    [ShallowCopy(r)]);
   fi;
   # r is a mapping on UnderlyingSemigroup(S)
   reps := UnderlyingRepresentatives(R);
@@ -1583,7 +1570,7 @@ function(T)
     for j in [1 .. Size(S)] do
       if out[M[x][j]] = fail then
         # store [i, j] instead of [x, j] for efficiency
-        out[M[x][j]] := [i, j]; 
+        out[M[x][j]] := [i, j];
       fi;
     od;
     out[x] := [i, 0];
@@ -1792,7 +1779,7 @@ end);
 InstallMethod(\^, "for a semigroup element and a left translation",
 [IsAssociativeElement, IsSemigroupTranslation],
 function(x, t)
-  local T, S, M, reps, enum, y;
+  local T, S, M, enum, y;
 
   if IsLeftTranslation(t) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
@@ -1807,7 +1794,6 @@ function(x, t)
     ErrorNoReturn("the first argument must be an element of the domain of ",
                   "the second");
   fi;
-  reps := UnderlyingRepresentatives(T);
   enum := EnumeratorCanonical(S);
   x := PositionCanonical(S, x);
   y := RepresentativeMultipliers(T)[x];
