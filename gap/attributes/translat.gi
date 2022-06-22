@@ -424,25 +424,6 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S)
   return r;
 end;
 
-SEMIGROUPS.LeftTranslationsBacktrackDataV := function(data, j, a, s)
-  local right_inverses, V, C, t;
-
-  if IsBound(data.V[j][a][s]) then
-    return data.V[j][a][s];
-  fi;
-
-  t              := data.left_canon_inverse_by_gen[a][j];
-  C              := right_inverses[s][t];
-  right_inverses := data.right_inverses;
-
-  if C = fail then
-    V := [];
-  else
-  fi;
-  data.V[j][a][s] := V;
-  return V;
-end;
-
 SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
   local left_canon_inverse_by_gen, multtable, right_inverses, W, r, x, a;
 
@@ -467,28 +448,6 @@ SEMIGROUPS.LeftTranslationsBacktrackDataW := function(data, i, j, s)
   od;
   data.W[i][j][s] := W;
   return W;
-end;
-
-SEMIGROUPS.RightTranslationsBacktrackDataF := function(data, j, a, s)
-  local left_inverses, F, C, t;
-
-  if IsBound(data.F[j][a][s]) then
-    return data.F[j][a][s];
-  fi;
-
-  left_inverses := data.left_inverses;
-  F := [1 .. data.n];
-  for t in data.right_inverses_by_rep[a][j] do
-    C := left_inverses[s][t];
-    if C = fail then
-      F := [];
-      break;
-    else
-      F := Intersection(F, C);
-    fi;
-  od;
-  data.F[j][a][s] := F;
-  return F;
 end;
 
 SEMIGROUPS.RightTranslationsBacktrackDataG := function(data, i, j, s)
@@ -518,17 +477,12 @@ SEMIGROUPS.RightTranslationsBacktrackDataG := function(data, i, j, s)
   return G;
 end;
 
-# TODO: possiblefgenvals is superfluous
 SEMIGROUPS.LeftTranslationsBacktrack := function(L, opt...)
-  local S, n, reps, m, omega_stack, possiblefgenvals, nr_only, nr, data, U, bt,
-  lambda, out, i;
+  local S, reps, m, nr_only, nr, data, U, omega_stack, bt, lambda, out, i;
 
   S                 := UnderlyingSemigroup(L);
-  n                 := Size(S);
   reps              := UnderlyingRepresentatives(L);
   m                 := Size(reps);
-  omega_stack       := List([1 .. m], i -> List([1 .. m], j -> []));
-  possiblefgenvals  := List([1 .. m], i -> [1 .. n]);
   nr_only           := opt = ["nr_only"];
   nr                := 0;
 
@@ -537,7 +491,7 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L, opt...)
 
   # restrict via the U_{i}
   for i in [1 .. m] do
-    IntersectSet(possiblefgenvals[i], U[i]);
+    omega_stack := [List(U, ShallowCopy)];
   od;
 
   bt := function(i)
@@ -569,7 +523,6 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L, opt...)
     od;
   end;
 
-  omega_stack := [possiblefgenvals];
   lambda := [];
   out := [];
   bt(1);
@@ -1106,8 +1059,7 @@ function(L, l)
                     "indices of elements of the semigroup of the first ",
                     "argument");
     fi;
-    # TODO store and use MultiplicationTableWithCanonicalPositions and
-    # LeftTranslationsBacktrackData
+    # TODO (later) store and use LeftTranslationsBacktrackData
     semi_list := AsListCanonical(S);
     full_lambda := [];
     for i in [1 .. Size(reps)] do
@@ -1190,8 +1142,7 @@ function(R, r)
                     "indices of elements of the semigroup of the first ",
                     "argument");
     fi;
-    # TODO store and use MultiplicationTableWithCanonicalPositions and
-    # RightTranslationsBacktrackData
+    # TODO store and use some of RightTranslationsBacktrackData
     semi_list := AsListCanonical(S);
     full_rho := [];
     for i in [1 .. Size(reps)] do
@@ -1354,37 +1305,38 @@ InstallMethod(GeneratorsOfSemigroup,
 [IsTranslationsSemigroup and IsWholeFamily],
 2,
 function(T)
-  local S, n, iso, inv, reesMatSemi, gens, t, f;
+  local S, n, iso, inv, rms, gens, t, f;
+
   S := UnderlyingSemigroup(T);
   if not IsRectangularBand(S) then
     TryNextMethod();
   fi;
 
-  iso         := IsomorphismReesMatrixSemigroup(S);
-  inv         := InverseGeneralMapping(iso);
-  reesMatSemi := Range(iso);
+  iso := IsomorphismReesMatrixSemigroup(S);
+  inv := InverseGeneralMapping(iso);
+  rms := Range(iso);
   if IsLeftTranslationsSemigroup(T) then
-    n := Length(Rows(reesMatSemi));
+    n := Length(Rows(rms));
   else
-    n := Length(Columns(reesMatSemi));
+    n := Length(Columns(rms));
   fi;
 
   gens := [];
   for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
     if IsLeftTranslationsSemigroup(T) then
       f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1] ^ t,
+        return ReesMatrixSemigroupElement(rms, x[1] ^ t,
           (), x[3]);
       end;
       Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
-      MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+      MappingByFunction(rms, rms, f), iso)));
     else
       f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1],
+        return ReesMatrixSemigroupElement(rms, x[1],
           (), x[3] ^ t);
       end;
       Add(gens, RightTranslationNC(T, CompositionMapping(inv,
-        MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+        MappingByFunction(rms, rms, f), iso)));
     fi;
   od;
   return gens;
@@ -1398,19 +1350,19 @@ InstallMethod(GeneratorsOfSemigroup,
 [IsBitranslationsSemigroup],
 2,
 function(H)
-  local S, leftGens, rightGens, l, r, gens;
+  local S, left_gens, right_gens, l, r, gens;
 
   S := UnderlyingSemigroup(H);
   if not IsRectangularBand(S) then
     TryNextMethod();
   fi;
 
-  leftGens  := GeneratorsOfSemigroup(LeftTranslations(S));
-  rightGens := GeneratorsOfSemigroup(RightTranslations(S));
+  left_gens  := GeneratorsOfSemigroup(LeftTranslations(S));
+  right_gens := GeneratorsOfSemigroup(RightTranslations(S));
   gens      := [];
 
-  for l in leftGens do
-    for r in rightGens do
+  for l in left_gens do
+    for r in right_gens do
       Add(gens, BitranslationNC(H, l, r));
     od;
   od;
@@ -1593,7 +1545,6 @@ function(T)
   fi;
 end);
 
-# TODO: make arguments consistent
 InstallMethod(AsList, "for a translational hull",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
@@ -1603,15 +1554,14 @@ function(H)
   if SEMIGROUPS.HasEasyBitranslationsGenerators(H) then
     TryNextMethod();
   elif IsReesZeroMatrixSemigroup(S) then
-    return SEMIGROUPS.BitranslationsOfRZMS(S);
+    return SEMIGROUPS.BitranslationsRZMS(H);
   elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    return SEMIGROUPS.BitranslationsOfNormalRMS(S);
+    return SEMIGROUPS.BitranslationsNormalRMS(H);
   else
     return SEMIGROUPS.BitranslationsBacktrack(H);
   fi;
 end);
 
-# TODO: use the nr_only options here
 InstallMethod(Size, "for a semigroups of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
