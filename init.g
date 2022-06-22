@@ -110,6 +110,7 @@ ReadPackage("semigroups", "gap/attributes/isomorph.gd");
 ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/maximal.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
+ReadPackage("semigroups", "gap/attributes/homomorph.gd");
 
 ReadPackage("semigroups", "gap/congruences/cong.gd");
 ReadPackage("semigroups", "gap/congruences/congpart.gd");

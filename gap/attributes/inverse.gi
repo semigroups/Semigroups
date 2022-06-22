@@ -700,7 +700,7 @@ function(S)
   T := InverseSemigroup(out);
   inv := x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
 
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, iso, inv);
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
