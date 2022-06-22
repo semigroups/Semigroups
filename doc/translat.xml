@@ -284,8 +284,8 @@ true
 gap> S := Semigroup([Transformation([2, 2, 3, 1]), 
 > Transformation([1, 4, 3, 3])]);;
 gap> L := InnerLeftTranslations(S);
-<left translations semigroup over <transformation semigroup of 
- degree 4 with 2 generators>>
+<left translations semigroup over <transformation semigroup 
+ of size 24, degree 4 with 2 generators>>
 gap> R := InnerRightTranslations(S);
 <right translations semigroup over <transformation semigroup 
  of size 24, degree 4 with 2 generators>>
@@ -393,7 +393,7 @@ gap> RT := RightTranslations(R);;
 gap> gpfunc := [G.1, G.2 * G.1];;
 gap> t := IdentityTransformation;;
 gap> l := LeftTranslationOfNormalRMS(L, gpfunc, t);
-<left translation on <simple semigroup with 5 generators>>
+<left translation on <semigroup>>
 gap> r := RightTranslationOfNormalRMS(RT, gpfunc, t);
 Error, the second argument must be a list of group elements of length \
 equal to the number of rows of the underlying semigroup of the first a\
@@ -429,7 +429,7 @@ gap> rt := Transformation([3, 3, 3]);;
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
 gap> r := RightTranslationOfNormalRMS(RT, rgpfunc, rt);;
 gap> h := BitranslationOfNormalRMS(H, l, r);
-<bitranslation on <simple semigroup with 5 generators>>
+<bitranslation on <semigroup>>
 gap> l := LeftTranslationOfNormalRMS(L, 
 > lgpfunc, IdentityTransformation);;
 gap> h := BitranslationOfNormalRMS(H, l, r);
