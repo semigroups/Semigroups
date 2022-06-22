@@ -717,10 +717,6 @@ InstallMethod(LeftTranslations, "for a finite enumerable semigroup",
 function(S)
   local fam, L, type;
 
-  if HasLeftTranslations(S) then
-    return LeftTranslations(S);
-  fi;
-
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
     fam   := SEMIGROUPS.FamOfRMSLeftTranslationsByTriple();
     type  := fam!.type;
@@ -741,8 +737,6 @@ function(S)
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
 
-  SetUnderlyingRepresentatives(L, GeneratorsOfSemigroup(S));
-
   return L;
 end);
 
@@ -750,10 +744,6 @@ InstallMethod(RightTranslations, "for a finite enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, type, R;
-
-  if HasRightTranslations(S) then
-    return RightTranslations(S);
-  fi;
 
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
     fam   := SEMIGROUPS.FamOfRMSRightTranslationsByTriple();
@@ -782,10 +772,6 @@ InstallMethod(TranslationalHull, "for a finite enumerable semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local fam, type, H;
-
-  if HasTranslationalHull(S) then
-    return TranslationalHull(S);
-  fi;
 
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
     fam   := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
@@ -848,7 +834,7 @@ end);
 # Second argument should be a mapping on the underlying semigroup or
 # a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
-function(L, l)
+function(L, l, opt...)
   local S, reps, semi_list, full_lambda, g, lg, x, y, i, s;
 
   if not (IsLeftTranslationsSemigroup(L)) then
@@ -858,6 +844,16 @@ function(L, l)
 
   S    := UnderlyingSemigroup(L);
   reps := UnderlyingRepresentatives(L);
+
+  if not IsEmpty(opt) then
+    if Length(opt) = 1 and SEMIGROUPS.IsNormalRMSOverGroup(S) then
+      return LeftTranslationOfNormalRMS(L, l, opt[1]);
+    else
+      ErrorNoReturn("if more than two arguments are given, there must be ",
+                    "precisely three and the first argument must be a normal ",
+                    "RMS over a group");
+    fi;
+  fi;
 
   # TODO allow general mapping from reps to S
   # In fact, insist on it? Or document that other values are ignored
@@ -871,13 +867,13 @@ function(L, l)
     fi;
   elif IsDenseList(l) then
     if not Size(l) = Size(reps) then
-      ErrorNoReturn("the second argument must map indices of generators to ",
-                    "indices of elements of the semigroup of the first ",
+      ErrorNoReturn("the second argument must map indices of representatives ",
+                    "to indices of elements of the semigroup of the first ",
                     "argument");
     fi;
-    if not ForAll(l, y -> IsInt(y) and y <= Size(S)) then
-      ErrorNoReturn("the second argument must map indices of generators to ",
-                    "indices of elements of the semigroup of the first ",
+    if not ForAll(l, y -> IsPosInt(y) and y <= Size(S)) then
+      ErrorNoReturn("the second argument must map indices of representatives ",
+                    "to indices of elements of the semigroup of the first ",
                     "argument");
     fi;
     # TODO (later) store and use LeftTranslationsBacktrackData
@@ -913,7 +909,7 @@ function(L, l)
   local S, tup, reps, map_as_list, i;
   S := UnderlyingSemigroup(L);
   if IsLeftTranslationOfNormalRMSSemigroup(L) then
-    tup := SEMIGROUPS.LeftTransToNormalRMSTuple(S, l);
+    tup := SEMIGROUPS.LeftTransToNormalRMSTupleNC(S, l);
     return LeftTranslationOfNormalRMSNC(L, tup[1], tup[2]);
   fi;
   if IsDenseList(l) then
@@ -931,8 +927,9 @@ function(L, l)
 end);
 
 # Same for right translations.
+# TODO: should this not be an operation?
 InstallGlobalFunction(RightTranslation,
-function(R, r)
+function(R, r, opt...)
   local S, reps, semi_list, full_rho, g, rg, x, y, i, s;
 
   if not (IsRightTranslationsSemigroup(R)) then
@@ -942,6 +939,16 @@ function(R, r)
 
   S    := UnderlyingSemigroup(R);
   reps := UnderlyingRepresentatives(R);
+
+  if not IsEmpty(opt) then
+    if Length(opt) = 1 and SEMIGROUPS.IsNormalRMSOverGroup(S) then
+      return RightTranslationOfNormalRMS(R, r, opt[1]);
+    else
+      ErrorNoReturn("if more than two arguments are given, there must be ",
+                    "precisely three and the first argument must be a normal ",
+                    "RMS over a group");
+    fi;
+  fi;
 
   # TODO allow general mapping from reps to S
   if IsGeneralMapping(r) then
@@ -954,13 +961,13 @@ function(R, r)
     fi;
   elif IsDenseList(r) then
     if not Size(r) = Size(reps) then
-      ErrorNoReturn("the second argument must map indices of generators to ",
-                    "indices of elements of the semigroup of the first ",
+      ErrorNoReturn("the second argument must map indices of representatives ",
+                    "to indices of elements of the semigroup of the first ",
                     "argument");
     fi;
-    if not ForAll(r, y -> IsInt(y) and y <= Size(S)) then
-      ErrorNoReturn("the second argument must map indices of generators to ",
-                    "indices of elements of the semigroup of the first ",
+    if not ForAll(r, y -> IsPosInt(y) and y <= Size(S)) then
+      ErrorNoReturn("the second argument must map indices of representatives ",
+                    "to indices of elements of the semigroup of the first ",
                     "argument");
     fi;
     # TODO store and use some of RightTranslationsBacktrackData
@@ -996,7 +1003,7 @@ function(R, r)
   local S, tup, reps, map_as_list, i;
   S := UnderlyingSemigroup(R);
   if IsRightTranslationOfNormalRMSSemigroup(R) then
-    tup := SEMIGROUPS.RightTransToNormalRMSTuple(S, r);
+    tup := SEMIGROUPS.RightTransToNormalRMSTupleNC(S, r);
     return RightTranslationOfNormalRMSNC(R, tup[1], tup[2]);
   fi;
   if IsDenseList(r) then
@@ -1048,7 +1055,6 @@ function(H, l, r)
             IsRightTranslation(r)) then
     ErrorNoReturn("the second argument must be a left translation ",
                   "and the third argument must be a right translation");
-    return;
   fi;
 
   S := UnderlyingSemigroup(H);
@@ -1193,7 +1199,7 @@ end);
 #############################################################################
 
 InstallMethod(GeneratorsOfSemigroup,
-"for the left translations of a finite monogenic semigroup",
+"for the left translations of a finite monoid",
 [IsLeftTranslationsSemigroup and IsWholeFamily],
 function(L)
   if not IsMonoid(UnderlyingSemigroup(L)) then
@@ -1203,7 +1209,7 @@ function(L)
 end);
 
 InstallMethod(GeneratorsOfSemigroup,
-"for the right translations of a finite monogenic semigroup",
+"for the right translations of a finite monoid",
 [IsRightTranslationsSemigroup and IsWholeFamily],
 function(R)
   if not IsMonoid(UnderlyingSemigroup(R)) then
@@ -1213,7 +1219,7 @@ function(R)
 end);
 
 InstallMethod(GeneratorsOfSemigroup,
-"for the right translations of a finite monogenic semigroup",
+"for the translational hull of a finite monoid",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   if not IsMonoid(UnderlyingSemigroup(H)) then
@@ -1223,7 +1229,7 @@ function(H)
 end);
 
 InstallMethod(Size,
-"for a semigroup of left/right translations of a monogenic semigroup",
+"for a semigroup of left/right translations of a monoid",
 [IsTranslationsSemigroup and IsWholeFamily],
 1,
 function(T)
@@ -1233,7 +1239,7 @@ function(T)
   return Size(UnderlyingSemigroup(T));
 end);
 
-InstallMethod(Size, "for a translational hull of a monogenic semigroup",
+InstallMethod(Size, "for a translational hull of a monoid",
 [IsBitranslationsSemigroup and IsWholeFamily],
 1,
 function(H)
@@ -1270,7 +1276,7 @@ function(R)
 end);
 
 InstallMethod(GeneratorsOfSemigroup,
-"for the right translations of a finite monogenic semigroup",
+"for the translational hull of a finite monogenic semigroup",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   if not IsMonogenicSemigroup(UnderlyingSemigroup(H)) then
@@ -1309,9 +1315,20 @@ InstallMethod(UnderlyingRepresentatives,
 "for a semigroup of left or right translations",
 [IsTranslationsSemigroup],
 function(T)
-  local S;
+  local S, L, G;
 
   S := UnderlyingSemigroup(T);
+  L := IsLeftTranslationsSemigroup(T);
+
+  if SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    G := UnderlyingSemigroup(S);
+    if L then
+      return List(Rows(S), i -> RMSElement(S, i, One(G), 1));
+    else
+      return List(Columns(S), j -> RMSElement(S, 1, One(G), j));
+    fi;
+  fi;
+
   if IsLeftTranslationsSemigroup(T) then
     return List(MaximalRClasses(S), Representative);
   else

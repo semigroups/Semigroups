@@ -97,15 +97,11 @@ end;
 # required for the LeftTranslationsOfNormalRMS function.
 # Arguments are:
 # 1. S, a normalised RMS over a group,
-# 2. - a transformation on the indices of S (as defined by AsListCanonical), OR
+# 2. - a dense list of length the underlying reps of left translations on S OR
 #    - a mapping on S
 #    in either case, the second argument must define a left translation on S.
-SEMIGROUPS.LeftTransToNormalRMSTuple := function(S, x)
-  local I, G, one, group_func, trans, s, t, i;
-  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("the first argument should be a normalised RMS over a ",
-                  "group");
-  fi;
+SEMIGROUPS.LeftTransToNormalRMSTupleNC := function(S, x)
+  local I, G, one, group_func, trans, t, s, i;
 
   I          := Rows(S);
   G          := UnderlyingSemigroup(S);
@@ -113,33 +109,27 @@ SEMIGROUPS.LeftTransToNormalRMSTuple := function(S, x)
   group_func := [];
   trans      := [];
 
-  if IsTransformation(x) and DegreeOfTransformation(x) <= Size(S) then
+  if IsDenseList(x) and
+      Length(x) = Length(UnderlyingRepresentatives(LeftTranslations(S))) then
     for i in I do
-      s         := RMSElement(S, i, one, 1);
-      t         := AsListCanonical(S)[PositionCanonical(S, s) ^ x];
-      trans[i]  := t![1];
+      # This relies on UnderlyingRepresentatives not being interfered with
+      t             := AsListCanonical(S)[x[i]];
+      trans[i]      := t![1];
       group_func[i] := t![2];
     od;
   elif IsGeneralMapping(x) and Source(x) = Range(x) and Source(x) = S then
     for i in I do
-      s         := RMSElement(S, i, one, 1);
-      t         := s ^ x;
-      trans[i]  := t![1];
+      s             := RMSElement(S, i, one, 1);
+      t             := s ^ x;
+      trans[i]      := t![1];
       group_func[i] := t![2];
     od;
-  else
-    ErrorNoReturn("the second argument should be a transformation on the ",
-                  "indices of the semigroup or a mapping on the semigroup");
   fi;
   return [group_func, Transformation(trans)];
 end;
 
-SEMIGROUPS.RightTransToNormalRMSTuple := function(S, x)
+SEMIGROUPS.RightTransToNormalRMSTupleNC := function(S, x)
   local J, G, one, group_func, trans, s, t, j;
-  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("the first argument should be a normalised RMS over a ",
-                  "group");
-  fi;
 
   J          := Columns(S);
   G          := UnderlyingSemigroup(S);
@@ -147,11 +137,12 @@ SEMIGROUPS.RightTransToNormalRMSTuple := function(S, x)
   group_func := [];
   trans      := [];
 
-  if IsTransformation(x) and DegreeOfTransformation(x) <= Size(S) then
+  if IsDenseList(x) and
+      Length(x) = Length(UnderlyingRepresentatives(RightTranslations(S))) then
     for j in J do
-      s         := RMSElement(S, 1, one, j);
-      t         := AsListCanonical(S)[PositionCanonical(S, s) ^ x];
-      trans[j]  := t![3];
+      # This relies on UnderlyingRepresentatives not being interfered with
+      t             := AsListCanonical(S)[x[j]];
+      trans[j]      := t![3];
       group_func[j] := t![2];
     od;
   elif IsGeneralMapping(x) and Source(x) = Range(x) and Source(x) = S then
@@ -161,9 +152,6 @@ SEMIGROUPS.RightTransToNormalRMSTuple := function(S, x)
       trans[j]  := t![3];
       group_func[j] := t![2];
     od;
-  else
-    ErrorNoReturn("the second argument should be a transformation on the ",
-                  "indices of the semigroup or a mapping on the semigroup");
   fi;
   return [group_func, Transformation(trans)];
 end;
@@ -849,7 +837,7 @@ function(L, group_func, t)
 
   if not (IsLeftTranslationsSemigroup(L) and
          SEMIGROUPS.IsNormalRMSOverGroup(S)) then
-      ErrorNoReturn("the first argument must be a semigroups of left ",
+      ErrorNoReturn("the first argument must be a semigroup of left ",
                     "translations over a normalised RMS over ",
                     "a group");
   fi;
