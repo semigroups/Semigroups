@@ -437,11 +437,12 @@ gap> for x in GeneratorsOfSemigroup(T) do
 >      fi;
 >    od;
 gap> l := LeftTranslation(L,
-> [(1,6,3,9)(2,7,5,4)(8,10,11,12), (1,6,3,9)(2,7,5,4)(8,10,11,12)],
+> [(1, 6, 3, 9)(2, 7, 5, 4)(8, 10, 11, 12),
+> (1, 6, 3, 9)(2, 7, 5, 4)(8, 10, 11, 12)],
 > Transformation([2, 2]));
 <left translation on <simple semigroup of size 96, with 6 generators>>
 gap> r := RightTranslation(R,
-> [(1,2,3,5)(4,10,7,12)(6,11,9,8), (), (), ()],
+> [(1, 2, 3, 5)(4, 10, 7, 12)(6, 11, 9, 8), (), (), ()],
 > Transformation([2, 3, 4, 1]));
 <right translation on <simple semigroup of size 96, with 6 generators>>
 gap> AsListCanonical(T);;
