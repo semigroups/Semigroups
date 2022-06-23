@@ -148,7 +148,7 @@ InstallMethod(RandomMatrixOp,
 function(R, n, ranks)
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
     ErrorNoReturn("the list of ranks has to consist of numbers >= 0 and <= ",
-                  n, "");
+                  n);
   fi;
   return Matrix(R, []);
 end);
@@ -231,8 +231,7 @@ function(filter, field, list)
   local mat, filter2;
 
   if not ForAll(list, v -> ForAll(v, x -> x in field)) then
-    ErrorNoReturn("the entries of the matrix are not all in ",
-                  field, "");
+    ErrorNoReturn("the entries of the matrix are not all in ", field);
   fi;
 
   filter2 := filter and IsMatrixOverFiniteField;
