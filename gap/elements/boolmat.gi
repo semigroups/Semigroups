@@ -109,7 +109,7 @@ function(mat)
   x := EmptyPlist(n);
   for i in [1 .. n] do
     if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
-      ErrorNoReturn("the entries of each list must not exceed ", n, "");
+      ErrorNoReturn("the entries of each list must not exceed ", n);
     fi;
     Add(x, BlistList([1 .. n], mat[i]));
   od;

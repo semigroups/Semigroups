@@ -127,7 +127,7 @@ function(S, r)
         x := Intersection([1, 2, 5], r.types);
         if not IsEmpty(x) then
           Info(InfoSemigroups, 2, "a Rees matrix semigroup has no maximal ",
-                                  "subsemigroups of types ", x, "");
+                                  "subsemigroups of types ", x);
         fi;
       fi;
       opts.types := r.types;

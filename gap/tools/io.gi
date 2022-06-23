@@ -239,7 +239,7 @@ function(arg)
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn("couldn't open the file ", name, "");
+      ErrorNoReturn("couldn't open the file ", name);
     fi;
   elif IsFile(name) then
     file := name;
@@ -438,7 +438,7 @@ function(arg)
     file := IO_CompressedFile(name, mode);
     if file = fail then
       # Cannot test this
-      ErrorNoReturn("couldn't open the file ", name, "");
+      ErrorNoReturn("couldn't open the file ", name);
     fi;
   elif IsFile(name) then
     file := name;
