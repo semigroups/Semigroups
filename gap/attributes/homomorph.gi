@@ -312,8 +312,8 @@ InstallMethod(ImageElm, "for a semigroup homom. by images and element",
 [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
 function(hom, x)
   if not x in Source(hom) then
-    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element of the source of the ",
-    "1st argument (semigroup homom. by images)");
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+    "of the source of the 1st argument (semigroup homom. by images)");
   fi;
   return EvaluateWord(MappingGeneratorsImages(hom)[2],
                       Factorization(Source(hom), x));
@@ -456,7 +456,8 @@ function(hom1, hom2)
 end);
 
 InstallMethod(ViewObj, "for SHBI/SHBF",
-[IsSemigroupHomomorphismByImagesOrFunction], 2, # to beat method for mapping by function with inverse
+[IsSemigroupHomomorphismByImagesOrFunction],
+2,  # to beat method for mapping by function with inverse
 function(hom)
   Print("\>");
   ViewObj(Source(hom));
