@@ -34,7 +34,6 @@ function(S, T, gens, imgs)
   # in case of different generators, do:
   # gens -> original generators (as passed to Semigroup function)
   # imgs -> images of original generators
-  U := Semigroup(gens, rec(acting := true));
   original_gens := GeneratorsOfSemigroup(S);
   if original_gens <> gens then
     imgs := List(original_gens,
