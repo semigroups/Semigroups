@@ -144,8 +144,8 @@ gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);
  generator>
 gap> map := IsomorphismSemigroups(S, T);
 <commutative non-regular transformation semigroup of size 4, degree 5 with 1 
- generator> -> <commutative non-regular block bijection semigroup of size 4, 
- degree 6 with 1 generator>
+  generator> -> <commutative non-regular block bijection semigroup of size 4, 
+  degree 6 with 1 generator>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -364,7 +364,7 @@ gap> T := AsMonoid(IsPBRMonoid, S);
 <pbr monoid of size 27, degree 3 with 3 generators>
 gap> map := IsomorphismSemigroups(S, T);
 <full transformation monoid of degree 3> -> <pbr monoid of size 27, degree 3 
- with 3 generators>
+  with 3 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

@@ -42,8 +42,8 @@ gap> J := FullTransformationMonoid(4);;
 gap> imgs := ListWithIdenticalEntries(4,
 > ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
-<full transformation monoid of degree 3> -> <full transformation monoi\
-d of degree 4>]]></Example>
+<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 4>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -129,8 +129,8 @@ gap> map := x -> t ^ Length(Factorization(SS, x));;
 gap> inv := x -> s ^ Length(Factorization(TT, x));;
 gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
 <commutative non-regular transformation semigroup of size 4, degree 5 
- with 1 generator> -> <commutative non-regular block bijection 
- semigroup of size 4, degree 6 with 1 generator>]]></Example>
+  with 1 generator> -> <commutative non-regular block bijection 
+  semigroup of size 4, degree 6 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -154,8 +154,8 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> T := FullTransformationMonoid(4);;
 gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-<full transformation monoid of degree 3> -> <full transformation monoi\
-d of degree 4>
+<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 4>
 gap> IsSemigroupHomomorphismByImages(hom);
 true]]></Example>
     </Description>
@@ -216,8 +216,8 @@ gap> map := x -> t ^ Length(Factorization(SS, x));;
 gap> inv := x -> s ^ Length(Factorization(TT, x));;
 gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
 <commutative non-regular transformation semigroup of size 4, degree 5 
- with 1 generator> -> <commutative non-regular block bijection 
- semigroup of size 4, degree 6 with 1 generator>
+  with 1 generator> -> <commutative non-regular block bijection 
+  semigroup of size 4, degree 6 with 1 generator>
 gap> IsSemigroupIsomorphismByFunction(iso);
 true]]></Example>
     </Description>
@@ -266,8 +266,8 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := ListX(gens, x -> IdentityTransformation);;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);;
 gap> hom := AsSemigroupHomomorphismByFunction(hom);
-<general linear monoid 2x2 over GF(2)> -> <trivial transformation 
- group of degree 0 with 1 generator>]]></Example>
+<general linear monoid 2x2 over GF(2)> -> 
+<trivial transformation group of degree 0 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -289,8 +289,8 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, S, gens, gens);;
 gap> AsSemigroupIsomorphismByFunction(hom);
-<full transformation monoid of degree 3> -> <full transformation monoi\
-d of degree 3>]]></Example>
+<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 3>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
