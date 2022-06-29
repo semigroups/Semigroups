@@ -293,7 +293,7 @@ hom -> SemigroupIsomorphismByFunction(Source(hom),
 
 # Methods for SHBI/SIBI/SHBF
 InstallMethod(IsSurjective, "for a semigroup homomorphism",
-  [IsSemigroupHomomorphismByImagesOrFunction],
+[IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)
   return Size(ImagesSource(hom)) = Size(Range(hom));
 end);
