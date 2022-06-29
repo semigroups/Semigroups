@@ -318,6 +318,7 @@ function(hom, x)
   return EvaluateWord(MappingGeneratorsImages(hom)[2],
                       Factorization(Source(hom), x));
 end);
+
 InstallMethod(ImagesSource, "for SHBI",
 [IsSemigroupHomomorphismByImages],
     hom -> Semigroup(MappingGeneratorsImages(hom)[2]));
