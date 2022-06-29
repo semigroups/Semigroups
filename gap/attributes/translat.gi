@@ -855,7 +855,6 @@ function(L, l, opt...)
     fi;
   fi;
 
-  # TODO allow general mapping from reps to S
   # In fact, insist on it? Or document that other values are ignored
   if IsGeneralMapping(l) then
     if not (S = Source(l) and Source(l) = Range(l)) then
@@ -927,7 +926,6 @@ function(L, l)
 end);
 
 # Same for right translations.
-# TODO: should this not be an operation?
 InstallGlobalFunction(RightTranslation,
 function(R, r, opt...)
   local S, reps, semi_list, full_rho, g, rg, x, y, i, s;
@@ -950,7 +948,6 @@ function(R, r, opt...)
     fi;
   fi;
 
-  # TODO allow general mapping from reps to S
   if IsGeneralMapping(r) then
     if not (S = Source(r) and Source(r) = Range(r)) then
       ErrorNoReturn("the domain and range of the second argument must be ",
@@ -970,7 +967,8 @@ function(R, r, opt...)
                     "to indices of elements of the semigroup of the first ",
                     "argument");
     fi;
-    # TODO store and use some of RightTranslationsBacktrackData
+
+    # TODO (later) store and use some of RightTranslationsBacktrackData
     semi_list := AsListCanonical(S);
     full_rho := [];
     for i in [1 .. Size(reps)] do
@@ -1708,7 +1706,6 @@ function(t)
   fi;
 end);
 
-# TODO: why is this a global function?
 InstallGlobalFunction(LeftPartOfBitranslation,
 function(h)
   if not IsBitranslation(h) then

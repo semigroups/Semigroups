@@ -591,8 +591,6 @@ end;
 # 2. Methods for (zero) simple semigroups
 #############################################################################
 
-# TODO: snake_case
-
 # The generators are generators of partial transformation monoid to act on the
 # index sets, together with functions to the generators of the group.
 InstallMethod(GeneratorsOfSemigroup,
