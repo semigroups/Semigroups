@@ -370,8 +370,7 @@ function(hom, elms)
   if not IsSubsetSet(AsList(Range(hom)), elms) then
     ErrorNoReturn("the 2nd argument is not a subset of the range of the ",
                   "1st argument (semigroup homom. by images)");
-  fi;
-  if not IsSubsetSet(AsList(ImagesSource(hom)), elms) then
+  elif not IsSubsetSet(AsList(ImagesSource(hom)), elms) then
     ErrorNoReturn("the 2nd argument is not a subset of the image of the ",
                   "source of the 1st argument (semigroup homom. by images)");
   fi;
