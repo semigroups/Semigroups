@@ -312,7 +312,7 @@ InstallMethod(ImageElm, "for a semigroup homom. by images and element",
 [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
 function(hom, x)
   if not x in Source(hom) then
-    ErrorNoReturn("the 2nd argument is not an element of the source of the ",
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element of the source of the ",
     "1st argument (semigroup homom. by images)");
   fi;
   return EvaluateWord(MappingGeneratorsImages(hom)[2],
