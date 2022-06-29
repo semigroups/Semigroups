@@ -459,9 +459,11 @@ end);
 InstallMethod(ViewObj, "for SHBI/SHBF",
 [IsSemigroupHomomorphismByImagesOrFunction], 2, # to beat method for mapping by function with inverse
 function(hom)
+  Print("\>");
   ViewObj(Source(hom));
-  Print(" -> ");
+  Print("\< \>->\< \>");
   ViewObj(Range(hom));
+  Print("\<");
 end);
 
 InstallMethod(String, "for a semigroup homom. by function",
