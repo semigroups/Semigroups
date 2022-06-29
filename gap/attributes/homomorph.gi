@@ -84,8 +84,8 @@ function(S, T, gens, imgs)
   # gens -> original generators (as passed to Semigroup function)
   # imgs -> images of original generators
   original_gens := GeneratorsOfSemigroup(S);
-  U := Semigroup(gens, rec(acting := true));
   if original_gens <> gens then
+    U := Semigroup(gens, rec(acting := true));
     imgs := List(original_gens,
       x -> EvaluateWord(imgs, Factorization(U, x)));
     gens := original_gens;
