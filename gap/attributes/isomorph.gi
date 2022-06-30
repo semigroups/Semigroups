@@ -210,7 +210,7 @@ function(S, T)
   TT := Semigroup(t);
   map := x -> t ^ Length(Factorization(SS, x));
   inv := x -> s ^ Length(Factorization(TT, x));
-  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
 end);
 
 # TODO(later) when/if Digraphs has vertex coloured digraphs, make this a user
@@ -265,7 +265,7 @@ function(S, T)
   invariants := [IsFinite, IsSimpleSemigroup, IsZeroSimpleSemigroup, Size,
                  NrLClasses, NrDClasses, NrRClasses, NrHClasses, NrIdempotents];
   if S = T then
-    return MagmaIsomorphismByFunctionsNC(S, T, IdFunc, IdFunc);
+    return SemigroupIsomorphismByFunctionNC(S, T, IdFunc, IdFunc);
   elif IsFinite(S) <> IsFinite(T) then
     return fail;
   elif not IsFinite(S) then
@@ -294,7 +294,7 @@ function(S, T)
   p := RestrictedPerm(p, [1 .. Size(S)]);
   map := x -> AsSSortedList(T)[PositionSorted(S, x) ^ p];
   inv := x -> AsSSortedList(S)[PositionSorted(T, x) ^ (p ^ -1)];
-  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
 end);
 
 InstallMethod(AutomorphismGroup, "for a semigroup",
@@ -310,7 +310,7 @@ function(S)
   G := Group(X);
   map := p -> (x -> AsSSortedList(S)[PositionSorted(S, x) ^ p]);
   Y := List(GeneratorsOfGroup(G),
-            p -> MagmaIsomorphismByFunctionsNC(S,
+            p -> SemigroupIsomorphismByFunctionNC(S,
                                                S,
                                                map(p),
                                                map(p ^ -1)));
