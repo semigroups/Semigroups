@@ -47,13 +47,11 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([4, 1, 2, 2, 1]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpMonoid(S);
-MappingByFunction( <transformation monoid of degree 5 with 5 generators>
- , <fp monoid with 5 generators and 608 relations>, function( x ) ... end, fun\
-ction( x ) ... end )
+<transformation monoid of degree 5 with 5 generators> -> 
+<fp monoid with 5 generators and 608 relations>
 gap> inv := InverseGeneralMapping(map);
-MappingByFunction( <fp monoid with 5 generators and 608 relations>, 
+<fp monoid with 5 generators and 608 relations> -> 
 <transformation monoid of degree 5 with 5 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 gap> map := IsomorphismFpSemigroup(S);;
@@ -2235,9 +2233,8 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([4, 1, 2, 2, 1]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpSemigroup(S);
-MappingByFunction( <transformation monoid of degree 5 with 5 generators>
- , <fp semigroup with 6 generators and 619 relations>, function( x ) ... end, \
-function( x ) ... end )
+<transformation monoid of degree 5 with 5 generators> -> 
+<fp semigroup with 6 generators and 619 relations>
 gap> T := Range(map);
 <fp semigroup with 6 generators and 619 relations>
 gap> AsList(T);
@@ -2363,9 +2360,8 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([4, 1, 2, 2, 1]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpSemigroup(S);
-MappingByFunction( <transformation monoid of degree 5 with 3 generators>
- , <fp semigroup with 4 generators and 68 relations>, function( x ) ... end, f\
-unction( x ) ... end )
+<transformation monoid of degree 5 with 3 generators> -> 
+<fp semigroup with 4 generators and 68 relations>
 gap> T := Range(map);
 <fp semigroup with 4 generators and 68 relations>
 gap> TestEnumerator(Enumerator(T));
@@ -2411,15 +2407,11 @@ gap> F := FreeGroup(1);
 <free group on the generators [ f1 ]>
 gap> R := [F.1 ^ 2];;
 gap> IsomorphismFpSemigroup(F / R);
-MappingByFunction( <fp group on the generators 
-[ f1 
- ]>, <fp semigroup with 3 generators and 8 relations>, function( x ) ... end, \
-function( x ) ... end )
+<fp group on the generators [ f1 ]> -> 
+<fp semigroup with 3 generators and 8 relations>
 gap> IsomorphismFpMonoid(F / R);
-MappingByFunction( <fp group on the generators 
-[ f1 
- ]>, <fp monoid with 2 generators and 3 relations>, function( x ) ... end, fun\
-ction( x ) ... end )
+<fp group on the generators [ f1 ]> -> 
+<fp monoid with 2 generators and 3 relations>
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

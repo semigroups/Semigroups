@@ -102,7 +102,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 [CanUseFroidurePin],
 ToBeat([CanUseFroidurePin], [IsFpMonoid]),
 function(S)
-  local cay, deg, gen, next, T, iso, inv, i;
+  local cay, deg, gen, next, T, i, iso, inv;
   if not IsFinite(S) then
     ErrorNoReturn("the argument (a semigroup) is not finite");
   elif IsPartialPermSemigroup(S) or IsTransformationSemigroup(S) then
@@ -125,16 +125,10 @@ function(S)
   T := Semigroup(gen);
   UseIsomorphismRelation(S, T);
 
-  iso := function(x)
-    return EvaluateWord(gen, MinimalFactorization(S, x));
-  end;
+  iso := x -> EvaluateWord(gen, MinimalFactorization(S, x));
+  inv := x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
 
-  inv := function(x)
-    return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
-  end;
-
-  # TODO(later) replace this with SemigroupIsomorphismByImagesOfGenerators
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, iso, inv);
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
@@ -162,7 +156,7 @@ function(S)
   fi;
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
@@ -179,17 +173,17 @@ function(S)
   n := DegreeOfBipartitionSemigroup(S);
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       AsTransformation,
-                                       x -> AsBipartition(x, n));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          AsTransformation,
+                                          x -> AsBipartition(x, n));
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
 "for semigroup of binary relations with generators",
 [IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup],
 function(S)
-  local n, pts, o, pos, T, i;
+  local n, pts, o, pos, T, map, inv, i;
 
   if not IsBinaryRelationOnPointsRep(Representative(S)) then
     TryNextMethod();
@@ -207,11 +201,102 @@ function(S)
   T := Semigroup(List(GeneratorsOfSemigroup(S),
                  x -> TransformationOpNC(x, pts, OnPoints)));
 
-  return MappingByFunction(S,
-                           T,
-                           x -> TransformationOpNC(x, pts, OnPoints),
-                           x -> BinaryRelationOnPoints(List([1 .. n], i ->
-                                                            pts[pos[i] ^ x])));
+  map := x -> TransformationOpNC(x, pts, OnPoints);
+  inv := x -> BinaryRelationOnPoints(List([1 .. n], i -> pts[pos[i] ^ x]));
+  return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library.
+
+InstallMethod(IsomorphismTransformationMonoid, "for a semigroup",
+[IsSemigroup],
+1,  # to beat the GAP library version
+function(S)
+  local iso1, inv1, iso2, inv2;
+  if MultiplicativeNeutralElement(S) = fail then
+      ErrorNoReturn("the argument must be a semigroup with a ",
+                    "multiplicative neutral element");
+  fi;
+  iso1 := IsomorphismTransformationSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismTransformationMonoid(Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+  UseIsomorphismRelation(S, Range(iso2));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library.
+
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup with known generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+1,  # to beat the GAP library version
+function(S)
+  local id, dom, T, inv;
+  if IsMonoid(S) then
+    return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
+  elif MultiplicativeNeutralElement(S) = fail then
+    ErrorNoReturn("the argument must be a semigroup with a ",
+                  "multiplicative neutral element");
+  fi;
+  id := MultiplicativeNeutralElement(S);
+  dom := ImageSetOfTransformation(id, DegreeOfTransformationSemigroup(S));
+  T := Monoid(List(GeneratorsOfSemigroup(S), x -> TransformationOp(x, dom)));
+  UseIsomorphismRelation(S, T);
+  inv := function(x)
+    local out, i;
+    out := [1 .. DegreeOfTransformationSemigroup(S)];
+    for i in [1 .. Length(dom)] do
+      out[dom[i]] := dom[i ^ x];
+    od;
+    return id * Transformation(out);
+  end;
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> TransformationOp(x, dom),
+                                          inv);
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library.
+
+InstallMethod(IsomorphismTransformationSemigroup, "for partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  local n, T, inv;
+
+  n := Maximum(DegreeOfPartialPermCollection(S),
+               CodegreeOfPartialPermCollection(S)) + 1;
+
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsTransformation(x, n)));
+  UseIsomorphismRelation(S, T);
+
+  inv := function(x)
+    local out, j, i;
+    out := [];
+    for i in [1 .. n - 1] do
+      j := i ^ x;
+      if j <> n then
+        out[i] := j;
+      else
+        out[i] := 0;
+      fi;
+    od;
+    return PartialPerm(out);
+  end;
+
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsTransformation(x, n),
+                                          inv);
 end);
 
 #############################################################################
@@ -236,10 +321,10 @@ function(S)
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
-  iso := MagmaIsomorphismByFunctionsNC(U,
-                                       G,
-                                       PermutationOfImage,
-                                       x -> x ^ map);
+  iso := SemigroupIsomorphismByFunctionNC(U,
+                                          G,
+                                          PermutationOfImage,
+                                          x -> x ^ map);
   SetIsomorphismPermGroup(U, iso);
 
   return U;

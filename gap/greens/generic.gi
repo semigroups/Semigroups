@@ -132,7 +132,7 @@ end);
 #     # This really sucks performancewise
 #     return First(H, h -> map(h) = x);
 #   end;
-#   return MappingByFunction(H, G, map, inv);
+#   return SemigroupIsomorphismByFunctionNC(H, G, map, inv);
 # end);
 
 InstallMethod(StructureDescription, "for a Green's H-class",

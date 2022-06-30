@@ -63,7 +63,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsBooleanMatSemigroup and a boolean mat semigroup",
 [IsBooleanMatSemigroup, IsBooleanMatSemigroup],
 function(filter, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 
 # It seems necessary that the method below occurs after the fallback method in
@@ -77,10 +77,10 @@ function(filter, S)
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   UseIsomorphismRelation(S, T);
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBooleanMat(x, n),
-                                       AsTransformation);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBooleanMat(x, n),
+                                          AsTransformation);
 end);
 
 # If the second argument here is a transformation semigroup, then
@@ -110,6 +110,6 @@ InstallMethod(IsomorphismMonoid,
 "for IsBooleanMatMonoid and a boolean mat monoid",
 [IsBooleanMatMonoid, IsBooleanMatMonoid],
 function(filter, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 

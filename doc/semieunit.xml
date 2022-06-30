@@ -252,9 +252,8 @@ gap> S := InverseSemigroup([PartialPermNC([1, 2], [2, 1]),
 > PartialPermNC([1], [1])]);
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> cov := EUnitaryInverseCover(S);
-MappingByFunction( <inverse partial perm semigroup of rank 4 with 2 
- generators>, <inverse partial perm semigroup of rank 2 with 2 
- generators>, function( x ) ... end )
+<inverse partial perm semigroup of rank 4 with 2 generators> -> 
+<inverse partial perm semigroup of rank 2 with 2 generators>
 gap> IsEUnitaryInverseSemigroup(Source(cov));
 true
 gap> S = Range(cov);

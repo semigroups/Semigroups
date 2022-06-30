@@ -31,17 +31,17 @@ function(filt, R, S)
   iso2 := IsomorphismSemigroup(filt, R, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup and a finite field matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup, IsMatrixOverFiniteFieldSemigroup],
 function(filt, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -53,13 +53,13 @@ function(filt, R, S)
   local D, map, inv, T;
   D := BaseDomain(Representative(S));
   if D = R then
-    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+    return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
   elif Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))
       and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then
     map := x -> Matrix(R, x);
     inv := x -> Matrix(D, x);
     T   := Semigroup(List(GeneratorsOfSemigroup(S), map));
-    return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+    return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
   fi;
   TryNextMethod();  # take an isomorphism to a transformation semigroup
 end);
@@ -76,7 +76,7 @@ function(filt, S)
   R := DefaultFieldOfMatrix(Representative(S));
   map := x -> Matrix(R, x);
   T := Semigroup(List(GeneratorsOfSemigroup(S), map));
-  return MagmaIsomorphismByFunctionsNC(S, T, map, AsList);
+  return SemigroupIsomorphismByFunctionNC(S, T, map, AsList);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -91,7 +91,7 @@ function(filt, R, S)
       and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then
     map := x -> Matrix(R, x);
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
-    return MagmaIsomorphismByFunctionsNC(S, T, map, AsList);
+    return SemigroupIsomorphismByFunctionNC(S, T, map, AsList);
   fi;
   TryNextMethod();
 end);
@@ -121,7 +121,7 @@ function(filt, R, S)
   inv := x -> Transformation([1 .. n], i -> PositionNonZero(x[i]));
   gens := List(GeneratorsOfSemigroup(S), iso);
 
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, inv);
+  return SemigroupIsomorphismByFunctionNC(S, Semigroup(gens), iso, inv);
 end);
 
 #############################################################################
@@ -153,10 +153,10 @@ function(filt, R, S)
   iso2 := IsomorphismMonoid(filt, R, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 InstallMethod(IsomorphismMonoid,
@@ -177,7 +177,7 @@ InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid and a matrix over finite field monoid",
 [IsMatrixOverFiniteFieldMonoid, IsMatrixOverFiniteFieldMonoid],
 function(filter, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 
 InstallMethod(IsomorphismMonoid,

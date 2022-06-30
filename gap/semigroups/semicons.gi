@@ -800,48 +800,74 @@ InstallMethod(StrongSemilatticeOfSemigroups,
 "for a digraph, a list, and a list",
 [IsDigraph, IsList, IsList],
 function(D, semigroups, homomorphisms)
-  local efam, etype, type, maps, n, rtclosure, path, len, tobecomposed, gens,
-  out, s, i, j, paths, firsthom;
+  local out, pos, err, efam, etype, type, maps, n, rtclosure, paths, path, len,
+   tobecomposed, firsthom, gens, i, j;
 
   if not IsMeetSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D)) then
-    ErrorNoReturn("expected a digraph whose reflexive transitive closure ",
-                  "is a meet semilattice digraph as first argument");
+    ErrorNoReturn("the reflexive transitive closure of the 1st argument ",
+                  "(a digraph) must be a meet semilattice");
   fi;
-  for s in semigroups do
-    if not IsSemigroup(s) then
-      ErrorNoReturn("expected a list of semigroups as second argument");
-    fi;
-  od;
-  if DigraphNrVertices(D) <> Length(semigroups) then
-    ErrorNoReturn("the number of vertices of the first argument <D> must ",
-                  "be equal to the length of the second argument");
+  pos := PositionProperty(semigroups, x -> not IsSemigroup(x));
+  if pos <> fail then
+    ErrorNoReturn("the 2nd argument (a list) must consist of semigroups, ",
+                  "but found ", TNAM_OBJ(semigroups[pos]), " in position ", pos);
+  elif DigraphNrVertices(D) <> Length(semigroups) then
+    err := Concatenation(
+             "the 2nd argument (a list) must have length {}, ",
+             "the number of vertices of the 1st argument (a digraph)",
+             ", but found length {}");
+    ErrorNoReturn(StringFormatted(err,
+                                  DigraphNrVertices(D),
+                                  Length(semigroups)));
+  fi;
+  pos := PositionProperty(homomorphisms, x -> not IsList(x));
+  if pos <> fail then
+    ErrorNoReturn("the 3rd argument (a list) must consist of lists, ",
+                  "but found ",
+                  TNAM_OBJ(homomorphisms[pos]),
+                  " in position ",
+                  pos);
   elif DigraphNrVertices(D) <> Length(homomorphisms) then
-    ErrorNoReturn("where D is the first argument, expected a list of length ",
-                  "DigraphNrVertices(D) as third argument");
+    err := Concatenation(
+             "the 3rd argument (a list) must have length {}, ",
+             "the number of vertices of the 1st argument (a digraph)",
+             ", but found length {}");
+    ErrorNoReturn(StringFormatted(err,
+                  DigraphNrVertices(D),
+                  Length(homomorphisms)));
   fi;
+
+  out := OutNeighbours(D);
   for i in [1 .. DigraphNrVertices(D)] do
-    if not IsList(homomorphisms[i]) then
-      ErrorNoReturn("expected a list of lists as third argument");
-    elif Length(homomorphisms[i]) <> Length(OutNeighbours(D)[i]) then
-      ErrorNoReturn("where D and homomorphisms are the 1st and 3rd arguments ",
-                    "respectively, the length of homomorphisms[i] must be ",
-                    "equal to OutNeighbours(D)[i]");
+    if Length(homomorphisms[i]) <> Length(out[i]) then
+      err := Concatenation(
+               "the 3rd argument (a list) must have the same shape ",
+               "as the out-neighbours of the 1st argument (a digraph), ",
+               "expected shape {} but found {}");
+      ErrorNoReturn(StringFormatted(err,
+                                    List(out, Length),
+                                    List(homomorphisms, Length)));
     fi;
+    pos := PositionProperty(homomorphisms[i],
+                            x -> not IsSemigroupHomomorphism(x));
+    if pos <> fail then
+        ErrorNoReturn("the 3rd argument (a list) must consist ",
+                      "of lists of homomorphisms, but position ",
+                      StringFormatted("[{}, {}]", i, pos),
+                      " is not a homomorphism");
+    fi;
+
     for j in [1 .. Length(homomorphisms[i])] do
-      if not RespectsMultiplication(homomorphisms[i][j]) then
-        ErrorNoReturn("expected a list of lists of homomorphisms ",
-                      "as third argument, homomorphisms[", i,
-                      "][", j, "] is not a homomorphism");
-      fi;
-      if  (not IsSubset(Source(homomorphisms[i][j]),
-                        semigroups[OutNeighbours(D)[i][j]])) or
-          (not IsSubset(semigroups[i],
-                        Range(homomorphisms[i][j]))) then
-        ErrorNoReturn("expected homomorphism from ",
-                      OutNeighbours(D)[i][j],
-                      " to ",
-                      i,
-                      " to have correct source and range");
+      if Source(homomorphisms[i][j]) <> semigroups[out[i][j]] then
+        err := Concatenation("expected the homomorphism in position {} of the ",
+                             "3rd argument to have source equal to position {} ",
+                             "in the 2nd argument");
+        ErrorNoReturn(StringFormatted(err, [i, j], out[i][j]));
+      elif Range(homomorphisms[i][j]) <> semigroups[i] then
+        err := Concatenation("expected the homomorphism in position {} of the ",
+                             "3rd argument to have range equal to position {} ",
+                             "in the 2nd argument");
+        ErrorNoReturn(StringFormatted(err, [i, j], i));
       fi;
     od;
   od;

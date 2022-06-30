@@ -2018,9 +2018,8 @@ gap> R := ReesZeroMatrixSemigroup(G,
 gap> IsInverseSemigroup(R);
 true
 gap> iso := RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>, 
+<Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )> -> 
 <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
- , function( x ) ... end, function( x ) ... end )
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> Matrix(S);
@@ -2047,9 +2046,8 @@ gap> mat := [
 gap> R := ReesZeroMatrixSemigroup(G, mat);
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
 gap> iso := RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>, 
+<Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )> -> 
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
- , function( x ) ... end, function( x ) ... end )
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
 
@@ -2631,12 +2629,9 @@ Error, the underlying semigroup of the argument (a  subsemigroup of a Rees 0-m\
 atrix semigroup) does not satisfy IsGroupAsSemigroup
 gap> S := Semigroup(MultiplicativeZero(R));;
 gap> IsomorphismPermGroup(S);
-MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
- with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
-gap> S := Semigroup(RMSElementNC(R, 1, (1, 2, 3), 1));;
+<subsemigroup of 3x4 Rees 0-matrix semigroup with 1 generator> -> Group(())
 gap> map := IsomorphismPermGroup(S);
-MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
- with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+<subsemigroup of 3x4 Rees 0-matrix semigroup with 1 generator> -> Group(())
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

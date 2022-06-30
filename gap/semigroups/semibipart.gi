@@ -152,10 +152,10 @@ function(S)
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
-  map := MagmaIsomorphismByFunctionsNC(U,
-                                       G,
-                                       AsPermutation,
-                                       x -> AsBipartition(x, deg));
+  map := SemigroupIsomorphismByFunctionNC(U,
+                                          G,
+                                          AsPermutation,
+                                          x -> AsBipartition(x, deg));
   SetIsomorphismPermGroup(U, map);
 
   return U;
@@ -307,10 +307,10 @@ function(filter, S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBipartition(x, n)));
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBipartition(x, n),
-                                       AsTransformation);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBipartition(x, n),
+                                          AsTransformation);
 end);
 
 # the converse of the previous method
@@ -326,10 +326,10 @@ function(filter, S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBipartition(x, n)));
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBipartition(x, n),
-                                       AsPartialPerm);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBipartition(x, n),
+                                          AsPartialPerm);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -345,10 +345,10 @@ function(filter, S)
                              x -> AsBipartition(x, n)));
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBipartition(x, n),
-                                       AsPartialPerm);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBipartition(x, n),
+                                          AsPartialPerm);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -361,10 +361,10 @@ function(filt, S)
   T := Semigroup(List(GeneratorsOfGroup(S), x -> AsBipartition(x, n)));
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBipartition(x, n),
-                                       AsPermutation);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBipartition(x, n),
+                                          AsPermutation);
 end);
 
 # fall back method
@@ -384,10 +384,10 @@ function(filter, S)
   iso2 := IsomorphismSemigroup(filter, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 # this is one way, i.e. no converse method
@@ -430,10 +430,10 @@ function(filter, S)
     return PartialPerm(out);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBlockBijection(x, n),
-                                       inv);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBlockBijection(x, n),
+                                          inv);
 end);
 
 # this is one way, i.e. no converse method
@@ -476,10 +476,10 @@ function(filter, S)
     return PartialPerm(out);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsBlockBijection(x, n),
-                                       inv);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsBlockBijection(x, n),
+                                          inv);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -494,7 +494,7 @@ function(filt, I)
   J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
   UseIsomorphismRelation(I, J);
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
+  return SemigroupIsomorphismByFunctionNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -510,21 +510,21 @@ function(filt, I)
   J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
   UseIsomorphismRelation(I, J);
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
+  return SemigroupIsomorphismByFunctionNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a block bijection semigroup",
 [IsBlockBijectionSemigroup, IsBlockBijectionSemigroup],
 function(filter, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a bipartition semigroup",
 [IsBipartitionSemigroup, IsBipartitionSemigroup],
 function(filter, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
 end);
 
 # TODO(later) could have a method for IsomorphismSemigroup for

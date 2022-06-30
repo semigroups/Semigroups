@@ -2362,9 +2362,8 @@ true
 gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> map := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
-MappingByFunction( <inverse block bijection monoid of degree 3 with 3 
- generators>, <inverse block bijection monoid of degree 3 with 3 generators>
- , function( object ) ... end, function( object ) ... end )
+<inverse block bijection monoid of degree 3 with 3 generators> -> 
+<inverse block bijection monoid of degree 3 with 3 generators>
 
 # Test RandomSemigroup
 gap> S := RandomSemigroup(IsBipartitionSemigroup, 2, 5);;

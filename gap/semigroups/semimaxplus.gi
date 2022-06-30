@@ -252,7 +252,7 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
   [ValueGlobal(_IsXSemigroup), ValueGlobal(_IsXSemigroup)],
   function(filter, S)
-    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+    return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
   end);
 
 od;
@@ -278,10 +278,10 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
     iso2 := IsomorphismSemigroup(filter, threshold, Range(iso1));
     inv2 := InverseGeneralMapping(iso2);
 
-    return MagmaIsomorphismByFunctionsNC(S,
-                                         Range(iso2),
-                                         x -> (x ^ iso1) ^ iso2,
-                                         x -> (x ^ inv2) ^ inv1);
+    return SemigroupIsomorphismByFunctionNC(S,
+                                            Range(iso2),
+                                            x -> (x ^ iso1) ^ iso2,
+                                            x -> (x ^ inv2) ^ inv1);
   end);
 
   InstallMethod(IsomorphismSemigroup,
@@ -296,7 +296,7 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
   [ValueGlobal(_IsXSemigroup), IsPosInt, ValueGlobal(_IsXSemigroup)],
   function(filter, threshold, S)
     if threshold = ThresholdTropicalMatrix(Representative(S)) then
-      return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+      return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
     fi;
     TryNextMethod();
   end);
@@ -318,10 +318,10 @@ function(filter, threshold, period, S)
   iso2 := IsomorphismSemigroup(filter, threshold, period, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -337,7 +337,7 @@ InstallMethod(IsomorphismSemigroup,
 function(filter, threshold, period, S)
   if threshold = ThresholdNTPMatrix(Representative(S))
       and period = PeriodNTPMatrix(Representative(S)) then
-    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+    return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
   fi;
   TryNextMethod();
 end);
@@ -392,10 +392,10 @@ _InstallIsomorphism0 := function(filter)
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
     UseIsomorphismRelation(S, T);
 
-    return MagmaIsomorphismByFunctionsNC(S,
-                                         T,
-                                         map,
-                                         AsTransformation);
+    return SemigroupIsomorphismByFunctionNC(S,
+                                            T,
+                                            map,
+                                            AsTransformation);
   end);
 end;
 
@@ -445,10 +445,10 @@ _InstallIsomorphism1 := function(filter)
     iso2 := IsomorphismMonoid(filter, threshold, Range(iso1));
     inv2 := InverseGeneralMapping(iso2);
 
-    return MagmaIsomorphismByFunctionsNC(S,
-                                         Range(iso2),
-                                         x -> (x ^ iso1) ^ iso2,
-                                         x -> (x ^ inv2) ^ inv1);
+    return SemigroupIsomorphismByFunctionNC(S,
+                                            Range(iso2),
+                                            x -> (x ^ iso1) ^ iso2,
+                                            x -> (x ^ inv2) ^ inv1);
   end);
 
   InstallMethod(IsomorphismMonoid,
@@ -487,10 +487,10 @@ _InstallIsomorphism1 := function(filter)
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
     UseIsomorphismRelation(S, T);
 
-    return MagmaIsomorphismByFunctionsNC(S,
-                                         T,
-                                         map,
-                                         AsTransformation);
+    return SemigroupIsomorphismByFunctionNC(S,
+                                            T,
+                                            map,
+                                            AsTransformation);
   end);
 
   InstallMethod(IsomorphismSemigroup,
@@ -536,10 +536,10 @@ function(filter, threshold, period, S)
   iso2 := IsomorphismMonoid(filter, threshold, period, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 InstallMethod(IsomorphismMonoid,
@@ -578,14 +578,14 @@ function(filt, threshold, period, S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), map));
   UseIsomorphismRelation(S, T);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       x -> AsMatrix(IsNTPMatrix,
-                                                     x,
-                                                     n,
-                                                     threshold,
-                                                     period),
-                                       x -> AsTransformation(x));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          x -> AsMatrix(IsNTPMatrix,
+                                                        x,
+                                                        n,
+                                                        threshold,
+                                                        period),
+                                          x -> AsTransformation(x));
 end);
 
 #############################################################################

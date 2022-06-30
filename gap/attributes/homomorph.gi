@@ -12,10 +12,11 @@
 # This file contains various methods for representing homomorphisms between
 # semigroups
 
-InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and two lists",
+InstallMethod(SemigroupHomomorphismByImages,
+"for two semigroups and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
-  local map, R, rel, original_gens, U;
+  local original_gens, U, map, R, rel;
 
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 3rd argument (a list) must consist of elements ",
@@ -36,9 +37,14 @@ function(S, T, gens, imgs)
   # imgs -> images of original generators
   original_gens := GeneratorsOfSemigroup(S);
   if original_gens <> gens then
-     U := Semigroup(gens);
+    U := Semigroup(gens);
+    # Use MinimalFactorization rather than Factorization because
+    # MinimalFactorization is guaranteed to return a list of positive integers,
+    # but Factorization is not (i.e. if S is an inverse acting semigroup.
+    # Also since we require an IsomorphismFpSemigroup, there's no additional
+    # cost to using MinimalFactorization instead of Factorization.
     imgs := List(original_gens,
-      x -> EvaluateWord(imgs, Factorization(U, x)));
+                 x -> EvaluateWord(imgs, MinimalFactorization(U, x)));
     gens := original_gens;
   fi;
 
@@ -61,11 +67,11 @@ end);
 InstallMethod(SemigroupHomomorphismByImages,
 "for two transformation semigroups and two transformation collections",
 [IsTransformationSemigroup and IsActingSemigroup,
-    IsTransformationSemigroup and IsActingSemigroup,
-    IsTransformationCollection and IsList,
-    IsTransformationCollection and IsList],
+ IsTransformationSemigroup and IsActingSemigroup,
+ IsTransformationCollection and IsList,
+ IsTransformationCollection and IsList],
 function(S, T, gens, imgs)
-  local K, SxT, embS, embT, S1, T1, i, original_gens, U;
+  local original_gens, U, S1, T1, SxT, embS, embT, K, i;
 
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 3rd argument (a list) must consist of elements ",
@@ -87,8 +93,10 @@ function(S, T, gens, imgs)
   original_gens := GeneratorsOfSemigroup(S);
   if original_gens <> gens then
     U := Semigroup(gens, rec(acting := true));
-    imgs := List(original_gens,
-      x -> EvaluateWord(imgs, Factorization(U, x)));
+    # Use Factorization not MinimalFactorization because it might be quicker,
+    # and there's no danger of negative numbers since S and T are both
+    # transformation semigroups.
+    imgs := List(original_gens, x -> EvaluateWord(imgs, Factorization(U, x)));
     gens := original_gens;
   fi;
 
@@ -114,37 +122,32 @@ function(S, T, gens, imgs)
   od;
   K := Semigroup(K, rec(acting := true));
 
-  # todo: stop this loop as soon as K exceeds S in size:
+  # TODO(later) stop this loop as soon as K exceeds S in size:
   if Size(K) <> Size(S) then
     return fail;
-  else
-    return SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
   fi;
+  return SemigroupHomomorphismByImages_NC(S, T, gens, imgs);
 end);
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and one list",
 [IsSemigroup, IsSemigroup, IsList],
 function(S, T, imgs)
-  local gens;
-  gens := GeneratorsOfSemigroup(S);
-  return SemigroupHomomorphismByImages(S, T, gens, imgs);
+  return SemigroupHomomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs);
 end);
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  local gens, imgs;
-  gens := GeneratorsOfSemigroup(S);
-  imgs := GeneratorsOfSemigroup(T);
-  return SemigroupHomomorphismByImages(S, T, gens, imgs);
+  return SemigroupHomomorphismByImages(S,
+                                       T,
+                                       GeneratorsOfSemigroup(S),
+                                       GeneratorsOfSemigroup(T));
 end);
 
 InstallMethod(SemigroupHomomorphismByImages, "for a semigroup and two lists",
 [IsSemigroup, IsList, IsList],
 function(S, gens, imgs)
-  local T;
-  T := Semigroup(imgs);
-  return SemigroupHomomorphismByImages(S, T, gens, imgs);
+  return SemigroupHomomorphismByImages(S, Semigroup(imgs), gens, imgs);
 end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroup and two lists",
@@ -164,8 +167,8 @@ function(S, T, gens, imgs)
   local iso;
   iso := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                                ElementsFamily(FamilyObj(T))),
-                         IsSemigroupHomomorphismByImages and IsBijective),
-                         rec());
+                           IsSemigroupHomomorphismByImages and IsBijective),
+                           rec());
   SetSource(iso, S);
   SetRange(iso, T);
   SetMappingGeneratorsImages(iso, [Immutable(gens), Immutable(imgs)]);
@@ -175,26 +178,22 @@ end);
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroups and one list",
 [IsSemigroup, IsSemigroup, IsList],
 function(S, T, imgs)
-  local gens;
-  gens := GeneratorsOfSemigroup(S);
-  return SemigroupIsomorphismByImages(S, T, gens, imgs);
+  return SemigroupIsomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs);
 end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroups",
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  local gens, imgs;
-  gens := GeneratorsOfSemigroup(S);
-  imgs := GeneratorsOfSemigroup(T);
-  return SemigroupIsomorphismByImages(S, T, gens, imgs);
+  return SemigroupIsomorphismByImages(S,
+                                      T,
+                                      GeneratorsOfSemigroup(S),
+                                      GeneratorsOfSemigroup(T));
 end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for a semigroup and two lists",
 [IsSemigroup, IsList, IsList],
 function(S, gens, imgs)
-  local T;
-  T := Semigroup(imgs);
-  return SemigroupIsomorphismByImages(S, T, gens, imgs);
+  return SemigroupIsomorphismByImages(S, Semigroup(imgs), gens, imgs);
 end);
 
 InstallMethod(SemigroupHomomorphismByImages_NC,
@@ -202,17 +201,6 @@ InstallMethod(SemigroupHomomorphismByImages_NC,
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
   local hom;
-  # if HasGeneratorsOfGroup(Gt;)
-  #    and IsIdenticalObj(GeneratorsOfGroup(G),mapi[1]) then
-  #   Append(obj_args, [PreImagesRange, G]);
-  #   filter := filter and IsTotal and HasPreImagesRange;
-  # fi;
-  #
-  # if HasGeneratorsOfGroup(H)
-  #    and IsIdenticalObj(GeneratorsOfGroup(H),mapi[2]) then
-  #   Append(obj_args, [ImagesSource, H]);
-  #   filter := filter and IsSurjective and HasImagesSource;
-  # fi;
 
   hom := Objectify(NewType(GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                                  ElementsFamily(FamilyObj(T))),
@@ -224,8 +212,8 @@ function(S, T, gens, imgs)
   return hom;
 end);
 
-InstallMethod(SemigroupHomomorphismByFunction,
-"for two semigroups and a function",
+InstallMethod(SemigroupHomomorphismByFunctionNC,
+"for semigroup, semigroup, and function",
 [IsSemigroup, IsSemigroup, IsFunction],
 function(S, T, f)
   local hom;
@@ -237,17 +225,38 @@ function(S, T, f)
   return hom;
 end);
 
+# TODO(Homomorphisms): update the doc for this, and document the NC version
+InstallMethod(SemigroupHomomorphismByFunction,
+"for two semigroups and a function",
+[IsSemigroup, IsSemigroup, IsFunction],
+function(S, T, f)
+  local map;
+  map := MappingByFunction(S, T, f);
+  if not RespectsMultiplication(map) then
+    return fail;
+  fi;
+  SetFilterObj(map, IsSemigroupHomomorphismByFunction);
+  return map;
+end);
+
 InstallMethod(SemigroupIsomorphismByFunction,
 "for two semigroups and two functions",
 [IsSemigroup, IsSemigroup, IsFunction, IsFunction],
 function(S, T, f, g)
-  local hom;
-  hom := SemigroupHomomorphismByFunction(S, T, f);
-  if IsBijective(hom) then
-    return SemigroupIsomorphismByFunctionNC(S, T, f, g);
-  else
+  local map, inv;
+  map := SemigroupHomomorphismByFunction(S, T, f);
+  if map = fail or not IsBijective(map) then
     return fail;
   fi;
+  inv := SemigroupHomomorphismByFunction(T, S, g);
+  if inv = fail or not IsBijective(inv) then
+    return fail;
+  elif CompositionMapping(map, inv)
+      <> SemigroupHomomorphismByFunctionNC(T, T, IdFunc) then
+    return fail;
+  fi;
+
+  return SemigroupIsomorphismByFunctionNC(S, T, f, g);
 end);
 
 InstallMethod(SemigroupIsomorphismByFunctionNC,
@@ -263,6 +272,36 @@ function(S, T, f, g)
   SetSource(iso, S);
   SetRange(iso, T);
   return iso;
+end);
+
+InstallMethod(InverseGeneralMapping,
+"for a semigroup isomorphism by function",
+[IsSemigroupIsomorphismByFunction],
+function(map)
+  local inv;
+  inv := SemigroupIsomorphismByFunctionNC(Range(map),
+                                          Source(map),
+                                          map!.invFun,
+                                          map!.fun);
+  TransferMappingPropertiesToInverse(map, inv);
+  return inv;
+end);
+
+# The next method applies when we create a homomorphism using
+# SemigroupHomomorphismByFunction and so invFun is not available.
+
+InstallMethod(InverseGeneralMapping,
+"for a bijective semigroup homomorphism by function",
+[IsSemigroupHomomorphismByFunction and IsBijective],
+function(map)
+  local inv;
+  inv := SemigroupIsomorphismByFunctionNC(Range(map),
+                                          Source(map),
+                                          x -> First(Source(map),
+                                                     y -> y ^ map = x),
+                                          map!.fun);
+  TransferMappingPropertiesToInverse(map, inv);
+  return inv;
 end);
 
 # methods for converting between SHBI and SHBF
@@ -281,15 +320,17 @@ end);
 InstallMethod(AsSemigroupHomomorphismByFunction,
 "for a semigroup homomorphism by images",
 [IsSemigroupHomomorphismByImages],
-hom -> SemigroupHomomorphismByFunction(Source(hom),
-                      Range(hom), x -> ImageElm(hom, x)));
+hom -> SemigroupHomomorphismByFunctionNC(Source(hom),
+                                         Range(hom),
+                                         x -> ImageElm(hom, x)));
 
 InstallMethod(AsSemigroupIsomorphismByFunction,
 "for a semigroup homomorphism by images",
 [IsSemigroupHomomorphismByImages],
-hom -> SemigroupIsomorphismByFunction(Source(hom),
-                      Range(hom), x -> ImageElm(hom, x),
-                      y -> PreImages(hom, y)));
+hom -> SemigroupIsomorphismByFunctionNC(Source(hom),
+                                        Range(hom),
+                                        x -> ImageElm(hom, x),
+                                        y -> PreImages(hom, y)));
 
 # Methods for SHBI/SIBI/SHBF
 InstallMethod(IsSurjective, "for a semigroup homomorphism",
@@ -306,22 +347,28 @@ end);
 
 InstallMethod(ImagesSet, "for a semigroup homom. and list of elements",
 [IsSemigroupHomomorphismByImagesOrFunction, IsList],
-    {hom, elms} -> List(elms, x -> ImageElm(hom, x)));
+{hom, elms} -> List(elms, x -> ImageElm(hom, x)));
 
 InstallMethod(ImageElm, "for a semigroup homom. by images and element",
 [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
 function(hom, x)
   if not x in Source(hom) then
     ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
-    "of the source of the 1st argument (semigroup homom. by images)");
+                  "of the source of the 1st argument (semigroup homom. by ",
+                  "images)");
   fi;
+  # Use MinimalFactorization rather than Factorization because
+  # MinimalFactorization is guaranteed to return a list of positive integers,
+  # but Factorization is not (i.e. if S is an inverse acting semigroup.
+  # Also since we require an IsomorphismFpSemigroup, there's no additional
+  # cost to using MinimalFactorization instead of Factorization.
   return EvaluateWord(MappingGeneratorsImages(hom)[2],
-                      Factorization(Source(hom), x));
+                      MinimalFactorization(Source(hom), x));
 end);
 
 InstallMethod(ImagesSource, "for SHBI",
 [IsSemigroupHomomorphismByImages],
-    hom -> Semigroup(MappingGeneratorsImages(hom)[2]));
+hom -> Semigroup(MappingGeneratorsImages(hom)[2]));
 
 InstallMethod(PreImagesRepresentative,
 "for a semigroup homom. by images and an element in the range",
@@ -329,17 +376,39 @@ InstallMethod(PreImagesRepresentative,
 function(hom, x)
   if not x in Range(hom) then
     ErrorNoReturn("the 2nd argument is not an element of the range of the ",
-    "1st argument (semigroup homom. by images)");
+                  "1st argument (semigroup homom. by images)");
   elif not x in ImagesSource(hom) then
     return fail;
   fi;
+  # Use MinimalFactorization rather than Factorization because
+  # MinimalFactorization is guaranteed to return a list of positive integers,
+  # but Factorization is not (i.e. if S is an inverse acting semigroup.
+  # Also since we require an IsomorphismFpSemigroup, there's no additional
+  # cost to using MinimalFactorization instead of Factorization.
   return EvaluateWord(MappingGeneratorsImages(hom)[1],
-                      Factorization(ImagesSource(hom), x));
+                      MinimalFactorization(ImagesSource(hom), x));
+end);
+
+InstallMethod(ImagesRepresentative,
+"for a semigroup homom. by images and an element in the source",
+[IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
+function(hom, x)
+  if not x in Source(hom) then
+    ErrorNoReturn("the 2nd argument is not an element of the source of the ",
+                  "1st argument (semigroup homom. by images)");
+  fi;
+  # Use MinimalFactorization rather than Factorization because
+  # MinimalFactorization is guaranteed to return a list of positive integers,
+  # but Factorization is not (i.e. if S is an inverse acting semigroup.
+  # Also since we require an IsomorphismFpSemigroup, there's no additional
+  # cost to using MinimalFactorization instead of Factorization.
+  return EvaluateWord(MappingGeneratorsImages(hom)[2],
+                      MinimalFactorization(Source(hom), x));
 end);
 
 InstallMethod(ImagesElm, "for a semigroup homom. by images and an element",
 [IsSemigroupHomomorphismByImages, IsMultiplicativeElement],
-    {hom, x} -> [ImageElm(hom, x)]);
+{hom, x} -> [ImageElm(hom, x)]);
 
 InstallMethod(PreImagesElm,
 "for a semigroup homom. by images and an element in the range",
@@ -362,29 +431,14 @@ function(hom, x)
   return preim;
 end);
 
-InstallMethod(PreImagesSet,
-"for a semigroup homom. by images and a set of elements in the range",
-[IsSemigroupHomomorphismByImages, IsList],
-function(hom, elms)
-  local y, preim;
-  if not IsSubsetSet(AsList(Range(hom)), elms) then
-    ErrorNoReturn("the 2nd argument is not a subset of the range of the ",
-                  "1st argument (semigroup homom. by images)");
-  elif not IsSubsetSet(AsList(ImagesSource(hom)), elms) then
-    ErrorNoReturn("the 2nd argument is not a subset of the image of the ",
-                  "source of the 1st argument (semigroup homom. by images)");
-  fi;
-  preim := [];
-  for y in elms do
-    Append(preim, PreImagesElm(hom, y));
-  od;
-  return preim;
-end);
-
 InstallMethod(KernelOfSemigroupHomomorphism, "for a semigroup homomorphism",
 [IsSemigroupHomomorphismByImagesOrFunction],
 function(hom)
   local S, cong, enum, x, y, pairs, i, j;
+
+  if IsQuotientSemigroup(Range(hom)) then
+    return QuotientSemigroupCongruence(Range(hom));
+  fi;
 
   S := Source(hom);
   if IsBijective(hom) then
@@ -418,10 +472,19 @@ InstallMethod(String, "for a semigroup homom. by images",
 [IsSemigroupHomomorphismByImages],
 function(hom)
   local mapi;
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   mapi := MappingGeneratorsImages(hom);
   return Concatenation("SemigroupHomomorphismByImages( ",
-          String(Source(hom)), ", ", String(Range(hom)), ", ",
-          String(mapi[1]), ", ", String(mapi[2]), " )");
+                       String(Source(hom)),
+                       ", ",
+                       String(Range(hom)),
+                       ", ",
+                       String(mapi[1]),
+                       ", ",
+                       String(mapi[2]),
+                       " )");
 end);
 
 InstallMethod(PrintObj, "for a semigroup homom. by images",
@@ -435,10 +498,19 @@ InstallMethod(String, "for a semigroup isom. by images",
 [IsSemigroupHomomorphismByImages and IsBijective],
 function(iso)
   local mapi;
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   mapi := MappingGeneratorsImages(iso);
   return Concatenation("SemigroupIsomorphismByImages( ",
-          String(Source(iso)), ", ", String(Range(iso)), ", ",
-          String(mapi[1]), ", ", String(mapi[2]), " )");
+                       String(Source(iso)),
+                       ", ",
+                       String(Range(iso)),
+                       ", ",
+                       String(mapi[1]),
+                       ", ",
+                       String(mapi[2]),
+                       " )");
 end);
 
 InstallMethod(\=, "compare homom. by images", IsIdenticalObj,
@@ -459,6 +531,9 @@ InstallMethod(ViewObj, "for SHBI/SHBF",
 [IsSemigroupHomomorphismByImagesOrFunction],
 2,  # to beat method for mapping by function with inverse
 function(hom)
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   Print("\>");
   ViewObj(Source(hom));
   Print("\< \>->\< \>");
@@ -469,14 +544,24 @@ end);
 InstallMethod(String, "for a semigroup homom. by function",
 [IsSemigroupHomomorphismByFunction],
 function(hom)
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   return Concatenation("SemigroupHomomorphismByFunction( ",
-          String(Source(hom)), ", ", String(Range(hom)), ", ",
-          String(hom!.fun), " )");
+                       String(Source(hom)),
+                       ", ",
+                       String(Range(hom)),
+                       ", ",
+                       String(hom!.fun),
+                       " )");
 end);
 
 InstallMethod(PrintObj, "for a semigroup homom. by function",
 [IsSemigroupHomomorphismByFunction],
 function(hom)
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   Print(String(hom));
   return;
 end);
@@ -484,15 +569,26 @@ end);
 InstallMethod(String, "for a semigroup isom. by function",
 [IsSemigroupIsomorphismByFunction],
 function(iso)
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   return Concatenation("SemigroupIsomorphismByFunction( ",
-          String(Source(iso)), ", ", String(Range(iso)), ", ",
-          String(iso!.fun), ", ",
-          String(iso!.invFun), " )");
+                       String(Source(iso)),
+                       ", ",
+                       String(Range(iso)),
+                       ", ",
+                       String(iso!.fun),
+                       ", ",
+                       String(iso!.invFun),
+                       " )");
 end);
 
 InstallMethod(PrintObj, "for a semigroup isom. by function",
 [IsSemigroupIsomorphismByFunction],
 function(iso)
+  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   Print(String(iso));
   return;
 end);

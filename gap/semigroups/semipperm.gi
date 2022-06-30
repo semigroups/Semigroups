@@ -107,10 +107,10 @@ function(S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), AsPartialPerm));
   UseIsomorphismRelation(S, T);
   n := DegreeOfBipartitionSemigroup(S);
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       AsPartialPerm,
-                                       x -> AsBipartition(x, n));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          AsPartialPerm,
+                                          x -> AsBipartition(x, n));
 end);
 
 InstallMethod(IsomorphismPartialPermSemigroup,
@@ -130,10 +130,10 @@ function(S)
   UseIsomorphismRelation(S, T);
   n := DegreeOfBipartitionSemigroup(S);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       T,
-                                       AsPartialPerm,
-                                       x -> AsBipartition(x, n));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          T,
+                                          AsPartialPerm,
+                                          x -> AsBipartition(x, n));
 end);
 
 InstallMethod(IsomorphismPartialPermSemigroup, "for a semigroup ideal",
@@ -146,7 +146,7 @@ function(I)
   J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
   UseIsomorphismRelation(I, J);
 
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
+  return SemigroupIsomorphismByFunctionNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 InstallMethod(IsomorphismPartialPermSemigroup, "for a group as semigroup",
@@ -155,7 +155,7 @@ function(G)
   local perm_iso, perm_inv, perm_grp, pperm_iso, pperm_inv;
 
   if IsPartialPermSemigroup(G) then
-    return MagmaIsomorphismByFunctionsNC(G, G, IdFunc, IdFunc);
+    TryNextMethod();
   fi;
 
   perm_iso := IsomorphismPermGroup(G);
@@ -166,9 +166,10 @@ function(G)
                                 # HasGensOfGp
   pperm_iso := IsomorphismPartialPermSemigroup(perm_grp);
   pperm_inv := InverseGeneralMapping(pperm_iso);
-  return MagmaIsomorphismByFunctionsNC(G, Range(pperm_iso),
-                                       x -> (x ^ perm_iso) ^ pperm_iso,
-                                       x -> (x ^ pperm_inv) ^ perm_inv);
+  return SemigroupIsomorphismByFunctionNC(G,
+                                          Range(pperm_iso),
+                                          x -> (x ^ perm_iso) ^ pperm_iso,
+                                          x -> (x ^ pperm_inv) ^ perm_inv);
 end);
 
 InstallMethod(IsomorphismPartialPermSemigroup,
@@ -199,7 +200,7 @@ function(S)
       return one;
     end;
     T := SymmetricInverseSemigroup(1);
-    return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+    return SemigroupIsomorphismByFunctionNC(S, T, iso, inv);
   fi;
 
   iso_pp := IsomorphismPartialPermSemigroup(grp);
@@ -221,8 +222,47 @@ function(S)
     return (x ^ inv_pp) ^ inj_zm;
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, iso, inv);
 end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupHomomorphismByFunction here but
+# MagmaIsomorphismByFunctionNC in the GAP library.
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local set, iso, gens, T;
+
+  if not IsInverseSemigroup(S) then
+    ErrorNoReturn("the argument must be an inverse semigroup");
+  fi;
+
+  set := AsSet(S);
+
+  iso := function(x)
+    local dom;
+    dom := Set(set * InversesOfSemigroupElement(S, x)[1]);
+    return PartialPermNC(List(dom, y -> Position(set, y)),
+                         List(List(dom, y -> y * x),
+                              y -> Position(set, y)));
+  end;
+
+  gens := GeneratorsOfSemigroup(S);
+
+  T := InverseSemigroup(List(gens, iso));
+  UseIsomorphismRelation(S, T);
+
+  return SemigroupHomomorphismByFunctionNC(S, T, iso);
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library.
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+S -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup with inverse op",
@@ -343,7 +383,7 @@ function(S)
   map := x -> EvaluateWord(newgens, Factorization(S, x));
   inv := x -> EvaluateWord(oldgens, Factorization(T, x));
 
-  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+  return SemigroupIsomorphismByFunctionNC(S, T, map, inv);
 end);
 
 #############################################################################
@@ -399,10 +439,10 @@ function(S)
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
 
-  iso := MagmaIsomorphismByFunctionsNC(U,
-                                       G,
-                                       x -> x ^ map,
-                                       x -> x ^ inv);
+  iso := SemigroupIsomorphismByFunctionNC(U,
+                                          G,
+                                          x -> x ^ map,
+                                          x -> x ^ inv);
   SetIsomorphismPermGroup(U, iso);
 
   return U;

@@ -444,9 +444,11 @@ function(D, i)
 
   if IsBound(info.iso) then
     map := x -> info.embedding(x ^ info.iso[i], i);
-    map := MappingByFunction(info.factors[i], D, map);
+    map := SemigroupHomomorphismByFunctionNC(info.factors[i], D, map);
   else
-    map := MappingByFunction(info.factors[i], D, x -> info.embedding(x, i));
+    map := SemigroupHomomorphismByFunctionNC(info.factors[i],
+                                             D,
+                                             x -> info.embedding(x, i));
   fi;
   info.embeddings[i] := map;
   return map;
@@ -474,9 +476,11 @@ function(D, i)
 
   if IsBound(info.iso) then
     map := x -> info.projection(x, i) ^ InverseGeneralMapping(info.iso[i]);
-    map := MappingByFunction(D, info.factors[i], map);
+    map := SemigroupHomomorphismByFunctionNC(D, info.factors[i], map);
   else
-    map := MappingByFunction(D, info.factors[i], x -> info.projection(x, i));
+    map := SemigroupHomomorphismByFunctionNC(D,
+                                             info.factors[i],
+                                             x -> info.projection(x, i));
   fi;
   info.projections[i] := map;
   return map;

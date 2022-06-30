@@ -100,7 +100,7 @@ function(S)
                         List(w, x -> gen2[x]));
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, G, iso, inv);
+  return SemigroupIsomorphismByFunctionNC(S, G, iso, inv);
 end);
 
 InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
@@ -118,10 +118,10 @@ function(S)
 
   dom := DomainOfPartialPermCollection(S);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       G,
-                                       AsPermutation,
-                                       x -> AsPartialPerm(x, dom));
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          G,
+                                          AsPermutation,
+                                          x -> AsPartialPerm(x, dom));
 end);
 
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
@@ -138,7 +138,7 @@ function(S)
   UseIsomorphismRelation(S, G);
   id := MultiplicativeNeutralElement(S);
 
-  return MagmaIsomorphismByFunctionsNC(S,
+  return SemigroupIsomorphismByFunctionNC(S,
                                        G,
                                        PermutationOfImage,
                                        x -> id * x);
@@ -154,7 +154,7 @@ function(S)
   UseIsomorphismRelation(S, G);
   deg := DegreeOfBipartitionSemigroup(S);
 
-  return MagmaIsomorphismByFunctionsNC(S,
+  return SemigroupIsomorphismByFunctionNC(S,
                                        G,
                                        AsPermutation,
                                        x -> AsBipartition(x, deg));
@@ -172,7 +172,7 @@ function(S)
   fi;
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
   inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S,
+  return SemigroupIsomorphismByFunctionNC(S,
                                        Range(iso),
                                        x -> x ^ iso,
                                        x -> x ^ inv);
