@@ -121,8 +121,8 @@ gap> PreImagesElm(hom, 2);
 Error, the 2nd argument is not an element of the range of the 1st argument (se\
 migroup homom. by images)
 gap> PreImagesSet(hom, [2]);
-Error, the 2nd argument is not a subset of the range of the 1st argument (semi\
-group homom. by images)
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PreImagesSet' on 2 arguments
 gap> IsSurjective(hom);
 true
 gap> IsInjective(hom);
@@ -210,18 +210,15 @@ gap> BruteForceIsoCheck(iso);
 true
 gap> BruteForceInverseCheck(iso);
 true
-gap> s := Representative(MaximalDClasses(S)[1]);;
-gap> t := Representative(MaximalDClasses(T)[1]);;
-gap> SS := Semigroup(s);;
-gap> TT := Semigroup(t);;
-gap> map := x -> t ^ Length(Factorization(SS, x));;
-gap> inv := x -> s ^ Length(Factorization(TT, x));;
+gap> map := x -> T.1 ^ Length(Factorization(S, x));;
+gap> inv := x -> S.1 ^ Length(Factorization(T, x));;
 gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);;
 gap> Print(iso, "\n");
 SemigroupIsomorphismByFunction( Semigroup( [ Transformation( [ 2, 1, 2, 3, 4 ]\
  ) ] ), Semigroup( [ Bipartition([ [ 1, -2 ], [ 2, -1 ], [ 3, 4, -3, -6 ], [ 5\
-, -4 ], [ 6, -5 ] ]) ] ), function ( x ) return t ^ Length( Factorization( SS,\
- x ) ); end, function ( x ) return s ^ Length( Factorization( TT, x ) ); end )
+, -4 ], [ 6, -5 ] ]) ] ), function ( x ) return T.1 ^ Length( Factorization( S\
+, x ) ); end, function ( x ) return S.1 ^ Length( Factorization( T, x ) ); end\
+ )
 gap> EvalString(String(iso)) = iso;
 true
 
@@ -490,8 +487,8 @@ gap> PreImagesSet(hom, [imgs[1]]);
   Transformation( [ 3, 3, 1 ] ), Transformation( [ 3, 3, 2 ] ), 
   Transformation( [ 3, 3, 3 ] ) ]
 gap> PreImagesSet(hom, [Transformation([3, 3, 4, 3])]);
-Error, the 2nd argument is not a subset of the image of the source of the 1st \
-argument (semigroup homom. by images)
+Error, the 2nd argument is not mapped to by the 1st argument (semigroup homom.\
+ by images)
 gap> PreImage(hom);
 <full transformation monoid of degree 3>
 
@@ -827,13 +824,13 @@ gap> g := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> h := Semigroup([(1, 2, 3), (1, 2)]);;
 gap> hom := SemigroupHomomorphismByFunction(g, h,
 > function(x) if SignPerm(x) = -1 then return (1, 2); else return ();fi;end);
-<semigroup with 2 generators> -> <semigroup with 2 generators>
+<semigroup of size 24, with 2 generators> -> 
+<semigroup of size 6, with 2 generators>
 gap> ImagesSource(hom);
 [ (), (1,2) ]
 gap> Image(hom, (1, 2, 3, 4));
 (1,2)
-gap> hom := SemigroupIsomorphismByFunction(g, h,            
-> function(x) return ();end, function(x) return (x);end); 
+gap> hom := SemigroupIsomorphismByFunction(g, h, x -> (), IdFunc);
 fail
 
 # Test with quotient semigroup, but this time SHBF
@@ -844,13 +841,14 @@ gap> cong := congs[4];;
 gap> T := S / cong;;
 gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := List(gens, gen -> EquivalenceClassOfElement(cong, gen));;
-gap> hom1 := SemigroupHomomorphismByFunction(S, T, x -> EquivalenceClassOfElement(cong, x));;
+gap> hom1 := SemigroupHomomorphismByFunctionNC(S, T, x ->
+> EquivalenceClassOfElement(cong, x));;
 gap> BruteForceHomoCheck(hom1);
 true
 gap> KernelOfSemigroupHomomorphism(hom1);
 <2-sided semigroup congruence over <transformation semigroup of size 59, 
  degree 5 with 3 generators> with 1 generating pairs>
-gap> gens[1] ^ hom1 = imgs[1];              
+gap> gens[1] ^ hom1 = imgs[1];
 true
 gap> ImageElm(hom1, gens[1]) = imgs[1];
 true
@@ -977,5 +975,111 @@ gap> T := Semigroup(FullTransformationMonoid(1), rec(acting := true));;
 gap> hom := SemigroupHomomorphismByImages(S, T, GeneratorsOfSemigroup(S), List(GeneratorsOfSemigroup(S), x -> T.1));
 <transformation monoid of size 387420489, degree 9 with 3 generators> -> 
 <trivial transformation group of degree 0 with 1 generator>
+
+# Test for IsGeneratorsOfInverseSemigroup
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 1, 3);
+<transformation group of size 3, degree 3 with 1 generator>
+gap> T := InverseSemigroup(MonogenicSemigroup(IsPartialPermSemigroup, 1, 3));
+<partial perm group of rank 3 with 1 generator>
+gap> hom := SemigroupHomomorphismByImages(S, T, [S.1 ^ 2], [T.1]);
+<transformation group of size 3, degree 3 with 1 generator> -> 
+<partial perm group of rank 3 with 1 generator>
+
+# SemigroupIsomorphismByImages non-bijective homom.
+gap> S := FullTransformationMonoid(3);;
+gap> T := FullTransformationSemigroup(2);;
+gap> SemigroupIsomorphismByImages(S, T, GeneratorsOfSemigroup(S), 
+> List([1 .. 4], x -> ConstantTransformation(2, 1)));
+fail
+gap> SemigroupIsomorphismByImagesNC(S, T, GeneratorsOfSemigroup(S), 
+> List([1 .. 4], x -> ConstantTransformation(2, 1)));
+<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 2>
+
+# SemigroupHomomorphismByFunction non-homomorphism
+gap> S := FullTransformationMonoid(3);;
+gap> T := FullTransformationSemigroup(3);;
+gap> SemigroupHomomorphismByFunction(S, T, x -> AsTransformation((1, 2, 3)));
+fail
+
+# SemigroupIsomorphismByFunction inverse not a homomorphism
+gap> S := FullTransformationMonoid(3);;
+gap> T := FullTransformationSemigroup(3);;
+gap> SemigroupIsomorphismByFunction(S, 
+>                                   T,
+>                                   x -> x, 
+>                                   x -> AsTransformation((1, 2, 3)));
+fail
+
+# SemigroupIsomorphismByFunction inverse not inverse
+gap> S := FullTransformationMonoid(3);;
+gap> T := FullTransformationSemigroup(3);;
+gap> SemigroupIsomorphismByFunction(S, 
+>                                   T,
+>                                   x -> x, 
+>                                   x -> x ^ (1, 2));
+fail
+gap> S := FullTransformationMonoid(3);;
+gap> T := FullTransformationSemigroup(3);;
+gap> SemigroupIsomorphismByFunction(S, 
+>                                   T,
+>                                   x -> x ^ (1, 2), 
+>                                   x -> x);
+fail
+
+# InverseGeneralMapping for a semigroup homomorphism that happens to be an
+# isomorphism
+gap> S := Semigroup(PBR([[-2], [-2]], [[], [1, 2]]));
+<commutative pbr semigroup of degree 2 with 1 generator>
+gap> map := IsomorphismPartialPermSemigroup(S);
+<trivial pbr group of degree 2 with 1 generator> -> 
+<trivial partial perm group of rank 1 with 1 generator>
+gap> IsBijective(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+# ImagesRepresentative for semigroups homomorphism by images
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 1, 3);
+<transformation group of size 3, degree 3 with 1 generator>
+gap> T := InverseSemigroup(MonogenicSemigroup(IsPartialPermSemigroup, 1, 3));
+<partial perm group of rank 3 with 1 generator>
+gap> hom := SemigroupHomomorphismByImages(S, T, [S.1 ^ 2], [T.1]);
+<transformation group of size 3, degree 3 with 1 generator> -> 
+<partial perm group of rank 3 with 1 generator>
+gap> ImagesRepresentative(hom, S.1);
+(1,3,2)
+gap> ImagesRepresentative(hom, ConstantTransformation(3, 1));
+Error, the 2nd argument is not an element of the source of the 1st argument (s\
+emigroup homom. by images)
+
+# KernelOfSemigroupHomomorphism for non-quotient semigroup
+gap> S := Semigroup(Transformation([2, 1, 5, 1, 5]),
+>                   Transformation([1, 1, 1, 5, 3]), 
+>                   Transformation([2, 5, 3, 5, 3]));;
+gap> cong := SemigroupCongruence(S, 
+> [[Transformation([1, 1, 1, 1, 1]), Transformation([1, 1, 1, 3, 3])]]);
+<2-sided semigroup congruence over <transformation semigroup of degree 5 with 
+ 3 generators> with 1 generating pairs>
+gap> T := AsSemigroup(IsTransformationSemigroup, S / cong);;
+gap> hom := SemigroupHomomorphismByImages(S, T);;
+gap> KernelOfSemigroupHomomorphism(hom);
+<2-sided semigroup congruence over <transformation semigroup of size 59, 
+ degree 5 with 3 generators> with 1 generating pairs>
+gap> KernelOfSemigroupHomomorphism(hom) = cong;
+true
+
+# Equality for semigroup homomorphisms
+gap> S := Semigroup(Transformation([2, 1, 5, 1, 5]),
+>                   Transformation([1, 1, 1, 5, 3]), 
+>                   Transformation([2, 5, 3, 5, 3]));;
+gap> hom1 := SemigroupHomomorphismByImages(S, S, GeneratorsOfSemigroup(S), 
+> List(GeneratorsOfSemigroup(S), x -> Idempotents(S)[1]));;
+gap> hom2 := SemigroupHomomorphismByImages(S, S, GeneratorsOfSemigroup(S), 
+> List(GeneratorsOfSemigroup(S), x -> Idempotents(S)[2]));;
+gap> hom1 = hom2;
+false
+
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attributes/homomorph.tst");

@@ -92,7 +92,7 @@ function(S)
   return EnumeratorByFunctions(S, enum);
 end);
 
-# TODO EnumeratorSorted
+# TODO(later) EnumeratorSorted
 
 InstallMethod(AsSSortedList, "for an fp semigroup with nice monomorphism",
 [IsFpSemigroup and HasNiceMonomorphism],
@@ -331,8 +331,6 @@ function(filt, S)
 end);
 
 # same method for ideals
-# We do not add CanUseFroidurePin to the filters below because FpSemigroups
-# only satisfy this if they are finite and they know it.
 
 InstallMethod(IsomorphismFpSemigroup,
 "for a semigroup with CanUseFroidurePin",
@@ -355,7 +353,7 @@ function(S)
 
   map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
-  result := MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
+  result := SemigroupIsomorphismByFunctionNC(S, Q, map, inv);
   if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)
       or IsBipartitionSemigroup(S) then
     SetNiceMonomorphism(Q, InverseGeneralMapping(result));
@@ -364,9 +362,6 @@ function(S)
 end);
 
 # same method for ideals
-
-# We do not add CanUseFroidurePin to the filters below because FpSemigroups
-# only satisfy this if they are finite and they know it.
 
 InstallMethod(IsomorphismFpMonoid, "for a semigroup with CanUseFroidurePin",
 [CanUseFroidurePin],
@@ -486,7 +481,7 @@ function(S)
     return MultiplicativeNeutralElement(S);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
+  return SemigroupIsomorphismByFunctionNC(S, Q, map, inv);
 end);
 
 InstallMethod(AssignGeneratorVariables, "for a free semigroup",
@@ -531,14 +526,149 @@ function(G)
   iso2 := IsomorphismFpSemigroup(Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(G,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(G,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
-InstallMethod(IsomorphismFpMonoid, "for a group",
-[IsGroup],
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library; comments are also removed
+# and other superficial changes to adhere to Semigroups package conventions.
+
+InstallMethod(IsomorphismFpSemigroup, "for an fp group", [IsFpGroup],
+function(G)
+  local freegp, gensfreegp, freesmg, gensfreesmg, idgen, newrels, rels, smgrel,
+  semi, gens, isomfun, id, invfun, i, rel;
+
+  freegp := FreeGroupOfFpGroup(G);
+
+  gensfreegp := List(GeneratorsOfSemigroup(freegp), String);
+  freesmg := FreeSemigroup(gensfreegp{[1 .. Length(gensfreegp)]});
+
+  gensfreesmg := GeneratorsOfSemigroup(freesmg);
+  idgen := gensfreesmg[1];
+
+  newrels := [[idgen * idgen, idgen]];
+  for i in [2 .. Length(gensfreesmg)] do
+    Add(newrels, [idgen * gensfreesmg[i], gensfreesmg[i]]);
+    Add(newrels, [gensfreesmg[i] * idgen, gensfreesmg[i]]);
+  od;
+
+  # then relations gens * gens ^ -1 = idgen (and the other way around)
+  for i in [2 .. Length(gensfreesmg)] do
+    if IsOddInt(i) then
+      Add(newrels, [gensfreesmg[i] * gensfreesmg[i - 1], idgen]);
+    else
+      Add(newrels, [gensfreesmg[i] * gensfreesmg[i + 1], idgen]);
+    fi;
+  od;
+
+  rels := RelatorsOfFpGroup(G);
+  for rel in rels do
+     smgrel := [Gpword2MSword(idgen, rel, 1), idgen];
+     Add(newrels, smgrel);
+  od;
+
+  # finally create the fp semigroup
+  semi := FactorFreeSemigroupByRelations(freesmg, newrels);
+  gens := GeneratorsOfSemigroup(semi);
+
+  isomfun := x -> ElementOfFpSemigroup(FamilyObj(gens[1]),
+                  Gpword2MSword(idgen, UnderlyingElement(x), 1));
+
+  id := One(freegp);
+  invfun := x -> ElementOfFpGroup(FamilyObj(One(G)),
+              MSword2gpword(id, UnderlyingElement(x), 1));
+
+  return SemigroupIsomorphismByFunctionNC(G, semi, isomfun, invfun);
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library; comments are also removed
+# and other superficial changes to adhere to Semigroups package conventions.
+
+InstallMethod(IsomorphismFpMonoid, "for an fp group", [IsFpGroup],
+function(G)
+  local freegp, gens, mongens, s, t, p, freemon, gensmon, id, newrels, rels, w,
+  monrel, mon, monfam, isomfun, idg, invfun, hom, i, j, rel;
+
+  freegp := FreeGroupOfFpGroup(G);
+  gens := GeneratorsOfGroup(G);
+
+  mongens := [];
+  for i in gens do
+    s := String(i);
+    Add(mongens, s);
+    if ForAll(s, x -> x in CHARS_UALPHA or x in CHARS_LALPHA) then
+      # inverse: change casification
+      t := "";
+      for j in [1 .. Length(s)] do
+        p := Position(CHARS_LALPHA, s[j]);
+        if p <> fail then
+          Add(t, CHARS_UALPHA[p]);
+        else
+          p := Position(CHARS_UALPHA, s[j]);
+          Add(t, CHARS_LALPHA[p]);
+        fi;
+      od;
+      s := t;
+    else
+      s := Concatenation(s, "^-1");
+    fi;
+    Add(mongens, s);
+  od;
+
+  freemon := FreeMonoid(mongens);
+  gensmon := GeneratorsOfMonoid(freemon);
+  id := Identity(freemon);
+  newrels := [];
+  # inverse relators
+  for i in [1 .. Length(gens)] do
+    Add(newrels, [gensmon[2 * i - 1] * gensmon[2 * i], id]);
+    Add(newrels, [gensmon[2 * i] * gensmon[2 * i - 1], id]);
+  od;
+
+  rels := ValueOption("relations");
+  if rels = fail then
+    rels := RelatorsOfFpGroup(G);
+    for rel in rels do
+      w := rel;
+      w := GroupwordToMonword(id, w);
+      monrel := [w, id];
+      Add(newrels, monrel);
+    od;
+  else
+    if not ForAll(Flat(rels), x -> x in FreeGroupOfFpGroup(G)) then
+      Info(InfoFpGroup, 1, "Converting relation words into free group");
+      rels := List(rels, i -> List(i, UnderlyingElement));
+    fi;
+    for rel in rels do
+      Add(newrels, List(rel, x -> GroupwordToMonword(id, x)));
+    od;
+  fi;
+
+  mon := FactorFreeMonoidByRelations(freemon, newrels);
+  gens := GeneratorsOfMonoid(mon);
+  monfam := FamilyObj(Representative(mon));
+
+  isomfun := x -> ElementOfFpMonoid(monfam,
+                  GroupwordToMonword(id, UnderlyingElement(x)));
+
+  idg := One(freegp);
+  invfun := x -> ElementOfFpGroup(FamilyObj(One(G)),
+     MonwordToGroupword(idg, UnderlyingElement(x)));
+  hom := SemigroupIsomorphismByFunctionNC(G, mon, isomfun, invfun);
+  hom!.type := 1;
+  if not HasIsomorphismFpMonoid(G) then
+    SetIsomorphismFpMonoid(G, hom);
+  fi;
+  return hom;
+end);
+
+InstallMethod(IsomorphismFpMonoid, "for a group", [IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
   # The next clause shouldn't be required, but for some reason in GAP 4.10 the
@@ -554,10 +684,10 @@ function(G)
   iso2 := IsomorphismFpMonoid(Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(G,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(G,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end);
 
 SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
@@ -717,7 +847,7 @@ function(M)
   inv := x -> EvaluateWord(GeneratorsOfSemigroup(T),
                            SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
 
-  return MagmaIsomorphismByFunctionsNC(M, MF, map, inv);
+  return SemigroupIsomorphismByFunctionNC(M, MF, map, inv);
 end);
 
 InstallMethod(ParseRelations,

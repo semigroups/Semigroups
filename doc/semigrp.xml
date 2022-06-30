@@ -63,41 +63,34 @@ gap> S := Semigroup([
 >   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
- generators>, <transformation semigroup of size 11, degree 12 with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<transformation semigroup of size 11, degree 12 with 2 generators>
 gap> IsomorphismSemigroup(IsBooleanMatSemigroup, S);
-MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
- generators>, <semigroup of size 11, 12x12 boolean matrices with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<semigroup of size 11, 12x12 boolean matrices with 2 generators>
 gap> IsomorphismSemigroup(IsFpSemigroup, S);
-MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
- generators>
- , <fp semigroup with 2 generators and 5 relations>, function( x ) ...\
- end, function( x ) ... end )
+<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<fp semigroup with 2 generators and 5 relations>
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 6, 8, 10],
 >             [2, 6, 7, 9, 1, 5]),
 > PartialPerm([1, 2, 3, 4, 6, 7, 8, 10],
 >             [3, 8, 1, 9, 4, 10, 5, 6])]);;
 gap> IsomorphismSemigroup(IsBipartitionSemigroup, S);
-MappingByFunction( <inverse partial perm semigroup of rank 10 with 2 
- generators>, <inverse bipartition semigroup of degree 10 with 2 
- generators>, function( x ) ... end, <Operation "AsPartialPerm"> )
+<inverse partial perm semigroup of rank 10 with 2 generators> -> 
+<inverse bipartition semigroup of degree 10 with 2 generators>
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
-MappingByFunction( <symmetric inverse monoid of degree 4>, 
+<symmetric inverse monoid of degree 4> -> 
 <inverse block bijection monoid of degree 5 with 3 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> Size(Range(last));
 209
 gap> S := Semigroup([
 > PartialPerm([3, 1]), PartialPerm([1, 3, 4])]);;
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
-MappingByFunction( <partial perm semigroup of rank 3 with 2 
- generators>, <block bijection semigroup of degree 5 with 2 
- generators>, function( x ) ... end, function( x ) ... end )]]></Example>
+<partial perm semigroup of rank 3 with 2 generators> -> 
+<block bijection semigroup of degree 5 with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -206,18 +199,14 @@ gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 >                   Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));
 <transformation semigroup of degree 10 with 2 generators>
 gap> IsomorphismMonoid(IsTransformationMonoid, S);
-MappingByFunction( <transformation semigroup of degree 10 with 2 
- generators>, <transformation monoid of degree 8 with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+<transformation semigroup of degree 10 with 2 generators> -> 
+<transformation monoid of degree 8 with 2 generators>
 gap> IsomorphismMonoid(IsBooleanMatMonoid, S);
-MappingByFunction( <transformation semigroup of degree 10 with 2 
- generators>, <monoid of 8x8 boolean matrices with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+<transformation semigroup of degree 10 with 2 generators> -> 
+<monoid of 8x8 boolean matrices with 2 generators>
 gap> IsomorphismMonoid(IsFpMonoid, S);
-MappingByFunction( <transformation semigroup of degree 10 with 2 
- generators>
- , <fp monoid with 2 generators and 17 relations>, function( x ) ... e\
-nd, function( x ) ... end )]]></Example>
+<transformation semigroup of degree 10 with 2 generators> -> 
+<fp monoid with 2 generators and 17 relations>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

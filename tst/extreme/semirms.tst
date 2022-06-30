@@ -472,9 +472,8 @@ true
 gap> List(U, IsMonoidAsSemigroup);
 [ false, false, false, false, false, false ]
 gap> IsomorphismTransformationSemigroup(R);
-MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, <commutative transformation monoid of size 2, degree 2 
- with 1 generator>, function( x ) ... end, function( x ) ... end )
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators> -> 
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
 gap> IsOrthodoxSemigroup(R);
 true
 gap> IsOrthodoxSemigroup(V);
@@ -509,9 +508,8 @@ false
 gap> IsSimpleSemigroup(R);
 true
 gap> f := IsomorphismReesMatrixSemigroup(R); g := InverseGeneralMapping(f);;
-MappingByFunction( <subsemigroup of 3x2 Rees 0-matrix semigroup 
- with 4 generators>, <Rees matrix semigroup 3x2 over Group(())>
- , function( x ) ... end, function( x ) ... end )
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 4 generators> -> 
+<Rees matrix semigroup 3x2 over Group(())>
 gap> ForAll(R, x -> (x ^ f) ^ g = x);
 true
 gap> ForAll(R, x -> ForAll(R, y -> (x * y) ^ f = x ^ f * y ^ f));
@@ -980,10 +978,8 @@ IdentityTransformation
 gap> R := ReesZeroMatrixSemigroup(T, [[id]]);
 <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
 gap> RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 1x1 over 
-  <full transformation monoid of degree 4>>, 
-<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
- , function( x ) ... end, function( x ) ... end )
+<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>> 
+-> <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
 gap> R := ReesZeroMatrixSemigroup(G, [[id]]);
 <Rees 0-matrix semigroup 1x1 over <transformation group of size 24, 
   degree 4 with 2 generators>>
@@ -1003,9 +999,8 @@ gap> R := ReesZeroMatrixSemigroup(G,
 gap> IsInverseSemigroup(R);
 true
 gap> iso := RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 5 ] )>, 
+<Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 5 ] )> -> 
 <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 5 ] )>
- , function( x ) ... end, function( x ) ... end )
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 5 ] )>
 gap> Matrix(S);
@@ -1034,9 +1029,8 @@ gap> mat := [
 gap> R := ReesZeroMatrixSemigroup(G, mat);
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
 gap> iso := RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>, 
+<Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )> -> 
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
- , function( x ) ... end, function( x ) ... end )
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 8x6 over Sym( [ 1 .. 4 ] )>
 

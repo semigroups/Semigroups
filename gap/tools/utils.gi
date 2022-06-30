@@ -79,6 +79,8 @@ SEMIGROUPS.StartTest := function()
     UserPreference("semigroups", "FreeInverseSemigroupElementDisplay");
   record.FpSemigroupView :=
     UserPreference("semigroups", "FpSemigroupView");
+  record.HomomorphismView :=
+    UserPreference("Semigroups", "HomomorphismView");
 
   # store current default options
   record.SEMIGROUPS_DefaultOptionsRec :=
@@ -105,6 +107,9 @@ SEMIGROUPS.StartTest := function()
                     "minimal");
   SetUserPreference("semigroups",
                     "FpSemigroupView",
+                    "semigroups-pkg");
+  SetUserPreference("semigroups",
+                    "HomomorphismView",
                     "semigroups-pkg");
 
   # set default options
@@ -139,6 +144,9 @@ SEMIGROUPS.StopTest := function()
   SetUserPreference("semigroups",
                     "FpSemigroupView",
                     record.FpSemigroupView);
+  SetUserPreference("semigroups",
+                    "HomomorphismView",
+                    record.HomomorphismView);
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;

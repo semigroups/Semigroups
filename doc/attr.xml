@@ -1051,9 +1051,8 @@ gap> R := ReesZeroMatrixSemigroup(Group(()),
 >  [0, 0, ()]]);
 <Rees 0-matrix semigroup 3x3 over Group(())>
 gap> iso := RZMSNormalization(R);
-MappingByFunction( <Rees 0-matrix semigroup 3x3 over Group(())>, 
+<Rees 0-matrix semigroup 3x3 over Group(())> -> 
 <Rees 0-matrix semigroup 3x3 over Group(())>
- , function( x ) ... end, function( x ) ... end )
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 3x3 over Group(())>
 gap> Matrix(S);
@@ -1093,9 +1092,8 @@ gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
 >  [(2, 3), (1, 3, 2, 4), (2, 3)]]);
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> iso := RMSNormalization(R);
-MappingByFunction( <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
- , <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
- , function( x ) ... end, function( x ) ... end )
+<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )> -> 
+<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> S := Range(iso);
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> Matrix(S);

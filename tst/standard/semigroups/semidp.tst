@@ -581,9 +581,8 @@ gap> Unbind(SemigroupDirectProductInfo(D).embeddings);
 gap> Embedding(D, 4);
 Error, the 2nd argument (a pos. int.) is not in the range [1 .. 3]
 gap> Embedding(D, 1);
-MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
- generators>, <transformation semigroup of size 27, degree 12 with 27 
- generators>, function( x ) ... end )
+<transformation semigroup of size 3, degree 4 with 3 generators> -> 
+<transformation semigroup of size 27, degree 12 with 27 generators>
 gap> Embedding(D, 1) = last;
 true
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[1]);
@@ -593,9 +592,8 @@ Error, the direct product information for the 1st argument (a semigroup) is co\
 rrupted, please re-create the object
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Embedding(D, 3);
-MappingByFunction( <transformation semigroup of size 3, degree 4 with 3 
- generators>, <transformation semigroup of size 27, degree 12 with 27 
- generators>, function( x ) ... end )
+<transformation semigroup of size 3, degree 4 with 3 generators> -> 
+<transformation semigroup of size 27, degree 12 with 27 generators>
 gap> Unbind(SemigroupDirectProductInfo(D).embeddings[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).embedding);
 gap> Embedding(D, 3);
@@ -653,9 +651,8 @@ gap> Unbind(SemigroupDirectProductInfo(D).projections);
 gap> Projection(D, 4);
 Error, the 2nd argument (a pos. int.) is not in the range [1 .. 3]
 gap> Projection(D, 1);
-MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
- generators>, <transformation semigroup of size 3, degree 3 with 3 generators>
- , function( x ) ... end )
+<transformation semigroup of size 27, degree 9 with 27 generators> -> 
+<transformation semigroup of size 3, degree 3 with 3 generators>
 gap> Projection(D, 1) = last;
 true
 gap> Unbind(SemigroupDirectProductInfo(D).projections[1]);
@@ -665,9 +662,8 @@ Error, the direct product information for the 1st argument (a semigroup) is co\
 rrupted, please re-create the object
 gap> SemigroupDirectProductInfo(D).nrfactors := 3;;
 gap> Projection(D, 3);
-MappingByFunction( <transformation semigroup of size 27, degree 9 with 27 
- generators>, <transformation semigroup of size 3, degree 3 with 3 generators>
- , function( x ) ... end )
+<transformation semigroup of size 27, degree 9 with 27 generators> -> 
+<transformation semigroup of size 3, degree 3 with 3 generators>
 gap> Unbind(SemigroupDirectProductInfo(D).projections[3]);
 gap> Unbind(SemigroupDirectProductInfo(D).projection);
 gap> Projection(D, 3);

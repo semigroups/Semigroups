@@ -934,34 +934,34 @@ gap> D := CompleteDigraph(2);;
 gap> S1 := TrivialSemigroup();;
 gap> id := IdentityMapping(S1);;
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [[id, id], [id, id]]);
-Error, expected a digraph whose reflexive transitive closure is a meet semilat\
-tice digraph as first argument
+Error, the reflexive transitive closure of the 1st argument (a digraph) must b\
+e a meet semilattice
 gap> D := Digraph([[2], []]);;
 gap> StrongSemilatticeOfSemigroups(D, [S1, 1], [[id], []]);
-Error, expected a list of semigroups as second argument
+Error, the 2nd argument (a list) must consist of semigroups, but found integer\
+ in position 2
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1, S1], [[id], []]);
-Error, the number of vertices of the first argument <D> must be equal to the l\
-ength of the second argument
+Error, the 2nd argument (a list) must have length 2, the number of vertices of\
+ the 1st argument (a digraph), but found length 3
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [[id], [], []]);
-Error, where D is the first argument, expected a list of length DigraphNrVerti\
-ces(D) as third argument
+Error, the 3rd argument (a list) must have length 2, the number of vertices of\
+ the 1st argument (a digraph), but found length 3
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [1, []]);
-Error, expected a list of lists as third argument
+Error, the 3rd argument (a list) must consist of lists, but found integer in p\
+osition 1
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [[id, id], []]);
-Error, where D and homomorphisms are the 1st and 3rd arguments respectively, t\
-he length of homomorphisms[i] must be equal to OutNeighbours(D)[i]
+Error, the 3rd argument (a list) must have the same shape as the out-neighbour\
+s of th\
+e 1st argument (a digraph), expected shape [ 1, 0 ] but found [ 2, 0 ]
 gap> S2 := FullTransformationMonoid(2);;
-gap> m1 := MappingByFunction(S2, S2, function(x)
->                                      return Transformation([2, 1]);
->                                    end);;
+gap> m1 := SemigroupHomomorphismByFunction(S2, S2, x -> Transformation([2, 1]));;
 gap> StrongSemilatticeOfSemigroups(D, [S2, S2], [[m1], []]);
-Error, expected a list of lists of homomorphisms as third argument, homomorphi\
-sms[1][1] is not a homomorphism
+Error, the 3rd argument (a list) must consist of lists of homomorphisms, but p\
+osition [1, 1] is not a homomorphism
 gap> StrongSemilatticeOfSemigroups(D, [S1, S2], [[id], []]);
-Error, expected homomorphism from 2 to 1 to have correct source and range
-gap> StrongSemilatticeOfSemigroups(D, [S2, S1], [[id], []]);
-<strong semilattice of 2 semigroups>
-gap> id := IdentityMapping(S2);;
+Error, expected the homomorphism in position [ 1, 1 ] of the 3rd argument to h\
+ave source equal to position 2 in the 2nd argument
+gap> id := SemigroupHomomorphismByFunction(S1, S2, IdFunc);;
 gap> StrongSemilatticeOfSemigroups(D, [S2, S1], [[id], []]);
 <strong semilattice of 2 semigroups>
 
@@ -969,12 +969,8 @@ gap> StrongSemilatticeOfSemigroups(D, [S2, S1], [[id], []]);
 gap> D := Digraph([[2, 3], [4], [4], []]);;
 gap> S1 := FullTransformationMonoid(2);;
 gap> id := IdentityMapping(S1);;
-gap> m1 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([1, 1]);
->                                    end);;
-gap> m2 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([2, 2]);
->                                    end);;
+gap> m1 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([1, 1]));;
+gap> m2 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([2, 2]));;
 gap> L := [S1, S1, S1, S1];;
 gap> H := [[m1, m2], [id], [id], []];;
 gap> StrongSemilatticeOfSemigroups(D, L, H);
@@ -989,12 +985,12 @@ Error, Expected homomorphism from 4 to 4 to be the identity
 gap> D := Digraph([[2, 3], [2], []]);;
 gap> S1 := FullTransformationMonoid(2);;
 gap> id := IdentityMapping(S1);;
-gap> m1 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([1, 1]);
->                                    end);;
-gap> m2 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([2, 2]);
->                                    end);;
+gap> m1 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([1, 1]));
+<full transformation monoid of degree 2> -> 
+<full transformation monoid of degree 2>
+gap> m2 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([2, 2]));
+<full transformation monoid of degree 2> -> 
+<full transformation monoid of degree 2>
 gap> L := [S1, S1, S1];;
 gap> H := [[m1, m2], [id], []];;
 gap> StrongSemilatticeOfSemigroups(D, L, H);
@@ -1006,12 +1002,12 @@ gap> Size(last);
 gap> D := Digraph([[2, 3], [2], []]);;
 gap> S1 := FullTransformationMonoid(2);;
 gap> id := IdentityMapping(S1);;
-gap> m1 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([1, 1]);
->                                    end);;
-gap> m2 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([2, 2]);
->                                    end);;
+gap> m1 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([1, 1]));
+<full transformation monoid of degree 2> -> 
+<full transformation monoid of degree 2>
+gap> m2 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([2, 2]));
+<full transformation monoid of degree 2> -> 
+<full transformation monoid of degree 2>
 gap> L := [S1, S1, S1];;
 gap> H := [[m1, m2], [id], []];;
 gap> S := StrongSemilatticeOfSemigroups(D, L, H);;
@@ -1060,7 +1056,7 @@ gap> m1 := function(trans)
 >      Append(out, temp);
 >      return Transformation(out);
 >    end;;
-gap> H[3][2] := MappingByFunction(L[5], L[3], m1);;
+gap> H[3][2] := SemigroupHomomorphismByFunction(L[5], L[3], m1);;
 gap> c := SemigroupCongruence(L[3], [[Transformation([1, 2, 4, 3]),
 >                                     Transformation([1, 3, 2, 4])]]);;
 gap> # this congruence separates T_4 into three sets:
@@ -1084,7 +1080,7 @@ gap> m1 := function(trans)
 >        return fail;
 >      fi;
 >    end;;
-gap> H[1][2] := MappingByFunction(L[3], L[1], m1);;
+gap> H[1][2] := SemigroupHomomorphismByFunction(L[3], L[1], m1);;
 gap> m1 := function(trans)
 >      if Length(ImageSetOfTransformation(trans, 3)) < 3 then
 >        return MultiplicativeZero(L[2]);
@@ -1092,7 +1088,7 @@ gap> m1 := function(trans)
 >        return PermutationOfImage(trans) ^ UnderlyingInjectionZeroMagma(L[2]);
 >      fi;
 >    end;;
-gap> H[2][1] := MappingByFunction(L[5], L[2], m1);;
+gap> H[2][1] := SemigroupHomomorphismByFunction(L[5], L[2], m1);;
 gap> m1 := function(magelem)
 >      local p;
 >      p := magelem ^ InverseGeneralMapping(UnderlyingInjectionZeroMagma(L[2]));
@@ -1104,8 +1100,10 @@ gap> m1 := function(magelem)
 >        return Transformation([1, 3, 2]);
 >      fi;
 >    end;;
-gap> H[1][1] := MappingByFunction(L[2], L[1], m1);;
-gap> H[3][1] := IdentityMapping(L[3]);;
+gap> H[1][1] := SemigroupHomomorphismByFunction(L[2], L[1], m1);;
+gap> H[3][1] := SemigroupHomomorphismByFunction(L[4], L[3], IdFunc);
+<transformation semigroup of size 4, degree 4 with 4 generators> -> 
+<full transformation monoid of degree 4>
 gap> D := Digraph([[2, 3], [5], [4, 5], [], []]);;
 gap> S := StrongSemilatticeOfSemigroups(D, L, H);
 <strong semilattice of 5 semigroups>

@@ -518,9 +518,9 @@ gap> BruteForceInverseCheck(map);
 true
 gap> map := IsomorphismSemigroups(W, S);
 CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group( 
-[ () ] ), [  ], [  ] ), [ (), () ]), MappingByFunction( 
-<Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
-  Group(())>, function( u ) ... end, function( v ) ... end ) )
+[ () ] ), [  ], [  ] ), [ (), () ]), 
+<Rees matrix semigroup 1x1 over Group(())> -> 
+<Rees matrix semigroup 1x1 over Group(())> )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

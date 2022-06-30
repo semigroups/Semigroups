@@ -311,9 +311,9 @@ function(S)
   map := p -> (x -> AsSSortedList(S)[PositionSorted(S, x) ^ p]);
   Y := List(GeneratorsOfGroup(G),
             p -> SemigroupIsomorphismByFunctionNC(S,
-                                               S,
-                                               map(p),
-                                               map(p ^ -1)));
+                                                  S,
+                                                  map(p),
+                                                  map(p ^ -1)));
   H := Group(Y);
   SetNiceMonomorphism(H, GroupHomomorphismByImagesNC(H, G, Y, X));
   SetIsHandledByNiceMonomorphism(H, true);

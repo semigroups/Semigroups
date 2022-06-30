@@ -1647,9 +1647,9 @@ gap> IsomorphismSemigroups(W, W) = IdentityMapping(W);
 true
 gap> IsomorphismSemigroups(W, S);
 CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group( 
-[ () ] ), [  ], [  ] ), [ (), () ]), MappingByFunction( 
-<Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
-  Group(())>, function( u ) ... end, function( v ) ... end ) )
+[ () ] ), [  ], [  ] ), [ (), () ]), 
+<Rees matrix semigroup 1x1 over Group(())> -> 
+<Rees matrix semigroup 1x1 over Group(())> )
 
 # Issue 363: MultiplicativeNeutralElement, for an ideal
 gap> S := SingularFactorisableDualSymmetricInverseMonoid(3);

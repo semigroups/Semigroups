@@ -52,10 +52,10 @@ SEMIGROUPS.DefaultIsomorphismSemigroup := function(filter, S)
   iso2 := IsomorphismSemigroup(filter, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end;
 
 # Returns an isomorphism from the monoid (or IsMonoidAsSemigroup) <S> to a
@@ -71,10 +71,10 @@ SEMIGROUPS.DefaultIsomorphismMonoid := function(filter, S)
   iso2 := IsomorphismMonoid(filter, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
+  return SemigroupIsomorphismByFunctionNC(S,
+                                          Range(iso2),
+                                          x -> (x ^ iso1) ^ iso2,
+                                          x -> (x ^ inv2) ^ inv1);
 end;
 
 #############################################################################

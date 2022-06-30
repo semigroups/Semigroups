@@ -1426,12 +1426,8 @@ gap> PartialOrderOfDClasses(S);
 gap> D := Digraph([[2, 3], [2], []]);;
 gap> S1 := FullTransformationMonoid(2);;
 gap> id := IdentityMapping(S1);;
-gap> m1 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([1, 1]);
->                                    end);;
-gap> m2 := MappingByFunction(S1, S1, function(x)
->                                      return Transformation([2, 2]);
->                                    end);;
+gap> m1 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([1, 1]));;
+gap> m2 := SemigroupHomomorphismByFunction(S1, S1, x -> Transformation([2, 2]));;
 gap> L := [S1, S1, S1];;
 gap> H := [[m1, m2], [id], []];;
 gap> S := StrongSemilatticeOfSemigroups(D, L, H);

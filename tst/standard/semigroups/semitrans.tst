@@ -289,9 +289,8 @@ gap> BruteForceInverseCheck := function(map)
 # isomorphism from RMS to transformation semigroup
 gap> S := RectangularBand(IsReesMatrixSemigroup, 5, 5);;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <Rees matrix semigroup 5x5 over Group(())>, 
+<Rees matrix semigroup 5x5 over Group(())> -> 
 <transformation semigroup of size 25, degree 26 with 5 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -300,9 +299,8 @@ true
 # isomorphism from RZMS to transformation semigroup
 gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 10);;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <Rees 0-matrix semigroup 9x1 over Group(())>, 
+<Rees 0-matrix semigroup 9x1 over Group(())> -> 
 <commutative transformation semigroup of size 10, degree 11 with 9 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -311,9 +309,8 @@ true
 # isomorphism from fp semigroup to transformation semigroup
 gap> S := AsSemigroup(IsFpSemigroup, JonesMonoid(5));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <fp semigroup with 5 generators and 28 relations>, 
+<fp semigroup with 5 generators and 28 relations> -> 
 <transformation monoid of size 42, degree 42 with 4 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -322,9 +319,8 @@ true
 # isomorphism from pbr semigroup to transformation semigroup
 gap> S := FullPBRMonoid(1);;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <pbr monoid of size 16, degree 1 with 4 generators>, 
+<pbr monoid of size 16, degree 1 with 4 generators> -> 
 <transformation monoid of size 16, degree 16 with 4 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -337,9 +333,8 @@ gap> S := Semigroup(
 > Bipartition([[1, 2, 6, 7, -3, -4, -6], [3, 4, 5, 10, -2, -10],
 >              [8, -8], [9, -1], [-5], [-7, -9]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <bipartition semigroup of size 7, degree 10 with 2 
- generators>, <transformation semigroup of size 7, degree 8 with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+<bipartition semigroup of size 7, degree 10 with 2 generators> -> 
+<transformation semigroup of size 7, degree 8 with 2 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -354,9 +349,8 @@ gap> S := Semigroup([
 >  Bipartition([[1, 2, -2], [3, -3, -4, -5], [4, 5, -1]])]);
 <block bijection semigroup of degree 5 with 5 generators>
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <block bijection semigroup of size 54, degree 5 with 5 
- generators>, <transformation semigroup of size 54, degree 55 with 5 
- generators>, function( x ) ... end, function( x ) ... end )
+<block bijection semigroup of size 54, degree 5 with 5 generators> -> 
+<transformation semigroup of size 54, degree 55 with 5 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -377,9 +371,8 @@ true
 gap> S := Semigroup(PartialPerm([1, 2, 3, 4], [4, 5, 1, 2]),
 >                   PartialPerm([1, 2, 4], [1, 3, 5]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <partial perm semigroup of rank 4 with 2 generators>, 
+<partial perm semigroup of rank 4 with 2 generators> -> 
 <transformation semigroup of degree 6 with 2 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -395,9 +388,8 @@ gap> S := Monoid(Matrix(IsBooleanMat,
 >                Matrix(IsBooleanMat,
 >        [[1, 0], [0, 0]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <monoid of 2x2 boolean matrices with 4 generators>, 
+<monoid of 2x2 boolean matrices with 4 generators> -> 
 <transformation monoid of degree 4 with 4 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -409,9 +401,8 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 >                   Matrix(IsMaxPlusMatrix,
 >        [[0, -3], [-3, -1]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <semigroup of size 26, 2x2 max-plus matrices with 2 
- generators>, <transformation semigroup of size 26, degree 27 with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<semigroup of size 26, 2x2 max-plus matrices with 2 generators> -> 
+<transformation semigroup of size 26, degree 27 with 2 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -423,9 +414,8 @@ gap> S := Semigroup(Matrix(IsMinPlusMatrix,
 >                   Matrix(IsMinPlusMatrix,
 >        [[0, 3], [3, 1]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <semigroup of size 26, 2x2 min-plus matrices with 2 
- generators>, <transformation semigroup of size 26, degree 27 with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<semigroup of size 26, 2x2 min-plus matrices with 2 generators> -> 
+<transformation semigroup of size 26, degree 27 with 2 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -438,9 +428,8 @@ gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix,
 >                   Matrix(IsTropicalMaxPlusMatrix,
 >        [[0, 3], [3, 1]], 10));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <semigroup of size 13, 2x2 tropical max-plus matrices with 
- 2 generators>, <transformation semigroup of size 13, degree 14 with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<semigroup of size 13, 2x2 tropical max-plus matrices with 2 generators> -> 
+<transformation semigroup of size 13, degree 14 with 2 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -453,9 +442,8 @@ gap> S := Semigroup(Matrix(IsTropicalMinPlusMatrix,
 >                   Matrix(IsTropicalMinPlusMatrix,
 >        [[0, 3], [3, 1]], 5));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <semigroup of size 18, 2x2 tropical min-plus matrices with 
- 2 generators>, <transformation semigroup of size 18, degree 19 with 2 
- generators>, function( x ) ... end, function( x ) ... end )
+<semigroup of size 18, 2x2 tropical min-plus matrices with 2 generators> -> 
+<transformation semigroup of size 18, degree 19 with 2 generators>
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -482,9 +470,8 @@ gap> S := Monoid(
 >        0, 3));
 <monoid of 3x3 ntp matrices with 3 generators>
 gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <monoid of size 19683, 3x3 ntp matrices with 3 generators>
- , <transformation monoid of size 19683, degree 19683 with 3 generators>
- , function( x ) ... end, function( x ) ... end )
+<monoid of size 19683, 3x3 ntp matrices with 3 generators> -> 
+<transformation monoid of size 19683, degree 19683 with 3 generators>
 
 # isomorphism from ntp mat semigroup to transformation
 #   semigroup. This is the general linear semigroup over the field with 2
@@ -498,9 +485,8 @@ gap> S := Monoid(
 >        [[1, 0], [0, 0]], 0, 2));
 <monoid of 2x2 ntp matrices with 3 generators>
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <monoid of size 16, 2x2 ntp matrices with 3 generators>, 
+<monoid of size 16, 2x2 ntp matrices with 3 generators> -> 
 <transformation monoid of size 16, degree 16 with 3 generators>
- , function( x ) ... end, function( x ) ... end )
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);
@@ -581,9 +567,8 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
-MappingByFunction( <semigroup of size 16, 17x17 integer matrices with 4 
- generators>, <transformation semigroup of size 16, degree 17 with 4 
- generators>, function( x ) ... end, function( x ) ... end )
+<semigroup of size 16, 17x17 integer matrices with 4 generators> -> 
+<transformation semigroup of size 16, degree 17 with 4 generators>
 gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);
@@ -2761,9 +2746,8 @@ gap> R := [[F.1 ^ 2, F.1]];
 gap> IsomorphismTransformationSemigroup(F / R);
 Error, the argument (a semigroup) is not finite
 gap> IsomorphismTransformationSemigroup(MinimalIdeal(FreeBand(2)));
-MappingByFunction( <simple semigroup ideal of size 4, with 1 generator>, 
+<simple semigroup ideal of size 4, with 1 generator> -> 
 <transformation semigroup of size 4, degree 5 with 4 generators>
-, function( x ) ... end, function( x ) ... end )
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

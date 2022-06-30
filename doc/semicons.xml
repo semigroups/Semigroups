@@ -461,11 +461,11 @@ gap> cong := SemigroupCongruence(S4, pairs);;
 gap> S2 := S4 / cong;;
 gap> S1 := TrivialSemigroup();;
 gap> L := [S1, S2, S3, S4];;
-gap> idfn := function(t) return IdentityTransformation; end;;
-gap> f21 := MappingByFunction(S2, S1, idfn);;
-gap> f31 := MappingByFunction(S3, S1, idfn);;
+gap> idfn := t -> IdentityTransformation;;
+gap> f21 := SemigroupHomomorphismByFunction(S2, S1, idfn);;
+gap> f31 := SemigroupHomomorphismByFunction(S3, S1, idfn);;
 gap> f42 := HomomorphismQuotientSemigroup(cong);;
-gap> f43 := IdentityMapping(S4);;
+gap> f43 := SemigroupHomomorphismByFunction(S4, S3, IdFunc);;
 gap> H := [[f21, f31], [f42], [f43], []];;
 gap> SSS := StrongSemilatticeOfSemigroups(D, L, H);
 <strong semilattice of 4 semigroups>

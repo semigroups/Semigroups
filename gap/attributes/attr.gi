@@ -90,13 +90,13 @@ SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
                      [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
   end;
 
-  hom := MappingByFunction(D, rms, iso,
-                           function(x)
-                             if x![1] = 0 then
-                               return fail;
-                             fi;
-                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
-                           end);
+  inv := function(x)
+    if x![1] = 0 then
+      return fail;
+    fi;
+    return R[x![1]] * (x![2] ^ InverseGeneralMapping(map)) * L[x![3]];
+  end;
+  hom := MappingByFunction(D, rms, iso, inv);
   SetIsInjective(hom, true);
   SetIsTotal(hom, true);
   return hom;
@@ -178,9 +178,9 @@ function(S)
                       x -> x ^ InverseGeneralMapping(map)));
 
   iso := SemigroupIsomorphismByFunctionNC(U,
-                           Range(map),
-                           x -> x ^ map,
-                           x -> x ^ InverseGeneralMapping(map));
+                                          Range(map),
+                                          x -> x ^ map,
+                                          x -> x ^ InverseGeneralMapping(map));
   SetIsomorphismPermGroup(U, iso);
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, Range(iso));
