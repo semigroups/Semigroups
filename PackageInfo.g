@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "4.0.2",
-Date := "05/06/2022",  # dd/mm/yyyy format
+Version := "4.0.3",
+Date := "01/07/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",

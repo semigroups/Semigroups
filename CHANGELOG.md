@@ -3,6 +3,26 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 4.0.3 (released 01/07/2022)
+
+This is a minor release that includes a number of improvements and bug fixes:
+
+* Update authors + mailmap by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/837
+* Resolve issue #835 (implement `MultiplicationTable` for fp semigroups and
+  monoids) by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/838
+* Improve ccache hit rate in CI by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/840
+* Improve support for quotient semigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/841
+* semigrp: remove 2 unnec. methods after #841 by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/843
+* congsemigraph: add meet method by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/842
+* Remove superfluous strings from error messages by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/845
+
 ### Version 4.0.2 (released 05/06/2022)
 
 This is a minor release that includes a number of minor fixes:
