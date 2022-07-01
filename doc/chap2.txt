@@ -32,21 +32,21 @@
   [30X    [33X[0;6Yensure  that the [5Xorb[105X package version 4.8.2 or higher is available. [5Xorb[105X
         and [5XSemigroups[105X both perform better if [5Xorb[105X is compiled.[133X
   
-  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-4.0.2.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-4.0.3.tar.gz[111X  from  the
         Semigroups package webpage ([7Xhttps://semigroups.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-4.0.2[111X.[133X
+        [11Xsemigroups-4.0.3[111X.[133X
   
   [30X    [33X[0;6Ylocate your [5XGAP[105X directory, the one containing the directories [11Xlib[111X, [11Xdoc[111X
-        and  so  on.  Move  the directory [11Xsemigroups-4.0.2.tar.gz[111X into the [11Xpkg[111X
+        and  so  on.  Move  the directory [11Xsemigroups-4.0.3.tar.gz[111X into the [11Xpkg[111X
         subdirectory of your [5XGAP[105X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
         [5XSemigroups[105X              uses             the             libsemigroups
         ([7Xhttps://libsemigroups.github.io/libsemigroups/[107X)  C++  library,  which
         requires  a  compiler  implementing  the  C++14  standard.  Inside the
-        [11Xpkg/semigroups-4.0.2[111X directory, in your terminal type[133X
+        [11Xpkg/semigroups-4.0.3[111X directory, in your terminal type[133X
   
   [4X      [32X[104X
           [4X./configure && make[104X
@@ -73,7 +73,7 @@
   the  C++  library  [5Xlibsemigroups[105X.  It  is not possible to use the [5XSemigroups[105X
   package without compiling it.[133X
   
-  [33X[0;0YTo  compile  the  kernel  component  inside  the [11Xpkg/semigroups-4.0.2.tar.gz[111X
+  [33X[0;0YTo  compile  the  kernel  component  inside  the [11Xpkg/semigroups-4.0.3.tar.gz[111X
   directory, type[133X
   
   [4X[32X[104X
@@ -115,7 +115,7 @@
     [4X    [104X
   [4X[32X[104X
   
-  [33X[0;0Ywhen you're inside the [11Xpkg/semigroups-4.0.2[111X directory.[133X
+  [33X[0;0Ywhen you're inside the [11Xpkg/semigroups-4.0.3[111X directory.[133X
   
   
   [1X2.4 [33X[0;0YTesting your installation[133X[101X

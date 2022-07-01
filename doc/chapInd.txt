@@ -390,10 +390,8 @@
   [2XIsTransBipartition[102X 3.5-12 
   [2XIsTransformationBooleanMat[102X 5.3-17 
   [2XIsTransformationPBR[102X 4.5-9 
-  [2XIsTransitive[102X, for a transformation
-      semigroup and a pos int 11.11-7 
-      for a transformation
-      semigroup and a set 11.11-7 
+  [2XIsTransitive[102X, for a transformation semigroup and a pos int 11.11-7 
+      for a transformation semigroup and a set 11.11-7 
   [2XIsTransitiveBooleanMat[102X 5.3-12 
   [2XIsTrimBooleanMat[102X 5.3-9 
   [2XIsTropicalMatrix[102X 5.1-8 

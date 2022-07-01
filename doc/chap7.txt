@@ -1006,7 +1006,7 @@
   
   [1X7.8-1 TrivialSemigroup[101X
   
-  [33X[1;0Y[29X[2XTrivialSemigroup[102X( [[3Xfilt[103X, ][[3Xdeg[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XTrivialSemigroup[102X( [[3Xfilt[103X][,] [[3Xdeg[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA trivial semigroup.[133X
   
   [33X[0;0YA [12Xtrivial[112X semigroup is a semigroup with precisely one element. This function
