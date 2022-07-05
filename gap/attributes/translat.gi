@@ -1439,6 +1439,7 @@ function(T)
   Print("translations of ", ViewString(UnderlyingSemigroup(T)), ">");
 end);
 
+# TODO: not supposed to do this
 InstallMethod(ViewObj, "for a semigroup of translations",
 [IsTranslationsSemigroup], PrintObj);
 
@@ -1605,7 +1606,7 @@ SEMIGROUPS.ImagePositionsOfTranslation := function(x)
   return images;
 end;
 
-InstallMethod(ImageOfTranslation, "for a left or right translation",
+InstallMethod(ImageSetOfTranslation, "for a left or right translation",
 [IsSemigroupTranslation],
 function(x)
   local T, S, enum;

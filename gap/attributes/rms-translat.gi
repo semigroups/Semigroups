@@ -566,6 +566,10 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   return fam;
 end;
 
+SEMIGROUPS.BitranslationOfNormalRMSByTriple := function(H, triple)
+
+end;
+
 SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, triple)
   local S, P, I, M, left_group_func, right_group_func, l, r;
 
@@ -878,7 +882,7 @@ function(R, group_func, t)
 
   if not (IsRightTranslationsSemigroup(R) and
           SEMIGROUPS.IsNormalRMSOverGroup(S)) then
-      ErrorNoReturn("the first argument must be a semigroups of right ",
+      ErrorNoReturn("the first argument must be a semigroup of right ",
                     "translations over a normalised RMS over ",
                     "a group");
   fi;

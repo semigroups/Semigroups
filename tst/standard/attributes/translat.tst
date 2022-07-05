@@ -531,7 +531,7 @@ gap> T := Semigroup(Generators(L){[1 .. 20]});
  degree 4 with 3 generators>>
 gap> Size(T);
 89
-gap> ImageOfTranslation(AsList(T)[4]);
+gap> ImageSetOfTranslation(AsList(T)[4]);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
   Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
   Transformation( [ 1, 2, 2, 1 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
@@ -560,7 +560,7 @@ gap> T := Semigroup(Generators(R){[1 .. 20]});
  degree 4 with 3 generators>>
 gap> Size(T);
 51
-gap> ImageOfTranslation(AsList(T)[4]);
+gap> ImageSetOfTranslation(AsList(T)[4]);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
   Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ), 
   Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 1, 2, 2 ] ), 

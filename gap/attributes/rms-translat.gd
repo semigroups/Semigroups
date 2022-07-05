@@ -1,13 +1,14 @@
 ############################################################################
 ##
 # W  rms-translat.gd
-# Y  Copyright (C) 2015-17                                       Finn Smith
+# Y  Copyright (C) 2015-22                                       Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
+# The declarations in this file are purposefully undocumented.
 DeclareCategory("IsTranslationOfNormalRMS", IsSemigroupTranslation);
 DeclareCategory("IsLeftTranslationOfNormalRMS",
                 IsTranslationOfNormalRMS and IsLeftTranslation);
