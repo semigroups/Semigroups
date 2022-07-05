@@ -850,8 +850,8 @@ function(L, l, opt...)
       return LeftTranslationOfNormalRMS(L, l, opt[1]);
     else
       ErrorNoReturn("if more than two arguments are given, there must be ",
-                    "precisely three and the first argument must be a normal ",
-                    "RMS over a group");
+                    "precisely three and the first argument must be over a ",
+                    "normal RMS over a group");
     fi;
   fi;
 
@@ -943,8 +943,8 @@ function(R, r, opt...)
       return RightTranslationOfNormalRMS(R, r, opt[1]);
     else
       ErrorNoReturn("if more than two arguments are given, there must be ",
-                    "precisely three and the first argument must be a normal ",
-                    "RMS over a group");
+                    "precisely three and the first argument must be over a ",
+                    "normal RMS over a group");
     fi;
   fi;
 
@@ -1041,19 +1041,10 @@ end);
 
 # Creates a bitranslation (l, r) from a left translation l and a right
 # translation r, as an element of a translational hull H.
-InstallGlobalFunction(Bitranslation,
+InstallMethod(Bitranslation,
+[IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation],
 function(H, l, r)
   local S, L, R, l_reps, r_reps;
-
-  if not IsBitranslationsSemigroup(H) then
-    ErrorNoReturn("the first argument must be a translational hull");
-  fi;
-
-  if not (IsLeftTranslation(l) and
-            IsRightTranslation(r)) then
-    ErrorNoReturn("the second argument must be a left translation ",
-                  "and the third argument must be a right translation");
-  fi;
 
   S := UnderlyingSemigroup(H);
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(l));

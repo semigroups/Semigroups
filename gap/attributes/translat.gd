@@ -69,7 +69,35 @@ DeclareCategoryCollections("IsRightTranslation");
 DeclareCategoryCollections("IsBitranslation");
 #! @EndGroup
 
-# TODO: reference IsTranslationOfNormalRMS
+#! @BeginGroup XPartOfBitranslation
+#! @GroupTitle XPartOfBitranslation
+#! @Returns a left or right translation
+#! @Arguments h
+#! @Description
+#! For a Bitranslation <A>h</A> consisting of a linked pair <M>(`l`, `r`)</M>,
+#! of left and right translations, `LeftPartOfBitranslation(<A>b</A>)` returns
+#! the left translation `l`, and `RightPartOfBitranslation(<A>b</A>)` returns
+#! the right translation `r`.
+DeclareGlobalFunction("LeftPartOfBitranslation");
+DeclareGlobalFunction("RightPartOfBitranslation");
+#! @EndGroup
+
+#! @BeginGroup IsXTranslationsSemigroup
+#! @GroupTitle IsXTranslationsSemigroup
+#! @Description
+#! `IsXTranslationsSemigroup` is a synonym for
+#! `IsSemigroup and IsXTranslationCollection` (where `X` is one of `Semigroup`,
+#! `Left` `Right`, or `Bi`).
+DeclareSynonym("IsTranslationsSemigroup",
+               IsSemigroup and IsSemigroupTranslationCollection);
+DeclareSynonym("IsLeftTranslationsSemigroup",
+               IsSemigroup and IsLeftTranslationCollection);
+DeclareSynonym("IsRightTranslationsSemigroup",
+               IsSemigroup and IsRightTranslationCollection);
+DeclareSynonym("IsBitranslationsSemigroup",
+               IsSemigroup and IsBitranslationCollection);
+#! @EndGroup
+
 #! @BeginGroup XTranslation
 #! @GroupTitle XTranslation
 #! @Returns a left or right translation
@@ -131,40 +159,12 @@ DeclareGlobalFunction("RightTranslation");
 #! gap> x := Bitranslation(H, l, r);
 #! <bitranslation on <regular semigroup of size 17, with 4 generators>>
 #! @EndExampleSession
-DeclareGlobalFunction("Bitranslation");
+DeclareOperation("Bitranslation", 
+  [IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation]);
 
 DeclareGlobalFunction("LeftTranslationNC");
 DeclareGlobalFunction("RightTranslationNC");
 DeclareGlobalFunction("BitranslationNC");
-
-#! @BeginGroup XPartOfBitranslation
-#! @GroupTitle XPartOfBitranslation
-#! @Returns a left or right translation
-#! @Arguments h
-#! @Description
-#! For a Bitranslation <A>h</A> consisting of a linked pair <M>(`l`, `r`)</M>,
-#! of left and right translations, `LeftPartOfBitranslation(<A>b</A>)` returns
-#! the left translation `l`, and `RightPartOfBitranslation(<A>b</A>)` returns
-#! the right translation `r`.
-DeclareGlobalFunction("LeftPartOfBitranslation");
-DeclareGlobalFunction("RightPartOfBitranslation");
-#! @EndGroup
-
-#! @BeginGroup IsXTranslationsSemigroup
-#! @GroupTitle IsXTranslationsSemigroup
-#! @Description
-#! `IsXTranslationsSemigroup` is a synonym for
-#! `IsSemigroup and IsXTranslationCollection` (where `X` is one of `Semigroup`,
-#! `Left` `Right`, or `Bi`).
-DeclareSynonym("IsTranslationsSemigroup",
-               IsSemigroup and IsSemigroupTranslationCollection);
-DeclareSynonym("IsLeftTranslationsSemigroup",
-               IsSemigroup and IsLeftTranslationCollection);
-DeclareSynonym("IsRightTranslationsSemigroup",
-               IsSemigroup and IsRightTranslationCollection);
-DeclareSynonym("IsBitranslationsSemigroup",
-               IsSemigroup and IsBitranslationCollection);
-#! @EndGroup
 
 #! @BeginGroup UnderlyingSemigroup
 #! @GroupTitle UnderlyingSemigroup

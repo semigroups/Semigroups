@@ -617,7 +617,7 @@ gap> l := RightTranslation(L, [4]);
 Error, the first argument must be a semigroup of right translations
 gap> l := LeftTranslation(L, [4, 6], 3);
 Error, if more than two arguments are given, there must be precisely three and\
- the first argument must be a normal RMS over a group
+ the first argument must be over a normal RMS over a group
 gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> T.1 ^ l;
 Error, the first argument must be an element of the domain of the second
@@ -651,7 +651,7 @@ Error, the second argument must map indices of representatives to indices of e\
 lements of the semigroup of the first argument
 gap> r := RightTranslation(R, [1, 1], 3);
 Error, if more than two arguments are given, there must be precisely three and\
- the first argument must be a normal RMS over a group
+ the first argument must be over a normal RMS over a group
 gap> r := RightTranslation(R, [6, 3]);
 Error, the transformation given must define a right translation
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.1));;
@@ -667,11 +667,6 @@ gap> RT := RightTranslations(T);;
 gap> H := TranslationalHull(S);;
 gap> l := Representative(L);;
 gap> r := Representative(R);;
-gap> Bitranslation(L, l, r);
-Error, the first argument must be a translational hull
-gap> Bitranslation(H, r, l);
-Error, the second argument must be a left translation and the third argument m\
-ust be a right translation
 gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
 gap> Bitranslation(H, l, r);
@@ -713,8 +708,8 @@ gap> R := RightTranslations(T);;
 gap> RS := RightTranslations(S);;
 gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2, G.1];;
 gap> RightTranslationOfNormalRMS(RS, rgpfunc, IdentityTransformation);
-Error, the first argument must be a semigroups of right translations over a no\
-rmalised RMS over a group
+Error, the first argument must be a semigroup of right translations over a nor\
+malised RMS over a group
 gap> RightTranslationOfNormalRMS(R, [G.1, G.2], IdentityTransformation);
 Error, the second argument must be a list of group elements of length equal to\
  the number of rows of the underlying semigroup of the first argument
@@ -744,14 +739,13 @@ gap> lt := Transformation([2, 2]);;
 gap> rt := Transformation([3, 3, 3]);;
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
 gap> r := RightTranslationOfNormalRMS(R, rgpfunc, rt);;
-gap> h := BitranslationOfNormalRMS(H, l, r);
+gap> h := Bitranslation(H, l, r);
 <bitranslation on <semigroup>>
-gap> h := BitranslationOfNormalRMS(HS, l, r);
-Error, the first argument must be a normalised RMS over a group
+gap> h := Bitranslation(HS, l, r);
+Error, each argument must have the same underlying semigroup
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, IdentityTransformation);;
-gap> h := BitranslationOfNormalRMS(H, l, r);
-Error, the second and third arguments must be a linked left and right translat\
-ion, respectively
+gap> h := Bitranslation(H, l, r);
+Error, the translations given must satisfy the linking condition
 
 # Hashing translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 

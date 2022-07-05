@@ -34,5 +34,5 @@ DeclareGlobalFunction("LeftTranslationOfNormalRMS");
 DeclareGlobalFunction("LeftTranslationOfNormalRMSNC");
 DeclareGlobalFunction("RightTranslationOfNormalRMS");
 DeclareGlobalFunction("RightTranslationOfNormalRMSNC");
-DeclareGlobalFunction("BitranslationOfNormalRMS");
-DeclareGlobalFunction("BitranslationOfNormalRMSNC");
+
+DeclareGlobalFunction("BitranslationOfNormalRMSByTripleNC");

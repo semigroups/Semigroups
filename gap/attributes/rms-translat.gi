@@ -531,7 +531,7 @@ SEMIGROUPS.BitranslationsNormalRMS := function(H)
   for triple in SEMIGROUPS.NormalRMSLinkedTriples(S) do
     triple := Concatenation([triple[1]],
                             List(triple{[2, 3]}, Transformation));
-    Add(out, SEMIGROUPS.BitranslationOfNormalRMSByTripleNC(H, triple));
+    Add(out, BitranslationOfNormalRMSByTripleNC(H, triple));
   od;
   return out;
 end;
@@ -566,30 +566,6 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   return fam;
 end;
 
-SEMIGROUPS.BitranslationOfNormalRMSByTriple := function(H, triple)
-
-end;
-
-SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, triple)
-  local S, P, I, M, left_group_func, right_group_func, l, r;
-
-  S := UnderlyingSemigroup(H);
-  P := Matrix(S);
-  I := Rows(S);
-  M := Columns(S);
-
-  left_group_func  := List(I, i -> triple[1] * P[1 ^ triple[3]][i]);
-  right_group_func := List(M, mu -> P[mu][1 ^ triple[2]] * triple[1]);
-
-  l := LeftTranslationOfNormalRMSNC(LeftTranslations(S),
-                                    left_group_func,
-                                    triple[2]);
-  r := RightTranslationOfNormalRMSNC(RightTranslations(S),
-                                     right_group_func,
-                                     triple[3]);
-
-  return BitranslationOfNormalRMSNC(H, l, r);
-end;
 
 #############################################################################
 # 2. Methods for (zero) simple semigroups
@@ -913,41 +889,110 @@ function(R, group_func, t)
                    [group_func, t]);
 end);
 
-InstallGlobalFunction(BitranslationOfNormalRMS,
-function(H, l, r)
-  local S, i, I, j, J, lf, lt, P, rf, rt;
+#InstallMethod(Bitranslation,
+#[IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation],
+#1,
+#function(H, l, r)
+#  local S, i, I, j, J, lf, lt, P, rf, rt;
+#
+#  S := UnderlyingSemigroup(H);
+#
+#  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
+#    TryNextMethod();
+#  fi;
+#
+#  P := Matrix(S);
+#  I := Rows(S);
+#  J := Columns(S);
+#
+#  lf := l![1];
+#  lt := l![2];
+#  rf := r![1];
+#  rt := r![2];
+#
+#  for i in I do
+#    for j in J do
+#      if not P[j][i ^ lt] * lf[i] = rf[j] * P[j ^ rt][i] then
+#        ErrorNoReturn("the second and third arguments must be a ",
+#                      "linked left and right translation, respectively");
+#      fi;
+#    od;
+#  od;
+#
+#  return BitranslationOfNormalRMSNC(H, l, r);
+#end);
+
+#InstallGlobalFunction(BitranslationOfNormalRMSNC,
+#function(H, l, r)
+#  return Objectify(TypeBitranslations(H), [l, r]);
+#end);
+
+InstallOtherMethod(Bitranslation,
+"for a bitranslation defined by a triple on a normal RMS",
+[IsBitranslationsSemigroup, IsAssociativeElement, IsTransformation,
+  IsTransformation],
+function(H, g, chi, psi)
+  local S, P, I, J, i, mu;
 
   S := UnderlyingSemigroup(H);
-
+  
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      ErrorNoReturn("the first argument must be a normalised RMS over ",
-                    "a group");
+    TryNextMethod();
   fi;
-
+  
   P := Matrix(S);
   I := Rows(S);
   J := Columns(S);
 
-  lf := l![1];
-  lt := l![2];
-  rf := r![1];
-  rt := r![2];
+  if not g in UnderlyingSemigroup(S) then
+    ErrorNoReturn("the second argument must be an element of the group that ",
+                  "the underlying semigroup of the first argument is defined ",
+                  "over");
+  fi;
 
-  for i in I do
-    for j in J do
-      if not P[j][i ^ lt] * lf[i] = rf[j] * P[j ^ rt][i] then
-        ErrorNoReturn("the second and third arguments must be a ",
-                      "linked left and right translation, respectively");
+  if LargestImageOfMovedPoint(chi) > Length(I) then
+    ErrorNoReturn("the third argument must be a transformation on the rows of ",
+                  "the underlying semigroup of the first argument");
+  fi;
+  
+  if LargestImageOfMovedPoint(psi) > Length(J) then
+    ErrorNoReturn("the fourth argument must be a transformation on the rows ",
+                  "of the underlying semigroup of the first argument");
+  fi;
+
+  for i in I do 
+    for mu in J do
+      if not P[mu][i ^ chi] * g * P[1 ^ psi][i] 
+              = P[mu][1 ^ chi] * g * P[mu ^ psi][i] then
+        ErrorNoReturn("the arguments given do not define a bitranslation");
       fi;
     od;
   od;
 
-  return BitranslationOfNormalRMSNC(H, l, r);
+  return BitranslationOfNormalRMSByTripleNC(H, [g, chi, psi]);
 end);
 
-InstallGlobalFunction(BitranslationOfNormalRMSNC,
-function(H, l, r)
-  return Objectify(TypeBitranslations(H), [l, r]);
+
+InstallGlobalFunction(BitranslationOfNormalRMSByTripleNC,
+function(H, triple)
+  local S, P, I, M, left_group_func, right_group_func, l, r;
+
+  S := UnderlyingSemigroup(H);
+  P := Matrix(S);
+  I := Rows(S);
+  M := Columns(S);
+
+  left_group_func  := List(I, i -> triple[1] * P[1 ^ triple[3]][i]);
+  right_group_func := List(M, mu -> P[mu][1 ^ triple[2]] * triple[1]);
+
+  l := LeftTranslationOfNormalRMSNC(LeftTranslations(S),
+                                    left_group_func,
+                                    triple[2]);
+  r := RightTranslationOfNormalRMSNC(RightTranslations(S),
+                                     right_group_func,
+                                     triple[3]);
+
+  return BitranslationNC(H, l, r);
 end);
 
 ############################################################################
@@ -973,18 +1018,6 @@ function(T)
                                        List(Columns(S), x -> e),
                                        IdentityTransformation);
   fi;
-end);
-
-InstallMethod(Representative, "for a translational hull over a normalised RMS",
-[IsBitranslationOfNormalRMSSemigroup and IsWholeFamily],
-function(H)
-  local L, R, S;
-
-  S := UnderlyingSemigroup(H);
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-
-  return BitranslationOfNormalRMS(H, Representative(L), Representative(R));
 end);
 
 InstallMethod(\*, "for left translations of a normalised RMS",
