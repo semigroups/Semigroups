@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+#! @Chapter Translations
+#! @Section Methods for translations
+
 #! @BeginGroup IsXTranslation
 #! @GroupTitle IsXTranslation
 #! @Description
@@ -82,12 +85,6 @@ DeclareGlobalFunction("LeftPartOfBitranslation");
 DeclareGlobalFunction("RightPartOfBitranslation");
 #! @EndGroup
 
-#! @BeginGroup IsXTranslationsSemigroup
-#! @GroupTitle IsXTranslationsSemigroup
-#! @Description
-#! `IsXTranslationsSemigroup` is a synonym for
-#! `IsSemigroup and IsXTranslationCollection` (where `X` is one of `Semigroup`,
-#! `Left` `Right`, or `Bi`).
 DeclareSynonym("IsTranslationsSemigroup",
                IsSemigroup and IsSemigroupTranslationCollection);
 DeclareSynonym("IsLeftTranslationsSemigroup",
@@ -96,18 +93,18 @@ DeclareSynonym("IsRightTranslationsSemigroup",
                IsSemigroup and IsRightTranslationCollection);
 DeclareSynonym("IsBitranslationsSemigroup",
                IsSemigroup and IsBitranslationCollection);
-#! @EndGroup
 
 #! @BeginGroup XTranslation
 #! @GroupTitle XTranslation
 #! @Returns a left or right translation
 #! @Arguments T, x[, y]
 #! @Description
-#! For the semigroup <A>T</A> of left of right translations of a semigroup <A>
-#! S</A> and <A>x</A> one of:
+#! For the semigroup <A>T</A> of left or right translations of a semigroup <M>
+#! S</M> and <A>x</A> one of:
 #! * a mapping on the underlying semigroup; note that in this case only the
 #!   values of the mapping on the <Ref Attr="UnderlyingRepresentatives"/> of
-#!   <A>T</A> are checked and used;
+#!   <A>T</A> are checked and used, so mappings which do not define translations
+#!   can be used to create translations if they are valid on a subset of S;
 #! * a list of indices representing the images of the
 #!   <Ref Attr="UnderlyingRepresentatives"/> of <A>T</A>, where the ordering
 #!   is that of <Ref Oper="PositionCanonical"/> on <A>S</A>;
@@ -135,8 +132,10 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! gap> s ^ l;
 #! Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 #! @EndExampleSession
-DeclareGlobalFunction("LeftTranslation");
-DeclareGlobalFunction("RightTranslation");
+DeclareOperation("LeftTranslation",
+                 [IsLeftTranslationsSemigroup, IsGeneralMapping]);
+DeclareOperation("RightTranslation",
+                 [IsRightTranslationsSemigroup, IsGeneralMapping]);
 #! @EndGroup
 
 #! @Returns a bitranslation

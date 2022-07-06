@@ -830,86 +830,79 @@ function(S)
   return Semigroup(I);
 end);
 
-# Create a left translation as an element of a left translations semigroup.
-# Second argument should be a mapping on the underlying semigroup or
-# a transformation of its indices (as defined by AsListCanonical)
-InstallGlobalFunction(LeftTranslation,
-function(L, l, opt...)
-  local S, reps, semi_list, full_lambda, g, lg, x, y, i, s;
-
-  if not (IsLeftTranslationsSemigroup(L)) then
-    ErrorNoReturn("the first argument must be a semigroup of left ",
-                  "translations");
-  fi;
+InstallMethod(LeftTranslation,
+"for a left translations semigroup and a general mapping",
+[IsLeftTranslationsSemigroup, IsGeneralMapping],
+function(L, map)
+  local S, reps;
 
   S    := UnderlyingSemigroup(L);
   reps := UnderlyingRepresentatives(L);
 
-  if not IsEmpty(opt) then
-    if Length(opt) = 1 and SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      return LeftTranslationOfNormalRMS(L, l, opt[1]);
-    else
-      ErrorNoReturn("if more than two arguments are given, there must be ",
-                    "precisely three and the first argument must be over a ",
-                    "normal RMS over a group");
-    fi;
+  if not (S = Source(map) and Source(map) = Range(map)) then
+    ErrorNoReturn("the domain and range of the second argument must be ",
+                  "the underlying semigroup of the first");
+  fi;
+  if ForAny(reps, s -> ForAny(S, t -> (s ^ map) * t <> (s * t) ^ map)) then
+    ErrorNoReturn("the mapping given must define a left translation");
   fi;
 
-  # In fact, insist on it? Or document that other values are ignored
-  if IsGeneralMapping(l) then
-    if not (S = Source(l) and Source(l) = Range(l)) then
-      ErrorNoReturn("the domain and range of the second argument must be ",
-                    "the underlying semigroup of the first");
-    fi;
-    if ForAny(reps, s -> ForAny(S, t -> (s ^ l) * t <> (s * t) ^ l)) then
-      ErrorNoReturn("the mapping given must define a left translation");
-    fi;
-  elif IsDenseList(l) then
-    if not Size(l) = Size(reps) then
-      ErrorNoReturn("the second argument must map indices of representatives ",
-                    "to indices of elements of the semigroup of the first ",
-                    "argument");
-    fi;
-    if not ForAll(l, y -> IsPosInt(y) and y <= Size(S)) then
-      ErrorNoReturn("the second argument must map indices of representatives ",
-                    "to indices of elements of the semigroup of the first ",
-                    "argument");
-    fi;
-    # TODO (later) store and use LeftTranslationsBacktrackData
-    semi_list := AsListCanonical(S);
-    full_lambda := [];
-    for i in [1 .. Size(reps)] do
-      g := reps[i];
-      lg := l[i];
-      for s in S do
-        x := PositionCanonical(S, g * s);
-        y := PositionCanonical(S, semi_list[lg] * s);
-        if not IsBound(full_lambda[x]) then
-          full_lambda[x] := y;
-        fi;
-        if full_lambda[x] <> y then
-          ErrorNoReturn("the transformation given must define a left ",
-                        "translation");
-        fi;
-      od;
-    od;
-  else
-    ErrorNoReturn("the first argument should be a left translations ",
-                  "semigroup, and the second argument should be a mapping ",
-                  "on the underlying semigroup of the first argument, or a ",
-                  "list of indices of values of the generators under the ",
-                  "translation");
+  return LeftTranslationNC(L, map);
+end);
+
+InstallOtherMethod(LeftTranslation,
+"for a left translations semigroup and a dense list",
+[IsLeftTranslationsSemigroup, IsDenseList],
+function(L, l)
+  local S, reps, semi_list, full_lambda, g, lg, x, y, i, s;
+
+  S    := UnderlyingSemigroup(L);
+  reps := UnderlyingRepresentatives(L);
+
+  if not Length(l) = Length(reps) then
+    ErrorNoReturn("the second argument must map indices of representatives ",
+                  "to indices of elements of the semigroup of the first ",
+                  "argument");
   fi;
+  if not ForAll(l, y -> IsPosInt(y) and y <= Size(S)) then
+    ErrorNoReturn("the second argument must map indices of representatives ",
+                  "to indices of elements of the semigroup of the first ",
+                  "argument");
+  fi;
+  # TODO (later) store and use LeftTranslationsBacktrackData
+  semi_list := AsListCanonical(S);
+  full_lambda := [];
+  for i in [1 .. Size(reps)] do
+    g := reps[i];
+    lg := l[i];
+    for s in S do
+      x := PositionCanonical(S, g * s);
+      y := PositionCanonical(S, semi_list[lg] * s);
+      if not IsBound(full_lambda[x]) then
+        full_lambda[x] := y;
+      fi;
+      if full_lambda[x] <> y then
+        ErrorNoReturn("the transformation given must define a left ",
+                      "translation");
+      fi;
+    od;
+  od;
+
   return LeftTranslationNC(L, l);
 end);
 
+# Careful - expects a particular form for normal RMS
 InstallGlobalFunction(LeftTranslationNC,
-function(L, l)
-  local S, tup, reps, map_as_list, i;
+function(L, l, opt...)
+  local S, reps, map_as_list, i;
+
   S := UnderlyingSemigroup(L);
   if IsLeftTranslationOfNormalRMSSemigroup(L) then
-    tup := SEMIGROUPS.LeftTransToNormalRMSTupleNC(S, l);
-    return LeftTranslationOfNormalRMSNC(L, tup[1], tup[2]);
+    if IsEmpty(opt) then
+      return LeftTranslationOfNormalRMSNC(L, l);
+    else
+      return LeftTranslationOfNormalRMSNC(L, l, opt[1]);
+    fi;
   fi;
   if IsDenseList(l) then
     return Objectify(TypeLeftTranslationsSemigroupElements(L),
@@ -925,84 +918,79 @@ function(L, l)
   return Objectify(TypeLeftTranslationsSemigroupElements(L), [map_as_list]);
 end);
 
-# Same for right translations.
-InstallGlobalFunction(RightTranslation,
-function(R, r, opt...)
-  local S, reps, semi_list, full_rho, g, rg, x, y, i, s;
-
-  if not (IsRightTranslationsSemigroup(R)) then
-    ErrorNoReturn("the first argument must be a semigroup of right ",
-                  "translations");
-  fi;
+InstallMethod(RightTranslation,
+"for a right translations semigroup and a general mapping",
+[IsRightTranslationsSemigroup, IsGeneralMapping],
+function(R, map)
+  local S, reps;
 
   S    := UnderlyingSemigroup(R);
   reps := UnderlyingRepresentatives(R);
 
-  if not IsEmpty(opt) then
-    if Length(opt) = 1 and SEMIGROUPS.IsNormalRMSOverGroup(S) then
-      return RightTranslationOfNormalRMS(R, r, opt[1]);
-    else
-      ErrorNoReturn("if more than two arguments are given, there must be ",
-                    "precisely three and the first argument must be over a ",
-                    "normal RMS over a group");
-    fi;
+  if not (S = Source(map) and Source(map) = Range(map)) then
+    ErrorNoReturn("the domain and range of the second argument must be ",
+                  "the underlying semigroup of the first");
+  fi;
+  if ForAny(reps, s -> ForAny(S, t -> s * (t ^ map) <> (s * t) ^ map)) then
+    ErrorNoReturn("the mapping given must define a right translation");
   fi;
 
-  if IsGeneralMapping(r) then
-    if not (S = Source(r) and Source(r) = Range(r)) then
-      ErrorNoReturn("the domain and range of the second argument must be ",
-                    "the underlying semigroup of the first");
-    fi;
-    if ForAny(reps, s -> ForAny(S, t -> s * (t ^ r) <> (s * t) ^ r)) then
-      ErrorNoReturn("the mapping given must define a right translation");
-    fi;
-  elif IsDenseList(r) then
-    if not Size(r) = Size(reps) then
-      ErrorNoReturn("the second argument must map indices of representatives ",
-                    "to indices of elements of the semigroup of the first ",
-                    "argument");
-    fi;
-    if not ForAll(r, y -> IsPosInt(y) and y <= Size(S)) then
-      ErrorNoReturn("the second argument must map indices of representatives ",
-                    "to indices of elements of the semigroup of the first ",
-                    "argument");
-    fi;
+  return RightTranslationNC(R, map);
+end);
 
-    # TODO (later) store and use some of RightTranslationsBacktrackData
-    semi_list := AsListCanonical(S);
-    full_rho := [];
-    for i in [1 .. Size(reps)] do
-      g := reps[i];
-      rg := r[i];
-      for s in S do
-        x := PositionCanonical(S, s * g);
-        y := PositionCanonical(S, s * semi_list[rg]);
-        if not IsBound(full_rho[x]) then
-          full_rho[x] := y;
-        fi;
-        if full_rho[x] <> y then
-          ErrorNoReturn("the transformation given must define a right ",
-                        "translation");
-        fi;
-      od;
+InstallOtherMethod(RightTranslation,
+"for a right translations semigroup and a dense list",
+[IsRightTranslationsSemigroup, IsDenseList],
+function(R, r)
+  local S, reps, semi_list, full_rho, g, rg, x, y, i, s;
+  
+  S    := UnderlyingSemigroup(R);
+  reps := UnderlyingRepresentatives(R);
+
+  if not Length(r) = Length(reps) then
+    ErrorNoReturn("the second argument must map indices of representatives ",
+                  "to indices of elements of the semigroup of the first ",
+                  "argument");
+  fi;
+  if not ForAll(r, y -> IsPosInt(y) and y <= Size(S)) then
+    ErrorNoReturn("the second argument must map indices of representatives ",
+                  "to indices of elements of the semigroup of the first ",
+                  "argument");
+  fi;
+
+  # TODO (later) store and use some of RightTranslationsBacktrackData
+  semi_list := AsListCanonical(S);
+  full_rho := [];
+  for i in [1 .. Size(reps)] do
+    g := reps[i];
+    rg := r[i];
+    for s in S do
+      x := PositionCanonical(S, s * g);
+      y := PositionCanonical(S, s * semi_list[rg]);
+      if not IsBound(full_rho[x]) then
+        full_rho[x] := y;
+      fi;
+      if full_rho[x] <> y then
+        ErrorNoReturn("the transformation given must define a right ",
+                      "translation");
+      fi;
     od;
-  else
-    ErrorNoReturn("the first argument should be a right translations ",
-                  "semigroup, and the second argument should be a mapping ",
-                  "on the underlying semigroup of the first argument, or a ",
-                  "list of indices of values of the generators under the ",
-                  "translation");
-  fi;
+  od;
+
   return RightTranslationNC(R, r);
 end);
 
+# Careful - expects a particular form for normal RMS
 InstallGlobalFunction(RightTranslationNC,
-function(R, r)
+function(R, r, opt...)
   local S, tup, reps, map_as_list, i;
   S := UnderlyingSemigroup(R);
   if IsRightTranslationOfNormalRMSSemigroup(R) then
-    tup := SEMIGROUPS.RightTransToNormalRMSTupleNC(S, r);
-    return RightTranslationOfNormalRMSNC(R, tup[1], tup[2]);
+    if IsEmpty(opt) then
+      return RightTranslationOfNormalRMSNC(R, r);
+    else
+      return RightTranslationOfNormalRMSNC(R, r, opt[1]);
+    fi;
   fi;
   if IsDenseList(r) then
     return Objectify(TypeRightTranslationsSemigroupElements(R),

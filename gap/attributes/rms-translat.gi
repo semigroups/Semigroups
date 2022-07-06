@@ -96,13 +96,14 @@ end;
 # Converts the transformation underlying a left translation into the arguments
 # required for the LeftTranslationsOfNormalRMS function.
 # Arguments are:
-# 1. S, a normalised RMS over a group,
+# 1. L, a left translations semigroup over a normalised RMS over a group,
 # 2. - a dense list of length the underlying reps of left translations on S OR
 #    - a mapping on S
 #    in either case, the second argument must define a left translation on S.
-SEMIGROUPS.LeftTransToNormalRMSTupleNC := function(S, x)
-  local I, G, one, group_func, trans, t, s, i;
+SEMIGROUPS.LeftTransToNormalRMSTupleNC := function(L, x)
+  local S, I, G, one, group_func, trans, t, s, i;
 
+  S          := UnderlyingSemigroup(L);
   I          := Rows(S);
   G          := UnderlyingSemigroup(S);
   one        := One(G);
@@ -128,9 +129,10 @@ SEMIGROUPS.LeftTransToNormalRMSTupleNC := function(S, x)
   return [group_func, Transformation(trans)];
 end;
 
-SEMIGROUPS.RightTransToNormalRMSTupleNC := function(S, x)
-  local J, G, one, group_func, trans, s, t, j;
+SEMIGROUPS.RightTransToNormalRMSTupleNC := function(R, x)
+  local S, J, G, one, group_func, trans, s, t, j;
 
+  S          := UnderlyingSemigroup(R);
   J          := Columns(S);
   G          := UnderlyingSemigroup(S);
   one        := One(G);
@@ -609,8 +611,9 @@ function(T)
         return ReesMatrixSemigroupElement(rms, x[1] ^ t,
             x[2], x[3]);
       end;
-      Add(gens, LeftTranslation(T, CompositionMapping(
-        inv, MappingByFunction(rms, rms, f), iso)));
+      Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
+                                        MappingByFunction(rms, rms, f),
+                                                        iso)));
     else
       f := function(x)
         if (x = zero or x[3] ^ t = n + 1) then
@@ -619,8 +622,9 @@ function(T)
         return ReesMatrixSemigroupElement(rms, x[1],
           x[2], x[3] ^ t);
       end;
-      Add(gens, RightTranslation(T, CompositionMapping(
-        inv, MappingByFunction(rms, rms, f), iso)));
+      Add(gens, RightTranslationNC(T, CompositionMapping(inv,
+                                          MappingByFunction(rms, rms, f),
+                                                         iso)));
     fi;
   od;
 
@@ -639,8 +643,9 @@ function(T)
         return ReesMatrixSemigroupElement(rms, x[1],
             fa(x[1]) * x[2], x[3]);
       end;
-      Add(gens, LeftTranslationNC(T, CompositionMapping(
-        inv, MappingByFunction(rms, rms, f), iso)));
+      Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
+                                        MappingByFunction(rms, rms, f),
+                                                        iso)));
     else
       f := function(x)
         if x = zero then
@@ -692,31 +697,28 @@ function(T)
   for t in GeneratorsOfSemigroup(FullTransformationMonoid(n)) do
     if L then
       if IsNRMS then
-        Add(gens, LeftTranslationOfNormalRMS(T, idgroup_func, t));
+        Add(gens, LeftTranslationNC(T, idgroup_func, t));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(rms, x[1] ^ t,
                                             x[2], x[3]);
         end;
-        Add(gens, LeftTranslation(T, CompositionMapping(
-                                        inv,
-                                        MappingByFunction(rms,
-                                                          rms, f),
-                                        iso)));
+        Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
+                                          MappingByFunction(rms, rms, f),
+                                                          iso)));
       fi;
     else
       if IsNRMS then
-        Add(gens, RightTranslationOfNormalRMS(T, idgroup_func, t));
+        Add(gens, RightTranslationNC(T, idgroup_func, t));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(rms, x[1],
             x[2], x[3] ^ t);
         end;
-        Add(gens, RightTranslation(T, CompositionMapping(
-                                        inv,
-                                        MappingByFunction(rms,
-                                                          rms, f),
-                                        iso)));
+        Add(gens, RightTranslationNC(T,
+                                     CompositionMapping(inv,
+                                          MappingByFunction(rms, rms, f),
+                                                        iso)));
       fi;
     fi;
   od;
@@ -730,35 +732,32 @@ function(T)
     end;
     if L then
       if IsNRMS then
-        Add(gens, LeftTranslationOfNormalRMS(T,
-                                             List([1 .. n], i -> fa(i)),
-                                             IdentityTransformation));
+        Add(gens, LeftTranslationNC(T,
+                                    List([1 .. n], i -> fa(i)),
+                                    IdentityTransformation));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(rms, x[1],
               fa(x[1]) * x[2], x[3]);
         end;
-        Add(gens, LeftTranslation(T, CompositionMapping(
-                                        inv,
-                                        MappingByFunction(rms,
-                                                          rms, f),
-                                        iso)));
+        Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
+                                          MappingByFunction(rms, rms, f),
+                                                          iso)));
       fi;
     else
       if IsNRMS then
-        Add(gens, RightTranslationOfNormalRMS(T,
-                                              List([1 .. n], i -> fa(i)),
-                                              IdentityTransformation));
+        Add(gens, RightTranslationNC(T,
+                                     List([1 .. n], i -> fa(i)),
+                                     IdentityTransformation));
       else
         f := function(x)
           return ReesMatrixSemigroupElement(rms, x[1],
             x[2] * fa(x[3]), x[3]);
         end;
-        Add(gens, RightTranslation(T, CompositionMapping(
-                                        inv,
-                                        MappingByFunction(rms,
-                                                          rms, f),
-                                        iso)));
+        Add(gens, RightTranslationNC(T,
+                                     CompositionMapping(inv,
+                                          MappingByFunction(rms, rms, f),
+                                                        iso)));
       fi;
     fi;
   od;
@@ -807,19 +806,13 @@ end);
 # L should be a left translations semigroup
 # group_func should be a function (represented as a list) from I to G
 # t should be a transformation of I
-InstallGlobalFunction(LeftTranslationOfNormalRMS,
+InstallOtherMethod(LeftTranslation,
+"for a semigroup of left translations, a dense list, and a transformation",
+[IsLeftTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
 function(L, group_func, t)
   local S, G;
 
   S := UnderlyingSemigroup(L);
-
-  if not (IsLeftTranslationsSemigroup(L) and
-         SEMIGROUPS.IsNormalRMSOverGroup(S)) then
-      ErrorNoReturn("the first argument must be a semigroup of left ",
-                    "translations over a normalised RMS over ",
-                    "a group");
-  fi;
-
   G := UnderlyingSemigroup(S);
 
   if not (IsList(group_func) and
@@ -837,11 +830,22 @@ function(L, group_func, t)
                   "first argument");
   fi;
 
-  return LeftTranslationOfNormalRMSNC(L, group_func, t);
+  return LeftTranslationNC(L, group_func, t);
 end);
 
 InstallGlobalFunction(LeftTranslationOfNormalRMSNC,
-function(L, group_func, t)
+function(L, x, opt...)
+  local tup, group_func, t;
+
+  if IsEmpty(opt) then
+    tup         := SEMIGROUPS.LeftTransToNormalRMSTupleNC(L, x);
+    group_func  := tup[1];
+    t           := tup[2];
+  else
+    group_func := x;
+    t          := opt[1];
+  fi;
+
   return Objectify(TypeLeftTranslationsSemigroupElements(L),
                    [group_func, t]);
 end);
@@ -850,19 +854,13 @@ end);
 # R should be a right translations semigroup
 # group_func should be a function (represented as a list) from J to G
 # t should be a transformation of J
-InstallGlobalFunction(RightTranslationOfNormalRMS,
+InstallOtherMethod(RightTranslation,
+"for a semigroup of right translations, a dense list, and a transformation",
+[IsRightTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
 function(R, group_func, t)
   local S, G;
 
   S := UnderlyingSemigroup(R);
-
-  if not (IsRightTranslationsSemigroup(R) and
-          SEMIGROUPS.IsNormalRMSOverGroup(S)) then
-      ErrorNoReturn("the first argument must be a semigroup of right ",
-                    "translations over a normalised RMS over ",
-                    "a group");
-  fi;
-
   G := UnderlyingSemigroup(S);
 
   if not (IsList(group_func) and
@@ -884,7 +882,18 @@ function(R, group_func, t)
 end);
 
 InstallGlobalFunction(RightTranslationOfNormalRMSNC,
-function(R, group_func, t)
+function(R, x, opt...)
+  local tup, group_func, t;
+
+  if IsEmpty(opt) then
+    tup         := SEMIGROUPS.RightTransToNormalRMSTupleNC(R, x);
+    group_func  := tup[1];
+    t           := tup[2];
+  else
+    group_func := x;
+    t          := opt[1];
+  fi;
+
   return Objectify(TypeRightTranslationsSemigroupElements(R),
                    [group_func, t]);
 end);
@@ -985,12 +994,8 @@ function(H, triple)
   left_group_func  := List(I, i -> triple[1] * P[1 ^ triple[3]][i]);
   right_group_func := List(M, mu -> P[mu][1 ^ triple[2]] * triple[1]);
 
-  l := LeftTranslationOfNormalRMSNC(LeftTranslations(S),
-                                    left_group_func,
-                                    triple[2]);
-  r := RightTranslationOfNormalRMSNC(RightTranslations(S),
-                                     right_group_func,
-                                     triple[3]);
+  l := LeftTranslationNC(LeftTranslations(S), left_group_func, triple[2]);
+  r := RightTranslationNC(RightTranslations(S), right_group_func, triple[3]);
 
   return BitranslationNC(H, l, r);
 end);
@@ -1010,13 +1015,13 @@ function(T)
   e := MultiplicativeNeutralElement(G);
 
   if IsLeftTranslationOfNormalRMSSemigroup(T) then
-    return LeftTranslationOfNormalRMS(T,
-                                      List(Rows(S), x -> e),
-                                      IdentityTransformation);
+    return LeftTranslationNC(T,
+                             List(Rows(S), x -> e),
+                             IdentityTransformation);
   else
-    return RightTranslationOfNormalRMS(T,
-                                       List(Columns(S), x -> e),
-                                       IdentityTransformation);
+    return RightTranslationNC(T,
+                              List(Columns(S), x -> e),
+                              IdentityTransformation);
   fi;
 end);
 
