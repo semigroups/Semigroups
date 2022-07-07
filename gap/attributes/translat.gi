@@ -943,7 +943,7 @@ InstallOtherMethod(RightTranslation,
 [IsRightTranslationsSemigroup, IsDenseList],
 function(R, r)
   local S, reps, semi_list, full_rho, g, rg, x, y, i, s;
-  
+
   S    := UnderlyingSemigroup(R);
   reps := UnderlyingRepresentatives(R);
 
@@ -983,7 +983,8 @@ end);
 # Careful - expects a particular form for normal RMS
 InstallGlobalFunction(RightTranslationNC,
 function(R, r, opt...)
-  local S, tup, reps, map_as_list, i;
+  local S, reps, map_as_list, i;
+
   S := UnderlyingSemigroup(R);
   if IsRightTranslationOfNormalRMSSemigroup(R) then
     if IsEmpty(opt) then

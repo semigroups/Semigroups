@@ -898,44 +898,6 @@ function(R, x, opt...)
                    [group_func, t]);
 end);
 
-#InstallMethod(Bitranslation,
-#[IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation],
-#1,
-#function(H, l, r)
-#  local S, i, I, j, J, lf, lt, P, rf, rt;
-#
-#  S := UnderlyingSemigroup(H);
-#
-#  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-#    TryNextMethod();
-#  fi;
-#
-#  P := Matrix(S);
-#  I := Rows(S);
-#  J := Columns(S);
-#
-#  lf := l![1];
-#  lt := l![2];
-#  rf := r![1];
-#  rt := r![2];
-#
-#  for i in I do
-#    for j in J do
-#      if not P[j][i ^ lt] * lf[i] = rf[j] * P[j ^ rt][i] then
-#        ErrorNoReturn("the second and third arguments must be a ",
-#                      "linked left and right translation, respectively");
-#      fi;
-#    od;
-#  od;
-#
-#  return BitranslationOfNormalRMSNC(H, l, r);
-#end);
-
-#InstallGlobalFunction(BitranslationOfNormalRMSNC,
-#function(H, l, r)
-#  return Objectify(TypeBitranslations(H), [l, r]);
-#end);
-
 InstallOtherMethod(Bitranslation,
 "for a bitranslation defined by a triple on a normal RMS",
 [IsBitranslationsSemigroup, IsAssociativeElement, IsTransformation,
@@ -944,11 +906,11 @@ function(H, g, chi, psi)
   local S, P, I, J, i, mu;
 
   S := UnderlyingSemigroup(H);
-  
+
   if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
     TryNextMethod();
   fi;
-  
+
   P := Matrix(S);
   I := Rows(S);
   J := Columns(S);
@@ -963,15 +925,15 @@ function(H, g, chi, psi)
     ErrorNoReturn("the third argument must be a transformation on the rows of ",
                   "the underlying semigroup of the first argument");
   fi;
-  
+
   if LargestImageOfMovedPoint(psi) > Length(J) then
     ErrorNoReturn("the fourth argument must be a transformation on the rows ",
                   "of the underlying semigroup of the first argument");
   fi;
 
-  for i in I do 
+  for i in I do
     for mu in J do
-      if not P[mu][i ^ chi] * g * P[1 ^ psi][i] 
+      if not P[mu][i ^ chi] * g * P[1 ^ psi][i]
               = P[mu][1 ^ chi] * g * P[mu ^ psi][i] then
         ErrorNoReturn("the arguments given do not define a bitranslation");
       fi;
