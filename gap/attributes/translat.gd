@@ -9,19 +9,107 @@
 ##
 
 #! @Chapter Translations
+
+#! In this chapter we describe the functionality in Semigroups for working with
+#! translations of semigroups. The notation used (as well as a number of
+#! results) is based on <Cite Key="Petrich1970aa"/>. Translations are of
+#! interest mainly due to their role in ideal extensions. A description of
+#! this role can also be found in <Cite Key="Petrich1970aa"/>.  The
+#! implementation of translations in this package is only applicable to
+#! finite semigroups satisfying <Ref Filt="CanUseFroidurePin"/>.
+#!
+#! For a semigroup <M>S</M>, a transformation <M>\lambda</M> of <M>S</M>
+#! (written on the left) is a left translation if for all <M>s, t</M> in
+#! <M>S</M>, <M>\lambda (s)t = \lambda (st) </M>.
+#! A right translation <M>\rho</M> (written on the right) is defined
+#! dually.
+#!
+#! The set <M>L</M> of left translations of <M>S</M> is a semigroup under
+#! composition of functions, as is the set <M>R</M> of right translations.
+#! The associativity of <M>S</M> guarantees that left [right] multiplication by
+#! any element <M>s</M> of <M>S</M> represents a left [right] translation;
+#! this is the <E>inner</E> left [right] translation <M>\lambda_s</M>
+#! [<M>\rho_s</M>].  The inner left [right] translations form an ideal in
+#! <M>L</M> [<M>R</M>].
+#!
+#! A left translation <M>\lambda</M> and right translation <M>\rho</M> are
+#! <E>linked</E> if for all <C>s, t</C> in <M>S</M>,
+#! <M>s\lambda(t) = (s)\rho t</M>.
+#! A pair of linked translations is called a <E>bitranslation</E>. The set of
+#! all bitranslations forms a semigroup <M>H</M> called the <E>translational
+#! hull</E> of <M>S</M> where the operation is componentwise. If the
+#! components are inner translations corresponding to multiplication by
+#! the same element, then the bitranslation is <E>inner</E>. The inner
+#! bitranslations form an ideal of the translational hull.
+#!
+#! <Heading>
+#!     Translations of normalised Rees matrix semigroups
+#! </Heading>
+#! Translations of a normalized Rees matrix semigroup
+#! <M>T</M> (see <Ref Attr = "RMSNormalization"/>) over a group <M>G</M>
+#! can be represented through certain tuples, which can be computed
+#! very efficiently compared to arbitrary translations. For left translations
+#! these tuples consist of a function from the row indices of <M>T</M> to G and
+#! a transformation on the row indices of <M>T</M>; the same is true of right
+#! translations and columns. More specifically, given a normalised Rees matrix
+#! semigroup <M>S</M> over a group <M>G</M> with sandwich matrix <M>P</M>, rows
+#! <M>I</M> and columns <M>J</M>, the left translations are
+#! characterised by pairs <M>(\theta, \chi)</M> where <M>\theta</M> is a
+#! function from <M>I</M> to <M>G</M> and <M>\chi</M> is a transformation of
+#! <M>I</M>. The left translation <M>\lambda</M> defined by
+#! <M>(\theta, \chi)</M> acts on <M>S</M> via
+#!
+#! <Display Mode="M">
+#!   \lambda((i, a, \mu)) = ((i)\chi, (i)\theta \cdot a, \mu),
+#! </Display>
+#!
+#! where <M>i \in I</M>, <M>a \in G</M>, and <M>\mu \in J</M>
+#! Dually, right translations <M>\rho</M> are characterised by
+#! pairs <M>(\omega, \psi)</M> where <M>\omega</M> is a function from
+#! <M>J</M> to <M>G</M> and <M>\psi</M> is a transformation of
+#! <M>J</M>, with action given by
+#!
+#! <Display Mode="M">
+#!   ((i, a, \mu))\rho = (i, a \cdot (\mu)\psi, (\mu)\psi).
+#! </Display>
+#!
+#! Similarly, bitranslations <M>(\lambda, \rho)</M> of <M>S</M> can be
+#! characterised by triples <M>(g, \chi, \psi)</M> such that <M>g \in G</M>,
+#! <M>\chi</M> and <M>\psi</M> are transformations of <M>I, J</M> respectively,
+#! and
+#!
+#! <Display Mode="M">
+#!   p_{\mu, (i)\chi} \cdot g \cdot p_{(1)\psi, i} =
+#!    p_{\mu, (1)\chi} \cdot g \cdot p_{(mu)\psi, i}.
+#! </Display>
+#!
+#! The action of <M>\lambda</M> on <M>S</M> is then given by
+#!
+#! <Display Mode="M">
+#!   \lambda((i, a, \mu)) = ((i)\chi, b \cdot p_{(1)\psi, i} \cdot a, \mu),
+#! </Display>
+#!
+#! and of <M>\rho</M> on <M>S</M> by
+#!
+#! <Display Mode="M">
+#!   ((i, a, \mu))\rho = (i, a \cdot p_{\mu, (1)\chi} \cdot b, (\mu)\psi).
+#! </Display>
+#!
+#! Further details may be found in <Cite Key="Clifford1977aa"/>.
+#!
 #! @Section Methods for translations
 
 #! @BeginGroup IsXTranslation
 #! @GroupTitle IsXTranslation
 #! @Description
-#! All, and only, left [right] translations belong to <C>IsLeftTranslation</C> 
-#! [<C>IsRightTranslation</C>]. These are both subcategories of 
+#! All, and only, left [right] translations belong to <C>IsLeftTranslation</C>
+#! [<C>IsRightTranslation</C>]. These are both subcategories of
 #! <C>IsSemigroupTranslation</C>, which itself is a subcategory of
 #! <C>IsAssociativeElement</C>.
 #! @BeginExampleSession
 #! gap> S := RectangularBand(3, 4);;
 #! gap> l := Representative(LeftTranslations(S));
-#! <left translation on <regular transformation semigroup of size 12, 
+#! <left translation on <regular transformation semigroup of size 12,
 #!  degree 8 with 4 generators>>
 #! gap> IsSemigroupTranslation(l);
 #! true
@@ -29,6 +117,10 @@
 #! true
 #! gap> IsRightTranslation(l);
 #! false
+#! gap> l = One(LeftTranslations(S));
+#! true
+#! gap> l * l = l;
+#! true
 #! @EndExampleSession
 DeclareCategory("IsSemigroupTranslation",
                 IsAssociativeElement and IsMultiplicativeElementWithOne);
@@ -64,7 +156,7 @@ DeclareCategory("IsBitranslation",
 #! @BeginGroup IsXTranslationCollection
 #! @GroupTitle IsXTranslationCollection
 #! @Description
-#! Every collection of left-, right-, or bi-translations belongs to the 
+#! Every collection of left-, right-, or bi-translations belongs to the
 #! respective category <Ref Filt="IsXTranslationCollection"/>.
 DeclareCategoryCollections("IsSemigroupTranslation");
 DeclareCategoryCollections("IsLeftTranslation");
@@ -77,7 +169,7 @@ DeclareCategoryCollections("IsBitranslation");
 #! @Returns a left or right translation
 #! @Arguments h
 #! @Description
-#! For a Bitranslation <A>h</A> consisting of a linked pair <M>(`l`, `r`)</M>,
+#! For a Bitranslation <A>h</A> consisting of a linked pair <M>(l, r)</M>,
 #! of left and right translations, `LeftPartOfBitranslation(<A>b</A>)` returns
 #! the left translation `l`, and `RightPartOfBitranslation(<A>b</A>)` returns
 #! the right translation `r`.
@@ -104,15 +196,15 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! * a mapping on the underlying semigroup; note that in this case only the
 #!   values of the mapping on the <Ref Attr="UnderlyingRepresentatives"/> of
 #!   <A>T</A> are checked and used, so mappings which do not define translations
-#!   can be used to create translations if they are valid on a subset of S;
+#!   can be used to create translations if they are valid on that subset of S;
 #! * a list of indices representing the images of the
 #!   <Ref Attr="UnderlyingRepresentatives"/> of <A>T</A>, where the ordering
 #!   is that of <Ref Oper="PositionCanonical"/> on <A>S</A>;
-#! * (for `LeftTranslation`) a list of length `Length(Rows(S))` 
+#! * (for `LeftTranslation`) a list of length `Length(Rows(S))`
 #!   containing elements of `UnderlyingSemigroup(S)`; in this case
 #!   <A>S</A> must be a normalised Rees matrix semigroup and `y` must be
 #!   a Transformation of `Rows(S)`;
-#! * (for `RightTranslation`) a list of length `Length(Columns(S))` 
+#! * (for `RightTranslation`) a list of length `Length(Columns(S))`
 #!   containing elements of `UnderlyingSemigroup(S)`; in this case
 #!   <A>S</A> must be a normalised Rees matrix semigroup and `y` must be
 #!   a Transformation of `Columns(S)`;
@@ -127,7 +219,7 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! > end;;
 #! gap> map := MappingByFunction(S, S, f);;
 #! gap> l := LeftTranslation(L, map);
-#! <left translation on <regular transformation semigroup of size 12, 
+#! <left translation on <regular transformation semigroup of size 12,
 #!  degree 8 with 4 generators>>
 #! gap> s ^ l;
 #! Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
@@ -158,7 +250,7 @@ DeclareOperation("RightTranslation",
 #! gap> x := Bitranslation(H, l, r);
 #! <bitranslation on <regular semigroup of size 17, with 4 generators>>
 #! @EndExampleSession
-DeclareOperation("Bitranslation", 
+DeclareOperation("Bitranslation",
   [IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation]);
 
 DeclareGlobalFunction("LeftTranslationNC");
@@ -218,12 +310,12 @@ DeclareAttribute("TypeBitranslations", IsBitranslationsSemigroup);
 #! @Arguments S
 #! @Description
 #! Given a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,
-#! returns the semigroup of all left or right translations of <A>S</A>. 
+#! returns the semigroup of all left or right translations of <A>S</A>.
 #! @BeginExampleSession
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> L := LeftTranslations(S);
-#! <the semigroup of left translations of <transformation semigroup of 
+#! <the semigroup of left translations of <transformation semigroup of
 #!  degree 6 with 2 generators>>
 #! gap> Size(L);
 #! 361
@@ -237,13 +329,13 @@ DeclareAttribute("RightTranslations",
 #! @Returns the translational hull
 #! @Arguments S
 #! @Description
-#! Given a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,  
+#! Given a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,
 #! returns the translational hull of <A>S</A>.
 #! @BeginExampleSession
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> H := TranslationalHull(S);
-#! <translational hull over <transformation semigroup of degree 6 with 2 
+#! <translational hull over <transformation semigroup of degree 6 with 2
 #!  generators>>
 #! gap> Size(H);
 #! 38
@@ -257,8 +349,8 @@ DeclareAttribute("TranslationalHull",
 #! @Arguments S
 #! @Description
 #! For a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,
-#! <C>InnerLeftTranslations</C>(<A>S</A>) 
-#! returns the inner left translations of S (i.e. the translations 
+#! <C>InnerLeftTranslations</C>(<A>S</A>)
+#! returns the inner left translations of S (i.e. the translations
 #! defined by left multiplication by a fixed element of <A>S</A>), and
 #! <C>InnerRightTranslations</C>(<A>S</A>) returns the inner right translations
 #! of <A>S</A> (i.e. the translations defined by right multiplication by
@@ -267,7 +359,7 @@ DeclareAttribute("TranslationalHull",
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> I := InnerLeftTranslations(S);
-#! <left translations semigroup over <transformation semigroup of size 22, 
+#! <left translations semigroup over <transformation semigroup of size 22,
 #!  degree 6 with 2 generators>>
 #! gap> Size(I) <= Size(S);
 #! true
@@ -282,14 +374,14 @@ DeclareAttribute("InnerRightTranslations",
 #! @Arguments S
 #! @Description
 #! Given a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,
-#! returns the inner translational hull of <A>S</A>, i.e. the bitranslations 
+#! returns the inner translational hull of <A>S</A>, i.e. the bitranslations
 #! whose left and right translation components are inner translations defined by
 #! left and right multiplication by the same fixed element of <A>S</A>.
 #! @BeginExampleSession
 #! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 #! > Transformation([3, 4, 1, 1, 4, 2])]);;
 #! gap> I := InnerTranslationalHull(S);
-#! <semigroup of bitranslations over <transformation semigroup of size 22, 
+#! <semigroup of bitranslations over <transformation semigroup of size 22,
 #!  degree 6 with 2 generators>>
 #! gap> L := LeftTranslations(S);;
 #! gap> R := RightTranslations(S);;
@@ -318,7 +410,7 @@ InstallTrueMethod(CanUseGapFroidurePin, IsBitranslationsSemigroup);
 #! @Arguments T
 #! @Description
 #! For efficiency, we typically store translations on a semigroup <M>S</M> as
-#! their actions on a small subset of <M>S</S>. For left translations, this is a
+#! their actions on a small subset of <M>S</M>. For left translations, this is a
 #! set of representatives of the maximal &R;-classes of <M>S</M>; dually for
 #! right translations we use representatives of the maximal &L;-classes. You can
 #! use `UnderlyingRepresentatives` to access these representatives.
@@ -347,10 +439,10 @@ DeclareAttribute("RepresentativeMultipliers", IsTranslationsSemigroup);
 #! gap> S := Semigroup([Transformation([1, 3, 3, 4]),
 #! > Transformation([3, 4, 1, 2])]);;
 #! gap> t := Set(LeftTranslations(S))[4];
-#! <left translation on <transformation semigroup of size 8, degree 4 with 
+#! <left translation on <transformation semigroup of size 8, degree 4 with
 #!  2 generators>>
 #! gap> ImageSetOfTranslation(t);
-#! [ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+#! [ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ),
 #!   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 4, 1, 3 ] ) ]
 #! @EndExampleSession
 DeclareOperation("ImageSetOfTranslation", [IsSemigroupTranslation]);
