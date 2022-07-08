@@ -101,9 +101,9 @@ namespace gapbind14 {
   // Constants
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<std::is_same<T, PositiveInfinity>::value>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_cpp<PositiveInfinity> {
+    using cpp_type                          = PositiveInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
     auto operator()(Obj x) {
       if (CALL_1ARGS(IsInfinity, x) != True) {
@@ -115,9 +115,9 @@ namespace gapbind14 {
     }
   };
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<std::is_same<T, NegativeInfinity>::value>> {
-    using cpp_type                          = T;
+  template <>
+  struct to_cpp<NegativeInfinity> {
+    using cpp_type                          = NegativeInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
     auto operator()(Obj x) {
       if (CALL_1ARGS(IsNegInfinity, x) != True) {

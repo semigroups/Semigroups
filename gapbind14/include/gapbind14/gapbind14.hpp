@@ -28,18 +28,15 @@
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
 
-#include <array>          // for array
-#include <functional>     // for function
 #include <sstream>        // for ostringstream
 #include <string>         // for string
-#include <tuple>          // for tuple
 #include <type_traits>    // for enable_if_t
 #include <typeinfo>       // for typeid
 #include <unordered_map>  // for unordered_map
-#include <unordered_set>  // for unordered_set
 #include <utility>        // for make_pair
 #include <vector>         // for vector
 
+#include "cpp-fn.hpp"        // for arg_count
 #include "gap_include.hpp"   // for gmp
 #include "tame-free-fn.hpp"  // for tame free functions
 #include "tame-make.hpp"     // for tame member functions
@@ -240,11 +237,9 @@ namespace gapbind14 {
 
     void check_args(Obj args, size_t n) {
       if (!IS_LIST(args)) {
-        ErrorQuit("expected the argument to be a list, found %s",
-                  (Int) TNAM_OBJ(args),
-                  0L);
+        ErrorQuit("expected a list, found %s", (Int) TNAM_OBJ(args), 0L);
       } else if (LEN_LIST(args) != n) {
-        ErrorQuit("expected the argument to be a list of length %d, found %d",
+        ErrorQuit("expected a list of length %d, found %d",
                   (Int) n,
                   (Int) LEN_LIST(args));
       }
@@ -435,40 +430,33 @@ namespace gapbind14 {
   // to_cpp - for gapbind14 gap objects
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType, std::enable_if_t<IsGapBind14Type<TCppType>::value>> {
-    using cpp_type = TCppType;
+  template <typename T>
+  struct to_cpp<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
+    using cpp_type = T;
     static gap_tnum_type const gap_type;
 
-    std::decay_t<TCppType> &operator()(Obj o) {
+    std::decay_t<T> &operator()(Obj o) {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
         ErrorQuit(
             "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      return *SubTypeSpec<std::decay_t<TCppType>>::obj_cpp_ptr(o);
+      return *SubTypeSpec<std::decay_t<T>>::obj_cpp_ptr(o);
     }
   };
 
-  template <typename TCppType>
-  struct to_gap<TCppType, std::enable_if_t<IsGapBind14Type<TCppType>::value>> {
-    using cpp_type = TCppType;
+  template <typename T>
+  struct to_gap<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
+    using cpp_type = T;
     static gap_tnum_type const gap_type;
 
-    Obj operator()(TCppType obj) {
-      Obj o = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
-      ADDR_OBJ(o)
-      [0]            = reinterpret_cast<Obj>(get_module().subtype<TCppType>());
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new TCppType(obj));
+    Obj operator()(T obj) {
+      Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
+      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(get_module().subtype<T>());
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new T(obj));
       CHANGED_BAG(o);
       return o;
     }
   };
-
-  template <typename TCppType>
-  gap_tnum_type const
-      to_cpp<TCppType,
-             std::enable_if_t<IsGapBind14Type<TCppType>::value>>::gap_type
-      = T_GAPBIND14_OBJ;
 
   ////////////////////////////////////////////////////////////////////////
   // Free functions

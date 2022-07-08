@@ -18,6 +18,8 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+#include <unordered_set>
+
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
