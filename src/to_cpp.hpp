@@ -56,31 +56,33 @@
 #include "libsemigroups/pbr.hpp"        // for PBR
 #include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
 
-using libsemigroups::IsMaxPlusTruncMat;
-using libsemigroups::IsMinPlusTruncMat;
-using libsemigroups::IsNTPMat;
-
 using libsemigroups::BMat;
 using libsemigroups::BMat8;
 using semigroups::WBMat8;
 
 using libsemigroups::IntMat;
 using libsemigroups::MaxPlusMat;
+using libsemigroups::MaxPlusTruncMat;
 using libsemigroups::MinPlusMat;
+using libsemigroups::MinPlusTruncMat;
+using libsemigroups::NTPMat;
 using libsemigroups::ProjMaxPlusMat;
 
-using libsemigroups::Bipartition;
-using libsemigroups::MaxPlusTruncSemiring;
-using libsemigroups::MinPlusTruncSemiring;
 using libsemigroups::NTPSemiring;
+
+using libsemigroups::Bipartition;
 using libsemigroups::PBR;
 
 using libsemigroups::IsPPerm;
+using libsemigroups::PPerm;
 using libsemigroups::Transf;
 
+using libsemigroups::congruence_kind;
 using libsemigroups::NegativeInfinity;
 using libsemigroups::PositiveInfinity;
 using libsemigroups::UNDEFINED;
+
+using libsemigroups::detail::DynamicArray2;
 
 namespace semigroups {
   NTPSemiring<> const* semiring(size_t threshold, size_t period);
@@ -105,7 +107,7 @@ namespace gapbind14 {
   struct to_cpp<PositiveInfinity> {
     using cpp_type                          = PositiveInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    auto operator()(Obj x) {
+    auto operator()(Obj x) const {
       if (CALL_1ARGS(IsInfinity, x) != True) {
         ErrorQuit("expected object satisfying IsInfinity, found %s",
                   (Int) TNAM_OBJ(x),
@@ -119,7 +121,7 @@ namespace gapbind14 {
   struct to_cpp<NegativeInfinity> {
     using cpp_type                          = NegativeInfinity;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    auto operator()(Obj x) {
+    auto operator()(Obj x) const {
       if (CALL_1ARGS(IsNegInfinity, x) != True) {
         ErrorQuit("expected object satisfying IsNegInfinity, found %s",
                   (Int) TNAM_OBJ(x),
@@ -138,7 +140,7 @@ namespace gapbind14 {
     using cpp_type                          = BMat<>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    BMat<> operator()(Obj o) {
+    BMat<> operator()(Obj o) const {
       if (CALL_1ARGS(IsBooleanMat, o) != True) {
         ErrorQuit("expected boolean matrix but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
@@ -171,7 +173,7 @@ namespace gapbind14 {
 
   template <>
   struct to_cpp<WBMat8> {
-    WBMat8 operator()(Obj o) {
+    WBMat8 operator()(Obj o) const {
       if (CALL_1ARGS(IsBooleanMat, o) != True) {
         ErrorQuit("expected boolean matrix but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
@@ -236,7 +238,9 @@ namespace gapbind14 {
           } else if (CALL_1ARGS(IsInfinity, val) == True) {
             itm = to_cpp<PositiveInfinity>()(val);
           } else if (CALL_1ARGS(IsNegInfinity, val) == True) {
-            itm = to_cpp<NegativeInfinity>()(val);
+            itm = to_cpp<std::conditional_t<std::is_signed<scalar_type>::value,
+                                            NegativeInfinity,
+                                            scalar_type>>()(val);
           }
           x(i, j) = itm;
         }
@@ -266,7 +270,7 @@ namespace gapbind14 {
   struct to_cpp<MaxPlusMat<>> {
     using cpp_type = MaxPlusMat<>;
 
-    MaxPlusMat<> operator()(Obj o) {
+    MaxPlusMat<> operator()(Obj o) const {
       if (CALL_1ARGS(IsMaxPlusMatrix, o) != True) {
         ErrorQuit("expected max-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -282,7 +286,7 @@ namespace gapbind14 {
   struct to_cpp<MinPlusMat<>> {
     using cpp_type = MinPlusMat<>;
 
-    MinPlusMat<> operator()(Obj o) {
+    MinPlusMat<> operator()(Obj o) const {
       if (CALL_1ARGS(IsMinPlusMatrix, o) != True) {
         ErrorQuit("expected min-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -298,7 +302,7 @@ namespace gapbind14 {
   struct to_cpp<ProjMaxPlusMat<>> {
     using cpp_type = ProjMaxPlusMat<>;
 
-    ProjMaxPlusMat<> operator()(Obj o) {
+    ProjMaxPlusMat<> operator()(Obj o) const {
       if (CALL_1ARGS(IsProjectiveMaxPlusMatrix, o) != True) {
         ErrorQuit("expected min-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -309,87 +313,86 @@ namespace gapbind14 {
   template <>
   struct to_cpp<ProjMaxPlusMat<> const&> : to_cpp<ProjMaxPlusMat<>> {};
 
-  template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<IsMaxPlusTruncMat<std::decay_t<
-                           T>> || IsMinPlusTruncMat<std::decay_t<T>>>> {
-    using cpp_type                          = std::decay_t<T>;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    std::decay_t<T> operator()(Obj o) {
-      LIBSEMIGROUPS_ASSERT(
-          IsMinPlusTruncMat<
-              std::decay_t<T>> || IsMaxPlusTruncMat<std::decay_t<T>>);
-      if (IsMinPlusTruncMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsTropicalMinPlusMatrix, o) != True) {
-          ErrorQuit("expected tropical min-plus matrix, found %s!",
-                    (Int) TNAM_OBJ(o),
-                    0L);
-        }
-      } else if (IsMaxPlusTruncMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsTropicalMaxPlusMatrix, o) != True) {
-          ErrorQuit("expected tropical max-plus matrix, found %s!",
-                    (Int) TNAM_OBJ(o),
-                    0L);
-        }
-      } else {
-        ErrorQuit("expected tropical max/min-plus matrix, found %s!",
+  template <>
+  struct to_cpp<MaxPlusTruncMat<>> {
+    using cpp_type = MaxPlusTruncMat<>;
+
+    cpp_type operator()(Obj o) const {
+      if (CALL_1ARGS(IsTropicalMaxPlusMatrix, o) != True) {
+        ErrorQuit("expected tropical max-plus matrix, found %s",
                   (Int) TNAM_OBJ(o),
                   0L);
       }
 
       size_t m            = LEN_PLIST(ELM_PLIST(o, 1));
-      using semiring_type = typename std::decay_t<T>::semiring_type;
+      using semiring_type = typename MaxPlusTruncMat<>::semiring_type;
       auto const* sr      = semigroups::semiring<semiring_type>(
           static_cast<size_t>(INT_INTOBJ(ELM_PLIST(o, m + 1))));
-      return detail::init_cpp_matrix<T>(o, sr);
+      return detail::init_cpp_matrix<MaxPlusTruncMat<>>(o, sr);
     }
   };
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsNTPMat<std::decay_t<T>>>> {
-    using cpp_type                          = std::decay_t<T>;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
-    std::decay_t<T> operator()(Obj o) {
+  // TODO: remove
+  template <>
+  struct to_cpp<MaxPlusTruncMat<> const&> : to_cpp<MaxPlusTruncMat<>> {};
+
+  template <>
+  struct to_cpp<MinPlusTruncMat<>> {
+    using cpp_type = MinPlusTruncMat<>;
+
+    cpp_type operator()(Obj o) const {
+      if (CALL_1ARGS(IsTropicalMinPlusMatrix, o) != True) {
+        ErrorQuit("expected tropical min-plus matrix, found %s",
+                  (Int) TNAM_OBJ(o),
+                  0L);
+      }
+
+      size_t m            = LEN_PLIST(ELM_PLIST(o, 1));
+      using semiring_type = typename MinPlusTruncMat<>::semiring_type;
+      auto const* sr      = semigroups::semiring<semiring_type>(
+          static_cast<size_t>(INT_INTOBJ(ELM_PLIST(o, m + 1))));
+      return detail::init_cpp_matrix<MinPlusTruncMat<>>(o, sr);
+    }
+  };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<MinPlusTruncMat<> const&> : to_cpp<MinPlusTruncMat<>> {};
+
+  template <>
+  struct to_cpp<NTPMat<>> {
+    using cpp_type = NTPMat<>;
+
+    NTPMat<> operator()(Obj o) const {
       if (CALL_1ARGS(IsNTPMatrix, o) != True) {
         ErrorQuit("expected ntp matrix, found %s!", (Int) TNAM_OBJ(o), 0L);
-      } else if (LEN_PLIST(o) == 0) {
-        ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
       }
+      SEMIGROUPS_ASSERT(LEN_PLIST(o) != 0);
       size_t      m  = LEN_PLIST(ELM_PLIST(o, 1));
       auto const* sr = semigroups::semiring(
           static_cast<size_t>(INT_INTOBJ(ELM_PLIST(o, m + 1))),
           static_cast<size_t>(INT_INTOBJ(ELM_PLIST(o, m + 2))));
-      std::decay_t<T> x(sr, m, m);
-      using scalar_type = typename std::decay_t<T>::scalar_type;
-      for (size_t i = 0; i < m; i++) {
-        Obj row = ELM_PLIST(o, i + 1);
-        for (size_t j = 0; j < m; j++) {
-          x(i, j) = to_cpp<scalar_type>()(ELM_PLIST(row, j + 1));
-        }
-      }
-      GAPBIND14_TRY(libsemigroups::validate(x));
-      return x;
+      return detail::init_cpp_matrix<NTPMat<>>(o, sr);
     }
   };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<NTPMat<> const&> : to_cpp<NTPMat<>> {};
 
   ////////////////////////////////////////////////////////////////////////
   // congruence_kind
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<std::is_same<std::decay_t<T>,
-                                    libsemigroups::congruence_kind>::value>> {
-    using cpp_type                          = std::decay_t<T>;
+  template <>
+  struct to_cpp<congruence_kind> {
+    using cpp_type                          = congruence_kind;
     static gap_tnum_type constexpr gap_type = T_STRING;
 
-    std::decay_t<T> operator()(Obj o) {
+    cpp_type operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      using libsemigroups::congruence_kind;
       std::string stype = std::string(CSTR_STRING(o));
       if (stype == "left") {
         return congruence_kind::left;
@@ -402,29 +405,32 @@ namespace gapbind14 {
       }
     }
   };
+  // TODO: remove
+  template <>
+  struct to_cpp<congruence_kind&&> : to_cpp<congruence_kind> {};
 
-  template <typename T>
-  struct to_cpp<T,
-                std::enable_if_t<std::is_same<
-                    std::decay_t<T>,
-                    libsemigroups::Congruence::options::runners>::value>> {
-    using cpp_type = std::decay_t<T>;
+  template <>
+  struct to_cpp<libsemigroups::Congruence::options::runners> {
+    using cpp_type = libsemigroups::Congruence::options::runners;
 
-    std::decay_t<T> operator()(Obj o) {
-      using runners = libsemigroups::Congruence::options::runners;
+    cpp_type operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
         ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
       std::string stype = std::string(CSTR_STRING(o));
       if (stype == "none") {
-        return runners::none;
+        return cpp_type::none;
       } else if (stype == "standard") {
-        return runners::standard;
+        return cpp_type::standard;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
       }
     }
   };
+
+  template <>
+  struct to_cpp<libsemigroups::Congruence::options::runners&&>
+      : to_cpp<libsemigroups::Congruence::options::runners> {};
 
   ////////////////////////////////////////////////////////////////////////
   // Transformations
@@ -452,7 +458,7 @@ namespace gapbind14 {
   struct to_cpp<Transf<0, Scalar>> {
     using cpp_type = Transf<0, Scalar>;
 
-    cpp_type operator()(Obj t) {
+    cpp_type operator()(Obj t) const {
       if (!IS_PLIST(t)) {
         ErrorQuit("expected list, got %s", (Int) TNAM_OBJ(t), 0L);
       } else if (LEN_PLIST(t) != 2) {
@@ -502,6 +508,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
+    // TODO: renovate
     template <typename S, typename T>
     void to_cpp_pperm(S& x, T* ptr, size_t const N) {
       static_assert(
@@ -528,6 +535,7 @@ namespace gapbind14 {
     }
 
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+    // TODO: renovate
     template <typename T>
     auto construct_pperm(size_t n)
         -> std::enable_if_t<std::is_same<T, HPCombi::PPerm16>::value, T> {
@@ -549,17 +557,15 @@ namespace gapbind14 {
 
   }  // namespace detail
 
-  template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<IsPPerm<std::decay_t<T>>
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-                       || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
-#endif
-                       >> {
-    using cpp_type = std::decay_t<T>;
+  template <typename Scalar>
+  struct to_cpp<PPerm<0, Scalar>> {
+    using cpp_type = PPerm<0, Scalar>;
+    // #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+    // FIXME
+    // || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
+    //#endif
 
-    std::decay_t<T> operator()(Obj t) const {
+    cpp_type operator()(Obj t) const {
       if (!IS_PLIST(t)) {
         ErrorQuit("expected list, got %s", (Int) TNAM_OBJ(t), 0L);
       } else if (LEN_PLIST(t) != 2) {
@@ -594,7 +600,7 @@ namespace gapbind14 {
             (Int) M);
       }
 
-      std::decay_t<T> result(detail::construct_pperm<cpp_type>(N));
+      cpp_type result(detail::construct_pperm<cpp_type>(N));
       if (TNUM_OBJ(x) == T_PPERM2) {
         detail::to_cpp_pperm(result, ADDR_PPERM2(x), DEG_PPERM2(x));
       } else if (TNUM_OBJ(x) == T_PPERM4) {
@@ -618,6 +624,12 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  template <typename Scalar>
+  struct to_cpp<PPerm<0, Scalar> const&> : to_cpp<PPerm<0, Scalar>> {};
+
+  template <typename Scalar>
+  struct to_cpp<PPerm<0, Scalar>&> : to_cpp<PPerm<0, Scalar>> {};
 
   ////////////////////////////////////////////////////////////////////////
   // Bipartition
@@ -677,8 +689,10 @@ namespace gapbind14 {
   struct to_cpp<PBR const&> : to_cpp<PBR> {};
 
   template <typename T>
-  struct to_cpp<T, std::enable_if_t<libsemigroups::IsDynamicArray2<T>>> {
-    std::decay_t<T> operator()(Obj x) {
+  struct to_cpp<DynamicArray2<T>> {
+    using cpp_type = DynamicArray2<T>;
+    cpp_type operator()(Obj x) {
+      using value_type = typename DynamicArray2<T>::value_type;
       if (!IS_LIST(x)) {
         ErrorQuit("expected a list, got %s", (Int) TNAM_OBJ(x), 0L);
       }
@@ -696,19 +710,19 @@ namespace gapbind14 {
                     (Int) i + 1);
         }
       }
-      size_t nr_cols = (LEN_LIST(x) == 0 ? 0 : LEN_LIST(ELM_LIST(x, 1)));
-      std::decay_t<T> result(nr_cols, LEN_LIST(x));
+      size_t   nr_cols = (LEN_LIST(x) == 0 ? 0 : LEN_LIST(ELM_LIST(x, 1)));
+      cpp_type result(nr_cols, LEN_LIST(x));
       for (size_t i = 0; i < LEN_LIST(x); ++i) {
         Obj item = ELM_LIST(x, i + 1);
         for (size_t j = 0; j < nr_cols; ++j) {
-          result.set(i,
-                     j,
-                     to_cpp<typename std::decay_t<T>::value_type>()(
-                         ELM_LIST(item, j + 1)));
+          result.set(i, j, to_cpp<value_type>()(ELM_LIST(item, j + 1)));
         }
       }
       return result;
     }
   };
+  // TODO: remove
+  template <typename T>
+  struct to_cpp<DynamicArray2<T> const&> : to_cpp<DynamicArray2<T>> {};
 }  // namespace gapbind14
 #endif  // SEMIGROUPS_SRC_TO_CPP_HPP_
