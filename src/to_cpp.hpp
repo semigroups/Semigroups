@@ -69,6 +69,8 @@ using libsemigroups::IsProjMaxPlusMat;
 using libsemigroups::BMat8;
 using semigroups::WBMat8;
 
+using libsemigroups::BMat;
+
 using libsemigroups::Bipartition;
 using libsemigroups::MaxPlusTruncSemiring;
 using libsemigroups::MinPlusTruncSemiring;
@@ -133,12 +135,12 @@ namespace gapbind14 {
   // BMat <-> IsBooleanMat
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsBMat<std::decay_t<T>>>> {
-    using cpp_type                          = std::decay_t<T>;
+  template <>
+  struct to_cpp<BMat<>> {
+    using cpp_type                          = BMat<>;
     static gap_tnum_type constexpr gap_type = T_POSOBJ;
 
-    std::decay_t<T> operator()(Obj o) {
+    BMat<> operator()(Obj o) {
       if (CALL_1ARGS(IsBooleanMat, o) != True) {
         ErrorQuit("expected boolean matrix but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
@@ -147,8 +149,8 @@ namespace gapbind14 {
 
       Obj row = ELM_PLIST(o, 1);
       SEMIGROUPS_ASSERT(IS_PLIST(row) || IS_BLIST_REP(row));
-      size_t          m = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
-      std::decay_t<T> x(m, m);
+      size_t m = (IS_BLIST_REP(row) ? LEN_BLIST(row) : LEN_PLIST(row));
+      BMat<> x(m, m);
 
       for (size_t i = 0; i < m; i++) {
         row = ELM_PLIST(o, i + 1);
@@ -166,19 +168,15 @@ namespace gapbind14 {
     }
   };
 
-  template <typename T>
-  struct to_cpp<
-      T,
-      std::enable_if_t<std::is_same<WBMat8, std::decay_t<T>>::value>> {
+  template <>
+  struct to_cpp<BMat<> const&> : to_cpp<BMat<>> {};
+
+  template <>
+  struct to_cpp<WBMat8> {
     WBMat8 operator()(Obj o) {
       if (CALL_1ARGS(IsBooleanMat, o) != True) {
         ErrorQuit("expected boolean matrix but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      // else if (LEN_LIST(o) > 8) {
-      //  ErrorQuit("expected boolean matrix of dimension at most 8 got %s!",
-      //            (Int) LEN_LIST(o),
-      //            0L);
-      // }
       SEMIGROUPS_ASSERT(LEN_PLIST(o) > 0);
 
       Obj row = ELM_PLIST(o, 1);
@@ -200,6 +198,12 @@ namespace gapbind14 {
       return std::make_pair(x, m);
     }
   };
+
+  template <>
+  struct to_cpp<WBMat8&> : to_cpp<WBMat8> {};
+
+  template <>
+  struct to_cpp<WBMat8 const&> : to_cpp<WBMat8> {};
 
   ////////////////////////////////////////////////////////////////////////
   // IntMat + MaxPlusMat + MinPlusMat
@@ -449,11 +453,11 @@ namespace gapbind14 {
       size_t N = INT_INTOBJ(ELM_PLIST(t, 2));
 
       if (INT_INTOBJ(CALL_1ARGS(LARGEST_MOVED_PT_TRANS, x)) > N) {
-        ErrorQuit(
-            "expected transformation with largest moved point not greater than "
-            "%d, found %d",
-            (Int) N,
-            (Int) DEG_TRANS(x));
+        ErrorQuit("expected transformation with largest moved point not "
+                  "greater than "
+                  "%d, found %d",
+                  (Int) N,
+                  (Int) DEG_TRANS(x));
       }
 
       std::decay_t<T> result;
@@ -600,8 +604,8 @@ namespace gapbind14 {
   // Bipartition
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<IsBipartition<std::decay_t<T>>>> {
+  template <>
+  struct to_cpp<Bipartition&> {
     Bipartition& operator()(Obj x) const {
       if (TNUM_OBJ(x) != T_BIPART) {
         ErrorQuit("expected a bipartition, got %s", (Int) TNAM_OBJ(x), 0L);
@@ -609,6 +613,12 @@ namespace gapbind14 {
       return *bipart_get_cpp(x);
     }
   };
+
+  template <>
+  struct to_cpp<Bipartition const&> : to_cpp<Bipartition&> {};
+
+  template <>
+  struct to_cpp<Bipartition> : to_cpp<Bipartition&> {};
 
   ////////////////////////////////////////////////////////////////////////
   // PBR

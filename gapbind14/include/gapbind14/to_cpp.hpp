@@ -33,6 +33,15 @@ namespace gapbind14 {
   template <typename TCppType, typename = void>
   struct to_cpp;
 
+  // template <typename T>
+  // struct to_cpp<T&> : to_cpp<T> {};
+
+  // template <typename T>
+  // struct to_cpp<T const&> : to_cpp<T> {};
+
+  // template <typename T>
+  // struct to_cpp<T&&> : to_cpp<T> {};
+
   ////////////////////////////////////////////////////////////////////////
   // void
   ////////////////////////////////////////////////////////////////////////
