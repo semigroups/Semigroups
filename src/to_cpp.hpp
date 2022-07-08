@@ -56,29 +56,27 @@
 #include "libsemigroups/pbr.hpp"        // for PBR
 #include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
 
-using libsemigroups::IsBMat;
-using libsemigroups::IsIntMat;
-using libsemigroups::IsMatrix;
-using libsemigroups::IsMaxPlusMat;
 using libsemigroups::IsMaxPlusTruncMat;
-using libsemigroups::IsMinPlusMat;
 using libsemigroups::IsMinPlusTruncMat;
 using libsemigroups::IsNTPMat;
-using libsemigroups::IsProjMaxPlusMat;
 
+using libsemigroups::BMat;
 using libsemigroups::BMat8;
 using semigroups::WBMat8;
 
-using libsemigroups::BMat;
+using libsemigroups::IntMat;
+using libsemigroups::MaxPlusMat;
+using libsemigroups::MinPlusMat;
+using libsemigroups::ProjMaxPlusMat;
 
 using libsemigroups::Bipartition;
 using libsemigroups::MaxPlusTruncSemiring;
 using libsemigroups::MinPlusTruncSemiring;
 using libsemigroups::NTPSemiring;
+using libsemigroups::PBR;
 
-using libsemigroups::IsBipartition;
 using libsemigroups::IsPPerm;
-using libsemigroups::IsTransf;
+using libsemigroups::Transf;
 
 using libsemigroups::NegativeInfinity;
 using libsemigroups::PositiveInfinity;
@@ -210,9 +208,23 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
-    template <typename T>
-    void init_cpp_matrix(T& x, Obj o, size_t const m) {
-      using scalar_type = typename T::scalar_type;
+
+    template <typename T, typename... TArgs>
+    T make_matrix(size_t r, size_t c, TArgs&&... params) {
+      return T(std::forward<TArgs>(params)..., r, c);
+    }
+
+    template <typename T, typename... TArgs>
+    std::decay_t<T> init_cpp_matrix(Obj o, TArgs&&... params) {
+      // TODO: remove decay_t x many
+      using scalar_type = typename std::decay_t<T>::scalar_type;
+      if (LEN_PLIST(o) == 0) {
+        ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
+      }
+
+      size_t          m = LEN_PLIST(ELM_PLIST(o, 1));
+      std::decay_t<T> x
+          = make_matrix<std::decay_t<T>>(m, m, std::forward<TArgs>(params)...);
       for (size_t i = 0; i < m; i++) {
         Obj row = ELM_PLIST(o, i + 1);
         for (size_t j = 0; j < m; j++) {
@@ -230,53 +242,72 @@ namespace gapbind14 {
         }
       }
       GAPBIND14_TRY(libsemigroups::validate(x));
+      return x;
     }
   }  // namespace detail
 
-  template <typename T>
-  struct to_cpp<T,
-                std::
-                    enable_if_t<
-                        IsIntMat<std::decay_t<
-                            T>> || IsMaxPlusMat<std::decay_t<T>> || IsMinPlusMat<std::decay_t<T>> || IsProjMaxPlusMat<std::decay_t<T>>>> {  // NOLINT(whitespace/line_length)
-    using cpp_type                          = std::decay_t<T>;
-    static gap_tnum_type constexpr gap_type = T_POSOBJ;
+  template <>
+  struct to_cpp<IntMat<>> {
+    using cpp_type = IntMat<>;
 
-    std::decay_t<T> operator()(Obj o) {
-      using scalar_type   = typename std::decay_t<T>::scalar_type;
-      using semiring_type = typename std::decay_t<T>::semiring_type;
-
-      if (IsIntMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsIntegerMatrix, o) != True) {
-          ErrorQuit("expected integer matrix found %s!", (Int) TNAM_OBJ(o), 0L);
-        }
-      } else if (IsMaxPlusMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsMaxPlusMatrix, o) != True) {
-          ErrorQuit(
-              "expected max-plus matrix found %s!", (Int) TNAM_OBJ(o), 0L);
-        }
-      } else if (IsMinPlusMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsMinPlusMatrix, o) != True) {
-          ErrorQuit(
-              "expected min-plus matrix found %s!", (Int) TNAM_OBJ(o), 0L);
-        }
-      } else if (IsProjMaxPlusMat<std::decay_t<T>>) {
-        if (CALL_1ARGS(IsProjectiveMaxPlusMatrix, o) != True) {
-          ErrorQuit("expected projective max-plus matrix found %s!",
-                    (Int) TNAM_OBJ(o),
-                    0L);
-        }
+    IntMat<> operator()(Obj o) const {
+      if (CALL_1ARGS(IsIntegerMatrix, o) != True) {
+        ErrorQuit("expected integer matrix, found %s", (Int) TNAM_OBJ(o), 0L);
       }
-      if (LEN_PLIST(o) == 0) {
-        ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
-      }
-
-      size_t          m = LEN_PLIST(ELM_PLIST(o, 1));
-      std::decay_t<T> x(m, m);
-      detail::init_cpp_matrix(x, o, m);
-      return x;
+      return detail::init_cpp_matrix<IntMat<>>(o);
     }
   };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<IntMat<> const&> : to_cpp<IntMat<>> {};
+
+  template <>
+  struct to_cpp<MaxPlusMat<>> {
+    using cpp_type = MaxPlusMat<>;
+
+    MaxPlusMat<> operator()(Obj o) {
+      if (CALL_1ARGS(IsMaxPlusMatrix, o) != True) {
+        ErrorQuit("expected max-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
+      }
+      return detail::init_cpp_matrix<MaxPlusMat<>>(o);
+    }
+  };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<MaxPlusMat<> const&> : to_cpp<MaxPlusMat<>> {};
+
+  template <>
+  struct to_cpp<MinPlusMat<>> {
+    using cpp_type = MinPlusMat<>;
+
+    MinPlusMat<> operator()(Obj o) {
+      if (CALL_1ARGS(IsMinPlusMatrix, o) != True) {
+        ErrorQuit("expected min-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
+      }
+      return detail::init_cpp_matrix<MinPlusMat<>>(o);
+    }
+  };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<MinPlusMat<> const&> : to_cpp<MinPlusMat<>> {};
+
+  template <>
+  struct to_cpp<ProjMaxPlusMat<>> {
+    using cpp_type = ProjMaxPlusMat<>;
+
+    ProjMaxPlusMat<> operator()(Obj o) {
+      if (CALL_1ARGS(IsProjectiveMaxPlusMatrix, o) != True) {
+        ErrorQuit("expected min-plus matrix, found %s", (Int) TNAM_OBJ(o), 0L);
+      }
+      return detail::init_cpp_matrix<ProjMaxPlusMat<>>(o);
+    }
+  };
+  // TODO: remove
+  template <>
+  struct to_cpp<ProjMaxPlusMat<> const&> : to_cpp<ProjMaxPlusMat<>> {};
 
   template <typename T>
   struct to_cpp<
@@ -307,17 +338,11 @@ namespace gapbind14 {
                   0L);
       }
 
-      // TODO(later) something is wrong with LEN_LIST here
-      // if (LEN_LIST(o) == 0) {
-      //  ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
-      //}
       size_t m            = LEN_PLIST(ELM_PLIST(o, 1));
       using semiring_type = typename std::decay_t<T>::semiring_type;
       auto const* sr      = semigroups::semiring<semiring_type>(
           static_cast<size_t>(INT_INTOBJ(ELM_PLIST(o, m + 1))));
-      std::decay_t<T> x(sr, m, m);
-      detail::init_cpp_matrix(x, o, m);
-      return x;
+      return detail::init_cpp_matrix<T>(o, sr);
     }
   };
 
@@ -423,17 +448,11 @@ namespace gapbind14 {
 
   }  // namespace detail
 
-  template <typename T>
-  struct to_cpp<T,
-                std::enable_if_t<
-                    IsTransf<std::decay_t<T>>
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-                    || std::is_same<std::decay_t<T>, HPCombi::Transf16>::value
-#endif
-                    >> {
-    using cpp_type = std::decay_t<T>;
+  template <typename Scalar>
+  struct to_cpp<Transf<0, Scalar>> {
+    using cpp_type = Transf<0, Scalar>;
 
-    std::decay_t<T> operator()(Obj t) {
+    cpp_type operator()(Obj t) {
       if (!IS_PLIST(t)) {
         ErrorQuit("expected list, got %s", (Int) TNAM_OBJ(t), 0L);
       } else if (LEN_PLIST(t) != 2) {
@@ -454,16 +473,12 @@ namespace gapbind14 {
 
       if (INT_INTOBJ(CALL_1ARGS(LARGEST_MOVED_PT_TRANS, x)) > N) {
         ErrorQuit("expected transformation with largest moved point not "
-                  "greater than "
-                  "%d, found %d",
+                  "greater than %d, found %d",
                   (Int) N,
                   (Int) DEG_TRANS(x));
       }
 
-      std::decay_t<T> result;
-      if (IsTransf<std::decay_t<T>>) {
-        result = std::decay_t<T>(N);
-      }
+      cpp_type result(N);
       if (TNUM_OBJ(x) == T_TRANS2) {
         detail::to_cpp_transf(
             result, ADDR_TRANS2(x), std::min(DEG_TRANS(x), N));
@@ -477,6 +492,10 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  // TODO: remove
+  template <typename Scalar>
+  struct to_cpp<Transf<0, Scalar> const&> : to_cpp<Transf<0, Scalar>> {};
 
   ////////////////////////////////////////////////////////////////////////
   // Partial perms
@@ -614,9 +633,11 @@ namespace gapbind14 {
     }
   };
 
+  // TODO: remove
   template <>
   struct to_cpp<Bipartition const&> : to_cpp<Bipartition&> {};
 
+  // TODO: remove
   template <>
   struct to_cpp<Bipartition> : to_cpp<Bipartition&> {};
 
@@ -624,9 +645,9 @@ namespace gapbind14 {
   // PBR
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename T>
-  struct to_cpp<T, std::enable_if_t<libsemigroups::IsPBR<std::decay_t<T>>>> {
-    libsemigroups::PBR operator()(Obj x) const {
+  template <>
+  struct to_cpp<PBR> {
+    PBR operator()(Obj x) const {
       if (CALL_1ARGS(IsPBR, x) != True) {
         ErrorQuit("expected a PBR, got %s", (Int) TNAM_OBJ(x), 0L);
       } else if (LEN_PLIST(x) == 0) {
@@ -650,6 +671,10 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  // TODO: remove
+  template <>
+  struct to_cpp<PBR const&> : to_cpp<PBR> {};
 
   template <typename T>
   struct to_cpp<T, std::enable_if_t<libsemigroups::IsDynamicArray2<T>>> {
