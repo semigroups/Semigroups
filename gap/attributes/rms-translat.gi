@@ -568,7 +568,6 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   return fam;
 end;
 
-
 #############################################################################
 # 2. Methods for (zero) simple semigroups
 #############################################################################
@@ -942,7 +941,6 @@ function(H, g, chi, psi)
 
   return BitranslationOfNormalRMSByTripleNC(H, [g, chi, psi]);
 end);
-
 
 InstallGlobalFunction(BitranslationOfNormalRMSByTripleNC,
 function(H, triple)

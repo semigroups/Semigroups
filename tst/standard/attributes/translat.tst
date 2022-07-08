@@ -481,6 +481,9 @@ gap> for h in TranslationalHull(T) do
 > od;
 > od;
 > od;
+gap> Bitranslation(TranslationalHull(T), (1, 4, 3, 2)(5, 7)(6, 8), 
+> Transformation([1, 1, 1]), Transformation([1, 1, 1]));
+<bitranslation on <simple semigroup of size 144, with 4 generators>>
 gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
 gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
@@ -720,6 +723,9 @@ Error, each argument must have the same underlying semigroup
 gap> l := LeftTranslation(L, lgpfunc, IdentityTransformation);;
 gap> h := Bitranslation(H, l, r);
 Error, the translations given must satisfy the linking condition
+gap> Bitranslation(H, (1, 2, 3, 5)(4, 10, 7, 12)(6, 11, 9, 8),                 
+> Transformation([2, 2]), Transformation([2, 3, 2]));
+Error, the arguments given do not define a bitranslation
 
 # Hashing translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 
