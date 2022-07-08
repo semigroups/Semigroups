@@ -55,14 +55,14 @@ namespace libsemigroups {
 
 namespace gapbind14 {
   template <>
-  struct IsGapBind14Type<libsemigroups::FpSemigroup &> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::FpSemigroup> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter const &>
+  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter>
       : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::Congruence &> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::Congruence> : std::true_type {};
 
 }  // namespace gapbind14
 

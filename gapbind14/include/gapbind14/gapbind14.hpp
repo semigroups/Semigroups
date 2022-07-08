@@ -95,6 +95,18 @@ namespace gapbind14 {
   template <typename T>
   struct IsGapBind14Type : std::false_type {};
 
+  template <typename T>
+  struct IsGapBind14Type<T &> : IsGapBind14Type<T> {};
+
+  template <typename T>
+  struct IsGapBind14Type<T &&> : IsGapBind14Type<T> {};
+
+  template <typename T>
+  struct IsGapBind14Type<T const &> : IsGapBind14Type<T> {};
+
+  template <typename T>
+  struct IsGapBind14Type<std::shared_ptr<T>> : IsGapBind14Type<T> {};
+
   ////////////////////////////////////////////////////////////////////////
   // Function templates
   ////////////////////////////////////////////////////////////////////////
