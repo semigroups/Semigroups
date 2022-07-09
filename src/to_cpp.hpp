@@ -226,16 +226,14 @@ namespace gapbind14 {
     }
 
     template <typename T, typename... TArgs>
-    std::decay_t<T> init_cpp_matrix(Obj o, TArgs&&... params) {
-      // TODO: remove decay_t x many
-      using scalar_type = typename std::decay_t<T>::scalar_type;
+    T init_cpp_matrix(Obj o, TArgs&&... params) {
+      using scalar_type = typename T::scalar_type;
       if (LEN_PLIST(o) == 0) {
         ErrorQuit("expected matrix of non-zero dimension!", 0L, 0L);
       }
 
-      size_t          m = LEN_PLIST(ELM_PLIST(o, 1));
-      std::decay_t<T> x
-          = make_matrix<std::decay_t<T>>(m, m, std::forward<TArgs>(params)...);
+      size_t m = LEN_PLIST(ELM_PLIST(o, 1));
+      T      x = make_matrix<T>(m, m, std::forward<TArgs>(params)...);
       for (size_t i = 0; i < m; i++) {
         Obj row = ELM_PLIST(o, i + 1);
         for (size_t j = 0; j < m; j++) {
