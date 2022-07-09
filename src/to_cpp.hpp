@@ -24,12 +24,16 @@
 #define SEMIGROUPS_SRC_TO_CPP_HPP_
 
 // Standard library
-#include <algorithm>      // for sort
-#include <memory>         // for unique_ptr
+#include <algorithm>      // for max, min, sort
+#include <cstddef>        // for size_t
+#include <cstdint>        // for uint32_t
+#include <exception>      // for exception
+#include <functional>     // for __unwrap_reference<>::type
+#include <memory>         // for make_unique, unique_ptr
 #include <string>         // for string
-#include <type_traits>    // for decay_t, enable_if_t, is_same
-#include <unordered_map>  // for unordered_map
-#include <utility>        // for pair
+#include <type_traits>    // for decay_t, is_same, conditional_t
+#include <unordered_map>  // for operator==, unordered_map
+#include <utility>        // for forward
 #include <vector>         // for vector
 
 // GAP headers
@@ -42,19 +46,24 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
-#include "gapbind14/gapbind14.hpp"
+#include "gapbind14/cpp-fn.hpp"  // for GAPBIND14_TRY
+#include "gapbind14/to_cpp.hpp"  // for to_cpp
+#include "gapbind14/to_gap.hpp"  // for gap_tnum_type
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"   // for Degree
-#include "libsemigroups/bipart.hpp"     // for Bipartition
-#include "libsemigroups/bmat8.hpp"      // for BMat8
-#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
-#include "libsemigroups/cong.hpp"       // for Congruence
-#include "libsemigroups/constants.hpp"  // for constants
-#include "libsemigroups/debug.hpp"      // for LIBSEMIGROUPS_ASSERT
-#include "libsemigroups/matrix.hpp"     // for validate etc
-#include "libsemigroups/pbr.hpp"        // for PBR
-#include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
+#include "libsemigroups/adapters.hpp"    // for Degree
+#include "libsemigroups/bmat8.hpp"       // for BMat8
+#include "libsemigroups/cong.hpp"        // for Congruence
+#include "libsemigroups/constants.hpp"   // for NegativeInfinity, PositiveIn...
+#include "libsemigroups/containers.hpp"  // for DynamicArray2
+#include "libsemigroups/matrix.hpp"      // for NTPMat, MaxPlusTruncMat, Min...
+#include "libsemigroups/pbr.hpp"         // for PBR
+#include "libsemigroups/transf.hpp"      // for PPerm, Transf, IsPPerm
+#include "libsemigroups/types.hpp"       // for congruence_kind, congruence_...
+
+namespace libsemigroups {
+  class Bipartition;
+}
 
 using libsemigroups::BMat;
 using libsemigroups::BMat8;
@@ -262,10 +271,6 @@ namespace gapbind14 {
     }
   };
 
-  // TODO: remove
-  template <>
-  struct to_cpp<IntMat<> const&> : to_cpp<IntMat<>> {};
-
   template <>
   struct to_cpp<MaxPlusMat<>> {
     using cpp_type = MaxPlusMat<>;
@@ -277,10 +282,6 @@ namespace gapbind14 {
       return detail::init_cpp_matrix<MaxPlusMat<>>(o);
     }
   };
-
-  // TODO: remove
-  template <>
-  struct to_cpp<MaxPlusMat<> const&> : to_cpp<MaxPlusMat<>> {};
 
   template <>
   struct to_cpp<MinPlusMat<>> {
@@ -294,10 +295,6 @@ namespace gapbind14 {
     }
   };
 
-  // TODO: remove
-  template <>
-  struct to_cpp<MinPlusMat<> const&> : to_cpp<MinPlusMat<>> {};
-
   template <>
   struct to_cpp<ProjMaxPlusMat<>> {
     using cpp_type = ProjMaxPlusMat<>;
@@ -309,9 +306,6 @@ namespace gapbind14 {
       return detail::init_cpp_matrix<ProjMaxPlusMat<>>(o);
     }
   };
-  // TODO: remove
-  template <>
-  struct to_cpp<ProjMaxPlusMat<> const&> : to_cpp<ProjMaxPlusMat<>> {};
 
   template <>
   struct to_cpp<MaxPlusTruncMat<>> {
@@ -332,10 +326,6 @@ namespace gapbind14 {
     }
   };
 
-  // TODO: remove
-  template <>
-  struct to_cpp<MaxPlusTruncMat<> const&> : to_cpp<MaxPlusTruncMat<>> {};
-
   template <>
   struct to_cpp<MinPlusTruncMat<>> {
     using cpp_type = MinPlusTruncMat<>;
@@ -355,10 +345,6 @@ namespace gapbind14 {
     }
   };
 
-  // TODO: remove
-  template <>
-  struct to_cpp<MinPlusTruncMat<> const&> : to_cpp<MinPlusTruncMat<>> {};
-
   template <>
   struct to_cpp<NTPMat<>> {
     using cpp_type = NTPMat<>;
@@ -375,10 +361,6 @@ namespace gapbind14 {
       return detail::init_cpp_matrix<NTPMat<>>(o, sr);
     }
   };
-
-  // TODO: remove
-  template <>
-  struct to_cpp<NTPMat<> const&> : to_cpp<NTPMat<>> {};
 
   ////////////////////////////////////////////////////////////////////////
   // congruence_kind
@@ -405,9 +387,6 @@ namespace gapbind14 {
       }
     }
   };
-  // TODO: remove
-  template <>
-  struct to_cpp<congruence_kind&&> : to_cpp<congruence_kind> {};
 
   template <>
   struct to_cpp<libsemigroups::Congruence::options::runners> {
@@ -427,10 +406,6 @@ namespace gapbind14 {
       }
     }
   };
-
-  template <>
-  struct to_cpp<libsemigroups::Congruence::options::runners&&>
-      : to_cpp<libsemigroups::Congruence::options::runners> {};
 
   ////////////////////////////////////////////////////////////////////////
   // Transformations
@@ -498,10 +473,6 @@ namespace gapbind14 {
       return result;
     }
   };
-
-  // TODO: remove
-  template <typename Scalar>
-  struct to_cpp<Transf<0, Scalar> const&> : to_cpp<Transf<0, Scalar>> {};
 
   ////////////////////////////////////////////////////////////////////////
   // Partial perms
@@ -625,18 +596,12 @@ namespace gapbind14 {
     }
   };
 
-  template <typename Scalar>
-  struct to_cpp<PPerm<0, Scalar> const&> : to_cpp<PPerm<0, Scalar>> {};
-
-  template <typename Scalar>
-  struct to_cpp<PPerm<0, Scalar>&> : to_cpp<PPerm<0, Scalar>> {};
-
   ////////////////////////////////////////////////////////////////////////
   // Bipartition
   ////////////////////////////////////////////////////////////////////////
 
   template <>
-  struct to_cpp<Bipartition&> {
+  struct to_cpp<Bipartition> {
     Bipartition& operator()(Obj x) const {
       if (TNUM_OBJ(x) != T_BIPART) {
         ErrorQuit("expected a bipartition, got %s", (Int) TNAM_OBJ(x), 0L);
@@ -644,14 +609,6 @@ namespace gapbind14 {
       return *bipart_get_cpp(x);
     }
   };
-
-  // TODO: remove
-  template <>
-  struct to_cpp<Bipartition const&> : to_cpp<Bipartition&> {};
-
-  // TODO: remove
-  template <>
-  struct to_cpp<Bipartition> : to_cpp<Bipartition&> {};
 
   ////////////////////////////////////////////////////////////////////////
   // PBR
@@ -683,10 +640,6 @@ namespace gapbind14 {
       return result;
     }
   };
-
-  // TODO: remove
-  template <>
-  struct to_cpp<PBR const&> : to_cpp<PBR> {};
 
   template <typename T>
   struct to_cpp<DynamicArray2<T>> {
@@ -721,8 +674,5 @@ namespace gapbind14 {
       return result;
     }
   };
-  // TODO: remove
-  template <typename T>
-  struct to_cpp<DynamicArray2<T> const&> : to_cpp<DynamicArray2<T>> {};
 }  // namespace gapbind14
 #endif  // SEMIGROUPS_SRC_TO_CPP_HPP_

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//
 
 #ifndef INCLUDE_GAPBIND14_TO_CPP_HPP_
 #define INCLUDE_GAPBIND14_TO_CPP_HPP_
@@ -27,20 +26,28 @@
 
 namespace gapbind14 {
 
+  template <typename T>
+  struct IsGapBind14Type;
+
   using gap_tnum_type = UInt;
 
   // For Obj -> TCppType
   template <typename TCppType, typename = void>
   struct to_cpp;
 
-  // template <typename T>
-  // struct to_cpp<T&> : to_cpp<T> {};
+  template <typename T>
+  struct to_cpp<
+      T &,
+      std::enable_if_t<!IsGapBind14Type<T>::value && !std::is_const<T>::value>>
+      : to_cpp<T> {};
 
-  // template <typename T>
-  // struct to_cpp<T const&> : to_cpp<T> {};
+  template <typename T>
+  struct to_cpp<T const &, std::enable_if_t<!IsGapBind14Type<T>::value>>
+      : to_cpp<T> {};
 
-  // template <typename T>
-  // struct to_cpp<T&&> : to_cpp<T> {};
+  template <typename T>
+  struct to_cpp<T &&, std::enable_if_t<!IsGapBind14Type<T>::value>>
+      : to_cpp<T> {};
 
   ////////////////////////////////////////////////////////////////////////
   // void
@@ -131,15 +138,6 @@ namespace gapbind14 {
       return result;
     }
   };
-
-  template <typename T>
-  struct to_cpp<std::vector<T>&> : to_cpp<std::vector<T>> {};
-
-  template <typename T>
-  struct to_cpp<std::vector<T> const&> : to_cpp<std::vector<T>> {};
-
-  template <typename T>
-  struct to_cpp<std::vector<T>&&> : to_cpp<std::vector<T>> {};
 
 }  // namespace gapbind14
 #endif  // INCLUDE_GAPBIND14_TO_CPP_HPP_
