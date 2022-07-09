@@ -413,9 +413,14 @@ namespace gapbind14 {
 
     // TODO(later) figure out how to check that the subtype of arg0 is
     // compatible with Wild
-
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
+
+    // auto const &m = get_module();
+    // if (m.subtype<class_type>() != m.subtype(arg0)) {
+    //   ErrorQuit("expected ?? but got ??", 0L, 0L);
+    // }
+
+    class_type *ptr = SubTypeSpec<class_type>::obj_cpp_ptr(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;

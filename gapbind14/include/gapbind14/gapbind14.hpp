@@ -19,9 +19,6 @@
 // TODO(now)
 // * Rename SubTypeSpec -> Subtype
 // * Rename Subtype -> SubtypeBase
-// * should be possible to use shared_ptr instead of raw ptrs inside the
-//    objects
-// * use unique_ptr instead of raw ptrs
 // * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
 // * Allow custom printing
 
@@ -118,8 +115,6 @@ namespace gapbind14 {
     stm << n;
     return stm.str();
   }
-
-  class Module;  // forward decl
 
   ////////////////////////////////////////////////////////////////////////
   // Subtype class - for polymorphism
@@ -447,7 +442,7 @@ namespace gapbind14 {
     using cpp_type = T;
     static gap_tnum_type const gap_type;
 
-    std::decay_t<T> &operator()(Obj o) {
+    std::decay_t<T> &operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
         ErrorQuit(
             "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
@@ -461,7 +456,7 @@ namespace gapbind14 {
     using cpp_type = T;
     static gap_tnum_type const gap_type;
 
-    Obj operator()(T obj) {
+    Obj operator()(T obj) const {
       Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(get_module().subtype<T>());
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new T(obj));
