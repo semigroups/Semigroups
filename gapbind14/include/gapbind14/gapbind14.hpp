@@ -17,8 +17,6 @@
 //
 
 // TODO(now)
-// * Rename SubTypeSpec -> Subtype
-// * Rename Subtype -> SubtypeBase
 // * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
 // * Allow custom printing
 
@@ -78,10 +76,10 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 namespace gapbind14 {
 
   ////////////////////////////////////////////////////////////////////////
-  // Typdefs
+  // Aliases
   ////////////////////////////////////////////////////////////////////////
 
-  using gapbind14_sub_type = size_t;
+  using gapbind14_subtype = size_t;
 
   ////////////////////////////////////////////////////////////////////////
   // Constants
@@ -117,29 +115,32 @@ namespace gapbind14 {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  // Subtype class - for polymorphism
+  // SubtypeBase class - for polymorphism
   ////////////////////////////////////////////////////////////////////////
 
-  class Subtype {
-   public:
-    Subtype(std::string nm, gapbind14_sub_type sbtyp);
+  class SubtypeBase {
+   private:
+    std::string       _name;
+    gapbind14_subtype _subtype;
 
-    virtual ~Subtype() {}
+   public:
+    SubtypeBase(std::string nm, gapbind14_subtype sbtyp);
+
+    virtual ~SubtypeBase() {}
 
     std::string const &name() const {
       return _name;
     }
-
-    static gapbind14_sub_type obj_subtype(Obj o) {
+    // TODO(now) this should just be a free function
+    static gapbind14_subtype obj_subtype(Obj o) {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
+        ErrorQuit("expected gapbind14 object, found %s", (Int) TNAM_OBJ(o), 0L);
       }
       GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
-      return reinterpret_cast<gapbind14_sub_type>(ADDR_OBJ(o)[0]);
+      return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
     }
 
-    gapbind14_sub_type obj_subtype() {
+    gapbind14_subtype obj_subtype() const noexcept {
       return _subtype;
     }
 
@@ -151,35 +152,31 @@ namespace gapbind14 {
 
     virtual void load(Obj o) = 0;
     virtual void free(Obj o) = 0;
-
-   private:
-    std::string        _name;
-    gapbind14_sub_type _subtype;
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // SubtypeSpec class
+  // Subtype class
   ////////////////////////////////////////////////////////////////////////
 
   template <typename TClass>
-  class SubTypeSpec : public Subtype {
+  class Subtype : public SubtypeBase {
    public:
     using class_type = TClass;
 
-    SubTypeSpec(std::string nm, gapbind14_sub_type sbtyp)
-        : Subtype(nm, sbtyp) {}
+    Subtype(std::string nm, gapbind14_subtype sbtyp) : SubtypeBase(nm, sbtyp) {}
 
     template <typename TFunctionType>
     Obj create_obj(Obj args) {
       return new_bag(new_tclass_ptr<TFunctionType>(args));
     }
 
+    // TODO: remove this from class interface
     static TClass *obj_cpp_ptr(Obj o) {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
         ErrorQuit(
             "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
       } else if (ADDR_OBJ(o)[1] == nullptr) {
-        ErrorQuit("found nullptr expected pointer to C++ class! ", 0L, 0L);
+        ErrorQuit("expected pointer to C++ class, found nullptr", 0L, 0L);
       }
 
       GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
@@ -198,7 +195,7 @@ namespace gapbind14 {
     void load(Obj o) override {
       GAPBIND14_ASSERT(obj_subtype(o) == obj_subtype());
       // ADDR_OBJ(o)[0] holds the subtype, and is loaded in the Module::load
-      // TODO(now) move this into Subtype
+      // TODO(now) move this into SubtypeBase
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
     }
 
@@ -258,31 +255,47 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   class Module {
-   public:
-    Module() : _funcs(), _mem_funcs(), _module_name(), _next_subtype(0) {}
+   private:
+    std::vector<StructGVarFunc>                        _funcs;
+    std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
+    std::string                                        _module_name;
+    std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
+    std::vector<SubtypeBase *>                         _subtypes;
+    std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
 
+    Module()
+        : _funcs(),
+          _mem_funcs(),
+          _module_name(),
+          _subtype_names(),
+          _subtypes(),
+          _type_to_subtype() {}
+
+   public:
     explicit Module(std::string module_name) : Module() {
       _module_name = module_name;
     }
 
     Module(Module const &) = delete;
     Module(Module &&)      = delete;
-    Module &operator=(Module const &) = default;
+    Module &operator=(Module const &) = delete;
     Module &operator=(Module &&) = delete;
 
     ~Module() = default;
 
+    // TODO: remove from class interface
     void print(Obj o) {
       Pr("<class %s at %s>",
-         (Int)(_subtypes.at(Subtype::obj_subtype(o))->name().c_str()),
+         (Int)(_subtypes.at(SubtypeBase::obj_subtype(o))->name().c_str()),
          (Int) to_string(o).c_str());
     }
 
+    // TODO: remove from class interface
     void save(Obj o) {
-      Subtype::save(o);
+      SubtypeBase::save(o);
     }
 
-    gapbind14_sub_type subtype(std::string const &subtype_name) const {
+    gapbind14_subtype subtype(std::string const &subtype_name) const {
       auto it = _subtype_names.find(subtype_name);
       if (it == _subtype_names.end()) {
         throw std::runtime_error("No subtype named " + subtype_name);
@@ -291,16 +304,17 @@ namespace gapbind14 {
     }
 
     const char *name(Obj o) {
-      gapbind14_sub_type sbtyp = Subtype::obj_subtype(o);
+      gapbind14_subtype sbtyp = SubtypeBase::obj_subtype(o);
       return _subtypes.at(sbtyp)->name().c_str();
     }
 
-    gapbind14_sub_type subtype(Obj o) {
-      return Subtype::obj_subtype(o);
+    // TODO: remove from class interface
+    gapbind14_subtype subtype(Obj o) {
+      return SubtypeBase::obj_subtype(o);
     }
 
     template <typename Class>
-    gapbind14_sub_type subtype() {
+    gapbind14_subtype subtype() {
       auto it = _type_to_subtype.find(typeid(Class).hash_code());
       if (it == _type_to_subtype.end()) {
         throw std::runtime_error(std::string("No subtype for ")
@@ -310,19 +324,19 @@ namespace gapbind14 {
     }
 
     void load(Obj o) {
-      gapbind14_sub_type sbtyp = LoadUInt();
-      ADDR_OBJ(o)[0]           = reinterpret_cast<Obj>(sbtyp);
+      gapbind14_subtype sbtyp = LoadUInt();
+      ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
       _subtypes.at(sbtyp)->load(o);
     }
 
     void free(Obj o) {
-      gapbind14_sub_type sbtyp = Subtype::obj_subtype(o);
+      gapbind14_subtype sbtyp = SubtypeBase::obj_subtype(o);
       _subtypes.at(sbtyp)->free(o);
     }
 
     template <typename TClass, typename TFunctionType>
-    Obj create(gapbind14_sub_type st, Obj args) {
-      return static_cast<SubTypeSpec<TClass> *>(_subtypes.at(st))
+    Obj create(gapbind14_subtype st, Obj args) {
+      return static_cast<Subtype<TClass> *>(_subtypes.at(st))
           ->template create_obj<TFunctionType>(args);
     }
 
@@ -339,11 +353,10 @@ namespace gapbind14 {
     }
 
     template <typename TClass>
-    gapbind14_sub_type add_subtype(std::string nm) {
-      _subtype_names.insert(std::make_pair(nm, _next_subtype));
-      _type_to_subtype.emplace(typeid(TClass).hash_code(), _next_subtype);
-      _subtypes.push_back(new SubTypeSpec<TClass>(nm, _next_subtype));
-      _next_subtype++;
+    gapbind14_subtype add_subtype(std::string nm) {
+      _subtype_names.insert(std::make_pair(nm, _subtypes.size()));
+      _type_to_subtype.emplace(typeid(TClass).hash_code(), _subtypes.size());
+      _subtypes.push_back(new Subtype<TClass>(nm, _subtypes.size()));
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
       return _subtypes.back()->obj_subtype();
     }
@@ -385,11 +398,13 @@ namespace gapbind14 {
       _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
     }
 
-    std::vector<Subtype *>::const_iterator begin() const {
+    // TODO: remove from class interface
+    std::vector<SubtypeBase *>::const_iterator begin() const {
       return _subtypes.cbegin();
     }
 
-    std::vector<Subtype *>::const_iterator end() const {
+    // TODO: remove from class interface
+    std::vector<SubtypeBase *>::const_iterator end() const {
       return _subtypes.cend();
     }
 
@@ -411,15 +426,6 @@ namespace gapbind14 {
                             params.cbegin() + (nr - 1) * 6 + 4);
       return copy_c_str(source);
     }
-
-    std::vector<StructGVarFunc>              _funcs;
-    std::vector<std::vector<StructGVarFunc>> _mem_funcs;
-    std::string                              _module_name;
-    // TODO(now) remove _next_subtype, it's just _subtypes.size()
-    gapbind14_sub_type                                  _next_subtype;
-    std::unordered_map<std::string, gapbind14_sub_type> _subtype_names;
-    std::vector<Subtype *>                              _subtypes;
-    std::unordered_map<size_t, gapbind14_sub_type>      _type_to_subtype;
   };
 
   Module &get_module();
@@ -447,7 +453,7 @@ namespace gapbind14 {
         ErrorQuit(
             "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
       }
-      return *SubTypeSpec<std::decay_t<T>>::obj_cpp_ptr(o);
+      return *Subtype<std::decay_t<T>>::obj_cpp_ptr(o);
     }
   };
 
@@ -540,9 +546,9 @@ namespace gapbind14 {
     }
 
    private:
-    Module &           _module;
-    std::string        _name;
-    gapbind14_sub_type _subtype;
+    Module &          _module;
+    std::string       _name;
+    gapbind14_subtype _subtype;
   };
 
   template <typename T>

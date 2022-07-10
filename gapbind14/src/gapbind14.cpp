@@ -1,6 +1,6 @@
 //
 // gapbind14
-// Copyright (C) 2020 James D. Mitchell
+// Copyright (C) 2020-2022 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -143,13 +143,14 @@ namespace gapbind14 {
                 (Int) LEN_LIST(args));
     }
   }
-  // Subtype implementations
 
-  Subtype::Subtype(std::string nm, gapbind14_sub_type sbtyp)
+  // SubtypeBase implementations
+
+  SubtypeBase::SubtypeBase(std::string nm, gapbind14_subtype sbtyp)
       : _name(nm), _subtype(sbtyp) {
-    static std::unordered_set<gapbind14_sub_type> defined;
+    static std::unordered_set<gapbind14_subtype> defined;
     if (defined.find(sbtyp) != defined.end()) {
-      throw std::runtime_error("Subtype " + to_string(sbtyp)
+      throw std::runtime_error("SubtypeBase " + to_string(sbtyp)
                                + " already registered!");
     } else {
       defined.insert(sbtyp);
