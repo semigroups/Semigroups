@@ -31,6 +31,14 @@ namespace gapbind14 {
     return MODULE;
   }
 
+  gapbind14_subtype obj_subtype(Obj o) {
+    if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
+      ErrorQuit("expected gapbind14 object, found %s", (Int) TNAM_OBJ(o), 0L);
+    }
+    GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
+    return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
+  }
+
   namespace {
 
     Obj TheTypeTGapBind14Obj;

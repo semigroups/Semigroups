@@ -32,6 +32,9 @@
 
 namespace gapbind14 {
 
+  template <typename TClass>
+  TClass *obj_cpp_ptr(Obj o);
+
   template <typename T>
   class Subtype;
 
@@ -68,7 +71,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     GAPBIND14_TRY(CppFunction<Wild>()(wild_mem_fn<Wild>(N), ptr));
     return 0L;
@@ -88,7 +91,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -111,7 +114,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -138,7 +141,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -168,7 +171,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -207,7 +210,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -250,7 +253,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -297,7 +300,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -343,7 +346,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_gap_type = to_gap<typename CppFunction<Wild>::return_type>;
     GAPBIND14_TRY(
@@ -364,7 +367,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -387,7 +390,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -420,7 +423,7 @@ namespace gapbind14 {
     //   ErrorQuit("expected ?? but got ??", 0L, 0L);
     // }
 
-    class_type *ptr = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -451,7 +454,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -491,7 +494,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -535,7 +538,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
@@ -583,7 +586,7 @@ namespace gapbind14 {
     // compatible with Wild
 
     using class_type = typename CppFunction<Wild>::class_type;
-    class_type *ptr  = Subtype<class_type>::obj_cpp_ptr(arg0);
+    class_type *ptr  = obj_cpp_ptr<class_type>(arg0);
 
     using to_cpp_1_type =
         typename CppFunction<Wild>::params_type::template get<0>;
