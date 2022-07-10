@@ -61,29 +61,29 @@ namespace {
   }
 }  // namespace
 
-GAPBIND14_MODULE(libsemigroups, m) {
+GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  InstallGlobalFunction(m, "set_report", &set_report);
-  InstallGlobalFunction(
-      m, "hardware_concurrency", &std::thread::hardware_concurrency);
+  gapbind14::InstallGlobalFunction("set_report", &set_report);
+  gapbind14::InstallGlobalFunction("hardware_concurrency",
+                                   &std::thread::hardware_concurrency);
 
   ////////////////////////////////////////////////////////////////////////
   // Initialise from other cpp files
   ////////////////////////////////////////////////////////////////////////
 
-  init_froidure_pin_base(m);
-  init_froidure_pin_bipart(m);
-  init_froidure_pin_bmat(m);
-  init_froidure_pin_matrix(m);
-  init_froidure_pin_max_plus_mat(m);
-  init_froidure_pin_min_plus_mat(m);
-  init_froidure_pin_pperm(m);
-  init_froidure_pin_pbr(m);
-  init_froidure_pin_transf(m);
-  init_cong(m);
+  init_froidure_pin_base(gapbind14::get_module());
+  init_froidure_pin_bipart(gapbind14::get_module());
+  init_froidure_pin_bmat(gapbind14::get_module());
+  init_froidure_pin_matrix(gapbind14::get_module());
+  init_froidure_pin_max_plus_mat(gapbind14::get_module());
+  init_froidure_pin_min_plus_mat(gapbind14::get_module());
+  init_froidure_pin_pperm(gapbind14::get_module());
+  init_froidure_pin_pbr(gapbind14::get_module());
+  init_froidure_pin_transf(gapbind14::get_module());
+  init_cong(gapbind14::get_module());
 
   ////////////////////////////////////////////////////////////////////////
   // FpSemigroup
@@ -92,7 +92,7 @@ GAPBIND14_MODULE(libsemigroups, m) {
   using libsemigroups::FpSemigroup;
   using libsemigroups::word_type;
 
-  gapbind14::class_<FpSemigroup>(m, "FpSemigroup")
+  gapbind14::class_<FpSemigroup>("FpSemigroup")
       .def(gapbind14::init<>{})
       .def("set_alphabet",
            gapbind14::overload_cast<size_t>(&FpSemigroup::set_alphabet))
@@ -111,7 +111,7 @@ GAPBIND14_MODULE(libsemigroups, m) {
   using libsemigroups::congruence::ToddCoxeter;
   using table_type = libsemigroups::congruence::ToddCoxeter::table_type;
 
-  gapbind14::class_<ToddCoxeter>(m, "ToddCoxeter")
+  gapbind14::class_<ToddCoxeter>("ToddCoxeter")
       .def(gapbind14::init<congruence_kind>{})
       .def("set_number_of_generators", &ToddCoxeter::set_number_of_generators)
       .def("number_of_generators", &ToddCoxeter::number_of_generators)
@@ -382,7 +382,7 @@ static StructGVarFunc GVarFuncs[] = {
  *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
  */
 static Int InitKernel(StructInitInfo* module) {
-  gapbind14::init_kernel(m);
+  gapbind14::init_kernel();
 
   /* init filters and functions */
   InitHdlrFiltsFromTable(GVarFilts);
@@ -486,7 +486,7 @@ static Int PostRestore(StructInitInfo* module) {
 }
 
 static Int InitLibrary(StructInitInfo* module) {
-  gapbind14::init_library(m);
+  gapbind14::init_library();
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED

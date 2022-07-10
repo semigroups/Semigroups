@@ -56,15 +56,15 @@
 #define GAPBIND14_STRINGIFY(x) #x
 #define GAPBIND14_TO_STRING(x) GAPBIND14_STRINGIFY(x)
 
-#define GAPBIND14_MODULE(name, module)                              \
-  ::gapbind14::Module module(GAPBIND14_TO_STRING(name));            \
-  static void         gapbind14_init_##name(::gapbind14::Module &); \
-                                                                    \
-  void ::gapbind14::GAPBIND14_MODULE_IMPL(gapbind14::Module &m) {   \
-    gapbind14_init_##name(m);                                       \
-    m.finalize();                                                   \
-  }                                                                 \
-                                                                    \
+#define GAPBIND14_MODULE(name)                                     \
+  static void gapbind14_init_##name(::gapbind14::Module &);        \
+                                                                   \
+  void ::gapbind14::GAPBIND14_MODULE_IMPL(gapbind14::Module &m) {  \
+    ::gapbind14::get_module().set_name(GAPBIND14_STRINGIFY(name)); \
+    gapbind14_init_##name(m);                                      \
+    m.finalize();                                                  \
+  }                                                                \
+                                                                   \
   void gapbind14_init_##name(::gapbind14::Module &variable)
 
 ////////////////////////////////////////////////////////////////////////
@@ -263,6 +263,7 @@ namespace gapbind14 {
     std::vector<SubtypeBase *>                         _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
 
+   public:
     Module()
         : _funcs(),
           _mem_funcs(),
@@ -271,11 +272,6 @@ namespace gapbind14 {
           _subtypes(),
           _type_to_subtype() {}
 
-   public:
-    explicit Module(std::string module_name) : Module() {
-      _module_name = module_name;
-    }
-
     Module(Module const &) = delete;
     Module(Module &&)      = delete;
     Module &operator=(Module const &) = delete;
@@ -283,7 +279,6 @@ namespace gapbind14 {
 
     ~Module() = default;
 
-    // TODO: remove from class interface
     void print(Obj o) {
       Pr("<class %s at %s>",
          (Int)(_subtypes.at(SubtypeBase::obj_subtype(o))->name().c_str()),
@@ -303,7 +298,11 @@ namespace gapbind14 {
       return it->second;
     }
 
-    const char *name(Obj o) {
+    void set_name(char const *nm) {
+      _module_name = nm;
+    }
+
+    const char *name(Obj o) {  // TODO const
       gapbind14_subtype sbtyp = SubtypeBase::obj_subtype(o);
       return _subtypes.at(sbtyp)->name().c_str();
     }
@@ -428,16 +427,14 @@ namespace gapbind14 {
     }
   };
 
-  Module &get_module();
-
   ////////////////////////////////////////////////////////////////////////
   // Forward declaration
   ////////////////////////////////////////////////////////////////////////
 
-  void GAPBIND14_MODULE_IMPL(Module &);
-
-  void init_library(Module &m);
-  void init_kernel(Module &m);
+  Module &get_module();
+  void    GAPBIND14_MODULE_IMPL(Module &);
+  void    init_library();
+  void    init_kernel();
 
   ////////////////////////////////////////////////////////////////////////
   // to_cpp - for gapbind14 gap objects
@@ -476,7 +473,8 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename Wild>
-  static void InstallGlobalFunction(Module &m, char const *name, Wild f) {
+  static void InstallGlobalFunction(char const *name, Wild f) {
+    auto &       m = get_module();
     size_t const n = all_wilds<Wild>().size();
     all_wilds<Wild>().push_back(f);
     m.add_func(__FILE__, name, get_tame<decltype(&tame<0, Wild>), Wild>(n));
@@ -502,8 +500,10 @@ namespace gapbind14 {
   template <typename Class>
   class class_ {
    public:
-    class_(Module &m, std::string name)
-        : _module(m), _name(name), _subtype(_module.add_subtype<Class>(name)) {}
+    class_(std::string name)
+        : _module(get_module()),
+          _name(name),
+          _subtype(_module.add_subtype<Class>(name)) {}
 
     template <typename... Args>
     class_ &def(init<Args...> x, std::string name = "make") {

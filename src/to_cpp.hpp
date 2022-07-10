@@ -480,9 +480,9 @@ namespace gapbind14 {
     // TODO: renovate
     template <typename S, typename T>
     void to_cpp_pperm(S& x, T* ptr, size_t const N) {
-      static_assert(
-          std::is_same<T, UInt2>::value || std::is_same<T, UInt4>::value,
-          "the template parameter T must be the same as UInt2 or UInt4");
+      static_assert(std::is_same<T, UInt2>::value
+                        || std::is_same<T, UInt4>::value,
+                    "the template parameter T must be UInt2 or UInt4");
       SEMIGROUPS_ASSERT(N <= libsemigroups::Degree<S>()(x));
       T i;
       T undef;

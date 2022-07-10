@@ -157,16 +157,15 @@ namespace gapbind14 {
     }
   }
 
-  void init_kernel(Module &m) {
+  void init_kernel() {
     InitHdlrFuncsFromTable(GVarFuncs);
 
+    auto &m = get_module();
     GAPBIND14_MODULE_IMPL(m);
-    auto &mm = get_module();
-    mm       = m;
-    InitHdlrFuncsFromTable(mm.funcs());
+    InitHdlrFuncsFromTable(m.funcs());
 
-    for (auto ptr : mm) {
-      InitHdlrFuncsFromTable(mm.mem_funcs(ptr->name()));
+    for (auto ptr : m) {
+      InitHdlrFuncsFromTable(m.mem_funcs(ptr->name()));
     }
 
     UInt &PKG_TNUM = T_GAPBIND14_OBJ;
@@ -186,8 +185,9 @@ namespace gapbind14 {
     InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
   }
 
-  void init_library(Module &m) {
+  void init_library() {
     InitGVarFuncsFromTable(GVarFuncs);
+    auto &                m   = get_module();
     StructGVarFunc const *tab = m.funcs();
 
     // init functions from m in the record named m.module_name()
