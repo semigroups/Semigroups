@@ -37,7 +37,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename TClass, typename... TArgs>
-  TClass* make(TArgs&&... params) {
+  TClass* make(TArgs... params) {
     return new TClass(std::forward<TArgs>(params)...);
   }
 

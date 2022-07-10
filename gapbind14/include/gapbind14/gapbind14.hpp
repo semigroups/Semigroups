@@ -103,7 +103,7 @@ namespace gapbind14 {
   struct IsGapBind14Type<std::shared_ptr<T>> : IsGapBind14Type<T> {};
 
   ////////////////////////////////////////////////////////////////////////
-  // Helper function
+  // Helper functions
   ////////////////////////////////////////////////////////////////////////
 
   // Convert object to string
@@ -114,18 +114,15 @@ namespace gapbind14 {
     return stm.str();
   }
 
+  void require_gapbind14_obj(Obj o);
+
   // Get the gapbind14 subtype of the object o.
   gapbind14_subtype obj_subtype(Obj o);
 
   template <typename TClass>
   TClass *obj_cpp_ptr(Obj o) {
-    if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
-      ErrorQuit("expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
-    } else if (ADDR_OBJ(o)[1] == nullptr) {
-      ErrorQuit("expected pointer to C++ class, found nullptr", 0L, 0L);
-    }
-
-    GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
+    require_gapbind14_obj(o);
+    // TODO: check that subtype of o corresponds to TClass
     return reinterpret_cast<TClass *>(ADDR_OBJ(o)[1]);
   }
 
@@ -320,8 +317,12 @@ namespace gapbind14 {
     }
 
     template <typename TClass>
-    gapbind14_subtype add_subtype(std::string nm) {
-      _subtype_names.insert(std::make_pair(nm, _subtypes.size()));
+    gapbind14_subtype add_subtype(std::string const &nm) {
+      bool inserted
+          = _subtype_names.insert(std::make_pair(nm, _subtypes.size())).second;
+      if (!inserted) {
+        throw std::runtime_error("Subtype named " + nm + " already registered");
+      }
       _type_to_subtype.emplace(typeid(TClass).hash_code(), _subtypes.size());
       _subtypes.push_back(new Subtype<TClass>(nm, _subtypes.size()));
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
@@ -347,8 +348,8 @@ namespace gapbind14 {
                       std::string        flnm,
                       std::string const &nm,
                       Obj (*func)(TArgs...)) {
-      static_assert(sizeof...(TArgs) > 1,
-                    "there must be at least 1 parameter: Obj self, Obj arg1");
+      // static_assert(sizeof...(TArgs) > 1,
+      //              "there must be at least 1 parameter: Obj self, Obj arg1");
       static_assert(sizeof...(TArgs) <= 7, "TArgs must be at most 7");
       _mem_funcs.at(subtype(sbtyp))
           .push_back({copy_c_str(nm),
@@ -408,14 +409,10 @@ namespace gapbind14 {
 
   template <typename T>
   struct to_cpp<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
-    using cpp_type = T;
-    static gap_tnum_type const gap_type;
+    using cpp_type = std::decay_t<T>;
 
     std::decay_t<T> &operator()(Obj o) const {
-      if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
-      }
+      require_gapbind14_obj(o);
       return *obj_cpp_ptr<std::decay_t<T>>(o);
     }
   };
@@ -423,12 +420,20 @@ namespace gapbind14 {
   template <typename T>
   struct to_gap<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
     using cpp_type = T;
-    static gap_tnum_type const gap_type;
 
-    Obj operator()(T obj) const {
+    Obj operator()(T const &obj) const {
+      return to_gap<T *>()(new T(obj));
+    }
+  };
+
+  template <typename T>
+  struct to_gap<T *> {
+    using cpp_type = T;
+
+    Obj operator()(T *ptr) const {
       Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(get_module().subtype<T>());
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new T(obj));
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
       CHANGED_BAG(o);
       return o;
     }
@@ -473,15 +478,7 @@ namespace gapbind14 {
 
     template <typename... Args>
     class_ &def(init<Args...> x, std::string name = "make") {
-      using Wild = decltype(&make<Class, Args...>);
-      _module.add_mem_func(
-          _name,
-          __FILE__,
-          name,
-          get_tame_constructor<Class,
-                               decltype(&tame_constructor<0, Class, Wild>),
-                               Wild>(_subtype));
-      return *this;
+      return def(name.c_str(), &make<Class, Args...>);
     }
 
     template <typename Wild>

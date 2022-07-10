@@ -31,11 +31,15 @@ namespace gapbind14 {
     return MODULE;
   }
 
-  gapbind14_subtype obj_subtype(Obj o) {
+  void require_gapbind14_obj(Obj o) {
     if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
-      ErrorQuit("expected gapbind14 object, found %s", (Int) TNAM_OBJ(o), 0L);
+      ErrorQuit("expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
     }
     GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
+  };
+
+  gapbind14_subtype obj_subtype(Obj o) {
+    require_gapbind14_obj(o);
     return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
   }
 
@@ -127,11 +131,7 @@ namespace gapbind14 {
     }
 
     Obj IsValidGapbind14Object(Obj self, Obj arg1) {
-      if (TNUM_OBJ(arg1) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg1), 0L);
-      }
-      GAPBIND14_ASSERT(SIZE_OBJ(arg1) == 2);
+      require_gapbind14_obj(arg1);
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 

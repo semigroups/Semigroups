@@ -192,7 +192,7 @@ function(S)
   fi;
   Unbind(S!.LibsemigroupsFroidurePin);
   record := FroidurePinMemFnRec(S);
-  T  := record.make([]);
+  T  := record.make();
   add_generator := record.add_generator;
   coll := GeneratorsOfSemigroup(S);
   for x in coll do
@@ -790,18 +790,18 @@ function(Constructor, S, coll, opts)
       # Can't use closure, TODO use copy_closure
       # FIXME if M goes larger than the type of R can support this will end
       # badly
-      CppT  := R.make([]);
+      CppT  := R.make();
       add_generator := R.add_generator;
       for x in GeneratorsOfSemigroup(S) do
         add_generator(CppT, [x, M]);
       od;
       R.closure(CppT, List(coll, x -> [x, M]));
     else
-      CppT := R.copy([LibsemigroupsFroidurePin(S)]);
+      CppT := R.copy(LibsemigroupsFroidurePin(S));
       R.closure(CppT, List(coll, x -> [x, N]));
     fi;
   else
-    CppT := R.copy([LibsemigroupsFroidurePin(S)]);
+    CppT := R.copy(LibsemigroupsFroidurePin(S));
     R.closure(CppT, coll);
   fi;
 
