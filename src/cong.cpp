@@ -45,8 +45,6 @@
 #include "libsemigroups/transf.hpp"        // for PPerm etc
 #include "libsemigroups/types.hpp"         // for word_type
 
-#include "libsemigroups/kbe.hpp"  // for KBE
-
 // Forward decls
 namespace libsemigroups {
   class FpSemigroup;

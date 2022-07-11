@@ -36,7 +36,7 @@ namespace gapbind14 {
       ErrorQuit("expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
     }
     GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
-  };
+  }
 
   gapbind14_subtype obj_subtype(Obj o) {
     require_gapbind14_obj(o);
