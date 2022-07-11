@@ -19,6 +19,7 @@
 // TODO(now)
 // * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
 // * Allow custom printing
+// * Support enums
 
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
@@ -34,7 +35,6 @@
 #include "cpp-fn.hpp"        // for arg_count
 #include "gap_include.hpp"   // for gmp
 #include "tame-free-fn.hpp"  // for tame free functions
-#include "tame-make.hpp"     // for tame member functions
 #include "tame-mem-fn.hpp"   // for tame constructors
 #include "to_cpp.hpp"        // for to_cpp
 #include "to_gap.hpp"        // for to_gap
@@ -121,6 +121,7 @@ namespace gapbind14 {
 
   template <typename TClass>
   TClass *obj_cpp_ptr(Obj o) {
+    // TODO add static_assert that TClass IsGapBind14Type
     require_gapbind14_obj(o);
     // TODO: check that subtype of o corresponds to TClass
     return reinterpret_cast<TClass *>(ADDR_OBJ(o)[1]);
@@ -162,64 +163,8 @@ namespace gapbind14 {
 
     Subtype(std::string nm, gapbind14_subtype sbtyp) : SubtypeBase(nm, sbtyp) {}
 
-    template <typename TFunctionType>
-    Obj create_obj(Obj args) {
-      return new_bag(new_tclass_ptr<TFunctionType>(args));
-    }
-
     void free(Obj o) override {
       delete obj_cpp_ptr<TClass>(o);
-    }
-
-   private:
-    Obj new_bag(Obj cpp_obj) {
-      // TODO: use to_gap/to_cpp
-      Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
-      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(subtype());
-      ADDR_OBJ(o)[1] = cpp_obj;
-      CHANGED_BAG(o);
-      return o;
-    }
-
-    template <typename TFunctionType, typename TSFINAE = Obj>
-    auto new_tclass_ptr(Obj args)
-        -> std::enable_if_t<arg_count<TFunctionType>::value == 0, TSFINAE> {
-      check_args(args, 0);
-      return reinterpret_cast<Obj>(new TClass());
-    }
-
-    template <typename TFunctionType, typename TSFINAE = Obj>
-    auto new_tclass_ptr(Obj args)
-        -> std::enable_if_t<arg_count<TFunctionType>::value == 1, TSFINAE> {
-      check_args(args, 1);
-      using to_cpp_0_type = typename gapbind14::CppFunction<
-          TFunctionType>::params_type::template get<0>;
-      Obj arg1 = ELM_LIST(args, 1);
-      return reinterpret_cast<Obj>(new TClass(to_cpp<to_cpp_0_type>()(arg1)));
-    }
-
-    template <typename TFunctionType, typename TSFINAE = Obj>
-    auto new_tclass_ptr(Obj args)
-        -> std::enable_if_t<arg_count<TFunctionType>::value == 2, TSFINAE> {
-      check_args(args, 2);
-      using to_cpp_0_type = typename gapbind14::CppFunction<
-          TFunctionType>::params_type::template get<0>;
-      using to_cpp_1_type = typename gapbind14::CppFunction<
-          TFunctionType>::params_type::template get<1>;
-      Obj arg1 = ELM_LIST(args, 1);
-      Obj arg2 = ELM_LIST(args, 2);
-      return reinterpret_cast<Obj>(new TClass(to_cpp<to_cpp_0_type>()(arg1),
-                                              to_cpp<to_cpp_1_type>()(arg2)));
-    }
-
-    void check_args(Obj args, size_t n) {
-      if (!IS_LIST(args)) {
-        ErrorQuit("expected a list, found %s", (Int) TNAM_OBJ(args), 0L);
-      } else if (LEN_LIST(args) != n) {
-        ErrorQuit("expected a list of length %d, found %d",
-                  (Int) n,
-                  (Int) LEN_LIST(args));
-      }
     }
   };
 
@@ -279,12 +224,6 @@ namespace gapbind14 {
       return _subtypes.at(sbtyp)->name().c_str();
     }
 
-    template <typename TClass, typename TFunctionType>
-    Obj create(gapbind14_subtype st, Obj args) const {
-      return static_cast<Subtype<TClass> *>(_subtypes.at(st))
-          ->template create_obj<TFunctionType>(args);
-    }
-
     void print(Obj o) {
       Pr("<class %s at %s>", (Int) name(o), (Int) to_string(o).c_str());
     }
@@ -293,6 +232,7 @@ namespace gapbind14 {
       SaveUInt(obj_subtype(o));
     }
 
+    // TODO: put in cpp file
     void load(Obj o) const {
       gapbind14_subtype sbtyp = LoadUInt();
       ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
@@ -359,6 +299,7 @@ namespace gapbind14 {
                       copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
     }
 
+    // TODO: put in cpp file
     void finalize() {
       for (auto &x : _mem_funcs) {
         x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
@@ -375,12 +316,14 @@ namespace gapbind14 {
     }
 
    private:
+    // TODO: remove from interface + put in cpp file
     static char const *copy_c_str(std::string const &str) {
       char *out = new char[str.size() + 1];  // we need extra char for NUL
       memcpy(out, str.c_str(), str.size() + 1);
       return out;
     }
 
+    // TODO: remove from interface + put in cpp file
     static char const *params(size_t nr) {
       GAPBIND14_ASSERT(nr <= 6);
       if (nr == 0) {
@@ -452,21 +395,16 @@ namespace gapbind14 {
   }
 
   ////////////////////////////////////////////////////////////////////////
-  // Tame constructor
-  ////////////////////////////////////////////////////////////////////////
-
-  template <size_t N, typename Class, typename Wild>
-  Obj tame_constructor(Obj self, Obj args) {
-    return get_module().create<Class, Wild>(get_module().subtype<Class>(),
-                                            args);
-  }
-
-  ////////////////////////////////////////////////////////////////////////
   // Classes
   ////////////////////////////////////////////////////////////////////////
 
   template <typename... Args>
   struct init {};
+
+  template <typename TClass, typename... TArgs>
+  TClass *make(TArgs... params) {
+    return new TClass(std::forward<TArgs>(params)...);
+  }
 
   template <typename Class>
   class class_ {
