@@ -46,7 +46,7 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
-#include "gapbind14/cpp-fn.hpp"  // for GAPBIND14_TRY
+#include "gapbind14/cpp_fn.hpp"  // for GAPBIND14_TRY
 #include "gapbind14/to_cpp.hpp"  // for to_cpp
 #include "gapbind14/to_gap.hpp"  // for gap_tnum_type
 

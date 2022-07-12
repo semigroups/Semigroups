@@ -41,7 +41,7 @@
 #include "to_gap.hpp"                 // for to_gap
 
 // Gapbind14 headers
-#include "gapbind14/cpp-fn.hpp"     // for overload_cast
+#include "gapbind14/cpp_fn.hpp"     // for overload_cast
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
 
 // libsemigroups headers

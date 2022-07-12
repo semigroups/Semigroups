@@ -37,8 +37,8 @@
 #include <vector>         // for vector
 
 #include "gap_include.hpp"   // for Obj etc
-#include "tame-free-fn.hpp"  // for tame free functions
-#include "tame-mem-fn.hpp"   // for tame constructors
+#include "tame_free_fn.hpp"  // for tame free functions
+#include "tame_mem_fn.hpp"   // for tame member functions
 #include "to_gap.hpp"        // for to_gap
 
 ////////////////////////////////////////////////////////////////////////
@@ -369,10 +369,12 @@ namespace gapbind14 {
 
   template <typename Wild>
   static void InstallGlobalFunction(char const *name, Wild f) {
-    size_t const n = all_wilds<Wild>().size();
-    all_wilds<Wild>().push_back(f);
+    size_t const n = detail::all_wilds<Wild>().size();
+    detail::all_wilds<Wild>().push_back(f);
     module().add_func(
-        __FILE__, name, get_tame<decltype(&tame<0, Wild>), Wild>(n));
+        __FILE__,
+        name,
+        detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -404,13 +406,14 @@ namespace gapbind14 {
     auto def(char const *mem_fn_name, Wild f)
         -> std::enable_if_t<std::is_member_function_pointer<Wild>::value,
                             class_ &> {
-      size_t const n = all_wild_mem_fns<Wild>().size();
-      all_wild_mem_fns<Wild>().push_back(f);
+      size_t const n = detail::all_wild_mem_fns<Wild>().size();
+      detail::all_wild_mem_fns<Wild>().push_back(f);
       module().add_mem_func(
           _name,
           __FILE__,
           mem_fn_name,
-          get_tame_mem_fn<decltype(&tame_mem_fn<0, Wild>), Wild>(n));
+          detail::get_tame_mem_fn<decltype(&detail::tame_mem_fn<0, Wild>),
+                                  Wild>(n));
       return *this;
     }
 
@@ -418,12 +421,13 @@ namespace gapbind14 {
     auto def(char const *mem_fn_name, Wild f)
         -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value,
                             class_ &> {
-      size_t const n = all_wilds<Wild>().size();
-      all_wilds<Wild>().push_back(f);
-      module().add_mem_func(_name,
-                            __FILE__,
-                            mem_fn_name,
-                            get_tame<decltype(&tame<0, Wild>), Wild>(n));
+      size_t const n = detail::all_wilds<Wild>().size();
+      detail::all_wilds<Wild>().push_back(f);
+      module().add_mem_func(
+          _name,
+          __FILE__,
+          mem_fn_name,
+          detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
       return *this;
     }
 
