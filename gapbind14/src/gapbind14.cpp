@@ -25,41 +25,59 @@
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
+  namespace detail {
 
-  Module &get_module() {
-    static Module MODULE;
-    return MODULE;
-  }
-
-  void require_gapbind14_obj(Obj o) {
-    if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
-      ErrorQuit("expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
+    Module &module() {
+      static Module MODULE;
+      return MODULE;
     }
-    GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
-  }
 
-  gapbind14_subtype obj_subtype(Obj o) {
-    require_gapbind14_obj(o);
-    return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
-  }
-
-  char const *copy_c_str(std::string const &str) {
-    char *out = new char[str.size() + 1];  // we need extra char for NUL
-    memcpy(out, str.c_str(), str.size() + 1);
-    return out;
-  }
-
-  char const *params_c_str(size_t nr) {
-    GAPBIND14_ASSERT(nr <= 6);
-    if (nr == 0) {
-      return "";
+    void require_gapbind14_obj(Obj o) {
+      if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
+        ErrorQuit(
+            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
+      }
+      GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
     }
-    static std::string params = "arg1, arg2, arg3, arg4, arg5, arg6";
-    std::string        source(params.cbegin(), params.cbegin() + (nr - 1) * 6);
-    source += std::string(params.cbegin() + (nr - 1) * 6,
-                          params.cbegin() + (nr - 1) * 6 + 4);
-    return copy_c_str(source);
-  }
+
+    gapbind14_subtype obj_subtype(Obj o) {
+      require_gapbind14_obj(o);
+      return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
+    }
+
+    char const *copy_c_str(std::string const &str) {
+      char *out = new char[str.size() + 1];  // we need extra char for NUL
+      memcpy(out, str.c_str(), str.size() + 1);
+      return out;
+    }
+
+    char const *params_c_str(size_t nr) {
+      GAPBIND14_ASSERT(nr <= 6);
+      if (nr == 0) {
+        return "";
+      }
+      static std::string params = "arg1, arg2, arg3, arg4, arg5, arg6";
+      std::string source(params.cbegin(), params.cbegin() + (nr - 1) * 6);
+      source += std::string(params.cbegin() + (nr - 1) * 6,
+                            params.cbegin() + (nr - 1) * 6 + 4);
+      return copy_c_str(source);
+    }
+
+    // SubtypeBase implementations
+
+    SubtypeBase::SubtypeBase(std::string nm, gapbind14_subtype sbtyp)
+        : _name(nm), _subtype(sbtyp) {
+      static std::unordered_set<gapbind14_subtype> defined;
+      if (defined.find(sbtyp) != defined.end()) {
+        throw std::runtime_error("SubtypeBase " + to_string(sbtyp)
+                                 + " already registered!");
+      } else {
+        defined.insert(sbtyp);
+      }
+    }
+  }  // namespace detail
+
+  // Module implementations
 
   void Module::load(Obj o) const {
     gapbind14_subtype sbtyp = LoadUInt();
@@ -87,15 +105,15 @@ namespace gapbind14 {
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
-      get_module().print(o);
+      module().print(o);
     }
 
     void TGapBind14ObjSaveFunc(Obj o) {
-      get_module().save(o);
+      module().save(o);
     }
 
     void TGapBind14ObjLoadFunc(Obj o) {
-      get_module().load(o);
+      module().load(o);
     }
 
     Obj TGapBind14ObjCopyFunc(Obj o, Int mut) {
@@ -105,7 +123,7 @@ namespace gapbind14 {
     void TGapBind14ObjCleanFunc(Obj o) {}
 
     void TGapBind14ObjFreeFunc(Obj o) {
-      get_module().free(o);
+      module().free(o);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -162,7 +180,7 @@ namespace gapbind14 {
     }
 
     Obj IsValidGapbind14Object(Obj self, Obj arg1) {
-      require_gapbind14_obj(arg1);
+      detail::require_gapbind14_obj(arg1);
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 
@@ -183,24 +201,11 @@ namespace gapbind14 {
     }
   }
 
-  // SubtypeBase implementations
-
-  SubtypeBase::SubtypeBase(std::string nm, gapbind14_subtype sbtyp)
-      : _name(nm), _subtype(sbtyp) {
-    static std::unordered_set<gapbind14_subtype> defined;
-    if (defined.find(sbtyp) != defined.end()) {
-      throw std::runtime_error("SubtypeBase " + to_string(sbtyp)
-                               + " already registered!");
-    } else {
-      defined.insert(sbtyp);
-    }
-  }
-
   void init_kernel() {
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    auto &m = get_module();
-    GAPBIND14_MODULE_IMPL(m);
+    auto &m = module();
+    detail::gapbind14_module_impl(m);
     InitHdlrFuncsFromTable(m.funcs());
 
     for (auto ptr : m) {
@@ -226,7 +231,7 @@ namespace gapbind14 {
 
   void init_library() {
     InitGVarFuncsFromTable(GVarFuncs);
-    auto &                m   = get_module();
+    auto &                m   = module();
     StructGVarFunc const *tab = m.funcs();
 
     // init functions from m in the record named m.module_name()

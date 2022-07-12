@@ -25,6 +25,7 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for to_cpp<FroidurePin<Bipartition>
+#include "pkg.hpp"           // for IsGapBind14Type
 #include "to_cpp.hpp"        // for to_cpp
 #include "to_gap.hpp"        // for to_gap
 
@@ -52,13 +53,6 @@ namespace libsemigroups {
 }  // namespace libsemigroups
 
 namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<libsemigroups::FpSemigroup> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter>
-      : std::true_type {};
-
   template <>
   struct IsGapBind14Type<libsemigroups::Congruence> : std::true_type {};
 

@@ -74,16 +74,16 @@ GAPBIND14_MODULE(libsemigroups) {
   // Initialise from other cpp files
   ////////////////////////////////////////////////////////////////////////
 
-  init_froidure_pin_base(gapbind14::get_module());
-  init_froidure_pin_bipart(gapbind14::get_module());
-  init_froidure_pin_bmat(gapbind14::get_module());
-  init_froidure_pin_matrix(gapbind14::get_module());
-  init_froidure_pin_max_plus_mat(gapbind14::get_module());
-  init_froidure_pin_min_plus_mat(gapbind14::get_module());
-  init_froidure_pin_pperm(gapbind14::get_module());
-  init_froidure_pin_pbr(gapbind14::get_module());
-  init_froidure_pin_transf(gapbind14::get_module());
-  init_cong(gapbind14::get_module());
+  init_froidure_pin_base(gapbind14::module());
+  init_froidure_pin_bipart(gapbind14::module());
+  init_froidure_pin_bmat(gapbind14::module());
+  init_froidure_pin_matrix(gapbind14::module());
+  init_froidure_pin_max_plus_mat(gapbind14::module());
+  init_froidure_pin_min_plus_mat(gapbind14::module());
+  init_froidure_pin_pperm(gapbind14::module());
+  init_froidure_pin_pbr(gapbind14::module());
+  init_froidure_pin_transf(gapbind14::module());
+  init_cong(gapbind14::module());
 
   ////////////////////////////////////////////////////////////////////////
   // FpSemigroup
