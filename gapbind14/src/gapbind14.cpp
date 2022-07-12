@@ -43,6 +43,37 @@ namespace gapbind14 {
     return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
   }
 
+  char const *copy_c_str(std::string const &str) {
+    char *out = new char[str.size() + 1];  // we need extra char for NUL
+    memcpy(out, str.c_str(), str.size() + 1);
+    return out;
+  }
+
+  char const *params_c_str(size_t nr) {
+    GAPBIND14_ASSERT(nr <= 6);
+    if (nr == 0) {
+      return "";
+    }
+    static std::string params = "arg1, arg2, arg3, arg4, arg5, arg6";
+    std::string        source(params.cbegin(), params.cbegin() + (nr - 1) * 6);
+    source += std::string(params.cbegin() + (nr - 1) * 6,
+                          params.cbegin() + (nr - 1) * 6 + 4);
+    return copy_c_str(source);
+  }
+
+  void Module::load(Obj o) const {
+    gapbind14_subtype sbtyp = LoadUInt();
+    ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
+    ADDR_OBJ(o)[1]          = static_cast<Obj>(nullptr);
+  }
+
+  void Module::finalize() {
+    for (auto &x : _mem_funcs) {
+      x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
+    }
+    _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
+  }
+
   namespace {
 
     Obj TheTypeTGapBind14Obj;

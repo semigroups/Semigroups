@@ -32,8 +32,7 @@
 #include <utility>        // for make_pair
 #include <vector>         // for vector
 
-#include "cpp-fn.hpp"        // for arg_count
-#include "gap_include.hpp"   // for gmp
+#include "gap_include.hpp"   // for Obj etc
 #include "tame-free-fn.hpp"  // for tame free functions
 #include "tame-mem-fn.hpp"   // for tame constructors
 #include "to_cpp.hpp"        // for to_cpp
@@ -119,13 +118,20 @@ namespace gapbind14 {
   // Get the gapbind14 subtype of the object o.
   gapbind14_subtype obj_subtype(Obj o);
 
-  template <typename TClass>
-  TClass *obj_cpp_ptr(Obj o) {
-    // TODO add static_assert that TClass IsGapBind14Type
+  template <typename T>
+  T *obj_cpp_ptr(Obj o) {
+    // Couldn't add static_assert that IsGapBind14Type<T>::value is true
+    // because sometimes we call this function when T is a base class of a
+    // class where IsGapBind14Type<T>::value is true.
     require_gapbind14_obj(o);
-    // TODO: check that subtype of o corresponds to TClass
-    return reinterpret_cast<TClass *>(ADDR_OBJ(o)[1]);
+    // Also cannot check that subtype of o corresponds to T for the same
+    // reason as above T might be a base class of a GapBind14Type.
+    return reinterpret_cast<T *>(ADDR_OBJ(o)[1]);
   }
+
+  char const *copy_c_str(std::string const &str);
+
+  char const *params_c_str(size_t nr);
 
   ////////////////////////////////////////////////////////////////////////
   // SubtypeBase class - for polymorphism
@@ -156,15 +162,15 @@ namespace gapbind14 {
   // Subtype class
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TClass>
+  template <typename T>
   class Subtype : public SubtypeBase {
    public:
-    using class_type = TClass;
+    using class_type = T;
 
     Subtype(std::string nm, gapbind14_subtype sbtyp) : SubtypeBase(nm, sbtyp) {}
 
     void free(Obj o) override {
-      delete obj_cpp_ptr<TClass>(o);
+      delete obj_cpp_ptr<T>(o);
     }
   };
 
@@ -232,12 +238,7 @@ namespace gapbind14 {
       SaveUInt(obj_subtype(o));
     }
 
-    // TODO: put in cpp file
-    void load(Obj o) const {
-      gapbind14_subtype sbtyp = LoadUInt();
-      ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
-      ADDR_OBJ(o)[1]          = static_cast<Obj>(nullptr);
-    }
+    void load(Obj o) const;
 
     void free(Obj o) const {
       gapbind14_subtype sbtyp = obj_subtype(o);
@@ -256,56 +257,50 @@ namespace gapbind14 {
       return &_mem_funcs[subtype(nm)][0];
     }
 
-    template <typename TClass>
+    template <typename T>
     gapbind14_subtype add_subtype(std::string const &nm) {
       bool inserted
           = _subtype_names.insert(std::make_pair(nm, _subtypes.size())).second;
       if (!inserted) {
         throw std::runtime_error("Subtype named " + nm + " already registered");
       }
-      _type_to_subtype.emplace(typeid(TClass).hash_code(), _subtypes.size());
-      _subtypes.push_back(new Subtype<TClass>(nm, _subtypes.size()));
+      _type_to_subtype.emplace(typeid(T).hash_code(), _subtypes.size());
+      _subtypes.push_back(new Subtype<T>(nm, _subtypes.size()));
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
       return _subtypes.back()->subtype();
     }
 
-    template <typename... TArgs>
+    template <typename... Args>
     void add_func(std::string        fnm,
                   std::string const &nm,
-                  Obj (*func)(TArgs...)) {
-      static_assert(sizeof...(TArgs) > 0,
+                  Obj (*func)(Args...)) {
+      static_assert(sizeof...(Args) > 0,
                     "there must be at least 1 parameter: Obj self");
-      static_assert(sizeof...(TArgs) <= 7, "TArgs must be at most 7");
+      static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
       _funcs.push_back({copy_c_str(nm),
-                        sizeof...(TArgs) - 1,
-                        params(sizeof...(TArgs) - 1),
+                        sizeof...(Args) - 1,
+                        params_c_str(sizeof...(Args) - 1),
                         (GVarFunc) func,
                         copy_c_str(fnm + ":Func" + nm)});
     }
 
-    template <typename... TArgs>
+    template <typename... Args>
     void add_mem_func(std::string const &sbtyp,
                       std::string        flnm,
                       std::string const &nm,
-                      Obj (*func)(TArgs...)) {
-      // static_assert(sizeof...(TArgs) > 1,
+                      Obj (*func)(Args...)) {
+      // static_assert(sizeof...(Args) > 1,
       //              "there must be at least 1 parameter: Obj self, Obj arg1");
-      static_assert(sizeof...(TArgs) <= 7, "TArgs must be at most 7");
+      static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
       _mem_funcs.at(subtype(sbtyp))
           .push_back({copy_c_str(nm),
-                      sizeof...(TArgs) - 1,
-                      params(sizeof...(TArgs) - 1),
+                      sizeof...(Args) - 1,
+                      params_c_str(sizeof...(Args) - 1),
                       (GVarFunc) func,
                       copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
     }
 
-    // TODO: put in cpp file
-    void finalize() {
-      for (auto &x : _mem_funcs) {
-        x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
-      }
-      _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
-    }
+    void finalize();
 
     std::vector<SubtypeBase *>::const_iterator begin() const {
       return _subtypes.cbegin();
@@ -313,27 +308,6 @@ namespace gapbind14 {
 
     std::vector<SubtypeBase *>::const_iterator end() const {
       return _subtypes.cend();
-    }
-
-   private:
-    // TODO: remove from interface + put in cpp file
-    static char const *copy_c_str(std::string const &str) {
-      char *out = new char[str.size() + 1];  // we need extra char for NUL
-      memcpy(out, str.c_str(), str.size() + 1);
-      return out;
-    }
-
-    // TODO: remove from interface + put in cpp file
-    static char const *params(size_t nr) {
-      GAPBIND14_ASSERT(nr <= 6);
-      if (nr == 0) {
-        return "";
-      }
-      static std::string params = "arg1, arg2, arg3, arg4, arg5, arg6";
-      std::string source(params.cbegin(), params.cbegin() + (nr - 1) * 6);
-      source += std::string(params.cbegin() + (nr - 1) * 6,
-                            params.cbegin() + (nr - 1) * 6 + 4);
-      return copy_c_str(source);
     }
   };
 
@@ -371,6 +345,7 @@ namespace gapbind14 {
 
   template <typename T>
   struct to_gap<T *> {
+    // TODO: add IsGapBind14Type
     using cpp_type = T;
 
     Obj operator()(T *ptr) const {
@@ -401,9 +376,9 @@ namespace gapbind14 {
   template <typename... Args>
   struct init {};
 
-  template <typename TClass, typename... TArgs>
-  TClass *make(TArgs... params) {
-    return new TClass(std::forward<TArgs>(params)...);
+  template <typename T, typename... Args>
+  T *make(Args... params) {
+    return new T(std::forward<Args>(params)...);
   }
 
   template <typename Class>
