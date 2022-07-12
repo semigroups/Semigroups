@@ -87,7 +87,8 @@ void init_cong(gapbind14::Module &m) {
   using libsemigroups::ProjMaxPlusMat;
   using libsemigroups::Transf;
 
-  // TODO: maybe use FroidurePinBase rather than the specialisations
+  // Cannot use FroidurePinBase rather than the specialisations because there's
+  // no constructor for a Congruence from a FroidurePinBase&.
   gapbind14::class_<Congruence>("Congruence")
       .def(gapbind14::init<congruence_kind, FroidurePin<Bipartition> const &>{},
            "make_from_froidurepin_bipartition")

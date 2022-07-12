@@ -19,18 +19,19 @@
 #ifndef INCLUDE_GAPBIND14_TO_GAP_HPP_
 #define INCLUDE_GAPBIND14_TO_GAP_HPP_
 
-#include <string>   // for string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <cstddef>      // for size_t
+#include <string>       // for string
+#include <type_traits>  // for enable_if_t, is_integral, is_same
+#include <utility>      // for pair
+#include <vector>       // for vector
 
-#include "gap_include.hpp"
+#include "gap_include.hpp"  // for Obj, UInt
 
 namespace gapbind14 {
 
   using gap_tnum_type = UInt;
 
-  // For TCppType -> Obj
-  template <typename TCppType, typename = void>
+  template <typename T, typename = void>
   struct to_gap;
 
   ////////////////////////////////////////////////////////////////////////
@@ -65,18 +66,18 @@ namespace gapbind14 {
   // Integers
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_gap<TCppType,
-                std::enable_if_t<std::is_integral<TCppType>::value
-                                 && !std::is_same<TCppType, bool>::value>> {
-    using cpp_type                          = TCppType;
+  template <typename T>
+  struct to_gap<T,
+                std::enable_if_t<std::is_integral<T>::value
+                                 && !std::is_same<T, bool>::value>> {
+    using cpp_type                          = T;
     static gap_tnum_type constexpr gap_type = T_INT;
 
-    Obj operator()(TCppType&& i) const {
+    Obj operator()(T&& i) const {
       return INTOBJ_INT(i);
     }
 
-    Obj operator()(TCppType const& i) const {
+    Obj operator()(T const& i) const {
       return INTOBJ_INT(i);
     }
   };

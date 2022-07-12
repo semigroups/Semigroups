@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//
 
 #ifndef INCLUDE_GAPBIND14_TAME_MEM_FN_HPP_
 #define INCLUDE_GAPBIND14_TAME_MEM_FN_HPP_
@@ -65,14 +64,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 0,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
-
+      // arg0 is checked in obj_cpp_ptr
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
 
@@ -85,13 +77,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 1,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -108,13 +94,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 2,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -135,13 +115,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 3,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -165,13 +139,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 4,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -204,13 +172,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 5,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -247,13 +209,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 6,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -294,13 +250,7 @@ namespace gapbind14 {
         -> std::enable_if_t<returns_void<Wild>::value
                                 && arg_count<Wild>::value == 7,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -340,13 +290,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 0,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -361,13 +305,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 1,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -384,13 +322,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 2,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -412,21 +344,10 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 3,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
+      // arg0 is checked in obj_cpp_ptr
 
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
       using class_type = typename CppFunction<Wild>::class_type;
-
-      // auto const &m = get_module();
-      // if (m.Subtype<class_type>() != m.Subtype(arg0)) {
-      //   ErrorQuit("expected ?? but got ??", 0L, 0L);
-      // }
-
-      class_type *ptr = detail::obj_cpp_ptr<class_type>(arg0);
+      class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
 
       using to_cpp_1_type =
           typename CppFunction<Wild>::params_type::template get<0>;
@@ -448,13 +369,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 4,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -488,13 +403,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 5,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -532,13 +441,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 6,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);
@@ -580,13 +483,7 @@ namespace gapbind14 {
         -> std::enable_if_t<!returns_void<Wild>::value
                                 && arg_count<Wild>::value == 7,
                             TSFINAE> {
-      if (TNUM_OBJ(arg0) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg0), 0L);
-      }
-
-      // TODO(later) figure out how to check that the Subtype of arg0 is
-      // compatible with Wild
+      // arg0 is checked in obj_cpp_ptr
 
       using class_type = typename CppFunction<Wild>::class_type;
       class_type *ptr  = detail::obj_cpp_ptr<class_type>(arg0);

@@ -19,9 +19,11 @@
 #ifndef INCLUDE_GAPBIND14_TO_CPP_HPP_
 #define INCLUDE_GAPBIND14_TO_CPP_HPP_
 
-#include <string>  // for string
-#include <vector>  // for vector
-
+#include <cstddef>      // for size_t
+#include <string>       // for string
+#include <type_traits>  // for enable_if_t, is_const, is_integral, is_same
+#include <vector>       // for vector
+                        //
 #include "gap_include.hpp"
 
 namespace gapbind14 {
@@ -82,11 +84,11 @@ namespace gapbind14 {
   // Integers
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType,
-                std::enable_if_t<std::is_integral<TCppType>::value
-                                 && !std::is_same<TCppType, bool>::value>> {
-    using cpp_type                          = TCppType;
+  template <typename T>
+  struct to_cpp<T,
+                std::enable_if_t<std::is_integral<T>::value
+                                 && !std::is_same<T, bool>::value>> {
+    using cpp_type                          = T;
     static gap_tnum_type constexpr gap_type = T_INT;
 
     Int operator()(Obj o) {

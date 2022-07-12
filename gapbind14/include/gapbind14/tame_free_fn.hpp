@@ -25,7 +25,7 @@
 #include <type_traits>  // for enable_if_t
 #include <vector>       // for vector
 
-#include "cpp_fn.hpp"  // for CppFunction, GAPBIND14_TRY, arg_count, returns_void, MAX_FUNCTIONS
+#include "cpp_fn.hpp"       // for CppFunction, GAPBIND14_TRY etc
 #include "gap_include.hpp"  // for Obj
 #include "to_cpp.hpp"       // for to_cpp
 #include "to_gap.hpp"       // for to_gap
