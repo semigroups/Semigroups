@@ -24,7 +24,11 @@
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
 
+#include <cstddef>        // for size_t
+#include <iterator>       // for distance, iterator_traits
+#include <memory>         // for shared_ptr
 #include <sstream>        // for ostringstream
+#include <stdexcept>      // for runtime_error
 #include <string>         // for string
 #include <type_traits>    // for enable_if_t
 #include <typeinfo>       // for typeid
@@ -35,7 +39,6 @@
 #include "gap_include.hpp"   // for Obj etc
 #include "tame-free-fn.hpp"  // for tame free functions
 #include "tame-mem-fn.hpp"   // for tame constructors
-#include "to_cpp.hpp"        // for to_cpp
 #include "to_gap.hpp"        // for to_gap
 
 ////////////////////////////////////////////////////////////////////////
@@ -73,6 +76,9 @@
 typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
+  // Forward decl
+  template <typename T, typename>
+  struct to_cpp;
 
   ////////////////////////////////////////////////////////////////////////
   // Aliases
@@ -237,12 +243,14 @@ namespace gapbind14 {
       return it->second;
     }
 
-    const char *name(Obj o) const {
+    const char *subtype_name(Obj o) const {
       return _subtypes.at(detail::obj_subtype(o))->name().c_str();
     }
 
     void print(Obj o) {
-      Pr("<class %s at %s>", (Int) name(o), (Int) detail::to_string(o).c_str());
+      Pr("<class %s at %s>",
+         (Int) subtype_name(o),
+         (Int) detail::to_string(o).c_str());
     }
 
     void save(Obj o) {
@@ -299,8 +307,6 @@ namespace gapbind14 {
                       std::string        flnm,
                       std::string const &nm,
                       Obj (*func)(Args...)) {
-      // static_assert(sizeof...(Args) > 1,
-      //              "there must be at least 1 parameter: Obj self, Obj arg1");
       static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
       _mem_funcs.at(subtype(sbtyp))
           .push_back({detail::copy_c_str(nm),
@@ -322,7 +328,7 @@ namespace gapbind14 {
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // to_cpp - for gapbind14 gap objects
+  // to_cpp/gap - for gapbind14 gap objects
   ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
@@ -387,10 +393,7 @@ namespace gapbind14 {
   class class_ {
    public:
     class_(std::string name)
-        // TODO remove _module
-        : _module(module()),
-          _name(name),
-          _subtype(_module.add_subtype<T>(name)) {}
+        : _name(name), _subtype(module().add_subtype<T>(name)) {}
 
     template <typename... Args>
     class_ &def(init<Args...> x, std::string name = "make") {
@@ -403,7 +406,7 @@ namespace gapbind14 {
                             class_ &> {
       size_t const n = all_wild_mem_fns<Wild>().size();
       all_wild_mem_fns<Wild>().push_back(f);
-      _module.add_mem_func(
+      module().add_mem_func(
           _name,
           __FILE__,
           mem_fn_name,
@@ -417,15 +420,14 @@ namespace gapbind14 {
                             class_ &> {
       size_t const n = all_wilds<Wild>().size();
       all_wilds<Wild>().push_back(f);
-      _module.add_mem_func(_name,
-                           __FILE__,
-                           mem_fn_name,
-                           get_tame<decltype(&tame<0, Wild>), Wild>(n));
+      module().add_mem_func(_name,
+                            __FILE__,
+                            mem_fn_name,
+                            get_tame<decltype(&tame<0, Wild>), Wild>(n));
       return *this;
     }
 
    private:
-    Module &          _module;
     std::string       _name;
     gapbind14_subtype _subtype;
   };

@@ -18,19 +18,20 @@
 
 #include "gapbind14/gapbind14.hpp"
 
-#include <unordered_set>
+#include <stdio.h>        // for fprintf, stderr
+#include <string.h>       // for memcpy, strchr, strrchr
+                          //
+#include <unordered_set>  // for unordered_set, unordered_set<>::iterator
+
+#include "gapbind14/gap_include.hpp"  // for Obj etc
 
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
-  namespace detail {
 
-    Module &module() {
-      static Module MODULE;
-      return MODULE;
-    }
+  namespace detail {
 
     void require_gapbind14_obj(Obj o) {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
@@ -189,16 +190,9 @@ namespace gapbind14 {
            {0, 0, 0, 0, 0}};
   }  // namespace
 
-  void check_args(Obj args, size_t n) {
-    if (!IS_LIST(args)) {
-      ErrorQuit("expected the argument to be a list, found %s",
-                (Int) TNAM_OBJ(args),
-                0L);
-    } else if (LEN_LIST(args) != n) {
-      ErrorQuit("expected the argument to be a list of length %d, found %d",
-                (Int) n,
-                (Int) LEN_LIST(args));
-    }
+  Module &module() {
+    static Module MODULE;
+    return MODULE;
   }
 
   void init_kernel() {
