@@ -469,6 +469,11 @@ SEMIGROUPS.LeftTranslationsBacktrack := function(L, opt...)
   lambda := [];
   out := [];
   bt(1);
+
+  if nr_only then
+    return nr;
+  fi;
+
   Apply(out, x -> LeftTranslationNC(L, x));
   return out;
 end;
@@ -531,6 +536,7 @@ SEMIGROUPS.RightTranslationsBacktrack := function(R, opt...)
   if nr_only then
     return nr;
   fi;
+
   Apply(out, x -> RightTranslationNC(RightTranslations(S), x));
   return out;
 end;
@@ -593,9 +599,13 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
       lambda[i] := s;
 
       if r_finished and i = l_m then
-        Add(out, BitranslationNC(H,
-                                 LeftTranslationNC(L, lambda),
-                                 RightTranslationNC(R, rho)));
+        if nr_only then
+          nr := nr + 1;
+        else
+          Add(out, BitranslationNC(H,
+                                   LeftTranslationNC(L, lambda),
+                                   RightTranslationNC(R, rho)));
+        fi;
         continue;
       fi;
 
@@ -652,9 +662,13 @@ SEMIGROUPS.BitranslationsBacktrack := function(H, opt...)
       rho[i] := s;
 
       if l_finished and i = r_m then
-        Add(out, BitranslationNC(H,
-                                 LeftTranslationNC(L, lambda),
-                                 RightTranslationNC(R, rho)));
+        if nr_only then
+          nr := nr + 1;
+        else
+          Add(out, BitranslationNC(H,
+                                   LeftTranslationNC(L, lambda),
+                                   RightTranslationNC(R, rho)));
+        fi;
         continue;
       fi;
 
@@ -1385,6 +1399,57 @@ InstallMethod(Size, "for a translational hull",
 [IsBitranslationsSemigroup and IsWholeFamily],
 function(H)
   return Size(AsList(H));
+end);
+
+InstallMethod(NrLeftTranslations, "for a semigroup",
+[IsSemigroup and CanUseFroidurePin and IsFinite],
+function(S)
+  local L, out;
+
+  L := LeftTranslations(S);
+  if SEMIGROUPS.HasEasyTranslationsGenerators(L) then
+    return Size(L);  # this is probably more efficient
+  fi;
+
+  out := SEMIGROUPS.LeftTranslationsBacktrack(L, "nr_only");
+  SetSize(L, out);
+  return out;
+end);
+
+InstallMethod(NrRightTranslations, "for a semigroup",
+[IsSemigroup and CanUseFroidurePin and IsFinite],
+function(S)
+  local R, out;
+
+  R := RightTranslations(S);
+  if SEMIGROUPS.HasEasyTranslationsGenerators(R) then
+    return Size(R);  # this is probably more efficient
+  fi;
+
+  out := SEMIGROUPS.RightTranslationsBacktrack(R, "nr_only");
+  SetSize(R, out);
+  return out;
+end);
+
+# TODO (later): avoid reproducing the logic in AsList
+InstallMethod(NrBitranslations, "for a semigroup",
+[IsSemigroup and CanUseFroidurePin and IsFinite],
+function(S)
+  local H, out;
+
+  H := TranslationalHull(S);
+  if SEMIGROUPS.HasEasyBitranslationsGenerators(H) then
+    return Size(H);  # this is probably more efficient
+  elif IsReesZeroMatrixSemigroup(S) then
+    out := SEMIGROUPS.BitranslationsRZMS(H, "nr_only");
+  elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    out := SEMIGROUPS.BitranslationsNormalRMS(H, "nr_only");
+  else
+    out := SEMIGROUPS.BitranslationsBacktrack(H, "nr_only");
+  fi;
+
+  SetSize(H, out);
+  return out;
 end);
 
 InstallMethod(Representative, "for a semigroup of left or right translations",

@@ -397,12 +397,15 @@ SEMIGROUPS.RZMSLinkedGroupFunctions := function(S, tau, sigma)
   return out;
 end;
 
-SEMIGROUPS.BitranslationsRZMS := function(H)
-  local S, out, idx_funcs, tau, sigma_it, sigma, gp_funcs, empty_bitrans, x, y;
+SEMIGROUPS.BitranslationsRZMS := function(H, opt...)
+  local S, out, idx_funcs, nr_only, nr, tau, sigma_it, sigma, gp_funcs,
+  empty_bitrans, x, y;
 
   S         := UnderlyingSemigroup(H);
   out       := [];
   idx_funcs := SEMIGROUPS.RZMSLinkedIndexFuncs(S);
+  nr_only   := opt = ["nr_only"];
+  nr        := 0;
 
   for x in idx_funcs do
     tau := x[1];
@@ -410,11 +413,19 @@ SEMIGROUPS.BitranslationsRZMS := function(H)
     while not IsDoneIterator(sigma_it) do
       sigma := NextIterator(sigma_it);
       gp_funcs := SEMIGROUPS.RZMSLinkedGroupFunctions(S, tau, sigma);
-      for y in gp_funcs do
-        Add(out, [[tau, y[1]], [sigma, y[2]]]);
-      od;
+      if nr_only then
+        nr := nr + Length(gp_funcs);
+      else
+        for y in gp_funcs do
+          Add(out, [[tau, y[1]], [sigma, y[2]]]);
+        od;
+      fi;
     od;
   od;
+
+  if nr_only then
+    return nr + 1;
+  fi;
 
   empty_bitrans := [[List(Rows(S), x -> 0), []],
                     [List(Columns(S), x -> 0), []]];
@@ -474,9 +485,9 @@ SEMIGROUPS.NormalRMSInitialisedLinkedFuncs := function(S, G, mat, mat_inv_rows,
   return out;
 end;
 
-SEMIGROUPS.NormalRMSLinkedTriples := function(S)
-  local I, M, iso, inv, G, mat, inv_rows, out, b, d_inv, c, i, mu, a, x, y,
-  func_pair;
+SEMIGROUPS.NormalRMSLinkedTriples := function(S, opt...)
+  local I, M, iso, inv, G, mat, nr_only, inv_rows, out, b, d_inv, c,
+  linked_funcs, i, mu, a, x, y, func_pair;
 
   I := Rows(S);
   M := Columns(S);
@@ -488,6 +499,8 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
   mat := StructuralCopy(MatrixOfReesMatrixSemigroup(S));
   mat := List(mat, row -> List(row, x -> AsTransformation(x ^ iso)));
 
+  nr_only := opt = ["nr_only"];
+
   inv_rows := List(I, x -> List(G, y -> []));
   for i in I do
     for mu in M do
@@ -496,39 +509,50 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S)
   od;
 
   out := [];
+  if nr_only then
+    out := 0;
+  fi;
+
   for a in G do
     b := AsPermutation(a) ^ inv;
     for x in I do
       d_inv := List(M, mu -> (mat[mu][x] * a) ^ -1);
       for y in M do
         c := List(I, i -> a * mat[y][i]);
-        for func_pair in SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
-                                                                    G,
-                                                                    mat,
-                                                                    inv_rows,
-                                                                    c,
-                                                                    d_inv,
-                                                                    a,
-                                                                    x,
-                                                                    y) do
-          Add(out, Concatenation([b], func_pair));
-        od;
+        linked_funcs := SEMIGROUPS.NormalRMSInitialisedLinkedFuncs(S,
+                                                                   G,
+                                                                   mat,
+                                                                   inv_rows,
+                                                                   c,
+                                                                   d_inv,
+                                                                   a,
+                                                                   x,
+                                                                   y);
+        if nr_only then
+          out := out + Length(linked_funcs);
+        else
+          for func_pair in linked_funcs do
+            Add(out, Concatenation([b], func_pair));
+          od;
+        fi;
       od;
     od;
   od;
   return out;
 end;
 
-SEMIGROUPS.BitranslationsNormalRMS := function(H)
-  local S, out, triple;
+SEMIGROUPS.BitranslationsNormalRMS := function(H, opt...)
+  local S, out, nr_only, nr, triple;
 
   S := UnderlyingSemigroup(H);
-  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
-    ErrorNoReturn("the argument must be a normalised RMS over a group");
-  fi;
 
-  H   := TranslationalHull(S);
-  out := [];
+  H       := TranslationalHull(S);
+  out     := [];
+  nr_only := opt = ["nr_only"];
+
+  if nr_only then
+    return SEMIGROUPS.NormalRMSLinkedTriples(S, opt[1]);
+  fi;
 
   for triple in SEMIGROUPS.NormalRMSLinkedTriples(S) do
     triple := Concatenation([triple[1]],

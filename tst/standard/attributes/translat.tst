@@ -587,6 +587,33 @@ gap> T := Semigroup(Generators(H){[1 .. 5]});
 gap> Size(T);
 44
 
+# NrTranslations
+gap> S := Semigroup([Transformation([1, 4, 3, 3, 5, 2]),
+> Transformation([3, 4, 1, 1, 4, 2])]);;
+gap> NrLeftTranslations(S);
+208
+gap> NrRightTranslations(S);
+128
+gap> NrBitranslations(S);
+78
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> H := TranslationalHull(S);;
+gap> HasSize(L) and HasSize(R) and HasSize(H);
+true
+gap> not (HasAsList(L) or HasAsList(R) or HasAsList(H));
+true
+gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> NrLeftTranslations(S) = NrLeftTranslations(T);
+true
+gap> NrRightTranslations(S) = NrRightTranslations(T);
+true
+gap> NrBitranslations(S) = NrBitranslations(T);
+true
+
 # Error Testing - Left Translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),
 > Transformation([3, 4, 1, 1, 4, 2])]);;

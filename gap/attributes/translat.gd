@@ -342,6 +342,33 @@ DeclareAttribute("RightTranslations",
 DeclareAttribute("TranslationalHull",
                  IsSemigroup and CanUseFroidurePin and IsFinite);
 
+#! @BeginGroup NrXTranslations
+#! @GroupTitle NrXTranslations
+#! @Returns the number of left-, right-, or bi-translations
+#! @Arguments S
+#! @Description
+#! Given a finite semigroup <A>S</A> satisfying <Ref Filt="CanUseFroidurePin"/>,
+#! returns the number of left-, right-, or bi-translations of <A>S</A>. This
+#! is typically more efficient than calling `Size(LeftTranslations(<A>S</A>))`,
+#! as the [bi]translations may not be produced.
+#! @BeginExampleSession
+#! gap> S := Semigroup([Transformation([1, 4, 3, 3, 6, 5, 2]),
+#! > Transformation([3, 4, 1, 1, 4, 2])]);;
+#! gap> NrLeftTranslations(S);
+#! 1444
+#! gap> NrRightTranslations(S);
+#! 398
+#! gap> NrBitranslations(S);
+#! 69
+#! @EndExampleSession
+DeclareAttribute("NrLeftTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("NrRightTranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+DeclareAttribute("NrBitranslations",
+                 IsSemigroup and CanUseFroidurePin and IsFinite);
+#! @EndGroup
+
 #! @BeginGroup InnerXTranslations
 #! @GroupTitle InnerXTranslations
 #! @Returns the monoid of inner left or right translations
