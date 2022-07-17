@@ -226,12 +226,16 @@ namespace gapbind14 {
       _module_name = nm;
     }
 
+    // TODO move to cpp file
     void clear() {
       _funcs.clear();
-      _mem_funcs.clear();
+      for (auto &funcs : _mem_funcs) {
+        funcs.clear();
+      }
       _module_name = "";
     }
 
+    // TODO move to cpp file
     gapbind14_subtype subtype(std::string const &subtype_name) const {
       auto it = _subtype_names.find(subtype_name);
       if (it == _subtype_names.end()) {
