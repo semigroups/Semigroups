@@ -20,6 +20,10 @@
 // * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
 // * Allow custom printing
 // * Support enums
+// * test for gapbind14/demo
+// * update gapbind14/README.md
+// * gapbind: iwyu in all files
+// * gapbind: const/noexcept in all files
 
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
@@ -100,8 +104,8 @@ namespace gapbind14 {
   template <typename T>
   struct IsGapBind14Type<std::shared_ptr<T>> : IsGapBind14Type<T> {};
 
-  void init_library();
-  void init_kernel();
+  void init_library(char const *);
+  void init_kernel(char const *);
 
   class Module;  // Forward decl
   Module &module();
@@ -195,7 +199,6 @@ namespace gapbind14 {
    private:
     std::vector<StructGVarFunc>                        _funcs;
     std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
-    std::string                                        _module_name;
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
     std::vector<detail::SubtypeBase *>                 _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
@@ -206,7 +209,6 @@ namespace gapbind14 {
     Module()
         : _funcs(),
           _mem_funcs(),
-          _module_name(),
           _subtype_names(),
           _subtypes(),
           _type_to_subtype() {}
@@ -217,10 +219,6 @@ namespace gapbind14 {
     Module &operator=(Module &&) = delete;
 
     ~Module() = default;
-
-    void set_module_name(char const *nm) {
-      _module_name = nm;
-    }
 
     void clear();
 
@@ -254,10 +252,6 @@ namespace gapbind14 {
 
     void free(Obj o) const {
       _subtypes.at(detail::obj_subtype(o))->free(o);
-    }
-
-    const char *module_name() const {
-      return _module_name.c_str();
     }
 
     StructGVarFunc const *funcs() const {

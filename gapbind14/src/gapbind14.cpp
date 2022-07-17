@@ -43,7 +43,6 @@ namespace gapbind14 {
         throw std::runtime_error(std::string("init function for module ")
                                  + module_name + " already inserted!");
       }
-      module().set_module_name(module_name);
       return 0;
     }
 
@@ -99,7 +98,6 @@ namespace gapbind14 {
     for (auto &funcs : _mem_funcs) {
       funcs.clear();
     }
-    _module_name = "";
   }
 
   gapbind14_subtype Module::subtype(std::string const &subtype_name) const {
@@ -214,7 +212,7 @@ namespace gapbind14 {
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 
-    // TODO remove, use InstallGlobalFunction instead
+    // TODO(later) remove, use InstallGlobalFunction instead
     StructGVarFunc GVarFuncs[]
         = {GVAR_ENTRY("gapbind14.cpp", IsValidGapbind14Object, 1, "arg1"),
            {0, 0, 0, 0, 0}};
@@ -225,7 +223,7 @@ namespace gapbind14 {
     return MODULE;
   }
 
-  void init_kernel() {
+  void init_kernel(char const *name) {
     static bool first_call = true;
     if (first_call) {
       first_call = false;
@@ -247,10 +245,10 @@ namespace gapbind14 {
       InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
-    auto it = detail::init_funcs().find(std::string(module().module_name()));
+    auto it = detail::init_funcs().find(std::string(name));
     if (it == detail::init_funcs().end()) {
       throw std::runtime_error(std::string("No init function for module ")
-                               + module().module_name() + " found");
+                               + name + " found");
     }
     it->second();  // installs all functions in the current module.
     module().finalize();
@@ -262,17 +260,16 @@ namespace gapbind14 {
     }
   }
 
-  void init_library() {
+  void init_library(char const *name) {
     static bool first_call = true;
     if (first_call) {
       first_call = false;
       InitGVarFuncsFromTable(GVarFuncs);
     }
-    auto &m = module();
-    m.finalize();
+    auto &                m   = module();
     StructGVarFunc const *tab = m.funcs();
 
-    // init functions from m in the record named m.module_name()
+    // init functions from m in the record named name
     // This is done to avoid polluting the global namespace
     Obj global_rec = NEW_PREC(0);
     SET_LEN_PREC(global_rec, 0);
@@ -302,7 +299,7 @@ namespace gapbind14 {
     }
 
     MakeImmutable(global_rec);
-    AssReadOnlyGVar(GVarName(m.module_name()), global_rec);
+    AssReadOnlyGVar(GVarName(name), global_rec);
     m.clear();
   }
 }  // namespace gapbind14

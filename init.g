@@ -27,9 +27,11 @@ if not IsBound(UserHomeExpand) then
   BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
 fi;
 
-DeclareCategory("IsTGapBind14Obj", IsObject);
-BindGlobal("TheTypeTGapBind14Obj",
-           NewType(NewFamily("TGapBind14ObjFamily"), IsTGapBind14Obj));
+if not IsBoundGlobal("IsTGapBind14Obj") then
+  DeclareCategory("IsTGapBind14Obj", IsObject);
+  BindGlobal("TheTypeTGapBind14Obj",
+             NewType(NewFamily("TGapBind14ObjFamily"), IsTGapBind14Obj));
+fi;
 
 BindGlobal("SEMIGROUPS", rec());
 MakeReadWriteGlobal("SEMIGROUPS");

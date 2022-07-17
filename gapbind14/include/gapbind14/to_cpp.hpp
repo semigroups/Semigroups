@@ -23,7 +23,7 @@
 #include <string>       // for string
 #include <type_traits>  // for enable_if_t, is_const, is_integral, is_same
 #include <vector>       // for vector
-                        //
+
 #include "gap_include.hpp"
 
 namespace gapbind14 {
@@ -33,8 +33,8 @@ namespace gapbind14 {
 
   using gap_tnum_type = UInt;
 
-  // For Obj -> TCppType
-  template <typename TCppType, typename = void>
+  // For Obj -> T
+  template <typename T, typename = void>
   struct to_cpp;
 
   template <typename T>
@@ -60,7 +60,16 @@ namespace gapbind14 {
     using cpp_type                          = void;
     static gap_tnum_type constexpr gap_type = 0;
 
-    void operator()() {}
+    void operator()() const noexcept {}
+  };
+
+  template <>
+  struct to_cpp<Obj> {
+    using cpp_type = Obj;
+
+    Obj operator()(Obj o) const noexcept {
+      return o;
+    }
   };
 
   ////////////////////////////////////////////////////////////////////////
@@ -72,7 +81,7 @@ namespace gapbind14 {
     using cpp_type                          = std::string;
     static gap_tnum_type constexpr gap_type = T_STRING;
 
-    std::string operator()(Obj o) {
+    std::string operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_STRING) {
         ErrorQuit("expected string, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -91,7 +100,7 @@ namespace gapbind14 {
     using cpp_type                          = T;
     static gap_tnum_type constexpr gap_type = T_INT;
 
-    Int operator()(Obj o) {
+    Int operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_INT) {
         ErrorQuit("expected int, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -108,7 +117,7 @@ namespace gapbind14 {
     using cpp_type                          = bool;
     static gap_tnum_type constexpr gap_type = T_BOOL;
 
-    bool operator()(Obj o) {
+    bool operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_BOOL) {
         ErrorQuit("expected bool, found %s", (Int) TNAM_OBJ(o), 0L);
       }
@@ -125,7 +134,7 @@ namespace gapbind14 {
     using cpp_type                          = std::vector<T>;
     static gap_tnum_type constexpr gap_type = T_PLIST_HOM;
 
-    std::vector<T> operator()(Obj o) {
+    std::vector<T> operator()(Obj o) const {
       if (!IS_LIST(o)) {
         ErrorQuit("expected list, found %s", (Int) TNAM_OBJ(o), 0L);
       }

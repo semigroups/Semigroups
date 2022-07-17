@@ -109,12 +109,12 @@ GAPBIND14_MODULE(gapbind_demo) {
 }
 
 static Int InitKernel(StructInitInfo* module) {
-  gapbind14::init_kernel();
+  gapbind14::init_kernel("gapbind_demo");
   return 0;
 }
 
 static Int InitLibrary(StructInitInfo* module) {
-  gapbind14::init_library();
+  gapbind14::init_library("gapbind_demo");
   return 0;
 }
 

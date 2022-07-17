@@ -379,7 +379,7 @@ static StructGVarFunc GVarFuncs[] = {
  *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
  */
 static Int InitKernel(StructInitInfo* module) {
-  gapbind14::init_kernel();
+  gapbind14::init_kernel("libsemigroups");
 
   /* init filters and functions */
   InitHdlrFiltsFromTable(GVarFilts);
@@ -483,7 +483,7 @@ static Int PostRestore(StructInitInfo* module) {
 }
 
 static Int InitLibrary(StructInitInfo* module) {
-  gapbind14::init_library();
+  gapbind14::init_library("libsemigroups");
   InitGVarFiltsFromTable(GVarFilts);
   InitGVarFuncsFromTable(GVarFuncs);
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
