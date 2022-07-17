@@ -55,10 +55,6 @@
 // Macros
 ////////////////////////////////////////////////////////////////////////
 
-// TODO check if these are used
-#define GAPBIND14_STRINGIFY(x) #x
-#define GAPBIND14_TO_STRING(x) GAPBIND14_STRINGIFY(x)
-
 #define GAPBIND14_MODULE(name)                                                 \
   static void gapbind14_init_##name();                                         \
   int         gapbind14_dummy_var_##name                                       \
@@ -226,23 +222,9 @@ namespace gapbind14 {
       _module_name = nm;
     }
 
-    // TODO move to cpp file
-    void clear() {
-      _funcs.clear();
-      for (auto &funcs : _mem_funcs) {
-        funcs.clear();
-      }
-      _module_name = "";
-    }
+    void clear();
 
-    // TODO move to cpp file
-    gapbind14_subtype subtype(std::string const &subtype_name) const {
-      auto it = _subtype_names.find(subtype_name);
-      if (it == _subtype_names.end()) {
-        throw std::runtime_error("No subtype named " + subtype_name);
-      }
-      return it->second;
-    }
+    gapbind14_subtype subtype(std::string const &subtype_name) const;
 
     template <typename T>
     gapbind14_subtype subtype() const {

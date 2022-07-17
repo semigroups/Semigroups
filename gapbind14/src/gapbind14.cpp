@@ -38,8 +38,11 @@ namespace gapbind14 {
     }
 
     int emplace_init_func(char const *module_name, void (*func)()) {
-      // TODO check if emplace works and if not exception
-      init_funcs().emplace(module_name, func);
+      bool inserted = init_funcs().emplace(module_name, func).second;
+      if (!inserted) {
+        throw std::runtime_error(std::string("init function for module ")
+                                 + module_name + " already inserted!");
+      }
       module().set_module_name(module_name);
       return 0;
     }
@@ -91,6 +94,21 @@ namespace gapbind14 {
 
   // Module implementations
 
+  void Module::clear() {
+    _funcs.clear();
+    for (auto &funcs : _mem_funcs) {
+      funcs.clear();
+    }
+    _module_name = "";
+  }
+
+  gapbind14_subtype Module::subtype(std::string const &subtype_name) const {
+    auto it = _subtype_names.find(subtype_name);
+    if (it == _subtype_names.end()) {
+      throw std::runtime_error("No subtype named " + subtype_name);
+    }
+    return it->second;
+  }
   void Module::load(Obj o) const {
     gapbind14_subtype sbtyp = LoadUInt();
     ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
@@ -230,7 +248,10 @@ namespace gapbind14 {
     }
 
     auto it = detail::init_funcs().find(std::string(module().module_name()));
-    // TODO if module_name not found throw
+    if (it == detail::init_funcs().end()) {
+      throw std::runtime_error(std::string("No init function for module ")
+                               + module().module_name() + " found");
+    }
     it->second();  // installs all functions in the current module.
     module().finalize();
 
