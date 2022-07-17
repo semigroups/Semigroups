@@ -55,19 +55,15 @@
 // Macros
 ////////////////////////////////////////////////////////////////////////
 
+// TODO check if these are used
 #define GAPBIND14_STRINGIFY(x) #x
 #define GAPBIND14_TO_STRING(x) GAPBIND14_STRINGIFY(x)
 
-#define GAPBIND14_MODULE(name)                                            \
-  static void gapbind14_init_##name(::gapbind14::Module &);               \
-                                                                          \
-  void ::gapbind14::detail::gapbind14_module_impl(gapbind14::Module &m) { \
-    ::gapbind14::module().set_module_name(GAPBIND14_STRINGIFY(name));     \
-    gapbind14_init_##name(m);                                             \
-    m.finalize();                                                         \
-  }                                                                       \
-                                                                          \
-  void gapbind14_init_##name(::gapbind14::Module &variable)
+#define GAPBIND14_MODULE(name)                                                 \
+  static void gapbind14_init_##name();                                         \
+  int         gapbind14_dummy_var_##name                                       \
+      = ::gapbind14::detail::emplace_init_func(#name, &gapbind14_init_##name); \
+  void gapbind14_init_##name()
 
 ////////////////////////////////////////////////////////////////////////
 // Typdefs for GAP
@@ -76,6 +72,7 @@
 typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
+
   // Forward decl
   template <typename T, typename>
   struct to_cpp;
@@ -119,7 +116,9 @@ namespace gapbind14 {
 
   namespace detail {
 
-    void gapbind14_module_impl(Module &);
+    std::unordered_map<std::string, void (*)()> &init_funcs();
+
+    int emplace_init_func(char const *module_name, void (*func)());
 
     // Convert object to string
     template <typename T>
@@ -205,6 +204,8 @@ namespace gapbind14 {
     std::vector<detail::SubtypeBase *>                 _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
 
+    static size_t _next_subtype;
+
    public:
     Module()
         : _funcs(),
@@ -223,6 +224,12 @@ namespace gapbind14 {
 
     void set_module_name(char const *nm) {
       _module_name = nm;
+    }
+
+    void clear() {
+      _funcs.clear();
+      _mem_funcs.clear();
+      _module_name = "";
     }
 
     gapbind14_subtype subtype(std::string const &subtype_name) const {
@@ -445,7 +452,7 @@ namespace gapbind14 {
     for (auto it = first; it != last; ++it) {
       AssPlist(result,
                i++,
-               to_gap<typename std::iterator_traits<T>::reference>()(*it));
+               to_gap<typename std::iterator_traits<T>::value_type>()(*it));
     }
     return result;
   }

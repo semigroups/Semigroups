@@ -324,9 +324,6 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
-#define GVAR_ENTRY2(srcfile, gapname, fname, nparam, params) \
-  { #gapname, nparam, params, (GVarFunc) fname, srcfile ":Func" #gapname }
-
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {

@@ -32,6 +32,17 @@ namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
 
   namespace detail {
+    std::unordered_map<std::string, void (*)()> &init_funcs() {
+      static std::unordered_map<std::string, void (*)()> inits;
+      return inits;
+    }
+
+    int emplace_init_func(char const *module_name, void (*func)()) {
+      // TODO check if emplace works and if not exception
+      init_funcs().emplace(module_name, func);
+      module().set_module_name(module_name);
+      return 0;
+    }
 
     void require_gapbind14_obj(Obj o) {
       if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
@@ -185,6 +196,7 @@ namespace gapbind14 {
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 
+    // TODO remove, use InstallGlobalFunction instead
     StructGVarFunc GVarFuncs[]
         = {GVAR_ENTRY("gapbind14.cpp", IsValidGapbind14Object, 1, "arg1"),
            {0, 0, 0, 0, 0}};
@@ -196,36 +208,47 @@ namespace gapbind14 {
   }
 
   void init_kernel() {
-    InitHdlrFuncsFromTable(GVarFuncs);
+    static bool first_call = true;
+    if (first_call) {
+      first_call = false;
+      InitHdlrFuncsFromTable(GVarFuncs);
+      UInt &PKG_TNUM = T_GAPBIND14_OBJ;
+      PKG_TNUM       = RegisterPackageTNUM("TGapBind14", TGapBind14ObjTypeFunc);
 
-    auto &m = module();
-    detail::gapbind14_module_impl(m);
-    InitHdlrFuncsFromTable(m.funcs());
+      PrintObjFuncs[PKG_TNUM] = TGapBind14ObjPrintFunc;
+      SaveObjFuncs[PKG_TNUM]  = TGapBind14ObjSaveFunc;
+      LoadObjFuncs[PKG_TNUM]  = TGapBind14ObjLoadFunc;
 
-    for (auto ptr : m) {
-      InitHdlrFuncsFromTable(m.mem_funcs(ptr->name()));
+      CopyObjFuncs[PKG_TNUM]      = &TGapBind14ObjCopyFunc;
+      CleanObjFuncs[PKG_TNUM]     = &TGapBind14ObjCleanFunc;
+      IsMutableObjFuncs[PKG_TNUM] = &AlwaysNo;
+
+      InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
+      InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
+
+      InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
-    UInt &PKG_TNUM = T_GAPBIND14_OBJ;
-    PKG_TNUM       = RegisterPackageTNUM("TGapBind14", TGapBind14ObjTypeFunc);
+    auto it = detail::init_funcs().find(std::string(module().module_name()));
+    // TODO if module_name not found throw
+    it->second();  // installs all functions in the current module.
+    module().finalize();
 
-    PrintObjFuncs[PKG_TNUM] = TGapBind14ObjPrintFunc;
-    SaveObjFuncs[PKG_TNUM]  = TGapBind14ObjSaveFunc;
-    LoadObjFuncs[PKG_TNUM]  = TGapBind14ObjLoadFunc;
+    InitHdlrFuncsFromTable(module().funcs());
 
-    CopyObjFuncs[PKG_TNUM]      = &TGapBind14ObjCopyFunc;
-    CleanObjFuncs[PKG_TNUM]     = &TGapBind14ObjCleanFunc;
-    IsMutableObjFuncs[PKG_TNUM] = &AlwaysNo;
-
-    InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
-    InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
-
-    InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
+    for (auto ptr : module()) {
+      InitHdlrFuncsFromTable(module().mem_funcs(ptr->name()));
+    }
   }
 
   void init_library() {
-    InitGVarFuncsFromTable(GVarFuncs);
-    auto &                m   = module();
+    static bool first_call = true;
+    if (first_call) {
+      first_call = false;
+      InitGVarFuncsFromTable(GVarFuncs);
+    }
+    auto &m = module();
+    m.finalize();
     StructGVarFunc const *tab = m.funcs();
 
     // init functions from m in the record named m.module_name()
@@ -259,5 +282,6 @@ namespace gapbind14 {
 
     MakeImmutable(global_rec);
     AssReadOnlyGVar(GVarName(m.module_name()), global_rec);
+    m.clear();
   }
 }  // namespace gapbind14

@@ -29,10 +29,27 @@
 
 namespace gapbind14 {
 
+  template <typename T>
+  struct IsGapBind14Type;
+
   using gap_tnum_type = UInt;
 
   template <typename T, typename = void>
   struct to_gap;
+
+  template <typename T>
+  struct to_gap<
+      T&,
+      std::enable_if_t<!IsGapBind14Type<T>::value && !std::is_const<T>::value>>
+      : to_gap<T> {};
+
+  template <typename T>
+  struct to_gap<T const&, std::enable_if_t<!IsGapBind14Type<T>::value>>
+      : to_gap<T> {};
+
+  template <typename T>
+  struct to_gap<T&&, std::enable_if_t<!IsGapBind14Type<T>::value>> : to_gap<T> {
+  };
 
   ////////////////////////////////////////////////////////////////////////
   // Obj
@@ -121,15 +138,6 @@ namespace gapbind14 {
     }
   };
 
-  template <typename T>
-  struct to_gap<std::vector<T>&> : to_gap<std::vector<T>> {};
-
-  template <typename T>
-  struct to_gap<std::vector<T>&&> : to_gap<std::vector<T>> {};
-
-  template <typename T>
-  struct to_gap<std::vector<T> const&> : to_gap<std::vector<T>> {};
-
   ////////////////////////////////////////////////////////////////////////
   // Pairs
   ////////////////////////////////////////////////////////////////////////
@@ -147,15 +155,6 @@ namespace gapbind14 {
       return result;
     }
   };
-
-  template <typename S, typename T>
-  struct to_gap<std::pair<S, T>&> : to_gap<std::pair<S, T>> {};
-
-  template <typename S, typename T>
-  struct to_gap<std::pair<S, T>&&> : to_gap<std::pair<S, T>> {};
-
-  template <typename S, typename T>
-  struct to_gap<std::pair<S, T> const&> : to_gap<std::pair<S, T>> {};
 
 }  // namespace gapbind14
 #endif  // INCLUDE_GAPBIND14_TO_GAP_HPP_
