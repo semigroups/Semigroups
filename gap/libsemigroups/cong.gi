@@ -169,15 +169,15 @@ function(C)
   if IsFpSemigroup(S) or (HasIsFreeSemigroup(S) and IsFreeSemigroup(S))
       or IsFpMonoid(S) or (HasIsFreeMonoid(S) and IsFreeMonoid(S)) then
     make := libsemigroups.Congruence.make_from_fpsemigroup;
-    CC := make([CongruenceHandednessString(C), LibsemigroupsFpSemigroup(S)]);
+    CC := make(CongruenceHandednessString(C), LibsemigroupsFpSemigroup(S));
     factor := Factorization;
   elif CanUseLibsemigroupsFroidurePin(S) then
-    CC := LibsemigroupsCongruenceConstructor(S)([CongruenceHandednessString(C),
-                                                 LibsemigroupsFroidurePin(S)]);
+    CC := LibsemigroupsCongruenceConstructor(S)(CongruenceHandednessString(C),
+                                                LibsemigroupsFroidurePin(S));
     factor := MinimalFactorization;
   elif CanUseGapFroidurePin(S) then
     N := Length(GeneratorsOfSemigroup(Range(C)));
-    tc := libsemigroups.ToddCoxeter.make([CongruenceHandednessString(C)]);
+    tc := libsemigroups.ToddCoxeter.make(CongruenceHandednessString(C));
     libsemigroups.ToddCoxeter.set_number_of_generators(tc, N);
     if IsRightMagmaCongruence(C) then
       table := RightCayleyGraphSemigroup(Range(C)) - 1;
@@ -186,7 +186,7 @@ function(C)
     fi;
     libsemigroups.ToddCoxeter.prefill(tc, table);
     CC := libsemigroups.Congruence.make_from_table(
-            [CongruenceHandednessString(C), "none"]);
+            CongruenceHandednessString(C), "none");
     libsemigroups.Congruence.set_number_of_generators(CC, N);
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;

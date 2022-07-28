@@ -25,6 +25,7 @@
 
 // Semigroups GAP package headers
 #include "froidure-pin.hpp"  // for to_cpp<FroidurePin<Bipartition>
+#include "pkg.hpp"           // for IsGapBind14Type
 #include "to_cpp.hpp"        // for to_cpp
 #include "to_gap.hpp"        // for to_gap
 
@@ -45,8 +46,6 @@
 #include "libsemigroups/transf.hpp"        // for PPerm etc
 #include "libsemigroups/types.hpp"         // for word_type
 
-#include "libsemigroups/kbe.hpp"  // for KBE
-
 // Forward decls
 namespace libsemigroups {
   class FpSemigroup;
@@ -55,14 +54,7 @@ namespace libsemigroups {
 
 namespace gapbind14 {
   template <>
-  struct IsGapBind14Type<libsemigroups::FpSemigroup &> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter const &>
-      : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::Congruence &> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::Congruence> : std::true_type {};
 
 }  // namespace gapbind14
 
@@ -95,7 +87,9 @@ void init_cong(gapbind14::Module &m) {
   using libsemigroups::ProjMaxPlusMat;
   using libsemigroups::Transf;
 
-  gapbind14::class_<Congruence>(m, "Congruence")
+  // Cannot use FroidurePinBase rather than the specialisations because there's
+  // no constructor for a Congruence from a FroidurePinBase&.
+  gapbind14::class_<Congruence>("Congruence")
       .def(gapbind14::init<congruence_kind, FroidurePin<Bipartition> const &>{},
            "make_from_froidurepin_bipartition")
       .def(gapbind14::init<congruence_kind, FroidurePin<BMat<>> const &>{},

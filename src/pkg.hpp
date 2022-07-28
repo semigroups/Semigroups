@@ -27,7 +27,11 @@
 #error "GCC version 5.0 or higher is required"
 #endif
 
+#include <type_traits>  // for true_type
+
 #include "compiled.h"  // for Obj, UInt
+
+#include "gapbind14/gapbind14.hpp"
 
 extern UInt T_BIPART;
 extern UInt T_BLOCKS;
@@ -66,5 +70,22 @@ extern Obj TYPES_BIPART;
 extern Obj LARGEST_MOVED_PT_TRANS;
 
 extern Obj IsSemigroup;
+
+namespace libsemigroups {
+  class FpSemigroup;
+  namespace congruence {
+    class ToddCoxeter;
+  }
+}  // namespace libsemigroups
+
+namespace gapbind14 {
+  template <>
+  struct IsGapBind14Type<libsemigroups::FpSemigroup> : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::congruence::ToddCoxeter>
+      : std::true_type {};
+
+}  // namespace gapbind14
 
 #endif  // SEMIGROUPS_SRC_PKG_HPP_

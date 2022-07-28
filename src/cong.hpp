@@ -22,7 +22,7 @@
 // Forward decl
 namespace gapbind14 {
   class Module;
-}
+}  // namespace gapbind14
 
 void init_cong(gapbind14::Module&);
 

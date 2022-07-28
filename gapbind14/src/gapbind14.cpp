@@ -1,6 +1,6 @@
 //
 // gapbind14
-// Copyright (C) 2020 James D. Mitchell
+// Copyright (C) 2020-2022 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,15 +18,106 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+#include <stdio.h>        // for fprintf, stderr
+#include <string.h>       // for memcpy, strchr, strrchr
+                          //
+#include <unordered_set>  // for unordered_set, unordered_set<>::iterator
+
+#include "gapbind14/gap_include.hpp"  // for Obj etc
+
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
 
-  Module &get_module() {
-    static Module MODULE;
-    return MODULE;
+  namespace detail {
+    std::unordered_map<std::string, void (*)()> &init_funcs() {
+      static std::unordered_map<std::string, void (*)()> inits;
+      return inits;
+    }
+
+    int emplace_init_func(char const *module_name, void (*func)()) {
+      bool inserted = init_funcs().emplace(module_name, func).second;
+      if (!inserted) {
+        throw std::runtime_error(std::string("init function for module ")
+                                 + module_name + " already inserted!");
+      }
+      return 0;
+    }
+
+    void require_gapbind14_obj(Obj o) {
+      if (TNUM_OBJ(o) != T_GAPBIND14_OBJ) {
+        ErrorQuit(
+            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(o), 0L);
+      }
+      GAPBIND14_ASSERT(SIZE_OBJ(o) == 2);
+    }
+
+    gapbind14_subtype obj_subtype(Obj o) {
+      require_gapbind14_obj(o);
+      return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
+    }
+
+    char const *copy_c_str(std::string const &str) {
+      char *out = new char[str.size() + 1];  // we need extra char for NUL
+      memcpy(out, str.c_str(), str.size() + 1);
+      return out;
+    }
+
+    char const *params_c_str(size_t nr) {
+      GAPBIND14_ASSERT(nr <= 6);
+      if (nr == 0) {
+        return "";
+      }
+      static std::string params = "arg1, arg2, arg3, arg4, arg5, arg6";
+      std::string source(params.cbegin(), params.cbegin() + (nr - 1) * 6);
+      source += std::string(params.cbegin() + (nr - 1) * 6,
+                            params.cbegin() + (nr - 1) * 6 + 4);
+      return copy_c_str(source);
+    }
+
+    // SubtypeBase implementations
+
+    SubtypeBase::SubtypeBase(std::string nm, gapbind14_subtype sbtyp)
+        : _name(nm), _subtype(sbtyp) {
+      static std::unordered_set<gapbind14_subtype> defined;
+      if (defined.find(sbtyp) != defined.end()) {
+        throw std::runtime_error("SubtypeBase " + to_string(sbtyp)
+                                 + " already registered!");
+      } else {
+        defined.insert(sbtyp);
+      }
+    }
+  }  // namespace detail
+
+  // Module implementations
+
+  void Module::clear() {
+    _funcs.clear();
+    for (auto &funcs : _mem_funcs) {
+      funcs.clear();
+    }
+  }
+
+  gapbind14_subtype Module::subtype(std::string const &subtype_name) const {
+    auto it = _subtype_names.find(subtype_name);
+    if (it == _subtype_names.end()) {
+      throw std::runtime_error("No subtype named " + subtype_name);
+    }
+    return it->second;
+  }
+  void Module::load(Obj o) const {
+    gapbind14_subtype sbtyp = LoadUInt();
+    ADDR_OBJ(o)[0]          = reinterpret_cast<Obj>(sbtyp);
+    ADDR_OBJ(o)[1]          = static_cast<Obj>(nullptr);
+  }
+
+  void Module::finalize() {
+    for (auto &x : _mem_funcs) {
+      x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
+    }
+    _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
   }
 
   namespace {
@@ -42,15 +133,15 @@ namespace gapbind14 {
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
-      get_module().print(o);
+      module().print(o);
     }
 
     void TGapBind14ObjSaveFunc(Obj o) {
-      get_module().save(o);
+      module().save(o);
     }
 
     void TGapBind14ObjLoadFunc(Obj o) {
-      get_module().load(o);
+      module().load(o);
     }
 
     Obj TGapBind14ObjCopyFunc(Obj o, Int mut) {
@@ -60,7 +151,7 @@ namespace gapbind14 {
     void TGapBind14ObjCleanFunc(Obj o) {}
 
     void TGapBind14ObjFreeFunc(Obj o) {
-      get_module().free(o);
+      module().free(o);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -117,77 +208,68 @@ namespace gapbind14 {
     }
 
     Obj IsValidGapbind14Object(Obj self, Obj arg1) {
-      if (TNUM_OBJ(arg1) != T_GAPBIND14_OBJ) {
-        ErrorQuit(
-            "expected gapbind14 object but got %s!", (Int) TNAM_OBJ(arg1), 0L);
-      }
-      GAPBIND14_ASSERT(SIZE_OBJ(arg1) == 2);
+      detail::require_gapbind14_obj(arg1);
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 
+    // TODO(later) remove, use InstallGlobalFunction instead
     StructGVarFunc GVarFuncs[]
         = {GVAR_ENTRY("gapbind14.cpp", IsValidGapbind14Object, 1, "arg1"),
            {0, 0, 0, 0, 0}};
   }  // namespace
 
-  void check_args(Obj args, size_t n) {
-    if (!IS_LIST(args)) {
-      ErrorQuit("expected the argument to be a list, found %s",
-                (Int) TNAM_OBJ(args),
-                0L);
-    } else if (LEN_LIST(args) != n) {
-      ErrorQuit("expected the argument to be a list of length %d, found %d",
-                (Int) n,
-                (Int) LEN_LIST(args));
-    }
-  }
-  // Subtype implementations
-
-  Subtype::Subtype(std::string nm, gapbind14_sub_type sbtyp)
-      : _name(nm), _subtype(sbtyp) {
-    static std::unordered_set<gapbind14_sub_type> defined;
-    if (defined.find(sbtyp) != defined.end()) {
-      throw std::runtime_error("Subtype " + to_string(sbtyp)
-                               + " already registered!");
-    } else {
-      defined.insert(sbtyp);
-    }
+  Module &module() {
+    static Module MODULE;
+    return MODULE;
   }
 
-  void init_kernel(Module &m) {
-    InitHdlrFuncsFromTable(GVarFuncs);
+  void init_kernel(char const *name) {
+    static bool first_call = true;
+    if (first_call) {
+      first_call = false;
+      InitHdlrFuncsFromTable(GVarFuncs);
+      UInt &PKG_TNUM = T_GAPBIND14_OBJ;
+      PKG_TNUM       = RegisterPackageTNUM("TGapBind14", TGapBind14ObjTypeFunc);
 
-    GAPBIND14_MODULE_IMPL(m);
-    auto &mm = get_module();
-    mm       = m;
-    InitHdlrFuncsFromTable(mm.funcs());
+      PrintObjFuncs[PKG_TNUM] = TGapBind14ObjPrintFunc;
+      SaveObjFuncs[PKG_TNUM]  = TGapBind14ObjSaveFunc;
+      LoadObjFuncs[PKG_TNUM]  = TGapBind14ObjLoadFunc;
 
-    for (auto ptr : mm) {
-      InitHdlrFuncsFromTable(mm.mem_funcs(ptr->name()));
+      CopyObjFuncs[PKG_TNUM]      = &TGapBind14ObjCopyFunc;
+      CleanObjFuncs[PKG_TNUM]     = &TGapBind14ObjCleanFunc;
+      IsMutableObjFuncs[PKG_TNUM] = &AlwaysNo;
+
+      InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
+      InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
+
+      InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
-    UInt &PKG_TNUM = T_GAPBIND14_OBJ;
-    PKG_TNUM       = RegisterPackageTNUM("TGapBind14", TGapBind14ObjTypeFunc);
+    auto it = detail::init_funcs().find(std::string(name));
+    if (it == detail::init_funcs().end()) {
+      throw std::runtime_error(std::string("No init function for module ")
+                               + name + " found");
+    }
+    it->second();  // installs all functions in the current module.
+    module().finalize();
 
-    PrintObjFuncs[PKG_TNUM] = TGapBind14ObjPrintFunc;
-    SaveObjFuncs[PKG_TNUM]  = TGapBind14ObjSaveFunc;
-    LoadObjFuncs[PKG_TNUM]  = TGapBind14ObjLoadFunc;
+    InitHdlrFuncsFromTable(module().funcs());
 
-    CopyObjFuncs[PKG_TNUM]      = &TGapBind14ObjCopyFunc;
-    CleanObjFuncs[PKG_TNUM]     = &TGapBind14ObjCleanFunc;
-    IsMutableObjFuncs[PKG_TNUM] = &AlwaysNo;
-
-    InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
-    InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
-
-    InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
+    for (auto ptr : module()) {
+      InitHdlrFuncsFromTable(module().mem_funcs(ptr->name()));
+    }
   }
 
-  void init_library(Module &m) {
-    InitGVarFuncsFromTable(GVarFuncs);
+  void init_library(char const *name) {
+    static bool first_call = true;
+    if (first_call) {
+      first_call = false;
+      InitGVarFuncsFromTable(GVarFuncs);
+    }
+    auto &                m   = module();
     StructGVarFunc const *tab = m.funcs();
 
-    // init functions from m in the record named m.module_name()
+    // init functions from m in the record named name
     // This is done to avoid polluting the global namespace
     Obj global_rec = NEW_PREC(0);
     SET_LEN_PREC(global_rec, 0);
@@ -217,6 +299,7 @@ namespace gapbind14 {
     }
 
     MakeImmutable(global_rec);
-    AssReadOnlyGVar(GVarName(m.module_name()), global_rec);
+    AssReadOnlyGVar(GVarName(name), global_rec);
+    m.clear();
   }
 }  // namespace gapbind14

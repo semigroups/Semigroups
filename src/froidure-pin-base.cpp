@@ -30,7 +30,7 @@ namespace gapbind14 {
 
 void init_froidure_pin_base(gapbind14::Module& m) {
   using FroidurePin_ = std::shared_ptr<libsemigroups::FroidurePinBase>;
-  gapbind14::class_<FroidurePin_>(m, "FroidurePinBase")
+  gapbind14::class_<FroidurePin_>("FroidurePinBase")
       .def("enumerate",
            [](FroidurePin_ S, size_t limit) { S->enumerate(limit); })
       .def("left_cayley_graph",

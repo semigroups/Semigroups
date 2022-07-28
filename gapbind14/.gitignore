@@ -56,3 +56,5 @@ src/*.lo
 
 /tmp/
 /gh-pages/
+*.so
+demo/gen

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//
 
 // Include gmp.h *before* switching to C mode, because GMP detects when
 // compiled from C++ and then does some things differently, which would

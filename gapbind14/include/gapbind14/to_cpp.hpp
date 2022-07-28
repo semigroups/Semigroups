@@ -1,6 +1,6 @@
 //
 // gapbind14
-// Copyright (C) 2020 James D. Mitchell
+// Copyright (C) 2020-2022 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,25 +15,41 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//
 
 #ifndef INCLUDE_GAPBIND14_TO_CPP_HPP_
 #define INCLUDE_GAPBIND14_TO_CPP_HPP_
 
-#include <string>   // for string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <cstddef>      // for size_t
+#include <string>       // for string
+#include <type_traits>  // for enable_if_t, is_const, is_integral, is_same
+#include <vector>       // for vector
 
 #include "gap_include.hpp"
-#include "is_something.hpp"  // for IsVector
 
 namespace gapbind14 {
 
+  template <typename T>
+  struct IsGapBind14Type;
+
   using gap_tnum_type = UInt;
 
-  // For Obj -> TCppType
-  template <typename TCppType, typename = void>
+  // For Obj -> T
+  template <typename T, typename = void>
   struct to_cpp;
+
+  template <typename T>
+  struct to_cpp<
+      T &,
+      std::enable_if_t<!IsGapBind14Type<T>::value && !std::is_const<T>::value>>
+      : to_cpp<T> {};
+
+  template <typename T>
+  struct to_cpp<T const &, std::enable_if_t<!IsGapBind14Type<T>::value>>
+      : to_cpp<T> {};
+
+  template <typename T>
+  struct to_cpp<T &&, std::enable_if_t<!IsGapBind14Type<T>::value>>
+      : to_cpp<T> {};
 
   ////////////////////////////////////////////////////////////////////////
   // void
@@ -44,23 +60,30 @@ namespace gapbind14 {
     using cpp_type                          = void;
     static gap_tnum_type constexpr gap_type = 0;
 
-    void operator()() {}
+    void operator()() const noexcept {}
+  };
+
+  template <>
+  struct to_cpp<Obj> {
+    using cpp_type = Obj;
+
+    Obj operator()(Obj o) const noexcept {
+      return o;
+    }
   };
 
   ////////////////////////////////////////////////////////////////////////
   // Strings
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType,
-                std::enable_if_t<
-                    std::is_same<std::string, std::decay_t<TCppType>>::value>> {
-    using cpp_type                          = TCppType;
+  template <>
+  struct to_cpp<std::string> {
+    using cpp_type                          = std::string;
     static gap_tnum_type constexpr gap_type = T_STRING;
 
-    TCppType operator()(Obj o) {
+    std::string operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_STRING) {
-        ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
+        ErrorQuit("expected string, found %s", (Int) TNAM_OBJ(o), 0L);
       }
       return std::string(CSTR_STRING(o), GET_LEN_STRING(o));
     }
@@ -70,16 +93,16 @@ namespace gapbind14 {
   // Integers
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType,
-                std::enable_if_t<std::is_integral<TCppType>::value
-                                 && !std::is_same<TCppType, bool>::value>> {
-    using cpp_type                          = TCppType;
+  template <typename T>
+  struct to_cpp<T,
+                std::enable_if_t<std::is_integral<T>::value
+                                 && !std::is_same<T, bool>::value>> {
+    using cpp_type                          = T;
     static gap_tnum_type constexpr gap_type = T_INT;
 
-    Int operator()(Obj o) {
+    Int operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_INT) {
-        ErrorQuit("expected int but got %s!", (Int) TNAM_OBJ(o), 0L);
+        ErrorQuit("expected int, found %s", (Int) TNAM_OBJ(o), 0L);
       }
       return INT_INTOBJ(o);
     }
@@ -89,15 +112,14 @@ namespace gapbind14 {
   // Bools
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType,
-                std::enable_if_t<std::is_same<TCppType, bool>::value>> {
-    using cpp_type                          = TCppType;
-    static gap_tnum_type constexpr gap_type = T_INT;
+  template <>
+  struct to_cpp<bool> {
+    using cpp_type                          = bool;
+    static gap_tnum_type constexpr gap_type = T_BOOL;
 
-    bool operator()(Obj o) {
+    bool operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_BOOL) {
-        ErrorQuit("expected bool but got %s!", (Int) TNAM_OBJ(o), 0L);
+        ErrorQuit("expected bool, found %s", (Int) TNAM_OBJ(o), 0L);
       }
       return o == True ? true : false;
     }
@@ -107,19 +129,19 @@ namespace gapbind14 {
   // Vectors
   ////////////////////////////////////////////////////////////////////////
 
-  template <typename TCppType>
-  struct to_cpp<TCppType const&, std::enable_if_t<IsVector<TCppType>::value>> {
-    using cpp_type                          = TCppType;
+  template <typename T>
+  struct to_cpp<std::vector<T>> {
+    using cpp_type                          = std::vector<T>;
     static gap_tnum_type constexpr gap_type = T_PLIST_HOM;
 
-    TCppType operator()(Obj o) {
+    std::vector<T> operator()(Obj o) const {
       if (!IS_LIST(o)) {
         ErrorQuit("expected list, found %s", (Int) TNAM_OBJ(o), 0L);
       }
 
       size_t const N   = LEN_LIST(o);
-      using value_type = typename TCppType::value_type;
-      TCppType result;
+      using value_type = typename std::vector<T>::value_type;
+      std::vector<T> result;
       result.reserve(N);
       for (size_t i = 0; i < N; ++i) {
         result.push_back(to_cpp<value_type>()(ELM_LIST(o, i + 1)));

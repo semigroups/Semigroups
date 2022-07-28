@@ -35,25 +35,12 @@
 
 namespace gapbind14 {
 
-  template <typename element_type>
-  struct IsGapBind14Type<libsemigroups::FroidurePin<element_type> const &>
-      : std::true_type {};
-
-  template <typename element_type>
-  struct IsGapBind14Type<libsemigroups::FroidurePin<element_type> &>
-      : std::true_type {};
+  template <typename T>
+  struct IsGapBind14Type<libsemigroups::FroidurePin<T>> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<std::shared_ptr<libsemigroups::FroidurePinBase>>
-      : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::FroidurePinBase> : std::true_type {};
 
-  template <>
-  struct IsGapBind14Type<std::shared_ptr<libsemigroups::FroidurePinBase> &>
-      : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<std::shared_ptr<libsemigroups::FroidurePinBase> &&>
-      : std::true_type {};
 }  // namespace gapbind14
 
 void init_froidure_pin_bipart(gapbind14::Module &);
@@ -72,7 +59,7 @@ void bind_froidure_pin(gapbind14::Module &m, std::string name) {
   using libsemigroups::FroidurePin;
   using FroidurePin_    = FroidurePin<element_type>;
   using const_reference = typename FroidurePin<element_type>::const_reference;
-  gapbind14::class_<FroidurePin_>(m, name)
+  gapbind14::class_<FroidurePin_>(name)
       .def(gapbind14::init<>{}, "make")
       .def(gapbind14::init<FroidurePin_ const &>{}, "copy")
       .def("add_generator", &FroidurePin_::add_generator)
