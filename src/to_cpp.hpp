@@ -627,9 +627,9 @@ namespace gapbind14 {
 
       libsemigroups::PBR result(m);
 
-      for (u_int32_t i = 0; i < 2 * m; i++) {
+      for (uint32_t i = 0; i < 2 * m; i++) {
         Obj adj = ELM_PLIST(x, i + 2);
-        for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
+        for (uint32_t j = 1; j <= LEN_PLIST(adj); j++) {
           result[i].push_back(INT_INTOBJ(ELM_PLIST(adj, j)) - 1);
           // assumes that adj is duplicate-free
         }
