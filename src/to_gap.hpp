@@ -379,20 +379,14 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
-    template <typename T>
-    static inline Obj NEW_PPERM(T);
-
-    template <>
     inline Obj NEW_PPERM(UInt2 N) {
       return NEW_PPERM2(N);
     }
 
-    template <>
     inline Obj NEW_PPERM(UInt4 N) {
       return NEW_PPERM4(N);
     }
 
-    // Initialise the GAP partial perm "t" using the C++ partial perm "x".
     template <typename S, typename T>
     Obj make_pperm(T const& x, S undef) {
       static_assert(
@@ -406,13 +400,13 @@ namespace gapbind14 {
           ,
           "the template parameter T must be the same as PPerm<> or PPerm16");
 
-      auto N = libsemigroups::Degree<T>()(x);
+      S N = libsemigroups::Degree<T>()(x);
       // remove trailing 0s
       while (N > 0 && x[N - 1] == undef) {
         N--;
       }
 
-      Obj result = NEW_PPERM<S>(N);
+      Obj result = NEW_PPERM(N);
       S*  ptr
           = reinterpret_cast<S*>(static_cast<Obj*>(ADDR_OBJ(result)) + 2) + 1;
       for (S i = 0; i < N; i++) {

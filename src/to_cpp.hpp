@@ -477,7 +477,21 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   namespace detail {
-    // TODO: renovate
+    template <typename T>
+    struct Undef;
+
+    template <typename T>
+    struct Undef<PPerm<0, T>> {
+      static constexpr T value = UNDEFINED;
+    };
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+    template <>
+    struct Undef<HPCombi::PPerm16> {
+      static constexpr UInt2 value = OxFF;
+    };
+#endif
+
     template <typename S, typename T>
     void to_cpp_pperm(S& x, T* ptr, size_t const N) {
       static_assert(std::is_same<T, UInt2>::value
@@ -485,12 +499,8 @@ namespace gapbind14 {
                     "the template parameter T must be UInt2 or UInt4");
       SEMIGROUPS_ASSERT(N <= libsemigroups::Degree<S>()(x));
       T i;
-      T undef;
-      if (IsPPerm<S>) {
-        undef = UNDEFINED;
-      } else {
-        undef = 0xFF;
-      }
+      T undef = static_cast<T>(Undef<S>::value);
+
       for (i = 0; i < N; ++i) {
         if (ptr[i] == 0) {
           x[i] = undef;
@@ -502,37 +512,11 @@ namespace gapbind14 {
         x[i] = undef;
       }
     }
-
-#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-    // TODO: renovate
-    template <typename T>
-    auto construct_pperm(size_t n)
-        -> std::enable_if_t<std::is_same<T, HPCombi::PPerm16>::value, T> {
-      SEMIGROUPS_ASSERT(n <= 16);
-      return T();
-    }
-
-    template <typename T>
-    auto construct_pperm(size_t n)
-        -> std::enable_if_t<!std::is_same<T, HPCombi::PPerm16>::value, T> {
-      return T(n);
-    }
-#else
-    template <typename T>
-    T construct_pperm(size_t n) {
-      return T(n);
-    }
-#endif
-
   }  // namespace detail
 
   template <typename Scalar>
   struct to_cpp<PPerm<0, Scalar>> {
     using cpp_type = PPerm<0, Scalar>;
-    // #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
-    // FIXME
-    // || std::is_same<std::decay_t<T>, HPCombi::PPerm16>::value
-    //#endif
 
     cpp_type operator()(Obj t) const {
       if (!IS_PLIST(t)) {
@@ -569,7 +553,7 @@ namespace gapbind14 {
             (Int) M);
       }
 
-      cpp_type result(detail::construct_pperm<cpp_type>(N));
+      cpp_type result(N);
       if (TNUM_OBJ(x) == T_PPERM2) {
         detail::to_cpp_pperm(result, ADDR_PPERM2(x), DEG_PPERM2(x));
       } else if (TNUM_OBJ(x) == T_PPERM4) {
@@ -622,7 +606,6 @@ namespace gapbind14 {
       }
 
       size_t m = INT_INTOBJ(ELM_PLIST(x, 1));
-      // The next assertion fails when it shouldn't FIXME
       // SEMIGROUPS_ASSERT(LEN_PLIST(x) == 2 * m + 1);
 
       libsemigroups::PBR result(m);
