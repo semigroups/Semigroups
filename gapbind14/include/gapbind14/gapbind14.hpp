@@ -16,11 +16,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-// TODO(now)
+// TODO:
 // * Allow return Fail instead of ErrorQuit in GAPBIND14_TRY
 // * Allow custom printing
 // * Support enums
-// * test for gapbind14/demo
+// * Support operators
+// * tests for gapbind14/demo
 // * update gapbind14/README.md
 // * gapbind: iwyu in all files
 // * gapbind: const/noexcept in all files
