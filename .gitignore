@@ -4,6 +4,7 @@
 *.bbl
 *.blg
 *.brf
+*.d
 *.g6
 *.gz
 *.html
@@ -34,6 +35,7 @@
 *.txt
 .dirstamp
 .libs
+/libsemigroups/
 Makefile
 Makefile.in
 Transitions*
@@ -50,6 +52,8 @@ cnf
 config.log
 config.status
 configure
+doc/*.css
+doc/*.js
 doc/main.aux
 doc/main.bbl
 doc/main.blg
@@ -64,11 +68,9 @@ doc/main.tex
 doc/main.toc
 doc/manual.pdf
 doc/manual.six
-doc/*.js
-doc/*.css
+gapbind14/demo/gen/
 gh-pages
 lcov*
-/libsemigroups/
 libtool
 libtool.m4
 ltmain.sh
