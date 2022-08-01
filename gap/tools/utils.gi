@@ -185,7 +185,7 @@ end;
 SEMIGROUPS.TestDir := function(dir, arg)
   local opts, name;
 
-  opts := rec(earlyStop   := true,
+  opts := rec(earlyStop   := false,
               testOptions := ShallowCopy(SEMIGROUPS.TestRec));
   opts.testOptions.showProgress := false;
   if Length(arg) = 1 and IsRecord(arg[1]) then
@@ -295,7 +295,7 @@ SEMIGROUPS.ManualExamples := function()
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
-  local oldscr, pad, total, num_fails, l, sp, bad, s, start_time, test,
+  local oldscr, pad, total, fails, l, num, sp, bad, s, start_time, test,
   end_time, elapsed, pex, j, ex, i;
 
   oldscr := SizeScreen();
@@ -305,7 +305,8 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
     return List([1 .. nr], x -> ' ');
   end;
   total := 0;
-  num_fails := 0;
+  fails := [];
+  num   := 0;
   for j in [1 .. Length(exlists)] do
     if j in excluded then
       Print("\033[44m# Skipping example ",
@@ -316,6 +317,7 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
       l := exlists[j];
       Print("# Running example ", nums[j], pad(nums[j]), " . . .");
       START_TEST("");
+      num := num + 1;
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
         bad := Filtered([1 .. Length(sp)], i -> Length(sp[i]) > 72);
@@ -342,7 +344,7 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
                 " in ",
                 ex[2]{[1 .. 3]},
                 "\033[0m\n");
-          num_fails := num_fails + 1;
+          AddSet(fails, num);
         fi;
 
         if test = false then
@@ -357,7 +359,7 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
               Print("\033[0m\n# But found:\n\033[30;41m");
               PrintFormattedString(Chomp(pex[4][i]));
               Print("\033[0m\n########\n");
-              num_fails := num_fails + 1;
+              AddSet(fails, num);
             fi;
           od;
         fi;
@@ -366,12 +368,16 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
   od;
   SizeScreen(oldscr);
   if Length(exlists) > 1 then
-    PrintFormatted("{} failures in {} examples\n",
-                   num_fails,
-                   Sum(exlists, Length));
-    Print("Total: ", total, " msecs\n");
+    if not IsEmpty(fails) then
+      Print("# Failed manual examples are:\n");
+      Print("# ", fails, "\n");
+    fi;
+    PrintFormatted("# {} failures in {} examples . . . msecs: {}\n",
+                   Length(fails),
+                   Sum(exlists, Length),
+                   total);
   fi;
-  return num_fails = 0;
+  return Length(fails) = 0;
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
