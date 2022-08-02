@@ -218,21 +218,11 @@ gap> F := FreeSemigroup(2);;
 gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
 <fp semigroup with 2 generators and 1 relation>
-gap> if CompareVersionNumbers(LIBSEMIGROUPS_VERSION, "2.1.4") then
->  x := NextIterator(Iterator(S));;
-> else
-> x := S.1;
-> fi;
-> x;
+gap> NextIterator(Iterator(S));
 s1
 gap> IteratorSorted(S);
 Error, the argument (a semigroup) is not finite
-gap> if CompareVersionNumbers(LIBSEMIGROUPS_VERSION, "2.1.4") then
-> x := NextIterator(IteratorCanonical(S));
-> else
-> x := S.1;
-> fi;
-gap> x;
+gap> NextIterator(IteratorCanonical(S));
 s1
 
 # Size

@@ -39,11 +39,6 @@ DeclareAttribute("SmallInverseSemigroupGeneratingSet",
                  IsMultiplicativeElementCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
                  IsMultiplicativeElementWithOneCollection);
-# SmallGeneratingSet was only declared for IsGroup before GAP 4.12, so the
-# next 3 lines can be removed when Semigroups requires at least GAP 4.12.
-if not [FLAGS_FILTER(IsSemigroup)] in GET_OPER_FLAGS(SmallGeneratingSet) then
-  DeclareAttribute("SmallGeneratingSet", IsSemigroup);
-fi;
 
 DeclareAttribute("MinimalSemigroupGeneratingSet",
                  IsSemigroup);

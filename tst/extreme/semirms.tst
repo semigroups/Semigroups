@@ -578,9 +578,7 @@ gap> IsGroup(T);
 false
 gap> mat := [[t2, t1], [t1, t2]];;
 gap> R := ReesZeroMatrixSemigroup(T, mat);;
-gap> (CompareVersionNumbers(GAPInfo.Version, "4.7.7")
-> and IsRegularSemigroup(R))
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.7");
+gap> IsRegularSemigroup(R);
 true
 
 # AutomorphismGroup of a ReesMatrixSemigroup
