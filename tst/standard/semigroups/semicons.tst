@@ -951,8 +951,7 @@ Error, the 3rd argument (a list) must consist of lists, but found integer in p\
 osition 1
 gap> StrongSemilatticeOfSemigroups(D, [S1, S1], [[id, id], []]);
 Error, the 3rd argument (a list) must have the same shape as the out-neighbour\
-s of th\
-e 1st argument (a digraph), expected shape [ 1, 0 ] but found [ 2, 0 ]
+s of the 1st argument (a digraph), expected shape [ 1, 0 ] but found [ 2, 0 ]
 gap> S2 := FullTransformationMonoid(2);;
 gap> m1 := SemigroupHomomorphismByFunction(S2, S2, x -> Transformation([2, 1]));;
 gap> StrongSemilatticeOfSemigroups(D, [S2, S2], [[m1], []]);

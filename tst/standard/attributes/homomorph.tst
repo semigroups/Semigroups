@@ -669,10 +669,8 @@ gap> PreImages(hom, [imgs[1]]);
 gap> T := TrivialSemigroup();;
 gap> S := GLM(2, 2);;
 gap> gens := GeneratorsOfSemigroup(S);
-[ Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2)]]) ]
+[ <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2> ]
 gap> imgs := ListX(gens, x -> IdentityTransformation);
 [ IdentityTransformation, IdentityTransformation, IdentityTransformation, 
   IdentityTransformation ]
@@ -682,22 +680,14 @@ gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
 gap> BruteForceHomoCheck(hom);
 true
 gap> PreImagesElm(hom, IdentityTransformation);
-[ Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [Z(2)^0, Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), 0*Z(2)], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [0*Z(2), 0*Z(2)]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [0*Z(2), 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [Z(2)^0, Z(2)^0]]), 
-  Matrix(GF(2), [[Z(2)^0, 0*Z(2)], [Z(2)^0, 0*Z(2)]]), 
-  Matrix(GF(2), [[0*Z(2), 0*Z(2)], [Z(2)^0, Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), 0*Z(2)], [0*Z(2), Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]]), 
-  Matrix(GF(2), [[Z(2)^0, Z(2)^0], [Z(2)^0, Z(2)^0]]), 
-  Matrix(GF(2), [[0*Z(2), Z(2)^0], [0*Z(2), Z(2)^0]]) ]
+[ <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2>, 
+  <an immutable 2x2 matrix over GF2>, <an immutable 2x2 matrix over GF2> ]
 gap> IsSurjective(hom);
 true
 gap> IsInjective(hom);
