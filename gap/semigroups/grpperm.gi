@@ -18,7 +18,7 @@
 # LargestElementStabChain(StabChainOp(G ^ conj,
 #                                     rec(base := BaseOfStabChain(S) ^ conj)));
 
-# TODO doc
+# TODO(later) doc
 InstallMethod(LargestElementConjugateStabChain,
 "for a stabilizer chain record and perm", [IsRecord, IsPerm],
 function(S, conj)

@@ -27,7 +27,7 @@
       <Ref Oper="PositionCanonical"/>,
       <Ref Oper="Enumerate"/>, and
       <Ref Oper="IsEnumerated"/>.
-      <!-- TODO(now) more! -->
+      <!-- TODO(later) more! -->
 
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 2]));;

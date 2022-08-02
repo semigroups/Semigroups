@@ -414,7 +414,7 @@ end);
 InstallMethod(MultiplicativeZero, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gens, D, zero, rep;
+  local gens, D, rep;
 
   if IsSemigroupIdeal(S)
       and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then

@@ -278,8 +278,8 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 function(S)
   local degree;
 
-  # TODO: Why is this funciton not the direct analogue of GradedLambdaOrbs?
-  # Where's fam here?
+  # TODO(later): Why is this function not the direct analogue of
+  # GradedLambdaOrbs? Where's fam here?
   degree := ActionDegree(S) + 1;
   if IsMatrixOverFiniteFieldSemigroup(S) then
     degree := degree + 1;

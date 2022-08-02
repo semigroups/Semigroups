@@ -375,7 +375,7 @@ function(S)
   return nr;
 end);
 
-# TODO(now) remove this method or find an example where it actually applies
+# TODO(later) remove this method or find an example where it actually applies
 
 InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and

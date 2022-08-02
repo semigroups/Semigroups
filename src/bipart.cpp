@@ -16,8 +16,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-// TODO(JDM) 1) if we use clear before resize maybe don't need fill
-//           2) in-place product
+// TODO(later) 1) if we use clear before resize maybe don't need fill
+//             2) in-place product
 
 #include "bipart.hpp"
 

@@ -790,9 +790,9 @@ function(Constructor, S, coll, opts)
       N := DegreeOfTransformationSemigroup(S);
     fi;
     if M > N then
-      # Can't use closure, TODO use copy_closure
-      # FIXME if M goes larger than the type of R can support this will end
-      # badly
+      # Can't use closure, TODO(later) use copy_closure
+      # FIXME(later) if M goes larger than the type of R can support this will
+      # end badly
       CppT  := R.make();
       add_generator := R.add_generator;
       for x in GeneratorsOfSemigroup(S) do

@@ -197,7 +197,8 @@ function(M)
 end);
 
 InstallMethod(ViewObj, "for an f.p. monoid",
-[IsFpMonoid and HasGeneratorsOfMonoid], 100,  # FIXME
+[IsFpMonoid and HasGeneratorsOfMonoid],
+4,  # to beat the library method
 function(M)
   if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
     TryNextMethod();
@@ -234,7 +235,8 @@ end);
 
 InstallMethod(ViewObj,
 "for an f.p. semigroup with known generators",
-[IsFpSemigroup and HasGeneratorsOfSemigroup], 100,  # FIXME
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+4,  # to beat the library method
 function(S)
   if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
     TryNextMethod();

@@ -283,7 +283,6 @@ function(S)
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
-  # FIXME Does this change still make sense?
   data := SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(
             DigraphStronglyConnectedComponents(RightCayleyDigraph(S)),
             DigraphStronglyConnectedComponents(LeftCayleyDigraph(S)));
