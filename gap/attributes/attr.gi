@@ -431,20 +431,6 @@ function(S)
   elif IsSemigroupIdeal(S) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
   elif not IsFinite(S) then
-    # TODO the next clause can be removed when we require libsemigroups >=
-    # 2.1.4, because after this version it will be possible to use the default
-    # method for magmas in the GAP library that is called by TryNextMethod()
-    # below.
-    gens := GeneratorsOfSemigroup(S);
-    if IsFpSemigroup(S) or IsFpMonoid(S) then
-      zero := First(gens,
-                    zero -> ForAll(gens,
-                                   x -> x * zero = zero and zero * x = zero));
-      if zero <> fail then
-        return zero;
-      fi;
-    fi;
-    # Remove to here
     Info(InfoWarning,
          1,
          "may not be able to find the multiplicative zero, ",

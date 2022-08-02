@@ -38,29 +38,15 @@ false
 gap> M1 := M;;
 gap> M = M1;
 true
-gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
->  value := (String(M) = "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), \
-> DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ])");
-> else
-> value := (String(M) =
-> "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( IsImmutableDi\
-> graph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])");
-> fi;
-gap> value;
+gap>  String(M) = "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), \
+> DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ])";
 true
 gap> s := "";;
 gap> str := OutputTextString(s, false);;
 gap> PrintTo(str, M);
 gap> CloseStream(str);
-gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
->  value := (String(M) = "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), \
-> DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ])");
-> else 
-> value := (s = 
-> "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( IsImmutableDi\
-> g\\\nraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])");
-> fi;
-gap> value;
+gap> String(M) = "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), \
+> DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ])";
 true
 
 #  McAlisterTripleSemigroup with bad inputs
@@ -145,25 +131,13 @@ gap> s := "";;
 gap> str := OutputTextString(s, false);;
 gap> PrintTo(str, Semigroup(Elements(M1){[1, 2, 3]}));
 gap> CloseStream(str);
-gap> if CompareVersionNumbers(PackageInfo("digraphs")[1].Version, "1.2.0") then
->  value := (s = 
+gap>  s = 
 > "Semigroup([ MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digra\
 > p\\\nhFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ]), 1, ()), MTSE(McAlisterTrip\
 > leSemig\\\nroup(SymmetricGroup( [ 2 .. 5 ] ), DigraphFromDigraph6String(\"&D`a\
 > cg_\"), [ 1 .\\\n. 4 ]), 1, (4,5)), MTSE(McAlisterTripleSemigroup(SymmetricGro\
 > up( [ 2 .. 5 ] ),\\\n DigraphFromDigraph6String(\"&D`acg_\"), [ 1 .. 4 ]), 1, \
-> (3,4)) ])");
-> else 
-> value := (s = 
-> "Semigroup([ MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digra\
-> p\\\nh( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] \
-> ), [ \\\n1 .. 4 ]), 1, ()), MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 \
-> .. 5 ] ),\\\n Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4\
->  ], [ 1, 5 ] \\\n] ), [ 1 .. 4 ]), 1, (4,5)), MTSE(McAlisterTripleSemigroup(Sy\
-> mmetricGroup( [ 2\\\n .. 5 ] ), Digraph( IsImmutableDigraph, [ [ 1 ], [ 1, 2 ]\
-> , [ 1, 3 ], [ 1, 4 ],\\\n [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, (3,4)) ])");
-> fi;
-gap> value;
+> (3,4)) ])";
 true
 
 #  AsSemigroup with bad input
