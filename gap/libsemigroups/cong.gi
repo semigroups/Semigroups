@@ -191,8 +191,6 @@ function(C)
     libsemigroups.Congruence.add_runner(CC, tc);
     factor := MinimalFactorization;
   else
-    # TODO(QUOTIENT): What about if IsQuotientSemigroup(Range(C))?
-    # Shouldn't be possible to reach the next line, and can't currently test it
     TryNextMethod();
   fi;
   add_pair := libsemigroups.Congruence.add_pair;

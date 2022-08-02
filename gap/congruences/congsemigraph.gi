@@ -8,8 +8,7 @@
 ##
 ############################################################################
 
-# TODO:
-# * MeetOfSemigroupCongruences?
+# TODO(5.0)
 # * fix the error messsage
 
 BindGlobal("SEMIGROUPS_IsHereditarySubset",

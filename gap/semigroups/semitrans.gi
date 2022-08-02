@@ -369,7 +369,7 @@ InstallMethod(DigraphOfAction,
 function(coll, list, act)
   local n, map, out, in_, labels, genstoapply, i, y, index, D, j;
 
-  # TODO arg checks
+  # TODO(later) arg checks
 
   n := Length(list);
   if n = 0 then

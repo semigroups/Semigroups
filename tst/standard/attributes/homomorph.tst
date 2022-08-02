@@ -466,9 +466,9 @@ gap> Images(hom, [gens[1]]);
 gap> PreImagesRange(hom);
 <full transformation monoid of degree 3>
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImageElm(hom, imgs[1]);
-# Error, <map> must be injective and surjective
+#
+gap> PreImageElm(hom, imgs[1]);
+Error, <map> must be injective and surjective
 gap> PreImagesRepresentative(hom, imgs[1]);
 IdentityTransformation
 gap> PreImagesSet(hom, [imgs[1]]);
@@ -492,9 +492,9 @@ Error, the 2nd argument is not mapped to by the 1st argument (semigroup homom.\
 gap> PreImage(hom);
 <full transformation monoid of degree 3>
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImage(hom, imgs[1]);
-# Error, <map> must be an injective and surjective mapping
+#
+gap> PreImage(hom, imgs[1]);
+Error, <map> must be an injective and surjective mapping
 gap> PreImage(hom, [imgs[1]]);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
   Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
@@ -593,9 +593,9 @@ gap> Images(hom, [gens[1]]);
 gap> PreImagesRange(hom);
 <full transformation monoid of degree 3>
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImageElm(hom, imgs[1]);
-# Error, <map> must be injective and surjective
+# 
+gap> PreImageElm(hom, imgs[1]);
+Error, <map> must be injective and surjective
 gap> PreImagesSet(hom, [imgs[1]]);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
   Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
@@ -614,9 +614,9 @@ gap> PreImagesSet(hom, [imgs[1]]);
 gap> PreImage(hom);
 <full transformation monoid of degree 3>
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImage(hom, imgs[1]);
-# Error, <map> must be an injective and surjective mapping
+# 
+gap> PreImage(hom, imgs[1]);
+Error, <map> must be an injective and surjective mapping
 gap> PreImage(hom, [imgs[1]]);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
   Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
@@ -888,9 +888,9 @@ true
 gap> PreImagesRange(hom1) = S;
 true
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImageElm(hom1, imgs[1]);
-# Error, <map> must be injective and surjective
+#
+gap> PreImageElm(hom1, imgs[1]);
+Error, <map> must be injective and surjective
 gap> PreImagesRepresentative(hom1, imgs[1]);
 Error, no default method for s.p. general mapping
 gap> PreImagesSet(hom1, [imgs[1]]);
@@ -898,9 +898,9 @@ gap> PreImagesSet(hom1, [imgs[1]]);
 gap> PreImage(hom1);
 <transformation semigroup of size 59, degree 5 with 3 generators>
 
-# TODO: When Semigroups requires GAP version 411 or higher uncomment this
-# gap> PreImage(hom1, imgs[1]);
-# Error, <map> must be an injective and surjective mapping
+#
+gap> PreImage(hom1, imgs[1]);
+Error, <map> must be an injective and surjective mapping
 gap> PreImage(hom1, [imgs[1]]);
 [ Transformation( [ 2, 1, 5, 1, 5 ] ) ]
 gap> PreImages(hom1);

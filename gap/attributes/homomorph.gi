@@ -225,7 +225,6 @@ function(S, T, f)
   return hom;
 end);
 
-# TODO(Homomorphisms): update the doc for this, and document the NC version
 InstallMethod(SemigroupHomomorphismByFunction,
 "for two semigroups and a function",
 [IsSemigroup, IsSemigroup, IsFunction],

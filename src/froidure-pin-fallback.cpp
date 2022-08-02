@@ -96,7 +96,7 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit, Obj report) {
     ErrorQuit("expected a plain record as 1st argument, found %s",
               (Int) TNAM_OBJ(obj),
               0L);
-  }  // TODO(now) other checks
+  }  // TODO(later) other checks
 
   initRNams();
 
@@ -351,13 +351,9 @@ Obj RUN_FROIDURE_PIN(Obj self, Obj obj, Obj limit, Obj report) {
   return data;
 }
 
-// Using the output of
-// DigraphStronglyConnectedComponents on the
-// right and left Cayley graphs of a
-// semigroup, the following function
-// calculates the strongly connected
-// components of the union of these two
-// graphs.
+// Using the output of DigraphStronglyConnectedComponents on the right and left
+// Cayley graphs of a semigroup, the following function calculates the strongly
+// connected components of the union of these two graphs.
 
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   UInt *ptr;

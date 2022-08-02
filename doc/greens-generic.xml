@@ -901,7 +901,7 @@ gap> AsSet(RegularDClasses(S));
   <Returns>The partial order of the &D;, &L;, or &R;-classes of <A>S</A>.
   </Returns>
   <Description>
-    <!-- TODO Should return a digraph, as it now does for D classes -->
+    <!-- TODO(5.0) Should return a digraph, as it now does for D classes -->
     Let <C>X</C> be one of Green's &D;-, &L;-, or &R;-relations. Then
     <C>PartialOrderOfXClasses</C> returns a list <C>list</C> where
     <C>list[i]</C> contains every <C>j</C> such that <C>GreensXClasses(S)[j]</C>
