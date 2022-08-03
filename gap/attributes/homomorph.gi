@@ -471,7 +471,7 @@ InstallMethod(String, "for a semigroup homom. by images",
 [IsSemigroupHomomorphismByImages],
 function(hom)
   local mapi;
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   mapi := MappingGeneratorsImages(hom);
@@ -497,7 +497,7 @@ InstallMethod(String, "for a semigroup isom. by images",
 [IsSemigroupHomomorphismByImages and IsBijective],
 function(iso)
   local mapi;
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   mapi := MappingGeneratorsImages(iso);
@@ -530,7 +530,7 @@ InstallMethod(ViewObj, "for SHBI/SHBF",
 [IsSemigroupHomomorphismByImagesOrFunction],
 2,  # to beat method for mapping by function with inverse
 function(hom)
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   Print("\>");
@@ -543,7 +543,7 @@ end);
 InstallMethod(String, "for a semigroup homom. by function",
 [IsSemigroupHomomorphismByFunction],
 function(hom)
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   return Concatenation("SemigroupHomomorphismByFunction( ",
@@ -558,7 +558,7 @@ end);
 InstallMethod(PrintObj, "for a semigroup homom. by function",
 [IsSemigroupHomomorphismByFunction],
 function(hom)
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   Print(String(hom));
@@ -568,7 +568,7 @@ end);
 InstallMethod(String, "for a semigroup isom. by function",
 [IsSemigroupIsomorphismByFunction],
 function(iso)
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   return Concatenation("SemigroupIsomorphismByFunction( ",
@@ -585,7 +585,7 @@ end);
 InstallMethod(PrintObj, "for a semigroup isom. by function",
 [IsSemigroupIsomorphismByFunction],
 function(iso)
-  if UserPreference("semigroups", "HomomorphismView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   Print(String(iso));

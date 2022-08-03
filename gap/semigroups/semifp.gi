@@ -175,7 +175,7 @@ InstallMethod(ViewString, "for an f.p. monoid with known generators",
 function(M)
   local generators_plural, relations_plural;
 
-  if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   elif Length(GeneratorsOfMonoid(M)) = 1 then
     generators_plural := "";
@@ -200,7 +200,7 @@ InstallMethod(ViewObj, "for an f.p. monoid",
 [IsFpMonoid and HasGeneratorsOfMonoid],
 4,  # to beat the library method
 function(M)
-  if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   Print(ViewString(M));
@@ -210,7 +210,7 @@ InstallMethod(ViewString, "for an f.p. semigroup with known generators",
 [IsFpSemigroup and HasGeneratorsOfSemigroup],
 function(M)
   local generators_plural, relations_plural;
-  if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
 
@@ -238,7 +238,7 @@ InstallMethod(ViewObj,
 [IsFpSemigroup and HasGeneratorsOfSemigroup],
 4,  # to beat the library method
 function(S)
-  if UserPreference("semigroups", "FpSemigroupView") <> "semigroups-pkg" then
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   Print(ViewString(S));
