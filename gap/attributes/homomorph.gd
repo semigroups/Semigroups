@@ -9,14 +9,6 @@
 #############################################################################
 ##
 
-DeclareUserPreference(rec(
-  name := "HomomorphismView",
-  description := ["options for the display of homomorphisms"],
-  default := "gap-library",
-  values := ["semigroups-pkg", "gap-library"],
-  multi := false,
-  package := "semigroups"));
-
 DeclareCategory("IsSemigroupHomomorphismByImagesOrFunction",
                 IsSemigroupGeneralMapping
                 and IsSingleValued

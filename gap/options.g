@@ -44,3 +44,12 @@ SEMIGROUPS.OptionsRec := function(S)
   fi;
   return S!.opts;
 end;
+
+DeclareUserPreference(rec(
+  name := "ViewObj",
+  description := [Concatenation("options for the viewing various objects in ",
+                  "the Semigroups package")],
+  default := "gap-library",
+  values := ["semigroups-pkg", "gap-library"],
+  multi := false,
+  package := "semigroups"));

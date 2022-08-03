@@ -228,6 +228,9 @@ InstallMethod(SemigroupViewStringSuffix,
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
   local n;
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
   n := ViewString(NrRows(Representative(S)));
   return Concatenation("\>\>", n, "x", n, "\< \>matrices\< \>over\< \>",
                        ViewString(BaseDomain(S)), "\<\< ");
