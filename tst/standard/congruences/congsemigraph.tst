@@ -67,9 +67,9 @@ gap> cong := CongruenceByWangPair(S, [3, 4], []);
 gap> cong := CongruenceByWangPair(S, [], [1, 3]);
 <graph inverse semigroup congruence with H = [  ] and W = [ 1, 3 ]>
 gap> cong := CongruenceByWangPair(S, [3], []);
-Error, the 2nd argument is not a valid hereditary subset
+Error, the 2nd argument (a list) is not a valid hereditary set
 gap> cong := CongruenceByWangPair(S, [], [4]);
-Error, the 3rd argument is not a valid W-set
+Error, the 3rd argument (a list) is not a valid W-set
 gap> D := Digraph([[2, 3], [3], [4], []]);
 <immutable digraph with 4 vertices, 4 edges>
 gap> S := GraphInverseSemigroup(D);
@@ -83,7 +83,7 @@ gap> CongruenceByWangPair(S, [4], [2]);
 gap> CongruenceByWangPair(S, [], []);
 <graph inverse semigroup congruence with H = [  ] and W = [  ]>
 gap> CongruenceByWangPair(S, [3], [4]);
-Error, the 2nd argument is not a valid hereditary subset
+Error, the 2nd argument (a list) is not a valid hereditary set
 
 # AsSemigroupCongruenceByGeneratingPairs
 gap> D := Digraph([[2, 3], [3], [4], []]);

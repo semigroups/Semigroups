@@ -8,9 +8,6 @@
 ##
 ############################################################################
 
-# TODO(5.0)
-# * fix the error messsage
-
 BindGlobal("SEMIGROUPS_IsHereditarySubset",
 function(S, H)
   local out, h, v, D, BlistH;
@@ -52,9 +49,9 @@ function(S, H, W)
                   " (lists) are not all vertices of the 1st argument",
                   "(a digraph)");
   elif not SEMIGROUPS_IsHereditarySubset(S, H) then
-    ErrorNoReturn("the 2nd argument is not a valid hereditary subset");
+    ErrorNoReturn("the 2nd argument (a list) is not a valid hereditary set");
   elif not SEMIGROUPS_IsValidWSet(S, H, W) then
-    ErrorNoReturn("the 3rd argument is not a valid W-set");
+    ErrorNoReturn("the 3rd argument (a list) is not a valid W-set");
   fi;
   return true;
 end);
@@ -183,7 +180,8 @@ function(C)
   local H, W, eq, result, pairs, j;
 
   if not IsGraphInverseSemigroup(Source(C)) then
-    ErrorNoReturn(Source(C), " is not a graph inverse semigroup");
+    ErrorNoReturn("the source of the 1st argument (a congruence)",
+                  " is not a graph inverse semigroup");
   fi;
   H := [];
   W := [];
