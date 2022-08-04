@@ -3,6 +3,52 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.0.0 (released 05/08/2022)
+
+This is a major release with several new features and some backwards
+incompatible changes prompted by changes in GAP 4.12. Note that to use version
+5.0.0 of [Semigroups][] GAP 4.12 is required. At the time of writing GAP 4.12
+has not yet been released, and so the development version of GAP (in the
+`master` branch of the git repo hosted on github) is required for
+[Semigroups][] version 5.0.0.
+
+The backwards incompatible changes in this release related to matrices over the
+integers or over a finite field. In previous versions of [Semigroups][] there
+was an implementation of matrices over the integers and over finite fields,
+because at the time they were written it was not possible to use the matrices
+in the GAP library. This is no longer the case, and some changes in the GAP
+library for version 4.12, meant that the implementation [Semigroups][] had to
+be removed. 
+
+Previously, to create a matrix over the integers you could do:
+
+    Matrix(IsIntegerMatrix, [[0, 1], [1, 0]]);
+
+The equivalent in version 5.0.0 of [Semigroups][] is:
+
+    Matrix(Integers, [[0, 1], [1, 0]]);
+
+where `Integers` is the ring of integers. The changes for matrices over finite
+fields are mostly internal, and it was, and still is, possible to create such
+matrices using, for example, 
+
+    Matrix(GF(4), Z(4) * [[0, 1], [1, 0]]);
+
+In versions of [Semigroups][] before 5.0.0, the filter
+`IsMatrixOverFiniteField` could also be used when constructing matrices, and
+these features have been removed in version 5.0.0. 
+See: https://github.com/semigroups/Semigroups/pull/827
+
+The new features introduced in version 5.0.0 are:
+
+* Add support for partial orders of L/R-classes by [Wilf A. Wilson][] in
+  https://github.com/semigroups/Semigroups/pull/415
+* Support for homomorphisms was introduced by Artemis Konstantinidi,
+  Chinmay Nagpal, and [James D. Mitchell][] in
+  https://github.com/semigroups/Semigroups/pull/797
+  and 
+  https://github.com/semigroups/Semigroups/pull/828
+
 ### Version 4.0.3 (released 01/07/2022)
 
 This is a minor release that includes a number of improvements and bug fixes:
