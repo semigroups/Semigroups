@@ -26,7 +26,7 @@ true
 gap> AsMonoid(T);
 <trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 4>
 gap> AsMonoid(S);;
 gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <trivial group of 1x1 max-plus matrices with 1 generator>
@@ -886,7 +886,7 @@ gap> IsIdenticalObj(S, T);
 true
 gap> T := AsMonoid(IsPartialPermMonoid, S);;
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 4 generators and 45 relations>
+<fp monoid with 4 generators and 45 relations of length 234>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);;
 
 # ClosureSemigroup

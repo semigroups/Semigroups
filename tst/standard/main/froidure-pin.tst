@@ -217,7 +217,7 @@ true
 gap> F := FreeSemigroup(2);;
 gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+<fp semigroup with 2 generators and 1 relation of length 6>
 gap> NextIterator(Iterator(S));
 s1
 gap> IteratorSorted(S);
@@ -233,7 +233,7 @@ gap> Size(S);
 gap> F := FreeSemigroup(2);;
 gap> R := [[F.1 * F.2, F.2 * F.1]];;
 gap> S := F / R;
-<fp semigroup with 2 generators and 1 relation>
+<fp semigroup with 2 generators and 1 relation of length 6>
 gap> Size(S);
 infinity
 

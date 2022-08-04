@@ -48,9 +48,9 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpMonoid(S);
 <transformation monoid of degree 5 with 5 generators> -> 
-<fp monoid with 5 generators and 608 relations>
+<fp monoid with 5 generators and 608 relations of length 4953>
 gap> inv := InverseGeneralMapping(map);
-<fp monoid with 5 generators and 608 relations> -> 
+<fp monoid with 5 generators and 608 relations of length 4953> -> 
 <transformation monoid of degree 5 with 5 generators>
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
@@ -95,7 +95,7 @@ gap> BruteForceInverseCheck := function(map)
 gap> S := TrivialSemigroup();
 <trivial transformation group of degree 0 with 1 generator>
 gap> S := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 4>
 gap> RelationsOfFpSemigroup(S);
 [ [ s1^2, s1 ] ]
 
@@ -103,7 +103,7 @@ gap> RelationsOfFpSemigroup(S);
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));
 <partial perm monoid of rank 1 with 2 generators>
 gap> S := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 4 relations>
+<fp semigroup with 2 generators and 4 relations of length 14>
 gap> RelationsOfFpSemigroup(S);
 [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s2 ] ]
 
@@ -116,7 +116,7 @@ gap> S := AsMonoid(IsFpMonoid, S);;
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));
 <partial perm monoid of rank 1 with 2 generators>
 gap> S := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 4>
 gap> RelationsOfFpMonoid(S);
 [ [ m1^2, m1 ] ]
 
@@ -127,7 +127,7 @@ gap> S := Semigroup([
 > PBR([[-2], [-3], [-3]], [[], [1], [2, 3]])]);
 <pbr semigroup of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -149,9 +149,9 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -175,7 +175,7 @@ gap> S := Semigroup([
 > Bipartition([[1, -2], [2], [-1]])]);
 <bipartition semigroup of degree 2 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -198,7 +198,7 @@ gap> S := Semigroup([
 > Transformation([1, 3, 3]), Transformation([2, 3, 3])]);
 <transformation semigroup of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -228,7 +228,7 @@ gap> S := Semigroup([
 > [false, false, true]])]);
 <semigroup of 3x3 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -258,7 +258,7 @@ gap> S := Semigroup([
 > [-infinity, -infinity, 0]])]);
 <semigroup of 3x3 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -288,7 +288,7 @@ gap> S := Semigroup([
 > [infinity, infinity, 0]])]);
 <semigroup of 3x3 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -318,7 +318,7 @@ gap> S := Semigroup([
 > [-infinity, -infinity, 0]])]);
 <semigroup of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -348,7 +348,7 @@ gap> S := Semigroup([
 > [0, 0, 1]])]);
 <semigroup of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -378,7 +378,7 @@ gap> S := Semigroup([
 > [-infinity, -infinity, 0]], 3)]);
 <semigroup of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -408,7 +408,7 @@ gap> S := Semigroup([
 > [infinity, infinity, 0]], 3)]);
 <semigroup of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -438,7 +438,7 @@ gap> S := Semigroup([
 > [0, 0, 1]], 3, 4)]);
 <semigroup of 3x3 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -462,7 +462,7 @@ gap> S := Monoid([
 > PBR([[-1], [-3], [-3]], [[1], [], [2, 3]])]);
 <pbr monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -485,9 +485,9 @@ gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1], [m2 ^ 2, m2], [m1 * m2 * m1, m1 * m2],
 > [m2 * m1 * m2, m1 * m2]];;
 gap> S := F / rels;
-<fp monoid with 2 generators and 4 relations>
+<fp monoid with 2 generators and 4 relations of length 18>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -511,7 +511,7 @@ gap> S := Monoid([
 > Bipartition([[1, -1], [2, 3, -3], [-2]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -534,7 +534,7 @@ gap> S := Monoid([
 > Transformation([2, 2]), Transformation([1, 3, 3])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -564,7 +564,7 @@ gap> S := Monoid([
 > [false, false, true]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -594,7 +594,7 @@ gap> S := Monoid([
 > [-infinity, -infinity, 0]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -624,7 +624,7 @@ gap> S := Monoid([
 > [infinity, infinity, 0]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -654,7 +654,7 @@ gap> S := Monoid([
 > [-infinity, -infinity, 0]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -684,7 +684,7 @@ gap> S := Monoid([
 > [0, 0, 1]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -714,7 +714,7 @@ gap> S := Monoid([
 > [-infinity, -infinity, 0]], 4)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -744,7 +744,7 @@ gap> S := Monoid([
 > [infinity, infinity, 0]], 2)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -774,7 +774,7 @@ gap> S := Monoid([
 > [0, 0, 1]], 1, 1)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -798,7 +798,7 @@ gap> S := Semigroup([
 > PBR([[-2], [-1], [-1], [-1], [-1]], [[2, 3, 4, 5], [1], [], [], []])]);
 <pbr semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -820,9 +820,9 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 4 relations>
+<fp semigroup with 2 generators and 4 relations of length 14>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -846,7 +846,7 @@ gap> S := Semigroup([
 > Bipartition([[1, -2], [2, 3, 4, 5, -1], [-3], [-4], [-5]])]);
 <bipartition semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -869,7 +869,7 @@ gap> S := Semigroup([
 > Transformation([1, 2, 2, 2, 2]), Transformation([2, 1, 1, 1, 1])]);
 <transformation semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -903,7 +903,7 @@ gap> S := Semigroup([
 >         [true, false, false, false, false]])]);
 <semigroup of 5x5 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -937,7 +937,7 @@ gap> S := Semigroup([
 >         [0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -971,7 +971,7 @@ gap> S := Semigroup([
 >         [0, infinity, infinity, infinity, infinity]])]);
 <semigroup of 5x5 min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1005,7 +1005,7 @@ gap> S := Semigroup([
 >         [0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 projective max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1039,7 +1039,7 @@ gap> S := Semigroup([
 >         [1, 0, 0, 0, 0]])]);
 <semigroup of 5x5 integer matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1073,7 +1073,7 @@ gap> S := Semigroup([
 >         [0, -infinity, -infinity, -infinity, -infinity]], 3)]);
 <semigroup of 5x5 tropical max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1107,7 +1107,7 @@ gap> S := Semigroup([
 >         [0, infinity, infinity, infinity, infinity]], 5)]);
 <semigroup of 5x5 tropical min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1141,7 +1141,7 @@ gap> S := Semigroup([
 >         [1, 0, 0, 0, 0]], 5, 1)]);
 <semigroup of 5x5 ntp matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1165,7 +1165,7 @@ gap> S := Monoid([
 > PBR([[-2], [-2], [-1]], [[3], [1, 2], []])]);
 <pbr monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1188,9 +1188,9 @@ gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1], [m1 * m2 * m1, m1], [m1 * m2 ^ 2, m2 ^ 2],
 > [m2 * m1 * m2, m2], [m2 ^ 2 * m1, m2 ^ 2], [m2 ^ 3, m2 ^ 2]];;
 gap> S := F / rels;
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1214,7 +1214,7 @@ gap> S := Monoid([
 > Bipartition([[1, 2, -2], [3, -1], [-3]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1237,7 +1237,7 @@ gap> S := Monoid([
 > Transformation([3, 2, 3]), Transformation([2, 2, 1])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1267,7 +1267,7 @@ gap> S := Monoid([
 >         [true, false, false]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1297,7 +1297,7 @@ gap> S := Monoid([
 >         [0, -infinity, -infinity]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1327,7 +1327,7 @@ gap> S := Monoid([
 >         [0, infinity, infinity]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1357,7 +1357,7 @@ gap> S := Monoid([
 >         [0, -infinity, -infinity]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1387,7 +1387,7 @@ gap> S := Monoid([
 >         [1, 0, 0]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1417,7 +1417,7 @@ gap> S := Monoid([
 >         [0, -infinity, -infinity]], 2)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1449,7 +1449,7 @@ gap> S := Monoid([
 >        2)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1479,7 +1479,7 @@ gap> S := Monoid([
 >         [1, 0, 0]], 1, 4)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 28>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1502,7 +1502,7 @@ gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2), (1, 2)],
 >         [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsFpSemigroup, R);
-<fp semigroup with 2 generators and 4 relations>
+<fp semigroup with 2 generators and 4 relations of length 19>
 gap> Size(R) = Size(T);
 true
 gap> NrDClasses(R) = NrDClasses(T);
@@ -1524,7 +1524,7 @@ true
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsMonoid(IsFpMonoid, R);
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 3>
 gap> Size(R) = Size(T);
 true
 gap> NrDClasses(R) = NrDClasses(T);
@@ -1547,7 +1547,7 @@ gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]),
 >                                 [[(1, 2), (1, 2)], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsFpSemigroup, R);
-<fp semigroup with 3 generators and 11 relations>
+<fp semigroup with 3 generators and 11 relations of length 50>
 gap> Size(R) = Size(T);
 true
 gap> NrDClasses(R) = NrDClasses(T);
@@ -1569,7 +1569,7 @@ true
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsMonoid(IsFpMonoid, R);
-<fp monoid with 2 generators and 4 relations>
+<fp monoid with 2 generators and 4 relations of length 13>
 gap> Size(R) = Size(T);
 true
 gap> NrDClasses(R) = NrDClasses(T);
@@ -1591,7 +1591,7 @@ true
 gap> S := GraphInverseSemigroup(Digraph([[2], []]));
 <finite graph inverse semigroup with 2 vertices, 1 edge>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 4 generators and 16 relations>
+<fp semigroup with 4 generators and 16 relations of length 63>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1613,7 +1613,7 @@ true
 gap> S := DihedralGroup(IsPermGroup, 6);
 Group([ (1,2,3), (2,3) ])
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 5 generators and 16 relations>
+<fp semigroup with 5 generators and 16 relations of length 57>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1635,7 +1635,7 @@ true
 gap> S := DihedralGroup(IsPermGroup, 6);
 Group([ (1,2,3), (2,3) ])
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 4 generators and 7 relations>
+<fp monoid with 4 generators and 7 relations of length 22>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1657,7 +1657,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 5 generators and 16 relations>
+<fp semigroup with 5 generators and 16 relations of length 57>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1679,7 +1679,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 4 generators and 7 relations>
+<fp monoid with 4 generators and 7 relations of length 22>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1700,7 +1700,7 @@ true
 #   convert from IsBlockBijectionSemigroup to IsFpSemigroup
 gap> S := InverseSemigroup(Bipartition([[1, -1, -3], [2, 3, -2]]));;
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 2 generators and 6 relations>
+<fp semigroup with 2 generators and 6 relations of length 29>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1722,7 +1722,7 @@ true
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 29>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1744,7 +1744,7 @@ true
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 11 relations>
+<fp semigroup with 3 generators and 11 relations of length 45>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1767,7 +1767,7 @@ gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]),
 >                          PartialPerm([1, 2], [3, 1]));
 <inverse partial perm semigroup of rank 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 3 generators and 15 relations>
+<fp semigroup with 3 generators and 15 relations of length 87>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1790,7 +1790,7 @@ gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([1, 2], [3, 1]));
 <inverse partial perm monoid of rank 3 with 2 generators>
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 3 generators and 15 relations>
+<fp monoid with 3 generators and 15 relations of length 87>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1813,7 +1813,7 @@ gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([1, 2], [3, 1]));
 <inverse partial perm monoid of rank 3 with 2 generators>
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 4 generators and 22 relations>
+<fp semigroup with 4 generators and 22 relations of length 109>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1882,7 +1882,7 @@ gap> S := Semigroup(Matrix(IsBooleanMat,
 >        [[1, 0],
 >         [0, 0]]));;
 gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid with 4 generators and 19 relations>
+<fp monoid with 4 generators and 19 relations of length 95>
 gap> RelationsOfFpMonoid(T);
 [ [ m1^2, <identity ...> ], [ m4, m3 ], [ m1*m4, m1*m3 ], [ m2^2, m2 ], 
   [ m2*m4, m2*m3 ], [ m3*m2, m3 ], [ m3^2, m3 ], [ m3*m4, m3 ], 
@@ -1893,7 +1893,7 @@ gap> RelationsOfFpMonoid(T);
 gap> Size(T);
 16
 gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 4 generators and 21 relations>
+<fp semigroup with 4 generators and 21 relations of length 105>
 gap> RelationsOfFpSemigroup(T);
 [ [ s4, s3 ], [ s1*s4, s1*s3 ], [ s2^2, s2 ], [ s2*s4, s2*s3 ], 
   [ s3*s2, s3 ], [ s3^2, s3 ], [ s3*s4, s3 ], [ s1^3, s1 ], [ s1^2*s2, s2 ], 
@@ -1988,7 +1988,7 @@ fail
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]));
 <commutative transformation semigroup of degree 5 with 1 generator>
 gap> S := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 4>
 gap> AsMonoid(S);;
 
 # Test IsomorphismFpMonoid, fail
@@ -2201,7 +2201,7 @@ gap> f := FreeSemigroup("x", "y");;
 gap> x := f.1;;
 gap> y := f.2;;
 gap> s := f / [[x * y, y * x]];
-<fp semigroup with 2 generators and 1 relation>
+<fp semigroup with 2 generators and 1 relation of length 6>
 gap> a := ElementOfFpSemigroup(s, x * y);
 x*y
 gap> b := ElementOfFpSemigroup(s, y * x);
@@ -2216,7 +2216,7 @@ gap> f := FreeMonoid("x", "y");;
 gap> x := f.1;;
 gap> y := f.2;;
 gap> s := f / [[x * y, y * x]];
-<fp monoid with 2 generators and 1 relation>
+<fp monoid with 2 generators and 1 relation of length 6>
 gap> a := ElementOfFpMonoid(s, x * y);
 x*y
 gap> b := ElementOfFpMonoid(s, y * x);
@@ -2234,9 +2234,9 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpSemigroup(S);
 <transformation monoid of degree 5 with 5 generators> -> 
-<fp semigroup with 6 generators and 619 relations>
+<fp semigroup with 6 generators and 619 relations of length 4987>
 gap> T := Range(map);
-<fp semigroup with 6 generators and 619 relations>
+<fp semigroup with 6 generators and 619 relations of length 4987>
 gap> AsList(T);
 [ s1, s2, s3, s4, s5, s6, s2^2, s2*s3, s2*s4, s2*s5, s2*s6, s3*s2, s3^2, 
   s3*s4, s3*s5, s3*s6, s4*s2, s4*s3, s4^2, s4*s5, s4*s6, s5*s2, s5*s3, s5*s4, 
@@ -2361,9 +2361,9 @@ gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([5, 5, 1, 1, 3]));;
 gap> map := IsomorphismFpSemigroup(S);
 <transformation monoid of degree 5 with 3 generators> -> 
-<fp semigroup with 4 generators and 68 relations>
+<fp semigroup with 4 generators and 68 relations of length 491>
 gap> T := Range(map);
-<fp semigroup with 4 generators and 68 relations>
+<fp semigroup with 4 generators and 68 relations of length 491>
 gap> TestEnumerator(Enumerator(T));
 true
 gap> AsSSortedList(T);
@@ -2391,14 +2391,14 @@ true
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> S.1 < S.2 * S.1;
 true
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 ^ 2, m1], [m2 ^ 2, m2], [m1 * m2 * m1, m1 * m2],
 > [m2 * m1 * m2, m1 * m2]];;
 gap> S := F / rels;
-<fp monoid with 2 generators and 4 relations>
+<fp monoid with 2 generators and 4 relations of length 18>
 gap> S.1 < S.2 * S.1;
 true
 
@@ -2408,10 +2408,10 @@ gap> F := FreeGroup(1);
 gap> R := [F.1 ^ 2];;
 gap> IsomorphismFpSemigroup(F / R);
 <fp group on the generators [ f1 ]> -> 
-<fp semigroup with 3 generators and 8 relations>
+<fp semigroup with 3 generators and 8 relations of length 27>
 gap> IsomorphismFpMonoid(F / R);
 <fp group on the generators [ f1 ]> -> 
-<fp monoid with 2 generators and 3 relations>
+<fp monoid with 2 generators and 3 relations of length 8>
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

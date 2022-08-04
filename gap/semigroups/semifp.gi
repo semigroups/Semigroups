@@ -179,9 +179,10 @@ function(M)
   fi;
 
   return PRINT_STRINGIFY(
-    StringFormatted("\>\><fp monoid with {} and {}>\<\<",
+    StringFormatted("\>\><fp monoid with {} and {} of length {}>\<\<",
                     Pluralize(Length(GeneratorsOfMonoid(M)), "generator"),
-                    Pluralize(Length(RelationsOfFpMonoid(M)), "relation")));
+                    Pluralize(Length(RelationsOfFpMonoid(M)), "relation"),
+                    Length(M)));
 end);
 
 InstallMethod(ViewObj, "for an f.p. monoid",
@@ -202,9 +203,10 @@ function(S)
   fi;
 
   return PRINT_STRINGIFY(
-    StringFormatted("\>\><fp semigroup with {} and {}>\<\<",
+    StringFormatted("\>\><fp semigroup with {} and {} of length {}>\<\<",
                     Pluralize(Length(GeneratorsOfSemigroup(S)), "generator"),
-                    Pluralize(Length(RelationsOfFpSemigroup(S)), "relation")));
+                    Pluralize(Length(RelationsOfFpSemigroup(S)), "relation"),
+                    Length(S)));
 end);
 
 InstallMethod(ViewObj,
@@ -1020,4 +1022,16 @@ function(S, x)
   else
     return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)) + 1;
   fi;
+end);
+
+InstallMethod(Length, "for an fp semigroup", [IsFpSemigroup],
+function(S)
+  return Length(GeneratorsOfSemigroup(S))
+    + Sum(RelationsOfFpSemigroup(S), x -> Length(x[1]) + Length(x[2]));
+end);
+
+InstallMethod(Length, "for an fp monoid", [IsFpMonoid],
+function(S)
+  return Length(GeneratorsOfMonoid(S))
+    + Sum(RelationsOfFpMonoid(S), x -> Length(x[1]) + Length(x[2]));
 end);

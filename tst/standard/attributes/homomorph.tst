@@ -949,15 +949,15 @@ gap> relations := [[gens[1], gens[2]]];;
 gap> T := S / relations;;
 gap> imgs := GeneratorsOfSemigroup(T);;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-<fp semigroup with 3 generators and 34 relations> -> 
-<fp semigroup with 3 generators and 35 relations>
+<fp semigroup with 3 generators and 34 relations of length 225> -> 
+<fp semigroup with 3 generators and 35 relations of length 227>
 gap> gens[1] ^ hom;
 s1
 gap> gens[2] ^ hom;
 s2
 gap> KernelOfSemigroupHomomorphism(hom);
 <universal semigroup congruence over <fp semigroup with 3 generators and 
-  34 relations>>
+  34 relations of length 225>>
 
 # Test with huge transformation semigroup
 gap> S := Semigroup(FullTransformationMonoid(9), rec(acting := true));;

@@ -70,7 +70,7 @@ gap> IsomorphismSemigroup(IsBooleanMatSemigroup, S);
 <semigroup of size 11, 12x12 boolean matrices with 2 generators>
 gap> IsomorphismSemigroup(IsFpSemigroup, S);
 <bipartition semigroup of size 11, degree 6 with 2 generators> -> 
-<fp semigroup with 2 generators and 5 relations>
+<fp semigroup with 2 generators and 5 relations of length 27>
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 6, 8, 10],
 >             [2, 6, 7, 9, 1, 5]),
@@ -206,7 +206,7 @@ gap> IsomorphismMonoid(IsBooleanMatMonoid, S);
 <monoid of 8x8 boolean matrices with 2 generators>
 gap> IsomorphismMonoid(IsFpMonoid, S);
 <transformation semigroup of degree 10 with 2 generators> -> 
-<fp monoid with 2 generators and 17 relations>]]></Example>
+<fp monoid with 2 generators and 17 relations of length 278>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

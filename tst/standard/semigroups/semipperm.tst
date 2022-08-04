@@ -311,7 +311,7 @@ gap> rels := [[s1 ^ 2, s1],
 >             [s2 * s1, s2],
 >             [s2 ^ 2, s2]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 4 relations>
+<fp semigroup with 2 generators and 4 relations of length 14>
 gap> T := AsSemigroup(IsPartialPermSemigroup, S);
 <inverse partial perm monoid of size 2, rank 2 with 2 generators>
 gap> Size(S) = Size(T);
@@ -615,7 +615,7 @@ gap> rels := [[m1 ^ 2, m1],
 >         [m3 * m2 ^ 2, m2 ^ 2],
 >         [m3 * m2 * m3, m3]];;
 gap> S := F / rels;
-<fp monoid with 3 generators and 11 relations>
+<fp monoid with 3 generators and 11 relations of length 45>
 gap> T := AsSemigroup(IsPartialPermSemigroup, S);
 <inverse partial perm monoid of size 7, rank 7 with 4 generators>
 gap> Size(S) = Size(T);
@@ -949,7 +949,7 @@ true
 gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 3, s1]];;
 gap> S := F / rels;
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 5>
 gap> T := AsMonoid(IsPartialPermMonoid, S);
 <commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
 gap> Size(S) = Size(T);
@@ -1260,7 +1260,7 @@ gap> rels := [[m2 ^ 2, m1 ^ 2],
 >         [m2 * m1 ^ 2, m1 ^ 2],
 >         [m2 * m1 * m2, m2]];;
 gap> S := F / rels;
-<fp monoid with 2 generators and 6 relations>
+<fp monoid with 2 generators and 6 relations of length 29>
 gap> T := AsMonoid(IsPartialPermMonoid, S);
 <inverse partial perm monoid of size 6, rank 6 with 3 generators>
 gap> Size(S) = Size(T);

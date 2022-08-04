@@ -13,3 +13,5 @@ DeclareOperation("ElementOfFpMonoid", [IsFpMonoid, IsAssocWord]);
 DeclareOperation("ParseRelations", [IsDenseList, IsString]);
 DeclareAttribute("UnderlyingCongruence", IsFpSemigroup);
 DeclareAttribute("UnderlyingCongruence", IsFpMonoid);
+DeclareAttribute("Length", IsFpSemigroup);
+DeclareAttribute("Length", IsFpMonoid);

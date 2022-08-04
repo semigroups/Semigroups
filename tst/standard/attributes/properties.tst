@@ -1607,7 +1607,7 @@ true
 gap> S := FreeSemigroup(1);;
 gap> x := GeneratorsOfSemigroup(S);;
 gap> S := S / [[x[1] * x[1], x[1]]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 4>
 gap> IsTrivial(S);
 true
 
@@ -1615,7 +1615,7 @@ true
 gap> S := FreeSemigroup(1);;
 gap> x := GeneratorsOfSemigroup(S);;
 gap> S := S / [[x[1], x[1]]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 3>
 gap> IsTrivial(S);
 false
 
@@ -1943,21 +1943,21 @@ gap> S := F / [];;
 gap> IsSurjectiveSemigroup(S);
 false
 gap> S := F / [[F.1, F.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 3>
 gap> IsSurjectiveSemigroup(S);
 false
 gap> S := F / [[F.1 ^ 3, F.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 5>
 gap> IsSurjectiveSemigroup(S);
 true
 gap> S := F / [[F.1 ^ 3, F.1 ^ 2]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 6>
 gap> IsSurjectiveSemigroup(S);
 false
 gap> F := FreeSemigroup(3);
 <free semigroup on the generators [ s1, s2, s3 ]>
 gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 11>
 gap> IsSurjectiveSemigroup(S);
 true
 

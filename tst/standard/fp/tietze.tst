@@ -662,7 +662,7 @@ gap> SetInfoLevel(InfoFpSemigroup, 0);;
 gap> f := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> s := f / [[f.1 ^ 4, f.1], [f.1, f.1 ^ 44], [f.1 ^ 8, f.2 * f.3]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 63>
 gap> stz := StzPresentation(s);
 <fp semigroup presentation with 3 generators and 3 relations with length 63>
 gap> len := Length(stz);
@@ -672,7 +672,7 @@ true
 gap> Length(stz) < len;
 true
 gap> s := f / [[f.1, f.1 ^ 2]];
-<fp semigroup with 3 generators and 1 relation>
+<fp semigroup with 3 generators and 1 relation of length 6>
 gap> stz := StzPresentation(s);
 <fp semigroup presentation with 3 generators and 1 relation with length 6>
 gap> len := Length(stz);
@@ -682,7 +682,7 @@ false
 gap> len = Length(stz);
 true
 gap> s := f / [[f.1, f.2 ^ 5]];
-<fp semigroup with 3 generators and 1 relation>
+<fp semigroup with 3 generators and 1 relation of length 9>
 gap> stz := StzPresentation(s);
 <fp semigroup presentation with 3 generators and 1 relation with length 9>
 gap> len := Length(stz);

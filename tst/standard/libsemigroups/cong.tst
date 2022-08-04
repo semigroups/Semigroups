@@ -278,7 +278,7 @@ gap> F := FreeSemigroup(2);
 gap> R := [[F.1, F.2], [F.1 * F.2 * F.1, F.2 * F.1], [F.1 ^ 10, F.1]];
 [ [ s1, s2 ], [ s1*s2*s1, s2*s1 ], [ s1^10, s1 ] ]
 gap> S := F / R;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 20>
 gap> C := SemigroupCongruence(S, []);
 <universal semigroup congruence over <trivial group with 2 generators>>
 gap> ImagesElm(C, S.1 ^ 10);
@@ -294,10 +294,10 @@ gap> R := [[F.1 * F.2, F.2 * F.1], [F.1 * F.3, F.3 * F.1], [F.1 ^ 2, F.1],
   [ s3*s1, s1 ], [ s2*s3, s3*s2 ], [ s2^3, s2 ], [ s2*s3, s2 ], [ s3*s2, s2 ] 
  ]
 gap> S := F / R;
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 34>
 gap> C := SemigroupCongruence(S, [[S.1, S.2]]);
 <2-sided semigroup congruence over <fp semigroup with 3 generators and 
-  9 relations> with 1 generating pairs>
+  9 relations of length 34> with 1 generating pairs>
 gap> ImagesElm(C, S.1);
 [ s1, s2, s1*s2, s2^2, s1*s2^2 ]
 gap> ImagesElm(C, S.3);

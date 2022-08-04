@@ -344,7 +344,7 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
                 " in ",
                 ex[2]{[1 .. 3]},
                 "\033[0m\n");
-          AddSet(fails, num);
+          AddSet(fails, nums[j]);
         fi;
 
         if test = false then
@@ -359,7 +359,7 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
               Print("\033[0m\n# But found:\n\033[30;41m");
               PrintFormattedString(Chomp(pex[4][i]));
               Print("\033[0m\n########\n");
-              AddSet(fails, num);
+              AddSet(fails, nums[j]);
             fi;
           od;
         fi;
@@ -368,16 +368,16 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
   od;
   SizeScreen(oldscr);
   if Length(exlists) > 1 then
-    if not IsEmpty(fails) then
-      Print("# Failed manual examples are:\n");
-      Print("# ", fails, "\n");
-    fi;
     PrintFormatted("# {} failures in {} examples . . . msecs: {}\n",
                    Length(fails),
                    Sum(exlists, Length),
                    total);
   fi;
-  return Length(fails) = 0;
+  if not IsEmpty(fails) then
+    Print("# Failed manual examples are:\n");
+    return fails;
+  fi;
+  return true;
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)

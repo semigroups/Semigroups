@@ -212,13 +212,13 @@ gap> Factorization(H, images[2]);
 gap> map := IsomorphismFpSemigroup(T);
 <quotient of <2-sided semigroup congruence over <transformation semigroup of 
   degree 5 with 3 generators> with 1 generating pairs>> -> 
-<fp semigroup with 3 generators and 8 relations>
+<fp semigroup with 3 generators and 8 relations of length 33>
 gap> map := IsomorphismFpSemigroup(Q);
 <semigroup of size 4, with 3 generators> -> 
-<fp semigroup with 3 generators and 8 relations>
+<fp semigroup with 3 generators and 8 relations of length 33>
 gap> IsomorphismFpSemigroup(H);
 <semigroup of size 4, with 3 generators> -> 
-<fp semigroup with 3 generators and 8 relations>
+<fp semigroup with 3 generators and 8 relations of length 33>
 
 # Quotients of quotients
 gap> S := Semigroup(Transformation([2, 1, 5, 1, 5]),

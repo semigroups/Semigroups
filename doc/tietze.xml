@@ -24,7 +24,7 @@
 gap> F := FreeSemigroup("a", "b", "c");;
 gap> AssignGeneratorVariables(F);;
 gap> S := F / [[a * b, c], [b * c, a], [c * a, b]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 12>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 12>]]></Example>
@@ -60,7 +60,7 @@ gap> stz := StzPresentation(S);
 gap> F := FreeSemigroup("a", "b", "c");;
 gap> AssignGeneratorVariables(F);;
 gap> S := F / [[a * b, c], [b * c, a], [c * a, b]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 12>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 12>
@@ -223,7 +223,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 19>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -371,7 +371,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 19>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -404,7 +404,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 19>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -432,7 +432,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 19>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -469,7 +469,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 19>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
@@ -506,7 +506,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -549,7 +549,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -597,7 +597,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -631,7 +631,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -663,7 +663,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -687,7 +687,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -716,7 +716,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -750,7 +750,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -782,7 +782,7 @@ gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> T := F / [[F.1, F.2 ^ 5 * F.3],
 >              [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 22>
 gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 3 relations
  with length 22>
@@ -838,7 +838,7 @@ gap> StzPrintPresentation(stz);
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 11>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
@@ -873,7 +873,7 @@ gap> TietzeForwardMap(stz);
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 11>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
@@ -918,14 +918,14 @@ gap> TietzeBackwardMap(stz);
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
 gap> S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];
-<fp semigroup with 3 generators and 2 relations>
+<fp semigroup with 3 generators and 2 relations of length 11>
 gap> stz := StzPresentation(S);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 11>
 gap> StzRemoveGenerator(stz, "a");
 gap> map := StzIsomorphism(stz);
-<fp semigroup with 3 generators and 2 relations> -> 
-<fp semigroup with 2 generators and 1 relation>
+<fp semigroup with 3 generators and 2 relations of length 11> -> 
+<fp semigroup with 2 generators and 1 relation of length 6>
 gap> S.1 ^ map;
 c^3]]>
 </Example>

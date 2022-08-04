@@ -924,7 +924,7 @@ true
 gap> F := FreeSemigroup(2);;
 gap> x := [[F.1 * F.1, F.1], [F.1 * F.2, F.1], [F.2 * F.1, F.1]];;
 gap> T := F / x;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 11>
 gap> IsFinite(T);
 false
 gap> MultiplicativeZero(T);
@@ -1860,7 +1860,7 @@ true
 #  MinimalSemigroupGeneratingSet: for a trivial semigroup, 1
 gap> S := FreeSemigroup(1);;
 gap> S := S / [[S.1 ^ 2, S.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 4>
 gap> MinimalSemigroupGeneratingSet(S);
 [ s1 ]
 
@@ -1884,7 +1884,7 @@ d
 #  MinimalMonoidGeneratingSet: for a trivial monoid, 1
 gap> S := FreeMonoid(1);;
 gap> S := S / [[S.1, S.1 ^ 0]];
-<fp monoid with 1 generator and 1 relation>
+<fp monoid with 1 generator and 1 relation of length 2>
 gap> MinimalMonoidGeneratingSet(S);
 [ <identity ...> ]
 

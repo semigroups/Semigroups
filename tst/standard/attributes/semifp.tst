@@ -20,19 +20,19 @@ gap> S := F / [];;
 gap> IndecomposableElements(S);
 [ s1 ]
 gap> S := F / [[F.1, F.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 3>
 gap> IndecomposableElements(S);
 [ s1 ]
 gap> S := F / [[F.1 ^ 3, F.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 5>
 gap> IndecomposableElements(S);
 [  ]
 gap> S := F / [[F.1 ^ 3, F.1 ^ 2]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 6>
 gap> IndecomposableElements(S);
 [ s1 ]
 gap> S := F / [[F.1 ^ 3, F.1]];
-<fp semigroup with 1 generator and 1 relation>
+<fp semigroup with 1 generator and 1 relation of length 5>
 gap> IsMonoidAsSemigroup(S);
 true
 gap> HasIsSurjectiveSemigroup(S);
@@ -42,7 +42,7 @@ gap> IndecomposableElements(S);
 gap> F := FreeSemigroup(3);
 <free semigroup on the generators [ s1, s2, s3 ]>
 gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];
-<fp semigroup with 3 generators and 3 relations>
+<fp semigroup with 3 generators and 3 relations of length 11>
 gap> IndecomposableElements(S);
 [  ]
 

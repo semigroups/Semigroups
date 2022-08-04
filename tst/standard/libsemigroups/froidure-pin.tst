@@ -367,7 +367,7 @@ fail
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> PositionCanonical(S, 1);
 fail
 
@@ -596,7 +596,7 @@ gap> Enumerator(S){[3 .. 5]};
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 ^ 2, s2 * s1]];;
 gap> S := F / rels;
-<fp semigroup with 2 generators and 3 relations>
+<fp semigroup with 2 generators and 3 relations of length 12>
 gap> EnumeratorCanonical(S)[4];
 fail
 gap> 
