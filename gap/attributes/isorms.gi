@@ -571,10 +571,8 @@ InstallMethod(ViewObj,
 function(G)
   Print("<automorphism group of ");
   ViewObj(Source(G.1));
-  Print(" with ", Length(GeneratorsOfGroup(G)), " generator");
-  if Length(GeneratorsOfGroup(G)) > 1 then
-    Print("s");
-  fi;
+  Print(" with ");
+  Print(Pluralize(Length(GeneratorsOfGroup(G)), "generator"));
   Print(">");
 end);
 

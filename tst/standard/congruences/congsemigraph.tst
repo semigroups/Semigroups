@@ -32,8 +32,8 @@ e_1
 gap> e_3 := S.3;
 e_3
 gap> cong := SemigroupCongruence(S, [[e_1, e_3]]);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 5 edges> with 1 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 5 edges> with 1 generating pairs>
 gap> IsCongruenceByWangPair(cong);
 false
 
@@ -93,8 +93,8 @@ gap> S := GraphInverseSemigroup(D);
 gap> C := CongruenceByWangPair(S, [4], [2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> AsSemigroupCongruenceByGeneratingPairs(C);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 4 edges> with 2 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 4 edges> with 2 generating pairs>
 gap> EquivalenceRelationPartition(C);
 [ [ e_1, e_1e_3e_3^-1 ], 
   [ e_4, v_4, e_4^-1, 0, e_2e_4, e_3e_4, e_4e_4^-1, e_4^-1e_2^-1, 
@@ -113,8 +113,8 @@ gap> S := GraphInverseSemigroup(D);
 gap> CongruenceByWangPair(S, [4], [1, 2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 3 edges> with 3 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 3 edges> with 3 generating pairs>
 gap> EquivalenceRelationPartition(cong);
 [ [ e_1, e_1e_2e_2^-1 ], 
   [ e_3, v_4, e_3^-1, 0, e_2e_3, e_3e_3^-1, e_3^-1e_2^-1, e_1e_2e_3, 
@@ -126,8 +126,8 @@ gap> EquivalenceRelationPartition(cong);
 gap> CongruenceByWangPair(S, [2, 3, 4], []);
 <graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 3 edges> with 3 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 3 edges> with 3 generating pairs>
 gap> EquivalenceRelationPartition(cong);
 [ [ e_1, e_2, e_3, v_2, v_3, v_4, e_1^-1, e_2^-1, e_3^-1, 0, e_1e_2, 
       e_1e_1^-1, e_2e_3, e_2e_2^-1, e_3e_3^-1, e_2^-1e_1^-1, e_3^-1e_2^-1, 
@@ -138,8 +138,8 @@ gap> EquivalenceRelationPartition(cong);
 gap> CongruenceByWangPair(S, [], [1]);
 <graph inverse semigroup congruence with H = [  ] and W = [ 1 ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 3 edges> with 1 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 3 edges> with 1 generating pairs>
 gap> EquivalenceRelationPartition(cong);
 [ [ v_1, e_1e_1^-1 ] ]
 
@@ -203,15 +203,15 @@ gap> S := GraphInverseSemigroup(D);
 gap> CongruenceByWangPair(S, [4], [2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 4 edges> with 2 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 4 edges> with 2 generating pairs>
 gap> AsCongruenceByWangPair(cong);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> CongruenceByWangPair(S, [3, 4], [1]);
 <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 4 edges> with 3 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 4 edges> with 3 generating pairs>
 gap> AsCongruenceByWangPair(cong);
 <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>
 gap> D := Digraph([[2], [3, 4], [4], []]);
@@ -221,8 +221,8 @@ gap> S := GraphInverseSemigroup(D);
 gap> CongruenceByWangPair(S, [4], [1, 2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(last);
-<2-sided semigroup congruence over <finite graph inverse semigroup with 4 vert\
-ices, 4 edges> with 3 generating pairs>
+<2-sided semigroup congruence over <finite graph inverse semigroup with 
+4 vertices, 4 edges> with 3 generating pairs>
 gap> AsCongruenceByWangPair(cong);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>
 

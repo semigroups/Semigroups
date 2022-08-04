@@ -296,8 +296,8 @@ gap> R := [[F.1 * F.2, F.2 * F.1], [F.1 * F.3, F.3 * F.1], [F.1 ^ 2, F.1],
 gap> S := F / R;
 <fp semigroup with 3 generators and 9 relations>
 gap> C := SemigroupCongruence(S, [[S.1, S.2]]);
-<2-sided semigroup congruence over <fp semigroup with 3 generators and 9 relat\
-ions> with 1 generating pairs>
+<2-sided semigroup congruence over <fp semigroup with 3 generators and 
+  9 relations> with 1 generating pairs>
 gap> ImagesElm(C, S.1);
 [ s1, s2, s1*s2, s2^2, s1*s2^2 ]
 gap> ImagesElm(C, S.3);

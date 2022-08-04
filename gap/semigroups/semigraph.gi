@@ -15,7 +15,7 @@ InstallMethod(ViewString, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
 RankFilter(IsGroupAsSemigroup),  # to beat library method for groups as semigrps
 function(S)
-  local D, finiteness, vert_suffix, edge_suffix;
+  local D, finiteness;
 
   D := GraphOfGraphInverseSemigroup(S);
 
@@ -25,25 +25,11 @@ function(S)
     finiteness := "infinite";
   fi;
 
-  if DigraphNrVertices(D) = 1 then
-    vert_suffix := "ex";
-  else
-    vert_suffix := "ices";
-  fi;
-
-  if DigraphNrEdges(D) = 1 then
-    edge_suffix := "";
-  else
-    edge_suffix := "s";
-  fi;
-
   return PRINT_STRINGIFY(
-    StringFormatted("<{} graph inverse semigroup with {} vert{}, {} edge{}>",
+    StringFormatted("<{} graph inverse semigroup with {}, {}>",
     finiteness,
-    DigraphNrVertices(D),
-    vert_suffix,
-    DigraphNrEdges(D),
-    edge_suffix));
+    Pluralize(DigraphNrVertices(D), "vertex"),
+    Pluralize(DigraphNrEdges(D), "edge")));
 end);
 
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",

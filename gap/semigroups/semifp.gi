@@ -173,27 +173,15 @@ InstallMethod(ViewString, "for an f.p. monoid element",
 InstallMethod(ViewString, "for an f.p. monoid with known generators",
 [IsFpMonoid and HasGeneratorsOfMonoid],
 function(M)
-  local generators_plural, relations_plural;
 
   if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
-  elif Length(GeneratorsOfMonoid(M)) = 1 then
-    generators_plural := "";
-  else
-    generators_plural := "s";
-  fi;
-  if Length(RelationsOfFpMonoid(M)) = 1 then
-    relations_plural := "";
-  else
-    relations_plural := "s";
   fi;
 
   return PRINT_STRINGIFY(
-    StringFormatted("<fp monoid with {} generator{} and {} relation{}>",
-                    Length(GeneratorsOfMonoid(M)),
-                    generators_plural,
-                    Length(RelationsOfFpMonoid(M)),
-                    relations_plural));
+    StringFormatted("\>\><fp monoid with {} and {}>\<\<",
+                    Pluralize(Length(GeneratorsOfMonoid(M)), "generator"),
+                    Pluralize(Length(RelationsOfFpMonoid(M)), "relation")));
 end);
 
 InstallMethod(ViewObj, "for an f.p. monoid",
@@ -208,29 +196,15 @@ end);
 
 InstallMethod(ViewString, "for an f.p. semigroup with known generators",
 [IsFpSemigroup and HasGeneratorsOfSemigroup],
-function(M)
-  local generators_plural, relations_plural;
+function(S)
   if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
 
-  if Length(GeneratorsOfSemigroup(M)) = 1 then
-    generators_plural := "";
-  else
-    generators_plural := "s";
-  fi;
-  if Length(RelationsOfFpSemigroup(M)) = 1 then
-    relations_plural := "";
-  else
-    relations_plural := "s";
-  fi;
-
   return PRINT_STRINGIFY(
-    StringFormatted("<fp semigroup with {} generator{} and {} relation{}>",
-                    Length(GeneratorsOfSemigroup(M)),
-                    generators_plural,
-                    Length(RelationsOfFpSemigroup(M)),
-                    relations_plural));
+    StringFormatted("\>\><fp semigroup with {} and {}>\<\<",
+                    Pluralize(Length(GeneratorsOfSemigroup(S)), "generator"),
+                    Pluralize(Length(RelationsOfFpSemigroup(S)), "relation")));
 end);
 
 InstallMethod(ViewObj,

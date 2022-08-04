@@ -171,23 +171,14 @@ InstallMethod(\<, "for stz presentations",
 InstallMethod(ViewString,
 [IsStzPresentation],
 function(stz)
-  local str;
-  str := "<fp semigroup presentation with ";
-  Append(str, String(Length(stz!.GeneratorsOfStzPresentation)));
-  Append(str, " generator");
-  if Length(stz!.GeneratorsOfStzPresentation) > 1 then
-    Append(str, "s");
-  fi;
-  Append(str, " and ");
-  Append(str, String(Length(stz!.RelationsOfStzPresentation)));
-  Append(str, " relation");
-  if Length(stz!.RelationsOfStzPresentation) <> 1 then
-    Append(str, "s");
-  fi;
-  Append(str, "\< with length ");
-  Append(str, String(Length(stz)));
-  Append(str, ">");
-  return str;
+  local num_gens, num_rels;
+  num_gens := Length(stz!.GeneratorsOfStzPresentation);
+  num_rels := Length(stz!.RelationsOfStzPresentation);
+  return Concatenation(
+    StringFormatted("<fp semigroup presentation with {} and {}",
+                    Pluralize(num_gens, "generator"),
+                    Pluralize(num_rels, "relation")),
+    StringFormatted("\< with length {}>", Length(stz)));
 end);
 
 SEMIGROUPS.StzRelationDisplayString := function(stz, i)

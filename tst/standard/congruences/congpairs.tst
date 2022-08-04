@@ -652,8 +652,8 @@ true
 gap> F := FreeMonoid(2);;
 gap> S := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
-<2-sided semigroup congruence over <fp monoid with 2 generators and 2 relation\
-s> with 1 generating pairs>
+<2-sided semigroup congruence over <fp monoid with 2 generators and 
+  2 relations> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(F, [[F.1, F.2]]);
 <left semigroup congruence over <free monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
@@ -661,10 +661,10 @@ gap> RightSemigroupCongruenceByGeneratingPairs(F, [[F.1, F.2]]);
 <right semigroup congruence over <free monoid on the generators 
 [ m1, m2 ]> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
-<left semigroup congruence over <fp monoid with 2 generators and 2 relations> \
-with 1 generating pairs>
+<left semigroup congruence over <fp monoid with 2 generators and 2 relations>
+  with 1 generating pairs>
 gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
-<right semigroup congruence over <fp monoid with 2 generators and 2 relations>\
+<right semigroup congruence over <fp monoid with 2 generators and 2 relations>
  with 1 generating pairs>
 
 # tests from congfpmon.tst
@@ -710,8 +710,8 @@ gap> (M.2 * M.1) ^ 2 * M.2 * M.1 ^ 2 = M.1 ^ 3;
 true
 gap> pair := [M.1 ^ 2 * M.2 * M.1, M.1 * M.2 * M.1];;
 gap> cong := SemigroupCongruence(M, pair);
-<2-sided semigroup congruence over <fp monoid with 2 generators and 5 relation\
-s> with 1 generating pairs>
+<2-sided semigroup congruence over <fp monoid with 2 generators and 
+  5 relations> with 1 generating pairs>
 gap> NrEquivalenceClasses(cong);
 3
 gap> [M.2, M.2 * M.1] in cong;
@@ -767,8 +767,8 @@ gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
 gap> Size(M);
 40
 gap> cong := LeftSemigroupCongruence(M, [M.1, M.2 ^ 3]);
-<left semigroup congruence over <fp monoid with 2 generators and 8 relations> \
-with 1 generating pairs>
+<left semigroup congruence over <fp monoid with 2 generators and 8 relations>
+  with 1 generating pairs>
 gap> IsLeftSemigroupCongruence(cong);
 true
 gap> HasIsSemigroupCongruence(cong);
@@ -828,7 +828,7 @@ gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
 gap> Size(M);
 40
 gap> cong := RightSemigroupCongruence(M, [M.1, M.2 ^ 3]);
-<right semigroup congruence over <fp monoid with 2 generators and 8 relations>\
+<right semigroup congruence over <fp monoid with 2 generators and 8 relations>
  with 1 generating pairs>
 gap> IsRightSemigroupCongruence(cong);
 true

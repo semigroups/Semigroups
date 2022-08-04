@@ -956,8 +956,8 @@ s1
 gap> gens[2] ^ hom;
 s2
 gap> KernelOfSemigroupHomomorphism(hom);
-<universal semigroup congruence over <fp semigroup with 3 generators and 34 re\
-lations>>
+<universal semigroup congruence over <fp semigroup with 3 generators and 
+  34 relations>>
 
 # Test with huge transformation semigroup
 gap> S := Semigroup(FullTransformationMonoid(9), rec(acting := true));;
