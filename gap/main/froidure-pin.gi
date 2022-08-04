@@ -35,6 +35,7 @@ for x in [IsMatrixOverFiniteFieldSemigroup,
           IsFreeInverseSemigroupCategory] do
   InstallTrueMethod(CanUseGapFroidurePin, x);
 od;
+Unbind(x);
 
 InstallMethod(CanUseGapFroidurePin, "for a semigroup",
 [IsSemigroup], ReturnFalse);

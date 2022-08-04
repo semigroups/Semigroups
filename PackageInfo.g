@@ -356,7 +356,7 @@ Dependencies := rec(
   NeededOtherPackages := [["datastructures", ">=0.2.5"],
                           ["digraphs", ">=1.5.0"],
                           ["genss", ">=1.6.5"],
-                          ["images", ">=1.3.0"],
+                          ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
                           ["orb", ">=4.8.2"]],
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
