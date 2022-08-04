@@ -82,6 +82,7 @@ Persons := [
     FirstNames    := "Stuart",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "stuartburrell1994@gmail.com",
     WWWHome       := "https://stuartburrell.github.io"),
 
   rec(
@@ -100,6 +101,7 @@ Persons := [
     FirstNames    := "Tom",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "tom.contileslie@gmail.com",
     WWWHome       := "https://tomcontileslie.com/"),
 
   rec(
@@ -107,7 +109,7 @@ Persons := [
     FirstNames    := "Joe",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "jde1@st-andrews.ac.uk",
+    Email         := "je53@st-andrews.ac.uk",
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
@@ -156,6 +158,7 @@ Persons := [
     FirstNames    := "Robert",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "hancock@informatik.uni-heidelberg.de",
     WWWHome       := "https://sites.google.com/view/robert-hancock/"),
 
   rec(
@@ -194,6 +197,16 @@ Persons := [
     Place         := "Brussels, Belgium"),
 
   rec(
+    LastName      := "Nagpal",
+    FirstNames    := "Chinmaya",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "chinmaya1011@gmail.com",
+    PostalAddress := _STANDREWSMATHS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
     LastName      := "Konovalov",
     FirstNames    := "Olexandr",
     IsAuthor      := true,
@@ -202,6 +215,16 @@ Persons := [
     WWWHome       :=
       "https://www.st-andrews.ac.uk/computer-science/people/obk1/",
     PostalAddress := _STANDREWSCS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName      := "Konstantinidi",
+    FirstNames    := "Artemis",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "ak316@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
