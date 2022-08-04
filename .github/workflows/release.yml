@@ -1,14 +1,9 @@
-name: "Standard tests"
+name: "Extended tests"
 on:
   workflow_dispatch:
   pull_request:
-  push:
-    branches:
-      - "master"
-      - "stable-*.*"
-  schedule:
-    # Every day at 3:15 AM UTC
-    - cron: '15 3 * * *'
+    paths:
+      - ".VERSION"
 
 jobs:
   test:
@@ -64,11 +59,12 @@ jobs:
         with:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
-      - name: "Run Semigroups package's tst/teststandard.g"
-        uses: gap-actions/run-pkg-tests@v2
-      - uses: gap-actions/process-coverage@v2
-      - uses: codecov/codecov-action@v2
-      - name: "Run GAP's tst/testinstall.g"
+      - name: "Run GAP's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
         with:
-          GAP_TESTFILE: "ci/run-gap-testinstall.g"
+          GAP_TESTFILE: "ci/run-gap-teststandard.g"
+      - name: "Run GAP's tst/testbugfix.g"
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-testbugfix.g"
+

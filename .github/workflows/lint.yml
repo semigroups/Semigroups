@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   pull_request:
   push:
+    branches:
+      - "master"
+      - "stable-*.*"
   schedule:
     # Every day at 3:10 AM UTC
     - cron: '10 3 * * *'
@@ -10,8 +13,6 @@ on:
 jobs:
   gaplint:
     runs-on: ubuntu-latest
-    # Don't run this twice for PRs from branches in the same repository
-    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
     steps:
       - uses: actions/checkout@v2
       - name: "Install dependencies . . ."
@@ -21,7 +22,6 @@ jobs:
 
   cpplint:
     runs-on: ubuntu-latest
-    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
