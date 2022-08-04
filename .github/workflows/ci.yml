@@ -34,7 +34,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: "Install dependencies"
+      - name: "Checking if this is a release candidate?"
+        id: is-release-candidate
+        run: |
+          if [[ ${{ github.event.pull_request.head.ref }} =~ ^rc-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo ::set-output name=match::true
+          fi
+      - name: "Install dependencies (macOS only!)"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake
       # Setup ccache, to speed up repeated compilation of the same binaries
@@ -63,7 +69,21 @@ jobs:
         with:
           ABI: ${{ matrix.ABI }}
           CONFIGFLAGS: --disable-hpcombi
-      - name: "Run tst/teststandard.g"
+      - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
       - uses: gap-actions/process-coverage@v2
       - uses: codecov/codecov-action@v2
+      - name: "Run GAP's tst/testinstall.g"
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-testinstall.g"
+      - name: "Run GAP's tst/teststandard.g (in branch rc-v*.*.* only!)"
+        if: steps.is-release-candidate.outputs.match == 'true'
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-teststandard.g"
+      - name: "Run GAP's tst/testbugfix.g (in branch rc-v*.*.* only!)"
+        if: steps.is-release-candidate.outputs.match == 'true'
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-testbugfix.g"

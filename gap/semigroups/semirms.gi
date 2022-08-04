@@ -187,15 +187,16 @@ function(S)
   inv := InverseGeneralMapping(iso);
   UseIsomorphismRelation(S, Range(iso));
 
+  # We use object instead of x below to stop some GAP library tests from
+  # failing.
   return SemigroupIsomorphismByFunctionNC(S,
                                           Range(iso),
-                                          x -> x ^ iso,
-                                          x -> x ^ inv);
+                                          object -> object ^ iso,
+                                          object -> object ^ inv);
 end);
 
 InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
-3,  # to beat IsReesZeroMatrixSubsemigroup
 function(S)
   local D, map, inj, inv;
 
@@ -987,4 +988,3 @@ IO_Unpicklers.RZMS := function(file)
   fi;
   return ReesZeroMatrixSemigroup(x[1], x[2]);
 end;
-

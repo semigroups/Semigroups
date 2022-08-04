@@ -236,7 +236,7 @@ gap> cong1 := CongruenceByWangPair(S, [4], [2]);
 gap> cong2 := CongruenceByWangPair(S, [], [1, 3]);
 <graph inverse semigroup congruence with H = [  ] and W = [ 1, 3 ]>
 gap> JoinSemigroupCongruences(cong1, cong2);
-<graph inverse semigroup congruence with H = [ 1, 2, 3, 4 ] and W = [  ]>
+<graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>
 gap> cong1 := CongruenceByWangPair(S, [4], [2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> cong2 := CongruenceByWangPair(S, [4], [1]);
@@ -258,7 +258,7 @@ gap> cong1 := CongruenceByWangPair(S, [3, 4], []);
 gap> cong2 := CongruenceByWangPair(S, [4], [2]);
 <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>
 gap> JoinSemigroupCongruences(cong1, cong2);
-<graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>
+<graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>
 gap> cong1 := CongruenceByWangPair(S, [3, 4], []);
 <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>
 gap> cong2 := CongruenceByWangPair(S, [4], [1]);
@@ -326,11 +326,11 @@ gap> L := LatticeOfCongruences(S);
 <lattice of 10 two-sided congruences over 
  <finite graph inverse semigroup with 4 vertices, 5 edges>>
 gap> C := CongruencesOfSemigroup(S);
-[ <graph inverse semigroup congruence with H = [ 1, 2, 3, 4 ] and W = [  ]>, 
+[ <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>, 
   <graph inverse semigroup congruence with H = [ 1, 3, 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
-  <graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
   <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 3 ]>, 
@@ -374,13 +374,13 @@ gap> L := LatticeOfCongruences(S);
 <lattice of 12 two-sided congruences over 
  <finite graph inverse semigroup with 4 vertices, 4 edges>>
 gap> C := CongruencesOfSemigroup(S);
-[ <graph inverse semigroup congruence with H = [ 1, 2, 3, 4 ] and W = [  ]>, 
+[ <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>, 
   <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 1, 3 ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 1 ]>, 
-  <graph inverse semigroup congruence with H = [ 2, 3, 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
   <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 3 ]>, 
