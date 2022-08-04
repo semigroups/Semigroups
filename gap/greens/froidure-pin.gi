@@ -550,7 +550,7 @@ InstallMethod(PartialOrderOfDClasses,
 function(S)
   local D;
   if not IsBound(GreensDRelation(S)!.data) then
-    # Acting semigroups are enumerable, but may not have this data.
+    # Acting semigroups CanUseFroidurePin, but may not have this data.
     TryNextMethod();
   fi;
   D := DigraphMutableCopy(LeftCayleyDigraph(S));
@@ -562,7 +562,8 @@ function(S)
   return D;
 end);
 
-InstallMethod(PartialOrderOfLClasses, "for a finite enumerable semigroup",
+InstallMethod(PartialOrderOfLClasses,
+"for a finite semigroup that CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local D, comps, enum, canon, actual, perm;
@@ -586,7 +587,8 @@ function(S)
   return D;
 end);
 
-InstallMethod(PartialOrderOfRClasses, "for a finite enumerable semigroup",
+InstallMethod(PartialOrderOfRClasses,
+"for a finite semigroup that CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
 function(S)
   local D, comps, enum, canon, actual, perm;

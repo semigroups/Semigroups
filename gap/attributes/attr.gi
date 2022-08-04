@@ -530,7 +530,8 @@ InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
 [IsFinite and IsMonoidAsSemigroup],
 S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
-InstallMethod(MaximalLClasses, "for an enumerable semigroup",
+InstallMethod(MaximalLClasses,
+"for a semigroup that CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
 
@@ -541,7 +542,8 @@ function(S)
   return LClasses(S){DigraphSources(PartialOrderOfLClasses(S))};
 end);
 
-InstallMethod(MaximalRClasses, "for an enumerable semigroup",
+InstallMethod(MaximalRClasses,
+"for a semigroup that CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin],
 function(S)
 
