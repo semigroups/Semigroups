@@ -37,7 +37,7 @@ jobs:
       - name: "Checking if this is a release candidate?"
         id: is-release-candidate
         run: |
-          if [[ ${{ github.event_name }} == 'pull_request' && ${{ github.event.pull_request.head.ref }} =~ ^rc-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ ${{ github.event_name }} == 'pull_request' && x${{ github.event.pull_request.head.ref }} =~ ^xrc-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
               echo ::set-output name=match::true
           fi
       - name: "Install dependencies (macOS only!)"
