@@ -17,8 +17,8 @@ integers or over a finite field. In previous versions of [Semigroups][] there
 was an implementation of matrices over the integers and over finite fields,
 because at the time they were written it was not possible to use the matrices
 in the GAP library. This is no longer the case, and some changes in the GAP
-library for version 4.12, meant that the implementation [Semigroups][] had to
-be removed. 
+library for version 4.12, meant that the implementation in [Semigroups][] had
+to be removed. 
 
 Previously, to create a matrix over the integers you could do:
 
