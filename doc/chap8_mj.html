@@ -321,11 +321,11 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S2 := S4 / cong;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S1 := TrivialSemigroup();;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := [S1, S2, S3, S4];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">idfn := function(t) return IdentityTransformation; end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f21 := MappingByFunction(S2, S1, idfn);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f31 := MappingByFunction(S3, S1, idfn);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">idfn := t -&gt; IdentityTransformation;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f21 := SemigroupHomomorphismByFunction(S2, S1, idfn);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f31 := SemigroupHomomorphismByFunction(S3, S1, idfn);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f42 := HomomorphismQuotientSemigroup(cong);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f43 := IdentityMapping(S4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f43 := SemigroupHomomorphismByFunction(S4, S3, IdFunc);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := [[f21, f31], [f42], [f43], []];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSS := StrongSemilatticeOfSemigroups(D, L, H);</span>
 &lt;strong semilattice of 4 semigroups&gt;

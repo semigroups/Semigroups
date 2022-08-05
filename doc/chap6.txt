@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-4.0.3/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.0.0/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
@@ -615,41 +615,34 @@
     [4X[25X>[125X [27X  [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);[127X[104X
     [4X[28X<bipartition semigroup of degree 6 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsTransformationSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 [128X[104X
-    [4X[28X generators>, <transformation semigroup of size 11, degree 12 with 2 [128X[104X
-    [4X[28X generators>, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<bipartition semigroup of size 11, degree 6 with 2 generators> -> [128X[104X
+    [4X[28X<transformation semigroup of size 11, degree 12 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsBooleanMatSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 [128X[104X
-    [4X[28X generators>, <semigroup of size 11, 12x12 boolean matrices with 2 [128X[104X
-    [4X[28X generators>, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<bipartition semigroup of size 11, degree 6 with 2 generators> -> [128X[104X
+    [4X[28X<semigroup of size 11, 12x12 boolean matrices with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsFpSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 [128X[104X
-    [4X[28X generators>[128X[104X
-    [4X[28X , <fp semigroup with 2 generators and 5 relations>, function( x ) ...\[128X[104X
-    [4X[28X end, function( x ) ... end )[128X[104X
+    [4X[28X<bipartition semigroup of size 11, degree 6 with 2 generators> -> [128X[104X
+    [4X[28X<fp semigroup with 2 generators and 5 relations of length 27>[128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
     [4X[25X>[125X [27XPartialPerm([1, 2, 3, 6, 8, 10],[127X[104X
     [4X[25X>[125X [27X            [2, 6, 7, 9, 1, 5]),[127X[104X
     [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 6, 7, 8, 10],[127X[104X
     [4X[25X>[125X [27X            [3, 8, 1, 9, 4, 10, 5, 6])]);;[127X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsBipartitionSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <inverse partial perm semigroup of rank 10 with 2 [128X[104X
-    [4X[28X generators>, <inverse bipartition semigroup of degree 10 with 2 [128X[104X
-    [4X[28X generators>, function( x ) ... end, <Operation "AsPartialPerm"> )[128X[104X
+    [4X[28X<inverse partial perm semigroup of rank 10 with 2 generators> -> [128X[104X
+    [4X[28X<inverse bipartition semigroup of degree 10 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(4);[127X[104X
     [4X[28X<symmetric inverse monoid of degree 4>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsBlockBijectionSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <symmetric inverse monoid of degree 4>, [128X[104X
+    [4X[28X<symmetric inverse monoid of degree 4> -> [128X[104X
     [4X[28X<inverse block bijection monoid of degree 5 with 3 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XSize(Range(last));[127X[104X
     [4X[28X209[128X[104X
     [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
     [4X[25X>[125X [27XPartialPerm([3, 1]), PartialPerm([1, 3, 4])]);;[127X[104X
     [4X[25Xgap>[125X [27XIsomorphismSemigroup(IsBlockBijectionSemigroup, S);[127X[104X
-    [4X[28XMappingByFunction( <partial perm semigroup of rank 3 with 2 [128X[104X
-    [4X[28X generators>, <block bijection semigroup of degree 5 with 2 [128X[104X
-    [4X[28X generators>, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<partial perm semigroup of rank 3 with 2 generators> -> [128X[104X
+    [4X[28X<block bijection semigroup of degree 5 with 2 generators>[128X[104X
   [4X[32X[104X
   
   [1X6.5-2 IsomorphismMonoid[101X
@@ -695,18 +688,14 @@
     [4X[25X>[125X [27X                  Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));[127X[104X
     [4X[28X<transformation semigroup of degree 10 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismMonoid(IsTransformationMonoid, S);[127X[104X
-    [4X[28XMappingByFunction( <transformation semigroup of degree 10 with 2 [128X[104X
-    [4X[28X generators>, <transformation monoid of degree 8 with 2 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<transformation semigroup of degree 10 with 2 generators> -> [128X[104X
+    [4X[28X<transformation monoid of degree 8 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismMonoid(IsBooleanMatMonoid, S);[127X[104X
-    [4X[28XMappingByFunction( <transformation semigroup of degree 10 with 2 [128X[104X
-    [4X[28X generators>, <monoid of 8x8 boolean matrices with 2 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<transformation semigroup of degree 10 with 2 generators> -> [128X[104X
+    [4X[28X<monoid of 8x8 boolean matrices with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismMonoid(IsFpMonoid, S);[127X[104X
-    [4X[28XMappingByFunction( <transformation semigroup of degree 10 with 2 [128X[104X
-    [4X[28X generators>[128X[104X
-    [4X[28X , <fp monoid with 2 generators and 17 relations>, function( x ) ... e\[128X[104X
-    [4X[28Xnd, function( x ) ... end )[128X[104X
+    [4X[28X<transformation semigroup of degree 10 with 2 generators> -> [128X[104X
+    [4X[28X<fp monoid with 2 generators and 17 relations of length 278>[128X[104X
   [4X[32X[104X
   
   [1X6.5-3 AsSemigroup[101X
@@ -887,9 +876,8 @@
     [4X[25X>[125X [27X [0, 0, ()]]);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 3x3 over Group(())>[128X[104X
     [4X[25Xgap>[125X [27Xiso := RZMSNormalization(R);[127X[104X
-    [4X[28XMappingByFunction( <Rees 0-matrix semigroup 3x3 over Group(())>, [128X[104X
+    [4X[28X<Rees 0-matrix semigroup 3x3 over Group(())> -> [128X[104X
     [4X[28X<Rees 0-matrix semigroup 3x3 over Group(())>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XS := Range(iso);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 3x3 over Group(())>[128X[104X
     [4X[25Xgap>[125X [27XMatrix(S);[127X[104X
@@ -927,9 +915,8 @@
     [4X[25X>[125X [27X [(2, 3), (1, 3, 2, 4), (2, 3)]]);[127X[104X
     [4X[28X<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27Xiso := RMSNormalization(R);[127X[104X
-    [4X[28XMappingByFunction( <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>[128X[104X
-    [4X[28X , <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )> -> [128X[104X
+    [4X[28X<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27XS := Range(iso);[127X[104X
     [4X[28X<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27XMatrix(S);[127X[104X

@@ -75,17 +75,11 @@
     </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84F281347ECB62B7">5.4-1 NewMatrixOverFiniteField</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78AC470C84547DB3">5.4-2 IdentityMatrixOverFiniteField</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87C001497EFB0D2E">5.4-3 NewIdentityMatrixOverFiniteField</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X857E626783CCF766">5.4-4 RowSpaceBasis</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X780AA71D82E73A1F">5.4-5 RowRank</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8733B04781B682E5">5.4-6 RightInverse</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83CDD42880D663F4">5.4-7 BaseDomain</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84E313CC78DB0DA9">5.4-8 TransposedMatImmutable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X857E626783CCF766">5.4-1 RowSpaceBasis</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8733B04781B682E5">5.4-2 RightInverse</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X868EC5B57ECC3BB4">5.5 <span class="Heading">
-      Integer Matrices
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8770A88E82AA24B7">5.5 <span class="Heading">
+      Matrices over the integers
     </span></a>
 </span>
 <div class="ContSSBlock">
@@ -115,12 +109,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X808A4061809A6E67">5.7-3 IsFinite</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80C6B26284721409">5.7-4 IsTorsion</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X873DE466868DA849">5.7-5 NormalizeSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CF51CB48610A07D">5.7-6 <span class="Heading">Matrix groups</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7844208D7DC457D6">5.7-7 IsMatrixOverFiniteFieldGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7B5131DC831AC1C9"><code>5.7-8 \^</code></a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AC6EABF7FF04D7B">5.7-9 IsomorphismMatrixGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7BC0AEC9851C7B22">5.7-10 AsMatrixGroup</a></span>
 </div></div>
 </div>
 
@@ -312,14 +300,14 @@ Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], [0, 3, 0], [1, 1, 3]], 9)
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                        [2, 2, 2]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">          2, 1);</span>
 Matrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(IsIntegerMatrix, [[-1, -2, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, 3, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 0, -3]]);</span>
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(Integers, [[-1, -2, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [0, 3, -1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [1, 0, -3]]);</span>
-Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+&lt;3x3-matrix over Integers&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(Integers, [[-1, -2, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [0, 3, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [1, 0, -3]]);</span>
+&lt;3x3-matrix over Integers&gt;
 </pre></div>
 
 <p><a id="X85426D8885431ECE" name="X85426D8885431ECE"></a></p>
@@ -341,9 +329,6 @@ Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 
 </li>
 <li><p><code class="func">IsMaxPlusMatrix</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>) and a tropical max-plus matrix;</p>
-
-</li>
-<li><p><code class="func">IsIntegerMatrix</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>) and an ntp matrix.</p>
 
 </li>
 </ul>
@@ -380,8 +365,8 @@ Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsNTPMatrix, [[1, 2, 2],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                               [0, 2, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                               [1, 3, 0]], 4, 5);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(IsIntegerMatrix, mat);</span>
-Matrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(Integers, mat);</span>
+&lt;3x3-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);</span>
 Matrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)
@@ -408,8 +393,8 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := AsMatrix(IsNTPMatrix, mat, 2, 1);</span>
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := AsMatrix(IsIntegerMatrix, mat);</span>
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, mat);</span>
+&lt;3x3-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(IsNTPMatrix, mat, 1, 2);</span>
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)</pre></div>
 
@@ -462,10 +447,10 @@ Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1],
   [2, 2, 1]], 2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsNTPMatrix, 3, 2, 5);</span>
 Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsIntegerMatrix, 2);</span>
-Matrix(IsIntegerMatrix, [[1, 3], [0, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(Integers, 2);</span>
-Matrix(IsIntegerMatrix, [[-1, 0], [0, -1]])
+Matrix(Integers, [[1, 3], [0, 0]])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(Integers, 2);</span>
+Matrix(Integers, [[-1, 0], [0, -1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(GF(5), 1);</span>
 Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
@@ -481,7 +466,7 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMaxPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Integers</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every matrix over a semiring in <strong class="pkg">Semigroups</strong> is a member of one of these categories, which are subcategory of <code class="func">IsMatrixOverSemiring</code> (<a href="chap5.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
@@ -511,8 +496,6 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTropicalMinPlusMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNTPMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every collection of matrices over the same semiring in <strong class="pkg">Semigroups</strong> belongs to one of the categories above. For example, semigroups of boolean matrices belong to <code class="code">IsBooleanMatCollection</code>.</p>
@@ -533,27 +516,22 @@ Matrix(GF(5), [[Z(5)^0]])</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 2],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [3, 5]]);</span>
-Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList(mat);</span>
-[ [ 0, 2 ], [ 3, 5 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                         [Z(7) ^ 4, Z(7)]]);</span>
-Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsNTPMatrix,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6);</span>
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := AsList(mat);</span>
-[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
+[ [ 0, 1, 0 ], [ 1, 3, 1 ], [ 1, 0, 1 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMutable(list);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMutable(list[1]);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := AsMutableList(mat);</span>
-[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
+[ [ 0, 1, 0 ], [ 1, 3, 1 ], [ 1, 0, 1 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMutable(list);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMutable(list[1]);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat = Matrix(BaseDomain(mat), AsList(mat));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat = Matrix(IsNTPMatrix, AsList(mat), 5, 6);</span>
 true</pre></div>
 
 <p><a id="X7D21408E845E4648" name="X7D21408E845E4648"></a></p>
@@ -1261,100 +1239,35 @@ true</pre></div>
       Matrices over finite fields
     </span></h4>
 
-<p>In this section we describe the operations, properties, and attributes in <strong class="pkg">Semigroups</strong> specifically for matrices over finite fields. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings.</p>
+<p>In this section we describe some operations in <strong class="pkg">Semigroups</strong> for matrices over finite fields that are required for such matrices to form semigroups satisfying <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-2</span></a>).</p>
 
-<p><a id="X84F281347ECB62B7" name="X84F281347ECB62B7"></a></p>
+<p>From v5.0.0, <strong class="pkg">Semigroups</strong> uses the <strong class="pkg">GAP</strong> library implementation of matrices over finite fields belonging to the category <code class="func">IsMatrixObj</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap26_mj.html#X7E7617A0781D1E4B"><span class="RefLink">Reference: IsMatrixObj</span></a>) rather than the previous implementation in the <strong class="pkg">Semigroups</strong> package. This means that from v5.0.0, matrices over a finite field no longer belong to the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
 
-<h5>5.4-1 NewMatrixOverFiniteField</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">rows</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a new matrix object.</p>
-
-<p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> matrix over the finite field <var class="Arg">F</var> with constructing filter <var class="Arg">filt</var>. The matrix itself is given by a list <var class="Arg">rows</var> of rows. Currently the only possible value for <var class="Arg">filt</var> is <code class="code">IsPlistMatrixOverFiniteFieldRep</code>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                 GF(4),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                 Z(4) * [[1, 0], [0, 1]]);</span>
-Matrix(GF(2^2), [[Z(2^2), 0*Z(2)], [0*Z(2), Z(2^2)]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                 GF(4),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                 []);</span>
-Matrix(GF(2^2), [])</pre></div>
-
-<p><a id="X78AC470C84547DB3" name="X78AC470C84547DB3"></a></p>
-
-<h5>5.4-2 IdentityMatrixOverFiniteField</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMatrixOverFiniteField</code>( <var class="Arg">mat</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Given a finite field <var class="Arg">F</var> and a positive integer <var class="Arg">n</var>, this operation returns an <var class="Arg">n</var>-by-<var class="Arg">n</var> identity matrix with entries in the finite field <var class="Arg">F</var>. If instead the first argument is an <var class="Arg">n</var>-by-<var class="Arg">n</var> matrix <var class="Arg">mat</var> whose <code class="func">BaseDomain</code> (<a href="chap5.html#X83CDD42880D663F4"><span class="RefLink">5.4-7</span></a>) is a finite field <var class="Arg">F</var>, then <code class="code">IdentityMatrixOverFiniteField(<var class="Arg">mat</var>, <var class="Arg">n</var>)</code> returns the same as <code class="code">IdentityMatrixOverFiniteField(<var class="Arg">F</var>, <var class="Arg">n</var>)</code>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewIdentityMatrixOverFiniteField(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);</span>
-Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                     GF(4), 2);</span>
-Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])</pre></div>
-
-<p><a id="X87C001497EFB0D2E" name="X87C001497EFB0D2E"></a></p>
-
-<h5>5.4-3 NewIdentityMatrixOverFiniteField</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewIdentityMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewZeroMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> zero or identity matrix with entries in the finite field <var class="Arg">F</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewIdentityMatrixOverFiniteField(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);</span>
-Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                     GF(4), 2);</span>
-Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])</pre></div>
+<p>The following methods are implemented in <strong class="pkg">Semigroups</strong> for matrix objects over finite fields.</p>
 
 <p><a id="X857E626783CCF766" name="X857E626783CCF766"></a></p>
 
-<h5>5.4-4 RowSpaceBasis</h5>
+<h5>5.4-1 RowSpaceBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceBasis</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformation</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformationInv</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>To compute the value of any of the above attributes, a canonical basis for the row space of <var class="Arg">m</var> is computed along with an invertible matrix <code class="code">RowSpaceTransformation</code> such that <code class="code">m * RowSpaceTransformation(m) = RowSpaceBasis(m)</code>. <code class="code">RowSpaceTransformationInv(m)</code> is the inverse of <code class="code">RowSpaceTransformation(m)</code>.</p>
+<p>If <var class="Arg">m</var> is a matrix object over a finite field, then to compute the value of any of the above attributes, a canonical basis for the row space of <var class="Arg">m</var> is computed along with an invertible matrix <code class="code">RowSpaceTransformation</code> such that <code class="code">m * RowSpaceTransformation(m) = RowSpaceBasis(m)</code>. <code class="code">RowSpaceTransformationInv(m)</code> is the inverse of <code class="code">RowSpaceTransformation(m)</code>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);</span>
-Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0, Z(2)^0], 
-  [Z(2)^0, Z(2)^0, Z(2)^0]])
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceBasis(x);</span>
 &lt;rowbasis of rank 3 over GF(2^2)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceTransformation(x);</span>
 [ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
   [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]</pre></div>
 
-<p><a id="X780AA71D82E73A1F" name="X780AA71D82E73A1F"></a></p>
-
-<h5>5.4-5 RowRank</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowRank</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: Length of a basis of the row space of <var class="Arg">m</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);</span>
-Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
-  [Z(5)^0, Z(5)^0, Z(5)^0]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowRank(x);</span>
-2</pre></div>
-
 <p><a id="X8733B04781B682E5" name="X8733B04781B682E5"></a></p>
 
-<h5>5.4-6 RightInverse</h5>
+<h5>5.4-2 RightInverse</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -1365,69 +1278,29 @@ Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)],
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);</span>
-Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], 
-  [Z(2)^0, Z(2)^0, Z(2)^0]])
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftInverse(x);</span>
-Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], 
-  [Z(2)^0, 0*Z(2), Z(2)^0]])
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(LeftInverse(x) * x);</span>
-Z(2)^0 Z(2)^0 0*Z(2)
-0*Z(2) 0*Z(2) 0*Z(2)
-0*Z(2) 0*Z(2) Z(2)^0</pre></div>
+ 1 1 .
+ . . .
+ . . 1
+</pre></div>
 
-<p><a id="X83CDD42880D663F4" name="X83CDD42880D663F4"></a></p>
-
-<h5>5.4-7 BaseDomain</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseDomain</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: If <var class="Arg">mat</var> is a matrix over a finite field (in the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>)), then <code class="code">BaseDomain</code> returns the finite field specified at the point that <var class="Arg">mat</var> was created. Every entry in the matrix <var class="Arg">mat</var> belongs to <code class="code">BaseDomain(<var class="Arg">mat</var>)</code>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);</span>
-Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
-  [Z(5)^0, Z(5)^0, Z(5)^0]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BaseDomain(x);</span>
-GF(5)</pre></div>
-
-<p><a id="X84E313CC78DB0DA9" name="X84E313CC78DB0DA9"></a></p>
-
-<h5>5.4-8 TransposedMatImmutable</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An immutable matrix.</p>
-
-<p>This attribute contains an immutable copy of <var class="Arg">m</var>. Note that matrices are immutable by default.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);</span>
-Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
-  [Z(5)^0, Z(5)^0, Z(5)^0]])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransposedMatImmutable(x);</span>
-Matrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0], 
-  [0*Z(5), 0*Z(5), Z(5)^0]])</pre></div>
-
-<p><a id="X868EC5B57ECC3BB4" name="X868EC5B57ECC3BB4"></a></p>
+<p><a id="X8770A88E82AA24B7" name="X8770A88E82AA24B7"></a></p>
 
 <h4>5.5 <span class="Heading">
-      Integer Matrices
+      Matrices over the integers
     </span></h4>
 
-<p>In this section we describe operations in <strong class="pkg">Semigroups</strong> specifically for integer matrices. These are in addition to those given elsewhere in this chapter for arbitrary matrices over semirings. These include:</p>
+<p>In this section we describe operations in <strong class="pkg">Semigroups</strong> specifically for integer matrices.</p>
 
+<p>From v5.0.0, <strong class="pkg">Semigroups</strong> uses the <strong class="pkg">GAP</strong> library implementation of matrices over the intergers belonging to the category <code class="func">IsMatrixObj</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap26_mj.html#X7E7617A0781D1E4B"><span class="RefLink">Reference: IsMatrixObj</span></a>) rather than the previous implementation in the <strong class="pkg">Semigroups</strong> package. This means that from v5.0.0, matrices over the integers no longer belong to the category <code class="func">IsMatrixOverSemiring</code> (<a href="chap5.html#X8711618C7A8A1B60"><span class="RefLink">5.1-1</span></a>).</p>
 
-<ul>
-<li><p><code class="func">InverseOp</code> (<a href="chap5.html#X7BC66ECE8378068E"><span class="RefLink">5.5-1</span></a>)</p>
+<p>The following methods are implemented in <strong class="pkg">Semigroups</strong> for matrix objects over the integers.</p>
 
-</li>
-<li><p><code class="func">IsTorsion</code> (<a href="chap5.html#X7CA636F080777C36"><span class="RefLink">5.5-2</span></a>)</p>
-
-</li>
-<li><p><code class="func">Order</code> (<a href="chap5.html#X84F59A2687C62763"><span class="RefLink">5.5-3</span></a>)</p>
-
-</li>
-</ul>
 <p><a id="X7BC66ECE8378068E" name="X7BC66ECE8378068E"></a></p>
 
 <h5>5.5-1 InverseOp</h5>
@@ -1435,17 +1308,18 @@ Matrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An integer matrix.</p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)) whose inverse (if it exists) is also an integer matrix, then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">Integers</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)) whose inverse (if it exists) is also an integer matrix, then <code class="code">InverseOp</code> returns the inverse of <var class="Arg">mat</var>.</p>
 
 <p>An integer matrix has an integer matrix inverse if and only if it has determinant one.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 0, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, 1, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [1, 0, 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, [[0, 0, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, 1, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 0, 0]]);</span>
+&lt;3x3-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InverseOp(mat);</span>
-Matrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
+&lt;3x3-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat * InverseOp(mat) = One(mat);</span>
 true
 </pre></div>
@@ -1457,21 +1331,23 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTorsion</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">mat</var> is torsion and <code class="keyw">false</code> otherwise.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">Integers</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">IsTorsion</code> returns <code class="keyw">true</code> if <var class="Arg">mat</var> is torsion and <code class="keyw">false</code> otherwise.</p>
 
 <p>An integer matrix <var class="Arg">mat</var> is torsion if and only if there exists an integer <code class="code">n</code> such that <var class="Arg">mat</var> to the power of <code class="code">n</code> is equal to the identity matrix.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 0, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, 1, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [1, 0, 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, [[0, 0, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, 1, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 0, 0]]);</span>
+&lt;3x3-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTorsion(mat);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, -1, 0, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [4, 4, 2, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [1, 1, 0, 3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, [[0, 0, -1, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, -1, 0, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [4, 4, 2, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 1, 0, 3]]);</span>
+&lt;4x4-matrix over Integers&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTorsion(mat);</span>
 false
 </pre></div>
@@ -1483,19 +1359,19 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Order</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An integer or <code class="code">infinity</code>.</p>
 
-<p>If <var class="Arg">mat</var> is an integer matrix (i.e. belongs to the category <code class="func">IsIntegerMatrix</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>)), then <code class="code">InverseOp</code> returns the order of <var class="Arg">mat</var>. The order of <var class="Arg">mat</var> is the smallest integer power of <var class="Arg">mat</var> equal to the identity. If no such integer exists, the order is equal to <code class="code">infinity</code>.</p>
+<p>If <var class="Arg">mat</var> is an integer matrix, then <code class="code">InverseOp</code> returns the order of <var class="Arg">mat</var>. The order of <var class="Arg">mat</var> is the smallest integer power of <var class="Arg">mat</var> equal to the identity. If no such integer exists, the order is equal to <code class="code">infinity</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, -1, 0, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [4, 4, 2, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [1, 1, 0, 3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, [[0, 0, -1, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, -1, 0, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [4, 4, 2, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 1, 0, 3]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(mat);</span>
 infinity
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsIntegerMatrix, [[0, 0, -1],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, 1, 0],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [1, 0, 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(Integers, [[0, 0, -1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [0, 1, 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, 0, 0]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order(mat);</span>
 4
 </pre></div>
@@ -1651,7 +1527,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegerMatrixMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>The above are the currently supported types of matrix monoids. They correspond to the matrix semigroup types in Section <a href="chap5.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>. For matrix semigroups over finite fields there is also <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>).</p>
+<p>The above are the currently supported types of matrix monoids. They correspond to the matrix semigroup types in Section <a href="chap5.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>.</p>
 
 <p><a id="X808A4061809A6E67" name="X808A4061809A6E67"></a></p>
 
@@ -1721,111 +1597,6 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                        [-2, -10]])));</span>
 &lt;commutative semigroup of 2x2 max-plus matrices with 1 generator&gt;
 </pre></div>
-
-<p><a id="X7CF51CB48610A07D" name="X7CF51CB48610A07D"></a></p>
-
-<h5>5.7-6 <span class="Heading">Matrix groups</span></h5>
-
-<p>For interfacing the semigroups code with <strong class="pkg">GAP</strong>'s library code for matrix groups, the <strong class="pkg">Semigroups</strong> package implements matrix groups that delegate to the <strong class="pkg">GAP</strong> library. These functions include:</p>
-
-
-<ul>
-<li><p><code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>)</p>
-
-</li>
-<li><p><code class="func">\^</code> (<a href="chap5.html#X7B5131DC831AC1C9"><span class="RefLink">5.7-8</span></a>)</p>
-
-</li>
-<li><p><code class="func">IsomorphismMatrixGroup</code> (<a href="chap5.html#X7AC6EABF7FF04D7B"><span class="RefLink">5.7-9</span></a>)</p>
-
-</li>
-<li><p><code class="func">AsMatrixGroup</code> (<a href="chap5.html#X7BC0AEC9851C7B22"><span class="RefLink">5.7-10</span></a>)</p>
-
-</li>
-</ul>
-<p>This type of group only applies to matrices over finite fields (see <code class="func">IsMatrixOverFiniteFieldSemigroup</code> (<a href="chap5.html#X7DC6EB0680B3E4DD"><span class="RefLink">5.7-1</span></a>)).</p>
-
-<p><a id="X7844208D7DC457D6" name="X7844208D7DC457D6"></a></p>
-
-<h5>5.7-7 IsMatrixOverFiniteFieldGroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap5.html#X86233A3E86512493"><span class="RefLink">5.1-9</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
-&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteFieldGroup(G);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);</span>
-Group([ &lt;an immutable 3x3 matrix over GF2&gt; ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroup(G);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteFieldGroup(G);</span>
-false</pre></div>
-
-<p><a id="X7B5131DC831AC1C9" name="X7B5131DC831AC1C9"></a></p>
-
-<h5><code>5.7-8 \^</code></h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A matrix group over a finite field.</p>
-
-<p>The arguments of this operation, <var class="Arg">G</var> and <var class="Arg">mat</var>, must be categories <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>) and <code class="func">IsMatrixOverFiniteField</code> (<a href="chap5.html#X782480C686F1A663"><span class="RefLink">5.1-8</span></a>). If <var class="Arg">G</var> consists of <code class="code">d</code> by <code class="code">d</code> matrices over <code class="code">GF(q)</code> and <var class="Arg">mat</var> is a <code class="code">d</code> by <code class="code">d</code> matrix over <code class="code">GF(q)</code>, then <code class="code"><var class="Arg">G</var> ^ <var class="Arg">mat</var></code> returns the conjugate of <var class="Arg">G</var> by <var class="Arg">mat</var> inside <code class="code">GL(d, q)</code>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Matrix(GF(4), Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
-&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G ^ y;</span>
-&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;</pre></div>
-
-<p><a id="X7AC6EABF7FF04D7B" name="X7AC6EABF7FF04D7B"></a></p>
-
-<h5>5.7-9 IsomorphismMatrixGroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: An isomorphism.</p>
-
-<p>If <var class="Arg">G</var> belongs to the category <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap5.html#X7844208D7DC457D6"><span class="RefLink">5.7-7</span></a>), then <code class="code">IsomorphismMatrixGroup</code> returns an isomorphism from <var class="Arg">G</var> into a group consisting of <strong class="pkg">GAP</strong> library matrices.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismMatrixGroup(G);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso); Range(iso);</span>
-&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
-Group(
-[ 
-  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
-      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])</pre></div>
-
-<p><a id="X7BC0AEC9851C7B22" name="X7BC0AEC9851C7B22"></a></p>
-
-<h5>5.7-10 AsMatrixGroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A group of <strong class="pkg">GAP</strong> library matrices over a finite field.</p>
-
-<p>Returns the image of the isomorphism returned by <a href="chap5.html#X7AC6EABF7FF04D7B"><span class="RefLink">5.7-9</span></a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
-&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrixGroup(G);</span>
-Group(
-[ 
-  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
-      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>

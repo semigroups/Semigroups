@@ -234,11 +234,11 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := ParseRelations([x, y, z], "  x=(y^2z)^2x, y=xxx=z , z=y^3");</span>
 [ [ x, (y^2*z)^2*x ], [ y, x^3 ], [ x^3, z ], [ z, y^3 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f / r;</span>
-&lt;fp semigroup with 3 generators and 4 relations&gt;
+&lt;fp semigroup with 3 generators and 4 relations of length 23&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := FreeSemigroup("a");</span>
 &lt;free semigroup on the generators [ a ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");</span>
-&lt;fp semigroup with 1 generator and 1 relation&gt;</pre></div>
+&lt;fp semigroup with 1 generator and 1 relation of length 4&gt;</pre></div>
 
 <p><a id="X847012347856C55E" name="X847012347856C55E"></a></p>
 
@@ -256,7 +256,7 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup("x", "y");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(f);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := f / [[x * x, x], [y * y, y]];</span>
-&lt;fp semigroup with 2 generators and 2 relations&gt;
+&lt;fp semigroup with 2 generators and 2 relations of length 8&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := ElementOfFpSemigroup(s, x * y);</span>
 x*y
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := ElementOfFpSemigroup(s, x * y * y);</span>
@@ -303,7 +303,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b", "c");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / [[a * b, c], [b * c, a], [c * a, b]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 12&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(S);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 12&gt;</pre></div>
@@ -324,7 +324,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b", "c");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / [[a * b, c], [b * c, a], [c * a, b]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 12&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(S);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 12&gt;
@@ -348,7 +348,7 @@ true</pre></div>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;
@@ -370,7 +370,7 @@ true</pre></div>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;
@@ -394,7 +394,7 @@ true</pre></div>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;
@@ -417,7 +417,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -450,7 +450,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -476,7 +476,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -499,7 +499,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -525,7 +525,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -582,7 +582,7 @@ true
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;
@@ -612,7 +612,7 @@ words that are equal in the presentation &lt;stz&gt;
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -641,7 +641,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -671,7 +671,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -693,7 +693,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];</span>
-&lt;fp semigroup with 3 generators and 3 relations&gt;
+&lt;fp semigroup with 3 generators and 3 relations of length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 3 relations
  with length 22&gt;
@@ -732,7 +732,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b", "c");</span>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 11&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(S);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 11&gt;
@@ -757,7 +757,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b", "c");</span>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 11&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(S);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 11&gt;
@@ -786,15 +786,14 @@ a relation that is redundant in the presentation &lt;stz&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b", "c");</span>
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 11&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(S);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 11&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzRemoveGenerator(stz, "a");</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := StzIsomorphism(stz);</span>
-MappingByFunction( &lt;fp semigroup with 3 generators and 2 relations&gt;, &lt;\
-fp semigroup with 2 generators and 1 relation&gt;, function( word ) ... e\
-nd, function( word ) ... end )
+&lt;fp semigroup with 3 generators and 2 relations of length 11&gt; -&gt; 
+&lt;fp semigroup with 2 generators and 1 relation of length 6&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 ^ map;</span>
 c^3
 </pre></div>
@@ -826,7 +825,7 @@ c^3
 &lt;free semigroup on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := F / [[F.1, F.2 ^ 5 * F.3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [F.2 ^ 6, F.2 ^ 3]];</span>
-&lt;fp semigroup with 3 generators and 2 relations&gt;
+&lt;fp semigroup with 3 generators and 2 relations of length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stz := StzPresentation(T);</span>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;

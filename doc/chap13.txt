@@ -948,6 +948,8 @@
   [1X13.5-3 MeetSemigroupCongruences[101X
   
   [33X[1;0Y[29X[2XMeetSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMeetLeftSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMeetRightSemigroupCongruences[102X( [3Xc1[103X, [3Xc2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA semigroup congruence.[133X
   
   [33X[0;0YThis  operation  returns the [13Xmeet[113X of the two semigroup congruences [3Xc1[103X and [3Xc2[103X

@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "4.0.3",
-Date := "01/07/2022",  # dd/mm/yyyy format
+Version := "5.0.0",
+Date := "05/08/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -82,6 +82,7 @@ Persons := [
     FirstNames    := "Stuart",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "stuartburrell1994@gmail.com",
     WWWHome       := "https://stuartburrell.github.io"),
 
   rec(
@@ -100,6 +101,7 @@ Persons := [
     FirstNames    := "Tom",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "tom.contileslie@gmail.com",
     WWWHome       := "https://tomcontileslie.com/"),
 
   rec(
@@ -107,7 +109,7 @@ Persons := [
     FirstNames    := "Joe",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "jde1@st-andrews.ac.uk",
+    Email         := "je53@st-andrews.ac.uk",
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
@@ -156,6 +158,7 @@ Persons := [
     FirstNames    := "Robert",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "hancock@informatik.uni-heidelberg.de",
     WWWHome       := "https://sites.google.com/view/robert-hancock/"),
 
   rec(
@@ -194,6 +197,16 @@ Persons := [
     Place         := "Brussels, Belgium"),
 
   rec(
+    LastName      := "Nagpal",
+    FirstNames    := "Chinmaya",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "chinmaya1011@gmail.com",
+    PostalAddress := _STANDREWSMATHS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
     LastName      := "Konovalov",
     FirstNames    := "Olexandr",
     IsAuthor      := true,
@@ -202,6 +215,16 @@ Persons := [
     WWWHome       :=
       "https://www.st-andrews.ac.uk/computer-science/people/obk1/",
     PostalAddress := _STANDREWSCS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName      := "Konstantinidi",
+    FirstNames    := "Artemis",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "ak316@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
@@ -321,7 +344,7 @@ Status := "deposited",
 PackageDoc := rec(
   BookName  := "Semigroups",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Semigroups",
@@ -329,11 +352,11 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.10.0",
+  GAP := ">=4.12.0",
   NeededOtherPackages := [["datastructures", ">=0.2.5"],
                           ["digraphs", ">=1.5.0"],
                           ["genss", ">=1.6.5"],
-                          ["images", ">=1.3.0"],
+                          ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
                           ["orb", ">=4.8.2"]],
   SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],

@@ -206,14 +206,14 @@
     [4X[25X>[125X [27X                        [2, 2, 2]],[127X[104X
     [4X[25X>[125X [27X          2, 1);[127X[104X
     [4X[28XMatrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)[128X[104X
-    [4X[25Xgap>[125X [27XMatrix(IsIntegerMatrix, [[-1, -2, 0],[127X[104X
-    [4X[25X>[125X [27X                            [0, 3, -1],[127X[104X
-    [4X[25X>[125X [27X                            [1, 0, -3]]);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])[128X[104X
     [4X[25Xgap>[125X [27XMatrix(Integers, [[-1, -2, 0],[127X[104X
     [4X[25X>[125X [27X                     [0, 3, -1],[127X[104X
     [4X[25X>[125X [27X                     [1, 0, -3]]);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])[128X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(Integers, [[-1, -2, 0],[127X[104X
+    [4X[25X>[125X [27X                     [0, 3, -1],[127X[104X
+    [4X[25X>[125X [27X                     [1, 0, -3]]);[127X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
   [4X[32X[104X
   
   [1X5.1-6 AsMatrix[101X
@@ -236,8 +236,6 @@
         tropical min-plus matrix to a (non-tropical) min-plus matrix);[133X
   
   [30X    [33X[0;6Y[2XIsMaxPlusMatrix[102X ([14X5.1-8[114X) and a tropical max-plus matrix;[133X
-  
-  [30X    [33X[0;6Y[2XIsIntegerMatrix[102X ([14X5.1-8[114X) and an ntp matrix.[133X
   
   [33X[0;0YThe  version of the operation with arguments [3Xfilt[103X, [3Xmat[103X, and [3Xthreshold[103X can be
   applied to:[133X
@@ -272,8 +270,8 @@
     [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix, [[1, 2, 2],[127X[104X
     [4X[25X>[125X [27X                               [0, 2, 0],[127X[104X
     [4X[25X>[125X [27X                               [1, 3, 0]], 4, 5);;[127X[104X
-    [4X[25Xgap>[125X [27XAsMatrix(IsIntegerMatrix, mat);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(Integers, mat);[127X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27Xmat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;[127X[104X
     [4X[25Xgap>[125X [27Xmat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);[127X[104X
     [4X[28XMatrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)[128X[104X
@@ -300,8 +298,8 @@
     [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)[128X[104X
     [4X[25Xgap>[125X [27Xmat := AsMatrix(IsNTPMatrix, mat, 2, 1);[127X[104X
     [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)[128X[104X
-    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsIntegerMatrix, mat);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, mat);[127X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27XAsMatrix(IsNTPMatrix, mat, 1, 2);[127X[104X
     [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)[128X[104X
   [4X[32X[104X
@@ -355,10 +353,10 @@
     [4X[28X  [2, 2, 1]], 2)[128X[104X
     [4X[25Xgap>[125X [27XRandomMatrix(IsNTPMatrix, 3, 2, 5);[127X[104X
     [4X[28XMatrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)[128X[104X
-    [4X[25Xgap>[125X [27XRandomMatrix(IsIntegerMatrix, 2);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[1, 3], [0, 0]])[128X[104X
     [4X[25Xgap>[125X [27XRandomMatrix(Integers, 2);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[-1, 0], [0, -1]])[128X[104X
+    [4X[28XMatrix(Integers, [[1, 3], [0, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(Integers, 2);[127X[104X
+    [4X[28XMatrix(Integers, [[-1, 0], [0, -1]])[128X[104X
     [4X[25Xgap>[125X [27XRandomMatrix(GF(5), 1);[127X[104X
     [4X[28XMatrix(GF(5), [[Z(5)^0]])[128X[104X
   [4X[32X[104X
@@ -374,7 +372,7 @@
   [33X[1;0Y[29X[2XIsTropicalMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsTropicalMinPlusMatrix[102X( [3Xobj[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsNTPMatrix[102X( [3Xobj[103X ) [32X Category[133X
-  [33X[1;0Y[29X[2XIsIntegerMatrix[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIntegers[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of one of these
@@ -412,8 +410,6 @@
   [33X[1;0Y[29X[2XIsTropicalMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsNTPMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsNTPMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
-  [33X[1;0Y[29X[2XIsIntegerMatrixCollection[102X( [3Xobj[103X ) [32X Category[133X
-  [33X[1;0Y[29X[2XIsIntegerMatrixCollColl[102X( [3Xobj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery collection of matrices over the same semiring in [5XSemigroups[105X belongs to
@@ -438,27 +434,22 @@
   lists of the matrix over semiring [3Xmat[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 2],[127X[104X
-    [4X[25X>[125X [27X                                   [3, 5]]);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[0, 2], [3, 5]])[128X[104X
-    [4X[25Xgap>[125X [27XAsList(mat);[127X[104X
-    [4X[28X[ [ 0, 2 ], [ 3, 5 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2],[127X[104X
-    [4X[25X>[125X [27X                         [Z(7) ^ 4, Z(7)]]);[127X[104X
-    [4X[28XMatrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix,[127X[104X
+    [4X[25X>[125X [27X                 [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)[128X[104X
     [4X[25Xgap>[125X [27Xlist := AsList(mat);[127X[104X
-    [4X[28X[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ][128X[104X
+    [4X[28X[ [ 0, 1, 0 ], [ 1, 3, 1 ], [ 1, 0, 1 ] ][128X[104X
     [4X[25Xgap>[125X [27XIsMutable(list);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XIsMutable(list[1]);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xlist := AsMutableList(mat);[127X[104X
-    [4X[28X[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ][128X[104X
+    [4X[28X[ [ 0, 1, 0 ], [ 1, 3, 1 ], [ 1, 0, 1 ] ][128X[104X
     [4X[25Xgap>[125X [27XIsMutable(list);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsMutable(list[1]);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xmat = Matrix(BaseDomain(mat), AsList(mat));[127X[104X
+    [4X[25Xgap>[125X [27Xmat = Matrix(IsNTPMatrix, AsList(mat), 5, 6);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
@@ -1167,84 +1158,35 @@
   
   [1X5.4 [33X[0;0YMatrices over finite fields[133X[101X
   
-  [33X[0;0YIn  this  section  we describe the operations, properties, and attributes in
-  [5XSemigroups[105X  specifically  for  matrices  over  finite  fields.  These are in
-  addition  to  those  given  elsewhere in this chapter for arbitrary matrices
-  over semirings.[133X
+  [33X[0;0YIn  this section we describe some operations in [5XSemigroups[105X for matrices over
+  finite  fields  that  are  required  for  such  matrices  to form semigroups
+  satisfying [2XIsActingSemigroup[102X ([14X6.1-2[114X).[133X
   
-  [1X5.4-1 NewMatrixOverFiniteField[101X
+  [33X[0;0YFrom v5.0.0, [5XSemigroups[105X uses the [5XGAP[105X library implementation of matrices over
+  finite fields belonging to the category [2XIsMatrixObj[102X ([14XReference: IsMatrixObj[114X)
+  rather  than  the  previous  implementation  in the [5XSemigroups[105X package. This
+  means that from v5.0.0, matrices over a finite field no longer belong to the
+  category [2XIsMatrixOverSemiring[102X ([14X5.1-1[114X).[133X
   
-  [33X[1;0Y[29X[2XNewMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xrows[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya new matrix object.[133X
+  [33X[0;0YThe  following methods are implemented in [5XSemigroups[105X for matrix objects over
+  finite fields.[133X
   
-  [33X[0;0YCreates a new [3Xn[103X-by-[3Xn[103X matrix over the finite field [3XF[103X with constructing filter
-  [3Xfilt[103X.  The matrix itself is given by a list [3Xrows[103X of rows. Currently the only
-  possible value for [3Xfilt[103X is [10XIsPlistMatrixOverFiniteFieldRep[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
-    [4X[25X>[125X [27X                                 GF(4),[127X[104X
-    [4X[25X>[125X [27X                                 Z(4) * [[1, 0], [0, 1]]);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2^2), 0*Z(2)], [0*Z(2), Z(2^2)]])[128X[104X
-    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
-    [4X[25X>[125X [27X                                 GF(4),[127X[104X
-    [4X[25X>[125X [27X                                 []);[127X[104X
-    [4X[28XMatrix(GF(2^2), [])[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-2 IdentityMatrixOverFiniteField[101X
-  
-  [33X[1;0Y[29X[2XIdentityMatrixOverFiniteField[102X( [3XF[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XIdentityMatrixOverFiniteField[102X( [3Xmat[103X, [3Xn[103X ) [32X operation[133X
-  
-  [33X[0;0YGiven  a  finite field [3XF[103X and a positive integer [3Xn[103X, this operation returns an
-  [3Xn[103X-by-[3Xn[103X  identity  matrix  with entries in the finite field [3XF[103X. If instead the
-  first  argument is an [3Xn[103X-by-[3Xn[103X matrix [3Xmat[103X whose [2XBaseDomain[102X ([14X5.4-7[114X) is a finite
-  field  [3XF[103X,  then  [10XIdentityMatrixOverFiniteField([3Xmat[103X[10X,  [3Xn[103X[10X)[110X  returns the same as
-  [10XIdentityMatrixOverFiniteField([3XF[103X[10X, [3Xn[103X[10X)[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := NewIdentityMatrixOverFiniteField([127X[104X
-    [4X[25X>[125X [27X                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])[128X[104X
-    [4X[25Xgap>[125X [27Xy := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
-    [4X[25X>[125X [27X                                     GF(4), 2);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-3 NewIdentityMatrixOverFiniteField[101X
-  
-  [33X[1;0Y[29X[2XNewIdentityMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNewZeroMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation[133X
-  
-  [33X[0;0YCreates  a  new  [3Xn[103X-by-[3Xn[103X  zero  or identity matrix with entries in the finite
-  field [3XF[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := NewIdentityMatrixOverFiniteField([127X[104X
-    [4X[25X>[125X [27X                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])[128X[104X
-    [4X[25Xgap>[125X [27Xy := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
-    [4X[25X>[125X [27X                                     GF(4), 2);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-4 RowSpaceBasis[101X
+  [1X5.4-1 RowSpaceBasis[101X
   
   [33X[1;0Y[29X[2XRowSpaceBasis[102X( [3Xm[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRowSpaceTransformation[102X( [3Xm[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRowSpaceTransformationInv[102X( [3Xm[103X ) [32X attribute[133X
   
-  [33X[0;0YTo  compute  the value of any of the above attributes, a canonical basis for
-  the   row   space   of  [3Xm[103X  is  computed  along  with  an  invertible  matrix
-  [10XRowSpaceTransformation[110X   such   that   [10Xm   *   RowSpaceTransformation(m)   =
-  RowSpaceBasis(m)[110X.    [10XRowSpaceTransformationInv(m)[110X    is   the   inverse   of
-  [10XRowSpaceTransformation(m)[110X.[133X
+  [33X[0;0YIf  [3Xm[103X  is  a matrix object over a finite field, then to compute the value of
+  any  of  the  above  attributes, a canonical basis for the row space of [3Xm[103X is
+  computed  along with an invertible matrix [10XRowSpaceTransformation[110X such that [10Xm
+  * RowSpaceTransformation(m) = RowSpaceBasis(m)[110X. [10XRowSpaceTransformationInv(m)[110X
+  is the inverse of [10XRowSpaceTransformation(m)[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0, Z(2)^0], [128X[104X
-    [4X[28X  [Z(2)^0, Z(2)^0, Z(2)^0]])[128X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ][128X[104X
     [4X[25Xgap>[125X [27XRowSpaceBasis(x);[127X[104X
     [4X[28X<rowbasis of rank 3 over GF(2^2)>[128X[104X
     [4X[25Xgap>[125X [27XRowSpaceTransformation(x);[127X[104X
@@ -1252,20 +1194,7 @@
     [4X[28X  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ][128X[104X
   [4X[32X[104X
   
-  [1X5.4-5 RowRank[101X
-  
-  [33X[1;0Y[29X[2XRowRank[102X( [3Xm[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YLength of a basis of the row space of [3Xm[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
-    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
-    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
-    [4X[25Xgap>[125X [27XRowRank(x);[127X[104X
-    [4X[28X2[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-6 RightInverse[101X
+  [1X5.4-2 RightInverse[101X
   
   [33X[1;0Y[29X[2XRightInverse[102X( [3Xm[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLeftInverse[102X( [3Xm[103X ) [32X attribute[133X
@@ -1276,81 +1205,51 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], [128X[104X
-    [4X[28X  [Z(2)^0, Z(2)^0, Z(2)^0]])[128X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ][128X[104X
     [4X[25Xgap>[125X [27XLeftInverse(x);[127X[104X
-    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], [128X[104X
-    [4X[28X  [Z(2)^0, 0*Z(2), Z(2)^0]])[128X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ][128X[104X
     [4X[25Xgap>[125X [27XDisplay(LeftInverse(x) * x);[127X[104X
-    [4X[28XZ(2)^0 Z(2)^0 0*Z(2)[128X[104X
-    [4X[28X0*Z(2) 0*Z(2) 0*Z(2)[128X[104X
-    [4X[28X0*Z(2) 0*Z(2) Z(2)^0[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-7 BaseDomain[101X
-  
-  [33X[1;0Y[29X[2XBaseDomain[102X( [3Xmat[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YIf  [3Xmat[103X  is  a  matrix  over  a  finite  field  (in  the  category
-            [2XIsMatrixOverSemiring[102X  ([14X5.1-1[114X)), then [10XBaseDomain[110X returns the finite
-            field  specified at the point that [3Xmat[103X was created. Every entry in
-            the matrix [3Xmat[103X belongs to [10XBaseDomain([3Xmat[103X[10X)[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
-    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
-    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
-    [4X[25Xgap>[125X [27XBaseDomain(x);[127X[104X
-    [4X[28XGF(5)[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-8 TransposedMatImmutable[101X
-  
-  [33X[1;0Y[29X[2XTransposedMatImmutable[102X( [3Xm[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YAn immutable matrix.[133X
-  
-  [33X[0;0YThis  attribute  contains  an  immutable  copy  of [3Xm[103X. Note that matrices are
-  immutable by default.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
-    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
-    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
-    [4X[25Xgap>[125X [27XTransposedMatImmutable(x);[127X[104X
-    [4X[28XMatrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0], [128X[104X
-    [4X[28X  [0*Z(5), 0*Z(5), Z(5)^0]])[128X[104X
+    [4X[28X 1 1 .[128X[104X
+    [4X[28X . . .[128X[104X
+    [4X[28X . . 1[128X[104X
   [4X[32X[104X
   
   
-  [1X5.5 [33X[0;0YInteger Matrices[133X[101X
+  [1X5.5 [33X[0;0YMatrices over the integers[133X[101X
   
   [33X[0;0YIn  this  section  we  describe  operations  in  [5XSemigroups[105X specifically for
-  integer  matrices.  These  are  in addition to those given elsewhere in this
-  chapter for arbitrary matrices over semirings. These include:[133X
+  integer matrices.[133X
   
-  [30X    [33X[0;6Y[2XInverseOp[102X ([14X5.5-1[114X)[133X
+  [33X[0;0YFrom v5.0.0, [5XSemigroups[105X uses the [5XGAP[105X library implementation of matrices over
+  the intergers belonging to the category [2XIsMatrixObj[102X ([14XReference: IsMatrixObj[114X)
+  rather  than  the  previous  implementation  in the [5XSemigroups[105X package. This
+  means  that  from v5.0.0, matrices over the integers no longer belong to the
+  category [2XIsMatrixOverSemiring[102X ([14X5.1-1[114X).[133X
   
-  [30X    [33X[0;6Y[2XIsTorsion[102X ([14X5.5-2[114X)[133X
-  
-  [30X    [33X[0;6Y[2XOrder[102X ([14X5.5-3[114X)[133X
+  [33X[0;0YThe  following methods are implemented in [5XSemigroups[105X for matrix objects over
+  the integers.[133X
   
   [1X5.5-1 InverseOp[101X
   
   [33X[1;0Y[29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn integer matrix.[133X
   
-  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
-  ([14X5.1-8[114X))  whose  inverse  (if  it  exists)  is  also an integer matrix, then
-  [10XInverseOp[110X returns the inverse of [3Xmat[103X.[133X
+  [33X[0;0YIf  [3Xmat[103X is an integer matrix (i.e. belongs to the category [2XIntegers[102X ([14X5.1-8[114X))
+  whose  inverse  (if  it  exists)  is  also an integer matrix, then [10XInverseOp[110X
+  returns the inverse of [3Xmat[103X.[133X
   
   [33X[0;0YAn  integer  matrix  has  an  integer  matrix  inverse if and only if it has
   determinant one.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
-    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                            [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                            [1, 0, 0]]);[127X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27XInverseOp(mat);[127X[104X
-    [4X[28XMatrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])[128X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27Xmat * InverseOp(mat) = One(mat);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
@@ -1360,22 +1259,24 @@
   [33X[1;0Y[29X[2XIsTorsion[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
-  ([14X5.1-8[114X)), then [10XIsTorsion[110X returns [9Xtrue[109X if [3Xmat[103X is torsion and [9Xfalse[109X otherwise.[133X
+  [33X[0;0YIf [3Xmat[103X is an integer matrix (i.e. belongs to the category [2XIntegers[102X ([14X5.1-8[114X)),
+  then [10XIsTorsion[110X returns [9Xtrue[109X if [3Xmat[103X is torsion and [9Xfalse[109X otherwise.[133X
   
   [33X[0;0YAn  integer  matrix  [3Xmat[103X is torsion if and only if there exists an integer [10Xn[110X
   such that [3Xmat[103X to the power of [10Xn[110X is equal to the identity matrix.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
-    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                            [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                            [1, 0, 0]]);[127X[104X
+    [4X[28X<3x3-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27XIsTorsion(mat);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [0, -1, 0, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [4, 4, 2, -1],[127X[104X
-    [4X[25X>[125X [27X                                   [1, 1, 0, 3]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, [[0, 0, -1, 0],[127X[104X
+    [4X[25X>[125X [27X                            [0, -1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                            [4, 4, 2, -1],[127X[104X
+    [4X[25X>[125X [27X                            [1, 1, 0, 3]]);[127X[104X
+    [4X[28X<4x4-matrix over Integers>[128X[104X
     [4X[25Xgap>[125X [27XIsTorsion(mat);[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
@@ -1385,21 +1286,20 @@
   [33X[1;0Y[29X[2XOrder[102X( [3Xmat[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn integer or [10Xinfinity[110X.[133X
   
-  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
-  ([14X5.1-8[114X)),  then  [10XInverseOp[110X returns the order of [3Xmat[103X. The order of [3Xmat[103X is the
-  smallest  integer  power  of  [3Xmat[103X  equal to the identity. If no such integer
-  exists, the order is equal to [10Xinfinity[110X.[133X
+  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix, then [10XInverseOp[110X returns the order of [3Xmat[103X. The
+  order  of [3Xmat[103X is the smallest integer power of [3Xmat[103X equal to the identity. If
+  no such integer exists, the order is equal to [10Xinfinity[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [0, -1, 0, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [4, 4, 2, -1],[127X[104X
-    [4X[25X>[125X [27X                                   [1, 1, 0, 3]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, [[0, 0, -1, 0],[127X[104X
+    [4X[25X>[125X [27X                            [0, -1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                            [4, 4, 2, -1],[127X[104X
+    [4X[25X>[125X [27X                            [1, 1, 0, 3]]);;[127X[104X
     [4X[25Xgap>[125X [27XOrder(mat);[127X[104X
     [4X[28Xinfinity[128X[104X
-    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
-    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
-    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(Integers, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                            [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                            [1, 0, 0]]);;[127X[104X
     [4X[25Xgap>[125X [27XOrder(mat);[127X[104X
     [4X[28X4[128X[104X
   [4X[32X[104X
@@ -1548,9 +1448,7 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  above  are  the  currently  supported  types  of  matrix  monoids. They
-  correspond  to  the  matrix  semigroup  types  in  Section [14X5.7-1[114X. For matrix
-  semigroups  over  finite  fields  there is also [2XIsMatrixOverFiniteFieldGroup[102X
-  ([14X5.7-7[114X).[133X
+  correspond to the matrix semigroup types in Section [14X5.7-1[114X.[133X
   
   [1X5.7-3 IsFinite[101X
   
@@ -1625,104 +1523,5 @@
     [4X[25X>[125X [27X                                       [[0, -3],[127X[104X
     [4X[25X>[125X [27X                                        [-2, -10]])));[127X[104X
     [4X[28X<commutative semigroup of 2x2 max-plus matrices with 1 generator>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.7-6 [33X[0;0YMatrix groups[133X[101X
-  
-  [33X[0;0YFor  interfacing  the  semigroups  code  with  [5XGAP[105X's library code for matrix
-  groups, the [5XSemigroups[105X package implements matrix groups that delegate to the
-  [5XGAP[105X library. These functions include:[133X
-  
-  [30X    [33X[0;6Y[2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X)[133X
-  
-  [30X    [33X[0;6Y[2X\^[102X ([14X5.7-8[114X)[133X
-  
-  [30X    [33X[0;6Y[2XIsomorphismMatrixGroup[102X ([14X5.7-9[114X)[133X
-  
-  [30X    [33X[0;6Y[2XAsMatrixGroup[102X ([14X5.7-10[114X)[133X
-  
-  [33X[0;0YThis  type  of  group  only  applies  to  matrices  over  finite fields (see
-  [2XIsMatrixOverFiniteFieldSemigroup[102X ([14X5.7-1[114X)).[133X
-  
-  [1X5.7-7 IsMatrixOverFiniteFieldGroup[101X
-  
-  [33X[1;0Y[29X[2XIsMatrixOverFiniteFieldGroup[102X( [3XG[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YA [13Xmatrix group[113X is simply a group of invertible matrices over a finite field.
-  An  object  in  [5XSemigroups[105X  is  a  matrix  group  if  it  satisfies  [2XIsGroup[102X
-  ([14XReference: IsGroup[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X5.1-9[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
-    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
-    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XG := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);[127X[104X
-    [4X[28XGroup([ <an immutable 3x3 matrix over GF2> ])[128X[104X
-    [4X[25Xgap>[125X [27XIsGroup(G);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-8 \^[101X
-  
-  [33X[1;0Y[29X[2X\^[102X( [3XG[103X, [3Xmat[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA matrix group over a finite field.[133X
-  
-  [33X[0;0YThe   arguments   of   this   operation,  [3XG[103X  and  [3Xmat[103X,  must  be  categories
-  [2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X) and [2XIsMatrixOverFiniteField[102X ([14X5.1-8[114X). If
-  [3XG[103X  consists  of  [10Xd[110X  by [10Xd[110X matrices over [10XGF(q)[110X and [3Xmat[103X is a [10Xd[110X by [10Xd[110X matrix over
-  [10XGF(q)[110X, then [10X[3XG[103X[10X ^ [3Xmat[103X[10X[110X returns the conjugate of [3XG[103X by [3Xmat[103X inside [10XGL(d, q)[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
-    [4X[25Xgap>[125X [27Xy := Matrix(GF(4), Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]]);;[127X[104X
-    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
-    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XG ^ y;[127X[104X
-    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-9 IsomorphismMatrixGroup[101X
-  
-  [33X[1;0Y[29X[2XIsomorphismMatrixGroup[102X( [3XG[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
-  
-  [33X[0;0YIf  [3XG[103X  belongs  to  the  category [2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X), then
-  [10XIsomorphismMatrixGroup[110X returns an isomorphism from [3XG[103X into a group consisting
-  of [5XGAP[105X library matrices.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
-    [4X[25Xgap>[125X [27XG := Group(x);;[127X[104X
-    [4X[25Xgap>[125X [27Xiso := IsomorphismMatrixGroup(G);;[127X[104X
-    [4X[25Xgap>[125X [27XSource(iso); Range(iso);[127X[104X
-    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
-    [4X[28XGroup([128X[104X
-    [4X[28X[ [128X[104X
-    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
-    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-10 AsMatrixGroup[101X
-  
-  [33X[1;0Y[29X[2XAsMatrixGroup[102X( [3XG[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA group of [5XGAP[105X library matrices over a finite field.[133X
-  
-  [33X[0;0YReturns the image of the isomorphism returned by [14X5.7-9[114X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
-    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
-    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XAsMatrixGroup(G);[127X[104X
-    [4X[28XGroup([128X[104X
-    [4X[28X[ [128X[104X
-    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
-    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
   [4X[32X[104X
   

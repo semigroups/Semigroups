@@ -66,7 +66,7 @@
   [1X11.1-2 PositionCanonical[101X
   
   [33X[1;0Y[29X[2XPositionCanonical[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [6XReturns:[106X  [33X[0;10YA positive integer or [9Xfail[109X.[133X
   
   [33X[0;0YWhen  the argument [3XS[103X is a semigroup satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X) and
   [3Xx[103X  is  an  element  of  [3XS[103X,  [10XPositionCanonical[110X  returns  the position of [3Xx[103X in
@@ -104,9 +104,6 @@
     [4X[28X<full transformation monoid of degree 7>[128X[104X
     [4X[25Xgap>[125X [27XEnumerate(S, 1000);[127X[104X
     [4X[28X<full transformation monoid of degree 7>[128X[104X
-    [4X[25Xgap>[125X [27XDisplay(S);[127X[104X
-    [4X[28X<partially enumerated semigroup with 8197 elements, [128X[104X
-    [4X[28X224 rules, max word length 11>[128X[104X
   [4X[32X[104X
   
   [1X11.1-4 IsEnumerated[101X
@@ -126,10 +123,10 @@
   
   [33X[1;0Y[29X[2XRightCayleyDigraph[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLeftCayleyDigraph[102X( [3XS[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists of positive integers.[133X
+  [6XReturns:[106X  [33X[0;10YA digraph.[133X
   
   [33X[0;0YWhen  the  argument  [3XS[103X  is a semigroup satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X),
-  [10XRightCayleyDigraph[110X  returns  the  right  Cayley  graphs  of  [3XS[103X, as a [2XDigraph[102X
+  [10XRightCayleyDigraph[110X  returns  the  right  Cayley  graph  of  [3XS[103X,  as a [2XDigraph[102X
   ([14XDigraphs:  Digraph[114X)  [10Xdigraph[110X  where  vertex [10XOutNeighbours(digraph)[i][j][110X is
   [10XPositionCanonical([3XS[103X[10X,  AsListCanonical([3XS[103X[10X)[i]  * GeneratorsOfSemigroup([3XS[103X[10X)[j])[110X.
   The digraph returned by [10XLeftCayleyDigraph[110X is defined analogously.[133X
@@ -1030,9 +1027,9 @@
     [4X[25Xgap>[125X [27XAsSet(Idempotents(L));[127X[104X
     [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XH := GroupHClass(D);[127X[104X
-    [4X[28X<Green's H-class: Transformation( [ 1, 1, 3, 3 ] )>[128X[104X
+    [4X[28X<Green's H-class: Transformation( [ 1, 3, 3, 1 ] )>[128X[104X
     [4X[25Xgap>[125X [27XIdempotents(H);[127X[104X
-    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ) ][128X[104X
+    [4X[28X[ Transformation( [ 1, 3, 3, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
     [4X[25X>[125X [27XPartialPerm([10, 6, 3, 4, 9, 0, 1]),[127X[104X
     [4X[25X>[125X [27XPartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;[127X[104X
@@ -1565,8 +1562,8 @@
   elements  in  [10XC(n)[110X. Recall that for a transformation [3Xtrans[103X and integer [3Xn[103X the
   function [10XAsDigraph[110X returns a digraph with [3Xn[103X vertices and an edge with source
   [10Xx[110X  and  range  [10Xx^trans[110X  for  every  [10Xx[110X  in [10X[1 .. n][110X. See [2XAsDigraph[102X ([14XDigraphs:
-  AsDigraph[114X).  Then [10XCanonicalTransformation[110X returns a canonical representative
-  of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
+  AsDigraph  for  a  binary  relation[114X). Then [10XCanonicalTransformation[110X returns a
+  canonical representative of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Transformation([5, 1, 4, 1, 1]);[127X[104X
@@ -2011,10 +2008,9 @@
     [4X[28X<inverse partial perm monoid of size 6721, rank 6721 with 3 [128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XSmallerDegreePartialPermRepresentation(T);[127X[104X
-    [4X[28XMappingByFunction( <inverse partial perm monoid of size 6721, [128X[104X
-    [4X[28X rank 6721 with 3 generators>, <inverse partial perm monoid of [128X[104X
-    [4X[28X rank 30 with 3 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<inverse partial perm monoid of size 6721, rank 6721 with 3 [128X[104X
+    [4X[28X  generators> -> <inverse partial perm monoid of rank 30 with 3 [128X[104X
+    [4X[28X  generators>[128X[104X
   [4X[32X[104X
   
   [1X11.14-9 VagnerPrestonRepresentation[101X
@@ -2024,7 +2020,7 @@
   
   [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
   [3XS[103X  where  the  elements  of [3XS[103X have a unique semigroup inverse accessible via
-  [2XInverse[102X   ([14XReference:   Inverse[114X),   to  the  inverse  semigroup  of  partial
+  [2XInverse[102X   ([14XReference:   inverse[114X),   to  the  inverse  semigroup  of  partial
   permutations [3XT[103X of degree equal to the size of [3XS[103X, which is obtained using the
   Vagner-Preston Representation Theorem.[133X
   
@@ -2044,9 +2040,8 @@
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X7[128X[104X
     [4X[25Xgap>[125X [27Xiso := VagnerPrestonRepresentation(S);[127X[104X
-    [4X[28XMappingByFunction( <symmetric inverse monoid of degree 2>, [128X[104X
+    [4X[28X<symmetric inverse monoid of degree 2> -> [128X[104X
     [4X[28X<inverse partial perm monoid of rank 7 with 2 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XRespectsMultiplication(iso);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(iso);;[127X[104X
@@ -2060,10 +2055,9 @@
     [4X[25Xgap>[125X [27XIsInverseSemigroup(V);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XVagnerPrestonRepresentation(V);[127X[104X
-    [4X[28XMappingByFunction( <inverse bipartition semigroup of size 394, [128X[104X
-    [4X[28X degree 5 with 3 generators>, <inverse partial perm semigroup of [128X[104X
-    [4X[28X rank 394 with 5 generators>[128X[104X
-    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X<inverse bipartition semigroup of size 394, degree 5 with 3 [128X[104X
+    [4X[28X  generators> -> <inverse partial perm semigroup of rank 394 with 5 [128X[104X
+    [4X[28X  generators>[128X[104X
   [4X[32X[104X
   
   [1X11.14-10 CharacterTableOfInverseSemigroup[101X
@@ -2138,9 +2132,8 @@
     [4X[25X>[125X [27XPartialPermNC([1], [1])]);[127X[104X
     [4X[28X<inverse partial perm semigroup of rank 2 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27Xcov := EUnitaryInverseCover(S);[127X[104X
-    [4X[28XMappingByFunction( <inverse partial perm semigroup of rank 4 with 2 [128X[104X
-    [4X[28X generators>, <inverse partial perm semigroup of rank 2 with 2 [128X[104X
-    [4X[28X generators>, function( x ) ... end )[128X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 2 generators> -> [128X[104X
+    [4X[28X<inverse partial perm semigroup of rank 2 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(Source(cov));[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XS = Range(cov);[127X[104X

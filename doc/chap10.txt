@@ -177,7 +177,7 @@
     [4X[28X1[128X[104X
     [4X[25Xgap>[125X [27Xx := PartialPerm([2, 3, 4, 5, 0, 0, 6, 8, 10, 11]);;[127X[104X
     [4X[25Xgap>[125X [27XL := LClass(POI(11), x);[127X[104X
-    [4X[28X<Green's L-class: [1,2,3,4,5,6,8,11][7,10]>[128X[104X
+    [4X[28X<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>[128X[104X
     [4X[25Xgap>[125X [27XSize(L);[127X[104X
     [4X[28X165[128X[104X
   [4X[32X[104X
@@ -365,13 +365,17 @@
     [4X[28X<Green's D-class: <empty partial perm>>[128X[104X
   [4X[32X[104X
   
-  [1X10.1-7 MaximalDClasses[101X
+  
+  [1X10.1-7 [33X[0;0YMaximalXClasses[133X[101X
   
   [33X[1;0Y[29X[2XMaximalDClasses[102X( [3XS[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YThe maximal [13XD[113X-classes of a semigroup.[133X
+  [33X[1;0Y[29X[2XMaximalLClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMaximalRClasses[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe maximal [13XD[113X, [13XL[113X, or [13XR[113X-classes of a semigroup.[133X
   
-  [33X[0;0Y[10XMaximalDClasses[110X  returns  the  maximal [13XD[113X-classes with respect to the partial
-  order of [13XD[113X-classes.[133X
+  [33X[0;0YLet [10XX[110X be one of Green's [13XD[113X-, [13XL[113X-, or [13XR[113X-relations. Then [10XMaximalXClasses[110X returns
+  the  maximal  Green's  [10XX[110X-classes  with  respect  to  the  partial  order  of
+  [10XX[110X-classes.[133X
   
   [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X10.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
   ([14XReference: IsGreensLessThanOrEqual[114X), and [2XMinimalDClass[102X ([14X10.1-6[114X).[133X
@@ -415,7 +419,7 @@
     [4X[25Xgap>[125X [27XNrDClasses(S);[127X[104X
     [4X[28X7[128X[104X
     [4X[25Xgap>[125X [27XAsSet(RegularDClasses(S));[127X[104X
-    [4X[28X[ <Green's D-class: Transformation( [ 1, 3, 4, 1, 3, 3 ] )>, [128X[104X
+    [4X[28X[ <Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )>, [128X[104X
     [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, [128X[104X
     [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )> ][128X[104X
   [4X[32X[104X
@@ -485,7 +489,7 @@
     [4X[28X6342[128X[104X
     [4X[25Xgap>[125X [27Xx := Transformation([1, 3, 3, 1, 3, 5]);;[127X[104X
     [4X[25Xgap>[125X [27XD := DClass(S, x);[127X[104X
-    [4X[28X<Green's D-class: Transformation( [ 2, 4, 2, 2, 2, 1 ] )>[128X[104X
+    [4X[28X<Green's D-class: Transformation( [ 1, 3, 3, 1, 3, 5 ] )>[128X[104X
     [4X[25Xgap>[125X [27XNrRClasses(D);[127X[104X
     [4X[28X87[128X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(10);;[127X[104X
@@ -501,20 +505,31 @@
     [4X[28X1024[128X[104X
   [4X[32X[104X
   
-  [1X10.1-10 PartialOrderOfDClasses[101X
+  
+  [1X10.1-10 [33X[0;0YPartialOrderOfXClasses[133X[101X
   
   [33X[1;0Y[29X[2XPartialOrderOfDClasses[102X( [3XS[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YThe partial order of the [13XD[113X-classes of [3XS[103X.[133X
+  [33X[1;0Y[29X[2XPartialOrderOfLClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPartialOrderOfRClasses[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA digraph.[133X
   
-  [33X[0;0YReturns  a  digraph  [10XD[110X  where  the  vertex  [10Xi[110X  is  adjacent  to  vertex [10Xj[110X if
-  [10XGreensDClasses(S)[j][110X  is immediately strictly less than [10XGreensDClasses(S)[i][110X
-  in  the  partial  order of [13XD[113X-classes of [3XS[103X; it might be that [10Xi[110X is adjacent to
-  further  nodes in addition to those just mentioned. The returned digraph has
-  no  loops.  The reflexive transitive closure of the digraph [10XD[110X is the partial
-  order of [13XD[113X-classes of [3XS[103X.[133X
+  [33X[0;0YLet  [10XX[110X be one of Green's [13XD[113X-, [13XL[113X-, or [13XR[113X-relations. Then [10XPartialOrderOfXClasses[110X
+  returns  a  digraph  [10XD[110X  where [10XOutNeighbours(D)[i][110X contains every [10Xj[110X such that
+  [10XGreensXClasses(S)[j][110X  is  immediately  less than [10XGreensXClasses(S)[i][110X in the
+  partial  order  of  [10XX[110X-classes  of [3XS[103X. The reflexive transitive closure of the
+  digraph  [10XD[110X  is  the  partial  order  of  [10XX[110X-classes of [3XS[103X (in the sense of the
+  [5XDigraphs[105X package).[133X
   
-  [33X[0;0YThe partial order on the [13XD[113X-classes is defined by [22Xx≤ y[122X if and only if [22XS ^ 1xS
-  ^ 1[122X is a subset of [22XS ^ 1yS ^ 1[122X.[133X
+  [33X[0;0YThe partial order on the [10XX[110X-classes is defined as follows.[133X
+  
+  [8XGreen's [13XD[113X-relation:[108X
+        [33X[0;6Y[22Xx≤ y[122X if and only if [22XS ^ 1xS ^ 1[122X is a subset of [22XS ^ 1yS ^ 1[122X.[133X
+  
+  [8XGreen's [13XL[113X-relation:[108X
+        [33X[0;6Y[22Xx≤ y[122X if and only if [22XS ^ 1x[122X is a subset of [22XS ^ 1y[122X.[133X
+  
+  [8XGreen's [13XR[113X-relation:[108X
+        [33X[0;6Y[22Xx≤ y[122X if and only if [22XxS ^ 1[122X is a subset of [22XyS ^ 1[122X.[133X
   
   [33X[0;0YSee     also    [2XGreensDClasses[102X    ([14X10.1-4[114X),    [2XGreensDClasses[102X    ([14XReference:
   GreensDClasses[114X),             [2XIsGreensLessThanOrEqual[102X             ([14XReference:

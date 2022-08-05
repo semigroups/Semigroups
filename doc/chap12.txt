@@ -198,7 +198,7 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XF := FreeSemigroup(3);;[127X[104X
     [4X[25Xgap>[125X [27XP := F / [[F.1, F.2 * F.1], [F.3 ^ 3, F.3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 10>[128X[104X
     [4X[25Xgap>[125X [27XIsSurjectiveSemigroup(P);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XI := SingularTransformationMonoid(5);[127X[104X

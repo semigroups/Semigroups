@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     4.0.3
+                                     5.0.0
   
   
-                                  1 July 2022
+                                 5 August 2022
   
   
                                  James Mitchell
@@ -40,7 +40,11 @@
   
                                  Julius Jonusas
   
+                                Chinmaya Nagpal
+  
                                Olexandr Konovalov
+  
+                             Artemis Konstantinidi
   
                                Dima V. Pasechnik
   
@@ -83,6 +87,7 @@
   
   
   Stuart Burrell
+      Email:    [7Xmailto:stuartburrell1994@gmail.com[107X
       Homepage: [7Xhttps://stuartburrell.github.io[107X
   Reinis Cirpons
       Email:    [7Xmailto:rc234@st-andrews.ac.uk[107X
@@ -92,9 +97,10 @@
   
   
   Tom Conti-Leslie
+      Email:    [7Xmailto:tom.contileslie@gmail.com[107X
       Homepage: [7Xhttps://tomcontileslie.com/[107X
   Joe Edwards
-      Email:    [7Xmailto:jde1@st-andrews.ac.uk[107X
+      Email:    [7Xmailto:je53@st-andrews.ac.uk[107X
       Homepage: [7Xhttps://github.com/Joseph-Edwards[107X
       Address:  [33X[0;14YMathematical  Institute,  North  Haugh, St Andrews, Fife, KY16
                 9SS, Scotland[133X
@@ -116,6 +122,7 @@
       Email:    [7Xmailto:nicholas.charles.ham@gmail.com[107X
       Homepage: [7Xhttps://n-ham.github.io[107X
   Robert Hancock
+      Email:    [7Xmailto:hancock@informatik.uni-heidelberg.de[107X
       Homepage: [7Xhttps://sites.google.com/view/robert-hancock/[107X
   Max Horn
       Email:    [7Xmailto:horn@mathematik.uni-kl.de[107X
@@ -133,11 +140,23 @@
   
   Julius Jonusas
       Homepage: [7Xhttp://julius.jonusas.work[107X
+  Chinmaya Nagpal
+      Email:    [7Xmailto:chinmaya1011@gmail.com[107X
+      Address:  [33X[0;14YMathematical  Institute,  North  Haugh, St Andrews, Fife, KY16
+                9SS, Scotland[133X
+  
+  
   Olexandr Konovalov
       Email:    [7Xmailto:obk1@st-andrews.ac.uk[107X
       Homepage: [7Xhttps://www.st-andrews.ac.uk/computer-science/people/obk1/[107X
       Address:  [33X[0;14YJack  Cole  Building, North Haugh, St Andrews, Fife, KY16 9SX,
                 Scotland[133X
+  
+  
+  Artemis Konstantinidi
+      Email:    [7Xmailto:ak316@st-andrews.ac.uk[107X
+      Address:  [33X[0;14YMathematical  Institute,  North  Haugh, St Andrews, Fife, KY16
+                9SS, Scotland[133X
   
   
   Dima V. Pasechnik
@@ -401,15 +420,9 @@
       5.3-16 IsEquivalenceBooleanMat
       5.3-17 IsTransformationBooleanMat
     5.4 [33X[0;0YMatrices over finite fields[133X
-      5.4-1 NewMatrixOverFiniteField
-      5.4-2 IdentityMatrixOverFiniteField
-      5.4-3 NewIdentityMatrixOverFiniteField
-      5.4-4 RowSpaceBasis
-      5.4-5 RowRank
-      5.4-6 RightInverse
-      5.4-7 BaseDomain
-      5.4-8 TransposedMatImmutable
-    5.5 [33X[0;0YInteger Matrices[133X
+      5.4-1 RowSpaceBasis
+      5.4-2 RightInverse
+    5.5 [33X[0;0YMatrices over the integers[133X
       5.5-1 InverseOp
       5.5-2 IsTorsion
       5.5-3 Order
@@ -424,11 +437,6 @@
       5.7-3 IsFinite
       5.7-4 IsTorsion
       5.7-5 NormalizeSemigroup
-      5.7-6 [33X[0;0YMatrix groups[133X
-      5.7-7 IsMatrixOverFiniteFieldGroup
-      5.7-8 \^
-      5.7-9 IsomorphismMatrixGroup
-      5.7-10 AsMatrixGroup
   6 [33X[0;0YSemigroups and monoids defined by generating sets[133X
     6.1 [33X[0;0YUnderlying algorithms[133X
       6.1-1 [33X[0;0YActing semigroups[133X
@@ -574,10 +582,10 @@
       10.1-4 [33X[0;0YGreensXClasses[133X
       10.1-5 [33X[0;0YXClassReps[133X
       10.1-6 MinimalDClass
-      10.1-7 MaximalDClasses
+      10.1-7 [33X[0;0YMaximalXClasses[133X
       10.1-8 NrRegularDClasses
       10.1-9 [33X[0;0YNrXClasses[133X
-      10.1-10 PartialOrderOfDClasses
+      10.1-10 [33X[0;0YPartialOrderOfXClasses[133X
       10.1-11 LengthOfLongestDClassChain
       10.1-12 IsGreensDGreaterThanFunc
     10.2 [33X[0;0YIterators and enumerators of classes and representatives[133X
@@ -775,22 +783,34 @@
       13.10-2 IsUniversalSemigroupCongruenceClass
       13.10-3 UniversalSemigroupCongruence
   14 [33X[0;0YSemigroup homomorphisms[133X
-    14.1 [33X[0;0YIsomorphisms of arbitrary semigroups[133X
-      14.1-1 IsIsomorphicSemigroup
-      14.1-2 SmallestMultiplicationTable
-      14.1-3 CanonicalMultiplicationTable
-      14.1-4 CanonicalMultiplicationTablePerm
-      14.1-5 OnMultiplicationTable
-      14.1-6 IsomorphismSemigroups
-      14.1-7 AutomorphismGroup
-    14.2 [33X[0;0YIsomorphisms of Rees (0-)matrix semigroups[133X
-      14.2-1 IsRMSIsoByTriple
-      14.2-2 RMSIsoByTriple
-      14.2-3 ELM_LIST
-      14.2-4 CompositionMapping2
-      14.2-5 ImagesElm
-      14.2-6 CanonicalReesZeroMatrixSemigroup
-      14.2-7 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroups[133X
+    14.1 [33X[0;0YHomomorphisms of arbitrary semigroups[133X
+      14.1-1 SemigroupHomomorphismByImages
+      14.1-2 SemigroupHomomorphismByFunctionNC
+      14.1-3 IsSemigroupHomomorphismByImages
+      14.1-4 IsSemigroupHomomorphismByFunction
+      14.1-5 AsSemigroupHomomorphismByImages
+      14.1-6 AsSemigroupHomomorphismByFunction
+      14.1-7 KernelOfSemigroupHomomorphism
+    14.2 [33X[0;0YIsomorphisms of arbitrary semigroups[133X
+      14.2-1 IsIsomorphicSemigroup
+      14.2-2 SmallestMultiplicationTable
+      14.2-3 CanonicalMultiplicationTable
+      14.2-4 CanonicalMultiplicationTablePerm
+      14.2-5 OnMultiplicationTable
+      14.2-6 IsomorphismSemigroups
+      14.2-7 AutomorphismGroup
+      14.2-8 SemigroupIsomorphismByImages
+      14.2-9 SemigroupIsomorphismByFunctionNC
+      14.2-10 IsSemigroupIsomorphismByFunction
+      14.2-11 AsSemigroupIsomorphismByFunction
+    14.3 [33X[0;0YIsomorphisms of Rees (0-)matrix semigroups[133X
+      14.3-1 IsRMSIsoByTriple
+      14.3-2 RMSIsoByTriple
+      14.3-3 ELM_LIST
+      14.3-4 CompositionMapping2
+      14.3-5 ImagesElm
+      14.3-6 CanonicalReesZeroMatrixSemigroup
+      14.3-7 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroups[133X
   15 [33X[0;0YFinitely presented semigroups and Tietze transformations[133X
     15.1 [33X[0;0YChanging representation for words and strings[133X
       15.1-1 WordToString

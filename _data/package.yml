@@ -1,6 +1,6 @@
 name: Semigroups
-version: 4.0.3
-date: 2022-07-01
+version: 5.0.0
+date: 2022-08-05
 description: |
     A package for semigroups and monoids
 
@@ -33,8 +33,12 @@ authors:
       url: https://caj.host.cs.st-andrews.ac.uk/
     - name: Julius Jonusas
       url: http://julius.jonusas.work
+    - name: Chinmaya Nagpal
+      url: mailto:chinmaya1011@gmail.com
     - name: Olexandr Konovalov
       url: https://www.st-andrews.ac.uk/computer-science/people/obk1/
+    - name: Artemis Konstantinidi
+      url: mailto:ak316@st-andrews.ac.uk
     - name: Dima V. Pasechnik
       url: http://users.ox.ac.uk/~coml0531/
     - name: Markus Pfeiffer
@@ -63,7 +67,7 @@ maintainers:
     - name: James Mitchell
       url: https://jdbm.me
 
-GAP: ">=4.10.0"
+GAP: ">=4.12.0"
 
 needed-pkgs:
     - name: "datastructures"
@@ -76,7 +80,7 @@ needed-pkgs:
       version: ">=1.6.5"
       url: "https://gap-packages.github.io/genss"
     - name: "images"
-      version: ">=1.3.0"
+      version: ">=1.3.1"
       url: "https://gap-packages.github.io/images/"
     - name: "IO"
       version: ">=4.5.1"
@@ -99,7 +103,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v4.0.3/semigroups-4.0.3.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.0.0/semigroups-5.0.0.tar.gz
 
 abstract: |
     
@@ -128,5 +132,5 @@ abstract: |
               drawing graphical representations of certain types of elements.
 
 status: deposited
-doc-html: doc/chap0.html
+doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf

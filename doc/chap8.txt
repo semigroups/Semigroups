@@ -278,11 +278,11 @@
     [4X[25Xgap>[125X [27XS2 := S4 / cong;;[127X[104X
     [4X[25Xgap>[125X [27XS1 := TrivialSemigroup();;[127X[104X
     [4X[25Xgap>[125X [27XL := [S1, S2, S3, S4];;[127X[104X
-    [4X[25Xgap>[125X [27Xidfn := function(t) return IdentityTransformation; end;;[127X[104X
-    [4X[25Xgap>[125X [27Xf21 := MappingByFunction(S2, S1, idfn);;[127X[104X
-    [4X[25Xgap>[125X [27Xf31 := MappingByFunction(S3, S1, idfn);;[127X[104X
+    [4X[25Xgap>[125X [27Xidfn := t -> IdentityTransformation;;[127X[104X
+    [4X[25Xgap>[125X [27Xf21 := SemigroupHomomorphismByFunction(S2, S1, idfn);;[127X[104X
+    [4X[25Xgap>[125X [27Xf31 := SemigroupHomomorphismByFunction(S3, S1, idfn);;[127X[104X
     [4X[25Xgap>[125X [27Xf42 := HomomorphismQuotientSemigroup(cong);;[127X[104X
-    [4X[25Xgap>[125X [27Xf43 := IdentityMapping(S4);;[127X[104X
+    [4X[25Xgap>[125X [27Xf43 := SemigroupHomomorphismByFunction(S4, S3, IdFunc);;[127X[104X
     [4X[25Xgap>[125X [27XH := [[f21, f31], [f42], [f43], []];;[127X[104X
     [4X[25Xgap>[125X [27XSSS := StrongSemilatticeOfSemigroups(D, L, H);[127X[104X
     [4X[28X<strong semilattice of 4 semigroups>[128X[104X

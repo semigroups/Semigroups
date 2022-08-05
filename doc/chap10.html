@@ -42,11 +42,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X865387A87FAAC395">10.1-5 <span class="Heading">XClassReps</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81E5A04F7DA3A1E1">10.1-6 MinimalDClass</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81F030B27ACB141D">10.1-7 MaximalDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X834172F4787A565B">10.1-7 <span class="Heading">MaximalXClasses</span></a>
+</span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7AA3F0A77D0043FB">10.1-8 NrRegularDClasses</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7E45FD9F7BADDFBD">10.1-9 <span class="Heading">NrXClasses</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X83F1C306846DF26B">10.1-10 PartialOrderOfDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8140814084748101">10.1-10 <span class="Heading">PartialOrderOfXClasses</span></a>
+</span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X83B0EDA57F1D2F97">10.1-11 LengthOfLongestDClassChain</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7E872C5381D0DD8A">10.1-12 IsGreensDGreaterThanFunc</a></span>
 </div></div>
@@ -251,7 +253,7 @@ true</pre></div>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([2, 3, 4, 5, 0, 0, 6, 8, 10, 11]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClass(POI(11), x);</span>
-&lt;Green's L-class: [1,2,3,4,5,6,8,11][7,10]&gt;
+&lt;Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(L);</span>
 165</pre></div>
 
@@ -420,7 +422,7 @@ true</pre></div>
 
 <p>It is significantly easier to find the minimal <em>D</em>-class of a semigroup, than to find its <em>D</em>-classes.</p>
 
-<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X83F1C306846DF26B"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), <code class="func">MinimalIdeal</code> (<a href="chap11.html#X7BC68589879C3BE9"><span class="RefLink">11.7-1</span></a>) and <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap11.html#X7CA6744182D07C5B"><span class="RefLink">11.7-2</span></a>).</p>
+<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X8140814084748101"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), <code class="func">MinimalIdeal</code> (<a href="chap11.html#X7BC68589879C3BE9"><span class="RefLink">11.7-1</span></a>) and <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap11.html#X7CA6744182D07C5B"><span class="RefLink">11.7-2</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -433,16 +435,18 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalDClass(S);</span>
 &lt;Green's D-class: &lt;empty partial perm&gt;&gt;</pre></div>
 
-<p><a id="X81F030B27ACB141D" name="X81F030B27ACB141D"></a></p>
+<p><a id="X834172F4787A565B" name="X834172F4787A565B"></a></p>
 
-<h5>10.1-7 MaximalDClasses</h5>
+<h5>10.1-7 <span class="Heading">MaximalXClasses</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: The maximal <em>D</em>-classes of a semigroup.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalLClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalRClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: The maximal <em>D</em>, <em>L</em>, or <em>R</em>-classes of a semigroup.</p>
 
-<p><code class="code">MaximalDClasses</code> returns the maximal <em>D</em>-classes with respect to the partial order of <em>D</em>-classes.</p>
+<p>Let <code class="code">X</code> be one of Green's <em>D</em>-, <em>L</em>-, or <em>R</em>-relations. Then <code class="code">MaximalXClasses</code> returns the maximal Green's <code class="code">X</code>-classes with respect to the partial order of <code class="code">X</code>-classes.</p>
 
-<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X83F1C306846DF26B"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap10.html#X81E5A04F7DA3A1E1"><span class="RefLink">10.1-6</span></a>).</p>
+<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X8140814084748101"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap10.html#X81E5A04F7DA3A1E1"><span class="RefLink">10.1-6</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -484,7 +488,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S);</span>
 7
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(RegularDClasses(S));</span>
-[ &lt;Green's D-class: Transformation( [ 1, 3, 4, 1, 3, 3 ] )&gt;, 
+[ &lt;Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )&gt;, 
   &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )&gt;, 
   &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )&gt; ]</pre></div>
 
@@ -549,7 +553,7 @@ true</pre></div>
 6342
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([1, 3, 3, 1, 3, 5]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S, x);</span>
-&lt;Green's D-class: Transformation( [ 2, 4, 2, 2, 2, 1 ] )&gt;
+&lt;Green's D-class: Transformation( [ 1, 3, 3, 1, 3, 5 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(D);</span>
 87
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(10);;</span>
@@ -564,17 +568,34 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(S);</span>
 1024</pre></div>
 
-<p><a id="X83F1C306846DF26B" name="X83F1C306846DF26B"></a></p>
+<p><a id="X8140814084748101" name="X8140814084748101"></a></p>
 
-<h5>10.1-10 PartialOrderOfDClasses</h5>
+<h5>10.1-10 <span class="Heading">PartialOrderOfXClasses</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: The partial order of the <em>D</em>-classes of <var class="Arg">S</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfLClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfRClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A digraph.</p>
 
-<p>Returns a digraph <code class="code">D</code> where the vertex <code class="code">i</code> is adjacent to vertex <code class="code">j</code> if <code class="code">GreensDClasses(S)[j]</code> is immediately strictly less than <code class="code">GreensDClasses(S)[i]</code> in the partial order of <em>D</em>-classes of <var class="Arg">S</var>; it might be that <code class="code">i</code> is adjacent to further nodes in addition to those just mentioned. The returned digraph has no loops. The reflexive transitive closure of the digraph <code class="code">D</code> is the partial order of <em>D</em>-classes of <var class="Arg">S</var>.</p>
+<p>Let <code class="code">X</code> be one of Green's <em>D</em>-, <em>L</em>-, or <em>R</em>-relations. Then <code class="code">PartialOrderOfXClasses</code> returns a digraph <code class="code">D</code> where <code class="code">OutNeighbours(D)[i]</code> contains every <code class="code">j</code> such that <code class="code">GreensXClasses(S)[j]</code> is immediately less than <code class="code">GreensXClasses(S)[i]</code> in the partial order of <code class="code">X</code>-classes of <var class="Arg">S</var>. The reflexive transitive closure of the digraph <code class="code">D</code> is the partial order of <code class="code">X</code>-classes of <var class="Arg">S</var> (in the sense of the <span class="URL"><a href="https://digraphs.github.io/Digraphs">Digraphs</a></span> package).</p>
 
-<p>The partial order on the <em>D</em>-classes is defined by <span class="SimpleMath">x≤ y</span> if and only if <span class="SimpleMath">S ^ 1xS ^ 1</span> is a subset of <span class="SimpleMath">S ^ 1yS ^ 1</span>.</p>
+<p>The partial order on the <code class="code">X</code>-classes is defined as follows.</p>
 
+
+<dl>
+<dt><strong class="Mark">Green's <em>D</em>-relation:</strong></dt>
+<dd><p><span class="SimpleMath">x≤ y</span> if and only if <span class="SimpleMath">S ^ 1xS ^ 1</span> is a subset of <span class="SimpleMath">S ^ 1yS ^ 1</span>.</p>
+
+</dd>
+<dt><strong class="Mark">Green's <em>L</em>-relation:</strong></dt>
+<dd><p><span class="SimpleMath">x≤ y</span> if and only if <span class="SimpleMath">S ^ 1x</span> is a subset of <span class="SimpleMath">S ^ 1y</span>.</p>
+
+</dd>
+<dt><strong class="Mark">Green's <em>R</em>-relation:</strong></dt>
+<dd><p><span class="SimpleMath">x≤ y</span> if and only if <span class="SimpleMath">xS ^ 1</span> is a subset of <span class="SimpleMath">yS ^ 1</span>.</p>
+
+</dd>
+</dl>
 <p>See also <code class="func">GreensDClasses</code> (<a href="chap10.html#X7D51218A80234DE5"><span class="RefLink">10.1-4</span></a>), <code class="func">GreensDClasses</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensDClasses</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">\&lt;</code> (<a href="chap10.html#X85F30ACF86C3A733"><span class="RefLink">10.3-1</span></a>).</p>
 
 
@@ -619,7 +640,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LengthOfLongestDClassChain</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A non-negative integer.</p>
 
-<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">LengthOfLongestDClassChain</code> returns the length of the longest chain in the partial order defined by <code class="code">PartialOrderOfDClasses(<var class="Arg">S</var>)</code>. See <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X83F1C306846DF26B"><span class="RefLink">10.1-10</span></a>).</p>
+<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">LengthOfLongestDClassChain</code> returns the length of the longest chain in the partial order defined by <code class="code">PartialOrderOfDClasses(<var class="Arg">S</var>)</code>. See <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X8140814084748101"><span class="RefLink">10.1-10</span></a>).</p>
 
 <p>The partial order on the <em>D</em>-classes is defined by <span class="SimpleMath">x≤ y</span> if and only if <span class="SimpleMath">S ^ 1xS ^ 1</span> is a subset of <span class="SimpleMath">S ^ 1yS ^ 1</span>. A <em>chain</em> of <em>D</em>-classes is a collection of <code class="code">n</code> <em>D</em>-classes <span class="SimpleMath">D_1, D_2, ... D_n</span> such that <span class="SimpleMath">D_1 &lt; D_2 &lt; ⋯ &lt; D_n</span>. The <em>length</em> of such a chain is <code class="code">n - 1</code>.</p>
 

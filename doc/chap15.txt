@@ -131,11 +131,11 @@
     [4X[25Xgap>[125X [27Xr := ParseRelations([x, y, z], "  x=(y^2z)^2x, y=xxx=z , z=y^3");[127X[104X
     [4X[28X[ [ x, (y^2*z)^2*x ], [ y, x^3 ], [ x^3, z ], [ z, y^3 ] ][128X[104X
     [4X[25Xgap>[125X [27Xf / r;[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 4 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 4 relations of length 23>[128X[104X
     [4X[25Xgap>[125X [27Xf2 := FreeSemigroup("a");[127X[104X
     [4X[28X<free semigroup on the generators [ a ]>[128X[104X
     [4X[25Xgap>[125X [27Xf2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");[127X[104X
-    [4X[28X<fp semigroup with 1 generator and 1 relation>[128X[104X
+    [4X[28X<fp semigroup with 1 generator and 1 relation of length 4>[128X[104X
   [4X[32X[104X
   
   [1X15.2-2 ElementOfFpSemigroup[101X
@@ -155,7 +155,7 @@
     [4X[25Xgap>[125X [27Xf := FreeSemigroup("x", "y");;[127X[104X
     [4X[25Xgap>[125X [27XAssignGeneratorVariables(f);[127X[104X
     [4X[25Xgap>[125X [27Xs := f / [[x * x, x], [y * y, y]];[127X[104X
-    [4X[28X<fp semigroup with 2 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 2 generators and 2 relations of length 8>[128X[104X
     [4X[25Xgap>[125X [27Xa := ElementOfFpSemigroup(s, x * y);[127X[104X
     [4X[28Xx*y[128X[104X
     [4X[25Xgap>[125X [27Xb := ElementOfFpSemigroup(s, x * y * y);[127X[104X
@@ -211,7 +211,7 @@
     [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b", "c");;[127X[104X
     [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);;[127X[104X
     [4X[25Xgap>[125X [27XS := F / [[a * b, c], [b * c, a], [c * a, b]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 12>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(S);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 12>[128X[104X
@@ -240,7 +240,7 @@
     [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b", "c");;[127X[104X
     [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);;[127X[104X
     [4X[25Xgap>[125X [27XS := F / [[a * b, c], [b * c, a], [c * a, b]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 12>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(S);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 12>[128X[104X
@@ -272,7 +272,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 19>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 19>[128X[104X
@@ -299,7 +299,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 19>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 19>[128X[104X
@@ -322,7 +322,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 19>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 19>[128X[104X
@@ -344,7 +344,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -380,7 +380,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -405,7 +405,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -430,7 +430,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -458,7 +458,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -541,7 +541,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 19>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 19>[128X[104X
@@ -574,7 +574,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -611,7 +611,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -652,7 +652,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -680,7 +680,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3], [F.2 ^ 2, F.2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 3 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 3 relations of length 22>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 3 relations[128X[104X
     [4X[28X with length 22>[128X[104X
@@ -732,7 +732,7 @@
     [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b", "c");[127X[104X
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XS := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 11>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(S);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 11>[128X[104X
@@ -761,7 +761,7 @@
     [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b", "c");[127X[104X
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XS := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 11>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(S);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 11>[128X[104X
@@ -800,15 +800,14 @@
     [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b", "c");[127X[104X
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XS := F / [[F.1, F.3 ^ 3], [F.2 ^ 2, F.3 ^ 2]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 11>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(S);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 11>[128X[104X
     [4X[25Xgap>[125X [27XStzRemoveGenerator(stz, "a");[127X[104X
     [4X[25Xgap>[125X [27Xmap := StzIsomorphism(stz);[127X[104X
-    [4X[28XMappingByFunction( <fp semigroup with 3 generators and 2 relations>, <\[128X[104X
-    [4X[28Xfp semigroup with 2 generators and 1 relation>, function( word ) ... e\[128X[104X
-    [4X[28Xnd, function( word ) ... end )[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 11> -> [128X[104X
+    [4X[28X<fp semigroup with 2 generators and 1 relation of length 6>[128X[104X
     [4X[25Xgap>[125X [27XS.1 ^ map;[127X[104X
     [4X[28Xc^3[128X[104X
   [4X[32X[104X
@@ -857,7 +856,7 @@
     [4X[28X<free semigroup on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XT := F / [[F.1, F.2 ^ 5 * F.3],[127X[104X
     [4X[25X>[125X [27X             [F.2 ^ 6, F.2 ^ 3]];[127X[104X
-    [4X[28X<fp semigroup with 3 generators and 2 relations>[128X[104X
+    [4X[28X<fp semigroup with 3 generators and 2 relations of length 19>[128X[104X
     [4X[25Xgap>[125X [27Xstz := StzPresentation(T);[127X[104X
     [4X[28X<fp semigroup presentation with 3 generators and 2 relations[128X[104X
     [4X[28X with length 19>[128X[104X

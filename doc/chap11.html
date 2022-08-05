@@ -237,7 +237,7 @@ Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 <h5>11.1-2 PositionCanonical</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionCanonical</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+<p>Returns: A positive integer or <code class="keyw">fail</code>.</p>
 
 <p>When the argument <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>) and <var class="Arg">x</var> is an element of <var class="Arg">S</var>, <code class="code">PositionCanonical</code> returns the position of <var class="Arg">x</var> in <code class="code">AsListCanonical(<var class="Arg">S</var>)</code> or equivalently the position of <var class="Arg">x</var> in <code class="code">EnumeratorCanonical(<var class="Arg">S</var>)</code>.</p>
 
@@ -270,10 +270,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(7);</span>
 &lt;full transformation monoid of degree 7&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Enumerate(S, 1000);</span>
-&lt;full transformation monoid of degree 7&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(S);</span>
-&lt;partially enumerated semigroup with 8197 elements, 
-224 rules, max word length 11&gt;</pre></div>
+&lt;full transformation monoid of degree 7&gt;</pre></div>
 
 <p><a id="X877FAAA67F834897" name="X877FAAA67F834897"></a></p>
 
@@ -296,9 +293,9 @@ true</pre></div>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCayleyDigraph</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: A list of lists of positive integers.</p>
+<p>Returns: A digraph.</p>
 
-<p>When the argument <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graphs of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
+<p>When the argument <var class="Arg">S</var> is a semigroup satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">RightCayleyDigraph</code> returns the right Cayley graph of <var class="Arg">S</var>, as a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) <code class="code">digraph</code> where vertex <code class="code">OutNeighbours(digraph)[i][j]</code> is <code class="code">PositionCanonical(<var class="Arg">S</var>, AsListCanonical(<var class="Arg">S</var>)[i] * GeneratorsOfSemigroup(<var class="Arg">S</var>)[j])</code>. The digraph returned by <code class="code">LeftCayleyDigraph</code> is defined analogously.</p>
 
 <p>The digraph returned by this attribute belongs to the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), the semigroup <var class="Arg">S</var> and the generators used to create the digraph can be recovered from the digraph using <code class="func">SemigroupOfCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap5_mj.html#X7A000B1D7CCF7093"><span class="RefLink">Digraphs: SemigroupOfCayleyDigraph</span></a>) and <code class="func">GeneratorsOfCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap5_mj.html#X8528455987D7D2BF"><span class="RefLink">Digraphs: GeneratorsOfCayleyDigraph</span></a>).</p>
 
@@ -913,7 +910,7 @@ true
 
 <p>It is significantly easier to find the minimal <em>D</em>-class of a semigroup, than to find its <em>D</em>-classes.</p>
 
-<p>See also <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap11.html#X7CA6744182D07C5B"><span class="RefLink">11.7-2</span></a>), <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X83F1C306846DF26B"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap10.html#X81E5A04F7DA3A1E1"><span class="RefLink">10.1-6</span></a>).</p>
+<p>See also <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap11.html#X7CA6744182D07C5B"><span class="RefLink">11.7-2</span></a>), <code class="func">PartialOrderOfDClasses</code> (<a href="chap10.html#X8140814084748101"><span class="RefLink">10.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap10.html#X81E5A04F7DA3A1E1"><span class="RefLink">10.1-6</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1144,9 +1141,9 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(L));</span>
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := GroupHClass(D);</span>
-&lt;Green's H-class: Transformation( [ 1, 1, 3, 3 ] )&gt;
+&lt;Green's H-class: Transformation( [ 1, 3, 3, 1 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Idempotents(H);</span>
-[ Transformation( [ 1, 1, 3, 3 ] ) ]
+[ Transformation( [ 1, 3, 3, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([10, 6, 3, 4, 9, 0, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;</span>
@@ -1630,7 +1627,7 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )</pre></div>
 
 <p>If <var class="Arg">trans</var> is a transformation, and <var class="Arg">n</var> is a non-negative integer such that the restriction of <var class="Arg">trans</var> to <code class="keyw">[1 .. n]</code> defines a transformation of <code class="code">[1 .. n]</code>, then <code class="code">CanonicalTransformation</code> returns a canonical representative of the transformation <var class="Arg">trans</var> restricted to <code class="code">[1 .. n]</code>.</p>
 
-<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X83CA27E67F685EB3"><span class="RefLink">Digraphs: AsDigraph</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
+<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X86834E307EACC670"><span class="RefLink">Digraphs: AsDigraph for a binary relation</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
 
 
 <div class="example"><pre>
@@ -2056,10 +2053,9 @@ true
 &lt;inverse partial perm monoid of size 6721, rank 6721 with 3 
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreePartialPermRepresentation(T);</span>
-MappingByFunction( &lt;inverse partial perm monoid of size 6721, 
- rank 6721 with 3 generators&gt;, &lt;inverse partial perm monoid of 
- rank 30 with 3 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
+&lt;inverse partial perm monoid of size 6721, rank 6721 with 3 
+  generators&gt; -&gt; &lt;inverse partial perm monoid of rank 30 with 3 
+  generators&gt;</pre></div>
 
 <p><a id="X7BC49C3487384364" name="X7BC49C3487384364"></a></p>
 
@@ -2068,7 +2064,7 @@ MappingByFunction( &lt;inverse partial perm monoid of size 6721,
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VagnerPrestonRepresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: An isomorphism to an inverse semigroup of partial permutations.</p>
 
-<p><code class="code">VagnerPrestonRepresentation</code> returns an isomorphism from an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>), to the inverse semigroup of partial permutations <var class="Arg">T</var> of degree equal to the size of <var class="Arg">S</var>, which is obtained using the Vagner-Preston Representation Theorem.</p>
+<p><code class="code">VagnerPrestonRepresentation</code> returns an isomorphism from an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap24_mj.html#X7899335779A39A95"><span class="RefLink">Reference: inverse</span></a>), to the inverse semigroup of partial permutations <var class="Arg">T</var> of degree equal to the size of <var class="Arg">S</var>, which is obtained using the Vagner-Preston Representation Theorem.</p>
 
 <p>More precisely, if <span class="SimpleMath">f:S-&gt; T</span> is the isomorphism returned by <code class="code">VagnerPrestonRepresentation(<var class="Arg">S</var>)</code> and <span class="SimpleMath">x</span> is in <var class="Arg">S</var>, then <span class="SimpleMath">f(x)</span> is the partial permutation with domain <span class="SimpleMath">Sx^-1</span> and range <span class="SimpleMath">Sx^-1x</span> defined by <span class="SimpleMath">f(x): sx^-1↦ sx^-1x</span>.</p>
 
@@ -2081,9 +2077,8 @@ MappingByFunction( &lt;inverse partial perm monoid of size 6721,
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 7
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := VagnerPrestonRepresentation(S);</span>
-MappingByFunction( &lt;symmetric inverse monoid of degree 2&gt;, 
+&lt;symmetric inverse monoid of degree 2&gt; -&gt; 
 &lt;inverse partial perm monoid of rank 7 with 2 generators&gt;
- , function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RespectsMultiplication(iso);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(iso);;</span>
@@ -2097,10 +2092,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(V);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">VagnerPrestonRepresentation(V);</span>
-MappingByFunction( &lt;inverse bipartition semigroup of size 394, 
- degree 5 with 3 generators&gt;, &lt;inverse partial perm semigroup of 
- rank 394 with 5 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
+&lt;inverse bipartition semigroup of size 394, degree 5 with 3 
+  generators&gt; -&gt; &lt;inverse partial perm semigroup of rank 394 with 5 
+  generators&gt;</pre></div>
 
 <p><a id="X7C83DF9A7973AF6D" name="X7C83DF9A7973AF6D"></a></p>
 
@@ -2167,9 +2161,8 @@ MappingByFunction( &lt;inverse bipartition semigroup of size 394,
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1], [1])]);</span>
 &lt;inverse partial perm semigroup of rank 2 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cov := EUnitaryInverseCover(S);</span>
-MappingByFunction( &lt;inverse partial perm semigroup of rank 4 with 2 
- generators&gt;, &lt;inverse partial perm semigroup of rank 2 with 2 
- generators&gt;, function( x ) ... end )
+&lt;inverse partial perm semigroup of rank 4 with 2 generators&gt; -&gt; 
+&lt;inverse partial perm semigroup of rank 2 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(Source(cov));</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = Range(cov);</span>
