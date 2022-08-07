@@ -56,9 +56,10 @@ static inline void initRNams() {
 }
 
 inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
-  SET_ELM_PLIST(ELM_PLIST(plist, i), j, val);
-  SET_LEN_PLIST(ELM_PLIST(plist, i), j);
-  CHANGED_BAG(plist);
+  Obj inner = ELM_PLIST(plist, i);
+  SET_ELM_PLIST(inner, j, val);
+  SET_LEN_PLIST(inner, j);
+  CHANGED_BAG(inner);
 }
 
 // Semigroups
