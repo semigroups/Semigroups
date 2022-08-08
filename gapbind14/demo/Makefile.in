@@ -1,0 +1,19 @@
+#
+# Makefile rules for the orb package
+#
+KEXT_NAME = gapbind_demo
+KEXT_SOURCES = src/gapbind_demo.c src/gapbind14.cc
+
+KEXT_CXXFLAGS = -I../include -std=gnu++14
+KEXT_LDFLAGS = -lstdc++
+
+# ifndef GAP_KERNEL_MAJOR_VERSION
+#   KEXT_CXXFLAGS += -I$(GAP_LIB_DIR)/pkg/semigroups/gapbind14/include
+# endif
+
+# include shared GAP package build system
+GAPPATH = @GAPPATH@
+include Makefile.gappkg
+
+src/gapbind14.cc: ../src/gapbind14.cpp
+	cp $< $@
