@@ -78,6 +78,7 @@ bin/include/libsemigroups/libsemigroups.hpp:
 
 all-local: semigroups.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR)
+	rm -f $(GAPINSTALLLIB)  # workaround for macOS code signing
 if SYS_IS_CYGWIN
 	cp .libs/semigroups.dll $(GAPINSTALLLIB)
 if WITH_INCLUDED_LIBSEMIGROUPS
