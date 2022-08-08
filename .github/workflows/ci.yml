@@ -48,7 +48,7 @@ jobs:
           override_cache_key: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-${{ matrix.gap-branch }}-${{ matrix.ABI }}
       - name: "Install GAP and clone/compile necessary packages"
-        uses: gap-actions/setup-gap@v2
+        uses: gap-actions/setup-gap@v2.5.0
         env:
           # We don't understand why this is necessary. Hopefully it can be
           # removed in the fullness of time.
@@ -59,6 +59,7 @@ jobs:
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
+          CONFIGFLAGS: "--enable-debug"
       - name: "Build Semigroups"
         uses: gap-actions/build-pkg@v1
         with:
