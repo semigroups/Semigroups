@@ -37,7 +37,7 @@
 .libs
 /libsemigroups/
 Makefile
-Makefile.in
+/Makefile.in
 Transitions*
 _*.xml
 _AutoDocMainFile.xml
@@ -51,7 +51,7 @@ bin
 cnf
 config.log
 config.status
-configure
+/configure
 doc/*.css
 doc/*.js
 doc/main.aux
