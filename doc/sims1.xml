@@ -1,0 +1,140 @@
+#############################################################################
+##
+##  sims1.xml
+##  Copyright (C) 2022                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="NumberOfRightCongruences">
+  <ManSection>
+    <Oper Name = "NumberOfRightCongruences"
+          Arg = "S, n, extra"
+          Label="for a semigroup, positive integer, and list or collection"/>
+    <Oper Name = "NumberOfLeftCongruences"
+          Arg = "S, n, extra"
+          Label="for a semigroup, positive integer, and list or collection"/>
+    <Oper Name = "NumberOfRightCongruences"
+          Arg = "S, n"
+          Label="for a semigroup, and a positive integer"/>
+    <Oper Name = "NumberOfLeftCongruences"
+          Arg = "S, n"
+          Label="for a semigroup, and a positive integer"/>
+    <Attr Name = "NumberOfRightCongruences"
+          Arg = "S"
+          Label="for a semigroup"/>
+    <Oper Name = "NumberOfLeftCongruences"
+          Arg = "S"
+          Label="for a semigroup"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+      <C>NumberOfRightCongruences</C> returns the number of right congruences
+      of the semigroup <A>S</A> with at most <A>n</A> classes that contain the
+      pairs in <A>extra</A>; <C>NumberOfLeftCongruences</C> is defined dually
+      for left congruences rather than right congruences. <P/>
+
+      If the optional third argument <A>extra</A> is not present, then
+      <C>NumberOfRightCongruences</C> returns the number of right congruences
+      of <A>S</A> with at most <A>n</A> classes. <P/>
+
+      If the optional second argument <A>n</A> is not present, then
+      <C>NumberOfRightCongruences</C> returns the number of right congruences
+      of <A>S</A>. <P/>
+
+      Note that the 2 and 3 argument variants of this function can be applied
+      to infinite semigroups, but the 1 argument variant cannot. <P/>
+
+      If the lattice of right or left congruences of <A>S</A> is known, then
+      that is used by <C>NumberOfRightCongruences</C>.  If this lattice is not
+      known, then Sim's low index congruence algorithm is used.<P/>
+
+      See <Ref Attr="IteratorOfRightCongruences" Label="for a semigroup"/> to
+      actually obtain the congruences counted by this function.
+<Example><![CDATA[
+gap> S := PartitionMonoid(2);
+<regular bipartition *-monoid of size 15, degree 2 with 3 generators>
+gap> NumberOfRightCongruences(S, 10);
+86
+gap> NumberOfLeftCongruences(S, 10);
+86
+gap> NumberOfRightCongruences(S, Size(S), [[S.1, S.2], [S.1, S.3]]);
+1
+gap> NumberOfLeftCongruences(S, Size(S), [[S.1, S.2], [S.1, S.3]]);
+1
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IteratorOfRightCongruences">
+<ManSection>
+  <Oper Name = "IteratorOfRightCongruences"
+    Arg = "S, n, extra"
+    Label="for a semigroup, positive integer, and list or collection"/>
+  <Oper Name = "IteratorOfLeftCongruences"
+    Arg = "S, n, extra"
+    Label="for a semigroup, positive integer, and list or collection"/>
+  <Oper Name = "IteratorOfRightCongruences"
+    Arg = "S, n"
+    Label="for a semigroup, and a positive integer"/>
+  <Oper Name = "IteratorOfLeftCongruences"
+    Arg = "S, n"
+    Label="for a semigroup, and a positive integer"/>
+  <Attr Name = "IteratorOfRightCongruences"
+    Arg = "S"
+    Label="for a semigroup"/>
+  <Oper Name = "IteratorOfLeftCongruences"
+    Arg = "S"
+    Label="for a semigroup"/>
+  <Returns>An iterator.</Returns>
+  <Description>
+    <C>IteratorOfRightCongruences</C> returns an iterator where calling 
+    <Ref Oper="NextIterator" BookName="ref"/> returns the next right congruence
+    of the semigroup <A>S</A> with at most <A>n</A> classes that contain the
+    pairs in <A>extra</A>; <C>IteratorOfLeftCongruences</C> is defined dually
+    for left congruences rather than right congruences. <P/>
+
+    If the optional third argument <A>extra</A> is not present, then
+    <C>IteratorOfRightCongruences</C> uses an empty list by default. <P/>
+
+    If the optional second argument <A>n</A> is not present, then
+    <C>IteratorOfRightCongruences</C> uses <C>Size(<A>S</A>)</C> by default.
+    <P/>
+
+    Note that the 2 and 3 argument variants of this function can be applied
+    to infinite semigroups, but the 1 argument variant cannot. <P/>
+
+    If the lattice of right or left congruences of <A>S</A> is known, then
+    that is used by <C>IteratorOfRightCongruences</C>.  If this lattice is not
+    known, then Sim's low index congruence algorithm is used.
+
+    <Example><![CDATA[
+gap> F := FreeMonoidAndAssignGeneratorVars("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> NumberOfRightCongruences(S);
+6
+gap> it := IteratorOfRightCongruences(S);
+<iterator>
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 1, 1 ] ]
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 2, 1 ], [ 2, 2 ] ]
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 2, 2 ], [ 2, 2 ] ]
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 2, 3 ], [ 2, 2 ], [ 2, 3 ] ]
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 2, 3 ], [ 2, 2 ], [ 3, 3 ] ]
+gap> OutNeighbours(WordGraph(NextIterator(it)));
+[ [ 2, 3 ], [ 2, 2 ], [ 4, 3 ], [ 4, 4 ] ]
+gap> NextIterator(it);
+fail]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

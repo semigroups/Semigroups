@@ -49,6 +49,7 @@
 #include "libsemigroups/bmat8.hpp"      // for BMat8
 #include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
 #include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
+#include "libsemigroups/digraph.hpp"    // for ActionDigraph
 #include "libsemigroups/matrix.hpp"     // for matrix_threshold etc
 #include "libsemigroups/pbr.hpp"        // for PBR
 #include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
@@ -514,5 +515,36 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  ////////////////////////////////////////////////////////////////////////
+  // ActionDigraph
+  ////////////////////////////////////////////////////////////////////////
+
+  template <typename T>
+  struct to_gap<libsemigroups::ActionDigraph<T>> {
+    using ActionDigraph_ = libsemigroups::ActionDigraph<T>;
+    Obj operator()(ActionDigraph_ const& ad) const noexcept {
+      using node_type = typename ActionDigraph_::node_type;
+      Obj result      = NEW_PLIST(T_PLIST, ad.number_of_nodes());
+      // this is intentionally not IMMUTABLE
+      // TODO(ActionDigraph) handle case of zero nodes?
+      SET_LEN_PLIST(result, ad.number_of_nodes());
+
+      for (size_t i = 0; i < ad.number_of_nodes(); ++i) {
+        Obj next = NEW_PLIST(T_PLIST, 0);
+        SET_LEN_PLIST(next, 0);
+        for (size_t j = 0; j < ad.out_degree(); ++j) {
+          auto val = ad.unsafe_neighbor(i, j);
+          if (val != UNDEFINED) {
+            AssPlist(next, j + 1, to_gap<node_type>()(val + 1));
+          }
+        }
+        SET_ELM_PLIST(result, i + 1, next);
+        CHANGED_BAG(result);
+      }
+      return result;
+    }
+  };
+
 }  // namespace gapbind14
 #endif  // SEMIGROUPS_SRC_TO_GAP_HPP_

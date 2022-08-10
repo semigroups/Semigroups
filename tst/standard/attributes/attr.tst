@@ -2124,6 +2124,12 @@ gap> S := SemigroupByMultiplicationTable(
 gap> S := AsMonoid(IsFpMonoid, S);
 <fp monoid with 5 generators and 25 relations of length 80>
 
+# MinimalFaithfulTransformationDegree
+gap> MinimalFaithfulTransformationDegree(RightZeroSemigroup(10));
+7
+gap> MinimalFaithfulTransformationDegree(LeftZeroSemigroup(10));
+6
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

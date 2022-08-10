@@ -503,6 +503,11 @@ function(S)
       or IsBipartitionSemigroup(S) then
     SetNiceMonomorphism(Q, InverseGeneralMapping(result));
   fi;
+  if IsTransformationSemigroup(S) then
+    SetIsomorphismTransformationSemigroup(Q, InverseGeneralMapping(result));
+  elif IsPartialPermSemigroup(S) then
+    SetIsomorphismPartialPermSemigroup(Q, InverseGeneralMapping(result));
+  fi;
   return result;
 end);
 

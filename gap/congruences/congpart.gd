@@ -56,8 +56,8 @@
 # for <C>. If you never want to construct such a libsemigroups Congruence
 # object representing for <C>, then an immediate method should be installed in
 # libsemigroups/cong.gi explicitly excluding this type of congruence, and the
-# following mandatory methods listed above for
-# CanComputeEquivalenceRelationPartition should be implemented.
+# mandatory methods listed above for CanComputeEquivalenceRelationPartition
+# should be implemented.
 #
 # To define a new type of congruence that does not implement any of the above
 # (i.e. that uses libsemigroups Congruence objects to compute

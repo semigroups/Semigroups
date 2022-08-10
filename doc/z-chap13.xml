@@ -19,6 +19,14 @@
     <Item>
       Kernel and trace -- only for inverse semigroups
     </Item>
+    <Item>
+      Word graph -- only for congruences created via
+      <Ref Attr="IteratorOfLeftCongruences" Label="for a semigroup"/>
+      or <Ref Attr="IteratorOfRightCongruences" Label="for a semigroup"/>
+    </Item>
+    <Item>
+      Wang pairs -- only for graph inverse semigroup
+    </Item>
   </List>
 
   The operation <Ref Func = "SemigroupCongruence"/> can be used to create any
@@ -107,10 +115,12 @@
     <#Include Label = "PosetOfCongruences">
     <#Include Label = "JoinSemilatticeOfCongruences">
     <#Include Label = "MinimalCongruences">
+    <#Include Label = "NumberOfRightCongruences">
+    <#Include Label = "IteratorOfRightCongruences">
 
   </Section>
 
-<Section>
+  <Section>
     <Heading>
       Comparing congruences
     </Heading>
@@ -121,7 +131,6 @@
     <#Include Label = "JoinSemigroupCongruences">
 
   </Section>
-
 
   <Section>
     <Heading>Congruences on Rees matrix semigroups</Heading>
