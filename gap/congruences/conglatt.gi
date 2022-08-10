@@ -400,11 +400,12 @@ function(S)
   fi;
 
   MxM   := DirectProduct(M, M);
+  SetFilterObj(MxM, IsActingSemigroup);
   map1  := Embedding(MxM, 1);
   map2  := Embedding(MxM, 2);
 
   Delta := Set(GeneratorsOfSemigroup(S), x -> x ^ map1 * x ^ map2);
-  pairs := RelativeRClassReps(MxM, Semigroup(Delta));
+  pairs := RelativeRClassReps(MxM, Semigroup(Delta, rec(acting := true)));
   map1  := Projection(MxM, 1);
   map2  := Projection(MxM, 2);
   pairs := Set(pairs, x -> AsSortedList([x ^ map1, x ^ map2]));

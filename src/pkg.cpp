@@ -50,6 +50,7 @@
 #include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
 #include "libsemigroups/freeband.hpp"   // for freeband_equal_to
 #include "libsemigroups/report.hpp"     // for REPORTER, Reporter
+#include "libsemigroups/sims1.hpp"      // for Sims1
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
 #include "libsemigroups/types.hpp"         // for word_type, letter_type
 
@@ -61,6 +62,22 @@ namespace {
     libsemigroups::REPORTER.report(val);
   }
 }  // namespace
+
+namespace gapbind14 {
+  template <>
+  struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
+      : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Sims1<uint32_t>> : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<typename libsemigroups::Sims1<uint32_t>::iterator>
+      : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
+}  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
@@ -123,6 +140,74 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("number_of_generators", &ToddCoxeter::number_of_generators)
       .def("prefill",
            gapbind14::overload_cast<table_type const&>(&ToddCoxeter::prefill));
+
+  using libsemigroups::Presentation;
+
+  gapbind14::class_<Presentation<word_type>>("Presentation")
+      .def(gapbind14::init<>{}, "make")
+      .def("alphabet",
+           gapbind14::overload_cast<>(&Presentation<word_type>::alphabet))
+      .def("set_alphabet",
+           [](Presentation<word_type>& thing, word_type val) -> void {
+             thing.alphabet(val);
+           })
+      .def("alphabet_from_rules",
+           [](Presentation<word_type>& thing) -> void {
+             thing.alphabet_from_rules();
+           })
+      .def("contains_empty_word",
+           [](Presentation<word_type>& thing, bool val) -> void {
+             thing.contains_empty_word(val);
+           })
+      .def("validate", &Presentation<word_type>::validate)
+      .def("number_of_rules",
+           [](Presentation<word_type> const& thing) -> size_t {
+             return thing.rules.size();
+           });
+
+  gapbind14::InstallGlobalFunction(
+      "presentation_add_rule",
+      gapbind14::overload_cast<Presentation<word_type>&,
+                               word_type const&,
+                               word_type const&>(
+          &libsemigroups::presentation::add_rule<word_type>));
+
+  using libsemigroups::Sims1;
+
+  gapbind14::class_<typename Sims1<uint32_t>::iterator>("Sims1Iterator")
+      .def("increment", [](typename Sims1<uint32_t>::iterator& it) { ++it; })
+      .def("deref",
+           [](typename Sims1<uint32_t>::iterator const& it) { return *it; });
+
+  gapbind14::class_<Sims1<uint32_t>>("Sims1")
+      .def(gapbind14::init<congruence_kind>{}, "make")
+      .def("short_rules",
+           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
+             s.short_rules(p);
+           })
+      .def("extra",
+           [](Sims1<uint32_t>& s, Presentation<word_type> const& p) {
+             s.extra(p);
+           })
+      .def("number_of_threads",
+           [](Sims1<uint32_t>& s, size_t val) { s.number_of_threads(val); })
+      .def("number_of_congruences", &Sims1<uint32_t>::number_of_congruences)
+      .def("cbegin", &Sims1<uint32_t>::cbegin);
+
+  using libsemigroups::RepOrc;
+
+  gapbind14::class_<RepOrc>("RepOrc")
+      .def(gapbind14::init<>{}, "make")
+      .def("short_rules",
+           [](RepOrc& ro, Presentation<word_type> const& p) {
+             ro.short_rules(p);
+           })
+      .def("number_of_threads",
+           [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
+      .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
+      .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
+      .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
+      .def("digraph", &RepOrc::digraph<uint32_t>);
 }
 
 ////////////////////////////////////////////////////////////////////////

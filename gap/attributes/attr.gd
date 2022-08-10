@@ -79,3 +79,9 @@ DeclareAttribute("MultiplicationTableWithCanonicalPositions",
                  IsSemigroup and CanUseFroidurePin);
 DeclareAttribute("TransposedMultiplicationTableWithCanonicalPositions",
                  IsSemigroup and CanUseFroidurePin);
+
+DeclareAttribute("MinimalFaithfulTransformationDegree", IsSemigroup);
+DeclareAttribute("SmallerDegreeTransformationRepresentation", IsSemigroup);
+
+# TODO(later)
+# DeclareAttribute("MinimalFaithfulTransformationRepresentation", IsSemigroup);

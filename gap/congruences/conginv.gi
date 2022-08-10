@@ -15,6 +15,11 @@
 ## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
 ##
 
+InstallImmediateMethod(CanUseLibsemigroupsCongruence,
+                       IsInverseSemigroupCongruenceByKernelTrace,
+                       0,
+                       ReturnFalse);
+
 # TODO(later) use a congruence on the semilattice of idempotents for the trace,
 # instead of traceBlocks and traceLookup.
 

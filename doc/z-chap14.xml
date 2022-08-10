@@ -17,23 +17,60 @@
     <#Include Label = "SemigroupHomomorphismByFunction">
     The following methods relate to semigroup homomorphisms by images or
     by function:
-    <Ref Attr = "Range" BookName = "ref"/>,
-    <Ref Attr = "Image" BookName = "ref"/>,
-    <Ref Attr = "Images" BookName = "ref"/>,
-    <Ref Attr = "ImageElm" BookName = "ref"/>,
-    <Ref Attr = "PreImage" BookName = "ref"/>,
-    <Ref Attr = "PreImages" BookName = "ref"/>,
-    <Ref Attr = "PreImagesRepresentative" BookName = "ref"/>,
-    <Ref Attr = "PreImagesRange" BookName = "ref"/>,
-    <Ref Attr = "PreImagesElm" BookName = "ref"/>,
-    <Ref Attr = "PreImagesSet" BookName = "ref"/>,
-    <Ref Attr = "IsSurjective" BookName = "ref"/>,
-    <Ref Attr = "IsInjective" BookName = "ref"/>,
-    <Ref Attr = "IsBijective" BookName = "ref"/>,
-    <Ref Attr = "Source" BookName = "ref"/>,
-    <Ref Attr = "Range" BookName = "ref"/>,
-    <Ref Attr = "ImagesSource" BookName = "ref"/>,
-    <Ref Attr = "KernelOfSemigroupHomomorphism"/>
+    <List>
+      <Item>
+        <Ref Attr = "Range" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "Image" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "Images" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "ImageElm" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImage" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImages" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImagesRepresentative" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImagesRange" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImagesElm" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "PreImagesSet" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "IsSurjective" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "IsInjective" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "IsBijective" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "Source" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "Range" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "ImagesSource" BookName = "ref"/>,
+      </Item>
+      <Item>
+        <Ref Attr = "KernelOfSemigroupHomomorphism"/>.
+      </Item>
+    </List>
+
     <#Include Label = "IsSemigroupHomomorphismByImages">
     <#Include Label = "IsSemigroupHomomorphismByFunction">
     <#Include Label = "AsSemigroupHomomorphismByImages">
@@ -61,6 +98,8 @@
     <#Include Label = "SemigroupIsomorphismByFunction">
     <#Include Label = "IsSemigroupIsomorphismByFunction">
     <#Include Label = "AsSemigroupIsomorphismByFunction">
+    <#Include Label = "SmallerDegreeTransformationRepresentation">
+    <#Include Label = "MinimalFaithfulTransformationDegree">
 
   </Section>
 

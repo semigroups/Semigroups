@@ -59,6 +59,7 @@ ReadPackage("semigroups", "gap/elements/trans.gd");
 
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
+ReadPackage("semigroups", "gap/libsemigroups/sims1.gd");
 
 ReadPackage("semigroups", "gap/main/froidure-pin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");
@@ -126,6 +127,7 @@ ReadPackage("semigroups", "gap/congruences/congrms.gd");
 ReadPackage("semigroups", "gap/congruences/congsemigraph.gd");
 ReadPackage("semigroups", "gap/congruences/congsimple.gd");
 ReadPackage("semigroups", "gap/congruences/conguniv.gd");
+ReadPackage("semigroups", "gap/congruences/congwordgraph.gd");
 
 ReadPackage("semigroups", "gap/libsemigroups/cong.gd");
 

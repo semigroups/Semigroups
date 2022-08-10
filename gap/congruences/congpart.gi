@@ -177,6 +177,7 @@ function(C)
   Sort(result, {x, y} -> cmp(Representative(x), Representative(y)));
   return result;
 end);
+
 ############################################################################
 # Congruence attributes/operations/etc that don't require CanUseFroidurePin
 ############################################################################
@@ -238,6 +239,50 @@ InstallMethod(NrEquivalenceClasses,
 [CanComputeEquivalenceRelationPartition],
 function(C)
   return Length(EquivalenceClasses(C));
+end);
+
+BindGlobal("_GeneratingPairsOfLeftRight2SidedCongDefault",
+function(XCongruenceByGeneratingPairs, C)
+  local result, pairs, class, i, j;
+
+  result := XCongruenceByGeneratingPairs(Source(C), []);
+
+  for class in EquivalenceRelationPartition(C) do
+    for i in [1 .. Length(class) - 1] do
+      for j in [i + 1 .. Length(class)] do
+        if not [class[i], class[j]] in result then
+          pairs := GeneratingPairsOfLeftRightOrTwoSidedCongruence(result);
+          pairs := Concatenation(pairs, [[class[i], class[j]]]);
+          result := XCongruenceByGeneratingPairs(Source(C), pairs);
+        fi;
+      od;
+    od;
+  od;
+  return GeneratingPairsOfLeftRightOrTwoSidedCongruence(result);
+end);
+
+InstallMethod(GeneratingPairsOfRightMagmaCongruence,
+"for a right congruence that can compute partition",
+[CanComputeEquivalenceRelationPartition and IsRightMagmaCongruence],
+function(C)
+  return _GeneratingPairsOfLeftRight2SidedCongDefault(
+            RightSemigroupCongruenceByGeneratingPairs, C);
+end);
+
+InstallMethod(GeneratingPairsOfLeftMagmaCongruence,
+"for a left congruence that can compute partition",
+[CanComputeEquivalenceRelationPartition and IsLeftMagmaCongruence],
+function(C)
+  return _GeneratingPairsOfLeftRight2SidedCongDefault(
+            LeftSemigroupCongruenceByGeneratingPairs, C);
+end);
+
+InstallMethod(GeneratingPairsOfMagmaCongruence,
+"for a congruence that can compute partition",
+[CanComputeEquivalenceRelationPartition and IsMagmaCongruence],
+function(C)
+  return _GeneratingPairsOfLeftRight2SidedCongDefault(
+            SemigroupCongruenceByGeneratingPairs, C);
 end);
 
 ########################################################################
