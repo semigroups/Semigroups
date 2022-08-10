@@ -542,7 +542,7 @@ SEMIGROUPS.NormalRMSLinkedTriples := function(S, opt...)
 end;
 
 SEMIGROUPS.BitranslationsNormalRMS := function(H, opt...)
-  local S, out, nr_only, nr, triple;
+  local S, out, nr_only, triple;
 
   S := UnderlyingSemigroup(H);
 
