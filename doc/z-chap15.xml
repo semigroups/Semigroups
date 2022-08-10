@@ -51,6 +51,7 @@
     <#Include Label = "ParseRelations">
     <#Include Label = "ElementOfFpSemigroup">
     <#Include Label = "ElementOfFpMonoid">
+    <#Include Label = "FreeMonoidAndAssignGeneratorVars">
   </Section>
 
   <Section Label="Creating Tietze transformation objects">

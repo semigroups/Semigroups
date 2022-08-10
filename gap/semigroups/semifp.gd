@@ -15,3 +15,6 @@ DeclareAttribute("UnderlyingCongruence", IsFpSemigroup);
 DeclareAttribute("UnderlyingCongruence", IsFpMonoid);
 DeclareAttribute("Length", IsFpSemigroup);
 DeclareAttribute("Length", IsFpMonoid);
+
+DeclareGlobalFunction("FreeMonoidAndAssignGeneratorVars");
+DeclareGlobalFunction("FreeSemigroupAndAssignGeneratorVars");

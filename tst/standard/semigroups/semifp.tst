@@ -61,8 +61,8 @@ true
 
 # Test IsomorphismFpMonoid, infinite
 gap> IsomorphismFpMonoid(FreeMonoid(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `IsomorphismFpMonoid' on 1 arguments
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2>
 
 # Test IsomorphismFpSemigroup, infinite
 gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
@@ -2412,6 +2412,83 @@ gap> IsomorphismFpSemigroup(F / R);
 gap> IsomorphismFpMonoid(F / R);
 <fp group on the generators [ f1 ]> -> 
 <fp monoid with 2 generators and 3 relations of length 8>
+
+# String for IsElementOfFpMonoid 
+gap> String(One(FreeMonoid(0)));
+"<identity ...>"
+
+# String + Print for FreeMonoid/Semigroup
+gap> String(FreeMonoid("a", "b"));
+"FreeMonoidAndAssignGeneratorVars([ \"a\", \"b\" ])"
+gap> Print(FreeMonoid("a", "b"), "\n");
+FreeMonoidAndAssignGeneratorVars([ "a", "b" ])
+gap> String(FreeSemigroup("a", "b"));
+"FreeSemigroupAndAssignGeneratorVars([ \"a\", \"b\" ])"
+gap> Print(FreeSemigroup("a", "b"), "\n");
+FreeSemigroupAndAssignGeneratorVars([ "a", "b" ])
+
+# String + Print for FpMonoid/Semigroup
+gap> S := RightZeroSemigroup(2);
+<transformation semigroup of degree 2 with 2 generators>
+gap> S := Range(IsomorphismFpSemigroup(S));
+<fp semigroup with 2 generators and 4 relations of length 14>
+gap> String(S);
+"FreeSemigroupAndAssignGeneratorVars([ \"s1\", \"s2\" ])\> / \<\>[ [ s1^2, s1 \
+], [ s1*s2, s2 ], [ s2*s1, s1 ], [ s2^2, s2 ] ]\<"
+gap> Print(S, "\n");
+FreeSemigroupAndAssignGeneratorVars([ "s1", "s2" ]) / 
+[ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s1 ], [ s2^2, s2 ] ]
+gap> FreeSemigroupAndAssignGeneratorVars(["s1", "s2"]) / 
+> [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s1], [s2 ^ 2, s2]];
+<fp semigroup with 2 generators and 4 relations of length 14>
+gap> S := Semigroup(RightZeroSemigroup(2), IdentityTransformation);
+<transformation monoid of degree 2 with 2 generators>
+gap> S := Range(IsomorphismFpMonoid(S));
+<fp monoid with 2 generators and 4 relations of length 14>
+gap> String(S);
+"FreeMonoidAndAssignGeneratorVars([ \"m1\", \"m2\" ])\> / \<\>[ [ m1^2, m1 ], \
+[ m1*m2, m2 ], [ m2*m1, m1 ], [ m2^2, m2 ] ]\<"
+gap> Print(S, "\n");
+FreeMonoidAndAssignGeneratorVars([ "m1", "m2" ]) / 
+[ [ m1^2, m1 ], [ m1*m2, m2 ], [ m2*m1, m1 ], [ m2^2, m2 ] ]
+gap> FreeMonoidAndAssignGeneratorVars(["m1", "m2"]) / 
+> [[m1 ^ 2, m1], [m1 * m2, m2], [m2 * m1, m1], [m2 ^ 2, m2]];
+<fp monoid with 2 generators and 4 relations of length 14>
+gap> Print(AsMonoid(IsFpMonoid, SymmetricInverseMonoid(2)), "\n");
+FreeMonoidAndAssignGeneratorVars([ "m1", "m2" ]) / 
+[ [ m1^2, One(m1) ], [ m2^2, m2 ], [ (m1*m2)^2, m2*m1*m2 ], [ (m2*m1)^2, m2*m1\
+*m2 ] ]
+gap> FreeMonoidAndAssignGeneratorVars(["m1", "m2"]) /
+> [[m1 ^ 2, One(m1)], [m2 ^ 2, m2], [(m1 * m2) ^ 2, m2 * m1 * m2], 
+> [(m2 * m1) ^ 2, m2 * m1 * m2]];
+<fp monoid with 2 generators and 4 relations of length 21>
+
+# IsomorphismFpSemigroup for a free semigroup/monoid
+gap> IsomorphismFpSemigroup(FreeSemigroup(2)); 
+<free semigroup on the generators [ s1, s2 ]> -> 
+<fp semigroup with 2 generators and 0 relations of length 2>
+gap> IsomorphismFpMonoid(FreeMonoid(2)); 
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2>
+gap> IsomorphismFpSemigroup(FreeMonoid(2)); 
+CompositionMapping( <fp monoid with 2 generators and 0 relations of length 2> 
+-> <fp semigroup with 3 generators and 5 relations of length 18>, 
+<free monoid on the generators [ m1, m2 ]> -> 
+<fp monoid with 2 generators and 0 relations of length 2> )
+
+# Factorization for an fp monoid
+gap> F := FreeMonoid(2);
+<free monoid on the generators [ m1, m2 ]>
+gap> F := Range(IsomorphismFpMonoid(F));
+<fp monoid with 2 generators and 0 relations of length 2>
+gap> w := Factorization(F, F.1 * F.2 * One(F));
+[ 2, 3 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(F), w) = F.1 * F.2 * One(F);
+true
+gap> w := Factorization(F, One(F));
+[ 1 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(F), w) = One(F);
+true
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

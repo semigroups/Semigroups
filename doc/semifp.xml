@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  semifp.xml
-#Y  Copyright (C) 2020                                   Luke Elliott
+#Y  Copyright (C) 2020-2022                                   Luke Elliott
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -89,3 +89,28 @@ true]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="FreeMonoidAndAssignGeneratorVars">
+<ManSection>
+  <Func Name="FreeMonoidAndAssignGeneratorVars" Arg="arg..."/>
+  <Func Name="FreeSemigroupAndAssignGeneratorVars" Arg="arg..."/>
+  <Returns>A free semigroup or monoid.</Returns>
+  <Description>
+    <C>FreeMonoidAndAssignGeneratorVars</C> is synonym with:
+    <Log>
+      FreeMonoid(arg...);
+      AssignGeneratorVariables(last);</Log>
+    These functions exist so that the <C>String</C> method for a finitely
+    presented semigroup or monoid to be valid &GAP; input which can be used to
+    reconstruct the semigroup or monoid.
+    <Example><![CDATA[
+gap> F := FreeSemigroupAndAssignGeneratorVars("x", "y");;
+gap> IsBound(x);
+true
+gap> IsBound(y);
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+

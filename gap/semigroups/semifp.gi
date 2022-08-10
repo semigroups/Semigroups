@@ -164,11 +164,123 @@ InstallMethod(ExtRepOfObj, "for an element of an fp monoid",
 # - for both IsFpSemigroup/Monoid and IsFpSemigroup/Monoid +
 # HasNiceMonomorphism
 
+#############################################################################
+# Viewing and printing - elements
+#############################################################################
+
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
 
 InstallMethod(ViewString, "for an f.p. monoid element",
 [IsElementOfFpMonoid], String);
+
+#############################################################################
+# Viewing and printing - free monoids and semigroups
+#############################################################################
+
+InstallMethod(String, "for a free monoid with known generators",
+[IsFreeMonoid and HasGeneratorsOfMonoid],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  return StringFormatted("FreeMonoidAndAssignGeneratorVars({})",
+                         List(GeneratorsOfMonoid(M), String));
+end);
+
+InstallMethod(PrintString, "for a free monoid with known generators",
+[IsFreeMonoid and HasGeneratorsOfMonoid], String);
+
+InstallMethod(PrintObj, "for a free monoid with known generators",
+[IsFreeMonoid and HasGeneratorsOfMonoid],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  Print(PrintString(M));
+  return;
+end);
+
+InstallMethod(String, "for a free semigroup with known generators",
+[IsFreeSemigroup and HasGeneratorsOfSemigroup],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  return StringFormatted("FreeSemigroupAndAssignGeneratorVars({})",
+                         List(GeneratorsOfSemigroup(M), String));
+end);
+
+InstallMethod(PrintString, "for a free semigroup with known generators",
+[IsFreeSemigroup and HasGeneratorsOfSemigroup], String);
+
+InstallMethod(PrintObj, "for a free semigroup with known generators",
+[IsFreeSemigroup and HasGeneratorsOfSemigroup],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  Print(PrintString(M));
+  return;
+end);
+
+#############################################################################
+# Viewing and printing - free monoids and semigroups
+#############################################################################
+
+InstallMethod(String, "for an f.p. monoid with known generators",
+[IsFpMonoid and HasGeneratorsOfMonoid],
+function(M)
+  local result, fam, id;
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  result := PRINT_STRINGIFY(FreeMonoidOfFpMonoid(M),
+                            " / ",
+                            RelationsOfFpMonoid(M));
+
+  fam := ElementsFamily(FamilyObj(FreeMonoidOfFpMonoid(M)));
+
+  if IsEmpty(fam!.names) then
+    return result;
+  fi;
+  id := StringFormatted("One({})", fam!.names[1]);
+  return ReplacedString(result, "<identity ...>", id);
+end);
+
+InstallMethod(PrintString, "for an f.p. monoid with known generators",
+[IsFpMonoid and HasGeneratorsOfMonoid],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  return String(M);
+end);
+
+InstallMethod(PrintObj, "for an f.p. monoid with known generators",
+[IsFpMonoid and HasGeneratorsOfMonoid],
+4,  # to beat the library method
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  Print(PrintString(M));
+  return;
+end);
 
 InstallMethod(ViewString, "for an f.p. monoid with known generators",
 [IsFpMonoid and HasGeneratorsOfMonoid],
@@ -185,7 +297,7 @@ function(M)
                     Length(M)));
 end);
 
-InstallMethod(ViewObj, "for an f.p. monoid",
+InstallMethod(ViewObj, "for an f.p. monoid with known generators",
 [IsFpMonoid and HasGeneratorsOfMonoid],
 4,  # to beat the library method
 function(M)
@@ -193,6 +305,43 @@ function(M)
     TryNextMethod();
   fi;
   Print(ViewString(M));
+end);
+
+InstallMethod(String, "for an f.p. semigroup with known generators",
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  return PRINT_STRINGIFY(FreeSemigroupOfFpSemigroup(M),
+                        " / ",
+                         RelationsOfFpSemigroup(M));
+end);
+
+InstallMethod(PrintString, "for an f.p. semigroup with known generators",
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  return String(M);
+end);
+
+InstallMethod(PrintObj, "for an f.p. semigroup with known generators",
+[IsFpSemigroup and HasGeneratorsOfSemigroup],
+4,  # to beat the library method
+function(M)
+
+  if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
+    TryNextMethod();
+  fi;
+
+  Print(PrintString(M));
+  return;
 end);
 
 InstallMethod(ViewString, "for an f.p. semigroup with known generators",
@@ -219,6 +368,26 @@ function(S)
   fi;
   Print(ViewString(S));
 end);
+
+InstallGlobalFunction(FreeMonoidAndAssignGeneratorVars,
+function(arg...)
+  local F;
+  F := CallFuncList(FreeMonoid, arg);
+  AssignGeneratorVariables(F);
+  return F;
+end);
+
+InstallGlobalFunction(FreeSemigroupAndAssignGeneratorVars,
+function(arg...)
+  local F;
+  F := CallFuncList(FreeSemigroup, arg);
+  AssignGeneratorVariables(F);
+  return F;
+end);
+
+########################################################################
+# Random
+########################################################################
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsFpSemigroup, IsList],
@@ -508,6 +677,55 @@ function(G)
                                           x -> (x ^ inv2) ^ inv1);
 end);
 
+InstallMethod(IsomorphismFpSemigroup, "for a free semigroup",
+[IsFreeSemigroup],
+function(S)
+  local T;
+  T := S / [];
+  return SemigroupIsomorphismByImagesNC(S,
+                                        T,
+                                        GeneratorsOfSemigroup(S),
+                                        GeneratorsOfSemigroup(T));
+end);
+
+InstallMethod(IsomorphismFpMonoid, "for a free monoid",
+[IsFreeMonoid],
+function(S)
+  local T;
+  T := S / [];
+  return SemigroupIsomorphismByImagesNC(S,
+                                        T,
+                                        GeneratorsOfMonoid(S),
+                                        GeneratorsOfMonoid(T));
+end);
+
+InstallMethod(IsomorphismFpSemigroup, "for a free monoid",
+[IsFreeMonoid],
+function(S)
+  local map1, map2;
+  map1 := IsomorphismFpMonoid(S);
+  map2 := IsomorphismFpSemigroup(Range(map1));
+  return CompositionMapping(map2, map1);
+end);
+
+InstallMethod(IsomorphismFpSemigroup, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  return SemigroupIsomorphismByImagesNC(S,
+                                        S,
+                                        GeneratorsOfSemigroup(S),
+                                        GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(IsomorphismFpMonoid, "for an fp monoid",
+[IsFpMonoid],
+function(S)
+  return SemigroupIsomorphismByImagesNC(S,
+                                        S,
+                                        GeneratorsOfSemigroup(S),
+                                        GeneratorsOfSemigroup(S));
+end);
+
 # The next method is copied directly from the GAP library the only change is
 # the return value which uses SemigroupIsomorphismByFunctionNC here but
 # MagmaIsomorphismByFunctionsNC in the GAP library; comments are also removed
@@ -642,6 +860,71 @@ function(G)
     SetIsomorphismFpMonoid(G, hom);
   fi;
   return hom;
+end);
+
+# The next method is copied directly from the GAP library the only change is
+# the return value which uses SemigroupIsomorphismByFunctionNC here but
+# MagmaIsomorphismByFunctionsNC in the GAP library; comments are also removed
+# and other superficial changes to adhere to Semigroups package conventions.
+
+InstallMethod(IsomorphismFpSemigroup, "for an fp monoid", [IsFpMonoid],
+function(M)
+  local AddToExtRep, FMtoFS, FStoFM, FM, FS, id, rels, next, S, map, inv, x,
+  rel;
+
+  AddToExtRep := function(w, id, val)
+    local wlist, i;
+
+    wlist := ExtRepOfObj(w);
+    wlist := ShallowCopy(wlist);
+    for i in [1 .. 1 / 2 * (Length(wlist))] do
+      wlist[2 * i - 1] := wlist[2 * i - 1] + val;
+    od;
+
+    return ObjByExtRep(FamilyObj(id), wlist);
+  end;
+
+  FMtoFS := function(id, w)
+    if IsOne(w) then
+      return id;
+    fi;
+    return AddToExtRep(w, id, 1);
+  end;
+
+  FStoFM := function(id, w)
+    if ExtRepOfObj(w) = [1, 1] then
+      return id;
+    fi;
+    return AddToExtRep(w, id, -1);
+  end;
+
+  FM := FreeMonoidOfFpMonoid(M);
+  FS := FreeSemigroup(List(GeneratorsOfSemigroup(FM), String));
+
+  id := FS.(Position(GeneratorsOfSemigroup(FM), One(FM)));
+
+  rels := [[id * id, id]];
+  for x in GeneratorsOfSemigroup(FS) do
+    if x <> id then
+      Add(rels, [id * x, x]);
+      Add(rels, [x * id, x]);
+    fi;
+  od;
+
+  for rel in RelationsOfFpMonoid(M) do
+    next := [FMtoFS(id, rel[1]), FMtoFS(id, rel[2])];
+    Add(rels, next);
+  od;
+
+  S := FS / rels;
+
+  map := x -> ElementOfFpSemigroup(FamilyObj(S.1),
+                                   FMtoFS(id, UnderlyingElement(x)));
+
+  inv := x -> Image(NaturalHomomorphismByGenerators(FM, M),
+                    FStoFM(One(FM), UnderlyingElement(x)));
+
+  return SemigroupIsomorphismByFunctionNC(M, S, map, inv);
 end);
 
 InstallMethod(IsomorphismFpMonoid, "for a group", [IsGroup],
@@ -1012,6 +1295,9 @@ InstallMethod(Factorization, "for a free semigroup and word",
 [IsFreeSemigroup, IsWord],
 {S, x} -> SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
 
+InstallMethod(MinimalFactorization, "for a free semigroup and word",
+[IsFreeSemigroup, IsWord], Factorization);
+
 # Returns a factorization of the semigroup generators of S, not the monoid
 # generators !!!
 InstallMethod(Factorization, "for a free monoid and word",
@@ -1023,6 +1309,9 @@ function(S, x)
     return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)) + 1;
   fi;
 end);
+
+InstallMethod(MinimalFactorization, "for a free monoid and word",
+[IsFreeMonoid, IsWord], Factorization);
 
 InstallMethod(Length, "for an fp semigroup", [IsFpSemigroup],
 function(S)
