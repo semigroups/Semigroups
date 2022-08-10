@@ -411,11 +411,9 @@ gap> GeneratorsOfSemigroup(L);
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>>, 
-  <left translation on <simple semigroup of size 96, with 6 generators>>, 
   <left translation on <simple semigroup of size 96, with 6 generators>> ]
 gap> GeneratorsOfSemigroup(R);
 [ <right translation on <simple semigroup of size 96, with 6 generators>>, 
-  <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
   <right translation on <simple semigroup of size 96, with 6 generators>>, 
