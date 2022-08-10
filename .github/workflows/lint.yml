@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Install dependencies . . ."
-        run: sudo pip install gaplint==1.1.0
+        run: sudo pip install gaplint==1.1.2
       - name: "Run gaplint . . ."
         run: bash etc/gaplint.sh
 
