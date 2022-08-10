@@ -3,6 +3,11 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.0.1 (released 11/08/2022)
+
+This is a minor release resolving some issues in the kernel module and build
+system [[Max Horn][]].
+
 ### Version 5.0.0 (released 05/08/2022)
 
 This is a major release with several new features and some backwards
