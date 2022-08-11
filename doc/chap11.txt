@@ -1562,8 +1562,8 @@
   elements  in  [10XC(n)[110X. Recall that for a transformation [3Xtrans[103X and integer [3Xn[103X the
   function [10XAsDigraph[110X returns a digraph with [3Xn[103X vertices and an edge with source
   [10Xx[110X  and  range  [10Xx^trans[110X  for  every  [10Xx[110X  in [10X[1 .. n][110X. See [2XAsDigraph[102X ([14XDigraphs:
-  AsDigraph  for  a  binary  relation[114X). Then [10XCanonicalTransformation[110X returns a
-  canonical representative of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
+  AsDigraph  for  a  transformation  or  perm[114X).  Then  [10XCanonicalTransformation[110X
+  returns a canonical representative of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Transformation([5, 1, 4, 1, 1]);[127X[104X
