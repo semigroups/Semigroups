@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.0.1
+                                     5.0.2
   
   
-                                 11 August 2022
+                                 12 August 2022
   
   
                                  James Mitchell
@@ -30,7 +30,7 @@
   
                              Fernando Flores Brito
   
-                                  Nicholas Ham
+                                    Nick Ham
   
                                  Robert Hancock
   
@@ -117,8 +117,9 @@
   
   
   Fernando Flores Brito
+      Email:    [7Xmailto:ffloresbrito@gmail.com[107X
       Homepage: [7Xhttps://github.com/ffloresbrito[107X
-  Nicholas Ham
+  Nick Ham
       Email:    [7Xmailto:nicholas.charles.ham@gmail.com[107X
       Homepage: [7Xhttps://n-ham.github.io[107X
   Robert Hancock
@@ -139,6 +140,7 @@
   
   
   Julius Jonusas
+      Email:    [7Xmailto:j.jonusas@gmail.com[107X
       Homepage: [7Xhttp://julius.jonusas.work[107X
   Chinmaya Nagpal
       Email:    [7Xmailto:chinmaya1011@gmail.com[107X
@@ -202,7 +204,7 @@
       Email:    [7Xmailto:gap@wilf-wilson.net[107X
       Homepage: [7Xhttps://wilf.me[107X
   Michael Young
-      Email:    [7Xmailto:mct25@st-and.ac.uk[107X
+      Email:    [7Xmailto:mct25@st-andrews.ac.uk[107X
       Homepage: [7Xhttps://mtorpey.github.io/[107X
       Address:  [33X[0;14YJack  Cole  Building, North Haugh, St Andrews, Fife, KY16 9SX,
                 Scotland[133X

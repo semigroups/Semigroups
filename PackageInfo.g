@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.0.1",
-Date := "11/08/2022",  # dd/mm/yyyy format
+Version := "5.0.2",
+Date := "12/08/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -141,11 +141,12 @@ Persons := [
     FirstNames    := "Fernando",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "ffloresbrito@gmail.com",
     WWWHome       := "https://github.com/ffloresbrito"),
 
   rec(
     LastName      := "Ham",
-    FirstNames    := "Nicholas",
+    FirstNames    := "Nick",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "nicholas.charles.ham@gmail.com",
@@ -193,6 +194,7 @@ Persons := [
     FirstNames    := "Julius",
     IsAuthor      := true,
     IsMaintainer  := false,
+    Email         := "j.jonusas@gmail.com",
     WWWHome       := "http://julius.jonusas.work",
     Place         := "Brussels, Belgium"),
 
@@ -333,7 +335,7 @@ Persons := [
      FirstNames    := "Michael",
      IsAuthor      := true,
      IsMaintainer  := false,
-     Email         := "mct25@st-and.ac.uk",
+     Email         := "mct25@st-andrews.ac.uk",
      WWWHome       := "https://mtorpey.github.io/",
      PostalAddress := _STANDREWSCS,
      Place         := "St Andrews",
