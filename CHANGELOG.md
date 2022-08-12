@@ -3,6 +3,11 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.0.2 (released 12/08/2022)
+
+This is a minor release hopefully resolving some crashes originating in
+[libsemigroups][].
+
 ### Version 5.0.1 (released 11/08/2022)
 
 This is a minor release resolving some issues in the kernel module and build
