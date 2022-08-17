@@ -13,11 +13,9 @@ DeclareCategory("IsDualSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsDualSemigroupElement");
 DeclareAttribute("DualSemigroup", IsSemigroup);
 
-# Every semigroup is mathematically a dual semigroup
-# What we care about is whether it is represented as one
-DeclareRepresentation("IsDualSemigroupRep",
-                      IsDualSemigroupElementCollection and IsSemigroup,
-                      []);
+# TODO (major release): remove "Rep" and update docs
+DeclareCategory("IsDualSemigroupRep",
+                IsDualSemigroupElementCollection and IsSemigroup);
 
 DeclareAttribute("DualSemigroupOfFamily", IsFamily);
 DeclareAttribute("AntiIsomorphismDualSemigroup", IsSemigroup);
