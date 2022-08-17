@@ -96,15 +96,17 @@ false]]></Example> </Description> </ManSection>
 <#GAPDoc Label="IsDualSemigroupRep">
   <ManSection>
     <Filt Name = "IsDualSemigroupRep" Type = "Category" Arg="sgrp"/>
-    <Returns>Returns <K>true</K> if <A>sgrp</A> is represented as
-      a dual semigroup.</Returns>
+    <Returns>Returns <K>true</K> if <A>sgrp</A> lies in the category of
+      dual semigroups.</Returns>
     <Description>
       Semigroups created using <Ref Func="DualSemigroup"/>
-      normally have this representation. The exception is semigroups
+      normally lie in this category. The exception is semigroups
       which are the dual of semigroups already lying in this category.
-      That is, a semigroup has the representation
+      That is, a semigroup lies in the category
       <Ref Filt="IsDualSemigroupRep"/> if and only if the corresponding
-      dual semigroup does not.
+      dual semigroup does not. Note that this is not a Representation in the
+      GAP sense, and will likely be renamed in a future major release of the
+      package.
 <Example>
 <![CDATA[
 gap> S := Semigroup([Transformation([3, 5, 1, 1, 2]),
