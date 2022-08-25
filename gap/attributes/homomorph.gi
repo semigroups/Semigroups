@@ -154,8 +154,11 @@ InstallMethod(SemigroupIsomorphismByImages, "for two semigroup and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
 function(S, T, gens, imgs)
   local hom;
+  # TODO(Homomorph): we could check for other isomorphism invariants here, like
+  # we require that gens, and imgs are duplicate free for example, and that S
+  # and T have the same size etc
   hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-  if IsBijective(hom) then
+  if hom <> fail and IsBijective(hom) then
     return hom;
   fi;
   return fail;

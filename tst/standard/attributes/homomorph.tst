@@ -157,6 +157,12 @@ PartialPerm( [ ], [ ] ) ] ), [ IdentityTransformation ], [ PartialPerm( [ ], [\
  ] ) ] )
 gap> EvalString(String(hom)) = hom;
 true
+gap> S := TrivialSemigroup();
+<trivial transformation group of degree 0 with 1 generator>
+gap> T := FullTransformationSemigroup(2);
+<full transformation monoid of degree 2>
+gap> SemigroupIsomorphismByImages(S, T, [S.1, S.1], [T.1, T.2]);
+fail
 
 # homomorph: SemigroupHomomorphismByImages, for infinite semigroup(s)
 gap> S := FreeSemigroup(1);;
