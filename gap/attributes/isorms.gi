@@ -616,6 +616,7 @@ function(G)
                                                        G,
                                                        GeneratorsOfGroup(H),
                                                        GeneratorsOfGroup(G)));
+  SetIsBijective(iso, true);
   SetNiceMonomorphism(G, iso);
   SetIsHandledByNiceMonomorphism(G, true);
   UseIsomorphismRelation(G, H);
