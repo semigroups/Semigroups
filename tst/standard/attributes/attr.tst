@@ -2113,6 +2113,17 @@ gap> MaximalLClasses(S);
 gap> MaximalRClasses(S);
 [ <Green's R-class: PBR([ [ -1 ] ], [ [ 1 ] ])> ]
 
+# Issue 868 - IsMonoidAsSemigroup assumed HasMultiplicativeNeutralElement
+gap> S := SemigroupByMultiplicationTable(
+> [[1, 1, 1, 1, 5, 6],
+>  [1, 1, 1, 2, 5, 6],
+>  [3, 3, 3, 3, 5, 6],
+>  [1, 2, 3, 4, 5, 6],
+>  [5, 5, 5, 5, 5, 5],
+>  [6, 6, 6, 6, 6, 6]]);;
+gap> S := AsMonoid(IsFpMonoid, S);
+<fp monoid with 5 generators and 25 relations of length 80>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
