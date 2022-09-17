@@ -315,7 +315,9 @@ function(S)
                                                   map(p),
                                                   map(p ^ -1)));
   H := Group(Y);
-  SetNiceMonomorphism(H, GroupHomomorphismByImagesNC(H, G, Y, X));
+  map := GroupHomomorphismByImagesNC(H, G, Y, X);
+  SetIsBijective(map, true);
+  SetNiceMonomorphism(H, map);
   SetIsHandledByNiceMonomorphism(H, true);
   UseIsomorphismRelation(H, G);
   return H;
