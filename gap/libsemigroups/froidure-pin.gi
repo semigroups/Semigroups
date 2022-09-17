@@ -724,7 +724,7 @@ function(S)
   if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     pos_to_pos_sorted := {T, i} -> i;
     product := FroidurePinMemFnRec(S).product_by_reduction;
-    FroidurePinMemFnRec(S).enumerate(T, N);
+    FroidurePinMemFnRec(S).enumerate(T, N + 1);
   else
     pos_to_pos_sorted := FroidurePinMemFnRec(S).position_to_sorted_position;
     product := FroidurePinMemFnRec(S).fast_product;
