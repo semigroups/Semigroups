@@ -782,8 +782,8 @@ end);
 
 InstallMethod(Size,
 "for the semigroup of translations of a completely 0-simple semigroup",
-[IsTranslationsSemigroup and IsWholeFamily], 
-1, # To beat the method for arbitrary underlying semigroups which calls AsList 
+[IsTranslationsSemigroup and IsWholeFamily],
+1,  # To beat the method for arbitrary underlying semigroups which calls AsList
 function(T)
   local S, G, rms, n;
   S := UnderlyingSemigroup(T);
@@ -803,7 +803,7 @@ end);
 InstallMethod(Size,
 "for the semigroup of translations of a completely simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
-1, # To beat the method for arbitrary underlying semigroups which calls AsList 
+1,  # To beat the method for arbitrary underlying semigroups which calls AsList
 function(T)
   local S, G, rms, n;
   S := UnderlyingSemigroup(T);

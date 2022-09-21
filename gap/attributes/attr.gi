@@ -1114,7 +1114,7 @@ function(S)
   sortedlist := AsSortedList(S);
 
   t    := PermList(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
-  tinv := t^-1;
+  tinv := t ^ -1;
   M    := MultiplicationTable(S);
 
   return List([1 .. n], i -> List([1 .. n], j -> M[i ^ tinv][j ^ tinv] ^ t));
