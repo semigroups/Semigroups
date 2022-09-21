@@ -9,11 +9,9 @@
 ##
 gap> START_TEST("Semigroups package: extreme/translat.tst");
 gap> LoadPackage("semigroups", false);;
-
-#
 gap> SEMIGROUPS.StartTest();
 
-#T# RZMS Translational Hull
+# RZMS Translational Hull
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
 gap> mat := [[0, G.2], [G.1, G.1], [G.2, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
@@ -31,7 +29,7 @@ gap> for h in TranslationalHull(S) do
 > od;
 > od;
 
-#T# RMS Translational Hull
+# RMS Translational Hull
 gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
 gap> mat := TransposedMat([[G.1, G.2, G.3 * G.2, G.1 * G.3],
 > [G.2 * G.2, G.3, G.1, G.3 * G.3]]);;
@@ -39,7 +37,7 @@ gap> S := ReesMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
 444
 
-#T# SEMIGROUPS_UnbindVariables
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(l);
 gap> Unbind(mat);
