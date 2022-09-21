@@ -23,12 +23,7 @@
 ## http://dx.doi.org/10.1016/0021-8693(77)90383-0.
 #############################################################################
 
-# TODO: make sure you can't mix translations of different types in one
-# semigroup
-
-# TODO: have the functions in this file accept an optional number_only arg
-
-# TODO: have zero-simple semigroups compute their translations using this code
+# TODO(later): compute translations of zero-simple semigroups using this
 
 # TODO(later): swap Rows/Columns if one is smaller
 

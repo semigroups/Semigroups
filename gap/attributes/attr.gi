@@ -1110,12 +1110,11 @@ InstallMethod(MultiplicationTableWithCanonicalPositions,
 [IsSemigroup and CanUseFroidurePin],
 function(S)
   local n, sortedlist, t, tinv, M;
-  n           := Size(S);
-  sortedlist  := AsSortedList(S);
+  n          := Size(S);
+  sortedlist := AsSortedList(S);
 
-  t    := Transformation(List([1 .. n],
-                         i -> PositionCanonical(S, sortedlist[i])));
-  tinv := InverseOfTransformation(t);
+  t    := PermList(List([1 .. n], i -> PositionCanonical(S, sortedlist[i])));
+  tinv := t^-1;
   M    := MultiplicationTable(S);
 
   return List([1 .. n], i -> List([1 .. n], j -> M[i ^ tinv][j ^ tinv] ^ t));
