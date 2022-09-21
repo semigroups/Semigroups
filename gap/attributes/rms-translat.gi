@@ -64,8 +64,7 @@ SEMIGROUPS.RZMSTupleToRightTranslation := function(S, idx_list, gp_list)
   foo := function(x)
     if x = zero then
       return zero;
-    fi;
-    if idx_list[x[3]] <> 0 then
+    elif idx_list[x[3]] <> 0 then
       return RMSElement(S,
                         x[1],
                         x[2] * gp_list[x[3]],
@@ -153,7 +152,7 @@ SEMIGROUPS.RightTransToNormalRMSTupleNC := function(R, x)
   return [group_func, Transformation(trans)];
 end;
 
-# This should go somewhere else
+# TODO(later): This should go somewhere else
 SEMIGROUPS.IsNormalRMSOverGroup := function(S)
   local mat, T, one;
 
@@ -590,7 +589,7 @@ end;
 # 2. Methods for (zero) simple semigroups
 #############################################################################
 
-# The generators are generators of partial transformation monoid to act on the
+# The generators are generators of a partial transformation monoid to act on the
 # index sets, together with functions to the generators of the group.
 InstallMethod(GeneratorsOfSemigroup,
 "for the semigroup of left/right translations of a finite 0-simple semigroup",
@@ -783,7 +782,8 @@ end);
 
 InstallMethod(Size,
 "for the semigroup of translations of a completely 0-simple semigroup",
-[IsTranslationsSemigroup and IsWholeFamily], 1,
+[IsTranslationsSemigroup and IsWholeFamily], 
+1, # To beat the method for arbitrary underlying semigroups which calls AsList 
 function(T)
   local S, G, rms, n;
   S := UnderlyingSemigroup(T);
@@ -791,7 +791,7 @@ function(T)
     TryNextMethod();
   fi;
   rms := Range(IsomorphismReesZeroMatrixSemigroup(S));
-  G           := UnderlyingSemigroup(rms);
+  G   := UnderlyingSemigroup(rms);
   if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(rms));
   else
@@ -802,7 +802,8 @@ end);
 
 InstallMethod(Size,
 "for the semigroup of translations of a completely simple semigroup",
-[IsTranslationsSemigroup and IsWholeFamily], 1,
+[IsTranslationsSemigroup and IsWholeFamily],
+1, # To beat the method for arbitrary underlying semigroups which calls AsList 
 function(T)
   local S, G, rms, n;
   S := UnderlyingSemigroup(T);
@@ -810,7 +811,7 @@ function(T)
     TryNextMethod();
   fi;
   rms := Range(IsomorphismReesMatrixSemigroup(S));
-  G           := UnderlyingSemigroup(rms);
+  G   := UnderlyingSemigroup(rms);
   if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(rms));
   else
@@ -886,9 +887,7 @@ function(R, group_func, t)
     ErrorNoReturn("the second argument must be a list of group elements ",
                   "of length equal to the number of rows of the underlying ",
                   "semigroup of the first argument");
-  fi;
-
-  if not (IsTransformation(t) and
+  elif not (IsTransformation(t) and
           DegreeOfTransformation(t) <= Size(Matrix(S))) then
     ErrorNoReturn("the third argument must be a transformation on ",
                   "the number of columns of the underlying semigroup of the ",
@@ -936,14 +935,10 @@ function(H, g, chi, psi)
     ErrorNoReturn("the second argument must be an element of the group that ",
                   "the underlying semigroup of the first argument is defined ",
                   "over");
-  fi;
-
-  if LargestImageOfMovedPoint(chi) > Length(I) then
+  elif LargestImageOfMovedPoint(chi) > Length(I) then
     ErrorNoReturn("the third argument must be a transformation on the rows of ",
                   "the underlying semigroup of the first argument");
-  fi;
-
-  if LargestImageOfMovedPoint(psi) > Length(J) then
+  elif LargestImageOfMovedPoint(psi) > Length(J) then
     ErrorNoReturn("the fourth argument must be a transformation on the rows ",
                   "of the underlying semigroup of the first argument");
   fi;
