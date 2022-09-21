@@ -8,7 +8,8 @@
 #############################################################################
 ##
 
-# The declarations in this file are purposefully undocumented.
+# The definitions in this file are internal, and hence not included in the
+# user documentation.
 DeclareCategory("IsTranslationOfNormalRMS", IsSemigroupTranslation);
 DeclareCategory("IsLeftTranslationOfNormalRMS",
                 IsTranslationOfNormalRMS and IsLeftTranslation);
