@@ -1,24 +1,24 @@
 #############################################################################
 ##
 # W  rms-translat.gi
-# Y  Copyright (C) 2016-22                                         Finn Smith
+# Y  Copyright (C) 2016-22                                      Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 #############################################################################
-## This file contains special methods for translations semigroups and
+## This file contains special methods for translation semigroups and
 ## translational hulls of completely simple and 0-simple semigroups.
 ##
 ## These methods are based on the constructions given in
 ## Petrich, M. (1968)
-## ‘The translational hull of a completely 0-simple semigroup’,
+## 'The translational hull of a completely 0-simple semigroup',
 ## Glasgow Mathematical Journal, 9(01), p. 1.
 ## doi: 10.1017/s0017089500000239
 ##
 ## A.H Clifford, Mario Petrich, (1977)
-## Some classes of completely regular semigroups,
+## 'Some classes of completely regular semigroups',
 ## Journal of Algebra, Volume 46, Issue 2, 1977, Pages 462-480,
 ## http://dx.doi.org/10.1016/0021-8693(77)90383-0.
 #############################################################################
