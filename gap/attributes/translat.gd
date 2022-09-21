@@ -1,7 +1,7 @@
 ############################################################################
 ##
 # W  translat.gd
-# Y  Copyright (C) 2015-22                      James D. Mitchell, Finn Smith
+# Y  Copyright (C) 2015-22                                      Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,8 +10,8 @@
 
 #! @Chapter Translations
 
-#! In this chapter we describe the functionality in Semigroups for working with
-#! translations of semigroups. The notation used (as well as a number of
+#! In this chapter we describe the functionality in &SEMIGROUPS; for working
+#! with translations of semigroups. The notation used (as well as a number of
 #! results) is based on <Cite Key="Petrich1970aa"/>. Translations are of
 #! interest mainly due to their role in ideal extensions. A description of
 #! this role can also be found in <Cite Key="Petrich1970aa"/>.  The
@@ -212,10 +212,7 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! gap> S := RectangularBand(3, 4);;
 #! gap> L := LeftTranslations(S);;
 #! gap> s := AsList(S)[1];;
-#! gap> f := function(x)
-#! > return s * x;
-#! > end;;
-#! gap> map := MappingByFunction(S, S, f);;
+#! gap> map := MappingByFunction(S, S, x -> s * x);;
 #! gap> l := LeftTranslation(L, map);
 #! <left translation on <regular transformation semigroup of size 12, 
 #!  degree 8 with 4 generators>>
@@ -232,8 +229,10 @@ DeclareOperation("RightTranslation",
 #! @Arguments H, l, r
 #! @Description
 #! If <A>H</A> is a translational hull over a semigroup <M>S</M>, and <A>l</A>
-#! and <A>r</A> are left and right translations respectively over <M>S</M>, then
-#! this function returns the bitranslation <M>(<A>l</A>, <A>r</A>)</M>.
+#! and <A>r</A> are linked left and right translations respectively over
+#! <M>S</M>, then this function returns the bitranslation
+#! <M>(<A>l</A>, <A>r</A>)</M>. If <A>l</A> and <A>r</A> are not linked, then
+#! an error is produced.
 #! @BeginExampleSession
 #! gap> G := Group((1, 2), (3, 4));;
 #! gap> A := AsList(G);;
