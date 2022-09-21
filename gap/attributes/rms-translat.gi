@@ -288,7 +288,7 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
     Add(reps, rep);
   od;
 
-  dive := function(v)
+  dive := function(v, scc_rep)
     local y, z, defns, x, w;
     if v <= r then
       y := row_definitions[v];
@@ -306,11 +306,10 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
         x := [mat[z][tau[v]] * y[1], y[2] * mat[sigma[z]][v] ^ -1];
       fi;
       if IsBound(defns[z]) then
-        # FIXME: slightly evil to use rep here
-        Add(conditions[rep], [defns[z], x]);
+        Add(conditions[scc_rep], [defns[z], x]);
       else
         defns[z] := x;
-        dive(w);
+        dive(w, scc_rep);
       fi;
     od;
   end;
@@ -323,7 +322,7 @@ SEMIGROUPS.RZMSGroupLinkingConditions := function(S, tau, sigma)
 
   for rep in reps do
     row_definitions[rep] := [e, e];
-    dive(rep);
+    dive(rep, rep);
   od;
 
   return rec(reps := reps,
