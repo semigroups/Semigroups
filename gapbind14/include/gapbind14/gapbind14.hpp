@@ -94,22 +94,22 @@ namespace gapbind14 {
   struct IsGapBind14Type : std::false_type {};
 
   template <typename T>
-  struct IsGapBind14Type<T &> : IsGapBind14Type<T> {};
+  struct IsGapBind14Type<T&> : IsGapBind14Type<T> {};
 
   template <typename T>
-  struct IsGapBind14Type<T &&> : IsGapBind14Type<T> {};
+  struct IsGapBind14Type<T&&> : IsGapBind14Type<T> {};
 
   template <typename T>
-  struct IsGapBind14Type<T const &> : IsGapBind14Type<T> {};
+  struct IsGapBind14Type<T const&> : IsGapBind14Type<T> {};
 
   template <typename T>
   struct IsGapBind14Type<std::shared_ptr<T>> : IsGapBind14Type<T> {};
 
-  void init_library(char const *);
-  void init_kernel(char const *);
+  void init_library(char const*);
+  void init_kernel(char const*);
 
   class Module;  // Forward decl
-  Module &module();
+  Module& module();
 
   ////////////////////////////////////////////////////////////////////////
   // Helper functions
@@ -117,13 +117,13 @@ namespace gapbind14 {
 
   namespace detail {
 
-    std::unordered_map<std::string, void (*)()> &init_funcs();
+    std::unordered_map<std::string, void (*)()>& init_funcs();
 
-    int emplace_init_func(char const *module_name, void (*func)());
+    int emplace_init_func(char const* module_name, void (*func)());
 
     // Convert object to string
     template <typename T>
-    std::string to_string(T const &n) {
+    std::string to_string(T const& n) {
       std::ostringstream stm;
       stm << n;
       return stm.str();
@@ -135,19 +135,19 @@ namespace gapbind14 {
     gapbind14_subtype obj_subtype(Obj o);
 
     template <typename T>
-    T *obj_cpp_ptr(Obj o) {
+    T* obj_cpp_ptr(Obj o) {
       // Couldn't add static_assert that IsGapBind14Type<T>::value is true
       // because sometimes we call this function when T is a base class of a
       // class where IsGapBind14Type<T>::value is true.
       require_gapbind14_obj(o);
       // Also cannot check that subtype of o corresponds to T for the same
       // reason as above T might be a base class of a GapBind14Type.
-      return reinterpret_cast<T *>(ADDR_OBJ(o)[1]);
+      return reinterpret_cast<T*>(ADDR_OBJ(o)[1]);
     }
 
-    char const *copy_c_str(std::string const &str);
+    char const* copy_c_str(std::string const& str);
 
-    char const *params_c_str(size_t nr);
+    char const* params_c_str(size_t nr);
 
     ////////////////////////////////////////////////////////////////////////
     // SubtypeBase class - for polymorphism
@@ -163,7 +163,7 @@ namespace gapbind14 {
 
       virtual ~SubtypeBase() {}
 
-      std::string const &name() const {
+      std::string const& name() const {
         return _name;
       }
 
@@ -201,7 +201,7 @@ namespace gapbind14 {
     std::vector<StructGVarFunc>                        _funcs;
     std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
-    std::vector<detail::SubtypeBase *>                 _subtypes;
+    std::vector<detail::SubtypeBase*>                  _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
 
     static size_t _next_subtype;
@@ -214,16 +214,16 @@ namespace gapbind14 {
           _subtypes(),
           _type_to_subtype() {}
 
-    Module(Module const &) = delete;
-    Module(Module &&)      = delete;
-    Module &operator=(Module const &) = delete;
-    Module &operator=(Module &&) = delete;
+    Module(Module const&) = delete;
+    Module(Module&&)      = delete;
+    Module& operator=(Module const&) = delete;
+    Module& operator=(Module&&) = delete;
 
     ~Module() = default;
 
     void clear();
 
-    gapbind14_subtype subtype(std::string const &subtype_name) const;
+    gapbind14_subtype subtype(std::string const& subtype_name) const;
 
     template <typename T>
     gapbind14_subtype subtype() const {
@@ -235,7 +235,7 @@ namespace gapbind14 {
       return it->second;
     }
 
-    const char *subtype_name(Obj o) const {
+    const char* subtype_name(Obj o) const {
       return _subtypes.at(detail::obj_subtype(o))->name().c_str();
     }
 
@@ -255,16 +255,16 @@ namespace gapbind14 {
       _subtypes.at(detail::obj_subtype(o))->free(o);
     }
 
-    StructGVarFunc const *funcs() const {
+    StructGVarFunc const* funcs() const {
       return &_funcs[0];
     }
 
-    StructGVarFunc const *mem_funcs(std::string const &nm) const {
+    StructGVarFunc const* mem_funcs(std::string const& nm) const {
       return &_mem_funcs[subtype(nm)][0];
     }
 
     template <typename T>
-    gapbind14_subtype add_subtype(std::string const &nm) {
+    gapbind14_subtype add_subtype(std::string const& nm) {
       bool inserted
           = _subtype_names.insert(std::make_pair(nm, _subtypes.size())).second;
       if (!inserted) {
@@ -278,7 +278,7 @@ namespace gapbind14 {
 
     template <typename... Args>
     void add_func(std::string        fnm,
-                  std::string const &nm,
+                  std::string const& nm,
                   Obj (*func)(Args...)) {
       static_assert(sizeof...(Args) > 0,
                     "there must be at least 1 parameter: Obj self");
@@ -291,9 +291,9 @@ namespace gapbind14 {
     }
 
     template <typename... Args>
-    void add_mem_func(std::string const &sbtyp,
+    void add_mem_func(std::string const& sbtyp,
                       std::string        flnm,
-                      std::string const &nm,
+                      std::string const& nm,
                       Obj (*func)(Args...)) {
       static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
       _mem_funcs.at(subtype(sbtyp))
@@ -306,11 +306,11 @@ namespace gapbind14 {
 
     void finalize();
 
-    std::vector<detail::SubtypeBase *>::const_iterator begin() const noexcept {
+    std::vector<detail::SubtypeBase*>::const_iterator begin() const noexcept {
       return _subtypes.cbegin();
     }
 
-    std::vector<detail::SubtypeBase *>::const_iterator end() const noexcept {
+    std::vector<detail::SubtypeBase*>::const_iterator end() const noexcept {
       return _subtypes.cend();
     }
   };
@@ -323,7 +323,7 @@ namespace gapbind14 {
   struct to_cpp<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
     using cpp_type = std::decay_t<T>;
 
-    std::decay_t<T> &operator()(Obj o) const {
+    std::decay_t<T>& operator()(Obj o) const {
       detail::require_gapbind14_obj(o);
       return *detail::obj_cpp_ptr<std::decay_t<T>>(o);
     }
@@ -333,16 +333,16 @@ namespace gapbind14 {
   struct to_gap<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
     using cpp_type = T;
 
-    Obj operator()(T const &obj) const {
-      return to_gap<T *>()(new T(obj));
+    Obj operator()(T const& obj) const {
+      return to_gap<T*>()(new T(obj));
     }
   };
 
   template <typename T>
-  struct to_gap<T *, std::enable_if_t<IsGapBind14Type<T>::value>> {
+  struct to_gap<T*, std::enable_if_t<IsGapBind14Type<T>::value>> {
     using cpp_type = T;
 
-    Obj operator()(T *ptr) const {
+    Obj operator()(T* ptr) const {
       Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(module().subtype<T>());
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
@@ -356,7 +356,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   template <typename Wild>
-  static void InstallGlobalFunction(char const *name, Wild f) {
+  static void InstallGlobalFunction(char const* name, Wild f) {
     size_t const n = detail::all_wilds<Wild>().size();
     detail::all_wilds<Wild>().push_back(f);
     module().add_func(
@@ -374,7 +374,7 @@ namespace gapbind14 {
 
   namespace detail {
     template <typename T, typename... Args>
-    T *make(Args... params) {
+    T* make(Args... params) {
       return new T(std::forward<Args>(params)...);
     }
   }  // namespace detail
@@ -386,14 +386,14 @@ namespace gapbind14 {
         : _name(name), _subtype(module().add_subtype<T>(name)) {}
 
     template <typename... Args>
-    class_ &def(init<Args...> x, std::string name = "make") {
+    class_& def(init<Args...> x, std::string name = "make") {
       return def(name.c_str(), &detail::make<T, Args...>);
     }
 
     template <typename Wild>
-    auto def(char const *mem_fn_name, Wild f)
+    auto def(char const* mem_fn_name, Wild f)
         -> std::enable_if_t<std::is_member_function_pointer<Wild>::value,
-                            class_ &> {
+                            class_&> {
       size_t const n = detail::all_wild_mem_fns<Wild>().size();
       detail::all_wild_mem_fns<Wild>().push_back(f);
       module().add_mem_func(
@@ -406,9 +406,9 @@ namespace gapbind14 {
     }
 
     template <typename Wild>
-    auto def(char const *mem_fn_name, Wild f)
+    auto def(char const* mem_fn_name, Wild f)
         -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value,
-                            class_ &> {
+                            class_&> {
       size_t const n = detail::all_wilds<Wild>().size();
       detail::all_wilds<Wild>().push_back(f);
       module().add_mem_func(
