@@ -43,25 +43,25 @@ namespace gapbind14 {
 
 }  // namespace gapbind14
 
-void init_froidure_pin_bipart(gapbind14::Module &);
-void init_froidure_pin_bmat(gapbind14::Module &);
-void init_froidure_pin_matrix(gapbind14::Module &);
-void init_froidure_pin_max_plus_mat(gapbind14::Module &);
-void init_froidure_pin_min_plus_mat(gapbind14::Module &);
-void init_froidure_pin_pbr(gapbind14::Module &);
-void init_froidure_pin_pperm(gapbind14::Module &);
-void init_froidure_pin_transf(gapbind14::Module &);
+void init_froidure_pin_bipart(gapbind14::Module&);
+void init_froidure_pin_bmat(gapbind14::Module&);
+void init_froidure_pin_matrix(gapbind14::Module&);
+void init_froidure_pin_max_plus_mat(gapbind14::Module&);
+void init_froidure_pin_min_plus_mat(gapbind14::Module&);
+void init_froidure_pin_pbr(gapbind14::Module&);
+void init_froidure_pin_pperm(gapbind14::Module&);
+void init_froidure_pin_transf(gapbind14::Module&);
 
-void init_froidure_pin_base(gapbind14::Module &m);
+void init_froidure_pin_base(gapbind14::Module& m);
 
 template <typename element_type>
-void bind_froidure_pin(gapbind14::Module &m, std::string name) {
+void bind_froidure_pin(gapbind14::Module& m, std::string name) {
   using libsemigroups::FroidurePin;
   using FroidurePin_    = FroidurePin<element_type>;
   using const_reference = typename FroidurePin<element_type>::const_reference;
   gapbind14::class_<FroidurePin_>(name)
       .def(gapbind14::init<>{}, "make")
-      .def(gapbind14::init<FroidurePin_ const &>{}, "copy")
+      .def(gapbind14::init<FroidurePin_ const&>{}, "copy")
       .def("add_generator", &FroidurePin_::add_generator)
       .def("generator", &FroidurePin_::generator)
       .def("closure",
@@ -87,10 +87,10 @@ void bind_froidure_pin(gapbind14::Module &m, std::string name) {
       .def("finished", &FroidurePin_::finished)
       .def("position", &FroidurePin_::position)
       .def("rules",
-           [](FroidurePin_ &S) {
+           [](FroidurePin_& S) {
              return gapbind14::make_iterator(S.cbegin_rules(), S.cend_rules());
            })
-      .def("idempotents", [](FroidurePin_ &S) {
+      .def("idempotents", [](FroidurePin_& S) {
         return gapbind14::make_iterator(S.cbegin_idempotents(),
                                         S.cend_idempotents());
       })
@@ -109,30 +109,30 @@ namespace libsemigroups {
 
   template <>
   struct Complexity<WBMat8> {
-    constexpr inline size_t operator()(WBMat8 const &x) const noexcept {
+    constexpr inline size_t operator()(WBMat8 const& x) const noexcept {
       return Complexity<BMat8>()(x.first);
     }
   };
 
   template <>
   struct Degree<WBMat8> {
-    size_t operator()(WBMat8 const &x) const noexcept {
+    size_t operator()(WBMat8 const& x) const noexcept {
       return x.second;
     }
   };
 
   template <>
   struct One<WBMat8> {
-    WBMat8 operator()(WBMat8 const &x) const noexcept {
+    WBMat8 operator()(WBMat8 const& x) const noexcept {
       return std::make_pair(One<BMat8>()(x.first), x.second);
     }
   };
 
   template <>
   struct Product<WBMat8> {
-    void operator()(WBMat8 &      xy,
-                    WBMat8 const &x,
-                    WBMat8 const &y,
+    void operator()(WBMat8&       xy,
+                    WBMat8 const& x,
+                    WBMat8 const& y,
                     size_t = 0) const noexcept {
       return Product<BMat8>()(xy.first, x.first, y.first);
     }
@@ -140,14 +140,14 @@ namespace libsemigroups {
 
   template <>
   struct Hash<WBMat8> {
-    size_t operator()(WBMat8 const &x) {
+    size_t operator()(WBMat8 const& x) {
       return Hash<BMat8>()(x.first);
     }
   };
 
   template <>
   struct IncreaseDegree<WBMat8> {
-    inline void operator()(WBMat8 const &) const noexcept {}
+    inline void operator()(WBMat8 const&) const noexcept {}
   };
 
 }  // namespace libsemigroups
