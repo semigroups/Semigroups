@@ -293,13 +293,13 @@ gap> result := [];;
 > result;
 [ [ 1 ], [ 2 ], [ 2, 1 ], [ 1, 2 ], [ 1, 2, 1 ], [ 2, 1, 2 ] ]
 gap> EqualInFreeBand(["a"], [1]);
-Error, expected a list of pos. int.s, got list (string)
+Error, expected int, found list (string)
 gap> EqualInFreeBand([], [1]);
 false
 gap> EqualInFreeBand([], []);
 true
-gap> EqualInFreeBand([], ["a"]);  # FIXME(later) this should give an error
-false
+gap> EqualInFreeBand([], ["a"]);
+Error, expected int, found list (string)
 gap> EqualInFreeBand([1], [2, 2, 2]);
 false
 

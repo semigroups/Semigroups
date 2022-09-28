@@ -48,6 +48,7 @@
 #include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
 #include "libsemigroups/cong-intf.hpp"  // for congruence_kind
 #include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
+#include "libsemigroups/freeband.hpp"   // for freeband_equal_to
 #include "libsemigroups/report.hpp"     // for REPORTER, Reporter
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
 #include "libsemigroups/types.hpp"         // for word_type, letter_type
@@ -69,6 +70,11 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::InstallGlobalFunction("set_report", &set_report);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
                                    &std::thread::hardware_concurrency);
+  gapbind14::InstallGlobalFunction(
+      "freeband_equal_to",
+      gapbind14::overload_cast<libsemigroups::word_type,
+                               libsemigroups::word_type>(
+          &libsemigroups::freeband_equal_to<libsemigroups::word_type>));
 
   ////////////////////////////////////////////////////////////////////////
   // Initialise from other cpp files
