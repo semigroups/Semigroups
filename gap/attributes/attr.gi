@@ -526,8 +526,9 @@ function(S)
   return DClasses(S){DigraphSources(D)};
 end);
 
-InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
-[IsFinite and IsMonoidAsSemigroup],
+InstallMethod(MaximalDClasses,
+"for a finite monoid as semigroup with mult. neutral elt",
+[IsFinite and IsMonoidAsSemigroup and HasMultiplicativeNeutralElement],
 S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
 InstallMethod(MaximalLClasses,
