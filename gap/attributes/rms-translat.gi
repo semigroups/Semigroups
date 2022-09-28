@@ -550,7 +550,7 @@ SEMIGROUPS.BitranslationsNormalRMS := function(H, opt...)
   for triple in SEMIGROUPS.NormalRMSLinkedTriples(S) do
     triple := Concatenation([triple[1]],
                             List(triple{[2, 3]}, Transformation));
-    Add(out, BitranslationOfNormalRMSByTripleNC(H, triple));
+    Add(out, _BitranslationOfNormalRMSByTripleNC(H, triple));
   od;
   return out;
 end;
@@ -559,8 +559,8 @@ SEMIGROUPS.FamOfRMSLeftTranslationsByTriple := function()
   local fam, type;
 
   fam       := NewFamily("LeftTranslationsSemigroupElementsFamily",
-                          IsLeftTranslationOfNormalRMS);
-  type      := NewType(fam, IsLeftTranslationOfNormalRMS);
+                          _IsLeftTranslationOfNormalRMS);
+  type      := NewType(fam, _IsLeftTranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
@@ -569,8 +569,8 @@ SEMIGROUPS.FamOfRMSRightTranslationsByTriple := function()
   local fam, type;
 
   fam       := NewFamily("RightTranslationsSemigroupElementsFamily",
-                          IsRightTranslationOfNormalRMS);
-  type      := NewType(fam, IsRightTranslationOfNormalRMS);
+                          _IsRightTranslationOfNormalRMS);
+  type      := NewType(fam, _IsRightTranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
@@ -579,8 +579,8 @@ SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
   local fam, type;
 
   fam       := NewFamily("BitranslationsSemigroupElementsFamily",
-                          IsBitranslationOfNormalRMS);
-  type      := NewType(fam, IsBitranslationOfNormalRMS);
+                          _IsBitranslationOfNormalRMS);
+  type      := NewType(fam, _IsBitranslationOfNormalRMS);
   fam!.type := type;
   return fam;
 end;
@@ -826,7 +826,7 @@ end);
 # t should be a transformation of I
 InstallOtherMethod(LeftTranslation,
 "for a semigroup of left translations, a dense list, and a transformation",
-[IsLeftTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
+[_IsLeftTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
 function(L, group_func, t)
   local S, G;
 
@@ -851,7 +851,7 @@ function(L, group_func, t)
   return LeftTranslationNC(L, group_func, t);
 end);
 
-InstallGlobalFunction(LeftTranslationOfNormalRMSNC,
+InstallGlobalFunction(_LeftTranslationOfNormalRMSNC,
 function(L, x, opt...)
   local tup, group_func, t;
 
@@ -874,7 +874,7 @@ end);
 # t should be a transformation of J
 InstallOtherMethod(RightTranslation,
 "for a semigroup of right translations, a dense list, and a transformation",
-[IsRightTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
+[_IsRightTranslationOfNormalRMSSemigroup, IsDenseList, IsTransformation],
 function(R, group_func, t)
   local S, G;
 
@@ -894,10 +894,10 @@ function(R, group_func, t)
                   "first argument");
   fi;
 
-  return RightTranslationOfNormalRMSNC(R, group_func, t);
+  return _RightTranslationOfNormalRMSNC(R, group_func, t);
 end);
 
-InstallGlobalFunction(RightTranslationOfNormalRMSNC,
+InstallGlobalFunction(_RightTranslationOfNormalRMSNC,
 function(R, x, opt...)
   local tup, group_func, t;
 
@@ -952,10 +952,10 @@ function(H, g, chi, psi)
     od;
   od;
 
-  return BitranslationOfNormalRMSByTripleNC(H, [g, chi, psi]);
+  return _BitranslationOfNormalRMSByTripleNC(H, [g, chi, psi]);
 end);
 
-InstallGlobalFunction(BitranslationOfNormalRMSByTripleNC,
+InstallGlobalFunction(_BitranslationOfNormalRMSByTripleNC,
 function(H, triple)
   local S, P, I, M, left_group_func, right_group_func, l, r;
 
@@ -979,7 +979,7 @@ end);
 
 InstallMethod(Representative,
 "for a semigroup of left or right translations over a normalised RMS",
-[IsTranslationOfNormalRMSSemigroup and IsWholeFamily],
+[_IsTranslationOfNormalRMSSemigroup and IsWholeFamily],
 function(T)
   local e, G, S;
 
@@ -987,7 +987,7 @@ function(T)
   G := UnderlyingSemigroup(S);
   e := MultiplicativeNeutralElement(G);
 
-  if IsLeftTranslationOfNormalRMSSemigroup(T) then
+  if _IsLeftTranslationOfNormalRMSSemigroup(T) then
     return LeftTranslationNC(T,
                              List(Rows(S), x -> e),
                              IdentityTransformation);
@@ -1000,7 +1000,7 @@ end);
 
 InstallMethod(\*, "for left translations of a normalised RMS",
 IsIdenticalObj,
-[IsLeftTranslationOfNormalRMS, IsLeftTranslationOfNormalRMS],
+[_IsLeftTranslationOfNormalRMS, _IsLeftTranslationOfNormalRMS],
 function(x, y)
   return Objectify(FamilyObj(x)!.type,
                    [List([1 .. Size(x![1])], i -> x![1][i ^ y![2]] * y![1][i]),
@@ -1009,21 +1009,21 @@ end);
 
 InstallMethod(\=, "for left translations of a normalised RMS",
 IsIdenticalObj,
-[IsLeftTranslationOfNormalRMS, IsLeftTranslationOfNormalRMS],
+[_IsLeftTranslationOfNormalRMS, _IsLeftTranslationOfNormalRMS],
 function(x, y)
   return x![1] = y![1] and x![2] = y![2];
 end);
 
 InstallMethod(\<, "for left translations of a normalised RMS",
 IsIdenticalObj,
-[IsLeftTranslationOfNormalRMS, IsLeftTranslationOfNormalRMS],
+[_IsLeftTranslationOfNormalRMS, _IsLeftTranslationOfNormalRMS],
 function(x, y)
   return x![2] < y![2] or (x![2] = y![2] and x![1] < y![1]);
 end);
 
 InstallMethod(\*, "for right translations of a normalised RMS",
 IsIdenticalObj,
-[IsRightTranslationOfNormalRMS, IsRightTranslationOfNormalRMS],
+[_IsRightTranslationOfNormalRMS, _IsRightTranslationOfNormalRMS],
 function(x, y)
   return Objectify(FamilyObj(x)!.type,
                    [List([1 .. Size(x![1])], j -> x![1][j] * y![1][j ^ x![2]]),
@@ -1032,43 +1032,43 @@ end);
 
 InstallMethod(\=, "for right translations of a normalised RMS",
 IsIdenticalObj,
-[IsRightTranslationOfNormalRMS, IsRightTranslationOfNormalRMS],
+[_IsRightTranslationOfNormalRMS, _IsRightTranslationOfNormalRMS],
 function(x, y)
   return x![1] = y![1] and x![2] = y![2];
 end);
 
 InstallMethod(\<, "for right translations of a normalised RMS",
 IsIdenticalObj,
-[IsRightTranslationOfNormalRMS, IsRightTranslationOfNormalRMS],
+[_IsRightTranslationOfNormalRMS, _IsRightTranslationOfNormalRMS],
 function(x, y)
   return x![2] < y![2] or (x![2] = y![2] and x![1] < y![1]);
 end);
 
 InstallMethod(\*, "for bitranslations of a normalised RMS",
 IsIdenticalObj,
-[IsBitranslationOfNormalRMS, IsBitranslationOfNormalRMS],
+[_IsBitranslationOfNormalRMS, _IsBitranslationOfNormalRMS],
 function(x, y)
     return Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]);
 end);
 
 InstallMethod(\=, "for bitranslations of a normalised RMS",
 IsIdenticalObj,
-[IsBitranslationOfNormalRMS, IsBitranslationOfNormalRMS],
+[_IsBitranslationOfNormalRMS, _IsBitranslationOfNormalRMS],
 function(x, y)
   return x![1] = y![1] and x![2] = y![2];
 end);
 
 InstallMethod(\<, "for bitranslations of a normalised RMS",
 IsIdenticalObj,
-[IsBitranslationOfNormalRMS, IsBitranslationOfNormalRMS],
+[_IsBitranslationOfNormalRMS, _IsBitranslationOfNormalRMS],
 function(x, y)
   return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
 end);
 
 InstallMethod(\^, "for a semigroup element and a translation",
-[IsReesMatrixSemigroupElement, IsTranslationOfNormalRMS],
+[IsReesMatrixSemigroupElement, _IsTranslationOfNormalRMS],
 function(x, t)
-  if IsLeftTranslationOfNormalRMS(t) then
+  if _IsLeftTranslationOfNormalRMS(t) then
     return RMSElementNC(ReesMatrixSemigroupOfFamily(FamilyObj(x)),
                         x![1] ^ t![2],
                         t![1][x![1]] * x![2],
@@ -1082,14 +1082,14 @@ function(x, t)
 end);
 
 InstallMethod(ChooseHashFunction, "for a left or right translation and int",
-[IsTranslationOfNormalRMS, IsInt],
+[_IsTranslationOfNormalRMS, IsInt],
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForRMSTranslations,
              data := hashlen);
 end);
 
 InstallMethod(ChooseHashFunction, "for a bitranslation and int",
-[IsBitranslationOfNormalRMS, IsInt],
+[_IsBitranslationOfNormalRMS, IsInt],
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForRMSBitranslations,
              data := hashlen);

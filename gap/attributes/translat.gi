@@ -911,11 +911,11 @@ function(L, l, opt...)
   local S, reps, map_as_list, i;
 
   S := UnderlyingSemigroup(L);
-  if IsLeftTranslationOfNormalRMSSemigroup(L) then
+  if _IsLeftTranslationOfNormalRMSSemigroup(L) then
     if IsEmpty(opt) then
-      return LeftTranslationOfNormalRMSNC(L, l);
+      return _LeftTranslationOfNormalRMSNC(L, l);
     else
-      return LeftTranslationOfNormalRMSNC(L, l, opt[1]);
+      return _LeftTranslationOfNormalRMSNC(L, l, opt[1]);
     fi;
   fi;
   if IsDenseList(l) then
@@ -1000,11 +1000,11 @@ function(R, r, opt...)
   local S, reps, map_as_list, i;
 
   S := UnderlyingSemigroup(R);
-  if IsRightTranslationOfNormalRMSSemigroup(R) then
+  if _IsRightTranslationOfNormalRMSSemigroup(R) then
     if IsEmpty(opt) then
-      return RightTranslationOfNormalRMSNC(R, r);
+      return _RightTranslationOfNormalRMSNC(R, r);
     else
-      return RightTranslationOfNormalRMSNC(R, r, opt[1]);
+      return _RightTranslationOfNormalRMSNC(R, r, opt[1]);
     fi;
   fi;
   if IsDenseList(r) then
