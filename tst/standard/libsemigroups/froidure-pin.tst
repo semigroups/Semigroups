@@ -701,6 +701,26 @@ gap> S := F / R;;
 gap> MultiplicationTable(S);
 [ [ 1, 2, 3, 4 ], [ 2, 2, 2, 2 ], [ 3, 4, 3, 4 ], [ 4, 4, 4, 4 ] ]
 
+# Issue #869, when the size of an fp semigroup/monoid equals its number of
+# generators.
+gap> F := FreeSemigroup(6);
+<free semigroup on the generators [ s1, s2, s3, s4, s5, s6 ]>
+gap> R :=
+> [[F.1 ^ 2, F.1], [F.1 * F.2, F.1], [F.1 * F.3, F.1], [F.1 * F.4, F.1],
+>  [F.1 * F.5, F.5], [F.1 * F.6, F.6], [F.2 * F.1, F.1], [F.2 ^ 2, F.1],
+>  [F.2 * F.3, F.1], [F.2 * F.4, F.2], [F.2 * F.5, F.5], [F.2 * F.6, F.6],
+>  [F.3 * F.1, F.3], [F.3 * F.2, F.3], [F.3 ^ 2, F.3], [F.3 * F.4, F.3],
+>  [F.3 * F.5, F.5], [F.3 * F.6, F.6], [F.4 * F.1, F.1], [F.4 * F.2, F.2],
+>  [F.4 * F.3, F.3], [F.4 ^ 2, F.4], [F.4 * F.5, F.5], [F.4 * F.6, F.6],
+>  [F.5 * F.1, F.5], [F.5 * F.2, F.5], [F.5 * F.3, F.5], [F.5 * F.4, F.5],
+>  [F.5 ^ 2, F.5], [F.5 * F.6, F.5], [F.6 * F.1, F.6], [F.6 * F.2, F.6],
+>  [F.6 * F.3, F.6], [F.6 * F.4, F.6], [F.6 * F.5, F.6], [F.6 ^ 2, F.6]];;
+gap> S := F / R;
+<fp semigroup with 6 generators and 36 relations of length 114>
+gap> MultiplicationTable(S);
+[ [ 1, 1, 1, 1, 5, 6 ], [ 1, 1, 1, 2, 5, 6 ], [ 3, 3, 3, 3, 5, 6 ], 
+  [ 1, 2, 3, 4, 5, 6 ], [ 5, 5, 5, 5, 5, 5 ], [ 6, 6, 6, 6, 6, 6 ] ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
