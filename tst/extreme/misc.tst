@@ -30,6 +30,8 @@ gap> Size(s);
 gap> f := Transformation([8, 1, 5, 5, 8, 3, 7, 8]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
+gap> Transformation([8, 1, 5, 5, 8, 3, 7, 8]) in last;
+true
 gap> RhoOrbStabChain(l);
 true
 gap> Size(l);
@@ -43,6 +45,8 @@ gap> ForAll(l, x -> x in l);
 true
 gap> d := DClass(s, f);
 <Green's D-class: Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )>
+gap> Transformation([8, 1, 5, 5, 8, 3, 7, 8]) in last;
+true
 gap> iter := Iterator(d);
 <iterator>
 gap> for i in iter do od;
@@ -104,12 +108,14 @@ gap> s := Semigroup(gens);
 gap> f := Transformation([5, 2, 7, 2, 7, 2, 5, 8]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>
+gap> Transformation([5, 2, 7, 2, 7, 2, 5]) in last;
+true
 gap> enum := Enumerator(l);
 <enumerator of <Green's L-class: Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )>>
 gap> enum[1];
 Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )
 gap> enum[2];
-Transformation( [ 5, 7, 2, 7, 2, 7, 5 ] )
+Transformation( [ 5, 8, 7, 8, 7, 8, 5, 2 ] )
 gap> Position(enum, enum[2]);
 2
 gap> Position(enum, enum[1]);
@@ -223,7 +229,7 @@ gap> Size(s);
 4857
 gap> f := PartialPerm([6, 9], [12, 6]);;
 gap> l := LClass(s, f);
-<Green's L-class: [2,6][7,12]>
+<Green's L-class: [9,6,12]>
 gap> NrHClasses(l);
 66
 gap> Size(l);
@@ -449,11 +455,15 @@ gap> Size(s);
 gap> f := Transformation([2, 2, 7, 7, 7, 1, 2, 7]);;
 gap> l := LClassNC(s, f);
 <Green's L-class: Transformation( [ 2, 2, 7, 7, 7, 1, 2, 7 ] )>
+gap> Transformation([2, 2, 7, 7, 7, 1, 2, 7]) in last;
+true
 gap> g := Transformation([2, 2, 7, 7, 7, 1, 2, 1]);;
 gap> Size(l);
 936
 gap> h := GreensHClassOfElement(l, g);
 <Green's H-class: Transformation( [ 2, 2, 7, 7, 7, 1, 2, 1 ] )>
+gap> Transformation([2, 2, 7, 7, 7, 1, 2, 1]) in last;
+true
 gap> Size(h);
 1
 gap> SchutzenbergerGroup(l);
@@ -515,7 +525,7 @@ gap> IsGreensClassNC(h);
 true
 gap> f := PartialPermNC([2, 8, 9], [8, 10, 5]);;
 gap> l := LClass(s, f);
-<Green's L-class: [1,8][2,5][4,10]>
+<Green's L-class: [2,8,10][9,5]>
 gap> h := HClassNC(l, f);
 <Green's H-class: [2,8,10][9,5]>
 gap> ForAll(h, x -> x in s);
@@ -537,6 +547,8 @@ gap> f in s;
 true
 gap> l := LClass(s, f);
 <Green's L-class: Transformation( [ 5, 4, 7, 2, 2, 2, 2, 5 ] )>
+gap> Transformation([5, 4, 7, 2, 2, 2, 2, 5]) in last;
+true
 gap> IsGreensClassNC(l);
 false
 gap> Size(l);
@@ -544,6 +556,8 @@ gap> Size(l);
 gap> f := Transformation([4, 3, 2, 7, 7, 6, 6, 5]);;
 gap> l := LClass(s, f);
 <Green's L-class: Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )>
+gap> Transformation([4, 3, 2, 7, 7, 6, 6, 5]) in last;
+true
 gap> Size(l);
 1
 
@@ -581,7 +595,7 @@ false
 gap> NrHClasses(l);
 4
 gap> l := LClass(s, f);
-<Green's L-class: [1,4](2)>
+<Green's L-class: [3,4](2)>
 gap> HClassReps(l);
 [ [1,4](2), [3,4](2), [1,2,4], [3,2,4] ]
 gap> IsRegularGreensClass(l);
@@ -627,10 +641,14 @@ gap> gens := [Transformation([1, 5, 6, 2, 5, 2, 1]),
 gap> s := Semigroup(gens);;
 gap> l := LClasses(s)[1154];
 <Green's L-class: Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )>
+gap> Transformation([7, 2, 2, 3, 6, 1, 2]) in last;
+true
 gap> IsRegularGreensClass(l);
 false
 gap> d := DClassOfLClass(l);
 <Green's D-class: Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )>
+gap> Transformation([7, 2, 2, 3, 6, 1, 2]) in last;
+true
 gap> Size(l);
 1
 gap> Size(d);
@@ -643,6 +661,8 @@ gap> NrRClasses(d);
 1
 gap> l := LClasses(s)[523];
 <Green's L-class: Transformation( [ 5, 5, 5, 1, 7, 3, 6 ] )>
+gap> Transformation([5, 5, 5, 1, 7, 3, 6]) in last;
+true
 gap> Size(l);
 1
 
@@ -673,7 +693,7 @@ gap> IsRegularSemigroup(s);
 false
 gap> f := PartialPerm([3, 4, 7], [4, 7, 8]);;
 gap> d := DClass(s, f);
-<Green's D-class: [1,7][3,4][6,8]>
+<Green's D-class: [3,4,7,8]>
 gap> Size(d);
 282
 gap> NrRClasses(d);
@@ -1699,8 +1719,12 @@ false
 gap> f := Transformation([4, 2, 4, 3]);;
 gap> d := First(DClasses(s), x -> f in x);
 <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>
+gap> Transformation([1, 4, 1, 2]) in last;
+true
 gap> h := HClass(d, f);
 <Green's H-class: Transformation( [ 4, 2, 4, 3 ] )>
+gap> Transformation([4, 2, 4, 3]) in last;
+true
 gap> Size(h);
 6
 gap> IsGroupHClass(h);
@@ -1831,22 +1855,24 @@ gap> List(reps, x -> DClass(s, x));
 [ <Green's D-class: IdentityTransformation>, 
   <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 4, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
   <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 4, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 4, 2 ] )>, 
   <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )> ]
+  <Green's D-class: Transformation( [ 4, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 4 ] )> ]
 gap> d := DClass(s, Transformation([1, 2, 4, 4]));
-<Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>
+<Green's D-class: Transformation( [ 1, 2, 4, 4 ] )>
+gap> Transformation([1, 4, 1, 2]) in last;
+true
 gap> f := Transformation([1, 2, 4, 4]);
 Transformation( [ 1, 2, 4, 4 ] )
 gap> o := LambdaOrb(s);
@@ -1859,20 +1885,20 @@ gap> List(reps, x -> DClass(s, x));
 [ <Green's D-class: IdentityTransformation>, 
   <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 4, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
   <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 4, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 4, 2 ] )>, 
   <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )> ]
+  <Green's D-class: Transformation( [ 4, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 4 ] )> ]
 gap> Union(List(last, x -> LClass(x, Representative(x))));
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
   Transformation( [ 1, 2, 3, 2 ] ), IdentityTransformation, 
@@ -1895,40 +1921,40 @@ gap> D := List(reps, x -> DClass(s, x));
 [ <Green's D-class: IdentityTransformation>, 
   <Green's D-class: Transformation( [ 1, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 2, 4, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 1, 2 ] )>, 
   <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 2, 3, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 3, 3, 2, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 4, 2, 4 ] )>, 
   <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 2, 4, 4 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 4, 2 ] )>, 
   <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
   <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 2, 4, 2 ] )> ]
+  <Green's D-class: Transformation( [ 4, 2, 2, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 4, 2, 4 ] )> ]
 gap> Length(Set(D));
 9
 gap> List(D, x -> LClass(x, Representative(x)));
 [ <Green's L-class: IdentityTransformation>, 
   <Green's L-class: Transformation( [ 1, 3, 2, 3 ] )>, 
   <Green's L-class: Transformation( [ 1, 4, 1, 2 ] )>, 
-  <Green's L-class: Transformation( [ 1, 4, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 2, 4, 4 ] )>, 
   <Green's L-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's L-class: Transformation( [ 4, 2, 1, 2 ] )>, 
   <Green's L-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's L-class: Transformation( [ 3, 2, 3, 2 ] )>, 
-  <Green's L-class: Transformation( [ 3, 2, 3, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 2, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 3, 3, 2, 3 ] )>, 
   <Green's L-class: Transformation( [ 1, 4, 2, 4 ] )>, 
   <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
-  <Green's L-class: Transformation( [ 4, 4, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 2, 4, 4 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 4, 2 ] )>, 
   <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
   <Green's L-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's L-class: Transformation( [ 4, 2, 4, 2 ] )>, 
-  <Green's L-class: Transformation( [ 4, 2, 4, 2 ] )> ]
+  <Green's L-class: Transformation( [ 4, 2, 2, 2 ] )>, 
+  <Green's L-class: Transformation( [ 4, 4, 2, 4 ] )> ]
 gap> Union(last);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
   Transformation( [ 1, 2, 3, 2 ] ), IdentityTransformation, 
@@ -2023,7 +2049,7 @@ gap> f := PartialPerm([1, 88], [78, 48]);;
 gap> f in d;
 true
 gap> r := RClass(d, f);
-<Green's R-class: [1,34][88,16]>
+<Green's R-class: [1,78][88,48]>
 gap> ForAll(r, x -> x in d);
 true
 gap> Size(r);
@@ -2047,7 +2073,7 @@ gap> Size(d);
 3686
 gap> f := PartialPerm([41, 50], [17, 32]);;
 gap> r := RClassNC(d, f);
-<Green's R-class: [41,34][50,16]>
+<Green's R-class: [41,17][50,32]>
 gap> Size(r);
 3686
 gap> ForAll(r, x -> x in d);
@@ -2055,7 +2081,7 @@ true
 gap> ForAll(d, x -> x in r);
 true
 gap> rr := RClass(s, f);
-<Green's R-class: [41,34][50,16]>
+<Green's R-class: [41,17][50,32]>
 gap> AsSSortedList(rr) = AsSSortedList(r);
 true
 gap> d;
@@ -2079,12 +2105,16 @@ gap> s := Semigroup(gens);
 gap> f := Transformation([6, 6, 6, 6, 6, 10, 6, 6, 6, 6]);;
 gap> d := DClassNC(s, f);
 <Green's D-class: Transformation( [ 6, 6, 6, 6, 6, 10, 6, 6, 6, 6 ] )>
+gap> Transformation([6, 6, 6, 6, 6, 10, 6, 6, 6, 6]) in last;
+true
 gap> Size(d);
 31680
 gap> IsRegularDClass(d);
 true
 gap> GroupHClass(d);
 <Green's H-class: Transformation( [ 10, 10, 10, 10, 10, 6, 10, 10, 10, 10 ] )>
+gap> Transformation([10, 10, 10, 10, 10, 6, 10, 10, 10, 10]) in last;
+true
 
 # MiscTest19
 gap> gens := [PartialPermNC([1, 3, 4, 6, 10], [3, 4, 1, 6, 10]),
@@ -2107,12 +2137,12 @@ gap> d := last;
 <Green's D-class: (1,3,4)(6)(10)>
 gap> Size(d);
 3
-gap> GroupHClass(d);
+gap> h := GroupHClass(d);
 <Green's H-class: <identity partial perm on [ 1, 3, 4, 6, 10 ]>>
-gap> Size(last);
+gap> PartialPerm([1, 3, 4, 6, 10], [1, 3, 4, 6, 10]) in last;
+true
+gap> Size(h);
 3
-gap> h := last2;
-<Green's H-class: <identity partial perm on [ 1, 3, 4, 6, 10 ]>>
 gap> AsSSortedList(h) = AsSSortedList(d);
 true
 gap> Elements(h);
@@ -2283,8 +2313,8 @@ gap> NrRClasses(s);
 639
 gap> f := PartialPerm([3, 9], [5, 4]);;
 gap> d := DClass(s, f);
-<Green's D-class: [2,7][10,6]>
-gap> Position(LambdaOrb(d), ImageSetOfPartialPerm(Representative(d)));
+<Green's D-class: [3,5][9,4]>
+gap> Position(LambdaOrb(d), ImageSetOfPartialPerm(d!.rep));
 7
 gap> OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
 [ 61, 38, 60, 92, 39, 62, 94, 93, 133, 184, 64, 96, 136, 134, 160, 211, 8, 
@@ -2301,7 +2331,7 @@ gap> Number(Idempotents(s), x -> x in d);
 gap> s := Semigroup(gens);
 <partial perm semigroup of rank 10 with 3 generators>
 gap> d := DClass(s, f);
-<Green's D-class: [3,7][9,6]>
+<Green's D-class: [3,5][9,4]>
 gap> s := Semigroup(gens);
 <partial perm semigroup of rank 10 with 3 generators>
 gap> d := DClassNC(s, f);
@@ -2315,7 +2345,7 @@ gap> s := Semigroup(gens);
 gap> l := LClass(s, f);
 <Green's L-class: [3,5][9,4]>
 gap> d := DClassOfLClass(l);
-<Green's D-class: [3,7][9,6]>
+<Green's D-class: [3,5][9,4]>
 gap> NrIdempotents(d);
 45
 gap> s := Semigroup(gens);
@@ -2333,7 +2363,7 @@ gap> NrIdempotents(d);
 gap> s := Semigroup(gens);
 <partial perm semigroup of rank 10 with 3 generators>
 gap> r := RClass(s, f);
-<Green's R-class: [3,7][9,6]>
+<Green's R-class: [3,5][9,4]>
 gap> d := DClassOfRClass(r);
 <Green's D-class: [3,7][9,6]>
 gap> NrIdempotents(d);
@@ -2375,15 +2405,19 @@ gap> IsRegularSemigroup(s);
 true
 gap> d := DClasses(s)[2];
 <Green's D-class: Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] )>
+gap> Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]) in last;
+true
 gap> NrHClasses(d);
 1
-gap> GroupHClass(d);
+gap> h := GroupHClass(d);
 <Green's H-class: Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )>
-gap> AsSSortedList(last) = AsSSortedList(d);
+gap> Transformation([1, 2, 4, 4, 5, 6, 7, 6, 10, 10]) in last;
+true
+gap> AsSSortedList(h) = AsSSortedList(d);
 true
 gap> Size(d);
 7
-gap> Size(last3);
+gap> Size(h);
 7
 
 # MiscTest24
@@ -2496,6 +2530,8 @@ gap> s := Monoid(gens);;
 gap> f := Transformation([2, 1, 3, 5, 4, 10, 9, 8, 7, 6]);;
 gap> d := DClass(HClass(s, f));
 <Green's D-class: Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] )>
+gap> Transformation([2, 1, 3, 5, 4, 10, 9, 8, 7, 6]) in last;
+true
 gap> Size(d);
 120
 gap> HClassReps(d);
@@ -2508,7 +2544,9 @@ gap> Size(s);
 491558
 gap> f := Transformation([6, 6, 3, 6, 4, 6, 6, 6, 6, 4]);;
 gap> d := DClass(HClass(s, f));
-<Green's D-class: Transformation( [ 9, 4, 9, 6, 4, 9, 6, 9, 6, 9 ] )>
+<Green's D-class: Transformation( [ 6, 6, 3, 6, 4, 6, 6, 6, 6, 4 ] )>
+gap> Transformation([9, 4, 9, 6, 4, 9, 6, 9, 6, 9]) in last;
+true
 gap> Size(d);
 121500
 gap> NrHClasses(d);
@@ -2518,7 +2556,9 @@ gap> Length(HClassReps(d));
 gap> ForAll(HClassReps(d), x -> x in d);
 true
 gap> d := DClass(RClass(s, f));
-<Green's D-class: Transformation( [ 9, 4, 9, 6, 4, 9, 6, 9, 6, 9 ] )>
+<Green's D-class: Transformation( [ 9, 9, 6, 9, 4, 9, 9, 9, 9, 4 ] )>
+gap> Transformation([9, 4, 9, 6, 4, 9, 6, 9, 6, 9]) in last;
+true
 gap> Size(d);
 121500
 gap> ForAll(d, x -> x in d);
@@ -2573,7 +2613,9 @@ gap> gens := [
 gap> s := Semigroup(gens);;
 gap> f := Transformation([9, 10, 10, 3, 10, 9, 9, 9, 9, 9]);;
 gap> r := RClass(s, f);
-<Green's R-class: Transformation( [ 9, 8, 8, 1, 8, 9, 9, 9, 9, 9 ] )>
+<Green's R-class: Transformation( [ 9, 10, 10, 3, 10, 9, 9, 9, 9, 9 ] )>
+gap> Transformation([9, 8, 8, 1, 8, 9, 9, 9, 9, 9]) in last;
+true
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
@@ -2582,7 +2624,9 @@ gap> ForAll(r, x -> x in r);
 true
 gap> f := Transformation([8, 8, 8, 8, 8, 8, 7, 7, 8, 8]);;
 gap> r := RClass(s, f);
-<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
+<Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] )>
+gap> Transformation([1, 1, 1, 1, 1, 1, 9, 9, 1, 1]) in last;
+true
 gap> Size(r);
 86
 gap> iter := IteratorOfRClasses(s);
@@ -2590,6 +2634,8 @@ gap> iter := IteratorOfRClasses(s);
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
+gap> Transformation([9, 1, 8, 2, 1, 8, 9, 9, 9, 8]) in last;
+true
 gap> Size(r);
 1992
 gap> SchutzenbergerGroup(r);
@@ -2701,17 +2747,23 @@ gap> ForAll(last2, x -> Representative(x) in r);
 true
 gap> Semigroup(gens);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
+<Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] )>
+gap> Transformation([1, 1, 1, 1, 1, 1, 9, 9, 1, 1]) in last;
+true
 gap> f := Transformation([9, 9, 5, 9, 5, 9, 5, 5, 5, 5]);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
+<Green's R-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>
+gap> Transformation([9, 9, 1, 9, 1, 9, 1, 1, 1, 1]) in last;
+true
 gap> Size(r);
 86
 gap> NrHClasses(r);
 43
 gap> s := Semigroup(gens);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
+<Green's R-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>
+gap> Transformation([9, 9, 1, 9, 1, 9, 1, 1, 1, 1]) in last;
+true
 gap> GreensHClasses(r);
 [ <Green's H-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>, 
   <Green's H-class: Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )>, 
@@ -2774,11 +2826,15 @@ true
 gap> f := Transformation([10, 1, 9, 10, 2, 1, 5, 3, 2, 3]);;
 gap> r := GreensRClassOfElement(s, f);
 <Green's R-class: Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )>
+gap> Transformation([10, 1, 9, 10, 2, 1, 5, 3, 2, 3]) in last;
+true
 gap> Size(r);
 1
 gap> f := Transformation([10, 10, 3, 10, 10, 10, 10, 10, 6, 10]);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 8, 8, 1, 8, 8, 8, 8, 8, 9, 8 ] )>
+<Green's R-class: Transformation( [ 10, 10, 3, 10, 10, 10, 10, 10, 6, 10 ] )>
+gap> Transformation([8, 8, 1, 8, 8, 8, 8, 8, 9, 8]) in last;
+true
 gap> Size(r);
 546
 gap> f := Transformation([6, 6, 4, 6, 6, 6, 6, 6, 3, 6]);;
@@ -2786,6 +2842,8 @@ gap> f in r;
 true
 gap> h := HClass(r, f);
 <Green's H-class: Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )>
+gap> Transformation([6, 6, 4, 6, 6, 6, 6, 6, 3, 6]) in last;
+true
 gap> f in h;
 true
 gap> ForAll(h, x -> x in r);
@@ -2899,6 +2957,8 @@ gap> Size(s);
 998
 gap> r := RClass(s, f);
 <Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
+gap> Transformation([4, 4, 3, 8, 5, 3, 3, 1]) in last;
+true
 gap> IsRegularGreensClass(r);
 true
 gap> Idempotents(r);
@@ -2927,6 +2987,8 @@ gap> Transformation([4, 4, 3, 8, 1, 3, 3, 5]) in r;
 true
 gap> r;
 <Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
+gap> Transformation([4, 4, 3, 8, 5, 3, 3, 1]) in last;
+true
 gap> NrIdempotents(r);
 1
 
@@ -2971,10 +3033,16 @@ gap> Size(s);
 gap> f := Transformation([2, 4, 6, 6, 5, 6]);;
 gap> r := RClass(s, f);
 <Green's R-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
+gap> Transformation([2, 4, 6, 6, 5, 6]) in last;
+true
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
+gap> Transformation([2, 4, 6, 6, 5, 6]) in last;
+true
 gap> hh := HClass(r, f);
 <Green's H-class: Transformation( [ 2, 4, 6, 6, 5, 6 ] )>
+gap> Transformation([2, 4, 6, 6, 5, 6]) in last;
+true
 gap> hh = h;
 true
 gap> ForAll(h, x -> x in r);
@@ -3095,8 +3163,12 @@ false
 gap> f := Transformation([3, 2, 3, 4, 3, 5]);;
 gap> r := RClassNC(s, f);
 <Green's R-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
+gap> Transformation([3, 2, 3, 4, 3, 5]) in last;
+true
 gap> d := DClassOfRClass(r);
 <Green's D-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
+gap> Transformation([3, 2, 3, 4, 3, 5]) in last;
+true
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -3138,7 +3210,7 @@ gap> Size(s);
 12612
 gap> f := PartialPermNC([1, 4, 6], [2, 3, 6]);;
 gap> r := RClass(s, f);
-<Green's R-class: [1,3][4,2][6,5]>
+<Green's R-class: [1,2][4,3](6)>
 gap> Size(r);
 120
 gap> NrHClasses(r);
@@ -3159,15 +3231,21 @@ gap> s := Semigroup(gens);;
 gap> f := Transformation([5, 6, 5, 4, 5, 4, 5, 4]);;
 gap> h := HClass(s, f);
 <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
+gap> Transformation([5, 6, 5, 4, 5, 4, 5, 4]) in last;
+true
 gap> ForAll(h, x -> x in h);
 true
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
+gap> Transformation([5, 6, 5, 4, 5, 4, 5, 4]) in last;
+true
 gap> Enumerator(h);
 <enumerator of <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
  >
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )>
+gap> Transformation([5, 6, 5, 4, 5, 4, 5, 4]) in last;
+true
 gap> SchutzenbergerGroup(h);
 Group([ (4,6) ])
 
@@ -3195,6 +3273,8 @@ gap> Idempotents(h);
 gap> f := Transformation([3, 2, 4, 5, 6, 1, 1]);;
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] )>
+gap> Transformation([3, 2, 4, 5, 6, 1, 1]) in last;
+true
 gap> Idempotents(h);
 [ Transformation( [ 1, 2, 3, 4, 5, 6, 6 ] ) ]
 gap> IsGroupHClass(h);
@@ -3234,7 +3314,7 @@ gap> f := PartialPermNC([1, 2, 5, 6], [5, 3, 6, 4]);;
 gap> h := HClass(s, f);
 <Green's H-class: [1,5,6,4][2,3]>
 gap> d := DClass(s, f);
-<Green's D-class: [1,6][2,3,5](4)>
+<Green's D-class: [1,5,6,4][2,3]>
 gap> h := HClass(s, f);
 <Green's H-class: [1,5,6,4][2,3]>
 gap> IsGroupHClass(h);
@@ -3252,7 +3332,7 @@ true
 gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
 gap> d := DClass(s, Representative(h));
-<Green's D-class: [1,6][2,3,5](4)>
+<Green's D-class: [1,5,6,4][2,3]>
 gap> f := Representative(h);
 [1,5,6,4][2,3]
 gap> h := HClass(d, f);
@@ -3269,7 +3349,7 @@ gap> Size(h);
 gap> f := Representative(h);
 [1,3](2)(4)
 gap> r := RClassNC(d, f);
-<Green's R-class: [4,1,2,5]>
+<Green's R-class: [1,3](2)(4)>
 gap> h := HClass(r, f);
 Error, the 2nd argument (a mult. elt.) does not belong to the 1st argument (a \
 Green's class)
@@ -3278,7 +3358,7 @@ false
 gap> Elements(h) = Elements(HClass(s, f));
 false
 gap> l := LClass(s, f);
-<Green's L-class: [1,3,4](2)>
+<Green's L-class: [1,3](2)(4)>
 gap> h := HClass(l, f);
 <Green's H-class: [1,3](2)(4)>
 gap> Elements(h) = Elements(HClass(s, f));
@@ -3309,22 +3389,28 @@ gap> s := Semigroup(gens);;
 gap> f := Transformation([4, 4, 1, 2, 1, 2]);;
 gap> h := HClassNC(s, f);
 <Green's H-class: Transformation( [ 4, 4, 1, 2, 1, 2 ] )>
+gap> Transformation([4, 4, 1, 2, 1, 2]) in last;
+true
 gap> IsRegularGreensClass(h);
 false
 gap> IsGroupHClass(h);
 false
 gap> h := GroupHClass(DClass(h));
 <Green's H-class: Transformation( [ 2, 2, 3, 6, 3, 6 ] )>
+gap> Transformation([2, 2, 3, 6, 3, 6]) in last;
+true
 gap> Size(h);
 6
 gap> r := RClassOfHClass(h);
-<Green's R-class: Transformation( [ 1, 1, 2, 4, 2, 4 ] )>
+<Green's R-class: Transformation( [ 2, 2, 3, 6, 3, 6 ] )>
+gap> Transformation([1, 1, 2, 4, 2, 4]) in last;
+true
 gap> ForAll(h, x -> x in r);
 true
 gap> Number(r, x -> x in h);
 6
 gap> l;
-<Green's L-class: [1,3,4](2)>
+<Green's L-class: [1,3](2)(4)>
 gap> RhoOrbStabChain(l);
 true
 gap> g := SchutzenbergerGroup(l);
@@ -3378,7 +3464,9 @@ gap> gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
 gap> s := Semigroup(gens);;
 gap> f := Transformation([9, 10, 10, 3, 10, 9, 9, 9, 9, 9]);;
 gap> r := RClass(s, f);
-<Green's R-class: Transformation( [ 9, 8, 8, 1, 8, 9, 9, 9, 9, 9 ] )>
+<Green's R-class: Transformation( [ 9, 10, 10, 3, 10, 9, 9, 9, 9, 9 ] )>
+gap> Transformation([9, 8, 8, 1, 8, 9, 9, 9, 9, 9]) in last;
+true
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
@@ -3387,7 +3475,9 @@ gap> ForAll(r, x -> x in r);
 true
 gap> f := Transformation([8, 8, 8, 8, 8, 8, 7, 7, 8, 8]);;
 gap> r := RClass(s, f);
-<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
+<Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] )>
+gap> Transformation([1, 1, 1, 1, 1, 1, 9, 9, 1, 1]) in last;
+true
 gap> Size(r);
 86
 gap> iter := IteratorOfRClasses(s);
@@ -3395,6 +3485,8 @@ gap> iter := IteratorOfRClasses(s);
 gap> repeat r := NextIterator(iter); until Size(r) > 1000;
 gap> r;
 <Green's R-class: Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )>
+gap> Transformation([9, 1, 8, 2, 1, 8, 9, 9, 9, 8]) in last;
+true
 gap> Size(r);
 1992
 gap> SchutzenbergerGroup(r);
@@ -3506,17 +3598,23 @@ gap> ForAll(last2, x -> Representative(x) in r);
 true
 gap> Semigroup(gens);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 1, 1, 1, 1, 1, 1, 9, 9, 1, 1 ] )>
+<Green's R-class: Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] )>
+gap> Transformation([1, 1, 1, 1, 1, 1, 9, 9, 1, 1]) in last;
+true
 gap> f := Transformation([9, 9, 5, 9, 5, 9, 5, 5, 5, 5]);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
+<Green's R-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>
+gap> Transformation([9, 9, 1, 9, 1, 9, 1, 1, 1, 1]) in last;
+true
 gap> Size(r);
 86
 gap> NrHClasses(r);
 43
 gap> s := Semigroup(gens);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>
+<Green's R-class: Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )>
+gap> Transformation([9, 9, 1, 9, 1, 9, 1, 1, 1, 1]) in last;
+true
 gap> GreensHClasses(r);
 [ <Green's H-class: Transformation( [ 9, 9, 1, 9, 1, 9, 1, 1, 1, 1 ] )>, 
   <Green's H-class: Transformation( [ 8, 8, 2, 8, 2, 8, 2, 2, 2, 2 ] )>, 
@@ -3572,6 +3670,8 @@ gap> f := Representative(h);
 Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] )
 gap> hh := HClass(r, f);
 <Green's H-class: Transformation( [ 4, 4, 9, 4, 9, 4, 9, 9, 9, 9 ] )>
+gap> Transformation([4, 4, 9, 4, 9, 4, 9, 9, 9, 9]) in last;
+true
 gap> hh = h;
 true
 gap> h = hh;
@@ -3581,11 +3681,15 @@ true
 gap> f := Transformation([10, 1, 9, 10, 2, 1, 5, 3, 2, 3]);;
 gap> r := GreensRClassOfElement(s, f);
 <Green's R-class: Transformation( [ 10, 1, 9, 10, 2, 1, 5, 3, 2, 3 ] )>
+gap> Transformation([10, 1, 9, 10, 2, 1, 5, 3, 2, 3]) in last;
+true
 gap> Size(r);
 1
 gap> f := Transformation([10, 10, 3, 10, 10, 10, 10, 10, 6, 10]);;
 gap> r := GreensRClassOfElement(s, f);
-<Green's R-class: Transformation( [ 8, 8, 1, 8, 8, 8, 8, 8, 9, 8 ] )>
+<Green's R-class: Transformation( [ 10, 10, 3, 10, 10, 10, 10, 10, 6, 10 ] )>
+gap> Transformation([8, 8, 1, 8, 8, 8, 8, 8, 9, 8]) in last;
+true
 gap> Size(r);
 546
 gap> f := Transformation([6, 6, 4, 6, 6, 6, 6, 6, 3, 6]);;
@@ -3593,6 +3697,8 @@ gap> f in r;
 true
 gap> h := HClass(r, f);
 <Green's H-class: Transformation( [ 6, 6, 4, 6, 6, 6, 6, 6, 3, 6 ] )>
+gap> Transformation([6, 6, 4, 6, 6, 6, 6, 6, 3, 6]) in last;
+true
 gap> f in h;
 true
 gap> ForAll(h, x -> x in r);
@@ -3706,6 +3812,8 @@ gap> Size(s);
 998
 gap> r := RClass(s, f);
 <Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
+gap> Transformation([4, 4, 3, 8, 5, 3, 3, 1]) in last;
+true
 gap> IsRegularGreensClass(r);
 true
 gap> Idempotents(r);
@@ -3734,6 +3842,8 @@ gap> Transformation([4, 4, 3, 8, 1, 3, 3, 5]) in r;
 true
 gap> r;
 <Green's R-class: Transformation( [ 4, 4, 3, 8, 5, 3, 3, 1 ] )>
+gap> Transformation([4, 4, 3, 8, 5, 3, 3, 1]) in last;
+true
 gap> NrIdempotents(r);
 1
 
@@ -3823,7 +3933,7 @@ gap> r;
 gap> Size(DClass(r));
 2400
 gap> d := DClass(r);
-<Green's D-class: [4,1,5](2)>
+<Green's D-class: (1,5,2)>
 gap> ForAll(r, x -> x in d);
 true
 gap> Number(d, x -> x in r);
@@ -3865,8 +3975,12 @@ false
 gap> f := Transformation([3, 2, 3, 4, 3, 5]);;
 gap> r := RClassNC(s, f);
 <Green's R-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
+gap> Transformation([3, 2, 3, 4, 3, 5]) in last;
+true
 gap> d := DClassOfRClass(r);
 <Green's D-class: Transformation( [ 3, 2, 3, 4, 3, 5 ] )>
+gap> Transformation([3, 2, 3, 4, 3, 5]) in last;
+true
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -4105,7 +4219,7 @@ gap> Size(s);
 12612
 gap> f := PartialPerm([1, 4, 6], [2, 3, 6]);;
 gap> r := RClass(s, f);
-<Green's R-class: [1,3][4,2][6,5]>
+<Green's R-class: [1,2][4,3](6)>
 gap> Size(r);
 120
 gap> NrHClasses(r);

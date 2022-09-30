@@ -700,9 +700,13 @@ gap> LClassReps(L){[10 .. 20]};
 
 # IdealsTest14: GreensXClassOfElement
 gap> GreensDClassOfElement(I, Transformation([2, 2, 6, 2, 5, 5]));
-<Green's D-class: Transformation( [ 5, 5, 2, 5, 5, 1 ] )>
+<Green's D-class: Transformation( [ 2, 2, 6, 2, 5, 5 ] )>
+gap> Transformation([5, 5, 2, 5, 5, 1]) in last;
+true
 gap> GreensDClassOfElement(J, Transformation([6, 6, 4, 2, 4, 2]));
-<Green's D-class: Transformation( [ 2, 1, 5, 5, 5, 5 ] )>
+<Green's D-class: Transformation( [ 6, 6, 4, 2, 4, 2 ] )>
+gap> Transformation([2, 1, 5, 5, 5, 5]) in last;
+true
 gap> GreensDClassOfElement(K, PartialPerm([1, 4, 5, 6], [6, 2, 1, 3]));
 <Green's D-class: [4,2][5,1,6,3]>
 gap> GreensHClassOfElement(L, Bipartition([[1, 3, 4, 6, -3],
