@@ -61,3 +61,12 @@ DeclareAttribute("RulesOfSemigroup", IsSemigroup and CanUseFroidurePin);
 
 DeclareOperation("IdempotentsSubset",
                  [IsSemigroup and CanUseFroidurePin, IsHomogeneousList]);
+
+DeclareOperation("FirstLetter",
+                 [IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement]);
+DeclareOperation("FinalLetter",
+                 [IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement]);
+DeclareOperation("Prefix",
+                 [IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement]);
+DeclareOperation("Suffix",
+                 [IsSemigroup and CanUseFroidurePin, IsMultiplicativeElement]);

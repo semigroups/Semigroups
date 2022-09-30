@@ -558,3 +558,115 @@ function(S, list)
   od;
   return out;
 end);
+
+InstallMethod(FirstLetter,
+"for a semigroup with CanUseGapFroidurePin and a pos. int.",
+[CanUseGapFroidurePin, IsPosInt],
+function(S, i)
+  local fp;
+
+  if i > Size(S) then
+    ErrorNoReturn("the 2nd argument (a positive integer) is greater ",
+                  "than the size of the 1st argument (a semigroup)");
+  fi;
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                         i + 1,
+                         InfoLevel(InfoSemigroups) > 0);
+  return fp.first[i];
+end);
+
+InstallMethod(FirstLetter,
+"for a semigroup with CanUseGapFroidurePin and a multiplicative element",
+[CanUseGapFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+                  "of the 1st argument (a semigroup)");
+  fi;
+  return FirstLetter(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(FinalLetter,
+"for a semigroup with CanUseGapFroidurePin and a pos. int.",
+[CanUseGapFroidurePin, IsPosInt],
+function(S, i)
+  local fp;
+
+  if i > Size(S) then
+    ErrorNoReturn("the 2nd argument (a positive integer) is greater ",
+                  "than the size of the 1st argument (a semigroup)");
+  fi;
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                         i + 1,
+                         InfoLevel(InfoSemigroups) > 0);
+  return fp.final[i];
+end);
+
+InstallMethod(FinalLetter,
+"for a semigroup with CanUseGapFroidurePin and a multiplicative element",
+[CanUseGapFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+                  "of the 1st argument (a semigroup)");
+  fi;
+  return FinalLetter(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(Prefix,
+"for a semigroup with CanUseGapFroidurePin and a pos. int.",
+[CanUseGapFroidurePin, IsPosInt],
+function(S, i)
+  local fp;
+
+  if i > Size(S) then
+    ErrorNoReturn("the 2nd argument (a positive integer) is greater ",
+                  "than the size of the 1st argument (a semigroup)");
+  fi;
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                         i + 1,
+                         InfoLevel(InfoSemigroups) > 0);
+  return fp.prefix[i];
+end);
+
+InstallMethod(Prefix,
+"for a semigroup with CanUseGapFroidurePin and a multiplicative element",
+[CanUseGapFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+                  "of the 1st argument (a semigroup)");
+  fi;
+  return Prefix(S, PositionCanonical(S, x));
+end);
+
+InstallMethod(Suffix,
+"for a semigroup with CanUseGapFroidurePin and a pos. int.",
+[CanUseGapFroidurePin, IsPosInt],
+function(S, i)
+  local fp;
+
+  if i > Size(S) then
+    ErrorNoReturn("the 2nd argument (a positive integer) is greater ",
+                  "than the size of the 1st argument (a semigroup)");
+  fi;
+
+  fp := RUN_FROIDURE_PIN(GapFroidurePin(S),
+                         i + 1,
+                         InfoLevel(InfoSemigroups) > 0);
+  return fp.suffix[i];
+end);
+
+InstallMethod(Suffix,
+"for a semigroup with CanUseGapFroidurePin and a multiplicative element",
+[CanUseGapFroidurePin, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    ErrorNoReturn("the 2nd argument (a mult. elt.) is not an element ",
+                  "of the 1st argument (a semigroup)");
+  fi;
+  return Suffix(S, PositionCanonical(S, x));
+end);

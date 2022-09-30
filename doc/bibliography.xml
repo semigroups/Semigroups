@@ -576,5 +576,46 @@
   <year>2021</year>
   <other type="arxiv">2108.08277</other>
 </article></entry>
+    
+<entry id="Petrich1968aa"><article>
+  <author>
+    <name><first>Mario</first><last>Petrich</last></name>
+  </author>  
+  <title>The translational hull of a completely 0-simple semigroup</title>
+  <journal>Glasgow Mathematical Journal</journal>
+  <year>1968</year>
+  <volume>9</volume>
+  <number>1</number>
+  <pages>1--11</pages>
+</article></entry>
 
+<entry id="Petrich1970aa"><article>
+  <author>
+    <name><first>Mario</first><last>Petrich</last></name>
+  </author>  
+  <title>The translational hull in semigroups and rings</title>
+  <journal>Semigroup Forum</journal>
+  <year>1970</year>
+  <volume>1</volume>
+  <number>1</number>
+  <pages>283--360</pages>
+  <issn>1432-2137</issn>
+  <url>https://doi.org/10.1007/BF02573051</url>
+  <other type="doi">10.1007/BF02573051</other>
+</article></entry>
+
+<entry id="Clifford1977aa"><article>
+  <author>
+    <name><first>Alfred H.</first><last>Clifford</last></name>
+    <name><first>Mario</first><last>Petrich</last></name>
+  </author>  
+  <title>Some classes of completely regular semigroups</title>
+  <journal>Journal of Algebra</journal>
+  <year>1977</year>
+  <volume>46</volume>
+  <number>2</number>
+  <pages>462--480</pages>
+  <issn>0021-8693</issn>
+  <url>http://dx.doi.org/10.1016/0021-8693(77)90383-0</url>
+</article></entry>
 </file>
