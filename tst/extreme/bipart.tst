@@ -2701,15 +2701,15 @@ gap> LClassReps(D);;
 gap> x := Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8],
 > [2, 5, 8, -1, -7], [-2]]);;
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
-  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
+  [ 2, 5, 8, -1, -7 ], [ -2 ]>>
 gap> LClassReps(D);
 [ <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], [ 3, 5, 6, -1, -7 ], 
      [ -2 ]> ]
 gap> L := LClass(S, Bipartition([[1], [2, 4], [3, 6, -3, -4, -5, -6, -8],
 > [5, 7, 8, -1, -7], [-2]]));
-<Green's L-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
-  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
+<Green's L-class: <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -3, -4, -5, -6, -8 ]
+   , [ 5, 7, 8, -1, -7 ], [ -2 ]>>
 gap> LL := LClassNC(S, Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8], [2,
 > 5, 8, -1, -7], [-2]]));
 <Green's L-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
@@ -2732,8 +2732,8 @@ fail
 gap> IsRegularDClass(D);
 false
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -4, -6, -8 ], 
-  [ 3, 5, 6, -1, -3, -5, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -3, -5, -7 ], 
+  [ 5, 7, -4, -6, -8 ], [ -2 ]>>
 gap> IsRegularDClass(D);
 false
 gap> x := Bipartition([[1, 7, 8, -2, -5], [2, 3, 5, 6, -1, -3, -4, -6],

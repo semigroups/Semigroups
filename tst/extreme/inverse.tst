@@ -75,26 +75,36 @@ gap> gens := [PartialPermNC([1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19],
 > [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19])];;
 gap> s := InverseSemigroup(gens);;
 gap> d := DClass(s, Generators(s)[1]);
-<Green's D-class: <identity partial perm on 
- [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ]>>
+<Green's D-class: [2,18][3,20][6,5,11,19,1,9][7,16,13][12,14](8)>
+gap> PartialPerm([1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20], 
+>                [1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20]) in d;
+true
 gap> Size(s);
 60880
 gap> h := HClass(d, Generators(s)[1]);
 <Green's H-class: [2,18][3,20][6,5,11,19,1,9][7,16,13][12,14](8)>
 gap> Generators(s)[1] in h;
 true
+gap> Generators(s)[1] in h;
+true
 gap> DClassOfHClass(h) = d;
 true
 gap> DClassOfHClass(h);
-<Green's D-class: <identity partial perm on 
- [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ]>>
+<Green's D-class: [2,18][3,20][6,5,11,19,1,9][7,16,13][12,14](8)>
+gap> PartialPerm([1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20], 
+>                [1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20]) in last;
+true
 gap> r := RClassOfHClass(h);
 <Green's R-class: [2,18][3,20][6,5,11,19,1,9][7,16,13][12,14](8)>
+gap> Representative(h) in r;
+true
 gap> ForAll(h, x -> x in r);
 true
 gap> l := LClass(h);
-<Green's L-class: <identity partial perm on 
- [ 1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20 ]>>
+<Green's L-class: [2,18][3,20][6,5,11,19,1,9][7,16,13][12,14](8)>
+gap> PartialPerm([1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20], 
+>                [1, 5, 8, 9, 11, 13, 14, 16, 18, 19, 20]) in l;
+true
 gap> ForAll(h, x -> x in l);
 true
 gap> Representative(l) in l;
@@ -118,11 +128,15 @@ true
 gap> RClassOfHClass(h);
 <Green's R-class: [3,7][8,1,2,6,9][10,5]>
 gap> LClassOfHClass(h);
-<Green's L-class: <identity partial perm on [ 1, 2, 5, 6, 7, 9 ]>>
+<Green's L-class: [3,7][8,1,2,6,9][10,5]>
+gap> PartialPerm([1, 2, 5, 6, 7, 9], [1, 2, 5, 6, 7, 9]) in last;
+true
 gap> r := RClassOfHClass(h);
 <Green's R-class: [3,7][8,1,2,6,9][10,5]>
 gap> l := LClass(h);
-<Green's L-class: <identity partial perm on [ 1, 2, 5, 6, 7, 9 ]>>
+<Green's L-class: [3,7][8,1,2,6,9][10,5]>
+gap> PartialPerm([1, 2, 5, 6, 7, 9], [1, 2, 5, 6, 7, 9]) in last;
+true
 gap> DClass(r) = DClass(l);
 true
 gap> DClass(h) = DClass(l);
@@ -267,6 +281,8 @@ gap> GreensHClasses(D);
 [ <Green's H-class: <identity partial perm on [ 1, 3, 4 ]>> ]
 gap> D := GreensDClasses(s)[3];
 <Green's D-class: <identity partial perm on [ 1, 3 ]>>
+gap> PartialPerm([1, 3], [1, 3]) in last;
+true
 gap> GreensLClasses(D);
 [ <Green's L-class: <identity partial perm on [ 1, 3 ]>>, 
   <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, 
@@ -301,7 +317,7 @@ gap> GreensHClasses(D);
   <Green's H-class: <identity partial perm on [ 2, 3 ]>> ]
 gap> h := last[9];;
 gap> L := LClass(D, Representative(h));
-<Green's L-class: [1,4][3,2]>
+<Green's L-class: [1,2,4]>
 gap> Position(HClasses(L), h);
 2
 gap> DClassOfLClass(L) = D;
@@ -309,7 +325,7 @@ true
 gap> LClassOfHClass(h) = L;
 true
 gap> R := RClassOfHClass(h);
-<Green's R-class: [2,1,3]>
+<Green's R-class: [1,2,4]>
 gap> Position(HClasses(R), h);
 3
 gap> DClassOfRClass(R) = D;
@@ -321,19 +337,21 @@ gap> s := InverseSemigroup(
 > PartialPermNC([1, 2, 3, 4, 6], [3, 6, 4, 5, 1]));;
 gap> f := PartialPermNC([1, 4, 6], [6, 3, 1]);;
 gap> D := DClass(s, f);
-<Green's D-class: <identity partial perm on [ 3, 4, 6 ]>>
+<Green's D-class: [4,3](1,6)>
+gap> PartialPerm([3, 4, 6], [3, 4, 6]) in last;
+true
 gap> LClass(s, f) = LClass(D, f);
 true
 gap> RClass(s, f) = RClass(D, f);
 true
 gap> R := RClass(s, f);
-<Green's R-class: [1,3](4,6)>
+<Green's R-class: [4,3](1,6)>
 gap> HClass(s, f) = HClass(R, f);
 true
 gap> HClass(D, f) = HClass(R, f);
 true
 gap> L := LClass(s, f);
-<Green's L-class: [4,1](3,6)>
+<Green's L-class: [4,3](1,6)>
 gap> HClass(D, f) = HClass(L, f);
 true
 gap> HClass(s, f) = HClass(L, f);
@@ -344,89 +362,109 @@ gap> s := POI(10);
 <inverse partial perm monoid of rank 10 with 10 generators>
 gap> f := PartialPermNC([2, 4, 5, 7], [2, 3, 5, 7]);;
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 5, 7 ]>>
+<Green's L-class: [4,3](2)(5)(7)>
+gap> PartialPerm([2, 3, 5, 7], [2, 3, 5, 7]) in last;
+true
 gap> l := LClass(s, f);
-<Green's L-class: [1,2,3,5][9,7]>
+<Green's L-class: [4,3](2)(5)(7)>
 gap> s := POI(15);
 <inverse partial perm monoid of rank 15 with 15 generators>
 gap> f := PartialPermNC([1, 3, 5, 8, 9, 10, 12, 13, 14],
 > [2, 3, 4, 7, 9, 11, 12, 13, 15]);;
 gap> l := LClass(s, f);
-<Green's L-class: [5,7,11,15][6,9][8,12][10,13](2)(3)(4)>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]
- >>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
+gap> PartialPerm([2, 3, 4, 7, 9, 11, 12, 13, 15], [2, 3, 4, 7, 9, 11, 12, 13, 15]) in last;
+true
 gap> s := POI(15);;
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]
- >>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
+gap> PartialPerm([2, 3, 4, 7, 9, 11, 12, 13, 15], [2, 3, 4, 7, 9, 11, 12, 13, 15]) in last;
+true
 gap> l = LClass(s, f);
 true
 gap> f := PartialPermNC([1, 2, 4, 7, 8, 11, 12], [1, 2, 6, 7, 9, 10, 11]);;
 gap> l := LClass(POI(12), f);
-<Green's L-class: [3,6,10][4,7][5,9](1)(2)(11)>
+<Green's L-class: [4,6][8,9][12,11,10](1)(2)(7)>
 gap> f := PartialPermNC([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13],
 > [1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 13]);;
 gap> l := LClass(POI(13), f);
-<Green's L-class: [6,5,4,3,2,1][11,12,13](7)(8)(9)(10)>
+<Green's L-class: [6,5][11,12](1)(2)(3)(4)(7)(8)(9)(10)(13)>
 gap> f := PartialPermNC([1, 2, 3, 4, 7, 8, 9, 10],
 > [2, 3, 4, 5, 6, 8, 10, 11]);;
 gap> l := LClass(POI(13), f);
-<Green's L-class: [1,2,3,4,5,6,8][7,10,11]>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> LClassNC(POI(13), f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> RClassNC(POI(13), f);
 <Green's R-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> HClassNC(POI(13), f);
 <Green's H-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> DClassNC(POI(13), f);
-<Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's D-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> s := POI(13);
 <inverse partial perm monoid of rank 13 with 13 generators>
 gap> D := DClassNC(s, f);
-<Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's D-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> l := LClass(s, f);
-<Green's L-class: [1,2,3,4,5,6,8][7,10,11]>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> s := POI(15);
 <inverse partial perm monoid of rank 15 with 15 generators>
 gap> f := PartialPermNC([1, 3, 5, 8, 9, 10, 12, 13, 14],
 > [2, 3, 4, 7, 9, 11, 12, 13, 15]);;
 gap> l := LClass(s, f);
-<Green's L-class: [5,7,11,15][6,9][8,12][10,13](2)(3)(4)>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]
- >>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
+gap> PartialPerm([2, 3, 4, 7, 9, 11, 12, 13, 15], [2, 3, 4, 7, 9, 11, 12, 13, 15]) in last;
+true
 gap> s := POI(15);;
 gap> l := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]
- >>
+<Green's L-class: [1,2][5,4][8,7][10,11][14,15](3)(9)(12)(13)>
+gap> PartialPerm([2, 3, 4, 7, 9, 11, 12, 13, 15], [2, 3, 4, 7, 9, 11, 12, 13, 15]) in last;
+true
 gap> l = LClass(s, f);
 true
 gap> f := PartialPermNC([1, 2, 4, 7, 8, 11, 12], [1, 2, 6, 7, 9, 10, 11]);;
 gap> l := LClass(POI(12), f);
-<Green's L-class: [3,6,10][4,7][5,9](1)(2)(11)>
+<Green's L-class: [4,6][8,9][12,11,10](1)(2)(7)>
 gap> f := PartialPermNC([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13],
 > [1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 13]);;
 gap> l := LClass(POI(13), f);
-<Green's L-class: [6,5,4,3,2,1][11,12,13](7)(8)(9)(10)>
+<Green's L-class: [6,5][11,12](1)(2)(3)(4)(7)(8)(9)(10)(13)>
 gap> f := PartialPermNC([1, 2, 3, 4, 7, 8, 9, 10],
 > [2, 3, 4, 5, 6, 8, 10, 11]);;
 gap> l := LClass(POI(13), f);
-<Green's L-class: [1,2,3,4,5,6,8][7,10,11]>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> LClassNC(POI(13), f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> RClassNC(POI(13), f);
 <Green's R-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> HClassNC(POI(13), f);
 <Green's H-class: [1,2,3,4,5][7,6][9,10,11](8)>
 gap> DClassNC(POI(13), f);
-<Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's D-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> s := POI(13);
 <inverse partial perm monoid of rank 13 with 13 generators>
 gap> D := DClassNC(s, f);
-<Green's D-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's D-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> LClassNC(s, f) = LClass(D, f);
 true
 gap> LClass(s, f) = LClassNC(D, f);
@@ -452,7 +490,9 @@ true
 gap> HClass(s, f) = HClassNC(R, f);
 true
 gap> L := LClassNC(s, f);
-<Green's L-class: <identity partial perm on [ 2, 3, 4, 5, 6, 8, 10, 11 ]>>
+<Green's L-class: [1,2,3,4,5][7,6][9,10,11](8)>
+gap> PartialPerm([2, 3, 4, 5, 6, 8, 10, 11], [2, 3, 4, 5, 6, 8, 10, 11]) in last;
+true
 gap> HClass(s, f) = HClassNC(L, f);
 true
 gap> HClass(s, f) = HClass(L, f);
@@ -528,8 +568,9 @@ gap> Size(m);
 gap> f := PartialPermNC([27, 30, 31, 32, 58, 62, 63, 64],
 > [8, 16, 28, 60, 49, 59, 32, 64]);;
 gap> d := DClassNC(m, f);
-<Green's D-class: <identity partial perm on [ 8, 16, 28, 32, 49, 59, 60, 64 ]
- >>
+<Green's D-class: [27,8][30,16][31,28][58,49][62,59][63,32,60](64)>
+gap> PartialPerm([8, 16, 28, 32, 49, 59, 60, 64], [8, 16, 28, 32, 49, 59, 60, 64]) in last;
+true
 gap> LClassReps(d);
 [ <identity partial perm on [ 8, 16, 28, 32, 49, 59, 60, 64 ]>, 
   [8,13][28,29][49,50][60,61](16)(32)(59)(64), 
@@ -554,6 +595,8 @@ gap> List(DClasses(m), NrRClasses);
 [ 1, 6, 15, 20, 15, 6, 1 ]
 gap> d := DClasses(m)[6];
 <Green's D-class: <identity partial perm on [ 61, 64 ]>>
+gap> PartialPerm([61, 64], [61, 64]) in last;
+true
 gap> LClassReps(d);
 [ <identity partial perm on [ 61, 64 ]>, [61,60](64), [61,59](64), 
   [61,32](64), [61,62](64), [61,63](64) ]
@@ -562,6 +605,8 @@ gap> RClassReps(d);
   [32,61](64), [62,61](64), [63,61](64) ]
 gap> d := DClassNC(m, Representative(d));
 <Green's D-class: <identity partial perm on [ 61, 64 ]>>
+gap> PartialPerm([61, 64], [61, 64]) in last;
+true
 gap> LClassReps(d);
 [ <identity partial perm on [ 61, 64 ]>, [61,60](64), [61,59](64), 
   [61,32](64), [61,62](64), [61,63](64) ]
@@ -649,16 +694,22 @@ gap> s := InverseSemigroup([PartialPermNC([1, 2, 3, 5], [2, 1, 6, 3]),
 > PartialPermNC([1, 2, 3, 6], [3, 5, 2, 6])]);;
 gap> f := PartialPermNC([1 .. 3], [6, 3, 1]);;
 gap> d := DClassNC(s, f);
-<Green's D-class: <identity partial perm on [ 1, 3, 6 ]>>
+<Green's D-class: [2,3,1,6]>
+gap> PartialPerm([1, 3, 6], [1, 3, 6]) in last;
+true
 gap> GroupHClass(d);
 <Green's H-class: <identity partial perm on [ 1, 3, 6 ]>>
-gap> StructureDescription(last);
+gap> PartialPerm([1, 3, 6], [1, 3, 6]) in last;
+true
+gap> StructureDescription(GroupHClass(d));
 "1"
 gap> ForAny(DClasses(s), x -> not IsTrivial(GroupHClass(x)));
 true
-gap> First(DClasses(s), x -> not IsTrivial(GroupHClass(x)));
+gap> D := First(DClasses(s), x -> not IsTrivial(GroupHClass(x)));
 <Green's D-class: <identity partial perm on [ 1, 2 ]>>
-gap> StructureDescription(GroupHClass(last));
+gap> PartialPerm([1, 2], [1, 2]) in D;
+true
+gap> StructureDescription(GroupHClass(D));
 "C2"
 
 # InverseTest13
@@ -820,14 +871,18 @@ gap> d := DClassNC(s, f);;
 gap> NrIdempotents(d);
 13
 gap> l := LClass(d, f);
-<Green's L-class: <identity partial perm on [ 1, 2, 3, 5, 7 ]>>
+<Green's L-class: [9,5][10,3,2,7,1]>
+gap> PartialPerm([1, 2, 3, 5, 7], [1, 2, 3, 5, 7]) in last;
+true
 gap> NrIdempotents(l);
 1
 gap> DClass(l);
-<Green's D-class: <identity partial perm on [ 1, 2, 3, 5, 7 ]>>
-gap> last = d;
+<Green's D-class: [9,5][10,3,2,7,1]>
+gap> PartialPerm([1, 2, 3, 5, 7], [1, 2, 3, 5, 7]) in last;
 true
-gap> NrIdempotents(last2);
+gap> DClass(l) = d;
+true
+gap> NrIdempotents(DClass(l));
 13
 
 # InverseTest18

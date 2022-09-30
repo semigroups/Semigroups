@@ -547,9 +547,9 @@ gap> L := GreensLClassOfElement(S, Transformation([3, 1, 1, 3]));;
 gap> AsSet(Idempotents(L));
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ]
 gap> H := GroupHClass(D);
-<Green's H-class: Transformation( [ 1, 3, 3, 1 ] )>
+<Green's H-class: Transformation( [ 1, 1, 3, 3 ] )>
 gap> Idempotents(H);
-[ Transformation( [ 1, 3, 3, 1 ] ) ]
+[ Transformation( [ 1, 1, 3, 3 ] ) ]
 gap> S := InverseSemigroup(
 > PartialPerm([10, 6, 3, 4, 9, 0, 1]),
 > PartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;

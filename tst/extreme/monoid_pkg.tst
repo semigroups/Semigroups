@@ -80,9 +80,11 @@ true
 gap> gens := [Transformation([3, 5, 3, 3, 5, 6]),
 > Transformation([6, 2, 4, 2, 2, 6])];;
 gap> S := Semigroup(gens);;
-gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
+gap> H := GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
 <Green's H-class: Transformation( [ 6, 2, 2, 2, 2, 6 ] )>
-gap> IsomorphismPermGroup(last);
+gap> Transformation([6, 2, 2, 2, 2, 6]) in H;
+true
+gap> IsomorphismPermGroup(H);
 MappingByFunction( <Green's H-class: Transformation( [ 6, 2, 2, 2, 2, 6 ] )>
  , Group(()), function( x ) ... end, function( x ) ... end )
 
@@ -740,6 +742,8 @@ gap> m := Semigroup(GeneratorsOfSemigroup(m));
 <transformation semigroup of degree 7 with 2 generators>
 gap>  r := GreensLClassOfElement(m, Transformation([3, 3, 3, 3, 3, 3, 5]));
 <Green's L-class: Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] )>
+gap> Transformation([3, 3, 3, 3, 3, 3, 5]) in last;
+true
 gap> d := DClassOfLClass(r);;
 gap> dr := GreensLClasses(d);;
 gap> r2 := First(dr, x -> x = r);;
@@ -808,11 +812,13 @@ gap> b := Transformation([2, 3, 1, 5, 4, 1]);;
 gap> M := Semigroup(a, b);;
 gap> GreensLClassOfElement(M, a);
 <Green's L-class: Transformation( [ 2, 1, 4, 5, 6, 3 ] )>
+gap> Transformation([2, 1, 4, 5, 6, 3]) in last;
+true
 gap> f := FreeSemigroup(3);;
 gap> a := f.1;; b := f.2;; c := f.3;;
 gap> s := f / [[a ^ 2, a], [b ^ 2, b], [c ^ 2, c], [a * b, a],
 > [b * a, b], [a * c, a], [c * a, c], [b * c, b], [c * b, c]];
-<fp semigroup with 3 generators and 9 relations>
+<fp semigroup with 3 generators and 9 relations of length 30>
 gap> Size(s);
 3
 gap> GreensLClassOfElement(s, s.1);
@@ -831,6 +837,8 @@ gap> gens := [Transformation([4, 1, 4, 5, 3]),
 gap> S := Semigroup(gens);;
 gap> C := GreensLClassOfElement(S, gens[1] * gens[2] * gens[1]);
 <Green's L-class: Transformation( [ 5, 3, 5, 4, 3 ] )>
+gap> Transformation([5, 3, 5, 4, 3]) in last;
+true
 gap> gens := [Transformation([5, 1, 1, 5, 1]),
 > Transformation([5, 2, 4, 3, 2])];;
 gap> S := Semigroup(gens);;
@@ -844,13 +852,17 @@ gap> a := Transformation([2, 1, 4, 5, 6, 3]);;
 gap> b := Transformation([2, 3, 1, 5, 4, 1]);;
 gap> M := Semigroup(a, b);;
 gap> rc := GreensRClassOfElement(M, a * b * a);
-<Green's R-class: Transformation( [ 5, 2, 1, 4, 3, 3 ] )>
+<Green's R-class: Transformation( [ 4, 1, 6, 5, 2, 2 ] )>
+gap> Transformation([5, 2, 1, 4, 3, 3]) in last;
+true
 gap> gens := [Transformation([3, 5, 2, 5, 1]),
 > Transformation([4, 3, 2, 1, 5])];;
 gap> S := Semigroup(gens);;
 gap> f := Transformation([2, 4, 2, 5, 3]);;
 gap> r := RClass(S, f);
-<Green's R-class: Transformation( [ 3, 1, 3, 5, 2 ] )>
+<Green's R-class: Transformation( [ 2, 4, 2, 5, 3 ] )>
+gap> Transformation([3, 1, 3, 5, 2]) in last;
+true
 gap> LambdaOrb(r);
 <closed orbit, 25 points with Schreier tree with log>
 gap> AsList(last);
@@ -915,6 +927,8 @@ gap> NrRClasses(s);
 gap> f := Transformation([3, 3, 3, 3, 3, 2, 3]);;
 gap> r := RClass(s, f);
 <Green's R-class: Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )>
+gap> Transformation([3, 3, 3, 3, 3, 2, 3]) in last;
+true
 gap> LambdaOrb(r);
 <closed orbit, 19 points with Schreier tree with log>
 gap> AsSet(LambdaOrb(r));
