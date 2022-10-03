@@ -1208,14 +1208,19 @@ function(p, hashlen)
   return rec(func := {v, data} -> 1, data := fail);
 end);
 
+# The next two methods are more general than might seem necessary but
+# apparently ReesZeroMatrixSemigroup's satisfying IsWholeFamily are not in
+# IsActingSemigroup but their ideals are, and we still require a method for
+# ConvertToInternalElement as a result.
+
 InstallMethod(ConvertToInternalElement,
-"for an acting semigroup and mult. elt.",
-[IsActingSemigroup, IsMultiplicativeElement],
+"for a semigroup and mult. elt.",
+[IsSemigroup, IsMultiplicativeElement],
 {S, x} -> x);
 
 InstallMethod(ConvertToExternalElement,
-"for an acting semigroup and mult. elt.",
-[IsActingSemigroup, IsMultiplicativeElement],
+"for a semigroup and mult. elt.",
+[IsSemigroup, IsMultiplicativeElement],
 {S, x} -> x);
 
 InstallMethod(ConvertToInternalElement,

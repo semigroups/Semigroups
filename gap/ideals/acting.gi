@@ -188,6 +188,10 @@ function(I)
   return GeneratorsOfSemigroup(U);
 end);
 
+# Don't think that this applies to semigroups of matrices over finite fields,
+# so this doesn't require us to use ConvertToInternalElement
+# TODO(FixExtremeTests): check that this is really correct
+
 InstallMethod(GeneratorsOfSemigroup,
 "for an inverse acting semigroup rep ideal",
 [IsInverseActingSemigroupRep and IsSemigroupIdeal],
@@ -568,7 +572,7 @@ function(data, limit, record)
                             ParentAttr, I,
                             EquivalenceClassRelation, drel,
                             IsGreensClassNC, false,
-                            Representative, x,
+                            Representative, ConvertToExternalElement(I, x),
                             LambdaOrb, lambdao,
                             LambdaOrbSCCIndex, m,
                             RhoOrb, rhoo,
@@ -639,7 +643,8 @@ function(data, limit, record)
   # initialise the data if necessary
   if data!.init = false then
     # add the generators of the ideal...
-    idealgens := GeneratorsOfSemigroupIdeal(I);
+    idealgens := List(GeneratorsOfSemigroupIdeal(I),
+                      x -> ConvertToInternalElement(I, x));
     for i in [1 .. Length(idealgens)] do
       UpdateSemigroupIdealData(idealgens[i], fail, fail, i);
     od;
@@ -704,6 +709,8 @@ function(data, limit, record)
   fi;
   return data;
 end);
+
+# TODO(FixExtremeTests): use ConvertToInternalElement here
 
 InstallMethod(\in,
 "for a multiplicative element and regular acting semigroup ideal",
@@ -1046,7 +1053,7 @@ function(data, limit, record)
                             ParentAttr, I,
                             EquivalenceClassRelation, drel,
                             IsGreensClassNC, false,
-                            Representative, x,
+                            Representative, ConvertToExternalElement(I, x),
                             LambdaOrb, lambdao,
                             LambdaOrbSCCIndex, m,
                             RhoOrb, rhoo,
@@ -1093,7 +1100,8 @@ function(data, limit, record)
   # initialise the data if necessary
   if data!.init = false then
     # add the generators of the ideal...
-    idealgens := GeneratorsOfSemigroupIdeal(I);
+    idealgens := List(GeneratorsOfSemigroupIdeal(I),
+                      x -> ConvertToInternalElement(I, x));
     for i in [1 .. Length(idealgens)] do
       UpdateSemigroupIdealData(idealgens[i], fail, fail, i);
     od;

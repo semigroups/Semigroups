@@ -1259,7 +1259,7 @@ function(S)
   out := EmptyPlist(Length(scc) - 1);
 
   for i in [2 .. Length(scc)] do
-    out[i - 1] := data[scc[i][1]][4];
+    out[i - 1] := ConvertToExternalElement(S, data[scc[i][1]][4]);
   od;
   return out;
 end);
