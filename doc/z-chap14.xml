@@ -158,27 +158,4 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
  
-  <Section>
-
-    <Heading>
-      Changing the representation of a semigroup
-    </Heading>
-
-    <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      The Nambooripad partial order of a regular semigroup
-    </Heading>
-
-    <#Include Label = "NambooripadLeqRegularSemigroup">
-    <#Include Label = "NambooripadPartialOrder">
-
-  </Section>
 </Chapter>
