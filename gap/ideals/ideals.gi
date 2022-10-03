@@ -206,7 +206,6 @@ function(arg)
   elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
     # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
-
   elif (IsMultiplicativeElement(arg[2])
         and IsGeneratorsOfSemigroup([arg[2]]))
       or (IsListOrCollection(arg[2])

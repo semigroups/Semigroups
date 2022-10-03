@@ -55,6 +55,6 @@ DeclareAttribute("SchutzGpMembership", IsSemigroup);
 DeclareOperation("FakeOne", [IsCollection]);
 
 DeclareOperation("ConvertToInternalElement",
-                 [IsActingSemigroup, IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("ConvertToExternalElement",
-                 [IsActingSemigroup, IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
