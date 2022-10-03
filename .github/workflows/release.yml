@@ -67,4 +67,8 @@ jobs:
         uses: gap-actions/run-pkg-tests@v2
         with:
           GAP_TESTFILE: "ci/run-gap-testbugfix.g"
+      - name: "Run Semigroups package's tst/testextreme.g"
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-testextreme.g"
 
