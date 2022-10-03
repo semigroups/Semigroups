@@ -192,11 +192,11 @@ DeclareSynonym("IsBitranslationsSemigroup",
 #! For the semigroup <A>T</A> of left or right translations of a semigroup <M>
 #! S</M> and <A>x</A> one of:
 #! * a mapping on the underlying semigroup; note that in this case only the
-#!   values of the mapping on the <Ref Attr="UnderlyingRepresentatives"/> of
+#!   values of the mapping on the `UnderlyingRepresentatives` of
 #!   <A>T</A> are checked and used, so mappings which do not define translations
 #!   can be used to create translations if they are valid on that subset of S;
 #! * a list of indices representing the images of the
-#!   <Ref Attr="UnderlyingRepresentatives"/> of <A>T</A>, where the ordering
+#!   `UnderlyingRepresentatives` of <A>T</A>, where the ordering
 #!   is that of <Ref Oper="PositionCanonical"/> on <A>S</A>;
 #! * (for `LeftTranslation`) a list of length `Length(Rows(S))`
 #!   containing elements of `UnderlyingSemigroup(S)`; in this case
