@@ -267,7 +267,7 @@ InstallMethod(IsCompletelyRegularSemigroup,
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local record, o, pos, f;
+  local record, gens, f, o, pos;
 
   if HasParent(S) and HasIsCompletelyRegularSemigroup(Parent(S))
       and IsCompletelyRegularSemigroup(Parent(S)) then
@@ -279,14 +279,14 @@ function(S)
 
   record := ShallowCopy(LambdaOrbOpts(S));
   record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
 
   for f in GeneratorsOfSemigroup(S) do
-    o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), record);
+    f := ConvertToInternalElement(S, f);
+    o := Orb(gens, LambdaFunc(S)(f), LambdaAct(S), record);
     pos := LookForInOrb(o,
-                        function(o, x)
-                          return LambdaRank(S)(LambdaAct(S)(x, f))
-                                  <> LambdaRank(S)(x);
-                        end,
+                        {o, x} -> LambdaRank(S)(LambdaAct(S)(x, f))
+                                  <> LambdaRank(S)(x),
                         1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
@@ -1223,6 +1223,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 function(S, x)
   local o, l, scc, rho, tester, i;
 
+   x := ConvertToInternalElement(S, x);
    if IsClosedOrbit(LambdaOrb(S)) then
     o := LambdaOrb(S);
     l := Position(o, LambdaFunc(S)(x));
@@ -1378,7 +1379,8 @@ function(S)
   elif HasNrDClasses(S) then
     return NrDClasses(S) = 1;
   elif HasGeneratorsOfSemigroup(S) then
-    gens := GeneratorsOfSemigroup(S);  # not GeneratorsOfMonoid!
+    gens := List(GeneratorsOfSemigroup(S),  # not GeneratorsOfMonoid!
+                 x -> ConvertToInternalElement(S, x));
     lambdafunc := LambdaFunc(S);
     lambdarank := LambdaRank(S);
     rank := lambdarank(lambdafunc(gens[1]));
@@ -1395,10 +1397,9 @@ function(S)
     od;
 
     for f in gens do
-      o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), opts);
-      pos := LookForInOrb(o, function(o, x)
-                               return LambdaRank(S)(x) < rank;
-                             end, 1);
+      f := ConvertToInternalElement(S, f);
+      o := Orb(gens, LambdaFunc(S)(f), LambdaAct(S), opts);
+      pos := LookForInOrb(o, {o, x} -> LambdaRank(S)(x) < rank, 1);
       if pos <> false then
         return false;
       fi;
