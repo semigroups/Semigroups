@@ -87,7 +87,7 @@ SEMIGROUPS.CreateXClass := function(args, type, rel)
     Assert(1, IsActingSemigroupGreensClass(args[1]));
     S := Parent(args[1]);
     nc := IsGreensClassNC(args[1]);
-    rep := Representative(args[1]);
+    rep := args[1]!.rep;
   else  # arg is semigroup/Green's class, rep, and boolean
         # for creating smaller classes inside bigger ones
     if IsGreensClass(args[1]) then
@@ -1063,7 +1063,7 @@ H -> Size(SchutzenbergerGroup(H)));
 
 # same method for regular/ideals, different for inverse
 
-InstallMethod(\in, "for multiplicative element and D-class of acting semigroup",
+InstallMethod(\in, "for mult. elt. and D-class of acting semigroup",
 [IsMultiplicativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
   local S, rep, o, m, scc, l, schutz, cosets, membership, one, p;
@@ -1079,7 +1079,6 @@ function(x, D)
   fi;
 
   x := ConvertToInternalElement(S, x);
-  rep := D!.rep;
 
   o := LambdaOrb(D);
   m := LambdaOrbSCCIndex(D);
@@ -1107,6 +1106,7 @@ function(x, D)
   fi;
 
   cosets := LambdaCosets(D);
+  rep := D!.rep;
   x := LambdaPerm(S)(rep, x);
   membership := SchutzGpMembership(S);
   one := LambdaIdentity(S)(ActionRank(S)(rep));
@@ -1259,7 +1259,7 @@ function(S)
   out := EmptyPlist(Length(scc) - 1);
 
   for i in [2 .. Length(scc)] do
-    out[i - 1] := data[scc[i][1]][4];
+    out[i - 1] := ConvertToExternalElement(S, data[scc[i][1]][4]);
   od;
   return out;
 end);
@@ -1423,7 +1423,7 @@ function(S)
   for i in [1 .. Length(reps)] do
     # don't use GreensRClassOfElementNC cos we don't need to rectify the
     # lambda-value
-    out[i] := SEMIGROUPS.CreateRClass(S, reps[i], false);
+    out[i] := CreateRClass(S, reps[i], false);
     SetLambdaOrb(out[i], LambdaOrb(S));
     SetLambdaOrbSCCIndex(out[i], data[i + 1][2]);
     SetSemigroupDataIndex(out[i], i + 1);

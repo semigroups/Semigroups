@@ -16,11 +16,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-// Include gmp.h *before* switching to C mode, because GMP detects when
-// compiled from C++ and then does some things differently, which would
-// cause an error if called from within extern "C". But libsing.h
-// (indirectly) includes gmp.h ...
-
 #ifndef INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_
 #define INCLUDE_GAPBIND14_GAP_INCLUDE_HPP_
 

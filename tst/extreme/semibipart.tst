@@ -348,41 +348,65 @@ gap> f := S.1 * S.2;
 gap> H := HClass(S, f);
 <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -5], [-2, -3, -4]]) in last;
+true
 gap> LClass(H);
 <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -5], [-2, -3, -4]]) in last;
+true
 gap> RClass(H);
-<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -4, -5], [-3]]) in last;
+true
 gap> DClass(RClass(H));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -4, -5], [-3]]) in last;
+true
 gap> DClass(LClass(H));
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -4, -5], [-3]]) in last;
+true
 gap> DClass(H);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], [ -3 ]>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -5 ], [ -2, -3, -4 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -4, -5], [-3]]) in last;
+true
 gap> f := Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]);
 <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
 gap> H := HClassNC(S, f);
 <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> LClass(H);
 <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> RClass(H);
 <Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> DClass(RClass(H));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> DClass(LClass(H));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> DClass(H);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> DClasses(S);
 [ <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5 ], [ -1, -2, -4, -5 ], 
       [ -3 ]>>, 
@@ -399,6 +423,8 @@ gap> DClasses(S);
 gap> H := HClassNC(S, f);
 <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> RClasses(DClass(H));
 [ <Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
       [ -4, -5 ]>>, 
@@ -473,23 +499,43 @@ gap> S := Semigroup(S);
 gap> D := DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> D := [D];
 [ <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
       [ -4, -5 ]>> ]
 gap> D[2] := DClass(S, f);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[3] := DClass(RClass(S, f));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[4] := DClass(RClass(S, f));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[5] := DClass(LClass(S, f));
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[6] := DClass(HClass(S, f));
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[7] := DClass(LClass(HClass(S, f)));
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> D[8] := DClass(RClass(HClass(S, f)));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
 gap> ForAll(Combinations([1 .. 8], 2), x -> D[x[1]] = D[x[2]]);
 true
 gap> List(D, IsGreensClassNC);
@@ -497,15 +543,23 @@ gap> List(D, IsGreensClassNC);
 gap> D[7] := DClass(LClass(HClassNC(S, f)));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> D[6] := DClass(RClass(HClassNC(S, f)));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> D[5] := DClass(HClassNC(S, f));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> D[4] := DClass(LClassNC(S, f));
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
 gap> ForAll(Combinations([1 .. 8], 2), x -> D[x[1]] = D[x[2]]);
 true
 gap> List(D, IsGreensClassNC);
@@ -515,10 +569,14 @@ gap> S := Semigroup(S);
 gap> D := DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> LClassNC(D, f);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> L := LClassNC(D, f);
 <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> Size(L);
 7
 gap> Size(LClass(S, f));
 7
@@ -533,11 +591,16 @@ true
 gap> S := Semigroup(S);
 <bipartition semigroup of degree 5 with 5 generators>
 gap> D := DClass(S, f);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
-gap> LClassNC(D, f);
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
+gap> L := LClassNC(D, f);
 <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> Size(L);
 7
 gap> Size(LClass(S, f));
 7
@@ -552,10 +615,16 @@ true
 gap> S := Semigroup(S);
 <bipartition semigroup of degree 5 with 5 generators>
 gap> D := DClass(S, f);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
-gap> RClassNC(D, f);
-<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
-gap> Size(last);
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
+gap> R := RClassNC(D, f);
+<Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
+gap> Size(R);
 9
 gap> Size(RClass(S, f));
 9
@@ -572,10 +641,14 @@ gap> S := Semigroup(S);
 gap> D := DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> RClassNC(D, f);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> R := RClassNC(D, f);
 <Green's R-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> Size(R);
 9
 gap> Size(RClass(S, f));
 9
@@ -590,11 +663,16 @@ true
 gap> S := Semigroup(S);
 <bipartition semigroup of degree 5 with 5 generators>
 gap> D := DClass(S, f);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>
-gap> HClassNC(D, f);
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
+  >
+gap> Bipartition([[1, 2, 3, 4, 5, -2, -3, -4], [-1, -5]]) in last; 
+true
+gap> H := HClassNC(D, f);
 <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> Size(H);
 1
 gap> Size(HClass(S, f));
 1
@@ -611,10 +689,14 @@ gap> S := Semigroup(S);
 gap> D := DClassNC(S, f);
 <Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> HClassNC(D, f);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> H := HClassNC(D, f);
 <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>
   >
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 4, 5, -2], [-1, -3], [-4, -5]]) in last;
+true
+gap> Size(H);
 1
 gap> Size(HClass(S, f));
 1
@@ -2630,19 +2712,28 @@ gap> LClassReps(D);
 gap> x := Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8],
 > [2, 5, 8, -1, -7], [-2]]);;
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
-  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
+  [ 2, 5, 8, -1, -7 ], [ -2 ]>>
+gap> Bipartition([[1, 2, 4, 7, 8, -3, -4, -5, -6, -8], 
+>  [3, 5, 6, -1, -7], [-2]]) in last;
+true
 gap> LClassReps(D);
 [ <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], [ 3, 5, 6, -1, -7 ], 
      [ -2 ]> ]
 gap> L := LClass(S, Bipartition([[1], [2, 4], [3, 6, -3, -4, -5, -6, -8],
 > [5, 7, 8, -1, -7], [-2]]));
-<Green's L-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
-  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
+<Green's L-class: <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -3, -4, -5, -6, -8 ]
+   , [ 5, 7, 8, -1, -7 ], [ -2 ]>>
+gap> Bipartition([[1, 2, 4, 7, 8, -3, -4, -5, -6, -8], 
+>  [3, 5, 6, -1, -7], [-2]]) in last;
+true
 gap> LL := LClassNC(S, Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8], [2,
 > 5, 8, -1, -7], [-2]]));
 <Green's L-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
   [ 2, 5, 8, -1, -7 ], [ -2 ]>>
+gap> Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8], 
+>  [2, 5, 8, -1, -7], [-2]]) in last;
+true
 gap> LL = L;
 true
 gap> L = LL;
@@ -2656,13 +2747,19 @@ gap> x := Bipartition([[1], [2, 4], [3, 6, 8, -1, -3, -5, -7],
 gap> D := DClass(RClassNC(S, x));
 <Green's D-class: <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -3, -5, -7 ], 
   [ 5, 7, -4, -6, -8 ], [ -2 ]>>
+gap> Bipartition([[1], [2, 4], [3, 6, 8, -1, -3, -5, -7], 
+>  [5, 7, -4, -6, -8], [-2]]) in last;
+true
 gap> GroupHClass(D);
 fail
 gap> IsRegularDClass(D);
 false
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -4, -6, -8 ], 
-  [ 3, 5, 6, -1, -3, -5, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -3, -5, -7 ], 
+  [ 5, 7, -4, -6, -8 ], [ -2 ]>>
+gap> Bipartition([[1, 2, 4, 7, 8, -4, -6, -8], 
+>  [3, 5, 6, -1, -3, -5, -7], [-2]]) in last;
+true
 gap> IsRegularDClass(D);
 false
 gap> x := Bipartition([[1, 7, 8, -2, -5], [2, 3, 5, 6, -1, -3, -4, -6],
@@ -2671,19 +2768,28 @@ gap> IsRegularDClass(DClass(S, x));
 false
 gap> NrRegularDClasses(S);
 4
-gap> First(DClasses(S), IsRegularDClass);
+gap> D := First(DClasses(S), IsRegularDClass);
 <Green's D-class: <bipartition: [ 1, 2, 3, 7, -7 ], [ 4, 5, 6, 8 ], 
   [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>>
-gap> Size(last);
+gap> Bipartition([[1, 2, 3, 7, -7], [4, 5, 6, 8], 
+>  [-1, -2], [-3, -6, -8], [-4], [-5]]) in last;
+true
+gap> Size(D);
 12078
-gap> GroupHClass(last2);
+gap> H := GroupHClass(D);
 <Green's H-class: <bipartition: [ 1, 2, 3, 7, -7 ], [ 4, 5, 6, 8 ], 
   [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>>
-gap> StructureDescription(last);
+gap> Bipartition([[1, 2, 3, 7, -7], [4, 5, 6, 8], 
+>  [-1, -2], [-3, -6, -8], [-4], [-5]]) in last;
+true
+gap> StructureDescription(H);
 "1"
 gap> D := First(DClasses(S), IsRegularDClass);
 <Green's D-class: <bipartition: [ 1, 2, 3, 7, -7 ], [ 4, 5, 6, 8 ], 
   [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>>
+gap> Bipartition([[1, 2, 3, 7, -7], [4, 5, 6, 8], 
+>  [-1, -2], [-3, -6, -8], [-4], [-5]]) in last;
+true
 gap> NrRClasses(D);
 99
 gap> NrLClasses(D);

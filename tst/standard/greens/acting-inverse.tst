@@ -41,15 +41,15 @@ gap> S := InverseSemigroup([
 >  rec(acting := true));;
 gap> x := Bipartition([[1, -1], [2, -4], [3, -2], [4, 5, -3, -5]]);;
 gap> D := DClassOfLClass(LClass(S, x));
-<Green's D-class: <block bijection: [ 1, -1 ], [ 2, -4 ], [ 3, -2 ], 
-  [ 4, 5, -3, -5 ]>>
+<Green's D-class: <block bijection: [ 1, 5, -3, -5 ], [ 2, -4 ], [ 3, -2 ], 
+  [ 4, -1 ]>>
 gap> x in D;
 true
 gap> D = DClass(S, x);
 true
 gap> DClassOfRClass(RClass(S, x));
-<Green's D-class: <block bijection: [ 1, -1 ], [ 2, -4 ], [ 3, -2 ], 
-  [ 4, 5, -3, -5 ]>>
+<Green's D-class: <block bijection: [ 1, -4 ], [ 2, -2 ], [ 3, -3 ], 
+  [ 4, 5, -1, -5 ]>>
 gap> x in D;
 true
 gap> D = DClass(S, x);

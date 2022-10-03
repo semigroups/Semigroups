@@ -155,7 +155,10 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local record, htopts, fam;
+  local S, gens, record, htopts, fam;
+
+  S := SupersemigroupOfIdeal(I);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
 
   record := rec();
   record.orbits := [[fail]];
@@ -168,7 +171,7 @@ function(I)
   record.schreierpos := [fail];
   record.orbitgraph := [[]];
   record.looking := false;
-  record.gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
+  record.gens := gens;
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   record.orbschreiercmp := [];
@@ -183,7 +186,7 @@ function(I)
 
   htopts := ShallowCopy(LambdaOrbOpts(I));
   htopts.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen;
-  record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
+  record.ht := HTCreate(LambdaFunc(I)(gens[1]), htopts);
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
 
@@ -193,7 +196,11 @@ end);
 InstallMethod(RhoOrb, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local record, htopts, fam;
+  local S, gens, record, htopts, fam;
+
+  S := SupersemigroupOfIdeal(I);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
+
   record := rec();
   record.orbits := [[fail]];
   record.lens := [1];
@@ -205,7 +212,7 @@ function(I)
   record.schreierpos := [fail];
   record.orbitgraph := [[]];
   record.looking := false;
-  record.gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
+  record.gens := gens;
   record.orbschreierpos := [];
   record.orbschreiergen := [];
   record.orbschreiercmp := [];
@@ -219,7 +226,7 @@ function(I)
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
   htopts := ShallowCopy(RhoOrbOpts(I));
   htopts.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen;
-  record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
+  record.ht := HTCreate(RhoFunc(I)(gens[1]), htopts);
 
   fam := CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
   return Objectify(NewType(fam, IsIdealOrb and IsRhoOrb), record);
@@ -229,6 +236,10 @@ end);
 # the lambda values of the generators (and their inverses) of the ideal by
 # acting on the right by the generators (and their inverses) of the
 # supersemigroup. Hence we require a different case here.
+
+# Don't think that this applies to semigroups of matrices over finite fields,
+# so this doesn't require us to use ConvertToInternalElement
+# TODO(FixExtremeTests): check that this is really correct
 
 InstallMethod(LambdaOrb, "for an inverse acting semigroup rep ideal",
 [IsInverseActingSemigroupRep and IsSemigroupIdeal],
@@ -253,7 +264,8 @@ function(I)
 
   o := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
            LambdaOrbSeed(I),
-           LambdaAct(I), record);
+           LambdaAct(I),
+           record);
 
   # install the lambda values of the generators
   ht := o!.ht;
@@ -311,7 +323,7 @@ end);
 
 InstallGlobalFunction(UpdateIdealLambdaOrb,
 function(o, pt, x, pos, gen, ind, lookfunc)
-  local I, record, len, new, ht, found, nrorb, cmp, i;
+  local I, record, len, S, gens, new, ht, found, nrorb, cmp, i;
 
   I := o!.parent;
   record := ShallowCopy(LambdaOrbOpts(I));
@@ -335,10 +347,9 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
-             pt,
-             LambdaAct(I),
-             record);
+  S := SupersemigroupOfIdeal(I);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
+  new := Orb(gens, pt, LambdaAct(I), record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -425,7 +436,7 @@ end);
 
 InstallGlobalFunction(UpdateIdealRhoOrb,
 function(o, pt, x, pos, gen, ind, lookfunc)
-  local I, record, len, new, ht, found, nrorb, cmp, i;
+  local I, record, len, S, gens, new, ht, found, nrorb, cmp, i;
 
   I := o!.parent;
   record := ShallowCopy(RhoOrbOpts(I));
@@ -449,10 +460,9 @@ function(o, pt, x, pos, gen, ind, lookfunc)
     record.onlygradesdata := fail;
   fi;
 
-  new := Orb(GeneratorsOfSemigroup(SupersemigroupOfIdeal(I)),
-             pt,
-             RhoAct(I),
-             record);
+  S := SupersemigroupOfIdeal(I);
+  gens := List(GeneratorsOfSemigroup(S), x -> ConvertToInternalElement(S, x));
+  new := Orb(gens, pt, RhoAct(I), record);
   Enumerate(new);
 
   ht := o!.ht;
@@ -529,18 +539,21 @@ end);
 InstallMethod(EvaluateWord, "for an ideal orb and an ideal word (Semigroups)",
 [IsIdealOrb, IsList], 2,  # to beat the methods for lambda/rho orbs below
 function(o, w)
-  local res, gens, i;
+  local super_gens, I, ideal_gens, res, i;
   # it is safe to use <GeneratorsOfSemigroup> here since an ideal can't be
   # obtained using <ClosureSemigroup>
-  gens := o!.gens;
+  super_gens := o!.gens;
   # = GeneratorsOfSemigroup(SupersemigroupOfIdeal(o!.parent));
-  res := GeneratorsOfSemigroupIdeal(o!.parent)[AbsInt(w[2])] ^ SignInt(w[2]);
+  I := o!.parent;
+  ideal_gens := List(GeneratorsOfSemigroupIdeal(I),
+                     x -> ConvertToInternalElement(I, x));
+  res := ideal_gens[AbsInt(w[2])] ^ SignInt(w[2]);
 
   for i in [1 .. Length(w[1])] do
-    res := gens[w[1][i]] * res;
+    res := super_gens[w[1][i]] * res;
   od;
   for i in [1 .. Length(w[3])] do
-    res := res * gens[w[3][i]];
+    res := res * super_gens[w[3][i]];
   od;
   return res;
 end);

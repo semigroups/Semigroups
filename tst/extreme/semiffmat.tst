@@ -128,11 +128,10 @@ gap> MinimalIdeal(S);
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
-Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
-  [0*Z(3), 0*Z(3), 0*Z(3)]])
+[ [ 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3) ] ]
 gap> MinimalDClass(S);
-<Green's D-class: Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], 
-   [0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)]])>
+<Green's D-class: <matrix object of dimensions 3x3 over GF(3)>>
 gap> M := MaximalSubsemigroups(S);;
 gap> List(M, Size);
 [ 133, 9 ]
@@ -143,10 +142,10 @@ gap> List(M, U -> IsMaximalSubsemigroup(S, U));
 gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
->   n := DimensionOfMatrixOverSemiring(mat);
+>   n := NrRows(mat);
 >   for i in [2 .. n] do
 >     for j in [1 .. i - 1] do
->       if mat!.mat[i][j] <> zero then
+>       if mat[i, j] <> zero then
 >         return false;
 >       fi;
 >     od;
@@ -164,10 +163,10 @@ gap> Size(T);
 gap> upper := function(mat)
 >   local zero, n, i, j;
 >   zero := Zero(BaseDomain(mat));
->   n := DimensionOfMatrixOverSemiring(mat);
+>   n := NrRows(mat);
 >   for i in [2 .. n] do
 >     for j in [1 .. i - 1] do
->       if mat!.mat[i][j] <> zero then
+>       if mat[i][j] <> zero then
 >         return false;
 >       fi;
 >     od;
@@ -319,7 +318,7 @@ gap> NrRClasses(S);
 gap> NrLClasses(S);
 2
 gap> SchutzenbergerGroup(DClasses(S)[1]);
-<group of 8x8 matrices over GF(2) with 3 generators>
+<matrix group of size 5348063769211699200 with 3 generators>
 gap> PartialOrderOfDClasses(S);
 <immutable empty digraph with 1 vertex>
 
