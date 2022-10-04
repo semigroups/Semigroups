@@ -295,8 +295,8 @@ SEMIGROUPS.ManualExamples := function()
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
-  local oldscr, pad, total, fails, l, num, sp, bad, s, start_time, test,
-  end_time, elapsed, pex, j, ex, i;
+  local oldscr, pad, total, fails, num, HighlightWS, l, sp, bad, s, start_time,
+  test, end_time, elapsed, pex, j, ex, i;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
@@ -307,6 +307,12 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
   total := 0;
   fails := [];
   num   := 0;
+
+  HighlightWS := function(str)
+    str := Chomp(str);
+    return ReplacedString(str, " \n", "~\n");
+  end;
+
   for j in [1 .. Length(exlists)] do
     if j in excluded then
       Print("\033[44m# Skipping example ",
@@ -355,9 +361,9 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
                     "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
               Print("# Expected output:\n\033[30;42m");
-              PrintFormattedString(Chomp(pex[2][i]));
+              PrintFormattedString(HighlightWS(pex[2][i]));
               Print("\033[0m\n# But found:\n\033[30;41m");
-              PrintFormattedString(Chomp(pex[4][i]));
+              PrintFormattedString(HighlightWS(pex[4][i]));
               Print("\033[0m\n########\n");
               AddSet(fails, nums[j]);
             fi;
