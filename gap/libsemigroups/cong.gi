@@ -394,14 +394,15 @@ InstallMethod(EquivalenceRelationPartitionWithSingletons,
 [CanUseLibsemigroupsCongruence and
  HasGeneratingPairsOfLeftRightOrTwoSidedCongruence],
 function(C)
-  local part, i, x;
+  local part, word, i, x;
   if not IsFinite(Range(C)) then
     ErrorNoReturn("the argument (a congruence) must have finite range");
   fi;
 
   part := [];
   for x in Range(C) do
-    i := CongruenceWordToClassIndex(C, x);
+    word := MinimalFactorization(Range(C), x);
+    i := CongruenceWordToClassIndex(C, word);
     if not IsBound(part[i]) then
       part[i] := [];
     fi;
