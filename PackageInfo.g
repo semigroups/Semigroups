@@ -82,11 +82,8 @@ Persons := [
     FirstNames    := "Thomas",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "mam49@st-andrews.ac.uk",
-    PostalAddress := _STANDREWSMATHS,
-    Place         := "St Andrews",
-    Institution   := "University of St Andrews",
-    WWWHome       := "https://github.com/marinaanagno"),
+    Email         := "sam@math.rwth-aachen.de",
+    WWWHome       := "https://www.math.rwth-aachen.de/~Thomas.Breuer/"),
 
   rec(
     LastName      := "Burrell",
