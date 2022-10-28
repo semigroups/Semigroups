@@ -3,6 +3,50 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.1.0 (released 28/10/2022)
+
+The following major new features have been added in this version:
+
+* extensive support for translations by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/720.
+  See Chapter 18 of the manual for details.
+* support for `Sims1` in libsemigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/873. This manifests in the new
+  functions:
+  * `IteratorOfRightCongruences`, `IteratorOfLeftCongruences`
+  * `NumberOfRightCongruences`, `NumberOfLeftCongruences`
+  * `SmalerDegreeTransformationRepresentation`
+
+The following bugs were resolved:
+
+* `IsDualSemigroupRep` is no longer a representation by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/863
+* fix an issue in `SemigroupIsomorphismByImages` by @james-d-mitchell
+  in https://github.com/semigroups/Semigroups/pull/866
+* set `IsInjective` flag before calling `SetNiceMonomorphism` by @ThomasBreuer
+  in https://github.com/semigroups/Semigroups/pull/870
+* Fix issue 869 (the multiplication table of fp semigroups/monoids was
+  sometimes incorrect) by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/871
+* Resolve Issue #868 (there was recursion depth trap error when trying to
+  create an fp monoid from a small semigroup)by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/872
+* semifp: add missing methods for fp monoids/semigroups by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/874
+* Fix the README to use the correct version of GAP that's required by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/876
+* Replace gap implementation of `EqualInFreeBand` with C++ implementation from
+  libsemigroups by @reiniscirpons in
+  https://github.com/semigroups/Semigroups/pull/877
+* Remove an obsolete comment by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/878
+* Fix extreme tests by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/880
+
+## New Contributors
+* @ThomasBreuer made their first contribution in https://github.com/semigroups/Semigroups/pull/870
+* @reiniscirpons made their first contribution in https://github.com/semigroups/Semigroups/pull/877
+
 ### Version 5.0.2 (released 12/08/2022)
 
 This is a minor release hopefully resolving some crashes originating in
@@ -28,7 +72,7 @@ was an implementation of matrices over the integers and over finite fields,
 because at the time they were written it was not possible to use the matrices
 in the GAP library. This is no longer the case, and some changes in the GAP
 library for version 4.12, meant that the implementation in [Semigroups][] had
-to be removed. 
+to be removed.
 
 Previously, to create a matrix over the integers you could do:
 
@@ -40,13 +84,13 @@ The equivalent in version 5.0.0 of [Semigroups][] is:
 
 where `Integers` is the ring of integers. The changes for matrices over finite
 fields are mostly internal, and it was, and still is, possible to create such
-matrices using, for example, 
+matrices using, for example,
 
     Matrix(GF(4), Z(4) * [[0, 1], [1, 0]]);
 
 In versions of [Semigroups][] before 5.0.0, the filter
 `IsMatrixOverFiniteField` could also be used when constructing matrices, and
-these features have been removed in version 5.0.0. 
+these features have been removed in version 5.0.0.
 See: https://github.com/semigroups/Semigroups/pull/827
 
 The new features introduced in version 5.0.0 are:
@@ -56,7 +100,7 @@ The new features introduced in version 5.0.0 are:
 * Support for homomorphisms was introduced by Artemis Konstantinidi,
   Chinmay Nagpal, and [James D. Mitchell][] in
   https://github.com/semigroups/Semigroups/pull/797
-  and 
+  and
   https://github.com/semigroups/Semigroups/pull/828
 
 ### Version 4.0.3 (released 01/07/2022)
