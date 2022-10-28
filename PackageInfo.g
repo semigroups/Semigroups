@@ -78,6 +78,17 @@ Persons := [
     WWWHome       := "https://github.com/marinaanagno"),
 
   rec(
+    LastName      := "Breuer",
+    FirstNames    := "Thomas",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mam49@st-andrews.ac.uk",
+    PostalAddress := _STANDREWSMATHS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews",
+    WWWHome       := "https://github.com/marinaanagno"),
+
+  rec(
     LastName      := "Burrell",
     FirstNames    := "Stuart",
     IsAuthor      := true,
