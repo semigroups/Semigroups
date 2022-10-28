@@ -1,0 +1,4 @@
+[authors]
+expired_emails = ["cr66@st-andrews.ac.uk"]
+author_files = ["PackageInfo.g"]
+ignore = ["convert-repo"]
