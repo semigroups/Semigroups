@@ -1,0 +1,416 @@
+  
+  [1X18 [33X[0;0YTranslations[133X[101X
+  
+  [33X[0;0YIn this chapter we describe the functionality in [5XSemigroups[105X for working with
+  translations  of  semigroups.  The  notation  used  (as  well as a number of
+  results)  is  based  on  [Pet70]. Translations are of interest mainly due to
+  their role in ideal extensions. A description of this role can also be found
+  in  [Pet70].  The  implementation  of  translations  in this package is only
+  applicable to finite semigroups satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X).[133X
+  
+  [33X[0;0YFor  a  semigroup [22XS[122X, a transformation [22Xλ[122X of [22XS[122X (written on the left) is a left
+  translation  if  for  all  [22Xs, t[122X in [22XS[122X, [22Xλ (s)t = λ (st)[122X. A right translation [22Xρ[122X
+  (written on the right) is defined dually.[133X
+  
+  [33X[0;0YThe  set  [22XL[122X  of  left  translations of [22XS[122X is a semigroup under composition of
+  functions,  as  is  the  set [22XR[122X of right translations. The associativity of [22XS[122X
+  guarantees that left [right] multiplication by any element [22Xs[122X of [22XS[122X represents
+  a  left  [right] translation; this is the [13Xinner[113X left [right] translation [22Xλ_s[122X
+  [[22Xρ_s[122X]. The inner left [right] translations form an ideal in [22XL[122X [[22XR[122X].[133X
+  
+  [33X[0;0YA  left  translation [22Xλ[122X and right translation [22Xρ[122X are [13Xlinked[113X if for all [10Xs, t[110X in
+  [22XS[122X,  [22Xsλ(t) = (s)ρ t[122X. A pair of linked translations is called a [13Xbitranslation[113X.
+  The  set  of all bitranslations forms a semigroup [22XH[122X called the [13Xtranslational
+  hull[113X  of [22XS[122X where the operation is componentwise. If the components are inner
+  translations  corresponding  to multiplication by the same element, then the
+  bitranslation  is  [13Xinner[113X.  The  inner  bitranslations  form  an ideal of the
+  translational hull.[133X
+  
+  [33X[0;0YTranslations  of  a normalized Rees matrix semigroup [22XT[122X (see [2XRMSNormalization[102X
+  ([14X6.5-7[114X)) over a group [22XG[122X can be represented through certain tuples, which can
+  be  computed  very  efficiently compared to arbitrary translations. For left
+  translations these tuples consist of a function from the row indices of [22XT[122X to
+  G  and  a  transformation on the row indices of [22XT[122X; the same is true of right
+  translations  and columns. More specifically, given a normalised Rees matrix
+  semigroup [22XS[122X over a group [22XG[122X with sandwich matrix [22XP[122X, rows [22XI[122X and columns [22XJ[122X, the
+  left  translations  are  characterised by pairs [22X(θ, χ)[122X where [22Xθ[122X is a function
+  from  [22XI[122X  to [22XG[122X and [22Xχ[122X is a transformation of [22XI[122X. The left translation [22Xλ[122X defined
+  by [22X(θ, χ)[122X acts on [22XS[122X via[133X
+  
+  
+  [24X[33X[0;6Yλ((i, a, μ)) = ((i)χ, (i)θ ⋅ a, μ),[133X[124X
+  
+  [33X[0;0Ywhere [22Xi ∈ I[122X, [22Xa ∈ G[122X, and [22Xμ ∈ J[122X Dually, right translations [22Xρ[122X are characterised
+  by  pairs [22X(ω, ψ)[122X where [22Xω[122X is a function from [22XJ[122X to [22XG[122X and [22Xψ[122X is a transformation
+  of [22XJ[122X, with action given by[133X
+  
+  
+  [24X[33X[0;6Y((i, a, μ))ρ = (i, a ⋅ (μ)ψ, (μ)ψ).[133X[124X
+  
+  [33X[0;0YSimilarly, bitranslations [22X(λ, ρ)[122X of [22XS[122X can be characterised by triples [22X(g, χ,
+  ψ)[122X such that [22Xg ∈ G[122X, [22Xχ[122X and [22Xψ[122X are transformations of [22XI, J[122X respectively, and[133X
+  
+  
+  [24X[33X[0;6Yp_μ, (i)χ ⋅ g ⋅ p_(1)ψ, i = p_μ, (1)χ ⋅ g ⋅ p_(mu)ψ, i.[133X[124X
+  
+  [33X[0;0YThe action of [22Xλ[122X on [22XS[122X is then given by[133X
+  
+  
+  [24X[33X[0;6Yλ((i, a, μ)) = ((i)χ, b ⋅ p_(1)ψ, i ⋅ a, μ),[133X[124X
+  
+  [33X[0;0Yand of [22Xρ[122X on [22XS[122X by[133X
+  
+  
+  [24X[33X[0;6Y((i, a, μ))ρ = (i, a ⋅ p_μ, (1)χ ⋅ b, (μ)ψ).[133X[124X
+  
+  [33X[0;0YFurther details may be found in [CP77].[133X
+  
+  
+  [1X18.1 [33X[0;0YMethods for translations[133X[101X
+  
+  
+  [1X18.1-1 [33X[0;0YIsXTranslation[133X[101X
+  
+  [33X[1;0Y[29X[2XIsSemigroupTranslation[102X( [3Xarg[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsLeftTranslation[102X( [3Xarg[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRightTranslation[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YAll,  and  only,  left  [right]  translations  belong  to  [10XIsLeftTranslation[110X
+  [[10XIsRightTranslation[110X].      These      are      both     subcategories     of
+  [10XIsSemigroupTranslation[110X,     which     itself    is    a    subcategory    of
+  [10XIsAssociativeElement[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(3, 4);;[127X[104X
+    [4X[25Xgap>[125X [27Xl := Representative(LeftTranslations(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsSemigroupTranslation(l);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsLeftTranslation(l);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRightTranslation(l);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl = One(LeftTranslations(S));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl * l = l;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-2 IsBitranslation[101X
+  
+  [33X[1;0Y[29X[2XIsBitranslation[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YAll,   and  only,  bitranslations  belong  to  [10XIsBitranslation[110X.  This  is  a
+  subcategory of [2XIsAssociativeElement[102X ([14XReference: IsAssociativeElement[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := Group((1, 2), (3, 4));;[127X[104X
+    [4X[25Xgap>[125X [27XA := AsList(G);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[A[1], 0, A[1]],[127X[104X
+    [4X[25X>[125X [27X[A[2], A[2], A[4]]];;[127X[104X
+    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RightTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xl := OneOp(Representative(L));;[127X[104X
+    [4X[25Xgap>[125X [27Xr := OneOp(Representative(R));;[127X[104X
+    [4X[25Xgap>[125X [27XH := TranslationalHull(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Bitranslation(H, l, r);;[127X[104X
+    [4X[25Xgap>[125X [27XIsBitranslation(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSemigroupTranslation(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.1-3 [33X[0;0YIsXTranslationCollection[133X[101X
+  
+  [33X[1;0Y[29X[2XIsSemigroupTranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsLeftTranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRightTranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBitranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YEvery  collection  of  left-,  right-,  or  bi-translations  belongs  to the
+  respective category [2XIsXTranslationCollection[102X.[133X
+  
+  
+  [1X18.1-4 [33X[0;0YXPartOfBitranslation[133X[101X
+  
+  [33X[1;0Y[29X[2XLeftPartOfBitranslation[102X( [3Xh[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRightPartOfBitranslation[102X( [3Xarg[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya left or right translation[133X
+  
+  [33X[0;0YFor  a Bitranslation [3Xh[103X consisting of a linked pair [22X(l, r)[122X, of left and right
+  translations, [10XLeftPartOfBitranslation([3Xb[103X[10X)[110X returns the left translation [10Xl[110X, and
+  [10XRightPartOfBitranslation([3Xb[103X[10X)[110X returns the right translation [10Xr[110X.[133X
+  
+  
+  [1X18.1-5 [33X[0;0YXTranslation[133X[101X
+  
+  [33X[1;0Y[29X[2XLeftTranslation[102X( [3XT[103X, [3Xx[103X[, [3Xy[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightTranslation[102X( [3Xarg1[103X, [3Xarg2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya left or right translation[133X
+  
+  [33X[0;0YFor the semigroup [3XT[103X of left or right translations of a semigroup [22XS[122X and [3Xx[103X one
+  of:[133X
+  
+  [30X    [33X[0;6Ya mapping on the underlying semigroup; note that in this case only the
+        values  of  the  mapping  on  the  [10XUnderlyingRepresentatives[110X  of [3XT[103X are
+        checked  and used, so mappings which do not define translations can be
+        used to create translations if they are valid on that subset of S;[133X
+  
+  [30X    [33X[0;6Ya    list    of    indices    representing    the    images   of   the
+        [10XUnderlyingRepresentatives[110X   of  [3XT[103X,  where  the  ordering  is  that  of
+        [2XPositionCanonical[102X ([14X11.1-2[114X) on [3XS[103X;[133X
+  
+  [30X    [33X[0;6Y(for  [10XLeftTranslation[110X)  a  list  of  length [10XLength(Rows(S))[110X containing
+        elements   of  [10XUnderlyingSemigroup(S)[110X;  in  this  case  [3XS[103X  must  be  a
+        normalised  Rees  matrix  semigroup  and [10Xy[110X must be a Transformation of
+        [10XRows(S)[110X;[133X
+  
+  [30X    [33X[0;6Y(for  [10XRightTranslation[110X) a list of length [10XLength(Columns(S))[110X containing
+        elements   of  [10XUnderlyingSemigroup(S)[110X;  in  this  case  [3XS[103X  must  be  a
+        normalised  Rees  matrix  semigroup  and [10Xy[110X must be a Transformation of
+        [10XColumns(S)[110X;[133X
+  
+  [33X[0;0Y[10XLeftTranslation[110X and [10XRightTranslation[110X return the corresponding translations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(3, 4);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xs := AsList(S)[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xmap := MappingByFunction(S, S, x -> s * x);;[127X[104X
+    [4X[25Xgap>[125X [27Xl := LeftTranslation(L, map);[127X[104X
+    [4X[28X<left translation on <regular transformation semigroup of size 12, [128X[104X
+    [4X[28X degree 8 with 4 generators>>[128X[104X
+    [4X[25Xgap>[125X [27Xs ^ l;[127X[104X
+    [4X[28XTransformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-6 Bitranslation[101X
+  
+  [33X[1;0Y[29X[2XBitranslation[102X( [3XH[103X, [3Xl[103X, [3Xr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya bitranslation[133X
+  
+  [33X[0;0YIf [3XH[103X is a translational hull over a semigroup [22XS[122X, and [3Xl[103X and [3Xr[103X are linked left
+  and  right  translations respectively over [22XS[122X, then this function returns the
+  bitranslation [22X([3Xl[103X, [3Xr[103X)[122X. If [3Xl[103X and [3Xr[103X are not linked, then an error is produced.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := Group((1, 2), (3, 4));;[127X[104X
+    [4X[25Xgap>[125X [27XA := AsList(G);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[A[1], 0],[127X[104X
+    [4X[25X>[125X [27X[A[2], A[2]]];;[127X[104X
+    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(G, mat);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RightTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xl := LeftTranslation(L, MappingByFunction(S, S, s -> S.1 * s));;[127X[104X
+    [4X[25Xgap>[125X [27Xr := RightTranslation(R, MappingByFunction(S, S, s -> s * S.1));;[127X[104X
+    [4X[25Xgap>[125X [27XH := TranslationalHull(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Bitranslation(H, l, r);[127X[104X
+    [4X[28X<bitranslation on <regular semigroup of size 17, with 4 generators>>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.1-7 [33X[0;0YUnderlyingSemigroup[133X[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUnderlyingSemigroup[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya semigroup[133X
+  
+  [33X[0;0YGiven  a  semigroup of translations or bitranslations, returns the semigroup
+  on which these translations act.[133X
+  
+  
+  [1X18.1-8 [33X[0;0YXTranslationsSemigroupOfFamily[133X[101X
+  
+  [33X[1;0Y[29X[2XLeftTranslationsSemigroupOfFamily[102X( [3Xfam[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightTranslationsSemigroupOfFamily[102X( [3Xarg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTranslationalHullOfFamily[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe  semigroup of left or right translations, or the translational
+            hull[133X
+  
+  [33X[0;0YGiven  a  family  [3Xfam[103X  of  left-,  right-  or  bi-translations,  returns the
+  translations semigroup or translational hull to which they belong.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(3, 3);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xl := Representative(L);;[127X[104X
+    [4X[25Xgap>[125X [27XLeftTranslationsSemigroupOfFamily(FamilyObj(l)) = L;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XH := TranslationalHull(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xh := Representative(H);;[127X[104X
+    [4X[25Xgap>[125X [27XTranslationalHullOfFamily(FamilyObj(h)) = H;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.1-9 [33X[0;0YTypeXTranslationSemigroupElements[133X[101X
+  
+  [33X[1;0Y[29X[2XTypeLeftTranslationsSemigroupElements[102X( [3Xarg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTypeRightTranslationsSemigroupElements[102X( [3Xarg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTypeBitranslations[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya type[133X
+  
+  [33X[0;0YGiven a (bi)translations semigroup, returns the type of the elements that it
+  contains.[133X
+  
+  
+  [1X18.1-10 [33X[0;0YXTranslations[133X[101X
+  
+  [33X[1;0Y[29X[2XLeftTranslations[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRightTranslations[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe semigroup of left or right translations[133X
+  
+  [33X[0;0YGiven a finite semigroup [3XS[103X satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X), returns the
+  semigroup of all left or right translations of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 1, 4, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);[127X[104X
+    [4X[28X<the semigroup of left translations of <transformation semigroup of [128X[104X
+    [4X[28X degree 6 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XSize(L);[127X[104X
+    [4X[28X361[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-11 TranslationalHull[101X
+  
+  [33X[1;0Y[29X[2XTranslationalHull[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe translational hull[133X
+  
+  [33X[0;0YGiven a finite semigroup [3XS[103X satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X), returns the
+  translational hull of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 1, 4, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XH := TranslationalHull(S);[127X[104X
+    [4X[28X<translational hull over <transformation semigroup of degree 6 with 2 [128X[104X
+    [4X[28X generators>>[128X[104X
+    [4X[25Xgap>[125X [27XSize(H);[127X[104X
+    [4X[28X38[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.1-12 [33X[0;0YNrXTranslations[133X[101X
+  
+  [33X[1;0Y[29X[2XNrLeftTranslations[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrRightTranslations[102X( [3Xarg[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrBitranslations[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe number of left-, right-, or bi-translations[133X
+  
+  [33X[0;0YGiven a finite semigroup [3XS[103X satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X), returns the
+  number  of  left-,  right-,  or bi-translations of [3XS[103X. This is typically more
+  efficient  than  calling  [10XSize(LeftTranslations([3XS[103X[10X))[110X, as the [bi]translations
+  may not be produced.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 3, 6, 5, 2]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 1, 4, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XNrLeftTranslations(S);[127X[104X
+    [4X[28X1444[128X[104X
+    [4X[25Xgap>[125X [27XNrRightTranslations(S);[127X[104X
+    [4X[28X398[128X[104X
+    [4X[25Xgap>[125X [27XNrBitranslations(S);[127X[104X
+    [4X[28X69[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.1-13 [33X[0;0YInnerXTranslations[133X[101X
+  
+  [33X[1;0Y[29X[2XInnerLeftTranslations[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInnerRightTranslations[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe monoid of inner left or right translations[133X
+  
+  [33X[0;0YFor   a   finite   semigroup   [3XS[103X   satisfying   [2XCanUseFroidurePin[102X   ([14X6.1-4[114X),
+  [10XInnerLeftTranslations[110X([3XS[103X)  returns the inner left translations of S (i.e. the
+  translations  defined  by  left multiplication by a fixed element of [3XS[103X), and
+  [10XInnerRightTranslations[110X([3XS[103X)  returns  the  inner right translations of [3XS[103X (i.e.
+  the translations defined by right multiplication by a fixed element of [3XS[103X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 1, 4, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XI := InnerLeftTranslations(S);[127X[104X
+    [4X[28X<left translations semigroup over <transformation semigroup [128X[104X
+    [4X[28X of size 22, degree 6 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XSize(I) <= Size(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-14 InnerTranslationalHull[101X
+  
+  [33X[1;0Y[29X[2XInnerTranslationalHull[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe inner translational hull[133X
+  
+  [33X[0;0YGiven a finite semigroup [3XS[103X satisfying [2XCanUseFroidurePin[102X ([14X6.1-4[114X), returns the
+  inner  translational hull of [3XS[103X, i.e. the bitranslations whose left and right
+  translation  components  are  inner  translations  defined by left and right
+  multiplication by the same fixed element of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 1, 4, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XI := InnerTranslationalHull(S);[127X[104X
+    [4X[28X<semigroup of bitranslations over <transformation semigroup [128X[104X
+    [4X[28X of size 22, degree 6 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RightTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XH := TranslationalHull(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xinners := [];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor s in S do[127X[104X
+    [4X[25X>[125X [27Xl := LeftTranslation(L, MappingByFunction(S, S, x -> s * x));[127X[104X
+    [4X[25X>[125X [27Xr := RightTranslation(R, MappingByFunction(S, S, x -> x * s));[127X[104X
+    [4X[25X>[125X [27XAddSet(inners, Bitranslation(H, l, r));[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XSet(I) = inners;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-15 UnderlyingRepresentatives[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingRepresentatives[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya set of representatives[133X
+  
+  [33X[0;0YFor  efficiency,  we  typically store translations on a semigroup [22XS[122X as their
+  actions  on  a  small  subset  of [22XS[122X. For left translations, this is a set of
+  representatives of the maximal [13XR[113X-classes of [22XS[122X; dually for right translations
+  we   use   representatives   of   the   maximal   [13XL[113X-classes.   You  can  use
+  [10XUnderlyingRepresentatives[110X to access these representatives.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[G.1, G.2], [G.1, G.1],[127X[104X
+    [4X[25X>[125X [27X[G.2, G.3], [G.1 * G.2, G.1 * G.3]];;[127X[104X
+    [4X[25Xgap>[125X [27XS := ReesMatrixSemigroup(G, mat);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LeftTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RightTranslations(S);;[127X[104X
+    [4X[25Xgap>[125X [27XUnderlyingRepresentatives(L);[127X[104X
+    [4X[28X[ (1,(),1), (2,(),2) ][128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingRepresentatives(R);[127X[104X
+    [4X[28X[ (1,(),1), (2,(),2), (1,(),3), (1,(),4) ][128X[104X
+  [4X[32X[104X
+  
+  [1X18.1-16 ImageSetOfTranslation[101X
+  
+  [33X[1;0Y[29X[2XImageSetOfTranslation[102X( [3Xt[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya set of elements[133X
+  
+  [33X[0;0YGiven  a  left  or  right translation [3Xt[103X on a semigroup [22XS[122X, returns the set of
+  elements of [22XS[122X lying in the image of [3Xt[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 3, 3, 4]),[127X[104X
+    [4X[25X>[125X [27XTransformation([3, 4, 1, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27Xt := Set(LeftTranslations(S))[4];[127X[104X
+    [4X[28X<left translation on <transformation semigroup of size 8, degree 4 [128X[104X
+    [4X[28X with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XImageSetOfTranslation(t);[127X[104X
+    [4X[28X[ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 4, 1, 3 ] ) ][128X[104X
+  [4X[32X[104X
+  

@@ -177,6 +177,31 @@
   
   [33X[0;0YThis is analogous to [2XElementOfFpSemigroup[102X ([14X15.2-2[114X).[133X
   
+  [1X15.2-4 FreeMonoidAndAssignGeneratorVars[101X
+  
+  [33X[1;0Y[29X[2XFreeMonoidAndAssignGeneratorVars[102X( [3Xarg...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeSemigroupAndAssignGeneratorVars[102X( [3Xarg...[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA free semigroup or monoid.[133X
+  
+  [33X[0;0Y[10XFreeMonoidAndAssignGeneratorVars[110X is synonym with:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X      FreeMonoid(arg...);[128X[104X
+    [4X[28X      AssignGeneratorVariables(last);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThese  functions  exist  so  that the [10XString[110X method for a finitely presented
+  semigroup  or  monoid to be valid [5XGAP[105X input which can be used to reconstruct
+  the semigroup or monoid.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroupAndAssignGeneratorVars("x", "y");;[127X[104X
+    [4X[25Xgap>[125X [27XIsBound(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsBound(y);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
   
   [1X15.3 [33X[0;0YCreating Tietze transformation objects[133X[101X
   

@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.0.2",
-Date := "12/08/2022",  # dd/mm/yyyy format
+Version := "5.1.0",
+Date := "31/10/2022",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -76,6 +76,14 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
     WWWHome       := "https://github.com/marinaanagno"),
+
+  rec(
+    LastName      := "Breuer",
+    FirstNames    := "Thomas",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "sam@math.rwth-aachen.de",
+    WWWHome       := "https://www.math.rwth-aachen.de/~Thomas.Breuer/"),
 
   rec(
     LastName      := "Burrell",

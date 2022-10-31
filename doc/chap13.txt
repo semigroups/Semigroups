@@ -13,6 +13,12 @@
   
   [30X    [33X[0;6YKernel and trace -- only for inverse semigroups[133X
   
+  [30X    [33X[0;6YWord     graph     --     only    for    congruences    created    via
+        [2XIteratorOfLeftCongruences[102X   ([14X13.4-13[114X)   or  [2XIteratorOfRightCongruences[102X
+        ([14X13.4-13[114X)[133X
+  
+  [30X    [33X[0;6YWang pairs -- only for graph inverse semigroup[133X
+  
   [33X[0;0YThe  operation  [2XSemigroupCongruence[102X  ([14X13.2-1[114X)  can  be used to create any of
   these,  interpreting  the  arguments  in  a  smart  way.  The  usual  way of
   specifying  a  congruence will be by giving a set of generating pairs, but a
@@ -896,6 +902,107 @@
     [4X[25Xgap>[125X [27XMinimalCongruences(poset);[127X[104X
     [4X[28X[ <2-sided semigroup congruence over <symmetric inverse monoid of degr\[128X[104X
     [4X[28Xee 2> with 0 generating pairs> ][128X[104X
+  [4X[32X[104X
+  
+  [1X13.4-12 NumberOfRightCongruences[101X
+  
+  [33X[1;0Y[29X[2XNumberOfRightCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberOfLeftCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberOfRightCongruences[102X( [3XS[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberOfLeftCongruences[102X( [3XS[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNumberOfRightCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNumberOfLeftCongruences[102X( [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0Y[10XNumberOfRightCongruences[110X  returns  the  number  of  right congruences of the
+  semigroup  [3XS[103X  with  at  most  [3Xn[103X  classes  that  contain  the pairs in [3Xextra[103X;
+  [10XNumberOfLeftCongruences[110X  is  defined dually for left congruences rather than
+  right congruences.[133X
+  
+  [33X[0;0YIf    the   optional   third   argument   [3Xextra[103X   is   not   present,   then
+  [10XNumberOfRightCongruences[110X  returns  the number of right congruences of [3XS[103X with
+  at most [3Xn[103X classes.[133X
+  
+  [33X[0;0YIf    the    optional    second    argument   [3Xn[103X   is   not   present,   then
+  [10XNumberOfRightCongruences[110X returns the number of right congruences of [3XS[103X.[133X
+  
+  [33X[0;0YNote  that  the 2 and 3 argument variants of this function can be applied to
+  infinite semigroups, but the 1 argument variant cannot.[133X
+  
+  [33X[0;0YIf the lattice of right or left congruences of [3XS[103X is known, then that is used
+  by  [10XNumberOfRightCongruences[110X.  If  this lattice is not known, then Sim's low
+  index congruence algorithm is used.[133X
+  
+  [33X[0;0YSee  [2XIteratorOfRightCongruences[102X ([14X13.4-13[114X) to actually obtain the congruences
+  counted by this function.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(2);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 15, degree 2 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfRightCongruences(S, 10);[127X[104X
+    [4X[28X86[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfLeftCongruences(S, 10);[127X[104X
+    [4X[28X86[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfRightCongruences(S, Size(S), [[S.1, S.2], [S.1, S.3]]);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfLeftCongruences(S, Size(S), [[S.1, S.2], [S.1, S.3]]);[127X[104X
+    [4X[28X1[128X[104X
+  [4X[32X[104X
+  
+  [1X13.4-13 IteratorOfRightCongruences[101X
+  
+  [33X[1;0Y[29X[2XIteratorOfRightCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfLeftCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfRightCongruences[102X( [3XS[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfLeftCongruences[102X( [3XS[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIteratorOfRightCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIteratorOfLeftCongruences[102X( [3XS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0Y[10XIteratorOfRightCongruences[110X  returns  an  iterator where calling [2XNextIterator[102X
+  ([14XReference: NextIterator[114X) returns the next right congruence of the semigroup
+  [3XS[103X   with   at   most   [3Xn[103X   classes   that   contain   the  pairs  in  [3Xextra[103X;
+  [10XIteratorOfLeftCongruences[110X is defined dually for left congruences rather than
+  right congruences.[133X
+  
+  [33X[0;0YIf    the   optional   third   argument   [3Xextra[103X   is   not   present,   then
+  [10XIteratorOfRightCongruences[110X uses an empty list by default.[133X
+  
+  [33X[0;0YIf    the    optional    second    argument   [3Xn[103X   is   not   present,   then
+  [10XIteratorOfRightCongruences[110X uses [10XSize([3XS[103X[10X)[110X by default.[133X
+  
+  [33X[0;0YNote  that  the 2 and 3 argument variants of this function can be applied to
+  infinite semigroups, but the 1 argument variant cannot.[133X
+  
+  [33X[0;0YIf the lattice of right or left congruences of [3XS[103X is known, then that is used
+  by  [10XIteratorOfRightCongruences[110X. If this lattice is not known, then Sim's low
+  index congruence algorithm is used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeMonoidAndAssignGeneratorVars("a", "b");[127X[104X
+    [4X[28X<free monoid on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XR := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := F / R;[127X[104X
+    [4X[28X<fp monoid with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XNumberOfRightCongruences(S);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27Xit := IteratorOfRightCongruences(S);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 1, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 2, 1 ], [ 2, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 2, 2 ], [ 2, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 2, 3 ], [ 2, 2 ], [ 2, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 2, 3 ], [ 2, 2 ], [ 3, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOutNeighbours(WordGraph(NextIterator(it)));[127X[104X
+    [4X[28X[ [ 2, 3 ], [ 2, 2 ], [ 4, 3 ], [ 4, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(it);[127X[104X
+    [4X[28Xfail[128X[104X
   [4X[32X[104X
   
   

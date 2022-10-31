@@ -156,5 +156,3 @@
   into memory. This might be useful if the file contains more information than
   there is available memory.[133X
   
-  [33X[0;0Y [133X
-  

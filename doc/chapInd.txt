@@ -47,6 +47,7 @@
   [2XAutomorphismGroup[102X, for a semigroup 14.2-7 
   [2XBipartition[102X 3.2-1 
   [2XBipartitionByIntRep[102X 3.2-2 
+  [2XBitranslation[102X, for IsBitranslationsSemigroup, IsLeftTranslation, IsRightTranslation 18.1-6 
   [2XBlistNumber[102X 5.3-7 
   [2XBLOCKS_NC[102X 3.6-2 
   [2XBooleanMat[102X 5.3-1 
@@ -148,6 +149,8 @@
   [2XFreeInverseSemigroup[102X, for a given rank 7.11-1 
       for a list of names 7.11-1 
       for various names 7.11-1 
+  [2XFreeMonoidAndAssignGeneratorVars[102X 15.2-4 
+  [2XFreeSemigroupAndAssignGeneratorVars[102X 15.2-4 
   [2XFullBooleanMatMonoid[102X 7.6-1 
   [2XFullMatrixMonoid[102X 7.5-1 
   [2XFullPBRMonoid[102X 7.4-1 
@@ -193,6 +196,7 @@
   [2XIdentityBipartition[102X 3.2-3 
   [2XIdentityPBR[102X 4.2-4 
   [2XImagesElm[102X, for IsRMSIsoByTriple 14.3-5 
+  [2XImageSetOfTranslation[102X, for IsSemigroupTranslation 18.1-16 
   [2XImagesRepresentative[102X, for IsRMSIsoByTriple 14.3-5 
   [2XIndecomposableElements[102X 11.6-6 
   [2XIndexOfVertexOfGraphInverseSemigroup[102X 7.10-9 
@@ -200,6 +204,9 @@
   [2XInfoSemigroups[102X 2.5-1 
   [2XInjectionNormalizedPrincipalFactor[102X 10.4-7 
   [2XInjectionPrincipalFactor[102X 10.4-7 
+  [2XInnerLeftTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-13 
+  [2XInnerRightTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-13 
+  [2XInnerTranslationalHull[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-14 
   [2XIntegers[102X 5.1-8 
   [2XIntRepOfBipartition[102X 3.5-4 
   [2XInverseMonoidByGenerators[102X 6.2-1 
@@ -219,6 +226,8 @@
   [2XIsBipartitionMonoid[102X 3.8-1 
   [2XIsBipartitionPBR[102X 4.5-8 
   [2XIsBipartitionSemigroup[102X 3.8-1 
+  [2XIsBitranslation[102X, for IsAssociativeElement and IsMultiplicativeElementWithOne 18.1-2 
+  [2XIsBitranslationCollection[102X 18.1-3 
   [2XIsBlockBijection[102X 3.5-16 
   [2XIsBlockBijectionMonoid[102X 3.8-2 
   [2XIsBlockBijectionPBR[102X 4.5-8 
@@ -285,6 +294,8 @@
   [2XIsLeftCongruenceClass[102X 13.3-2 
   [2XIsLeftSemigroupCongruence[102X 13.1-2 
   [2XIsLeftSimple[102X 12.1-9 
+  [2XIsLeftTranslation[102X, for IsSemigroupTranslation 18.1-1 
+  [2XIsLeftTranslationCollection[102X 18.1-3 
   [2XIsLeftZeroSemigroup[102X 12.1-10 
   [2XIsLinkedTriple[102X 13.6-5 
   [2XIsLTrivial[102X 12.1-19 
@@ -356,6 +367,8 @@
   [2XIsRightCongruenceClass[102X 13.3-3 
   [2XIsRightSemigroupCongruence[102X 13.1-3 
   [2XIsRightSimple[102X 12.1-9 
+  [2XIsRightTranslation[102X, for IsSemigroupTranslation 18.1-1 
+  [2XIsRightTranslationCollection[102X 18.1-3 
   [2XIsRightZeroSemigroup[102X 12.1-18 
   [2XIsRMSCongruenceByLinkedTriple[102X 13.6-1 
   [2XIsRMSCongruenceClassByLinkedTriple[102X 13.6-3 
@@ -370,6 +383,8 @@
   [2XIsSemigroupHomomorphismByFunction[102X 14.1-4 
   [2XIsSemigroupHomomorphismByImages[102X 14.1-3 
   [2XIsSemigroupIsomorphismByFunction[102X 14.2-10 
+  [2XIsSemigroupTranslation[102X, for IsAssociativeElement and IsMultiplicativeElementWithOne 18.1-1 
+  [2XIsSemigroupTranslationCollection[102X 18.1-3 
   [2XIsSemigroupWithAdjoinedZero[102X 12.1-20 
   [2XIsSemilattice[102X 12.1-21 
   [2XIsSimpleSemigroup[102X 12.1-22 
@@ -422,7 +437,13 @@
   [2XIteratorOfDClassReps[102X 10.2-1 
   [2XIteratorOfHClassReps[102X 10.2-1 
   [2XIteratorOfLClassReps[102X 10.2-1 
+  [2XIteratorOfLeftCongruences[102X, for a semigroup 13.4-13 
+      for a semigroup, and a positive integer 13.4-13 
+      for a semigroup, positive integer, and list or collection 13.4-13 
   [2XIteratorOfRClasses[102X 10.2-2 
+  [2XIteratorOfRightCongruences[102X, for a semigroup 13.4-13 
+      for a semigroup, and a positive integer 13.4-13 
+      for a semigroup, positive integer, and list or collection 13.4-13 
   [2XJClasses[102X 10.1-4 
   [2XJoinIrreducibleDClasses[102X 11.14-2 
   [2XJoinLeftSemigroupCongruences[102X 13.5-4 
@@ -451,8 +472,12 @@
       for a semigroup and a multiplicative element collection 13.4-1 
   [2XLeftInverse[102X, for a matrix over finite field 5.4-2 
   [2XLeftOne[102X, for a bipartition 3.2-4 
+  [2XLeftPartOfBitranslation[102X 18.1-4 
   [2XLeftProjection[102X 3.2-4 
   [2XLeftSemigroupCongruence[102X 13.2-2 
+  [2XLeftTranslation[102X, for IsLeftTranslationsSemigroup, IsGeneralMapping 18.1-5 
+  [2XLeftTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-10 
+  [2XLeftTranslationsSemigroupOfFamily[102X, for IsFamily 18.1-8 
   [2XLeftZeroSemigroup[102X 7.8-5 
   [2XLength[102X 15.3-6 
   [2XLengthOfLongestDClassChain[102X 10.1-11 
@@ -479,6 +504,7 @@
       for a semigroup and a multiplicative element collection 13.4-2 
   [2XMinimalDClass[102X 10.1-6 
   [2XMinimalFactorization[102X 11.5-3 
+  [2XMinimalFaithfulTransformationDegree[102X 14.2-13 
   [2XMinimalIdeal[102X 11.7-1 
   [2XMinimalIdealGeneratingSet[102X 9.2-2 
   [2XMinimalInverseMonoidGeneratingSet[102X 11.6-4 
@@ -508,6 +534,7 @@
   [2XNonTrivialFactorization[102X 11.5-4 
   [2XNormalizedPrincipalFactor[102X 10.4-8 
   [2XNormalizeSemigroup[102X 5.7-5 
+  [2XNrBitranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-12 
   [2XNrBlocks[102X, for a bipartition 3.5-9 
       for blocks 3.5-9 
   [2XNrDClasses[102X 10.1-9 
@@ -515,14 +542,22 @@
   [2XNrIdempotents[102X 11.9-2 
   [2XNrLClasses[102X 10.1-9 
   [2XNrLeftBlocks[102X 3.5-7 
+  [2XNrLeftTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-12 
   [2XNrMaximalSubsemigroups[102X 11.10-2 
   [2XNrRClasses[102X 10.1-9 
   [2XNrRegularDClasses[102X 10.1-8 
   [2XNrRightBlocks[102X 3.5-8 
+  [2XNrRightTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-12 
   [2XNrTransverseBlocks[102X, for a bipartition 3.5-2 
       for blocks 3.6-4 
   [2XNumberBlist[102X 5.3-7 
   [2XNumberBooleanMat[102X 5.3-6 
+  [2XNumberOfLeftCongruences[102X, for a semigroup 13.4-12 
+      for a semigroup, and a positive integer 13.4-12 
+      for a semigroup, positive integer, and list or collection 13.4-12 
+  [2XNumberOfRightCongruences[102X, for a semigroup 13.4-12 
+      for a semigroup, and a positive integer 13.4-12 
+      for a semigroup, positive integer, and list or collection 13.4-12 
   [2XNumberPBR[102X 4.5-4 
   [2XOnBlist[102X 5.3-4 
   [2XOnLeftBlocks[102X 3.7-2 
@@ -610,8 +645,12 @@
   [2XRightCosetsOfInverseSemigroup[102X 11.14-6 
   [2XRightInverse[102X, for a matrix over finite field 5.4-2 
   [2XRightOne[102X, for a bipartition 3.2-5 
+  [2XRightPartOfBitranslation[102X 18.1-4 
   [2XRightProjection[102X 3.2-5 
   [2XRightSemigroupCongruence[102X 13.2-3 
+  [2XRightTranslation[102X, for IsRightTranslationsSemigroup, IsGeneralMapping 18.1-5 
+  [2XRightTranslations[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-10 
+  [2XRightTranslationsSemigroupOfFamily[102X, for IsFamily 18.1-8 
   [2XRightZeroSemigroup[102X 7.8-5 
   [2XRMSCongruenceByLinkedTriple[102X 13.6-2 
   [2XRMSCongruenceClassByLinkedTriple[102X 13.6-4 
@@ -672,6 +711,7 @@
   [2XSingularUniformBlockBijectionMonoid[102X 7.3-8 
   [2XSLM[102X 7.5-2 
   [2XSmallerDegreePartialPermRepresentation[102X 11.14-8 
+  [2XSmallerDegreeTransformationRepresentation[102X 14.2-12 
   [2XSmallestElementSemigroup[102X 11.11-8 
   [2XSmallestIdempotentPower[102X 11.4-2 
   [2XSmallestMultiplicationTable[102X 14.2-2 
@@ -722,8 +762,16 @@
   [2XTikzRightCayleyDigraph[102X 16.3-2 
   [2XTikzString[102X 16.3-1 
   [2XTraceOfSemigroupCongruence[102X 13.7-5 
+  [2XTranslationalHull[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-11 
+  [2XTranslationalHullOfFamily[102X, for IsFamily 18.1-8 
   [2XTriangularBooleanMatMonoid[102X 7.6-6 
   [2XTrivialSemigroup[102X 7.8-1 
+  [2XTypeBitranslations[102X, for IsBitranslationsSemigroup 18.1-9 
+  [2XTypeLeftTranslationsSemigroupElements[102X, for IsLeftTranslationsSemigroup 18.1-9 
+  [2XTypeRightTranslationsSemigroupElements[102X, for IsRightTranslationsSemigroup 18.1-9 
+  [2XUnderlyingRepresentatives[102X, for IsTranslationsSemigroup 18.1-15 
+  [2XUnderlyingSemigroup[102X, for IsBitranslationsSemigroup 18.1-7 
+      for IsTranslationsSemigroup 18.1-7 
   [2XUnderlyingSemigroupOfCongruencePoset[102X 13.4-8 
   [2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X 11.7-4 
   [2XUniformBlockBijectionMonoid[102X 7.3-8 

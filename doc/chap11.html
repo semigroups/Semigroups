@@ -17,7 +17,7 @@
 <body class="chap11"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -1141,9 +1141,9 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(L));</span>
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := GroupHClass(D);</span>
-&lt;Green's H-class: Transformation( [ 1, 3, 3, 1 ] )&gt;
+&lt;Green's H-class: Transformation( [ 1, 1, 3, 3 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Idempotents(H);</span>
-[ Transformation( [ 1, 3, 3, 1 ] ) ]
+[ Transformation( [ 1, 1, 3, 3 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([10, 6, 3, 4, 9, 0, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;</span>
@@ -1627,7 +1627,7 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )</pre></div>
 
 <p>If <var class="Arg">trans</var> is a transformation, and <var class="Arg">n</var> is a non-negative integer such that the restriction of <var class="Arg">trans</var> to <code class="keyw">[1 .. n]</code> defines a transformation of <code class="code">[1 .. n]</code>, then <code class="code">CanonicalTransformation</code> returns a canonical representative of the transformation <var class="Arg">trans</var> restricted to <code class="code">[1 .. n]</code>.</p>
 
-<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X855E2AC47A4F5B55"><span class="RefLink">Digraphs: AsDigraph for a transformation or perm</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
+<p>More specifically, let <code class="code">C(n)</code> be a class of transformations of degree <var class="Arg">n</var> such that <code class="code">AsDigraph</code> returns isomorphic digraphs for every pair of element elements in <code class="code">C(n)</code>. Recall that for a transformation <var class="Arg">trans</var> and integer <var class="Arg">n</var> the function <code class="code">AsDigraph</code> returns a digraph with <var class="Arg">n</var> vertices and an edge with source <code class="code">x</code> and range <code class="code">x^trans</code> for every <code class="code">x</code> in <code class="code">[1 .. n]</code>. See <code class="func">AsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X86834E307EACC670"><span class="RefLink">Digraphs: AsDigraph for a binary relation</span></a>). Then <code class="code">CanonicalTransformation</code> returns a canonical representative of the class <code class="code">C(n)</code> that contains <var class="Arg">trans</var>.</p>
 
 
 <div class="example"><pre>
@@ -2234,7 +2234,7 @@ true</pre></div>
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

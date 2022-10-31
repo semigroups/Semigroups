@@ -6,15 +6,17 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.0.2
+                                     5.1.0
   
   
-                                 12 August 2022
+                                31 October 2022
   
   
                                  James Mitchell
   
                         Marina Anagnostopoulou-Merkouri
+  
+                                 Thomas Breuer
   
                                  Stuart Burrell
   
@@ -86,6 +88,9 @@
                 9SS, Scotland[133X
   
   
+  Thomas Breuer
+      Email:    [7Xmailto:sam@math.rwth-aachen.de[107X
+      Homepage: [7Xhttps://www.math.rwth-aachen.de/~Thomas.Breuer/[107X
   Stuart Burrell
       Email:    [7Xmailto:stuartburrell1994@gmail.com[107X
       Homepage: [7Xhttps://stuartburrell.github.io[107X
@@ -752,6 +757,8 @@
       13.4-9 PosetOfCongruences
       13.4-10 JoinSemilatticeOfCongruences
       13.4-11 MinimalCongruences
+      13.4-12 NumberOfRightCongruences
+      13.4-13 IteratorOfRightCongruences
     13.5 [33X[0;0YComparing congruences[133X
       13.5-1 IsSubrelation
       13.5-2 IsSuperrelation
@@ -805,6 +812,8 @@
       14.2-9 SemigroupIsomorphismByFunctionNC
       14.2-10 IsSemigroupIsomorphismByFunction
       14.2-11 AsSemigroupIsomorphismByFunction
+      14.2-12 SmallerDegreeTransformationRepresentation
+      14.2-13 MinimalFaithfulTransformationDegree
     14.3 [33X[0;0YIsomorphisms of Rees (0-)matrix semigroups[133X
       14.3-1 IsRMSIsoByTriple
       14.3-2 RMSIsoByTriple
@@ -823,6 +832,7 @@
       15.2-1 ParseRelations
       15.2-2 ElementOfFpSemigroup
       15.2-3 ElementOfFpMonoid
+      15.2-4 FreeMonoidAndAssignGeneratorVars
     15.3 [33X[0;0YCreating Tietze transformation objects[133X
       15.3-1 StzPresentation
       15.3-2 IsStzPresentation
@@ -873,6 +883,24 @@
       17.2-1 ReadMultiplicationTable
       17.2-2 WriteMultiplicationTable
       17.2-3 IteratorFromMultiplicationTableFile
+  18 [33X[0;0YTranslations[133X
+    18.1 [33X[0;0YMethods for translations[133X
+      18.1-1 [33X[0;0YIsXTranslation[133X
+      18.1-2 IsBitranslation
+      18.1-3 [33X[0;0YIsXTranslationCollection[133X
+      18.1-4 [33X[0;0YXPartOfBitranslation[133X
+      18.1-5 [33X[0;0YXTranslation[133X
+      18.1-6 Bitranslation
+      18.1-7 [33X[0;0YUnderlyingSemigroup[133X
+      18.1-8 [33X[0;0YXTranslationsSemigroupOfFamily[133X
+      18.1-9 [33X[0;0YTypeXTranslationSemigroupElements[133X
+      18.1-10 [33X[0;0YXTranslations[133X
+      18.1-11 TranslationalHull
+      18.1-12 [33X[0;0YNrXTranslations[133X
+      18.1-13 [33X[0;0YInnerXTranslations[133X
+      18.1-14 InnerTranslationalHull
+      18.1-15 UnderlyingRepresentatives
+      18.1-16 ImageSetOfTranslation
   
   
   [32X

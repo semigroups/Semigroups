@@ -22,6 +22,9 @@
   [[20XBur16[120X]  [16XBurrell,  S.  A.[116X, [17XThe Order Problem for Natural and Tropical Matrix
   Semigroups[117X, MMath project, University of St Andrews, United Kingdom (2016).
   
+  [[20XCP77[120X]  [16XClifford,  A. H. and Petrich, M.[116X, [17XSome classes of completely regular
+  semigroups[117X, [18XJournal of Algebra[118X, [19X46[119X, 2 (1977), 462--480.
+  
   [[20XDMW18[120X]  [16XDonoven,  C.,  Mitchell, J. D. and Wilson, W. A.[116X, [17XComputing maximal
   subsemigroups  of  a  finite  semigroup[117X,  [18XJournal  of  Algebra[118X,  [19X505[119X (2018),
   559-596.
@@ -79,6 +82,9 @@
   
   [[20XMM16[120X]  [16XMesyan,  Z.  and  Mitchell,  J. D.[116X, [17XThe structure of a graph inverse
   semigroup[117X, [18XSemigroup Forum[118X, Springer Nature, [19X93[119X, 1 (2016), 111–130.
+  
+  [[20XPet70[120X]  [16XPetrich,  M.[116X,  [17XThe  translational  hull  in  semigroups  and rings[117X,
+  [18XSemigroup Forum[118X, [19X1[119X, 1 (1970), 283--360.
   
   [[20XRR10[120X] [16XRadoszewski, J. and Rytter, W.[116X ([1m[31mvan Leeuwen, J., Muscholl, A., Peleg,
   D.,  Pokorný,  J.  and Rumpe, B.[15X, Eds.), [17XEfficient Testing of Equivalence of

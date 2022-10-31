@@ -70,15 +70,41 @@
   [4X[32X[104X
   
   [33X[0;0YThe  following  methods  relate  to  semigroup homomorphisms by images or by
-  function:   [2XRange[102X  ([14XReference:  range[114X),  [2XImage[102X  ([14XReference:  Image[114X),  [2XImages[102X
-  ([14XReference:  Images[114X),  [2XImageElm[102X  ([14XReference: ImageElm[114X), [2XPreImage[102X ([14XReference:
-  PreImage[114X),   [2XPreImages[102X   ([14XReference:   PreImages[114X),   [2XPreImagesRepresentative[102X
-  ([14XReference:     PreImagesRepresentative[114X),     [2XPreImagesRange[102X     ([14XReference:
-  PreImagesRange[114X),   [2XPreImagesElm[102X   ([14XReference:   PreImagesElm[114X),  [2XPreImagesSet[102X
-  ([14XReference:    PreImagesSet[114X),    [2XIsSurjective[102X   ([14XReference:   IsSurjective[114X),
-  [2XIsInjective[102X  ([14XReference: IsInjective[114X), [2XIsBijective[102X ([14XReference: IsBijective[114X),
-  [2XSource[102X   ([14XReference:   Source[114X),   [2XRange[102X   ([14XReference:  range[114X),  [2XImagesSource[102X
-  ([14XReference: ImagesSource[114X), [2XKernelOfSemigroupHomomorphism[102X ([14X14.1-7[114X)[133X
+  function:[133X
+  
+  [30X    [33X[0;6Y[2XRange[102X ([14XReference: range[114X),[133X
+  
+  [30X    [33X[0;6Y[2XImage[102X ([14XReference: Image[114X),[133X
+  
+  [30X    [33X[0;6Y[2XImages[102X ([14XReference: Images[114X),[133X
+  
+  [30X    [33X[0;6Y[2XImageElm[102X ([14XReference: ImageElm[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImage[102X ([14XReference: PreImage[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImages[102X ([14XReference: PreImages[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImagesRepresentative[102X ([14XReference: PreImagesRepresentative[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImagesRange[102X ([14XReference: PreImagesRange[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImagesElm[102X ([14XReference: PreImagesElm[114X),[133X
+  
+  [30X    [33X[0;6Y[2XPreImagesSet[102X ([14XReference: PreImagesSet[114X),[133X
+  
+  [30X    [33X[0;6Y[2XIsSurjective[102X ([14XReference: IsSurjective[114X),[133X
+  
+  [30X    [33X[0;6Y[2XIsInjective[102X ([14XReference: IsInjective[114X),[133X
+  
+  [30X    [33X[0;6Y[2XIsBijective[102X ([14XReference: IsBijective[114X),[133X
+  
+  [30X    [33X[0;6Y[2XSource[102X ([14XReference: Source[114X),[133X
+  
+  [30X    [33X[0;6Y[2XRange[102X ([14XReference: range[114X),[133X
+  
+  [30X    [33X[0;6Y[2XImagesSource[102X ([14XReference: ImagesSource[114X),[133X
+  
+  [30X    [33X[0;6Y[2XKernelOfSemigroupHomomorphism[102X ([14X14.1-7[114X).[133X
   
   [1X14.1-3 IsSemigroupHomomorphismByImages[101X
   
@@ -532,6 +558,67 @@
     [4X[25Xgap>[125X [27XAsSemigroupIsomorphismByFunction(hom);[127X[104X
     [4X[28X<full transformation monoid of degree 3> -> [128X[104X
     [4X[28X<full transformation monoid of degree 3>[128X[104X
+  [4X[32X[104X
+  
+  [1X14.2-12 SmallerDegreeTransformationRepresentation[101X
+  
+  [33X[1;0Y[29X[2XSmallerDegreeTransformationRepresentation[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YAn isomorphism to a transformation semigroup.[133X
+  
+  [33X[0;0YThis  function attempts to find a small degree transformation representation
+  of  the  semigroup [3XS[103X. The implementation attempts to find a right congruence
+  of [3XS[103X that [3XS[103X acts on (the equivalence classes of) faithfully.[133X
+  
+  [33X[0;0YIf [3XS[103X is not a finitely presented semigroup, then the returned isomorphism is
+  the  composition  of an isomorphism to a finitely presented semigroup and an
+  isomorphism  from  that  finitely  presented  semigroup  to a transformation
+  semigroup.[133X
+  
+  [33X[0;0YThe  runtime  of  this  function  depends  on the presentation for [3XS[103X that is
+  either  given  explicitly  or  computed by the [5XSemigroups[105X package, but it is
+  difficult  to  predict what properties of the presentation lead to a shorter
+  runtime.  This  is  unlikely to terminate in a reasonable amount of time for
+  semigroups  with  more  than  approx.  [10X10000[110X  elements,  but  might also not
+  terminate quickly for smaller semigroups depending on the presentation used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := BrauerMonoid(3);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismTransformationSemigroup(S);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 15, degree 3 with 3 generators> [128X[104X
+    [4X[28X-> <transformation monoid of size 15, degree 15 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallerDegreeTransformationRepresentation(S);[127X[104X
+    [4X[28XCompositionMapping( [128X[104X
+    [4X[28X<fp semigroup with 4 generators and 20 relations of length 81> -> [128X[104X
+    [4X[28X<transformation monoid of degree 7 with 3 generators>, [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 15, degree 3 with 3 generators> [128X[104X
+    [4X[28X-> <fp semigroup with 4 generators and 20 relations of length 81> )[128X[104X
+    [4X[25Xgap>[125X [27XS := JonesMonoid(5);[127X[104X
+    [4X[28X<regular bipartition *-monoid of degree 5 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X42[128X[104X
+    [4X[25Xgap>[125X [27XSmallerDegreeTransformationRepresentation(S);[127X[104X
+    [4X[28XCompositionMapping( [128X[104X
+    [4X[28X<fp semigroup with 5 generators and 28 relations of length 120> -> [128X[104X
+    [4X[28X<transformation monoid of degree 10 with 4 generators>, [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 42, degree 5 with 4 generators> [128X[104X
+    [4X[28X-> <fp semigroup with 5 generators and 28 relations of length 120> )[128X[104X
+  [4X[32X[104X
+  
+  [1X14.2-13 MinimalFaithfulTransformationDegree[101X
+  
+  [33X[1;0Y[29X[2XMinimalFaithfulTransformationDegree[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0YThis  function  returns  the  minimal  degree  of  a faithful transformation
+  representation  of the semigroup [3XS[103X. This is currently only implemented for a
+  very small number of types of semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RightZeroSemigroup(10);[127X[104X
+    [4X[28X<transformation semigroup of degree 7 with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27XMinimalFaithfulTransformationDegree(S);[127X[104X
+    [4X[28X7[128X[104X
   [4X[32X[104X
   
   

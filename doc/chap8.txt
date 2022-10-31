@@ -111,12 +111,14 @@
   [1X8.2-2 IsDualSemigroupRep[101X
   
   [33X[1;0Y[29X[2XIsDualSemigroupRep[102X( [3Xsgrp[103X ) [32X Category[133X
-  [6XReturns:[106X  [33X[0;10YReturns [9Xtrue[109X if [3Xsgrp[103X is represented as a dual semigroup.[133X
+  [6XReturns:[106X  [33X[0;10YReturns [9Xtrue[109X if [3Xsgrp[103X lies in the category of dual semigroups.[133X
   
-  [33X[0;0YSemigroups   created   using   [2XDualSemigroup[102X   ([14X8.2-1[114X)  normally  have  this
-  representation. The exception is semigroups which are the dual of semigroups
-  already  lying in this category. That is, a semigroup has the representation
-  [2XIsDualSemigroupRep[102X if and only if the corresponding dual semigroup does not.[133X
+  [33X[0;0YSemigroups   created  using  [2XDualSemigroup[102X  ([14X8.2-1[114X)  normally  lie  in  this
+  category.  The  exception  is  semigroups  which  are the dual of semigroups
+  already  lying  in  this category. That is, a semigroup lies in the category
+  [2XIsDualSemigroupRep[102X if and only if the corresponding dual semigroup does not.
+  Note  that this is not a Representation in the GAP sense, and will likely be
+  renamed in a future major release of the package.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

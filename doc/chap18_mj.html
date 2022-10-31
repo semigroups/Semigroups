@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (Semigroups) - Chapter 18: Translations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap18"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap18.html">[MathJax off]</a></p>
+<p><a id="X7EC01B437CC2B2C9" name="X7EC01B437CC2B2C9"></a></p>
+<div class="ChapSects"><a href="chap18_mj.html#X7EC01B437CC2B2C9">18 <span class="Heading">Translations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X864C64877E5714AC">18.1 <span class="Heading">Methods for translations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X849F15607B774B90">18.1-1 <span class="Heading">IsXTranslation</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F6689E885982816">18.1-2 IsBitranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F536B1B85978B63">18.1-3 <span class="Heading">IsXTranslationCollection</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7D52D17E7A28CE0E">18.1-4 <span class="Heading">XPartOfBitranslation</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7ACCBAB57E910910">18.1-5 <span class="Heading">XTranslation</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X8664424983C3281F">18.1-6 Bitranslation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7B5BB0BA8683A021">18.1-7 <span class="Heading">UnderlyingSemigroup</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X857C28C8790A35F6">18.1-8 <span class="Heading">XTranslationsSemigroupOfFamily</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7AA681A283A22C28">18.1-9 <span class="Heading">TypeXTranslationSemigroupElements</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7D5CC8A48371410D">18.1-10 <span class="Heading">XTranslations</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X8231194386449BD4">18.1-11 TranslationalHull</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7C826FBA78739FA4">18.1-12 <span class="Heading">NrXTranslations</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7E9306DF79587A33">18.1-13 <span class="Heading">InnerXTranslations</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7C109DF080E72F68">18.1-14 InnerTranslationalHull</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X87E30C387BE79FB8">18.1-15 UnderlyingRepresentatives</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7E81252986BB72BB">18.1-16 ImageSetOfTranslation</a></span>
+</div></div>
+</div>
+
+<h3>18 <span class="Heading">Translations</span></h3>
+
+<p>In this chapter we describe the functionality in <strong class="pkg">Semigroups</strong> for working with translations of semigroups. The notation used (as well as a number of results) is based on <a href="chapBib_mj.html#biBPetrich1970aa">[Pet70]</a>. Translations are of interest mainly due to their role in ideal extensions. A description of this role can also be found in <a href="chapBib_mj.html#biBPetrich1970aa">[Pet70]</a>. The implementation of translations in this package is only applicable to finite semigroups satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>).</p>
+
+<p>For a semigroup <span class="SimpleMath">\(S\)</span>, a transformation <span class="SimpleMath">\(\lambda\)</span> of <span class="SimpleMath">\(S\)</span> (written on the left) is a left translation if for all <span class="SimpleMath">\(s, t\)</span> in <span class="SimpleMath">\(S\)</span>, <span class="SimpleMath">\(\lambda (s)t = \lambda (st) \)</span>. A right translation <span class="SimpleMath">\(\rho\)</span> (written on the right) is defined dually.</p>
+
+<p>The set <span class="SimpleMath">\(L\)</span> of left translations of <span class="SimpleMath">\(S\)</span> is a semigroup under composition of functions, as is the set <span class="SimpleMath">\(R\)</span> of right translations. The associativity of <span class="SimpleMath">\(S\)</span> guarantees that left [right] multiplication by any element <span class="SimpleMath">\(s\)</span> of <span class="SimpleMath">\(S\)</span> represents a left [right] translation; this is the <em>inner</em> left [right] translation <span class="SimpleMath">\(\lambda_s\)</span> [<span class="SimpleMath">\(\rho_s\)</span>]. The inner left [right] translations form an ideal in <span class="SimpleMath">\(L\)</span> [<span class="SimpleMath">\(R\)</span>].</p>
+
+<p>A left translation <span class="SimpleMath">\(\lambda\)</span> and right translation <span class="SimpleMath">\(\rho\)</span> are <em>linked</em> if for all <code class="code">s, t</code> in <span class="SimpleMath">\(S\)</span>, <span class="SimpleMath">\(s\lambda(t) = (s)\rho t\)</span>. A pair of linked translations is called a <em>bitranslation</em>. The set of all bitranslations forms a semigroup <span class="SimpleMath">\(H\)</span> called the <em>translational hull</em> of <span class="SimpleMath">\(S\)</span> where the operation is componentwise. If the components are inner translations corresponding to multiplication by the same element, then the bitranslation is <em>inner</em>. The inner bitranslations form an ideal of the translational hull.</p>
+
+<p>Translations of a normalized Rees matrix semigroup <span class="SimpleMath">\(T\)</span> (see <code class="func">RMSNormalization</code> (<a href="chap6_mj.html#X80DE617E841E5BA0"><span class="RefLink">6.5-7</span></a>)) over a group <span class="SimpleMath">\(G\)</span> can be represented through certain tuples, which can be computed very efficiently compared to arbitrary translations. For left translations these tuples consist of a function from the row indices of <span class="SimpleMath">\(T\)</span> to G and a transformation on the row indices of <span class="SimpleMath">\(T\)</span>; the same is true of right translations and columns. More specifically, given a normalised Rees matrix semigroup <span class="SimpleMath">\(S\)</span> over a group <span class="SimpleMath">\(G\)</span> with sandwich matrix <span class="SimpleMath">\(P\)</span>, rows <span class="SimpleMath">\(I\)</span> and columns <span class="SimpleMath">\(J\)</span>, the left translations are characterised by pairs <span class="SimpleMath">\((\theta, \chi)\)</span> where <span class="SimpleMath">\(\theta\)</span> is a function from <span class="SimpleMath">\(I\)</span> to <span class="SimpleMath">\(G\)</span> and <span class="SimpleMath">\(\chi\)</span> is a transformation of <span class="SimpleMath">\(I\)</span>. The left translation <span class="SimpleMath">\(\lambda\)</span> defined by <span class="SimpleMath">\((\theta, \chi)\)</span> acts on <span class="SimpleMath">\(S\)</span> via</p>
+
+<p class="center">\[
+   \lambda((i, a, \mu)) = ((i)\chi, (i)\theta \cdot a, \mu),
+ \]</p>
+
+<p>where <span class="SimpleMath">\(i \in I\)</span>, <span class="SimpleMath">\(a \in G\)</span>, and <span class="SimpleMath">\(\mu \in J\)</span> Dually, right translations <span class="SimpleMath">\(\rho\)</span> are characterised by pairs <span class="SimpleMath">\((\omega, \psi)\)</span> where <span class="SimpleMath">\(\omega\)</span> is a function from <span class="SimpleMath">\(J\)</span> to <span class="SimpleMath">\(G\)</span> and <span class="SimpleMath">\(\psi\)</span> is a transformation of <span class="SimpleMath">\(J\)</span>, with action given by</p>
+
+<p class="center">\[
+   ((i, a, \mu))\rho = (i, a \cdot (\mu)\psi, (\mu)\psi).
+ \]</p>
+
+<p>Similarly, bitranslations <span class="SimpleMath">\((\lambda, \rho)\)</span> of <span class="SimpleMath">\(S\)</span> can be characterised by triples <span class="SimpleMath">\((g, \chi, \psi)\)</span> such that <span class="SimpleMath">\(g \in G\)</span>, <span class="SimpleMath">\(\chi\)</span> and <span class="SimpleMath">\(\psi\)</span> are transformations of <span class="SimpleMath">\(I, J\)</span> respectively, and</p>
+
+<p class="center">\[
+   p_{\mu, (i)\chi} \cdot g \cdot p_{(1)\psi, i} =
+    p_{\mu, (1)\chi} \cdot g \cdot p_{(mu)\psi, i}.
+ \]</p>
+
+<p>The action of <span class="SimpleMath">\(\lambda\)</span> on <span class="SimpleMath">\(S\)</span> is then given by</p>
+
+<p class="center">\[
+   \lambda((i, a, \mu)) = ((i)\chi, b \cdot p_{(1)\psi, i} \cdot a, \mu),
+ \]</p>
+
+<p>and of <span class="SimpleMath">\(\rho\)</span> on <span class="SimpleMath">\(S\)</span> by</p>
+
+<p class="center">\[
+   ((i, a, \mu))\rho = (i, a \cdot p_{\mu, (1)\chi} \cdot b, (\mu)\psi).
+ \]</p>
+
+<p>Further details may be found in <a href="chapBib_mj.html#biBClifford1977aa">[CP77]</a>.</p>
+
+<p><a id="X864C64877E5714AC" name="X864C64877E5714AC"></a></p>
+
+<h4>18.1 <span class="Heading">Methods for translations</span></h4>
+
+<p><a id="X849F15607B774B90" name="X849F15607B774B90"></a></p>
+
+<h5>18.1-1 <span class="Heading">IsXTranslation</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightTranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>All, and only, left [right] translations belong to <code class="code">IsLeftTranslation</code> [<code class="code">IsRightTranslation</code>]. These are both subcategories of <code class="code">IsSemigroupTranslation</code>, which itself is a subcategory of <code class="code">IsAssociativeElement</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(3, 4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := Representative(LeftTranslations(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupTranslation(l);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftTranslation(l);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightTranslation(l);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l = One(LeftTranslations(S));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l * l = l;</span>
+true
+</pre></div>
+
+<p><a id="X7F6689E885982816" name="X7F6689E885982816"></a></p>
+
+<h5>18.1-2 IsBitranslation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>All, and only, bitranslations belong to <code class="code">IsBitranslation</code>. This is a subcategory of <code class="func">IsAssociativeElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">Reference: IsAssociativeElement</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1, 2), (3, 4));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AsList(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[A[1], 0, A[1]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[A[2], A[2], A[4]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := OneOp(Representative(L));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := OneOp(Representative(R));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bitranslation(H, l, r);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBitranslation(x);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupTranslation(x);</span>
+false
+</pre></div>
+
+<p><a id="X7F536B1B85978B63" name="X7F536B1B85978B63"></a></p>
+
+<h5>18.1-3 <span class="Heading">IsXTranslationCollection</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightTranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBitranslationCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Every collection of left-, right-, or bi-translations belongs to the respective category <code class="func">IsXTranslationCollection</code>.</p>
+
+<p><a id="X7D52D17E7A28CE0E" name="X7D52D17E7A28CE0E"></a></p>
+
+<h5>18.1-4 <span class="Heading">XPartOfBitranslation</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftPartOfBitranslation</code>( <var class="Arg">h</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightPartOfBitranslation</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a left or right translation</p>
+
+<p>For a Bitranslation <var class="Arg">h</var> consisting of a linked pair <span class="SimpleMath">\((l, r)\)</span>, of left and right translations, <code class="code">LeftPartOfBitranslation(<var class="Arg">b</var>)</code> returns the left translation <code class="code">l</code>, and <code class="code">RightPartOfBitranslation(<var class="Arg">b</var>)</code> returns the right translation <code class="code">r</code>.</p>
+
+<p><a id="X7ACCBAB57E910910" name="X7ACCBAB57E910910"></a></p>
+
+<h5>18.1-5 <span class="Heading">XTranslation</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslation</code>( <var class="Arg">T</var>, <var class="Arg">x</var>[, <var class="Arg">y</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslation</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a left or right translation</p>
+
+<p>For the semigroup <var class="Arg">T</var> of left or right translations of a semigroup <span class="SimpleMath">\( S\)</span> and <var class="Arg">x</var> one of:</p>
+
+
+<ul>
+<li><p>a mapping on the underlying semigroup; note that in this case only the values of the mapping on the <code class="code">UnderlyingRepresentatives</code> of <var class="Arg">T</var> are checked and used, so mappings which do not define translations can be used to create translations if they are valid on that subset of S;</p>
+
+</li>
+<li><p>a list of indices representing the images of the <code class="code">UnderlyingRepresentatives</code> of <var class="Arg">T</var>, where the ordering is that of <code class="func">PositionCanonical</code> (<a href="chap11_mj.html#X7B4B10AE81602D4E"><span class="RefLink">11.1-2</span></a>) on <var class="Arg">S</var>;</p>
+
+</li>
+<li><p>(for <code class="code">LeftTranslation</code>) a list of length <code class="code">Length(Rows(S))</code> containing elements of <code class="code">UnderlyingSemigroup(S)</code>; in this case <var class="Arg">S</var> must be a normalised Rees matrix semigroup and <code class="code">y</code> must be a Transformation of <code class="code">Rows(S)</code>;</p>
+
+</li>
+<li><p>(for <code class="code">RightTranslation</code>) a list of length <code class="code">Length(Columns(S))</code> containing elements of <code class="code">UnderlyingSemigroup(S)</code>; in this case <var class="Arg">S</var> must be a normalised Rees matrix semigroup and <code class="code">y</code> must be a Transformation of <code class="code">Columns(S)</code>;</p>
+
+</li>
+</ul>
+<p><code class="code">LeftTranslation</code> and <code class="code">RightTranslation</code> return the corresponding translations.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(3, 4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := AsList(S)[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := MappingByFunction(S, S, x -&gt; s * x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := LeftTranslation(L, map);</span>
+&lt;left translation on &lt;regular transformation semigroup of size 12, 
+ degree 8 with 4 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s ^ l;</span>
+Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
+</pre></div>
+
+<p><a id="X8664424983C3281F" name="X8664424983C3281F"></a></p>
+
+<h5>18.1-6 Bitranslation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Bitranslation</code>( <var class="Arg">H</var>, <var class="Arg">l</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a bitranslation</p>
+
+<p>If <var class="Arg">H</var> is a translational hull over a semigroup <span class="SimpleMath">\(S\)</span>, and <var class="Arg">l</var> and <var class="Arg">r</var> are linked left and right translations respectively over <span class="SimpleMath">\(S\)</span>, then this function returns the bitranslation <span class="SimpleMath">\((\textit{l}, \textit{r})\)</span>. If <var class="Arg">l</var> and <var class="Arg">r</var> are not linked, then an error is produced.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1, 2), (3, 4));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AsList(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[A[1], 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[A[2], A[2]]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := LeftTranslation(L, MappingByFunction(S, S, s -&gt; S.1 * s));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := RightTranslation(R, MappingByFunction(S, S, s -&gt; s * S.1));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bitranslation(H, l, r);</span>
+&lt;bitranslation on &lt;regular semigroup of size 17, with 4 generators&gt;&gt;
+</pre></div>
+
+<p><a id="X7B5BB0BA8683A021" name="X7B5BB0BA8683A021"></a></p>
+
+<h5>18.1-7 <span class="Heading">UnderlyingSemigroup</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroup</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a semigroup</p>
+
+<p>Given a semigroup of translations or bitranslations, returns the semigroup on which these translations act.</p>
+
+<p><a id="X857C28C8790A35F6" name="X857C28C8790A35F6"></a></p>
+
+<h5>18.1-8 <span class="Heading">XTranslationsSemigroupOfFamily</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslationsSemigroupOfFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslationsSemigroupOfFamily</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TranslationalHullOfFamily</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the semigroup of left or right translations, or the translational hull</p>
+
+<p>Given a family <var class="Arg">fam</var> of left-, right- or bi-translations, returns the translations semigroup or translational hull to which they belong.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(3, 3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := Representative(L);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftTranslationsSemigroupOfFamily(FamilyObj(l)) = L;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := Representative(H);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TranslationalHullOfFamily(FamilyObj(h)) = H;</span>
+true
+</pre></div>
+
+<p><a id="X7AA681A283A22C28" name="X7AA681A283A22C28"></a></p>
+
+<h5>18.1-9 <span class="Heading">TypeXTranslationSemigroupElements</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeLeftTranslationsSemigroupElements</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeRightTranslationsSemigroupElements</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeBitranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a type</p>
+
+<p>Given a (bi)translations semigroup, returns the type of the elements that it contains.</p>
+
+<p><a id="X7D5CC8A48371410D" name="X7D5CC8A48371410D"></a></p>
+
+<h5>18.1-10 <span class="Heading">XTranslations</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the semigroup of left or right translations</p>
+
+<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the semigroup of all left or right translations of <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);</span>
+&lt;the semigroup of left translations of &lt;transformation semigroup of 
+ degree 6 with 2 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(L);</span>
+361
+</pre></div>
+
+<p><a id="X8231194386449BD4" name="X8231194386449BD4"></a></p>
+
+<h5>18.1-11 TranslationalHull</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TranslationalHull</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the translational hull</p>
+
+<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the translational hull of <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);</span>
+&lt;translational hull over &lt;transformation semigroup of degree 6 with 2 
+ generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(H);</span>
+38
+</pre></div>
+
+<p><a id="X7C826FBA78739FA4" name="X7C826FBA78739FA4"></a></p>
+
+<h5>18.1-12 <span class="Heading">NrXTranslations</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrLeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrBitranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the number of left-, right-, or bi-translations</p>
+
+<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the number of left-, right-, or bi-translations of <var class="Arg">S</var>. This is typically more efficient than calling <code class="code">Size(LeftTranslations(<var class="Arg">S</var>))</code>, as the [bi]translations may not be produced.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrLeftTranslations(S);</span>
+1444
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRightTranslations(S);</span>
+398
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrBitranslations(S);</span>
+69
+</pre></div>
+
+<p><a id="X7E9306DF79587A33" name="X7E9306DF79587A33"></a></p>
+
+<h5>18.1-13 <span class="Heading">InnerXTranslations</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerLeftTranslations</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerRightTranslations</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the monoid of inner left or right translations</p>
+
+<p>For a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), <code class="code">InnerLeftTranslations</code>(<var class="Arg">S</var>) returns the inner left translations of S (i.e. the translations defined by left multiplication by a fixed element of <var class="Arg">S</var>), and <code class="code">InnerRightTranslations</code>(<var class="Arg">S</var>) returns the inner right translations of <var class="Arg">S</var> (i.e. the translations defined by right multiplication by a fixed element of <var class="Arg">S</var>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InnerLeftTranslations(S);</span>
+&lt;left translations semigroup over &lt;transformation semigroup 
+ of size 22, degree 6 with 2 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(I) &lt;= Size(S);</span>
+true
+</pre></div>
+
+<p><a id="X7C109DF080E72F68" name="X7C109DF080E72F68"></a></p>
+
+<h5>18.1-14 InnerTranslationalHull</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerTranslationalHull</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: the inner translational hull</p>
+
+<p>Given a finite semigroup <var class="Arg">S</var> satisfying <code class="func">CanUseFroidurePin</code> (<a href="chap6_mj.html#X7FEE8CFA87E7B872"><span class="RefLink">6.1-4</span></a>), returns the inner translational hull of <var class="Arg">S</var>, i.e. the bitranslations whose left and right translation components are inner translations defined by left and right multiplication by the same fixed element of <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 3, 6, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 1, 4, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InnerTranslationalHull(S);</span>
+&lt;semigroup of bitranslations over &lt;transformation semigroup 
+ of size 22, degree 6 with 2 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := TranslationalHull(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inners := [];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for s in S do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">l := LeftTranslation(L, MappingByFunction(S, S, x -&gt; s * x));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">r := RightTranslation(R, MappingByFunction(S, S, x -&gt; x * s));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">AddSet(inners, Bitranslation(H, l, r));</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(I) = inners;</span>
+true
+</pre></div>
+
+<p><a id="X87E30C387BE79FB8" name="X87E30C387BE79FB8"></a></p>
+
+<h5>18.1-15 UnderlyingRepresentatives</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRepresentatives</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a set of representatives</p>
+
+<p>For efficiency, we typically store translations on a semigroup <span class="SimpleMath">\(S\)</span> as their actions on a small subset of <span class="SimpleMath">\(S\)</span>. For left translations, this is a set of representatives of the maximal \(\mathscr{R}\)-classes of <span class="SimpleMath">\(S\)</span>; dually for right translations we use representatives of the maximal \(\mathscr{L}\)-classes. You can use <code class="code">UnderlyingRepresentatives</code> to access these representatives.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[G.1, G.2], [G.1, G.1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[G.2, G.3], [G.1 * G.2, G.1 * G.3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LeftTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RightTranslations(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingRepresentatives(L);</span>
+[ (1,(),1), (2,(),2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingRepresentatives(R);</span>
+[ (1,(),1), (2,(),2), (1,(),3), (1,(),4) ]
+</pre></div>
+
+<p><a id="X7E81252986BB72BB" name="X7E81252986BB72BB"></a></p>
+
+<h5>18.1-16 ImageSetOfTranslation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageSetOfTranslation</code>( <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a set of elements</p>
+
+<p>Given a left or right translation <var class="Arg">t</var> on a semigroup <span class="SimpleMath">\(S\)</span>, returns the set of elements of <span class="SimpleMath">\(S\)</span> lying in the image of <var class="Arg">t</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 3, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 4, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := Set(LeftTranslations(S))[4];</span>
+&lt;left translation on &lt;transformation semigroup of size 8, degree 4 
+ with 2 generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageSetOfTranslation(t);</span>
+[ Transformation( [ 1, 2, 3, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+  Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 4, 1, 3 ] ) ]
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

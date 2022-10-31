@@ -17,7 +17,7 @@
 <body class="chap14"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -55,6 +55,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7B44408D8309C3DC">14.2-9 SemigroupIsomorphismByFunctionNC</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7EFDBD2C7A4FB6AF">14.2-10 IsSemigroupIsomorphismByFunction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X86C4FC857AF125BD">14.2-11 AsSemigroupIsomorphismByFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X794E5DA4872989E4">14.2-12 SmallerDegreeTransformationRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X867264587CFD0013">14.2-13 MinimalFaithfulTransformationDegree</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X80DE3DB0782D9358">14.3 <span class="Heading">
       Isomorphisms of Rees (0-)matrix semigroups
@@ -139,8 +141,62 @@
 &lt;semigroup of size 24, with 2 generators&gt; -&gt; 
 &lt;semigroup of size 6, with 2 generators&gt;</pre></div>
 
-<p>The following methods relate to semigroup homomorphisms by images or by function: <code class="func">Range</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">Image</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X87F4D35A826599C6"><span class="RefLink">Reference: Image</span></a>), <code class="func">Images</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X86114B2E7E77488C"><span class="RefLink">Reference: Images</span></a>), <code class="func">ImageElm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7CFAB0157BFB1806"><span class="RefLink">Reference: ImageElm</span></a>), <code class="func">PreImage</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X836FAEAC78B55BF4"><span class="RefLink">Reference: PreImage</span></a>), <code class="func">PreImages</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X85C8590E832002EF"><span class="RefLink">Reference: PreImages</span></a>), <code class="func">PreImagesRepresentative</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>), <code class="func">PreImagesRange</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X78EF1FE77B0973C0"><span class="RefLink">Reference: PreImagesRange</span></a>), <code class="func">PreImagesElm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7FBB830C8729E995"><span class="RefLink">Reference: PreImagesElm</span></a>), <code class="func">PreImagesSet</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X856BAFC87B2D2811"><span class="RefLink">Reference: PreImagesSet</span></a>), <code class="func">IsSurjective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X784ECE847E005B8F"><span class="RefLink">Reference: IsSurjective</span></a>), <code class="func">IsInjective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7F065FD7822C0A12"><span class="RefLink">Reference: IsInjective</span></a>), <code class="func">IsBijective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X878F56AB7B342767"><span class="RefLink">Reference: IsBijective</span></a>), <code class="func">Source</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>), <code class="func">Range</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>), <code class="func">ImagesSource</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7D23C1CE863DACD8"><span class="RefLink">Reference: ImagesSource</span></a>), <code class="func">KernelOfSemigroupHomomorphism</code> (<a href="chap14.html#X86BCE2207E55FC9F"><span class="RefLink">14.1-7</span></a>)</p>
+<p>The following methods relate to semigroup homomorphisms by images or by function:</p>
 
+
+<ul>
+<li><p><code class="func">Range</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>),</p>
+
+</li>
+<li><p><code class="func">Image</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X87F4D35A826599C6"><span class="RefLink">Reference: Image</span></a>),</p>
+
+</li>
+<li><p><code class="func">Images</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X86114B2E7E77488C"><span class="RefLink">Reference: Images</span></a>),</p>
+
+</li>
+<li><p><code class="func">ImageElm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7CFAB0157BFB1806"><span class="RefLink">Reference: ImageElm</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImage</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X836FAEAC78B55BF4"><span class="RefLink">Reference: PreImage</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImages</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X85C8590E832002EF"><span class="RefLink">Reference: PreImages</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImagesRepresentative</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7AE24A1586B7DE79"><span class="RefLink">Reference: PreImagesRepresentative</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImagesRange</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X78EF1FE77B0973C0"><span class="RefLink">Reference: PreImagesRange</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImagesElm</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7FBB830C8729E995"><span class="RefLink">Reference: PreImagesElm</span></a>),</p>
+
+</li>
+<li><p><code class="func">PreImagesSet</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X856BAFC87B2D2811"><span class="RefLink">Reference: PreImagesSet</span></a>),</p>
+
+</li>
+<li><p><code class="func">IsSurjective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X784ECE847E005B8F"><span class="RefLink">Reference: IsSurjective</span></a>),</p>
+
+</li>
+<li><p><code class="func">IsInjective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7F065FD7822C0A12"><span class="RefLink">Reference: IsInjective</span></a>),</p>
+
+</li>
+<li><p><code class="func">IsBijective</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X878F56AB7B342767"><span class="RefLink">Reference: IsBijective</span></a>),</p>
+
+</li>
+<li><p><code class="func">Source</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7DE8173F80E07AB1"><span class="RefLink">Reference: Source</span></a>),</p>
+
+</li>
+<li><p><code class="func">Range</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">Reference: range</span></a>),</p>
+
+</li>
+<li><p><code class="func">ImagesSource</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7D23C1CE863DACD8"><span class="RefLink">Reference: ImagesSource</span></a>),</p>
+
+</li>
+<li><p><code class="func">KernelOfSemigroupHomomorphism</code> (<a href="chap14.html#X86BCE2207E55FC9F"><span class="RefLink">14.1-7</span></a>).</p>
+
+</li>
+</ul>
 <p><a id="X7C76C6E5780D4A57" name="X7C76C6E5780D4A57"></a></p>
 
 <h5>14.1-3 IsSemigroupHomomorphismByImages</h5>
@@ -540,6 +596,61 @@ true</pre></div>
 &lt;full transformation monoid of degree 3&gt; -&gt; 
 &lt;full transformation monoid of degree 3&gt;</pre></div>
 
+<p><a id="X794E5DA4872989E4" name="X794E5DA4872989E4"></a></p>
+
+<h5>14.2-12 SmallerDegreeTransformationRepresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallerDegreeTransformationRepresentation</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: An isomorphism to a transformation semigroup.</p>
+
+<p>This function attempts to find a small degree transformation representation of the semigroup <var class="Arg">S</var>. The implementation attempts to find a right congruence of <var class="Arg">S</var> that <var class="Arg">S</var> acts on (the equivalence classes of) faithfully.</p>
+
+<p>If <var class="Arg">S</var> is not a finitely presented semigroup, then the returned isomorphism is the composition of an isomorphism to a finitely presented semigroup and an isomorphism from that finitely presented semigroup to a transformation semigroup.</p>
+
+<p>The runtime of this function depends on the presentation for <var class="Arg">S</var> that is either given explicitly or computed by the <strong class="pkg">Semigroups</strong> package, but it is difficult to predict what properties of the presentation lead to a shorter runtime. This is unlikely to terminate in a reasonable amount of time for semigroups with more than approx. <code class="code">10000</code> elements, but might also not terminate quickly for smaller semigroups depending on the presentation used.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrauerMonoid(3);</span>
+&lt;regular bipartition *-monoid of degree 3 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTransformationSemigroup(S);</span>
+&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt; 
+-&gt; &lt;transformation monoid of size 15, degree 15 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreeTransformationRepresentation(S);</span>
+CompositionMapping( 
+&lt;fp semigroup with 4 generators and 20 relations of length 81&gt; -&gt; 
+&lt;transformation monoid of degree 7 with 3 generators&gt;, 
+&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt; 
+-&gt; &lt;fp semigroup with 4 generators and 20 relations of length 81&gt; )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := JonesMonoid(5);</span>
+&lt;regular bipartition *-monoid of degree 5 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+42
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreeTransformationRepresentation(S);</span>
+CompositionMapping( 
+&lt;fp semigroup with 5 generators and 28 relations of length 120&gt; -&gt; 
+&lt;transformation monoid of degree 10 with 4 generators&gt;, 
+&lt;regular bipartition *-monoid of size 42, degree 5 with 4 generators&gt; 
+-&gt; &lt;fp semigroup with 5 generators and 28 relations of length 120&gt; )
+</pre></div>
+
+<p><a id="X867264587CFD0013" name="X867264587CFD0013"></a></p>
+
+<h5>14.2-13 MinimalFaithfulTransformationDegree</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalFaithfulTransformationDegree</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p>This function returns the minimal degree of a faithful transformation representation of the semigroup <var class="Arg">S</var>. This is currently only implemented for a very small number of types of semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RightZeroSemigroup(10);</span>
+&lt;transformation semigroup of degree 7 with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalFaithfulTransformationDegree(S);</span>
+7
+</pre></div>
+
 <p><a id="X80DE3DB0782D9358" name="X80DE3DB0782D9358"></a></p>
 
 <h4>14.3 <span class="Heading">
@@ -779,7 +890,7 @@ true</pre></div>
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -1027,9 +1027,9 @@
     [4X[25Xgap>[125X [27XAsSet(Idempotents(L));[127X[104X
     [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XH := GroupHClass(D);[127X[104X
-    [4X[28X<Green's H-class: Transformation( [ 1, 3, 3, 1 ] )>[128X[104X
+    [4X[28X<Green's H-class: Transformation( [ 1, 1, 3, 3 ] )>[128X[104X
     [4X[25Xgap>[125X [27XIdempotents(H);[127X[104X
-    [4X[28X[ Transformation( [ 1, 3, 3, 1 ] ) ][128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 3, 3 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
     [4X[25X>[125X [27XPartialPerm([10, 6, 3, 4, 9, 0, 1]),[127X[104X
     [4X[25X>[125X [27XPartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;[127X[104X
@@ -1562,8 +1562,8 @@
   elements  in  [10XC(n)[110X. Recall that for a transformation [3Xtrans[103X and integer [3Xn[103X the
   function [10XAsDigraph[110X returns a digraph with [3Xn[103X vertices and an edge with source
   [10Xx[110X  and  range  [10Xx^trans[110X  for  every  [10Xx[110X  in [10X[1 .. n][110X. See [2XAsDigraph[102X ([14XDigraphs:
-  AsDigraph  for  a  transformation  or  perm[114X).  Then  [10XCanonicalTransformation[110X
-  returns a canonical representative of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
+  AsDigraph  for  a  binary  relation[114X). Then [10XCanonicalTransformation[110X returns a
+  canonical representative of the class [10XC(n)[110X that contains [3Xtrans[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx := Transformation([5, 1, 4, 1, 1]);[127X[104X
