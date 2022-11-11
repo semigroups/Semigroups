@@ -1645,3 +1645,17 @@ function(S, T)
   od;
   return true;
 end);
+
+InstallMethod(IsSelfDualSemigroup,
+"for a finite semigroup with CanUseFroidurePin",
+[IsSemigroup and CanUseFroidurePin],
+function(S)
+  local T, map;
+  T := AsSemigroup(IsFpSemigroup, S);
+  map := AntiIsomorphismDualFpSemigroup(T);
+  return SemigroupIsomorphismByImages(T,
+                                      Range(map),
+                                      GeneratorsOfSemigroup(T),
+                                      List(GeneratorsOfSemigroup(T),
+                                           x -> x ^ map)) <> fail;
+end);
