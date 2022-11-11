@@ -43,6 +43,10 @@ DeclareOperation("IsFullInverseSubsemigroup",
 DeclareOperation("IsNormalInverseSubsemigroup",
                  [IsInverseSemigroup, IsInverseSemigroup]);
 
+if not IsBoundGlobal("IsSelfDualSemigroup") then
+  DeclareProperty("IsSelfDualSemigroup", IsSemigroup);
+fi;
+
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
 
