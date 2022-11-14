@@ -11,19 +11,24 @@
 <#GAPDoc Label="ParseRelations">
 <ManSection>
   <Oper Name="ParseRelations" Arg="gens, rels"/>
-  <Returns>A list of pairs of semigroup elements.</Returns>
+  <Returns>A list of pairs of semigroup or monoid elements.</Returns>
   <Description>
     <C>ParseRelations</C> converts a string describing relations for a
-    semigroup to the list of pairs of semigroup elements it represents.
-    Any white space given is ignored. The output list is then compatible
-    with other GAP functions. In the below examples we see free semigroups
-    being directly quotiented by the output of the <C>ParseRelations</C>
-    function.
+    semigroup or monoid to the list of pairs of semigroup or monoid elements it
+    represents. Any white space given is ignored. The output list is then
+    compatible with other &GAP; functions. In the below examples we see free
+    semigroups and monoids being directly quotiented by the output of the
+    <C>ParseRelations</C> function.
     <P/>
 
-    <A>gens</A> must be a list of generators for a free semigroup, each being
-    a single English letter (in upper or lower case). <A>rels</A> must be
-    string that lists the equalities desired.
+    The argument <A>gens</A> must be a list of generators for a free semigroup,
+    each being a single alphabet letter (in upper or lower case). The argument
+    <A>rels</A> must be string that lists the equalities desired.<P/>
+
+    To take a quotient of a free monoid, it is necessary to use 
+    <Ref Attr="GeneratorsOfMonoid" BookName="ref"/> as the 1st argument to
+    <C>ParseRelations</C> and the identity may appear as <C>1</C> in the
+    specified relations.
 
     <Example><![CDATA[
 gap> f := FreeSemigroup("x", "y", "z");;
@@ -37,7 +42,11 @@ gap> f / r;
 gap> f2 := FreeSemigroup("a");
 <free semigroup on the generators [ a ]>
 gap> f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");
-<fp semigroup with 1 generator and 1 relation of length 4>]]></Example>
+<fp semigroup with 1 generator and 1 relation of length 4>
+gap> FreeMonoidAndAssignGeneratorVars("a", "b")
+> / ParseRelations([a, b], "a^2=1,b^3=1,(ab)^3=1");
+<fp monoid with 2 generators and 3 relations of length 13>
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
