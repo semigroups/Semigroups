@@ -1329,3 +1329,19 @@ function(S)
   return Length(GeneratorsOfMonoid(S))
     + Sum(RelationsOfFpMonoid(S), x -> Length(x[1]) + Length(x[2]));
 end);
+
+InstallMethod(ReversedOp, "for an element of an fp semigroup",
+[IsElementOfFpSemigroup],
+function(word)
+  local rev;
+  rev := Reversed(UnderlyingElement(word));
+  return ElementOfFpSemigroup(FamilyObj(word), rev);
+end);
+
+InstallMethod(ReversedOp, "for an element of an fp monoid",
+[IsElementOfFpMonoid],
+function(word)
+  local rev;
+  rev := Reversed(UnderlyingElement(word));
+  return ElementOfFpMonoid(FamilyObj(word), rev);
+end);
