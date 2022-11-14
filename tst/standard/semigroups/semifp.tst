@@ -2170,12 +2170,12 @@ gap> ParseRelations(GeneratorsOfSemigroup(f), "yx=x= ((a)b^2y)^50");
 [ [ y*x, x ], [ x, (a*b^2*y)^50 ] ]
 gap> f := FreeSemigroup("x", "y", "a", "b", "X", "@");;
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y");
-Error, expected the first argument to be a list of a free semigroup generators\
- represented by single English letter but found the generator @
+Error, expected the 1st argument to be a list of a free semigroup or monoid ge\
+nerators represented by a single alphabet letter but found @
 gap> f := FreeSemigroup("x", "y");;
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=()");
-Error, expected the second argument to be a string listing the relations of a \
-semigroup but found an = symbol which isn't pairing two words
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=(");
 Error, expected the number of open brackets to match the number of closed brac\
 kets
@@ -2193,8 +2193,56 @@ Error, expected a free semigroup generator but found a
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=y^0");
 Error, expected ^ to be followed by a positive integer but found 0
 gap> ParseRelations(GeneratorsOfSemigroup(f), "x=");
-Error, expected the second argument to be a string listing the relations of a \
-semigroup but found an = symbol which isn't pairing two words
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
+
+#
+gap> f := FreeMonoid("x", "y", "a", "b", "X");                              
+<free monoid on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfMonoid(f),
+> "x=X^3(yx^2)=a,b(aX)^3x=XXXX,XXX=1");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ], 
+  [ X^3, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "e");                 
+<free monoid on the generators [ x, y, e ]>
+gap> ParseRelations(GeneratorsOfMonoid(f), "ex=x=xe=1, ey=y=ye, xy = e, 1 = 1");
+[ [ e*x, x ], [ x, x*e ], [ x*e, <identity ...> ], [ e*y, y ], [ y, y*e ], 
+  [ x*y, e ], [ <identity ...>, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "a", "b", "X");                              
+<free monoid on the generators [ x, y, a, b, X ]>
+gap> ParseRelations(GeneratorsOfMonoid(f), ",x=X^3(yx^2)=a,b(aX)^3x=XXXX=1^1=1");
+[ [ x, X^3*y*x^2 ], [ X^3*y*x^2, a ], [ b*(a*X)^3*x, X^4 ], 
+  [ X^4, <identity ...> ], [ <identity ...>, <identity ...> ] ]
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=yx=x= ((a)b^2y)^50=1");
+[ [ <identity ...>, y*x ], [ y*x, x ], [ x, (a*b^2*y)^50 ], 
+  [ (a*b^2*y)^50, <identity ...> ] ]
+gap> f := FreeMonoid("x", "y", "a", "b", "X", "@");;
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x^1=y");
+Error, expected the 1st argument to be a list of a free semigroup or monoid ge\
+nerators represented by a single alphabet letter but found @
+gap> f := FreeMonoid("x", "y");;
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=()");
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=(");
+Error, expected the number of open brackets to match the number of closed brac\
+kets
+gap> ParseRelations(GeneratorsOfMonoid(f), "x=(^1)");
+Error, expected ^ to be preceded by a ) or a generator but found (
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=a^");
+Error, expected ^ to be followed by a positive integer but found end of string
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x^y");
+Error, expected ^ to be followed by a positive integer but found y
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=^y");
+Error, expected ^ to be preceded by a ) or a generator but found beginning of \
+string
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x=a");
+Error, expected a free semigroup generator but found a
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=x=y^0");
+Error, expected ^ to be followed by a positive integer but found 0
+gap> ParseRelations(GeneratorsOfMonoid(f), "1=");
+Error, expected the 2nd argument to be a string listing the relations of a sem\
+igroup but found an = symbol which isn't pairing two words
 
 # Test ElementOfFpSemigroup
 gap> f := FreeSemigroup("x", "y");;
