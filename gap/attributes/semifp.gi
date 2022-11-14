@@ -42,3 +42,43 @@ function(S)
   return Set(Filtered(PartsOfPartitionDS(uf), x -> not decomposable[x[1]]),
              x -> GeneratorsOfSemigroup(S)[x[1]]);
 end);
+
+InstallMethod(AntiIsomorphismDualFpSemigroup, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  local F, R, T, map, inv;
+  F := FreeSemigroupOfFpSemigroup(S);
+  R := List(RelationsOfFpSemigroup(S), x -> List(x, Reversed));
+  T := F / R;
+  map := function(x)
+    local word;
+    word := Reversed(UnderlyingElement(x));
+    return ElementOfFpSemigroup(FamilyObj(Representative(T)), word);
+  end;
+  inv := function(x)
+    local word;
+    word := Reversed(UnderlyingElement(x));
+    return ElementOfFpSemigroup(FamilyObj(Representative(S)), word);
+  end;
+  return MappingByFunction(S, T, map, inv);
+end);
+
+InstallMethod(AntiIsomorphismDualFpMonoid, "for an fp monoid",
+[IsFpMonoid],
+function(S)
+  local F, R, T, map, inv;
+  F := FreeMonoidOfFpMonoid(S);
+  R := List(RelationsOfFpMonoid(S), x -> List(x, Reversed));
+  T := F / R;
+  map := function(x)
+    local word;
+    word := Reversed(UnderlyingElement(x));
+    return ElementOfFpMonoid(FamilyObj(Representative(T)), word);
+  end;
+  inv := function(x)
+    local word;
+    word := Reversed(UnderlyingElement(x));
+    return ElementOfFpMonoid(FamilyObj(Representative(S)), word);
+  end;
+  return MappingByFunction(S, T, map, inv);
+end);
