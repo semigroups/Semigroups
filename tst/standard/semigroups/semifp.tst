@@ -2572,6 +2572,36 @@ a*b^2*a
 gap> Reversed(One(S));
 <identity ...>
 
+# AntiIsomorphismDualFpMonoid/Semigroup
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> map := AntiIsomorphismDualFpSemigroup(S);
+MappingByFunction( <fp semigroup with 2 generators and 
+  3 relations of length 14>, <fp semigroup with 2 generators and 
+  3 relations of length 14>, function( x ) ... end, function( x ) ... end )
+gap> RelationsOfFpSemigroup(Range(map));
+[ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ]
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, One(F)], [b ^ 2, One(F)], [(a * b) ^ 2, One(F)]];
+[ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
+  [ (a*b)^2, <identity ...> ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 11>
+gap> map := AntiIsomorphismDualFpMonoid(S);
+MappingByFunction( <fp monoid with 2 generators and 3 relations of length 11>
+ , <fp monoid with 2 generators and 3 relations of length 11>
+ , function( x ) ... end, function( x ) ... end )
+gap> RelationsOfFpMonoid(Range(map));
+[ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
+  [ (b*a)^2, <identity ...> ] ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);
