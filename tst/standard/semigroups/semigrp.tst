@@ -1098,6 +1098,12 @@ gap> S := GraphInverseSemigroup(CycleDigraph(2));
 gap> S < S;
 false
 
+# Issue 565 - no ClosureSemigroup method for non-libsemigroups types
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> Size(GeneratorsOfSemigroup(Semigroup(AsList(S), rec(small := true)))) < Size(S);
+true
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semigrp.tst");
