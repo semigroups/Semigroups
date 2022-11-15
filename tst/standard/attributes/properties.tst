@@ -2004,6 +2004,25 @@ gap> IsNormalInverseSubsemigroup(G,
 >                                InverseSemigroup(G.1, rec(acting := true)));
 false
 
+# IsSelfDualSemigroup
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> IsSelfDualSemigroup(S);
+false
+gap> IsSelfDualSemigroup(FreeBand(3));
+true
+gap> S := DualSymmetricInverseMonoid(3);
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> IsSelfDualSemigroup(S);
+true
+gap> IsSelfDualSemigroup(MonogenicSemigroup(7, 8));
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);

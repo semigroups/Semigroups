@@ -46,7 +46,7 @@
     <#Include Label = "IsZeroRectangularBand">
     <#Include Label = "IsZeroSemigroup">
     <#Include Label = "IsZeroSimpleSemigroup">
-
+    <#Include Label = "IsSelfDualSemigroup">
   </Section>
 
   <Section>

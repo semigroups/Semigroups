@@ -1651,6 +1651,12 @@ InstallMethod(IsSelfDualSemigroup,
 [IsSemigroup and CanUseFroidurePin],
 function(S)
   local T, map;
+  if IsCommutativeSemigroup(S) then  # TODO(later) any more?
+    return true;
+  elif NrRClasses(S) <> NrLClasses(S) then
+    return false;
+  fi;
+
   T := AsSemigroup(IsFpSemigroup, S);
   map := AntiIsomorphismDualFpSemigroup(T);
   return SemigroupIsomorphismByImages(T,
