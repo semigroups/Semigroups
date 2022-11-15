@@ -1194,3 +1194,36 @@ false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IsSelfDualSemigroup">
+  <ManSection>
+    <Prop Name="IsSelfDualSemigroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Returns <K>true</K> if the semigroup <A>S</A> is self dual and
+      <K>false</K> otherwise.
+      <P/>
+
+      A semigroup is <E>self dual</E> if it is isomorphic to its dual,
+      that is, the semigroup <C>T</C> with multiplication <C>*</C> defined
+      by <C>x*y=yx</C> where <C>yx</C> denotes the product in <A>S</A>.
+
+      <Example><![CDATA[
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> IsSelfDualSemigroup(S);
+false
+gap> IsSelfDualSemigroup(FreeBand(3));
+true
+gap> S := DualSymmetricInverseMonoid(3);
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> IsSelfDualSemigroup(S);
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

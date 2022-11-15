@@ -44,7 +44,7 @@ DeclareOperation("IsNormalInverseSubsemigroup",
                  [IsInverseSemigroup, IsInverseSemigroup]);
 
 if not IsBoundGlobal("IsSelfDualSemigroup") then
-  DeclareProperty("IsSelfDualSemigroup", IsSemigroup);
+  DeclareProperty("IsSelfDualSemigroup", IsSemigroup and CanUseFroidurePin);
 fi;
 
 DeclareSynonymAttr("IsRectangularGroup",
