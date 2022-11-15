@@ -76,8 +76,10 @@ function(arg)
     # We should have a list of generating pairs
     if Length(arg) = 2 then
       pairs := arg[2];
-      if not IsEmpty(pairs) and not IsList(pairs[1]) then
-        pairs := [pairs];
+      if not IsEmpty(pairs) then
+        if (not IsList(pairs[1])) or IsMatrixObj(pairs[1]) then
+          pairs := [pairs];
+        fi;
       fi;
     elif Length(arg) > 2 then
       pairs := arg{[2 .. Length(arg)]};

@@ -1118,28 +1118,45 @@ InstallMethod(ParseRelations,
 "for a list of free generators and a string",
 [IsDenseList, IsString],
 function(gens, inputstring)
-    local newinputstring, g, chartoel, RemoveBrackets, ParseRelation, output;
+    local newinputstring, g, chartoel, RemoveBrackets, ParseRelation, output,
+    chars;
 
     for g in gens do
-      if not (Size(String(g)) = 1 and String(g)[1]
-         in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") then
+      g := String(g);
+      if Size(g) <> 1 or not IsAlphaChar(g[1]) then
         ErrorNoReturn(
-        "expected the first argument to be a list of a free semigroup ",
-        "generators represented by single English letter but found ",
-        "the generator ", String(g));
+        "expected the 1st argument to be a list of a free semigroup or monoid ",
+        "generators represented by a single alphabet letter but found ",
+        String(g));
       fi;
     od;
 
-    newinputstring := Filtered(inputstring, x -> not x = ' ');
-    for g in gens do
+    newinputstring := Filtered(inputstring, x -> x <> ' ');
+    chars := List(gens, x -> String(x)[1]);
+    if PositionSublist(newinputstring, "=1") <> fail then
+      Add(chars, '1');
+    fi;
+
+    for g in chars do
       newinputstring := ReplacedString(newinputstring,
-                        [String(g)[1], '^'], ['(', String(g)[1], ')', '^']);
+                                       [g, '^'],
+                                       ['(', g, ')', '^']);
+      newinputstring := ReplacedString(newinputstring,
+                                       Concatenation(['(', g, ')'], "^1="),
+                                       ['(', g, ')', '=']);
+      newinputstring := ReplacedString(newinputstring,
+                                       Concatenation(['(', g, ')'], "^1)"),
+                                       ['(', g, ')', ')']);
+      newinputstring := ReplacedString(newinputstring,
+                                       Concatenation(['(', g, ')'], "^1("),
+                                       ['(', g, ')', '(']);
+
     od;
 
     RemoveBrackets := function(word)
         local i, product, lbracket, rbracket, nestcount, index, p, chartoel;
         if word = "" then
-            ErrorNoReturn("expected the second argument to be",
+            ErrorNoReturn("expected the 2nd argument to be",
                           " a string listing the relations of a semigroup",
                           " but found an = symbol which isn't pairing two",
                           " words");
@@ -1184,6 +1201,9 @@ function(gens, inputstring)
                     return gens[i];
                 fi;
             od;
+            if char = '1' and IsAssocWordWithOne(gens[1]) then
+              return One(gens);
+            fi;
             ErrorNoReturn("expected a free semigroup generator",
                           " but found ", [char]);
         end;
@@ -1267,7 +1287,7 @@ function(gens, inputstring)
     ParseRelation := x -> List(SplitString(x, "="), RemoveBrackets);
     output := List(SplitString(newinputstring, ","), ParseRelation);
     if ForAny(output, x -> Size(x) = 1) then
-      ErrorNoReturn("expected the second argument to be",
+      ErrorNoReturn("expected the 2nd argument to be",
                     " a string listing the relations of a semigroup",
                     " but found an = symbol which isn't pairing two",
                     " words");

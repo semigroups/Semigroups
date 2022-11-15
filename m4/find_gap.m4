@@ -55,6 +55,7 @@ AC_DEFUN([FIND_GAP],
   if test "x$GAParch" != "x"; then
     GAPARCH=$GAParch
   fi
+  AC_MSG_RESULT($GAPARCH)
 
   if test "x$GAPARCH" = "xUnknown" ; then
     echo ""
@@ -88,7 +89,6 @@ AC_DEFUN([FIND_GAP],
   AC_SUBST(GAP_CPPFLAGS)
   AC_SUBST(GAP_CFLAGS)
   AC_SUBST(GAP_LDFLAGS)
-  AC_SUBST(GAP_LIBS)
 
   AC_LANG_POP([C])
 ])
