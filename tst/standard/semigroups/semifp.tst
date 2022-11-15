@@ -2538,6 +2538,40 @@ gap> w := Factorization(F, One(F));
 gap> EvaluateWord(GeneratorsOfSemigroup(F), w) = One(F);
 true
 
+# Reversed for elements of a fp semigroup/monoid
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> Reversed(a * b * b);
+b^2*a
+gap> Reversed(a * b * b * a);
+a*b^2*a
+gap> Reversed(a * b * b) = b * b * a;
+true
+gap> Reversed(a * b * b * a) = a * b * b * a;
+true
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([a, b], "a ^ 3=a, b ^ 2= b, (ab) ^ 2= 1");
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, <identity ...> ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 13>
+gap> Reversed(a * b * b) = b * b * a;
+true
+gap> Reversed(a * b * b * a) = a * b * b * a;
+true
+gap> Reversed(a * b * b);
+b^2*a
+gap> Reversed(a * b * b * a);
+a*b^2*a
+gap> Reversed(One(S));
+<identity ...>
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);
