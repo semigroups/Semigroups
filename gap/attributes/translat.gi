@@ -1380,7 +1380,7 @@ function(H)
   S := UnderlyingSemigroup(H);
   if SEMIGROUPS.HasEasyBitranslationsGenerators(H) then
     TryNextMethod();
-  elif IsReesZeroMatrixSemigroup(S) then
+  elif IsReesZeroMatrixSemigroup(S) and IsZeroSimpleSemigroup(S) then
     return SEMIGROUPS.BitranslationsRZMS(H);
   elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return SEMIGROUPS.BitranslationsNormalRMS(H);
