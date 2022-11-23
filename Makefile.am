@@ -40,19 +40,24 @@ semigroups_la_SOURCES += gapbind14/src/gapbind14.cpp
 semigroups_la_CXXFLAGS = $(GAP_CFLAGS)   @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) @LIBSEMIGROUPS_CFLAGS@
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/gapbind14/include
+
 if HPCOMBI_CONSTEXPR_FUN_ARGS
 semigroups_la_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
-semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern
 endif
 
+if LIBSEMIGROUPS_HPCOMBI_ENABLED
 semigroups_la_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
+endif
+
 semigroups_la_CFLAGS = $(GAP_CFLAGS)
 
 if WITH_INCLUDED_LIBSEMIGROUPS
 # FIXME(later) all the include paths should point into bin/include/ and not to
 # the sources, or otherwise we should stop make installing into bin
+if LIBSEMIGROUPS_HPCOMBI_ENABLED
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/HPCombi/include/fallback
+endif
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/extern/fmt-8.0.1/include
 semigroups_la_CPPFLAGS += -I$(top_srcdir)/libsemigroups/include
 endif

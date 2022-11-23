@@ -2747,7 +2747,7 @@ gap> IsomorphismTransformationSemigroup(F / R);
 Error, the argument (a semigroup) is not finite
 gap> IsomorphismTransformationSemigroup(MinimalIdeal(FreeBand(2)));
 <simple semigroup ideal of size 4, with 1 generator> -> 
-<transformation semigroup of size 4, degree 5 with 4 generators>
+<transformation semigroup of size 4, degree 5 with 3 generators>
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

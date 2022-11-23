@@ -520,7 +520,7 @@ InstallMethod(ClosureSemigroupOrMonoidNC,
 "for a function, semigroup, finite list, and record",
 [IsFunction, IsSemigroup, IsList and IsFinite, IsRecord],
 function(Constructor, S, coll, opts)
-  local n;
+  local n, T, x;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
@@ -538,7 +538,14 @@ function(Constructor, S, coll, opts)
     Sort(coll, IsGreensDGreaterThanFunc(Semigroup(coll)));
   fi;
 
-  return Constructor(S, coll, opts);
+  T := Constructor(S, opts);
+
+  for x in coll do
+    if not x in T then
+      T := Constructor(T, x, opts);
+    fi;
+  od;
+  return T;
 end);
 
 #############################################################################

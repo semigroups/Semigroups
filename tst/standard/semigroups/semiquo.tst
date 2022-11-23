@@ -176,8 +176,7 @@ gap> SmallSemigroupGeneratingSet(S / cong);
 [ <2-sided congruence class of <identity partial perm on [ 1, 2, 3, 4 ]>>, 
   <2-sided congruence class of (1,3)(2,4)(21,23)(22,24)(25,27)(26,28)(33,35)
     (34,36)>, <2-sided congruence class of (1,2)(3,4)(5,6)(7,8)(11,12)(13,14)
-    (19,20)(29,30)>, <2-sided congruence class of [11,10][12,9][13,16][14,15]
-    [19,18][20,17][29,32][30,31](1,4)(2,3)(5,8)(6,7)> ]
+    (19,20)(29,30)> ]
 gap> GeneratorsSmallest(S / cong);
 [ <2-sided congruence class of <identity partial perm on [ 1, 2, 3, 4 ]>>, 
   <2-sided congruence class of (1,2)(3,4)(5,6)(7,8)(11,12)(13,14)(19,20)
