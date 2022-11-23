@@ -775,6 +775,20 @@ gap> for h in H do
 > HTAdd(ht, h, true);
 > od;
 
+# Translational Hull of RZMS which is not completely 0-simple
+gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
+gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> Size(TranslationalHull(S));
+14977
+
+# Translational Hull of RZMS which is not completely 0-simple
+gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
+gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> NrBitranslations(S);
+14977
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);
