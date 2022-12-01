@@ -223,11 +223,13 @@
 <h5>15.2-1 ParseRelations</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParseRelations</code>( <var class="Arg">gens</var>, <var class="Arg">rels</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: A list of pairs of semigroup elements.</p>
+<p>Returns: A list of pairs of semigroup or monoid elements.</p>
 
-<p><code class="code">ParseRelations</code> converts a string describing relations for a semigroup to the list of pairs of semigroup elements it represents. Any white space given is ignored. The output list is then compatible with other GAP functions. In the below examples we see free semigroups being directly quotiented by the output of the <code class="code">ParseRelations</code> function.</p>
+<p><code class="code">ParseRelations</code> converts a string describing relations for a semigroup or monoid to the list of pairs of semigroup or monoid elements it represents. Any white space given is ignored. The output list is then compatible with other <strong class="pkg">GAP</strong> functions. In the below examples we see free semigroups and monoids being directly quotiented by the output of the <code class="code">ParseRelations</code> function.</p>
 
-<p><var class="Arg">gens</var> must be a list of generators for a free semigroup, each being a single English letter (in upper or lower case). <var class="Arg">rels</var> must be string that lists the equalities desired.</p>
+<p>The argument <var class="Arg">gens</var> must be a list of generators for a free semigroup, each being a single alphabet letter (in upper or lower case). The argument <var class="Arg">rels</var> must be string that lists the equalities desired.</p>
+
+<p>To take a quotient of a free monoid, it is necessary to use <code class="func">GeneratorsOfMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>) as the 1st argument to <code class="code">ParseRelations</code> and the identity may appear as <code class="code">1</code> in the specified relations.</p>
 
 
 <div class="example"><pre>
@@ -242,7 +244,11 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := FreeSemigroup("a");</span>
 &lt;free semigroup on the generators [ a ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");</span>
-&lt;fp semigroup with 1 generator and 1 relation of length 4&gt;</pre></div>
+&lt;fp semigroup with 1 generator and 1 relation of length 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoidAndAssignGeneratorVars("a", "b")</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">/ ParseRelations([a, b], "a^2=1,b^3=1,(ab)^3=1");</span>
+&lt;fp monoid with 2 generators and 3 relations of length 13&gt;
+</pre></div>
 
 <p><a id="X847012347856C55E" name="X847012347856C55E"></a></p>
 

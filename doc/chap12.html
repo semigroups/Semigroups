@@ -62,6 +62,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7C6787D07B95B450">12.1-26 IsZeroRectangularBand</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X81A1882181B75CC9">12.1-27 IsZeroSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8193A60F839C064E">12.1-28 IsZeroSimpleSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X846FC6247EE31607">12.1-29 IsSelfDualSemigroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12.html#X80F2725581B166EE">12.2 <span class="Heading">
       Inverse semigroups
@@ -896,6 +897,35 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 3, 4, 5, 6, 8, 7, 1, 2, 2]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSimpleSemigroup(S);</span>
 false</pre></div>
+
+<p><a id="X846FC6247EE31607" name="X846FC6247EE31607"></a></p>
+
+<h5>12.1-29 IsSelfDualSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSelfDualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is self dual and <code class="keyw">false</code> otherwise.</p>
+
+<p>A semigroup is <em>self dual</em> if it is isomorphic to its dual, that is, the semigroup <code class="code">T</code> with multiplication <code class="code">*</code> defined by <code class="code">x*y=yx</code> where <code class="code">yx</code> denotes the product in <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b");</span>
+&lt;free semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];</span>
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / R;</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSelfDualSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSelfDualSemigroup(FreeBand(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(3);</span>
+&lt;inverse block bijection monoid of degree 3 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSelfDualSemigroup(S);</span>
+true</pre></div>
 
 <p><a id="X80F2725581B166EE" name="X80F2725581B166EE"></a></p>
 

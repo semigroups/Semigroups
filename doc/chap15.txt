@@ -111,17 +111,22 @@
   [1X15.2-1 ParseRelations[101X
   
   [33X[1;0Y[29X[2XParseRelations[102X( [3Xgens[103X, [3Xrels[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of pairs of semigroup elements.[133X
+  [6XReturns:[106X  [33X[0;10YA list of pairs of semigroup or monoid elements.[133X
   
-  [33X[0;0Y[10XParseRelations[110X converts a string describing relations for a semigroup to the
-  list  of pairs of semigroup elements it represents. Any white space given is
-  ignored. The output list is then compatible with other GAP functions. In the
-  below  examples  we  see  free  semigroups  being directly quotiented by the
-  output of the [10XParseRelations[110X function.[133X
+  [33X[0;0Y[10XParseRelations[110X  converts  a  string  describing relations for a semigroup or
+  monoid  to  the list of pairs of semigroup or monoid elements it represents.
+  Any  white  space  given is ignored. The output list is then compatible with
+  other  [5XGAP[105X  functions.  In  the  below  examples  we see free semigroups and
+  monoids  being  directly  quotiented  by  the  output  of the [10XParseRelations[110X
+  function.[133X
   
-  [33X[0;0Y[3Xgens[103X  must be a list of generators for a free semigroup, each being a single
-  English  letter (in upper or lower case). [3Xrels[103X must be string that lists the
-  equalities desired.[133X
+  [33X[0;0YThe  argument  [3Xgens[103X  must be a list of generators for a free semigroup, each
+  being  a  single alphabet letter (in upper or lower case). The argument [3Xrels[103X
+  must be string that lists the equalities desired.[133X
+  
+  [33X[0;0YTo   take   a   quotient   of   a  free  monoid,  it  is  necessary  to  use
+  [2XGeneratorsOfMonoid[102X  ([14XReference:  GeneratorsOfMonoid[114X)  as the 1st argument to
+  [10XParseRelations[110X and the identity may appear as [10X1[110X in the specified relations.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf := FreeSemigroup("x", "y", "z");;[127X[104X
@@ -136,6 +141,9 @@
     [4X[28X<free semigroup on the generators [ a ]>[128X[104X
     [4X[25Xgap>[125X [27Xf2 / ParseRelations(GeneratorsOfSemigroup(f2), "a = a^2");[127X[104X
     [4X[28X<fp semigroup with 1 generator and 1 relation of length 4>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoidAndAssignGeneratorVars("a", "b")[127X[104X
+    [4X[25X>[125X [27X/ ParseRelations([a, b], "a^2=1,b^3=1,(ab)^3=1");[127X[104X
+    [4X[28X<fp monoid with 2 generators and 3 relations of length 13>[128X[104X
   [4X[32X[104X
   
   [1X15.2-2 ElementOfFpSemigroup[101X

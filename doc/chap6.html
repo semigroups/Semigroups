@@ -66,6 +66,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X870210EA7912B52A">6.5-6 RZMSNormalization</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80DE617E841E5BA0">6.5-7 RMSNormalization</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E2ECC577A1CF7CA">6.5-8 IsomorphismReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X820BB66381737F2D">6.5-9 AntiIsomorphismDualFpSemigroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.6 <span class="Heading">Random semigroups</span></a>
 </span>
@@ -303,7 +304,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.1.0/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.2.0/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
@@ -839,6 +840,36 @@ true
 &lt;partial perm monoid of rank 1 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(IsomorphismReesZeroMatrixSemigroup(S));</span>
 &lt;Rees 0-matrix semigroup 1x1 over Group(())&gt;</pre></div>
+
+<p><a id="X820BB66381737F2D" name="X820BB66381737F2D"></a></p>
+
+<h5>6.5-9 AntiIsomorphismDualFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismDualFpSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismDualFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A finitely presented semigroup or monoid.</p>
+
+<p><code class="code">AntiIsomorphismDualFpSemigroup</code> returns an anti-isomorphism (<code class="func">MappingByFunction</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X7D55E1977ED70E01"><span class="RefLink">Reference: MappingByFunction</span></a>)) from the finitely presented semigroup <var class="Arg">S</var> to another finitely presented semigroup. The range finitely presented semigroup is obtained from <var class="Arg">S</var> by reversing the relations of <var class="Arg">S</var>.</p>
+
+<p><code class="code">AntiIsomorphismDualFpMonoid</code> works analogously when <var class="Arg">S</var> is a finitely presented monoid, and the range of the returned anti-isomorphism is a finitely presented monoid.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b");</span>
+&lt;free semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];</span>
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / R;</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualFpSemigroup(S);</span>
+MappingByFunction( &lt;fp semigroup with 2 generators and 
+  3 relations of length 14&gt;, &lt;fp semigroup with 2 generators and 
+  3 relations of length 14&gt;
+ , function( x ) ... end, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpSemigroup(Range(map));</span>
+[ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ]
+</pre></div>
 
 <p><a id="X7C3F130B8362D55A" name="X7C3F130B8362D55A"></a></p>
 

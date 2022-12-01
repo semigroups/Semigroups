@@ -851,6 +851,35 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
+  [1X12.1-29 IsSelfDualSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsSelfDualSemigroup[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YReturns [9Xtrue[109X if the semigroup [3XS[103X is self dual and [9Xfalse[109X otherwise.[133X
+  
+  [33X[0;0YA  semigroup  is  [13Xself  dual[113X  if  it is isomorphic to its dual, that is, the
+  semigroup  [10XT[110X  with  multiplication  [10X*[110X defined by [10Xx*y=yx[110X where [10Xyx[110X denotes the
+  product in [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b");[127X[104X
+    [4X[28X<free semigroup on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);[127X[104X
+    [4X[25Xgap>[125X [27XR := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := F / R;[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XIsSelfDualSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsSelfDualSemigroup(FreeBand(3));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(3);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsSelfDualSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
   
   [1X12.2 [33X[0;0YInverse semigroups[133X[101X
   

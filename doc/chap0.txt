@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.1.0
+                                     5.2.0
   
   
-                                31 October 2022
+                                1 December 2022
   
   
                                  James Mitchell
@@ -467,6 +467,7 @@
       6.5-6 RZMSNormalization
       6.5-7 RMSNormalization
       6.5-8 IsomorphismReesMatrixSemigroup
+      6.5-9 AntiIsomorphismDualFpSemigroup
     6.6 [33X[0;0YRandom semigroups[133X
       6.6-1 RandomSemigroup
   7 [33X[0;0YStandard examples[133X
@@ -715,6 +716,7 @@
       12.1-26 IsZeroRectangularBand
       12.1-27 IsZeroSemigroup
       12.1-28 IsZeroSimpleSemigroup
+      12.1-29 IsSelfDualSemigroup
     12.2 [33X[0;0YInverse semigroups[133X
       12.2-1 IsCliffordSemigroup
       12.2-2 IsBrandtSemigroup

@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-5.1.0/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.2.0/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
@@ -956,6 +956,39 @@
     [4X[28X<partial perm monoid of rank 1 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XRange(IsomorphismReesZeroMatrixSemigroup(S));[127X[104X
     [4X[28X<Rees 0-matrix semigroup 1x1 over Group(())>[128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-9 AntiIsomorphismDualFpSemigroup[101X
+  
+  [33X[1;0Y[29X[2XAntiIsomorphismDualFpSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAntiIsomorphismDualFpMonoid[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA finitely presented semigroup or monoid.[133X
+  
+  [33X[0;0Y[10XAntiIsomorphismDualFpSemigroup[110X       returns       an       anti-isomorphism
+  ([2XMappingByFunction[102X   ([14XReference:   MappingByFunction[114X))   from  the  finitely
+  presented  semigroup  [3XS[103X  to  another finitely presented semigroup. The range
+  finitely  presented  semigroup is obtained from [3XS[103X by reversing the relations
+  of [3XS[103X.[133X
+  
+  [33X[0;0Y[10XAntiIsomorphismDualFpMonoid[110X works analogously when [3XS[103X is a finitely presented
+  monoid,  and  the  range  of  the  returned  anti-isomorphism  is a finitely
+  presented monoid.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b");[127X[104X
+    [4X[28X<free semigroup on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);[127X[104X
+    [4X[25Xgap>[125X [27XR := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := F / R;[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualFpSemigroup(S);[127X[104X
+    [4X[28XMappingByFunction( <fp semigroup with 2 generators and [128X[104X
+    [4X[28X  3 relations of length 14>, <fp semigroup with 2 generators and [128X[104X
+    [4X[28X  3 relations of length 14>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XRelationsOfFpSemigroup(Range(map));[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ][128X[104X
   [4X[32X[104X
   
   

@@ -18,6 +18,8 @@
   [2X\in[102X 5.3-3 
   [10X ^ [110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.3-7 
   [2XAnnularJonesMonoid[102X 7.3-5 
+  [2XAntiIsomorphismDualFpMonoid[102X 6.5-9 
+  [2XAntiIsomorphismDualFpSemigroup[102X 6.5-9 
   [2XAntiIsomorphismDualSemigroup[102X 8.2-4 
   [2XApsisMonoid[102X 7.3-11 
   [2XAsBipartition[102X 3.3-1 
@@ -378,6 +380,7 @@
   [2XIsRZMSCongruenceByLinkedTriple[102X 13.6-1 
   [2XIsRZMSCongruenceClassByLinkedTriple[102X 13.6-3 
   [2XIsRZMSIsoByTriple[102X 14.3-1 
+  [2XIsSelfDualSemigroup[102X 12.1-29 
   [2XIsSemiband[102X 12.1-8 
   [2XIsSemigroupCongruence[102X 13.1-1 
   [2XIsSemigroupHomomorphismByFunction[102X 14.1-4 
