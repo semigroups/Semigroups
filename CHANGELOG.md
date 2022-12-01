@@ -3,6 +3,29 @@ Copyright © 2011-2022 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.2.0 (released 01/12/2022)
+
+This release contains a number of fixes and improvements, and one new feature,
+which is a method for `IsSelfDualSemigroup` and related functionality for
+semigroups satisfying `CanUseFroidurePin`:
+
+* m4/find_gap.m4: update by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/887
+* Adds method for `IsSelfDualSemigroup` and related functionality by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/890
+* Fix some bugs by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/889
+* Fix closure semigroup for non-libsemigroups types by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/891
+* Add missing tests and doc for `IsSelfDualSemigroup` and friends by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/892
+* Change `-march=avx` -> `-mavx` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/896
+* Fix faulty usage of 0-simple RZMS translations code by @flsmith in
+  https://github.com/semigroups/Semigroups/pull/893
+* build: replace `m4/ax_check_hpcombi` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/897
+
 ### Version 5.1.0 (released 31/10/2022)
 
 The following major new features have been added in this version:
