@@ -56,7 +56,7 @@ S -> MaximalSubsemigroupsNC(S, rec(number := false)));
 # - <r.types>:   relevant only if S is a Rees (0-)matrix semigroup:
 #                  a subset of [1 .. 6], enumerating the types to find.
 #                  (see paper in preparation for a description of each type)
-# - <r.zero>:    not user-facing! relevant whn S is an RZMS & <r.gens> is true:
+# - <r.zero>:    not user-facing! relevant when S is an RZMS & <r.gens> is true:
 #                  (true) include all generators, which may include 0 (default).
 #                  (false) remove 0 from each generating set, if present.
 

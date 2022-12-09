@@ -724,7 +724,7 @@ function(R)
     return y < x;
   end;
 
-  # Sort the connected components of <R> by size (#rows * #colums) descending.
+  # Sort the connected components of <R> by size (#rows * #columns) descending.
   # This also sends any zero-columns or zero-rows to the end of the new matrix.
   comp := ShallowCopy(RZMSConnectedComponents(R));
   size := List(comp, x -> Length(x[1]) * Length(x[2]));

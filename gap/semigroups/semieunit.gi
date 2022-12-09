@@ -798,7 +798,7 @@ end;
 # F-inverse Semigroups
 ###############################################################################
 # The connected components of the natural partial order will be the
-# congruence classes of the minmum group congruence. Thus we can simply
+# congruence classes of the minimum group congruence. Thus we can simply
 # check that precisely one of the sources of the digraph of the natural
 # partial order is in each connected component.
 InstallMethod(IsFInverseMonoid, "for a semigroup",

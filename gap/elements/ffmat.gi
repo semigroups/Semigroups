@@ -53,7 +53,7 @@ InstallMethod(OneMutable, "for an FFE coll coll coll",
 
 # Note that: the following methods implement the RandomMatrix interface for
 # IsMatrixOverSemiring in the Semigroups package and do not related to anything
-# similar in the GAP libary for IsMatrixObj (if they exist).
+# similar in the GAP library for IsMatrixObj (if they exist).
 
 InstallMethod(RandomMatrixOp, "for a finite field and pos int",
 [IsField and IsFinite, IsPosInt],

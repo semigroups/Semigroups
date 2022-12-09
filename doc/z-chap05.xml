@@ -254,7 +254,7 @@
     integer matrices. <P/>
 
     From v5.0.0, &SEMIGROUPS; uses the &GAP; library implementation of matrices
-    over the intergers belonging to the category <Ref Filt="IsMatrixObj"
+    over the integers belonging to the category <Ref Filt="IsMatrixObj"
     BookName="ref"/> rather than the previous implementation in the
     &SEMIGROUPS; package. This means that from v5.0.0, matrices over the
     integers no longer belong to the category <Ref

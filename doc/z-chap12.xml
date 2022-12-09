@@ -3,7 +3,7 @@
     Properties of semigroups
   </Heading>
 
-  In this chapter we decribe the methods that are available in &SEMIGROUPS; for
+  In this chapter we describe the methods that are available in &SEMIGROUPS; for
   determining various properties of a semigroup or monoid.
 
   <!--**********************************************************************-->
