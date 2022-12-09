@@ -80,7 +80,7 @@
         <A>act</A> must be a right action, meaning that 
         <A>act</A><C>(A,gh)=<A>act</A>(<A>act</A>(A,g),h)</C> holds for all
         <C>A</C> in <A>X</A> and <C>g,h</C> <M>\in</M> <A>G</A>. Furthermore
-        the permutation represenation of this action must be a subgroup of the
+        the permutation representation of this action must be a subgroup of the
         automorphism group of <A>X</A>. That means we require the following
         to return <K>true</K>: <P/>
         <C>IsSubgroup(AutomorphismGroup(</C><A>X</A><C>),
@@ -93,8 +93,8 @@
       </Item>
     </List>
 
-    For user convienience, there are multiple versions of
-    <C>McAlisterTripleSemigroup</C>. When the argument <A>act</A> is ommitted
+    For user convenience, there are multiple versions of
+    <C>McAlisterTripleSemigroup</C>. When the argument <A>act</A> is omitted
     it is assumed to be <Ref Func= "OnPoints" BookName= "ref"/>. Additionally,
     the semilattice argument <A>Y</A> may be replaced by a homogeneous list
     <A>sub_ver</A> of vertices of <A>X</A>. When <A>sub_ver</A> is provided,
@@ -273,7 +273,7 @@ true]]></Example>
       to some <Ref Oper="McAlisterTripleSemigroup"/> where the
       <Ref Attr="McAlisterTripleSemigroupPartialOrder"/> satisfies
       <Ref Prop="IsJoinSemilatticeDigraph" BookName="Digraphs"/>. McAlister
-      triple semigroups are a represenation of E-unitary inverse semigroups and
+      triple semigroups are a representation of E-unitary inverse semigroups and
       more can be read about them in Chapter
       <Ref Chap="McAlister triple semigroups"/>.
 <Example><![CDATA[

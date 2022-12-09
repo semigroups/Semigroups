@@ -282,7 +282,7 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
     <Returns>A string.</Returns>
     <Description>
       This function produces a string containing LaTeX code for the
-      transformation <A>f</A>. If the optional paramater <A>n</A> is used, then
+      transformation <A>f</A>. If the optional parameter <A>n</A> is used, then
       this is taken to be the degree of the transformation <A>f</A>, if the
       parameter <A>n</A> is not given, then <Ref Attr="DegreeOfTransformation"
         BookName="ref"/> is used by default. If <A>n</A> is less than the

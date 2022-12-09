@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# This file contains an intitial implementation of partitioned binary
+# This file contains an initial implementation of partitioned binary
 # relations (PBRs) as defined in:
 #
 # Paul Martin and Volodymyr Mazorchuk, Partitioned binary relations,

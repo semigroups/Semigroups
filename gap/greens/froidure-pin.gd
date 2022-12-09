@@ -11,7 +11,7 @@
 ## with CanUseFroidurePin.
 
 # Green's classes in this representation have a single component which contains
-# the strongly connected compontents of the appropriate Cayley graph, it
+# the strongly connected components of the appropriate Cayley graph, it
 # contains two subcomponents consisting of the actual components and a lookup
 # table <t> such that the value of <t[i]> is the index of the class containing
 # EnumeratorCanonical(S)[i], where S is the semigroup.

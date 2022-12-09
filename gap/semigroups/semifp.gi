@@ -1097,7 +1097,7 @@ function(M)
     od;
   od;
 
-  # Relation to indentify One(G) and One(S)
+  # Relation to identify One(G) and One(S)
   Add(rels, [EvaluateWord(GeneratorsOfSemigroup(F),
                           Factorization(G, One(G)) + s),
              EvaluateWord(GeneratorsOfSemigroup(F),

@@ -49,7 +49,7 @@ InstallMethod(\=, "for Green's relations",
 [IsGreensRelation, IsGreensRelation], 5,  # to beat the method for congruences
 function(rel1, rel2)
   if Source(rel1) <> Source(rel2) then
-    return false;  # This is different than in the libary
+    return false;  # This is different than in the library
   elif IsGreensRRelation(rel1) then
     return IsGreensRRelation(rel2);
   elif IsGreensLRelation(rel1) then

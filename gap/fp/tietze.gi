@@ -238,7 +238,7 @@ InstallMethod(StzPrintGenerators,
 [IsStzPresentation, IsList],
 function(stz, list)
   local flat, gens, out, rel, i;
-  # This function displays a list of generators and number of occurences
+  # This function displays a list of generators and number of occurrences
   # of each
 
   # warn if there are no generators in the list (not sure this could happen)

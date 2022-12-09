@@ -355,7 +355,7 @@ gap> GreensRClasses(D);
       <Log>GreensRClassOfElementNC(X, x);</Log>
       returns an answer relatively quickly, whereas
       <Log>GreensRClassOfElement(X, x)</Log>
-      can take a signficant amount of time to return a value.<P/>
+      can take a significant amount of time to return a value.<P/>
 
       See also <Ref Oper="GreensRClassOfElement" BookName="ref"/> and <Ref
       Meth="RClassOfHClass"/>.

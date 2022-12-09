@@ -52,7 +52,7 @@ SEMIGROUPS.FreeBandElmToWord := function(elem)
     out := [tuple![1]];
   else
     first := tuple![1];
-    pre_tuple := tuple![2];  # tuple correspoding to the prefix
+    pre_tuple := tuple![2];  # tuple corresponding to the prefix
     last := tuple![3];
     su_tuple := tuple![4];  # tuple corresponding to the sufix
 
