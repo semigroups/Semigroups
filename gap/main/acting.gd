@@ -31,5 +31,6 @@ SEMIGROUPS.UniversalFakeOne :=
                                        SEMIGROUPS_IsUniversalFakeOne,
                                        CanEasilyCompareElements,
                                        CanEasilyCompareElements),
-                             SEMIGROUPS_IsUniversalFakeOne),
+                             SEMIGROUPS_IsUniversalFakeOne
+                             and IsComponentObjectRep),
                      rec());
