@@ -480,7 +480,7 @@ gap> for h in TranslationalHull(T) do
 > od;
 > od;
 gap> Bitranslation(TranslationalHull(T), 
-> (1,13,11,12)(2,15,14,3)(4,16,5,6)(7,10,8,9), 
+> (1, 13, 11, 12)(2, 15, 14, 3)(4, 16, 5, 6)(7, 10, 8, 9), 
 > Transformation([2, 2, 2]), Transformation([3, 3, 3]));
 <bitranslation on <simple semigroup of size 144, with 6 generators>>
 gap> G := Range(RegularActionHomomorphism(SmallGroup(6, 1)));;
