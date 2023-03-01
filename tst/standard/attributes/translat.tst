@@ -112,7 +112,7 @@ gap> AsList(TranslationalHull(S));
      of size 8, degree 9 with 1 generator>> ]
 
 # small RZMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(4, 2)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(4, 2)));;
 gap> H := AsList(G);;
 gap> mat := [[H[1], 0],
 > [H[2], H[2]]];;
@@ -297,7 +297,7 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >   od;
 >   return linkedpairs;
 > end;;
-gap> G := Range(IsomorphismPermGroup(SmallGroup(4, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(4, 1)));;
 gap> H := ShallowCopy(AsList(G));;
 gap> mat := [[0, H[4]], [H[4], 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
@@ -333,7 +333,7 @@ gap> for h in H do
 >    od;
 
 # Test inner translations
-gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(6, 1)));;
 gap> a := G.1;; b := G.2;;
 gap> mat := [[a, 0],
 > [b, a]];;
@@ -354,7 +354,7 @@ gap> SortedList(C) = SortedList(D);
 true
 
 # One for translations semigroups elements and translational hull elements
-gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(6, 1)));;
 gap> a := G.1;; b := G.2;;
 gap> mat := [[a, 0],
 > [b, a]];;
@@ -374,7 +374,7 @@ gap> Semigroup(AsList(H)) = H;
 true
 
 # Methods for non-normalised RMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(8, 2)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(8, 2)));;
 gap> mat := [[G.1, G.2], [G.2, G.2 * G.2]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);;
@@ -386,7 +386,7 @@ true
 gap> 
 
 # Special methods for normalised RMS 
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -450,7 +450,7 @@ gap> l = l2 and r = r2;
 true
 
 # More normal RMS testing
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3],
 > [G.1 * G.2, G.1 * G.3]]);;
 gap> T := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
@@ -460,7 +460,7 @@ true
 gap> Size(TranslationalHull(T));
 100
 gap> G := SmallGroup(16, 2);;
-gap> iso := IsomorphismPermGroup(G);;
+gap> iso := RegularActionHomomorphism(G);;
 gap> mat := [[G.1 ^ iso, G.2 ^ iso, (G.2 * G.1) ^ iso],
 > [(G.2 * G.2) ^ iso, G.2 ^ iso, (G.2 * G.2) ^ iso],
 > [(G.2 * G.1 * G.2) ^ iso, G.3 ^ iso, (G.1 * G.3) ^ iso]];;
@@ -479,10 +479,11 @@ gap> for h in TranslationalHull(T) do
 > od;
 > od;
 > od;
-gap> Bitranslation(TranslationalHull(T), (1, 4, 3, 2)(5, 7)(6, 8), 
-> Transformation([1, 1, 1]), Transformation([1, 1, 1]));
-<bitranslation on <simple semigroup of size 144, with 4 generators>>
-gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
+gap> Bitranslation(TranslationalHull(T), 
+> (1,13,11,12)(2,15,14,3)(4,16,5,6)(7,10,8,9), 
+> Transformation([2, 2, 2]), Transformation([3, 3, 3]));
+<bitranslation on <simple semigroup of size 144, with 6 generators>>
+gap> G := Range(RegularActionHomomorphism(SmallGroup(6, 1)));;
 gap> mat := [[G.1, G.2], [G.1 * G.2, G.1], [G.2, G.2]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -490,7 +491,7 @@ gap> Size(TranslationalHull(T));
 40
 gap> Size(Semigroup(TranslationalHull(T)));
 40
-gap> G := Range(IsomorphismPermGroup(SmallGroup(24, 3)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(24, 3)));;
 gap> mat := [[G.1, G.2, G.2 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -601,7 +602,7 @@ gap> HasSize(L) and HasSize(R) and HasSize(H);
 true
 gap> not (HasAsList(L) or HasAsList(R) or HasAsList(H));
 true
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -684,7 +685,7 @@ gap> Bitranslation(H, l, r);
 Error, each argument must have the same underlying semigroup
 
 # Error Testing - left translations over normalised RMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -705,7 +706,7 @@ Error, the third argument must be a transformation on the number of rows of th\
 e underlying semigroup of the first argument
 
 # Error Testing - right translations over normalised RMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -726,7 +727,7 @@ Error, the third argument must be a transformation on the number of columns of\
  the underlying semigroup of the first argument
 
 # Error testing - bitranslations over normalised RMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -776,14 +777,14 @@ gap> for h in H do
 > od;
 
 # Translational Hull of RZMS which is not completely 0-simple
-gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
+gap> G := Range(RegularActionHomomorphism(SmallGroup(16, 2)));;   
 gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
 14977
 
 # Translational Hull of RZMS which is not completely 0-simple
-gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
+gap> G := Range(RegularActionHomomorphism(SmallGroup(16, 2)));;   
 gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> NrBitranslations(S);
