@@ -386,7 +386,7 @@ true
 gap> 
 
 # Special methods for normalised RMS 
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
@@ -726,7 +726,7 @@ Error, the third argument must be a transformation on the number of columns of\
  the underlying semigroup of the first argument
 
 # Error testing - bitranslations over normalised RMS
-gap> G := Range(IsomorphismPermGroup(SmallGroup(12, 1)));;
+gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;

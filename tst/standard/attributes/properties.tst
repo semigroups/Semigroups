@@ -1998,10 +1998,8 @@ gap> IsNormalInverseSubsemigroup(S, T);
 false
 gap> G := AsSemigroup(IsPartialPermSemigroup, DihedralGroup(8));;
 gap> G := InverseSemigroup(G, rec(acting := true));;
-gap> H := InverseSemigroup(G.1, rec(acting := true));
-<partial perm group of rank 8 with 1 generator>
-gap> IsNormalInverseSubsemigroup(G,
->                                InverseSemigroup(G.1, rec(acting := true)));
+gap> H := InverseSemigroup(G.1, rec(acting := true));;
+gap> IsNormalInverseSubsemigroup(G, H);
 false
 
 # IsSelfDualSemigroup
