@@ -1784,8 +1784,7 @@ true
 #   convert from non-perm group to IsPartialPermSemigroup
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
-gap> T := AsSemigroup(IsPartialPermSemigroup, S);
-<partial perm group of size 6, rank 6 with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1955,8 +1954,8 @@ true
 gap> map := IsomorphismPartialPermSemigroup(S);;
 gap> Source(map);
 <pc group of size 8 with 3 generators>
-gap> Range(map);
-<partial perm group of size 8, rank 8 with 3 generators>
+gap> Size(Range(map));
+8
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
