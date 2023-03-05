@@ -9,6 +9,9 @@
 ##
 #############################################################################
 ##
+
+#@local A, B, C, I, J, K, L, M, R, S, T, U, a, acting, an, data, gens, gensI
+#@local gensJ, gensK, gensL, ideals, idems, o, s, x
 gap> START_TEST("Semigroups package: extreme/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -849,32 +852,6 @@ gap> Source(x) = I;
 true
 gap> Range(x);
 Group([ (1,2,3,4,5,6), (1,2) ])
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(B);
-gap> Unbind(C);
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(K);
-gap> Unbind(L);
-gap> Unbind(M);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(U);
-gap> Unbind(a);
-gap> Unbind(data);
-gap> Unbind(gens);
-gap> Unbind(gensI);
-gap> Unbind(gensJ);
-gap> Unbind(gensK);
-gap> Unbind(gensL);
-gap> Unbind(ideals);
-gap> Unbind(idems);
-gap> Unbind(o);
-gap> Unbind(s);
-gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();

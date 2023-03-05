@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, T, U, acting, an, gens, o, regular, s, x, y
 gap> START_TEST("Semigroups package: standard/attributes/factor.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -621,15 +623,6 @@ true
 gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(T), 
 >                                Factorization(T, x)) = x);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(gens);
-gap> Unbind(o);
-gap> Unbind(s);
-gap> Unbind(x);
-gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

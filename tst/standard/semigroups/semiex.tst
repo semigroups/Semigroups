@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local M, S, T, acting, n, part
 gap> START_TEST("Semigroups package: standard/semigroups/semiex.tst");
 gap> LoadPackage("semigroups", false);;
 

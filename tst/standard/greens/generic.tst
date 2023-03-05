@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, DD, DDD, H, J, L, L3, LL, R, RR, RRR, S, S1, T, acting, an, gens, id
+#@local iter, m1, m2, x, y
 gap> START_TEST("Semigroups package: standard/greens/generic.tst");
 gap> LoadPackage("semigroups", false);;
 

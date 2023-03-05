@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local file, fname, gens, it, name, table, tables, x
 gap> START_TEST("Semigroups package: standard/tools/io.tst");
 gap> LoadPackage("semigroups", false);;
 

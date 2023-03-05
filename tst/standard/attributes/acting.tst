@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local D, I, L, R, S, Y, acting, an, foo, inj, inv, map, x, y, z
 gap> START_TEST("Semigroups package: standard/attributes/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -380,19 +382,6 @@ gap> RightIdentity(S, Transformation([3, 1, 2, 2])) = One(S);
 true
 gap> LeftIdentity(S, Transformation([3, 1, 2, 2])) = One(S);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(I);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(foo);
-gap> Unbind(inj);
-gap> Unbind(inv);
-gap> Unbind(map);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, F, H, S, T, U, acting, coll
+#@local inv, map, rels, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semiffmat.tst");
 gap> LoadPackage("semigroups", false);;
 

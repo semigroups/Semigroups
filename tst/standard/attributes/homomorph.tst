@@ -8,6 +8,12 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceHomoCheck, BruteForceInverseCheck, BruteForceIsoCheck, F, J
+#@local K, S, T, U, V, acting, cong, congs, g, gens, gens1, gens2, gens3, gensS
+#@local gensT, gensU, gensV, h, hom, hom1, hom1bf, hom1bfbi, hom2, hom3, images
+#@local images1, images2, images3, imgs, imgs2, inv, iso, j, map, relations, x
+#@local y, z
 gap> START_TEST("Semigroups package: standard/attributes/homomorph.tst");
 gap> LoadPackage("semigroups", false);;
 

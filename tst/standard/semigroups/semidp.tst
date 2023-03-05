@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceHomomCheck, D, ProductCheck, S, T, e, embeds, gens, i, list
+#@local nrfactors, p, projects, s, smap, t, tmap
 gap> START_TEST("Semigroups package: standard/semigroups/semidp.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -731,17 +734,6 @@ gap> Size(S);
 000000000000000000000000000000000000000000000000000000000000000000000000000000\
 000000000000000000000
 
-#  SEMIGROUPS_UnbindVariables
-gap> Unbind(list);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(D);
-gap> Unbind(e);
-gap> Unbind(p);
-gap> Unbind(embeds);
-gap> Unbind(projects);
-gap> Unbind(gens);
-
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semidp.tst");

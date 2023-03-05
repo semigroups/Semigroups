@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local I, J, S, acting, an, x, y
 gap> START_TEST("Semigroups package: standard/ideals/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -271,13 +273,6 @@ gap> x := Transformation([1, 3, 4, 1, 3]);;
 gap> I := SemigroupIdeal(S, x, rec(acting := true));;
 gap> SemigroupIdealData(I);
 <closed semigroup ideal data with 10 reps, 10 lambda-values, 8 rho-values>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(S);
-gap> Unbind(x);
-gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

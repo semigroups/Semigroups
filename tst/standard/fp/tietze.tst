@@ -7,6 +7,10 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+#@local a, argument, b, bad, c, d, e, elm, f, f1, f2, g, infoRel, inv, l, len
+#@local map, prevFpSemigroupInfoLevel, r, rels, s, s1, s2, s3, stz, stz1, stz2
+#@local stz3, t, word
 gap> START_TEST("Semigroups package: standard/fp/tietze.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -770,34 +774,6 @@ gap> t := AsSemigroup(IsTransformationSemigroup, t);;
 gap> IsomorphismSemigroups(s, t) <> fail;
 true
 gap> SetInfoLevel(InfoFpSemigroup, prevFpSemigroupInfoLevel);;
-
-# UnbindVariables
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(bad);
-gap> Unbind(c);
-gap> Unbind(d);
-gap> Unbind(e);
-gap> Unbind(elm);
-gap> Unbind(f);
-gap> Unbind(f1);
-gap> Unbind(f2);
-gap> Unbind(inv);
-gap> Unbind(l);
-gap> Unbind(len);
-gap> Unbind(map);
-gap> Unbind(prevFpSemigroupInfoLevel);
-gap> Unbind(r);
-gap> Unbind(rels);
-gap> Unbind(s);
-gap> Unbind(s1);
-gap> Unbind(s2);
-gap> Unbind(s3);
-gap> Unbind(stz);
-gap> Unbind(stz1);
-gap> Unbind(stz2);
-gap> Unbind(stz3);
-gap> Unbind(t);
 
 #
 gap> SEMIGROUPS.StopTest();

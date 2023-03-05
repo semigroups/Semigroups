@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, coll, f, filename, ht, m, mat, x
 gap> START_TEST("Semigroups package: standard/elements/semiringmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -593,14 +595,6 @@ Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
 gap> RandomMatrix(Integers, -1, [2]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `RandomMatrix' on 3 arguments
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(ht);
-gap> Unbind(iter);
-gap> Unbind(mat);
-gap> Unbind(row);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

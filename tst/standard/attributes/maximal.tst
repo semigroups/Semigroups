@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, G, M, R, S, T, U, an, contain, correct, gens, mat, max, number
+#@local types, x, zero
 gap> START_TEST("Semigroups package: standard/attributes/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -844,16 +847,6 @@ gap> Length(max) = 1;
 true
 gap> max[1] = Semigroup(GeneratorsOfMonoid(S));
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(U);
-gap> Unbind(D);
-gap> Unbind(max);
-gap> Unbind(correct);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

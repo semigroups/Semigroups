@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local G, M, S, T, acting, elms, func, i, j, n, upper, x, y, zero
 gap> START_TEST("Semigroups package: extreme/semiffmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -345,16 +347,6 @@ gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup,
 <semigroup of 3x3 matrices over GF(2^2) with 2 generators>
 gap> Size(S);
 27
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(G);
-gap> Unbind(func);
-gap> Unbind(T);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(upper);
-gap> Unbind(M);
 
 #
 gap> SEMIGROUPS.StopTest();

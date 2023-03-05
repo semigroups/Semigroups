@@ -8,6 +8,12 @@
 #############################################################################
 ##
 ## a concatenation of relevant tests from the monoid/tst. 
+
+#@local BigMonoids, C, D, H, I, M, S, SmallMonoids, T, a, acting, b, c, c3, c4
+#@local cs1, cs2, cs3, cs4, cs5, d, dc, dr, f, g, g1, g2, g3, g4, g5, g6, g7
+#@local g8, g9, gens, gr, h, i, idem, iso, m, m1, m10, m11, m12, m13, m14, m15
+#@local m16, m17, m18, m19, m2, m20, m21, m22, m23, m3, m4, m5, m6, m7, m8, m9
+#@local mat, o, r, r2, rc, res, rms, s, semis, sizes, t, x
 gap> START_TEST("Semigroups package: extreme/monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1476,83 +1482,6 @@ gap> gens := [Transformation([1, 4, 2, 6, 6, 5, 2]),
 gap> S := Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-gap> Unbind(semis); Unbind(S); Unbind(m);
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BigMonoids);
-gap> Unbind(C);
-gap> Unbind(D);
-gap> Unbind(H);
-gap> Unbind(I);
-gap> Unbind(M);
-gap> Unbind(S);
-gap> Unbind(SmallMonoids);
-gap> Unbind(T);
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(c3);
-gap> Unbind(c4);
-gap> Unbind(cs1);
-gap> Unbind(cs2);
-gap> Unbind(cs3);
-gap> Unbind(cs4);
-gap> Unbind(cs5);
-gap> Unbind(d);
-gap> Unbind(dc);
-gap> Unbind(dr);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(g1);
-gap> Unbind(g2);
-gap> Unbind(g3);
-gap> Unbind(g4);
-gap> Unbind(g5);
-gap> Unbind(g6);
-gap> Unbind(g7);
-gap> Unbind(g8);
-gap> Unbind(g9);
-gap> Unbind(gens);
-gap> Unbind(gr);
-gap> Unbind(h);
-gap> Unbind(i);
-gap> Unbind(idem);
-gap> Unbind(iso);
-gap> Unbind(m);
-gap> Unbind(m1);
-gap> Unbind(m10);
-gap> Unbind(m11);
-gap> Unbind(m12);
-gap> Unbind(m13);
-gap> Unbind(m14);
-gap> Unbind(m15);
-gap> Unbind(m16);
-gap> Unbind(m17);
-gap> Unbind(m18);
-gap> Unbind(m19);
-gap> Unbind(m2);
-gap> Unbind(m20);
-gap> Unbind(m21);
-gap> Unbind(m22);
-gap> Unbind(m23);
-gap> Unbind(m3);
-gap> Unbind(m4);
-gap> Unbind(m5);
-gap> Unbind(m6);
-gap> Unbind(m7);
-gap> Unbind(m8);
-gap> Unbind(m9);
-gap> Unbind(mat);
-gap> Unbind(o);
-gap> Unbind(r);
-gap> Unbind(r2);
-gap> Unbind(rc);
-gap> Unbind(res);
-gap> Unbind(rms);
-gap> Unbind(s);
-gap> Unbind(semis);
-gap> Unbind(sizes);
-gap> Unbind(t);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

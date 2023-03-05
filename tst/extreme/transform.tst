@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+
+#@local S, a, d, dc, f, filt, g1, g2, gens, h, hc, i, im, inv, iso, ker, m1
+#@local m18, m6, perm, perms, s, t, x
 gap> START_TEST("Semigroups package: extreme/transform.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -296,30 +299,6 @@ gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(d);
-gap> Unbind(dc);
-gap> Unbind(f);
-gap> Unbind(filt);
-gap> Unbind(g1);
-gap> Unbind(g2);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(hc);
-gap> Unbind(im);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(ker);
-gap> Unbind(m1);
-gap> Unbind(m18);
-gap> Unbind(m6);
-gap> Unbind(perm);
-gap> Unbind(perms);
-gap> Unbind(s);
-gap> Unbind(t);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

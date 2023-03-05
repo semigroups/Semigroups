@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+#@local S
 gap> START_TEST("Semigroups package: extreme/greens-acting-regular.tst");
 gap> LoadPackage("semigroups", false);;
 

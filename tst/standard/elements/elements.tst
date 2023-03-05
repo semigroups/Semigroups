@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, x
 gap> START_TEST("Semigroups package: standard/elements/elements.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -109,9 +111,6 @@ gap> IsMultiplicativeZero(S, x);
 true
 gap> IsMultiplicativeZero(S, PartialPerm([1]));
 false
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();

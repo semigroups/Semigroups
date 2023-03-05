@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local C, C1, C2, F, R, S, it
 gap> START_TEST("Semigroups package: standard/libsemigroups/congwordgraph.tst");
 gap> LoadPackage("semigroups", false);;
 

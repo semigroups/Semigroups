@@ -15,6 +15,10 @@
 #############################################################################
 
 # Set up testing environment
+
+#@local D, DD, S, T, U, b, cong, id, idd, x, xx, y
+
+#@local D, DD, S, T, U, b, cong, id, idd, x, xx, y
 gap> START_TEST("Semigroups package: workspaces/save-workspace.tst");
 gap> SetInfoLevel(InfoDebug, 0);
 gap> LoadPackage("semigroups", false);;
@@ -139,18 +143,10 @@ gap> AsDigraph(b);
 gap> CanonicalBlocks(b);
 <blocks: [ 1* ], [ 2*, 3* ], [ 4*, 5*, 6*, 7* ], [ 8, 9, 10 ]>
 
-#############################################################################
-##  Tests end here
-#############################################################################
-
 # Save the workspace
 gap> SaveWorkspace(Concatenation(SEMIGROUPS.PackageDir,
 >                                "/tst/workspaces/test-output.w"));
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(cong);
 
 #
 gap> SEMIGROUPS.StopTest();

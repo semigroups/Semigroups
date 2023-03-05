@@ -6,6 +6,8 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+#@local S, gens
 gap> START_TEST("Semigroups package: extreme/examples.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2441,10 +2443,6 @@ gap> IsZeroGroup(S);
 false
 gap> IsZeroSemigroup(S);
 false
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(gens);
 
 # 
 gap> SEMIGROUPS.StopTest();

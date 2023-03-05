@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local B, C, G, R, R1, R2, R3, S, T, T3, U, a, acting, an, correct, gens, mat
+#@local max, s1, s2, t1, t2
 gap> START_TEST("Semigroups package: extreme/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -847,30 +850,6 @@ gap> S := Semigroup([Transformation([6, 3, 2, 5, 2, 8, 4, 2]),
 >  Transformation([2, 7, 7, 4, 1, 5, 8, 2])]);;
 gap> NrMaximalSubsemigroups(S);
 18
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(B);
-gap> Unbind(C);
-gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(R);
-gap> Unbind(R1);
-gap> Unbind(R2);
-gap> Unbind(R3);
-gap> Unbind(R4);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(T3);
-gap> Unbind(U);
-gap> Unbind(correct);
-gap> Unbind(gens);
-gap> Unbind(mat);
-gap> Unbind(max);
-gap> Unbind(s1);
-gap> Unbind(s2);
-gap> Unbind(t1);
-gap> Unbind(t2);
-gap> Unbind(t3);
 
 #
 gap> SEMIGROUPS.StopTest();

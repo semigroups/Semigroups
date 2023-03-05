@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local F, R, S, e, it
 gap> START_TEST("Semigroups package: standard/libsemigroups/sims1.tst");
 gap> LoadPackage("semigroups", false);;
 

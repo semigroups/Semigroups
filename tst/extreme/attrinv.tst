@@ -7,6 +7,10 @@
 #
 #############################################################################
 ##
+
+#@local A, B, C, D, I, I2, I5, J, J2, P, Q, R, S, T, U, V, VPR, W, WW, a, b
+#@local cosets, d, f, f1, f2, f3, g, gens, h, h1, h2, inv, iso, m, m1, m2, t
+#@local tmp, w, ww, x, xx, y, yy, z, zz
 gap> START_TEST("Semigroups package: extreme/attrinv.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -693,52 +697,6 @@ gap> IsInverseSemigroup(B);
 true
 gap> V := Range(VagnerPrestonRepresentation(B));
 <inverse partial perm semigroup of rank 664 with 6 generators>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(B);
-gap> Unbind(C);
-gap> Unbind(I);
-gap> Unbind(I2);
-gap> Unbind(I5);
-gap> Unbind(J);
-gap> Unbind(J2);
-gap> Unbind(P);
-gap> Unbind(Q);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(U);
-gap> Unbind(V);
-gap> Unbind(VPR);
-gap> Unbind(W);
-gap> Unbind(WW);
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(cosets);
-gap> Unbind(d);
-gap> Unbind(f);
-gap> Unbind(f1);
-gap> Unbind(f2);
-gap> Unbind(f3);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(h1);
-gap> Unbind(h2);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(m);
-gap> Unbind(m1);
-gap> Unbind(m2);
-gap> Unbind(t);
-gap> Unbind(tmp);
-gap> Unbind(w);
-gap> Unbind(ww);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(zz);
 
 #
 gap> SEMIGROUPS.StopTest();

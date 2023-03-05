@@ -6,6 +6,8 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+#@local D, H, L, S, S1, S2, c, c1, c2, c3, id, m1, m2, out, p, temp
 gap> START_TEST("Semigroups package: standard/semigroups/semicons.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1124,19 +1126,6 @@ gap> MultiplicativeZero(S) = SSSE(S, 1, Transformation([1, 1, 1]));
 true
 gap> MultiplicativeNeutralElement(S);
 fail
-
-#
-gap> Unbind(S);
-
-# Unbind strong semilattice vars
-gap> Unbind(D);
-gap> Unbind(L);
-gap> Unbind(H);
-gap> Unbind(id);
-gap> Unbind(m1);
-gap> Unbind(m2);
-gap> Unbind(S1);
-gap> Unbind(S2);
 
 # 
 gap> SEMIGROUPS.StopTest();

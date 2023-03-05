@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local G, I, IsIsometryPP, M, S, T, U, acting, func, gens, i, j, k, l, n
+#@local regular, small, x
 gap> START_TEST("Semigroups package: standard/semigroups/semigrp.tst");
 gap> LoadPackage("semigroups", false);;
 

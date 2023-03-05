@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+#@local S, acting, f, g, gens, i, inv, iso, s, small, u, x, y, z
 gap> START_TEST("Semigroups package: extreme/semigroups.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -237,21 +239,6 @@ gap> x ^ 2 * y = x ^ 2 * y;
 true
 gap> x * x ^ -1 = y * y ^ -1;
 false
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(i);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(s);
-gap> Unbind(u);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(S);
 
 #
 gap> SEMIGROUPS.StopTest();

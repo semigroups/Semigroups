@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local D, DigraphNrVertices, DigraphRange, DigraphSource, S, gr, s, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -125,11 +127,6 @@ gap> S := GraphInverseSemigroup(D);
 <finite graph inverse semigroup with 12 vertices, 11 edges>
 gap> VerticesOfGraphInverseSemigroup(S);
 [ v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10, v_11, v_12 ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(gr);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

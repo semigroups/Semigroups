@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local I, S, acting, d, f, g, gens, i, inv, iso, iter, j, rms, s, semis, small
+#@local t
 gap> START_TEST("Semigroups package: extreme/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -905,23 +908,6 @@ gap> I := SemigroupIdeal(s, MultiplicativeZero(s));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsZeroSemigroup(I);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(I);
-gap> Unbind(S);
-gap> Unbind(d);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(i);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(iter);
-gap> Unbind(j);
-gap> Unbind(rms);
-gap> Unbind(s);
-gap> Unbind(semis);
-gap> Unbind(t);
 
 #
 gap> SEMIGROUPS.StopTest();

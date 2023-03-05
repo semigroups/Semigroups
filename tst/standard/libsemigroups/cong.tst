@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local C, D, F, I, R, S, T, cong, hom, t, u
 gap> START_TEST("Semigroups package: standard/libsemigroups/cong.tst");
 gap> LoadPackage("semigroups", false);;
 

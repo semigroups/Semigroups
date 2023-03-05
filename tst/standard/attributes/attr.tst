@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, F, G, GR, I, L, R, S, T, acting, an, coll, digraph, foo, gens, inj
+#@local inv, iso, map, n, r, s, t, x, y, z
 gap> START_TEST("Semigroups package: standard/attributes/attr.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2089,7 +2092,7 @@ true
 gap> LeftIdentity(S, Matrix(IsBooleanMat, [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]])) = MultiplicativeNeutralElement(S);
 true
 
-#T# MaximalL/RClasses
+# MaximalL/RClasses
 gap> S := LeftZeroSemigroup(3);
 <transformation semigroup of degree 4 with 3 generators>
 gap> MaximalLClasses(S);
@@ -2129,26 +2132,6 @@ gap> MinimalFaithfulTransformationDegree(RightZeroSemigroup(10));
 7
 gap> MinimalFaithfulTransformationDegree(LeftZeroSemigroup(10));
 6
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(G);
-gap> Unbind(GR);
-gap> Unbind(I);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(coll);
-gap> Unbind(foo);
-gap> Unbind(gens);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(map);
-gap> Unbind(s);
-gap> Unbind(t);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

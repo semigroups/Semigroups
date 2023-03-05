@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local acting, batch_size, cong_by_ker_trace_threshold, hashlen, nr_threads
+#@local regular, small
 gap> START_TEST("Semigroups package: standard/options.tst");
 gap> LoadPackage("semigroups", false);;
 

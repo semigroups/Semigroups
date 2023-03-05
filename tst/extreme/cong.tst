@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local P, R, S, c, classes, classx, classy, classz, cong, gens, l, q, s, t, u
+#@local v, x, y, z
 gap> START_TEST("Semigroups package: extreme/cong.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -277,27 +280,6 @@ gap> l := LatticeOfCongruences(S);
 gap> IsIsomorphicDigraph(l, 
 > DigraphFromDigraph6String("&L~~gpU{yksMEB@?_?XozWKcAI@B?__"));
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(P);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(c);
-gap> Unbind(classes);
-gap> Unbind(classx);
-gap> Unbind(classy);
-gap> Unbind(classz);
-gap> Unbind(cong);
-gap> Unbind(gens);
-gap> Unbind(l);
-gap> Unbind(q);
-gap> Unbind(s);
-gap> Unbind(t);
-gap> Unbind(u);
-gap> Unbind(v);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

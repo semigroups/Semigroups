@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, F, R, S, T, U, i, inv, map
+#@local mat, rels, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semiboolmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1862,18 +1865,6 @@ gap> S := Semigroup([
 >        [[0, 0, 1], [0, 1, 1], [0, 0, 0]])]);;
 gap> AsMonoid(S);
 fail
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(map);
-gap> Unbind(rels);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();
