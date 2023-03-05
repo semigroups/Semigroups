@@ -190,7 +190,7 @@ This is a minor release that includes a number of changes:
 ### Version 4.0.0 (released 28/02/2022)
 
 This is a major release which simplifies and improves many aspects of the
-package. The kernel module has been simplified signficantly, to make it easier
+package. The kernel module has been simplified significantly, to make it easier
 to incorporate future changes in  [libsemigroups][], and some superfluous
 functionality was withdrawn.
 
@@ -206,7 +206,7 @@ minimum version of `libsemigroups` is increased from v1.1.0 to v1.3.2. The
 required version of `Digraphs` is increased to v1.2.0. The `datastructures`
 package was implicitly required (via `Digraphs`), and now at least version
 v0.2.5 is required explicitly. The version of GAP required was implicitly at
-least v4.10.0, but was explicity v4.9.0, it is now explicitly v4.10.0.
+least v4.10.0, but was explicitly v4.9.0, it is now explicitly v4.10.0.
 
 ### Version 3.4.0 (released 28/08/2020)
 
