@@ -167,7 +167,7 @@ gap> Size(T);
     <Description>
       If <A>n</A> is a non-negative integer, then this operation returns the
       Brauer monoid of degree <A>n</A>. The <E>Brauer monoid</E> is the
-      submonoid of the partition monoid consisiting of those bipartitions where
+      submonoid of the partition monoid consisting of those bipartitions where
       the size of every block is 2. <P/>
 
       <C>PartialBrauerMonoid</C> returns the partial Brauer monoid, which is the

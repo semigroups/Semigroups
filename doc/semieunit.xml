@@ -50,7 +50,7 @@
 
     must return <K>true</K>. Herein if we say that a vertex <C>A</C> of <A>X</A>
     is 'in' <A>Y</A> then we mean there is a vertex of <A>Y</A> whose label is
-    <C>A</C>. Alerternatively the user may choose to give the argument
+    <C>A</C>. Alternatively the user may choose to give the argument
     <A>Y</A> as the vertices of <A>X</A> on which <A>Y</A> is the induced
     subdigraph. <P/>
     

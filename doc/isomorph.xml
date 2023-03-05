@@ -127,7 +127,7 @@ gap> CanonicalMultiplicationTable(S);
     <Description>
       This function returns the lex-least multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
-      returns the lex-least multiplication of any semigroup isomoprhic to
+      returns the lex-least multiplication of any semigroup isomorphic to
       <A>S</A>.
 
       Due to the high complexity of computing the smallest multiplication table
