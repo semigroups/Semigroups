@@ -160,7 +160,7 @@
     [4X[28XGreensRClassOfElement(X, x)[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Ycan take a signficant amount of time to return a value.[133X
+  [33X[0;0Ycan take a significant amount of time to return a value.[133X
   
   [33X[0;0YSee   also   [2XGreensRClassOfElement[102X  ([14XReference:  GreensRClassOfElement[114X)  and
   [2XRClassOfHClass[102X ([14X10.1-1[114X).[133X

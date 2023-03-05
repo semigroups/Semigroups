@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.2.0
+                                     5.2.1
   
   
-                                1 December 2022
+                                  5 March 2023
   
   
                                  James Mitchell
@@ -155,7 +155,7 @@
   
   Olexandr Konovalov
       Email:    [7Xmailto:obk1@st-andrews.ac.uk[107X
-      Homepage: [7Xhttps://www.st-andrews.ac.uk/computer-science/people/obk1/[107X
+      Homepage: [7Xhttps://olexandr-konovalov.github.io/[107X
       Address:  [33X[0;14YJack  Cole  Building, North Haugh, St Andrews, Fife, KY16 9SX,
                 Scotland[133X
   

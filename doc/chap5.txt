@@ -1223,7 +1223,7 @@
   integer matrices.[133X
   
   [33X[0;0YFrom v5.0.0, [5XSemigroups[105X uses the [5XGAP[105X library implementation of matrices over
-  the intergers belonging to the category [2XIsMatrixObj[102X ([14XReference: IsMatrixObj[114X)
+  the  integers belonging to the category [2XIsMatrixObj[102X ([14XReference: IsMatrixObj[114X)
   rather  than  the  previous  implementation  in the [5XSemigroups[105X package. This
   means  that  from v5.0.0, matrices over the integers no longer belong to the
   category [2XIsMatrixOverSemiring[102X ([14X5.1-1[114X).[133X

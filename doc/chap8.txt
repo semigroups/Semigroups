@@ -411,7 +411,7 @@
   which  we  call  a  [13XMcAlister  triple  semigroup[113X over [10X(G,X,Y)[110X. In fact every
   McAlister  triple  semigroup  is  an  E-unitary  inverse semigroup and every
   E-unitary   inverse   semigroup  is  isomorphic  to  some  McAlister  triple
-  semigroup.  Note  that there need not be a unqiue McAlister triple semigroup
+  semigroup.  Note  that there need not be a unique McAlister triple semigroup
   for  a particular McAlister triple because in general there is more than one
   way for a group to act on a partial order.[133X
   
@@ -468,7 +468,7 @@
         digraph  [3XX[103X, its second argument should be an element of [3XG[103X, and it must
         return  a  vertex  of  [3XX[103X.  [3Xact[103X  must  be  a right action, meaning that
         [3Xact[103X[10X(A,gh)=[3Xact[103X[10X([3Xact[103X[10X(A,g),h)[110X   holds  for  all  [10XA[110X  in  [3XX[103X  and  [10Xg,h[110X  [22X∈[122X  [3XG[103X.
-        Furthermore  the  permutation  represenation  of this action must be a
+        Furthermore  the  permutation  representation of this action must be a
         subgroup  of  the  automorphism  group of [3XX[103X. That means we require the
         following to return [9Xtrue[109X:[133X
   
@@ -480,8 +480,8 @@
         minimal  vertex  of  [3XY[103X,  i.e.  the  unique  vertex  of  [3XY[103X  whose  only
         out-neighbour is itself.[133X
   
-  [33X[0;0YFor     user     convienience,    there    are    multiple    versions    of
-  [10XMcAlisterTripleSemigroup[110X. When the argument [3Xact[103X is ommitted it is assumed to
+  [33X[0;0YFor     user     convenience,     there    are    multiple    versions    of
+  [10XMcAlisterTripleSemigroup[110X.  When the argument [3Xact[103X is omitted it is assumed to
   be  [2XOnPoints[102X ([14XReference: OnPoints[114X). Additionally, the semilattice argument [3XY[103X
   may be replaced by a homogeneous list [3Xsub_ver[103X of vertices of [3XX[103X. When [3Xsub_ver[103X
   is   provided,   [10XMcAlisterTripleSemigroup[110X   is   called   with  [3XY[103X  equalling

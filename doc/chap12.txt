@@ -1,7 +1,7 @@
   
   [1X12 [33X[0;0YProperties of semigroups[133X[101X
   
-  [33X[0;0YIn  this chapter we decribe the methods that are available in [5XSemigroups[105X for
+  [33X[0;0YIn this chapter we describe the methods that are available in [5XSemigroups[105X for
   determining various properties of a semigroup or monoid.[133X
   
   
@@ -1001,7 +1001,7 @@
   [2XMcAlisterTripleSemigroup[102X             ([14X8.4-2[114X)            where            the
   [2XMcAlisterTripleSemigroupPartialOrder[102X            ([14X8.4-4[114X)            satisfies
   [2XIsJoinSemilatticeDigraph[102X   ([14XDigraphs:  IsJoinSemilatticeDigraph[114X).  McAlister
-  triple  semigroups  are  a represenation of E-unitary inverse semigroups and
+  triple  semigroups  are a representation of E-unitary inverse semigroups and
   more can be read about them in Chapter [14X8.4[114X.[133X
   
   [4X[32X  Example  [32X[104X

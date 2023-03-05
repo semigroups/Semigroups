@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.2.0
-date: 2022-12-01
+version: 5.2.1
+date: 2023-03-05
 description: |
     A package for semigroups and monoids
 
@@ -38,7 +38,7 @@ authors:
     - name: Chinmaya Nagpal
       url: mailto:chinmaya1011@gmail.com
     - name: Olexandr Konovalov
-      url: https://www.st-andrews.ac.uk/computer-science/people/obk1/
+      url: https://olexandr-konovalov.github.io/
     - name: Artemis Konstantinidi
       url: mailto:ak316@st-andrews.ac.uk
     - name: Dima V. Pasechnik
@@ -105,7 +105,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.2.0/semigroups-5.2.0.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.2.1/semigroups-5.2.1.tar.gz
 
 abstract: |
     

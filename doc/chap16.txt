@@ -172,7 +172,7 @@
   [6XReturns:[106X  [33X[0;10YA string.[133X
   
   [33X[0;0YThis function produces a string containing LaTeX code for the transformation
-  [3Xf[103X.  If the optional paramater [3Xn[103X is used, then this is taken to be the degree
+  [3Xf[103X.  If the optional parameter [3Xn[103X is used, then this is taken to be the degree
   of   the   transformation   [3Xf[103X,  if  the  parameter  [3Xn[103X  is  not  given,  then
   [2XDegreeOfTransformation[102X   ([14XReference:   DegreeOfTransformation[114X)  is  used  by
   default. If [3Xn[103X is less than the degree of [3Xf[103X, then an error is given.[133X

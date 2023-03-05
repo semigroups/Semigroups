@@ -4,8 +4,8 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 5.2.0.
-  [5XSemigroups[105X  5.2.0  is  a  distant descendant of the Monoid package for GAP 3
+  [33X[0;0YThis  is  the  manual  for  the  [5XSemigroups[105X  package  for [5XGAP[105X version 5.2.1.
+  [5XSemigroups[105X  5.2.1  is  a  distant descendant of the Monoid package for GAP 3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton, Edmund F. Robertson, and Nik Ruskuc.[133X
   
@@ -31,7 +31,7 @@
   
   [8XPart II: semigroups and monoids defined by generating sets[108X
         [33X[0;6Yfunctions  and  operations for creating semigroups and monoids defined
-        by  generating  sets (of the type descibed in Part I) are described in
+        by  generating sets (of the type described in Part I) are described in
         Chapter [14X6[114X.[133X
   
   [8XPart III: standard examples and constructions[108X

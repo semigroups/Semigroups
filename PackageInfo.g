@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.2.0",
-Date := "01/12/2022",  # dd/mm/yyyy format
+Version := "5.2.1",
+Date := "05/03/2023",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -222,8 +222,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "obk1@st-andrews.ac.uk",
-    WWWHome       :=
-      "https://www.st-andrews.ac.uk/computer-science/people/obk1/",
+    WWWHome       := "https://olexandr-konovalov.github.io/",
     PostalAddress := _STANDREWSCS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
