@@ -163,7 +163,7 @@ gap> ReadGenerators(file, 13);
       list of multiplication tables.<P/>
 
       If the optional second argument <A>nr</A> is present, then
-      <C>ReadMultiplicationTable</C> returns the mutiplication table stored in
+      <C>ReadMultiplicationTable</C> returns the multiplication table stored in
       the <A>nr</A>th line of <A>filename</A>.
       <!-- The next example is a log not an example because for some reason it
       fails in the cygwin CI job -->
