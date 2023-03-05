@@ -1,0 +1,110 @@
+#
+# Makefile rules for the semigroups package
+#
+KEXT_NAME = semigroups
+
+KEXT_CXXFLAGS = @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
+KEXT_LDFLAGS = -lstdc++  # add C++ library
+
+# configure settings
+GAPPATH = @GAPROOT@
+HPCOMBI_CONSTEXPR_FUN_ARGS = @HPCOMBI_CONSTEXPR_FUN_ARGS@
+LIBSEMIGROUPS_HPCOMBI_ENABLED = @LIBSEMIGROUPS_HPCOMBI_ENABLED@
+WITH_INCLUDED_LIBSEMIGROUPS = @WITH_INCLUDED_LIBSEMIGROUPS@
+SYS_IS_CYGWIN = @SYS_IS_CYGWIN@
+
+# sources
+KEXT_SOURCES =  src/bipart.cpp
+KEXT_SOURCES += src/cong.cpp
+KEXT_SOURCES += src/froidure-pin-base.cpp
+KEXT_SOURCES += src/froidure-pin-bipart.cpp
+KEXT_SOURCES += src/froidure-pin-bmat.cpp
+KEXT_SOURCES += src/froidure-pin-fallback.cpp
+KEXT_SOURCES += src/froidure-pin-matrix.cpp
+KEXT_SOURCES += src/froidure-pin-max-plus-mat.cpp
+KEXT_SOURCES += src/froidure-pin-min-plus-mat.cpp
+KEXT_SOURCES += src/froidure-pin-pbr.cpp
+KEXT_SOURCES += src/froidure-pin-pperm.cpp
+KEXT_SOURCES += src/froidure-pin-transf.cpp
+KEXT_SOURCES += src/pkg.cpp
+KEXT_SOURCES += src/to_gap.cpp
+KEXT_SOURCES += gapbind14/src/gapbind14.cpp
+
+KEXT_CPPFLAGS = -Igapbind14/include/
+
+ifdef HPCOMBI_CONSTEXPR_FUN_ARGS
+KEXT_CPPFLAGS += -DHPCOMBI_CONSTEXPR_FUN_ARGS
+endif
+
+ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+KEXT_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
+endif
+
+ifdef WITH_INCLUDED_LIBSEMIGROUPS
+KEXT_LDFLAGS += -Wl,-rpath,bin/lib
+# FIXME(later) all the include paths should point into bin/include/ and not to
+# the sources, or otherwise we should stop make installing into bin
+ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include
+KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include/fallback
+endif
+KEXT_CPPFLAGS += -Ilibsemigroups/extern/fmt-8.0.1/include
+KEXT_CPPFLAGS += -Ilibsemigroups/include
+endif
+KEXT_CPPFLAGS += -DFMT_HEADER_ONLY
+
+ifdef KERNEL_DEBUG
+KEXT_CPPFLAGS += -DDEBUG
+else
+KEXT_CPPFLAGS += -DNDEBUG
+endif
+
+KEXT_CXXFLAGS += $(KEXT_CPPFLAGS) # HACK: there is no KEXT_CPPFLAGS
+
+KEXT_LDFLAGS += @LIBSEMIGROUPS_LIBS@
+
+# HACK: On cygwin, add this flag to work around issues where fork() sometimes
+# fails on Cygwin when semigroups.so is loaded into GAP. This will hopefully
+# become unnecessary with GAP 4.13, which will automatically add this to the
+# flags.
+ifdef SYS_IS_CYGWIN
+KEXT_LDFLAGS += -Wl,--enable-auto-image-base
+endif
+
+# include shared GAP package build system
+KEXT_USE_AUTOCONF = 1
+include Makefile.gappkg
+
+# ensure pkgconfig.h is built
+$(KEXT_OBJS): gen/pkgconfig.h
+
+ifdef WITH_INCLUDED_LIBSEMIGROUPS
+# ensure libsemigroups is installed into bin before compiling
+$(KEXT_OBJS): bin/include/libsemigroups/libsemigroups.hpp
+
+# the following is only run if BUILT_SOURCES is wound up
+bin/include/libsemigroups/libsemigroups.hpp:
+	$(MAKE) -C libsemigroups install
+	# Cygwin only looks for DLLs in the same directory as the executable
+	# resides in. The following achieves that assuming that the GAP
+	# being used was self-compiled by the user. If the GAP build system
+	# changes to stop using GNU libtool, this will have to be adjusted.
+	if test -f bin/bin/cygsemigroups*.dll ; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs ; fi
+
+endif
+
+clean:
+	find . -name '*.gcda' -delete
+
+lint:
+	etc/gaplint.sh
+	etc/cpplint.sh
+
+format:
+	clang-format -i src/*.[hc]
+
+.PHONY: lint format
+
+superclean: distclean
+	git clean -xdf --exclude *.swp --exclude *.swo
+.PHONY: superclean
