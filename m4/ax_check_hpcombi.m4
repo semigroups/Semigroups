@@ -28,7 +28,7 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
   AC_MSG_RESULT([$enable_hpcombi])
 
   AS_IF([test "x$enable_hpcombi" = xyes],
-        [AC_CHECK_FILE([$srcdir/extern/HPCombi/VERSION], 
+        [AS_IF([test -f $srcdir/extern/HPCombi/VERSION], 
                        [], 
                        [AC_MSG_WARN([HPCombi is not available])
                        [enable_hpcombi=no]])])
@@ -96,7 +96,8 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
         [AC_DEFINE([HPCOMBI_ENABLED], [1], [define if building with HPCombi])])
 
   dnl # the following is used in Makefile.am
-  AM_CONDITIONAL([LIBSEMIGROUPS_HPCOMBI_ENABLED], [test "x$enable_hpcombi" = xyes])
+  AS_IF([test "x$enable_hpcombi" = xyes],
+        AC_SUBST(LIBSEMIGROUPS_HPCOMBI_ENABLED, yes))
 
   dnl # check for HPCombi's preprocessor macro
   AS_IF([test "x$enable_hpcombi" = xyes], 
@@ -112,9 +113,9 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
                    )
    AC_MSG_RESULT([$hpcombi_constexpr_fun_args])])
 
-  AM_CONDITIONAL([HPCOMBI_CONSTEXPR_FUN_ARGS], 
-                 [test "x$hpcombi_constexpr_fun_args" = xyes])
-    
+  AS_IF([test "x$hpcombi_constexpr_fun_args" = xyes],
+        AC_SUBST(HPCOMBI_CONSTEXPR_FUN_ARGS, yes))
+
   AS_IF([test "x$enable_hpcombi" = xyes],
         AC_SUBST(ax_hpcombi_cxxflags_variable))
 ])

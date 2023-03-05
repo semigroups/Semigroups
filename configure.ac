@@ -9,26 +9,12 @@ dnl ##
 dnl ## Setup autoconf
 dnl ##
 AC_PREREQ([2.68])
-AC_INIT([semigroups], m4_esyscmd([tr -d '\n' < .VERSION]))
+AC_INIT([semigroups], [GAP package])
 AC_CONFIG_SRCDIR([src/pkg.cpp])
-AC_CONFIG_HEADERS([src/_pkgconfig.h:cnf/pkgconfig.h.in])
+AC_CONFIG_HEADERS([gen/pkgconfig.h:src/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([cnf])
 
-dnl ##
-dnl ## Get canonical host info
-dnl ##
-AC_CANONICAL_HOST
-AC_CANONICAL_TARGET
-
-dnl ##
-dnl ## Setup automake
-dnl ##
-AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects nostdinc])
-AM_SILENT_RULES([yes])
-AM_PROG_AR
-
-AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[],[src/_pkgconfig.h])
+AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[semigroups],[gen/pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
 dnl ## libsemigroups which is why this contains ../ 
@@ -41,12 +27,6 @@ AC_PROG_CXX
 AC_LANG([C++])
 
 AX_CXX_COMPILE_STDCXX_14(,[mandatory])
-
-dnl ##
-dnl ## Setup libtool (for building the GAP kernel extension)
-dnl ##
-LT_PREREQ([2.4.2])
-LT_INIT([disable-static dlopen win32-dll])
 
 dnl ##
 dnl ## Locate the GAP root dir
@@ -63,10 +43,9 @@ dnl ##
 dnl ## Detect Windows resp. Cygwin
 dnl ##
 case $host_os in
-  *cygwin* ) CYGWIN=yes;;
-         * ) CYGWIN=no;;
+  *cygwin* ) AC_SUBST(SYS_IS_CYGWIN, yes);;
 esac
-AM_CONDITIONAL([SYS_IS_CYGWIN], [test "$CYGWIN" = "yes"])
+
 
 dnl ## Check for libsemigroups
 AX_CHECK_LIBSEMIGROUPS
@@ -79,11 +58,11 @@ AC_ARG_ENABLE([debug],
     )
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
-
-AM_CONDITIONAL([KERNEL_DEBUG], [test "x$enable_debug" = xyes])
+ERNEL_DEBUG=$enable_debug
+AC_SUBST(KERNEL_DEBUG)
 
 # Check if HPCombi is enable, and available
-AX_CHECK_HPCOMBI()
+AX_CHECK_HPCOMBI
 
 dnl ##
 dnl ## Output everything
