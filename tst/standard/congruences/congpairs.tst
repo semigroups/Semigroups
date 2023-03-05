@@ -8,6 +8,10 @@
 ##
 #############################################################################
 ##
+
+#@local C, F, M, S, T, ccong, class, class1, class2, classes, cong, cong1
+#@local cong2, cong3, enum, gens, lcong, pair, pair1, pair2, pairs, pairs1
+#@local pairs2, part, part1, rels, sgens, u, v, x
 gap> START_TEST("Semigroups package: standard/congruences/congpairs.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1001,33 +1005,6 @@ gap> C := LeftSemigroupCongruence(S, pairs);
 gap> AsLeftSemigroupCongruenceByGeneratingPairs(C);
 <left semigroup congruence over <inverse partial perm semigroup of size 14, 
  rank 3 with 2 generators> with 1 generating pairs>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(F);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(class);
-gap> Unbind(class1);
-gap> Unbind(class2);
-gap> Unbind(classes);
-gap> Unbind(cong);
-gap> Unbind(cong1);
-gap> Unbind(cong2);
-gap> Unbind(cong3);
-gap> Unbind(enum);
-gap> Unbind(gens);
-gap> Unbind(lcong);
-gap> Unbind(pair);
-gap> Unbind(pair1);
-gap> Unbind(pair2);
-gap> Unbind(pairs);
-gap> Unbind(pairs1);
-gap> Unbind(pairs2);
-gap> Unbind(rels);
-gap> Unbind(sgens);
-gap> Unbind(u);
-gap> Unbind(v);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

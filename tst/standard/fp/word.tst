@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local A, w
 gap> START_TEST("Semigroups package: standard/fp/word.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -98,10 +100,6 @@ gap> StringToWord("");
 [  ]
 gap> StringToWord("a");
 [ 1 ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(w);
 
 #
 gap> SEMIGROUPS.StopTest();

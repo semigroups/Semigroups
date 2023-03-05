@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceAntiIsoCheck, BruteForceInverseCheck, D, DS, S, T, U, V
+#@local antiiso, antiso, d, i, inv, invantiso, iso, x, y
 gap> START_TEST("Semigroups package: standard/attributes/dual.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -299,16 +302,6 @@ gap> UnderlyingElementOfDualSemigroupElement(Representative(T)) in
 >  Bipartition([[1], [2, -3, -4], [3, 4, -1], [-2]]),
 >  Bipartition([[1, -2], [2, -3, -4], [3], [4, -1]])];
 true
-
-#  UnbindVariables
-gap> Unbind(antiso);
-gap> Unbind(inv);
-gap> Unbind(invantiso);
-gap> Unbind(i);
-gap> Unbind(U);
-gap> Unbind(V);
-gap> Unbind(S);
-gap> Unbind(T);
 
 #
 gap> SEMIGROUPS.StopTest();

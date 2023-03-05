@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local G, M, R, S, acting, b, data, forflatplainlists, func, o, r, rank, s
+#@local schutz, x, y
 gap> START_TEST("Semigroups package: standard/main/setup.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1135,17 +1138,6 @@ gap> x := ChooseHashFunction(fail, 0);
 rec( data := fail, func := function( v, data ) ... end )
 gap> x.func(fail, fail);
 1
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(b);
-gap> Unbind(o);
-gap> Unbind(r);
-gap> Unbind(s);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(S);
-gap> Unbind(R);
-gap> Unbind(schutz);
 
 #
 gap> SEMIGROUPS.StopTest();

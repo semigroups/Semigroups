@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local A, B, BruteForceInverseCheck, BruteForceIsoCheck, G, G1, G2, H, I, R
+#@local R1, R2, S, T, U, UU, V, W, WW, auto, comp, func, g, g_elms_list, id
+#@local inv, iso, map, mat, mat1, mat2, norm, out, x, y
 gap> START_TEST("Semigroups package: standard/attributes/isorms.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1137,41 +1141,6 @@ gap> S := ReesMatrixSemigroup(G, mat);;
 gap> CanonicalReesMatrixSemigroup(S);
 Error, the underlying semigroup of the argument (a Rees 0-matrix semigroup) is\
  not a group
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(G);
-gap> Unbind(G1);
-gap> Unbind(G2);
-gap> Unbind(H);
-gap> Unbind(I);
-gap> Unbind(R);
-gap> Unbind(R1);
-gap> Unbind(R2);
-gap> Unbind(S);
-gap> Unbind(WW);
-gap> Unbind(auto);
-gap> Unbind(comp);
-gap> Unbind(U);
-gap> Unbind(UU);
-gap> Unbind(V);
-gap> Unbind(W);
-gap> Unbind(func);
-gap> Unbind(g);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(list);
-gap> Unbind(map);
-gap> Unbind(mat);
-gap> Unbind(mat1);
-gap> Unbind(mat2);
-gap> Unbind(norm);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
 
 #
 gap> SEMIGROUPS.StopTest();

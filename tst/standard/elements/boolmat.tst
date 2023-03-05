@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local BMats, S, a, b, blist, blists, c, d, e, ht, mat, x, y, z
 gap> START_TEST("Semigroups package: standard/elements/boolmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -600,14 +602,6 @@ gap> IsTransformationBooleanMat(z);
 false
 gap> AsTransformation(z);
 fail
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(blist);
-gap> Unbind(ht);
-gap> Unbind(mat);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

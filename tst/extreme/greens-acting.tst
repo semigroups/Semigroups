@@ -9,6 +9,10 @@
 ##
 
 # takes approx. 1 minute to run currently!
+
+#@local C, D, H, I, L, M, R, S, a, acting, b, c, d, dd, dr, elts, enum, f, g
+#@local gens, h, hh, i, idem, iter, iter1, iter2, iter3, j, l, ll, m, out, out2
+#@local out3, r, r1, r2, r3, rc, reps, rr, s, t, x
 gap> START_TEST("Semigroups package: extreme/greens-acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1989,47 +1993,6 @@ gap> L := GreensLClasses(D)[1];;
 gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(C);
-gap> Unbind(D);
-gap> Unbind(H);
-gap> Unbind(I);
-gap> Unbind(L);
-gap> Unbind(M);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(d);
-gap> Unbind(dr);
-gap> Unbind(elts);
-gap> Unbind(enum);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(hh);
-gap> Unbind(i);
-gap> Unbind(idem);
-gap> Unbind(iter);
-gap> Unbind(iter1);
-gap> Unbind(iter2);
-gap> Unbind(iter3);
-gap> Unbind(j);
-gap> Unbind(l);
-gap> Unbind(ll);
-gap> Unbind(m);
-gap> Unbind(out);
-gap> Unbind(r);
-gap> Unbind(r1);
-gap> Unbind(r2);
-gap> Unbind(rc);
-gap> Unbind(reps);
-gap> Unbind(rr);
-gap> Unbind(s);
-gap> Unbind(t);
-gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();

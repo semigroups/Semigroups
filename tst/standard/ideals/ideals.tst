@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local A, I, J, S, T, acting, ideals, regular, x, y, z
 gap> START_TEST("Semigroups package: standard/ideals/ideals.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -372,17 +374,6 @@ true
 # SemigroupIdeal bad input
 gap> SemigroupIdeal("bananas", "bananas");
 Error, the 1st argument is not a semigroup
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(ideals);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

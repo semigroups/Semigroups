@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, gens, i, iter, list1, u, w, x, y, z
 gap> START_TEST("Semigroups package: standard/fp/freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -139,16 +141,6 @@ gap> for i in [1 .. 10] do
 > x := NextIterator(iter);
 > MinimalWord(x * y);
 > od; 
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(gens);
-gap> Unbind(i);
-gap> Unbind(iter);
-gap> Unbind(u);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

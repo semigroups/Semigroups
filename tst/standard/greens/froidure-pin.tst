@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local D, DD, DDD, H, J, L, L3, LL, R, RR, RRR, S, acting, an, gens, map, x, y
 gap> START_TEST("Semigroups package: standard/greens/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1721,22 +1723,6 @@ gap> D := PartialOrderOfRClasses(S);
 <immutable digraph with 5 vertices, 6 edges>
 gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+D[CGO?"));
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(DD);
-gap> Unbind(DDD);
-gap> Unbind(H);
-gap> Unbind(J);
-gap> Unbind(L);
-gap> Unbind(L3);
-gap> Unbind(LL);
-gap> Unbind(R);
-gap> Unbind(RR);
-gap> Unbind(RRR);
-gap> Unbind(S);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

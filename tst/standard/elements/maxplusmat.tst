@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local A, S, mat, mat2, mat3, x
 gap> START_TEST("Semigroups package: standard/elements/maxplusmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -605,12 +607,6 @@ Error, the entries in the 2nd argument do not define a matrix of type IsNTPMat\
 rix
 gap> x := Matrix(IsNTPMatrix, [[1, 1], [0, 0]], 5, -10);
 Error, the 3rd argument (a pos. int.) is not > 0
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(mat);
-gap> Unbind(mat2);
-gap> Unbind(mat3);
 
 #
 gap> SEMIGROUPS.StopTest();

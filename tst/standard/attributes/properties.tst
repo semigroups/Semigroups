@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local C, D, F, G, H, I, J, K, R, S, T, acting, an, data, gens, x
 gap> START_TEST("Semigroups package: standard/attributes/properties.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2020,16 +2022,6 @@ gap> IsSelfDualSemigroup(S);
 true
 gap> IsSelfDualSemigroup(MonogenicSemigroup(7, 8));
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(gens);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

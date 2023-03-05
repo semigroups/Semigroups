@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local F, S
 gap> START_TEST("Semigroups package: standard/attributes/semifp.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -46,10 +48,6 @@ gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];
 gap> IndecomposableElements(S);
 [  ]
 
-#  SEMIGROUPS_UnbindVariables
-gap> Unbind(F);
-gap> Unbind(S);
-
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attributes/semifp.tst");

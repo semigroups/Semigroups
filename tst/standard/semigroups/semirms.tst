@@ -9,6 +9,10 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, F, G, H, I, R, RR, S, T, U
+#@local a, an, b, c, comps, d, data, e, filename, first_occurrence, func, ht, i
+#@local id, idems, inv, iso, map, mat, rels, x, y, z, zero
 gap> START_TEST("Semigroups package: standard/semigroups/semirms.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -3001,32 +3005,6 @@ gap> NrIdempotents(S) = Length(Idempotents(S));
 true
 gap> NrIdempotents(S);
 4
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(G);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(a);
-gap> Unbind(comps);
-gap> Unbind(data);
-gap> Unbind(func);
-gap> Unbind(i);
-gap> Unbind(id);
-gap> Unbind(idems);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(map);
-gap> Unbind(mat);
-gap> Unbind(occurrence);
-gap> Unbind(rels);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(zero);
 
 #
 gap> SEMIGROUPS.StopTest();

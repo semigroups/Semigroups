@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local I, S, T, acting, an, regular, x
 gap> START_TEST("Semigroups package: standard/main/semiact.tst");
 gap> LoadPackage("semigroups", false);;
 

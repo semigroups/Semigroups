@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S
 gap> START_TEST("Semigroups package: extreme/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 

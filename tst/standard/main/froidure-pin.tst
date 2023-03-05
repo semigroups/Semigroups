@@ -11,6 +11,12 @@
 # This file contains tests for main/froidure-pin.g* which use the
 # implementation of the Froidure-Pin algorithm in the Semigroups package kernel
 # module and not the version in libsemigroups.
+
+#@local F, G, ListIterator, LoopIterator, N, R, S, T, TestEnumerator
+#@local TestIterator, acting, an, cong, copy, elts, final, first, found, gens
+#@local genslookup, genstoapply, ht, i, left, len, lenindex, list, mat, nr
+#@local nrrules, one, out, parent, pos, prefix, reduced, right, rules, stopper
+#@local suffix, valid, words, x
 gap> START_TEST("Semigroups package: standard/main/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 

@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, S, T, gens, ht, i, it, iter, j, list, new, next, result, s, words, x
+#@local y, z
 gap> START_TEST("Semigroups package: standard/fp/freeband.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -302,22 +305,6 @@ gap> EqualInFreeBand([], ["a"]);
 Error, expected int, found list (string)
 gap> EqualInFreeBand([1], [2, 2, 2]);
 false
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(gens);
-gap> Unbind(ht);
-gap> Unbind(i);
-gap> Unbind(iter);
-gap> Unbind(list);
-gap> Unbind(new);
-gap> Unbind(next);
-gap> Unbind(s);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

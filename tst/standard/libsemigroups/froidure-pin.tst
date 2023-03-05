@@ -7,6 +7,14 @@
 ##
 #############################################################################
 ##
+
+#@local F, N, R, S, acting, add_generator, at, closure, coll, copy
+#@local current_position, en, enumerate, factorisation, fast_product
+#@local final_letter, finished, first_letter, generator, idempotents
+#@local is_idempotent, it, left_cayley_graph, list, make, nr
+#@local number_of_generators, number_of_idempotents, opts, position
+#@local position_to_sorted_position, prefix, rels, right_cayley_graph, rules
+#@local size, sorted_at, sorted_position, suffix, x
 gap> START_TEST("Semigroups package: standard/libsemigroups/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -764,18 +772,6 @@ gap> S := F / R;
 gap> MultiplicationTable(S);
 [ [ 1, 1, 1, 1, 5, 6 ], [ 1, 1, 1, 2, 5, 6 ], [ 3, 3, 3, 3, 5, 6 ], 
   [ 1, 2, 3, 4, 5, 6 ], [ 5, 5, 5, 5, 5, 5 ], [ 6, 6, 6, 6, 6, 6 ] ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(map);
-gap> Unbind(rels);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

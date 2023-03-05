@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local A, BruteForceInverseCheck, BruteForceIsoCheck, F, G, S, T, U, V, inv
+#@local map, x, y
 gap> START_TEST("Semigroups package: standard/attributes/isomorph.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -388,10 +391,6 @@ gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
 gap> AutomorphismGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
 
 #
 gap> SEMIGROUPS.StopTest();

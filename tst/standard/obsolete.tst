@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+
 gap> START_TEST("Semigroups package: standard/obsolete.tst");
 gap> LoadPackage("semigroups", false);;
 

@@ -10,6 +10,8 @@
 ## This test file contains some tests for the performance of
 ## IteratorIteratorSorted, Enumerator, EnumeratorSorted, and AsSSortedList.
 
+
+#@local A, S, a, acting, enum, iter, x
 gap> START_TEST("Semigroups package: extreme/semiiter.tst");
 gap> LoadPackage("semigroups", false);;
 

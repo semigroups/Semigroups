@@ -15,6 +15,8 @@
 #############################################################################
 
 # Set up testing environment
+
+#@local D, DD, id, idd, xx
 gap> START_TEST("Semigroups package: workspaces/load-workspace.tst");
 gap> SEMIGROUPS.StartTest();
 
@@ -133,14 +135,6 @@ gap> AsDigraph(b);
 <immutable digraph with 10 vertices, 23 edges>
 gap> CanonicalBlocks(b);
 <blocks: [ 1* ], [ 2*, 3* ], [ 4*, 5*, 6*, 7* ], [ 8, 9, 10 ]>
-
-#############################################################################
-##  Tests end here
-#############################################################################
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(cong);
 
 #
 gap> SEMIGROUPS.StopTest();

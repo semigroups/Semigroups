@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local S, T, badcong, class, classes, cong, congs, otheruni, pairs, part, r
+#@local uni, uniS, uniT
 gap> START_TEST("Semigroups package: standard/congruences/conguniv.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -250,21 +253,6 @@ gap> cong := RMSCongruenceByLinkedTriple(S, SymmetricGroup(4),
 >                                        [[1, 2, 3, 4]], [[1, 2, 3]]);;
 gap> IsUniversalSemigroupCongruence(cong);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(badcong);
-gap> Unbind(class);
-gap> Unbind(classes);
-gap> Unbind(cong);
-gap> Unbind(congs);
-gap> Unbind(otheruni);
-gap> Unbind(pairs);
-gap> Unbind(r);
-gap> Unbind(uni);
-gap> Unbind(uniS);
-gap> Unbind(uniT);
 
 #
 gap> SEMIGROUPS.StopTest();

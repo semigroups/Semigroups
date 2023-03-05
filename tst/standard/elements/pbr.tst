@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local A, B, P, S, coll, f, filename, pos, x, y
 gap> START_TEST("Semigroups package: standard/elements/pbr.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -498,12 +500,6 @@ gap> IO_Unpicklers.PABR(f);
 IO_Error
 gap> IO_Pickle(f, x);
 IO_Error
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(filename);
-gap> Unbind(x);
-gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

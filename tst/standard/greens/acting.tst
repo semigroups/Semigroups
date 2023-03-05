@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, D, DD, DDD, H, L, L3, LL, R
+#@local RR, RRR, S, T, acting, en, inv, it, iter, map, nr, x, y
 gap> START_TEST("Semigroups package: standard/greens/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1862,23 +1865,6 @@ gap> nr := 0;
 gap> for x in Iterator(R) do nr := nr + 1; od;
 gap> nr = Size(R);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(DD);
-gap> Unbind(DDD);
-gap> Unbind(H);
-gap> Unbind(L);
-gap> Unbind(L3);
-gap> Unbind(LL);
-gap> Unbind(R);
-gap> Unbind(RR);
-gap> Unbind(RRR);
-gap> Unbind(S);
-gap> Unbind(enum);
-gap> Unbind(iter);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

@@ -7,6 +7,12 @@
 ##
 #############################################################################
 ##
+
+#@local C, F, I, M, R, S, T, c, ccong, class, class1a, class1b, class1c, class2
+#@local cong, cong1, cong2, cong3, congS, congT, cong_by_ker_trace_threshold
+#@local el, elm, f, g, ideal, iso, ker, lcong, lookup1, lookup2, m, pair, pair1
+#@local pair2, pairs, pairs1, pairs2, phi, rcong, reesclass, reescong, rmscong
+#@local trc, x
 gap> START_TEST("Semigroups package: standard/congruences/cong.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1026,42 +1032,6 @@ gap> EquivalenceRelationPartitionWithSingletons(C);
   [ <block bijection: [ 1, -2, -3 ], [ 2, 3, -1 ]> ], 
   [ <block bijection: [ 1, 3, -2 ], [ 2, -1, -3 ]> ], 
   [ <block bijection: [ 1, -1, -3 ], [ 2, 3, -2 ]> ] ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(F);
-gap> Unbind(I);
-gap> Unbind(M);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(ccong);
-gap> Unbind(class);
-gap> Unbind(class1a);
-gap> Unbind(class1b);
-gap> Unbind(class1c);
-gap> Unbind(class2);
-gap> Unbind(cong);
-gap> Unbind(cong1);
-gap> Unbind(cong2);
-gap> Unbind(congS);
-gap> Unbind(congT);
-gap> Unbind(elm);
-gap> Unbind(ideal);
-gap> Unbind(iso);
-gap> Unbind(ker);
-gap> Unbind(lcong);
-gap> Unbind(lookup1);
-gap> Unbind(lookup2);
-gap> Unbind(pair);
-gap> Unbind(pair1);
-gap> Unbind(pair2);
-gap> Unbind(pairs);
-gap> Unbind(rcong);
-gap> Unbind(reesclass);
-gap> Unbind(reescong);
-gap> Unbind(rmscong);
-gap> Unbind(trc);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();
