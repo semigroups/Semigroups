@@ -224,6 +224,7 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
       .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
       .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
+      .def("get_target_size", [](RepOrc& ro) { return ro.target_size(); })
       .def("digraph", &RepOrc::digraph<uint32_t>);
 }
 
