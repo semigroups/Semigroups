@@ -55,7 +55,7 @@ gap> RandomWord(8, 4);
   <Description>
     This function takes a word <A>w</A>, consisting of <C>n</C> distinct
     positive integers and returns a word <C>s</C> where the characters of
-    <C>s</C> correspond to those of <A>w</A> in order of first appearence.<P/>
+    <C>s</C> correspond to those of <A>w</A> in order of first appearance.<P/>
 
     The word <A>w</A> is changed in-place into word <C>s</C>.
   <Example><![CDATA[
@@ -85,7 +85,7 @@ gap> StandardiseWord(w);
     positive integers and returns a word <C>w</C> (i.e. a list of positive
     integers) over the alphabet <C>[1 .. n]</C>. The positive integers of
     <C>w</C> correspond to the characters of <A>s</A>, in order of first
-    appearence.
+    appearance.
   <Example><![CDATA[
 gap> w := "abac";
 "abac"

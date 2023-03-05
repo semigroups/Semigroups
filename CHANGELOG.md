@@ -1,7 +1,12 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-2022 [James D. Mitchell][] et al.
+Copyright © 2011-2023 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 5.2.1 (released 05/03/2023)
+
+This is a minor release with some changes for compatibility with upcoming
+changes to GAP, and some updates to the build system.
 
 ### Version 5.2.0 (released 01/12/2022)
 

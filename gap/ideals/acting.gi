@@ -282,7 +282,7 @@ function(I)
   return GeneratorsOfInverseSemigroup(U);
 end);
 
-# this could be simplier for ideals which know they are regular a priori.
+# this could be simpler for ideals which know they are regular a priori.
 
 InstallMethod(SemigroupIdealData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],

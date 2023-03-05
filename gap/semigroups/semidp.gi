@@ -14,7 +14,7 @@
 ### convert := function(element, degree, offset)
 # Takes an element, the degree of the semigroup it belongs to, and an offset
 # to say by how much to "increase" the values in its representation.
-# The function then returns an object respresenting this offset element,
+# The function then returns an object representing this offset element,
 # in a form that is readily used by the following <combine> function.
 #
 ### combine := function(list)

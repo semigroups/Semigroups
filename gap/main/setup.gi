@@ -1238,7 +1238,7 @@ function(S, mat)
   bd  := BaseDomain(mat);
   n   := NrRows(mat);
   mat := List([1 .. n],
-              i -> Concatenation(MutableCopyMat(mat[i]), [Zero(bd)]));
+              i -> Concatenation(mat[i], [Zero(bd)]));
   Add(mat, ZeroMatrix(bd, 1, n + 1)[1]);
   mat[n + 1, n + 1] := One(bd);
   return Matrix(bd, mat);

@@ -3,7 +3,7 @@
     Attributes and operations for semigroups
   </Heading>
 
-  In this chapter we decribe the methods that are available in &SEMIGROUPS; for
+  In this chapter we describe the methods that are available in &SEMIGROUPS; for
   determining the attributes of a semigroup, and the operations which can be
   applied to a semigroup.
 

@@ -85,7 +85,7 @@ end;
 
 # Theorem 3.4.1 in Howie's book, Fundamentals of Semigroup Theory. This
 # function finds the values of the elements u_i and v_lambda of the underlying
-# group of R2 for the choice of l, and g, by propogating the initial value x
+# group of R2 for the choice of l, and g, by propagating the initial value x
 # from u_1 to v_1, ..., v_n, and then from v_1 to u_2, ..., u_m.  It then
 # checks that the equation in Theorem 3.4.1 holds for the values of u and v
 # defined.

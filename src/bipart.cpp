@@ -165,7 +165,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
   // construct C++ object
   Bipartition* x;
   // We could use Bipartition::make in the next line, but then we are repeating
-  // the checks in the Semigroups package, which give more meaninful error
+  // the checks in the Semigroups package, which give more meaningful error
   // messages.
   GAPBIND14_TRY(x = new Bipartition(Bipartition(blocks));)
   x->set_number_of_left_blocks(nr_left_blocks);

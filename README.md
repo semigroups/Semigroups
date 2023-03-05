@@ -1,6 +1,6 @@
 # README - Semigroups package for GAP
 
-#### Copyright (C) 2011-2022 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
+#### Copyright (C) 2011-2023 James D. Mitchell et al.<br />Licensing information is available in the LICENSE file.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)
 
@@ -17,7 +17,7 @@ This will create a subdirectory `semigroups-x.x.x`.
 
 ## Issues
 
-For questions, remarks, suggestions, and issues please use the 
+For questions, remarks, suggestions, and issues please use the
 [issue tracker](https://github.com/gap-packages/Semigroups/issues).
 
 ## Installation
@@ -30,13 +30,13 @@ The following is a summary of the steps that should lead to a successful
 installation of [Semigroups][]:
 
 * get the [datastructures](https://gap-packages.github.io/datastructures)
-  package version 0.2.5 or higher 
+  package version 0.2.5 or higher
 
 * ensure that the [Digraphs][] package version 1.2.0 or higher is available.
   [Digraphs][] must be compiled before [Semigroups][] can be loaded.
 
 * get the [genss](https://gap-packages.github.io/genss) package version 1.6.5 or
-  higher 
+  higher
 
 * get the [images](https://gap-packages.github.io/images) package version 1.3.0 or
 
@@ -52,7 +52,7 @@ Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so comp
 
 * unzip and untar the file `semigroups-x.x.x.tar.gz`, for example, using
 
-    ``` 
+    ```
     gunzip semigroups-x.x.x.tar.gz; tar xvf semigroups-x.x.x.tar
     ```
 
@@ -75,7 +75,7 @@ Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so comp
 
   For the latter case, you need a working [pkg-config][] tool; assuming
   [libsemigroups][] was installed at location `/foo/bar`, type
-    
+
     * `PKG_CONFIG_PATH=/foo/bar/lib/pkgconfig ./configure --with-external-libsemigroups`
     * `make`
 
