@@ -21,10 +21,9 @@ jobs:
           - ubuntu
         gap-branch:
           - master
+          - stable-4.12
         ABI:
           - 64
-          - 32
-
         include:
           # macOS job
           - gap-branch: master
