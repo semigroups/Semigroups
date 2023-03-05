@@ -19,18 +19,12 @@ jobs:
       matrix:
         os:
           - ubuntu
+          - macos
         gap-branch:
           - master
           - stable-4.12
         ABI:
           - 64
-        include:
-          # macOS job
-          - gap-branch: master
-            # to ensure datastructures>= v0.2.6
-            pkgs-to-clone: "datastructures"
-            os: macos
-            ABI: 64
 
     steps:
       - uses: actions/checkout@v3
@@ -53,8 +47,6 @@ jobs:
           # removed in the fullness of time.
           LDFLAGS: "-pthread"
         with:
-          # digraphs included here to ensure version >=1.5.0
-          GAP_PKGS_TO_CLONE: "digraphs/digraphs ${{ matrix.pkgs-to-clone }}"
           GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
           GAPBRANCH: ${{ matrix.gap-branch }}
           ABI: ${{ matrix.ABI }}
