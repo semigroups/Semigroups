@@ -8,7 +8,6 @@ on:
       - "stable-*.*"
 jobs:
   enable-debug:
-    name: "stable-4.12 / ubuntu / 64-bit"
     runs-on: "ubuntu-latest"
     env:
       GAPBRANCH: "stable-4.12"
@@ -33,5 +32,43 @@ jobs:
         uses: gap-actions/build-pkg@v1
         with:
           CONFIGFLAGS: --disable-hpcombi --enable-debug
+      - name: "Run Semigroups package's tst/teststandard.g"
+        uses: gap-actions/run-pkg-tests@v2
+
+  with-external-libsemigroups:
+    runs-on: "ubuntu-latest"
+    env:
+      GAPBRANCH: "stable-4.12"
+      ABI: 64
+      PKG_CONFIG_PATH: "/home/runner/micromamba-root/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba-root/envs/libsemigroups/share/pkgconfig/"
+      LD_LIBRARY_PATH: "/home/runner/micromamba-root/envs/libsemigroups/lib"
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Install conda environment from environment.yml . . ."
+        uses: mamba-org/provision-with-micromamba@main
+      - name: "Python version . . ."
+        run: |
+          micromamba activate libsemigroups
+      - name: "Setup ccache"
+        uses: Chocobo1/setup-ccache-action@v1
+        with:
+          update_packager_index: false
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+      - name: "Install GAP and clone/compile necessary packages"
+        uses: gap-actions/setup-gap@v2
+        env:
+          # We don't understand why this is necessary. Hopefully it can be
+          # removed in the fullness of time.
+          LDFLAGS: "-pthread"
+        with:
+          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Build Semigroups"
+        uses: gap-actions/build-pkg@v1
+        with: # we use --with-external-fmt since this is available from conda
+          CONFIGFLAGS: --disable-hpcombi --with-external-libsemigroups --enable-fmt --with-external-fmt
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
