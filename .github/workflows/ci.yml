@@ -71,11 +71,16 @@ jobs:
        CHERE_INVOKING: 1
      steps:
        - uses: actions/checkout@v2
-       - uses: gap-actions/setup-cygwin@v1
-       - uses: gap-actions/setup-gap@cygwin-v2
+       - name: "Setup cygwin"
+         uses: gap-actions/setup-cygwin@v1
+       - name: "Setup GAP for cygwin"
+         uses: gap-actions/setup-gap@cygwin-v2
          with:
            GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
-       - uses: gap-actions/build-pkg@cygwin-v1
+       - name: "Build Semigroups"
+         uses: gap-actions/build-pkg@cygwin-v1
+         with:
+           CONFIGFLAGS: --disable-fmt # to try and speed up compilation
        - uses: gap-actions/run-pkg-tests@cygwin-v2
          with:
            GAP_TESTFILE: "tst/teststandard.g"
