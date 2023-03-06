@@ -1,15 +1,22 @@
 name: clang-format
-on: [push, pull_request]
-concurrency:
-  group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
-  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "main"
+      - "stable-*.*"
+  schedule:
+    # Every day at 3:10 AM UTC
+    - cron: '10 3 * * *'
+
 jobs:
   formatting-check:
     name: Formatting check
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Run clang-format style check for C/C++/Protobuf programs.
+    - name: "Run clang-format style checks on src/*.[hc]pp . . ."
       uses: jidicula/clang-format-action@v4.10.1
       with:
         clang-format-version: '15'
