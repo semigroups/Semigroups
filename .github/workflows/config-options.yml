@@ -42,6 +42,7 @@ jobs:
       ABI: 64
       PKG_CONFIG_PATH: "/home/runner/micromamba-root/envs/libsemigroups/lib/pkgconfig:/home/runner/micromamba-root/envs/libsemigroups/share/pkgconfig/"
       LD_LIBRARY_PATH: "/home/runner/micromamba-root/envs/libsemigroups/lib"
+      DO_NOT_DOWNLOAD_LIBSEMIGROUPS: 1 # prevents prerequisites.sh
     defaults:
       run:
         shell: bash -l {0}
@@ -50,14 +51,14 @@ jobs:
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/provision-with-micromamba@main
       - name: "Python version . . ."
-        run: |
-          micromamba activate libsemigroups
+        run:  micromamba activate libsemigroups
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
           update_packager_index: false
           override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
           override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+      - run: mkdir libsemigroups
       - name: "Install GAP and clone/compile necessary packages"
         uses: gap-actions/setup-gap@v2
         env:
