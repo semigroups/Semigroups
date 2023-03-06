@@ -7,10 +7,6 @@
 ##
 #############################################################################
 ##
-
-#@local BruteForceInverseCheck, BruteForceIsoCheck, F, G, LoopIterator, Noop, R
-#@local S, T, TestEnumerator, TestIterator, a, b, f, factorizable, inv, iso
-#@local len, map, rels, s, tst, valid, w, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semifp.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2605,6 +2601,23 @@ MappingByFunction( <fp monoid with 2 generators and 3 relations of length 11>
 gap> RelationsOfFpMonoid(Range(map));
 [ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
   [ (b*a)^2, <identity ...> ] ]
+
+# SEMIGROUPS_UnbindVariables
+gap> Unbind(a);
+gap> Unbind(b);
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(f);
+gap> Unbind(F);
+gap> Unbind(G);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(inv);
+gap> Unbind(map);
+gap> Unbind(rels);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

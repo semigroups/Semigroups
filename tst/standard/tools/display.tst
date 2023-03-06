@@ -7,9 +7,6 @@
 ##
 #############################################################################
 ##
-
-#@local HClasses, S, acting, beginDocument, colors, endDocument, highlight
-#@local idempotentsemilattice, labels, maximal, normal, number, x, y
 gap> START_TEST("Semigroups package: standard/tools/display.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1027,6 +1024,10 @@ Error, no 2nd choice method found for `DotString' on 1 arguments
 gap> TikzRightCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
+
+# SEMIGROUPS_UnbindVariables
+gap> Unbind(x);
+gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();
