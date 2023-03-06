@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local C, S, T, acting, classes, classx, classy, classz, cong, cong1, cong2
+#@local congs, elms, i, j, map, x, y, z
 gap> START_TEST("Semigroups package: standard/congruences/congsimple.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -302,30 +305,6 @@ gap> C := SemigroupCongruence(S, [S.1, S.2]);
 gap> CongruenceByIsomorphism(map, C);
 Error, the range of the 1st argument (a general mapping) is not equal to the r\
 ange of the 2nd argument (a congruence)
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(classes);
-gap> Unbind(classx);
-gap> Unbind(classy);
-gap> Unbind(classz);
-gap> Unbind(cong);
-gap> Unbind(cong1);
-gap> Unbind(cong2);
-gap> Unbind(cong3);
-gap> Unbind(cong4);
-gap> Unbind(cong5);
-gap> Unbind(cong6);
-gap> Unbind(cong7);
-gap> Unbind(cong8);
-gap> Unbind(congs);
-gap> Unbind(elms);
-gap> Unbind(pairs);
-gap> Unbind(q);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

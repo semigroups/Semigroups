@@ -570,17 +570,19 @@
 <entry id="Anagnostopoulou-Merkouri2021aa"><article>
   <author>
     <name><first>Marina</first><last>Anagnostopoulou-Merkouri</last></name>
+    <name><first>Zak</first><last>Mesyan</last></name>
     <name><first>James D.</first><last>Mitchell</last></name>
   </author>
-  <title>Properties of Congruence Lattices of Finite Graph Inverse Semigroups</title>
-  <year>2021</year>
+  <title>Properties of congruence lattices of graph inverse semigroups</title>
+  <journal>International Journal of Algebra and Computation</journal>
+  <year>2023</year>
   <other type="arxiv">2108.08277</other>
 </article></entry>
-    
+
 <entry id="Petrich1968aa"><article>
   <author>
     <name><first>Mario</first><last>Petrich</last></name>
-  </author>  
+  </author>
   <title>The translational hull of a completely 0-simple semigroup</title>
   <journal>Glasgow Mathematical Journal</journal>
   <year>1968</year>
@@ -592,7 +594,7 @@
 <entry id="Petrich1970aa"><article>
   <author>
     <name><first>Mario</first><last>Petrich</last></name>
-  </author>  
+  </author>
   <title>The translational hull in semigroups and rings</title>
   <journal>Semigroup Forum</journal>
   <year>1970</year>
@@ -608,7 +610,7 @@
   <author>
     <name><first>Alfred H.</first><last>Clifford</last></name>
     <name><first>Mario</first><last>Petrich</last></name>
-  </author>  
+  </author>
   <title>Some classes of completely regular semigroups</title>
   <journal>Journal of Algebra</journal>
   <year>1977</year>

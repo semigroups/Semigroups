@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, cong, cong_by_ker_trace_threshold
 gap> START_TEST("Semigroups package: extreme/conginv.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -35,10 +37,6 @@ true
 gap> SemigroupIdealOfReesCongruence(cong);
 <inverse partial perm semigroup ideal of size 57500, rank 8 with
   57500 generators>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(cong);
 
 #
 gap> SEMIGROUPS.StopTest();

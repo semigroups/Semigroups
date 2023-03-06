@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, IsIsometryPP, L, R, S, acting, ccong, classx, classy, classz, cong
+#@local d, f, gens, h, i, inv, iso, iter, j, k, l, m, n, pairs, q, r, s, x, y, z
 gap> START_TEST("Semigroups package: extreme/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1016,27 +1019,6 @@ gap> Size(s);
 gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of size 5, rank 2 with 2 generators>>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(IsIsometryPP);
-gap> Unbind(L);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(d);
-gap> Unbind(f);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(hh);
-gap> Unbind(i);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(iter);
-gap> Unbind(j);
-gap> Unbind(l);
-gap> Unbind(m);
-gap> Unbind(r);
-gap> Unbind(s);
 
 # 
 gap> SEMIGROUPS.StopTest();

@@ -7,6 +7,12 @@
 ##
 #############################################################################
 ##
+
+#@local B, C, D, F, G, H, I, L, LL, M, M0, P, R, R1, R2, S, T, U, V, W, acting
+#@local bug, c, cong, contain, ec, es, f, file, g, gens, gns, hom, i, id, inv
+#@local iso, iter, latt, log, looking, lookingfor, map, mat, max, n, number, o
+#@local pair, pairs, r, regular, rel, rels, s, s1, s2, sgns, slist, small, t
+#@local tab, tuples, u, x, y, z
 gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1803,57 +1809,6 @@ gap> T := FullTransformationMonoid(2);;
 gap> cong := SemigroupCongruence(T, []);;
 gap> IsAssociativeElement(Elements(T / cong)[1]);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(B);
-gap> Unbind(D);
-gap> Unbind(F);
-gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(I);
-gap> Unbind(L);
-gap> Unbind(LL);
-gap> Unbind(M);
-gap> Unbind(P);
-gap> Unbind(R);
-gap> Unbind(R1);
-gap> Unbind(R2);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(U);
-gap> Unbind(V);
-gap> Unbind(c);
-gap> Unbind(cong);
-gap> Unbind(contain);
-gap> Unbind(ec);
-gap> Unbind(f);
-gap> Unbind(file);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(gns);
-gap> Unbind(hom);
-gap> Unbind(i);
-gap> Unbind(id);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(iter);
-gap> Unbind(latt);
-gap> Unbind(map);
-gap> Unbind(mat);
-gap> Unbind(max);
-gap> Unbind(n);
-gap> Unbind(o);
-gap> Unbind(pairs);
-gap> Unbind(rel);
-gap> Unbind(s);
-gap> Unbind(sgns);
-gap> Unbind(t);
-gap> Unbind(tab);
-gap> Unbind(tuples);
-gap> Unbind(u);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

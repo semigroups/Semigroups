@@ -1,15 +1,17 @@
 #############################################################################
 ##
 #W  extreme/semieunit.tst
-#Y  Copyright (C) 2016                                    Christopher Russell
+#Y  Copyright (C) 2016                                 Christopher Russell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+#@local BruteForceIsoCheck, InfoLevelInfoSmallsemi, e_unitary_semigroups
+#@local inv_semigroups, triples, x, y
 gap> START_TEST("Semigroups package: extreme/semieunit.tst");
 gap> LoadPackage("semigroups", false);;
-gap> LoadPackage("Digraphs", false);;
 gap> LoadPackage("smallsemi", false);;
 
 # Set info levels and user preferences
@@ -41,12 +43,7 @@ gap> Apply(triples, a -> BruteForceIsoCheck(a));;
 gap> false in triples;
 false
 
-#  SEMIGROUPS_UnbindVariables
-gap> Unbind(e_unitary_semigroups);
-gap> Unbind(inv_semigroups);
-gap> Unbind(triples);
-
-#E#
+#
 gap> SetInfoLevel(InfoSmallsemi, SEMIGROUPS.TestRec.InfoLevelInfoSmallsemi);
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/semieunit.tst");

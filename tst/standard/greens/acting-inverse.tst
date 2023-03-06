@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local D, L, R, S, acting, an, en, it, x, y
 gap> START_TEST("Semigroups package: standard/greens/acting-inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -537,15 +539,6 @@ gap> L := LClass(S, x);
 gap> AsSSortedList(L);;
 gap> Iterator(L);
 <iterator>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(L);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(e);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

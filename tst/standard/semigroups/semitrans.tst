@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local B, BruteForceInverseCheck, BruteForceIsoCheck, C, CC, D, DP, F
+#@local LoopIterator, M, Noop, R, S, S1, S2, T, TC, TestIterator, W, WW, acting
+#@local coll, gr, inv, iso, iter1, iter2, len, list, map, n, rels, valid, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semitrans.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2748,28 +2752,6 @@ Error, the argument (a semigroup) is not finite
 gap> IsomorphismTransformationSemigroup(MinimalIdeal(FreeBand(2)));
 <simple semigroup ideal of size 4, with 1 generator> -> 
 <transformation semigroup of size 4, degree 5 with 3 generators>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(B);
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(M);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(S1);
-gap> Unbind(S2);
-gap> Unbind(T);
-gap> Unbind(coll);
-gap> Unbind(gr);
-gap> Unbind(iso);
-gap> Unbind(iter1);
-gap> Unbind(iter2);
-gap> Unbind(map);
-gap> Unbind(n);
-gap> Unbind(rels);
-gap> Unbind(x);
-gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

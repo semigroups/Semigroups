@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local A, B, BruteForceInverseCheck, BruteForceIsoCheck, C, F, R, S, T, inv
+#@local map, rels, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semipbr.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2133,17 +2136,6 @@ gap> C > A;
 true
 gap> C > B;
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(map);
-gap> Unbind(rels);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

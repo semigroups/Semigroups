@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local f
 gap> START_TEST("Semigroups package: standard/elements/trans.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -50,9 +52,6 @@ Error, no 1st choice method found for `TransformationByImageAndKernel' on 2 ar\
 guments
 gap> TransformationByImageAndKernel([1 .. 4], [[1 .. 4]]);
 fail
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(M);
 
 #
 gap> SEMIGROUPS.StopTest();

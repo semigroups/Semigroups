@@ -8,6 +8,8 @@
 ##
 #############################################################################
 ##
+
+#@local S, a, b, blocks, x, y
 gap> START_TEST("Semigroups package: standard/elements/blocks.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -158,14 +160,6 @@ intObj method"
 # Test empty blocks
 gap> BLOCKS_NC([]);
 <empty blocks>
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(blocks);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

@@ -7,6 +7,12 @@
 ##
 #############################################################################
 ##
+
+#@local G, N, S, T, badCoset, class, class0, class1, class2, class3, classes
+#@local classother, colBlocks, cong, cong1, cong2, congs, congs1, congs12
+#@local congs13, congs19, congs24, congs25, congs28, congs3, congs31, congs7
+#@local congs9, enum, eq, g, i, ims, mat, n, nCoset, q, rowBlocks, s, t
+#@local trivialcong, uni, x, y, z, zero
 gap> START_TEST("Semigroups package: standard/congruences/congrms.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -689,39 +695,6 @@ gap> cong := RMSCongruenceByLinkedTriple(S, G, colBlocks, rowBlocks);;
 gap> Representative(RMSCongruenceClassByLinkedTriple(cong,
 > RightCoset(G, (1, 5)), 2, 3));
 (2,(),3)
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(badCoset);
-gap> Unbind(ccong);
-gap> Unbind(class);
-gap> Unbind(class0);
-gap> Unbind(class1);
-gap> Unbind(class2);
-gap> Unbind(class3);
-gap> Unbind(classes);
-gap> Unbind(classother);
-gap> Unbind(colBlocks);
-gap> Unbind(cong);
-gap> Unbind(cong1);
-gap> Unbind(cong2);
-gap> Unbind(congs);
-gap> Unbind(congs1);
-gap> Unbind(eq);
-gap> Unbind(g);
-gap> Unbind(ims);
-gap> Unbind(mat);
-gap> Unbind(n);
-gap> Unbind(nCoset);
-gap> Unbind(q);
-gap> Unbind(rowBlocks);
-gap> Unbind(t);
-gap> Unbind(uni);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(zero);
 
 #
 gap> SEMIGROUPS.StopTest();

@@ -8,6 +8,8 @@
 ##
 #############################################################################
 ##
+
+#@local D, DD, G, H, HH, L, LL, R, S, T, acting, an, f, g, gens, inv, iso, s, x
 gap> START_TEST("Semigroups package: extreme/semibipart.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2829,25 +2831,6 @@ gap> ForAll(S, x -> x ^ iso in Range(iso));
 true
 gap> ForAll(S, x -> (x ^ iso) ^ inv = x);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(DD);
-gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(HH);
-gap> Unbind(L);
-gap> Unbind(LL);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(s);
-gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();

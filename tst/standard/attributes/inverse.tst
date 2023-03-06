@@ -7,6 +7,9 @@
 #
 #############################################################################
 ##
+
+#@local D, I, S, T, W, acting, an, elts, es, f, foo, gens, h, iso, jid, n, reps
+#@local small, x
 gap> START_TEST("Semigroups package: standard/attributes/inverse.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1056,21 +1059,6 @@ gap> S := InverseSemigroup([
 gap> S := IdempotentGeneratedSubsemigroup(S);;
 gap> HasIsIdempotentGenerated(S) and IsIdempotentGenerated(S);
 true
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(I);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(W);
-gap> Unbind(f);
-gap> Unbind(foo);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(iso);
-gap> Unbind(jid);
-gap> Unbind(reps);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

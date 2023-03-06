@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local I, S, acting, en
 gap> START_TEST("Semigroups package: standard/ideals/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 

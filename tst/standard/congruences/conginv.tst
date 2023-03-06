@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local S, T, ccong, classx, classy, classz, cong, cong1, cong2
+#@local cong_by_ker_trace_threshold, g, min, pair, pair1, pair2, pairs, q
+#@local ttrace, utrace, x, y, z
 gap> START_TEST("Semigroups package: standard/congruences/conginv.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -282,29 +286,6 @@ gap> cong := SemigroupCongruence(S, pairs);
  with 2 generators> with congruence pair (12,3)>
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(ccong);
-gap> Unbind(classx);
-gap> Unbind(classy);
-gap> Unbind(classz);
-gap> Unbind(cong);
-gap> Unbind(cong1);
-gap> Unbind(cong2);
-gap> Unbind(g);
-gap> Unbind(min);
-gap> Unbind(pair);
-gap> Unbind(pair1);
-gap> Unbind(pair2);
-gap> Unbind(pairs);
-gap> Unbind(q);
-gap> Unbind(ttrace);
-gap> Unbind(utrace);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 
 # 
 gap> SEMIGROUPS.StopTest();

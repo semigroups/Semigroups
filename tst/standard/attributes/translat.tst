@@ -7,6 +7,11 @@
 ##
 #############################################################################
 ##
+
+#@local C, D, G, H, HS, I, L, LS, Lht, Ll, Lr, M, R, RS, RT, Rht, Rl, Rr, S, T
+#@local a, b, bruteforcetranshull, d, dclasses, f, flag, g, h, ht, i, iso, j, l
+#@local l2, lclasses, lgpfunc, linkedpairs, lt, mat, r, r2, rclasses, reps
+#@local rgpfunc, rt, s, t, x
 gap> START_TEST("Semigroups package: standard/translat.tst");
 gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
@@ -789,38 +794,6 @@ gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> NrBitranslations(S);
 14977
 
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(a);
-gap> Unbind(b);
-gap> Unbind(f);
-gap> Unbind(G);
-gap> Unbind(g);
-gap> Unbind(L);
-gap> Unbind(Ll);
-gap> Unbind(Lr);
-gap> Unbind(LS);
-gap> Unbind(l);
-gap> Unbind(l2);
-gap> Unbind(lgpfunc);
-gap> Unbind(lt);
-gap> Unbind(H);
-gap> Unbind(HS);
-gap> Unbind(I);
-gap> Unbind(h);
-gap> Unbind(mat);
-gap> Unbind(R);
-gap> Unbind(RS);
-gap> Unbind(RT);
-gap> Unbind(Rl);
-gap> Unbind(r);
-gap> Unbind(r2);
-gap> Unbind(rgpfunc);
-gap> Unbind(rt);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(SEMIGROUPS.bruteforcetranshull);
-gap> Unbind(x);
-
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/translat.tst");

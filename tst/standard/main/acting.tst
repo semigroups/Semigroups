@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local R, S, acting, f, gens, iter, r, s, x
 gap> START_TEST("Semigroups package: standard/main/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -403,15 +405,6 @@ gap> MinimalIdeal(S);
 <transformation group of degree 3>
 gap> ConstantTransformation(3, 1) in S;
 false
-
-# UnbindVariables
-gap> Unbind(S);
-gap> Unbind(f);
-gap> Unbind(gens);
-gap> Unbind(iter);
-gap> Unbind(r);
-gap> Unbind(s);
-gap> Unbind(x);
 
 #
 gap> SEMIGROUPS.StopTest();

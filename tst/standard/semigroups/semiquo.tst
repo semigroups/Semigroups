@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local G, H, I, J, Q, R, S, T, cong, gens, images, map, pair
 gap> START_TEST("Semigroups package: standard/semigroups/semiquo.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -270,16 +272,6 @@ e over <quotient of <2-sided semigroup congruence over <transformation
     1 generating pairs>> with 1 generating pairs> ]
 gap> Size(Q);
 2
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(Q);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(cong);
-gap> Unbind(pair);
 
 #
 gap> SEMIGROUPS.StopTest();

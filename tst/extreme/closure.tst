@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+#@local S, T, a, acting, gens, i, s, t, x
 gap> START_TEST("Semigroups package: extreme/closure.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -644,16 +646,6 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 21
 9
 22
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(a);
-gap> Unbind(gens);
-gap> Unbind(i);
-gap> Unbind(s);
-gap> Unbind(t);
-gap> Unbind(x);
 
 # 
 gap> SEMIGROUPS.StopTest();

@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local M, S, coll, ht, mat, mat2, r1, r2, rs, x, y, z
 gap> START_TEST("Semigroups package: standard/elements/ffmat.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -341,9 +343,6 @@ gap> RowSpaceTransformation(x);
 gap> RowSpaceTransformationInv(x);
 [ [ 0*Z(2), Z(2)^0, 0*Z(2) ], [ Z(2)^0, Z(2^2)^2, 0*Z(2) ], 
   [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(M);
 
 #
 gap> SEMIGROUPS.StopTest();

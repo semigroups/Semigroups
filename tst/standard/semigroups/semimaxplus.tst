@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, F, S, T, i, inv, map, mat
+#@local rels, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semimaxplus.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -645,9 +648,6 @@ gap> Size(S);
 19683
 gap> S := FullTropicalMinPlusMonoid(4, 3);
 Error, the 1st argument (dimension) must be 2 or 3
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
 
 #
 gap> SEMIGROUPS.StopTest();

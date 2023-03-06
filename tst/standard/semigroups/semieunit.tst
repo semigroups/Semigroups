@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local G, G1, G2, G3, M, M1, M2, M3, M4, M5, M6, M7, Mps, S, S1, S2, T, act
+#@local attr, cov, elms, gr, iso, ps, s, str, x, x1, x2, x3, x4, y, y1, y2, y3
+#@local y4
 gap> START_TEST("Semigroups package: standard/semigroups/semieunit.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -330,25 +334,6 @@ true
 gap> S = Range(cov);
 true
 
-#  SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(act);
-gap> Unbind(cov);
-gap> Unbind(elms);
-gap> Unbind(G);
-gap> Unbind(M);
-gap> Unbind(Mps);
-gap> Unbind(ps);
-gap> Unbind(S);
-gap> Unbind(x);
-gap> Unbind(x1);
-gap> Unbind(x2);
-gap> Unbind(x3);
-gap> Unbind(y);
-gap> Unbind(y1);
-gap> Unbind(y2);
-gap> Unbind(y3);
-
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigroups/semieunit.tst");

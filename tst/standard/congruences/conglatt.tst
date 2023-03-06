@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, S, coll, congs, info, l, latt, min, minl, minr, numbers, pair1
+#@local pair2, pair3, poset, restriction, x
 gap> START_TEST("Semigroups package: standard/congruences/conglatt.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -415,21 +418,6 @@ gap> x := DigraphSinks(D)[1];
 2
 gap> NrEquivalenceClasses(RightCongruencesOfSemigroup(S)[x]);
 1
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(coll);
-gap> Unbind(congs);
-gap> Unbind(l);
-gap> Unbind(latt);
-gap> Unbind(min);
-gap> Unbind(minl);
-gap> Unbind(minr);
-gap> Unbind(pair1);
-gap> Unbind(pair2);
-gap> Unbind(pair3);
-gap> Unbind(poset);
-gap> Unbind(restriction);
 
 #
 gap> SEMIGROUPS.StopTest();

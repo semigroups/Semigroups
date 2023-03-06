@@ -8,6 +8,9 @@
 ##
 #############################################################################
 ##
+
+#@local ElementNumber, G, Length, N, NumberElement, S, an, bp, classes
+#@local classes2, e, elts, enum, f, filename, g, gens, l, n, r, triples, x, y
 gap> START_TEST("Semigroups package: standard/elements/bipart.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -774,23 +777,6 @@ gap> BipartitionByIntRep(['a', 'a']);
 Error, the items in the argument (a list) must be positive integers
 gap> BipartitionByIntRep(['a']);
 Error, the degree of a bipartition must be even, found 1
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(G);
-gap> Unbind(N);
-gap> Unbind(S);
-gap> Unbind(bp);
-gap> Unbind(classes);
-gap> Unbind(classes2);
-gap> Unbind(e);
-gap> Unbind(elts);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(l);
-gap> Unbind(r);
-gap> Unbind(triples);
-gap> Unbind(x);
-gap> Unbind(y);
 
 # 
 gap> SEMIGROUPS.StopTest();

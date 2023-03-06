@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, F, G, G1, G2, R, S, S1, S2
+#@local base, base1, base2, conj, inv, iso, map, p1, p2, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/grpperm.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -572,18 +575,6 @@ gap> OnTuples(base2, p1);
 [ 10, 9, 12, 3 ]
 gap> OnTuples(base2, p2);
 [ 10, 9, 12, 3 ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceInverseCheck);
-gap> Unbind(BruteForceIsoCheck);
-gap> Unbind(F);
-gap> Unbind(G);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(iso);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(map);
 
 #
 gap> SEMIGROUPS.StopTest();

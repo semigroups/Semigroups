@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local D, H, K18g, L, P, a1, a2, a3, a4, a5, a6, acting, cosets, d, data, dd
+#@local e, enum, f, g, gens, h, hh, i, iter, l, lambda_schutz, lambda_stab, m
+#@local o, p, r, rep, reps, rho_schutz, rho_stab, rr, s, scc, schutz
 gap> START_TEST("Semigroups package: extreme/misc.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -4226,44 +4230,6 @@ gap> NrHClasses(r);
 20
 gap> Number(HClassReps(s), x -> x in r);
 20
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(H);
-gap> Unbind(K18g);
-gap> Unbind(L);
-gap> Unbind(P);
-gap> Unbind(a1);
-gap> Unbind(a2);
-gap> Unbind(a3);
-gap> Unbind(a4);
-gap> Unbind(a5);
-gap> Unbind(a6);
-gap> Unbind(cosets);
-gap> Unbind(d);
-gap> Unbind(data);
-gap> Unbind(dd);
-gap> Unbind(e);
-gap> Unbind(enum);
-gap> Unbind(f);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(hh);
-gap> Unbind(i);
-gap> Unbind(iso);
-gap> Unbind(iter);
-gap> Unbind(l);
-gap> Unbind(m);
-gap> Unbind(o);
-gap> Unbind(p);
-gap> Unbind(r);
-gap> Unbind(rep);
-gap> Unbind(reps);
-gap> Unbind(rr);
-gap> Unbind(s);
-gap> Unbind(schutz);
-gap> Unbind(stab);
 
 #
 gap> SEMIGROUPS.StopTest();

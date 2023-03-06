@@ -7,6 +7,9 @@
 ##
 #############################################################################
 ##
+
+#@local D, D1, D2, H, I, L, L1, L2, R, R1, R2, S, T, acting, en, it, nr
+#@local regular, x
 gap> START_TEST("Semigroups package: standard/greens/acting-regular.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -387,14 +390,6 @@ gap> Position(en, Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]]));
 fail
 gap> en[10000];
 fail
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(D);
-gap> Unbind(H);
-gap> Unbind(L);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(e);
 
 # 
 gap> SEMIGROUPS.StopTest();

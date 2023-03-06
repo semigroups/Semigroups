@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local C, I, J, K, S, T, c, c1, c2, c3, c4, cc, ccong, ci, cj, ck, class1
+#@local class2, cong, i1, i2, i3, i4, im, pairs, t, tclass, x, xclass, xxclass
+#@local y, yclass, z
 gap> START_TEST("Semigroups package: standard/congruences/congrees.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -278,40 +282,6 @@ gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> C := RightSemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(C);
 false
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(I);
-gap> Unbind(J);
-gap> Unbind(K);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(c);
-gap> Unbind(c1);
-gap> Unbind(c2);
-gap> Unbind(c3);
-gap> Unbind(c4);
-gap> Unbind(cc);
-gap> Unbind(ccong);
-gap> Unbind(ci);
-gap> Unbind(cj);
-gap> Unbind(ck);
-gap> Unbind(class1);
-gap> Unbind(class2);
-gap> Unbind(cong);
-gap> Unbind(i1);
-gap> Unbind(i2);
-gap> Unbind(i3);
-gap> Unbind(i4);
-gap> Unbind(im);
-gap> Unbind(pairs);
-gap> Unbind(t);
-gap> Unbind(tclass);
-gap> Unbind(x);
-gap> Unbind(xclass);
-gap> Unbind(xxclass);
-gap> Unbind(y);
-gap> Unbind(yclass);
-gap> Unbind(z);
 
 #
 gap> SEMIGROUPS.StopTest();

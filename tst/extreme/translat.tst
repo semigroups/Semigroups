@@ -7,6 +7,8 @@
 ##
 #############################################################################
 ##
+
+#@local G, S, h, l, mat, r, s, t
 gap> START_TEST("Semigroups package: extreme/translat.tst");
 gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
@@ -37,14 +39,6 @@ gap> S := ReesMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
 444
 
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(G);
-gap> Unbind(l);
-gap> Unbind(mat);
-gap> Unbind(r);
-gap> Unbind(S);
-gap> Unbind(t);
-
-#E#
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/translat.tst");

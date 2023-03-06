@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local A, D, G, H, M, R, S, T, U, UU, V, a, acting, an, comps, d, e, eV, f, f1
+#@local f2, f3, f4, f5, f6, f7, f8, first_occurrence, g, gens, h, i, id, idems
+#@local inj, inv, iso, l, map, mat, reps, t1, t2, x, y, z, zero
 gap> START_TEST("Semigroups package: extreme/semirms.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1081,47 +1085,6 @@ gap> MatrixEntries(R);
   <bipartition: [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ]>, 
   <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
   <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(A);
-gap> Unbind(D);
-gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(M);
-gap> Unbind(R);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(U);
-gap> Unbind(UU);
-gap> Unbind(V);
-gap> Unbind(a);
-gap> Unbind(comps);
-gap> Unbind(d);
-gap> Unbind(e);
-gap> Unbind(eV);
-gap> Unbind(f);
-gap> Unbind(f1);
-gap> Unbind(f5);
-gap> Unbind(g);
-gap> Unbind(gens);
-gap> Unbind(h);
-gap> Unbind(i);
-gap> Unbind(id);
-gap> Unbind(idems);
-gap> Unbind(inj);
-gap> Unbind(inv);
-gap> Unbind(iso);
-gap> Unbind(l);
-gap> Unbind(map);
-gap> Unbind(mat);
-gap> Unbind(occurrence);
-gap> Unbind(reps);
-gap> Unbind(t1);
-gap> Unbind(t2);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(zero);
 
 #
 gap> SEMIGROUPS.StopTest();

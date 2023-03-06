@@ -7,6 +7,10 @@
 ##
 #############################################################################
 ##
+
+#@local BruteForceInverseCheck, BruteForceIsoCheck, C, F, H1, H2, I, J, L, R, S
+#@local T, V, acting, empty_map, en, f, f1, f2, g, h, inv, iso, map, rels, rho
+#@local s, symmetric, x, y
 gap> START_TEST("Semigroups package: standard/semigroups/semipperm.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2159,26 +2163,6 @@ gap> List(GeneratingPairsOfSemigroupCongruence(C), x -> OnTuples(x, map));
 [ [ <empty partial perm>, 
       <identity partial perm on 
         [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]> ] ]
-
-# SEMIGROUPS_UnbindVariables
-gap> Unbind(F);
-gap> Unbind(H1);
-gap> Unbind(J);
-gap> Unbind(S);
-gap> Unbind(T);
-gap> Unbind(V);
-gap> Unbind(enum);
-gap> Unbind(f);
-gap> Unbind(f1);
-gap> Unbind(f2);
-gap> Unbind(h);
-gap> Unbind(iso);
-gap> Unbind(map);
-gap> Unbind(rho);
-gap> Unbind(s);
-gap> Unbind(sets);
-gap> Unbind(x);
-gap> Unbind(y);
 
 #
 gap> SEMIGROUPS.StopTest();

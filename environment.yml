@@ -1,0 +1,7 @@
+name: libsemigroups
+
+channels:
+  - conda-forge
+
+dependencies:
+  - libsemigroups
