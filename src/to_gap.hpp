@@ -97,6 +97,7 @@ namespace gapbind14 {
         }
         AssPlist(result, i + 1, row);
       }
+      SEMIGROUPS_ASSERT(LEN_PLIST(result) == n + extra_capacity);
       if (gap_t != nullptr) {
         RetypeBag(result, T_POSOBJ);
         SET_TYPE_POSOBJ(result, gap_t);
@@ -248,7 +249,6 @@ namespace gapbind14 {
             return (y == NEGATIVE_INFINITY ? to_gap<NegativeInfinity>()(y)
                                            : to_gap<scalar_type>()(y));
           });
-      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 1);
       SET_ELM_PLIST(result,
                     x.number_of_rows() + 1,
                     to_gap<scalar_type>()(matrix_threshold(x)));
@@ -273,7 +273,6 @@ namespace gapbind14 {
             return (y == POSITIVE_INFINITY ? to_gap<PositiveInfinity>()(y)
                                            : to_gap<scalar_type>()(y));
           });
-      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 1);
       SET_ELM_PLIST(result,
                     x.number_of_rows() + 1,
                     to_gap<scalar_type>()(matrix_threshold(x)));
@@ -314,7 +313,6 @@ namespace gapbind14 {
       using libsemigroups::matrix_threshold;
 
       auto result = detail::make_matrix(x, NTPMatrixType, 2);
-      SEMIGROUPS_ASSERT(LEN_PLIST(result) == x.number_of_rows() + 2);
       SET_ELM_PLIST(result,
                     x.number_of_rows() + 1,
                     to_gap<scalar_type>()(matrix_threshold(x)));

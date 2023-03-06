@@ -1,0 +1,37 @@
+name: "Configuration options"
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "main"
+      - "stable-*.*"
+jobs:
+  enable-debug:
+    name: "stable-4.12 / ubuntu / 64-bit"
+    runs-on: "ubuntu-latest"
+    env:
+      GAPBRANCH: "stable-4.12"
+      ABI: 64
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Setup ccache"
+        uses: Chocobo1/setup-ccache-action@v1
+        with:
+          update_packager_index: false
+          override_cache_key: ${{ runner.os }}-$GAPBRANCH-$ABI-${{ github.ref }}
+          override_cache_key_fallback: ${{ runner.os }}-$GAPBRANCH-$ABI
+      - name: "Install GAP and clone/compile necessary packages"
+        uses: gap-actions/setup-gap@v2
+        env:
+          # We don't understand why this is necessary. Hopefully it can be
+          # removed in the fullness of time.
+          LDFLAGS: "-pthread"
+        with:
+          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+      - name: "Build Semigroups"
+        uses: gap-actions/build-pkg@v1
+        with:
+          CONFIGFLAGS: --disable-hpcombi --enable-debug
+      - name: "Run Semigroups package's tst/teststandard.g"
+        uses: gap-actions/run-pkg-tests@v2
