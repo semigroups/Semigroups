@@ -23,6 +23,18 @@ fi
 
 notice_it "libsemigroups v$VERS is required by this version of Semigroups"
 
+if [ -f "config.log" ] ; then
+  if grep -q "\.\/configure.*\-\-with\-external\-libsemigroups" config.log ; then
+    notice_it "Configuration flag \"--with-external-libsemigroups\" found in config.log"
+    notice_it "Not downloading libsemigroups, no further prerequisites required"
+    exit 0
+  fi
+elif [[ ! -z "${DO_NOT_DOWNLOAD_LIBSEMIGROUPS}" ]]; then
+  notice_it "Environment variable DO_NOT_DOWNLOAD_LIBSEMIGROUPS is defined"
+  notice_it "Not downloading libsemigroups, no further prerequisites required"
+  exit 0
+fi
+
 if [ -d "$LIBS_DIR" ] && [ "$(ls -A $LIBS_DIR)" ]; then
   notice_it "The libsemigroups directory exists and is non-empty"
   if [ -f "$LIBS_DIR/.VERSION" ]; then
