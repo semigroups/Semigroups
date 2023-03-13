@@ -69,7 +69,7 @@
         from version 3.0.0, it is necessary to compile the &SEMIGROUPS; package.
         &SEMIGROUPS; uses the
         <URL Text="libsemigroups">
-          https://libsemigroups.github.io/libsemigroups/
+          https://libsemigroups.github.io/
         </URL>
         C++ library, which requires a compiler implementing the C++14 standard.
         Inside the <F>pkg/semigroups-&VERSION;</F> directory, in your terminal
