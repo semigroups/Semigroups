@@ -1506,7 +1506,7 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [Semigroups]: https://gap-packages.github.io/Semigroups
 [Smallsemi]: https://gap-packages.github.io/smallsemi
 [io]: https://gap-packages.github.io/io
-[libsemigroups]: https://libsemigroups.github.io/libsemigroups
+[libsemigroups]: https://libsemigroups.github.io/
 [orb package]: https://gap-packages.github.io/orb
 [orb]: https://gap-packages.github.io/orb
 [Bitbucket issue tracker]: https://bitbucket.org/james-d-mitchell/semigroups/issues

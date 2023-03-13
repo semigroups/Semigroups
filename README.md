@@ -96,7 +96,7 @@ Both [orb][] and [Semigroups][] perform better when [orb][] is compiled, so comp
 Enjoy!
 
 [Semigroups]: https://semigroups.github.io/Semigroups
-[libsemigroups]: https://libsemigroups.github.io/libsemigroups
+[libsemigroups]: https://libsemigroups.github.io/
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
 [orb]: https://gap-packages.github.io/orb
 [Digraphs]: https://digraphs.github.io/Digraphs
