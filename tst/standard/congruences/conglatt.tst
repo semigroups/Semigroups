@@ -40,8 +40,8 @@ gap> S := OrderEndomorphisms(2);;
 gap> CongruencesOfSemigroup(S);
 [ <2-sided semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 0 generating pairs>, 
-  <2-sided semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
+  <universal semigroup congruence over <regular transformation monoid 
+     of size 3, degree 2 with 2 generators>>, 
   <2-sided semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 1 generating pairs> ]
 gap> l := LatticeOfCongruences(S);
@@ -131,6 +131,9 @@ gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 >                                    Transformation([2, 2, 2]),
 >                                    Transformation([3, 3, 3])]);;
+gap> PosetOfPrincipalLeftCongruences(S, Combinations(AsList(restriction), 2));
+<poset of 3 left congruences over <transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 gap> latt := LatticeOfLeftCongruences(S, Combinations(AsList(restriction), 2));
 <lattice of 5 left congruences over <transformation semigroup of size 11, 
  degree 3 with 2 generators>>
@@ -157,8 +160,8 @@ gap> InNeighbours(latt);
 [ [ 1 ], [ 1, 2 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, Combinations(restriction, 2));
-<lattice of 1 two-sided congruences over <transformation semigroup 
- of size 11, degree 3 with 2 generators>>
+<lattice of 1 two-sided congruence over <transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 gap> InNeighbours(latt);
 [ [ 1 ] ]
 
@@ -209,10 +212,10 @@ PosetOfCongruences(
     [ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 3, 1 ] ) ] ] ), 
   SemigroupCongruence( Semigroup( [ Transformation( [ 1, 3, 1 ] ), 
       Transformation( [ 2, 3, 3 ] ) ] ), 
-    [ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ) ] ] ), 
+    [ [ Transformation( [ 1, 3, 1 ] ), Transformation( [ 3, 1, 3 ] ) ] ] ), 
   SemigroupCongruence( Semigroup( [ Transformation( [ 1, 3, 1 ] ), 
       Transformation( [ 2, 3, 3 ] ) ] ), 
-    [ [ Transformation( [ 1, 3, 1 ] ), Transformation( [ 3, 1, 3 ] ) ] ] ) ] )
+    [ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ) ] ] ) ] )
 gap> Size(PrincipalCongruencesOfSemigroup(S));
 3
 
@@ -307,7 +310,7 @@ gap> Size(minr);
 9
 gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
 [ 1, 2, 3 ]
-gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c)) in [[1], [5]];
+gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c)) in [[7], [8]];
 true
 
 # Biggish example which forces garbage collection
@@ -325,15 +328,12 @@ gap> pair3 := [PartialPerm([1, 2], [1, 2]), PartialPerm([1, 2], [2, 1])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
-gap> l := JoinSemilatticeOfCongruences(PosetOfCongruences(coll),
-> WrappedRightCongruence);
+gap> l := JoinSemilatticeOfCongruences(coll);
 <poset of 4 right congruences over <symmetric inverse monoid of degree 2>>
 gap> IsIsomorphicDigraph(l, DigraphFromDigraph6String("&ClRC"));
 true
 gap> JoinSemilatticeOfCongruences(coll);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `JoinSemilatticeOfCongruences' on 1 argu\
-ments
+<poset of 4 right congruences over <symmetric inverse monoid of degree 2>>
 
 # MinimalCongruences
 gap> S := SymmetricInverseMonoid(2);;
@@ -352,22 +352,19 @@ gap> poset := LatticeOfCongruences(S);
  <symmetric inverse monoid of degree 2>>
 gap> IsIsomorphicDigraph(poset, DigraphFromDigraph6String("&C|qK"));
 true
-gap> Print(l, "\n");
+gap> Print(poset, "\n");
 PosetOfCongruences( 
-[ RightSemigroupCongruence( InverseMonoid( 
-    [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ], 
-      [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ), 
-  RightSemigroupCongruence( InverseMonoid( 
-    [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
+[ SemigroupCongruence( InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
+      PartialPerm( [ 1 ], [ 1 ] ) ] ), [  ] ), 
+  SemigroupCongruence( InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
+      PartialPerm( [ 1 ], [ 1 ] ) ] ), 
+    [ [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ), 
+  SemigroupCongruence( InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
+      PartialPerm( [ 1 ], [ 1 ] ) ] ), 
     [ [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), PartialPerm( [ 1, 2 ], [ 2, 1 ] ) 
-         ] ] ), RightSemigroupCongruence( InverseMonoid( 
+         ] ] ), SemigroupCongruence( InverseMonoid( 
     [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 1 ] ) ] ] ), 
-  RightSemigroupCongruence( InverseMonoid( 
-    [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ), 
-    [ [ PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ] ] ) 
- ] )
+    [ [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1 ], [ 1 ] ) ] ] ) ] )
 gap> MinimalCongruences(poset);
 [ <2-sided semigroup congruence over <symmetric inverse monoid of degree 2> wi\
 th 0 generating pairs> ]
@@ -394,8 +391,9 @@ gap> CongruencesOfPoset(poset);
 [  ]
 gap> DigraphNrVertices(poset);
 0
-gap> JoinSemilatticeOfCongruences(poset, JoinSemigroupCongruences);
-<empty congruence poset>
+gap> JoinSemilatticeOfCongruences(poset);
+Error, cannot form the join semilattice of an empty congruence poset without t\
+he underlying semigroup being set
 gap> MinimalCongruences(poset);
 [  ]
 
@@ -414,8 +412,7 @@ gap> S := InverseSemigroup(PartialPerm([1, 3], [2, 4]),
 >                          PartialPerm([1], [1]));;
 gap> D := DigraphReflexiveTransitiveReduction(LatticeOfRightCongruences(S));
 <immutable digraph with 22 vertices, 49 edges>
-gap> x := DigraphSinks(D)[1];
-2
+gap> x := DigraphSinks(D)[1];;
 gap> NrEquivalenceClasses(RightCongruencesOfSemigroup(S)[x]);
 1
 

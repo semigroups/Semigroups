@@ -23,53 +23,74 @@
 ##
 
 #############################################################################
+## Helper function for creating CongruencePosets
+#############################################################################
+
+SEMIGROUPS.MakeCongruencePoset := function(poset, congs)
+  if congs <> fail then
+    SetCongruencesOfPoset(poset, congs);
+    SetDigraphVertexLabels(poset, congs);
+    if not IsEmpty(congs) then
+      SetUnderlyingSemigroupOfCongruencePoset(poset, Range(congs[1]));
+    fi;
+  fi;
+  SetFilterObj(poset, IsCongruencePoset);
+  return poset;
+end;
+
+#############################################################################
 ## The main three functions
 #############################################################################
 
-SEMIGROUPS.PrincipalXCongruencePosetNC :=
+SEMIGROUPS.PrincipalXCongruencesNC :=
   function(S, pairs, SemigroupXCongruence)
-    local total, congs, nrcongs, children, parents, last_collected, nr,
-    badcong, newchildren, newparents, newcong, pair1, poset, pair, i, c, p;
+    local total, words, congs, congs_discrim, nrcongs, last_collected, nr,
+    keep, newcong, m, newcongdiscrim, i, old_pair, new_pair;
 
-  # Get all the unique principal congs
-  if IsList(pairs) then
-    total := Length(pairs);
-  else
-    total := Binomial(Size(S), 2);
-  fi;
+  Assert(1, IsListOrCollection(pairs));
+  total := Size(pairs);
+
   Info(InfoSemigroups, 1, "Finding principal congruences . . .");
-  congs := [];      # List of all congs found so far
+  words := List([1 .. Int(Log2(Float(Size(S))))], x -> Random(S));
+  words := List(words, x -> MinimalFactorization(S, x));
+
+  congs := [];      # List of all congs found so far, partitioned by nr classes
+  congs_discrim := [];
+
   nrcongs := 0;     # Number of congs found so far
-  children := [];   # List of lists of children
-  parents := [];    # List of lists of parents
   last_collected := 0;
   nr := 0;
-  for pair in pairs do
+  for new_pair in pairs do
     nr := nr + 1;
-    if pair[1] = pair[2] then
+    if new_pair[1] = new_pair[2] then
       continue;
     fi;
-    badcong := false;
-    newchildren := [];  # Children of newcong
-    newparents := [];   # Parents of newcong
-    newcong := SemigroupXCongruence(S, pair);
-    for i in [1 .. Length(congs)] do
-      pairs := GeneratingPairsOfLeftRightOrTwoSidedCongruence(congs[i]);
-      if not IsEmpty(pairs) then
-        pair1 := pairs[1];
-        if CongruenceTestMembershipNC(congs[i], pair[1], pair[2]) then
-          if CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
-            # This is not a new cong - drop it!
-            badcong := true;
-            break;
-          else
-            Add(newparents, i);
-          fi;
-        elif CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
-          Add(newchildren, i);
+    keep := true;
+    newcong := SemigroupXCongruence(S, [new_pair]);
+    m := NrEquivalenceClasses(newcong);
+    newcongdiscrim := List(words, w -> CongruenceWordToClassIndex(newcong, w));
+    if not IsBound(congs[m]) then
+      congs[m] := [newcong];
+      congs_discrim[m] := [newcongdiscrim];
+      nrcongs := nrcongs + 1;
+      continue;
+    fi;
+    i := PositionSorted(congs_discrim[m], newcongdiscrim);
+    while i <= Length(congs_discrim[m])
+         and congs_discrim[m][i] = newcongdiscrim do
+      old_pair := GeneratingPairsOfLeftRightOrTwoSidedCongruence(congs[m][i]);
+      if not IsEmpty(old_pair) then
+        old_pair := old_pair[1];
+        if CongruenceTestMembershipNC(congs[m][i], new_pair[1], new_pair[2])
+            and CongruenceTestMembershipNC(newcong, old_pair[1], old_pair[2])
+            then
+          keep := false;
+          break;
         fi;
       fi;
+      i := i + 1;
     od;
+
     if nr > last_collected + 1999 then
       Info(InfoSemigroups,
            1,
@@ -80,101 +101,22 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
       last_collected := nr;
       GASMAN("collect");
     fi;
-    if not badcong then
+    if keep then
       nrcongs := nrcongs + 1;
-      congs[nrcongs] := newcong;
-      for c in newchildren do
-        Add(parents[c], nrcongs);
-      od;
-      for p in newparents do
-        Add(children[p], nrcongs);
-      od;
-      Add(newchildren, nrcongs);  # Include loops (reflexive)
-      Add(newparents, nrcongs);
-      children[nrcongs] := newchildren;
-      parents[nrcongs] := newparents;
+      InsertElmList(congs[m], i, newcong);
+      InsertElmList(congs_discrim[m], i, newcongdiscrim);
     fi;
   od;
   Info(InfoSemigroups,
        1,
        StringFormatted("Found {} principal congruences in total!",
-                       Length(parents)));
+                       nrcongs));
 
-  # We are done: make the object and return
-  poset := Digraph(parents);
-  SetInNeighbours(poset, children);
-  SetCongruencesOfPoset(poset, congs);
-  SetDigraphVertexLabels(poset, congs);
-  SetUnderlyingSemigroupOfCongruencePoset(poset, S);
-  SetFilterObj(poset, IsCongruencePoset);
-  return poset;
+  return Flat(congs);
 end;
 
-InstallMethod(PosetOfCongruences, "for a list or collection",
-[IsListOrCollection],
-function(coll)
-  local congs, nrcongs, children, parents, i, ignore, j, poset;
-  congs := AsList(coll);
-  nrcongs := Length(congs);
-
-  # Setup children and parents lists
-  children := [];
-  parents := [];
-  for i in [1 .. nrcongs] do
-    children[i] := Set([i]);
-    parents[i] := Set([i]);
-  od;
-
-  # Find children of each cong in turn
-  for i in [1 .. nrcongs] do
-    # Ignore known parents
-    ignore := BlistList([1 .. nrcongs], [parents[i]]);
-    for j in [1 .. nrcongs] do
-      if not ignore[j] and IsSubrelation(congs[i], congs[j]) then
-        AddSet(children[i], j);
-        AddSet(parents[j], i);
-      fi;
-    od;
-  od;
-
-  # We are done: make the object and return
-  poset := Digraph(parents);
-  SetInNeighbours(poset, children);
-  SetCongruencesOfPoset(poset, congs);
-  SetDigraphVertexLabels(poset, congs);
-  if nrcongs > 0 then
-    SetUnderlyingSemigroupOfCongruencePoset(poset, Range(congs[1]));
-  fi;
-  SetFilterObj(poset, IsCongruencePoset);
-  return poset;
-end);
-
-SEMIGROUPS.AddTrivialCongruence := function(poset, SemigroupXCongruence)
-  local S, children, parents, congs, nrcongs, i;
-  # Extract the info
-  S := UnderlyingSemigroupOfCongruencePoset(poset);
-  children := InNeighboursMutableCopy(poset);
-  parents := OutNeighboursMutableCopy(poset);
-  congs := ShallowCopy(CongruencesOfPoset(poset));
-
-  # Add the trivial congruence
-  nrcongs := Length(congs) + 1;
-  Add(congs, SemigroupXCongruence(S, []), 1);
-  children := Concatenation([[]], children + 1);
-  parents := Concatenation([[1 .. nrcongs]], parents + 1);
-  for i in [1 .. nrcongs] do
-    Add(children[i], 1, 1);
-  od;
-
-  # Make the object and return
-  poset := Digraph(parents);
-  SetInNeighbours(poset, children);
-  SetCongruencesOfPoset(poset, congs);
-  SetDigraphVertexLabels(poset, congs);
-  SetUnderlyingSemigroupOfCongruencePoset(poset, S);
-  SetFilterObj(poset, IsCongruencePoset);
-  return poset;
-end;
+########################################################################
+########################################################################
 
 # We declare the following for the sole purpose of being able to use the
 # Froidure-Pin (GAP implementation) algorithm for computing the join
@@ -188,7 +130,7 @@ end;
 # GeneralMappingsFamily. This is a requirement according to the GAP reference
 # manual entry for CategoryCollections.
 DeclareCategory("IsWrappedLeftRightOrTwoSidedCongruence",
-                IsAssociativeElement);
+                IsAssociativeElement and IsMultiplicativeElementWithOne);
 DeclareCategory("IsWrappedRightCongruence",
                 IsWrappedLeftRightOrTwoSidedCongruence);
 DeclareCategory("IsWrappedLeftCongruence",
@@ -281,33 +223,55 @@ InstallMethod(\*, "for wrapped 2-sided semigroup congruences",
 [IsWrappedTwoSidedCongruence, IsWrappedTwoSidedCongruence],
 {x, y} -> WrappedTwoSidedCongruence(JoinSemigroupCongruences(x![1], y![1])));
 
-InstallMethod(JoinSemilatticeOfCongruences,
-"for a congruence poset and a function",
-[IsCongruencePoset, IsFunction],
-function(gen_congs, WrappedXCongruence)
-  local gens, U, S, poset, all_congs;
+InstallMethod(One, "for wrapped left semigroup congruence",
+[IsWrappedLeftCongruence],
+x -> WrappedLeftCongruence(TrivialCongruence(Source(x![1]))));
+
+InstallMethod(One, "for wrapped right semigroup congruence",
+[IsWrappedRightCongruence],
+x -> WrappedRightCongruence(TrivialCongruence(Source(x![1]))));
+
+InstallMethod(One, "for wrapped 2-sided semigroup congruence",
+[IsWrappedTwoSidedCongruence],
+x -> WrappedTwoSidedCongruence(TrivialCongruence(Source(x![1]))));
+
+BindGlobal("_ClosureLattice",
+function(S, gen_congs, WrappedXCongruence)
+  local gens, poset, all_congs, old_value, U;
 
   # Trivial case
-  if DigraphNrVertices(gen_congs) = 0 then
-    return gen_congs;
+  if Length(gen_congs) = 0 then
+    return SEMIGROUPS.MakeCongruencePoset(Digraph([[1]]),
+                                          [TrivialCongruence(S)]);
   fi;
 
-  gens := List(CongruencesOfPoset(gen_congs), WrappedXCongruence);
-  U := Range(gens[1]![1]);
-
-  S := Semigroup(List(CongruencesOfPoset(gen_congs), WrappedXCongruence));
-  poset := DigraphReflexiveTransitiveClosure(PartialOrderOfDClasses(S));
+  if ValueOption("FroidurePin") <> fail then
+    gens := List(gen_congs, WrappedXCongruence);
+    S := Monoid(gens);
+    poset := RightCayleyDigraph(S);
+    all_congs := List(AsListCanonical(S), x -> x![1]);
+  else  # The default
+    S := List(gen_congs, EquivalenceRelationLookup);
+    old_value := libsemigroups.should_report();
+    if InfoLevel(InfoSemigroups) = 4 then
+      libsemigroups.set_report(true);
+    fi;
+    poset := DigraphNC(libsemigroups.LATTICE_OF_CONGRUENCES(S));
+    libsemigroups.set_report(old_value);
+    all_congs := fail;
+  fi;
   Info(InfoSemigroups, 1, StringFormatted("Found {} congruences in total!",
-       Size(S)));
-  all_congs := List(DClasses(S), x -> Representative(x)![1]);
+       DigraphNrVertices(poset)));
 
-  SetCongruencesOfPoset(poset, all_congs);
-  SetDigraphVertexLabels(poset, all_congs);
+  U := Source(Representative(gen_congs));
+
+  poset := SEMIGROUPS.MakeCongruencePoset(poset, all_congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, U);
-  SetFilterObj(poset, IsCongruencePoset);
   SetPosetOfPrincipalCongruences(poset,
-    Filtered(CongruencesOfPoset(gen_congs),
+    Filtered(gen_congs,
      x -> Size(GeneratingPairsOfLeftRightOrTwoSidedCongruence(x)) = 1));
+  SetGeneratingCongruencesOfJoinSemilattice(poset, gen_congs);
+  SetFilterObj(poset, IsCayleyDigraphOfCongruences);
   return poset;
 end);
 
@@ -328,6 +292,143 @@ function(S, obj)
   fi;
 end);
 
+# Creates a poset object from a list of congruences, without generating any
+# congruences.
+
+InstallMethod(PosetOfCongruences, "for a list or collection",
+[IsListOrCollection],
+function(coll)
+  local congs, nrcongs, children, parents, i, ignore, j, poset;
+  congs := AsList(coll);
+  nrcongs := Length(congs);
+
+  # Setup children and parents lists
+  children := [];
+  parents := [];
+  for i in [1 .. nrcongs] do
+    children[i] := Set([i]);
+    parents[i] := Set([i]);
+  od;
+
+  # Find children of each cong in turn
+  for i in [1 .. nrcongs] do
+    # Ignore known parents
+    ignore := BlistList([1 .. nrcongs], [parents[i]]);
+    for j in [1 .. nrcongs] do
+      if not ignore[j] and IsSubrelation(congs[i], congs[j]) then
+        AddSet(children[i], j);
+        AddSet(parents[j], i);
+      fi;
+    od;
+  od;
+
+  # We are done: make the object and return
+  poset := Digraph(parents);
+  SetInNeighbours(poset, children);
+  return SEMIGROUPS.MakeCongruencePoset(poset, congs);
+end);
+
+InstallMethod(JoinSemilatticeOfCongruences, "for a congruence poset",
+[IsCongruencePoset],
+function(C)
+  local S;
+  if IsEmpty(CongruencesOfPoset(C)) then
+    if not HasUnderlyingSemigroupOfCongruencePoset(C) then
+      ErrorNoReturn("cannot form the join semilattice of an empty congruence ",
+                    "poset without the underlying semigroup being set");
+    fi;
+
+    S := UnderlyingSemigroupOfCongruencePoset(C);
+    return SEMIGROUPS.MakeCongruencePoset(Digraph([[1]]),
+                                          [TrivialCongruence(S)]);
+  fi;
+  return JoinSemilatticeOfCongruences(CongruencesOfPoset(C));
+end);
+
+InstallMethod(JoinSemilatticeOfCongruences, "for a congruence poset",
+[IsListOrCollection],
+function(gen_congs)
+  local S, D, all_congs, trivial;
+  # TODO(FasterJoins) arg checks
+  if IsEmpty(gen_congs) then
+    ErrorNoReturn("the argument must not be empty");
+  fi;
+  S := Source(gen_congs[1]);
+  if ForAll(gen_congs, IsMagmaCongruence) then
+    D := _ClosureLattice(S, gen_congs, WrappedTwoSidedCongruence);
+  elif ForAll(gen_congs, IsLeftMagmaCongruence) then
+    D := _ClosureLattice(S, gen_congs, WrappedLeftCongruence);
+  else
+    Assert(1, ForAll(gen_congs, IsRightMagmaCongruence));
+    D := _ClosureLattice(S, gen_congs, WrappedRightCongruence);
+  fi;
+  all_congs := CongruencesOfPoset(D);
+  D := DigraphMutableCopy(D);
+  DigraphRemoveAllMultipleEdges(D);
+  if not TrivialCongruence(S) in gen_congs then
+    all_congs := ShallowCopy(all_congs);
+    DigraphRemoveLoops(D);
+    trivial := DigraphSources(D)[1];
+    DigraphRemoveVertex(D, trivial);
+    Remove(all_congs, trivial);
+  fi;
+  DigraphReflexiveTransitiveClosure(D);
+  MakeImmutable(D);
+  return SEMIGROUPS.MakeCongruencePoset(D, all_congs);
+end);
+
+# This method exists because when we use the "Simple" option with
+# LatticeOfCongruences etc the congruences themselves are not present (only the
+# CayleyDigraphOfCongruences), so we use this method to reconstruct the
+# congruences themselves.
+InstallMethod(CongruencesOfPoset, "for a congruence poset",
+[IsCayleyDigraphOfCongruences],
+function(D)
+  local S, result, gen_congs, Q, q, genstoapply, seen, Join, current, n, i;
+
+  S := UnderlyingSemigroupOfCongruencePoset(D);
+  result := [TrivialCongruence(S)];
+  gen_congs := GeneratingCongruencesOfJoinSemilattice(D);
+  if IsEmpty(gen_congs) then
+    return result;
+  fi;
+  Append(result, gen_congs);
+
+  # TODO(later): replace this with a Queue from the datastructures
+  # We do a simple BFS from the bottom of the lattice.
+  Q := [1];
+  q := 1;
+  # We prepended the TrivialCongruence and this is not one of the generators
+  genstoapply := [1 .. Length(result) - 1];
+  seen := BlistList([1 .. DigraphNrVertices(D)], []);
+
+  if IsMagmaCongruence(gen_congs[1]) then
+    Join := JoinSemigroupCongruences;
+  elif IsRightMagmaCongruence(gen_congs[1]) then
+    Join := JoinRightSemigroupCongruences;
+  else
+    Assert(1, IsLeftMagmaCongruence(gen_congs[1]));
+    Join := JoinLeftSemigroupCongruences;
+  fi;
+
+  while q <= Size(Q) do
+    current := Q[q];
+    for i in genstoapply do
+      n := OutNeighbours(D)[current][i];
+      if not seen[n] then
+        seen[n] := true;
+        result[n] := Join(result[current], result[i + 1]);
+        if n <> 1 then
+          Add(Q, n);
+        fi;
+      fi;
+    od;
+    q := q + 1;
+  od;
+  SetDigraphVertexLabels(D, result);
+  return result;
+end);
+
 ########################################################################
 # GeneratingPairsOfPrincipalCongruences
 ########################################################################
@@ -340,23 +441,19 @@ function(S)
                   "CanUseFroidurePin");
   fi;
   return Combinations(AsList(S), 2);
+  # It'd be better to return an iterator here, but given that
+  # GeneratingPairsOfPrincipalCongruences is an attribute, the iterator can't
+  # be used when it's returned.
   # return IteratorOfCombinations(AsList(S), 2);
 end);
 
+# Use the method just above
 InstallMethod(GeneratingPairsOfPrincipalLeftCongruences,
-"for an acting semigroup", [IsSemigroup],
-function(S)
-  if not (IsFinite(S) and CanUseFroidurePin(S)) then
-    ErrorNoReturn("the argument (a semigroup) must be finite and have ",
-                  "CanUseFroidurePin");
-  fi;
-  return Combinations(AsList(S), 2);
-  # return IteratorOfCombinations(AsList(S), 2);
-end);
+"for a semigroup", [IsSemigroup], GeneratingPairsOfPrincipalCongruences);
 
+# Use the method just above
 InstallMethod(GeneratingPairsOfPrincipalRightCongruences,
-"for an acting semigroup", [IsSemigroup],
-GeneratingPairsOfPrincipalCongruences);
+"for a semigroup", [IsSemigroup], GeneratingPairsOfPrincipalCongruences);
 
 InstallMethod(GeneratingPairsOfPrincipalCongruences, "for an acting semigroup",
 [IsActingSemigroup],
@@ -412,166 +509,120 @@ function(S)
   return Filtered(pairs, x -> x[1] in S and x[2] in S);
 end);
 
-########################################################################
-# PosetOfPrincipalRight/LeftCongruences
-########################################################################
-
-InstallMethod(PosetOfPrincipalCongruences, "for a semigroup", [IsSemigroup],
+InstallMethod(GeneratingPairsOfPrincipalLeftCongruences,
+"for an acting semigroup", [IsActingSemigroup],
 function(S)
-  local pairs;
-  if HasLatticeOfCongruences(S) then
-    return PosetOfPrincipalCongruences(LatticeOfCongruences(S));
-  fi;
-  pairs := GeneratingPairsOfPrincipalCongruences(S);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                SemigroupCongruence);
+  local map, T;
+  map := AntiIsomorphismTransformationSemigroup(S);
+  T := Range(map);
+  map := InverseGeneralMapping(map);
+  return List(GeneratingPairsOfPrincipalRightCongruences(T),
+              x -> List(x, y -> y ^ map));
 end);
 
-InstallMethod(PosetOfPrincipalCongruences,
-"for a semigroup and list or collection",
+#############################################################################
+## CayleyDigraphOfCongruences
+#############################################################################
+
+InstallMethod(CayleyDigraphOfCongruences,
+"for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
 function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                SemigroupCongruence);
+  # pairs are checked in PrincipalCongruencesOfSemigroup
+  return _ClosureLattice(S,
+                         PrincipalCongruencesOfSemigroup(S, pairs),
+                         WrappedTwoSidedCongruence);
 end);
 
-InstallMethod(PosetOfPrincipalRightCongruences, "for a semigroup",
+InstallMethod(CayleyDigraphOfCongruences, "for a semigroup", [IsSemigroup],
+function(S)
+  return _ClosureLattice(S,
+                         PrincipalCongruencesOfSemigroup(S),
+                         WrappedTwoSidedCongruence);
+end);
+
+InstallMethod(CayleyDigraphOfRightCongruences,
+"for a semigroup and a list or collection",
+[IsSemigroup, IsListOrCollection],
+function(S, pairs)
+  # pairs are checked in PrincipalCongruencesOfSemigroup
+  return _ClosureLattice(S,
+                         PrincipalRightCongruencesOfSemigroup(S, pairs),
+                         WrappedRightCongruence);
+end);
+
+InstallMethod(CayleyDigraphOfRightCongruences, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local pairs;
-  if HasLatticeOfRightCongruences(S) then
-    return PosetOfPrincipalRightCongruences(LatticeOfRightCongruences(S));
-  fi;
-  pairs := GeneratingPairsOfPrincipalRightCongruences(S);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                RightSemigroupCongruence);
+  return _ClosureLattice(S,
+                         PrincipalRightCongruencesOfSemigroup(S),
+                         WrappedRightCongruence);
 end);
 
-InstallMethod(PosetOfPrincipalRightCongruences,
-"for a semigroup and list or collection",
+InstallMethod(CayleyDigraphOfLeftCongruences,
+"for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
 function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                RightSemigroupCongruence);
+  # pairs are checked in PrincipalCongruencesOfSemigroup
+  return _ClosureLattice(S,
+                         PrincipalLeftCongruencesOfSemigroup(S, pairs),
+                         WrappedLeftCongruence);
 end);
 
-InstallMethod(PosetOfPrincipalLeftCongruences, "for a semigroup",
-[IsSemigroup],
+InstallMethod(CayleyDigraphOfLeftCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  local pairs;
-  if HasLatticeOfLeftCongruences(S) then
-    return PosetOfPrincipalLeftCongruences(LatticeOfLeftCongruences(S));
-  fi;
-  pairs := GeneratingPairsOfPrincipalLeftCongruences(S);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                LeftSemigroupCongruence);
-end);
-
-InstallMethod(PosetOfPrincipalLeftCongruences,
-"for a semigroup and list or collection",
-[IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
-                                                pairs,
-                                                LeftSemigroupCongruence);
+  return _ClosureLattice(S,
+                         PrincipalLeftCongruencesOfSemigroup(S),
+                         WrappedLeftCongruence);
 end);
 
 #############################################################################
 ## LatticeOfCongruences
 #############################################################################
 
-InstallMethod(LatticeOfCongruencesNC,
-"for a semigroup and a list or collection",
-[IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  local poset;
-  poset := PosetOfPrincipalCongruences(S, pairs);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedTwoSidedCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
-end);
+SEMIGROUPS.MakeLattice := function(C)
+  local D;
+  D := DigraphMutableCopy(C);
+  DigraphRemoveAllMultipleEdges(D);
+  DigraphReflexiveTransitiveClosure(D);
+  MakeImmutable(D);
+  return SEMIGROUPS.MakeCongruencePoset(D, CongruencesOfPoset(C));
+end;
 
 InstallMethod(LatticeOfCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
 function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return LatticeOfCongruencesNC(S, pairs);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S, pairs));
 end);
 
 InstallMethod(LatticeOfCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  local poset;
-  # Although this duplicates code from LatticeOfCongruencesNC above, it avoids
-  # recomputation of the PosetOfPrincipalCongruences if it's already known.
-  poset := PosetOfPrincipalCongruences(S);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedTwoSidedCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
-end);
-
-InstallMethod(LatticeOfRightCongruencesNC,
-"for a semigroup and a list or collection",
-[IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  local poset;
-  poset := PosetOfPrincipalRightCongruences(S, pairs);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedRightCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S));
 end);
 
 InstallMethod(LatticeOfRightCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
 function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return LatticeOfRightCongruencesNC(S, pairs);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S, pairs));
 end);
 
 InstallMethod(LatticeOfRightCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  local poset;
-  # Although this duplicates code from LatticeOfRightCongruencesNC above, it
-  # avoids recomputation of the PosetOfPrincipalCongruences if it's already
-  # known.
-  poset := PosetOfPrincipalRightCongruences(S);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedRightCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
-end);
-
-InstallMethod(LatticeOfLeftCongruencesNC,
-"for a semigroup and a list or collection",
-[IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  local poset;
-  poset := PosetOfPrincipalLeftCongruences(S, pairs);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedLeftCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S));
 end);
 
 InstallMethod(LatticeOfLeftCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
 function(S, pairs)
-  _CheckCongruenceLatticeArgs(S, pairs);
-  return LatticeOfLeftCongruencesNC(S, pairs);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S, pairs));
 end);
 
 InstallMethod(LatticeOfLeftCongruences, "for a semigroup", [IsSemigroup],
 function(S)
-  local poset;
-  # Although this duplicates code from LatticeOfLeftCongruencesNC above, it
-  # avoids recomputation of the PosetOfPrincipalCongruences if it's already
-  # known.
-  poset := PosetOfPrincipalLeftCongruences(S);
-  poset := JoinSemilatticeOfCongruences(poset, WrappedLeftCongruence);
-  return SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
+  return SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S));
 end);
 
 ########################################################################
@@ -580,51 +631,78 @@ end);
 
 InstallMethod(LeftCongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(LatticeOfLeftCongruences(S)));
+S -> CongruencesOfPoset(CayleyDigraphOfLeftCongruences(S)));
 
 InstallMethod(RightCongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(LatticeOfRightCongruences(S)));
+S -> CongruencesOfPoset(CayleyDigraphOfRightCongruences(S)));
 
 InstallMethod(CongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(LatticeOfCongruences(S)));
+S -> CongruencesOfPoset(CayleyDigraphOfCongruences(S)));
 
 ########################################################################
 # Principal congruences
 ########################################################################
 
-InstallMethod(PrincipalLeftCongruencesOfSemigroup,
-"for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(PosetOfPrincipalLeftCongruences(S)));
+InstallMethod(PrincipalLeftCongruencesOfSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local pairs;
+  pairs := GeneratingPairsOfPrincipalLeftCongruences(S);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            LeftSemigroupCongruence);
+end);
 
-InstallMethod(PrincipalRightCongruencesOfSemigroup,
-"for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(PosetOfPrincipalRightCongruences(S)));
+InstallMethod(PrincipalRightCongruencesOfSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local pairs;
+  pairs := GeneratingPairsOfPrincipalRightCongruences(S);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            RightSemigroupCongruence);
+end);
 
-InstallMethod(PrincipalCongruencesOfSemigroup,
-"for a semigroup", [IsSemigroup],
-S -> CongruencesOfPoset(PosetOfPrincipalCongruences(S)));
+InstallMethod(PrincipalCongruencesOfSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local pairs;
+  pairs := GeneratingPairsOfPrincipalCongruences(S);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            SemigroupCongruence);
+end);
 
 InstallMethod(PrincipalLeftCongruencesOfSemigroup,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, restriction)
-  return CongruencesOfPoset(PosetOfPrincipalLeftCongruences(S, restriction));
+function(S, pairs)
+  _CheckCongruenceLatticeArgs(S, pairs);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            LeftSemigroupCongruence);
 end);
 
 InstallMethod(PrincipalRightCongruencesOfSemigroup,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, restriction)
-  return CongruencesOfPoset(PosetOfPrincipalRightCongruences(S, restriction));
+function(S, pairs)
+  _CheckCongruenceLatticeArgs(S, pairs);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            RightSemigroupCongruence);
 end);
 
 InstallMethod(PrincipalCongruencesOfSemigroup,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, restriction)
-  return CongruencesOfPoset(PosetOfPrincipalCongruences(S, restriction));
+function(S, pairs)
+  _CheckCongruenceLatticeArgs(S, pairs);
+  return SEMIGROUPS.PrincipalXCongruencesNC(S,
+                                            pairs,
+                                            SemigroupCongruence);
 end);
 
 ########################################################################
@@ -683,6 +761,57 @@ function(S, pairs)
 end);
 
 ########################################################################
+# PosetOfPrincipalRight/LeftCongruences
+########################################################################
+
+InstallMethod(PosetOfPrincipalCongruences, "for a semigroup", [IsSemigroup],
+function(S)
+  if HasLatticeOfCongruences(S) then
+    return PosetOfPrincipalCongruences(LatticeOfCongruences(S));
+  fi;
+  return PosetOfCongruences(PrincipalCongruencesOfSemigroup(S));
+end);
+
+InstallMethod(PosetOfPrincipalRightCongruences, "for a semigroup",
+[IsSemigroup],
+function(S)
+  if HasLatticeOfRightCongruences(S) then
+    return PosetOfPrincipalRightCongruences(LatticeOfRightCongruences(S));
+  fi;
+  return PosetOfCongruences(PrincipalRightCongruencesOfSemigroup(S));
+end);
+
+InstallMethod(PosetOfPrincipalLeftCongruences, "for a semigroup",
+[IsSemigroup],
+function(S)
+  if HasLatticeOfLeftCongruences(S) then
+    return PosetOfPrincipalLeftCongruences(LatticeOfLeftCongruences(S));
+  fi;
+  return PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S));
+end);
+
+InstallMethod(PosetOfPrincipalCongruences,
+"for a semigroup and list or collection",
+[IsSemigroup, IsListOrCollection],
+function(S, pairs)
+  return PosetOfCongruences(PrincipalCongruencesOfSemigroup(S, pairs));
+end);
+
+InstallMethod(PosetOfPrincipalRightCongruences,
+"for a semigroup and list or collection",
+[IsSemigroup, IsListOrCollection],
+function(S, pairs)
+  return PosetOfCongruences(PrincipalRightCongruencesOfSemigroup(S, pairs));
+end);
+
+InstallMethod(PosetOfPrincipalLeftCongruences,
+"for a semigroup and list or collection",
+[IsSemigroup, IsListOrCollection],
+function(S, pairs)
+  return PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S, pairs));
+end);
+
+########################################################################
 # Printing, viewing, dot strings etc
 ########################################################################
 
@@ -692,7 +821,7 @@ function(poset)
   if DigraphNrVertices(poset) = 0 then
     Print("<empty congruence poset>");
   else
-    if IsLatticeDigraph(poset) then
+    if not IsMultiDigraph(poset) and IsLatticeDigraph(poset) then
       prefix := "lattice";
     else
       prefix := "poset";
@@ -704,16 +833,13 @@ function(poset)
     if C = fail or IsMagmaCongruence(C) then
       hand := "two-sided";
     else
-      hand := CongruenceHandednessString(C);
+      hand := ShallowCopy(CongruenceHandednessString(C));
     fi;
-    Print("<\>",
-          prefix,
-          " of ",
-          DigraphNrVertices(poset),
-          " ",
-          hand,
-          " congruences over \<");
-    ViewObj(UnderlyingSemigroupOfCongruencePoset(poset));
+    Append(hand, " congruence");
+    PrintFormatted("<\>{} of {} over \<",
+                   prefix,
+                   Pluralize(DigraphNrVertices(poset), hand));
+    ViewObj(S);
     Print(">");
   fi;
 end);
@@ -789,3 +915,4 @@ function(poset, opts)
 
   return str;
 end);
+

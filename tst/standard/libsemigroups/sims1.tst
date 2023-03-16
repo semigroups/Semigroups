@@ -298,13 +298,13 @@ gap> LeftCongruencesOfSemigroup(S);;
 gap> it := IteratorOfLeftCongruences(S, 2);
 <iterator>
 gap> NrEquivalenceClasses(NextIterator(it));
+2
+gap> NrEquivalenceClasses(NextIterator(it));
+2
+gap> NrEquivalenceClasses(NextIterator(it));
+2
+gap> NrEquivalenceClasses(NextIterator(it));
 1
-gap> NrEquivalenceClasses(NextIterator(it));
-2
-gap> NrEquivalenceClasses(NextIterator(it));
-2
-gap> NrEquivalenceClasses(NextIterator(it));
-2
 gap> NrEquivalenceClasses(NextIterator(it));
 2
 gap> NextIterator(it);

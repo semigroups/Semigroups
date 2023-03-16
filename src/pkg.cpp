@@ -22,18 +22,23 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>      // for size_t
-#include <exception>    // for exception
-#include <iostream>     // for string
-#include <type_traits>  // for conditional<>::type
-#include <vector>       // for vector
+#include <cstddef>        // for size_t
+#include <exception>      // for exception
+#include <iostream>       // for string
+#include <type_traits>    // for conditional<>::type
+#include <unordered_map>  // for unordered_map
+#include <utility>        // for swap
+#include <vector>         // for vector
+
+#include <set>  // for set
 
 // GAP headers
 #include "compiled.h"
 
 // Semigroups package for GAP headers
-#include "bipart.hpp"                 // for Blocks, Bipartition
-#include "cong.hpp"                   // for init_cong
+#include "bipart.hpp"  // for Blocks, Bipartition
+#include "cong.hpp"    // for init_cong
+#include "conglatt.hpp"
 #include "froidure-pin-fallback.hpp"  // for RUN_FROIDURE_PIN
 #include "froidure-pin.hpp"           // for init_froidure_pin
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
@@ -47,6 +52,7 @@
 // libsemigroups headers
 #include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
 #include "libsemigroups/cong-intf.hpp"  // for congruence_kind
+#include "libsemigroups/digraph.hpp"    // for ActionDigraph
 #include "libsemigroups/fpsemi.hpp"     // for FpSemigroup
 #include "libsemigroups/freeband.hpp"   // for freeband_equal_to
 #include "libsemigroups/report.hpp"     // for REPORTER, Reporter
@@ -54,8 +60,14 @@
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
 #include "libsemigroups/types.hpp"         // for word_type, letter_type
 
+#include "libsemigroups/adapters.hpp"
+#include "libsemigroups/uf.hpp"
+
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
+
+using libsemigroups::Hash;
+using libsemigroups::detail::Duf;
 
 namespace {
   void set_report(bool const val) {
@@ -85,6 +97,8 @@ GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
 
   gapbind14::InstallGlobalFunction("set_report", &set_report);
+  gapbind14::InstallGlobalFunction("should_report",
+                                   &libsemigroups::report::should_report);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
                                    &std::thread::hardware_concurrency);
   gapbind14::InstallGlobalFunction(
@@ -92,6 +106,9 @@ GAPBIND14_MODULE(libsemigroups) {
       gapbind14::overload_cast<libsemigroups::word_type,
                                libsemigroups::word_type>(
           &libsemigroups::freeband_equal_to<libsemigroups::word_type>));
+
+  gapbind14::InstallGlobalFunction("LATTICE_OF_CONGRUENCES",
+                                   &semigroups::LATTICE_OF_CONGRUENCES);
 
   ////////////////////////////////////////////////////////////////////////
   // Initialise from other cpp files
@@ -469,6 +486,7 @@ static StructGVarFunc GVarFuncs[] = {
                BIPART_NR_IDEMPOTENTS,
                4,
                "o, scc, lookup, nr_threads"),
+
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 

@@ -1,11 +1,12 @@
+/Makefile
 /aclocal.m4
 /autom4te.cache/
 /bin/
 /config.guess
+/config.log
 /config.status
 /config.sub
 /configure
-/doc/_*.xml
 /doc/*.aux
 /doc/*.bbl
 /doc/*.blg
@@ -24,6 +25,7 @@
 /doc/*.toc
 /doc/*.txt
 /doc/*.xml.bib
+/doc/_*.xml
 /doc/main.xml
 /doc/manual.lab
 /doc/manual.six
@@ -32,6 +34,5 @@
 /gen/
 /gh-pages/
 /libsemigroups/
-/Makefile
 /src/pkgconfig.h.in
 /src/semigroups-config.hpp

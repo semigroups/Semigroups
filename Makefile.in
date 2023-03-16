@@ -16,6 +16,7 @@ SYS_IS_CYGWIN = @SYS_IS_CYGWIN@
 # sources
 KEXT_SOURCES =  src/bipart.cpp
 KEXT_SOURCES += src/cong.cpp
+KEXT_SOURCES += src/conglatt.cpp
 KEXT_SOURCES += src/froidure-pin-base.cpp
 KEXT_SOURCES += src/froidure-pin-bipart.cpp
 KEXT_SOURCES += src/froidure-pin-bmat.cpp
