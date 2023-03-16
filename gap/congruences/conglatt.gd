@@ -20,8 +20,7 @@ DeclareCategory("IsCongruencePoset", IsDigraph);
 
 DeclareAttribute("UnderlyingSemigroupOfCongruencePoset", IsCongruencePoset);
 DeclareAttribute("PosetOfPrincipalCongruences", IsCongruencePoset);
-DeclareOperation("JoinSemilatticeOfCongruences",
-                 [IsCongruencePoset, IsFunction]);
+DeclareAttribute("JoinSemilatticeOfCongruences", IsCongruencePoset);
 DeclareAttribute("MinimalCongruences", IsCongruencePoset);
 
 DeclareAttribute("CongruencesOfPoset", IsCongruencePoset);
@@ -29,6 +28,7 @@ DeclareAttribute("CongruencesOfPoset", IsCongruencePoset);
 # Constructs the poset object consisting of the congruences given in the
 # argument.
 DeclareOperation("PosetOfCongruences", [IsListOrCollection]);
+DeclareAttribute("JoinSemilatticeOfCongruences", IsListOrCollection);
 
 DeclareAttribute("GeneratingPairsOfPrincipalCongruences", IsSemigroup);
 DeclareAttribute("GeneratingPairsOfPrincipalLeftCongruences", IsSemigroup);
@@ -49,17 +49,24 @@ DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
 
-DeclareOperation("LatticeOfCongruences",
+DeclareAttribute("CayleyDigraphOfCongruences", IsSemigroup);
+DeclareAttribute("CayleyDigraphOfLeftCongruences", IsSemigroup);
+DeclareAttribute("CayleyDigraphOfRightCongruences", IsSemigroup);
+
+DeclareOperation("CayleyDigraphOfCongruences",
                  [IsSemigroup, IsListOrCollection]);
-DeclareOperation("LatticeOfCongruencesNC",
+DeclareOperation("CayleyDigraphOfLeftCongruences",
+                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("CayleyDigraphOfRightCongruences",
+                 [IsSemigroup, IsListOrCollection]);
+
+DeclareCategory("IsCayleyDigraphOfCongruences", IsCongruencePoset);
+
+DeclareOperation("LatticeOfCongruences",
                  [IsSemigroup, IsListOrCollection]);
 DeclareOperation("LatticeOfLeftCongruences",
                  [IsSemigroup, IsListOrCollection]);
-DeclareOperation("LatticeOfLeftCongruencesNC",
-                 [IsSemigroup, IsListOrCollection]);
 DeclareOperation("LatticeOfRightCongruences",
-                 [IsSemigroup, IsListOrCollection]);
-DeclareOperation("LatticeOfRightCongruencesNC",
                  [IsSemigroup, IsListOrCollection]);
 
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
@@ -90,3 +97,5 @@ DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
                  [IsSemigroup, IsListOrCollection]);
 DeclareOperation("PrincipalRightCongruencesOfSemigroup",
                  [IsSemigroup, IsListOrCollection]);
+
+DeclareAttribute("GeneratingCongruencesOfJoinSemilattice", IsCongruencePoset);

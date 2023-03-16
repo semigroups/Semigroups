@@ -327,17 +327,17 @@ gap> S := GraphInverseSemigroup(D);
 gap> L := LatticeOfCongruences(S);
 <lattice of 10 two-sided congruences over 
  <finite graph inverse semigroup with 4 vertices, 5 edges>>
-gap> C := CongruencesOfSemigroup(S);
-[ <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>, 
-  <graph inverse semigroup congruence with H = [ 1, 3, 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
-  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
-  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
+gap> C := CongruencesOfSemigroup(S);; Set(C);
+[ <graph inverse semigroup congruence with H = [  ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 3 ]>, 
+  <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 1, 3, 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [  ] and W = [  ]> ]
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]> ]
 gap> val := true;;
 > for i in [1 .. Length(C)] do
 > for j in [1 .. Length(C)] do
@@ -375,19 +375,19 @@ gap> S := GraphInverseSemigroup(D);
 gap> L := LatticeOfCongruences(S);
 <lattice of 12 two-sided congruences over 
  <finite graph inverse semigroup with 4 vertices, 4 edges>>
-gap> C := CongruencesOfSemigroup(S);
-[ <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]>, 
-  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>, 
-  <graph inverse semigroup congruence with H = [  ] and W = [ 1, 3 ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
+gap> C := CongruencesOfSemigroup(S);; Set(C);
+[ <graph inverse semigroup congruence with H = [  ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 1 ]>, 
-  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
-  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
   <graph inverse semigroup congruence with H = [  ] and W = [ 3 ]>, 
+  <graph inverse semigroup congruence with H = [  ] and W = [ 1, 3 ]>, 
+  <graph inverse semigroup congruence with H = [ 1 .. 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 2 .. 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [  ]>, 
+  <graph inverse semigroup congruence with H = [ 3, 4 ] and W = [ 1 ]>, 
   <graph inverse semigroup congruence with H = [ 4 ] and W = [  ]>, 
-  <graph inverse semigroup congruence with H = [  ] and W = [  ]> ]
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1 ]>, 
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 2 ]>, 
+  <graph inverse semigroup congruence with H = [ 4 ] and W = [ 1, 2 ]> ]
 gap> val := true;;
 > for i in [1 .. Length(C)] do
 > for j in [1 .. Length(C)] do

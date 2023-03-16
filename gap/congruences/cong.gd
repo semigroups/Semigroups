@@ -100,6 +100,8 @@ DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
 DeclareGlobalFunction("RightSemigroupCongruence");
 
+DeclareAttribute("TrivialCongruence", IsSemigroup);
+
 # Properties of congruences
 DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);

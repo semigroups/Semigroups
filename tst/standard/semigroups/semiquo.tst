@@ -236,9 +236,9 @@ gap> CongruencesOfSemigroup(Q);
 [ <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
 e over <transformation semigroup of degree 5 with 3 generators> with 
     1 generating pairs>> with 0 generating pairs>, 
-  <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <transformation semigroup of degree 5 with 3 generators> with 
-    1 generating pairs>> with 1 generating pairs>, 
+  <universal semigroup congruence over <quotient of <2-sided semigroup congrue\
+nce over <transformation semigroup of degree 5 with 3 generators> with 
+    1 generating pairs>>>, 
   <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
 e over <transformation semigroup of degree 5 with 3 generators> with 
     1 generating pairs>> with 1 generating pairs>, 
@@ -266,10 +266,10 @@ gap> CongruencesOfSemigroup(Q);
 e over <quotient of <2-sided semigroup congruence over <transformation 
      semigroup of degree 5 with 3 generators> with 1 generating pairs>> with 
     1 generating pairs>> with 0 generating pairs>, 
-  <2-sided semigroup congruence over <quotient of <2-sided semigroup congruenc\
-e over <quotient of <2-sided semigroup congruence over <transformation 
+  <universal semigroup congruence over <quotient of <2-sided semigroup congrue\
+nce over <quotient of <2-sided semigroup congruence over <transformation 
      semigroup of degree 5 with 3 generators> with 1 generating pairs>> with 
-    1 generating pairs>> with 1 generating pairs> ]
+    1 generating pairs>>> ]
 gap> Size(Q);
 2
 

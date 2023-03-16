@@ -30,6 +30,28 @@ InstallImmediateMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
                        0,
                        GeneratingPairsOfRightMagmaCongruence);
 
+InstallImmediateMethod(GeneratingPairsOfLeftMagmaCongruence,
+                       IsMagmaCongruence and IsSemigroupCongruence
+                         and HasGeneratingPairsOfMagmaCongruence,
+                       0,
+                       function(C)
+                         if IsEmpty(GeneratingPairsOfMagmaCongruence(C)) then
+                           return [];
+                         fi;
+                         TryNextMethod();
+                       end);
+
+InstallImmediateMethod(GeneratingPairsOfRightMagmaCongruence,
+                       IsMagmaCongruence and IsSemigroupCongruence
+                         and HasGeneratingPairsOfMagmaCongruence,
+                       0,
+                       function(C)
+                         if IsEmpty(GeneratingPairsOfMagmaCongruence(C)) then
+                           return [];
+                         fi;
+                         TryNextMethod();
+                       end);
+
 # Some types of congruences (such as CongruenceByKernelAndTrace) do not know
 # their generating pairs by default, and hence we require the following methods
 # in addition to the immediate methods above.

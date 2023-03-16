@@ -116,10 +116,10 @@ gap> AsCongruenceByWangPair(cong);
 
 <#GAPDoc Label="GeneratingCongruencesOfLattice">
   <ManSection>
-    <Oper Name = "GeneratingCongruencesOfLattice" Arg = "S"/>
+    <Attr Name = "GeneratingCongruencesOfLattice" Arg = "S"/>
     <Returns>A semigroup.</Returns>
     <Description>
-      This operation takes a finite graph inverse semigroup <A>S</A> and returns a
+      This attribute takes a finite graph inverse semigroup <A>S</A> and returns a
       minimal generating set for the lattice of congruences of <A>S</A>, as described
       in <Cite Key="Anagnostopoulou-Merkouri2021aa"/>. This operation works only if
       the corresponding digraph of the graph inverse semigroup is simple. If there

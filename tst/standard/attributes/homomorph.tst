@@ -921,8 +921,11 @@ gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),
 >  Transformation([1, 1, 1, 5, 3]),
 >  Transformation([2, 5, 3, 5, 3])]);;
 gap> gens1 := GeneratorsOfSemigroup(S);;
-gap> congs := CongruencesOfSemigroup(S);;
-gap> cong := congs[3];;
+gap> cong := SemigroupCongruence(S,
+> [[Transformation([1, 1, 1, 5, 3]), Transformation([2, 5, 3, 5, 3])],
+>  [Transformation([1, 2, 5, 2, 5]), Transformation([2, 1, 5, 1, 5])]]);
+<2-sided semigroup congruence over <transformation semigroup of degree 5 with 
+ 3 generators> with 2 generating pairs>
 gap> T := S / cong;;
 gap> images1 := List(gens1, gen -> EquivalenceClassOfElement(cong, gen));;
 gap> hom1 := SemigroupHomomorphismByImages_NC(S, T, gens1, images1);;
