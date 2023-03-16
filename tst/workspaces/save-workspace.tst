@@ -16,7 +16,6 @@
 
 # Set up testing environment
 
-#@local D, DD, S, T, U, b, cong, id, idd, x, xx, y
 gap> START_TEST("Semigroups package: workspaces/save-workspace.tst");
 gap> SetInfoLevel(InfoDebug, 0);
 gap> LoadPackage("semigroups", false);;

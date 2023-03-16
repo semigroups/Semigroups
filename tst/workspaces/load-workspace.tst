@@ -16,7 +16,6 @@
 
 # Set up testing environment
 
-#@local D, DD, id, idd, xx
 gap> START_TEST("Semigroups package: workspaces/load-workspace.tst");
 gap> SEMIGROUPS.StartTest();
 
