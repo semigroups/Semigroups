@@ -37,7 +37,7 @@
 ##      the element used to create the class (stored in C!.rep)
 ##
 ##   2. Copy or set the lambda/rho orbits using SEMIGROUPS.CopyLambda/Rho and
-##      SEMIGROUPS.SetLambda/Rho. After calling any combination of these two
+##      SEMIGROUPS.SetLambda/Rho. After calling any combination of these tw
 ##      functions Lambda/RhoOrb and Lambda/RhoOrbSCCIndex for the class are
 ##      set.
 ##
@@ -1563,7 +1563,7 @@ function(L)
   nr := 0;
 
   for p in cosets do
-    x := act(rep, p);
+    x := act(rep, p ^ -1);
     for i in scc do
       nr := nr + 1;
       out[nr] := ConvertToExternalElement(Parent(L), mults[i][1] * x);

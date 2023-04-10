@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#@local I, S, T, acting, an, regular, x
+#@local I, S, T, acting, an, regular, x, H, T, D
 gap> START_TEST("Semigroups package: standard/main/semiact.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -197,6 +197,19 @@ gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S);
 true
 gap> Number(SymmetricInverseMonoid(4), x -> x in S) = Size(S);
 true
+
+# Fix bug reported by Balthazar Charles by email 10/4/2023.
+gap> T := Monoid(Transformation([1, 3, 2, 1]), Transformation([3, 3, 2]),
+> Transformation([4, 2, 4, 3]));
+<transformation monoid of degree 4 with 3 generators>
+gap> D := DClasses(T)[4];;
+gap> H := HClass(T, Representative(D));;
+gap> NrLClasses(D);
+1
+gap> NrRClasses(D);
+6
+gap> Size(Set(HClasses(LClass(H))));
+6
 
 #
 gap> SEMIGROUPS.StopTest();
