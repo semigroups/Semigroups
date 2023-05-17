@@ -363,7 +363,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.12.0",
   NeededOtherPackages := [["datastructures", ">=0.2.5"],
-                          ["digraphs", ">=1.5.0"],
+                          ["digraphs", ">=1.6.2"],
                           ["genss", ">=1.6.5"],
                           ["images", ">=1.3.1"],
                           ["IO", ">=4.5.1"],
