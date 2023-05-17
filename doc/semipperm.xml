@@ -93,3 +93,32 @@ gap> CyclesOfPartialPerm(x);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="UniformRandomPartialPerm">
+<ManSection>
+  <Oper Name="UniformRandomPartialPerm" Arg = "n"/>
+  <Returns>
+    A partial perm of degree <A>n</A> chosen uniformly at random among all
+    partial permutations of that degree.
+  </Returns>
+  <Description>
+    This function returns a partial perm of degree <A>n</A> chosen uniformly at
+    random among all partial permutations of that degree. This function differs
+    from <Ref Oper="RandomPartialPerm" BookName="ref"/> in that the returned
+    partial perm is chosen <E>uniformly</E> at random, whereas <Ref
+        Oper="RandomPartialPerm" BookName="ref"/> does not use a uniform
+    distribution. <P/>
+
+    The downside to <C>UniformRandomPartialPerm</C> is that it can use a
+    significant amount of memory, and is rather slower than <Ref
+        Oper="RandomPartialPerm" BookName="ref"/>. 
+
+    <Log><![CDATA[
+gap> UniformRandomPartialPerm(1000);
+<partial perm on 971 pts with degree 1000, codegree 1000>]]>
+    </Log>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+

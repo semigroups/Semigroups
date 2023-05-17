@@ -230,13 +230,14 @@
   <Section>
 
     <Heading>
-      Attributes of partial perm semigroups
+      Attributes of partial perms and partial perm semigroups
     </Heading>
 
     <#Include Label = "ComponentRepsOfPartialPermSemigroup">
     <#Include Label = "ComponentsOfPartialPermSemigroup">
     <#Include Label = "CyclesOfPartialPerm">
     <#Include Label = "CyclesOfPartialPermSemigroup">
+    <#Include Label = "UniformRandomPartialPerm">
 
   </Section>
 

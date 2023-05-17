@@ -24,19 +24,25 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 {filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons, "for IsPartialPermSemigroup and a list",
-[IsPartialPermSemigroup, IsList], {filt, params} ->
-Semigroup(List([1 .. params[1]], i -> RandomPartialPerm(params[2]))));
+[IsPartialPermSemigroup, IsList],
+function(_, params)
+  return Semigroup(List([1 .. params[1]],
+                        i -> UniformRandomPartialPerm(params[2])));
+end);
 
 InstallMethod(RandomMonoidCons, "for IsPartialPermMonoid and a list",
-[IsPartialPermMonoid, IsList], {filt, params} ->
-Monoid(List([1 .. params[1]], i -> RandomPartialPerm(params[2]))));
+[IsPartialPermMonoid, IsList],
+function(_, params)
+  return Monoid(List([1 .. params[1]],
+                     i -> UniformRandomPartialPerm(params[2])));
+end);
 
 InstallMethod(RandomInverseSemigroupCons,
 "for IsPartialPermSemigroup and a list",
 [IsPartialPermSemigroup, IsList],
 function(_, params)
   return InverseSemigroup(List([1 .. params[1]],
-                               i -> RandomPartialPerm(params[2])));
+                               i -> UniformRandomPartialPerm(params[2])));
 end);
 
 InstallMethod(RandomInverseMonoidCons,
@@ -44,7 +50,7 @@ InstallMethod(RandomInverseMonoidCons,
 [IsPartialPermMonoid, IsList],
 function(_, params)
   return InverseMonoid(List([1 .. params[1]],
-                            i -> RandomPartialPerm(params[2])));
+                            i -> UniformRandomPartialPerm(params[2])));
 end);
 
 #############################################################################
