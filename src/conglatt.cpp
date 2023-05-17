@@ -77,11 +77,11 @@ namespace semigroups {
 
       // not noexcept because the constructors of std::vector and std::array
       // aren't
-      UF(UF const&) = default;
+      UF(UF const&)            = default;
       UF& operator=(UF const&) = default;
       UF(UF&&)                 = default;
-      UF& operator=(UF&&) = default;
-      ~UF()               = default;
+      UF& operator=(UF&&)      = default;
+      ~UF()                    = default;
 
       // not noexcept because std::vector::operator[] isn't
       index_type find(index_type x) const {
