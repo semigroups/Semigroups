@@ -427,7 +427,7 @@ function(cong, elm)
   elif IsFpSemigroup(Range(cong))
       or (HasIsFreeSemigroup(Range(cong)) and IsFreeSemigroup(Range(cong)))
       or IsFpMonoid(Range(cong))
-      or (HasIsFreeSemigroup(Range(cong)) and IsFreeMonoid(Range(cong)))
+      or (HasIsFreeMonoid(Range(cong)) and IsFreeMonoid(Range(cong)))
       or IsQuotientSemigroup(Range(cong)) then
     part := EquivalenceRelationPartition(cong);
     pos := PositionProperty(part, l -> [elm, l[1]] in cong);
