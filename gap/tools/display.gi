@@ -743,19 +743,73 @@ function(digraph)
 end);
 
 InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
-function(digraph)
-  local S, li, label, i;
-  S  := SemigroupOfCayleyDigraph(digraph);
-  if not CanUseFroidurePin(S) or Size(S) > 26 then
+function(D)
+  local S, edge_colors, N, msg, legend, label, next, edge_func, node_labels,
+  node_func, result, i;
+
+  S := SemigroupOfCayleyDigraph(D);
+  edge_colors := ["\"#00ff00\"", "\"#ff00ff\"", "\"#007fff\"", "\"#ff7f00\"",
+                  "\"#7fbf7f\"", "\"#4604ac\"", "\"#de0328\"", "\"#19801d\"",
+                  "\"#d881f5\"", "\"#00ffff\"", "\"#ffff00\"", "\"#00ff7f\"",
+                  "\"#ad5867\"", "\"#85f610\"", "\"#84e9f5\"", "\"#f5c778\"",
+                  "\"#207090\"", "\"#764ef3\"", "\"#7b4c00\"", "\"#0000ff\"",
+                  "\"#b80c9a\"", "\"#601045\"", "\"#29b7c0\"", "\"#839f12"];
+  N := Length(GeneratorsOfSemigroup(S));
+  if not CanUseFroidurePin(S) then
     TryNextMethod();
+  elif N > Length(edge_colors) then
+    msg := Concatenation("the semigroup of the 1st argument (a Cayley digraph) ",
+                         "must have at most {} generators, found {}");
+    ErrorNoReturn(StringFormatted(msg, Length(edge_colors), N));
   fi;
-  li := AsListCanonical(S);
-  for i in [1 .. Size(S)] do
-    label := SEMIGROUPS.WordToExtRepObj(MinimalFactorization(S, li[i]));
-    label := SEMIGROUPS.ExtRepObjToString(label);
-    SetDigraphVertexLabel(digraph, i, label);
+
+  legend := "node [shape=plaintext]\nsubgraph cluster_01 {\nlabel=\"Legend\"\n";
+  Append(legend, "key2 [label=<<table border=\"0\" cellpadding=\"2\"");
+  Append(legend, " cellspacing=\"0\" cellborder=\"0\">\n");
+
+  for i in [1 .. N] do
+    Append(legend,
+           StringFormatted("  <tr><td port=\"i{}\">&nbsp;</td></tr>\n",
+                           i));
   od;
-  return DotVertexLabelledDigraph(digraph);
+  Append(legend, "</table>>]\n");
+  Append(legend, "key [label=<<table border=\"0\" cellpadding=\"2\"");
+  Append(legend, " cellspacing=\"0\" cellborder=\"0\">\n");
+
+  for i in [1 .. N] do
+    label := SEMIGROUPS.WordToExtRepObj([i]);
+    label := SEMIGROUPS.ExtRepObjToString(label);
+    next := "<tr><td align=\"right\" ";
+    Append(next, StringFormatted("port=\"i{}\">{}&nbsp;</td></tr>\n", i, label));
+    Append(legend, next);
+  od;
+
+  Append(legend, "</table>>]\n\n");
+
+  for i in [1 .. N] do
+    next := StringFormatted("key:i{1}:e -> key2:i{1}:w [color={2},",
+                            i,
+                            edge_colors[i]);
+    Append(next, "constraint=false]\n");
+    Append(legend, next);
+  od;
+  Append(legend, "}\n");
+
+  edge_func := {i, j} -> StringFormatted("[color={}]", edge_colors[j]);
+  node_labels := [];
+  for i in [1 .. Size(S)] do
+    label := SEMIGROUPS.WordToExtRepObj(MinimalFactorization(S, i));
+    label := SEMIGROUPS.ExtRepObjToString(label);
+    node_labels[i] := label;
+  od;
+  node_func := i -> StringFormatted(" [label=\"{}\"]", node_labels[i]);
+  result := DIGRAPHS_DotDigraph(D, [node_func], [edge_func]);
+  result := SplitString(result, "\n");
+  result[3] := "subgraph 00 {";
+  Add(result, "node [shape=box]", 3);
+  Add(result, legend);
+  Add(result, "}");
+  return JoinStringsWithSeparator(result, "\n");
 end);
 
 InstallMethod(DotLeftCayleyDigraph, "for a semigroup", [IsSemigroup],

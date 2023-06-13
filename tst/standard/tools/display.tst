@@ -1003,24 +1003,16 @@ op]\n           node {$a$} (c);\n  \\path[->] (c) edge [edge] node {$b$} (cb);\
 \n  \\path[->] (c) edge [loop]\n           node {$c$} (c);\n  \\path[->] (cb) \
 edge [loop]\n           node {$a$} (cb);\n  \\path[->] (cb) edge [edge] node {\
 $b$} (c);\n  \\path[->] (cb) edge [edge] node {$c$} (c);\n\\end{tikzpicture}"
-gap> DotRightCayleyDigraph(FullTransformationMonoid(2));
-"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
- [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
- 3\n3 -> 3\n3 -> 4\n3 -> 3\n4 -> 4\n4 -> 3\n4 -> 3\n}\n"
-gap> DotLeftCayleyDigraph(FullTransformationMonoid(2));
-"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
- [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
- 4\n3 -> 3\n3 -> 3\n3 -> 3\n4 -> 4\n4 -> 4\n4 -> 4\n}\n"
 gap> S := LeftZeroSemigroup(27);;
 gap> DotLeftCayleyDigraph(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DotString' on 1 arguments
+Error, the semigroup of the 1st argument (a Cayley digraph) must have at most \
+24 generators, found 27
 gap> TikzLeftCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
 gap> DotRightCayleyDigraph(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DotString' on 1 arguments
+Error, the semigroup of the 1st argument (a Cayley digraph) must have at most \
+24 generators, found 27
 gap> TikzRightCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
