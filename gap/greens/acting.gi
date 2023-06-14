@@ -1747,6 +1747,64 @@ function(S)
   return D;
 end);
 
+# TODO move to generic, it should work for any semigroup
+InstallMethod(LeftGreensMultiplier, "for two Green's R-classes",
+[IsGreensRClass, IsGreensRClass],
+function(R1, R2)
+  local a, b;
+
+  if Source(R1) <> Source(R2) then
+    ErrorNoReturn("the 1st and 2nd arguments (R-classes) must belong ",
+                  "to the same semigroup");
+  fi;
+
+  a := Representative(R1);
+  b := First(HClassReps(R1), x -> x in R2);
+
+  if b = fail then
+    ErrorNoReturn("the 1st and 2nd arguments (R-classes) do not belong ",
+                  "to the same D-class");
+  fi;
+
+  return LeftGreensMultiplierNC(Source(R1), a, b);
+end);
+
+# TODO move to generic, it should work for any semigroup
+InstallMethod(LeftGreensMultiplier,
+"for an acting semigroup and L-related elements",
+[IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+
+  if not b in S or not a in LClass(S, b) then
+    ErrorNoReturn("the 2nd and 3rd arguments (mult. elt.) must belong ",
+                  "to the same L-class of the 1st argument (a semigroup)");
+  fi;
+  return LeftGreensMultiplierNC(S, a, b);
+end);
+
+InstallMethod(LeftGreensMultiplierNC,
+"for an acting semigroup and L-related elements",
+[IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+  local o, l, m, result, p;
+
+  o := Enumerate(RhoOrb(S));
+  l := Position(o, RhoFunc(S)(a));
+  m := OrbSCCLookup(o)[l];
+
+  # back to the first pos. in scc
+  result := RhoOrbMult(o, m, l)[2];
+  l := Position(o, RhoFunc(S)(b));
+  # out to the same pos. as b
+  result := RhoOrbMult(o, m, l)[1] * result;
+
+  # result * a * LambdaPerm(S)(result * a, b) = b
+  p := LambdaPerm(S)(result * a, b);
+  # Apply the inverse of the bijection \Psi in Proposition 3.11 of the Citrus
+  # paper, to convert p from acting on the right to action on the left
+  return result * StabilizerAction(S)(a, p) * WeakInverse(a);
+end);
+
 #############################################################################
 ## 5. Idempotents . . .
 #############################################################################

@@ -10,6 +10,7 @@
 
 #@local BruteForceInverseCheck, BruteForceIsoCheck, D, DD, DDD, H, L, L3, LL, R
 #@local RR, RRR, S, T, acting, en, inv, it, iter, map, nr, x, y
+#@local CheckLeftGreensMultiplier1, CheckLeftGreensMultiplier2
 gap> START_TEST("Semigroups package: standard/greens/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1866,6 +1867,60 @@ gap> for x in Iterator(R) do nr := nr + 1; od;
 gap> nr = Size(R);
 true
 
-# 
+# Test function for LeftGreensMultiplier/NC
+gap> CheckLeftGreensMultiplier1 := function(S)
+>  local L, a, b;
+>  for L in LClasses(S) do
+>    for a in L do
+>      for b in L do
+>        if LeftGreensMultiplier(S, a, b) * a <> b then
+>          return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+> return true;
+> end;;
+gap> CheckLeftGreensMultiplier2 := function(S)
+>  local L, a, b;
+>  for L in LClasses(S) do
+>    for a in L do
+>      for b in L do
+>        if Set(RClass(S, a), x -> LeftGreensMultiplier(S, a, b) * x) <> Set(RClass(S, b)) then
+>           return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+>  return true;
+>  end;;
+gap> S := Monoid(Transformation([1, 3, 2, 1]),
+> Transformation([3, 3, 2]),
+> Transformation([4, 2, 4, 3]));;
+gap> CheckLeftGreensMultiplier1(S);
+true
+gap> CheckLeftGreensMultiplier2(S);
+true
+gap> S := Semigroup(Bipartition([[1, 2, 3, 4, 5, -1], [-2, -5], [-3, -4]]), 
+>                   Bipartition([[1, 2, 5, -5], [3, -1], [4, -2, -3, -4]]),
+>                   Bipartition([[1, -4, -5], [2, 3, 4, 5], [-1, -2, -3]]), 
+>                   Bipartition([[1, 2, 3, -2], [4, -1], [5, -5], [-3, -4]]),
+>                   Bipartition([[1, 2, 4, 5, -1, -2, -3, -5], [3], [-4]]));
+<bipartition semigroup of degree 5 with 5 generators>
+gap> CheckLeftGreensMultiplier1(S);
+true
+gap> CheckLeftGreensMultiplier2(S);
+true
+gap> S := Semigroup(PartialPerm([1, 2, 3], [4, 2, 1]), 
+>                   PartialPerm([1, 2, 3], [2, 4, 1]), 
+>                   PartialPerm([1, 2], [2, 3]), 
+>                   PartialPerm([1, 2], [3, 4]));
+<partial perm semigroup of rank 3 with 4 generators>
+gap> CheckLeftGreensMultiplier1(S);
+true
+gap> CheckLeftGreensMultiplier2(S);
+true
+
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/greens/acting.tst");
