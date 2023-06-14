@@ -5,7 +5,7 @@
 
   In this chapter we describe the functions in &SEMIGROUPS; for
   computing Green's classes and related properties of semigroups.
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -14,7 +14,7 @@
     <Heading>
       Creating Green's classes and representatives
     </Heading>
- 
+
     In this section, we describe the methods in the &SEMIGROUPS; package for
     creating Green's classes.
     <P/>
@@ -33,16 +33,16 @@
     <#Include Label = "IsGreensDGreaterThanFunc">
 
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
- 
+
   <Section>
 
     <Heading>
       Iterators and enumerators of classes and representatives
     </Heading>
- 
+
     In this section, we describe the methods in the &SEMIGROUPS; package for
     incrementally determining Green's classes or their representatives.
     <P/>
@@ -51,37 +51,37 @@
     <#Include Label = "IteratorOfXClasses">
 
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
- 
+
     <Heading>
       Properties of Green's classes
     </Heading>
- 
+
     In this section, we describe the properties and operators of Green's
-    classes that are available in the &SEMIGROUPS; package
+    classes that are available in the &SEMIGROUPS; package.
     <P/>
- 
+
     <#Include Label = "\&lt;">
     <#Include Label = "IsRegularGreensClass">
     <#Include Label = "IsGreensClassNC">
 
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
- 
+
   <Section>
- 
+
     <Heading>
       Attributes of Green's classes
     </Heading>
 
     In this section, we describe the attributes of Green's classes that are
-    available in the &SEMIGROUPS; package
+    available in the &SEMIGROUPS; package.
     <P/>
 
     <#Include Label = "GroupHClass">
@@ -92,9 +92,26 @@
     <#Include Label = "StructureDescription">
     <#Include Label = "InjectionPrincipalFactor">
     <#Include Label = "PrincipalFactor">
- 
+
   </Section>
- 
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+
+    <Heading>
+      Operations for Green's relations and classes
+    </Heading>
+
+    In this section, we describe some operations related to Green's classes that are
+    available in the &SEMIGROUPS; package.
+    <P/>
+
+    <#Include Label = "GreensMultiplier">
+
+  </Section>
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

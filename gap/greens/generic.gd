@@ -94,3 +94,24 @@ DeclareAttribute("OneImmutable", IsGreensHClass);
 DeclareProperty("IsHTrivial", IsGreensClass);
 DeclareProperty("IsLTrivial", IsGreensDClass);
 DeclareProperty("IsRTrivial", IsGreensDClass);
+
+DeclareOperation("LeftGreensMultiplier",
+                 [IsGreensRClass, IsGreensRClass]);
+DeclareOperation("RightGreensMultiplier",
+                 [IsGreensLClass, IsGreensLClass]);
+DeclareOperation("LeftGreensMultiplier",
+                 [IsSemigroup,
+                  IsMultiplicativeElement,
+                  IsMultiplicativeElement]);
+DeclareOperation("RightGreensMultiplier",
+                 [IsSemigroup,
+                  IsMultiplicativeElement,
+                  IsMultiplicativeElement]);
+DeclareOperation("LeftGreensMultiplierNC",
+                 [IsSemigroup,
+                  IsMultiplicativeElement,
+                  IsMultiplicativeElement]);
+DeclareOperation("RightGreensMultiplierNC",
+                 [IsSemigroup,
+                  IsMultiplicativeElement,
+                  IsMultiplicativeElement]);

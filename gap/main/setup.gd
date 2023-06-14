@@ -58,3 +58,4 @@ DeclareOperation("ConvertToInternalElement",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("ConvertToExternalElement",
                  [IsSemigroup, IsMultiplicativeElement]);
+DeclareOperation("WeakInverse", [IsMultiplicativeElement]);
