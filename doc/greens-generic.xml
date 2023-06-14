@@ -909,7 +909,7 @@ gap> AsSet(RegularDClasses(S));
     <C>GreensXClasses(S)[i]</C> in the partial order of <C>X</C>-classes of
     <A>S</A>. The reflexive transitive closure of the digraph <C>D</C> is the
     partial order of <C>X</C>-classes of <A>S</A> (in the sense of the
-      &DIGRAPHS; package). 
+      &DIGRAPHS; package).
     <P/>
 
     The partial order on the <C>X</C>-classes is defined as follows.
@@ -1048,6 +1048,56 @@ gap> List(DClasses(S), SchutzenbergerGroup);
   Group(()), Group(()), Group(()), Group(()), Group(()), 
   Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), 
   Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ]]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GreensMultiplier">
+<ManSection>
+  <Oper Name = "LeftGreensMultiplier" Arg = "S, a, b"/>
+  <Oper Name = "RightGreensMultiplier" Arg = "S, a, b"/>
+  <Returns>
+    An element.
+  </Returns>
+  <Description>
+  If <A>S</A> is a semigroup, and <A>a</A> and <A>b</A> are
+  &L;-related elements of <A>S</A>, then <C>LeftGreensMultiplier</C>
+  returns an element <C>s</C> such that <C>s * <A>a</A> = <A>b</A></C>. The
+  element <C>s</C> is of the same type as the elements of <A>S</A> but may
+  or may not be an element of <A>S</A>. In particular, if <A>S</A> is not a
+  monoid and <C><A>a</A> = <A>b</A></C>, then
+  <C>One(GeneratorsOfSemigroup(S))</C> may be returned. Even if <C><A>a</A> &lt;>
+  <A>b</A></C>, then it is not guaranteed that the returned element <C>s</C>
+  will belong to <A>S</A>. It is guaranteed that the left action of <C>s</C> on
+  the elements of the &L;-class of <A>a</A> is the same as the left action of
+  an element of <A>S</A> with the identity adjoined.<P/>
+
+  <C>LeftGreensMultiplier</C> gives an error if <A>a</A> and <A>b</A> are not
+  &L;-related elements of <A>S</A>.<P/>
+
+  The operation <C>RightGreensMultiplier</C> is defined analogously.
+
+  <Example><![CDATA[
+gap> S := Semigroup(Transformation([4, 4, 3, 5, 3]),
+>                   Transformation([5, 1, 1, 4, 1]),
+>                   Transformation([5, 5, 4, 4, 5]));;
+gap> a := Transformation([5, 5, 4, 4, 5]);;
+gap> LeftGreensMultiplier(S, a, a);
+Transformation( [ 1, 1, 3, 3, 1 ] )
+gap> RightGreensMultiplier(S, a, a);
+IdentityTransformation
+gap> b := Transformation([5, 4, 4, 5, 4]);
+Transformation( [ 5, 4, 4, 5, 4 ] )
+gap> s := LeftGreensMultiplier(S, a, b);
+Transformation( [ 1, 3, 3, 1, 3 ] )
+gap> s * a;
+Transformation( [ 5, 4, 4, 5, 4 ] )
+gap> b := Transformation([4, 4, 5, 5, 4]);
+Transformation( [ 4, 4, 5, 5, 4 ] )
+gap> s := RightGreensMultiplier(S, a, b);
+Transformation( [ 1, 2, 3, 5, 4 ] )
+gap> a * s = b;
+true]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>

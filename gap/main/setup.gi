@@ -896,14 +896,14 @@ function(S)
   return {x, y} -> x[2] ^ -1 * y[2];
 end);
 
-# Returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
-# yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
-
 InstallMethod(LambdaPerm, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(x, y)
   return MatrixOverFiniteFieldSchutzGrpElement(S, x, y);
 end);
+
+# Returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
+# yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> TRANS_IMG_CONJ);
@@ -1259,3 +1259,12 @@ function(S, mat)
   n := NrRows(mat) - 1;
   return Matrix(Unpack(mat){[1 .. n]}{[1 .. n]}, mat);
 end);
+
+InstallMethod(WeakInverse, "for a transformation",
+[IsTransformation], InverseOfTransformation);
+
+InstallMethod(WeakInverse, "for a partial perm",
+[IsPartialPerm], INV);
+
+InstallMethod(WeakInverse, "for a bipartition",
+[IsBipartition], Star);

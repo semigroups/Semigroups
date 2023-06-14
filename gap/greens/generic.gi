@@ -418,6 +418,70 @@ function(S)
   return D;
 end);
 
+InstallMethod(LeftGreensMultiplier, "for two Green's R-classes",
+[IsGreensRClass, IsGreensRClass],
+function(R1, R2)
+  local a, b;
+
+  if Source(R1) <> Source(R2) then
+    ErrorNoReturn("the 1st and 2nd arguments (R-classes) must belong ",
+                  "to the same semigroup");
+  fi;
+
+  a := Representative(R1);
+  b := First(HClassReps(R1), x -> x in R2);
+
+  if b = fail then
+    ErrorNoReturn("the 1st and 2nd arguments (R-classes) do not belong ",
+                  "to the same D-class");
+  fi;
+
+  return LeftGreensMultiplierNC(Source(R1), a, b);
+end);
+
+InstallMethod(RightGreensMultiplier, "for two Green's L-classes",
+[IsGreensLClass, IsGreensLClass],
+function(L1, L2)
+  local a, b;
+
+  if Source(L1) <> Source(L2) then
+    ErrorNoReturn("the 1st and 2nd arguments (L-classes) must belong ",
+                  "to the same semigroup");
+  fi;
+
+  a := Representative(L1);
+  b := First(HClassReps(L1), x -> x in L2);
+
+  if b = fail then
+    ErrorNoReturn("the 1st and 2nd arguments (L-classes) do not belong ",
+                  "to the same D-class");
+  fi;
+
+  return RightGreensMultiplierNC(Source(L1), a, b);
+end);
+
+InstallMethod(LeftGreensMultiplier,
+"for a semigroup and L-related elements",
+[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+  if not b in S or not a in LClass(S, b) then
+    ErrorNoReturn("the 2nd and 3rd arguments (mult. elts.) must belong ",
+                  "to the same L-class of the 1st argument (a semigroup)");
+  fi;
+  return LeftGreensMultiplierNC(S, a, b);
+end);
+
+InstallMethod(RightGreensMultiplier,
+"for a semigroup and R-related elements",
+[IsSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+  if not b in S or not a in RClass(S, b) then
+    ErrorNoReturn("the 2nd and 3rd arguments (mult. elts.) must belong ",
+                  "to the same R-class of the 1st argument (a semigroup)");
+  fi;
+  return RightGreensMultiplierNC(S, a, b);
+end);
+
 #############################################################################
 ## 5. Idempotents . . .
 #############################################################################

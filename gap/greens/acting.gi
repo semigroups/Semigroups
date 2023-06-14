@@ -1747,6 +1747,48 @@ function(S)
   return D;
 end);
 
+InstallMethod(LeftGreensMultiplierNC,
+"for an acting semigroup and L-related elements",
+[IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+  local o, l, m, result, p;
+
+  o := Enumerate(RhoOrb(S));
+  l := Position(o, RhoFunc(S)(a));
+  m := OrbSCCLookup(o)[l];
+
+  # back to the first pos. in scc
+  result := RhoOrbMult(o, m, l)[2];
+  l := Position(o, RhoFunc(S)(b));
+  # out to the same pos. as b
+  result := RhoOrbMult(o, m, l)[1] * result;
+
+  # result * a * LambdaPerm(S)(result * a, b) = b
+  p := LambdaPerm(S)(result * a, b);
+  # Apply the inverse of the bijection \Psi in Proposition 3.11 of the Citrus
+  # paper, to convert p from acting on the right to action on the left
+  return result * StabilizerAction(S)(a, p) * WeakInverse(a);
+end);
+
+InstallMethod(RightGreensMultiplierNC,
+"for an acting semigroup and R-related elements",
+[IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
+function(S, a, b)
+  local o, l, m, result;
+
+  o := Enumerate(LambdaOrb(S));
+  l := Position(o, LambdaFunc(S)(a));
+  m := OrbSCCLookup(o)[l];
+
+  # back to the first pos. in scc
+  result := LambdaOrbMult(o, m, l)[2];
+  l := Position(o, LambdaFunc(S)(b));
+  # out to the same pos. as b
+  result := result * LambdaOrbMult(o, m, l)[1];
+
+  return result * LambdaPerm(S)(a * result, b);
+end);
+
 #############################################################################
 ## 5. Idempotents . . .
 #############################################################################

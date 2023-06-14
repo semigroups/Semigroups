@@ -8,7 +8,10 @@
 #############################################################################
 ##
 
-#@local D, DD, DDD, H, J, L, L3, LL, R, RR, RRR, S, acting, an, gens, map, x, y
+#@local CheckLeftGreensMultiplier1, CheckLeftGreensMultiplier2
+#@local CheckRightGreensMultiplier1, CheckRightGreensMultiplier2, D, DD, DDD, H
+#@local J, L, L3, LL, R, RR, RRR, S, a, acting, an, b, gens, map, x, y
+#@local c, d, e, F
 gap> START_TEST("Semigroups package: standard/greens/froidure-pin.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1724,6 +1727,105 @@ gap> D := PartialOrderOfRClasses(S);
 gap> IsIsomorphicDigraph(D, DigraphFromDigraph6String("+D[CGO?"));
 true
 
-# 
+# GreensMultipliers for non-acting semigroup
+gap> CheckLeftGreensMultiplier1 := function(S)
+>  local L, a, b;
+>  for L in LClasses(S) do
+>    for a in L do
+>      for b in L do
+>        if LeftGreensMultiplierNC(S, a, b) * a <> b then
+>          return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+> return true;
+> end;;
+gap> CheckLeftGreensMultiplier2 := function(S)
+>  local L, a, b;
+>  for L in LClasses(S) do
+>    for a in L do
+>      for b in L do
+>        if Set(RClass(S, a), x -> LeftGreensMultiplierNC(S, a, b) * x) <> Set(RClass(S, b)) then
+>           return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+>  return true;
+>  end;;
+gap> CheckRightGreensMultiplier1 := function(S)
+>  local R, a, b;
+>  for R in RClasses(S) do
+>    for a in R do
+>      for b in R do
+>        if a * RightGreensMultiplierNC(S, a, b) <> b then
+>          return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+> return true;
+> end;;
+gap> CheckRightGreensMultiplier2 := function(S)
+>  local R, a, b;
+>  for R in RClasses(S) do
+>    for a in R do
+>      for b in R do
+>        if Set(LClass(S, a), x -> x * RightGreensMultiplierNC(S, a, b)) 
+>          <> Set(LClass(S, b)) then
+>           return [a, b];
+>        fi;
+>      od;
+>    od;
+>  od;
+>  return true;
+>  end;;
+gap> F := FreeMonoid("a", "b", "c", "d");;
+gap> a := F.1;; b := F.2;; c := F.3;; d := F.4;;
+gap> S := F /
+> [[a ^ 2, a], [a * b, b], [a * c, c], [a * d, d], [b * a, b], [c * a, c], 
+>  [d * a, d], [b ^ 3, b], [b * c ^ 2, b * c * b], [b * c * d, b ^ 2 * d], 
+>  [b * d ^ 2, b ^ 2 * c], [c * b * c, b ^ 2 * c], [c ^ 2 * b, c * b ^ 2], 
+>  [c ^ 3, c], [c * d ^ 2, c], [d * b * c, b * c], [d * c * b, d * b ^ 2], 
+>  [d * c ^ 2, d], [d ^ 3, d], [b * c * b ^ 2, b * c], [c * b ^ 2 * d, b * d], 
+>  [c * d * b * d, d * b * d], [(c * d) ^ 2, c ^ 2 * d * c], 
+>  [d * b ^ 2 * d, b ^ 2 * d], [d ^ 2 * c * d, (d * c) ^ 2], 
+>  [b * (b * d) ^ 2, (b * d) ^ 2], [b * c * b * d * c, b ^ 2 * d * c * d], 
+>  [(b * d) ^ 2 * c, (b * d) ^ 2], [b * (d * c) ^ 2, b ^ 2 * c * b * d], 
+>  [c * (b * d) ^ 2, (b * d) ^ 2], [c * d * b ^ 2 * c, d * b ^ 2 * c], 
+>  [(d * b) ^ 2 * d, (b * d) ^ 2], [b ^ 2 * d * b ^ 2 * c, b * d * b ^ 2 * c], 
+>  [b * c * b * d * b ^ 2, b ^ 2 * d * c * d * b], 
+>  [(b * d) ^ 2 * b ^ 2, (b * d) ^ 2 * b], 
+>  [b * d * c * d * b ^ 2, b ^ 2 * c * b * d * b], 
+>  [c * b * d * b ^ 2 * c, b * d * b ^ 2 * c], 
+>  [(d * b) ^ 2 * b * c, b * d * b ^ 2 * c], 
+>  [b * d * b ^ 2 * c * b * d, b * d * b ^ 2 * c * b], [a, b]];
+<fp monoid with 4 generators and 40 relations of length 276>
+gap> CheckLeftGreensMultiplier1(S);
+true
+gap> CheckLeftGreensMultiplier2(S);
+true
+gap> CheckRightGreensMultiplier1(S);
+true
+gap> CheckRightGreensMultiplier2(S);
+true
+gap> S := Semigroup(Bipartition([[1, 2, 3, 4, 5, -1], [-2, -5], [-3, -4]]),
+>                   Bipartition([[1, 2, 5, -5], [3, -1], [4, -2, -3, -4]]),
+>                   Bipartition([[1, -4, -5], [2, 3, 4, 5], [-1, -2, -3]]),
+>                   Bipartition([[1, 2, 3, -2], [4, -1], [5, -5], [-3, -4]]),
+>                   Bipartition([[1, 2, 4, 5, -1, -2, -3, -5], [3], [-4]]));
+<bipartition semigroup of degree 5 with 5 generators>
+gap> S := Image(EmbeddingFpMonoid(AsSemigroup(IsFpSemigroup, S)));;
+gap> CheckLeftGreensMultiplier1(S);
+true
+gap> CheckLeftGreensMultiplier2(S);
+true
+gap> CheckRightGreensMultiplier1(S);
+true
+gap> CheckRightGreensMultiplier2(S);
+true
+
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/greens/froidure-pin.tst");
