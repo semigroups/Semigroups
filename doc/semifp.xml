@@ -25,7 +25,7 @@
     each being a single alphabet letter (in upper or lower case). The argument
     <A>rels</A> must be string that lists the equalities desired.<P/>
 
-    To take a quotient of a free monoid, it is necessary to use 
+    To take a quotient of a free monoid, it is necessary to use
     <Ref Attr="GeneratorsOfMonoid" BookName="ref"/> as the 1st argument to
     <C>ParseRelations</C> and the identity may appear as <C>1</C> in the
     specified relations.
@@ -136,7 +136,7 @@ true]]></Example>
 
     <C>AntiIsomorphismDualFpMonoid</C> works analogously when <A>S</A> is a
     finitely presented monoid, and the range of the returned anti-isomorphism
-    is a finitely presented monoid. 
+    is a finitely presented monoid.
 
     <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b");
@@ -153,6 +153,44 @@ MappingByFunction( <fp semigroup with 2 generators and
  , function( x ) ... end, function( x ) ... end )
 gap> RelationsOfFpSemigroup(Range(map));
 [ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ]
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="EmbeddingFpMonoid">
+<ManSection>
+  <Attr Name="EmbeddingFpMonoid" Arg="S"/>
+  <Returns>A finitely presented monoid.</Returns>
+  <Description>
+    <C>EmbeddingFpMonoid</C> returns an embedding (<Ref
+    Oper="SemigroupHomomorphismByImages" Label="for two semigroups and two
+    lists"/>) from the finitely presented semigroup <A>S</A> into a finitely
+    presented monoid. If <A>S</A> satisfies <Ref Prop="IsMonoidAsSemigroup"/>,
+    then the mapping returned by this function is an isomorphism (the same
+    isomorphism as <Ref Attr="IsomorphismFpMonoid" BookName="ref"/>). If
+    <A>S</A> is not a monoid, then the range is isomorphic to <A>S</A> with an
+    identity adjoined (a new element not previously in <A>S</A>). The embedded
+    copy of <A>S</A> in the range can be recovered using <Ref Oper="Image"
+    BookName="ref"/>.
+
+    <Example><![CDATA[
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> Size(S);
+3
+gap> IsMonoidAsSemigroup(S);
+false
+gap> map := EmbeddingFpMonoid(S);
+<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> Size(Range(map));
+4
 ]]></Example>
   </Description>
 </ManSection>

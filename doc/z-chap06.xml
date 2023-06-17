@@ -429,6 +429,7 @@ gap> AsSemigroup(IsPBRSemigroup, M);
      <#Include Label = "RMSNormalization">
      <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
      <#Include Label = "AntiIsomorphismDualFpSemigroup">
+     <#Include Label = "EmbeddingFpMonoid">
 
    </Section>
 

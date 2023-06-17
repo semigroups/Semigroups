@@ -2602,6 +2602,52 @@ gap> RelationsOfFpMonoid(Range(map));
 [ [ a^3, <identity ...> ], [ b^2, <identity ...> ], 
   [ (b*a)^2, <identity ...> ] ]
 
+# EmbeddingFpMonoid
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> Size(S);
+3
+gap> IsMonoidAsSemigroup(S);
+false
+gap> map := EmbeddingFpMonoid(S);
+<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> Range(map) = Image(map);
+false
+gap> Size(Image(map));
+3
+gap> Size(Range(map));
+4
+
+# EmbeddingFpMonoid
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> S := Range(IsomorphismFpSemigroup(S));
+<fp semigroup with 3 generators and 8 relations of length 30>
+gap> Size(S);
+4
+gap> IsMonoidAsSemigroup(S);
+true
+gap> map := EmbeddingFpMonoid(S);
+<fp semigroup with 3 generators and 8 relations of length 30> -> 
+<fp monoid with 2 generators and 3 relations of length 11>
+gap> Range(map) = Image(map);
+true
+gap> Size(Images(map));
+4
+gap> Size(Range(map));
+4
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);

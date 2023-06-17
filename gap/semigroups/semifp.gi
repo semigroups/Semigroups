@@ -1365,3 +1365,31 @@ function(word)
   rev := Reversed(UnderlyingElement(word));
   return ElementOfFpMonoid(FamilyObj(word), rev);
 end);
+
+InstallMethod(EmbeddingFpMonoid, "for an fp semigroup",
+[IsFpSemigroup],
+function(S)
+  local F, R, map, T, hom, rel;
+
+  if HasIsMonoidAsSemigroup(S) and IsMonoidAsSemigroup(S) then
+    return IsomorphismFpMonoid(S);
+  fi;
+
+  F := FreeSemigroupOfFpSemigroup(S);
+  F := FreeMonoid(List(GeneratorsOfSemigroup(F), String));
+  R := [];
+
+  map := x -> ObjByExtRep(ElementsFamily(FamilyObj(F)), ExtRepOfObj(x));
+
+  for rel in RelationsOfFpSemigroup(S) do
+    Add(R, [map(rel[1]), map(rel[2])]);
+  od;
+
+  T := F / R;
+  hom := SemigroupHomomorphismByImages_NC(S,
+                                          T,
+                                          GeneratorsOfSemigroup(S),
+                                          GeneratorsOfMonoid(T));
+  SetIsInjective(hom, true);
+  return hom;
+end);
