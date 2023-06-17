@@ -196,4 +196,35 @@ gap> Size(Range(map));
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsSubsemigroupOfFpMonoid">
+<ManSection>
+  <Prop Name="IsSubsemigroupOfFpMonoid" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    This property is <K>true</K> if the object <A>S</A> is a subsemigroup of an
+    fp monoid, and <K>false</K> otherwise. This property is just a synonym for 
+    <Ref Prop="IsSemigroup" BookName="ref"/> and 
+    <C>IsElementOfFpMonoidCollection</C>.
+
+    <Example><![CDATA[
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> IsSubsemigroupOfFpMonoid(S);
+false
+gap> map := EmbeddingFpMonoid(S);
+<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> IsSubsemigroupOfFpMonoid(Image(map));
+true
+gap> IsSubsemigroupOfFpMonoid(Range(map));
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 
