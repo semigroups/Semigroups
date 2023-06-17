@@ -52,6 +52,7 @@
     <#Include Label = "ElementOfFpSemigroup">
     <#Include Label = "ElementOfFpMonoid">
     <#Include Label = "FreeMonoidAndAssignGeneratorVars">
+    <#Include Label = "IsSubsemigroupOfFpMonoid">
   </Section>
 
   <Section Label="Creating Tietze transformation objects">

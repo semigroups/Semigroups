@@ -2648,6 +2648,24 @@ gap> Size(Images(map));
 gap> Size(Range(map));
 4
 
+# IsSubsemigroupOfFpMonoid
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 3 relations of length 14>
+gap> IsSubsemigroupOfFpMonoid(S);
+false
+gap> map := EmbeddingFpMonoid(S);
+<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp monoid with 2 generators and 3 relations of length 14>
+gap> IsSubsemigroupOfFpMonoid(Image(map));
+true
+gap> IsSubsemigroupOfFpMonoid(Range(map));
+true
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);

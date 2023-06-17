@@ -16,6 +16,9 @@ DeclareAttribute("UnderlyingCongruence", IsFpMonoid);
 DeclareAttribute("Length", IsFpSemigroup);
 DeclareAttribute("Length", IsFpMonoid);
 
+DeclareSynonym("IsSubsemigroupOfFpMonoid",
+               IsSemigroup and IsElementOfFpMonoidCollection);
+
 DeclareAttribute("EmbeddingFpMonoid", IsFpSemigroup);
 
 DeclareOperation("ReversedOp", [IsElementOfFpSemigroup]);

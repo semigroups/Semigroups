@@ -15,6 +15,15 @@
 # All methods for fp semigroups and monoids go via the underlying congruence on
 # the free semigroup and free monoid.
 
+# TODO methods for submonoids of fp monoids and subsemigroups of fp semigroups
+InstallImmediateMethod(CanUseGapFroidurePin,
+IsSubsemigroupOfFpMonoid and HasGeneratorsOfSemigroup, 0,
+function(T)
+  local x;
+  x := Representative(GeneratorsOfSemigroup(T));
+  return CanUseFroidurePin(FpMonoidOfElementOfFpMonoid(x));
+end);
+
 InstallMethod(UnderlyingCongruence, "for an fp semigroup",
 [IsFpSemigroup],
 function(S)
