@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-#@local BruteForceInverseCheck, BruteForceIsoCheck, D, DD, DDD, H, L, L3, LL, R
-#@local RR, RRR, S, T, acting, en, inv, it, iter, map, nr, x, y
-#@local CheckLeftGreensMultiplier1, CheckLeftGreensMultiplier2
-#@local CheckRightGreensMultiplier1, CheckRightGreensMultiplier2
+#@local BruteForceInverseCheck, BruteForceIsoCheck, CheckLeftGreensMultiplier1
+#@local CheckLeftGreensMultiplier2, CheckRightGreensMultiplier1
+#@local CheckRightGreensMultiplier2, D, DD, DDD, H, L, L3, LL, R, RR, RRR, S, T
+#@local a, acting, b, d, en, inv, it, iter, map, mults, nr, x, y
 gap> START_TEST("Semigroups package: standard/greens/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1959,6 +1959,17 @@ true
 gap> CheckLeftGreensMultiplier2(S);
 true
 gap> CheckRightGreensMultiplier2(S);
+true
+
+# Fix bug in HClassReps(LClass) 
+gap> T := Monoid(Transformation([1, 3, 2, 1]),
+>                Transformation([3, 3, 2]), 
+>                Transformation([4, 2, 4, 3])); 
+<transformation monoid of degree 4 with 3 generators>
+gap> D := DClasses(T)[4];;
+gap> d := Representative(D);;
+gap> mults := List(HClassReps(LClass(T, d)), h -> LeftGreensMultiplierNC(T, d, h));;
+gap> Length(Set(mults, m -> RClass(T, m * d))) = Length(RClasses(D));
 true
 
 #

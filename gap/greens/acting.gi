@@ -1563,7 +1563,7 @@ function(L)
   nr := 0;
 
   for p in cosets do
-    x := act(rep, p);
+    x := act(rep, p ^ -1);
     for i in scc do
       nr := nr + 1;
       out[nr] := ConvertToExternalElement(Parent(L), mults[i][1] * x);
