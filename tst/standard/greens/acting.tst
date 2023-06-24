@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/greens/acting.tst
-#Y  Copyright (C) 2011-2022                              James D. Mitchell
+#Y  Copyright (C) 2011-2023                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,7 +11,7 @@
 #@local BruteForceInverseCheck, BruteForceIsoCheck, CheckLeftGreensMultiplier1
 #@local CheckLeftGreensMultiplier2, CheckRightGreensMultiplier1
 #@local CheckRightGreensMultiplier2, D, DD, DDD, H, L, L3, LL, R, RR, RRR, S, T
-#@local a, acting, b, d, en, inv, it, iter, map, mults, nr, x, y
+#@local a, acting, b, d, en, h, inv, it, iter, map, mults, nr, r, x, y
 gap> START_TEST("Semigroups package: standard/greens/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -1960,6 +1960,46 @@ gap> CheckLeftGreensMultiplier2(S);
 true
 gap> CheckRightGreensMultiplier2(S);
 true
+
+# Bug in RightGreensMultiplierNC
+gap> S := Monoid(
+> Bipartition([[1, 2, -6], [3, 4, -1], [5, -2], [6], [-3], [-4], [-5]]),
+> Bipartition([[1, 2, 3, 5, -2, -6], [4, -5], [6, -3, -4], [-1]]),
+> Bipartition([[1, 2, 6, -1], [3, -3], [4, 5, -6], [-2], [-4, -5]]),
+> Bipartition([[1, 3, -4], [2, 4, 5, -1, -5], [6, -2, -3, -6]]),
+> Bipartition([[1, 3, 4, 6, -5], [2, 5, -1, -2, -4], [-3, -6]]));
+<bipartition monoid of degree 6 with 5 generators>
+gap> d := Bipartition([[1, 3, -2], [2, 4, 5, 6, -1, -6], [-3], [-4], [-5]]);
+<bipartition: [ 1, 3, -2 ], [ 2, 4, 5, 6, -1, -6 ], [ -3 ], [ -4 ], [ -5 ]>
+gap> D := DClass(S, d);
+<Green's D-class: <bipartition: [ 1, 3, -2 ], [ 2, 4, 5, 6, -1, -6 ], [ -3 ], 
+  [ -4 ], [ -5 ]>>
+gap> x := Bipartition([[1, 3, -1, -6], [2, 4, 5, 6, -2], [-3], [-4], [-5]]);
+<bipartition: [ 1, 3, -1, -6 ], [ 2, 4, 5, 6, -2 ], [ -3 ], [ -4 ], [ -5 ]>
+gap> H := HClass(S, x);
+<Green's H-class: <bipartition: [ 1, 3, -1, -6 ], [ 2, 4, 5, 6, -2 ], [ -3 ], 
+  [ -4 ], [ -5 ]>>
+gap> h := Representative(H);
+<bipartition: [ 1, 3, -1, -6 ], [ 2, 4, 5, 6, -2 ], [ -3 ], [ -4 ], [ -5 ]>
+gap> r := RightGreensMultiplierNC(S, d, h);;
+gap> d * r in D;
+true
+
+# This is a bit slow so commented out
+# gap> S := Monoid(
+# > Bipartition([[1, 2, -6], [3, 4, -1], [5, -2], [6], [-3], [-4], [-5]]),
+# > Bipartition([[1, 2, 3, 5, -2, -6], [4, -5], [6, -3, -4], [-1]]),
+# > Bipartition([[1, 2, 6, -1], [3, -3], [4, 5, -6], [-2], [-4, -5]]),
+# > Bipartition([[1, 3, -4], [2, 4, 5, -1, -5], [6, -2, -3, -6]]),
+# > Bipartition([[1, 3, 4, 6, -5], [2, 5, -1, -2, -4], [-3, -6]]));
+# gap> CheckLeftGreensMultiplier1(S);
+# true
+# gap> CheckRightGreensMultiplier1(S);
+# true
+# gap> CheckLeftGreensMultiplier2(S);
+# true
+# gap> CheckRightGreensMultiplier2(S);
+# true
 
 # Fix bug in HClassReps(LClass) 
 gap> T := Monoid(Transformation([1, 3, 2, 1]),
