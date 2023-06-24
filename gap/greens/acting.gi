@@ -1774,7 +1774,7 @@ InstallMethod(RightGreensMultiplierNC,
 "for an acting semigroup and R-related elements",
 [IsActingSemigroup, IsMultiplicativeElement, IsMultiplicativeElement],
 function(S, a, b)
-  local o, l, m, result;
+  local o, l, m, result, p;
 
   o := Enumerate(LambdaOrb(S));
   l := Position(o, LambdaFunc(S)(a));
@@ -1786,7 +1786,10 @@ function(S, a, b)
   # out to the same pos. as b
   result := result * LambdaOrbMult(o, m, l)[1];
 
-  return result * LambdaPerm(S)(a * result, b);
+  # At this point StabilizerAction(a * result, LambdaPerm(S)(a * result, b)) =
+  # b.
+  p := LambdaPerm(S)(a * result, b);
+  return WeakInverse(a) * StabilizerAction(S)(a * result, p);
 end);
 
 #############################################################################

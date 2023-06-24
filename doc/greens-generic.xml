@@ -1085,7 +1085,7 @@ gap> a := Transformation([5, 5, 4, 4, 5]);;
 gap> LeftGreensMultiplier(S, a, a);
 Transformation( [ 1, 1, 3, 3, 1 ] )
 gap> RightGreensMultiplier(S, a, a);
-IdentityTransformation
+Transformation( [ 5, 5, 5, 4, 5 ] )
 gap> b := Transformation([5, 4, 4, 5, 4]);
 Transformation( [ 5, 4, 4, 5, 4 ] )
 gap> s := LeftGreensMultiplier(S, a, b);
@@ -1095,7 +1095,7 @@ Transformation( [ 5, 4, 4, 5, 4 ] )
 gap> b := Transformation([4, 4, 5, 5, 4]);
 Transformation( [ 4, 4, 5, 5, 4 ] )
 gap> s := RightGreensMultiplier(S, a, b);
-Transformation( [ 1, 2, 3, 5, 4 ] )
+Transformation( [ 4, 4, 4, 5, 4 ] )
 gap> a * s = b;
 true]]></Example>
   </Description>
