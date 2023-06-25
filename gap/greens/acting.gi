@@ -456,7 +456,7 @@ end);
 
 InstallMethod(RhoOrbStabChain, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-D -> RhoOrbStabChain(GreensLClassOfElementNC(D, Representative(D))));
+D -> RhoOrbStabChain(GreensLClassOfElementNC(D, D!.rep)));
 
 # same method for regular, not required for inverse, same for ideals
 
