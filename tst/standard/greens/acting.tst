@@ -11,7 +11,7 @@
 #@local BruteForceInverseCheck, BruteForceIsoCheck, CheckLeftGreensMultiplier1
 #@local CheckLeftGreensMultiplier2, CheckRightGreensMultiplier1
 #@local CheckRightGreensMultiplier2, D, DD, DDD, H, L, L3, LL, R, RR, RRR, S, T
-#@local a, acting, b, d, en, h, inv, it, iter, map, mults, nr, r, x, y
+#@local a, acting, b, c, d, e, en, h, inv, it, iter, map, mults, nr, r, x, y
 gap> START_TEST("Semigroups package: standard/greens/acting.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -2010,6 +2010,22 @@ gap> D := DClasses(T)[4];;
 gap> d := Representative(D);;
 gap> mults := List(HClassReps(LClass(T, d)), h -> LeftGreensMultiplierNC(T, d, h));;
 gap> Length(Set(mults, m -> RClass(T, m * d))) = Length(RClasses(D));
+true
+
+# Fix issue #931 (bug in RhoOrbStabChain(DClass) using the wrong representative
+gap> S := Monoid(Transformation([3, 2, 3, 3, 5, 5]), 
+>                Transformation([5, 4, 4, 5, 1, 4]), 
+>                Transformation([1, 1, 5, 3, 3]), 
+>                Transformation([4, 5, 6, 4, 1, 4]), 
+>                Transformation([5, 1, 2, 1, 6, 5]));
+<transformation monoid of degree 6 with 5 generators>
+gap> e := Transformation([1, 6, 6, 1, 5, 6]);
+Transformation( [ 1, 6, 6, 1, 5, 6 ] )
+gap> c := Transformation([6, 1, 1, 6, 5, 1]);
+Transformation( [ 6, 1, 1, 6, 5, 1 ] )
+gap> c in DClass(S, e);
+true
+gap> c in HClass(S, e);
 true
 
 #
