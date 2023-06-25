@@ -272,6 +272,12 @@ function(cong1, cong2)
   return IsSubset(Union(cong2!.H, cong2!.W), Union(cong1!.H, cong1!.W));
 end);
 
+InstallMethod(\=, "for two congruences by Wang pair",
+[IsCongruenceByWangPair, IsCongruenceByWangPair],
+function(cong1, cong2)
+  return cong1!.H = cong2!.H and cong1!.W = cong2!.W;
+end);
+
 InstallMethod(CayleyDigraphOfCongruences,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
