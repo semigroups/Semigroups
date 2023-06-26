@@ -1749,7 +1749,8 @@ function(S, a, b)
   p := LambdaPerm(S)(result * a, b);
   # Apply the inverse of the bijection \Psi in Proposition 3.11 of the Citrus
   # paper, to convert p from acting on the right to action on the left
-  return result * StabilizerAction(S)(a, p) * WeakInverse(a);
+  return result * StabilizerAction(S)(a, p)
+    * OnePseudoInverseOfSemigroupElement(a);
 end);
 
 InstallMethod(RightGreensMultiplierNC,
@@ -1771,7 +1772,8 @@ function(S, a, b)
   # At this point StabilizerAction(a * result, LambdaPerm(S)(a * result, b)) =
   # b.
   p := LambdaPerm(S)(a * result, b);
-  return WeakInverse(a) * StabilizerAction(S)(a * result, p);
+  return OnePseudoInverseOfSemigroupElement(a)
+    * StabilizerAction(S)(a * result, p);
 end);
 
 #############################################################################

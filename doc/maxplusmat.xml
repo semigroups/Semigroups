@@ -12,7 +12,6 @@
   <ManSection Label = "IsXMatrix">
   <Heading>Matrix filters</Heading>
     <Filt Name = "IsBooleanMat"              Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverFiniteField"   Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMaxPlusMatrix"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMinPlusMatrix"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMatrix"          Arg = "obj" Type = "Category"/>

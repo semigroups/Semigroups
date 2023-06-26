@@ -1207,13 +1207,19 @@ gap> GeneratorsSmallest(T);
 
 <#GAPDoc Label="OneInverseOfSemigroupElement">
 <ManSection>
-  <Attr Name="OneInverseOfSemigroupElement" Arg="S, x"/>
-  <Returns> One inverse of an element of a semigroup.</Returns>
+  <Oper Name="OneInverseOfSemigroupElement" Arg="S, x"/>
+  <Returns> One inverse of an element of a semigroup or <K>fail</K>.</Returns>
   <Description>
     <C>OneInverseOfSemigroupElement</C> returns one inverse of the element
-    <C>x</C> in the semigroup <A>S</A> and returns fail if this
-    element has no inverse in <A>S</A>.
-    <A>x</A> in the semigroup <A>S</A>.
+    <C>x</C> in the semigroup <A>S</A> and returns <K>fail</K> if this
+    element has no inverse in <A>S</A>.<P/>
+
+    An <E>inverse</E> of an element <A>x</A> in a semigroup <A>S</A> is an
+    element <C>y</C> of <A>S</A> such that <C><A>x</A> * y * <A>x</A> =
+    <A>x</A></C> and <C>y * <A>x</A> * y = <A>y</A></C>.
+
+    See also <Ref Oper="OnePseudoInverseOfSemigroupElement"/>.
+
   <Example><![CDATA[
 gap> S := FullTransformationMonoid(4);
 <full transformation monoid of degree 4>
@@ -1229,6 +1235,70 @@ gap> F := FreeSemigroup(1);
 <free semigroup on the generators [ s1 ]>
 gap> OneInverseOfSemigroupElement(F, F.1);
 Error, the semigroup is not finite]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnePseudoInverseOfSemigroupElement">
+<ManSection>
+  <Oper Name="OnePseudoInverseOfSemigroupElement" Arg="x"/>
+  <Returns> One pseudo-inverse of an element of a semigroup.</Returns>
+  <Description>
+    <C>OnePseudoInverseOfSemigroupElement</C> returns one pseudo-inverse of the
+    element <A>x</A>. This is an element of the same type as <A>x</A> belonging
+    to some semigroup or monoid containing <A>x</A>.
+    <P/>
+
+    An <E>pseudo-inverse</E> of an element <A>x</A> is an element <C>y</C> such
+    that <C><A>x</A> * y * <A>x</A> = <A>x</A></C>.
+    <P/>
+
+    Methods are installed for this operation for the following types of elements:
+    <List>
+    <Mark>transformations</Mark>
+    <Item>
+    <Ref Prop="IsTransformation" BookName="ref"/>;
+    </Item>
+    <Mark>partial perms</Mark>
+    <Item>
+    <Ref Prop="IsPartialPerm" BookName="ref"/>;
+    </Item>
+    <Mark>bipartitions</Mark>
+    <Item>
+    <Ref Prop="IsBipartition"/>;
+    </Item>
+    <Mark>matrices over finite fields</Mark>
+    <Item>
+    &GAP; matrices with entries in a finite field;
+    </Item>
+    <Mark>elements of McAlister triple semigroups</Mark>
+    <Item>
+    <Ref Prop="IsMcAlisterTripleSemigroupElement"/>;
+    </Item>
+    <Mark>elements of regular Rees 0-matrix semigroups over groups</Mark>
+    <Item>
+    <Ref Prop="IsReesZeroMatrixSemigroupElement" BookName="ref"/>.
+    </Item>
+    </List>
+
+    See also <Ref Oper="OneInverseOfSemigroupElement"/>.
+
+  <Example><![CDATA[
+gap> s := Transformation([2, 3, 1, 1]);
+Transformation( [ 2, 3, 1, 1 ] )
+gap> OnePseudoInverseOfSemigroupElement(s);
+Transformation( [ 3, 1, 2, 1 ] )
+gap> e := IdentityTransformation;
+IdentityTransformation
+gap> OnePseudoInverseOfSemigroupElement(e);
+IdentityTransformation
+gap> F := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> OnePseudoInverseOfSemigroupElement(F, F.1);
+Error, no method found! For debugging hints type ?Recovery from NoMeth\
+odFound
+Error, no 1st choice method found for `OnePseudoInverseOfSemigroupElem\
+ent' on 2 arguments]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
