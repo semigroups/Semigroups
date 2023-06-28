@@ -957,16 +957,27 @@ SEMIGROUPS.WordToExtRepObj := function(word)
   return ext_rep_obj;
 end;
 
-SEMIGROUPS.ExtRepObjToString := function(ext_rep_obj)
-  local alphabet, out, i;
-  alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+SEMIGROUPS.ExtRepObjToString := function(arg...)
+  local ext_rep_obj, names, out, i;
+
+  if Length(arg) = 1 then
+    ext_rep_obj := arg[1];
+    names := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  elif Length(arg) = 2 then
+    ext_rep_obj := arg[1];
+    names := Concatenation(arg[2]);
+  else
+    ErrorNoReturn("expected 1 or 2 arguments, found ", Length(arg));
+  fi;
+
   out := "";
   for i in [1, 3 .. Length(ext_rep_obj) - 1] do
-    if ext_rep_obj[i] > Length(alphabet) then
+    if ext_rep_obj[i] > Length(names) then
       ErrorNoReturn("the maximum value in an odd position of the ",
-                    "argument must be at most ", Length(alphabet));
+                    "argument must be at most ", Length(names), " found ",
+                    ext_rep_obj[i]);
     fi;
-    Add(out, alphabet[ext_rep_obj[i]]);
+    Add(out, names[ext_rep_obj[i]]);
     if ext_rep_obj[i + 1] > 1 then
       Append(out, " ^ ");
       Append(out, String(ext_rep_obj[i + 1]));

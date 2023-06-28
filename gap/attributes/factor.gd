@@ -15,3 +15,8 @@ DeclareOperation("NonTrivialFactorization",
 DeclareOperation("Factorization", [IsLambdaOrb, IsPosInt, IsPerm]);
 DeclareOperation("Factorization", [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("TraceSchreierTreeForward", [IsSemigroupData, IsPosInt]);
+
+DeclareOperation("MonoidFactorization",
+                 [IsMonoid, IsMultiplicativeElementWithOne]);
+DeclareOperation("MinimalMonoidFactorization",
+                 [IsMonoid, IsMultiplicativeElementWithOne]);

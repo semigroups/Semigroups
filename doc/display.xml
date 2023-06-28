@@ -265,13 +265,15 @@ gap> FileString("t3.dot", DotString(S));
 gap> S := DualSymmetricInverseMonoid(4);
 <inverse block bijection monoid of degree 4 with 3 generators>
 gap> DotSemilatticeOfIdempotents(S);
-"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \
-cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
- cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\
- -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\
-\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \
-6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
- -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Example>
+"//dot\ngraph semilattice {\n\tnode[shape=point] ranksep=2 \nsubgraph \
+cluster_1 {\n\t15\n}\nsubgraph cluster_2 {\n\t5\n\t11\n\t14\n\t12\n\t1\
+3\n\t8\n}\nsubgraph cluster_3 {\n\t2\n\t10\n\t6\n\t3\n\t4\n\t9\n\t7\n}\
+\nsubgraph cluster_4 {\n\t1\n}\n\t2 -- 1\n\t3 -- 1\n\t4 -- 1\n\t5 -- 2\
+\n\t5 -- 3\n\t5 -- 4\n\t6 -- 1\n\t7 -- 1\n\t8 -- 2\n\t8 -- 6\n\t8 -- 7\
+\n\t9 -- 1\n\t10 -- 1\n\t11 -- 2\n\t11 -- 9\n\t11 -- 10\n\t12 -- 3\n\t\
+12 -- 6\n\t12 -- 9\n\t13 -- 3\n\t13 -- 7\n\t13 -- 10\n\t14 -- 4\n\t14 \
+-- 6\n\t14 -- 10\n\t15 -- 5\n\t15 -- 8\n\t15 -- 11\n\t15 -- 12\n\t15 -\
+- 13\n\t15 -- 14\n}\n"]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

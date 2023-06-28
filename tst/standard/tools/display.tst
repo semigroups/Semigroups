@@ -20,152 +20,104 @@ gap> SEMIGROUPS.StartTest();;
 
 # Test TikzString for a pbr
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bla\
-ck, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14\
-cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/\
-.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n \
- \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\\
-node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\
-\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1\
-.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .\
-. controls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, \
-2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. contro\
-ls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (\
--3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, \
-2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\\
-arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n\
-  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc \
-(3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.73333333333333\
-34, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge \
-[botloop] (-3);\n\n\\end{tikzpicture}\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\\begin{tikzpicture}[\n  v\
+ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
+ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
+, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in =\
+ 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node \
+[vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  \
+}\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n\
+    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n\
+  \\arc (1) to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.333333333\
+3333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs fro\
+m vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335)\
+ and (1.2, 1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (2)\
+ .. controls (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667\
+, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs fro\
+m vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from verte\
+x 3\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333\
+333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % arcs\
+ from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\en\
+d{document}"
 gap> TikzString(PBR([[-2, 2], [1, 2], [-1, 2]], [[-3], [1, 2], [- 3]]),
 > rec(labels := true));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bla\
-ck, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14\
-cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/\
-.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n \
- \\foreach \\i in {1,...,3} {\n    \\node [vertex, label={[yshift=9mm]\\i}] at\
- (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\fo\
-reach \\i in {1,...,3} {\n    \\node [vertex, label={[yshift=-15mm,xshift=-0.5\
-mm]-\\i}] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n\
-  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) .. controls (\
-1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333\
-333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666\
-6666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n\n  % \
-arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333\
-333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge\
- [toploop] (2);\n\n  % arcs from vertex -2\n  \\arc (-2) to (1);\n  \\arc (-2)\
- to (2);\n\n  % arcs from vertex 3\n  \\arc (3) to (-1);\n  \\arc (3) .. contr\
-ols (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333\
-3333333335) .. (2);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-\
-3);\n\n\\end{tikzpicture}\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\\begin{tikzpicture}[\n  v\
+ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
+ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
+, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in =\
+ 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node \
+[vertex, label={[yshift=9mm]\\i}] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i\
+) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vert\
+ex, label={[yshift=-15mm,xshift=-0.5mm]-\\i}] at (\\i/1.5, 0) {};\n    \\node \
+[ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1)\
+ to (-2);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) an\
+d (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\
+\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, \
+1.0833333333333335) .. (-3);\n\n  % arcs from vertex 2\n  \\arc (2) .. control\
+s (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333\
+333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\
+\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n  \\ar\
+c (3) to (-1);\n  \\arc (3) .. controls (1.6000000000000001, 2.333333333333333\
+5) and (1.7333333333333334, 2.3333333333333335) .. (2);\n\n  % arcs from verte\
+x -3\n  \\arc (-3) edge [botloop] (-3);\n\n\\end{tikzpicture}\n\\end{document}\
+"
 
 # TikzString for a pbr collection
 gap> x := PBR([[1], [], []], [[2], [-2, 1, 2], [1, 2, 3]]);;
 gap> y := PBR([[-3, -2, -1, 2], [-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 2, 3]],
 > [[-3, -2, -1, 2], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2, 3]]);;
 gap> TikzString(Semigroup(x, y));
-"1\n2\n3\n4\n5\n\\begin{center}\n\\begin{tikzpicture}[\n  vertex/.style={circl\
-e, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none,\
- inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -\
-110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % verti\
-ces and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.\
-5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\\
-i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] \
-(-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [t\
-oploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) to (2);\n\n  % arcs from\
- vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\a\
-rc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n\n  % arcs fr\
-om vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\
-\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  verte\
-x/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circl\
-e, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, ou\
-t = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110\
-}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [ver\
-tex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\
-\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n   \
- \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \
-\\arc (1) to (-3);\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \\arc (1) ..\
- controls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2\
-.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. control\
-s (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-\
-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.66666666666666674) and (0\
-.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop]\
- (-1);\n  \\arc (-1) to (2);\n\n  % arcs from vertex 2\n  \\arc (2) to (-3);\n\
-  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. controls (0.9333333\
-3333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .\
-. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333\
-333334, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3\
-);\n\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0\
-.66666666666666674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \
-\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324\
-, 0.66666666666666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\
-\n  \\arc (-2) to (1);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\ar\
-c (3) to (-3);\n  \\arc (3) to (-2);\n  \\arc (3) to (-1);\n  \\arc (3) .. con\
-trols (1.2, 1.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .\
-. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (\
-1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3\
-);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3)\
- .. controls (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334\
-, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.083333333333\
-3335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (\
-1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\big\
-skip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=bl\
-ack, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.1\
-4cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop\
-/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n\
-  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \
-\\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} \
-{\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/\
-1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n\
-\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % a\
-rcs from vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2)\
-;\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n  % arcs from vertex 3\n\n  %\
- arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3)\
- to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\
-\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.sty\
-le={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance \
-= 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70,\
- in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\\
-node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {}\
-;\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) \
-{};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from verte\
-x 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) \
-.. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.0833333333333\
-335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.666666666666666\
-74) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge\
- [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to \
-(3);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) .. con\
-trols (1.7333333333333334, 0.66666666666666674) and (1.6000000000000001, 0.666\
-66666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. c\
-ontrols (0.93333333333333324, 0.66666666666666674) and (1.0666666666666667, 0.\
-66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\a\
-rc (-2) to (3);\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc \
-(-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.666\
-66666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\ar\
-c (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.083333\
-3333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3)\
- to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\
-\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.sty\
-le={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance \
-= 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out = 70,\
- in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\\
-node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {}\
-;\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) \
-{};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from verte\
-x 1\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) and (0.9\
-3333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from vertex -1\n  \\\
-arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from \
-vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) an\
-d (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop]\
- (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1\
-.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \
-\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n \
- \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1\
-.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\a\
-rc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.73333333333\
-33334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arc\
-s from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to \
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\usetikzlibrary{arrows\
+}\n\\usetikzlibrary{arrows.meta}\n\\newcommand{\\arc}{\\draw[semithick, -{>[wi\
+dth = 1.5mm, length = 2.5mm]}]}\n\n\\begin{document}\\begin{center}\n\\begin{t\
+ikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n\
+  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={m\
+in distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8m\
+m, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,\
+3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\\
+i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\
+\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arc\
+s from vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n \
+ \\arc (-1) to (2);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n  \\\
+arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n\n \
+ % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \\ar\
+c (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigsk\
+ip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner \
+sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  bo\
+tloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style={mi\
+n distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach\
+ \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghos\
+t] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\nod\
+e [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\
+\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-3);\n  \\arc (1) to (-2);\n \
+ \\arc (1) to (-1);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333\
+333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from\
+ vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) \
+and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666\
+666667, 0.66666666666666674) and (0.93333333333333324, 0.66666666666666674) ..\
+ (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (2);\n\n  % arcs fr\
+om vertex 2\n  \\arc (2) to (-3);\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\
+\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066\
+6666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n \
+ \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000\
+000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2\
+) .. controls (1.7333333333333334, 0.66666666666666674) and (1.600000000000000\
+1, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (\
+-2) .. controls (0.93333333333333324, 0.66666666666666674) and (1.066666666666\
+6667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (3)\
+;\n\n  % arcs from vertex 3\n  \\arc (3) to (-3);\n  \\arc (3) to (-2);\n  \\a\
+rc (3) to (-1);\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.4666\
+666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.60000000\
+00000001, 2.3333333333333335) and (1.7333333333333334, 2.3333333333333335) .. \
+(2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3)\
+ edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.6666666\
+6666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\arc (-\
+3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.0833333333\
+333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to \
 (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  v\
 ertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={c\
 ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
@@ -174,780 +126,468 @@ ircle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm\
 [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  \
 }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n\
     \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n\
-  \\arc (1) to (-3);\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \\arc (1) \
-edge [toploop] (1);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333\
-333335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. \
-controls (1.4666666666666668, 1.9166666666666665) and (1.2, 1.9166666666666665\
-) .. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666666666\
-6668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1)\
- .. controls (1.0666666666666667, 0.66666666666666674) and (0.9333333333333332\
-4, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (\
--1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from verte\
-x 2\n  \\arc (2) to (-3);\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc\
- (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066666666666\
-6667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2\
-) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000000000001\
-, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) .. cont\
-rols (1.7333333333333334, 0.66666666666666674) and (1.6000000000000001, 0.6666\
-6666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. co\
-ntrols (0.93333333333333324, 0.66666666666666674) and (1.0666666666666667, 0.6\
-6666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\ar\
-c (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) to (-3);\n  \\arc (3) to\
- (-2);\n  \\arc (3) to (-1);\n  \\arc (3) .. controls (1.2, 1.9166666666666665\
-) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. control\
-s (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.33333333\
-33333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\
-\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000\
-001, 0.66666666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2\
-);\n  \\arc (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668\
-, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \
-\\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikz\
-picture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  g\
-host/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min \
-distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, \
-out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} \
-{\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1\
-.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i\
-/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs f\
-rom vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\\
-arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from \
-vertex 2\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\ar\
-c (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from ve\
-rtex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\
-\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{\
-tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\
-\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style=\
-{min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = \
-8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,..\
-.,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\
-\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at\
- (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % a\
-rcs from vertex 1\n  \\arc (1) .. controls (1.0666666666666667, 2.333333333333\
-3335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n\n  % arcs from v\
-ertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) an\
-d (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1.066666666666\
-6667, 0.66666666666666674) and (0.93333333333333324, 0.66666666666666674) .. (\
--2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to\
- (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls\
- (0.93333333333333324, 2.3333333333333335) and (1.0666666666666667, 2.33333333\
-33333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1\
-.7333333333333334, 2.3333333333333335) and (1.6000000000000001, 2.333333333333\
-3335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.73333333\
-33333334, 0.66666666666666674) and (1.6000000000000001, 0.66666666666666674) .\
-. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.933333\
-33333333324, 0.66666666666666674) and (1.0666666666666667, 0.66666666666666674\
-) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\
-\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) an\
-d (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1\
-.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333333333\
-3335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \
-\\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001,\
- 0.66666666666666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n\
-  \\arc (-3) .. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.\
-0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\ar\
-c (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpict\
-ure}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04cm},\n  ghost\
-/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.style={min dist\
-ance = 8mm, out = -70, in = -110},\n  toploop/.style={min distance = 8mm, out \
-= 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {1,...,3} {\n \
-   \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, \
-3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5\
-, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from \
-vertex 1\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666\
-66666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333335) ..\
- (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.9166666666666665) and (1\
-.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1\
-);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\\
-arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066666666\
-6666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc\
- (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000000000\
-001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2) edge\
- [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to \
-(3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.2, 1.91666666666666\
-65) and (1.4666666666666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. contr\
-ols (1.6000000000000001, 2.3333333333333335) and (1.7333333333333334, 2.333333\
-3333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -\
-3\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{t\
-ikzpicture}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={c\
-ircle, draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = n\
-one, inner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in\
- = -110},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % v\
-ertices and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\\
-i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreac\
-h \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [gho\
-st] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edg\
-e [toploop] (1);\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333\
-335) and (0.93333333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. con\
-trols (1.4666666666666668, 1.9166666666666665) and (1.2, 1.9166666666666665) .\
-. (3);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.466666666666666\
-8, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) ..\
- controls (1.0666666666666667, 0.66666666666666674) and (0.93333333333333324, \
-0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1)\
- to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\
-\n  \\arc (2) .. controls (0.93333333333333324, 2.3333333333333335) and (1.066\
-6666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [toploop] (2);\n \
- \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) and (1.6000000\
-000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -2\n  \\arc (-2\
-) .. controls (1.7333333333333334, 0.66666666666666674) and (1.600000000000000\
-1, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (\
--2) .. controls (0.93333333333333324, 0.66666666666666674) and (1.066666666666\
-6667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2)\
-;\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .. controls (1.\
-2, 1.9166666666666665) and (1.4666666666666668, 1.9166666666666665) .. (1);\n \
- \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) and (1.7333333\
-333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploop] (3);\n\n  %\
- arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. contr\
-ols (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334, 0.66666\
-666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833333333333335) and\
- (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1);\n  \\\
-arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\big\
-skip\n\n\\end{center}\\end{document}"
+  \\arc (1) edge [toploop] (1);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1\
+);\n  \\arc (-1) to (2);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\
+\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2)\
+;\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n\
+  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\
+\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black,\
+ inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm}\
+,\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.st\
+yle={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\\
+foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\nod\
+e [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n  \
+  \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, \
+0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n\n  % \
+arcs from vertex -1\n  \\arc (-1) .. controls (1.4666666666666668, 1.083333333\
+3333335) and (1.2, 1.0833333333333335) .. (-3);\n  \\arc (-1) .. controls (1.0\
+666666666666667, 0.66666666666666674) and (0.93333333333333324, 0.666666666666\
+66674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\\
+arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n\n  % arcs f\
+rom vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.666666666666666\
+74) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge \
+[botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.666666666666\
+66674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to\
+ (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n\
+\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc (-3) .. \
+controls (1.6000000000000001, 0.66666666666666674) and (1.7333333333333334, 0.\
+66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833333333333335\
+) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3) to (1);\
+\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigski\
+p\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black\
+, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm\
+},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.s\
+tyle={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \
+\\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\n\
+ode [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n\
+    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5\
+, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) .. controls (1.0666666666\
+666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333333333335) .. (\
+2);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \
+\\arc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333\
+333333333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335)\
+ .. (1);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.73333333\
+33333334, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. \
+(3);\n\n  % arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-\
+2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex\
+ 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668,\
+ 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3\
+333333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc\
+ (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \
+\\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\b\
+igskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, in\
+ner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n\
+  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  toploop/.style\
+={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\for\
+each \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [\
+ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \
+\\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0)\
+ {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) to (-3);\n  \\arc (1) to (-2)\
+;\n  \\arc (1) to (-1);\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. contr\
+ols (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.33333\
+33333333335) .. (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.916666666\
+6666665) and (1.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \
+\\arc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.08\
+33333333333335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.6666\
+6666666666674) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\ar\
+c (-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\a\
+rc (-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) to (-3);\n  \\arc (2) t\
+o (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. controls (0.93333333333333324, 2\
+.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\a\
+rc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.333\
+3333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arc\
+s from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.666666666666\
+66674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) ed\
+ge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.666666666\
+66666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2)\
+ to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\
+\n  \\arc (3) to (-3);\n  \\arc (3) to (-2);\n  \\arc (3) to (-1);\n  \\arc (3\
+) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.91666666666\
+66665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.333333333333333\
+5) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [top\
+loop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\\
+arc (-3) .. controls (1.6000000000000001, 0.66666666666666674) and (1.73333333\
+33333334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833\
+333333333335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (\
+-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\
+\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw\
+, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner \
+sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n\
+  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and\
+ labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {\
+};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1\
+,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) \
+at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop]\
+ (1);\n\n  % arcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\
+  \\arc (-1) to (3);\n\n  % arcs from vertex 2\n\n  % arcs from vertex -2\n  \
+\\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n  \\arc (-2) to (2);\n \
+ \\arc (-2) to (3);\n\n  % arcs from vertex 3\n\n  % arcs from vertex -3\n  \\\
+arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpict\
+ure}\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, \
+draw, fill=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, in\
+ner sep = 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110\
+},\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices\
+ and labels\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, \
+3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i i\
+n {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\
+\\i) at (\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) .. contro\
+ls (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.333333\
+3333333335) .. (2);\n\n  % arcs from vertex -1\n  \\arc (-1) .. controls (1.46\
+66666666666668, 1.0833333333333335) and (1.2, 1.0833333333333335) .. (-3);\n  \
+\\arc (-1) .. controls (1.0666666666666667, 0.66666666666666674) and (0.933333\
+33333333324, 0.66666666666666674) .. (-2);\n  \\arc (-1) edge [botloop] (-1);\
+\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) to (3);\n\n  % arcs\
+ from vertex 2\n  \\arc (2) .. controls (0.93333333333333324, 2.33333333333333\
+35) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \\arc (2) edge [to\
+ploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.3333333333333335) \
+and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % arcs from vertex -\
+2\n  \\arc (-2) .. controls (1.7333333333333334, 0.66666666666666674) and (1.6\
+000000000000001, 0.66666666666666674) .. (-3);\n  \\arc (-2) edge [botloop] (-\
+2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.66666666666666674) and (\
+1.0666666666666667, 0.66666666666666674) .. (-1);\n  \\arc (-2) to (1);\n  \\a\
+rc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc (3) .\
+. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.91666666666666\
+65) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333335) \
+and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [toploo\
+p] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edge [botloop] (-3);\n  \\arc\
+ (-3) .. controls (1.6000000000000001, 0.66666666666666674) and (1.73333333333\
+33334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .. controls (1.2, 1.0833333\
+333333335) and (1.4666666666666668, 1.0833333333333335) .. (-1);\n  \\arc (-3)\
+ to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fi\
+ll=black, inner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep \
+= 0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110},\n  to\
+ploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % vertices and lab\
+els\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n\
+    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...\
+,3} {\n    \\node [vertex] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\
+\\i/1.5, 0) {};\n  }\n\n  % arcs from vertex 1\n  \\arc (1) edge [toploop] (1)\
+;\n  \\arc (1) .. controls (1.0666666666666667, 2.3333333333333335) and (0.933\
+33333333333324, 2.3333333333333335) .. (2);\n  \\arc (1) .. controls (1.466666\
+6666666668, 1.9166666666666665) and (1.2, 1.9166666666666665) .. (3);\n\n  % a\
+rcs from vertex -1\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc (-1) t\
+o (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333333324\
+, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1);\n  \
+\\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.7333333333333334, 2.\
+3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\n  % \
+arcs from vertex -2\n  \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) to (1);\n\
+  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs from vertex 3\n  \\arc \
+(3) .. controls (1.2, 1.9166666666666665) and (1.4666666666666668, 1.916666666\
+6666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000001, 2.3333333333333\
+335) and (1.7333333333333334, 2.3333333333333335) .. (2);\n  \\arc (3) edge [t\
+oploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) to (1);\n  \\arc (-3) to\
+ (2);\n  \\arc (-3) to (3);\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\b\
+egin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, inner sep =0.04\
+cm},\n  ghost/.style={circle, draw = none, inner sep = 0.14cm},\n  botloop/.st\
+yle={min distance = 8mm, out = -70, in = -110},\n  toploop/.style={min distanc\
+e = 8mm, out = 70, in = 110}]\n\n  % vertices and labels\n  \\foreach \\i in {\
+1,...,3} {\n    \\node [vertex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) \
+at (\\i/1.5, 3) {};\n  }\n\n  \\foreach \\i in {1,...,3} {\n    \\node [vertex\
+] at (\\i/1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n \
+ % arcs from vertex 1\n  \\arc (1) edge [toploop] (1);\n  \\arc (1) .. control\
+s (1.0666666666666667, 2.3333333333333335) and (0.93333333333333324, 2.3333333\
+333333335) .. (2);\n  \\arc (1) .. controls (1.4666666666666668, 1.91666666666\
+66665) and (1.2, 1.9166666666666665) .. (3);\n\n  % arcs from vertex -1\n  \\a\
+rc (-1) .. controls (1.4666666666666668, 1.0833333333333335) and (1.2, 1.08333\
+33333333335) .. (-3);\n  \\arc (-1) .. controls (1.0666666666666667, 0.6666666\
+6666666674) and (0.93333333333333324, 0.66666666666666674) .. (-2);\n  \\arc (\
+-1) edge [botloop] (-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n  \\arc \
+(-1) to (3);\n\n  % arcs from vertex 2\n  \\arc (2) .. controls (0.93333333333\
+333324, 2.3333333333333335) and (1.0666666666666667, 2.3333333333333335) .. (1\
+);\n  \\arc (2) edge [toploop] (2);\n  \\arc (2) .. controls (1.73333333333333\
+34, 2.3333333333333335) and (1.6000000000000001, 2.3333333333333335) .. (3);\n\
+\n  % arcs from vertex -2\n  \\arc (-2) .. controls (1.7333333333333334, 0.666\
+66666666666674) and (1.6000000000000001, 0.66666666666666674) .. (-3);\n  \\ar\
+c (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.93333333333333324, 0.\
+66666666666666674) and (1.0666666666666667, 0.66666666666666674) .. (-1);\n  \
+\\arc (-2) to (1);\n  \\arc (-2) to (2);\n  \\arc (-2) to (3);\n\n  % arcs fro\
+m vertex 3\n  \\arc (3) .. controls (1.2, 1.9166666666666665) and (1.466666666\
+6666668, 1.9166666666666665) .. (1);\n  \\arc (3) .. controls (1.6000000000000\
+001, 2.3333333333333335) and (1.7333333333333334, 2.3333333333333335) .. (2);\
+\n  \\arc (3) edge [toploop] (3);\n\n  % arcs from vertex -3\n  \\arc (-3) edg\
+e [botloop] (-3);\n  \\arc (-3) .. controls (1.6000000000000001, 0.66666666666\
+666674) and (1.7333333333333334, 0.66666666666666674) .. (-2);\n  \\arc (-3) .\
+. controls (1.2, 1.0833333333333335) and (1.4666666666666668, 1.08333333333333\
+35) .. (-1);\n  \\arc (-3) to (1);\n  \\arc (-3) to (2);\n  \\arc (-3) to (3);\
+\n\n\\end{tikzpicture}\n\n\\bigskip\\bigskip\n\n\\end{center}\\end{document}"
 
 # TikzString for a bipartition collection
 gap> TikzString(PartitionMonoid(2));
-"1\n2\n3\n4\n5\n\\begin{center}\n\\begin{tikzpicture}\n\n  %block number 1\n  \
-%vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9499999999999999\
-6, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) no\
-de [below] {$-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n\
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\\be\
+gin{center}\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\
+\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above]\
+ {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\
+\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and labe\
+ls\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\\
+fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n \
+ \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{\
+tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circl\
+e(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, \
+0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(\
+1, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)cir\
+cle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125\
+);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw(2, 2)--(1, 0)\
+;\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %bl\
+ock number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.\
+94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n\
   %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node \
 [above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$\
--2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\
-\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\
-\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above]\
- {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\
-\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labe\
-ls\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\\
-fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n \
- \\draw(2, 2)--(1, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{\
-tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circl\
-e(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\
-\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\\
-draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, \
--0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\n  %block nu\
-mber 3\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2)\
- node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\
-\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fil\
-l(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\
-  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill\
-(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)cir\
-cle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.\
-875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(1, 0.125) ..\
- controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\\e\
+-2$};\n\n  %lines\n  \\draw(2, 2)--(2, 0);\n\n  %block number 3\n  %vertices a\
+nd labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
+\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpictur\
+e}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n\
+  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.\
+125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n \
+ \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2\
+, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1\
+.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(1, 0.125) .. controls (1, 0.75) an\
+d (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\\end{tikzpicture}\n\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices a\
+nd labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) nod\
+e [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] \
+{$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block number 2\n  %vertices\
+ and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2\
+$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(1, 0)ci\
+rcle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzpic\
+ture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  \
+%vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9499999999999999\
+6, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n  %vertices and \
+labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\
+  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %line\
+s\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\f\
+ill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\\
+end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block n\
+umber 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999\
+999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n  %ve\
+rtices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [abov\
+e] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
+\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
+nes\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n  \
+\\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{t\
+ikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle\
+(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2\
+)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(2, 0)circle(\
+.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 1.875)\
+ .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \\draw(2, 2)--(2, 0);\n\
+\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\\
+draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigs\
+kip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and lab\
+els\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [abo\
+ve] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$}\
+;\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and l\
+abels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\
+\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)circle(\
+.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\
+\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vert\
+ices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.\
+2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [b\
+elow] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-\
+2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2\
+, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and label\
+s\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %\
+lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n \
+ %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\dra\
+w(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number\
+ 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) n\
+ode [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n \
+ \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\
+\n\n  %block number 4\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \
+\\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bi\
+gskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and l\
+abels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [a\
+bove] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$\
+2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n \
+ %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\
+\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fi\
+ll(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\e\
 nd{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block nu\
 mber 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.949999\
-99999999996, 2.2) node [above] {$1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2\
-, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 2)--(2, 0);\n\n  %block \
-number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, \
-2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and lab\
-els\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  \
-%lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n\
-  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\dr\
-aw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block numbe\
-r 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) \
-node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [belo\
-w] {$-1$};\n\n  %lines\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %verti\
-ces and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$\
--2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzp\
-icture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.12\
-5);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %\
-block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(\
-1.95, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2)\
- node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [be\
-low] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.7\
-5) .. (2, 0.125);\n  \\draw(2, 2)--(2, 0);\n\\end{tikzpicture}\n\n\n\\bigskip\
-\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\
-\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above]\
- {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\
-\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
-nes\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n  \
-\\draw(2, 2)--(2, 0);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1\
-, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\\end{t\
-ikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number\
- 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.9499999999\
-9999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0\
-.2) node [below] {$-1$};\n\n  %lines\n  \\draw(1, 2)--(1, 0);\n\n  %block numb\
-er 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2)\
- node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\
-\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %li\
-nes\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %\
-block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(\
-0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill(1, 0)circle(.125);\n  \
-\\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2,\
- -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.\
-75) and (2, 0.75) .. (2, 0.125);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\
-\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) nod\
-e [above] {$2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\\
-begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2\
-)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %l\
-ines\n\n  %block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\
-\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  \
-%vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [bel\
-ow] {$-1$};\n\n  %lines\n\n  %block number 4\n  %vertices and labels\n  \\fill\
-(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end\
-{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block numb\
-er 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999\
-999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.9\
-5, 2.2) node [above] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) no\
-de [below] {$-1$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (\
-2, 1.25) .. (2, 1.875);\n  \\draw(1, 2)--(1, 0);\n\n  %block number 2\n  %vert\
-ices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {\
-$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikz\
-picture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.1\
-25);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  \
-%block number 2\n  %vertices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw\
-(1.95, 2.2) node [above] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices \
-and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$}\
-;\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %l\
-ines\n  \\draw(1, 0.125) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\
-\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block\
- number 1\n  %vertices and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.949\
-99999999999996, 2.2) node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\dra\
-w(1.95, 2.2) node [above] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (\
-1, 1.25) and (2, 1.25) .. (2, 1.875);\n\n  %block number 2\n  %vertices and la\
-bels\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n \
- %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)circle(.12\
-5);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\
-\n\n\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertic\
-es and labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2)\
- node [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [a\
-bove] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.2\
-5) .. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)\
-circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.1\
-25);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .\
-. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\b\
-igskip\\bigskip\n\n\\end{center}\\end{document}"
+99999999996, 2.2) node [above] {$1$};\n\n  %lines\n\n  %block number 2\n  %ver\
+tices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
+] {$2$};\n\n  %lines\n\n  %block number 3\n  %vertices and labels\n  \\fill(1,\
+ 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle\
+(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125\
+) .. controls (1, 0.75) and (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\
+\\bigskip\\bigskip\n\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices a\
+nd labels\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) nod\
+e [above] {$1$};\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
+] {$2$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .\
+. (2, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \\fill(1, 0)circ\
+le(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n\n  %block numb\
+er 3\n  %vertices and labels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) n\
+ode [below] {$-2$};\n\n  %lines\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\
+\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(\
+1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \
+\\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n\n  %lines\
+\n  \\draw(1, 1.875) .. controls (1, 1.25) and (2, 1.25) .. (2, 1.875);\n\n  %\
+block number 2\n  %vertices and labels\n  \\fill(1, 0)circle(.125);\n  \\draw(\
+1, -0.2) node [below] {$-1$};\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) \
+node [below] {$-2$};\n\n  %lines\n  \\draw(1, 0.125) .. controls (1, 0.75) and\
+ (2, 0.75) .. (2, 0.125);\n\\end{tikzpicture}\n\n\n\\bigskip\\bigskip\n\n\\end\
+{center}\\end{document}"
 
 # Test TikzString for a bipartition
 gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and lab\
-els\n  \\fill(1, 2)circle(.125);\n  \\draw(0.94999999999999996, 2.2) node [abo\
-ve] {$1$};\n  \\fill(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) nod\
-e [above] {$3$};\n\n  %lines\n  \\draw(1, 1.875) .. controls (1, 1.16666666666\
-66667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n  %block number 2\n  %ver\
-tices and labels\n  \\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above\
-] {$2$};\n  \\fill(1, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\
-\n\n  %lines\n  \\draw(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and la\
-bels\n  \\fill(2, 0)circle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \
-\\fill(3, 0)circle(.125);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\
-\n  \\draw(2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.6666666666\
-6666663) .. (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
-gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]), 
-> rec(colors := true, labels := true, beginDocument := true, 
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\\be\
+gin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill(1, 2)c\
+ircle(.125);\n  \\draw(0.94999999999999996, 2.2) node [above] {$1$};\n  \\fill\
+(3, 2)circle(.125);\n  \\draw(2.9500000000000002, 2.2) node [above] {$3$};\n\n\
+  %lines\n  \\draw(1, 1.875) .. controls (1, 1.1666666666666667) and (3, 1.166\
+6666666666667) .. (3, 1.875);\n\n  %block number 2\n  %vertices and labels\n  \
+\\fill(2, 2)circle(.125);\n  \\draw(1.95, 2.2) node [above] {$2$};\n  \\fill(1\
+, 0)circle(.125);\n  \\draw(1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\dra\
+w(2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill(2, 0)c\
+ircle(.125);\n  \\draw(2, -0.2) node [below] {$-2$};\n  \\fill(3, 0)circle(.12\
+5);\n  \\draw(3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw(2, 0.125) ..\
+ controls (2, 0.66666666666666663) and (3, 0.66666666666666663) .. (3, 0.125);\
+\n\\end{tikzpicture}\n\n\\end{document}"
+gap> TikzString(Bipartition([[1, 3], [2, -1], [-2, -3]]),
+> rec(colors := true, labels := true, beginDocument := true,
 >     endDocument := true));
-"1\n2\n3\n4\n5\n\\begin{tikzpicture}\n\n  %block number 1\n  %vertices and lab\
-els\n  \\fill[red](1, 2)circle(.125);\n  \\draw[red](0.94999999999999996, 2.2)\
- node [above] {$1$};\n  \\fill[red](3, 2)circle(.125);\n  \\draw[red](2.950000\
-0000000002, 2.2) node [above] {$3$};\n\n  %lines\n  \\draw[red](1, 1.875) .. c\
-ontrols (1, 1.1666666666666667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n\
-  %block number 2\n  %vertices and labels\n  \\fill[green](2, 2)circle(.125);\
-\n  \\draw[green](1.95, 2.2) node [above] {$2$};\n  \\fill[green](1, 0)circle(\
-.125);\n  \\draw[green](1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw[gr\
-een](2, 2)--(1, 0);\n\n  %block number 3\n  %vertices and labels\n  \\fill[blu\
-e](2, 0)circle(.125);\n  \\draw[blue](2, -0.2) node [below] {$-2$};\n  \\fill[\
-blue](3, 0)circle(.125);\n  \\draw[blue](3, -0.2) node [below] {$-3$};\n\n  %l\
-ines\n  \\draw[blue](2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.\
-66666666666666663) .. (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\n\\begin{document}\\be\
+gin{tikzpicture}\n\n  %block number 1\n  %vertices and labels\n  \\fill[red](1\
+, 2)circle(.125);\n  \\draw[red](0.94999999999999996, 2.2) node [above] {$1$};\
+\n  \\fill[red](3, 2)circle(.125);\n  \\draw[red](2.9500000000000002, 2.2) nod\
+e [above] {$3$};\n\n  %lines\n  \\draw[red](1, 1.875) .. controls (1, 1.166666\
+6666666667) and (3, 1.1666666666666667) .. (3, 1.875);\n\n  %block number 2\n \
+ %vertices and labels\n  \\fill[green](2, 2)circle(.125);\n  \\draw[green](1.9\
+5, 2.2) node [above] {$2$};\n  \\fill[green](1, 0)circle(.125);\n  \\draw[gree\
+n](1, -0.2) node [below] {$-1$};\n\n  %lines\n  \\draw[green](2, 2)--(1, 0);\n\
+\n  %block number 3\n  %vertices and labels\n  \\fill[blue](2, 0)circle(.125);\
+\n  \\draw[blue](2, -0.2) node [below] {$-2$};\n  \\fill[blue](3, 0)circle(.12\
+5);\n  \\draw[blue](3, -0.2) node [below] {$-3$};\n\n  %lines\n  \\draw[blue](\
+2, 0.125) .. controls (2, 0.66666666666666663) and (3, 0.66666666666666663) ..\
+ (3, 0.125);\n\\end{tikzpicture}\n\n\\end{document}"
 
 # Test DotString for a semigroup
-gap> DotString(RegularBooleanMatMonoid(3));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD \
-COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD></TR>\
-\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLB\
-ORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"\
-><TD COLSPAN=\"7\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD>\
-<TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">\
-*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD \
-BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">\
-*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=inv\
-isible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSP\
-ACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"12\" BORDER = \"0\" > \
-3</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOL\
-OR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BG\
-COLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BG\
-COLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BG\
-COLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></T\
-R>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BG\
-COLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"g\
-ray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<T\
-R><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"g\
-ray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\
-\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD\
-><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*<\
-/TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\"\
->*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BG\
-COLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGC\
-OLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><T\
-D BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n4 [sha\
-pe=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDI\
-NG=\"10\" CELLSPACING=\"0\" PORT=\"4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"6\" BO\
-RDER = \"0\" > 4</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n5 [shape=box st\
-yle=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
- CELLSPACING=\"0\" PORT=\"5\">\n<TR BORDER=\"0\"><TD COLSPAN=\"9\" BORDER = \"\
-0\" > 5</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD\
- BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></\
-TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLO\
-R=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"w\
-hite\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*\
-</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOL\
-OR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\
-\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\
-\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n</TABLE>>];\n6 [shape=box style=invi\
-sible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPA\
-CING=\"0\" PORT=\"6\">\n<TR BORDER=\"0\"><TD COLSPAN=\"6\" BORDER = \"0\" > 6<\
-/TD></TR><TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*<\
-/font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</f\
-ont></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</fon\
-t></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font>\
-</TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></\
-TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD\
-></TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</\
-font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</fo\
-nt></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font\
-></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font><\
-/TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></T\
-D><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD>\
-</TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</f\
-ont></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</fon\
-t></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font>\
-</TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></\
-TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD\
-><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD><\
-/TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</fo\
-nt></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font\
-></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font><\
-/TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></T\
-D><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD>\
-<TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD></\
-TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</fon\
-t></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font>\
-</TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></\
-TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD\
-><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD><\
-TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD></T\
-R>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font\
-></TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font><\
-/TD><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></T\
-D><TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD>\
-<TD CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD><T\
-D CELLPADDING=\"10\" BGCOLOR=\"white\"><font color=\"white\">*</font></TD></TR\
->\n</TABLE>>];\n7 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELL\
-BORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"7\">\n<TR BORDER=\"0\
-\"><TD COLSPAN=\"3\" BORDER = \"0\" > 7</TD></TR><TR><TD BGCOLOR=\"gray\">*</T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">\
-*</TD></TR>\n</TABLE>>];\n8 [shape=box style=invisible label=<\n<TABLE BORDER=\
-\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"8\">\n<TR B\
-ORDER=\"0\"><TD COLSPAN=\"3\" BORDER = \"0\" > 8</TD></TR><TR><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD\
-></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"gray\">*</TD></TR>\n</TABLE>>];\n9 [shape=box style=invisible label=<\n<TABL\
-E BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"9\
-\">\n<TR BORDER=\"0\"><TD COLSPAN=\"6\" BORDER = \"0\" > 9</TD></TR><TR><TD BG\
-COLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-</TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\
-\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<T\
-R><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD></TR>\n</TABLE>>];\n10 [shape=box style=invisible label=<\n<TABLE BOR\
-DER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"10\">\n\
-<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 10</TD></TR><TR><TD BGCOLO\
-R=\"gray\">*</TD></TR>\n</TABLE>>];\n2 -> 1\n3 -> 2\n4 -> 3\n5 -> 3\n6 -> 4\n6\
- -> 5\n7 -> 4\n7 -> 5\n8 -> 4\n8 -> 5\n9 -> 6\n9 -> 7\n9 -> 8\n10 -> 9\n }"
+gap> GraphvizDClasses(RegularBooleanMatMonoid(3));
+<graphviz digraph DClasses with 10 nodes and 14 edges>
 gap> DotString(RegularBooleanMatMonoid(2), rec(maximal := true));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD \
-COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR><TR><TD BGCOLOR=\"gray\">1</TD></TR>\
-\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLB\
-ORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"\
-><TD COLSPAN=\"3\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">1</TD>\
-<TD BGCOLOR=\"gray\">1</TD><TD BGCOLOR=\"gray\">1</TD></TR>\n<TR><TD BGCOLOR=\
-\"gray\">1</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">1</TD></TR>\n<T\
-R><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">1</TD><TD BGCOLOR=\"gray\">1\
-</TD></TR>\n</TABLE>>];\n3 [shape=box style=invisible label=<\n<TABLE BORDER=\
-\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"3\">\n<TR B\
-ORDER=\"0\"><TD COLSPAN=\"2\" BORDER = \"0\" > 3</TD></TR><TR><TD BGCOLOR=\"gr\
-ay\">1</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><T\
-D BGCOLOR=\"gray\">1</TD></TR>\n</TABLE>>];\n4 [shape=box style=invisible labe\
-l=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\"\
- PORT=\"4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 4</TD></TR><\
-TR><TD BGCOLOR=\"gray\">C2</TD></TR>\n</TABLE>>];\n2 -> 1\n3 -> 2\n4 -> 3\n }"
+"//dot\ndigraph DClasses {\n\tnode [shape=plaintext] edge [color=black, arrowh\
+ead=none] \n\t1 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\
+\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \
+\"0\">1</TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">1</font></TD><\
+/TR>\n</TABLE>>, shape=box, style=invisible]\n\t2 [label=<<TABLE BORDER=\"0\" \
+CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\
+\"0\"><TD COLSPAN=\"3\" BORDER = \"0\">2</TD></TR><TR><TD BGCOLOR=\"gray\"><fo\
+nt color=\"black\">1</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">1</\
+font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">1</font></TD></TR>\n<TR><\
+TD BGCOLOR=\"gray\"><font color=\"black\">1</font></TD><TD BGCOLOR=\"white\"><\
+font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">1\
+</font></TD></TR>\n<TR><TD BGCOLOR=\"white\"><font color=\"white\">*</font></T\
+D><TD BGCOLOR=\"gray\"><font color=\"black\">1</font></TD><TD BGCOLOR=\"gray\"\
+><font color=\"black\">1</font></TD></TR>\n</TABLE>>, shape=box, style=invisib\
+le]\n\t3 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLS\
+PACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"2\" BORDER = \"0\">3<\
+/TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">1</font></TD><TD BGCOL\
+OR=\"white\"><font color=\"white\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\
+\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\
+\">1</font></TD></TR>\n</TABLE>>, shape=box, style=invisible]\n\t4 [label=<<TA\
+BLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\">4</TD></TR><TR><TD BGC\
+OLOR=\"gray\"><font color=\"black\">C2</font></TD></TR>\n</TABLE>>, shape=box,\
+ style=invisible]\n\t2 -> 1\n\t3 -> 2\n\t4 -> 3\n}\n"
 gap> DotString(RegularBooleanMatMonoid(2), rec(number := false));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD></TR>\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BOR\
-DER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<\
-TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">\
-*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGC\
-OLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\"\
->*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=invis\
-ible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPAC\
-ING=\"0\" PORT=\"3\">\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></\
-TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</T\
-ABLE>>];\n4 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"4\">\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD></TR>\n</TABLE>>];\n2 -> 1\n3 -> 2\n4 -> 3\n }"
+"//dot\ndigraph DClasses {\n\tnode [shape=plaintext] edge [color=black, arrowh\
+ead=none] \n\t1 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\
+\" CELLSPACING=\"0\" PORT=\"1\">\n<TR><TD BGCOLOR=\"gray\"><font color=\"black\
+\">*</font></TD></TR>\n</TABLE>>, shape=box, style=invisible]\n\t2 [label=<<TA\
+BLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+2\">\n<TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><TD BGCOLOR=\
+\"gray\"><font color=\"black\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\
+\"black\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"gray\"><font color=\"black\">*\
+</font></TD><TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD><TD BGCOL\
+OR=\"gray\"><font color=\"black\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\
+\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\
+\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD></TR>\
+\n</TABLE>>, shape=box, style=invisible]\n\t3 [label=<<TABLE BORDER=\"0\" CELL\
+BORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"3\">\n<TR><TD BGCOLOR\
+=\"gray\"><font color=\"black\">*</font></TD><TD BGCOLOR=\"white\"><font color\
+=\"white\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\"><font color=\"white\"\
+>*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD></TR>\n<\
+/TABLE>>, shape=box, style=invisible]\n\t4 [label=<<TABLE BORDER=\"0\" CELLBOR\
+DER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"4\">\n<TR><TD BGCOLOR=\"\
+gray\"><font color=\"black\">*</font></TD></TR>\n</TABLE>>, shape=box, style=i\
+nvisible]\n\t2 -> 1\n\t3 -> 2\n\t4 -> 3\n}\n"
 gap> DotString(RegularBooleanMatMonoid(2), rec(normal := false));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD \
-COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD></TR>\
-\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLB\
-ORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"\
-><TD COLSPAN=\"3\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<T\
-R><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*\
-</TD></TR>\n</TABLE>>];\n3 [shape=box style=invisible label=<\n<TABLE BORDER=\
-\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"3\">\n<TR B\
-ORDER=\"0\"><TD COLSPAN=\"2\" BORDER = \"0\" > 3</TD></TR><TR><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><T\
-D BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n4 [shape=box style=invisible labe\
-l=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\"\
- PORT=\"4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 4</TD></TR><\
-TR><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n2 -> 1\n3 -> 2\n4 -> 3\n }"
+"//dot\ndigraph DClasses {\n\tnode [shape=plaintext] edge [color=black, arrowh\
+ead=none] \n\t1 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\
+\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \
+\"0\">1</TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><\
+/TR>\n</TABLE>>, shape=box, style=invisible]\n\t2 [label=<<TABLE BORDER=\"0\" \
+CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\
+\"0\"><TD COLSPAN=\"3\" BORDER = \"0\">2</TD></TR><TR><TD BGCOLOR=\"gray\"><fo\
+nt color=\"black\">*</font></TD><TD BGCOLOR=\"white\"><font color=\"white\">*<\
+/font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD></TR>\n<TR>\
+<TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\">\
+<font color=\"black\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">\
+*</font></TD></TR>\n<TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></T\
+D><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><TD BGCOLOR=\"gray\"\
+><font color=\"black\">*</font></TD></TR>\n</TABLE>>, shape=box, style=invisib\
+le]\n\t3 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLS\
+PACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"2\" BORDER = \"0\">3<\
+/TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><TD BGCOL\
+OR=\"white\"><font color=\"white\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\
+\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\
+\">*</font></TD></TR>\n</TABLE>>, shape=box, style=invisible]\n\t4 [label=<<TA\
+BLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\">4</TD></TR><TR><TD BGC\
+OLOR=\"gray\"><font color=\"black\">*</font></TD></TR>\n</TABLE>>, shape=box, \
+style=invisible]\n\t2 -> 1\n\t3 -> 2\n\t4 -> 3\n}\n"
 gap> S := RegularBooleanMatMonoid(3);;
-gap> DotString(S, rec(highlight := [rec(HClasses := [HClass(S, One(S))]), 
+gap> GraphvizDClasses(S, rec(highlight := [rec(HClasses := [HClass(S, One(S))]),
 > rec(HClasses := [First(HClasses(S), x -> not IsGroupHClass(x))]),
 > rec(HClasses := HClasses(First(DClasses(S), x -> not IsRegularDClass(x))))
 > ]));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD \
-COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD></TR>\
-\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLB\
-ORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"\
-><TD COLSPAN=\"7\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD>\
-<TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">\
-*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD \
-BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"#FF0000\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=\
-invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CEL\
-LSPACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"12\" BORDER = \"0\"\
- > 3</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BG\
-COLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></\
-TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLO\
-R=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGC\
-OLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"\
-gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></\
-TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"g\
-ray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BG\
-COLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"g\
-ray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<T\
-R><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"g\
-ray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\
-\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gr\
-ay\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD\
-><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*<\
-/TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\"\
->*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BG\
-COLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</\
-TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGC\
-OLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><T\
-D BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n4 [sha\
-pe=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDI\
-NG=\"10\" CELLSPACING=\"0\" PORT=\"4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"6\" BO\
-RDER = \"0\" > 4</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n5 [shape=box st\
-yle=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
- CELLSPACING=\"0\" PORT=\"5\">\n<TR BORDER=\"0\"><TD COLSPAN=\"9\" BORDER = \"\
-0\" > 5</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD\
- BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD>\
-<TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></\
-TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLO\
-R=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGC\
-OLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"gra\
-y\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<\
-TR><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"w\
-hite\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*\
-</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD B\
-GCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><T\
-D BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOL\
-OR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\
-\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"w\
-hite\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\
-\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\
-\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n</TABLE>>];\n6 [shape=box style=invi\
-sible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPA\
-CING=\"0\" PORT=\"6\">\n<TR BORDER=\"0\"><TD COLSPAN=\"6\" BORDER = \"0\" > 6<\
-/TD></TR><TR><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">\
-*</font></TD></TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\"><font color\
-=\"white\">*</font></TD></TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\"#FF0000\">\
-<font color=\"white\">*</font></TD></TR>\n<TR><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\" BGCOLOR=\
-\"#FF0000\"><font color=\"white\">*</font></TD></TR>\n<TR><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLPADDING=\"10\
-\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD></TR>\n<TR><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD><TD CELLP\
-ADDING=\"10\" BGCOLOR=\"#FF0000\"><font color=\"white\">*</font></TD></TR>\n</\
-TABLE>>];\n7 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDE\
-R=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"7\">\n<TR BORDER=\"0\"><TD\
- COLSPAN=\"3\" BORDER = \"0\" > 7</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"whi\
-te\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD\
- BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD>\
-</TR>\n</TABLE>>];\n8 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" \
-CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"8\">\n<TR BORDER=\
-\"0\"><TD COLSPAN=\"3\" BORDER = \"0\" > 8</TD></TR><TR><TD BGCOLOR=\"gray\">*\
-</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\
-\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\
-\">*</TD></TR>\n</TABLE>>];\n9 [shape=box style=invisible label=<\n<TABLE BORD\
-ER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"9\">\n<T\
-R BORDER=\"0\"><TD COLSPAN=\"6\" BORDER = \"0\" > 9</TD></TR><TR><TD BGCOLOR=\
-\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\
-\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"w\
-hite\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></T\
-D><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR\
-=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCO\
-LOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"\
-></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"whit\
-e\"></TD><TD BGCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD \
-BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><\
-TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</T\
-D></TR>\n</TABLE>>];\n10 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\
-\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"10\">\n<TR BOR\
-DER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 10</TD></TR><TR><TD BGCOLOR=\"#88\
-0000\">*</TD></TR>\n</TABLE>>];\n2 -> 1\n3 -> 2\n4 -> 3\n5 -> 3\n6 -> 4\n6 -> \
-5\n7 -> 4\n7 -> 5\n8 -> 4\n8 -> 5\n9 -> 6\n9 -> 7\n9 -> 8\n10 -> 9\n }"
+<graphviz digraph DClasses with 10 nodes and 14 edges>
 
 # DotString with option idempotentsemilattice
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
 gap> DotString(S, rec(idempotentsemilattice := true));
-"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=black,arrowhe\
-ad=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER\
-=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD \
-COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR><TR><TD BGCOLOR=\"gray\" PORT=\"e8\"\
->*</TD></TR>\n</TABLE>>];\n2 [shape=box style=invisible label=<\n<TABLE BORDER\
-=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR \
-BORDER=\"0\"><TD COLSPAN=\"3\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"g\
-ray\" PORT=\"e6\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD>\
-</TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\" PORT=\"e4\">*</TD><\
-TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"\
-white\"></TD><TD BGCOLOR=\"gray\" PORT=\"e7\">*</TD></TR>\n</TABLE>>];\n3 [sha\
-pe=box style=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDI\
-NG=\"10\" CELLSPACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"3\" BO\
-RDER = \"0\" > 3</TD></TR><TR><TD BGCOLOR=\"gray\" PORT=\"e3\">*</TD><TD BGCOL\
-OR=\"white\"></TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLOR=\"white\">\
-</TD><TD BGCOLOR=\"gray\" PORT=\"e5\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n\
-<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\"\
- PORT=\"e2\">*</TD></TR>\n</TABLE>>];\n4 [shape=box style=invisible label=<\n<\
-TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\
-\"4\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 4</TD></TR><TR><TD\
- BGCOLOR=\"gray\" PORT=\"e1\">*</TD></TR>\n</TABLE>>];\n1 -> 2\n2 -> 3\n3 -> 4\
-\nedge [color=blue,arrowhead=none,style=dashed]\n3:e2 -> 4:e1\n3:e3 -> 4:e1\n2\
-:e4 -> 3:e2\n2:e4 -> 3:e3\n3:e5 -> 4:e1\n2:e6 -> 3:e3\n2:e6 -> 3:e5\n2:e7 -> 3\
-:e2\n2:e7 -> 3:e5\n1:e8 -> 2:e4\n1:e8 -> 2:e6\n1:e8 -> 2:e7\n }"
+"//dot\ndigraph DClasses {\n\tnode [shape=plaintext] edge [color=black, arrowh\
+ead=none] \n\t1 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\
+\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \
+\"0\">1</TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><\
+/TR>\n</TABLE>>, shape=box, style=invisible]\n\t2 [label=<<TABLE BORDER=\"0\" \
+CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\
+\"0\"><TD COLSPAN=\"3\" BORDER = \"0\">2</TD></TR><TR><TD BGCOLOR=\"gray\"><fo\
+nt color=\"black\">*</font></TD><TD BGCOLOR=\"white\"><font color=\"white\">*<\
+/font></TD><TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD></TR>\n<TR\
+><TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"gray\"\
+><font color=\"black\">*</font></TD><TD BGCOLOR=\"white\"><font color=\"white\
+\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\"><font color=\"white\">*</font\
+></TD><TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"g\
+ray\"><font color=\"black\">*</font></TD></TR>\n</TABLE>>, shape=box, style=in\
+visible]\n\t3 [label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" \
+CELLSPACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"3\" BORDER = \"0\
+\">3</TD></TR><TR><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD><TD \
+BGCOLOR=\"white\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"white\"><fo\
+nt color=\"white\">*</font></TD></TR>\n<TR><TD BGCOLOR=\"white\"><font color=\
+\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">*</font></TD\
+><TD BGCOLOR=\"white\"><font color=\"white\">*</font></TD></TR>\n<TR><TD BGCOL\
+OR=\"white\"><font color=\"white\">*</font></TD><TD BGCOLOR=\"white\"><font co\
+lor=\"white\">*</font></TD><TD BGCOLOR=\"gray\"><font color=\"black\">*</font>\
+</TD></TR>\n</TABLE>>, shape=box, style=invisible]\n\t4 [label=<<TABLE BORDER=\
+\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"4\">\n<TR B\
+ORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\">4</TD></TR><TR><TD BGCOLOR=\"gray\
+\"><font color=\"black\">*</font></TD></TR>\n</TABLE>>, shape=box, style=invis\
+ible]\n\t1 -> 2\n\t2 -> 3\n\t3 -> 4\n}\n"
 
 # DotSemilatticeOfIdempotents
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
 gap> DotSemilatticeOfIdempotents(S);
-"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph cluster_\
-1{\n8 \n}\nsubgraph cluster_2{\n6 4 7 \n}\nsubgraph cluster_3{\n3 5 2 \n}\nsub\
-graph cluster_4{\n1 \n}\n2 -- 1\n3 -- 1\n4 -- 2\n4 -- 3\n5 -- 1\n6 -- 3\n6 -- \
-5\n7 -- 2\n7 -- 5\n8 -- 4\n8 -- 6\n8 -- 7\n }"
+"//dot\ngraph semilattice {\n\tnode[shape=point] ranksep=2 \nsubgraph cluster_\
+1 {\n\t8\n}\nsubgraph cluster_2 {\n\t6\n\t4\n\t7\n}\nsubgraph cluster_3 {\n\t3\
+\n\t5\n\t2\n}\nsubgraph cluster_4 {\n\t1\n}\n\t2 -- 1\n\t3 -- 1\n\t4 -- 2\n\t4\
+ -- 3\n\t5 -- 1\n\t6 -- 3\n\t6 -- 5\n\t7 -- 2\n\t7 -- 5\n\t8 -- 4\n\t8 -- 7\n\
+\t8 -- 6\n}\n"
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := false));;
 gap> DotSemilatticeOfIdempotents(S);
-"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph cluster_\
-1{\n1 \n}\nsubgraph cluster_2{\n2 3 5 \n}\nsubgraph cluster_3{\n4 6 7 \n}\nsub\
-graph cluster_4{\n8 \n}\n2 -- 1\n3 -- 1\n4 -- 2\n4 -- 3\n5 -- 1\n6 -- 3\n6 -- \
-5\n7 -- 2\n7 -- 5\n8 -- 4\n8 -- 6\n8 -- 7\n }"
+"//dot\ngraph semilattice {\n\tnode[shape=point] ranksep=2 \nsubgraph cluster_\
+1 {\n\t1\n}\nsubgraph cluster_2 {\n\t2\n\t3\n\t5\n}\nsubgraph cluster_3 {\n\t4\
+\n\t6\n\t7\n}\nsubgraph cluster_4 {\n\t8\n}\n\t2 -- 1\n\t3 -- 1\n\t4 -- 2\n\t4\
+ -- 3\n\t5 -- 1\n\t6 -- 3\n\t6 -- 5\n\t7 -- 2\n\t7 -- 5\n\t8 -- 4\n\t8 -- 7\n\
+\t8 -- 6\n}\n"
 
 # TexString for a transformation
 gap> TexString(Transformation([1, 1, 1]));
@@ -998,26 +638,185 @@ op]\n           node {$a$} (c);\n  \\path[->] (c) edge [edge] node {$b$} (cb);\
 edge [loop]\n           node {$a$} (cb);\n  \\path[->] (cb) edge [edge] node {\
 $b$} (c);\n  \\path[->] (cb) edge [edge] node {$c$} (c);\n\\end{tikzpicture}"
 gap> DotRightCayleyDigraph(FullTransformationMonoid(2));
-"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
- [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
- 3\n3 -> 3\n3 -> 4\n3 -> 3\n4 -> 4\n4 -> 3\n4 -> 3\n}\n"
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [color\
+=\"#ff00ff\", label=b, style=filled]\n\t2 [label=\"&#949;\"]\n\t3 [color=\"#00\
+ff00\", label=a, style=filled]\n\t4 [label=ba]\n\t1 -> 2 [color=\"#00ff00\"]\n\
+\t1 -> 3 [color=\"#ff00ff\"]\n\t2 -> 1 [color=\"#00ff00\"]\n\t2 -> 3 [color=\"\
+#ff00ff\"]\n\t3 -> 4 [color=\"#00ff00\"]\n\t3 -> 3 [color=\"#ff00ff\"]\n\t4 ->\
+ 3 [color=\"#00ff00\"]\n\t4 -> 3 [color=\"#ff00ff\"]\n// legend context \n\tno\
+de [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table border=\"0\" c\
+ellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" \
+port=\"port1\">a&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">b&nbs\
+p;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellpadding=\"2\
+\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port=\"port1\"\
+>&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td></tr>\n</\
+table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:port1:w [co\
+lor=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\thead:por\
+t2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnode [shape=c\
+ircle] node [shape=\"box\"] \n\n}\n"
 gap> DotLeftCayleyDigraph(FullTransformationMonoid(2));
-"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
- [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
- 4\n3 -> 3\n3 -> 3\n3 -> 3\n4 -> 4\n4 -> 4\n4 -> 4\n}\n"
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [color\
+=\"#ff00ff\", label=b, style=filled]\n\t2 [label=\"&#949;\"]\n\t3 [color=\"#00\
+ff00\", label=a, style=filled]\n\t4 [label=ba]\n\t1 -> 2 [color=\"#00ff00\"]\n\
+\t1 -> 3 [color=\"#ff00ff\"]\n\t2 -> 1 [color=\"#00ff00\"]\n\t2 -> 4 [color=\"\
+#ff00ff\"]\n\t3 -> 3 [color=\"#00ff00\"]\n\t3 -> 3 [color=\"#ff00ff\"]\n\t4 ->\
+ 4 [color=\"#00ff00\"]\n\t4 -> 4 [color=\"#ff00ff\"]\n// legend context \n\tno\
+de [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table border=\"0\" c\
+ellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" \
+port=\"port1\">a&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">b&nbs\
+p;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellpadding=\"2\
+\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port=\"port1\"\
+>&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td></tr>\n</\
+table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:port1:w [co\
+lor=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\thead:por\
+t2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnode [shape=c\
+ircle] node [shape=\"box\"] \n\n}\n"
 gap> S := LeftZeroSemigroup(27);;
 gap> DotLeftCayleyDigraph(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DotString' on 1 arguments
+Error, the 1st argument (an out-regular digraph) must have out-degree at most \
+24, found 27
 gap> TikzLeftCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
 gap> DotRightCayleyDigraph(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `DotString' on 1 arguments
+Error, the 1st argument (an out-regular digraph) must have out-degree at most \
+24, found 27
 gap> TikzRightCayleyDigraph(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `TikzString' on 1 arguments
+
+#
+gap> S := Semigroup(Transformation([1, 2, 2]), Transformation([2, 2, 2]));
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> Size(S);
+2
+gap> DotLeftCayleyDigraph(S);
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [label\
+=\"&#949;\"]\n\t2 [color=\"#00ff00\", label=b, style=filled]\n\t1 -> 2 [color=\
+\"#00ff00\"]\n\t2 -> 2 [color=\"#00ff00\"]\n// legend context \n\tnode [shape=\
+plaintext] \nsubgraph legend {\n\thead [label=<<table border=\"0\" cellpadding\
+=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port=\"por\
+t1\">b&nbsp;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellp\
+adding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port\
+=\"port1\">&nbsp;</td></tr>\n</table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\th\
+ead:port1:e -> tail:port1:w [color=\"#00ff00\", constraint=false]\n}\n\tnode [\
+shape=circle] node [shape=\"box\"] \n\n}\n"
+
+#
+gap> F := FreeMonoid("c", "d");
+<free monoid on the generators [ c, d ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([c, d], "c^2=c, dc=d, cd^2=d^2, d^5=d^2");
+[ [ c^2, c ], [ d*c, d ], [ c*d^2, d^2 ], [ d^5, d^2 ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 4 relations of length 20>
+gap> DotLeftCayleyDigraph(S);
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [label\
+=\"&#949;\"]\n\t2 [color=\"#00ff00\", label=c, style=filled]\n\t3 [color=\"#ff\
+00ff\", label=d, style=filled]\n\t4 [label=cd]\n\t5 [label=\"d^2\"]\n\t6 [labe\
+l=\"d^3\"]\n\t7 [label=\"d^4\"]\n\t1 -> 2 [color=\"#00ff00\"]\n\t1 -> 3 [color\
+=\"#ff00ff\"]\n\t2 -> 2 [color=\"#00ff00\"]\n\t2 -> 3 [color=\"#ff00ff\"]\n\t3\
+ -> 4 [color=\"#00ff00\"]\n\t3 -> 5 [color=\"#ff00ff\"]\n\t4 -> 4 [color=\"#00\
+ff00\"]\n\t4 -> 5 [color=\"#ff00ff\"]\n\t5 -> 5 [color=\"#00ff00\"]\n\t5 -> 6 \
+[color=\"#ff00ff\"]\n\t6 -> 6 [color=\"#00ff00\"]\n\t6 -> 7 [color=\"#ff00ff\"\
+]\n\t7 -> 7 [color=\"#00ff00\"]\n\t7 -> 5 [color=\"#ff00ff\"]\n// legend conte\
+xt \n\tnode [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table borde\
+r=\"0\" cellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\
+\"right\" port=\"port1\">c&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"por\
+t2\">d&nbsp;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellp\
+adding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port\
+=\"port1\">&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td\
+></tr>\n</table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:p\
+ort1:w [color=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\
+\thead:port2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnod\
+e [shape=circle] node [shape=\"box\"] \n\n}\n"
+
+#
+gap> F := FreeSemigroup("c", "d");
+<free semigroup on the generators [ c, d ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([c, d], "c^2=c, dc=d, cd^2=d^2, d^5=d^2");
+[ [ c^2, c ], [ d*c, d ], [ c*d^2, d^2 ], [ d^5, d^2 ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 4 relations of length 20>
+gap> DotLeftCayleyDigraph(S);
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [color\
+=\"#00ff00\", label=c, style=filled]\n\t2 [color=\"#ff00ff\", label=d, style=f\
+illed]\n\t3 [label=cd]\n\t4 [label=\"d^2\"]\n\t5 [label=\"d^3\"]\n\t6 [label=\
+\"d^4\"]\n\t1 -> 1 [color=\"#00ff00\"]\n\t1 -> 2 [color=\"#ff00ff\"]\n\t2 -> 3\
+ [color=\"#00ff00\"]\n\t2 -> 4 [color=\"#ff00ff\"]\n\t3 -> 3 [color=\"#00ff00\
+\"]\n\t3 -> 4 [color=\"#ff00ff\"]\n\t4 -> 4 [color=\"#00ff00\"]\n\t4 -> 5 [col\
+or=\"#ff00ff\"]\n\t5 -> 5 [color=\"#00ff00\"]\n\t5 -> 6 [color=\"#ff00ff\"]\n\
+\t6 -> 6 [color=\"#00ff00\"]\n\t6 -> 4 [color=\"#ff00ff\"]\n// legend context \
+\n\tnode [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table border=\
+\"0\" cellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"r\
+ight\" port=\"port1\">c&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\
+\">d&nbsp;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellpad\
+ding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port=\
+\"port1\">&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td>\
+</tr>\n</table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:po\
+rt1:w [color=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\
+\thead:port2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnod\
+e [shape=circle] node [shape=\"box\"] \n\n}\n"
+
+#
+gap> F := FreeMonoid("a", "b");
+<free monoid on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([a, b], "a^2=a, ba=b, ab^2=b^2, b^5=b^2");
+[ [ a^2, a ], [ b*a, b ], [ a*b^2, b^2 ], [ b^5, b^2 ] ]
+gap> S := F / R;
+<fp monoid with 2 generators and 4 relations of length 20>
+gap> DotLeftCayleyDigraph(S);
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [label\
+=\"&#949;\"]\n\t2 [color=\"#00ff00\", label=a, style=filled]\n\t3 [color=\"#ff\
+00ff\", label=b, style=filled]\n\t4 [label=ab]\n\t5 [label=\"b^2\"]\n\t6 [labe\
+l=\"b^3\"]\n\t7 [label=\"b^4\"]\n\t1 -> 2 [color=\"#00ff00\"]\n\t1 -> 3 [color\
+=\"#ff00ff\"]\n\t2 -> 2 [color=\"#00ff00\"]\n\t2 -> 3 [color=\"#ff00ff\"]\n\t3\
+ -> 4 [color=\"#00ff00\"]\n\t3 -> 5 [color=\"#ff00ff\"]\n\t4 -> 4 [color=\"#00\
+ff00\"]\n\t4 -> 5 [color=\"#ff00ff\"]\n\t5 -> 5 [color=\"#00ff00\"]\n\t5 -> 6 \
+[color=\"#ff00ff\"]\n\t6 -> 6 [color=\"#00ff00\"]\n\t6 -> 7 [color=\"#ff00ff\"\
+]\n\t7 -> 7 [color=\"#00ff00\"]\n\t7 -> 5 [color=\"#ff00ff\"]\n// legend conte\
+xt \n\tnode [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table borde\
+r=\"0\" cellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\
+\"right\" port=\"port1\">a&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"por\
+t2\">b&nbsp;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellp\
+adding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port\
+=\"port1\">&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td\
+></tr>\n</table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:p\
+ort1:w [color=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\
+\thead:port2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnod\
+e [shape=circle] node [shape=\"box\"] \n\n}\n"
+
+#
+gap> F := FreeSemigroup("a", "b");
+<free semigroup on the generators [ a, b ]>
+gap> AssignGeneratorVariables(F);
+gap> R := ParseRelations([a, b], "a^2=a, ba=b, ab^2=b^2, b^5=b^2");
+[ [ a^2, a ], [ b*a, b ], [ a*b^2, b^2 ], [ b^5, b^2 ] ]
+gap> S := F / R;
+<fp semigroup with 2 generators and 4 relations of length 20>
+gap> DotLeftCayleyDigraph(S);
+"//dot\ndigraph hgn {\n\tnode [shape=circle] node [shape=\"box\"] \n\t1 [color\
+=\"#00ff00\", label=a, style=filled]\n\t2 [color=\"#ff00ff\", label=b, style=f\
+illed]\n\t3 [label=ab]\n\t4 [label=\"b^2\"]\n\t5 [label=\"b^3\"]\n\t6 [label=\
+\"b^4\"]\n\t1 -> 1 [color=\"#00ff00\"]\n\t1 -> 2 [color=\"#ff00ff\"]\n\t2 -> 3\
+ [color=\"#00ff00\"]\n\t2 -> 4 [color=\"#ff00ff\"]\n\t3 -> 3 [color=\"#00ff00\
+\"]\n\t3 -> 4 [color=\"#ff00ff\"]\n\t4 -> 4 [color=\"#00ff00\"]\n\t4 -> 5 [col\
+or=\"#ff00ff\"]\n\t5 -> 5 [color=\"#00ff00\"]\n\t5 -> 6 [color=\"#ff00ff\"]\n\
+\t6 -> 6 [color=\"#00ff00\"]\n\t6 -> 4 [color=\"#ff00ff\"]\n// legend context \
+\n\tnode [shape=plaintext] \nsubgraph legend {\n\thead [label=<<table border=\
+\"0\" cellpadding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"r\
+ight\" port=\"port1\">a&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\
+\">b&nbsp;</td></tr>\n</table>>\n]\n\ttail [label=<<table border=\"0\" cellpad\
+ding=\"2\" cellspacing=\"0\" cellborder=\"0\">\n<tr><td align=\"right\" port=\
+\"port1\">&nbsp;</td></tr>\n<tr><td align=\"right\" port=\"port2\">&nbsp;</td>\
+</tr>\n</table>>\n]\n\thead:port1:e\n\ttail:port1:w\n\thead:port1:e -> tail:po\
+rt1:w [color=\"#00ff00\", constraint=false]\n\thead:port2:e\n\ttail:port2:w\n\
+\thead:port2:e -> tail:port2:w [color=\"#ff00ff\", constraint=false]\n}\n\tnod\
+e [shape=circle] node [shape=\"box\"] \n\n}\n"
 
 # Unbind local variables, auto-generated by etc/tst-unbind-local-vars.py
 gap> Unbind(S);

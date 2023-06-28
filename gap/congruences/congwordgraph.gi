@@ -10,6 +10,7 @@
 ## This file contains implementation for left, right, and two-sided
 ## congruences that are defined in terms of a IsWordGraph.
 
+# TODO promote this to a proper operation
 BindGlobal("_MonoidFactorization", function(M, x)
   local word, pos, i;
 
