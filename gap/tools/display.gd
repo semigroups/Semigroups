@@ -20,5 +20,7 @@ DeclareOperation("TikzRightCayleyDigraph", [IsSemigroup]);
 
 DeclareOperation("DotLeftCayleyDigraph", [IsSemigroup]);
 DeclareOperation("DotRightCayleyDigraph", [IsSemigroup]);
+DeclareOperation("DotWordGraph", [IsDigraph]);
+DeclareOperation("DotWordGraph", [IsDigraph, IsList, IsList]);
 
 DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup);
