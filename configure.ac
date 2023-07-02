@@ -63,7 +63,7 @@ AC_ARG_ENABLE([debug],
     )
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
-ERNEL_DEBUG=$enable_debug
+KERNEL_DEBUG=$enable_debug
 AC_SUBST(KERNEL_DEBUG)
 
 # Check if HPCombi is enable, and available
