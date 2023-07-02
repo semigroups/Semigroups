@@ -4,7 +4,7 @@
 KEXT_NAME = semigroups
 
 KEXT_CXXFLAGS = @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
-KEXT_LDFLAGS = -lstdc++  # add C++ library
+KEXT_LDFLAGS = @CPP_STD_LIB@  # add C++ library
 
 # configure settings
 GAPPATH = @GAPROOT@
