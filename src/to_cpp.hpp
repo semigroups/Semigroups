@@ -508,7 +508,7 @@ namespace gapbind14 {
 #ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
     template <>
     struct Undef<HPCombi::PPerm16> {
-      static constexpr UInt2 value = OxFF;
+      static constexpr UInt2 value = 0xFF;
     };
 #endif
 
