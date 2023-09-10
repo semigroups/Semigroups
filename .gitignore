@@ -34,5 +34,6 @@
 /gen/
 /gh-pages/
 /libsemigroups/
-/src/pkgconfig.h.in
+/src/pkgconfig.h.in*
 /src/semigroups-config.hpp
+/config/

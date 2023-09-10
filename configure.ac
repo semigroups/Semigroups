@@ -13,6 +13,14 @@ AC_INIT([semigroups], [GAP package])
 AC_CONFIG_SRCDIR([src/pkg.cpp])
 AC_CONFIG_HEADERS([gen/pkgconfig.h:src/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
+dnl ##
+dnl ## Locate the GAP root dir
+dnl ##
+FIND_GAP
+cd config
+ln -s ${GAPROOT}/cnf/* .
+cd ..
+AC_CONFIG_AUX_DIR([config])
 
 AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[semigroups],[gen/pkgconfig.h])
 
@@ -28,10 +36,6 @@ AC_LANG([C++])
 
 AX_CXX_COMPILE_STDCXX_14(,[mandatory])
 
-dnl ##
-dnl ## Locate the GAP root dir
-dnl ##
-FIND_GAP
 
 dnl ##
 dnl ## Check for pthread, this seems to be required to compile with GCC
