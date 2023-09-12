@@ -18,9 +18,9 @@
 
 #include "gapbind14/gapbind14.hpp"
 
-#include <stdio.h>        // for fprintf, stderr
-#include <string.h>       // for memcpy, strchr, strrchr
-                          //
+#include <stdio.h>   // for fprintf, stderr
+#include <string.h>  // for memcpy, strchr, strrchr
+
 #include <unordered_set>  // for unordered_set, unordered_set<>::iterator
 
 #include "gapbind14/gap_include.hpp"  // for Obj etc
@@ -93,10 +93,32 @@ namespace gapbind14 {
 
   // Module implementations
 
+  Module::~Module() {
+    clear();
+    for (auto *subtype : _subtypes) {
+      delete subtype;
+    }
+  }
+
   void Module::clear() {
+    for (auto &func : _funcs) {
+      delete func.name;
+      if (func.nargs != 0) {
+        delete func.args;
+      }
+      delete func.cookie;
+    }
     _funcs.clear();
-    for (auto &funcs : _mem_funcs) {
-      funcs.clear();
+
+    for (auto &vec : _mem_funcs) {
+      for (auto &func : vec) {
+        delete func.name;
+        if (func.nargs != 0) {
+          delete func.args;
+        }
+        delete func.cookie;
+      }
+      vec.clear();
     }
   }
 
@@ -266,7 +288,7 @@ namespace gapbind14 {
       first_call = false;
       InitGVarFuncsFromTable(GVarFuncs);
     }
-    auto &                m   = module();
+    auto                 &m   = module();
     StructGVarFunc const *tab = m.funcs();
 
     // init functions from m in the record named name
