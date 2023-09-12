@@ -87,7 +87,8 @@ namespace gapbind14 {
 
     std::string operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_STRING) {
-        ErrorQuit("expected string, found %s", (Int) TNAM_OBJ(o), 0L);
+        throw std::runtime_error(std::string("expected string, found ")
+                                 + TNAM_OBJ(o));
       }
       return std::string(CSTR_STRING(o), GET_LEN_STRING(o));
     }
@@ -106,7 +107,8 @@ namespace gapbind14 {
 
     Int operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_INT) {
-        ErrorQuit("expected int, found %s", (Int) TNAM_OBJ(o), 0L);
+        throw std::runtime_error(std::string("expected int, found ")
+                                 + TNAM_OBJ(o));
       }
       return INT_INTOBJ(o);
     }
@@ -123,7 +125,8 @@ namespace gapbind14 {
 
     bool operator()(Obj o) const {
       if (TNUM_OBJ(o) != T_BOOL) {
-        ErrorQuit("expected bool, found %s", (Int) TNAM_OBJ(o), 0L);
+        throw std::runtime_error(std::string("expected bool, found ")
+                                 + TNAM_OBJ(o));
       }
       return o == True ? true : false;
     }
@@ -140,7 +143,8 @@ namespace gapbind14 {
 
     std::vector<T> operator()(Obj o) const {
       if (!IS_LIST(o)) {
-        ErrorQuit("expected list, found %s", (Int) TNAM_OBJ(o), 0L);
+        throw std::runtime_error(std::string("expected list, found ")
+                                 + TNAM_OBJ(o));
       }
 
       size_t const N   = LEN_LIST(o);

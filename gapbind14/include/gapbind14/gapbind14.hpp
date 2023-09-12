@@ -187,6 +187,9 @@ namespace gapbind14 {
           : SubtypeBase(nm, sbtyp) {}
 
       void free(Obj o) override {
+        static_assert(IsGapBind14Type<T>::value,
+                      "template parameter T must satisfy IsGapbind14Type<T>");
+        GAPBIND14_ASSERT(obj_subtype(o) == module().subtype<T>());
         delete detail::obj_cpp_ptr<T>(o);
       }
     };
@@ -214,12 +217,12 @@ namespace gapbind14 {
           _subtypes(),
           _type_to_subtype() {}
 
-    Module(Module const&) = delete;
-    Module(Module&&)      = delete;
+    Module(Module const&)            = delete;
+    Module(Module&&)                 = delete;
     Module& operator=(Module const&) = delete;
-    Module& operator=(Module&&) = delete;
+    Module& operator=(Module&&)      = delete;
 
-    ~Module() = default;
+    ~Module();
 
     void clear();
 
