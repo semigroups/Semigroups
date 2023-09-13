@@ -138,7 +138,7 @@ gen/%.$(GAP_OBJEXT): %.s GNUmakefile
 # build rule for linking all object files together into a kernel extension
 $(KEXT_SO): $(KEXT_OBJS)
 	@mkdir -p $(@D)
-	$(QUIET_GAC)$(GAP_CXX) -o $@ $(GAP_LDFLAGS) $(GAC_LDFLAGS) $(KEXT_OBJS) $(KEXT_LDFLAGS)
+	$(QUIET_GAC)$(GAP_CXX) -o $@ $(GAP_LDFLAGS) $(GAC_LDFLAGS) $(KEXT_OBJS) $(KEXT_LDFLAGS) $(LIBSEMIGROUPS_RPATH)
 
 # hook into `make clean`
 clean: clean-kext
