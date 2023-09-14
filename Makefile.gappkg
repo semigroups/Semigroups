@@ -3,7 +3,7 @@
 # The build rules in this file are intended for use by GAP packages that
 # want to build a simple GAP kernel extensions. They are based on the
 # GAP build system, and require GNU make. To use this in your GAP
-# package, `include` this file from your primary Makefile. You must also
+# package, `include` this file from your primary GNUmakefile. You must also
 # set several variables beforehand:
 #
 # - GAPPATH must be set to the location of the GAP installation against
@@ -65,7 +65,7 @@ GAP_OBJEXT ?= lo
 # override KEXT_RECONF if your package needs a different invocation
 # for reconfiguring (e.g. `./config.status --recheck` for autoconf)
 ifdef KEXT_USE_AUTOCONF
-KEXT_RECONF ?= ./config.status Makefile
+KEXT_RECONF ?= ./config.status GNUmakefile
 else
 KEXT_RECONF ?= ./configure "$(GAPPATH)"
 endif
@@ -118,20 +118,20 @@ KEXT_DEPFILES = $(patsubst %.$(GAP_OBJEXT),%.d,$(KEXT_OBJS))
 KEXT_DEPFLAGS = -MQ "$@" -MMD -MP -MF $(@D)/$(*F).d
 
 # build rule for C code
-# The dependency on Makefile ensures that re-running configure recompiles everything
-gen/%.$(GAP_OBJEXT): %.c Makefile
+# The dependency on GNUmakefile ensures that re-running configure recompiles everything
+gen/%.$(GAP_OBJEXT): %.c GNUmakefile
 	@mkdir -p $(@D)
 	$(QUIET_GAC)$(GAC) -d -p "$(KEXT_DEPFLAGS)" -p "$(KEXT_CFLAGS)" -c $< -o $@
 
 # build rule for C++ code
-# The dependency on Makefile ensures that re-running configure recompiles everything
-gen/%.$(GAP_OBJEXT): %.cpp Makefile
+# The dependency on GNUmakefile ensures that re-running configure recompiles everything
+gen/%.$(GAP_OBJEXT): %.cpp GNUmakefile
 	@mkdir -p $(@D)
 	$(QUIET_GAC)$(GAC) -d -p "$(KEXT_DEPFLAGS)" -p "$(KEXT_CXXFLAGS)" -c $< -o $@
 
 # build rule for assembler code
-# The dependency on Makefile ensures that re-running configure recompiles everything
-gen/%.$(GAP_OBJEXT): %.s Makefile
+# The dependency on GNUmakefile ensures that re-running configure recompiles everything
+gen/%.$(GAP_OBJEXT): %.s GNUmakefile
 	@mkdir -p $(@D)
 	$(QUIET_GAC)$(GAC) -d -p "$(KEXT_DEPFLAGS)" -p "$(KEXT_CFLAGS)" -c $< -o $@
 
@@ -148,7 +148,7 @@ clean-kext:
 # hook into `make distclean`
 distclean: distclean-kext
 distclean-kext:
-	rm -rf bin gen Makefile
+	rm -rf bin gen GNUmakefile
 	rm -rf doc/_*.xml
 	rm -rf doc/*.aux doc/*.bbl doc/*.blg doc/*.brf doc/*.idx doc/*.idx
 	rm -rf doc/*.ilg doc/*.ind doc/*.log doc/*.out doc/*.pnr doc/*.toc
@@ -163,8 +163,8 @@ check: check-kext
 check-kext:
 	$(GAP) tst/testall.g
 
-# re-run configure if configure, Makefile.in or GAP itself changed
-Makefile: configure Makefile.in $(GAPPATH)/sysinfo.gap
+# re-run configure if configure, GNUmakefile.in or GAP itself changed
+GNUmakefile: configure GNUmakefile.in $(GAPPATH)/sysinfo.gap
 	$(KEXT_RECONF)
 
 ifdef KEXT_USE_AUTOCONF
@@ -182,12 +182,12 @@ configure: $(configure_deps)
 	 fi
 endif # MAINTAINER_MODE
 
-# re-run configure if configure, Makefile.in or GAP itself changed
+# re-run configure if configure, GNUmakefile.in or GAP itself changed
 config.status: configure $(GAPPATH)/sysinfo.gap
 	./config.status --recheck
 
-# update Makefile if config.status changed
-Makefile: config.status
+# update GNUmakefile if config.status changed
+GNUmakefile: config.status
 
 gen/pkgconfig.h: gen/pkgconfig.h.stamp
 	@if test ! -f $@; then rm -f $<; else :; fi
@@ -218,7 +218,7 @@ endif # KEXT_USE_AUTOCONF
 .PHONY: check-kext clean-kext distclean-kext doc-kext
 
 ########################################################################
-# Makefile debugging trick:
+# GNUmakefile debugging trick:
 # call print-VARIABLE to see the runtime value of any variable
 ########################################################################
 print-%:
