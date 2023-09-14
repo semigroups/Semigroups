@@ -17,7 +17,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AX_PREFIX_CONFIG_H([src/semigroups-config.hpp],[semigroups],[gen/pkgconfig.h])
 
 dnl ## abs_top_builddir seems to hold the top build dir for the subpackage
-dnl ## libsemigroups which is why this contains ../ 
+dnl ## libsemigroups which is why this contains ../
 AC_PREFIX_DEFAULT('${abs_top_builddir}/../bin/')
 
 dnl ##
@@ -67,5 +67,5 @@ AX_CHECK_HPCOMBI
 dnl ##
 dnl ## Output everything
 dnl ##
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([GNUmakefile])
 AC_OUTPUT
