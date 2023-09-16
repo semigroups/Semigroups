@@ -15,8 +15,9 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
                           [libsemigroups >= $REQUI_LIBSEMIGROUPS_VERSION],
 			  [need_included_libsemigroups=no],
 			  [need_included_libsemigroups=yes])],
-	[AC_MSG_NOTICE([ignoring flag --with-external-libsemigroups, the Semigroups configure file
-                        was created on a system without m4 macros for pkg-config available...])])
+	[AC_MSG_NOTICE(m4_normalize([
+                        ignoring flag --with-external-libsemigroups, the Semigroups configure file
+                        was created on a system without m4 macros for pkg-config available...]))])
   fi
   if test "$need_included_libsemigroups" = yes;  then
 	AC_MSG_NOTICE([using included libsemigroups...])
@@ -28,8 +29,9 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
    		[AS_IF(
    		   [test -f libsemigroups/include/libsemigroups.hpp],
                    [],
-                   [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from
-                                  https://github.com/libsemigroups/libsemigroups into this directory])])])
+                   [AC_MSG_ERROR(m4_normalize([
+                                  libsemigroups is required, clone or download the repo from
+                                  https://github.com/libsemigroups/libsemigroups into this directory]))])])
 
         dnl Temporary workaround for compatibility with dev version of
         dnl libsemigroups which doesn't contain .VERSION file by default
