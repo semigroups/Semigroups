@@ -3,6 +3,54 @@ Copyright © 2011-2023 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.3.0 (released 18/09/2023)
+
+This release contains a fairly large number of changes, fixes, and
+improvements. The biggest changes/new features in this release are:
+
+* The build system has been completely updated by @fingolfin and @dimapase:
+  - Convert buildsystem to use Makefile.gappkg instead of automake by @fingolfin
+    in https://github.com/semigroups/Semigroups/pull/902
+  - Use the C++ compiler to link semigroups.so by @fingolfin in
+    https://github.com/semigroups/Semigroups/pull/942
+  - Work around autoconf 2.69 bugs by @fingolfin in
+    https://github.com/semigroups/Semigroups/pull/947
+  - set rpath for external libsemigroups by @dimpase in
+    https://github.com/semigroups/Semigroups/pull/954
+  - buildsystem: sane warning if not using gmake by @james-d-mitchell in
+    https://github.com/semigroups/Semigroups/pull/955
+* Some updates to improve the performance of `LatticeOfCongruences` and friends
+  by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/884
+* Add `GreensLeftMultipliers` and related by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/925
+
+The following bugs were fixed and/or issues resolved:
+
+* Use same URL as in my other packages by @olexandr-konovalov in
+  https://github.com/semigroups/Semigroups/pull/907
+* Fix a few typos inn the doc by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/913
+* Increase required version of Digraphs and remove some redundant code by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/921
+* greens: fix `HClassReps(LClass)` for acting semigroups by @james-d-mitchell
+  in https://github.com/semigroups/Semigroups/pull/927
+* greens: fix bug in `RightGreensMultiplier` for acting semigroups by
+  @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/930
+* congsemigraph: add `\=` method by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/933
+* greens: fix `RhoOrbStabChain(DClass)` by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/932
+* doc: remove empty xml files by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/934
+* Fix a typo that breaks HPCombi support by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/941
+* typo (ERNEL<-KERNEL) in configure.ac by @dimpase in
+  https://github.com/semigroups/Semigroups/pull/944
+* fix the URL for libsemigroups in README.md by @dimpase in
+  https://github.com/semigroups/Semigroups/pull/945
+* kernel: fix mem leaks by @james-d-mitchell in
+  https://github.com/semigroups/Semigroups/pull/951
+
 ### Version 5.2.1 (released 05/03/2023)
 
 This is a minor release with some changes for compatibility with upcoming
