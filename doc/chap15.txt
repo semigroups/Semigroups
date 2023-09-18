@@ -210,6 +210,34 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
+  [1X15.2-5 IsSubsemigroupOfFpMonoid[101X
+  
+  [33X[1;0Y[29X[2XIsSubsemigroupOfFpMonoid[102X( [3XS[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis property is [9Xtrue[109X if the object [3XS[103X is a subsemigroup of an fp monoid, and
+  [9Xfalse[109X otherwise. This property is just a synonym for [2XIsSemigroup[102X ([14XReference:
+  IsSemigroup[114X) and [10XIsElementOfFpMonoidCollection[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b");[127X[104X
+    [4X[28X<free semigroup on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);[127X[104X
+    [4X[25Xgap>[125X [27XR := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := F / R;[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XIsSubsemigroupOfFpMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xmap := EmbeddingFpMonoid(S);[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14> -> [128X[104X
+    [4X[28X<fp monoid with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XIsSubsemigroupOfFpMonoid(Image(map));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSubsemigroupOfFpMonoid(Range(map));[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
   
   [1X15.3 [33X[0;0YCreating Tietze transformation objects[133X[101X
   

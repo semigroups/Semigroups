@@ -67,6 +67,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X80DE617E841E5BA0">6.5-7 RMSNormalization</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E2ECC577A1CF7CA">6.5-8 IsomorphismReesMatrixSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X820BB66381737F2D">6.5-9 AntiIsomorphismDualFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7873016586653A44">6.5-10 EmbeddingFpMonoid</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.6 <span class="Heading">Random semigroups</span></a>
 </span>
@@ -304,7 +305,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.2.1/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.3.0/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
@@ -869,6 +870,35 @@ MappingByFunction( &lt;fp semigroup with 2 generators and
  , function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpSemigroup(Range(map));</span>
 [ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ]
+</pre></div>
+
+<p><a id="X7873016586653A44" name="X7873016586653A44"></a></p>
+
+<h5>6.5-10 EmbeddingFpMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmbeddingFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A finitely presented monoid.</p>
+
+<p><code class="code">EmbeddingFpMonoid</code> returns an embedding (<code class="func">SemigroupHomomorphismByImages</code> (<a href="chap14.html#X817596438369885B"><span class="RefLink">14.1-1</span></a>)) from the finitely presented semigroup <var class="Arg">S</var> into a finitely presented monoid. If <var class="Arg">S</var> satisfies <code class="func">IsMonoidAsSemigroup</code> (<a href="chap12.html#X7E4DEECD7CD9886D"><span class="RefLink">12.1-13</span></a>), then the mapping returned by this function is an isomorphism (the same isomorphism as <code class="func">IsomorphismFpMonoid</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap52_mj.html#X869F966B8196F28C"><span class="RefLink">Reference: IsomorphismFpMonoid</span></a>)). If <var class="Arg">S</var> is not a monoid, then the range is isomorphic to <var class="Arg">S</var> with an identity adjoined (a new element not previously in <var class="Arg">S</var>). The embedded copy of <var class="Arg">S</var> in the range can be recovered using <code class="func">Image</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap32_mj.html#X87F4D35A826599C6"><span class="RefLink">Reference: Image</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b");</span>
+&lt;free semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];</span>
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / R;</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoidAsSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := EmbeddingFpMonoid(S);</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt; 
+&lt;fp monoid with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(map));</span>
+4
 </pre></div>
 
 <p><a id="X7C3F130B8362D55A" name="X7C3F130B8362D55A"></a></p>

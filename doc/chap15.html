@@ -45,6 +45,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X847012347856C55E">15.2-2 ElementOfFpSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X82B7A51B7FE90486">15.2-3 ElementOfFpMonoid</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7C3837FA83BE9CD9">15.2-4 FreeMonoidAndAssignGeneratorVars</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X7FF4A1CF79799314">15.2-5 IsSubsemigroupOfFpMonoid</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X8379F50C83FA5088">15.3 <span class="Heading">
       Creating Tietze transformation objects
@@ -307,6 +308,34 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBound(x);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBound(y);</span>
+true</pre></div>
+
+<p><a id="X7FF4A1CF79799314" name="X7FF4A1CF79799314"></a></p>
+
+<h5>15.2-5 IsSubsemigroupOfFpMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsemigroupOfFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This property is <code class="keyw">true</code> if the object <var class="Arg">S</var> is a subsemigroup of an fp monoid, and <code class="keyw">false</code> otherwise. This property is just a synonym for <code class="func">IsSemigroup</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="code">IsElementOfFpMonoidCollection</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup("a", "b");</span>
+&lt;free semigroup on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(F);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];</span>
+[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / R;</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfFpMonoid(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := EmbeddingFpMonoid(S);</span>
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt; 
+&lt;fp monoid with 2 generators and 3 relations of length 14&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfFpMonoid(Image(map));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfFpMonoid(Range(map));</span>
 true</pre></div>
 
 <p><a id="X8379F50C83FA5088" name="X8379F50C83FA5088"></a></p>

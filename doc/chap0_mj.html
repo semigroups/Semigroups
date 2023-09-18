@@ -32,10 +32,10 @@
 <h2>A package for semigroups and monoids</h2>
 
 <p>
-    5.2.1</p>
+    5.3.0</p>
 
 <p>
-    5 March 2023
+    18 September 2023
   </p>
 
 </div>
@@ -668,6 +668,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X80DE617E841E5BA0">6.5-7 RMSNormalization</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7E2ECC577A1CF7CA">6.5-8 IsomorphismReesMatrixSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X820BB66381737F2D">6.5-9 AntiIsomorphismDualFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7873016586653A44">6.5-10 EmbeddingFpMonoid</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7C3F130B8362D55A">6.6 <span class="Heading">Random semigroups</span></a>
 </span>
@@ -948,6 +949,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X7EBB4F1981CC2AE9">10.4-7 InjectionPrincipalFactor</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X86C6D777847AAEC7">10.4-8 PrincipalFactor</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X802E2BC9828341A2">10.5 <span class="Heading">
+      Operations for Green's relations and classes
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X7EDE3F03879B2B12">10.5-1 LeftGreensMultiplier</a></span>
+</div></div>
 </div>
 <div class="ContChap"><a href="chap11_mj.html#X7C75B1DB81C7779B">11 <span class="Heading">
     Attributes and operations for semigroups
@@ -1201,14 +1209,16 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7986F3597F9DF7AF">13.4-3 PrincipalCongruencesOfSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X8195D6F47EE52806">13.4-4 IsCongruencePoset</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X86C9C5BA7FE93F4C">13.4-5 LatticeOfCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X83ACF2C0789F621B">13.4-6 PosetOfPrincipalCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7B2E2CEE8626FBC3">13.4-7 CongruencesOfPoset</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X830F42B582A2FAA0">13.4-8 UnderlyingSemigroupOfCongruencePoset</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X78A91138818A4FAE">13.4-9 PosetOfCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7C5BAC8D82ABEBBE">13.4-10 JoinSemilatticeOfCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X780E2B3F8509CE32">13.4-11 MinimalCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7AE16F237E862934">13.4-12 NumberOfRightCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X807A5FCC87661FA4">13.4-13 IteratorOfRightCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X784CFDE37A0B4F84">13.4-6 CayleyDigraphOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X83ACF2C0789F621B">13.4-7 PosetOfPrincipalCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7B2E2CEE8626FBC3">13.4-8 CongruencesOfPoset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X830F42B582A2FAA0">13.4-9 UnderlyingSemigroupOfCongruencePoset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X78A91138818A4FAE">13.4-10 PosetOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X87CF25A178B7F1AF">13.4-11 JoinSemilatticeOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7ECE04727B6A58A3">13.4-12 GeneratingCongruencesOfJoinSemilattice</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X780E2B3F8509CE32">13.4-13 MinimalCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7AE16F237E862934">13.4-14 NumberOfRightCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X807A5FCC87661FA4">13.4-15 IteratorOfRightCongruences</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13_mj.html#X857D750579B87DBF">13.5 <span class="Heading">
       Comparing congruences
@@ -1259,12 +1269,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7BC02E08840E0AF4">13.9-1 SemigroupIdealOfReesCongruence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7E15F66A8029C64A">13.9-2 IsReesCongruenceClass</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13_mj.html#X789450398397141D">13.10 <span class="Heading">Universal congruences</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13_mj.html#X7C6B4A2980BE9B03">13.10 <span class="Heading">Universal and trivial congruences</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X8751EF557A81A2B1">13.10-1 IsUniversalSemigroupCongruence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X8646253C86AFFA29">13.10-2 IsUniversalSemigroupCongruenceClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7B99C6A47F3D375F">13.10-3 UniversalSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13_mj.html#X7A9B483B7B4E0E27">13.10-4 TrivialCongruence</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap14_mj.html#X861935DB81A478C2">14 <span class="Heading">
@@ -1341,6 +1352,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15_mj.html#X847012347856C55E">15.2-2 ElementOfFpSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15_mj.html#X82B7A51B7FE90486">15.2-3 ElementOfFpMonoid</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15_mj.html#X7C3837FA83BE9CD9">15.2-4 FreeMonoidAndAssignGeneratorVars</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15_mj.html#X7FF4A1CF79799314">15.2-5 IsSubsemigroupOfFpMonoid</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15_mj.html#X8379F50C83FA5088">15.3 <span class="Heading">
       Creating Tietze transformation objects

@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-5.2.1/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.3.0/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   
@@ -989,6 +989,39 @@
     [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XRelationsOfFpSemigroup(Range(map));[127X[104X
     [4X[28X[ [ a^3, a ], [ b^2, b ], [ (b*a)^2, a ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X6.5-10 EmbeddingFpMonoid[101X
+  
+  [33X[1;0Y[29X[2XEmbeddingFpMonoid[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA finitely presented monoid.[133X
+  
+  [33X[0;0Y[10XEmbeddingFpMonoid[110X   returns   an   embedding  ([2XSemigroupHomomorphismByImages[102X
+  ([14X14.1-1[114X))  from the finitely presented semigroup [3XS[103X into a finitely presented
+  monoid.  If  [3XS[103X  satisfies  [2XIsMonoidAsSemigroup[102X  ([14X12.1-13[114X),  then the mapping
+  returned  by  this  function  is  an  isomorphism  (the  same isomorphism as
+  [2XIsomorphismFpMonoid[102X ([14XReference: IsomorphismFpMonoid[114X)). If [3XS[103X is not a monoid,
+  then  the  range is isomorphic to [3XS[103X with an identity adjoined (a new element
+  not  previously  in [3XS[103X). The embedded copy of [3XS[103X in the range can be recovered
+  using [2XImage[102X ([14XReference: Image[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup("a", "b");[127X[104X
+    [4X[28X<free semigroup on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XAssignGeneratorVariables(F);[127X[104X
+    [4X[25Xgap>[125X [27XR := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];[127X[104X
+    [4X[28X[ [ a^3, a ], [ b^2, b ], [ (a*b)^2, a ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := F / R;[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XIsMonoidAsSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xmap := EmbeddingFpMonoid(S);[127X[104X
+    [4X[28X<fp semigroup with 2 generators and 3 relations of length 14> -> [128X[104X
+    [4X[28X<fp monoid with 2 generators and 3 relations of length 14>[128X[104X
+    [4X[25Xgap>[125X [27XSize(Range(map));[127X[104X
+    [4X[28X4[128X[104X
   [4X[32X[104X
   
   

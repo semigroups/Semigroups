@@ -745,7 +745,7 @@
   [1X10.3 [33X[0;0YProperties of Green's classes[133X[101X
   
   [33X[0;0YIn this section, we describe the properties and operators of Green's classes
-  that are available in the [5XSemigroups[105X package[133X
+  that are available in the [5XSemigroups[105X package.[133X
   
   
   [1X10.3-1 [33X[0;0YLess than for Green's classes[133X[101X
@@ -856,7 +856,7 @@
   [1X10.4 [33X[0;0YAttributes of Green's classes[133X[101X
   
   [33X[0;0YIn  this  section,  we  describe  the attributes of Green's classes that are
-  available in the [5XSemigroups[105X package[133X
+  available in the [5XSemigroups[105X package.[133X
   
   [1X10.4-1 GroupHClass[101X
   
@@ -1173,5 +1173,54 @@
     [4X[28X  [ -2, -5 ], [ -4 ]>>[128X[104X
     [4X[25Xgap>[125X [27XNormalizedPrincipalFactor(D);[127X[104X
     [4X[28X<Rees matrix semigroup 1x5 over Group(())>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5 [33X[0;0YOperations for Green's relations and classes[133X[101X
+  
+  [33X[0;0YIn this section, we describe some operations related to Green's classes that
+  are available in the [5XSemigroups[105X package.[133X
+  
+  [1X10.5-1 LeftGreensMultiplier[101X
+  
+  [33X[1;0Y[29X[2XLeftGreensMultiplier[102X( [3XS[103X, [3Xa[103X, [3Xb[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRightGreensMultiplier[102X( [3XS[103X, [3Xa[103X, [3Xb[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn element.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is  a  semigroup,  and  [3Xa[103X  and  [3Xb[103X  are  [13XL[113X-related elements of [3XS[103X, then
+  [10XLeftGreensMultiplier[110X returns an element [10Xs[110X such that [10Xs * [3Xa[103X[10X = [3Xb[103X[10X[110X. The element [10Xs[110X
+  is of the same type as the elements of [3XS[103X but may or may not be an element of
+  [3XS[103X.   In   particular,   if   [3XS[103X   is   not   a   monoid   and  [10X[3Xa[103X[10X  =  [3Xb[103X[10X[110X,  then
+  [10XOne(GeneratorsOfSemigroup(S))[110X  may  be  returned. Even if [10X[3Xa[103X[10X <> [3Xb[103X[10X[110X, then it is
+  not  guaranteed  that  the  returned  element  [10Xs[110X  will  belong  to  [3XS[103X. It is
+  guaranteed  that the left action of [10Xs[110X on the elements of the [13XL[113X-class of [3Xa[103X is
+  the same as the left action of an element of [3XS[103X with the identity adjoined.[133X
+  
+  [33X[0;0Y[10XLeftGreensMultiplier[110X gives an error if [3Xa[103X and [3Xb[103X are not [13XL[113X-related elements of
+  [3XS[103X.[133X
+  
+  [33X[0;0YThe operation [10XRightGreensMultiplier[110X is defined analogously.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 4, 3, 5, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 1, 1, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 5, 4, 4, 5]));;[127X[104X
+    [4X[25Xgap>[125X [27Xa := Transformation([5, 5, 4, 4, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XLeftGreensMultiplier(S, a, a);[127X[104X
+    [4X[28XTransformation( [ 1, 1, 3, 3, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27XRightGreensMultiplier(S, a, a);[127X[104X
+    [4X[28XTransformation( [ 5, 5, 5, 4, 5 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xb := Transformation([5, 4, 4, 5, 4]);[127X[104X
+    [4X[28XTransformation( [ 5, 4, 4, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xs := LeftGreensMultiplier(S, a, b);[127X[104X
+    [4X[28XTransformation( [ 1, 3, 3, 1, 3 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xs * a;[127X[104X
+    [4X[28XTransformation( [ 5, 4, 4, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xb := Transformation([4, 4, 5, 5, 4]);[127X[104X
+    [4X[28XTransformation( [ 4, 4, 5, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xs := RightGreensMultiplier(S, a, b);[127X[104X
+    [4X[28XTransformation( [ 4, 4, 4, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xa * s = b;[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   

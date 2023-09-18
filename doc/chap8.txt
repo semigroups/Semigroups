@@ -446,7 +446,7 @@
   [33X[0;0Y[10X[3XY[103X[10X = InducedSubdigraph([3XX[103X[10X, DigraphVertexLabels([3XY[103X[10X)) [110X[133X
   
   [33X[0;0Ymust  return  [9Xtrue[109X.  Herein if we say that a vertex [10XA[110X of [3XX[103X is 'in' [3XY[103X then we
-  mean  there  is a vertex of [3XY[103X whose label is [10XA[110X. Alerternatively the user may
+  mean  there  is  a  vertex of [3XY[103X whose label is [10XA[110X. Alternatively the user may
   choose to give the argument [3XY[103X as the vertices of [3XX[103X on which [3XY[103X is the induced
   subdigraph.[133X
   

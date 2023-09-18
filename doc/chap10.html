@@ -86,6 +86,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7EBB4F1981CC2AE9">10.4-7 InjectionPrincipalFactor</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X86C6D777847AAEC7">10.4-8 PrincipalFactor</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X802E2BC9828341A2">10.5 <span class="Heading">
+      Operations for Green's relations and classes
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7EDE3F03879B2B12">10.5-1 LeftGreensMultiplier</a></span>
+</div></div>
 </div>
 
 <h3>10 <span class="Heading">
@@ -799,7 +806,7 @@ false</pre></div>
       Properties of Green's classes
     </span></h4>
 
-<p>In this section, we describe the properties and operators of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package</p>
+<p>In this section, we describe the properties and operators of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package.</p>
 
 <p><a id="X85F30ACF86C3A733" name="X85F30ACF86C3A733"></a></p>
 
@@ -903,7 +910,7 @@ false</pre></div>
       Attributes of Green's classes
     </span></h4>
 
-<p>In this section, we describe the attributes of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package</p>
+<p>In this section, we describe the attributes of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package.</p>
 
 <p><a id="X8723756387DD4C0F" name="X8723756387DD4C0F"></a></p>
 
@@ -1208,6 +1215,51 @@ MappingByFunction( &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ],
   [ -2, -5 ], [ -4 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalizedPrincipalFactor(D);</span>
 &lt;Rees matrix semigroup 1x5 over Group(())&gt;</pre></div>
+
+<p><a id="X802E2BC9828341A2" name="X802E2BC9828341A2"></a></p>
+
+<h4>10.5 <span class="Heading">
+      Operations for Green's relations and classes
+    </span></h4>
+
+<p>In this section, we describe some operations related to Green's classes that are available in the <strong class="pkg">Semigroups</strong> package.</p>
+
+<p><a id="X7EDE3F03879B2B12" name="X7EDE3F03879B2B12"></a></p>
+
+<h5>10.5-1 LeftGreensMultiplier</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftGreensMultiplier</code>( <var class="Arg">S</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightGreensMultiplier</code>( <var class="Arg">S</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An element.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, and <var class="Arg">a</var> and <var class="Arg">b</var> are <em>L</em>-related elements of <var class="Arg">S</var>, then <code class="code">LeftGreensMultiplier</code> returns an element <code class="code">s</code> such that <code class="code">s * <var class="Arg">a</var> = <var class="Arg">b</var></code>. The element <code class="code">s</code> is of the same type as the elements of <var class="Arg">S</var> but may or may not be an element of <var class="Arg">S</var>. In particular, if <var class="Arg">S</var> is not a monoid and <code class="code"><var class="Arg">a</var> = <var class="Arg">b</var></code>, then <code class="code">One(GeneratorsOfSemigroup(S))</code> may be returned. Even if <code class="code"><var class="Arg">a</var> &lt;&gt; <var class="Arg">b</var></code>, then it is not guaranteed that the returned element <code class="code">s</code> will belong to <var class="Arg">S</var>. It is guaranteed that the left action of <code class="code">s</code> on the elements of the <em>L</em>-class of <var class="Arg">a</var> is the same as the left action of an element of <var class="Arg">S</var> with the identity adjoined.</p>
+
+<p><code class="code">LeftGreensMultiplier</code> gives an error if <var class="Arg">a</var> and <var class="Arg">b</var> are not <em>L</em>-related elements of <var class="Arg">S</var>.</p>
+
+<p>The operation <code class="code">RightGreensMultiplier</code> is defined analogously.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([4, 4, 3, 5, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 1, 1, 4, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 4, 4, 5]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := Transformation([5, 5, 4, 4, 5]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftGreensMultiplier(S, a, a);</span>
+Transformation( [ 1, 1, 3, 3, 1 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightGreensMultiplier(S, a, a);</span>
+Transformation( [ 5, 5, 5, 4, 5 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := Transformation([5, 4, 4, 5, 4]);</span>
+Transformation( [ 5, 4, 4, 5, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := LeftGreensMultiplier(S, a, b);</span>
+Transformation( [ 1, 3, 3, 1, 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s * a;</span>
+Transformation( [ 5, 4, 4, 5, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := Transformation([4, 4, 5, 5, 4]);</span>
+Transformation( [ 4, 4, 5, 5, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := RightGreensMultiplier(S, a, b);</span>
+Transformation( [ 4, 4, 4, 5, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a * s = b;</span>
+true</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>

@@ -70,6 +70,12 @@
   [2XCanUseGapFroidurePin[102X 6.1-4 
   [2XCanUseLibsemigroupsFroidurePin[102X 6.1-4 
   [2XCatalanMonoid[102X 7.1-1 
+  [2XCayleyDigraphOfCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a list or collection 13.4-6 
+  [2XCayleyDigraphOfLeftCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a list or collection 13.4-6 
+  [2XCayleyDigraphOfRightCongruences[102X, for a semigroup 13.4-6 
+      for a semigroup and a list or collection 13.4-6 
   [2XCharacterTableOfInverseSemigroup[102X 11.14-10 
   [2XClosureInverseMonoid[102X 6.4-1 
   [2XClosureInverseSemigroup[102X 6.4-1 
@@ -83,7 +89,7 @@
   [2XCompositionMapping2[102X, for IsRMSIsoByTriple 14.3-4 
       for IsRZMSIsoByTriple 14.3-4 
   [2XCongruenceByWangPair[102X 13.8-2 
-  [2XCongruencesOfPoset[102X 13.4-7 
+  [2XCongruencesOfPoset[102X 13.4-8 
   [2XCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
       for a semigroup and a multiplicative element collection 13.4-1 
   [2XContentOfFreeBandElement[102X 7.9-7 
@@ -126,6 +132,7 @@
   [2XElementOfFpSemigroup[102X 15.2-2 
   [10XELM_LIST[110X (for Rees (0-)matrix semigroup isomorphisms by triples) 14.3-7 
   [2XELM_LIST[102X, for IsRMSIsoByTriple 14.3-3 
+  [2XEmbeddingFpMonoid[102X 6.5-10 
   [2XEmptyPBR[102X 4.2-3 
   [2XEndomorphismMonoid[102X, for a digraph 7.1-6 
       for a digraph and vertex coloring 7.1-6 
@@ -159,6 +166,7 @@
   [2XFullTropicalMaxPlusMonoid[102X 7.7-1 
   [2XFullTropicalMinPlusMonoid[102X 7.7-2 
   [2XGeneralLinearMonoid[102X 7.5-1 
+  [2XGeneratingCongruencesOfJoinSemilattice[102X 13.4-12 
   [2XGeneratingCongruencesOfLattice[102X 13.8-4 
   [2XGenerators[102X 11.6-1 
   [2XGeneratorsOfSemigroupIdeal[102X 9.2-1 
@@ -242,6 +250,7 @@
   [2XIsBooleanMatMonoid[102X 5.7-2 
   [2XIsBooleanMatSemigroup[102X 5.7-1 
   [2XIsBrandtSemigroup[102X 12.2-2 
+  [2XIsCayleyDigraphOfCongruences[102X 13.4-4 
   [2XIsCliffordSemigroup[102X 12.2-1 
   [2XIsColTrimBooleanMat[102X 5.3-9 
   [2XIsCombinatorialSemigroup[102X 12.1-19 
@@ -395,6 +404,7 @@
   [2XIsStrongSemilatticeOfSemigroups[102X 8.3-4 
   [2XIsStzPresentation[102X 15.3-2 
   [2XIsSubrelation[102X 13.5-1 
+  [2XIsSubsemigroupOfFpMonoid[102X 15.2-5 
   [2XIsSuperrelation[102X 13.5-2 
   [2XIsSurjectiveSemigroup[102X 12.1-6 
   [2XIsSymmetricBooleanMat[102X 5.3-10 
@@ -440,30 +450,29 @@
   [2XIteratorOfDClassReps[102X 10.2-1 
   [2XIteratorOfHClassReps[102X 10.2-1 
   [2XIteratorOfLClassReps[102X 10.2-1 
-  [2XIteratorOfLeftCongruences[102X, for a semigroup 13.4-13 
-      for a semigroup, and a positive integer 13.4-13 
-      for a semigroup, positive integer, and list or collection 13.4-13 
+  [2XIteratorOfLeftCongruences[102X, for a semigroup 13.4-15 
+      for a semigroup, and a positive integer 13.4-15 
+      for a semigroup, positive integer, and list or collection 13.4-15 
   [2XIteratorOfRClasses[102X 10.2-2 
-  [2XIteratorOfRightCongruences[102X, for a semigroup 13.4-13 
-      for a semigroup, and a positive integer 13.4-13 
-      for a semigroup, positive integer, and list or collection 13.4-13 
+  [2XIteratorOfRightCongruences[102X, for a semigroup 13.4-15 
+      for a semigroup, and a positive integer 13.4-15 
+      for a semigroup, positive integer, and list or collection 13.4-15 
   [2XJClasses[102X 10.1-4 
   [2XJoinIrreducibleDClasses[102X 11.14-2 
   [2XJoinLeftSemigroupCongruences[102X 13.5-4 
   [2XJoinRightSemigroupCongruences[102X 13.5-4 
   [2XJoinSemigroupCongruences[102X 13.5-4 
-  [2XJoinSemilatticeOfCongruences[102X, for a congruence poset and a function 13.4-10 
-      for a list or collection and a function 13.4-10 
+  [2XJoinSemilatticeOfCongruences[102X 13.4-11 
   [2XJonesMonoid[102X 7.3-3 
   [2XKernelOfSemigroupCongruence[102X 13.7-4 
   [2XKernelOfSemigroupHomomorphism[102X 14.1-7 
   [2XLargestElementSemigroup[102X 11.11-8 
   [2XLatticeOfCongruences[102X, for a semigroup 13.4-5 
-      for a semigroup and a multiplicative element collection 13.4-5 
+      for a semigroup and a list or collection 13.4-5 
   [2XLatticeOfLeftCongruences[102X, for a semigroup 13.4-5 
-      for a semigroup and a multiplicative element collection 13.4-5 
+      for a semigroup and a list or collection 13.4-5 
   [2XLatticeOfRightCongruences[102X, for a semigroup 13.4-5 
-      for a semigroup and a multiplicative element collection 13.4-5 
+      for a semigroup and a list or collection 13.4-5 
   [2XLClass[102X 10.1-2 
   [2XLClasses[102X 10.1-4 
   [2XLClassNC[102X 10.1-3 
@@ -473,6 +482,7 @@
   [2XLeftCayleyDigraph[102X 11.2-1 
   [2XLeftCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
       for a semigroup and a multiplicative element collection 13.4-1 
+  [2XLeftGreensMultiplier[102X 10.5-1 
   [2XLeftInverse[102X, for a matrix over finite field 5.4-2 
   [2XLeftOne[102X, for a bipartition 3.2-4 
   [2XLeftPartOfBitranslation[102X 18.1-4 
@@ -501,8 +511,8 @@
   [2XMeetLeftSemigroupCongruences[102X 13.5-3 
   [2XMeetRightSemigroupCongruences[102X 13.5-3 
   [2XMeetSemigroupCongruences[102X 13.5-3 
-  [2XMinimalCongruences[102X, for a congruence poset 13.4-11 
-      for a list or collection 13.4-11 
+  [2XMinimalCongruences[102X, for a congruence poset 13.4-13 
+      for a list or collection 13.4-13 
   [2XMinimalCongruencesOfSemigroup[102X, for a semigroup 13.4-2 
       for a semigroup and a multiplicative element collection 13.4-2 
   [2XMinimalDClass[102X 10.1-6 
@@ -555,12 +565,12 @@
       for blocks 3.6-4 
   [2XNumberBlist[102X 5.3-7 
   [2XNumberBooleanMat[102X 5.3-6 
-  [2XNumberOfLeftCongruences[102X, for a semigroup 13.4-12 
-      for a semigroup, and a positive integer 13.4-12 
-      for a semigroup, positive integer, and list or collection 13.4-12 
-  [2XNumberOfRightCongruences[102X, for a semigroup 13.4-12 
-      for a semigroup, and a positive integer 13.4-12 
-      for a semigroup, positive integer, and list or collection 13.4-12 
+  [2XNumberOfLeftCongruences[102X, for a semigroup 13.4-14 
+      for a semigroup, and a positive integer 13.4-14 
+      for a semigroup, positive integer, and list or collection 13.4-14 
+  [2XNumberOfRightCongruences[102X, for a semigroup 13.4-14 
+      for a semigroup, and a positive integer 13.4-14 
+      for a semigroup, positive integer, and list or collection 13.4-14 
   [2XNumberPBR[102X 4.5-4 
   [2XOnBlist[102X 5.3-4 
   [2XOnLeftBlocks[102X 3.7-2 
@@ -595,13 +605,13 @@
   [2XPOI[102X, monoid of order preserving partial perms 7.2-3 
   [2XPOPI[102X, monoid of orientation preserving partial perms 7.2-3 
   [2XPORI[102X, monoid of orientation preserving or reversing partial perms 7.2-3 
-  [2XPosetOfCongruences[102X 13.4-9 
-  [2XPosetOfPrincipalCongruences[102X, for a semigroup 13.4-6 
-      for a semigroup and a multiplicative element collection 13.4-6 
-  [2XPosetOfPrincipalLeftCongruences[102X, for a semigroup 13.4-6 
-      for a semigroup and a multiplicative element collection 13.4-6 
-  [2XPosetOfPrincipalRightCongruences[102X, for a semigroup 13.4-6 
-      for a semigroup and a multiplicative element collection 13.4-6 
+  [2XPosetOfCongruences[102X 13.4-10 
+  [2XPosetOfPrincipalCongruences[102X, for a semigroup 13.4-7 
+      for a semigroup and a multiplicative element collection 13.4-7 
+  [2XPosetOfPrincipalLeftCongruences[102X, for a semigroup 13.4-7 
+      for a semigroup and a multiplicative element collection 13.4-7 
+  [2XPosetOfPrincipalRightCongruences[102X, for a semigroup 13.4-7 
+      for a semigroup and a multiplicative element collection 13.4-7 
   [2XPositionCanonical[102X 11.1-2 
   [2XPrimitiveIdempotents[102X 11.14-5 
   [2XPrincipalCongruencesOfSemigroup[102X, for a semigroup 13.4-3 
@@ -646,6 +656,7 @@
   [2XRightCongruencesOfSemigroup[102X, for a semigroup 13.4-1 
       for a semigroup and a multiplicative element collection 13.4-1 
   [2XRightCosetsOfInverseSemigroup[102X 11.14-6 
+  [2XRightGreensMultiplier[102X 10.5-1 
   [2XRightInverse[102X, for a matrix over finite field 5.4-2 
   [2XRightOne[102X, for a bipartition 3.2-5 
   [2XRightPartOfBitranslation[102X 18.1-4 
@@ -768,6 +779,7 @@
   [2XTranslationalHull[102X, for IsSemigroup and CanUseFroidurePin and IsFinite 18.1-11 
   [2XTranslationalHullOfFamily[102X, for IsFamily 18.1-8 
   [2XTriangularBooleanMatMonoid[102X 7.6-6 
+  [2XTrivialCongruence[102X 13.10-4 
   [2XTrivialSemigroup[102X 7.8-1 
   [2XTypeBitranslations[102X, for IsBitranslationsSemigroup 18.1-9 
   [2XTypeLeftTranslationsSemigroupElements[102X, for IsLeftTranslationsSemigroup 18.1-9 
@@ -775,7 +787,7 @@
   [2XUnderlyingRepresentatives[102X, for IsTranslationsSemigroup 18.1-15 
   [2XUnderlyingSemigroup[102X, for IsBitranslationsSemigroup 18.1-7 
       for IsTranslationsSemigroup 18.1-7 
-  [2XUnderlyingSemigroupOfCongruencePoset[102X 13.4-8 
+  [2XUnderlyingSemigroupOfCongruencePoset[102X 13.4-9 
   [2XUnderlyingSemigroupOfSemigroupWithAdjoinedZero[102X 11.7-4 
   [2XUniformBlockBijectionMonoid[102X 7.3-8 
   [2XUnitriangularBooleanMatMonoid[102X 7.6-6 

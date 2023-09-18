@@ -350,7 +350,7 @@
   
   [33X[0;0YIf  [3Xn[103X  is  a  non-negative  integer,  then this operation returns the Brauer
   monoid  of  degree  [3Xn[103X.  The  [13XBrauer monoid[113X is the submonoid of the partition
-  monoid consisiting of those bipartitions where the size of every block is 2.[133X
+  monoid consisting of those bipartitions where the size of every block is 2.[133X
   
   [33X[0;0Y[10XPartialBrauerMonoid[110X   returns  the  partial  Brauer  monoid,  which  is  the
   submonoid of the partition monoid consisting of those bipartitions where the

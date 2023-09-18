@@ -6,8 +6,9 @@
   of the semigroup of transformations stabilising a partition of a finite set[117X,
   [18XMath. Proc. Camb. Phil. Soc.[118X, [19X159[119X (2015), 339 - 353.
   
-  [[20XAMM21[120X]  [16XAnagnostopoulou-Merkouri,  M.  and  Mitchell,  J. D.[116X, [17XProperties of
-  Congruence Lattices of Finite Graph Inverse Semigroups[117X (2021).
+  [[20XAMMM23[120X]  [16XAnagnostopoulou-Merkouri,  M.,  Mesyan,  Z.  and  Mitchell, J. D.[116X,
+  [17XProperties of congruence lattices of graph inverse semigroups[117X, [18XInternational
+  Journal of Algebra and Computation[118X (2023).
   
   [[20XAui12[120X]  [16XAuinger,  K.[116X,  [17XKrohn–Rhodes  complexity  of Brauer type semigroups[117X,
   [18XPortugaliae Mathematica[118X, [19X69[119X, 4 (2012), 341–360.
@@ -59,7 +60,7 @@
   
   [[20XHow95[120X]  [16XHowie, J. M.[116X, [17XFundamentals of semigroup theory[117X, The Clarendon Press
   Oxford University Press, London Mathematical Society Monographs. New Series,
-  [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).
+  [19X12[119X, New York (1995), x+351 pages, (Oxford Science Publications).
   
   [[20XHR05[120X]  [16XHalverson,  T.  and Ram, A.[116X, [17XPartition algebras[117X, [18XEuropean Journal of
   Combinatorics[118X, Elsevier, [19X26[119X, 6 (2005), 869–921.

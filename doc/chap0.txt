@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.2.1
+                                     5.3.0
   
   
-                                  5 March 2023
+                               18 September 2023
   
   
                                  James Mitchell
@@ -468,6 +468,7 @@
       6.5-7 RMSNormalization
       6.5-8 IsomorphismReesMatrixSemigroup
       6.5-9 AntiIsomorphismDualFpSemigroup
+      6.5-10 EmbeddingFpMonoid
     6.6 [33X[0;0YRandom semigroups[133X
       6.6-1 RandomSemigroup
   7 [33X[0;0YStandard examples[133X
@@ -612,6 +613,8 @@
       10.4-6 StructureDescription
       10.4-7 InjectionPrincipalFactor
       10.4-8 PrincipalFactor
+    10.5 [33X[0;0YOperations for Green's relations and classes[133X
+      10.5-1 LeftGreensMultiplier
   11 [33X[0;0YAttributes and operations for semigroups[133X
     11.1 [33X[0;0YAccessing the elements of a semigroup[133X
       11.1-1 AsListCanonical
@@ -753,14 +756,16 @@
       13.4-3 PrincipalCongruencesOfSemigroup
       13.4-4 IsCongruencePoset
       13.4-5 LatticeOfCongruences
-      13.4-6 PosetOfPrincipalCongruences
-      13.4-7 CongruencesOfPoset
-      13.4-8 UnderlyingSemigroupOfCongruencePoset
-      13.4-9 PosetOfCongruences
-      13.4-10 JoinSemilatticeOfCongruences
-      13.4-11 MinimalCongruences
-      13.4-12 NumberOfRightCongruences
-      13.4-13 IteratorOfRightCongruences
+      13.4-6 CayleyDigraphOfCongruences
+      13.4-7 PosetOfPrincipalCongruences
+      13.4-8 CongruencesOfPoset
+      13.4-9 UnderlyingSemigroupOfCongruencePoset
+      13.4-10 PosetOfCongruences
+      13.4-11 JoinSemilatticeOfCongruences
+      13.4-12 GeneratingCongruencesOfJoinSemilattice
+      13.4-13 MinimalCongruences
+      13.4-14 NumberOfRightCongruences
+      13.4-15 IteratorOfRightCongruences
     13.5 [33X[0;0YComparing congruences[133X
       13.5-1 IsSubrelation
       13.5-2 IsSuperrelation
@@ -789,10 +794,11 @@
     13.9 [33X[0;0YRees congruences[133X
       13.9-1 SemigroupIdealOfReesCongruence
       13.9-2 IsReesCongruenceClass
-    13.10 [33X[0;0YUniversal congruences[133X
+    13.10 [33X[0;0YUniversal and trivial congruences[133X
       13.10-1 IsUniversalSemigroupCongruence
       13.10-2 IsUniversalSemigroupCongruenceClass
       13.10-3 UniversalSemigroupCongruence
+      13.10-4 TrivialCongruence
   14 [33X[0;0YSemigroup homomorphisms[133X
     14.1 [33X[0;0YHomomorphisms of arbitrary semigroups[133X
       14.1-1 SemigroupHomomorphismByImages
@@ -835,6 +841,7 @@
       15.2-2 ElementOfFpSemigroup
       15.2-3 ElementOfFpMonoid
       15.2-4 FreeMonoidAndAssignGeneratorVars
+      15.2-5 IsSubsemigroupOfFpMonoid
     15.3 [33X[0;0YCreating Tietze transformation objects[133X
       15.3-1 StzPresentation
       15.3-2 IsStzPresentation

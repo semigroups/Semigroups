@@ -258,7 +258,7 @@
   
   [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
   isomorphic  to  the  semigroup  [3XS[103X.  [10XSmallestMultiplicationTable[110X  returns the
-  lex-least  multiplication  of any semigroup isomoprhic to [3XS[103X. Due to the high
+  lex-least  multiplication  of any semigroup isomorphic to [3XS[103X. Due to the high
   complexity  of  computing  the smallest multiplication table of a semigroup,
   this  function  only performs well for semigroups with at most approximately
   50 elements.[133X

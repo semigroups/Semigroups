@@ -14,8 +14,8 @@
   [30X    [33X[0;6YKernel and trace -- only for inverse semigroups[133X
   
   [30X    [33X[0;6YWord     graph     --     only    for    congruences    created    via
-        [2XIteratorOfLeftCongruences[102X   ([14X13.4-13[114X)   or  [2XIteratorOfRightCongruences[102X
-        ([14X13.4-13[114X)[133X
+        [2XIteratorOfLeftCongruences[102X   ([14X13.4-15[114X)   or  [2XIteratorOfRightCongruences[102X
+        ([14X13.4-15[114X)[133X
   
   [30X    [33X[0;6YWang pairs -- only for graph inverse semigroup[133X
   
@@ -566,8 +566,9 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
     [4X[25Xgap>[125X [27Xmin := MinimalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
+    [4X[28X[ <2-sided semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs> [128X[104X
+    [4X[28X ][128X[104X
     [4X[25Xgap>[125X [27Xminl := MinimalLeftCongruencesOfSemigroup(S);[127X[104X
     [4X[28X[ <left semigroup congruence over <transformation semigroup [128X[104X
     [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
@@ -610,21 +611,23 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([3, 1, 3]));;[127X[104X
     [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(S);[127X[104X
-    [4X[28X[ <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs>, [128X[104X
-    [4X[28X  <2-sided semigroup congruence over <transformation semigroup of [128X[104X
-    [4X[28X     degree 3 with 2 generators> with 1 generating pairs> ][128X[104X
+    [4X[28X[ <universal semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators>>, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs>,[128X[104X
+    [4X[28X  <2-sided semigroup congruence over <transformation semigroup [128X[104X
+    [4X[28X     of size 13, degree 3 with 2 generators> with 1 generating pairs> [128X[104X
+    [4X[28X ][128X[104X
   [4X[32X[104X
   
   [1X13.4-4 IsCongruencePoset[101X
   
   [33X[1;0Y[29X[2XIsCongruencePoset[102X( [3Xposet[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsCayleyDigraphOfCongruences[102X( [3Xposet[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  category  contains  all  congruence  posets.  A  [13Xcongruence poset[113X is a
@@ -635,13 +638,36 @@
   congruence poset can be left, right, or two-sided.[133X
   
   [33X[0;0YA congruence poset is a digraph (see [2XIsDigraph[102X ([14XDigraphs: IsDigraph[114X)) with a
-  vertex  for  each  congruence,  and an edge from vertex [10Xi[110X to vertex [10Xj[110X if and
-  only  if  the  congruence  numbered  [10Xi[110X  is  a  subrelation of the congruence
-  numbered [10Xj[110X. The list of congruences can be obtained using [2XCongruencesOfPoset[102X
-  ([14X13.4-7[114X).[133X
+  vertex  for  each  congruence, and an edge from vertex [10Xi[110X to vertex [10Xj[110X only if
+  the  congruence numbered [10Xi[110X is a subrelation of the congruence numbered [10Xj[110X. To
+  avoid  using  an  unnecessarily  large  amount  of  memory  in some cases, a
+  congruence  poset  does  not  necessarily  belong  to  [2XIsPartialOrderDigraph[102X
+  ([14XDigraphs: IsPartialOrderDigraph[114X). In other words, although every congruence
+  poset  represents  a partial order it is not necessarily the case that there
+  is  an edge from vertex [10Xi[110X to vertex [10Xj[110X if and only if the congruence numbered
+  [10Xi[110X is a subrelation of the congruence numbered [10Xj[110X.[133X
   
-  [33X[0;0YCongruence   posets   can  be  created  using  [2XPosetOfCongruences[102X  ([14X13.4-9[114X),
-  [2XJoinSemilatticeOfCongruences[102X ([14X13.4-10[114X), and [2XLatticeOfCongruences[102X ([14X13.4-5[114X).[133X
+  [33X[0;0YThe  list  of congruences can be obtained using [2XCongruencesOfPoset[102X ([14X13.4-8[114X);
+  and   the   underlying   semigroup  of  the  poset  can  be  obtained  using
+  [2XUnderlyingSemigroupOfCongruencePoset[102X ([14X13.4-9[114X).[133X
+  
+  [33X[0;0YCongruence posets can be created using any of:[133X
+  
+  [30X    [33X[0;6Y[2XPosetOfCongruences[102X ([14X13.4-10[114X),[133X
+  
+  [30X    [33X[0;6Y[2XJoinSemilatticeOfCongruences[102X ([14X13.4-11[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLatticeOfCongruences[102X  ([14X13.4-5[114X),  [2XLatticeOfLeftCongruences[102X ([14X13.4-5[114X), or
+        [2XLatticeOfRightCongruences[102X ([14X13.4-5[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCayleyDigraphOfCongruences[102X   ([14X13.4-6[114X),  [2XCayleyDigraphOfLeftCongruences[102X
+        ([14X13.4-6[114X), or [2XCayleyDigraphOfRightCongruences[102X ([14X13.4-6[114X).[133X
+  
+  [33X[0;0Y[10XIsCayleyDigraphOfCongruences[110X    only    applies    to    the    output    of
+  [2XJoinSemilatticeOfCongruences[102X ([14X13.4-11[114X), [2XCayleyDigraphOfCongruences[102X ([14X13.4-6[114X),
+  [2XCayleyDigraphOfLeftCongruences[102X ([14X13.4-6[114X), and [2XCayleyDigraphOfRightCongruences[102X
+  ([14X13.4-6[114X).  The  congruences  used as the generating set for these operations
+  can be obtained using [2XGeneratingCongruencesOfJoinSemilattice[102X ([14X13.4-12[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
@@ -652,18 +678,25 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsDigraph(poset);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XOutNeighbours(poset);[127X[104X
-    [4X[28X[ [ 1, 2, 3, 4 ], [ 2 ], [ 2, 3 ], [ 2, 3, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicDigraph(poset, [127X[104X
+    [4X[25X>[125X [27XDigraph([[1, 2, 3, 4], [2], [2, 3], [2, 3, 4]]));[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XT := FullTransformationMonoid(3);;[127X[104X
     [4X[25Xgap>[125X [27Xcongs := PrincipalCongruencesOfSemigroup(T);;[127X[104X
-    [4X[25Xgap>[125X [27Xposet := JoinSemilatticeOfCongruences(PosetOfCongruences(congs),[127X[104X
-    [4X[25X>[125X [27X                                         WrappedTwoSidedCongruence);[127X[104X
+    [4X[25Xgap>[125X [27Xposet := JoinSemilatticeOfCongruences(PosetOfCongruences(congs));[127X[104X
     [4X[28X<lattice of 6 two-sided congruences over [128X[104X
     [4X[28X <full transformation monoid of degree 3>>[128X[104X
+    [4X[25Xgap>[125X [27XIsCayleyDigraphOfCongruences(poset);[127X[104X
+    [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XIsCongruencePoset(poset);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XDigraphNrVertices(poset);[127X[104X
     [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27Xposet := CayleyDigraphOfCongruences(T);[127X[104X
+    [4X[28X<poset of 7 two-sided congruences over [128X[104X
+    [4X[28X <full transformation monoid of degree 3>>[128X[104X
+    [4X[25Xgap>[125X [27XIsCayleyDigraphOfCongruences(poset);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X13.4-5 LatticeOfCongruences[101X
@@ -674,15 +707,15 @@
   [33X[1;0Y[29X[2XLatticeOfCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XLatticeOfLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XLatticeOfRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
+  [6XReturns:[106X  [33X[0;10YA lattice digraph.[133X
   
-  [33X[0;0YIf  [3XS[103X  is  a  semigroup,  then [10XLatticeOfCongruences[110X gives a congruence poset
+  [33X[0;0YIf  [3XS[103X  is  a semigroup, then [10XLatticeOfCongruences[110X returns a congruence poset
   object  containing  all  the congruences of [3XS[103X and information about how they
   are  contained  in  each  other.  See  [2XIsCongruencePoset[102X  ([14X13.4-4[114X)  for more
   details.[133X
   
   [33X[0;0Y[10XLatticeOfLeftCongruences[110X and [10XLatticeOfRightCongruences[110X do the same thing for
-  left and right congruences respectively.[133X
+  left and right congruences, respectively.[133X
   
   [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
   result  will  only  include  congruences generated by pairs of elements from
@@ -701,8 +734,9 @@
     [4X[25Xgap>[125X [27XLatticeOfRightCongruences(S);[127X[104X
     [4X[28X<lattice of 5 right congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
-    [4X[25Xgap>[125X [27XOutNeighbours(LatticeOfRightCongruences(S));[127X[104X
-    [4X[28X[ [ 1, 2, 3, 4, 5 ], [ 2 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicDigraph(LatticeOfRightCongruences(S), [127X[104X
+    [4X[25X>[125X [27XDigraph([[1, 2, 3, 4, 5], [2], [2, 3], [2, 4], [2, 5]]));[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
     [4X[25Xgap>[125X [27Xrestriction := [Transformation([1, 1, 1, 1]),[127X[104X
     [4X[25X>[125X [27X                   Transformation([1, 1, 1, 2]),[127X[104X
@@ -712,7 +746,61 @@
     [4X[28X <full transformation monoid of degree 4>>[128X[104X
   [4X[32X[104X
   
-  [1X13.4-6 PosetOfPrincipalCongruences[101X
+  [1X13.4-6 CayleyDigraphOfCongruences[101X
+  
+  [33X[1;0Y[29X[2XCayleyDigraphOfCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCayleyDigraphOfLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCayleyDigraphOfRightCongruences[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCayleyDigraphOfCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCayleyDigraphOfLeftCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCayleyDigraphOfRightCongruences[102X( [3XS[103X, [3Xrestriction[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA digraph.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is  a  semigroup,  then  [10XCayleyDigraphOfCongruences[110X returns the right
+  Cayley  graph  of  the  semilattice  of congruences of [3XS[103X with respect to the
+  generating set consisting of the principal congruences congruence poset. See
+  [2XIsCayleyDigraphOfCongruences[102X ([14X13.4-4[114X) for more details.[133X
+  
+  [33X[0;0Y[10XCayleyDigraphOfLeftCongruences[110X  and  [10XCayleyDigraphOfRightCongruences[110X  do the
+  same thing for left and right congruences, respectively.[133X
+  
+  [33X[0;0YIf [3Xrestriction[103X is specified and is a collection of elements from [3XS[103X, then the
+  result  will  only  include  congruences generated by pairs of elements from
+  [3Xrestriction[103X. Otherwise, all congruences will be calculated.[133X
+  
+  [33X[0;0YNote  that  [2XLatticeOfCongruences[102X  ([14X13.4-5[114X),  and its analogues for right and
+  left  congruences,  return  the  reflexive transitive closure of the digraph
+  returned  by this function (with any multiple edges removed). If there are a
+  large  number  of  congruences,  then  it might be the case that forming the
+  reflexive  transitive  closure takes a significant amount of time, and so it
+  might be desirable to use this function instead.[133X
+  
+  [33X[0;0YSee [2XCongruencesOfSemigroup[102X ([14X13.4-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
+    [4X[25Xgap>[125X [27XCayleyDigraphOfCongruences(S);[127X[104X
+    [4X[28X<poset of 3 two-sided congruences over <regular transformation monoid [128X[104X
+    [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XCayleyDigraphOfLeftCongruences(S);[127X[104X
+    [4X[28X<poset of 3 left congruences over <regular transformation monoid [128X[104X
+    [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XCayleyDigraphOfRightCongruences(S);[127X[104X
+    [4X[28X<poset of 5 right congruences over <regular transformation monoid [128X[104X
+    [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicDigraph(CayleyDigraphOfRightCongruences(S), [127X[104X
+    [4X[25X>[125X [27XDigraph([[2, 3, 4], [2, 5, 5], [5, 3, 5], [5, 5, 4], [5, 5, 5]]));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27Xrestriction := [Transformation([1, 1, 1, 1]),[127X[104X
+    [4X[25X>[125X [27X                   Transformation([1, 1, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X                   Transformation([1, 1, 1, 3])];;[127X[104X
+    [4X[25Xgap>[125X [27XCayleyDigraphOfCongruences(S, Combinations(restriction, 2));[127X[104X
+    [4X[28X<poset of 2 two-sided congruences over [128X[104X
+    [4X[28X <full transformation monoid of degree 4>>[128X[104X
+  [4X[32X[104X
+  
+  [1X13.4-7 PosetOfPrincipalCongruences[101X
   
   [33X[1;0Y[29X[2XPosetOfPrincipalCongruences[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XPosetOfPrincipalLeftCongruences[102X( [3XS[103X ) [32X attribute[133X
@@ -755,7 +843,7 @@
     [4X[28X of size 11, degree 3 with 2 generators>>[128X[104X
   [4X[32X[104X
   
-  [1X13.4-7 CongruencesOfPoset[101X
+  [1X13.4-8 CongruencesOfPoset[101X
   
   [33X[1;0Y[29X[2XCongruencesOfPoset[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA list.[133X
@@ -773,19 +861,19 @@
     [4X[28X<lattice of 5 right congruences over <regular transformation monoid [128X[104X
     [4X[28X of size 3, degree 2 with 2 generators>>[128X[104X
     [4X[25Xgap>[125X [27XCongruencesOfPoset(latt);[127X[104X
-    [4X[28X[ <right semigroup congruence over <regular transformation monoid [128X[104X
+    [4X[28X[ <2-sided semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 0 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 2 generating pairs>, [128X[104X
-    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
     [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
     [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
-    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs> ][128X[104X
+    [4X[28X     of size 3, degree 2 with 2 generators> with 1 generating pairs>, [128X[104X
+    [4X[28X  <right semigroup congruence over <regular transformation monoid [128X[104X
+    [4X[28X     of size 3, degree 2 with 2 generators> with 2 generating pairs> ][128X[104X
   [4X[32X[104X
   
-  [1X13.4-8 UnderlyingSemigroupOfCongruencePoset[101X
+  [1X13.4-9 UnderlyingSemigroupOfCongruencePoset[101X
   
   [33X[1;0Y[29X[2XUnderlyingSemigroupOfCongruencePoset[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
@@ -803,7 +891,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X13.4-9 PosetOfCongruences[101X
+  [1X13.4-10 PosetOfCongruences[101X
   
   [33X[1;0Y[29X[2XPosetOfCongruences[102X( [3Xcoll[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
@@ -812,9 +900,9 @@
   right, or two-sided) then this operation returns the congruence poset formed
   by these congruences partially ordered by containment.[133X
   
-  [33X[0;0YThis  operation  does  not  create  any  new  congruences or take any joins.
-  However,    see    [2XJoinSemilatticeOfCongruences[102X    ([14X13.4-10[114X).    See    also
-  [2XIsCongruencePoset[102X ([14X13.4-4[114X) and [2XLatticeOfCongruences[102X ([14X13.4-5[114X).[133X
+  [33X[0;0YThis  operation  does  not create any new congruences or take any joins. See
+  also [2XJoinSemilatticeOfCongruences[102X ([14X13.4-11[114X), [2XIsCongruencePoset[102X ([14X13.4-4[114X), and
+  [2XLatticeOfCongruences[102X ([14X13.4-5[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := OrderEndomorphisms(2);;[127X[104X
@@ -830,23 +918,22 @@
     [4X[28X[ [ 1 ], [ 2 ], [ 1, 2, 3 ] ][128X[104X
   [4X[32X[104X
   
-  [1X13.4-10 JoinSemilatticeOfCongruences[101X
+  [1X13.4-11 JoinSemilatticeOfCongruences[101X
   
-  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xcoll[103X, [3Xjoin_func[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xposet[103X, [3Xjoin_func[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XJoinSemilatticeOfCongruences[102X( [3Xposet[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA congruence poset.[133X
   
-  [33X[0;0YIf [3Xcoll[103X is a list or collection of semigroup congruences (which may be left,
-  right,  or two-sided) and [3Xjoin_func[103X is a function for taking the join of two
-  of  the  congruences  (such  as [2XJoinSemigroupCongruences[102X ([14X13.5-4[114X)) then this
-  operation returns the congruence poset formed by these congruences partially
-  ordered by containment, along with all their joins.[133X
+  [33X[0;0YIf  [3Xposet[103X  is  a  congruence  poset  (i.e.  it  satisfies  [2XIsCongruencePoset[102X
+  ([14X13.4-4[114X)),  then  this function returns the congruence poset formed by these
+  congruences  partially  ordered  by containment, along with all their joins.
+  This includes the empty join which equals the trivial congruence.[133X
   
-  [33X[0;0YAlternatively,  a congruence poset [3Xposet[103X can be specified; in this case, the
-  congruences  contained  in  [3Xposet[103X  will  be  used  in  place  of  [3Xcoll[103X,  and
-  information already known about their containments will be used.[133X
+  [33X[0;0YThe  digraph  returned  by  this function represents the Cayley graph of the
+  semilattice generated by [2XCongruencesOfPoset[102X ([14X13.4-8[114X) with identity adjoined.
+  The  reflexive  transitive  closure of this digraph is a join semillatice in
+  the sense of [2XIsJoinSemilatticeDigraph[102X ([14XDigraphs: IsJoinSemilatticeDigraph[114X).[133X
   
-  [33X[0;0YSee also [2XIsCongruencePoset[102X ([14X13.4-4[114X) and [2XPosetOfCongruences[102X ([14X13.4-9[114X).[133X
+  [33X[0;0YSee also [2XIsCongruencePoset[102X ([14X13.4-4[114X) and [2XPosetOfCongruences[102X ([14X13.4-10[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
@@ -857,13 +944,38 @@
     [4X[25Xgap>[125X [27Xcoll := [RightSemigroupCongruence(S, pair1),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair2),[127X[104X
     [4X[25X>[125X [27X            RightSemigroupCongruence(S, pair3)];;[127X[104X
-    [4X[25Xgap>[125X [27XJoinSemilatticeOfCongruences(PosetOfCongruences(coll),[127X[104X
-    [4X[25X>[125X [27XWrappedRightCongruence);[127X[104X
+    [4X[25Xgap>[125X [27XD := JoinSemilatticeOfCongruences(PosetOfCongruences(coll));[127X[104X
     [4X[28X<poset of 4 right congruences over [128X[104X
     [4X[28X <symmetric inverse monoid of degree 2>>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D));[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X13.4-11 MinimalCongruences[101X
+  [1X13.4-12 GeneratingCongruencesOfJoinSemilattice[101X
+  
+  [33X[1;0Y[29X[2XGeneratingCongruencesOfJoinSemilattice[102X( [3Xposet[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA list of congruences.[133X
+  
+  [33X[0;0YIf   [3Xposet[103X   satisfies   [2XIsCayleyDigraphOfCongruences[102X  ([14X13.4-4[114X),  then  this
+  attribute holds the generating set for the semilattice of congruences (where
+  the operation is join).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := OrderEndomorphisms(3);;[127X[104X
+    [4X[25Xgap>[125X [27XD := CayleyDigraphOfCongruences(S);[127X[104X
+    [4X[28X<poset of 4 two-sided congruences over <regular transformation monoid [128X[104X
+    [4X[28X of size 10, degree 3 with 3 generators>>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratingCongruencesOfJoinSemilattice(D);[127X[104X
+    [4X[28X[ <universal semigroup congruence over <regular transformation monoid [128X[104X
+    [4X[28X     of size 10, degree 3 with 3 generators>>, [128X[104X
+    [4X[28X  <2-sided semigroup congruence over <regular transformation monoid [128X[104X
+    [4X[28X     of size 10, degree 3 with 3 generators> with 1 generating pairs>,[128X[104X
+    [4X[28X  <2-sided semigroup congruence over <regular transformation monoid [128X[104X
+    [4X[28X     of size 10, degree 3 with 3 generators> with 1 generating pairs> [128X[104X
+    [4X[28X ][128X[104X
+  [4X[32X[104X
+  
+  [1X13.4-13 MinimalCongruences[101X
   
   [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xcoll[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XMinimalCongruences[102X( [3Xposet[103X ) [32X attribute[133X
@@ -880,7 +992,7 @@
   
   [33X[0;0YThis  function  should  not  be  confused with [2XMinimalCongruencesOfSemigroup[102X
   ([14X13.4-2[114X).   See   also  [2XIsCongruencePoset[102X  ([14X13.4-4[114X)  and  [2XPosetOfCongruences[102X
-  ([14X13.4-9[114X).[133X
+  ([14X13.4-10[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(2);;[127X[104X
@@ -904,7 +1016,7 @@
     [4X[28Xee 2> with 0 generating pairs> ][128X[104X
   [4X[32X[104X
   
-  [1X13.4-12 NumberOfRightCongruences[101X
+  [1X13.4-14 NumberOfRightCongruences[101X
   
   [33X[1;0Y[29X[2XNumberOfRightCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XNumberOfLeftCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
@@ -933,7 +1045,7 @@
   by  [10XNumberOfRightCongruences[110X.  If  this lattice is not known, then Sim's low
   index congruence algorithm is used.[133X
   
-  [33X[0;0YSee  [2XIteratorOfRightCongruences[102X ([14X13.4-13[114X) to actually obtain the congruences
+  [33X[0;0YSee  [2XIteratorOfRightCongruences[102X ([14X13.4-15[114X) to actually obtain the congruences
   counted by this function.[133X
   
   [4X[32X  Example  [32X[104X
@@ -949,7 +1061,7 @@
     [4X[28X1[128X[104X
   [4X[32X[104X
   
-  [1X13.4-13 IteratorOfRightCongruences[101X
+  [1X13.4-15 IteratorOfRightCongruences[101X
   
   [33X[1;0Y[29X[2XIteratorOfRightCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XIteratorOfLeftCongruences[102X( [3XS[103X, [3Xn[103X, [3Xextra[103X ) [32X operation[133X
@@ -1551,7 +1663,7 @@
   corresponding  graph  of  [3XS[103X.  The  set [3XH[103X must be a hereditary subset (closed
   under  reachability)  and  all  vertices in [3XW[103X must have all but one of their
   out-neighbours  in  [3XH[103X.  For  more  information on Wang pairs see [Wan19] and
-  [AMM21].[133X
+  [AMMM23].[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XD := Digraph([[3, 4], [3, 4], [4], []]);[127X[104X
@@ -1613,7 +1725,8 @@
   returns  an  object  representing  the  same  congruence, but described as a
   congruence  by Wang pairs: a pair of sets [3XH[103X and [3XW[103X of the corresponding graph
   of  [3XS[103X  that  are  a  hereditary  subset  and  a  W-set  of  the  graph  of [3XS[103X
-  respectively. For more information about Wang pairs see [Wan19] and [AMM21].[133X
+  respectively.  For  more  information  about  Wang  pairs  see  [Wan19]  and
+  [AMMM23].[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XD := Digraph([[2, 3], [3], [4], []]);[127X[104X
@@ -1638,13 +1751,13 @@
   
   [1X13.8-4 GeneratingCongruencesOfLattice[101X
   
-  [33X[1;0Y[29X[2XGeneratingCongruencesOfLattice[102X( [3XS[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGeneratingCongruencesOfLattice[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
-  [33X[0;0YThis  operation  takes  a  finite  graph  inverse  semigroup [3XS[103X and returns a
+  [33X[0;0YThis  attribute  takes  a  finite  graph  inverse  semigroup [3XS[103X and returns a
   minimal  generating set for the lattice of congruences of [3XS[103X, as described in
-  [AMM21]. This operation works only if the corresponding digraph of the graph
-  inverse  semigroup  is  simple.  If  there  are  multiple edges, an error is
+  [AMMM23].  This  operation  works  only  if the corresponding digraph of the
+  graph  inverse semigroup is simple. If there are multiple edges, an error is
   returned.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1725,7 +1838,7 @@
   [4X[32X[104X
   
   
-  [1X13.10 [33X[0;0YUniversal congruences[133X[101X
+  [1X13.10 [33X[0;0YUniversal and trivial congruences[133X[101X
   
   [33X[0;0YThe linked triples of a completely 0-simple Rees 0-matrix semigroup describe
   only its non-universal congruences. In any one of these, the zero element of
@@ -1793,5 +1906,26 @@
     [4X[25Xgap>[125X [27XUniversalSemigroupCongruence(S);[127X[104X
     [4X[28X<universal semigroup congruence over [128X[104X
     [4X[28X<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>[128X[104X
+  [4X[32X[104X
+  
+  [1X13.10-4 TrivialCongruence[101X
+  
+  [33X[1;0Y[29X[2XTrivialCongruence[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA trivial semigroup congruence.[133X
+  
+  [33X[0;0YThis operation returns the trivial semigroup congruence for the semigroup [3XS[103X.
+  It can be used in the same way as any other semigroup congruence object.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(SymmetricGroup(3),[127X[104X
+    [4X[25X>[125X [27X[[(), (1, 3, 2)], [(1, 2), 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XTrivialCongruence(S);[127X[104X
+    [4X[28X<semigroup congruence over <Rees 0-matrix semigroup 2x2 over [128X[104X
+    [4X[28X  Sym( [ 1 .. 3 ] )> with linked triple (1,2,2)>[128X[104X
+    [4X[25Xgap>[125X [27XS := PartitionMonoid(2);[127X[104X
+    [4X[28X<regular bipartition *-monoid of size 15, degree 2 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XTrivialCongruence(S);[127X[104X
+    [4X[28X<2-sided semigroup congruence over <regular bipartition *-monoid [128X[104X
+    [4X[28X of size 15, degree 2 with 3 generators> with 0 generating pairs>[128X[104X
   [4X[32X[104X
   
