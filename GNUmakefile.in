@@ -43,7 +43,7 @@ KEXT_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 endif
 
 ifdef WITH_INCLUDED_LIBSEMIGROUPS
-KEXT_LDFLAGS += -Wl,-rpath,$PWD/bin/lib
+KEXT_LDFLAGS += -Wl,-rpath,$(PWD)/bin/lib
 # FIXME(later) all the include paths should point into bin/include/ and not to
 # the sources, or otherwise we should stop make installing into bin
 ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
