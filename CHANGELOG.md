@@ -3,6 +3,10 @@ Copyright © 2011-2023 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.3.1 (released 19/09/2023)
+
+This is a minor release fixing a minor issue in the build system.
+
 ### Version 5.3.0 (released 18/09/2023)
 
 This release contains a fairly large number of changes, fixes, and
