@@ -272,7 +272,7 @@
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityBipartition(10);</span>
-&lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+&lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ],
  [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]&gt;</pre></div>
 
 <p><a id="X824EDD4582AAA8C7" name="X824EDD4582AAA8C7"></a></p>
@@ -292,7 +292,7 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  [1, 4, -1, -2, -6], [2, 3, 5, -4], [6, -3], [-5]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftOne(x);</span>
-&lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], 
+&lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ],
  [ 6, -6 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(x);</span>
 &lt;blocks: [ 1*, 4* ], [ 2*, 3*, 5* ], [ 6* ]&gt;
@@ -342,10 +342,10 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, -4], [2, 3, 4], [5], [-1], [-2, -3], [-5]]);</span>
-&lt;bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
+&lt;bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ],
  [ -5 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Star(x);</span>
-&lt;bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
+&lt;bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ],
  [ -5 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x * y * x = x;</span>
 true
@@ -431,23 +431,23 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 5);</span>
 &lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x);</span>
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ],
  [ 6, -2 ], [ -6 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 10);</span>
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ],
  [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition((1, 3)(2, 4));</span>
 &lt;block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition((1, 3)(2, 4), 10);</span>
-&lt;block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], 
+&lt;block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ],
  [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 4, 5, 6], [6, 7, 1, 4, 3, 2]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 11);</span>
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
- [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ],
+ [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ],
  [ -9 ], [ -10 ], [ -11 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x);</span>
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ],
  [ 6, -2 ], [ 7 ], [ -5 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(Transformation([1, 1, 2]), 1);</span>
 &lt;block bijection: [ 1, -1 ]&gt;
@@ -458,7 +458,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 2);</span>
 &lt;bipartition: [ 1, 2, -2 ], [ -1 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 8);</span>
-&lt;bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], 
+&lt;bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ],
  [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PBR(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[-1, 1, 2, 3, 4], [-1, 1, 2, 3, 4],</span>
@@ -471,7 +471,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 4);</span>
 &lt;bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 5);</span>
-&lt;bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ], 
+&lt;bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ],
  [ -5 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 0);</span>
 &lt;empty bipartition&gt;</pre></div>
@@ -496,15 +496,15 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 6, 7, 10], [9, 5, 6, 1, 7, 8]);</span>
 [2,5][3,6,1,9][10,8](7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(x, 11);</span>
-&lt;bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
- [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
+&lt;bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ],
+ [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ],
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(x, 10);</span>
 Error, the 2nd argument (a pos. int.) is less than or equal to the max\
 imum of the degree and codegree of the 1st argument (a partial perm)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(x, 11);</span>
-&lt;block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
- [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
+&lt;block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ],
+ [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ],
  [ 10, -8 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, -3], [2], [3, -2], [-1]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(x);</span>
@@ -678,7 +678,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermLeftQuoBipartition(x, y);</span>
 (1,2,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Star(x) * y;</span>
-&lt;bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
+&lt;bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ],
  [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]&gt;</pre></div>
 
 <p><a id="X87F3A304814797CE" name="X87F3A304814797CE"></a></p>
@@ -729,7 +729,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 2, 6, 7, -4, -5, -7], [3, 4, 5, -1, -3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [8, -9], [9, -2], [-6], [-8]]);</span>
-&lt;bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
+&lt;bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ],
  [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBipartition(x);</span>
 4</pre></div>
@@ -873,7 +873,7 @@ true
 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  [1, 5], [2, 4, -2, -4], [3, 6, -1, -5, -6], [-3]]);</span>
-&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ],
  [ -3 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrBlocks(x);</span>
 4</pre></div>
@@ -889,9 +889,9 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [-1, -2, -3], [-4]]);</span>
-&lt;bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
+&lt;bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ],
  [ -4 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DomainOfBipartition(x);</span>
 [ 3, 4, 5, 6 ]</pre></div>
@@ -907,9 +907,9 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                     [-1, -2, -3], [-4]]);</span>
-&lt;bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
+&lt;bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ],
  [ -4 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CodomainOfBipartition(x);</span>
 [ -5, -6 ]</pre></div>
@@ -1269,7 +1269,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(S);</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S);</span>
-&lt;bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+&lt;bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
  [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
 false</pre></div>

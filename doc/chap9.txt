@@ -63,15 +63,15 @@
     [4X[28X<transformation semigroup of degree 4 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XIdeals(S);[127X[104X
     [4X[28X[ <non-regular transformation semigroup ideal of degree 4 with[128X[104X
-    [4X[28X      1 generator>, [128X[104X
+    [4X[28X      1 generator>,[128X[104X
     [4X[28X <non-regular transformation semigroup ideal of degree 4 with[128X[104X
-    [4X[28X     1 generator>, [128X[104X
+    [4X[28X     1 generator>,[128X[104X
     [4X[28X<non-regular transformation semigroup ideal of degree 4 with[128X[104X
-    [4X[28X    2 generators>, [128X[104X
+    [4X[28X    2 generators>,[128X[104X
     [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>,[128X[104X
     [4X[28X<non-regular transformation semigroup ideal of degree 4 with[128X[104X
-    [4X[28X  1 generator>, [128X[104X
-    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator> [128X[104X
+    [4X[28X  1 generator>,[128X[104X
+    [4X[28X<regular transformation semigroup ideal of degree 4 with 1 generator>[128X[104X
     [4X[28X][128X[104X
   [4X[32X[104X
   

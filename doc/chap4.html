@@ -143,7 +143,7 @@
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PBR([[-3, -2, -1, 2, 3], [-1], [-3, -2, 1, 2]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       [[-2, -1, 1, 2, 3], [3], [-3, -2, -1, 1, 3]]);</span>
-PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ], 
+PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
   [ [ -2, -1, 1, 2, 3 ], [ 3 ], [ -3, -2, -1, 1, 3 ] ])</pre></div>
 
 <p><a id="X82FE736F7F11B157" name="X82FE736F7F11B157"></a></p>
@@ -212,7 +212,7 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := UniversalPBR(2);</span>
-PBR([ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ], 
+PBR([ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ],
   [ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniversalPBR(x);</span>
 true</pre></div>
@@ -260,10 +260,10 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 2);</span>
 PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ] ], [ [ -1, 1, 2 ], [ -2 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 5);</span>
-PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [  ] ], 
+PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [  ] ],
   [ [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [ -4, -3, 4 ], [  ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x);</span>
-PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ] ], 
+PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ] ],
   [ [ -1, 1, 2 ], [ -2, 3 ], [ -4, -3, 4 ], [ -4, -3, 4 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsBooleanMat, [[1, 0, 0, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                [0, 1, 1, 0],</span>
@@ -281,7 +281,7 @@ PBR([ [ -2 ], [ -2 ], [ -1 ] ], [ [ 3 ], [ 1, 2 ], [  ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 2);</span>
 PBR([ [ -2 ], [ -2 ] ], [ [  ], [ 1, 2 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 4);</span>
-PBR([ [ -2 ], [ -2 ], [ -1 ], [ -4 ] ], 
+PBR([ [ -2 ], [ -2 ], [ -1 ], [ -4 ] ],
   [ [ 3 ], [ 1, 2 ], [  ], [ 4 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([4, 3]);</span>
 [1,4][2,3]
@@ -290,15 +290,15 @@ PBR([ [ -4 ], [ -3 ], [  ], [  ] ], [ [  ], [  ], [ 2 ], [ 1 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 2);</span>
 PBR([ [  ], [  ] ], [ [  ], [  ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 5);</span>
-PBR([ [ -4 ], [ -3 ], [  ], [  ], [  ] ], 
+PBR([ [ -4 ], [ -3 ], [  ], [  ], [  ] ],
   [ [  ], [  ], [ 2 ], [ 1 ], [  ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := (1, 3)(2, 4);</span>
 (1,3)(2,4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x);</span>
-PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ] ], 
+PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ] ],
   [ [ -1, 3 ], [ -2, 4 ], [ -3, 1 ], [ -4, 2 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPBR(x, 5);</span>
-PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ], 
+PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
   [ [ -1, 3 ], [ -2, 4 ], [ -3, 1 ], [ -4, 2 ], [ -5, 5 ] ])</pre></div>
 
 <p><a id="X8407F516825A514A" name="X8407F516825A514A"></a></p>
@@ -414,7 +414,7 @@ PBR([ [ -3, -2, 2, 3 ], [ -1, 2 ], [  ] ], [ [  ], [ 1 ], [  ] ])</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PBR([[-2], [-2, -1, 2, 3], [-1, 1, 2, 3]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [[-1, 1], [2, 3], [-3, 2, 3]]);</span>
-PBR([ [ -2 ], [ -2, -1, 2, 3 ], [ -1, 1, 2, 3 ] ], 
+PBR([ [ -2 ], [ -2, -1, 2, 3 ], [ -1, 1, 2, 3 ] ],
   [ [ -1, 1 ], [ 2, 3 ], [ -3, 2, 3 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfPBR(x);</span>
 3
@@ -545,13 +545,13 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PBR([[-1, 3], [-1, 3], [-2, 1, 2, 3]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [[-2, -1, 2], [-2, -1, 1, 2, 3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [-2, -1, 1, 2]]);</span>
-PBR([ [ -1, 3 ], [ -1, 3 ], [ -2, 1, 2, 3 ] ], 
+PBR([ [ -1, 3 ], [ -1, 3 ], [ -2, 1, 2, 3 ] ],
   [ [ -2, -1, 2 ], [ -2, -1, 1, 2, 3 ], [ -2, -1, 1, 2 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBipartitionPBR(x);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PBR([[-2, -1, 1], [2, 3], [2, 3]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [[-2, -1, 1], [-2, -1, 1], [-3]]);</span>
-PBR([ [ -2, -1, 1 ], [ 2, 3 ], [ 2, 3 ] ], 
+PBR([ [ -2, -1, 1 ], [ 2, 3 ], [ 2, 3 ] ],
   [ [ -2, -1, 1 ], [ -2, -1, 1 ], [ -3 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBipartitionPBR(x);</span>
 true
@@ -603,7 +603,7 @@ false</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PBR([[-3, 1, 3], [-1, 2], [-3, 1, 3]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [[-1, 2], [-2], [-3, 1, 3]]);</span>
-PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ], 
+PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ],
   [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualTransformationPBR(x);</span>
 false
@@ -713,7 +713,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(S);</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S);</span>
-PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ], 
+PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
   [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPBRMonoid(S);</span>
 false</pre></div>

@@ -115,7 +115,7 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := ListWithIdenticalEntries(4,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">ConstantTransformation(3, 1));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByImages(S, J, gens, imgs);</span>
-&lt;full transformation monoid of degree 3&gt; -&gt; 
+&lt;full transformation monoid of degree 3&gt; -&gt;
 &lt;full transformation monoid of degree 4&gt;</pre></div>
 
 <p><a id="X7DAA6AD985C22AD6" name="X7DAA6AD985C22AD6"></a></p>
@@ -137,11 +137,11 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Semigroup([(1, 2, 3, 4), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := Semigroup([(1, 2, 3), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByFunction(g, h,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x) </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x)</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">if SignPerm(x) = -1 then return (1, 2);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">else return ();</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">fi; end);</span>
-&lt;semigroup of size 24, with 2 generators&gt; -&gt; 
+&lt;semigroup of size 24, with 2 generators&gt; -&gt;
 &lt;semigroup of size 6, with 2 generators&gt;</pre></div>
 
 <p>The following methods relate to semigroup homomorphisms by images or by function:</p>
@@ -216,7 +216,7 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FullTransformationMonoid(4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByImages(S, T, gens, imgs);</span>
-&lt;full transformation monoid of degree 3&gt; -&gt; 
+&lt;full transformation monoid of degree 3&gt; -&gt;
 &lt;full transformation monoid of degree 4&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupHomomorphismByImages(hom);</span>
 true</pre></div>
@@ -235,9 +235,9 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([(1, 2, 3, 4), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup([(1, 2, 3), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByFunction(S, T,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x) if SignPerm(x) = -1 then return (1, 2); </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x) if SignPerm(x) = -1 then return (1, 2);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">else return ();fi; end);</span>
-&lt;semigroup of size 24, with 2 generators&gt; -&gt; 
+&lt;semigroup of size 24, with 2 generators&gt; -&gt;
 &lt;semigroup of size 6, with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupHomomorphismByFunction(hom);</span>
 true</pre></div>
@@ -256,9 +256,9 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([(1, 2, 3, 4), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup([(1, 2, 3), (1, 2)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByFunction(S, T,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x) if SignPerm(x) = -1 then return (1, 2); </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">function(x) if SignPerm(x) = -1 then return (1, 2);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">else return (); fi; end);</span>
-&lt;semigroup of size 24, with 2 generators&gt; -&gt; 
+&lt;semigroup of size 24, with 2 generators&gt; -&gt;
 &lt;semigroup of size 6, with 2 generators&gt;
 </pre></div>
 
@@ -279,7 +279,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := ListX(gens, x -&gt; IdentityTransformation);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByImages(S, T, gens, imgs);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := AsSemigroupHomomorphismByFunction(hom);</span>
-&lt;general linear monoid 2x2 over GF(2)&gt; -&gt; 
+&lt;general linear monoid 2x2 over GF(2)&gt; -&gt;
 &lt;trivial transformation group of degree 0 with 1 generator&gt;</pre></div>
 
 <p><a id="X86BCE2207E55FC9F" name="X86BCE2207E55FC9F"></a></p>
@@ -356,9 +356,9 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 8
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMultiplicationTable(S);</span>
-[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
-  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
-  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
+[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ],
+  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ],
+  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ],
   [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]</pre></div>
 
 <p><a id="X7FFEEFF484039A42" name="X7FFEEFF484039A42"></a></p>
@@ -388,9 +388,9 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 8
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalMultiplicationTable(S);</span>
-[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ], 
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ], 
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ], 
+[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ],
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ],
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ],
   [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]</pre></div>
 
 <p><a id="X869533A7819EC2F8" name="X869533A7819EC2F8"></a></p>
@@ -429,19 +429,19 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">table := [[1, 1, 3, 4, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 3, 3, 4, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 6, 6, 7, 5, 6, 7, 8], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">table := [[1, 1, 3, 4, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 1, 3, 4, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [1, 3, 3, 4, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 5, 6, 7, 5, 6, 7, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 6, 6, 7, 5, 6, 7, 8],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 6, 6, 7, 5, 6, 7, 8]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := (1, 2, 3, 4)(10, 11, 12);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnMultiplicationTable(table, p);</span>
-[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
-  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
-  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ], 
+[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
+  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
+  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ],
   [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]</pre></div>
 
 <p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
@@ -460,7 +460,7 @@ false</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsTransformationSemigroup, 4, 5);</span>
-&lt;regular transformation semigroup of size 20, degree 9 with 5 
+&lt;regular transformation semigroup of size 20, degree 9 with 5
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(IsBipartitionSemigroup, 4, 5);</span>
 &lt;regular bipartition semigroup of size 20, degree 3 with 5 generators&gt;
@@ -504,7 +504,7 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsTransformationSemigroup, 4, 5);</span>
-&lt;regular transformation semigroup of size 20, degree 9 with 5 
+&lt;regular transformation semigroup of size 20, degree 9 with 5
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(AutomorphismGroup(S));</span>
 "S4 x S5"</pre></div>
@@ -528,7 +528,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> Matrix(IsNTPMatrix, [[1, 1, 0], [4, 1, 1], [0, 0, 0]], 9, 4)]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsTransformationSemigroup, S);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SemigroupIsomorphismByImages(S, T);</span>
-&lt;semigroup of size 46, 3x3 ntp matrices with 2 generators&gt; -&gt; 
+&lt;semigroup of size 46, 3x3 ntp matrices with 2 generators&gt; -&gt;
 &lt;transformation semigroup of size 46, degree 47 with 2 generators&gt;
 </pre></div>
 
@@ -553,8 +553,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := x -&gt; T.1 ^ Length(Factorization(S, x));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := x -&gt; S.1 ^ Length(Factorization(T, x));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SemigroupIsomorphismByFunction(S, T, map, inv);</span>
-&lt;commutative non-regular transformation semigroup of size 4, degree 5 
-  with 1 generator&gt; -&gt; &lt;commutative non-regular block bijection 
+&lt;commutative non-regular transformation semigroup of size 4, degree 5
+  with 1 generator&gt; -&gt; &lt;commutative non-regular block bijection
   semigroup of size 4, degree 6 with 1 generator&gt;
 </pre></div>
 
@@ -574,8 +574,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := x -&gt; T.1 ^ Length(Factorization(S, x));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := x -&gt; S.1 ^ Length(Factorization(T, x));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SemigroupIsomorphismByFunction(S, T, map, inv);</span>
-&lt;commutative non-regular transformation semigroup of size 4, degree 5 
-  with 1 generator&gt; -&gt; &lt;commutative non-regular block bijection 
+&lt;commutative non-regular transformation semigroup of size 4, degree 5
+  with 1 generator&gt; -&gt; &lt;commutative non-regular block bijection
   semigroup of size 4, degree 6 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupIsomorphismByFunction(iso);</span>
 true</pre></div>
@@ -596,7 +596,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := SemigroupHomomorphismByImages(S, S, gens, gens);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSemigroupIsomorphismByFunction(hom);</span>
-&lt;full transformation monoid of degree 3&gt; -&gt; 
+&lt;full transformation monoid of degree 3&gt; -&gt;
 &lt;full transformation monoid of degree 3&gt;</pre></div>
 
 <p><a id="X794E5DA4872989E4" name="X794E5DA4872989E4"></a></p>
@@ -617,23 +617,23 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrauerMonoid(3);</span>
 &lt;regular bipartition *-monoid of degree 3 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTransformationSemigroup(S);</span>
-&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt; 
+&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt;
 -&gt; &lt;transformation monoid of size 15, degree 15 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreeTransformationRepresentation(S);</span>
-CompositionMapping( 
-&lt;fp semigroup with 4 generators and 20 relations of length 81&gt; -&gt; 
-&lt;transformation monoid of degree 7 with 3 generators&gt;, 
-&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt; 
+CompositionMapping(
+&lt;fp semigroup with 4 generators and 20 relations of length 81&gt; -&gt;
+&lt;transformation monoid of degree 7 with 3 generators&gt;,
+&lt;regular bipartition *-monoid of size 15, degree 3 with 3 generators&gt;
 -&gt; &lt;fp semigroup with 4 generators and 20 relations of length 81&gt; )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := JonesMonoid(5);</span>
 &lt;regular bipartition *-monoid of degree 5 with 4 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 42
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreeTransformationRepresentation(S);</span>
-CompositionMapping( 
-&lt;fp semigroup with 5 generators and 28 relations of length 120&gt; -&gt; 
-&lt;transformation monoid of degree 10 with 4 generators&gt;, 
-&lt;regular bipartition *-monoid of size 42, degree 5 with 4 generators&gt; 
+CompositionMapping(
+&lt;fp semigroup with 5 generators and 28 relations of length 120&gt; -&gt;
+&lt;transformation monoid of degree 10 with 4 generators&gt;,
+&lt;regular bipartition *-monoid of size 42, degree 5 with 4 generators&gt;
 -&gt; &lt;fp semigroup with 5 generators and 28 relations of length 120&gt; )
 </pre></div>
 
@@ -719,7 +719,7 @@ CompositionMapping(
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMapping(g);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_elms_list := [(), (), (), (), (), ()];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RZMSIsoByTriple(R, R, [(), id, g_elms_list]);</span>
-((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ), 
+((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ),
 [ (), (), (), (), (), () ])
 </pre></div>
 
@@ -778,19 +778,19 @@ CompositionMapping(
 &lt;Rees 0-matrix semigroup 6x6 over Group([ (1,2,3,4) ])&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AutomorphismGroup(R);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G.2;</span>
-((), IdentityMapping( Group( [ (1,2,3,4) ] ) ), 
+((), IdentityMapping( Group( [ (1,2,3,4) ] ) ),
 [ (), (), (), (), (), (), (), (), (), (), (), () ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G.3;</span>
-(( 2, 4)( 3, 5)( 8,10)( 9,11), GroupHomomorphismByImages( Group( 
-[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], 
-[ (1,2,3,4) ] ), [ (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4), 
-  (1,3)(2,4), (1,3)(2,4), (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4), 
+(( 2, 4)( 3, 5)( 8,10)( 9,11), GroupHomomorphismByImages( Group(
+[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ],
+[ (1,2,3,4) ] ), [ (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4),
+  (1,3)(2,4), (1,3)(2,4), (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4),
   (1,3)(2,4), (1,3)(2,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CompositionMapping2(G.2, G.3);</span>
-(( 2, 4)( 3, 5)( 8,10)( 9,11), GroupHomomorphismByImages( Group( 
-[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], 
-[ (1,2,3,4) ] ), [ (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4), 
-  (1,3)(2,4), (1,3)(2,4), (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4), 
+(( 2, 4)( 3, 5)( 8,10)( 9,11), GroupHomomorphismByImages( Group(
+[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ],
+[ (1,2,3,4) ] ), [ (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4),
+  (1,3)(2,4), (1,3)(2,4), (), (1,3)(2,4), (1,3)(2,4), (1,3)(2,4),
   (1,3)(2,4), (1,3)(2,4) ])</pre></div>
 
 <p><a id="X7F159C1179C93C11" name="X7F159C1179C93C11"></a></p>

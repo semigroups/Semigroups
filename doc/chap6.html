@@ -305,7 +305,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SEMIGROUPS.DefaultOptionsRec.small := true;</span>
 true</pre></div>
 
-<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.3.0/gap/options.g</code>.</p>
+<p>If you want to change the default values of the options stored in <code class="func">SEMIGROUPS.DefaultOptionsRec</code> (<a href="chap6.html#X78CF5DCC7C697BB3"><span class="RefLink">6.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="file">semigroups-5.3.1/gap/options.g</code>.</p>
 
 <p><a id="X78CF5DCC7C697BB3" name="X78CF5DCC7C697BB3"></a></p>
 
@@ -351,8 +351,8 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([4, 3, 2, 7, 7, 6, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([7, 1, 7, 4, 2, 5, 6, 3])];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(gens[1]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in gens do </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     S := ClosureSemigroup(S, x); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for x in gens do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     S := ClosureSemigroup(S, x);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
 &lt;transformation monoid of degree 8 with 4 generators&gt;
@@ -542,13 +542,13 @@ function( x ) ... end
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);</span>
 &lt;bipartition semigroup of degree 6 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsTransformationSemigroup, S);</span>
-&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt; 
+&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt;
 &lt;transformation semigroup of size 11, degree 12 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsBooleanMatSemigroup, S);</span>
-&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt; 
+&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt;
 &lt;semigroup of size 11, 12x12 boolean matrices with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsFpSemigroup, S);</span>
-&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt; 
+&lt;bipartition semigroup of size 11, degree 6 with 2 generators&gt; -&gt;
 &lt;fp semigroup with 2 generators and 5 relations of length 27&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 6, 8, 10],</span>
@@ -556,19 +556,19 @@ function( x ) ... end
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 6, 7, 8, 10],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [3, 8, 1, 9, 4, 10, 5, 6])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsBipartitionSemigroup, S);</span>
-&lt;inverse partial perm semigroup of rank 10 with 2 generators&gt; -&gt; 
+&lt;inverse partial perm semigroup of rank 10 with 2 generators&gt; -&gt;
 &lt;inverse bipartition semigroup of degree 10 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(4);</span>
 &lt;symmetric inverse monoid of degree 4&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsBlockBijectionSemigroup, S);</span>
-&lt;symmetric inverse monoid of degree 4&gt; -&gt; 
+&lt;symmetric inverse monoid of degree 4&gt; -&gt;
 &lt;inverse block bijection monoid of degree 5 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(last));</span>
 209
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([3, 1]), PartialPerm([1, 3, 4])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroup(IsBlockBijectionSemigroup, S);</span>
-&lt;partial perm semigroup of rank 3 with 2 generators&gt; -&gt; 
+&lt;partial perm semigroup of rank 3 with 2 generators&gt; -&gt;
 &lt;block bijection semigroup of degree 5 with 2 generators&gt;</pre></div>
 
 <p><a id="X83D03BE678C9974F" name="X83D03BE678C9974F"></a></p>
@@ -594,13 +594,13 @@ function( x ) ... end
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));</span>
 &lt;transformation semigroup of degree 10 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismMonoid(IsTransformationMonoid, S);</span>
-&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt; 
+&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt;
 &lt;transformation monoid of degree 8 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismMonoid(IsBooleanMatMonoid, S);</span>
-&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt; 
+&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt;
 &lt;monoid of 8x8 boolean matrices with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismMonoid(IsFpMonoid, S);</span>
-&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt; 
+&lt;transformation semigroup of degree 10 with 2 generators&gt; -&gt;
 &lt;fp monoid with 2 generators and 17 relations of length 278&gt;</pre></div>
 
 <p><a id="X80ED104F85AE5134" name="X80ED104F85AE5134"></a></p>
@@ -767,7 +767,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [0, 0, ()]]);</span>
 &lt;Rees 0-matrix semigroup 3x3 over Group(())&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := RZMSNormalization(R);</span>
-&lt;Rees 0-matrix semigroup 3x3 over Group(())&gt; -&gt; 
+&lt;Rees 0-matrix semigroup 3x3 over Group(())&gt; -&gt;
 &lt;Rees 0-matrix semigroup 3x3 over Group(())&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Range(iso);</span>
 &lt;Rees 0-matrix semigroup 3x3 over Group(())&gt;
@@ -782,7 +782,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Range(RZMSNormalization(R));</span>
 &lt;Rees 0-matrix semigroup 4x4 over Sym( [ 1 .. 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(S);</span>
-[ [ (), (), 0, 0 ], [ 0, (), 0, 0 ], [ 0, 0, (), 0 ], [ 0, 0, 0, () ] 
+[ [ (), (), 0, 0 ], [ 0, (), 0, 0 ], [ 0, 0, (), 0 ], [ 0, 0, 0, () ]
  ]</pre></div>
 
 <p><a id="X80DE617E841E5BA0" name="X80DE617E841E5BA0"></a></p>
@@ -804,7 +804,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [(2, 3), (1, 3, 2, 4), (2, 3)]]);</span>
 &lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := RMSNormalization(R);</span>
-&lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt; -&gt; 
+&lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt; -&gt;
 &lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Range(iso);</span>
 &lt;Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )&gt;
@@ -864,8 +864,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := F / R;</span>
 &lt;fp semigroup with 2 generators and 3 relations of length 14&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualFpSemigroup(S);</span>
-MappingByFunction( &lt;fp semigroup with 2 generators and 
-  3 relations of length 14&gt;, &lt;fp semigroup with 2 generators and 
+MappingByFunction( &lt;fp semigroup with 2 generators and
+  3 relations of length 14&gt;, &lt;fp semigroup with 2 generators and
   3 relations of length 14&gt;
  , function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfFpSemigroup(Range(map));</span>
@@ -895,7 +895,7 @@ MappingByFunction( &lt;fp semigroup with 2 generators and
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoidAsSemigroup(S);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := EmbeddingFpMonoid(S);</span>
-&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt; 
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt;
 &lt;fp monoid with 2 generators and 3 relations of length 14&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(map));</span>
 4

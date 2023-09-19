@@ -208,7 +208,7 @@
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 0, 0, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DimensionOfMatrixOverSemiring(x);</span>
 4</pre></div>
@@ -228,7 +228,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 0, 0, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DimensionOfMatrixOverSemiringCollection(Semigroup(x));</span>
 4</pre></div>
@@ -278,7 +278,7 @@ Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                         [0, 0, 0, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                         [1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                         [1, 0, 1, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1],
   [1, 0, 1, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(IsMaxPlusMatrix, [[4, 0, -2],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [1, -3, 0],</span>
@@ -291,7 +291,7 @@ Matrix(IsMinPlusMatrix, [[-1, infinity], [1, -1]])
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    [3, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    [-infinity, 1, 1]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">          9);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], 
+Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1],
   [-infinity, 1, 1]], 9)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    [0, 3, 0],</span>
@@ -363,7 +363,7 @@ Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]])
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                           [0, 1, 3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                           [4, 1, 0]], 10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(IsMaxPlusMatrix, mat);</span>
-Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
   [4, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsNTPMatrix, [[1, 2, 2],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                               [0, 2, 0],</span>
@@ -379,13 +379,13 @@ Matrix(IsTropicalMinPlusMatrix, [[0, 1, 1], [1, 1, 1], [0, 1, 1]], 1)
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                           [0, 1, 3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                           [4, 1, 0]], 10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(IsTropicalMaxPlusMatrix, mat, 4);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
   [0, 1, 3], [4, 1, 0]], 4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [0, 1, 3],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   [4, 1, 0]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(IsTropicalMaxPlusMatrix, mat, 10);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
   [0, 1, 3], [4, 1, 0]], 10)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := Matrix(IsNTPMatrix, [[0, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                               [1, 3, 1],</span>
@@ -443,10 +443,10 @@ Matrix(IsMaxPlusMatrix, [[1, -infinity], [1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsMinPlusMatrix, 3);</span>
 Matrix(IsMinPlusMatrix, [[infinity, 2, infinity], [4, 0, -2], [1, -3, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsTropicalMaxPlusMatrix, 3, 5);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]], 
+Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]],
   5)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsTropicalMinPlusMatrix, 3, 2);</span>
-Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1], 
+Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1],
   [2, 2, 1]], 2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrix(IsNTPMatrix, 3, 2, 5);</span>
 Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)
@@ -553,7 +553,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [1, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [-infinity, 1, -infinity, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [0, -infinity, 2, -infinity]], 10);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThresholdTropicalMatrix(mat);</span>
 10
@@ -562,7 +562,7 @@ Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [1, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [-infinity, 1, -infinity, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [0, -infinity, 2, -infinity]], 3);</span>
-Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ThresholdTropicalMatrix(mat);</span>
 3</pre></div>
@@ -833,8 +833,8 @@ Matrix(IsBooleanMat, [[1]])
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[-1, 1], [2, 3], [-3, 2, 3]],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[-1, 1, 2], [-3, -1, 1, 3], [-3, -1, 1, 2, 3]]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBooleanMat(x);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], 
-  [0, 1, 1, 0, 0, 1], [1, 1, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0],
+  [0, 1, 1, 0, 0, 1], [1, 1, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1],
   [1, 1, 1, 1, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(AsBooleanMat(x));</span>
 1 0 0 1 0 0
@@ -949,20 +949,20 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist := BlistList([1 .. 10], []);</span>
-[ false, false, false, false, false, false, false, false, false, 
+[ false, false, false, false, false, false, false, false, false,
   false ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberBlist(blist);</span>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist := BlistList([1 .. 10], [10]);</span>
-[ false, false, false, false, false, false, false, false, false, true 
+[ false, false, false, false, false, false, false, false, false, true
  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberBlist(blist);</span>
 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BlistNumber(1, 10);</span>
-[ false, false, false, false, false, false, false, false, false, 
+[ false, false, false, false, false, false, false, false, false,
   false ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BlistNumber(2, 10);</span>
-[ false, false, false, false, false, false, false, false, false, true 
+[ false, false, false, false, false, false, false, false, false, true
  ]</pre></div>
 
 <p><a id="X7EEA5011862E6298" name="X7EEA5011862E6298"></a></p>
@@ -988,12 +988,12 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 0, 0, 0, 0, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 1, 0, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1], 
-  [1, 0, 0, 1, 0, 1], [0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1], 
+Matrix(IsBooleanMat, [[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1],
+  [1, 0, 0, 1, 0, 1], [0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1],
   [0, 1, 1, 0, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalBooleanMat(mat);</span>
-Matrix(IsBooleanMat, [[0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], 
-  [0, 0, 1, 1, 1, 0], [1, 1, 0, 0, 1, 0], [0, 0, 1, 1, 0, 1], 
+Matrix(IsBooleanMat, [[0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0],
+  [0, 0, 1, 1, 1, 0], [1, 1, 0, 0, 1, 0], [0, 0, 1, 1, 0, 1],
   [1, 1, 1, 1, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(CanonicalBooleanMat(mat));</span>
 0 0 0 0 0 0
@@ -1062,7 +1062,7 @@ false</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 0, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 0, 1]]);</span>
-Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], 
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1],
   [0, 1, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSymmetricBooleanMat(mat);</span>
 false
@@ -1070,7 +1070,7 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 0, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 1, 1]]);</span>
-Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], 
+Matrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1],
   [0, 1, 1, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSymmetricBooleanMat(mat);</span>
 true</pre></div>
@@ -1090,7 +1090,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 0, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 0, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 1, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 1, 0, 0], [0, 1, 0, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 1, 0, 0], [0, 1, 0, 1],
   [1, 1, 1, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReflexiveBooleanMat(mat);</span>
 false
@@ -1098,7 +1098,7 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                      [0, 1, 1, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 1, 1, 0], [1, 1, 1, 1], [1, 1, 1, 1], 
+Matrix(IsBooleanMat, [[1, 1, 1, 0], [1, 1, 1, 1], [1, 1, 1, 1],
   [0, 1, 1, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReflexiveBooleanMat(mat);</span>
 true</pre></div>
@@ -1118,7 +1118,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0],
   [0, 1, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitiveBooleanMat(x);</span>
 false
@@ -1126,7 +1126,7 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 1]]);</span>
-Matrix(IsBooleanMat, [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], 
+Matrix(IsBooleanMat, [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1],
   [1, 1, 1, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitiveBooleanMat(x);</span>
 true</pre></div>
@@ -1146,7 +1146,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0],
   [0, 1, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAntiSymmetricBooleanMat(x);</span>
 false
@@ -1154,7 +1154,7 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 0], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 0],
   [0, 1, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAntiSymmetricBooleanMat(x);</span>
 true</pre></div>
@@ -1175,7 +1175,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 1],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 1, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0],
   [0, 1, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTotalBooleanMat(x);</span>
 true
@@ -1185,7 +1185,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 0, 1, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 0, 0, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [0, 1, 1, 0]]);</span>
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [0, 0, 0, 0], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [0, 0, 0, 0],
   [0, 1, 1, 0]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTotalBooleanMat(x);</span>
 false
@@ -1260,12 +1260,12 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);</span>
-[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ], 
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ],
   [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceBasis(x);</span>
 &lt;rowbasis of rank 3 over GF(2^2)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceTransformation(x);</span>
-[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ],
   [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]</pre></div>
 
 <p><a id="X8733B04781B682E5" name="X8733B04781B682E5"></a></p>
@@ -1281,10 +1281,10 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);</span>
-[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ],
   [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftInverse(x);</span>
-[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ],
   [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(LeftInverse(x) * x);</span>
  1 1 .
@@ -1416,7 +1416,7 @@ infinity
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      [0, -infinity, -infinity],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      [-infinity, 0, -infinity]]));</span>
-Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
+Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
   [-infinity, -infinity, 0], [0, -infinity, -infinity]])
 </pre></div>
 

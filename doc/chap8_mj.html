@@ -165,7 +165,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 2, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 4, 4, 1, 2])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
-&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
+&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2
  generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = Size(D);</span>
 true
@@ -188,7 +188,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 2, 4, 4, 3])]);</span>
 &lt;transformation semigroup of degree 5 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
-&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
+&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2
  generators&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(D);</span>
 true
@@ -205,7 +205,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Representative(D);</span>
 &lt;Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := Semigroup(x);</span>
-&lt;dual semigroup of &lt;commutative transformation semigroup of degree 5 
+&lt;dual semigroup of &lt;commutative transformation semigroup of degree 5
  with 1 generator&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(V);</span>
 true</pre></div>
@@ -252,8 +252,8 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(3);</span>
 &lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualSemigroup(S);</span>
-MappingByFunction( &lt;regular bipartition *-monoid of size 203, 
- degree 3 with 4 generators&gt;, &lt;dual semigroup of 
+MappingByFunction( &lt;regular bipartition *-monoid of size 203,
+ degree 3 with 4 generators&gt;, &lt;dual semigroup of
 &lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
  &gt;, function( x ) ... end, function( x ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(map);;</span>

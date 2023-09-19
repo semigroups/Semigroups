@@ -224,61 +224,61 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 4, 4, 4]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([4, 3, 1, 2]));;[127X[104X
     [4X[25Xgap>[125X [27XGreensDClasses(S);[127X[104X
-    [4X[28X[ <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
-    [4X[28X  <Green's D-class: Transformation( [ 4, 3, 1, 2 ] )>, [128X[104X
+    [4X[28X[ <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>,[128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 4, 3, 1, 2 ] )>,[128X[104X
     [4X[28X  <Green's D-class: Transformation( [ 4, 4, 4, 4 ] )> ][128X[104X
     [4X[25Xgap>[125X [27XGreensRClasses(S);[127X[104X
-    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 1, 2 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 4 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, [128X[104X
+    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 1, 2 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 4 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>,[128X[104X
     [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ][128X[104X
     [4X[25Xgap>[125X [27XD := GreensDClasses(S)[1];[127X[104X
     [4X[28X<Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27XGreensLClasses(D);[127X[104X
-    [4X[28X[ <Green's L-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X[ <Green's L-class: Transformation( [ 3, 4, 4, 4 ] )>,[128X[104X
     [4X[28X  <Green's L-class: Transformation( [ 1, 2, 2, 2 ] )> ][128X[104X
     [4X[25Xgap>[125X [27XGreensRClasses(D);[127X[104X
-    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, [128X[104X
-    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, [128X[104X
+    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>,[128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>,[128X[104X
     [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ][128X[104X
     [4X[25Xgap>[125X [27XR := GreensRClasses(D)[1];[127X[104X
     [4X[28X<Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27XGreensHClasses(R);[127X[104X
-    [4X[28X[ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X[ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>,[128X[104X
     [4X[28X  <Green's H-class: Transformation( [ 1, 2, 2, 2 ] )> ][128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
     [4X[25X>[125X [27XPartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;[127X[104X
     [4X[25Xgap>[125X [27XGreensDClasses(S);[127X[104X
-    [4X[28X[ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>, [128X[104X
-    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>, [128X[104X
-    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
-    [4X[28X  <Green's D-class: <identity partial perm on [ 4 ]>>, [128X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>,[128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>,[128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3 ]>>,[128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 4 ]>>,[128X[104X
     [4X[28X  <Green's D-class: <empty partial perm>> ][128X[104X
     [4X[25Xgap>[125X [27XGreensLClasses(S);[127X[104X
-    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 2, 4 ]>>, [128X[104X
-    [4X[28X  <Green's L-class: [4,2,1,3]>, [128X[104X
-    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>, [128X[104X
-    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
-    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, [128X[104X
-    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, [128X[104X
-    [4X[28X  <Green's L-class: [1,2](3)>, [128X[104X
-    [4X[28X  <Green's L-class: <identity partial perm on [ 4 ]>>, [128X[104X
-    [4X[28X  <Green's L-class: [4,1]>, <Green's L-class: [4,3]>, [128X[104X
+    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 2, 4 ]>>,[128X[104X
+    [4X[28X  <Green's L-class: [4,2,1,3]>,[128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>,[128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3 ]>>,[128X[104X
+    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>,[128X[104X
+    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>,[128X[104X
+    [4X[28X  <Green's L-class: [1,2](3)>,[128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 4 ]>>,[128X[104X
+    [4X[28X  <Green's L-class: [4,1]>, <Green's L-class: [4,3]>,[128X[104X
     [4X[28X  <Green's L-class: [4,2]>, <Green's L-class: <empty partial perm>> ][128X[104X
     [4X[25Xgap>[125X [27XD := GreensDClasses(S)[3];[127X[104X
     [4X[28X<Green's D-class: <identity partial perm on [ 1, 3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XGreensLClasses(D);[127X[104X
-    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
-    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, [128X[104X
-    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, [128X[104X
+    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 3 ]>>,[128X[104X
+    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>,[128X[104X
+    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>,[128X[104X
     [4X[28X  <Green's L-class: [1,2](3)> ][128X[104X
     [4X[25Xgap>[125X [27XGreensRClasses(D);[127X[104X
-    [4X[28X[ <Green's R-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
-    [4X[28X  <Green's R-class: [2,1,3]>, <Green's R-class: [2,3][4,1]>, [128X[104X
-    [4X[28X  <Green's R-class: [4,3,1]>, <Green's R-class: [4,1,3]>, [128X[104X
+    [4X[28X[ <Green's R-class: <identity partial perm on [ 1, 3 ]>>,[128X[104X
+    [4X[28X  <Green's R-class: [2,1,3]>, <Green's R-class: [2,3][4,1]>,[128X[104X
+    [4X[28X  <Green's R-class: [4,3,1]>, <Green's R-class: [4,1,3]>,[128X[104X
     [4X[28X  <Green's R-class: [2,1](3)> ][128X[104X
   [4X[32X[104X
   
@@ -311,19 +311,19 @@
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 4, 4, 4]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([4, 3, 1, 2]));;[127X[104X
     [4X[25Xgap>[125X [27XDClassReps(S);[127X[104X
-    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), [128X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ),[128X[104X
     [4X[28X  Transformation( [ 4, 4, 4, 4 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XLClassReps(S);[127X[104X
-    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), [128X[104X
-    [4X[28X  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), [128X[104X
-    [4X[28X  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), [128X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ),[128X[104X
+    [4X[28X  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ),[128X[104X
+    [4X[28X  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ),[128X[104X
     [4X[28X  Transformation( [ 1, 1, 1, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XD := GreensDClasses(S)[1];[127X[104X
     [4X[28X<Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
     [4X[25Xgap>[125X [27XLClassReps(D);[127X[104X
     [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XRClassReps(D);[127X[104X
-    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), [128X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),[128X[104X
     [4X[28X  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XR := GreensRClasses(D)[1];;[127X[104X
     [4X[25Xgap>[125X [27XHClassReps(R);[127X[104X
@@ -333,7 +333,7 @@
     [4X[25Xgap>[125X [27XM := MunnSemigroup(e);;[127X[104X
     [4X[25Xgap>[125X [27XL := LClassNC(M, PartialPerm([51, 63], [51, 47]));;[127X[104X
     [4X[25Xgap>[125X [27XHClassReps(L);[127X[104X
-    [4X[28X[ <identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51), [128X[104X
+    [4X[28X[ <identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51),[128X[104X
     [4X[28X  [64,47](51), [63,47](51), [59,47](51) ][128X[104X
   [4X[32X[104X
   
@@ -356,7 +356,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XD := MinimalDClass(JonesMonoid(8));[127X[104X
-    [4X[28X<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [128X[104X
+    [4X[28X<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ],[128X[104X
     [4X[28X  [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]>>[128X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
     [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 7, 8, 9], [2, 6, 9, 1, 5, 3, 8]),[127X[104X
@@ -382,8 +382,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMaximalDClasses(BrauerMonoid(8));[127X[104X
-    [4X[28X[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], [128X[104X
-    [4X[28X      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [128X[104X
+    [4X[28X[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ],[128X[104X
+    [4X[28X      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ],[128X[104X
     [4X[28X      [ 8, -8 ]>> ][128X[104X
     [4X[25Xgap>[125X [27XMaximalDClasses(FullTransformationMonoid(5));[127X[104X
     [4X[28X[ <Green's D-class: IdentityTransformation> ][128X[104X
@@ -393,7 +393,7 @@
     [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 6, 8], [4, 3, 2, 7, 6, 5]),[127X[104X
     [4X[25X>[125X [27XPartialPerm([1, 2, 4, 5, 6, 7, 8], [7, 1, 4, 2, 5, 6, 3]));;[127X[104X
     [4X[25Xgap>[125X [27XMaximalDClasses(S);[127X[104X
-    [4X[28X[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>, [128X[104X
+    [4X[28X[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>,[128X[104X
     [4X[28X  <Green's D-class: [8,3](1,7,6,5,2)(4)> ][128X[104X
   [4X[32X[104X
   
@@ -419,8 +419,8 @@
     [4X[25Xgap>[125X [27XNrDClasses(S);[127X[104X
     [4X[28X7[128X[104X
     [4X[25Xgap>[125X [27XAsSet(RegularDClasses(S));[127X[104X
-    [4X[28X[ <Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )>, [128X[104X
-    [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, [128X[104X
+    [4X[28X[ <Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )>,[128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>,[128X[104X
     [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )> ][128X[104X
   [4X[32X[104X
   
@@ -616,15 +616,15 @@
     [4X[25X>[125X [27X                  Transformation([2, 5, 3, 5, 3]),[127X[104X
     [4X[25X>[125X [27X                  Transformation([5, 5, 1, 1, 3]));;[127X[104X
     [4X[25Xgap>[125X [27Xreps := ShallowCopy(AsSet(DClassReps(S)));[127X[104X
-    [4X[28X[ Transformation( [ 1, 1, 1, 1, 1 ] ), [128X[104X
-    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ), [128X[104X
-    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ), [128X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 1, 1 ] ),[128X[104X
+    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ),[128X[104X
+    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ),[128X[104X
     [4X[28X  Transformation( [ 2, 4, 1, 5, 5 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XSort(reps, IsGreensDGreaterThanFunc(S));[127X[104X
     [4X[25Xgap>[125X [27Xreps;[127X[104X
-    [4X[28X[ Transformation( [ 2, 4, 1, 5, 5 ] ), [128X[104X
-    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ), [128X[104X
-    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ), [128X[104X
+    [4X[28X[ Transformation( [ 2, 4, 1, 5, 5 ] ),[128X[104X
+    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ),[128X[104X
+    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ),[128X[104X
     [4X[28X  Transformation( [ 1, 1, 1, 1, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(DClass(S, reps[2]),[127X[104X
     [4X[25X>[125X [27X                           DClass(S, reps[1]));[127X[104X
@@ -963,10 +963,10 @@
     [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 8, 9],[127X[104X
     [4X[25X>[125X [27X            [7, 4, 1, 6, 9, 5, 2, 3]));;[127X[104X
     [4X[25Xgap>[125X [27XList(DClasses(S), SchutzenbergerGroup);[127X[104X
-    [4X[28X[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]), [128X[104X
-    [4X[28X  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()), [128X[104X
-    [4X[28X  Group(()), Group(()), Group(()), Group(()), Group(()), [128X[104X
-    [4X[28X  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), [128X[104X
+    [4X[28X[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]),[128X[104X
+    [4X[28X  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()),[128X[104X
+    [4X[28X  Group(()), Group(()), Group(()), Group(()), Group(()),[128X[104X
+    [4X[28X  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()),[128X[104X
     [4X[28X  Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ][128X[104X
   [4X[32X[104X
   
@@ -1137,8 +1137,8 @@
     [4X[28X<Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ][128X[104X
     [4X[28X   , [ -3 ]>>[128X[104X
     [4X[25Xgap>[125X [27XInjectionNormalizedPrincipalFactor(D);[127X[104X
-    [4X[28XMappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [128X[104X
-    [4X[28X  [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over [128X[104X
+    [4X[28XMappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],[128X[104X
+    [4X[28X  [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over[128X[104X
     [4X[28X  Group([ (1,2) ])>, function( x ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
@@ -1169,7 +1169,7 @@
     [4X[25X>[125X [27XBipartition([[1, -5], [2, 3, 4, 5, -1, -3], [-2, -4]]),[127X[104X
     [4X[25X>[125X [27XBipartition([[1, 5, -4], [2, 4, -1, -5], [3, -2, -3]]));;[127X[104X
     [4X[25Xgap>[125X [27XD := MinimalDClass(S);[127X[104X
-    [4X[28X<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [128X[104X
+    [4X[28X<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ],[128X[104X
     [4X[28X  [ -2, -5 ], [ -4 ]>>[128X[104X
     [4X[25Xgap>[125X [27XNormalizedPrincipalFactor(D);[127X[104X
     [4X[28X<Rees matrix semigroup 1x5 over Group(())>[128X[104X

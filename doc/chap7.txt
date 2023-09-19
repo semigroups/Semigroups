@@ -327,7 +327,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := PartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4 [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4[128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X4140[128X[104X
@@ -1084,7 +1084,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := MonogenicSemigroup(5, 3);[127X[104X
-    [4X[28X<commutative non-regular transformation semigroup of size 7, degree 8 [128X[104X
+    [4X[28X<commutative non-regular transformation semigroup of size 7, degree 8[128X[104X
     [4X[28X with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -1094,7 +1094,7 @@
     [4X[25Xgap>[125X [27XStructureDescription(I);[127X[104X
     [4X[28X"C3"[128X[104X
     [4X[25Xgap>[125X [27XS := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);[127X[104X
-    [4X[28X<commutative non-regular block bijection semigroup of size 9, [128X[104X
+    [4X[28X<commutative non-regular block bijection semigroup of size 9,[128X[104X
     [4X[28X degree 10 with 1 generator>[128X[104X
   [4X[32X[104X
   
@@ -1124,7 +1124,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XT := RectangularBand(5, 6);[127X[104X
-    [4X[28X<regular transformation semigroup of size 30, degree 10 with 6 [128X[104X
+    [4X[28X<regular transformation semigroup of size 30, degree 10 with 6[128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XIsRectangularBand(T);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -1164,12 +1164,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := ZeroSemigroup(5);[127X[104X
-    [4X[28X<commutative non-regular transformation semigroup of size 5, degree 5 [128X[104X
+    [4X[28X<commutative non-regular transformation semigroup of size 5, degree 5[128X[104X
     [4X[28X with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XS := ZeroSemigroup(IsPartialPermSemigroup, 15);[127X[104X
-    [4X[28X<commutative non-regular partial perm semigroup of size 15, rank 14 [128X[104X
+    [4X[28X<commutative non-regular partial perm semigroup of size 15, rank 14[128X[104X
     [4X[28X with 14 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X15[128X[104X
@@ -1272,10 +1272,10 @@
     [4X[28X<0-simple inverse partial perm semigroup of rank 6 with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);[127X[104X
     [4X[28X<0-simple transformation semigroup of degree 7 with 5 generators>[128X[104X
-    [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsReesZeroMatrixSemigroup, [127X[104X
-    [4X[25X>[125X [27X                        DihedralGroup(4), [127X[104X
+    [4X[25Xgap>[125X [27XS := BrandtSemigroup(IsReesZeroMatrixSemigroup,[127X[104X
+    [4X[25X>[125X [27X                        DihedralGroup(4),[127X[104X
     [4X[25X>[125X [27X                        2);[127X[104X
-    [4X[28X<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with [128X[104X
+    [4X[28X<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with[128X[104X
     [4X[28X 2 generators>>[128X[104X
   [4X[32X[104X
   
@@ -1562,10 +1562,10 @@
     [4X[25Xgap>[125X [27XS := GraphInverseSemigroup(gr);[127X[104X
     [4X[28X<infinite graph inverse semigroup with 10 vertices, 37 edges>[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfInverseSemigroup(S);[127X[104X
-    [4X[28X[ e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, e_9, e_10, e_11, e_12, [128X[104X
-    [4X[28X  e_13, e_14, e_15, e_16, e_17, e_18, e_19, e_20, e_21, e_22, e_23, [128X[104X
-    [4X[28X  e_24, e_25, e_26, e_27, e_28, e_29, e_30, e_31, e_32, e_33, e_34, [128X[104X
-    [4X[28X  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10 [128X[104X
+    [4X[28X[ e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, e_9, e_10, e_11, e_12,[128X[104X
+    [4X[28X  e_13, e_14, e_15, e_16, e_17, e_18, e_19, e_20, e_21, e_22, e_23,[128X[104X
+    [4X[28X  e_24, e_25, e_26, e_27, e_28, e_29, e_30, e_31, e_32, e_33, e_34,[128X[104X
+    [4X[28X  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10[128X[104X
     [4X[28X ][128X[104X
     [4X[25Xgap>[125X [27XAssignGeneratorVariables(S);[127X[104X
     [4X[25Xgap>[125X [27Xe_1 * e_1 ^ -1;[127X[104X
@@ -1694,8 +1694,8 @@
     [4X[25Xgap>[125X [27XS := GraphInverseSemigroup(gr);[127X[104X
     [4X[28X<finite graph inverse semigroup with 3 vertices, 2 edges>[128X[104X
     [4X[25Xgap>[125X [27XElements(S);[127X[104X
-    [4X[28X[ e_2^-1, e_1^-1, e_1^-1e_2^-1, 0, e_1, e_1e_1^-1, e_1e_1^-1e_2^-1, [128X[104X
-    [4X[28X  e_2, e_2e_2^-1, e_2e_1, e_2e_1e_1^-1, e_2e_1e_1^-1e_2^-1, v_1, v_2, [128X[104X
+    [4X[28X[ e_2^-1, e_1^-1, e_1^-1e_2^-1, 0, e_1, e_1e_1^-1, e_1e_1^-1e_2^-1,[128X[104X
+    [4X[28X  e_2, e_2e_2^-1, e_2e_1, e_2e_1e_1^-1, e_2e_1e_1^-1e_2^-1, v_1, v_2,[128X[104X
     [4X[28X  v_3 ][128X[104X
     [4X[25Xgap>[125X [27XT := InverseSemigroup(Elements(S){[3, 5]});;[127X[104X
     [4X[25Xgap>[125X [27XIsGraphInverseSubsemigroup(T);[127X[104X
@@ -1813,10 +1813,10 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7);[127X[104X
-    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X<free inverse semigroup on the generators[128X[104X
     [4X[28X[ x1, x2, x3, x4, x5, x6, x7 ]>[128X[104X
     [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7, "s");[127X[104X
-    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X<free inverse semigroup on the generators[128X[104X
     [4X[28X[ s1, s2, s3, s4, s5, s6, s7 ]>[128X[104X
     [4X[25Xgap>[125X [27XS := FreeInverseSemigroup("a", "b", "c");[127X[104X
     [4X[28X<free inverse semigroup on the generators [ a, b, c ]>[128X[104X

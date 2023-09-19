@@ -100,7 +100,7 @@
     [4X[25Xgap>[125X [27XS := Semigroup([Transformation([1, 4, 3, 2, 2]),[127X[104X
     [4X[25X>[125X [27XTransformation([5, 4, 4, 1, 2])]);;[127X[104X
     [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
-    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2[128X[104X
     [4X[28X generators>>[128X[104X
     [4X[25Xgap>[125X [27XSize(S) = Size(D);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -126,7 +126,7 @@
     [4X[25X>[125X [27XTransformation([1, 2, 4, 4, 3])]);[127X[104X
     [4X[28X<transformation semigroup of degree 5 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XD := DualSemigroup(S);[127X[104X
-    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2 [128X[104X
+    [4X[28X<dual semigroup of <transformation semigroup of degree 5 with 2[128X[104X
     [4X[28X generators>>[128X[104X
     [4X[25Xgap>[125X [27XIsDualSemigroupRep(D);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -143,7 +143,7 @@
     [4X[25Xgap>[125X [27Xx := Representative(D);[127X[104X
     [4X[28X<Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup>[128X[104X
     [4X[25Xgap>[125X [27XV := Semigroup(x);[127X[104X
-    [4X[28X<dual semigroup of <commutative transformation semigroup of degree 5 [128X[104X
+    [4X[28X<dual semigroup of <commutative transformation semigroup of degree 5[128X[104X
     [4X[28X with 1 generator>>[128X[104X
     [4X[25Xgap>[125X [27XIsDualSemigroupRep(V);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -194,8 +194,8 @@
     [4X[25Xgap>[125X [27XS := PartitionMonoid(3);[127X[104X
     [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27Xmap := AntiIsomorphismDualSemigroup(S);[127X[104X
-    [4X[28XMappingByFunction( <regular bipartition *-monoid of size 203, [128X[104X
-    [4X[28X degree 3 with 4 generators>, <dual semigroup of [128X[104X
+    [4X[28XMappingByFunction( <regular bipartition *-monoid of size 203,[128X[104X
+    [4X[28X degree 3 with 4 generators>, <dual semigroup of[128X[104X
     [4X[28X<regular bipartition *-monoid of size 203, degree 3 with 4 generators>[128X[104X
     [4X[28X >, function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(map);;[127X[104X

@@ -334,7 +334,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfFpMonoid(S);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := EmbeddingFpMonoid(S);</span>
-&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt; 
+&lt;fp semigroup with 2 generators and 3 relations of length 14&gt; -&gt;
 &lt;fp monoid with 2 generators and 3 relations of length 14&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupOfFpMonoid(Image(map));</span>
 true
@@ -439,7 +439,7 @@ true</pre></div>
 &lt;fp semigroup presentation with 3 generators and 2 relations
  with length 19&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfStzPresentation(stz);</span>
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
   [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ] ]
 </pre></div>
 
@@ -598,20 +598,20 @@ true
 #I  1.  a  1 occurrences
 #I  2.  b  17 occurrences
 #I  3.  c  1 occurrences
-#I  
+#I
 #I  Current relations:
 #I  1. a = b^5*c
 #I  2. b^6 = b^3
 #I  3. b^2 = b
-#I  
+#I
 #I  There are 3 generators and 3 relations of total length 22.
-#I  
+#I
 #I  Generators of original fp semigroup expressed as
 #I  combinations of generators in current presentation:
 #I  1. a = a
 #I  2. b = b
 #I  3. c = c
-#I  
+#I
 #I  Generators of current presentation expressed as
 #I  combinations of generators of original fp semigroup:
 #I  1. a = a
@@ -653,8 +653,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair := [[2, 2, 2, 2, 2, 2, 2, 2, 2], [2, 2, 2]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzAddRelation(stz, pair);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfStzPresentation(stz);</span>
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
-  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
+  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ],
   [ [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [[1, 1], [3]];</span>
 [ [ 1, 1 ], [ 3 ] ]
@@ -711,8 +711,8 @@ a relation that is redundant in the presentation &lt;stz&gt;
  with length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzAddGenerator(stz, [2, 2, 2]);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfStzPresentation(stz);</span>
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
-  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], [ [ 2, 2 ], [ 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
+  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], [ [ 2, 2 ], [ 2 ] ],
   [ [ 2, 2, 2 ], [ 4 ] ] ]
 </pre></div>
 
@@ -763,7 +763,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
  with length 22&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzSubstituteRelation(stz, 3, 1);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfStzPresentation(stz);</span>
-[ [ [ 1 ], [ 2, 2, 2, 3 ] ], [ [ 2, 2, 2 ], [ 2, 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 3 ] ], [ [ 2, 2, 2 ], [ 2, 2 ] ],
   [ [ 2, 2 ], [ 2 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzSubstituteRelation(stz, 3, 1);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelationsOfStzPresentation(stz);</span>
@@ -856,7 +856,7 @@ a relation that is redundant in the presentation &lt;stz&gt;
  with length 11&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StzRemoveGenerator(stz, "a");</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := StzIsomorphism(stz);</span>
-&lt;fp semigroup with 3 generators and 2 relations of length 11&gt; -&gt; 
+&lt;fp semigroup with 3 generators and 2 relations of length 11&gt; -&gt;
 &lt;fp semigroup with 2 generators and 1 relation of length 6&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 ^ map;</span>
 c^3

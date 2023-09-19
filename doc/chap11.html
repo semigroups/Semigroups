@@ -223,7 +223,7 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextIterator(it);</span>
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">en := EnumeratorCanonical(S);</span>
-&lt;enumerator of &lt;commutative monoid of size 2, 3x3 boolean matrices 
+&lt;enumerator of &lt;commutative monoid of size 2, 3x3 boolean matrices
  with 1 generator&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">en[1];</span>
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
@@ -440,7 +440,7 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]);</span>
 [3,7][8,1,2,6,9][10,5]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">word := Factorization(S, x);</span>
-[ -2, -2, -2, -2, -3, -2, -2, -2, -2, -2, 5, 2, 5, 5, 2, 5, 2, 2, 2, 
+[ -2, -2, -2, -2, -3, -2, -2, -2, -2, -2, 5, 2, 5, 5, 2, 5, 2, 2, 2,
   2, -3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EvaluateWord(GeneratorsOfSemigroup(S), word);</span>
 [3,7][8,1,2,6,9][10,5]</pre></div>
@@ -488,21 +488,21 @@ Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 4, 5, 8], [7, 1, 4, 3, 2, 6]);</span>
 [5,2,1,7][8,6](3,4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">word := Factorization(S, x);</span>
-[ -2, -2, -2, -2, -2, -2, 2, 4, 4, 2, 3, 2, -3, -2, -2, 3, 2, -3, -2, 
-  -2, 4, -3, -4, 2, 2, 3, -2, -3, 4, -3, -4, 2, 2, 3, -2, -3, 2, 2, 
-  3, -2, -3, 2, 2, 3, -2, -3, 4, -3, -4, 3, 2, -3, -2, -2, 3, 2, -3, 
-  -2, -2, 4, 3, -4, 3, 2, -3, -2, -2, 3, 2, -3, -2, -2, 3, 2, 2, 3, 
+[ -2, -2, -2, -2, -2, -2, 2, 4, 4, 2, 3, 2, -3, -2, -2, 3, 2, -3, -2,
+  -2, 4, -3, -4, 2, 2, 3, -2, -3, 4, -3, -4, 2, 2, 3, -2, -3, 2, 2,
+  3, -2, -3, 2, 2, 3, -2, -3, 4, -3, -4, 3, 2, -3, -2, -2, 3, 2, -3,
+  -2, -2, 4, 3, -4, 3, 2, -3, -2, -2, 3, 2, -3, -2, -2, 3, 2, 2, 3,
   2, 2, 2, 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EvaluateWord(GeneratorsOfSemigroup(S), word);</span>
 [5,2,1,7][8,6](3,4)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(6);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1 * S.2 * S.3 * S.2 * S.1;</span>
-&lt;block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+&lt;block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ],
  [ 5, -1 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">word := Factorization(S, x);</span>
 [ -2, -2, -2, -2, -2, 4, 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EvaluateWord(GeneratorsOfSemigroup(S), word);</span>
-&lt;block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ], 
+&lt;block bijection: [ 1, 6, -4 ], [ 2, -2, -3 ], [ 3, -5 ], [ 4, -6 ],
  [ 5, -1 ]&gt;</pre></div>
 
 <p><a id="X83A4D71382C5B6C3" name="X83A4D71382C5B6C3"></a></p>
@@ -618,21 +618,21 @@ fail</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup(M);</span>
-[ IdentityTransformation, 
-  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ IdentityTransformation,
+  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfMonoid(M);</span>
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Generators(M);</span>
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Generators(M));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Generators(S);</span>
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup(S);</span>
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]</pre></div>
 
 <p><a id="X814DBABC878D5232" name="X814DBABC878D5232"></a></p>
@@ -674,8 +674,8 @@ fail</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 4, 3, 5, 2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 5, 4, 5, 5])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet(S);</span>
-[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
-  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
+[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ),
+  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ),
   Transformation( [ 4, 4, 3, 3, 5 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomInverseMonoid(IsPartialPermMonoid, 10000, 10);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet(S);</span>
@@ -717,50 +717,50 @@ fail</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([6, 5, 1, 3, 3, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 3, 4, 3, 2, 1])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IrredundantGeneratingSubset(S);</span>
-[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), 
-  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), 
-  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), 
-  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
-  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
+[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ),
+  Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+  Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+  Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+  Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
   Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomInverseMonoid(IsPartialPermMonoid, 1000, 10);</span>
 &lt;inverse partial perm monoid of degree 10 with 1000 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet(S);</span>
-[ [ 1 .. 10 ] -&gt; [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], 
-  [ 1 .. 10 ] -&gt; [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+[ [ 1 .. 10 ] -&gt; [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ],
+  [ 1 .. 10 ] -&gt; [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
   [ 1, 2, 3, 4, 6, 7, 8, 9 ] -&gt; [ 7, 5, 10, 1, 8, 4, 9, 6 ]
   [ 1 .. 9 ] -&gt; [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IrredundantGeneratingSubset(last);</span>
-[ [ 1 .. 9 ] -&gt; [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], 
-  [ 1 .. 10 ] -&gt; [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+[ [ 1 .. 9 ] -&gt; [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ],
+  [ 1 .. 10 ] -&gt; [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
   [ 1 .. 10 ] -&gt; [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomSemigroup(IsBipartitionSemigroup, 1000, 4);</span>
 &lt;bipartition semigroup of degree 4 with 749 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallGeneratingSet(S);</span>
-[ &lt;bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]&gt;, 
-  &lt;bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]&gt;, 
-  &lt;bipartition: [ 1, -4 ], [ 2, 4, -1, -3 ], [ 3, -2 ]&gt;, 
-  &lt;bipartition: [ 1, -1, -3 ], [ 2, -4 ], [ 3, 4, -2 ]&gt;, 
-  &lt;bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]&gt;, 
-  &lt;bipartition: [ 1, -2 ], [ 2, -1, -3 ], [ 3, 4, -4 ]&gt;, 
-  &lt;bipartition: [ 1, 3, -1 ], [ 2, -3 ], [ 4, -2, -4 ]&gt;, 
-  &lt;bipartition: [ 1, -1 ], [ 2, 4, -4 ], [ 3, -2, -3 ]&gt;, 
-  &lt;bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, -2 ], [ 3, -1, -4 ], [ 4, -3 ]&gt;, 
-  &lt;bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]&gt;, 
-  &lt;bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]&gt;, 
-  &lt;bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]&gt;, 
+[ &lt;bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]&gt;,
+  &lt;bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]&gt;,
+  &lt;bipartition: [ 1, -4 ], [ 2, 4, -1, -3 ], [ 3, -2 ]&gt;,
+  &lt;bipartition: [ 1, -1, -3 ], [ 2, -4 ], [ 3, 4, -2 ]&gt;,
+  &lt;bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]&gt;,
+  &lt;bipartition: [ 1, -2 ], [ 2, -1, -3 ], [ 3, 4, -4 ]&gt;,
+  &lt;bipartition: [ 1, 3, -1 ], [ 2, -3 ], [ 4, -2, -4 ]&gt;,
+  &lt;bipartition: [ 1, -1 ], [ 2, 4, -4 ], [ 3, -2, -3 ]&gt;,
+  &lt;bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, -2 ], [ 3, -1, -4 ], [ 4, -3 ]&gt;,
+  &lt;bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]&gt;,
+  &lt;bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]&gt;,
+  &lt;bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]&gt;,
   &lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IrredundantGeneratingSubset(last);</span>
-[ &lt;bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]&gt;, 
-  &lt;bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]&gt;, 
-  &lt;bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]&gt;, 
-  &lt;bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]&gt;, 
-  &lt;bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]&gt;, 
-  &lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]&gt;, 
-  &lt;bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]&gt;, 
+[ &lt;bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]&gt;,
+  &lt;bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]&gt;,
+  &lt;bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]&gt;,
+  &lt;bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]&gt;,
+  &lt;bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]&gt;,
+  &lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]&gt;,
+  &lt;bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]&gt;,
   &lt;bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]&gt; ]</pre></div>
 
 <p><a id="X8409DBED7996D495" name="X8409DBED7996D495"></a></p>
@@ -793,7 +793,7 @@ fail</pre></div>
 [ Transformation( [ 2, 3, 4, 5, 6, 1, 6, 7, 8 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalSemigroupGeneratingSet(S);</span>
-[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ),
   Transformation( [ 1, 2, 3, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 3, 4, 5, 1, 0, 6, 7]),</span>
@@ -826,15 +826,15 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([3, 3, 4, 1])]);</span>
 &lt;transformation monoid of degree 4 with 4 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsSmallest(S);</span>
-[ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
-  Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 2, 2 ] ), 
-  Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ), 
-  Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ), 
-  IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ), 
-  Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ), 
-  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
+[ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ),
+  Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ),
+  Transformation( [ 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 2, 2 ] ),
+  Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ),
+  Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ),
+  Transformation( [ 1, 2, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ),
+  IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ),
+  Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ),
+  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ),
   Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup(Bipartition([[1, 2, 3], [4, -1], [-2], [-3], [-4]]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Bipartition([[1, -3, -4], [2, 3, 4, -2], [-1]]),</span>
@@ -843,18 +843,18 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Bipartition([[1, 2, -1, -2], [3, 4, -3], [-4]]));</span>
 &lt;bipartition semigroup of degree 4 with 5 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsSmallest(T);</span>
-[ &lt;bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -1, -2 ], [ -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ -1 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -2 ], [ -1, -4 ], [ -3 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -2 ], [ -1 ], [ -3, -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -3 ], [ -1, -2 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4 ], [ -1, -2, -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3, 4, -3, -4 ], [ -1 ], [ -2 ]&gt;, 
-  &lt;bipartition: [ 1, 2, 3 ], [ 4, -1, -2, -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, 2, -1, -2 ], [ 3, 4, -3 ], [ -4 ]&gt;, 
-  &lt;bipartition: [ 1, -3 ], [ 2, 3, 4, -1, -2 ], [ -4 ]&gt;, 
+[ &lt;bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -1, -2 ], [ -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ -1 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -2 ], [ -1, -4 ], [ -3 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -2 ], [ -1 ], [ -3, -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -3 ], [ -1, -2 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4 ], [ -1, -2, -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3, 4, -3, -4 ], [ -1 ], [ -2 ]&gt;,
+  &lt;bipartition: [ 1, 2, 3 ], [ 4, -1, -2, -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, 2, -1, -2 ], [ 3, 4, -3 ], [ -4 ]&gt;,
+  &lt;bipartition: [ 1, -3 ], [ 2, 3, 4, -1, -2 ], [ -4 ]&gt;,
   &lt;bipartition: [ 1, -3, -4 ], [ 2, 3, 4, -2 ], [ -1 ]&gt; ]</pre></div>
 
 <p><a id="X7B4CD8937858A895" name="X7B4CD8937858A895"></a></p>
@@ -885,10 +885,10 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndecomposableElements(T);</span>
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := ZeroSemigroup(IsBipartitionSemigroup, 3);</span>
-&lt;commutative non-regular bipartition semigroup of size 3, degree 4 
+&lt;commutative non-regular bipartition semigroup of size 3, degree 4
  with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndecomposableElements(B);</span>
-[ &lt;bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]&gt;, 
+[ &lt;bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]&gt;,
   &lt;bipartition: [ 1, 2, 4, -1 ], [ 3, -2 ], [ -3 ], [ -4 ]&gt; ]</pre></div>
 
 <p><a id="X830E18747A0B5BED" name="X830E18747A0B5BED"></a></p>
@@ -920,10 +920,10 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalIdeal(S);</span>
 &lt;simple transformation semigroup ideal of degree 10 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(MinimalIdeal(S));</span>
-[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ),
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ),
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ),
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ),
   Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S, x);;</span>
@@ -960,7 +960,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -1], [2], [3], [4, -3], [5, 6, -5, -6],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  [-2, -4]])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentativeOfMinimalIdeal(B);</span>
-&lt;bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ], 
+&lt;bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ],
  [ -2, -4 ], [ -3 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([5, 1, 6, 2, 2, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 5, 5, 1, 6, 2]));;</span>
@@ -997,7 +997,7 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
 &lt;empty partial perm&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(6);</span>
-&lt;regular bipartition *-monoid of size 4213597, degree 6 with 4 
+&lt;regular bipartition *-monoid of size 4213597, degree 6 with 4
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
 fail
@@ -1119,11 +1119,11 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Idempotents(S, 1);</span>
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(S, 2));</span>
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ),
   Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(S));</span>
-[ Transformation( [ 1, 1, 3, 3 ] ), IdentityTransformation, 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), IdentityTransformation,
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ),
   Transformation( [ 4, 2, 2, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([2, 2, 4, 4]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClassOfElement(S, x);;</span>
@@ -1135,7 +1135,7 @@ fail
 [ Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClassOfLClass(L);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(D));</span>
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ),
   Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := GreensLClassOfElement(S, Transformation([3, 1, 1, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(Idempotents(L));</span>
@@ -1335,19 +1335,19 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(3);</span>
 &lt;full transformation monoid of degree 3&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalSubsemigroups(S);</span>
-[ &lt;transformation semigroup of degree 3 with 7 generators&gt;, 
-  &lt;transformation semigroup of degree 3 with 7 generators&gt;, 
-  &lt;transformation semigroup of degree 3 with 7 generators&gt;, 
-  &lt;transformation semigroup of degree 3 with 7 generators&gt;, 
+[ &lt;transformation semigroup of degree 3 with 7 generators&gt;,
+  &lt;transformation semigroup of degree 3 with 7 generators&gt;,
+  &lt;transformation semigroup of degree 3 with 7 generators&gt;,
+  &lt;transformation semigroup of degree 3 with 7 generators&gt;,
   &lt;transformation monoid of degree 3 with 5 generators&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalSubsemigroups(S,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">rec(gens := true, D := DClass(S, Transformation([2, 2, 3]))));</span>
-[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ), 
-      Transformation( [ 2, 2, 2 ] ), IdentityTransformation, 
+[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ),
+      Transformation( [ 2, 2, 2 ] ), IdentityTransformation,
       Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalSubsemigroups(S,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">rec(contain := [Transformation([2, 3, 1])]));</span>
-[ &lt;transformation semigroup of degree 3 with 7 generators&gt;, 
+[ &lt;transformation semigroup of degree 3 with 7 generators&gt;,
   &lt;transformation monoid of degree 3 with 5 generators&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PrincipalFactor(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">DClass(FullTransformationMonoid(4), Transformation([2, 2])));</span>
@@ -1355,9 +1355,9 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalSubsemigroups(R, rec(types := [5],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  contain := [RMSElement(R, 1, (), 1),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">              RMSElement(R, 1, (2, 3), 2)]));</span>
-[ &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;, 
-  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;, 
+[ &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;,
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;,
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt;,
   &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators&gt; ]</pre></div>
 
 <p><a id="X7A52B4117BCEF379" name="X7A52B4117BCEF379"></a></p>
@@ -1497,15 +1497,15 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 3, 4, 7, 1, 6]), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 3, 4, 7, 1, 6]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 2, 3, 5, 1, 5]));</span>
 &lt;transformation semigroup of degree 7 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := Concatenation(List([1 .. 7], x -&gt; [x]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                         Combinations([1 .. 7], 2));</span>
-[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 1, 2 ], 
-  [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 3 ], 
-  [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 4 ], [ 3, 5 ], 
-  [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 4, 7 ], [ 5, 6 ], 
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 1, 2 ],
+  [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 3 ],
+  [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 4 ], [ 3, 5 ],
+  [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 4, 7 ], [ 5, 6 ],
   [ 5, 7 ], [ 6, 7 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DigraphOfAction(S, list, OnSets);</span>
 &lt;immutable digraph with 28 vertices, 54 edges&gt;
@@ -1534,7 +1534,7 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 2, 3, 5, 1, 5]));</span>
 &lt;transformation semigroup of degree 7 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D1 := DigraphOfActionOnPoints(S);</span>
@@ -1702,7 +1702,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentsOfPartialPermSemigroup(S);</span>
-[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20 ], 
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20 ],
   [ 15 ], [ 17 ] ]</pre></div>
 
 <p><a id="X832937BB87EB4349" name="X832937BB87EB4349"></a></p>
@@ -1849,8 +1849,8 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([0, 2])]);</span>
 &lt;inverse partial perm semigroup of rank 4 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinIrreducibleDClasses(T);</span>
-[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 1 ]&gt;&gt;, 
+[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;&gt;,
+  &lt;Green's D-class: &lt;identity partial perm on [ 1 ]&gt;&gt;,
   &lt;Green's D-class: &lt;identity partial perm on [ 2 ]&gt;&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSymmetricInverseSemigroup(3);</span>
 &lt;inverse block bijection monoid of degree 3 with 3 generators&gt;
@@ -1877,9 +1877,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := [PartialPerm([1, 0, 3, 0])];</span>
 [ &lt;identity partial perm on [ 1, 3 ]&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := MajorantClosure(S, T);</span>
-[ &lt;identity partial perm on [ 1, 3 ]&gt;, 
-  &lt;identity partial perm on [ 1, 2, 3 ]&gt;, [2,4](1)(3), [4,2](1)(3), 
-  &lt;identity partial perm on [ 1, 3, 4 ]&gt;, 
+[ &lt;identity partial perm on [ 1, 3 ]&gt;,
+  &lt;identity partial perm on [ 1, 2, 3 ]&gt;, [2,4](1)(3), [4,2](1)(3),
+  &lt;identity partial perm on [ 1, 3, 4 ]&gt;,
   &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2,4)(3) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := InverseSemigroup([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),</span>
@@ -1889,14 +1889,14 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(B, T);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MajorantClosure(B, T);</span>
-[ &lt;block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]&gt;, 
-  &lt;block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]&gt;, 
+[ &lt;block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]&gt;,
+  &lt;block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]&gt;,
   &lt;block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]&gt;
-    , &lt;block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], 
-     [ 4, -4 ]&gt;, 
+    , &lt;block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ],
+     [ 4, -4 ]&gt;,
   &lt;block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], [ 3, -1 ], [ 4, -2 ]&gt;
-    , &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ], 
-     [ 4, -2 ]&gt;, &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], 
+    , &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ],
+     [ 4, -2 ]&gt;, &lt;block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ],
      [ 4, -2 ], [ 5, -5 ]&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(B, last);</span>
 true
@@ -1946,17 +1946,17 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
 &lt;empty partial perm&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(PrimitiveIdempotents(S));</span>
-[ &lt;identity partial perm on [ 1 ]&gt;, &lt;identity partial perm on [ 2 ]&gt;, 
+[ &lt;identity partial perm on [ 1 ]&gt;, &lt;identity partial perm on [ 2 ]&gt;,
   &lt;identity partial perm on [ 3 ]&gt;, &lt;identity partial perm on [ 4 ]&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);</span>
 &lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(PrimitiveIdempotents(S));</span>
-[ &lt;block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]&gt;, 
-  &lt;block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]&gt;, 
-  &lt;block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]&gt;, 
-  &lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]&gt;, 
+[ &lt;block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]&gt;,
+  &lt;block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]&gt;,
+  &lt;block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]&gt;,
+  &lt;block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]&gt;,
+  &lt;block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]&gt;,
+  &lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]&gt;,
   &lt;block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]&gt; ]</pre></div>
 
 <p><a id="X7B5D89A585F8B5EA" name="X7B5D89A585F8B5EA"></a></p>
@@ -1979,11 +1979,11 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMajorantlyClosed(S, T);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RC := RightCosetsOfInverseSemigroup(S, T);</span>
-[ [ &lt;identity partial perm on [ 1 ]&gt;, 
-      &lt;identity partial perm on [ 1, 2 ]&gt;, [2,3](1), [3,2](1), 
-      &lt;identity partial perm on [ 1, 3 ]&gt;, 
-      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3) ], 
-  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], 
+[ [ &lt;identity partial perm on [ 1 ]&gt;,
+      &lt;identity partial perm on [ 1, 2 ]&gt;, [2,3](1), [3,2](1),
+      &lt;identity partial perm on [ 1, 3 ]&gt;,
+      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3) ],
+  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ],
   [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ]</pre></div>
 
 <p><a id="X83298E9E86A343FF" name="X83298E9E86A343FF"></a></p>
@@ -2004,7 +2004,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := GroupHClass(DClass(S, PartialPerm([1, 2, 3])));</span>
 &lt;Green's H-class: &lt;identity partial perm on [ 1, 2, 3 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(H);</span>
-[ &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2)(3), 
+[ &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2)(3),
   (1,2,3), (1,3,2), (1,3)(2) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SameMinorantsSubgroup(H);</span>
 [ &lt;identity partial perm on [ 1, 2, 3 ]&gt; ]
@@ -2013,8 +2013,8 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1], [1]), PartialPerm([2], [2]));</span>
 &lt;inverse partial perm semigroup of rank 4 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(T);</span>
-[ &lt;empty partial perm&gt;, &lt;identity partial perm on [ 1 ]&gt;, 
-  &lt;identity partial perm on [ 2 ]&gt;, 
+[ &lt;empty partial perm&gt;, &lt;identity partial perm on [ 1 ]&gt;,
+  &lt;identity partial perm on [ 2 ]&gt;,
   &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := GroupHClass(DClass(T, PartialPerm([1, 2, 3, 4])));</span>
 &lt;Green's H-class: &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;&gt;
@@ -2039,7 +2039,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));</span>
 &lt;partial perm group of rank 8 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
-[ &lt;identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]&gt;, 
+[ &lt;identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]&gt;,
   (1,2)(3,4)(5,6)(7,8) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := SmallerDegreePartialPermRepresentation(S);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso) = S;</span>
@@ -2050,11 +2050,11 @@ true
 [ &lt;identity partial perm on [ 1, 2 ]&gt;, (1,2) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(5);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));</span>
-&lt;inverse partial perm monoid of size 6721, rank 6721 with 3 
+&lt;inverse partial perm monoid of size 6721, rank 6721 with 3
  generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallerDegreePartialPermRepresentation(T);</span>
-&lt;inverse partial perm monoid of size 6721, rank 6721 with 3 
-  generators&gt; -&gt; &lt;inverse partial perm monoid of rank 30 with 3 
+&lt;inverse partial perm monoid of size 6721, rank 6721 with 3
+  generators&gt; -&gt; &lt;inverse partial perm monoid of rank 30 with 3
   generators&gt;</pre></div>
 
 <p><a id="X7BC49C3487384364" name="X7BC49C3487384364"></a></p>
@@ -2077,7 +2077,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 7
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := VagnerPrestonRepresentation(S);</span>
-&lt;symmetric inverse monoid of degree 2&gt; -&gt; 
+&lt;symmetric inverse monoid of degree 2&gt; -&gt;
 &lt;inverse partial perm monoid of rank 7 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RespectsMultiplication(iso);</span>
 true
@@ -2092,8 +2092,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(V);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">VagnerPrestonRepresentation(V);</span>
-&lt;inverse bipartition semigroup of size 394, degree 5 with 3 
-  generators&gt; -&gt; &lt;inverse partial perm semigroup of rank 394 with 5 
+&lt;inverse bipartition semigroup of size 394, degree 5 with 3
+  generators&gt; -&gt; &lt;inverse partial perm semigroup of rank 394 with 5
   generators&gt;</pre></div>
 
 <p><a id="X7C83DF9A7973AF6D" name="X7C83DF9A7973AF6D"></a></p>
@@ -2117,33 +2117,33 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [2, 4, 1]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 4], [3, 4, 1])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterTableOfInverseSemigroup(S);</span>
-[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], 
+[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ],
+      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ],
       [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],
-      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, 
-      &lt;identity partial perm on [ 1, 3, 4 ]&gt;, (1,3,4), (1,4,3), 
-      &lt;identity partial perm on [ 1, 3 ]&gt;, (1,3), 
+      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ],
+      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;,
+      &lt;identity partial perm on [ 1, 3, 4 ]&gt;, (1,3,4), (1,4,3),
+      &lt;identity partial perm on [ 1, 3 ]&gt;, (1,3),
       &lt;identity partial perm on [ 3 ]&gt;, &lt;empty partial perm&gt; ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterTableOfInverseSemigroup(S);</span>
-[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ], 
-      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], 
-      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4), 
-      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), 
-      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2,3), 
-      &lt;identity partial perm on [ 2, 3 ]&gt;, (2,3), 
+[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ],
+      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ],
+      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ],
+      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ],
+      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ],
+      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ &lt;identity partial perm on [ 1, 2, 3, 4 ]&gt;, (1)(2)(3,4),
+      (1)(2,3,4), (1,2)(3,4), (1,2,3,4),
+      &lt;identity partial perm on [ 1, 2, 3 ]&gt;, (1)(2,3), (1,2,3),
+      &lt;identity partial perm on [ 2, 3 ]&gt;, (2,3),
       &lt;identity partial perm on [ 1 ]&gt;, &lt;empty partial perm&gt; ] ]</pre></div>
 
 <p><a id="X8383E6747D02D975" name="X8383E6747D02D975"></a></p>
@@ -2161,7 +2161,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPermNC([1], [1])]);</span>
 &lt;inverse partial perm semigroup of rank 2 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cov := EUnitaryInverseCover(S);</span>
-&lt;inverse partial perm semigroup of rank 4 with 2 generators&gt; -&gt; 
+&lt;inverse partial perm semigroup of rank 4 with 2 generators&gt; -&gt;
 &lt;inverse partial perm semigroup of rank 2 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEUnitaryInverseSemigroup(Source(cov));</span>
 true
@@ -2192,9 +2192,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NambooripadPartialOrder(S);</span>
-[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
   [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);</span>
 false
@@ -2221,9 +2221,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NambooripadPartialOrder(S);</span>
-[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
   [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);</span>
 false

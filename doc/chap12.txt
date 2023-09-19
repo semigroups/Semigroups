@@ -36,7 +36,7 @@
     [4X[25Xgap>[125X [27XIsBand(IdempotentGeneratedSubsemigroup(S));[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XS := PartitionMonoid(4);[127X[104X
-    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4 [128X[104X
+    [4X[28X<regular bipartition *-monoid of size 4140, degree 4 with 4[128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XM := MinimalIdeal(S);[127X[104X
     [4X[28X<simple bipartition *-semigroup ideal of degree 4 with 1 generator>[128X[104X
@@ -206,7 +206,7 @@
     [4X[25Xgap>[125X [27XIsSurjectiveSemigroup(I);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XM := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);[127X[104X
-    [4X[28X<commutative non-regular block bijection semigroup of size 4, [128X[104X
+    [4X[28X<commutative non-regular block bijection semigroup of size 4,[128X[104X
     [4X[28X degree 6 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsSurjectiveSemigroup(M);[127X[104X
     [4X[28Xfalse[128X[104X
@@ -234,7 +234,7 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XG := SymmetricGroup([1, 2, 10]);;[127X[104X
     [4X[25Xgap>[125X [27XT := AsSemigroup(IsBlockBijectionSemigroup, G);[127X[104X
-    [4X[28X<inverse block bijection semigroup of size 6, degree 11 with 2 [128X[104X
+    [4X[28X<inverse block bijection semigroup of size 6, degree 11 with 2[128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XIsGroupAsSemigroup(T);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -506,7 +506,7 @@
     [4X[25Xgap>[125X [27XG := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));[127X[104X
     [4X[28X<transformation group of size 7920, degree 11 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XR := RectangularBand(3, 2);[127X[104X
-    [4X[28X<regular transformation semigroup of size 6, degree 6 with 3 [128X[104X
+    [4X[28X<regular transformation semigroup of size 6, degree 6 with 3[128X[104X
     [4X[28X generators>[128X[104X
     [4X[25Xgap>[125X [27XS := DirectProduct(G, R);;[127X[104X
     [4X[25Xgap>[125X [27XIsRectangularGroup(R);[127X[104X
@@ -1094,7 +1094,7 @@
     [4X[28X<inverse block bijection semigroup of degree 7 with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27Xx := Bipartition([[127X[104X
     [4X[25X>[125X [27X  [1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7], [4, -1]]);[127X[104X
-    [4X[28X<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], [128X[104X
+    [4X[28X<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ],[128X[104X
     [4X[28X [ 4, -1 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsJoinIrreducible(B, x);[127X[104X
     [4X[28Xtrue[128X[104X

@@ -310,61 +310,61 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([3, 4, 4, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 3, 1, 2]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensDClasses(S);</span>
-[ &lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
-  &lt;Green's D-class: Transformation( [ 4, 3, 1, 2 ] )&gt;, 
+[ &lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;,
+  &lt;Green's D-class: Transformation( [ 4, 3, 1, 2 ] )&gt;,
   &lt;Green's D-class: Transformation( [ 4, 4, 4, 4 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(S);</span>
-[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 3, 1, 2 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 4, 4, 4 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;, 
+[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 3, 1, 2 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 4, 4, 4 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;,
   &lt;Green's R-class: Transformation( [ 4, 4, 4, 3 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[1];</span>
 &lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(D);</span>
-[ &lt;Green's L-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+[ &lt;Green's L-class: Transformation( [ 3, 4, 4, 4 ] )&gt;,
   &lt;Green's L-class: Transformation( [ 1, 2, 2, 2 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(D);</span>
-[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;, 
-  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;, 
+[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;,
+  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;,
   &lt;Green's R-class: Transformation( [ 4, 4, 4, 3 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClasses(D)[1];</span>
 &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensHClasses(R);</span>
-[ &lt;Green's H-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+[ &lt;Green's H-class: Transformation( [ 3, 4, 4, 4 ] )&gt;,
   &lt;Green's H-class: Transformation( [ 1, 2, 2, 2 ] )&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensDClasses(S);</span>
-[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
-  &lt;Green's D-class: &lt;identity partial perm on [ 4 ]&gt;&gt;, 
+[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;,
+  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;,
+  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;,
+  &lt;Green's D-class: &lt;identity partial perm on [ 4 ]&gt;&gt;,
   &lt;Green's D-class: &lt;empty partial perm&gt;&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(S);</span>
-[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;, 
-  &lt;Green's L-class: [4,2,1,3]&gt;, 
-  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;, 
-  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
-  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;, 
-  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;, 
-  &lt;Green's L-class: [1,2](3)&gt;, 
-  &lt;Green's L-class: &lt;identity partial perm on [ 4 ]&gt;&gt;, 
-  &lt;Green's L-class: [4,1]&gt;, &lt;Green's L-class: [4,3]&gt;, 
+[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;,
+  &lt;Green's L-class: [4,2,1,3]&gt;,
+  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;,
+  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;,
+  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;,
+  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;,
+  &lt;Green's L-class: [1,2](3)&gt;,
+  &lt;Green's L-class: &lt;identity partial perm on [ 4 ]&gt;&gt;,
+  &lt;Green's L-class: [4,1]&gt;, &lt;Green's L-class: [4,3]&gt;,
   &lt;Green's L-class: [4,2]&gt;, &lt;Green's L-class: &lt;empty partial perm&gt;&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[3];</span>
 &lt;Green's D-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(D);</span>
-[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
-  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;, 
-  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;, 
+[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;,
+  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;,
+  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;,
   &lt;Green's L-class: [1,2](3)&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(D);</span>
-[ &lt;Green's R-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
-  &lt;Green's R-class: [2,1,3]&gt;, &lt;Green's R-class: [2,3][4,1]&gt;, 
-  &lt;Green's R-class: [4,3,1]&gt;, &lt;Green's R-class: [4,1,3]&gt;, 
+[ &lt;Green's R-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;,
+  &lt;Green's R-class: [2,1,3]&gt;, &lt;Green's R-class: [2,3][4,1]&gt;,
+  &lt;Green's R-class: [4,3,1]&gt;, &lt;Green's R-class: [4,1,3]&gt;,
   &lt;Green's R-class: [2,1](3)&gt; ]</pre></div>
 
 <p><a id="X865387A87FAAC395" name="X865387A87FAAC395"></a></p>
@@ -393,19 +393,19 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([3, 4, 4, 4]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 3, 1, 2]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClassReps(S);</span>
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ),
   Transformation( [ 4, 4, 4, 4 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LClassReps(S);</span>
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
-  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
-  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ),
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ),
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ),
   Transformation( [ 1, 1, 1, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[1];</span>
 &lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LClassReps(D);</span>
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RClassReps(D);</span>
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClasses(D)[1];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HClassReps(R);</span>
@@ -415,7 +415,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MunnSemigroup(e);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClassNC(M, PartialPerm([51, 63], [51, 47]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HClassReps(L);</span>
-[ &lt;identity partial perm on [ 47, 51 ]&gt;, [27,47](51), [50,47](51), 
+[ &lt;identity partial perm on [ 47, 51 ]&gt;, [27,47](51), [50,47](51),
   [64,47](51), [63,47](51), [59,47](51) ]</pre></div>
 
 <p><a id="X81E5A04F7DA3A1E1" name="X81E5A04F7DA3A1E1"></a></p>
@@ -434,7 +434,7 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := MinimalDClass(JonesMonoid(8));</span>
-&lt;Green's D-class: &lt;bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], 
+&lt;Green's D-class: &lt;bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ],
   [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 5, 7, 8, 9], [2, 6, 9, 1, 5, 3, 8]),</span>
@@ -458,8 +458,8 @@ true</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(BrauerMonoid(8));</span>
-[ &lt;Green's D-class: &lt;block bijection: [ 1, -1 ], [ 2, -2 ], 
-      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], 
+[ &lt;Green's D-class: &lt;block bijection: [ 1, -1 ], [ 2, -2 ],
+      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ],
       [ 8, -8 ]&gt;&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(FullTransformationMonoid(5));</span>
 [ &lt;Green's D-class: IdentityTransformation&gt; ]
@@ -469,7 +469,7 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 6, 8], [4, 3, 2, 7, 6, 5]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 4, 5, 6, 7, 8], [7, 1, 4, 2, 5, 6, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(S);</span>
-[ &lt;Green's D-class: [2,8](1,3)(4)(5)(6)(7)&gt;, 
+[ &lt;Green's D-class: [2,8](1,3)(4)(5)(6)(7)&gt;,
   &lt;Green's D-class: [8,3](1,7,6,5,2)(4)&gt; ]</pre></div>
 
 <p><a id="X7AA3F0A77D0043FB" name="X7AA3F0A77D0043FB"></a></p>
@@ -495,8 +495,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S);</span>
 7
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(RegularDClasses(S));</span>
-[ &lt;Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )&gt;, 
-  &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )&gt;, 
+[ &lt;Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )&gt;,
+  &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )&gt;,
   &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )&gt; ]</pre></div>
 
 <p><a id="X7E45FD9F7BADDFBD" name="X7E45FD9F7BADDFBD"></a></p>
@@ -683,15 +683,15 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 5, 3, 5, 3]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 1, 1, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps := ShallowCopy(AsSet(DClassReps(S)));</span>
-[ Transformation( [ 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 3, 1, 3, 3 ] ), 
-  Transformation( [ 1, 3, 4, 1, 3 ] ), 
+[ Transformation( [ 1, 1, 1, 1, 1 ] ),
+  Transformation( [ 1, 3, 1, 3, 3 ] ),
+  Transformation( [ 1, 3, 4, 1, 3 ] ),
   Transformation( [ 2, 4, 1, 5, 5 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sort(reps, IsGreensDGreaterThanFunc(S));</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps;</span>
-[ Transformation( [ 2, 4, 1, 5, 5 ] ), 
-  Transformation( [ 1, 3, 4, 1, 3 ] ), 
-  Transformation( [ 1, 3, 1, 3, 3 ] ), 
+[ Transformation( [ 2, 4, 1, 5, 5 ] ),
+  Transformation( [ 1, 3, 4, 1, 3 ] ),
+  Transformation( [ 1, 3, 1, 3, 3 ] ),
   Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(DClass(S, reps[2]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                           DClass(S, reps[1]));</span>
@@ -1016,10 +1016,10 @@ Group([ (4,5) ])
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 5, 6, 7, 8, 9],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [7, 4, 1, 6, 9, 5, 2, 3]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DClasses(S), SchutzenbergerGroup);</span>
-[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]), 
-  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()), 
-  Group(()), Group(()), Group(()), Group(()), Group(()), 
-  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), 
+[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]),
+  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()),
+  Group(()), Group(()), Group(()), Group(()), Group(()),
+  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()),
   Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ]</pre></div>
 
 <p><a id="X81202126806443F9" name="X81202126806443F9"></a></p>
@@ -1180,8 +1180,8 @@ fail</pre></div>
 &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ]
    , [ -3 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InjectionNormalizedPrincipalFactor(D);</span>
-MappingByFunction( &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ], 
-  [ 2, 3, 4, -1, -5 ], [ -3 ]&gt;&gt;, &lt;Rees matrix semigroup 1x1 over 
+MappingByFunction( &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ],
+  [ 2, 3, 4, -1, -5 ], [ -3 ]&gt;&gt;, &lt;Rees matrix semigroup 1x1 over
   Group([ (1,2) ])&gt;, function( x ) ... end, function( x ) ... end )</pre></div>
 
 <p><a id="X86C6D777847AAEC7" name="X86C6D777847AAEC7"></a></p>
@@ -1211,7 +1211,7 @@ MappingByFunction( &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ],
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -5], [2, 3, 4, 5, -1, -3], [-2, -4]]),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 5, -4], [2, 4, -1, -5], [3, -2, -3]]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := MinimalDClass(S);</span>
-&lt;Green's D-class: &lt;bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], 
+&lt;Green's D-class: &lt;bipartition: [ 1, 2, 3, 4, 5, -1, -3 ],
   [ -2, -5 ], [ -4 ]&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalizedPrincipalFactor(D);</span>
 &lt;Rees matrix semigroup 1x5 over Group(())&gt;</pre></div>
