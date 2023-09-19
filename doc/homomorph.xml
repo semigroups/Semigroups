@@ -11,17 +11,17 @@
 
 <#GAPDoc Label="SemigroupHomomorphismByImages">
   <ManSection>
-    <Oper Name = "SemigroupHomomorphismByImages" 
-          Arg = "S, T, gens, imgs" 
+    <Oper Name = "SemigroupHomomorphismByImages"
+          Arg = "S, T, gens, imgs"
           Label = "for two semigroups and two lists"/>
-    <Oper Name = "SemigroupHomomorphismByImages" 
-          Arg = "S, T, imgs" 
+    <Oper Name = "SemigroupHomomorphismByImages"
+          Arg = "S, T, imgs"
           Label = "for two semigroups and a list"/>
-    <Oper Name = "SemigroupHomomorphismByImages" 
-          Arg = "S, T" 
+    <Oper Name = "SemigroupHomomorphismByImages"
+          Arg = "S, T"
           Label = "for two semigroups"/>
-    <Oper Name = "SemigroupHomomorphismByImages" 
-          Arg = "S, gens, imgs" 
+    <Oper Name = "SemigroupHomomorphismByImages"
+          Arg = "S, gens, imgs"
           Label = "for a semigroup and two lists"/>
     <Returns>
       A semigroup homomorphism, or <K>fail</K>.
@@ -48,7 +48,7 @@ gap> J := FullTransformationMonoid(4);;
 gap> imgs := ListWithIdenticalEntries(4,
 > ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
-<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 3> ->
 <full transformation monoid of degree 4>]]></Example>
     </Description>
   </ManSection>
@@ -56,17 +56,17 @@ gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
 
 <#GAPDoc Label="SemigroupIsomorphismByImages">
   <ManSection>
-    <Oper Name = "SemigroupIsomorphismByImages" 
-          Arg = "S, T, gens, imgs" 
+    <Oper Name = "SemigroupIsomorphismByImages"
+          Arg = "S, T, gens, imgs"
           Label = "for two semigroups and two lists"/>
-    <Oper Name = "SemigroupIsomorphismByImages" 
-          Arg = "S, T, imgs" 
+    <Oper Name = "SemigroupIsomorphismByImages"
+          Arg = "S, T, imgs"
           Label = "for two semigroups and a list"/>
-    <Oper Name = "SemigroupIsomorphismByImages" 
-          Arg = "S, T" 
+    <Oper Name = "SemigroupIsomorphismByImages"
+          Arg = "S, T"
           Label = "for two semigroups"/>
-    <Oper Name = "SemigroupIsomorphismByImages" 
-          Arg = "S, gens, imgs" 
+    <Oper Name = "SemigroupIsomorphismByImages"
+          Arg = "S, gens, imgs"
           Label = "for a semigroup and two list"/>
     <Returns>
       A semigroup isomorphism, or <K>fail</K>.
@@ -78,7 +78,7 @@ gap> hom := SemigroupHomomorphismByImages(S, J, gens, imgs);
       element of <A>imgs</A>. If this mapping corresponds to an isomorphism,
       the isomorphism is returned, and if not, then <K>fail</K> is returned. An
       isomorphism is a bijective homomorphism. See also
-      <Ref Oper = "SemigroupHomomorphismByImages" 
+      <Ref Oper = "SemigroupHomomorphismByImages"
         Label = "for two semigroups and two lists"/>.
       <Example><![CDATA[
 gap> S := Semigroup([
@@ -86,7 +86,7 @@ gap> S := Semigroup([
 >  Matrix(IsNTPMatrix, [[1, 1, 0], [4, 1, 1], [0, 0, 0]], 9, 4)]);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);;
 gap> iso := SemigroupIsomorphismByImages(S, T);
-<semigroup of size 46, 3x3 ntp matrices with 2 generators> -> 
+<semigroup of size 46, 3x3 ntp matrices with 2 generators> ->
 <transformation semigroup of size 46, degree 47 with 2 generators>
 ]]></Example>
     </Description>
@@ -121,11 +121,11 @@ gap> iso := SemigroupIsomorphismByImages(S, T);
 gap> g := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> h := Semigroup([(1, 2, 3), (1, 2)]);;
 gap> hom := SemigroupHomomorphismByFunction(g, h,
-> function(x) 
+> function(x)
 > if SignPerm(x) = -1 then return (1, 2);
 > else return ();
 > fi; end);
-<semigroup of size 24, with 2 generators> -> 
+<semigroup of size 24, with 2 generators> ->
 <semigroup of size 6, with 2 generators>]]></Example>
     </Description>
   </ManSection>
@@ -168,8 +168,8 @@ gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);;
 gap> map := x -> T.1 ^ Length(Factorization(S, x));;
 gap> inv := x -> S.1 ^ Length(Factorization(T, x));;
 gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
-<commutative non-regular transformation semigroup of size 4, degree 5 
-  with 1 generator> -> <commutative non-regular block bijection 
+<commutative non-regular transformation semigroup of size 4, degree 5
+  with 1 generator> -> <commutative non-regular block bijection
   semigroup of size 4, degree 6 with 1 generator>
 ]]></Example>
     </Description>
@@ -188,8 +188,8 @@ gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
       semigroup homomorphism is a mapping from a semigroup <C>S</C> to a
       semigroup <C>T</C> that respects multiplication. This representation
       describes semigroup homomorphisms internally by the generators of
-      <C>S</C> and their images in <C>T</C>. See 
-      <Ref Oper="SemigroupHomomorphismByImages" 
+      <C>S</C> and their images in <C>T</C>. See
+      <Ref Oper="SemigroupHomomorphismByImages"
         Label = "for two semigroups and two lists"/>.
       <Example><![CDATA[
 gap> S := FullTransformationMonoid(3);;
@@ -197,7 +197,7 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> T := FullTransformationMonoid(4);;
 gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);
-<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 3> ->
 <full transformation monoid of degree 4>
 gap> IsSemigroupHomomorphismByImages(hom);
 true]]></Example>
@@ -213,20 +213,20 @@ true]]></Example>
     </Returns>
     <Description>
       <C>IsSemigroupHomomorphismByFunction</C> returns <K>true</K> if <A>hom</A>
-      was created using <Ref Oper="SemigroupHomomorphismByFunction"/> and 
-      <K>false</K> if it was not. Note that this filter may return <K>true</K> 
+      was created using <Ref Oper="SemigroupHomomorphismByFunction"/> and
+      <K>false</K> if it was not. Note that this filter may return <K>true</K>
       even if the underlying &GAP; function does not define a homomorphism.
-      A semigroup homomorphism is a mapping from a semigroup <C>S</C> to a 
-      semigroup <C>T</C> that respects multiplication. This representation 
-      describes semigroup homomorphisms internally using a &GAP;  function 
+      A semigroup homomorphism is a mapping from a semigroup <C>S</C> to a
+      semigroup <C>T</C> that respects multiplication. This representation
+      describes semigroup homomorphisms internally using a &GAP;  function
       mapping elements of <C>S</C> to their images in <C>T</C>.
       <Example><![CDATA[
 gap> S := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> T := Semigroup([(1, 2, 3), (1, 2)]);;
 gap> hom := SemigroupHomomorphismByFunction(S, T,
-> function(x) if SignPerm(x) = -1 then return (1, 2); 
+> function(x) if SignPerm(x) = -1 then return (1, 2);
 > else return ();fi; end);
-<semigroup of size 24, with 2 generators> -> 
+<semigroup of size 24, with 2 generators> ->
 <semigroup of size 6, with 2 generators>
 gap> IsSemigroupHomomorphismByFunction(hom);
 true]]></Example>
@@ -257,8 +257,8 @@ gap> T := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);;
 gap> map := x -> T.1 ^ Length(Factorization(S, x));;
 gap> inv := x -> S.1 ^ Length(Factorization(T, x));;
 gap> iso := SemigroupIsomorphismByFunction(S, T, map, inv);
-<commutative non-regular transformation semigroup of size 4, degree 5 
-  with 1 generator> -> <commutative non-regular block bijection 
+<commutative non-regular transformation semigroup of size 4, degree 5
+  with 1 generator> -> <commutative non-regular block bijection
   semigroup of size 4, degree 6 with 1 generator>
 gap> IsSemigroupIsomorphismByFunction(iso);
 true]]></Example>
@@ -268,27 +268,27 @@ true]]></Example>
 
 <#GAPDoc Label="AsSemigroupHomomorphismByImages">
   <ManSection>
-    <Oper Name = "AsSemigroupHomomorphismByImages" 
-          Arg = "hom" 
+    <Oper Name = "AsSemigroupHomomorphismByImages"
+          Arg = "hom"
           Label = "for a semigroup homomorphism by function"/>
     <Returns>
       A semigroup homomorphism, or <K>fail</K>.
     </Returns>
     <Description>
-      <C>AsSemigroupHomomorphismByImages</C> takes <A>hom</A>, a semigroup 
-      homomorphism, and returns the same mapping but represented internally 
-      using the generators of <C>Source(<A>hom</A>)</C> and their images in 
-      <C>Range(<A>hom</A>)</C>. If <A>hom</A> not a semigroup homomorphism, 
-      then <K>fail</K> is returned. For example, this could happen if 
-      <A>hom</A> was created using <Ref Oper="SemigroupIsomorphismByFunction"/> 
+      <C>AsSemigroupHomomorphismByImages</C> takes <A>hom</A>, a semigroup
+      homomorphism, and returns the same mapping but represented internally
+      using the generators of <C>Source(<A>hom</A>)</C> and their images in
+      <C>Range(<A>hom</A>)</C>. If <A>hom</A> not a semigroup homomorphism,
+      then <K>fail</K> is returned. For example, this could happen if
+      <A>hom</A> was created using <Ref Oper="SemigroupIsomorphismByFunction"/>
       and a function which does not give a homomorphism.<P/>
       <Example><![CDATA[
 gap> S := Semigroup([(1, 2, 3, 4), (1, 2)]);;
 gap> T := Semigroup([(1, 2, 3), (1, 2)]);;
 gap> hom := SemigroupHomomorphismByFunction(S, T,
-> function(x) if SignPerm(x) = -1 then return (1, 2); 
+> function(x) if SignPerm(x) = -1 then return (1, 2);
 > else return (); fi; end);
-<semigroup of size 24, with 2 generators> -> 
+<semigroup of size 24, with 2 generators> ->
 <semigroup of size 6, with 2 generators>
 ]]></Example>
     </Description>
@@ -297,16 +297,16 @@ gap> hom := SemigroupHomomorphismByFunction(S, T,
 
 <#GAPDoc Label="AsSemigroupHomomorphismByFunction">
   <ManSection>
-    <Oper Name = "AsSemigroupHomomorphismByFunction" 
-          Arg = "hom" 
+    <Oper Name = "AsSemigroupHomomorphismByFunction"
+          Arg = "hom"
           Label = "for a semigroup homomorphism by images"/>
     <Returns>
       A semigroup homomorphism.
     </Returns>
     <Description>
-      <C>AsSemigroupHomomorphismByFunction</C> takes <A>hom</A>, a semigroup 
-      homomorphism, and returns the same mapping but described by a &GAP; 
-      function mapping elements of <C>Source(<A>hom</A>)</C> to their images 
+      <C>AsSemigroupHomomorphismByFunction</C> takes <A>hom</A>, a semigroup
+      homomorphism, and returns the same mapping but described by a &GAP;
+      function mapping elements of <C>Source(<A>hom</A>)</C> to their images
       in <C>Range(<A>hom</A>)</C>.<P/>
       <Example><![CDATA[
 gap> T := TrivialSemigroup();;
@@ -315,7 +315,7 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := ListX(gens, x -> IdentityTransformation);;
 gap> hom := SemigroupHomomorphismByImages(S, T, gens, imgs);;
 gap> hom := AsSemigroupHomomorphismByFunction(hom);
-<general linear monoid 2x2 over GF(2)> -> 
+<general linear monoid 2x2 over GF(2)> ->
 <trivial transformation group of degree 0 with 1 generator>]]></Example>
     </Description>
   </ManSection>
@@ -323,8 +323,8 @@ gap> hom := AsSemigroupHomomorphismByFunction(hom);
 
 <#GAPDoc Label="AsSemigroupIsomorphismByFunction">
   <ManSection>
-    <Oper Name = "AsSemigroupIsomorphismByFunction" 
-          Arg = "hom" 
+    <Oper Name = "AsSemigroupIsomorphismByFunction"
+          Arg = "hom"
           Label = "for a semigroup homomorphism by images"/>
     <Returns>
       A semigroup isomorphism, or <K>fail</K>.
@@ -340,7 +340,7 @@ gap> gens := GeneratorsOfSemigroup(S);;
 gap> imgs := ListWithIdenticalEntries(4, ConstantTransformation(3, 1));;
 gap> hom := SemigroupHomomorphismByImages(S, S, gens, gens);;
 gap> AsSemigroupIsomorphismByFunction(hom);
-<full transformation monoid of degree 3> -> 
+<full transformation monoid of degree 3> ->
 <full transformation monoid of degree 3>]]></Example>
     </Description>
   </ManSection>
@@ -353,10 +353,10 @@ gap> AsSemigroupIsomorphismByFunction(hom);
         A semigroup congruence.
     </Returns>
     <Description>
-      <C>KernelOfSemigroupHomomorphism</C> returns the kernel of the 
-      semigroup homomorphism <A>hom</A>. The kernel of a semigroup 
-      homomorphism <A>hom</A> is a semigroup congruence relating 
-      pairs of elements in <C>Source(<A>hom</A>)</C> mapping to the 
+      <C>KernelOfSemigroupHomomorphism</C> returns the kernel of the
+      semigroup homomorphism <A>hom</A>. The kernel of a semigroup
+      homomorphism <A>hom</A> is a semigroup congruence relating
+      pairs of elements in <C>Source(<A>hom</A>)</C> mapping to the
       same element under <A>hom</A>.
       <Example><![CDATA[
 gap> S := Semigroup([Transformation([2, 1, 5, 1, 5]),

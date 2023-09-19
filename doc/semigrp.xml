@@ -15,16 +15,16 @@
   <Description>
     <C>IsomorphismSemigroup</C> can be used to find an isomorphism from a given
     semigroup to a semigroup of another type, provided such an isomorphism
-    exists. 
+    exists.
     <P/>
 
     The first argument <A>filt</A> must be of the form <C>IsXSemigroup</C>, for
     example,
     <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>,
     <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and
-    <Ref Filt = "IsPBRSemigroup"/> are some possible values for <A>filt</A>. 
+    <Ref Filt = "IsPBRSemigroup"/> are some possible values for <A>filt</A>.
     Note that <A>filt</A> should not be of the form <C>IsXMonoid</C>; see
-    <Ref Oper = "IsomorphismMonoid"/>. 
+    <Ref Oper = "IsomorphismMonoid"/>.
     The second argument <A>S</A> should be a semigroup.
     <P/>
 
@@ -42,7 +42,7 @@
       "IsReesMatrixSemigroup" BookName = "ref"/> and when <A>S</A> is a
     non-simple semigroup.  Similarly, there is no method when <A>filt</A> is
     <Ref Prop = "IsPartialPermSemigroup" BookName = "ref"/> and when <A>S</A> is
-    a non-inverse semigroup. 
+    a non-inverse semigroup.
     <P/>
 
     In some cases, if no better method is installed, <C>IsomorphismSemigroup</C>
@@ -51,9 +51,9 @@
     isomorphism from <C>T</C> to a semigroup of type <A>filt</A>.
     <P/>
 
-    Note that if the argument <A>S</A> belongs to the category of monoids 
+    Note that if the argument <A>S</A> belongs to the category of monoids
     <Ref Filt="IsMonoid" BookName="ref"/>, then <C>IsomorphismSemigroup</C>
-    will often, but not always, return a monoid isomorphism. 
+    will often, but not always, return a monoid isomorphism.
 
     <Example><![CDATA[
 gap> S := Semigroup([
@@ -63,13 +63,13 @@ gap> S := Semigroup([
 >   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
-<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<bipartition semigroup of size 11, degree 6 with 2 generators> ->
 <transformation semigroup of size 11, degree 12 with 2 generators>
 gap> IsomorphismSemigroup(IsBooleanMatSemigroup, S);
-<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<bipartition semigroup of size 11, degree 6 with 2 generators> ->
 <semigroup of size 11, 12x12 boolean matrices with 2 generators>
 gap> IsomorphismSemigroup(IsFpSemigroup, S);
-<bipartition semigroup of size 11, degree 6 with 2 generators> -> 
+<bipartition semigroup of size 11, degree 6 with 2 generators> ->
 <fp semigroup with 2 generators and 5 relations of length 27>
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 6, 8, 10],
@@ -77,19 +77,19 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4, 6, 7, 8, 10],
 >             [3, 8, 1, 9, 4, 10, 5, 6])]);;
 gap> IsomorphismSemigroup(IsBipartitionSemigroup, S);
-<inverse partial perm semigroup of rank 10 with 2 generators> -> 
+<inverse partial perm semigroup of rank 10 with 2 generators> ->
 <inverse bipartition semigroup of degree 10 with 2 generators>
 gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
-<symmetric inverse monoid of degree 4> -> 
+<symmetric inverse monoid of degree 4> ->
 <inverse block bijection monoid of degree 5 with 3 generators>
 gap> Size(Range(last));
 209
 gap> S := Semigroup([
 > PartialPerm([3, 1]), PartialPerm([1, 3, 4])]);;
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
-<partial perm semigroup of rank 3 with 2 generators> -> 
+<partial perm semigroup of rank 3 with 2 generators> ->
 <block bijection semigroup of degree 5 with 2 generators>]]></Example>
   </Description>
 </ManSection>
@@ -106,7 +106,7 @@ gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
     details.
     <P/>
 
-    Note that if the argument <A>S</A> belongs to the category of monoids 
+    Note that if the argument <A>S</A> belongs to the category of monoids
     <Ref Filt="IsMonoid" BookName="ref"/>, then <C>AsSemigroup</C> will often,
     but not always, return a monoid. A monoid is not returned if there is not a
     good monoid isomorphism from <A>S</A> to a monoid of the required
@@ -152,16 +152,16 @@ gap> Size(S);
     <C>IsomorphismMonoid</C> can be used to find an isomorphism from a given
     semigroup which is mathematically a monoid (but might not belong to the
     category of monoids in &GAP;) to a monoid, provided such an isomorphism
-    exists. 
+    exists.
     <P/>
 
     The first argument <A>filt</A> must be of the form <C>IsXMonoid</C>, for
     example,
     <Ref Prop = "IsTransformationMonoid" BookName = "ref"/>,
     <Ref Prop = "IsFpMonoid" BookName = "ref"/>, and
-    <Ref Filt = "IsBipartitionMonoid"/> are some possible values for <A>filt</A>. 
+    <Ref Filt = "IsBipartitionMonoid"/> are some possible values for <A>filt</A>.
     Note that <A>filt</A> should not be of the form <C>IsXSemigroup</C>; see
-    <Ref Oper = "IsomorphismSemigroup"/>. 
+    <Ref Oper = "IsomorphismSemigroup"/>.
     The second argument <A>S</A> should be a semigroup which is mathematically
     a monoid but which may or may not belong to the category
     <Ref Filt="IsMonoid" BookName = "ref"/> of monoids in &GAP;,
@@ -186,7 +186,7 @@ gap> Size(S);
     <Ref Prop = "IsReesZeroMatrixSemigroup" BookName = "ref"/> and when
     <A>S</A> is a not 0-simple.  Similarly, there is no method when <A>filt</A>
     is <Ref Prop = "IsPartialPermMonoid" BookName = "ref"/> and when
-    <A>S</A> is a non-inverse monoid. 
+    <A>S</A> is a non-inverse monoid.
     <P/>
 
     In some cases, if no better method is installed, <C>IsomorphismMonoid</C>
@@ -199,13 +199,13 @@ gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 >                   Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));
 <transformation semigroup of degree 10 with 2 generators>
 gap> IsomorphismMonoid(IsTransformationMonoid, S);
-<transformation semigroup of degree 10 with 2 generators> -> 
+<transformation semigroup of degree 10 with 2 generators> ->
 <transformation monoid of degree 8 with 2 generators>
 gap> IsomorphismMonoid(IsBooleanMatMonoid, S);
-<transformation semigroup of degree 10 with 2 generators> -> 
+<transformation semigroup of degree 10 with 2 generators> ->
 <monoid of 8x8 boolean matrices with 2 generators>
 gap> IsomorphismMonoid(IsFpMonoid, S);
-<transformation semigroup of degree 10 with 2 generators> -> 
+<transformation semigroup of degree 10 with 2 generators> ->
 <fp monoid with 2 generators and 17 relations of length 278>]]></Example>
   </Description>
 </ManSection>
@@ -227,12 +227,12 @@ gap> IsomorphismMonoid(IsFpMonoid, S);
     monoids in &GAP;, then <C>AsMonoid</C> returns a monoid (in the category
     of monoids) isomorphic to <A>S</A> and of the same type as <A>S</A>.
     If <A>S</A> is already in the category of monoids and the first argument
-    <A>filt</A> is omitted, then <A>S</A> is returned. 
+    <A>filt</A> is omitted, then <A>S</A> is returned.
     <P/>
 
     If the first argument <A>filt</A> is omitted and the semigroup <A>S</A>
     is not a monoid, i.e. it does not satisfy <Ref
-      Prop="IsMonoidAsSemigroup"/>, then <K>fail</K> is returned. 
+      Prop="IsMonoidAsSemigroup"/>, then <K>fail</K> is returned.
 
     <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
@@ -280,7 +280,7 @@ gap> AsMonoid(S);
     If no arguments are specified, then they are all chosen at random, for a
     truly random experience.
     <P/>
- 
+
     The first argument, if present, should be a filter <A>filter</A>.  For
     <C>RandomSemigroup</C> and <C>RandomInverseSemigroup</C> the filter
     <A>filter</A> must be of the form <C>IsXSemigroup</C>. For example,
@@ -330,10 +330,10 @@ gap> AsMonoid(S);
       <Item>
         The fourth argument, if present, should be a positive integer <A>t</A>,
         which specifies the threshold of the semiring over which the matrices
-        in the returned semigroup are defined. 
+        in the returned semigroup are defined.
       </Item>
     </List>
- 
+
     You get the idea, the error messages are self-explanatory, and
     <C>RandomSemigroup</C> works for most of the type of semigroups defined in
     &GAP;.<P/>
@@ -382,7 +382,7 @@ gap> RandomMonoid(IsBipartitionMonoid, 5, 5);
 gap> RandomSemigroup(IsBooleanMatSemigroup);
 <semigroup of 3x3 boolean matrices with 18 generators>
 gap> RandomMonoid(IsBooleanMatMonoid);
-<monoid of 11x11 boolean matrices with 19 generators>]]></Log> 
+<monoid of 11x11 boolean matrices with 19 generators>]]></Log>
   </Description>
 </ManSection>
 <#/GAPDoc>

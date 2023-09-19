@@ -35,9 +35,9 @@
       than a few minutes to complete.  To quickly test that &SEMIGROUPS; is
       installed correctly use <Ref Func = "SemigroupsTestInstall"/>.<P/>
 
-      Each test file is run twice, once when the methods for 
+      Each test file is run twice, once when the methods for
       <Ref Filt="IsActingSemigroup"/> are enabled and once when they are
-      disabled. 
+      disabled.
     </Description>
   </ManSection>
 <#/GAPDoc>

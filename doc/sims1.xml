@@ -90,7 +90,7 @@ gap> NumberOfLeftCongruences(S, Size(S), [[S.1, S.2], [S.1, S.3]]);
     Label="for a semigroup"/>
   <Returns>An iterator.</Returns>
   <Description>
-    <C>IteratorOfRightCongruences</C> returns an iterator where calling 
+    <C>IteratorOfRightCongruences</C> returns an iterator where calling
     <Ref Oper="NextIterator" BookName="ref"/> returns the next right congruence
     of the semigroup <A>S</A> with at most <A>n</A> classes that contain the
     pairs in <A>extra</A>; <C>IteratorOfLeftCongruences</C> is defined dually

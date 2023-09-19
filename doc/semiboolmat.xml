@@ -60,7 +60,7 @@ gap> Size(S);
         and <C>D[n][1]</C>.
       </Item>
     </List>
-    This monoid has nearly <C>2 ^ (n ^ 2)</C> elements. 
+    This monoid has nearly <C>2 ^ (n ^ 2)</C> elements.
       <Example><![CDATA[
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>

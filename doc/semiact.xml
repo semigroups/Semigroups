@@ -13,8 +13,8 @@
     <Filt Name = "IsActingSemigroup" Arg = "obj" Type="Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      Every acting semigroup, as defined in Section 
-      <Ref Subsect="Acting semigroups"/>, belongs to this category. 
+      Every acting semigroup, as defined in Section
+      <Ref Subsect="Acting semigroups"/>, belongs to this category.
 
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 2]));;

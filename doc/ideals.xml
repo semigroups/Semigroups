@@ -173,15 +173,15 @@ gap> S := Semigroup([Transformation([4, 3, 4, 1]),
 <transformation semigroup of degree 4 with 2 generators>
 gap> Ideals(S);
 [ <non-regular transformation semigroup ideal of degree 4 with
-      1 generator>, 
+      1 generator>,
  <non-regular transformation semigroup ideal of degree 4 with
-     1 generator>, 
+     1 generator>,
 <non-regular transformation semigroup ideal of degree 4 with
-    2 generators>, 
+    2 generators>,
 <regular transformation semigroup ideal of degree 4 with 1 generator>,
 <non-regular transformation semigroup ideal of degree 4 with
-  1 generator>, 
-<regular transformation semigroup ideal of degree 4 with 1 generator> 
+  1 generator>,
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 ]
 ]]></Example>
     </Description>

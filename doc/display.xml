@@ -229,7 +229,7 @@ gap> FileString("t3.dot", DotString(S));
     <Description>
       If <A>digraph</A> is a <Ref Oper="Digraph" BookName="digraphs"/> in the
       category <Ref Filt="IsCayleyDigraph" BookName="digraphs"/>, then
-      <C>DotString</C> returns a graphical representation of <A>digraph</A>. 
+      <C>DotString</C> returns a graphical representation of <A>digraph</A>.
       The output is in <C>dot</C> format (also known
       as <C>GraphViz</C>) format. For details about this file format, and
       information about how to display or edit this format see
@@ -286,7 +286,7 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
       this is taken to be the degree of the transformation <A>f</A>, if the
       parameter <A>n</A> is not given, then <Ref Attr="DegreeOfTransformation"
         BookName="ref"/> is used by default. If <A>n</A> is less than the
-      degree of <A>f</A>, then an error is given. 
+      degree of <A>f</A>, then an error is given.
       <P/>
       <Example><![CDATA[
 gap> TexString(Transformation([6, 2, 4, 3, 6, 4]));
@@ -305,14 +305,14 @@ d{pmatrix}"]]></Example>
     <Oper Name="TikzRightCayleyDigraph" Arg="S"/>
     <Returns>A string.</Returns>
     <Description>
-      If <A>S</A> is a semigroup satisfying 
+      If <A>S</A> is a semigroup satisfying
       <Ref Prop="CanUseFroidurePin"/>, then <C>TikzLeftCayleyDigraph</C>
       is simply short for <C>TikzString(LeftCayleyDigraph(<A>S</A>))</C>.<P/>
 
       <C>TikzRightCayleyDigraph</C> can be used to produce a tikz string for
       the right Cayley graph of <A>S</A>.<P/>
 
-      See <Ref Oper="TikzString"/> for more details, and see also 
+      See <Ref Oper="TikzString"/> for more details, and see also
       <Ref Oper="DotLeftCayleyDigraph"/>.
 
       <Log><![CDATA[
@@ -351,7 +351,7 @@ kzpicture}"]]></Log>
       <C>DotRightCayleyDigraph</C> can be used to produce a dot string for
       the right Cayley graph of <A>S</A>.<P/>
 
-      See <Ref Oper="DotString"/> for more details, and see also 
+      See <Ref Oper="DotString"/> for more details, and see also
       <Ref Oper="TikzLeftCayleyDigraph"/>.
 
       <Log><![CDATA[

@@ -23,7 +23,7 @@
     In this section, we describe the operations in &SEMIGROUPS; for creating
     pictures in <C>dot</C> format.
     <P/>
- 
+
     The operations described in this section return strings, which
     can be written to a file using the function <Ref Func = "FileString"
       BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash" BookName =
@@ -35,7 +35,7 @@
     <#Include Label = "DotLeftCayleyDigraph">
 
   </Section>
- 
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -45,7 +45,7 @@
     </Heading>
     In this section, we describe the operations in &SEMIGROUPS; for creating
     &LaTeX; representations of &GAP; objects. For pictures of &GAP; objects
-    please see Section <Ref Sect="tikz pictures"/>. 
+    please see Section <Ref Sect="tikz pictures"/>.
 
     <#Include Label = "TexString">
   </Section>

@@ -26,7 +26,7 @@
       returns a new matrix corresponding to <A>mat</A> of the type specified by
       the filter <A>filt</A>, and if applicable the arguments <A>threshold</A>
       and <A>period</A>. The dimension of the matrix <A>mat</A> is not changed
-      by this operation. 
+      by this operation.
       <P/>
 
       The version of the operation with arguments <A>filt</A> and <A>mat</A>
@@ -60,7 +60,7 @@
           threshold of the resulting matrix.
         </Item>
       </List>
- 
+
       The version of the operation with arguments <A>filt</A>, <A>mat</A>,
       <A>threshold</A>, and <A>period</A> can be applied to <Ref Filt =
         "IsNTPMatrix"/> and an ntp matrix, or integer matrix.
@@ -73,7 +73,7 @@
 
       When converting non-tropical matrices to tropical matrices entries higher
       than the specified threshold are reduced to the threshold.
- 
+
       <Example><![CDATA[
 gap> mat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3],
 >                                            [1, 1, 6],
@@ -84,7 +84,7 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
 >                                            [0, 1, 3],
 >                                            [4, 1, 0]], 10);;
 gap> AsMatrix(IsMaxPlusMatrix, mat);
-Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
+Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3],
   [4, 1, 0]])
 gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
@@ -100,13 +100,13 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
 >                                            [0, 1, 3],
 >                                            [4, 1, 0]], 10);;
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 4);
-Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
   [0, 1, 3], [4, 1, 0]], 4)
 gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3],
 >                                    [0, 1, 3],
 >                                    [4, 1, 0]]);;
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 10);
-Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
   [0, 1, 3], [4, 1, 0]], 10)
 gap> mat := Matrix(IsNTPMatrix, [[0, 1, 0],
 >                                [1, 3, 1],
@@ -134,7 +134,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
       If <A>mat</A> is a matrix over a semiring (in the category <Ref Filt
         = "IsMatrixOverSemiring"/>), then <C>AsList</C> returns the underlying
       list of lists of semiring elements corresponding to <A>mat</A>. In this
-      case, the returned list and all of its entries are immutable. 
+      case, the returned list and all of its entries are immutable.
       <P/>
 
       The operation <C>AsMutableList</C> returns a mutable copy of the
@@ -212,7 +212,7 @@ true]]></Example>
     <Description>
       If <A>mat</A> is a matrix over a semiring (i.e. belongs to the category
       <Ref Filt = "IsMatrixOverSemiring"/>), then <A>mat</A> is a square <C>n</C>
-      by <C>n</C> matrix. 
+      by <C>n</C> matrix.
       <C>DimensionOfMatrixOverSemiring</C> returns the dimension <C>n</C> of
       <A>mat</A>.
       <Example><![CDATA[
@@ -220,7 +220,7 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [0, 1, 1, 0],
 >                     [1, 0, 1, 1],
 >                     [0, 0, 0, 1]]);
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 gap> DimensionOfMatrixOverSemiring(x);
 4]]></Example>
@@ -235,7 +235,7 @@ gap> DimensionOfMatrixOverSemiring(x);
     <Description>
       If <A>coll</A> is a collection of matrices over a semiring (i.e. belongs
       to the category <Ref Filt = "IsMatrixOverSemiringCollection"/>), then
-      the elements of <A>coll</A> are square <C>n</C> by <C>n</C> matrices. 
+      the elements of <A>coll</A> are square <C>n</C> by <C>n</C> matrices.
       <C>DimensionOfMatrixOverSemiringCollection</C> returns the dimension
       <C>n</C> of these matrices.
       <Example><![CDATA[
@@ -243,7 +243,7 @@ gap> x := BooleanMat([[1, 0, 0, 1],
 >                     [0, 1, 1, 0],
 >                     [1, 0, 1, 1],
 >                     [0, 0, 0, 1]]);
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
 4]]></Example>
@@ -262,14 +262,14 @@ gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
       This operation can be used to construct a matrix over
       a semiring in &SEMIGROUPS;.
       <P/>
- 
+
       In its first form, the first argument <A>filt</A> specifies the
       filter to be used to create the matrix, the second argument <A>mat</A> is
       a &GAP; matrix (i.e. a list of lists) compatible with <A>filt</A>, the
       third and fourth arguments <A>threshold</A> and <A>period</A> (if
       required) must be positive integers.
       <P/>
- 
+
       <List>
         <Mark><A>filt</A></Mark>
         <Item>
@@ -285,28 +285,28 @@ gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
           <A>period</A> if present. An error is given if <A>mat</A> is not
           compatible with the other arguments.
           <P/>
- 
+
           For example, if <A>filt</A> is <C>IsMaxPlusMatrix</C>, then the
           entries of <A>mat</A> must belong to the max-plus semiring, i.e. they
           must be integers or -<M>\infty</M>. <P/>
 
           The supported semirings are fully described at the start of this
-          chapter. 
+          chapter.
         </Item>
- 
+
         <Mark><A>threshold</A></Mark>
         <Item>
           If <A>filt</A> is any of <Ref Filt = "IsTropicalMaxPlusMatrix"/>,
           <Ref Filt = "IsTropicalMinPlusMatrix"/>, or <Ref Filt =
             "IsNTPMatrix"/>, then this argument specifies the threshold of the
-          underlying semiring of the matrix being created. 
+          underlying semiring of the matrix being created.
         </Item>
- 
+
         <Mark><A>period</A></Mark>
         <Item>
           If <A>filt</A> is <Ref Filt = "IsNTPMatrix"/>, then this argument
           specifies the period of the underlying semiring of the matrix being
-          created. 
+          created.
         </Item>
       </List>
 
@@ -317,13 +317,13 @@ gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
       <P/>
 
       The function <Ref Func = "BooleanMat"/> is provided for specifically
-      creating boolean matrices. 
+      creating boolean matrices.
       <Example><![CDATA[
 gap> Matrix(IsBooleanMat, [[1, 0, 0, 0],
 >                          [0, 0, 0, 0],
 >                          [1, 1, 1, 1],
 >                          [1, 0, 1, 1]]);
-Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], 
+Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1],
   [1, 0, 1, 1]])
 gap> Matrix(IsMaxPlusMatrix, [[4, 0, -2],
 >                             [1, -3, 0],
@@ -336,7 +336,7 @@ gap> Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],
 >                                     [3, 1, 1],
 >                                     [-infinity, 1, 1]],
 >           9);
-Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], 
+Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1],
   [-infinity, 1, 1]], 9)
 gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],
 >                                     [0, 3, 0],
@@ -380,13 +380,13 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
       in &SEMIGROUPS;. The usage of <C>RandomMatrix</C> is similar to that of
         <Ref Oper = "Matrix" Label = "for a filter and a matrix"/>.
       <P/>
- 
+
       In its first form, the first argument <A>filt</A> specifies the
       filter to be used to create the matrix, the second argument <A>dim</A> is
       dimension of the matrix, the third and fourth arguments <A>threshold</A>
       and <A>period</A> (if required) must be positive integers.
       <P/>
- 
+
       <List>
         <Mark><A>filt</A></Mark>
         <Item>
@@ -398,20 +398,20 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
         <Item>
           This must be a positive integer.
         </Item>
- 
+
         <Mark><A>threshold</A></Mark>
         <Item>
           If <A>filt</A> is any of <Ref Filt = "IsTropicalMaxPlusMatrix"/>,
           <Ref Filt = "IsTropicalMinPlusMatrix"/>, or <Ref Filt =
             "IsNTPMatrix"/>, then this argument specifies the threshold of the
-          underlying semiring of the matrix being created. 
+          underlying semiring of the matrix being created.
         </Item>
- 
+
         <Mark><A>period</A></Mark>
         <Item>
           If <A>filt</A> is <Ref Filt = "IsNTPMatrix"/>, then this argument
           specifies the period of the underlying semiring of the matrix being
-          created. 
+          created.
         </Item>
       </List>
 
@@ -428,10 +428,10 @@ Matrix(IsMaxPlusMatrix, [[1, -infinity], [1, 0]])
 gap> RandomMatrix(IsMinPlusMatrix, 3);
 Matrix(IsMinPlusMatrix, [[infinity, 2, infinity], [4, 0, -2], [1, -3, 0]])
 gap> RandomMatrix(IsTropicalMaxPlusMatrix, 3, 5);
-Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]], 
+Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]],
   5)
 gap> RandomMatrix(IsTropicalMinPlusMatrix, 3, 2);
-Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1], 
+Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1],
   [2, 2, 1]], 2)
 gap> RandomMatrix(IsNTPMatrix, 3, 2, 5);
 Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)

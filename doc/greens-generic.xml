@@ -204,61 +204,61 @@ true]]></Example>
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 >                   Transformation([4, 3, 1, 2]));;
 gap> GreensDClasses(S);
-[ <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>, 
-  <Green's D-class: Transformation( [ 4, 3, 1, 2 ] )>, 
+[ <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>,
+  <Green's D-class: Transformation( [ 4, 3, 1, 2 ] )>,
   <Green's D-class: Transformation( [ 4, 4, 4, 4 ] )> ]
 gap> GreensRClasses(S);
-[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, 
-  <Green's R-class: Transformation( [ 4, 3, 1, 2 ] )>, 
-  <Green's R-class: Transformation( [ 4, 4, 4, 4 ] )>, 
-  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, 
-  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, 
+[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>,
+  <Green's R-class: Transformation( [ 4, 3, 1, 2 ] )>,
+  <Green's R-class: Transformation( [ 4, 4, 4, 4 ] )>,
+  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>,
+  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>,
   <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ]
 gap> D := GreensDClasses(S)[1];
 <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>
 gap> GreensLClasses(D);
-[ <Green's L-class: Transformation( [ 3, 4, 4, 4 ] )>, 
+[ <Green's L-class: Transformation( [ 3, 4, 4, 4 ] )>,
   <Green's L-class: Transformation( [ 1, 2, 2, 2 ] )> ]
 gap> GreensRClasses(D);
-[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, 
-  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, 
-  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, 
+[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>,
+  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>,
+  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>,
   <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ]
 gap> R := GreensRClasses(D)[1];
 <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>
 gap> GreensHClasses(R);
-[ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>, 
+[ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>,
   <Green's H-class: Transformation( [ 1, 2, 2, 2 ] )> ]
 gap> S := InverseSemigroup([
 > PartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;
 gap> GreensDClasses(S);
-[ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>, 
-  <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>, 
-  <Green's D-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's D-class: <identity partial perm on [ 4 ]>>, 
+[ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>,
+  <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>,
+  <Green's D-class: <identity partial perm on [ 1, 3 ]>>,
+  <Green's D-class: <identity partial perm on [ 4 ]>>,
   <Green's D-class: <empty partial perm>> ]
 gap> GreensLClasses(S);
-[ <Green's L-class: <identity partial perm on [ 1, 2, 4 ]>>, 
-  <Green's L-class: [4,2,1,3]>, 
-  <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>, 
-  <Green's L-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, 
-  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, 
-  <Green's L-class: [1,2](3)>, 
-  <Green's L-class: <identity partial perm on [ 4 ]>>, 
-  <Green's L-class: [4,1]>, <Green's L-class: [4,3]>, 
+[ <Green's L-class: <identity partial perm on [ 1, 2, 4 ]>>,
+  <Green's L-class: [4,2,1,3]>,
+  <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>,
+  <Green's L-class: <identity partial perm on [ 1, 3 ]>>,
+  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>,
+  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>,
+  <Green's L-class: [1,2](3)>,
+  <Green's L-class: <identity partial perm on [ 4 ]>>,
+  <Green's L-class: [4,1]>, <Green's L-class: [4,3]>,
   <Green's L-class: [4,2]>, <Green's L-class: <empty partial perm>> ]
 gap> D := GreensDClasses(S)[3];
 <Green's D-class: <identity partial perm on [ 1, 3 ]>>
 gap> GreensLClasses(D);
-[ <Green's L-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, 
-  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, 
+[ <Green's L-class: <identity partial perm on [ 1, 3 ]>>,
+  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>,
+  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>,
   <Green's L-class: [1,2](3)> ]
 gap> GreensRClasses(D);
-[ <Green's R-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's R-class: [2,1,3]>, <Green's R-class: [2,3][4,1]>, 
-  <Green's R-class: [4,3,1]>, <Green's R-class: [4,1,3]>, 
+[ <Green's R-class: <identity partial perm on [ 1, 3 ]>>,
+  <Green's R-class: [2,1,3]>, <Green's R-class: [2,3][4,1]>,
+  <Green's R-class: [4,3,1]>, <Green's R-class: [4,1,3]>,
   <Green's R-class: [2,1](3)> ]]]></Example>
     </Description>
   </ManSection>
@@ -408,19 +408,19 @@ gap> Size(L);
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 >                   Transformation([4, 3, 1, 2]));;
 gap> DClassReps(S);
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ),
   Transformation( [ 4, 4, 4, 4 ] ) ]
 gap> LClassReps(S);
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
-  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
-  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ),
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ),
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ),
   Transformation( [ 1, 1, 1, 1 ] ) ]
 gap> D := GreensDClasses(S)[1];
 <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>
 gap> LClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
 gap> RClassReps(D);
-[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 gap> R := GreensRClasses(D)[1];;
 gap> HClassReps(R);
@@ -430,7 +430,7 @@ gap> e := InverseSemigroup(Idempotents(S));;
 gap> M := MunnSemigroup(e);;
 gap> L := LClassNC(M, PartialPerm([51, 63], [51, 47]));;
 gap> HClassReps(L);
-[ <identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51), 
+[ <identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51),
   [64,47](51), [63,47](51), [59,47](51) ]]]></Example>
     </Description>
   </ManSection>
@@ -525,11 +525,11 @@ gap> S := Semigroup(Transformation([2, 3, 4, 1]),
 gap> Idempotents(S, 1);
 [  ]
 gap> AsSet(Idempotents(S, 2));
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ),
   Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> AsSet(Idempotents(S));
-[ Transformation( [ 1, 1, 3, 3 ] ), IdentityTransformation, 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), IdentityTransformation,
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ),
   Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> x := Transformation([2, 2, 4, 4]);;
 gap> R := GreensRClassOfElement(S, x);;
@@ -541,7 +541,7 @@ gap> AsSet(Idempotents(L));
 [ Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> D := DClassOfLClass(L);;
 gap> AsSet(Idempotents(D));
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ),
   Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> L := GreensLClassOfElement(S, Transformation([3, 1, 1, 3]));;
 gap> AsSet(Idempotents(L));
@@ -885,8 +885,8 @@ gap> NrRegularDClasses(S);
 gap> NrDClasses(S);
 7
 gap> AsSet(RegularDClasses(S));
-[ <Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )>, 
-  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, 
+[ <Green's D-class: Transformation( [ 1, 4, 1, 1, 4, 3 ] )>,
+  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>,
   <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )> ]]]></Example>
   </Description>
 </ManSection>
@@ -1043,10 +1043,10 @@ gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 5, 6, 7, 8, 9],
 >             [7, 4, 1, 6, 9, 5, 2, 3]));;
 gap> List(DClasses(S), SchutzenbergerGroup);
-[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]), 
-  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()), 
-  Group(()), Group(()), Group(()), Group(()), Group(()), 
-  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), 
+[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]),
+  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()),
+  Group(()), Group(()), Group(()), Group(()), Group(()),
+  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()),
   Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ]]]></Example>
   </Description>
   </ManSection>

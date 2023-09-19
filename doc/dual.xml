@@ -22,7 +22,7 @@
 gap> S := Semigroup([Transformation([1, 4, 3, 2, 2]),
 > Transformation([5, 4, 4, 1, 2])]);;
 gap> D := DualSemigroup(S);
-<dual semigroup of <transformation semigroup of degree 5 with 2 
+<dual semigroup of <transformation semigroup of degree 5 with 2
  generators>>
 gap> Size(S) = Size(D);
 true
@@ -46,8 +46,8 @@ true]]></Example> </Description> </ManSection>
 gap> S := PartitionMonoid(3);
 <regular bipartition *-monoid of size 203, degree 3 with 4 generators>
 gap> map := AntiIsomorphismDualSemigroup(S);
-MappingByFunction( <regular bipartition *-monoid of size 203, 
- degree 3 with 4 generators>, <dual semigroup of 
+MappingByFunction( <regular bipartition *-monoid of size 203,
+ degree 3 with 4 generators>, <dual semigroup of
 <regular bipartition *-monoid of size 203, degree 3 with 4 generators>
  >, function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(map);;
@@ -113,7 +113,7 @@ gap> S := Semigroup([Transformation([3, 5, 1, 1, 2]),
 > Transformation([1, 2, 4, 4, 3])]);
 <transformation semigroup of degree 5 with 2 generators>
 gap> D := DualSemigroup(S);
-<dual semigroup of <transformation semigroup of degree 5 with 2 
+<dual semigroup of <transformation semigroup of degree 5 with 2
  generators>>
 gap> IsDualSemigroupRep(D);
 true
@@ -130,7 +130,7 @@ false
 gap> x := Representative(D);
 <Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup>
 gap> V := Semigroup(x);
-<dual semigroup of <commutative transformation semigroup of degree 5 
+<dual semigroup of <commutative transformation semigroup of degree 5
  with 1 generator>>
 gap> IsDualSemigroupRep(V);
 true]]></Example> </Description> </ManSection>

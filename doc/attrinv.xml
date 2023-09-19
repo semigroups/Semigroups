@@ -63,33 +63,33 @@ gap> S := InverseMonoid([
 >  PartialPerm([1, 2, 3], [2, 4, 1]),
 >  PartialPerm([1, 3, 4], [3, 4, 1])]);;
 gap> CharacterTableOfInverseSemigroup(S);
-[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], 
+[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ],
+      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ],
       [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],
-      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ <identity partial perm on [ 1, 2, 3, 4 ]>, 
-      <identity partial perm on [ 1, 3, 4 ]>, (1,3,4), (1,4,3), 
-      <identity partial perm on [ 1, 3 ]>, (1,3), 
+      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ],
+      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ <identity partial perm on [ 1, 2, 3, 4 ]>,
+      <identity partial perm on [ 1, 3, 4 ]>, (1,3,4), (1,4,3),
+      <identity partial perm on [ 1, 3 ]>, (1,3),
       <identity partial perm on [ 3 ]>, <empty partial perm> ] ]
 gap> S := SymmetricInverseMonoid(4);;
 gap> CharacterTableOfInverseSemigroup(S);
-[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], 
-      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ], 
-      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ], 
-      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], 
-      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], 
-      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], 
-      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], 
-  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), 
-      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), 
-      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), 
-      <identity partial perm on [ 2, 3 ]>, (2,3), 
+[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ],
+      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ],
+      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ],
+      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ],
+      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ],
+      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4),
+      (1)(2,3,4), (1,2)(3,4), (1,2,3,4),
+      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3),
+      <identity partial perm on [ 2, 3 ]>, (2,3),
       <identity partial perm on [ 1 ]>, <empty partial perm> ] ]]]></Example>
     </Description>
   </ManSection>
@@ -113,17 +113,17 @@ gap> S := InverseMonoid(
 gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> Set(PrimitiveIdempotents(S));
-[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, 
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>,
   <identity partial perm on [ 3 ]>, <identity partial perm on [ 4 ]> ]
 gap> S := DualSymmetricInverseMonoid(4);
 <inverse block bijection monoid of degree 4 with 3 generators>
 gap> Set(PrimitiveIdempotents(S));
-[ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>, 
-  <block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]>, 
-  <block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]>, 
-  <block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]>, 
-  <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]>, 
+[ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>,
+  <block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>,
+  <block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]>,
+  <block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]>,
+  <block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]>,
+  <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]>,
   <block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]> ]]]></Example>
   </Description>
 </ManSection>
@@ -174,7 +174,7 @@ gap> B := InverseSemigroup([
 <inverse block bijection semigroup of degree 7 with 4 generators>
 gap> x := Bipartition([
 >   [1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7], [4, -1]]);
-<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
+<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ],
  [ 4, -1 ]>
 gap> IsJoinIrreducible(B, x);
 true
@@ -198,7 +198,7 @@ false]]></Example>
   contains all elements of <A>S</A> which are greater than or equal to any
   element of <A>T</A>, with respect to the natural partial order.
   See <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>.<P/>
- 
+
   Note that <A>T</A> can be a subset of <A>S</A> or a subsemigroup of <A>S</A>.
 </Description>
 </ManSection>
@@ -251,8 +251,8 @@ gap> T := InverseSemigroup([
 >   PartialPerm([0, 2])]);
 <inverse partial perm semigroup of rank 4 with 3 generators>
 gap> JoinIrreducibleDClasses(T);
-[ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>, 
-  <Green's D-class: <identity partial perm on [ 1 ]>>, 
+[ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>,
+  <Green's D-class: <identity partial perm on [ 1 ]>>,
   <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> D := DualSymmetricInverseSemigroup(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
@@ -285,9 +285,9 @@ gap> S := SymmetricInverseSemigroup(4);
 gap> T := [PartialPerm([1, 0, 3, 0])];
 [ <identity partial perm on [ 1, 3 ]> ]
 gap> U := MajorantClosure(S, T);
-[ <identity partial perm on [ 1, 3 ]>, 
-  <identity partial perm on [ 1, 2, 3 ]>, [2,4](1)(3), [4,2](1)(3), 
-  <identity partial perm on [ 1, 3, 4 ]>, 
+[ <identity partial perm on [ 1, 3 ]>,
+  <identity partial perm on [ 1, 2, 3 ]>, [2,4](1)(3), [4,2](1)(3),
+  <identity partial perm on [ 1, 3, 4 ]>,
   <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,4)(3) ]
 gap> B := InverseSemigroup([
 >  Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),
@@ -297,14 +297,14 @@ gap> T := [Bipartition([[1, -2], [2, 3, 5, -1, -3, -5], [4, -4]]),
 gap> IsMajorantlyClosed(B, T);
 false
 gap> MajorantClosure(B, T);
-[ <block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]>, 
-  <block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]>, 
+[ <block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]>,
+  <block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]>,
   <block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]>
-    , <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], 
-     [ 4, -4 ]>, 
+    , <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ],
+     [ 4, -4 ]>,
   <block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], [ 3, -1 ], [ 4, -2 ]>
-    , <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ], 
-     [ 4, -2 ]>, <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], 
+    , <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ],
+     [ 4, -2 ]>, <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ],
      [ 4, -2 ], [ 5, -5 ]> ]
 gap> IsMajorantlyClosed(B, last);
 true
@@ -368,11 +368,11 @@ gap> T := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));
 gap> IsMajorantlyClosed(S, T);
 true
 gap> RC := RightCosetsOfInverseSemigroup(S, T);
-[ [ <identity partial perm on [ 1 ]>, 
-      <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), 
-      <identity partial perm on [ 1, 3 ]>, 
-      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3) ], 
-  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], 
+[ [ <identity partial perm on [ 1 ]>,
+      <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1),
+      <identity partial perm on [ 1, 3 ]>,
+      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3) ],
+  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ],
   [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ]]]></Example>
 <#/GAPDoc>
 
@@ -401,7 +401,7 @@ gap> S := SymmetricInverseSemigroup(3);
 gap> H := GroupHClass(DClass(S, PartialPerm([1, 2, 3])));
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
 gap> Elements(H);
-[ <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2)(3), 
+[ <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2)(3),
   (1,2,3), (1,3,2), (1,3)(2) ]
 gap> SameMinorantsSubgroup(H);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
@@ -410,8 +410,8 @@ gap> T := InverseSemigroup(
 > PartialPerm([1], [1]), PartialPerm([2], [2]));
 <inverse partial perm semigroup of rank 4 with 3 generators>
 gap> Elements(T);
-[ <empty partial perm>, <identity partial perm on [ 1 ]>, 
-  <identity partial perm on [ 2 ]>, 
+[ <empty partial perm>, <identity partial perm on [ 1 ]>,
+  <identity partial perm on [ 2 ]>,
   <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ]
 gap> x := GroupHClass(DClass(T, PartialPerm([1, 2, 3, 4])));
 <Green's H-class: <identity partial perm on [ 1, 2, 3, 4 ]>>
@@ -443,7 +443,7 @@ gap> AsSet(SameMinorantsSubgroup(x));
 gap> S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));
 <partial perm group of rank 8 with 1 generator>
 gap> Elements(S);
-[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
+[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>,
   (1,2)(3,4)(5,6)(7,8) ]
 gap> iso := SmallerDegreePartialPermRepresentation(S);;
 gap> Source(iso) = S;
@@ -454,11 +454,11 @@ gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid of size 6721, rank 6721 with 3 
+<inverse partial perm monoid of size 6721, rank 6721 with 3
  generators>
 gap> SmallerDegreePartialPermRepresentation(T);
-<inverse partial perm monoid of size 6721, rank 6721 with 3 
-  generators> -> <inverse partial perm monoid of rank 30 with 3 
+<inverse partial perm monoid of size 6721, rank 6721 with 3
+  generators> -> <inverse partial perm monoid of rank 30 with 3
   generators>]]></Example>
 <#/GAPDoc>
 
@@ -493,7 +493,7 @@ gap> S := SymmetricInverseSemigroup(2);
 gap> Size(S);
 7
 gap> iso := VagnerPrestonRepresentation(S);
-<symmetric inverse monoid of degree 2> -> 
+<symmetric inverse monoid of degree 2> ->
 <inverse partial perm monoid of rank 7 with 2 generators>
 gap> RespectsMultiplication(iso);
 true
@@ -508,7 +508,7 @@ gap> V := InverseSemigroup(
 gap> IsInverseSemigroup(V);
 true
 gap> VagnerPrestonRepresentation(V);
-<inverse bipartition semigroup of size 394, degree 5 with 3 
-  generators> -> <inverse partial perm semigroup of rank 394 with 5 
+<inverse bipartition semigroup of size 394, degree 5 with 3
+  generators> -> <inverse partial perm semigroup of rank 394 with 5
   generators>]]></Example>
 <#/GAPDoc>

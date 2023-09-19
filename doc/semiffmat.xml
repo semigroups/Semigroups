@@ -82,7 +82,7 @@ gap> S := Semigroup([
       <C>IsFullMatrixMonoid</C> and <C>IsGeneralLinearMonoid</C> return
       <K>true</K> if the semigroup <C>S</C> was created using either of the
       commands <Ref Oper="FullMatrixMonoid"/> or
-      <Ref Oper="GeneralLinearMonoid"/> and <K>false</K> otherwise. 
+      <Ref Oper="GeneralLinearMonoid"/> and <K>false</K> otherwise.
 
       <Example><![CDATA[
 gap> S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;

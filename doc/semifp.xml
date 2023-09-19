@@ -147,8 +147,8 @@ gap> R := [[a ^ 3, a], [b ^ 2, b], [(a * b) ^ 2, a]];
 gap> S := F / R;
 <fp semigroup with 2 generators and 3 relations of length 14>
 gap> map := AntiIsomorphismDualFpSemigroup(S);
-MappingByFunction( <fp semigroup with 2 generators and 
-  3 relations of length 14>, <fp semigroup with 2 generators and 
+MappingByFunction( <fp semigroup with 2 generators and
+  3 relations of length 14>, <fp semigroup with 2 generators and
   3 relations of length 14>
  , function( x ) ... end, function( x ) ... end )
 gap> RelationsOfFpSemigroup(Range(map));
@@ -187,7 +187,7 @@ gap> Size(S);
 gap> IsMonoidAsSemigroup(S);
 false
 gap> map := EmbeddingFpMonoid(S);
-<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp semigroup with 2 generators and 3 relations of length 14> ->
 <fp monoid with 2 generators and 3 relations of length 14>
 gap> Size(Range(map));
 4
@@ -202,8 +202,8 @@ gap> Size(Range(map));
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     This property is <K>true</K> if the object <A>S</A> is a subsemigroup of an
-    fp monoid, and <K>false</K> otherwise. This property is just a synonym for 
-    <Ref Prop="IsSemigroup" BookName="ref"/> and 
+    fp monoid, and <K>false</K> otherwise. This property is just a synonym for
+    <Ref Prop="IsSemigroup" BookName="ref"/> and
     <C>IsElementOfFpMonoidCollection</C>.
 
     <Example><![CDATA[
@@ -217,7 +217,7 @@ gap> S := F / R;
 gap> IsSubsemigroupOfFpMonoid(S);
 false
 gap> map := EmbeddingFpMonoid(S);
-<fp semigroup with 2 generators and 3 relations of length 14> -> 
+<fp semigroup with 2 generators and 3 relations of length 14> ->
 <fp monoid with 2 generators and 3 relations of length 14>
 gap> IsSubsemigroupOfFpMonoid(Image(map));
 true

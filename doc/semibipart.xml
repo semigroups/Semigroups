@@ -19,8 +19,8 @@
       it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and
       <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
-      A <E>bipartition monoid</E> is a monoid consisting of bipartitions. 
-      An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
+      A <E>bipartition monoid</E> is a monoid consisting of bipartitions.
+      An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies
       <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
@@ -48,7 +48,7 @@ gap> S := Semigroup([
 gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
-<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
  [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>
 gap> IsMonoid(S);
 false]]></Example>
@@ -86,11 +86,11 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
       A <E>block bijection semigroup</E> is simply a semigroup consisting of
       block bijections.  A <E>block bijection monoid</E> is a monoid consisting
       of block bijections.<P/>
- 
+
       An object in &GAP; is a block bijection monoid if it satisfies
       <Ref Prop = "IsMonoid" BookName = "ref"/> and <Ref
         Prop = "IsBlockBijectionSemigroup"/>.<P/>
- 
+
       See <Ref Prop = "IsBlockBijection"/>.
     </Description>
   </ManSection>
@@ -105,11 +105,11 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
       A <E>partial perm bipartition semigroup</E> is simply a semigroup
       consisting of partial perm bipartitions.  A <E>partial perm bipartition
         monoid</E> is a monoid consisting of partial perm bipartitions.<P/>
- 
+
       An object in &GAP; is a partial perm bipartition monoid
       if it satisfies <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Prop = "IsPartialPermBipartitionSemigroup"/>.<P/>
- 
+
       See <Ref Prop = "IsPartialPermBipartition"/>.
     </Description>
   </ManSection>

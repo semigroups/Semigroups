@@ -32,8 +32,8 @@
     read in the introduction to Chapter
     <Ref Chap = "McAlister triple semigroups"/>.
     <P/>
-    
-    In this implementation the partial order <C>X</C> of a McAlister triple is 
+
+    In this implementation the partial order <C>X</C> of a McAlister triple is
     represented by a <Ref Oper="Digraph" BookName="Digraphs"/> object <A>X</A>.
     The digraph represents a partial order in the sense that vertices are the
     elements of the partial order and the order relation is defined by
@@ -53,11 +53,11 @@
     <C>A</C>. Alternatively the user may choose to give the argument
     <A>Y</A> as the vertices of <A>X</A> on which <A>Y</A> is the induced
     subdigraph. <P/>
-    
+
     A McAlister triple semigroup is created from a quadruple
     <C>(<A>G</A>, <A>X</A>, <A>Y</A>, <A>act</A>)</C> where:
 
-    <List> 
+    <List>
       <Item>
         <A>G</A> is a finite group.
       </Item>
@@ -66,7 +66,7 @@
         <Ref Prop= "IsPartialOrderDigraph" BookName="Digraphs"/>.
       </Item>
       <Item>
-        <A>Y</A> is a digraph satisfying 
+        <A>Y</A> is a digraph satisfying
         <Ref Prop="IsJoinSemilatticeDigraph" BookName="Digraphs"/> which
         is an induced subdigraph of <A>X</A> satisfying the aforementioned
         labeling criteria. Furthermore the <Ref Attr="OutNeighbours"
@@ -77,7 +77,7 @@
         <A>act</A> is a function which takes as its first argument a vertex
         of the digraph <A>X</A>, its second argument should be an element of
         <A>G</A>, and it must return a vertex of <A>X</A>.
-        <A>act</A> must be a right action, meaning that 
+        <A>act</A> must be a right action, meaning that
         <A>act</A><C>(A,gh)=<A>act</A>(<A>act</A>(A,g),h)</C> holds for all
         <C>A</C> in <A>X</A> and <C>g,h</C> <M>\in</M> <A>G</A>. Furthermore
         the permutation representation of this action must be a subgroup of the
@@ -195,10 +195,10 @@ true]]></Example>
       triple semigroup <A>S</A> which corresponds to a label <A>A</A> of a
       vertex from the <Ref Attr="McAlisterTripleSemigroupSemilattice"/> of
       <A>S</A> and a group element <A>g</A> of the <Ref Attr=
-      "McAlisterTripleSemigroupGroup"/> of <A>S</A>. The pair 
+      "McAlisterTripleSemigroupGroup"/> of <A>S</A>. The pair
       <A>(A,g)</A> only represents an element of <A>S</A> if the following
       holds:
-      
+
       <A>A</A> acted on by the inverse of <A>g</A> (via <Ref
       Attr="McAlisterTripleSemigroupAction"/>) is a vertex of the
       join-semilattice of <A>S</A>. <P/>
@@ -252,7 +252,7 @@ gap> S := InverseSemigroup([PartialPermNC([1, 2], [2, 1]),
 > PartialPermNC([1], [1])]);
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> cov := EUnitaryInverseCover(S);
-<inverse partial perm semigroup of rank 4 with 2 generators> -> 
+<inverse partial perm semigroup of rank 4 with 2 generators> ->
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> IsEUnitaryInverseSemigroup(Source(cov));
 true

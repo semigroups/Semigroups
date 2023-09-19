@@ -126,7 +126,7 @@ false
       This method applies to max-plus matrix semigroups (i.e. those belonging to
       the category <Ref Filt = "IsMaxPlusMatrixSemigroup"/>) that are
       finitely generated, such that the spectral radius of the matrix equal to
-      the sum of the generators (with respect to the max-plus semiring) is zero. 
+      the sum of the generators (with respect to the max-plus semiring) is zero.
       <C>NormalizeSemigroup</C> returns  a semigroup of matrices all with
       strictly non-positive entries. Note that the output is isomorphic to a
       min-plus matrix semigroup. This method is based on

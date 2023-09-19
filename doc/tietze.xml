@@ -55,7 +55,7 @@ gap> stz := StzPresentation(S);
       these lists may change, and their current state can be viewed using
       <Ref Oper="GeneratorsOfStzPresentation"/> and
       <Ref Oper="RelationsOfStzPresentation"/>.
-      
+
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");;
 gap> AssignGeneratorVariables(F);;
@@ -135,7 +135,7 @@ false]]></Log>
     </Returns>
     <Description>
       If <A>S</A> is a finitely presented semigroup, then
-      <C>SimplifyFpSemigroup</C> 
+      <C>SimplifyFpSemigroup</C>
       will return a mapping object which will map <A>S</A> to a finitely
       presented semigroup
       which has had its presentation simplified.
@@ -154,7 +154,7 @@ false]]></Log>
       the mapping is returned. The newly reduced FpSemigroup can be accessed
       either by taking the range of the mapping or calling
       <C>SimplifiedFpSemigroup</C>, which first runs <C>SimplifyFpSemigroup</C>
-      and then returns the range of the mapping with the mapping held as an 
+      and then returns the range of the mapping with the mapping held as an
       attribute.<P/>
 
       For more information on how the mapping is created and used, go to
@@ -365,7 +365,7 @@ true]]></Log>
       as possible, so that if a generator in the fp semigroup obtained from the
       presentation is the same as a generator in the original fp semigroup,
       then they should have the same label.
-      
+
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
@@ -398,7 +398,7 @@ gap> GeneratorsOfStzPresentation(stz);
       As Tietze transformations are performed on the presentation object, the
       relations returned by this function will change to reflect the
       transformations.
-      
+
       <Example><![CDATA[
 gap> F := FreeSemigroup("a", "b", "c");
 <free semigroup on the generators [ a, b, c ]>
@@ -409,7 +409,7 @@ gap> stz := StzPresentation(T);
 <fp semigroup presentation with 3 generators and 2 relations
  with length 19>
 gap> RelationsOfStzPresentation(stz);
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
   [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ] ]]]>
 </Example>
     </Description>
@@ -424,7 +424,7 @@ gap> RelationsOfStzPresentation(stz);
     </Returns>
     <Description>
       If <A>stz</A> is an <Ref Oper="StzPresentation"/> object, then
-      <C>UnreducedFpSemigroup</C> will return the fp semigroup 
+      <C>UnreducedFpSemigroup</C> will return the fp semigroup
       that was used to create <A>stz</A> using <Ref Oper="StzPresentation"/>.
 
       <Example><![CDATA[
@@ -458,7 +458,7 @@ true]]>
         <C><A>pair</A>[2]</C>.
       <P/>
 
-      If, instead, <A>pair</A> is a list containing two elements of the fp 
+      If, instead, <A>pair</A> is a list containing two elements of the fp
       semigroup <C>S</C> that was used to create <C>stz</C>, and the two words
       are equal in that semigroup, then this function
       will add the <C>LetterRep</C> of these words as a new relation to
@@ -476,8 +476,8 @@ gap> stz := StzPresentation(T);
 gap> pair := [[2, 2, 2, 2, 2, 2, 2, 2, 2], [2, 2, 2]];;
 gap> StzAddRelation(stz, pair);
 gap> RelationsOfStzPresentation(stz);
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
-  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
+  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ],
   [ [ 2, 2, 2, 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ] ]
 gap> pair2 := [[1, 1], [3]];
 [ [ 1, 1 ], [ 3 ] ]
@@ -555,8 +555,8 @@ gap> stz := StzPresentation(T);
  with length 22>
 gap> StzAddGenerator(stz, [2, 2, 2]);
 gap> RelationsOfStzPresentation(stz);
-[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ], 
-  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], [ [ 2, 2 ], [ 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 2, 2, 3 ] ],
+  [ [ 2, 2, 2, 2, 2, 2 ], [ 2, 2, 2 ] ], [ [ 2, 2 ], [ 2 ] ],
   [ [ 2, 2, 2 ], [ 4 ] ] ]]]>
 </Example>
     </Description>
@@ -637,7 +637,7 @@ gap> stz := StzPresentation(T);
  with length 22>
 gap> StzSubstituteRelation(stz, 3, 1);
 gap> RelationsOfStzPresentation(stz);
-[ [ [ 1 ], [ 2, 2, 2, 3 ] ], [ [ 2, 2, 2 ], [ 2, 2 ] ], 
+[ [ [ 1 ], [ 2, 2, 2, 3 ] ], [ [ 2, 2, 2 ], [ 2, 2 ] ],
   [ [ 2, 2 ], [ 2 ] ] ]
 gap> StzSubstituteRelation(stz, 3, 1);
 gap> RelationsOfStzPresentation(stz);
@@ -791,20 +791,20 @@ gap> StzPrintPresentation(stz);
 #I  1.  a  1 occurrences
 #I  2.  b  17 occurrences
 #I  3.  c  1 occurrences
-#I  
+#I
 #I  Current relations:
 #I  1. a = b^5*c
 #I  2. b^6 = b^3
 #I  3. b^2 = b
-#I  
+#I
 #I  There are 3 generators and 3 relations of total length 22.
-#I  
+#I
 #I  Generators of original fp semigroup expressed as
 #I  combinations of generators in current presentation:
 #I  1. a = a
 #I  2. b = b
 #I  3. c = c
-#I  
+#I
 #I  Generators of current presentation expressed as
 #I  combinations of generators of original fp semigroup:
 #I  1. a = a
@@ -924,7 +924,7 @@ gap> stz := StzPresentation(S);
  with length 11>
 gap> StzRemoveGenerator(stz, "a");
 gap> map := StzIsomorphism(stz);
-<fp semigroup with 3 generators and 2 relations of length 11> -> 
+<fp semigroup with 3 generators and 2 relations of length 11> ->
 <fp semigroup with 2 generators and 1 relation of length 6>
 gap> S.1 ^ map;
 c^3]]>

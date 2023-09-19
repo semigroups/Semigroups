@@ -26,8 +26,8 @@
       "Digraphs"/>) with a vertex for each congruence, and an edge from
       vertex <C>i</C> to vertex <C>j</C> only if the congruence numbered
       <C>i</C> is a subrelation of the congruence numbered <C>j</C>.  To avoid
-      using an unnecessarily large amount of memory in some cases, 
-      a congruence poset does not necessarily belong to 
+      using an unnecessarily large amount of memory in some cases,
+      a congruence poset does not necessarily belong to
       <Ref Prop="IsPartialOrderDigraph" BookName="Digraphs"/>. In other words,
       although every congruence poset represents a partial order it is not
       necessarily the case that there is an edge from vertex <C>i</C> to vertex
@@ -47,41 +47,41 @@
           <Ref Oper = "JoinSemilatticeOfCongruences"/>
         </Item>
         <Item>
-          <Ref Attr = "LatticeOfCongruences" Label="for a semigroup"/>,  
+          <Ref Attr = "LatticeOfCongruences" Label="for a semigroup"/>,
           <Ref Attr = "LatticeOfLeftCongruences" Label="for a semigroup"/>, or
           <Ref Attr = "LatticeOfRightCongruences" Label="for a semigroup"/>
         </Item>
         <Item>
-          <Ref Attr = "CayleyDigraphOfCongruences" Label="for a semigroup"/>,  
+          <Ref Attr = "CayleyDigraphOfCongruences" Label="for a semigroup"/>,
           <Ref Attr = "CayleyDigraphOfLeftCongruences" Label="for a semigroup"/>, or
           <Ref Attr = "CayleyDigraphOfRightCongruences" Label="for a semigroup"/>.
         </Item>
       </List>
-      
-      <C>IsCayleyDigraphOfCongruences</C> only applies to the output of 
+
+      <C>IsCayleyDigraphOfCongruences</C> only applies to the output of
           <Ref Oper = "JoinSemilatticeOfCongruences"/>,
-      <Ref Attr = "CayleyDigraphOfCongruences" Label="for a semigroup"/>,  
+      <Ref Attr = "CayleyDigraphOfCongruences" Label="for a semigroup"/>,
       <Ref Attr = "CayleyDigraphOfLeftCongruences" Label="for a semigroup"/>, and
-      <Ref Attr = "CayleyDigraphOfRightCongruences" Label="for a semigroup"/>. 
+      <Ref Attr = "CayleyDigraphOfRightCongruences" Label="for a semigroup"/>.
       The congruences used as the generating set for these operations can be obtained using
       <Ref Attr="GeneratingCongruencesOfJoinSemilattice"/>.
 
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
 gap> poset := LatticeOfCongruences(S);
-<lattice of 4 two-sided congruences over 
+<lattice of 4 two-sided congruences over
  <symmetric inverse monoid of degree 2>>
 gap> IsCongruencePoset(poset);
 true
 gap> IsDigraph(poset);
 true
-gap> IsIsomorphicDigraph(poset, 
+gap> IsIsomorphicDigraph(poset,
 > Digraph([[1, 2, 3, 4], [2], [2, 3], [2, 3, 4]]));
 true
 gap> T := FullTransformationMonoid(3);;
 gap> congs := PrincipalCongruencesOfSemigroup(T);;
 gap> poset := JoinSemilatticeOfCongruences(PosetOfCongruences(congs));
-<lattice of 6 two-sided congruences over 
+<lattice of 6 two-sided congruences over
  <full transformation monoid of degree 3>>
 gap> IsCayleyDigraphOfCongruences(poset);
 false
@@ -90,7 +90,7 @@ true
 gap> DigraphNrVertices(poset);
 6
 gap> poset := CayleyDigraphOfCongruences(T);
-<poset of 7 two-sided congruences over 
+<poset of 7 two-sided congruences over
  <full transformation monoid of degree 3>>
 gap> IsCayleyDigraphOfCongruences(poset);
 true
@@ -133,15 +133,15 @@ true
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> LatticeOfCongruences(S);
-<lattice of 3 two-sided congruences over <regular transformation 
+<lattice of 3 two-sided congruences over <regular transformation
  monoid of size 3, degree 2 with 2 generators>>
 gap> LatticeOfLeftCongruences(S);
-<lattice of 3 left congruences over <regular transformation monoid 
+<lattice of 3 left congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> LatticeOfRightCongruences(S);
-<lattice of 5 right congruences over <regular transformation monoid 
+<lattice of 5 right congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
-gap> IsIsomorphicDigraph(LatticeOfRightCongruences(S), 
+gap> IsIsomorphicDigraph(LatticeOfRightCongruences(S),
 > Digraph([[1, 2, 3, 4, 5], [2], [2, 3], [2, 4], [2, 5]]));
 true
 gap> S := FullTransformationMonoid(4);;
@@ -149,31 +149,31 @@ gap> restriction := [Transformation([1, 1, 1, 1]),
 >                    Transformation([1, 1, 1, 2]),
 >                    Transformation([1, 1, 1, 3])];;
 gap> latt := LatticeOfCongruences(S, Combinations(restriction, 2));
-<lattice of 2 two-sided congruences over 
+<lattice of 2 two-sided congruences over
  <full transformation monoid of degree 4>>
 ]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-  
+
 <#GAPDoc Label="CayleyDigraphOfCongruences">
   <ManSection>
-    <Attr Name = "CayleyDigraphOfCongruences" 
+    <Attr Name = "CayleyDigraphOfCongruences"
           Arg = "S"
           Label = "for a semigroup"/>
-    <Attr Name = "CayleyDigraphOfLeftCongruences" 
+    <Attr Name = "CayleyDigraphOfLeftCongruences"
           Arg = "S"
           Label = "for a semigroup"/>
-    <Attr Name = "CayleyDigraphOfRightCongruences" 
+    <Attr Name = "CayleyDigraphOfRightCongruences"
           Arg = "S"
           Label = "for a semigroup"/>
-    <Oper Name = "CayleyDigraphOfCongruences" 
+    <Oper Name = "CayleyDigraphOfCongruences"
           Arg = "S, restriction"
           Label = "for a semigroup and a list or collection"/>
-    <Oper Name = "CayleyDigraphOfLeftCongruences" 
+    <Oper Name = "CayleyDigraphOfLeftCongruences"
           Arg = "S, restriction"
           Label = "for a semigroup and a list or collection"/>
-    <Oper Name = "CayleyDigraphOfRightCongruences" 
+    <Oper Name = "CayleyDigraphOfRightCongruences"
           Arg = "S, restriction"
           Label = "for a semigroup and a list or collection"/>
     <Returns>A digraph.</Returns>
@@ -206,15 +206,15 @@ gap> latt := LatticeOfCongruences(S, Combinations(restriction, 2));
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> CayleyDigraphOfCongruences(S);
-<poset of 3 two-sided congruences over <regular transformation monoid 
+<poset of 3 two-sided congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> CayleyDigraphOfLeftCongruences(S);
-<poset of 3 left congruences over <regular transformation monoid 
+<poset of 3 left congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> CayleyDigraphOfRightCongruences(S);
-<poset of 5 right congruences over <regular transformation monoid 
+<poset of 5 right congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
-gap> IsIsomorphicDigraph(CayleyDigraphOfRightCongruences(S), 
+gap> IsIsomorphicDigraph(CayleyDigraphOfRightCongruences(S),
 > Digraph([[2, 3, 4], [2, 5, 5], [5, 3, 5], [5, 5, 4], [5, 5, 5]]));
 true
 gap> S := FullTransformationMonoid(4);;
@@ -222,7 +222,7 @@ gap> restriction := [Transformation([1, 1, 1, 1]),
 >                    Transformation([1, 1, 1, 2]),
 >                    Transformation([1, 1, 1, 3])];;
 gap> CayleyDigraphOfCongruences(S, Combinations(restriction, 2));
-<poset of 2 two-sided congruences over 
+<poset of 2 two-sided congruences over
  <full transformation monoid of degree 4>>
 ]]></Example>
     </Description>
@@ -268,17 +268,17 @@ gap> CayleyDigraphOfCongruences(S, Combinations(restriction, 2));
 gap> S := Semigroup(Transformation([1, 3, 1]),
 >                   Transformation([2, 3, 3]));;
 gap> PosetOfPrincipalLeftCongruences(S);
-<poset of 12 left congruences over <transformation semigroup 
+<poset of 12 left congruences over <transformation semigroup
  of size 11, degree 3 with 2 generators>>
 gap> PosetOfPrincipalCongruences(S);
-<lattice of 3 two-sided congruences over <transformation semigroup 
+<lattice of 3 two-sided congruences over <transformation semigroup
  of size 11, degree 3 with 2 generators>>
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
-gap> poset := PosetOfPrincipalRightCongruences(S, 
+gap> poset := PosetOfPrincipalRightCongruences(S,
 > Combinations(restriction, 2));
-<poset of 3 right congruences over <transformation semigroup 
+<poset of 3 right congruences over <transformation semigroup
  of size 11, degree 3 with 2 generators>>
 ]]></Example>
     </Description>
@@ -301,18 +301,18 @@ gap> poset := PosetOfPrincipalRightCongruences(S,
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> latt := LatticeOfRightCongruences(S);
-<lattice of 5 right congruences over <regular transformation monoid 
+<lattice of 5 right congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> CongruencesOfPoset(latt);
-[ <2-sided semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 0 generating pairs>, 
-  <right semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <regular transformation monoid 
+[ <2-sided semigroup congruence over <regular transformation monoid
+     of size 3, degree 2 with 2 generators> with 0 generating pairs>,
+  <right semigroup congruence over <regular transformation monoid
+     of size 3, degree 2 with 2 generators> with 1 generating pairs>,
+  <right semigroup congruence over <regular transformation monoid
+     of size 3, degree 2 with 2 generators> with 1 generating pairs>,
+  <right semigroup congruence over <regular transformation monoid
+     of size 3, degree 2 with 2 generators> with 1 generating pairs>,
+  <right semigroup congruence over <regular transformation monoid
      of size 3, degree 2 with 2 generators> with 2 generating pairs> ]
 ]]></Example>
     </Description>
@@ -331,7 +331,7 @@ gap> CongruencesOfPoset(latt);
 gap> S := OrderEndomorphisms(2);
 <regular transformation monoid of degree 2 with 2 generators>
 gap> latt := LatticeOfRightCongruences(S);
-<lattice of 5 right congruences over <regular transformation monoid 
+<lattice of 5 right congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> UnderlyingSemigroupOfCongruencePoset(latt) = S;
 true
@@ -362,7 +362,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, [])];;
 gap> poset := PosetOfCongruences(coll);
-<poset of 3 right congruences over <regular transformation monoid 
+<poset of 3 right congruences over <regular transformation monoid
  of size 3, degree 2 with 2 generators>>
 gap> OutNeighbours(poset);
 [ [ 1 ], [ 2 ], [ 1, 2, 3 ] ]
@@ -376,22 +376,22 @@ gap> OutNeighbours(poset);
     <Attr Name = "JoinSemilatticeOfCongruences" Arg = "poset"/>
     <Returns>A congruence poset.</Returns>
     <Description>
-      If <A>poset</A> is a congruence poset (i.e. it satisfies 
-      <Ref Filt = "IsCongruencePoset"/>), then 
+      If <A>poset</A> is a congruence poset (i.e. it satisfies
+      <Ref Filt = "IsCongruencePoset"/>), then
      this function returns the congruence poset formed by these congruences
-      partially ordered by containment, along with all their joins. 
-      This includes the empty join which equals the trivial congruence. 
+      partially ordered by containment, along with all their joins.
+      This includes the empty join which equals the trivial congruence.
       <P/>
 
       The digraph returned by this function represents the Cayley graph of
       the semilattice generated by <Ref Attr="CongruencesOfPoset"/> with
       identity adjoined. The reflexive transitive closure of this digraph is a
-      join semillatice in the sense of 
+      join semillatice in the sense of
       <Ref Prop="IsJoinSemilatticeDigraph" BookName="Digraphs"/>.
       <P/>
 
       See also <Ref Filt = "IsCongruencePoset"/>
-      and <Ref Oper = "PosetOfCongruences"/>. 
+      and <Ref Oper = "PosetOfCongruences"/>.
 
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
@@ -403,7 +403,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
 gap> D := JoinSemilatticeOfCongruences(PosetOfCongruences(coll));
-<poset of 4 right congruences over 
+<poset of 4 right congruences over
  <symmetric inverse monoid of degree 2>>
 gap> IsJoinSemilatticeDigraph(DigraphReflexiveTransitiveClosure(D));
 true]]></Example>
@@ -445,11 +445,11 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair3)];;
 gap> MinimalCongruences(PosetOfCongruences(coll));
 [ <right semigroup congruence over <symmetric inverse monoid of degree\
- 2> with 1 generating pairs>, 
+ 2> with 1 generating pairs>,
   <right semigroup congruence over <symmetric inverse monoid of degree\
  2> with 1 generating pairs> ]
 gap> poset := LatticeOfCongruences(S);
-<lattice of 4 two-sided congruences over 
+<lattice of 4 two-sided congruences over
  <symmetric inverse monoid of degree 2>>
 gap> MinimalCongruences(poset);
 [ <2-sided semigroup congruence over <symmetric inverse monoid of degr\
@@ -458,28 +458,28 @@ ee 2> with 0 generating pairs> ]
     </Description>
   </ManSection>
 <#/GAPDoc>
-  
+
 <#GAPDoc Label="GeneratingCongruencesOfJoinSemilattice">
   <ManSection>
     <Attr Name = "GeneratingCongruencesOfJoinSemilattice" Arg="poset"/>
     <Returns>A list of congruences.</Returns>
     <Description>
-      If <A>poset</A> satisfies <Ref Filt="IsCayleyDigraphOfCongruences"/>, 
+      If <A>poset</A> satisfies <Ref Filt="IsCayleyDigraphOfCongruences"/>,
       then this attribute holds the generating set for the semilattice of
       congruences (where the operation is join).
 
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(3);;
 gap> D := CayleyDigraphOfCongruences(S);
-<poset of 4 two-sided congruences over <regular transformation monoid 
+<poset of 4 two-sided congruences over <regular transformation monoid
  of size 10, degree 3 with 3 generators>>
 gap> GeneratingCongruencesOfJoinSemilattice(D);
-[ <universal semigroup congruence over <regular transformation monoid 
-     of size 10, degree 3 with 3 generators>>, 
-  <2-sided semigroup congruence over <regular transformation monoid 
+[ <universal semigroup congruence over <regular transformation monoid
+     of size 10, degree 3 with 3 generators>>,
+  <2-sided semigroup congruence over <regular transformation monoid
      of size 10, degree 3 with 3 generators> with 1 generating pairs>,
-  <2-sided semigroup congruence over <regular transformation monoid 
-     of size 10, degree 3 with 3 generators> with 1 generating pairs> 
+  <2-sided semigroup congruence over <regular transformation monoid
+     of size 10, degree 3 with 3 generators> with 1 generating pairs>
  ]
 ]]></Example>
     </Description>

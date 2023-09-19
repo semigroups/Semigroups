@@ -142,7 +142,7 @@ gap> CyclesOfTransformationSemigroup(S);
       For a positive integer <A>n</A>, <C>IsSynchronizingSemigroup</C> returns
       <K>true</K> if the semigroup of transformations <A>S</A> contains a
         transformation with constant value on <C>[1 .. <A>n</A>]</C>
-          where <C>n</C> is the degree of the semigroup. 
+          where <C>n</C> is the degree of the semigroup.
       See also
       <Ref Oper = "ConstantTransformation" BookName = "ref"/>.
       <P/>
@@ -178,7 +178,7 @@ Transformation( [ 8, 7, 7, 7, 8, 8, 7, 8, 8, 8 ] )]]></Example>
       If <A>S</A> is a transformation semigroup and <A>list</A> is list such
       that <A>S</A> acts on the items in <A>list</A> via the function
       <A>act</A>, then <C>DigraphOfAction</C> returns a digraph representing
-      the action of <A>S</A> on the items in <A>list</A> and any further items 
+      the action of <A>S</A> on the items in <A>list</A> and any further items
       output by <C><A>act</A>(<A>list</A>[i], <A>S</A>.j)</C>.<P/>
 
       If <C><A>act</A>(<A>list</A>[i], <A>S</A>.j)</C> is the <C>k</C>-th item
@@ -196,15 +196,15 @@ Transformation( [ 8, 7, 7, 7, 8, 8, 7, 8, 8, 8 ] )]]></Example>
       <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 4, 3, 4, 7, 1, 6]), 
+gap> S := Semigroup(Transformation([2, 4, 3, 4, 7, 1, 6]),
 >                   Transformation([3, 3, 2, 3, 5, 1, 5]));
 <transformation semigroup of degree 7 with 2 generators>
 gap> list := Concatenation(List([1 .. 7], x -> [x]),
 >                          Combinations([1 .. 7], 2));
-[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 1, 2 ], 
-  [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 3 ], 
-  [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 4 ], [ 3, 5 ], 
-  [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 4, 7 ], [ 5, 6 ], 
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 1, 2 ],
+  [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], [ 2, 3 ],
+  [ 2, 4 ], [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 3, 4 ], [ 3, 5 ],
+  [ 3, 6 ], [ 3, 7 ], [ 4, 5 ], [ 4, 6 ], [ 4, 7 ], [ 5, 6 ],
   [ 5, 7 ], [ 6, 7 ] ]
 gap> D := DigraphOfAction(S, list, OnSets);
 <immutable digraph with 28 vertices, 54 edges>
@@ -236,7 +236,7 @@ gap> DigraphEdgeLabel(D, 16, 25);
 
       If the optional argument <A>n</A> is not specified, then by default the
       degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
-        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. 
+        Attr="DegreeOfTransformationSemigroup" BookName="ref" />.
       <P/>
 
       The digraph returned by <C>DigraphOfActionOnPoints</C> has <A>n</A>
@@ -248,7 +248,7 @@ gap> DigraphEdgeLabel(D, 16, 25);
       <P/>
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]), 
+gap> S := Semigroup(Transformation([2, 4, 2, 4, 7, 1, 6]),
 >                   Transformation([3, 3, 2, 3, 5, 1, 5]));
 <transformation semigroup of degree 7 with 2 generators>
 gap> D1 := DigraphOfActionOnPoints(S);
@@ -272,7 +272,7 @@ gap> DigraphOfActionOnPoints(S, 5);
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A transformation semigroup <A>S</A> is connected if the digraph returned
-      by the function <C>DigraphOfActionOnPoints</C> is connected. See 
+      by the function <C>DigraphOfActionOnPoints</C> is connected. See
       <Ref Prop = "IsConnectedDigraph" BookName = "digraphs" /> and <Ref Attr
         = "DigraphOfActionOnPoints" Label = "for a transformation semigroup"/>.
       The function <C>IsConnectedTransformationSemigroup</C> returns <K>true</K>

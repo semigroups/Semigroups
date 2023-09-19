@@ -20,8 +20,8 @@
       for more details.<P/>
 
       Basic operations for semigroups satisfying <C>CanUseFroidurePin</C> are:
-      <Ref Attr="AsListCanonical"/>, 
-      <Ref Attr="EnumeratorCanonical"/>, 
+      <Ref Attr="AsListCanonical"/>,
+      <Ref Attr="EnumeratorCanonical"/>,
       <Ref Oper="IteratorCanonical"/>,
       <Ref Oper="PositionCanonical"/>,
       <Ref Oper="Enumerate"/>, and
@@ -42,12 +42,12 @@ false
 
 <#GAPDoc Label="AsListCanonical">
   <ManSection>
-    <Attr Name="AsListCanonical" Arg="S"/> 
+    <Attr Name="AsListCanonical" Arg="S"/>
     <Attr Name="EnumeratorCanonical" Arg="S"/>
     <Oper Name="IteratorCanonical" Arg="S"/>
     <Returns>A list, enumerator, or iterator.</Returns>
     <Description>
-      When the argument <A>S</A> is a semigroup satisfying 
+      When the argument <A>S</A> is a semigroup satisfying
       <Ref Prop="CanUseFroidurePin"/>, <C>AsListCanonical</C>
       returns a list of the elements of <A>S</A> in the order they are
       enumerated by the Froidure-Pin Algorithm. This is the same as the order
@@ -68,8 +68,8 @@ false
       If <A>S</A> is an acting semigroup, then the value returned by
       <C>AsList</C> may not equal the value returned by <C>AsListCanonical</C>.
       <C>AsListCanonical</C> exists so that there is a method for obtaining the
-      elements of <A>S</A> in the particular order used by 
-      <Ref Attr="RightCayleyDigraph"/> and 
+      elements of <A>S</A> in the particular order used by
+      <Ref Attr="RightCayleyDigraph"/> and
       <Ref Attr="LeftCayleyDigraph"/>.<P/>
 
       See also <Ref Oper="PositionCanonical"/>.
@@ -91,7 +91,7 @@ gap> it := IteratorCanonical(S);
 gap> NextIterator(it);
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 gap> en := EnumeratorCanonical(S);
-<enumerator of <commutative monoid of size 2, 3x3 boolean matrices 
+<enumerator of <commutative monoid of size 2, 3x3 boolean matrices
  with 1 generator>>
 gap> en[1];
 Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
@@ -105,10 +105,10 @@ gap> Length(en);
 
 <#GAPDoc Label="Enumerate">
   <ManSection>
-    <Oper Name="Enumerate" Arg="S[, limit]"/> 
+    <Oper Name="Enumerate" Arg="S[, limit]"/>
     <Returns>A semigroup (the argument).</Returns>
     <Description>
-      If <A>S</A> is a semigroup with representation 
+      If <A>S</A> is a semigroup with representation
       <Ref Prop="CanUseFroidurePin"/> and <A>limit</A> is a positive
       integer, then this operation can be used to enumerate at least
       <A>limit</A> elements of <A>S</A>, or <C>Size(<A>S</A>)</C> elements if

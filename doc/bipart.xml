@@ -89,7 +89,7 @@ gap> NrBlocks(blocks);
 3
 gap> x := Bipartition([
 >   [1, 5], [2, 4, -2, -4], [3, 6, -1, -5, -6], [-3]]);
-<bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+<bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ],
  [ -3 ]>
 gap> NrBlocks(x);
 4]]></Example>
@@ -146,9 +146,9 @@ gap> NrRightBlocks(x);
       transverse block of <A>x</A>, where <C>n</C> is the degree of <A>x</A>
       (see <Ref Attr="DegreeOfBipartition"/>).
       <Example><![CDATA[
-gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], 
+gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6],
 >                      [-1, -2, -3], [-4]]);
-<bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
+<bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ],
  [ -4 ]>
 gap> DomainOfBipartition(x);
 [ 3, 4, 5, 6 ]]]></Example>
@@ -167,9 +167,9 @@ gap> DomainOfBipartition(x);
       in a transverse block of <A>x</A>, where <C>n</C> is the degree of
       <A>x</A> (see <Ref Attr="DegreeOfBipartition"/>).
       <Example><![CDATA[
-gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], 
+gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6],
 >                      [-1, -2, -3], [-4]]);
-<bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
+<bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ],
  [ -4 ]>
 gap> CodomainOfBipartition(x);
 [ -5, -6 ]]]></Example>
@@ -507,15 +507,15 @@ Error, the argument (a bipartition) does not define a partial perm]]></Example>
 gap> x := PartialPerm([1, 2, 3, 6, 7, 10], [9, 5, 6, 1, 7, 8]);
 [2,5][3,6,1,9][10,8](7)
 gap> AsBipartition(x, 11);
-<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
- [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
+<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ],
+ [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ],
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]>
 gap> AsBlockBijection(x, 10);
 Error, the 2nd argument (a pos. int.) is less than or equal to the max\
 imum of the degree and codegree of the 1st argument (a partial perm)
 gap> AsBlockBijection(x, 11);
-<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
- [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
+<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ],
+ [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ],
  [ 10, -8 ]>
 gap> x := Bipartition([[1, -3], [2], [3, -2], [-1]]);;
 gap> IsPartialPermBipartition(x);
@@ -604,23 +604,23 @@ gap> x := Transformation([3, 5, 3, 4, 1, 2]);;
 gap> AsBipartition(x, 5);
 <bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
 gap> AsBipartition(x);
-<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ],
  [ 6, -2 ], [ -6 ]>
 gap> AsBipartition(x, 10);
-<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ],
  [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>
 gap> AsBipartition((1, 3)(2, 4));
 <block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
 gap> AsBipartition((1, 3)(2, 4), 10);
-<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], 
+<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ],
  [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>
 gap> x := PartialPerm([1, 2, 3, 4, 5, 6], [6, 7, 1, 4, 3, 2]);;
 gap> AsBipartition(x, 11);
-<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
- [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ],
+ [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ],
  [ -9 ], [ -10 ], [ -11 ]>
 gap> AsBipartition(x);
-<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ],
  [ 6, -2 ], [ 7 ], [ -5 ]>
 gap> AsBipartition(Transformation([1, 1, 2]), 1);
 <block bijection: [ 1, -1 ]>
@@ -631,7 +631,7 @@ gap> AsBipartition(x, 0);
 gap> AsBipartition(x, 2);
 <bipartition: [ 1, 2, -2 ], [ -1 ]>
 gap> AsBipartition(x, 8);
-<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], 
+<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ],
  [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]>
 gap> x := PBR(
 > [[-1, 1, 2, 3, 4], [-1, 1, 2, 3, 4],
@@ -644,7 +644,7 @@ gap> AsBipartition(x, 2);
 gap> AsBipartition(x, 4);
 <bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]>
 gap> AsBipartition(x, 5);
-<bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ], 
+<bipartition: [ 1, 2, 3, 4, -1 ], [ 5 ], [ -2 ], [ -3 ], [ -4 ],
  [ -5 ]>
 gap> AsBipartition(x, 0);
 <empty bipartition>]]></Example>
@@ -790,7 +790,7 @@ gap> y := Bipartition([[1, 4, 6, 7, 8, 10], [2, 5, -3, -6, -7, -9],
 gap> PermLeftQuoBipartition(x, y);
 (1,2,3)
 gap> Star(x) * y;
-<bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
+<bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ],
  [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>]]></Example>
     </Description>
   </ManSection>
@@ -804,7 +804,7 @@ gap> Star(x) * y;
       Returns the identity bipartition with degree <A>n</A>.
       <Example><![CDATA[
 gap> IdentityBipartition(10);
-<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ],
  [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>]]></Example>
     </Description>
   </ManSection>
@@ -825,7 +825,7 @@ gap> IdentityBipartition(10);
       <Example><![CDATA[
 gap> x := Bipartition([[1, 2, 6, 7, -4, -5, -7], [3, 4, 5, -1, -3],
 >                      [8, -9], [9, -2], [-6], [-8]]);
-<bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
+<bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ],
  [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]>
 gap> RankOfBipartition(x);
 4]]></Example>
@@ -919,7 +919,7 @@ gap> ExtRepOfObj(x);
 gap> x := Bipartition([
 >   [1, 4, -1, -2, -6], [2, 3, 5, -4], [6, -3], [-5]]);;
 gap> LeftOne(x);
-<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], 
+<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ],
  [ 6, -6 ]>
 gap> LeftBlocks(x);
 <blocks: [ 1*, 4* ], [ 2*, 3*, 5* ], [ 6* ]>
@@ -977,10 +977,10 @@ true]]></Example>
       external representation of <A>x</A>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, -4], [2, 3, 4], [5], [-1], [-2, -3], [-5]]);
-<bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
+<bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ],
  [ -5 ]>
 gap> y := Star(x);
-<bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
+<bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ],
  [ -5 ]>
 gap> x * y * x = x;
 true

@@ -40,7 +40,7 @@
       generators.  <C>Generators</C> uses the definition that returns the least
       number of generators. If no generating set for <A>S</A> is known, then
       <C>GeneratorsOfSemigroup</C> is used by default.<P/>
- 
+
       <List>
         <Mark>for a group</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for
@@ -72,21 +72,21 @@ gap> M := Monoid([
 > Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 > Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9])]);;
 gap> GeneratorsOfSemigroup(M);
-[ IdentityTransformation, 
-  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ IdentityTransformation,
+  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> Generators(M);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> S := Semigroup(Generators(M));;
 gap> Generators(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfSemigroup(S);
-[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]]]></Example>
    </Description>
   </ManSection>
@@ -107,21 +107,21 @@ gap> GeneratorsOfSemigroup(S);
       <A>coll</A> that are already in <A>S</A>. In most cases, the new
       semigroup knows at least as much information about its structure as was
       already known about that of <A>S</A>. <P/>
-      
+
       When <C>X</C> is any of
       <Ref Func="Semigroup" BookName="ref"/>,
       <Ref Func="Monoid" BookName="ref"/>,
       <Ref Func="InverseSemigroup" BookName="ref"/>, or
-      <Ref Func="InverseMonoid" BookName="ref"/>, 
+      <Ref Func="InverseMonoid" BookName="ref"/>,
       the argument <A>S</A> of the operation <C>ClosureX</C> must belong to the
       category <C>IsX</C>, and <C>ClosureX(<A>S</A>, <A>coll</A>)</C> returns
-      an object in the category <C>IsX</C> such that 
+      an object in the category <C>IsX</C> such that
       <Log>
         ClosureX(S, coll) = X(S, coll);</Log>
       but may have fewer generators, if for example,
       <A>coll</A> contains a duplicates or elements already known to belong to
       <A>S</A>.<P/>
-      
+
       For example, the argument <A>S</A> of <C>ClosureInverseSemigroup</C> must
       be an inverse semigroup in the category <Ref Filt="IsInverseSemigroup"
         BookName="ref"/>.  <C>ClosureInverseSemigroup(<A>S</A>,
@@ -138,8 +138,8 @@ gap> gens := [Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >             Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
 >             Transformation([7, 1, 7, 4, 2, 5, 6, 3])];;
 gap> S := Monoid(gens[1]);;
-gap> for x in gens do 
->      S := ClosureSemigroup(S, x); 
+gap> for x in gens do
+>      S := ClosureSemigroup(S, x);
 >    od;
 gap> S;
 <transformation monoid of degree 8 with 4 generators>
@@ -195,7 +195,7 @@ gap> S := ClosureInverseSemigroup(S, T);
 
     If no elements of <A>S</A> fulfil <A>func</A>, then <K>fail</K> is
     returned.<P/>
- 
+
     If the optional third argument <A>limit</A> is present and a positive
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
@@ -268,12 +268,12 @@ gap> T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);
       is chosen randomly.
 
       Otherwise, if the data  structure for <A>S</A> is known,
-      then a random element of a randomly chosen &R;-class is returned. 
- 
+      then a random element of a randomly chosen &R;-class is returned.
+
       If the data structure for <A>S</A> has not been calculated, then a short
       product (at most <C>2 * Length(GeneratorsOfSemigroup(<A>S</A>))</C>) of
-      generators is returned. 
- 
+      generators is returned.
+
     </Description>
   </ManSection>
 <#/GAPDoc>

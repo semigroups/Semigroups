@@ -20,7 +20,7 @@
       If <A>blocks</A> is the left blocks of a bipartition <C>x</C>, then this
       operation returns a bipartition equal to the left projection of <C>x</C>.
       The analogous statement holds when <A>blocks</A> is the right blocks
-      of a bipartition. 
+      of a bipartition.
 
       <Example><![CDATA[
 gap> x := Bipartition([[1], [2, -2, -3], [3], [-1]]);
@@ -87,7 +87,7 @@ gap> BLOCKS_NC([[1], [2], [-3, -6], [-4, -5]]);
     <Description>
       <C>OnRightBlocks</C> returns the right blocks of the product
       <C>g * <A>x</A></C> where <C>g</C> is any bipartition whose right blocks
-      are equal to <A>blocks</A>. 
+      are equal to <A>blocks</A>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5],
 >                      [-1, -2, -6], [-7, -8]]);;
@@ -108,7 +108,7 @@ gap> OnRightBlocks(RightBlocks(y), x);
     <Description>
       <C>OnLeftBlocks</C> returns the left blocks of the product <C><A>x</A> *
         y</C> where <C>y</C> is any bipartition whose left blocks are equal to
-      <A>blocks</A>. 
+      <A>blocks</A>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8],
 >                      [4, -2, -5, -8], [-7]]);;
@@ -129,7 +129,7 @@ gap> OnLeftBlocks(LeftBlocks(y), x);
     <Description>
        If <C>n</C> is the degree of a bipartition with left or right blocks
        <A>blocks</A>, then <C>ExtRepOfObj</C> returns the partition
-       corresponding to <A>blocks</A> as a sorted list of duplicate-free lists. 
+       corresponding to <A>blocks</A> as a sorted list of duplicate-free lists.
       <Example><![CDATA[
 gap> blocks := BLOCKS_NC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;
 gap> ExtRepOfObj(blocks);
@@ -150,7 +150,7 @@ gap> ExtRepOfObj(blocks);
       transverse blocks in <A>blocks</A>. <P/>
 
       <C>NrTransverseBlocks</C> is a synonym of <C>RankOfBlocks</C> in this
-      context. 
+      context.
       <Example><![CDATA[
 gap> blocks := BLOCKS_NC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],
 >                        [8], [9], [-11]]);;
@@ -167,7 +167,7 @@ gap> RankOfBlocks(blocks);
     <Description>
       The degree of <A>blocks</A> is the number of points <C>n</C> where
       it is defined, i.e. the union of the blocks in <A>blocks</A> will be
-      <C>[1 .. n]</C> after taking the absolute value of every element. 
+      <C>[1 .. n]</C> after taking the absolute value of every element.
       <Example><![CDATA[
 gap> blocks := BLOCKS_NC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],
 >                        [12]]);;
@@ -183,7 +183,7 @@ gap> DegreeOfBlocks(blocks);
     <Returns>Blocks of a bipartition.</Returns>
     <Description>
       If <A>blocks</A> is the blocks of a bipartition, then the function
-      <C>CanonicalBlocks</C> returns a canonical representative of 
+      <C>CanonicalBlocks</C> returns a canonical representative of
       <A>blocks</A>.
       <P/>
 

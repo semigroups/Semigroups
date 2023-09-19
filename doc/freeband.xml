@@ -143,14 +143,14 @@ true]]></Example>
 
 <#GAPDoc Label="ContentOfFreeBandElement" >
 <ManSection>
-    <Attr Name = "ContentOfFreeBandElement" Arg = "x" /> 
-    <Attr Name = "ContentOfFreeBandElementCollection" Arg = "coll" /> 
+    <Attr Name = "ContentOfFreeBandElement" Arg = "x" />
+    <Attr Name = "ContentOfFreeBandElementCollection" Arg = "coll" />
     <Returns> A list of integers </Returns>
     <Description>
       The content of a free band element <A>x</A> is the set of generators
       appearing in the word representing the element <A>x</A> of the free band.
       <P/>
-      
+
       The function <C>ContentOfFreeBandElement</C> returns the content of free
       band element <A>x</A> represented as a list of integers, where <C>1</C>
       represents the first generator, <C>2</C> the second generator, and so on.

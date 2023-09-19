@@ -44,7 +44,7 @@
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
       <P/>
 
-      For matrices over finite fields see Section 
+      For matrices over finite fields see Section
       <Ref Sect = "Matrices over finite fields"/>; for Boolean matrices more
       details can be found in Section <Ref Sect = "Boolean matrices"/>.
 
@@ -119,7 +119,7 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix,
 >  [1, 1, 1, 0],
 >  [-infinity, 1, -infinity, 1],
 >  [0, -infinity, 2, -infinity]], 10);
-Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)
 gap> ThresholdTropicalMatrix(mat);
 10
@@ -128,7 +128,7 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix,
 >  [1, 1, 1, 0],
 >  [-infinity, 1, -infinity, 1],
 >  [0, -infinity, 2, -infinity]], 3);
-Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)
 gap> ThresholdTropicalMatrix(mat);
 3]]></Example>
@@ -291,7 +291,7 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
 gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],
 >                                       [0, -infinity, -infinity],
 >                                       [-infinity, 0, -infinity]]));
-Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
+Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
   [-infinity, -infinity, 0], [0, -infinity, -infinity]])
 ]]></Example>
     </Description>

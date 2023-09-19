@@ -20,11 +20,11 @@
       every <C>i</C>. For example, if <C><A>list</A> = [1, 2, 3]</C>, then
       <C>EndomorphismsPartition</C> returns the monoid of endomorphisms of the
       partition <C>[[1], [2, 3], [4, 5, 6]]</C>. <P/>
- 
+
       If <C>f</C> is a transformation of <C>[1 .. n]</C>, then it is an
       <B>endomorphism</B> of a partition <C>P</C> on <C>[1 .. n]</C> if
       <C>(i, j)</C> in <C>P</C> implies that <C>(i ^ f, j ^ f)</C> is in
-      <C>P</C>. 
+      <C>P</C>.
       <P/>
 
       <C>EndomorphismsPartition</C> returns a monoid with a minimal size
@@ -75,7 +75,7 @@ gap> S := AnnularJonesMonoid(4);
 
       Note that, in general, the partial Jones monoid of degree <A>n</A> is
       strictly contained in the Motzkin monoid of the same degree. <P/>
-      
+
       See <Ref Oper="PartialBrauerMonoid"/>, <Ref Oper="JonesMonoid" />, and
       <Ref Oper="MotzkinMonoid"/>.
 
@@ -138,7 +138,7 @@ gap> SingularJonesMonoid(8);
       subsemigroup of the partial Brauer monoid consisting of those bipartitions
       that are planar (planar bipartitions are defined in Chapter <Ref
         Chap="Bipartitions and blocks"/>).  <P/>
-      
+
       Note that the Motzkin monoid of degree <A>n</A> contains the partial Jones
       monoid of degree <A>n</A>, but in general, these monoids are not equal;
       see <Ref Oper="PartialJonesMonoid"/>.
@@ -174,10 +174,10 @@ gap> Size(T);
       submonoid of the partition monoid consisting of those bipartitions where
       the size of every block is <E>at most</E> 2. The partial Brauer monoid
       contains the Brauer monoid as a submonoid. <P/>
- 
+
       <C>SingularBrauerMonoid</C> returns the ideal of the Brauer monoid
       consisting of the non-invertible elements (i.e. those not in the group of
-      units), when <A>n</A> is at least 2. 
+      units), when <A>n</A> is at least 2.
 
       <Example><![CDATA[
 gap> S := BrauerMonoid(4);
@@ -208,14 +208,14 @@ gap> Size(S);
       If <A>n</A> is a non-negative integer, then this operation returns the
       partition monoid of degree <A>n</A>. The <E>partition monoid of degree
         <A>n</A></E> is the monoid consisting of all the bipartitions of degree
-      <A>n</A>. 
+      <A>n</A>.
       <P/>
 
       <C>SingularPartitionMonoid</C> returns the ideal of the partition monoid
       consisting of the non-invertible elements (i.e. those not in the group of
       units), when <A>n</A> is positive.
       <P/>
- 
+
       If <A>n</A> is positive, then <C>RookPartitionMonoid</C> returns submonoid
       of the partition monoid of degree <C><A>n</A> + 1</C> consisting of those
       bipartitions with <C><A>n</A> + 1</C> and <C>-<A>n</A> - 1</C> in the same
@@ -224,7 +224,7 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(4);
-<regular bipartition *-monoid of size 4140, degree 4 with 4 
+<regular bipartition *-monoid of size 4140, degree 4 with 4
  generators>
 gap> Size(S);
 4140
@@ -286,7 +286,7 @@ gap> Difference(S, T);
       block bijection monoid of degree <A>n</A>. The <E>uniform block bijection
       monoid</E> is the submonoid of the partition monoid consisting of the
       block bijections of degree &n; where the number of positive integers in a
-      block equals the number of negative integers in that block. 
+      block equals the number of negative integers in that block.
       The uniform block bijection monoid is also referred to as the
       <E>factorisable dual symmetric inverse monoid</E>. <P/>
 
@@ -304,13 +304,13 @@ gap> Difference(S, T);
       elements (i.e. those not in the group of units), when <A>n</A> is
       at least 2. <P/>
       <!-- TODO(later) reference -->
- 
+
       <C>PartialUniformBlockBijectionMonoid</C> returns the submonoid of the
       uniform block bijection monoid of degree <C><A>n</A> + 1</C> consisting
       of those uniform block bijection with  <C><A>n</A> + 1</C> and
       <C>-<A>n</A> - 1</C> in the same block. <P/>
 
-      See <Ref Prop="IsUniformBlockBijection"/>. 
+      See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
 gap> S := UniformBlockBijectionMonoid(4);
 <inverse block bijection monoid of degree 4 with 3 generators>
@@ -356,13 +356,13 @@ true]]></Example>
       <C>SingularDualSymmetricInverseMonoid</C> returns the ideal of the
       dual symmetric inverse monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
- 
+
       <C>PartialDualSymmetricInverseMonoid</C> returns the submonoid of the
       dual symmetric inverse monoid of degree <C><A>n</A> + 1</C> consisting of
       those block bijections with <C><A>n</A> + 1</C> and  <C>-<A>n</A> - 1</C> in
       the same block; see <Cite Key="Kudryavtseva2011aa"/> and
       <Cite Key="Kudryavtseva2015aa"/>. <P/>
- 
+
       See <Ref Prop = "IsBlockBijection"/>.
 
       <Example><![CDATA[
@@ -612,7 +612,7 @@ gap> NrIdempotents(S);
         <Item>
           <C>OrderEndomorphisms(<A>n</A>)</C> returns the monoid of
           transformations that preserve the usual order on <M>\{1, 2, \ldots,
-            n\}</M>, where <A>n</A> is a positive integer. 
+            n\}</M>, where <A>n</A> is a positive integer.
           <Alt Not = "Text">
             <C>OrderEndomorphisms(<A>n</A>)</C> is generated by the
             <M><A>n + 1</A></M> transformations:
@@ -726,7 +726,7 @@ true]]></Example>
       <Display>
         \left(
         \begin{array}{ccccc}
-        1&amp;2&amp;3&amp;\cdots&amp;n\\ 
+        1&amp;2&amp;3&amp;\cdots&amp;n\\
         -&amp;1&amp;2&amp;\cdots&amp;n-1
         \end{array}\right), \qquad
         \left(
@@ -770,7 +770,7 @@ true]]></Example>
 1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
 \end{array}\right),
       </Display>
-      and has <M>1+\frac{n}{2}{2n\choose n}</M> elements. 
+      and has <M>1+\frac{n}{2}{2n\choose n}</M> elements.
       </Alt>
     </Item>
     <Mark><C>PORI(<A>n</A>)</C></Mark>
@@ -849,7 +849,7 @@ gap> Size(S);
         If <A>n</A> is a integer greater than 1, then this function
         returns the semigroup of non-invertible transformations, which is
         generated by the <C><A>n</A>(<A>n</A> - 1)</C> idempotents of degree
-        <A>n</A> and rank <C><A>n</A> - 1</C> and has <M>n ^ n - n!</M> elements. 
+        <A>n</A> and rank <C><A>n</A> - 1</C> and has <M>n ^ n - n!</M> elements.
 
         <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(4);

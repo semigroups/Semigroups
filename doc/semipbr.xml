@@ -19,8 +19,8 @@
       it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and
       <Ref Filt = "IsPBRCollection"/>.<P/>
 
-      A <E>PBR monoid</E> is a monoid consisting of PBRs. 
-      An object <A>obj</A> is a PBR monoid in &GAP; if it satisfies 
+      A <E>PBR monoid</E> is a monoid consisting of PBRs.
+      An object <A>obj</A> is a PBR monoid in &GAP; if it satisfies
       <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Filt = "IsPBRCollection"/>.<P/>
 
@@ -48,7 +48,7 @@ gap> S := Semigroup([
 gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
-PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ], 
+PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
   [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ])
 gap> IsPBRMonoid(S);
 false]]></Example>
@@ -96,7 +96,7 @@ gap> DegreeOfPBRSemigroup(S);
       <C>IsomorphismPBRSemigroup</C> returns the
       natural embedding of <A>S</A> into the full pbr monoid on <C>n</C>
       points. <P/>
- 
+
       When <A>S</A> is any other type of semigroup, this function returns the
       composition of an isomorphism from <A>S</A> to a transformation
       semigroup, and an isomorphism from that transformation semigroup into a

@@ -26,10 +26,10 @@
     <C>S.1</C>, <C>S.2</C> and so on.
 <Example><![CDATA[
 gap> S := FreeInverseSemigroup(7);
-<free inverse semigroup on the generators 
+<free inverse semigroup on the generators
 [ x1, x2, x3, x4, x5, x6, x7 ]>
 gap> S := FreeInverseSemigroup(7, "s");
-<free inverse semigroup on the generators 
+<free inverse semigroup on the generators
 [ s1, s2, s3, s4, s5, s6, s7 ]>
 gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>

@@ -19,7 +19,7 @@
       integer such that the restriction of <A>trans</A> to <K>[1 .. n]</K>
       defines a transformation of <C>[1 .. n]</C>, then
       <C>CanonicalTransformation</C> returns a canonical representative of the
-      transformation <A>trans</A> restricted to <C>[1 .. n]</C>. 
+      transformation <A>trans</A> restricted to <C>[1 .. n]</C>.
       <P/>
 
       More specifically, let <C>C(n)</C> be a class of transformations of degree

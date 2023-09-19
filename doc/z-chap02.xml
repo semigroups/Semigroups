@@ -163,7 +163,7 @@ gap makedoc.g
 
     In this section we describe how to test that &SEMIGROUPS; is working as
     intended.  To quickly test that &SEMIGROUPS; is installed correctly use
-    <Ref Func = "SemigroupsTestInstall"/>.  For more extensive tests use 
+    <Ref Func = "SemigroupsTestInstall"/>.  For more extensive tests use
     <Ref Func = "SemigroupsTestStandard"/>.  Finally, for lengthy benchmarking
     tests use <Ref Func = "SemigroupsTestExtreme"/>.
     <P/>

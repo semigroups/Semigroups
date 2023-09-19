@@ -67,7 +67,7 @@ true]]></Example>
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> UniversalSemigroupCongruence(S);
-<universal semigroup congruence over 
+<universal semigroup congruence over
 <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>]]></Example>
   </Description>
 </ManSection>
@@ -85,12 +85,12 @@ gap> UniversalSemigroupCongruence(S);
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> TrivialCongruence(S);
-<semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+<semigroup congruence over <Rees 0-matrix semigroup 2x2 over
   Sym( [ 1 .. 3 ] )> with linked triple (1,2,2)>
 gap> S := PartitionMonoid(2);
 <regular bipartition *-monoid of size 15, degree 2 with 3 generators>
 gap> TrivialCongruence(S);
-<2-sided semigroup congruence over <regular bipartition *-monoid 
+<2-sided semigroup congruence over <regular bipartition *-monoid
  of size 15, degree 2 with 3 generators> with 0 generating pairs>]]></Example>
   </Description>
 </ManSection>

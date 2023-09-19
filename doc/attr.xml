@@ -11,7 +11,7 @@
 <#GAPDoc Label="EndomorphismMonoid">
 <ManSection>
   <Attr Name="EndomorphismMonoid" Arg="digraph" Label="for a digraph"/>
-  <Oper Name="EndomorphismMonoid" Arg="digraph, colors" 
+  <Oper Name="EndomorphismMonoid" Arg="digraph, colors"
     Label="for a digraph and vertex coloring"/>
   <Returns> A monoid.</Returns>
   <Description>
@@ -22,7 +22,7 @@
     <C>EndomorphismMonoid</C>, called with a single argument,
     returns the monoid of all endomorphisms of <A>digraph</A>. <P/>
 
-    If the <A>colors</A> argument is specified, then it will return 
+    If the <A>colors</A> argument is specified, then it will return
     the monoid of endomorphisms which respect the given colouring.
     The colouring <A>colors</A> can be in one of two forms: <P/>
 
@@ -104,15 +104,15 @@ gap> S := Semigroup(Transformation([1, 3, 4, 1, 3]),
 >                   Transformation([2, 5, 3, 5, 3]),
 >                   Transformation([5, 5, 1, 1, 3]));;
 gap> reps := ShallowCopy(AsSet(DClassReps(S)));
-[ Transformation( [ 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 3, 1, 3, 3 ] ), 
-  Transformation( [ 1, 3, 4, 1, 3 ] ), 
+[ Transformation( [ 1, 1, 1, 1, 1 ] ),
+  Transformation( [ 1, 3, 1, 3, 3 ] ),
+  Transformation( [ 1, 3, 4, 1, 3 ] ),
   Transformation( [ 2, 4, 1, 5, 5 ] ) ]
 gap> Sort(reps, IsGreensDGreaterThanFunc(S));
 gap> reps;
-[ Transformation( [ 2, 4, 1, 5, 5 ] ), 
-  Transformation( [ 1, 3, 4, 1, 3 ] ), 
-  Transformation( [ 1, 3, 1, 3, 3 ] ), 
+[ Transformation( [ 2, 4, 1, 5, 5 ] ),
+  Transformation( [ 1, 3, 4, 1, 3 ] ),
+  Transformation( [ 1, 3, 1, 3, 3 ] ),
   Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> IsGreensLessThanOrEqual(DClass(S, reps[2]),
 >                            DClass(S, reps[1]));
@@ -181,7 +181,7 @@ gap> StructureDescriptionMaximalSubgroups(S);
       <Ref Attr="RepresentativeOfMinimalIdeal"/>.
       <Example><![CDATA[
 gap> D := MinimalDClass(JonesMonoid(8));
-<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], 
+<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ],
   [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]>>
 gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 5, 7, 8, 9], [2, 6, 9, 1, 5, 3, 8]),
@@ -210,8 +210,8 @@ gap> MinimalDClass(S);
 
       <Example><![CDATA[
 gap> MaximalDClasses(BrauerMonoid(8));
-[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], 
-      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], 
+[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ],
+      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ],
       [ 8, -8 ]>> ]
 gap> MaximalDClasses(FullTransformationMonoid(5));
 [ <Green's D-class: IdentityTransformation> ]
@@ -221,7 +221,7 @@ gap> S := Semigroup(
 > PartialPerm([1, 2, 3, 4, 6, 8], [4, 3, 2, 7, 6, 5]),
 > PartialPerm([1, 2, 4, 5, 6, 7, 8], [7, 1, 4, 2, 5, 6, 3]));;
 gap> MaximalDClasses(S);
-[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>, 
+[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>,
   <Green's D-class: [8,3](1,7,6,5,2)(4)> ]]]></Example>
     </Description>
   </ManSection>
@@ -256,7 +256,7 @@ gap> S := Semigroup(
 > Bipartition([[1, -5], [2, 3, 4, 5, -1, -3], [-2, -4]]),
 > Bipartition([[1, 5, -4], [2, 4, -1, -5], [3, -2, -3]]));;
 gap> D := MinimalDClass(S);
-<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], 
+<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ],
   [ -2, -5 ], [ -4 ]>>
 gap> NormalizedPrincipalFactor(D);
 <Rees matrix semigroup 1x5 over Group(())>]]></Example>
@@ -312,8 +312,8 @@ gap> S := Semigroup([
 > Transformation([5, 4, 3, 5, 2]),
 > Transformation([5, 5, 4, 5, 5])]);;
 gap> SmallGeneratingSet(S);
-[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
-  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
+[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ),
+  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ),
   Transformation( [ 4, 4, 3, 3, 5 ] ) ]
 gap> S := RandomInverseMonoid(IsPartialPermMonoid, 10000, 10);;
 gap> SmallGeneratingSet(S);
@@ -352,8 +352,8 @@ gap> Length(SmallGeneratingSet(S));
     <Log>
       X(MinimalXGeneratingSet(S)) = S;
     </Log>
-    where <C>X</C> is one of 
-    <Ref Func="Semigroup" BookName="ref"/>, 
+    where <C>X</C> is one of
+    <Ref Func="Semigroup" BookName="ref"/>,
     <Ref Func="Monoid" BookName="ref"/>,
     <Ref Func="InverseSemigroup" BookName="ref"/>, or
     <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
@@ -370,7 +370,7 @@ gap> MinimalSemigroupGeneratingSet(S);
 [ Transformation( [ 2, 3, 4, 5, 6, 1, 6, 7, 8 ] ) ]
 gap> S := FullTransformationMonoid(4);;
 gap> MinimalSemigroupGeneratingSet(S);
-[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ),
   Transformation( [ 1, 2, 3, 1 ] ) ]
 gap> S := Monoid([
 >  PartialPerm([2, 3, 4, 5, 1, 0, 6, 7]),
@@ -412,7 +412,7 @@ gap> S := InverseSemigroup(
 gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> S := PartitionMonoid(6);
-<regular bipartition *-monoid of size 4213597, degree 6 with 4 
+<regular bipartition *-monoid of size 4213597, degree 6 with 4
  generators>
 gap> MultiplicativeZero(S);
 fail
@@ -449,10 +449,10 @@ gap> S := Semigroup(
 gap> MinimalIdeal(S);
 <simple transformation semigroup ideal of degree 10 with 1 generator>
 gap> Elements(MinimalIdeal(S));
-[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ),
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ),
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ),
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ),
   Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
 gap> x := Transformation([8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);;
 gap> D := DClass(S, x);;
@@ -536,7 +536,7 @@ gap> B := Semigroup([
 > Bipartition([[1, -1], [2], [3], [4, -3], [5, 6, -5, -6],
 >   [-2, -4]])]);;
 gap> RepresentativeOfMinimalIdeal(B);
-<bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ], 
+<bipartition: [ 1, 2 ], [ 3, 6 ], [ 4, 5 ], [ -1, -5, -6 ],
  [ -2, -4 ], [ -3 ]>
 gap> S := Semigroup(Transformation([5, 1, 6, 2, 2, 4]),
 >                   Transformation([3, 5, 5, 1, 6, 2]));;
@@ -775,8 +775,8 @@ gap> D := GreensDClassOfElement(S,
 <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ]
    , [ -3 ]>>
 gap> InjectionNormalizedPrincipalFactor(D);
-MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], 
-  [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over 
+MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
+  [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over
   Group([ (1,2) ])>, function( x ) ... end, function( x ) ... end )]]></Example>
   </Description>
 </ManSection>
@@ -795,7 +795,7 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
     matrix semigroup over some group (usually a permutation group), and
     <C>IsomorphismReesMatrixSemigroupOverPermGroup</C> returns an isomorphism to
     a Rees matrix semigroup over a permutation group.  <P/>
-    
+
     If <A>S</A> is finite and 0-simple, then
     <C>IsomorphismReesZeroMatrixSemigroup</C> returns an isomorphism to a Rees
     0-matrix semigroup over some group (usually a permutation group), and
@@ -842,50 +842,50 @@ gap> S := Semigroup([
 > Transformation([6, 5, 1, 3, 3, 4]),
 > Transformation([1, 3, 4, 3, 2, 1])]);;
 gap> IrredundantGeneratingSubset(S);
-[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), 
-  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), 
-  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), 
-  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
-  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
+[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ),
+  Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+  Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+  Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+  Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
   Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]
 gap> S := RandomInverseMonoid(IsPartialPermMonoid, 1000, 10);
 <inverse partial perm monoid of degree 10 with 1000 generators>
 gap> SmallGeneratingSet(S);
-[ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], 
-  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+[ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ],
+  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
   [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ]
   [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
 gap> IrredundantGeneratingSubset(last);
-[ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], 
-  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+[ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ],
+  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ],
   [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ]
 gap> S := RandomSemigroup(IsBipartitionSemigroup, 1000, 4);
 <bipartition semigroup of degree 4 with 749 generators>
 gap> SmallGeneratingSet(S);
-[ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, -4 ], [ 2, 4, -1, -3 ], [ 3, -2 ]>, 
-  <bipartition: [ 1, -1, -3 ], [ 2, -4 ], [ 3, 4, -2 ]>, 
-  <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]>, 
-  <bipartition: [ 1, -2 ], [ 2, -1, -3 ], [ 3, 4, -4 ]>, 
-  <bipartition: [ 1, 3, -1 ], [ 2, -3 ], [ 4, -2, -4 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, 4, -4 ], [ 3, -2, -3 ]>, 
-  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>, 
-  <bipartition: [ 1, 2, -2 ], [ 3, -1, -4 ], [ 4, -3 ]>, 
-  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>, 
-  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>, 
-  <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>, 
+[ <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>,
+  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>,
+  <bipartition: [ 1, -4 ], [ 2, 4, -1, -3 ], [ 3, -2 ]>,
+  <bipartition: [ 1, -1, -3 ], [ 2, -4 ], [ 3, 4, -2 ]>,
+  <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]>,
+  <bipartition: [ 1, -2 ], [ 2, -1, -3 ], [ 3, 4, -4 ]>,
+  <bipartition: [ 1, 3, -1 ], [ 2, -3 ], [ 4, -2, -4 ]>,
+  <bipartition: [ 1, -1 ], [ 2, 4, -4 ], [ 3, -2, -3 ]>,
+  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>,
+  <bipartition: [ 1, 2, -2 ], [ 3, -1, -4 ], [ 4, -3 ]>,
+  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>,
+  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>,
+  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>,
+  <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>,
   <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]> ]
 gap> IrredundantGeneratingSubset(last);
-[ <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>, 
-  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>, 
-  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>, 
-  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>, 
-  <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>, 
-  <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]>, 
-  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>, 
+[ <bipartition: [ 1, 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ -3 ]>,
+  <bipartition: [ 1, 3, -1 ], [ 2, -2 ], [ 4, -3, -4 ]>,
+  <bipartition: [ 1, 3, -2 ], [ 2, -1, -3 ], [ 4, -4 ]>,
+  <bipartition: [ 1, -1 ], [ 2, 4, -3 ], [ 3, -2 ], [ -4 ]>,
+  <bipartition: [ 1, -3 ], [ 2, -1 ], [ 3, 4, -4 ], [ -2 ]>,
+  <bipartition: [ 1, -3 ], [ 2, -2 ], [ 3, -1 ], [ 4, -4 ]>,
+  <bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1, -2 ], [ 4 ]>,
+  <bipartition: [ 1, -2, -3 ], [ 2, -4 ], [ 3 ], [ 4, -1 ]>,
   <bipartition: [ 1, -2, -4 ], [ 2 ], [ 3, -3 ], [ 4, -1 ]> ]]]></Log>
     </Description>
   </ManSection>
@@ -1051,7 +1051,7 @@ gap> R := ReesZeroMatrixSemigroup(Group(()),
 >  [0, 0, ()]]);
 <Rees 0-matrix semigroup 3x3 over Group(())>
 gap> iso := RZMSNormalization(R);
-<Rees 0-matrix semigroup 3x3 over Group(())> -> 
+<Rees 0-matrix semigroup 3x3 over Group(())> ->
 <Rees 0-matrix semigroup 3x3 over Group(())>
 gap> S := Range(iso);
 <Rees 0-matrix semigroup 3x3 over Group(())>
@@ -1066,7 +1066,7 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 gap> S := Range(RZMSNormalization(R));
 <Rees 0-matrix semigroup 4x4 over Sym( [ 1 .. 4 ] )>
 gap> Matrix(S);
-[ [ (), (), 0, 0 ], [ 0, (), 0, 0 ], [ 0, 0, (), 0 ], [ 0, 0, 0, () ] 
+[ [ (), (), 0, 0 ], [ 0, (), 0, 0 ], [ 0, 0, (), 0 ], [ 0, 0, 0, () ]
  ]]]></Example>
   </Description>
 </ManSection>
@@ -1092,7 +1092,7 @@ gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
 >  [(2, 3), (1, 3, 2, 4), (2, 3)]]);
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> iso := RMSNormalization(R);
-<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )> -> 
+<Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )> ->
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> S := Range(iso);
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
@@ -1171,15 +1171,15 @@ gap> S := Monoid([
 >  Transformation([3, 3, 4, 1])]);
 <transformation monoid of degree 4 with 4 generators>
 gap> GeneratorsSmallest(S);
-[ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
-  Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 2, 2 ] ), 
-  Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ), 
-  Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
-  Transformation( [ 1, 2, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ), 
-  IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ), 
-  Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ), 
-  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
+[ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ),
+  Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 1 ] ),
+  Transformation( [ 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 2, 2 ] ),
+  Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ),
+  Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ),
+  Transformation( [ 1, 2, 1, 1 ] ), Transformation( [ 1, 2, 2, 1 ] ),
+  IdentityTransformation, Transformation( [ 1, 3, 1, 1 ] ),
+  Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ),
+  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 4, 1, 2 ] ),
   Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]
 gap> T := Semigroup(Bipartition([[1, 2, 3], [4, -1], [-2], [-3], [-4]]),
 >                   Bipartition([[1, -3, -4], [2, 3, 4, -2], [-1]]),
@@ -1188,18 +1188,18 @@ gap> T := Semigroup(Bipartition([[1, 2, 3], [4, -1], [-2], [-3], [-4]]),
 >                   Bipartition([[1, 2, -1, -2], [3, 4, -3], [-4]]));
 <bipartition semigroup of degree 4 with 5 generators>
 gap> GeneratorsSmallest(T);
-[ <bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -1, -2 ], [ -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ -1 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1, -4 ], [ -3 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1 ], [ -3, -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -3 ], [ -1, -2 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4 ], [ -1, -2, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -3, -4 ], [ -1 ], [ -2 ]>, 
-  <bipartition: [ 1, 2, 3 ], [ 4, -1, -2, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, -1, -2 ], [ 3, 4, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, -3 ], [ 2, 3, 4, -1, -2 ], [ -4 ]>, 
+[ <bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]>,
+  <bipartition: [ 1, 2, 3, 4, -1, -2 ], [ -3 ], [ -4 ]>,
+  <bipartition: [ 1, 2, 3, 4, -1 ], [ -2 ], [ -3 ], [ -4 ]>,
+  <bipartition: [ 1, 2, 3, 4, -2, -3, -4 ], [ -1 ]>,
+  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1, -4 ], [ -3 ]>,
+  <bipartition: [ 1, 2, 3, 4, -2 ], [ -1 ], [ -3, -4 ]>,
+  <bipartition: [ 1, 2, 3, 4, -3 ], [ -1, -2 ], [ -4 ]>,
+  <bipartition: [ 1, 2, 3, 4 ], [ -1, -2, -3 ], [ -4 ]>,
+  <bipartition: [ 1, 2, 3, 4, -3, -4 ], [ -1 ], [ -2 ]>,
+  <bipartition: [ 1, 2, 3 ], [ 4, -1, -2, -3 ], [ -4 ]>,
+  <bipartition: [ 1, 2, -1, -2 ], [ 3, 4, -3 ], [ -4 ]>,
+  <bipartition: [ 1, -3 ], [ 2, 3, 4, -1, -2 ], [ -4 ]>,
   <bipartition: [ 1, -3, -4 ], [ 2, 3, 4, -2 ], [ -1 ]> ]]]></Example>
   </Description>
 </ManSection>
@@ -1215,7 +1215,7 @@ gap> GeneratorsSmallest(T);
     <E>decomposable</E> if it can be written as the product of two elements in
     <A>S</A>. An element of <A>S</A> is <E>indecomposable</E> if it is not
     decomposable. <P/>
-    
+
     See also <Ref Prop="IsSurjectiveSemigroup" />. <P/>
 
     Note that any generating set for <A>S</A> contains each indecomposable
@@ -1236,10 +1236,10 @@ gap> T := FullTransformationMonoid(10);
 gap> IndecomposableElements(T);
 [  ]
 gap> B := ZeroSemigroup(IsBipartitionSemigroup, 3);
-<commutative non-regular bipartition semigroup of size 3, degree 4 
+<commutative non-regular bipartition semigroup of size 3, degree 4
  with 2 generators>
 gap> IndecomposableElements(B);
-[ <bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]>, 
+[ <bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]>,
   <bipartition: [ 1, 2, 4, -1 ], [ 3, -2 ], [ -3 ], [ -4 ]> ]]]></Example>
   </Description>
 </ManSection>
@@ -1264,9 +1264,9 @@ true
 gap> Size(S);
 15
 gap> NambooripadPartialOrder(S);
-[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
   [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ]
 gap> NambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);
 false
@@ -1305,9 +1305,9 @@ true
 gap> Size(S);
 15
 gap> NambooripadPartialOrder(S);
-[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], 
+[ [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ], [  ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
   [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ]
 gap> NambooripadLeqRegularSemigroup(S)(Elements(S)[3], Elements(S)[9]);
 false
@@ -1337,30 +1337,30 @@ true]]></Example>
     but it is difficult to predict what properties of the presentation lead to
     a shorter runtime. This is unlikely to terminate in a reasonable amount of
     time for semigroups with more than approx. <C>10000</C> elements, but might
-    also not terminate quickly for smaller semigroups depending on the 
+    also not terminate quickly for smaller semigroups depending on the
     presentation used.
 
     <Example><![CDATA[
 gap> S := BrauerMonoid(3);
 <regular bipartition *-monoid of degree 3 with 3 generators>
 gap> IsomorphismTransformationSemigroup(S);
-<regular bipartition *-monoid of size 15, degree 3 with 3 generators> 
+<regular bipartition *-monoid of size 15, degree 3 with 3 generators>
 -> <transformation monoid of size 15, degree 15 with 3 generators>
 gap> SmallerDegreeTransformationRepresentation(S);
-CompositionMapping( 
-<fp semigroup with 4 generators and 20 relations of length 81> -> 
-<transformation monoid of degree 7 with 3 generators>, 
-<regular bipartition *-monoid of size 15, degree 3 with 3 generators> 
+CompositionMapping(
+<fp semigroup with 4 generators and 20 relations of length 81> ->
+<transformation monoid of degree 7 with 3 generators>,
+<regular bipartition *-monoid of size 15, degree 3 with 3 generators>
 -> <fp semigroup with 4 generators and 20 relations of length 81> )
 gap> S := JonesMonoid(5);
 <regular bipartition *-monoid of degree 5 with 4 generators>
 gap> Size(S);
 42
 gap> SmallerDegreeTransformationRepresentation(S);
-CompositionMapping( 
-<fp semigroup with 5 generators and 28 relations of length 120> -> 
-<transformation monoid of degree 10 with 4 generators>, 
-<regular bipartition *-monoid of size 42, degree 5 with 4 generators> 
+CompositionMapping(
+<fp semigroup with 5 generators and 28 relations of length 120> ->
+<transformation monoid of degree 10 with 4 generators>,
+<regular bipartition *-monoid of size 42, degree 5 with 4 generators>
 -> <fp semigroup with 5 generators and 28 relations of length 120> )
 ]]></Example>
   </Description>
@@ -1390,7 +1390,7 @@ gap> MinimalFaithfulTransformationDegree(S);
 
 # The following documentation is included but there are actually no
 # implementations for this as of yet, and so we don't link this into the
-# documentation. 
+# documentation.
 
 <#GAPDoc Label="MinimalFaithfulTransformationRepresentation">
 <ManSection>

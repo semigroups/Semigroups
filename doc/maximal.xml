@@ -102,19 +102,19 @@
 gap> S := FullTransformationSemigroup(3);
 <full transformation monoid of degree 3>
 gap> MaximalSubsemigroups(S);
-[ <transformation semigroup of degree 3 with 7 generators>, 
-  <transformation semigroup of degree 3 with 7 generators>, 
-  <transformation semigroup of degree 3 with 7 generators>, 
-  <transformation semigroup of degree 3 with 7 generators>, 
+[ <transformation semigroup of degree 3 with 7 generators>,
+  <transformation semigroup of degree 3 with 7 generators>,
+  <transformation semigroup of degree 3 with 7 generators>,
+  <transformation semigroup of degree 3 with 7 generators>,
   <transformation monoid of degree 3 with 5 generators> ]
 gap> MaximalSubsemigroups(S,
 > rec(gens := true, D := DClass(S, Transformation([2, 2, 3]))));
-[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ), 
-      Transformation( [ 2, 2, 2 ] ), IdentityTransformation, 
+[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ),
+      Transformation( [ 2, 2, 2 ] ), IdentityTransformation,
       Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ) ] ]
 gap> MaximalSubsemigroups(S,
 > rec(contain := [Transformation([2, 3, 1])]));
-[ <transformation semigroup of degree 3 with 7 generators>, 
+[ <transformation semigroup of degree 3 with 7 generators>,
   <transformation monoid of degree 3 with 5 generators> ]
 gap> R := PrincipalFactor(
 > DClass(FullTransformationMonoid(4), Transformation([2, 2])));
@@ -122,9 +122,9 @@ gap> R := PrincipalFactor(
 gap> MaximalSubsemigroups(R, rec(types := [5],
 >   contain := [RMSElement(R, 1, (), 1),
 >               RMSElement(R, 1, (2, 3), 2)]));
-[ <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
-  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
-  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
+[ <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>,
+  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>,
+  <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>,
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators> ]]]></Example>
   </Description>
 </ManSection>

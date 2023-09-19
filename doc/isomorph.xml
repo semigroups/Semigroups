@@ -16,26 +16,26 @@
   </Returns>
   <Description>
     If <A>table</A> is a multiplication table of a semigroup and the second
-    argument <A>p</A> is a permutation of 
+    argument <A>p</A> is a permutation of
     <C>[1 .. Length(<A>table</A>)]</C>, then this operation returns a
     multiplication table of a semigroup isomorphic to that defined by
     <A>table</A> where the elements <C>[1 .. Length(<A>table</A>)]</C> are
     relabelled according to <A>p</A>.
 
     <Example><![CDATA[
-gap> table := [[1, 1, 3, 4, 5, 6, 7, 8], 
->              [1, 1, 3, 4, 5, 6, 7, 8], 
->              [1, 1, 3, 4, 5, 6, 7, 8], 
->              [1, 3, 3, 4, 5, 6, 7, 8], 
->              [5, 5, 6, 7, 5, 6, 7, 8], 
->              [5, 5, 6, 7, 5, 6, 7, 8], 
->              [5, 6, 6, 7, 5, 6, 7, 8], 
+gap> table := [[1, 1, 3, 4, 5, 6, 7, 8],
+>              [1, 1, 3, 4, 5, 6, 7, 8],
+>              [1, 1, 3, 4, 5, 6, 7, 8],
+>              [1, 3, 3, 4, 5, 6, 7, 8],
+>              [5, 5, 6, 7, 5, 6, 7, 8],
+>              [5, 5, 6, 7, 5, 6, 7, 8],
+>              [5, 6, 6, 7, 5, 6, 7, 8],
 >              [5, 6, 6, 7, 5, 6, 7, 8]];;
 gap> p := (1, 2, 3, 4)(10, 11, 12);;
 gap> OnMultiplicationTable(table, p);
-[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
-  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ], 
-  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ], 
+[ [ 1, 2, 4, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
+  [ 1, 2, 2, 4, 5, 6, 7, 8 ], [ 1, 2, 2, 4, 5, 6, 7, 8 ],
+  [ 7, 5, 5, 6, 5, 6, 7, 8 ], [ 7, 5, 5, 6, 5, 6, 7, 8 ],
   [ 7, 5, 6, 6, 5, 6, 7, 8 ], [ 7, 5, 6, 6, 5, 6, 7, 8 ] ]]]></Example>
   </Description>
 </ManSection>
@@ -48,14 +48,14 @@ gap> OnMultiplicationTable(table, p);
     A permutation.
   </Returns>
   <Description>
-    This function returns a permutation <C>p</C> such that 
+    This function returns a permutation <C>p</C> such that
     <C>OnMultiplicationTable(MultiplicationTable(<A>S</A>), p);</C>
     equals <C>CanonicalMultiplicationTable(<A>S</A>)</C>. <P/>
 
     See <Ref Attr="CanonicalMultiplicationTable"/> for more details.<P/>
-    
+
     <C>CanonicalMultiplicationTablePerm</C> uses the machinery for canonical
-      labelling of vertex coloured digraphs in &BLISS; via 
+      labelling of vertex coloured digraphs in &BLISS; via
     <Ref Oper="BlissCanonicalLabelling" Label="for a digraph and a list"
       BookName="digraphs"/>.<P/>
 
@@ -87,18 +87,18 @@ gap> CanonicalMultiplicationTablePerm(S);
       of <C>CanonicalMultiplicationTable</C> are equal. <P/>
 
       <C>CanonicalMultiplicationTable</C> uses the machinery for canonical
-        labelling of vertex coloured digraphs in &BLISS; via 
+        labelling of vertex coloured digraphs in &BLISS; via
       <Ref Oper="BlissCanonicalLabelling" Label="for a digraph and a list"
         BookName="digraphs"/>.<P/>
 
-      The multiplication table returned by this function is the result of 
+      The multiplication table returned by this function is the result of
       <C>OnMultiplicationTable(MultiplicationTable(<A>S</A>),
         CanonicalMultiplicationTablePerm(<A>S</A>));</C><P/>
 
       Note that the performance of <C>CanonicalMultiplicationTable</C> is
         vastly superior to that of <C>SmallestMultiplicationTable</C>.<P/>
 
-      See also: <Ref Attr= "CanonicalMultiplicationTablePerm"/> and 
+      See also: <Ref Attr= "CanonicalMultiplicationTablePerm"/> and
       <Ref Oper="OnMultiplicationTable"/>.
 
       <Example><![CDATA[
@@ -110,9 +110,9 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> CanonicalMultiplicationTable(S);
-[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ], 
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ], 
-  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ], 
+[ [ 1, 2, 2, 8, 1, 2, 7, 8 ], [ 1, 2, 2, 8, 1, 2, 7, 8 ],
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 5, 4, 5, 6, 7, 8 ],
+  [ 1, 2, 6, 4, 5, 6, 7, 8 ], [ 1, 2, 6, 4, 5, 6, 7, 8 ],
   [ 1, 2, 1, 8, 1, 2, 7, 8 ], [ 1, 2, 1, 8, 1, 2, 7, 8 ] ]]]></Example>
     </Description>
   </ManSection>
@@ -153,9 +153,9 @@ gap> S := Semigroup(
 gap> Size(S);
 8
 gap> SmallestMultiplicationTable(S);
-[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
-  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
-  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
+[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ],
+  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ],
+  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ],
   [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]]]></Example>
     </Description>
   </ManSection>
@@ -207,22 +207,22 @@ false]]></Example>
       not, then <K>fail</K> is returned. <P/>
 
       <C>IsomorphismSemigroups</C> uses the machinery for finding isomorphisms
-        between vertex coloured digraphs in &BLISS; via 
-      <Ref Oper="IsomorphismDigraphs" 
+        between vertex coloured digraphs in &BLISS; via
+      <Ref Oper="IsomorphismDigraphs"
            Label="for digraphs and homogeneous lists"
            BookName="digraphs"/> using digraphs constructed from the
         multiplication tables of <A>S</A> and <A>T</A>.
       <P/>
 
       Note that finding an isomorphism between two semigroups is difficult, and
-      may not be possible for semigroups whose size exceeds a few hundred 
+      may not be possible for semigroups whose size exceeds a few hundred
       elements.  On the other hand, <C>IsomorphismSemigroups</C> may be
       able deduce that <A>S</A> and <A>T</A> are not isomorphic by finding
       that some of their semigroup-theoretic properties differ.
 
       <Example><![CDATA[
 gap> S := RectangularBand(IsTransformationSemigroup, 4, 5);
-<regular transformation semigroup of size 20, degree 9 with 5 
+<regular transformation semigroup of size 20, degree 9 with 5
  generators>
 gap> T := RectangularBand(IsBipartitionSemigroup, 4, 5);
 <regular bipartition semigroup of size 20, degree 3 with 5 generators>
@@ -256,7 +256,7 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-  
+
 <#GAPDoc Label="AutomorphismGroup">
   <ManSection>
     <Oper Name = "AutomorphismGroup" Arg = "S" Label="for a semigroup"/>
@@ -264,10 +264,10 @@ true]]></Example>
       A group.
     </Returns>
     <Description>
-      This operation returns the group of automorphisms of the semigroup <A>S</A>. 
+      This operation returns the group of automorphisms of the semigroup <A>S</A>.
 
-      <C>AutomorphismGroup</C> uses &BLISS; via  
-      <Ref Oper="AutomorphismGroup" 
+      <C>AutomorphismGroup</C> uses &BLISS; via
+      <Ref Oper="AutomorphismGroup"
            Label="for a digraph and a homogeneous list"
            BookName="digraphs"/> using a vertex coloured digraph constructed
       from the multiplication table of <A>S</A>. Consequently, this method is
@@ -275,7 +275,7 @@ true]]></Example>
       <P/>
       <Example><![CDATA[
 gap> S := RectangularBand(IsTransformationSemigroup, 4, 5);
-<regular transformation semigroup of size 20, degree 9 with 5 
+<regular transformation semigroup of size 20, degree 9 with 5
  generators>
 gap> StructureDescription(AutomorphismGroup(S));
 "S4 x S5"]]></Example>

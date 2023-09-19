@@ -62,7 +62,7 @@ gap> Elements(S);
         If <A>m</A> and <A>r</A> are positive integers,
         then this function returns a monogenic semigroup
         <C>S</C> with index <A>m</A> and period <A>r</A>
-        in the representation given by the filter <A>filt</A>. 
+        in the representation given by the filter <A>filt</A>.
         <P/>
 
         The optional argument <A>filt</A> may be one of the following:
@@ -82,7 +82,7 @@ gap> Elements(S);
         <M>f, f ^ {2}, \ldots, f ^ {m}, \ldots, f ^ {m + r - 1}</M>.
         The minimal ideal of <C>S</C> consists of the elements
         <M>f ^ {m}, \ldots, f ^ {m + r - 1}</M>
-        and is isomorphic to the cyclic group of order <M>r</M>. 
+        and is isomorphic to the cyclic group of order <M>r</M>.
         <P/>
 
         See <Ref Prop="IsMonogenicSemigroup"/> for more information
@@ -90,7 +90,7 @@ gap> Elements(S);
 
         <Example><![CDATA[
 gap> S := MonogenicSemigroup(5, 3);
-<commutative non-regular transformation semigroup of size 7, degree 8 
+<commutative non-regular transformation semigroup of size 7, degree 8
  with 1 generator>
 gap> IsMonogenicSemigroup(S);
 true
@@ -100,7 +100,7 @@ true
 gap> StructureDescription(I);
 "C3"
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
-<commutative non-regular block bijection semigroup of size 9, 
+<commutative non-regular block bijection semigroup of size 9,
  degree 10 with 1 generator>]]></Example>
     </Description>
   </ManSection>
@@ -133,7 +133,7 @@ gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
 
         <Example><![CDATA[
 gap> T := RectangularBand(5, 6);
-<regular transformation semigroup of size 30, degree 10 with 6 
+<regular transformation semigroup of size 30, degree 10 with 6
  generators>
 gap> IsRectangularBand(T);
 true
@@ -177,12 +177,12 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(5);
-<commutative non-regular transformation semigroup of size 5, degree 5 
+<commutative non-regular transformation semigroup of size 5, degree 5
  with 4 generators>
 gap> IsZeroSemigroup(S);
 true
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 15);
-<commutative non-regular partial perm semigroup of size 15, rank 14 
+<commutative non-regular partial perm semigroup of size 15, rank 14
  with 14 generators>
 gap> Size(S);
 15
@@ -224,13 +224,13 @@ true]]></Example>
           <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
           <Item><C>IsIntegerMatrixSemigroup.</C></Item>
         </List>
-        
+
         The optional argument <A>G</A> defaults to a trivial permutation group.
         If present <A>G</A> must be a permutation group, unless <A>filt</A> is
         <C>IsReesZeroMatrixSemigroup</C> when <A>G</A> may be any type of
-        finite group. 
+        finite group.
         <P/>
-        
+
         See <Ref Prop="IsBrandtSemigroup"/> for more information about Brandt
         semigroups.
 
@@ -250,10 +250,10 @@ gap> S := BrandtSemigroup(Group((1, 2)), 3);
 <0-simple inverse partial perm semigroup of rank 6 with 3 generators>
 gap> S := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);
 <0-simple transformation semigroup of degree 7 with 5 generators>
-gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, 
->                         DihedralGroup(4), 
+gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup,
+>                         DihedralGroup(4),
 >                         2);
-<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with 
+<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with
  2 generators>>]]></Example>
     </Description>
   </ManSection>
@@ -269,7 +269,7 @@ gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup,
     <Description>
         If <A>n</A> is a positive integer, then this function returns a left
         zero (or right zero, as appropriate) semigroup of order <A>n</A> in the
-        representation given by the filter <A>filt</A>. 
+        representation given by the filter <A>filt</A>.
         If <A>filt</A> is not specified then the default representation is
         <C>IsTransformationSemigroup</C>. <P/>
 
@@ -278,13 +278,13 @@ gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup,
         the function <C>RightZeroSemigroup([<A>filt</A>,] <A>n</A>)</C> simply
         calls <C>RectangularBand([<A>filt</A>,] 1, <A>n</A>)</C>. <P/>
 
-        For more information about <C>RectangularBand</C>, including its 
+        For more information about <C>RectangularBand</C>, including its
         permitted values of <A>filt</A>, see <Ref Func="RectangularBand"/>.
 
         See <Ref Prop="IsLeftZeroSemigroup"/> and <Ref
           Prop="IsRightZeroSemigroup"/> for more information about left zero
         and right zero semigroups.
- 
+
         <Example><![CDATA[
 gap> S := LeftZeroSemigroup(20);
 <transformation semigroup of degree 6 with 20 generators>
