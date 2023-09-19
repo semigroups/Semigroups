@@ -336,7 +336,7 @@ function(tree1, tree2)
   return CanonicalForm(tree1) < CanonicalForm(tree2);
 end);
 
-InstallMethod(ChooseHashFunction, "for a bipartition",
+InstallMethod(ChooseHashFunction, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement, IsInt],
   function(x, hashlen)
   local sample, record, func;
