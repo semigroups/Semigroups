@@ -322,6 +322,5 @@ namespace gapbind14 {
 
     MakeImmutable(global_rec);
     AssReadOnlyGVar(GVarName(name), global_rec);
-    m.clear();
   }
 }  // namespace gapbind14
