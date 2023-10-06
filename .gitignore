@@ -36,3 +36,4 @@
 /libsemigroups/
 /src/pkgconfig.h.in
 /src/semigroups-config.hpp
+test-output.w
