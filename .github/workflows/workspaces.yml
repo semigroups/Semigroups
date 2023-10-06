@@ -1,0 +1,70 @@
+# This is temporary until/if:
+# https://github.com/gap-actions/run-pkg-tests/pull/24
+# is merged, or something equivalent, then remove the script ci/run-tests.sh,
+# and use the save/load.g files as commented out below
+name: "Workspaces"
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "main"
+      - "stable-*.*"
+  schedule:
+    # Every day at 3:15 AM UTC
+    - cron: '15 3 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  workspaces:
+      env: 
+        GAP_VERSION: "4.12.2"
+      name: "GAP 4.12.2 / ubuntu / 64-bit"
+      runs-on: ubuntu-latest
+      container:
+          image: jamesdbmitchell/gap-docker-minimal:version-4.12.2
+          options: --user root
+          volumes: 
+            - ${{ github.workspace }}:/home/gap/inst/gap-4.12.2/pkg/Semigroups
+      steps:
+          - name: "Checkout the Semigroups GAP package"
+
+            uses: actions/checkout@v3
+          - name: "Install git + autotools"
+            run: |
+              sudo apt-get --yes update
+              sudo apt-get install git --yes
+              sudo apt-get install pkg-config m4 libtool automake autoconf --yes
+              sudo apt-get install libtool-bin --yes
+          - name: "Setup ccache"
+            uses: Chocobo1/setup-ccache-action@v1
+            with:
+              update_packager_index: false
+              override_cache_key: ${{ runner.os }}-v4.12.2-64-${{ github.ref }}
+              override_cache_key_fallback: ${{ runner.os }}-v4.12.2-64
+          - name: "Build the Semigroups GAP package"
+            run: | 
+              cd /home/gap/inst/gap-4.12.2/pkg/Semigroups
+              ./prerequisites.sh
+              ./autogen.sh
+              ./configure --disable-hpcombi
+              make -j4
+          - name: "Install Semigroups GAP package dependencies"
+            run: |
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"autodoc\", false));" | gap -A -T --quitonbteak
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"datastructures\", false));" | gap -A -T --quitonbteak
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"digraphs\", false));" | gap -A -T --quitonbteak
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"genss\", false));" | gap -A -T --quitonbteak
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"images\", false));" | gap -A -T --quitonbteak
+              echo "LoadPackage(\"PackageManager\"); QuitGap(InstallPackage(\"orb\", false) and CompilePackage(\"orb\"));" | gap -A -T --quitonbteak
+          - name: "Run tst/workspaces/save.g"
+            run: |
+              cd /home/gap/inst/gap-4.12.2/pkg/Semigroups
+              gap -A -T --quitonbreak tst/workspaces/save.g
+          - name: "Run tst/workspaces/load.g"
+            run: |
+              cd /home/gap/inst/gap-4.12.2/pkg/Semigroups
+              gap -A -T --quitonbreak -L tst/workspaces/test-output.w tst/workspaces/load.g

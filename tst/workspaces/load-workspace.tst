@@ -14,9 +14,9 @@
 ##
 #############################################################################
 
-# Set up testing environment
+# DO NOT USE LOCAL VARIABLES @local in this file!
 
-#@local D, DD, id, idd, xx
+# Set up testing environment
 gap> START_TEST("Semigroups package: workspaces/load-workspace.tst");
 gap> SEMIGROUPS.StartTest();
 
@@ -136,6 +136,7 @@ gap> AsDigraph(b);
 gap> CanonicalBlocks(b);
 <blocks: [ 1* ], [ 2*, 3* ], [ 4*, 5*, 6*, 7* ], [ 8, 9, 10 ]>
 
-#
+# No point unbinding local variables, since this will only ever be run in a
+# workspace
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: workspaces/load-workspace.tst");
