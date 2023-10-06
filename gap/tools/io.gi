@@ -447,7 +447,7 @@ function(arg)
   fi;
 
   for i in [1 .. Length(coll)] do
-    n := Size(coll[i]);  # Don't assume all multiplcation tables are same size.
+    n := Size(coll[i]);  # Don't assume all multiplication tables are same size.
     if not (IsRectangularTable(coll[i]) and IsInt(coll[i][1][1])) then
       if IsString(name) then
         IO_Close(file);

@@ -501,10 +501,10 @@ module, including many by [Max Horn][], such as
 those in PRs
 [#490](https://github.com/gap-packages/Semigroups/pull/490),
 [#491](https://github.com/gap-packages/Semigroups/pull/491),
-[#493](hhttps://github.com/gap-packages/Semigroups/pull/493),
-[#501](hhttps://github.com/gap-packages/Semigroups/pull/501),
-[#553](hhttps://github.com/gap-packages/Semigroups/pull/553), and
-[#562](hhttps://github.com/gap-packages/Semigroups/pull/562).
+[#493](https://github.com/gap-packages/Semigroups/pull/493),
+[#501](https://github.com/gap-packages/Semigroups/pull/501),
+[#553](https://github.com/gap-packages/Semigroups/pull/553), and
+[#562](https://github.com/gap-packages/Semigroups/pull/562).
 
 Semigroups now requires version 4.8.1 of the
 [orb package](https://gap-packages.github.io/orb), or newer.
@@ -1412,7 +1412,7 @@ expanded to include more types of semigroups than just those of
 transformations and partial permutations).
 
 A minor release fixing several bugs relating to inverse semigroups
-of partial permutations pointed out by partcipants at the
+of partial permutations pointed out by participants at the
 University of St Andrews Research for Undergraduates Summer School
 in July 2012.  Most notably by Demi Allen, Casey Donoven, Rhiannon
 Dougall, Robert Hancock, and [Wilf A. Wilson][]. More specifically,
