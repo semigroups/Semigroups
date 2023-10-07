@@ -3,6 +3,12 @@ Copyright © 2011-2023 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.3.2 (released 07/10/2023)
+
+This is a minor release with a some bugfixes and minor improvements. Support
+for GAP workspaces was broken in v5.3.0, and this issue has been resolved in
+v5.3.2.
+
 ### Version 5.3.1 (released 19/09/2023)
 
 This is a minor release fixing a minor issue in the build system.
