@@ -5,7 +5,7 @@ Licensing information can be found in the `LICENSE` file.
 
 ### Version 5.3.2 (released 07/10/2023)
 
-This is a minor release with a some bugfixes and minor improvements. Support
+This is a minor release with some bugfixes and minor improvements. Support
 for GAP workspaces was broken in v5.3.0, and this issue has been resolved in
 v5.3.2.
 
