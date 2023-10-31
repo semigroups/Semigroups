@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  semigroups/semiex.gi
-##  Copyright (C) 2013-2022                               James D. Mitchell
+##  Copyright (C) 2013-2023                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

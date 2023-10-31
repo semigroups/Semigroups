@@ -718,7 +718,7 @@ function(arg)
     S := BrandtSemigroupCons(arg[1], arg[2], arg[3]);
   else
     ErrorNoReturn("the arguments must be a positive integer or a filter and",
-                   " a positive integer, or  a perm group and positive ",
+                   " a positive integer, or a perm group and positive ",
                    "integer, or a filter, perm group, and positive ",
                    "integer");
   fi;
@@ -796,6 +796,26 @@ for _IsXSemigroup in ["IsTransformationSemigroup",
 od;
 Unbind(_IsXSemigroup);
 
+InstallGlobalFunction(FreeSemilattice,
+function(arg)
+  local S;
+
+  if Length(arg) = 0 then
+    S := TrivialSemigroupCons(IsTransformationSemigroup, 0);
+  elif Length(arg) = 1 and IsInt(arg[1]) and arg[1] >= 0 then
+    S := TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
+  elif Length(arg) = 1 and IsOperation(arg[1]) then
+    S := TrivialSemigroupCons(arg[1], 0);
+  elif Length(arg) = 2 and IsOperation(arg[1]) and IsInt(arg[2])
+      and arg[2] >= 0 then
+    S := TrivialSemigroupCons(arg[1], arg[2]);
+  else
+    ErrorNoReturn("the arguments must be a non-negative integer or ",
+                  "a filter and a non-negative integer");
+  fi;
+  SetIsTrivial(S, true);
+  return S;
+end);
 InstallMethod(StrongSemilatticeOfSemigroups,
 "for a digraph, a list, and a list",
 [IsDigraph, IsList, IsList],

@@ -20,6 +20,8 @@ DeclareGlobalFunction("LeftZeroSemigroup");
 DeclareGlobalFunction("RightZeroSemigroup");
 DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
 DeclareGlobalFunction("BrandtSemigroup");
+DeclareConstructor("FreeSemilatticeCons", [IsSemigroup, IsPosInt]);
+DeclareGlobalFunction("FreeSemilattice");
 
 DeclareCategory("IsSSSE", IsAssociativeElement);
 DeclareCategoryCollections("IsSSSE");
