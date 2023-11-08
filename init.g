@@ -42,6 +42,20 @@ BindGlobal("LIBSEMIGROUPS_VERSION",
            Chomp(StringFile(Concatenation(SEMIGROUPS.PackageDir,
                                           "/.LIBSEMIGROUPS_VERSION"))));
 
+# added when addressing issue #949
+if not IsBound( PreImagesNC ) then 
+    BindGlobal( "PreImagesNC", PreImages ); 
+fi; 
+if not IsBound( PreImagesElmNC ) then 
+    BindGlobal( "PreImagesElmNC", PreImagesElm ); 
+fi; 
+if not IsBound( PreImagesSetNC ) then 
+    BindGlobal( "PreImagesSetNC", PreImagesSet ); 
+fi; 
+if not IsBound( PreImagesRepresentativeNC ) then 
+    BindGlobal( "PreImagesRepresentativeNC", PreImagesRepresentative ); 
+fi; 
+
 ReadPackage("semigroups", "gap/options.g");
 
 ReadPackage("semigroups", "gap/elements/semiringmat.gd");

@@ -1106,14 +1106,14 @@ function(map)
   return IsOne(map[1]) and IsOne(map[2]) and ForAll(map[3], IsOne);
 end);
 
-InstallMethod(PreImagesRepresentative,
+InstallMethod(PreImagesRepresentativeNC,
 "for an RMS element under a mapping by a triple",
 FamRangeEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
 function(map, x)
   return ImagesRepresentative(InverseGeneralMapping(map), x);
 end);
 
-InstallMethod(PreImagesRepresentative,
+InstallMethod(PreImagesRepresentativeNC,
 "for an RZMS element under a mapping by a triple",
 FamRangeEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
 function(map, x)

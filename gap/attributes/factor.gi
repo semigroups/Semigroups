@@ -224,7 +224,7 @@ function(o, m, p)
       word := [k, -k];
     else
       epi := EpimorphismFromFreeGroup(G);
-      word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+      word := LetterRepAssocWord(PreImagesRepresentativeNC(epi, p));
     fi;
   fi;
 
