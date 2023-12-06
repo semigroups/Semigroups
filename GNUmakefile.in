@@ -49,7 +49,7 @@ ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
 KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include
 KEXT_CPPFLAGS += -Ilibsemigroups/extern/HPCombi/include/fallback
 endif
-KEXT_CPPFLAGS += -Ilibsemigroups/extern/fmt-8.0.1/include
+KEXT_CPPFLAGS += -Ilibsemigroups/extern/fmt-10.1.1/include
 KEXT_CPPFLAGS += -Ilibsemigroups/include
 endif
 KEXT_CPPFLAGS += -DFMT_HEADER_ONLY

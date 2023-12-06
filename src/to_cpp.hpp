@@ -53,11 +53,12 @@
 #include "libsemigroups/bmat8.hpp"       // for BMat8
 #include "libsemigroups/cong.hpp"        // for Congruence
 #include "libsemigroups/constants.hpp"   // for NegativeInfinity, PositiveIn...
-#include "libsemigroups/containers.hpp"  // for DynamicArray2
 #include "libsemigroups/matrix.hpp"      // for NTPMat, MaxPlusTruncMat, Min...
 #include "libsemigroups/pbr.hpp"         // for PBR
 #include "libsemigroups/transf.hpp"      // for PPerm, Transf, IsPPerm
 #include "libsemigroups/types.hpp"       // for congruence_kind, congruence_...
+
+#include "libsemigroups/detail/containers.hpp"  // for DynamicArray2
 
 namespace libsemigroups {
   class Bipartition;
@@ -398,25 +399,6 @@ namespace gapbind14 {
         return congruence_kind::right;
       } else if (stype == "2-sided") {
         return congruence_kind::twosided;
-      } else {
-        ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
-      }
-    }
-  };
-
-  template <>
-  struct to_cpp<libsemigroups::Congruence::options::runners> {
-    using cpp_type = libsemigroups::Congruence::options::runners;
-
-    cpp_type operator()(Obj o) const {
-      if (TNUM_OBJ(o) != T_STRING && TNUM_OBJ(o) != T_STRING + IMMUTABLE) {
-        ErrorQuit("expected string but got %s!", (Int) TNAM_OBJ(o), 0L);
-      }
-      std::string stype = std::string(CSTR_STRING(o));
-      if (stype == "none") {
-        return cpp_type::none;
-      } else if (stype == "standard") {
-        return cpp_type::standard;
       } else {
         ErrorQuit("Unrecognised type %s", (Int) stype.c_str(), 0L);
       }
