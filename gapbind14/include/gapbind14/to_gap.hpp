@@ -72,9 +72,9 @@ namespace gapbind14 {
     using cpp_type                          = std::string;
     static gap_tnum_type constexpr gap_type = T_STRING;
 
-    Obj operator()(std::string const& str) const {
+    Obj operator()(std::string_view str) const {
       Obj ret;
-      C_NEW_STRING(ret, str.length(), str.c_str());
+      C_NEW_STRING(ret, str.size(), str.begin());
       return ret;
     }
   };

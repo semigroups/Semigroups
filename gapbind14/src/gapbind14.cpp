@@ -42,8 +42,10 @@ namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
 
   namespace detail {
-    std::vector<std::pair<std::string, Obj>> &all_categories() {
-      static std::vector<std::pair<std::string, Obj>> _all_categories;
+    std::vector<std::pair<std::string_view, std::string_view>> &
+    all_categories() {
+      static std::vector<std::pair<std::string_view, std::string_view>>
+          _all_categories;
       return _all_categories;
     }
 
@@ -367,7 +369,9 @@ namespace gapbind14 {
     AssReadOnlyGVar(GVarName(name), global_rec);
 
     for (auto const &[nam, parent_category] : detail::all_categories()) {
-      CALL_2ARGS(GAP_DeclareCategory, to_gap<std::string>()(nam), GAP_IsObject);
+      CALL_2ARGS(GAP_DeclareCategory,
+                 to_gap<std::string>()(nam),
+                 _LibraryGVar(parent_category));
       // TODO figure out how to pass GAP_IsObject at the call site of
       // gapbind14::DeclareCategory
     }

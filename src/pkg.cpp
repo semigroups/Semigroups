@@ -103,77 +103,78 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  Obj GAP_IsObject = gapbind14::_LibraryGVar("IsObject");
+  auto GAP_IsObject = "IsObject";
 
   // TODO remove the next line, currently required to get the subtype
   gapbind14::class_<libsemigroups::Words>("Words");
 
-  Obj GAP_IsWords = gapbind14::DeclareCategory("IsWords", GAP_IsObject);
+  auto GAP_IsWords = gapbind14::DeclareCategory("IsWords", GAP_IsObject);
   // Declare a 0-arg operation
-  gapbind14::DeclareOperation("Words");
+  auto Words = gapbind14::DeclareOperation("Words");
 
   // TODO the return type of Words should be IsWords
   gapbind14::InstallMethod<libsemigroups::Words>(
-      "Words", "for no arguments", {}, gapbind14::init<>());
+      Words, "for no arguments", {}, gapbind14::init<>());
 
-  gapbind14::DeclareOperation("Count", {"IsObject"});
-  gapbind14::InstallMethod("Count",
+  auto Count = gapbind14::DeclareOperation("Count", {GAP_IsObject});
+  gapbind14::InstallMethod(Count,
                            "for an IsWords object",
-                           {"IsObject"},
+                           {GAP_IsObject},
                            &libsemigroups::Words::count);
 
-  gapbind14::DeclareOperation("FirstWord", {"IsObject"});
+  auto FirstWord = gapbind14::DeclareOperation("FirstWord", {GAP_IsObject});
   gapbind14::InstallMethod(
-      "FirstWord",
+      FirstWord,
       "for an IsWords object",
-      {"IsObject"},
+      {GAP_IsObject},
       gapbind14::overload_cast<>(&libsemigroups::Words::first));
 
-  gapbind14::DeclareOperation("FirstWord", {"IsObject", "IsObject"});
+  gapbind14::DeclareOperation("FirstWord", {GAP_IsObject, GAP_IsObject});
   gapbind14::InstallMethod(
-      "FirstWord",
+      FirstWord,
       "for an IsWords object and word",
-      {"IsObject", "IsObject"},
+      {GAP_IsObject, GAP_IsObject},
       // gapbind14 currently doesn't handle the reference returned by
       // words.first(w) properly so we wrap it in a lambda
       [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
         words.first(w);
       });
 
-  gapbind14::DeclareOperation("LastWord", {"IsObject"});
+  auto LastWord = gapbind14::DeclareOperation("LastWord", {GAP_IsObject});
   gapbind14::InstallMethod(
-      "LastWord",
+      LastWord,
       "for an IsWords object",
-      {"IsObject"},
+      {GAP_IsObject},
       gapbind14::overload_cast<>(&libsemigroups::Words::first));
 
-  gapbind14::DeclareOperation("LastWord", {"IsObject", "IsObject"});
+  gapbind14::DeclareOperation("LastWord", {GAP_IsObject, GAP_IsObject});
   gapbind14::InstallMethod(
-      "LastWord",
+      LastWord,
       "for an IsWords object and word",
-      {"IsObject", "IsObject"},
+      {GAP_IsObject, GAP_IsObject},
       // gapbind14 currently doesn't handle the reference returned by
       // words.first(w) properly so we wrap it in a lambda
       [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
         words.last(w);
       });
 
-  gapbind14::DeclareOperation("NumberOfLetters", {"IsObject", "IsObject"});
-  gapbind14::InstallMethod("NumberOfLetters",
+  auto NumberOfLetters = gapbind14::DeclareOperation(
+      "NumberOfLetters", {GAP_IsObject, GAP_IsObject});
+  gapbind14::InstallMethod(NumberOfLetters,
                            "for an IsWords object and a pos. int.",
-                           {"IsObject", "IsObject"},
+                           {GAP_IsObject, GAP_IsObject},
                            [](libsemigroups::Words& words, size_t n) {
                              words.number_of_letters(n);
                            });
 
-  gapbind14::DeclareOperation("Get", {"IsObject"});
+  auto Get = gapbind14::DeclareOperation("Get", {GAP_IsObject});
   gapbind14::InstallMethod(
-      "Get", "for an IsWords object", {"IsObject"}, &libsemigroups::Words::get);
+      Get, "for an IsWords object", {GAP_IsObject}, &libsemigroups::Words::get);
 
-  gapbind14::DeclareOperation("Next", {"IsObject"});
-  gapbind14::InstallMethod("Next",
+  auto Next = gapbind14::DeclareOperation("Next", {GAP_IsObject});
+  gapbind14::InstallMethod(Next,
                            "for an IsWords object",
-                           {"IsObject"},
+                           {GAP_IsObject},
                            &libsemigroups::Words::next);
 
   // Old

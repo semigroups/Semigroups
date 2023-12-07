@@ -434,7 +434,8 @@ namespace gapbind14 {
   struct init {};
 
   namespace detail {
-    std::vector<std::pair<std::string, Obj>>& all_categories();
+    std::vector<std::pair<std::string_view, std::string_view>>&
+    all_categories();
     std::vector<std::pair<std::string, std::vector<std::string_view>>>&
     all_operations();
 
@@ -455,21 +456,25 @@ namespace gapbind14 {
         detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
   }
 
-  static inline Obj DeclareCategory(char const* name, Obj parent_category) {
+  static inline std::string_view
+  DeclareCategory(std::string_view name, std::string_view parent_category) {
     // TODO replace with module.add_category
     detail::all_categories().emplace_back(name, parent_category);
-    return _LibraryGVar(name);
+    _LibraryGVar(name);
+    _LibraryGVar(parent_category);
+    return name;
   }
 
-  static inline Obj
-  DeclareOperation(char const*                                    name,
+  static inline std::string_view
+  DeclareOperation(std::string_view                               name,
                    std::initializer_list<std::string_view> const& filt_list) {
+    _LibraryGVar(name);
     detail::all_operations().emplace_back(
         std::string(name), std::vector<std::string_view>(filt_list));
-    return _LibraryGVar(name);
+    return name;
   }
 
-  static inline Obj DeclareOperation(char const* name) {
+  static inline std::string_view DeclareOperation(char const* name) {
     return DeclareOperation(name, {});
   }
 
@@ -480,6 +485,7 @@ namespace gapbind14 {
                 std::initializer_list<std::string_view> const& filt_list,
                 Wild                                           f)
       -> std::enable_if_t<std::is_member_function_pointer<Wild>::value> {
+    _LibraryGVar(name);
     size_t const n = detail::all_wild_mem_fns<Wild>().size();
     detail::all_wild_mem_fns<Wild>().push_back(f);
     module().add_method_to_install(
@@ -498,6 +504,7 @@ namespace gapbind14 {
                 std::initializer_list<std::string_view> const& filt_list,
                 Wild                                           f)
       -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value> {
+    _LibraryGVar(name);
     size_t const n = detail::all_wilds<Wild>().size();
     detail::all_wilds<Wild>().push_back(f);
     module().add_method_to_install(
