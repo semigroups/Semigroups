@@ -354,6 +354,11 @@ namespace gapbind14 {
                                std::vector<std::string_view> const& filt_list,
                                Obj (*func)(Args...)) {
       static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
+      if (filt_list.size() + 1 != sizeof...(Args)) {
+        std::cout << "Something wrong expected " << filt_list.size() + 1
+                  << " arguments, found " << sizeof...(Args) << std::endl;
+      }
+
       MethodToInstall mti;
       mti.name        = nm;
       mti.info_string = info_string;
@@ -429,8 +434,9 @@ namespace gapbind14 {
   struct init {};
 
   namespace detail {
-    std::vector<std::pair<std::string, Obj>>&              all_categories();
-    std::vector<std::pair<std::string, std::vector<Obj>>>& all_operations();
+    std::vector<std::pair<std::string, Obj>>& all_categories();
+    std::vector<std::pair<std::string, std::vector<std::string_view>>>&
+    all_operations();
 
     template <typename T, typename... Args>
     T* make(Args... params) {
@@ -456,10 +462,10 @@ namespace gapbind14 {
   }
 
   static inline Obj
-  DeclareOperation(char const*                       name,
-                   std::initializer_list<Obj> const& filt_list) {
-    detail::all_operations().emplace_back(std::string(name),
-                                          std::vector<Obj>(filt_list));
+  DeclareOperation(char const*                                    name,
+                   std::initializer_list<std::string_view> const& filt_list) {
+    detail::all_operations().emplace_back(
+        std::string(name), std::vector<std::string_view>(filt_list));
     return _LibraryGVar(name);
   }
 

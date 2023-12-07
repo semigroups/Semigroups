@@ -47,8 +47,9 @@ namespace gapbind14 {
       return _all_categories;
     }
 
-    std::vector<std::pair<std::string, std::vector<Obj>>> &all_operations() {
-      static std::vector<std::pair<std::string, std::vector<Obj>>>
+    std::vector<std::pair<std::string, std::vector<std::string_view>>> &
+    all_operations() {
+      static std::vector<std::pair<std::string, std::vector<std::string_view>>>
           _all_operations;
       return _all_operations;
     }
@@ -316,6 +317,14 @@ namespace gapbind14 {
     _LibraryGVar.import_all();
   }
 
+  std::vector<Obj> filter_list(std::vector<std::string_view> const &svs) {
+    std::vector<Obj> filt_list;
+    for (auto const &filt : svs) {
+      filt_list.push_back(_LibraryGVar(filt));
+    }
+    return filt_list;
+  }
+
   void init_library(char const *name) {
     static bool first_call = true;
     if (first_call) {
@@ -366,23 +375,21 @@ namespace gapbind14 {
     for (auto const &[nam, filt_list] : detail::all_operations()) {
       CALL_2ARGS(GAP_DeclareOperation,
                  to_gap<std::string>()(nam),
-                 to_gap<std::vector<Obj>>()(filt_list));
+                 to_gap<std::vector<Obj>>()(filter_list(filt_list)));
     }
 
     size_t index = 0;
     for (auto const &mti : module().methods_to_install()) {
-      Obj GAP_op = _LibraryGVar(mti.name);
+      Obj  GAP_op    = _LibraryGVar(mti.name);
+      auto filt_list = filter_list(mti.filt_list);
       // TODO must be an easier way of doing this, i.e. just add the global
       // function as elsewhere to GAP and then call install method using that
-      std::vector<Obj> filt_list;
-      for (auto const &filt : mti.filt_list) {
-        filt_list.push_back(_LibraryGVar(filt));
-      }
       UInt gvar = GVarName(mti.func.name);
       Obj  name = NameGVar(gvar);
       Obj args = ValidatedArgList(mti.func.name, mti.func.nargs, mti.func.args);
       Obj func = NewFunction(name, mti.func.nargs, args, mti.func.handler);
       SetupFuncInfo(func, mti.func.cookie);
+      assert(mt.func.nargs == filt_list.size());
 
       CALL_4ARGS(GAP_InstallMethod,
                  GAP_op,
@@ -390,7 +397,6 @@ namespace gapbind14 {
                  // required
                  to_gap<std::string>()(mti.info_string),
                  to_gap<std::vector<Obj>>()(filt_list),
-
                  func);
       std::cout << "Installed method for " << mti.name << std::endl;
       index++;

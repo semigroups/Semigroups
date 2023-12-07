@@ -116,18 +116,65 @@ GAPBIND14_MODULE(libsemigroups) {
   gapbind14::InstallMethod<libsemigroups::Words>(
       "Words", "for no arguments", {}, gapbind14::init<>());
 
-  gapbind14::DeclareOperation("Count", {GAP_IsObject});
-  // gapbind14::InstallMethod("Count",
-  //                          "for an IsWords object",
-  //                          {"IsObject"},
-  //                          &libsemigroups::Words::count);
+  gapbind14::DeclareOperation("Count", {"IsObject"});
+  gapbind14::InstallMethod("Count",
+                           "for an IsWords object",
+                           {"IsObject"},
+                           &libsemigroups::Words::count);
 
-  gapbind14::DeclareOperation("FirstWord", {GAP_IsObject});
-  // gapbind14::InstallMethod(
-  //     "FirstWord",
-  //     "for an IsWords object",
-  //     {"IsObject"},
-  //     gapbind14::overload_cast<>(&libsemigroups::Words::first));
+  gapbind14::DeclareOperation("FirstWord", {"IsObject"});
+  gapbind14::InstallMethod(
+      "FirstWord",
+      "for an IsWords object",
+      {"IsObject"},
+      gapbind14::overload_cast<>(&libsemigroups::Words::first));
+
+  gapbind14::DeclareOperation("FirstWord", {"IsObject", "IsObject"});
+  gapbind14::InstallMethod(
+      "FirstWord",
+      "for an IsWords object and word",
+      {"IsObject", "IsObject"},
+      // gapbind14 currently doesn't handle the reference returned by
+      // words.first(w) properly so we wrap it in a lambda
+      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
+        words.first(w);
+      });
+
+  gapbind14::DeclareOperation("LastWord", {"IsObject"});
+  gapbind14::InstallMethod(
+      "LastWord",
+      "for an IsWords object",
+      {"IsObject"},
+      gapbind14::overload_cast<>(&libsemigroups::Words::first));
+
+  gapbind14::DeclareOperation("LastWord", {"IsObject", "IsObject"});
+  gapbind14::InstallMethod(
+      "LastWord",
+      "for an IsWords object and word",
+      {"IsObject", "IsObject"},
+      // gapbind14 currently doesn't handle the reference returned by
+      // words.first(w) properly so we wrap it in a lambda
+      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
+        words.last(w);
+      });
+
+  gapbind14::DeclareOperation("NumberOfLetters", {"IsObject", "IsObject"});
+  gapbind14::InstallMethod("NumberOfLetters",
+                           "for an IsWords object and a pos. int.",
+                           {"IsObject", "IsObject"},
+                           [](libsemigroups::Words& words, size_t n) {
+                             words.number_of_letters(n);
+                           });
+
+  gapbind14::DeclareOperation("Get", {"IsObject"});
+  gapbind14::InstallMethod(
+      "Get", "for an IsWords object", {"IsObject"}, &libsemigroups::Words::get);
+
+  gapbind14::DeclareOperation("Next", {"IsObject"});
+  gapbind14::InstallMethod("Next",
+                           "for an IsWords object",
+                           {"IsObject"},
+                           &libsemigroups::Words::next);
 
   // Old
 
