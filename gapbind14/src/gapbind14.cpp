@@ -21,6 +21,8 @@
 #include <stdio.h>   // for fprintf, stderr
 #include <string.h>  // for memcpy, strchr, strrchr
 
+#include <iostream>
+
 #include <unordered_set>  // for unordered_set, unordered_set<>::iterator
 
 #include "gapbind14/gap_include.hpp"  // for Obj etc
@@ -28,10 +30,29 @@
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
+Obj GAP_IsObject;
+Obj GAP_DeclareCategory;
+Obj GAP_DeclareOperation;
+Obj GAP_InstallMethod;
+
 namespace gapbind14 {
+
+  LibraryGVar _LibraryGVar;
+
   UInt T_GAPBIND14_OBJ = 0;
 
   namespace detail {
+    std::vector<std::pair<std::string, Obj>> &all_categories() {
+      static std::vector<std::pair<std::string, Obj>> _all_categories;
+      return _all_categories;
+    }
+
+    std::vector<std::pair<std::string, std::vector<Obj>>> &all_operations() {
+      static std::vector<std::pair<std::string, std::vector<Obj>>>
+          _all_operations;
+      return _all_operations;
+    }
+
     std::unordered_map<std::string, void (*)()> &init_funcs() {
       static std::unordered_map<std::string, void (*)()> inits;
       return inits;
@@ -62,6 +83,12 @@ namespace gapbind14 {
     char const *copy_c_str(std::string const &str) {
       char *out = new char[str.size() + 1];  // we need extra char for NUL
       memcpy(out, str.c_str(), str.size() + 1);
+      return out;
+    }
+
+    char const *copy_c_str(std::string_view sv) {
+      char *out = new char[sv.size() + 1];  // we need extra char for NUL
+      memcpy(out, sv.begin(), sv.size() + 1);
       return out;
     }
 
@@ -246,6 +273,12 @@ namespace gapbind14 {
   }
 
   void init_kernel(char const *name) {
+    ImportGVarFromLibrary("DeclareCategory", &GAP_DeclareCategory);
+    ImportGVarFromLibrary("DeclareOperation", &GAP_DeclareOperation);
+    ImportGVarFromLibrary("InstallMethod", &GAP_InstallMethod);
+
+    ImportGVarFromLibrary("IsObject", &GAP_IsObject);
+
     static bool first_call = true;
     if (first_call) {
       first_call = false;
@@ -280,6 +313,7 @@ namespace gapbind14 {
     for (auto ptr : module()) {
       InitHdlrFuncsFromTable(module().mem_funcs(ptr->name()));
     }
+    _LibraryGVar.import_all();
   }
 
   void init_library(char const *name) {
@@ -322,5 +356,44 @@ namespace gapbind14 {
 
     MakeImmutable(global_rec);
     AssReadOnlyGVar(GVarName(name), global_rec);
+
+    for (auto const &[nam, parent_category] : detail::all_categories()) {
+      CALL_2ARGS(GAP_DeclareCategory, to_gap<std::string>()(nam), GAP_IsObject);
+      // TODO figure out how to pass GAP_IsObject at the call site of
+      // gapbind14::DeclareCategory
+    }
+
+    for (auto const &[nam, filt_list] : detail::all_operations()) {
+      CALL_2ARGS(GAP_DeclareOperation,
+                 to_gap<std::string>()(nam),
+                 to_gap<std::vector<Obj>>()(filt_list));
+    }
+
+    size_t index = 0;
+    for (auto const &mti : module().methods_to_install()) {
+      Obj GAP_op = _LibraryGVar(mti.name);
+      // TODO must be an easier way of doing this, i.e. just add the global
+      // function as elsewhere to GAP and then call install method using that
+      std::vector<Obj> filt_list;
+      for (auto const &filt : mti.filt_list) {
+        filt_list.push_back(_LibraryGVar(filt));
+      }
+      UInt gvar = GVarName(mti.func.name);
+      Obj  name = NameGVar(gvar);
+      Obj args = ValidatedArgList(mti.func.name, mti.func.nargs, mti.func.args);
+      Obj func = NewFunction(name, mti.func.nargs, args, mti.func.handler);
+      SetupFuncInfo(func, mti.func.cookie);
+
+      CALL_4ARGS(GAP_InstallMethod,
+                 GAP_op,
+                 // TODO deduction guides so that the template params aren't
+                 // required
+                 to_gap<std::string>()(mti.info_string),
+                 to_gap<std::vector<Obj>>()(filt_list),
+
+                 func);
+      std::cout << "Installed method for " << mti.name << std::endl;
+      index++;
+    }
   }
 }  // namespace gapbind14

@@ -127,7 +127,7 @@ namespace gapbind14 {
     static gap_tnum_type constexpr gap_type = T_PLIST_HOM;
 
     Obj operator()(std::vector<T> const& v) const {
-      Obj result = NEW_PLIST(T_PLIST_HOM, v.size());
+      Obj result = NEW_PLIST(T_PLIST, v.size());
       SET_LEN_PLIST(result, v.size());
       using value_type = typename std::vector<T>::value_type;
       size_t index     = 1;

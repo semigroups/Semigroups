@@ -93,12 +93,43 @@ namespace gapbind14 {
 
   template <>
   struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
+
+  template <>
+  struct IsGapBind14Type<libsemigroups::Words> : std::true_type {};
 }  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
   ////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////
+
+  Obj GAP_IsObject = gapbind14::_LibraryGVar("IsObject");
+
+  // TODO remove the next line, currently required to get the subtype
+  gapbind14::class_<libsemigroups::Words>("Words");
+
+  Obj GAP_IsWords = gapbind14::DeclareCategory("IsWords", GAP_IsObject);
+  // Declare a 0-arg operation
+  gapbind14::DeclareOperation("Words");
+
+  // TODO the return type of Words should be IsWords
+  gapbind14::InstallMethod<libsemigroups::Words>(
+      "Words", "for no arguments", {}, gapbind14::init<>());
+
+  gapbind14::DeclareOperation("Count", {GAP_IsObject});
+  // gapbind14::InstallMethod("Count",
+  //                          "for an IsWords object",
+  //                          {"IsObject"},
+  //                          &libsemigroups::Words::count);
+
+  gapbind14::DeclareOperation("FirstWord", {GAP_IsObject});
+  // gapbind14::InstallMethod(
+  //     "FirstWord",
+  //     "for an IsWords object",
+  //     {"IsObject"},
+  //     gapbind14::overload_cast<>(&libsemigroups::Words::first));
+
+  // Old
 
   gapbind14::InstallGlobalFunction("set_report", &set_report);
   gapbind14::InstallGlobalFunction("should_report",

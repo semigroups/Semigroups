@@ -30,6 +30,7 @@
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
 
 #include <cstddef>        // for size_t
+#include <iostream>       // for ostringstream
 #include <iterator>       // for distance, iterator_traits
 #include <memory>         // for shared_ptr
 #include <sstream>        // for ostringstream
@@ -73,6 +74,33 @@
 typedef Obj (*GVarFunc)(/*arguments*/);
 
 namespace gapbind14 {
+
+  // Provides a mechanism for defining and accessing GAP library variables in
+  // the kernel module.
+  extern class LibraryGVar {
+    std::vector<Obj>                        _GAP_LibraryGVars;
+    std::unordered_map<std::string, size_t> _map;
+
+   public:
+    Obj operator()(std::string_view name) {
+      auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
+      if (inserted) {
+        _GAP_LibraryGVars.emplace_back();
+        return _GAP_LibraryGVars.back();
+      } else {
+        return _GAP_LibraryGVars[it->second];
+      }
+    }
+
+    void import_all() {
+      for (auto const& var : _map) {
+        std::cout << "Importing GAP GVar " << var.first << " from library"
+                  << std::endl;
+        ImportGVarFromLibrary(var.first.c_str(),
+                              &_GAP_LibraryGVars[var.second]);
+      }
+    }
+  } _LibraryGVar;
 
   // Forward decl
   template <typename T, typename>
@@ -146,6 +174,7 @@ namespace gapbind14 {
     }
 
     char const* copy_c_str(std::string const& str);
+    char const* copy_c_str(std::string_view sv);
 
     char const* params_c_str(size_t nr);
 
@@ -200,9 +229,20 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   class Module {
+   public:
+    struct MethodToInstall {
+      std::string                   name;
+      std::string                   info_string;
+      std::vector<std::string_view> filt_list;
+      StructGVarFunc                func;
+    };
+
    private:
+    // TODO use StructGVarOper?
+
     std::vector<StructGVarFunc>                        _funcs;
     std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
+    std::vector<MethodToInstall>                       _methods_to_install;
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
     std::vector<detail::SubtypeBase*>                  _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
@@ -307,6 +347,33 @@ namespace gapbind14 {
                       detail::copy_c_str(flnm + ":Func" + sbtyp + "::" + nm)});
     }
 
+    template <typename... Args>
+    void add_method_to_install(std::string_view                     flnm,
+                               std::string_view                     nm,
+                               std::string_view                     info_string,
+                               std::vector<std::string_view> const& filt_list,
+                               Obj (*func)(Args...)) {
+      static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
+      MethodToInstall mti;
+      mti.name        = nm;
+      mti.info_string = info_string;
+      mti.filt_list   = filt_list;
+
+      std::string cookie_name = std::string(flnm) + ":Func";
+      cookie_name += nm;
+      mti.func = {detail::copy_c_str(nm),
+                  sizeof...(Args) - 1,
+                  detail::params_c_str(sizeof...(Args) - 1),
+                  (GVarFunc) func,
+                  detail::copy_c_str(cookie_name)};
+      _methods_to_install.push_back(mti);
+    }
+
+    // TODO re-add const x2
+    auto& methods_to_install() {
+      return _methods_to_install;
+    }
+
     void finalize();
 
     std::vector<detail::SubtypeBase*>::const_iterator begin() const noexcept {
@@ -358,6 +425,20 @@ namespace gapbind14 {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
+  template <typename... Args>
+  struct init {};
+
+  namespace detail {
+    std::vector<std::pair<std::string, Obj>>&              all_categories();
+    std::vector<std::pair<std::string, std::vector<Obj>>>& all_operations();
+
+    template <typename T, typename... Args>
+    T* make(Args... params) {
+      return new T(std::forward<Args>(params)...);
+    }
+
+  }  // namespace detail
+
   template <typename Wild>
   static void InstallGlobalFunction(char const* name, Wild f) {
     size_t const n = detail::all_wilds<Wild>().size();
@@ -368,19 +449,72 @@ namespace gapbind14 {
         detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
   }
 
-  ////////////////////////////////////////////////////////////////////////
-  // Tes
-  ////////////////////////////////////////////////////////////////////////
+  static inline Obj DeclareCategory(char const* name, Obj parent_category) {
+    // TODO replace with module.add_category
+    detail::all_categories().emplace_back(name, parent_category);
+    return _LibraryGVar(name);
+  }
 
-  template <typename... Args>
-  struct init {};
+  static inline Obj
+  DeclareOperation(char const*                       name,
+                   std::initializer_list<Obj> const& filt_list) {
+    detail::all_operations().emplace_back(std::string(name),
+                                          std::vector<Obj>(filt_list));
+    return _LibraryGVar(name);
+  }
 
-  namespace detail {
-    template <typename T, typename... Args>
-    T* make(Args... params) {
-      return new T(std::forward<Args>(params)...);
-    }
-  }  // namespace detail
+  static inline Obj DeclareOperation(char const* name) {
+    return DeclareOperation(name, {});
+  }
+
+  template <typename Wild, typename... Args>
+  static inline auto
+  InstallMethod(std::string_view                               name,
+                std::string_view                               info_string,
+                std::initializer_list<std::string_view> const& filt_list,
+                Wild                                           f)
+      -> std::enable_if_t<std::is_member_function_pointer<Wild>::value> {
+    size_t const n = detail::all_wild_mem_fns<Wild>().size();
+    detail::all_wild_mem_fns<Wild>().push_back(f);
+    module().add_method_to_install(
+        __FILE__,
+        name,
+        info_string,
+        filt_list,
+        detail::get_tame_mem_fn<decltype(&detail::tame_mem_fn<0, Wild>), Wild>(
+            n));
+  }
+
+  template <typename Wild, typename... Args>
+  static inline auto
+  InstallMethod(std::string_view                               name,
+                std::string_view                               info_string,
+                std::initializer_list<std::string_view> const& filt_list,
+                Wild                                           f)
+      -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value> {
+    size_t const n = detail::all_wilds<Wild>().size();
+    detail::all_wilds<Wild>().push_back(f);
+    module().add_method_to_install(
+        __FILE__,
+        name,
+        info_string,
+        filt_list,
+        detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
+  }
+
+  template <typename Thing, typename... Args>
+  static inline void
+  InstallMethod(std::string_view                               name,
+                std::string_view                               info_string,
+                std::initializer_list<std::string_view> const& filt_list,
+                init<Args...>) {
+    return InstallMethod(
+        name, info_string, filt_list, &detail::make<Thing, Args...>);
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  //
+  ////////////////////////////////////////////////////////////////////////
 
   template <typename T>
   class class_ {
@@ -440,6 +574,7 @@ namespace gapbind14 {
     }
     return result;
   }
+
 }  // namespace gapbind14
 
 #endif  // INCLUDE_GAPBIND14_GAPBIND14_HPP_
