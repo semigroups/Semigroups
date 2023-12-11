@@ -149,7 +149,7 @@ GAPBIND14_MODULE(libsemigroups) {
       LastWord,
       "for an IsWords object",
       {GAP_IsObject},
-      gapbind14::overload_cast<>(&libsemigroups::Words::first));
+      gapbind14::overload_cast<>(&libsemigroups::Words::last));
 
   gapbind14::DeclareOperation("LastWord", {GAP_IsObject, GAP_IsObject});
   gapbind14::InstallMethod(

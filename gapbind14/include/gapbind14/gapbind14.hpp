@@ -83,7 +83,7 @@ namespace gapbind14 {
 
   // Provides a mechanism for defining and accessing GAP library variables in
   // the kernel module.
-  class LibraryGVar {
+  class LibraryGVar_ {
     std::vector<Obj>                        _GAP_LibraryGVars;
     std::unordered_map<std::string, size_t> _map;
 
@@ -108,7 +108,7 @@ namespace gapbind14 {
     }
   };
 
-  extern LibraryGVar _LibraryGVar;
+  extern LibraryGVar_ LibraryGVar;
 
   // Forward decl
   template <typename T, typename>
@@ -369,7 +369,7 @@ namespace gapbind14 {
                      filt_name.end(),
                      filt_name.begin() + 3,
                      [](auto c) { return std::toupper(c); });
-      auto IsThingFilt = _LibraryGVar(std::string("Is") + nm);
+      auto IsThingFilt = LibraryGVar(std::string("Is") + nm);
       _filts.push_back({detail::copy_c_str(filt_name),
                         "obj",
                         &IsThingFilt,
@@ -540,9 +540,9 @@ namespace gapbind14 {
   }  // namespace detail
 
   static void NewType(std::string_view family, std::string_view filter) {
-    _LibraryGVar(family);
-    _LibraryGVar(filter);
-    _LibraryGVar(std::string(filter) + "Type");
+    LibraryGVar(family);
+    LibraryGVar(filter);
+    LibraryGVar(std::string(filter) + "Type");
     module().add_gap_type(family, filter);
   }
 
@@ -561,16 +561,16 @@ namespace gapbind14 {
                         std::string_view parent_category,
                         std::string_view filt) {
     module().add_category_to_declare(name, parent_category, filt);
-    _LibraryGVar(name);
-    _LibraryGVar(parent_category);
-    _LibraryGVar(filt);
+    LibraryGVar(name);
+    LibraryGVar(parent_category);
+    LibraryGVar(filt);
     return name;
   }
 
   static inline std::string_view
   DeclareOperation(std::string_view                               name,
                    std::initializer_list<std::string_view> const& filt_list) {
-    _LibraryGVar(name);
+    LibraryGVar(name);
     module().add_operation_to_declare(name, filt_list);
     return name;
   }
@@ -586,7 +586,7 @@ namespace gapbind14 {
                 std::initializer_list<std::string_view> const& filt_list,
                 Wild                                           f)
       -> std::enable_if_t<std::is_member_function_pointer<Wild>::value> {
-    _LibraryGVar(name);
+    LibraryGVar(name);
     size_t const n = detail::all_wild_mem_fns<Wild>().size();
     detail::all_wild_mem_fns<Wild>().push_back(f);
     module().add_method_to_install(
@@ -605,7 +605,7 @@ namespace gapbind14 {
                 std::initializer_list<std::string_view> const& filt_list,
                 Wild                                           f)
       -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value> {
-    _LibraryGVar(name);
+    LibraryGVar(name);
     size_t const n = detail::all_wilds<Wild>().size();
     detail::all_wilds<Wild>().push_back(f);
     module().add_method_to_install(

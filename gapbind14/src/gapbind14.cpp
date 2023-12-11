@@ -40,7 +40,7 @@ Obj GAP_IsInternalRep;
 
 namespace gapbind14 {
 
-  LibraryGVar _LibraryGVar;
+  LibraryGVar_ LibraryGVar;
 
   UInt T_GAPBIND14_OBJ = 0;
 
@@ -173,7 +173,7 @@ namespace gapbind14 {
 
     Obj TGapBind14ObjTypeFunc(Obj o) {
       return TheTypeTGapBind14Obj;
-      // _LibraryGVar(std::string(module().subtype_name(o)) + "Type");
+      // LibraryGVar(std::string(module().subtype_name(o)) + "Type");
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
@@ -311,13 +311,13 @@ namespace gapbind14 {
     for (auto ptr : module()) {
       InitHdlrFuncsFromTable(module().mem_funcs(ptr->name()));
     }
-    _LibraryGVar.import_all();
+    LibraryGVar.import_all();
   }
 
   std::vector<Obj> filter_list(std::vector<std::string_view> const &svs) {
     std::vector<Obj> filt_list;
     for (auto const &filt : svs) {
-      filt_list.push_back(_LibraryGVar(filt));
+      filt_list.push_back(LibraryGVar(filt));
     }
     return filt_list;
   }
@@ -369,15 +369,15 @@ namespace gapbind14 {
       std::cout << "Declared category " << ctd.name << std::endl;
       CALL_3ARGS(GAP_DeclareCategoryKernel,
                  to_gap<std::string>()(ctd.name),
-                 _LibraryGVar(ctd.parent),
-                 _LibraryGVar(ctd.filt));
+                 LibraryGVar(ctd.parent),
+                 LibraryGVar(ctd.filt));
     }
 
     for (auto const &[family, filter] : module().new_gap_types()) {
       Obj GAP_family = CALL_2ARGS(
-          GAP_NewFamily, to_gap<std::string>()(family), _LibraryGVar(filter));
-      Obj GAP_type = _LibraryGVar(filter + "Type");
-      GAP_type     = CALL_2ARGS(GAP_NewType, GAP_family, _LibraryGVar(filter));
+          GAP_NewFamily, to_gap<std::string>()(family), LibraryGVar(filter));
+      Obj GAP_type = LibraryGVar(filter + "Type");
+      GAP_type     = CALL_2ARGS(GAP_NewType, GAP_family, LibraryGVar(filter));
       std::cout << "Instantiated family " << family << std::endl;
       std::cout << "Instantiated type " << filter << "Type" << std::endl;
     }
@@ -391,7 +391,7 @@ namespace gapbind14 {
 
     size_t index = 0;
     for (auto const &mti : module().methods_to_install()) {
-      Obj  GAP_op    = _LibraryGVar(mti.name);
+      Obj  GAP_op    = LibraryGVar(mti.name);
       auto filt_list = filter_list(mti.filt_list);
       // TODO must be an easier way of doing this, i.e. just add the global
       // function as elsewhere to GAP and then call install method using that
