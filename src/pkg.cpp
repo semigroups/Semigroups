@@ -81,22 +81,39 @@ namespace {
 }  // namespace
 
 namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
-      : std::true_type {};
+  //   template <>
+  //   struct
+  //   IsGapBind14Type<libsemigroups::Presentation<libsemigroups::word_type>>
+  //       : std::true_type {};
+  //
+  //   template <>
+  //   struct IsGapBind14Type<libsemigroups::Sims1> : std::true_type {};
+  //
+  //   template <>
+  //   struct IsGapBind14Type<typename libsemigroups::Sims1::iterator>
+  //       : std::true_type {};
+  //
+  //   template <>
+  //   struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
 
   template <>
-  struct IsGapBind14Type<libsemigroups::Sims1> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::Words> : std::true_type {
+    static constexpr UInt T_NUM = 0;
+  };
 
   template <>
-  struct IsGapBind14Type<typename libsemigroups::Sims1::iterator>
-      : std::true_type {};
+  struct to_gap<libsemigroups::Words*> {
+    using Words    = libsemigroups::Words;
+    using cpp_type = Words;
 
-  template <>
-  struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
-
-  template <>
-  struct IsGapBind14Type<libsemigroups::Words> : std::true_type {};
+    Obj operator()(Words* ptr) const {
+      Obj o          = NewBag(T_WORDS_OBJ, 2 * sizeof(Obj));
+      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(module().subtype<Words>());
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
+      CHANGED_BAG(o);
+      return o;
+    }
+  };
 }  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
@@ -104,87 +121,78 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  auto GAP_IsObject = "IsObject";
-
-  // TODO remove the next line, currently required to get the subtype
   gapbind14::class_<libsemigroups::Words>("Words");
 
-  // gapbind14::NewType("WordsFamily", "IsWords");
+  gapbind14::DeclareCategory("IsWords", "IsObject");
+  gapbind14::DeclareOperation("Words", {});
+  gapbind14::DeclareOperation("Count", {"IsWords"});
+  gapbind14::DeclareOperation("FirstWord", {"IsObject"});
+  gapbind14::DeclareOperation("FirstWord", {"IsObject", "IsObject"});
+  gapbind14::DeclareOperation("LastWord", {"IsObject"});
+  gapbind14::DeclareOperation("LastWord", {"IsObject", "IsObject"});
+  gapbind14::DeclareOperation("NumberOfLetters", {"IsObject", "IsObject"});
+  gapbind14::DeclareOperation("Get", {"IsObject"});
+  gapbind14::DeclareOperation("Next", {"IsObject"});
+  gapbind14::DeclareOperation("AtEnd", {"IsObject"});
 
-  auto GAP_IsWords
-      = gapbind14::DeclareCategoryKernel("IsWords", GAP_IsObject, "IS_WORDS");
-  // Declare a 0-arg operation
-  auto Words = gapbind14::DeclareOperation("Words");
-
-  // TODO the return type of Words should be IsWords
   gapbind14::InstallMethod(
-      Words, "for no arguments", {}, gapbind14::init<libsemigroups::Words>());
+      "Words", "for no arguments", {}, gapbind14::init<libsemigroups::Words>());
 
-  auto Count = gapbind14::DeclareOperation("Count", {GAP_IsObject});
-  gapbind14::InstallMethod(Count,
+  gapbind14::InstallMethod("Count",
                            "for an IsWords object",
-                           {GAP_IsObject},
+                           {"IsWords"},
                            &libsemigroups::Words::count);
 
-  auto FirstWord = gapbind14::DeclareOperation("FirstWord", {GAP_IsObject});
   gapbind14::InstallMethod(
-      FirstWord,
+      "FirstWord",
       "for an IsWords object",
-      {GAP_IsObject},
+      {"IsObject"},
       gapbind14::overload_cast<>(&libsemigroups::Words::first));
 
-  gapbind14::DeclareOperation("FirstWord", {GAP_IsObject, GAP_IsObject});
   gapbind14::InstallMethod(
-      FirstWord,
+      "FirstWord",
       "for an IsWords object and word",
-      {GAP_IsObject, GAP_IsObject},
+      {"IsObject", "IsObject"},
       // gapbind14 currently doesn't handle the reference returned by
       // words.first(w) properly so we wrap it in a lambda
       [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
         words.first(w);
       });
 
-  auto LastWord = gapbind14::DeclareOperation("LastWord", {GAP_IsObject});
   gapbind14::InstallMethod(
-      LastWord,
+      "LastWord",
       "for an IsWords object",
-      {GAP_IsObject},
+      {"IsObject"},
       gapbind14::overload_cast<>(&libsemigroups::Words::last));
 
-  gapbind14::DeclareOperation("LastWord", {GAP_IsObject, GAP_IsObject});
   gapbind14::InstallMethod(
-      LastWord,
+      "LastWord",
       "for an IsWords object and word",
-      {GAP_IsObject, GAP_IsObject},
+      {"IsObject", "IsObject"},
       // gapbind14 currently doesn't handle the reference returned by
       // words.first(w) properly so we wrap it in a lambda
       [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
         words.last(w);
       });
 
-  auto NumberOfLetters = gapbind14::DeclareOperation(
-      "NumberOfLetters", {GAP_IsObject, GAP_IsObject});
-  gapbind14::InstallMethod(NumberOfLetters,
+  gapbind14::InstallMethod("NumberOfLetters",
                            "for an IsWords object and a pos. int.",
-                           {GAP_IsObject, GAP_IsObject},
+                           {"IsObject", "IsObject"},
                            [](libsemigroups::Words& words, size_t n) {
                              words.number_of_letters(n);
                            });
 
-  auto Get = gapbind14::DeclareOperation("Get", {GAP_IsObject});
   gapbind14::InstallMethod(
-      Get, "for an IsWords object", {GAP_IsObject}, &libsemigroups::Words::get);
+      "Get", "for an IsWords object", {"IsObject"}, &libsemigroups::Words::get);
 
-  auto Next = gapbind14::DeclareOperation("Next", {GAP_IsObject});
-  gapbind14::InstallMethod(Next,
+  gapbind14::InstallMethod("Next",
                            "for an IsWords object",
-                           {GAP_IsObject},
+                           {"IsObject"},
                            &libsemigroups::Words::next);
 
-  gapbind14::DeclareOperation("AtEnd", {"IsWords"});
   gapbind14::InstallMethod("AtEnd",
                            "for an IsWords object",
-                           {"IsWords"},
+                           {"IsObject"},
                            &libsemigroups::Words::at_end);
 
   // Old
@@ -235,36 +243,36 @@ GAPBIND14_MODULE(libsemigroups) {
            gapbind14::overload_cast<table_type
   const&>(&ToddCoxeter::prefill));
 */
-  using libsemigroups::Presentation;
+  // using libsemigroups::Presentation;
 
-  gapbind14::class_<Presentation<word_type>>("Presentation")
-      .def(gapbind14::init<>{}, "make")
-      .def("alphabet",
-           gapbind14::overload_cast<>(&Presentation<word_type>::alphabet))
-      .def("set_alphabet",
-           [](Presentation<word_type>& thing, word_type val) -> void {
-             thing.alphabet(val);
-           })
-      .def("alphabet_from_rules",
-           [](Presentation<word_type>& thing) -> void {
-             thing.alphabet_from_rules();
-           })
-      .def("contains_empty_word",
-           [](Presentation<word_type>& thing, bool val) -> void {
-             thing.contains_empty_word(val);
-           })
-      .def("validate", &Presentation<word_type>::validate)
-      .def("number_of_rules",
-           [](Presentation<word_type> const& thing) -> size_t {
-             return thing.rules.size();
-           });
+  // gapbind14::class_<Presentation<word_type>>("Presentation")
+  //     .def(gapbind14::init<>{}, "make")
+  //     .def("alphabet",
+  //          gapbind14::overload_cast<>(&Presentation<word_type>::alphabet))
+  //     .def("set_alphabet",
+  //          [](Presentation<word_type>& thing, word_type val) -> void {
+  //            thing.alphabet(val);
+  //          })
+  //     .def("alphabet_from_rules",
+  //          [](Presentation<word_type>& thing) -> void {
+  //            thing.alphabet_from_rules();
+  //          })
+  //     .def("contains_empty_word",
+  //          [](Presentation<word_type>& thing, bool val) -> void {
+  //            thing.contains_empty_word(val);
+  //          })
+  //     .def("validate", &Presentation<word_type>::validate)
+  //     .def("number_of_rules",
+  //          [](Presentation<word_type> const& thing) -> size_t {
+  //            return thing.rules.size();
+  //          });
 
-  gapbind14::InstallGlobalFunction(
-      "presentation_add_rule",
-      gapbind14::overload_cast<Presentation<word_type>&,
-                               word_type const&,
-                               word_type const&>(
-          &libsemigroups::presentation::add_rule<word_type>));
+  // gapbind14::InstallGlobalFunction(
+  //     "presentation_add_rule",
+  //     gapbind14::overload_cast<Presentation<word_type>&,
+  //                              word_type const&,
+  //                              word_type const&>(
+  //         &libsemigroups::presentation::add_rule<word_type>));
 
   /*  using libsemigroups::Sims1;
 

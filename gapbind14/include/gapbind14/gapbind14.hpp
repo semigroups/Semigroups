@@ -86,11 +86,17 @@ namespace gapbind14 {
   class LibraryGVar_ {
     std::vector<Obj>                        _GAP_LibraryGVars;
     std::unordered_map<std::string, size_t> _map;
+    bool                                    _imported;
 
    public:
+    LibraryGVar_() : _GAP_LibraryGVars(), _map(), _imported(false) {}
+
     Obj operator()(std::string_view name) {
       auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
       if (inserted) {
+        if (_imported) {
+          throw std::runtime_error("something wrong");
+        }
         _GAP_LibraryGVars.emplace_back();
         return _GAP_LibraryGVars.back();
       } else {
@@ -105,6 +111,7 @@ namespace gapbind14 {
         ImportGVarFromLibrary(var.first.c_str(),
                               &_GAP_LibraryGVars[var.second]);
       }
+      _imported = true;
     }
   };
 
@@ -125,6 +132,7 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   extern UInt T_GAPBIND14_OBJ;
+  extern UInt T_WORDS_OBJ;
 
   template <typename T>
   struct IsGapBind14Type : std::false_type {};
@@ -175,7 +183,7 @@ namespace gapbind14 {
       // Couldn't add static_assert that IsGapBind14Type<T>::value is true
       // because sometimes we call this function when T is a base class of a
       // class where IsGapBind14Type<T>::value is true.
-      require_gapbind14_obj(o);
+      // require_gapbind14_obj(o);
       // Also cannot check that subtype of o corresponds to T for the same
       // reason as above T might be a base class of a GapBind14Type.
       return reinterpret_cast<T*>(ADDR_OBJ(o)[1]);
@@ -232,19 +240,6 @@ namespace gapbind14 {
     };
   }  // namespace detail
 
-  // FIXME this doesn't work as intended, will have to use a tame function for
-  // this, since we can't explicitly write each such function for every IS_THING
-  // declared
-  static inline Obj IsThingHandler(Obj self, Obj val) {
-    if (TNUM_OBJ(val) == T_GAPBIND14_OBJ) {
-      return True;
-    } else if (TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM) {
-      return False;
-    } else {
-      return DoFilter(self, val);
-    }
-  }
-
   ////////////////////////////////////////////////////////////////////////
   // Module class
   ////////////////////////////////////////////////////////////////////////
@@ -261,7 +256,6 @@ namespace gapbind14 {
     struct CategoryToDeclare {
       std::string name;
       std::string parent;
-      std::string filt;
     };
 
     struct OperationToDeclare {
@@ -364,19 +358,6 @@ namespace gapbind14 {
       _subtypes.push_back(new detail::Subtype<T>(nm, _subtypes.size()));
       // TODO delete next
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
-      std::string filt_name = "IS_" + nm;
-      std::transform(filt_name.begin() + 3,
-                     filt_name.end(),
-                     filt_name.begin() + 3,
-                     [](auto c) { return std::toupper(c); });
-      auto IsThingFilt = LibraryGVar(std::string("Is") + nm);
-      _filts.push_back({detail::copy_c_str(filt_name),
-                        "obj",
-                        &IsThingFilt,
-                        (GVarFilt) IsThingHandler,  // TODO correct version of
-                                                    // this
-                        detail::copy_c_str("pkg.cpp:" + filt_name)});
-
       return _subtypes.back()->subtype();
     }
 
@@ -436,12 +417,10 @@ namespace gapbind14 {
     }
 
     void add_category_to_declare(std::string_view name,
-                                 std::string_view parent,
-                                 std::string_view filt) {
+                                 std::string_view parent) {
       CategoryToDeclare ctd;
       ctd.name   = name;
       ctd.parent = parent;
-      ctd.filt   = filt;
       _categories_to_declare.push_back(std::move(ctd));
     }
 
@@ -539,13 +518,6 @@ namespace gapbind14 {
 
   }  // namespace detail
 
-  static void NewType(std::string_view family, std::string_view filter) {
-    LibraryGVar(family);
-    LibraryGVar(filter);
-    LibraryGVar(std::string(filter) + "Type");
-    module().add_gap_type(family, filter);
-  }
-
   template <typename Wild>
   static void InstallGlobalFunction(char const* name, Wild f) {
     size_t const n = detail::all_wilds<Wild>().size();
@@ -556,27 +528,21 @@ namespace gapbind14 {
         detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
   }
 
-  static inline std::string_view
-  DeclareCategoryKernel(std::string_view name,
-                        std::string_view parent_category,
-                        std::string_view filt) {
-    module().add_category_to_declare(name, parent_category, filt);
+  static inline void DeclareCategory(std::string_view name,
+                                     std::string_view parent_category) {
+    module().add_category_to_declare(name, parent_category);
     LibraryGVar(name);
     LibraryGVar(parent_category);
-    LibraryGVar(filt);
-    return name;
   }
 
-  static inline std::string_view
+  static inline void
   DeclareOperation(std::string_view                               name,
                    std::initializer_list<std::string_view> const& filt_list) {
     LibraryGVar(name);
+    for (auto const& filt : filt_list) {
+      LibraryGVar(filt);
+    }
     module().add_operation_to_declare(name, filt_list);
-    return name;
-  }
-
-  static inline std::string_view DeclareOperation(char const* name) {
-    return DeclareOperation(name, {});
   }
 
   template <typename Wild, typename... Args>
@@ -587,6 +553,9 @@ namespace gapbind14 {
                 Wild                                           f)
       -> std::enable_if_t<std::is_member_function_pointer<Wild>::value> {
     LibraryGVar(name);
+    for (auto const& filt : filt_list) {
+      LibraryGVar(filt);
+    }
     size_t const n = detail::all_wild_mem_fns<Wild>().size();
     detail::all_wild_mem_fns<Wild>().push_back(f);
     module().add_method_to_install(
@@ -606,6 +575,9 @@ namespace gapbind14 {
                 Wild                                           f)
       -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value> {
     LibraryGVar(name);
+    for (auto const& filt : filt_list) {
+      LibraryGVar(filt);
+    }
     size_t const n = detail::all_wilds<Wild>().size();
     detail::all_wilds<Wild>().push_back(f);
     module().add_method_to_install(

@@ -31,7 +31,7 @@
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 Obj GAP_IsObject;
-Obj GAP_DeclareCategoryKernel;
+Obj GAP_DeclareCategory;
 Obj GAP_DeclareOperation;
 Obj GAP_InstallMethod;
 Obj GAP_NewType;
@@ -43,6 +43,7 @@ namespace gapbind14 {
   LibraryGVar_ LibraryGVar;
 
   UInt T_GAPBIND14_OBJ = 0;
+  UInt T_WORDS_OBJ     = 0;
 
   namespace detail {
 
@@ -166,6 +167,7 @@ namespace gapbind14 {
   namespace {
 
     Obj TheTypeTGapBind14Obj;
+    Obj TheWordsType;
 
     ////////////////////////////////////////////////////////////////////////
     // Required kernel functions
@@ -173,7 +175,10 @@ namespace gapbind14 {
 
     Obj TGapBind14ObjTypeFunc(Obj o) {
       return TheTypeTGapBind14Obj;
-      // LibraryGVar(std::string(module().subtype_name(o)) + "Type");
+    }
+
+    Obj TWordsTypeFunc(Obj o) {
+      return TheWordsType;
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
@@ -268,13 +273,13 @@ namespace gapbind14 {
   }
 
   void init_kernel(char const *name) {
-    ImportGVarFromLibrary("DeclareCategoryKernel", &GAP_DeclareCategoryKernel);
+    ImportGVarFromLibrary("DeclareCategory", &GAP_DeclareCategory);
     ImportGVarFromLibrary("DeclareOperation", &GAP_DeclareOperation);
     ImportGVarFromLibrary("InstallMethod", &GAP_InstallMethod);
     ImportGVarFromLibrary("IsObject", &GAP_IsObject);
+    // TODO remove the next 2?
     ImportGVarFromLibrary("NewFamily", &GAP_NewFamily);
     ImportGVarFromLibrary("NewType", &GAP_NewType);
-    ImportGVarFromLibrary("IsInternalRep", &GAP_IsInternalRep);
 
     static bool first_call = true;
     if (first_call) {
@@ -294,6 +299,8 @@ namespace gapbind14 {
       InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
       InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
 
+      T_WORDS_OBJ = RegisterPackageTNUM("T_WORDS_OBJ", TWordsTypeFunc);
+      InitCopyGVar("TheWordsType", &TheWordsType);
       InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
@@ -367,12 +374,12 @@ namespace gapbind14 {
 
     for (auto const &ctd : module().categories_to_declare()) {
       std::cout << "Declared category " << ctd.name << std::endl;
-      CALL_3ARGS(GAP_DeclareCategoryKernel,
+      CALL_2ARGS(GAP_DeclareCategory,
                  to_gap<std::string>()(ctd.name),
-                 LibraryGVar(ctd.parent),
-                 LibraryGVar(ctd.filt));
+                 LibraryGVar(ctd.parent));
     }
 
+    // TODO remove the loop below
     for (auto const &[family, filter] : module().new_gap_types()) {
       Obj GAP_family = CALL_2ARGS(
           GAP_NewFamily, to_gap<std::string>()(family), LibraryGVar(filter));
@@ -401,6 +408,8 @@ namespace gapbind14 {
       Obj func = NewFunction(name, mti.func.nargs, args, mti.func.handler);
       SetupFuncInfo(func, mti.func.cookie);
       assert(mt.func.nargs == filt_list.size());
+
+      std::cout << "Trying to Install method for " << mti.name << std::endl;
 
       CALL_4ARGS(GAP_InstallMethod,
                  GAP_op,
