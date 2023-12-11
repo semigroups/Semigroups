@@ -31,9 +31,12 @@
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 Obj GAP_IsObject;
-Obj GAP_DeclareCategory;
+Obj GAP_DeclareCategoryKernel;
 Obj GAP_DeclareOperation;
 Obj GAP_InstallMethod;
+Obj GAP_NewType;
+Obj GAP_NewFamily;
+Obj GAP_IsInternalRep;
 
 namespace gapbind14 {
 
@@ -42,19 +45,6 @@ namespace gapbind14 {
   UInt T_GAPBIND14_OBJ = 0;
 
   namespace detail {
-    std::vector<std::pair<std::string_view, std::string_view>> &
-    all_categories() {
-      static std::vector<std::pair<std::string_view, std::string_view>>
-          _all_categories;
-      return _all_categories;
-    }
-
-    std::vector<std::pair<std::string, std::vector<std::string_view>>> &
-    all_operations() {
-      static std::vector<std::pair<std::string, std::vector<std::string_view>>>
-          _all_operations;
-      return _all_operations;
-    }
 
     std::unordered_map<std::string, void (*)()> &init_funcs() {
       static std::unordered_map<std::string, void (*)()> inits;
@@ -170,6 +160,7 @@ namespace gapbind14 {
       x.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
     }
     _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
+    _filts.push_back(StructGVarFilt({0, 0, 0, 0, 0}));
   }
 
   namespace {
@@ -182,6 +173,7 @@ namespace gapbind14 {
 
     Obj TGapBind14ObjTypeFunc(Obj o) {
       return TheTypeTGapBind14Obj;
+      // _LibraryGVar(std::string(module().subtype_name(o)) + "Type");
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
@@ -276,11 +268,13 @@ namespace gapbind14 {
   }
 
   void init_kernel(char const *name) {
-    ImportGVarFromLibrary("DeclareCategory", &GAP_DeclareCategory);
+    ImportGVarFromLibrary("DeclareCategoryKernel", &GAP_DeclareCategoryKernel);
     ImportGVarFromLibrary("DeclareOperation", &GAP_DeclareOperation);
     ImportGVarFromLibrary("InstallMethod", &GAP_InstallMethod);
-
     ImportGVarFromLibrary("IsObject", &GAP_IsObject);
+    ImportGVarFromLibrary("NewFamily", &GAP_NewFamily);
+    ImportGVarFromLibrary("NewType", &GAP_NewType);
+    ImportGVarFromLibrary("IsInternalRep", &GAP_IsInternalRep);
 
     static bool first_call = true;
     if (first_call) {
@@ -312,6 +306,7 @@ namespace gapbind14 {
     module().finalize();
 
     InitHdlrFuncsFromTable(module().funcs());
+    InitHdlrFiltsFromTable(module().filters());
 
     for (auto ptr : module()) {
       InitHdlrFuncsFromTable(module().mem_funcs(ptr->name()));
@@ -368,18 +363,30 @@ namespace gapbind14 {
     MakeImmutable(global_rec);
     AssReadOnlyGVar(GVarName(name), global_rec);
 
-    for (auto const &[nam, parent_category] : detail::all_categories()) {
-      CALL_2ARGS(GAP_DeclareCategory,
-                 to_gap<std::string>()(nam),
-                 _LibraryGVar(parent_category));
-      // TODO figure out how to pass GAP_IsObject at the call site of
-      // gapbind14::DeclareCategory
+    InitGVarFiltsFromTable(module().filters());
+
+    for (auto const &ctd : module().categories_to_declare()) {
+      std::cout << "Declared category " << ctd.name << std::endl;
+      CALL_3ARGS(GAP_DeclareCategoryKernel,
+                 to_gap<std::string>()(ctd.name),
+                 _LibraryGVar(ctd.parent),
+                 _LibraryGVar(ctd.filt));
     }
 
-    for (auto const &[nam, filt_list] : detail::all_operations()) {
+    for (auto const &[family, filter] : module().new_gap_types()) {
+      Obj GAP_family = CALL_2ARGS(
+          GAP_NewFamily, to_gap<std::string>()(family), _LibraryGVar(filter));
+      Obj GAP_type = _LibraryGVar(filter + "Type");
+      GAP_type     = CALL_2ARGS(GAP_NewType, GAP_family, _LibraryGVar(filter));
+      std::cout << "Instantiated family " << family << std::endl;
+      std::cout << "Instantiated type " << filter << "Type" << std::endl;
+    }
+
+    for (auto const &otd : module().operations_to_declare()) {
       CALL_2ARGS(GAP_DeclareOperation,
-                 to_gap<std::string>()(nam),
-                 to_gap<std::vector<Obj>>()(filter_list(filt_list)));
+                 to_gap<std::string>()(otd.name),
+                 to_gap<std::vector<Obj>>()(filter_list(otd.filt_list)));
+      std::cout << "Declared operation for " << otd.name << std::endl;
     }
 
     size_t index = 0;
@@ -402,7 +409,8 @@ namespace gapbind14 {
                  to_gap<std::string>()(mti.info_string),
                  to_gap<std::vector<Obj>>()(filt_list),
                  func);
-      std::cout << "Installed method for " << mti.name << std::endl;
+      std::cout << "Installed method for " << mti.name << " with "
+                << filt_list.size() << " args" << std::endl;
       index++;
     }
   }

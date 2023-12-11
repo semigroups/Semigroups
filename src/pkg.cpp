@@ -22,8 +22,9 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>      // for size_t
-#include <exception>    // for exception
+#include <cstddef>    // for size_t
+#include <exception>  // for exception
+#include <filesystem>
 #include <iostream>     // for string
 #include <type_traits>  // for conditional<>::type
 #include <vector>       // for vector
@@ -108,13 +109,16 @@ GAPBIND14_MODULE(libsemigroups) {
   // TODO remove the next line, currently required to get the subtype
   gapbind14::class_<libsemigroups::Words>("Words");
 
-  auto GAP_IsWords = gapbind14::DeclareCategory("IsWords", GAP_IsObject);
+  // gapbind14::NewType("WordsFamily", "IsWords");
+
+  auto GAP_IsWords
+      = gapbind14::DeclareCategoryKernel("IsWords", GAP_IsObject, "IS_WORDS");
   // Declare a 0-arg operation
   auto Words = gapbind14::DeclareOperation("Words");
 
   // TODO the return type of Words should be IsWords
-  gapbind14::InstallMethod<libsemigroups::Words>(
-      Words, "for no arguments", {}, gapbind14::init<>());
+  gapbind14::InstallMethod(
+      Words, "for no arguments", {}, gapbind14::init<libsemigroups::Words>());
 
   auto Count = gapbind14::DeclareOperation("Count", {GAP_IsObject});
   gapbind14::InstallMethod(Count,
@@ -177,6 +181,12 @@ GAPBIND14_MODULE(libsemigroups) {
                            {GAP_IsObject},
                            &libsemigroups::Words::next);
 
+  gapbind14::DeclareOperation("AtEnd", {"IsWords"});
+  gapbind14::InstallMethod("AtEnd",
+                           "for an IsWords object",
+                           {"IsWords"},
+                           &libsemigroups::Words::at_end);
+
   // Old
 
   gapbind14::InstallGlobalFunction("set_report", &set_report);
@@ -222,7 +232,8 @@ GAPBIND14_MODULE(libsemigroups) {
       .def("set_number_of_generators", &ToddCoxeter::set_number_of_generators)
       .def("number_of_generators", &ToddCoxeter::number_of_generators)
       .def("prefill",
-           gapbind14::overload_cast<table_type const&>(&ToddCoxeter::prefill));
+           gapbind14::overload_cast<table_type
+  const&>(&ToddCoxeter::prefill));
 */
   using libsemigroups::Presentation;
 
@@ -264,7 +275,8 @@ GAPBIND14_MODULE(libsemigroups) {
     gapbind14::class_<Sims1>("Sims1")
         .def(gapbind14::init<congruence_kind>{}, "make")
         .def("short_rules",
-             [](Sims1& s, Presentation<word_type> const& p) { s.short_rules(p);
+             [](Sims1& s, Presentation<word_type> const& p) {
+  s.short_rules(p);
   }) .def("extra",
              [](Sims1& s, Presentation<word_type> const& p) { s.extra(p); })
         .def("number_of_threads",
@@ -284,8 +296,8 @@ GAPBIND14_MODULE(libsemigroups) {
              [](RepOrc& ro, size_t val) { ro.number_of_threads(val); })
         .def("max_nodes", [](RepOrc& ro, size_t val) { ro.max_nodes(val); })
         .def("min_nodes", [](RepOrc& ro, size_t val) { ro.min_nodes(val); })
-        .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val); })
-        .def("get_target_size", [](RepOrc& ro) { return ro.target_size(); })
+        .def("target_size", [](RepOrc& ro, size_t val) { ro.target_size(val);
+  }) .def("get_target_size", [](RepOrc& ro) { return ro.target_size(); })
         .def("digraph", &RepOrc::digraph<uint32_t>);
         */
 }

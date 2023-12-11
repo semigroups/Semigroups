@@ -73,11 +73,17 @@
 
 typedef Obj (*GVarFunc)(/*arguments*/);
 
+#if defined(GAP_KERNEL_MAJOR_VERSION) && (GAP_KERNEL_MAJOR_VERSION >= 2)
+typedef Obj (*GVarFilt)(Obj, Obj);
+#else
+typedef Obj (*GVarFilt)(/*arguments*/);
+#endif
+
 namespace gapbind14 {
 
   // Provides a mechanism for defining and accessing GAP library variables in
   // the kernel module.
-  extern class LibraryGVar {
+  class LibraryGVar {
     std::vector<Obj>                        _GAP_LibraryGVars;
     std::unordered_map<std::string, size_t> _map;
 
@@ -100,7 +106,9 @@ namespace gapbind14 {
                               &_GAP_LibraryGVars[var.second]);
       }
     }
-  } _LibraryGVar;
+  };
+
+  extern LibraryGVar _LibraryGVar;
 
   // Forward decl
   template <typename T, typename>
@@ -224,6 +232,19 @@ namespace gapbind14 {
     };
   }  // namespace detail
 
+  // FIXME this doesn't work as intended, will have to use a tame function for
+  // this, since we can't explicitly write each such function for every IS_THING
+  // declared
+  static inline Obj IsThingHandler(Obj self, Obj val) {
+    if (TNUM_OBJ(val) == T_GAPBIND14_OBJ) {
+      return True;
+    } else if (TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM) {
+      return False;
+    } else {
+      return DoFilter(self, val);
+    }
+  }
+
   ////////////////////////////////////////////////////////////////////////
   // Module class
   ////////////////////////////////////////////////////////////////////////
@@ -237,12 +258,33 @@ namespace gapbind14 {
       StructGVarFunc                func;
     };
 
+    struct CategoryToDeclare {
+      std::string name;
+      std::string parent;
+      std::string filt;
+    };
+
+    struct OperationToDeclare {
+      std::string                   name;
+      std::vector<std::string_view> filt_list;
+    };
+
+    struct NewTypeToInstantiate {
+      std::string family;
+      std::string filter;
+    };
+
    private:
     // TODO use StructGVarOper?
 
-    std::vector<StructGVarFunc>                        _funcs;
-    std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
-    std::vector<MethodToInstall>                       _methods_to_install;
+    std::vector<CategoryToDeclare>           _categories_to_declare;
+    std::vector<OperationToDeclare>          _operations_to_declare;
+    std::vector<StructGVarFunc>              _funcs;
+    std::vector<std::vector<StructGVarFunc>> _mem_funcs;
+    std::vector<StructGVarFilt>              _filts;
+    std::vector<MethodToInstall>             _methods_to_install;
+    std::vector<NewTypeToInstantiate>        _new_gap_types;
+
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
     std::vector<detail::SubtypeBase*>                  _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
@@ -253,7 +295,7 @@ namespace gapbind14 {
     Module()
         : _funcs(),
           _mem_funcs(),
-          _subtype_names(),
+          _subtype_names(),  // TODO init everything
           _subtypes(),
           _type_to_subtype() {}
 
@@ -306,6 +348,10 @@ namespace gapbind14 {
       return &_mem_funcs[subtype(nm)][0];
     }
 
+    StructGVarFilt const* filters() const {
+      return &_filts[0];
+    }
+
     template <typename T>
     gapbind14_subtype add_subtype(std::string const& nm) {
       bool inserted
@@ -313,9 +359,24 @@ namespace gapbind14 {
       if (!inserted) {
         throw std::runtime_error("Subtype named " + nm + " already registered");
       }
+
       _type_to_subtype.emplace(typeid(T).hash_code(), _subtypes.size());
       _subtypes.push_back(new detail::Subtype<T>(nm, _subtypes.size()));
+      // TODO delete next
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
+      std::string filt_name = "IS_" + nm;
+      std::transform(filt_name.begin() + 3,
+                     filt_name.end(),
+                     filt_name.begin() + 3,
+                     [](auto c) { return std::toupper(c); });
+      auto IsThingFilt = _LibraryGVar(std::string("Is") + nm);
+      _filts.push_back({detail::copy_c_str(filt_name),
+                        "obj",
+                        &IsThingFilt,
+                        (GVarFilt) IsThingHandler,  // TODO correct version of
+                                                    // this
+                        detail::copy_c_str("pkg.cpp:" + filt_name)});
+
       return _subtypes.back()->subtype();
     }
 
@@ -353,7 +414,7 @@ namespace gapbind14 {
                                std::string_view                     info_string,
                                std::vector<std::string_view> const& filt_list,
                                Obj (*func)(Args...)) {
-      static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
+      static_assert(sizeof...(Args) <= 7, "length of Args must be at most 7");
       if (filt_list.size() + 1 != sizeof...(Args)) {
         std::cout << "Something wrong expected " << filt_list.size() + 1
                   << " arguments, found " << sizeof...(Args) << std::endl;
@@ -371,7 +432,44 @@ namespace gapbind14 {
                   detail::params_c_str(sizeof...(Args) - 1),
                   (GVarFunc) func,
                   detail::copy_c_str(cookie_name)};
-      _methods_to_install.push_back(mti);
+      _methods_to_install.push_back(std::move(mti));
+    }
+
+    void add_category_to_declare(std::string_view name,
+                                 std::string_view parent,
+                                 std::string_view filt) {
+      CategoryToDeclare ctd;
+      ctd.name   = name;
+      ctd.parent = parent;
+      ctd.filt   = filt;
+      _categories_to_declare.push_back(std::move(ctd));
+    }
+
+    void add_operation_to_declare(std::string_view              name,
+                                  std::vector<std::string_view> filt_list) {
+      OperationToDeclare otd;
+      otd.name      = name;
+      otd.filt_list = filt_list;
+      _operations_to_declare.push_back(std::move(otd));
+    }
+
+    void add_gap_type(std::string_view family, std::string_view filter) {
+      NewTypeToInstantiate ntti;
+      ntti.family = family;
+      ntti.filter = filter;
+      _new_gap_types.push_back(std::move(ntti));
+    }
+
+    auto const& categories_to_declare() const {
+      return _categories_to_declare;
+    }
+
+    auto const& operations_to_declare() const {
+      return _operations_to_declare;
+    }
+
+    auto const& new_gap_types() const {
+      return _new_gap_types;
     }
 
     // TODO re-add const x2
@@ -434,17 +532,19 @@ namespace gapbind14 {
   struct init {};
 
   namespace detail {
-    std::vector<std::pair<std::string_view, std::string_view>>&
-    all_categories();
-    std::vector<std::pair<std::string, std::vector<std::string_view>>>&
-    all_operations();
-
     template <typename T, typename... Args>
     T* make(Args... params) {
       return new T(std::forward<Args>(params)...);
     }
 
   }  // namespace detail
+
+  static void NewType(std::string_view family, std::string_view filter) {
+    _LibraryGVar(family);
+    _LibraryGVar(filter);
+    _LibraryGVar(std::string(filter) + "Type");
+    module().add_gap_type(family, filter);
+  }
 
   template <typename Wild>
   static void InstallGlobalFunction(char const* name, Wild f) {
@@ -457,11 +557,13 @@ namespace gapbind14 {
   }
 
   static inline std::string_view
-  DeclareCategory(std::string_view name, std::string_view parent_category) {
-    // TODO replace with module.add_category
-    detail::all_categories().emplace_back(name, parent_category);
+  DeclareCategoryKernel(std::string_view name,
+                        std::string_view parent_category,
+                        std::string_view filt) {
+    module().add_category_to_declare(name, parent_category, filt);
     _LibraryGVar(name);
     _LibraryGVar(parent_category);
+    _LibraryGVar(filt);
     return name;
   }
 
@@ -469,8 +571,7 @@ namespace gapbind14 {
   DeclareOperation(std::string_view                               name,
                    std::initializer_list<std::string_view> const& filt_list) {
     _LibraryGVar(name);
-    detail::all_operations().emplace_back(
-        std::string(name), std::vector<std::string_view>(filt_list));
+    module().add_operation_to_declare(name, filt_list);
     return name;
   }
 
@@ -520,7 +621,7 @@ namespace gapbind14 {
   InstallMethod(std::string_view                               name,
                 std::string_view                               info_string,
                 std::initializer_list<std::string_view> const& filt_list,
-                init<Args...>) {
+                init<Thing, Args...>) {
     return InstallMethod(
         name, info_string, filt_list, &detail::make<Thing, Args...>);
   }
