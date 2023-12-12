@@ -20,7 +20,6 @@
 #define SEMIGROUPS_SRC_FROIDURE_PIN_HPP_
 
 #include <cstddef>      // for size_t
-#include <memory>       // for shared_ptr
 #include <string>       // for string
 #include <type_traits>  // for true_type
 #include <utility>      // for pair
@@ -36,10 +35,16 @@
 namespace gapbind14 {
 
   template <typename T>
-  struct IsGapBind14Type<libsemigroups::FroidurePin<T>> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::FroidurePin<T>> : std::true_type {
+    // TODO have to do this properly! By probably having one of these structs
+    // per type T
+    static constexpr std::string_view name = "FroidurePinT";
+  };
 
   template <>
-  struct IsGapBind14Type<libsemigroups::FroidurePinBase> : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::FroidurePinBase> : std::true_type {
+    static constexpr std::string_view name = "FroidurePinBase";
+  };
 
 }  // namespace gapbind14
 
@@ -56,11 +61,11 @@ void init_froidure_pin_base(gapbind14::Module& m);
 
 template <typename element_type>
 void bind_froidure_pin(gapbind14::Module& m, std::string name) {
-
   using libsemigroups::FroidurePin;
   using FroidurePin_    = FroidurePin<element_type>;
   using const_reference = typename FroidurePin<element_type>::const_reference;
-    using element_index_type = typename FroidurePin<element_type>::element_index_type;
+  using element_index_type =
+      typename FroidurePin<element_type>::element_index_type;
   gapbind14::class_<FroidurePin_>(name)
       .def(gapbind14::init<>{}, "make")
       .def(gapbind14::init<FroidurePin_ const&>{}, "copy")
@@ -81,7 +86,8 @@ void bind_froidure_pin(gapbind14::Module& m, std::string name) {
       .def("left_cayley_graph", &FroidurePin_::left_cayley_graph)
       .def("right_cayley_graph", &FroidurePin_::right_cayley_graph)
       .def("factorisation",
-           gapbind14::overload_cast<element_index_type>(&FroidurePin_::factorisation))
+           gapbind14::overload_cast<element_index_type>(
+               &FroidurePin_::factorisation))
       .def("position_to_sorted_position",
            &FroidurePin_::position_to_sorted_position)
       .def("fast_product", &FroidurePin_::fast_product)

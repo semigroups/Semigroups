@@ -512,7 +512,7 @@ namespace gapbind14 {
     using cpp_type = T;
 
     Obj operator()(T* ptr) const {
-      Obj o          = NewBag(T_GAPBIND14_OBJ, 2 * sizeof(Obj));
+      Obj o          = NewBag(TNums(IsGapBind14Type<T>::name), 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(module().subtype<T>());
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
       CHANGED_BAG(o);

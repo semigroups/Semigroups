@@ -81,8 +81,9 @@ namespace libsemigroups {
 
 namespace gapbind14 {
   template <>
-  struct IsGapBind14Type<libsemigroups::ToddCoxeter>
-      : std::true_type {};
+  struct IsGapBind14Type<libsemigroups::ToddCoxeter> : std::true_type {
+    static constexpr std::string_view name = "ToddCoxeter";
+  };
 
 }  // namespace gapbind14
 

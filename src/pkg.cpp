@@ -101,20 +101,6 @@ namespace gapbind14 {
     static constexpr std::string_view name = "Words";
   };
 
-  // TODO move this back to gapbind14.*pp and make it generic
-  template <>
-  struct to_gap<libsemigroups::Words*> {
-    using Words    = libsemigroups::Words;
-    using cpp_type = Words;
-
-    Obj operator()(Words* ptr) const {
-      Obj o = NewBag(TNums(IsGapBind14Type<Words>::name), 2 * sizeof(Obj));
-      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(module().subtype<Words>());
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
-      CHANGED_BAG(o);
-      return o;
-    }
-  };
 }  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
@@ -122,6 +108,7 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
+  // TODO combine class_<libsemigroups::Words> and IsGapBind14Type into a macro
   gapbind14::class_<libsemigroups::Words>("Words");
 
   gapbind14::DeclareCategory("IsWords", "IsObject");
