@@ -325,7 +325,9 @@ namespace gapbind14 {
           detail::copy_c_str(GAP_tnum_name),
           detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
       // TODO copy the other functions from above
-      PrintObjFuncs[GAP_tnum] = TGapBind14ObjPrintFunc;
+      // TODO only install PrintObjFuncs if PrintObj is not one of the methods
+      // installed for objects of this type. PrintObjFuncs[GAP_tnum] =
+      // TGapBind14ObjPrintFunc;
     }
 
     InitHdlrFuncsFromTable(module().funcs());

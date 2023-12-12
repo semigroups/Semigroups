@@ -180,9 +180,14 @@ GAPBIND14_MODULE(libsemigroups) {
                            "for an IsWords object",
                            {"IsWords"},
                            &libsemigroups::Words::at_end);
+  // Only works if PrintObjFuncs isn't installed later in init_kernel
+  // gapbind14::InstallMethod("PrintObj",
+  //                          "for an IsWords object XXX",
+  //                          {"IsWords"},
+  //                          [](Obj o) { Pr("bananas", 0L, 0L); });
 
   // Old
-
+  // TODO move global functions out of record
   gapbind14::InstallGlobalFunction("set_report", &set_report);
   gapbind14::InstallGlobalFunction("should_report",
                                    &libsemigroups::reporting_enabled);
