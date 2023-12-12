@@ -16,8 +16,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 # Test words
-gap> w := Words();
-<object>
+gap> w := Words();;
 gap> IsWords(w);
 true
 gap> TypeObj(w);

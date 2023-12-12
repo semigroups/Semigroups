@@ -30,14 +30,6 @@
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
-Obj GAP_IsObject;
-Obj GAP_DeclareCategory;
-Obj GAP_DeclareOperation;
-Obj GAP_InstallMethod;
-Obj GAP_NewType;
-Obj GAP_NewFamily;
-Obj GAP_IsInternalRep;
-
 namespace gapbind14 {
 
   LibraryGVar_ LibraryGVar;
@@ -269,14 +261,12 @@ namespace gapbind14 {
   }
 
   void init_kernel(char const *name) {
-    ImportGVarFromLibrary("DeclareCategory", &GAP_DeclareCategory);
-    ImportGVarFromLibrary("DeclareOperation", &GAP_DeclareOperation);
-    // TODO InstallEarlyMethod also
-    ImportGVarFromLibrary("InstallMethod", &GAP_InstallMethod);
-    ImportGVarFromLibrary("IsObject", &GAP_IsObject);
-    // TODO remove the next 2?
-    ImportGVarFromLibrary("NewFamily", &GAP_NewFamily);
-    ImportGVarFromLibrary("NewType", &GAP_NewType);
+    // Things we want from the GAP library
+    LibraryGVar("DeclareCategory");
+    LibraryGVar("DeclareOperation");
+    LibraryGVar("InstallMethod");
+    LibraryGVar("InstallEarlyMethod");
+    LibraryGVar("IsObject");
 
     static bool first_call = true;
     if (first_call) {
@@ -326,8 +316,8 @@ namespace gapbind14 {
           detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
       // TODO copy the other functions from above
       // TODO only install PrintObjFuncs if PrintObj is not one of the methods
-      // installed for objects of this type. PrintObjFuncs[GAP_tnum] =
-      // TGapBind14ObjPrintFunc;
+      // installed for objects of this type.
+      PrintObjFuncs[GAP_tnum] = TGapBind14ObjPrintFunc;
     }
 
     InitHdlrFuncsFromTable(module().funcs());
@@ -393,13 +383,13 @@ namespace gapbind14 {
 
     for (auto const &ctd : module().categories_to_declare()) {
       std::cout << "Declared category " << ctd.name << std::endl;
-      CALL_2ARGS(GAP_DeclareCategory,
+      CALL_2ARGS(LibraryGVar("DeclareCategory"),
                  to_gap<std::string>()(ctd.name),
                  LibraryGVar(ctd.parent));
     }
 
     for (auto const &otd : module().operations_to_declare()) {
-      CALL_2ARGS(GAP_DeclareOperation,
+      CALL_2ARGS(LibraryGVar("DeclareOperation"),
                  to_gap<std::string>()(otd.name),
                  to_gap<std::vector<Obj>>()(filter_list(otd.filt_list)));
       std::cout << "Declared operation for " << otd.name << std::endl;
@@ -420,7 +410,7 @@ namespace gapbind14 {
 
       std::cout << "Trying to Install method for " << mti.name << std::endl;
 
-      CALL_4ARGS(GAP_InstallMethod,
+      CALL_4ARGS(LibraryGVar("InstallMethod"),
                  GAP_op,
                  // TODO deduction guides so that the template params aren't
                  // required
