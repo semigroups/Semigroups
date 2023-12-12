@@ -26,93 +26,70 @@
 #include "libsemigroups/words.hpp"
 
 namespace gapbind14 {
-  template <>
-  struct IsGapBind14Type<libsemigroups::Words> : std::true_type {
-    static constexpr std::string_view name = "Words";
-  };
+  using Words     = libsemigroups::Words;
+  using word_type = libsemigroups::word_type;
+
+  GAPBIND14_TYPE("Words", Words);
+
+  void init_words(Module& m) {
+    class_<Words>("Words");
+
+    DeclareCategory("IsWords", "IsObject");
+
+    DeclareOperation("Words", {});
+    DeclareOperation("Count", {"IsWords"});
+    DeclareOperation("FirstWord", {"IsWords"});
+    DeclareOperation("FirstWord", {"IsWords", "IsObject"});
+    DeclareOperation("LastWord", {"IsWords"});
+    DeclareOperation("LastWord", {"IsWords", "IsObject"});
+    DeclareOperation("NumberOfLetters", {"IsWords", "IsObject"});
+    DeclareOperation("Get", {"IsWords"});
+    DeclareOperation("Next", {"IsWords"});
+    DeclareOperation("AtEnd", {"IsWords"});
+
+    InstallMethod("Words", "for no arguments", {}, init<Words>());
+
+    InstallMethod("Count", "for an IsWords object", {"IsWords"}, &Words::count);
+
+    InstallMethod("FirstWord",
+                  "for an IsWords object",
+                  {"IsWords"},
+                  overload_cast<>(&Words::first));
+
+    InstallMethod("FirstWord",
+                  "for an IsWords object and word",
+                  {"IsWords", "IsObject"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by words.first(w) properly so we wrap it in a lambda
+                  [](Words& words, word_type const& w) { words.first(w); });
+
+    InstallMethod("LastWord",
+                  "for an IsWords object",
+                  {"IsWords"},
+                  overload_cast<>(&Words::last));
+
+    InstallMethod("LastWord",
+                  "for an IsWords object and word",
+                  {"IsWords", "IsObject"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by words.first(w) properly so we wrap it in a lambda
+                  [](Words& words, word_type const& w) { words.last(w); });
+
+    InstallMethod("NumberOfLetters",
+                  "for an IsWords object and a pos. int.",
+                  {"IsWords", "IsObject"},
+                  [](Words& words, size_t n) { words.number_of_letters(n); });
+
+    InstallMethod("Get", "for an IsWords object", {"IsWords"}, &Words::get);
+
+    InstallMethod("Next", "for an IsWords object", {"IsWords"}, &Words::next);
+
+    InstallMethod(
+        "AtEnd", "for an IsWords object", {"IsWords"}, &Words::at_end);
+    // Only works if PrintObjFuncs isn't installed later in init_kernel
+    // InstallMethod("PrintObj",
+    //                          "for an IsWords object XXX",
+    //                          {"IsWords"},
+    //                          [](Obj o) { Pr("bananas", 0L, 0L); });
+  }
 }  // namespace gapbind14
-
-void init_words(gapbind14::Module& m) {
-  // TODO combine class_<libsemigroups::Words> and IsGapBind14Type into a macro
-  gapbind14::class_<libsemigroups::Words>("Words");
-
-  gapbind14::DeclareCategory("IsWords", "IsObject");
-  gapbind14::DeclareOperation("Words", {});
-  gapbind14::DeclareOperation("Count", {"IsWords"});
-  gapbind14::DeclareOperation("FirstWord", {"IsWords"});
-  // TODO IsObject -> IsHomogeneousList
-  gapbind14::DeclareOperation("FirstWord", {"IsWords", "IsObject"});
-  gapbind14::DeclareOperation("LastWord", {"IsWords"});
-  // TODO IsObject -> IsHomogeneousList
-  gapbind14::DeclareOperation("LastWord", {"IsWords", "IsObject"});
-  // TODO IsObject -> IsPosInt
-  gapbind14::DeclareOperation("NumberOfLetters", {"IsWords", "IsObject"});
-  gapbind14::DeclareOperation("Get", {"IsWords"});
-  gapbind14::DeclareOperation("Next", {"IsWords"});
-  gapbind14::DeclareOperation("AtEnd", {"IsWords"});
-
-  gapbind14::InstallMethod(
-      "Words", "for no arguments", {}, gapbind14::init<libsemigroups::Words>());
-
-  gapbind14::InstallMethod("Count",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::count);
-
-  gapbind14::InstallMethod(
-      "FirstWord",
-      "for an IsWords object",
-      {"IsWords"},
-      gapbind14::overload_cast<>(&libsemigroups::Words::first));
-
-  gapbind14::InstallMethod(
-      "FirstWord",
-      "for an IsWords object and word",
-      {"IsWords", "IsObject"},
-      // gapbind14 currently doesn't handle the reference returned by
-      // words.first(w) properly so we wrap it in a lambda
-      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
-        words.first(w);
-      });
-
-  gapbind14::InstallMethod(
-      "LastWord",
-      "for an IsWords object",
-      {"IsWords"},
-      gapbind14::overload_cast<>(&libsemigroups::Words::last));
-
-  gapbind14::InstallMethod(
-      "LastWord",
-      "for an IsWords object and word",
-      {"IsWords", "IsObject"},
-      // gapbind14 currently doesn't handle the reference returned by
-      // words.first(w) properly so we wrap it in a lambda
-      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
-        words.last(w);
-      });
-
-  gapbind14::InstallMethod("NumberOfLetters",
-                           "for an IsWords object and a pos. int.",
-                           {"IsWords", "IsObject"},
-                           [](libsemigroups::Words& words, size_t n) {
-                             words.number_of_letters(n);
-                           });
-
-  gapbind14::InstallMethod(
-      "Get", "for an IsWords object", {"IsWords"}, &libsemigroups::Words::get);
-
-  gapbind14::InstallMethod("Next",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::next);
-
-  gapbind14::InstallMethod("AtEnd",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::at_end);
-  // Only works if PrintObjFuncs isn't installed later in init_kernel
-  // gapbind14::InstallMethod("PrintObj",
-  //                          "for an IsWords object XXX",
-  //                          {"IsWords"},
-  //                          [](Obj o) { Pr("bananas", 0L, 0L); });
-}

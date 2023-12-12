@@ -77,6 +77,7 @@ ReadPackage("semigroups", "gap/elements/trans.gd");
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gd");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gd");
 ReadPackage("semigroups", "gap/libsemigroups/sims1.gd");
+ReadPackage("semigroups", "gap/libsemigroups/words.gd");
 
 ReadPackage("semigroups", "gap/main/froidure-pin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");

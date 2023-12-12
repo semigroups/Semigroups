@@ -67,6 +67,12 @@
       = ::gapbind14::detail::emplace_init_func(#name, &gapbind14_init_##name); \
   void gapbind14_init_##name()
 
+#define GAPBIND14_TYPE(gap_name, cpp_type)             \
+  template <>                                          \
+  struct IsGapBind14Type<cpp_type> : std::true_type {  \
+    static constexpr std::string_view name = gap_name; \
+  };
+
 ////////////////////////////////////////////////////////////////////////
 // Typdefs for GAP
 ////////////////////////////////////////////////////////////////////////
@@ -91,6 +97,7 @@ namespace gapbind14 {
    public:
     LibraryGVar_() : _GAP_LibraryGVars(), _map(), _imported(false) {}
 
+    // TODO to cpp file
     Obj operator()(std::string_view name) {
       auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
       if (inserted) {
@@ -618,6 +625,7 @@ namespace gapbind14 {
   //
   ////////////////////////////////////////////////////////////////////////
 
+  // TODO this should be a function
   template <typename T>
   class class_ {
    public:

@@ -30,6 +30,7 @@ ReadPackage("semigroups", "gap/libsemigroups/cong.gi");
 ReadPackage("semigroups", "gap/libsemigroups/fpsemi.gi");
 ReadPackage("semigroups", "gap/libsemigroups/froidure-pin.gi");
 ReadPackage("semigroups", "gap/libsemigroups/sims1.gi");
+ReadPackage("semigroups", "gap/libsemigroups/words.gi");
 
 ReadPackage("semigroups", "gap/main/froidure-pin.gi");
 ReadPackage("semigroups", "gap/main/setup.gi");

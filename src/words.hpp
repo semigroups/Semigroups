@@ -22,8 +22,7 @@
 // Forward decl
 namespace gapbind14 {
   class Module;
+  void init_words(Module&);
 }  // namespace gapbind14
-
-void init_words(gapbind14::Module&);
 
 #endif  // SEMIGROUPS_SRC_WORDS_HPP_
