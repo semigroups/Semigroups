@@ -85,10 +85,10 @@ namespace gapbind14 {
   //
   //   template <>
   //   struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
-
-}  // namespace gapbind14
+}
 
 GAPBIND14_MODULE(libsemigroups) {
+  gapbind14::DeclareCategory("IsRangeObj", "IsObject");
   ////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////

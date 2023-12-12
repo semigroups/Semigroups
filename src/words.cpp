@@ -34,7 +34,7 @@ namespace gapbind14 {
   void init_words(Module& m) {
     class_<Words>("Words");
 
-    DeclareCategory("IsWords", "IsObject");
+    DeclareCategory("IsWords", "IsRangeObj");
 
     DeclareOperation("Words", {});
     DeclareOperation("Count", {"IsWords"});
