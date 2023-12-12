@@ -275,6 +275,7 @@ namespace gapbind14 {
   void init_kernel(char const *name) {
     ImportGVarFromLibrary("DeclareCategory", &GAP_DeclareCategory);
     ImportGVarFromLibrary("DeclareOperation", &GAP_DeclareOperation);
+    // TODO InstallEarlyMethod also
     ImportGVarFromLibrary("InstallMethod", &GAP_InstallMethod);
     ImportGVarFromLibrary("IsObject", &GAP_IsObject);
     // TODO remove the next 2?
