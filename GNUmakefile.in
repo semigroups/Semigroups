@@ -30,6 +30,7 @@ KEXT_SOURCES += src/froidure-pin-pperm.cpp
 KEXT_SOURCES += src/froidure-pin-transf.cpp
 KEXT_SOURCES += src/pkg.cpp
 KEXT_SOURCES += src/to_gap.cpp
+KEXT_SOURCES += src/words.cpp
 KEXT_SOURCES += gapbind14/src/gapbind14.cpp
 
 KEXT_CPPFLAGS = -Igapbind14/include/

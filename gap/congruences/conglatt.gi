@@ -246,10 +246,10 @@ function(S, gen_congs, WrappedXCongruence)
     S := List(gen_congs, EquivalenceRelationLookup);
     old_value := libsemigroups.should_report();
     if InfoLevel(InfoSemigroups) = 4 then
-      libsemigroups.set_report(true);
+        LIBSEMIGROUPS_REPORTING_ENABLED(true);
     fi;
     poset := DigraphNC(libsemigroups.LATTICE_OF_CONGRUENCES(S));
-    libsemigroups.set_report(old_value);
+    LIBSEMIGROUPS_REPORTING_ENABLED(old_value);
     all_congs := fail;
   fi;
   Info(InfoSemigroups, 1, StringFormatted("Found {} congruences in total!",

@@ -1,6 +1,6 @@
 //
 // Semigroups package for GAP
-// Copyright (C) 2016-2021 James D. Mitchell
+// Copyright (C) 2016-2023 James D. Mitchell
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>   // for size_t
-#include <iostream>  // for string
-#include <vector>    // for vector
+#include <cstddef>  // for size_t
+#include <vector>   // for vector
 
 // GAP headers
 #include "compiled.h"
@@ -38,36 +37,32 @@
 #include "semigroups-debug.hpp"       // for SEMIGROUPS_ASSERT
 #include "to_cpp.hpp"                 // for to_cpp
 #include "to_gap.hpp"                 // for to_gap
+#include "words.hpp"                  // for init_words
 
 // Gapbind14 headers
 #include "gapbind14/cpp_fn.hpp"     // for overload_cast
 #include "gapbind14/gapbind14.hpp"  // for class_, InstallGlobalFunction
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"
-#include "libsemigroups/bipart.hpp"     // for Blocks, Bipartition
-#include "libsemigroups/cong-intf.hpp"  // for congruence_kind
-#include "libsemigroups/freeband.hpp"   // for freeband_equal_to
-#include "libsemigroups/sims1.hpp"      // for Sims1
+#include "libsemigroups/bipart.hpp"    // for Blocks, Bipartition
+#include "libsemigroups/freeband.hpp"  // for freeband_equal_to
 #include "libsemigroups/todd-coxeter.hpp"  // for ToddCoxeter, ToddCoxeter::table_type
 #include "libsemigroups/types.hpp"         // for word_type, letter_type
-#include "libsemigroups/word-graph.hpp"  // for ActionDigraph
 
 #include "libsemigroups/detail/report.hpp"  // for REPORTER, Reporter
-#include "libsemigroups/detail/uf.hpp"
 
 using libsemigroups::Bipartition;
 using libsemigroups::Blocks;
 
-using libsemigroups::Hash;
-using libsemigroups::detail::Duf;
+// using libsemigroups::Hash;
+// using libsemigroups::detail::Duf;
 
 namespace {
-  void set_report(bool const val) {
-    static std::shared_ptr<libsemigroups::ReportGuard> rg;
+  void LIBSEMIGROUPS_REPORTING_ENABLED(bool const val) {
+    static std::unique_ptr<libsemigroups::ReportGuard> rg;
     if (val) {
       if (rg != nullptr) {
-        rg = std::make_shared<libsemigroups::ReportGuard>(val);
+        rg = std::make_unique<libsemigroups::ReportGuard>(val);
       }
     } else {
       rg = nullptr;
@@ -91,11 +86,6 @@ namespace gapbind14 {
   //   template <>
   //   struct IsGapBind14Type<libsemigroups::RepOrc> : std::true_type {};
 
-  template <>
-  struct IsGapBind14Type<libsemigroups::Words> : std::true_type {
-    static constexpr std::string_view name = "Words";
-  };
-
 }  // namespace gapbind14
 
 GAPBIND14_MODULE(libsemigroups) {
@@ -103,92 +93,9 @@ GAPBIND14_MODULE(libsemigroups) {
   // Free functions
   ////////////////////////////////////////////////////////////////////////
 
-  // TODO combine class_<libsemigroups::Words> and IsGapBind14Type into a macro
-  gapbind14::class_<libsemigroups::Words>("Words");
+  gapbind14::InstallGlobalFunction("LIBSEMIGROUPS_REPORTING_ENABLED",
+                                   &LIBSEMIGROUPS_REPORTING_ENABLED);
 
-  gapbind14::DeclareCategory("IsWords", "IsObject");
-  gapbind14::DeclareOperation("Words", {});
-  gapbind14::DeclareOperation("Count", {"IsWords"});
-  gapbind14::DeclareOperation("FirstWord", {"IsWords"});
-  // TODO IsObject -> IsHomogeneousList
-  gapbind14::DeclareOperation("FirstWord", {"IsWords", "IsObject"});
-  gapbind14::DeclareOperation("LastWord", {"IsWords"});
-  // TODO IsObject -> IsHomogeneousList
-  gapbind14::DeclareOperation("LastWord", {"IsWords", "IsObject"});
-  // TODO IsObject -> IsPosInt
-  gapbind14::DeclareOperation("NumberOfLetters", {"IsWords", "IsObject"});
-  gapbind14::DeclareOperation("Get", {"IsWords"});
-  gapbind14::DeclareOperation("Next", {"IsWords"});
-  gapbind14::DeclareOperation("AtEnd", {"IsWords"});
-
-  gapbind14::InstallMethod(
-      "Words", "for no arguments", {}, gapbind14::init<libsemigroups::Words>());
-
-  gapbind14::InstallMethod("Count",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::count);
-
-  gapbind14::InstallMethod(
-      "FirstWord",
-      "for an IsWords object",
-      {"IsWords"},
-      gapbind14::overload_cast<>(&libsemigroups::Words::first));
-
-  gapbind14::InstallMethod(
-      "FirstWord",
-      "for an IsWords object and word",
-      {"IsWords", "IsObject"},
-      // gapbind14 currently doesn't handle the reference returned by
-      // words.first(w) properly so we wrap it in a lambda
-      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
-        words.first(w);
-      });
-
-  gapbind14::InstallMethod(
-      "LastWord",
-      "for an IsWords object",
-      {"IsWords"},
-      gapbind14::overload_cast<>(&libsemigroups::Words::last));
-
-  gapbind14::InstallMethod(
-      "LastWord",
-      "for an IsWords object and word",
-      {"IsWords", "IsObject"},
-      // gapbind14 currently doesn't handle the reference returned by
-      // words.first(w) properly so we wrap it in a lambda
-      [](libsemigroups::Words& words, libsemigroups::word_type const& w) {
-        words.last(w);
-      });
-
-  gapbind14::InstallMethod("NumberOfLetters",
-                           "for an IsWords object and a pos. int.",
-                           {"IsWords", "IsObject"},
-                           [](libsemigroups::Words& words, size_t n) {
-                             words.number_of_letters(n);
-                           });
-
-  gapbind14::InstallMethod(
-      "Get", "for an IsWords object", {"IsWords"}, &libsemigroups::Words::get);
-
-  gapbind14::InstallMethod("Next",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::next);
-
-  gapbind14::InstallMethod("AtEnd",
-                           "for an IsWords object",
-                           {"IsWords"},
-                           &libsemigroups::Words::at_end);
-  // Only works if PrintObjFuncs isn't installed later in init_kernel
-  // gapbind14::InstallMethod("PrintObj",
-  //                          "for an IsWords object XXX",
-  //                          {"IsWords"},
-  //                          [](Obj o) { Pr("bananas", 0L, 0L); });
-
-  // Old
-  // TODO move global functions out of record
-  gapbind14::InstallGlobalFunction("set_report", &set_report);
   gapbind14::InstallGlobalFunction("should_report",
                                    &libsemigroups::reporting_enabled);
   gapbind14::InstallGlobalFunction("hardware_concurrency",
@@ -216,6 +123,8 @@ GAPBIND14_MODULE(libsemigroups) {
   init_froidure_pin_pbr(gapbind14::module());
   init_froidure_pin_transf(gapbind14::module());
   init_cong(gapbind14::module());
+
+  init_words(gapbind14::module());
 
   ////////////////////////////////////////////////////////////////////////
   // ToddCoxeter
@@ -660,7 +569,7 @@ static Int InitKernel(StructInitInfo* module) {
 }
 
 static Int PostRestore(StructInitInfo* module) {
-  set_report(false);
+  LIBSEMIGROUPS_REPORTING_ENABLED(false);
   return 0;
 }
 

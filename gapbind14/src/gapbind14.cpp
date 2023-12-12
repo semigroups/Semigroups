@@ -344,41 +344,8 @@ namespace gapbind14 {
       first_call = false;
       InitGVarFuncsFromTable(GVarFuncs);
     }
-    auto                 &m   = module();
-    StructGVarFunc const *tab = m.funcs();
 
-    // init functions from m in the record named name
-    // This is done to avoid polluting the global namespace
-    Obj global_rec = NEW_PREC(0);
-    SET_LEN_PREC(global_rec, 0);
-
-    for (Int i = 0; tab[i].name != 0; i++) {
-      UInt gvar = GVarName(tab[i].name);
-      Obj  name = NameGVar(gvar);
-      Obj  args = ValidatedArgList(tab[i].name, tab[i].nargs, tab[i].args);
-      Obj  func = NewFunction(name, tab[i].nargs, args, tab[i].handler);
-      SetupFuncInfo(func, tab[i].cookie);
-      AssPRec(global_rec, RNamName(tab[i].name), func);
-    }
-    for (auto ptr : m) {
-      tab           = m.mem_funcs(ptr->name());
-      Obj class_rec = NEW_PREC(0);
-      SET_LEN_PREC(class_rec, 0);
-
-      for (Int i = 0; tab[i].name != 0; i++) {
-        UInt gvar = GVarName(tab[i].name);
-        Obj  name = NameGVar(gvar);
-        Obj  args = ValidatedArgList(tab[i].name, tab[i].nargs, tab[i].args);
-        Obj  func = NewFunction(name, tab[i].nargs, args, tab[i].handler);
-        SetupFuncInfo(func, tab[i].cookie);
-        AssPRec(class_rec, RNamName(tab[i].name), func);
-      }
-      AssPRec(global_rec, RNamName(ptr->name().c_str()), class_rec);
-    }
-
-    MakeImmutable(global_rec);
-    AssReadOnlyGVar(GVarName(name), global_rec);
-
+    InitGVarFuncsFromTable(module().funcs());
     InitGVarFiltsFromTable(module().filters());
 
     for (auto const &ctd : module().categories_to_declare()) {
