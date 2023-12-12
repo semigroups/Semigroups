@@ -70,7 +70,7 @@ namespace gapbind14 {
     }
 
     gapbind14_subtype obj_subtype(Obj o) {
-      require_gapbind14_obj(o);
+      // require_gapbind14_obj(o);
       return reinterpret_cast<gapbind14_subtype>(ADDR_OBJ(o)[0]);
     }
 
@@ -257,7 +257,7 @@ namespace gapbind14 {
     }
 
     Obj IsValidGapbind14Object(Obj self, Obj arg1) {
-      detail::require_gapbind14_obj(arg1);
+      // detail::require_gapbind14_obj(arg1);
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);
     }
 

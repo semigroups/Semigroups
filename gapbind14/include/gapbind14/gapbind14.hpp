@@ -476,7 +476,7 @@ namespace gapbind14 {
     using cpp_type = std::decay_t<T>;
 
     std::decay_t<T>& operator()(Obj o) const {
-      detail::require_gapbind14_obj(o);
+      // detail::require_gapbind14_obj(o);
       return *detail::obj_cpp_ptr<std::decay_t<T>>(o);
     }
   };
