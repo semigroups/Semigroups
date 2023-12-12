@@ -18,6 +18,10 @@ gap> SEMIGROUPS.StartTest();
 # Test words
 gap> w := Words();
 <object>
+gap> IsWords(w);
+true
+gap> TypeObj(w);
+<Type: (WordsFamily, [ IsInternalRep, IsWords ]), data: fail>
 gap> NumberOfLetters(w, 2);
 gap> Count(w);
 0

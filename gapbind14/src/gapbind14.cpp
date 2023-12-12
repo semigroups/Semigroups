@@ -176,10 +176,6 @@ namespace gapbind14 {
       return TheTypeTGapBind14Obj;
     }
 
-    Obj TWordsTypeFunc(Obj o) {
-      return LibraryGVar("TheWordsType");
-    }
-
     void TGapBind14ObjPrintFunc(Obj o) {
       module().print(o);
     }
@@ -320,9 +316,16 @@ namespace gapbind14 {
       auto  GAP_tnum_name = "T_" + tntr.name + "_OBJ";
       Module::toupper(GAP_tnum_name);
       std::cout << "Registering TNUM " << GAP_tnum_name << std::endl;
-      // TODO use the proper function not TWordsTypeFunc
-      GAP_tnum = RegisterPackageTNUM(detail::copy_c_str(GAP_tnum_name),
-                                     TWordsTypeFunc);
+
+      auto type_func = [GAP_type_name]() { return LibraryGVar(GAP_type_name); };
+      using Wild     = decltype(type_func);
+      size_t const n = detail::all_wilds<Wild>().size();
+      detail::all_wilds<Wild>().push_back(type_func);
+      GAP_tnum = RegisterPackageTNUM(
+          detail::copy_c_str(GAP_tnum_name),
+          detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
+      // TODO copy the other functions from above
+      PrintObjFuncs[GAP_tnum] = TGapBind14ObjPrintFunc;
     }
 
     InitHdlrFuncsFromTable(module().funcs());
