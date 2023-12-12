@@ -21,6 +21,8 @@
 
 #include "words.hpp"
 
+#include "to_cpp.hpp"
+
 #include "gapbind14/gapbind14.hpp"
 
 #include "libsemigroups/words.hpp"
@@ -32,6 +34,21 @@ namespace gapbind14 {
   GAPBIND14_TYPE("Words", Words);
 
   void init_words(Module& m) {
+    InstallGlobalFunction("NumberOfWords", &libsemigroups::number_of_words);
+    // There is already a RandomWord function in Semigroups
+    // InstallGlobalFunction("RandomWord", &libsemigroups::random_word);
+    InstallGlobalFunction(
+        "ParseString",
+        overload_cast<char const*>(&libsemigroups::literals::operator""_p));
+
+    InstallGlobalFunction(
+        "ToWord", overload_cast<std::string_view>(&libsemigroups::to_word));
+
+    InstallGlobalFunction(
+        "ToString", [](std::string_view alphabet, word_type const& input) {
+          return libsemigroups::to_string(alphabet, input);
+        });
+
     class_<Words>("Words");
 
     DeclareCategory("IsWords", "IsRangeObj");
@@ -46,6 +63,8 @@ namespace gapbind14 {
     DeclareOperation("Get", {"IsWords"});
     DeclareOperation("Next", {"IsWords"});
     DeclareOperation("AtEnd", {"IsWords"});
+    DeclareOperation("ReductionOrdering", {"IsWords"});
+    DeclareOperation("ReductionOrdering", {"IsWords", "IsString"});
 
     InstallMethod("Words", "for no arguments", {}, init<Words>());
 
@@ -78,6 +97,8 @@ namespace gapbind14 {
     InstallMethod("NumberOfLetters",
                   "for an IsWords object and a pos. int.",
                   {"IsWords", "IsObject"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by words.first(w) properly so we wrap it in a lambda
                   [](Words& words, size_t n) { words.number_of_letters(n); });
 
     InstallMethod("Get", "for an IsWords object", {"IsWords"}, &Words::get);
@@ -86,10 +107,25 @@ namespace gapbind14 {
 
     InstallMethod(
         "AtEnd", "for an IsWords object", {"IsWords"}, &Words::at_end);
-    // Only works if PrintObjFuncs isn't installed later in init_kernel
-    // InstallMethod("PrintObj",
+
+    InstallMethod("ReductionOrdering",
+                  "for an IsWords object",
+                  {"IsWords"},
+                  overload_cast<>(&Words::order));
+    // TODO must add a method to_gap impl for libsemigroups::Order
+
+    InstallMethod(
+        "ReductionOrdering",
+        "for an IsWords object and a string",
+        {"IsWords", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by words.first(w) properly so we wrap it in a lambda
+        [](Words& words, libsemigroups::Order val) { words.order(val); });
+    // Only works if PrintObjFuncs isn't installed later in
+    // init_kernel InstallMethod("PrintObj",
     //                          "for an IsWords object XXX",
     //                          {"IsWords"},
-    //                          [](Obj o) { Pr("bananas", 0L, 0L); });
+    //                          [](Obj o) { Pr("bananas", 0L, 0L);
+    //                          });
   }
 }  // namespace gapbind14

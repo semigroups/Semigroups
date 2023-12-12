@@ -15,8 +15,10 @@ function(range)
   iter := rec();
   iter.RangeObj := range;
   iter.NextIterator := function(it)
+    local result;
+    result := Get(it!.RangeObj);
     Next(it!.RangeObj);
-    return Get(it!.RangeObj);
+    return result;
   end;
   iter.IsDoneIterator := it -> AtEnd(it!.RangeObj);
 
