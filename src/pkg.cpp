@@ -22,14 +22,9 @@
 
 #include "pkg.hpp"
 
-#include <cstddef>    // for size_t
-#include <exception>  // for exception
-#include <filesystem>
-#include <iostream>     // for string
-#include <type_traits>  // for conditional<>::type
-#include <vector>       // for vector
-
-#include <set>  // for set
+#include <cstddef>   // for size_t
+#include <iostream>  // for string
+#include <vector>    // for vector
 
 // GAP headers
 #include "compiled.h"

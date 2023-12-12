@@ -255,6 +255,7 @@ namespace gapbind14 {
       }
     }
 
+    // TODO renovate this
     Obj IsValidGapbind14Object(Obj self, Obj arg1) {
       // detail::require_gapbind14_obj(arg1);
       return (ADDR_OBJ(arg1)[1] != nullptr ? True : False);

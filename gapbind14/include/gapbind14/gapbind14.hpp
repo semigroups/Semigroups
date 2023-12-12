@@ -468,8 +468,7 @@ namespace gapbind14 {
       return _tnums_to_register;
     }
 
-    // TODO re-add const x2
-    auto& methods_to_install() {
+    auto const& methods_to_install() const {
       return _methods_to_install;
     }
 
