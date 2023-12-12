@@ -98,16 +98,17 @@ namespace gapbind14 {
 
   template <>
   struct IsGapBind14Type<libsemigroups::Words> : std::true_type {
-    static constexpr UInt T_NUM = 0;
+    static constexpr std::string_view name = "Words";
   };
 
+  // TODO move this back to gapbind14.*pp and make it generic
   template <>
   struct to_gap<libsemigroups::Words*> {
     using Words    = libsemigroups::Words;
     using cpp_type = Words;
 
     Obj operator()(Words* ptr) const {
-      Obj o          = NewBag(T_WORDS_OBJ, 2 * sizeof(Obj));
+      Obj o = NewBag(TNums(IsGapBind14Type<Words>::name), 2 * sizeof(Obj));
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(module().subtype<Words>());
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(ptr);
       CHANGED_BAG(o);

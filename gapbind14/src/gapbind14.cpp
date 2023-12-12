@@ -41,9 +41,9 @@ Obj GAP_IsInternalRep;
 namespace gapbind14 {
 
   LibraryGVar_ LibraryGVar;
+  TNums_       TNums;
 
   UInt T_GAPBIND14_OBJ = 0;
-  UInt T_WORDS_OBJ     = 0;
 
   namespace detail {
 
@@ -167,7 +167,6 @@ namespace gapbind14 {
   namespace {
 
     Obj TheTypeTGapBind14Obj;
-    Obj TheWordsType;
 
     ////////////////////////////////////////////////////////////////////////
     // Required kernel functions
@@ -178,7 +177,7 @@ namespace gapbind14 {
     }
 
     Obj TWordsTypeFunc(Obj o) {
-      return TheWordsType;
+      return LibraryGVar("TheWordsType");
     }
 
     void TGapBind14ObjPrintFunc(Obj o) {
@@ -299,8 +298,6 @@ namespace gapbind14 {
       InitMarkFuncBags(PKG_TNUM, MarkNoSubBags);
       InitFreeFuncBag(PKG_TNUM, TGapBind14ObjFreeFunc);
 
-      T_WORDS_OBJ = RegisterPackageTNUM("T_WORDS_OBJ", TWordsTypeFunc);
-      InitCopyGVar("TheWordsType", &TheWordsType);
       InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
@@ -312,6 +309,20 @@ namespace gapbind14 {
     it->second();  // installs all functions in the current module.
     module().finalize();
 
+    for (auto const &tntr : module().tnums_to_register()) {
+      auto GAP_type_name = "The" + tntr.name + "Type";
+      auto GAP_type      = LibraryGVar(GAP_type_name);
+      std::cout << "Copying GVar " << GAP_type_name << std::endl;
+      InitCopyGVar(GAP_type_name.c_str(), &GAP_type);
+      UInt &GAP_tnum      = TNums(tntr.name);
+      auto  GAP_tnum_name = "T_" + tntr.name + "_OBJ";
+      Module::toupper(GAP_tnum_name);
+      std::cout << "Registering TNUM " << GAP_tnum_name << std::endl;
+      // TODO use the proper function not TWordsTypeFunc
+      GAP_tnum = RegisterPackageTNUM(detail::copy_c_str(GAP_tnum_name),
+                                     TWordsTypeFunc);
+    }
+
     InitHdlrFuncsFromTable(module().funcs());
     InitHdlrFiltsFromTable(module().filters());
 
@@ -321,6 +332,7 @@ namespace gapbind14 {
     LibraryGVar.import_all();
   }
 
+  // TODO move and rename this
   std::vector<Obj> filter_list(std::vector<std::string_view> const &svs) {
     std::vector<Obj> filt_list;
     for (auto const &filt : svs) {
@@ -377,16 +389,6 @@ namespace gapbind14 {
       CALL_2ARGS(GAP_DeclareCategory,
                  to_gap<std::string>()(ctd.name),
                  LibraryGVar(ctd.parent));
-    }
-
-    // TODO remove the loop below
-    for (auto const &[family, filter] : module().new_gap_types()) {
-      Obj GAP_family = CALL_2ARGS(
-          GAP_NewFamily, to_gap<std::string>()(family), LibraryGVar(filter));
-      Obj GAP_type = LibraryGVar(filter + "Type");
-      GAP_type     = CALL_2ARGS(GAP_NewType, GAP_family, LibraryGVar(filter));
-      std::cout << "Instantiated family " << family << std::endl;
-      std::cout << "Instantiated type " << filter << "Type" << std::endl;
     }
 
     for (auto const &otd : module().operations_to_declare()) {

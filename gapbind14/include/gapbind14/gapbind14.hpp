@@ -115,7 +115,26 @@ namespace gapbind14 {
     }
   };
 
+  class TNums_ {
+    std::vector<UInt>                       _GAP_TNums;
+    std::unordered_map<std::string, size_t> _map;
+
+   public:
+    TNums_() : _GAP_TNums(), _map() {}
+
+    UInt& operator()(std::string_view name) {
+      auto [it, inserted] = _map.emplace(name, _GAP_TNums.size());
+      if (inserted) {
+        _GAP_TNums.emplace_back();
+        return _GAP_TNums.back();
+      } else {
+        return _GAP_TNums[it->second];
+      }
+    }
+  };
+
   extern LibraryGVar_ LibraryGVar;
+  extern TNums_       TNums;
 
   // Forward decl
   template <typename T, typename>
@@ -132,7 +151,6 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
 
   extern UInt T_GAPBIND14_OBJ;
-  extern UInt T_WORDS_OBJ;
 
   template <typename T>
   struct IsGapBind14Type : std::false_type {};
@@ -263,9 +281,8 @@ namespace gapbind14 {
       std::vector<std::string_view> filt_list;
     };
 
-    struct NewTypeToInstantiate {
-      std::string family;
-      std::string filter;
+    struct TNUMToRegister {
+      std::string name;
     };
 
    private:
@@ -277,7 +294,7 @@ namespace gapbind14 {
     std::vector<std::vector<StructGVarFunc>> _mem_funcs;
     std::vector<StructGVarFilt>              _filts;
     std::vector<MethodToInstall>             _methods_to_install;
-    std::vector<NewTypeToInstantiate>        _new_gap_types;
+    std::vector<TNUMToRegister>              _tnums_to_register;
 
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
     std::vector<detail::SubtypeBase*>                  _subtypes;
@@ -346,6 +363,12 @@ namespace gapbind14 {
       return &_filts[0];
     }
 
+    static void toupper(std::string& s) {
+      std::transform(s.begin(), s.end(), s.begin(), [](auto c) {
+        return std::toupper(c);
+      });
+    }
+
     template <typename T>
     gapbind14_subtype add_subtype(std::string const& nm) {
       bool inserted
@@ -358,6 +381,7 @@ namespace gapbind14 {
       _subtypes.push_back(new detail::Subtype<T>(nm, _subtypes.size()));
       // TODO delete next
       _mem_funcs.push_back(std::vector<StructGVarFunc>());
+      _tnums_to_register.push_back({nm});
       return _subtypes.back()->subtype();
     }
 
@@ -432,13 +456,6 @@ namespace gapbind14 {
       _operations_to_declare.push_back(std::move(otd));
     }
 
-    void add_gap_type(std::string_view family, std::string_view filter) {
-      NewTypeToInstantiate ntti;
-      ntti.family = family;
-      ntti.filter = filter;
-      _new_gap_types.push_back(std::move(ntti));
-    }
-
     auto const& categories_to_declare() const {
       return _categories_to_declare;
     }
@@ -447,8 +464,8 @@ namespace gapbind14 {
       return _operations_to_declare;
     }
 
-    auto const& new_gap_types() const {
-      return _new_gap_types;
+    auto const& tnums_to_register() const {
+      return _tnums_to_register;
     }
 
     // TODO re-add const x2
