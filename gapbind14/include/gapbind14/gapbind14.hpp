@@ -25,6 +25,7 @@
 // * update gapbind14/README.md
 // * gapbind: iwyu in all files
 // * gapbind: const/noexcept in all files
+// * gapbind: use string_views where possible
 
 #ifndef INCLUDE_GAPBIND14_GAPBIND14_HPP_
 #define INCLUDE_GAPBIND14_GAPBIND14_HPP_
@@ -73,18 +74,6 @@
     static constexpr std::string_view name = gap_name; \
   };
 
-////////////////////////////////////////////////////////////////////////
-// Typdefs for GAP
-////////////////////////////////////////////////////////////////////////
-
-typedef Obj (*GVarFunc)(/*arguments*/);
-
-#if defined(GAP_KERNEL_MAJOR_VERSION) && (GAP_KERNEL_MAJOR_VERSION >= 2)
-typedef Obj (*GVarFilt)(Obj, Obj);
-#else
-typedef Obj (*GVarFilt)(/*arguments*/);
-#endif
-
 namespace gapbind14 {
 
   ////////////////////////////////////////////////////////////////////////
@@ -125,20 +114,17 @@ namespace gapbind14 {
   extern LibraryGVar_ LibraryGVar;
   extern TNums_       TNums;
 
-  // Forward decl
-  template <typename T, typename>
-  struct to_cpp;
-
   ////////////////////////////////////////////////////////////////////////
   // Aliases
   ////////////////////////////////////////////////////////////////////////
-
+  // TODO remove
   using gapbind14_subtype = size_t;
 
   ////////////////////////////////////////////////////////////////////////
   // Constants
   ////////////////////////////////////////////////////////////////////////
 
+  // TODO remove
   extern UInt T_GAPBIND14_OBJ;
 
   template <typename T>
@@ -168,11 +154,11 @@ namespace gapbind14 {
 
   namespace detail {
 
-    std::unordered_map<std::string, void (*)()>& init_funcs();
-
+    // TODO move into Module
     int emplace_init_func(char const* module_name, void (*func)());
 
     // Convert object to string
+    // TODO remove? Just use std::to_string?
     template <typename T>
     std::string to_string(T const& n) {
       std::ostringstream stm;
@@ -270,28 +256,43 @@ namespace gapbind14 {
       std::vector<std::string_view> filt_list;
     };
 
+    struct AttributeToDeclare {
+      AttributeToDeclare(std::string_view name_, std::string_view filt_)
+          : filt(filt_), name(name_) {}
+      std::string_view filt;
+      std::string_view name;
+    };
+
     struct TNUMToRegister {
+      TNUMToRegister(std::string_view name_) : name(name_) {}
       std::string name;
     };
 
    private:
     // TODO use StructGVarOper?
 
-    std::vector<CategoryToDeclare>           _categories_to_declare;
-    std::vector<OperationToDeclare>          _operations_to_declare;
-    std::vector<StructGVarFunc>              _funcs;
-    std::vector<std::vector<StructGVarFunc>> _mem_funcs;
-    std::vector<StructGVarFilt>              _filts;
-    std::vector<MethodToInstall>             _methods_to_install;
-    std::vector<TNUMToRegister>              _tnums_to_register;
+    std::vector<AttributeToDeclare> _attributes_to_declare;
+    std::vector<CategoryToDeclare>  _categories_to_declare;
+    std::vector<StructGVarFunc>     _funcs;
+    std::vector<StructGVarFilt>     _filts;
+    std::vector<MethodToInstall>    _methods_to_install;
+    std::vector<OperationToDeclare> _operations_to_declare;
+    std::vector<AttributeToDeclare> _properties_to_declare;
+    std::vector<TNUMToRegister>     _tnums_to_register;
 
+    // TODO remove
+    std::vector<std::vector<StructGVarFunc>>           _mem_funcs;
     std::unordered_map<std::string, gapbind14_subtype> _subtype_names;
     std::vector<detail::SubtypeBase*>                  _subtypes;
     std::unordered_map<size_t, gapbind14_subtype>      _type_to_subtype;
 
+    // TODO remove
     static size_t _next_subtype;
 
+    typedef Obj (*GVarFunc)(/*arguments*/);
+
    public:
+    // TODO to cpp
     Module()
         : _funcs(),
           _mem_funcs(),
@@ -308,8 +309,10 @@ namespace gapbind14 {
 
     void clear();
 
+    // TODO remove
     gapbind14_subtype subtype(std::string const& subtype_name) const;
 
+    // TODO remove
     template <typename T>
     gapbind14_subtype subtype() const {
       auto it = _type_to_subtype.find(typeid(T).hash_code());
@@ -320,22 +323,27 @@ namespace gapbind14 {
       return it->second;
     }
 
+    // TODO remove
     const char* subtype_name(Obj o) const {
       return _subtypes.at(detail::obj_subtype(o))->name().c_str();
     }
 
+    // TODO remove
     void print(Obj o) {
       Pr("<class %s at %s>",
          (Int) subtype_name(o),
          (Int) detail::to_string(o).c_str());
     }
 
+    // TODO remove
     void save(Obj o) {
       SaveUInt(detail::obj_subtype(o));
     }
 
+    // TODO remove
     void load(Obj o) const;
 
+    // TODO remove
     void free(Obj o) const {
       _subtypes.at(detail::obj_subtype(o))->free(o);
     }
@@ -352,14 +360,16 @@ namespace gapbind14 {
       return &_filts[0];
     }
 
+    // TODO move elsewhere
     static void toupper(std::string& s) {
       std::transform(s.begin(), s.end(), s.begin(), [](auto c) {
         return std::toupper(c);
       });
     }
 
+    // TODO remove
     template <typename T>
-    gapbind14_subtype add_subtype(std::string const& nm) {
+    gapbind14_subtype add_subtype(std::string&& nm) {
       bool inserted
           = _subtype_names.insert(std::make_pair(nm, _subtypes.size())).second;
       if (!inserted) {
@@ -381,6 +391,7 @@ namespace gapbind14 {
       static_assert(sizeof...(Args) > 0,
                     "there must be at least 1 parameter: Obj self");
       static_assert(sizeof...(Args) <= 7, "Args must be at most 7");
+
       _funcs.push_back({detail::copy_c_str(nm),
                         sizeof...(Args) - 1,
                         detail::params_c_str(sizeof...(Args) - 1),
@@ -388,6 +399,7 @@ namespace gapbind14 {
                         detail::copy_c_str(fnm + ":Func" + nm)});
     }
 
+    // TODO remove
     template <typename... Args>
     void add_mem_func(std::string const& sbtyp,
                       std::string        flnm,
@@ -429,6 +441,7 @@ namespace gapbind14 {
       _methods_to_install.push_back(std::move(mti));
     }
 
+    // TODO to cpp file
     void add_category_to_declare(std::string_view name,
                                  std::string_view parent) {
       CategoryToDeclare ctd;
@@ -437,6 +450,7 @@ namespace gapbind14 {
       _categories_to_declare.push_back(std::move(ctd));
     }
 
+    // TODO to cpp file
     void add_operation_to_declare(std::string_view              name,
                                   std::vector<std::string_view> filt_list) {
       OperationToDeclare otd;
@@ -445,12 +459,30 @@ namespace gapbind14 {
       _operations_to_declare.push_back(std::move(otd));
     }
 
+    // TODO to cpp file
+    void add_attribute_to_declare(std::string_view name,
+                                  std::string_view filt) {
+      _attributes_to_declare.emplace_back(name, filt);
+    }
+
+    void add_property_to_declare(std::string_view name, std::string_view filt) {
+      _properties_to_declare.emplace_back(name, filt);
+    }
+
     auto const& categories_to_declare() const {
       return _categories_to_declare;
     }
 
     auto const& operations_to_declare() const {
       return _operations_to_declare;
+    }
+
+    auto const& attributes_to_declare() const {
+      return _attributes_to_declare;
+    }
+
+    auto const& properties_to_declare() const {
+      return _properties_to_declare;
     }
 
     auto const& tnums_to_register() const {
@@ -463,10 +495,12 @@ namespace gapbind14 {
 
     void finalize();
 
+    // TODO remove
     std::vector<detail::SubtypeBase*>::const_iterator begin() const noexcept {
       return _subtypes.cbegin();
     }
 
+    // TODO remove
     std::vector<detail::SubtypeBase*>::const_iterator end() const noexcept {
       return _subtypes.cend();
     }
@@ -475,6 +509,10 @@ namespace gapbind14 {
   ////////////////////////////////////////////////////////////////////////
   // to_cpp/gap - for gapbind14 gap objects
   ////////////////////////////////////////////////////////////////////////
+
+  // Forward decl
+  template <typename T, typename>
+  struct to_cpp;
 
   template <typename T>
   struct to_cpp<T, std::enable_if_t<IsGapBind14Type<T>::value>> {
@@ -539,6 +577,8 @@ namespace gapbind14 {
   DeclareOperation(std::string_view                               name,
                    std::initializer_list<std::string_view> const& filt_list);
 
+  void DeclareProperty(std::string_view name, std::string_view filt);
+
   template <typename Wild, typename... Args>
   static inline auto
   InstallMethod(std::string_view                               name,
@@ -595,49 +635,9 @@ namespace gapbind14 {
 
   // TODO this should be a function
   template <typename T>
-  class class_ {
-   public:
-    class_(std::string name)
-        : _name(name), _subtype(module().add_subtype<T>(name)) {}
-
-    template <typename... Args>
-    class_& def(init<Args...> x, std::string name = "make") {
-      return def(name.c_str(), &detail::make<T, Args...>);
-    }
-
-    template <typename Wild>
-    auto def(char const* mem_fn_name, Wild f)
-        -> std::enable_if_t<std::is_member_function_pointer<Wild>::value,
-                            class_&> {
-      size_t const n = detail::all_wild_mem_fns<Wild>().size();
-      detail::all_wild_mem_fns<Wild>().push_back(f);
-      module().add_mem_func(
-          _name,
-          __FILE__,
-          mem_fn_name,
-          detail::get_tame_mem_fn<decltype(&detail::tame_mem_fn<0, Wild>),
-                                  Wild>(n));
-      return *this;
-    }
-
-    template <typename Wild>
-    auto def(char const* mem_fn_name, Wild f)
-        -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value,
-                            class_&> {
-      size_t const n = detail::all_wilds<Wild>().size();
-      detail::all_wilds<Wild>().push_back(f);
-      module().add_mem_func(
-          _name,
-          __FILE__,
-          mem_fn_name,
-          detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
-      return *this;
-    }
-
-   private:
-    std::string       _name;
-    gapbind14_subtype _subtype;
-  };
+  void class_(std::string_view name) {
+    module().add_subtype<T>(std::string(name));
+  }
 
   template <typename T>
   Obj make_iterator(T first, T last) {

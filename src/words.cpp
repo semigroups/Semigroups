@@ -31,13 +31,19 @@
 
 namespace gapbind14 {
   using Words     = libsemigroups::Words;
+  using Strings   = libsemigroups::Strings;
   using word_type = libsemigroups::word_type;
   using ToWord    = libsemigroups::ToWord;
 
   GAPBIND14_TYPE("Words", Words);
+  GAPBIND14_TYPE("Strings", Strings);
   GAPBIND14_TYPE("ToWord", ToWord);
 
   void init_words(Module& m) {
+    ////////////////////////////////////////////////////////////////////////
+    // Global functions
+    ////////////////////////////////////////////////////////////////////////
+
     InstallGlobalFunction("NumberOfWords", &libsemigroups::number_of_words);
     // There is already a RandomWord function in Semigroups
     // InstallGlobalFunction("RandomWord", &libsemigroups::random_word);
@@ -53,6 +59,10 @@ namespace gapbind14 {
           return libsemigroups::to_string(alphabet, input);
         });
 
+    ////////////////////////////////////////////////////////////////////////
+    // Declarations for Words
+    ////////////////////////////////////////////////////////////////////////
+
     class_<Words>("Words");
 
     DeclareCategory("IsWords", "IsRangeObj");
@@ -66,7 +76,6 @@ namespace gapbind14 {
     DeclareOperation("FirstWord", {"IsWords", "IsObject"});
     DeclareOperation("LastWord", {"IsWords"});
     DeclareOperation("LastWord", {"IsWords", "IsObject"});
-    DeclareOperation("NumberOfLetters", {"IsWords", "IsObject"});
     DeclareOperation("Get", {"IsWords"});
     DeclareOperation("Next", {"IsWords"});
     DeclareOperation("AtEnd", {"IsWords"});
@@ -76,6 +85,13 @@ namespace gapbind14 {
     DeclareOperation("UpperBound", {"IsWords", "IsInt"});
     DeclareOperation("MinimumWordLength", {"IsWords", "IsInt"});
     DeclareOperation("MaximumWordLength", {"IsWords", "IsInt"});
+
+    DeclareOperation("NumberOfLetters", {"IsWords", "IsObject"});
+    DeclareOperation("NumberOfLetters", {"IsWords"});
+
+    ////////////////////////////////////////////////////////////////////////
+    // Install methods for IsWords
+    ////////////////////////////////////////////////////////////////////////
 
     InstallMethod("Words", "for no arguments", {}, init<Words>());
     InstallMethod("Words",
@@ -130,7 +146,6 @@ namespace gapbind14 {
                   "for an IsWords object",
                   {"IsWords"},
                   overload_cast<>(&Words::order));
-    // TODO must add a method to_gap impl for libsemigroups::Order
 
     InstallMethod(
         "ReductionOrdering",
@@ -181,7 +196,156 @@ namespace gapbind14 {
     //                          [](Obj o) { Pr("bananas", 0L, 0L);
     //                          });
 
+    ////////////////////////////////////////////////////////////////////////
+    // Declarations for Strings
+    ////////////////////////////////////////////////////////////////////////
+
+    class_<Strings>("Strings");
+
+    DeclareCategory("IsStrings", "IsRangeObj");
+
+    DeclareOperation("Strings", {});
+    DeclareOperation("Strings", {"IsStrings"});
+    DeclareOperation("Init", {"IsStrings"});
+    DeclareOperation("Count", {"IsStrings"});
+    DeclareOperation("FirstWord", {"IsStrings"});
+    DeclareOperation("FirstWord", {"IsStrings", "IsString"});
+    DeclareOperation("LastWord", {"IsStrings"});
+    DeclareOperation("LastWord", {"IsStrings", "IsString"});
+    DeclareOperation("Get", {"IsStrings"});
+    DeclareOperation("Next", {"IsStrings"});
+    DeclareOperation("AtEnd", {"IsStrings"});
+    DeclareOperation("ReductionOrdering", {"IsStrings"});
+    DeclareOperation("ReductionOrdering", {"IsStrings", "IsString"});
+    DeclareOperation("UpperBound", {"IsStrings"});
+    DeclareOperation("UpperBound", {"IsStrings", "IsInt"});
+    DeclareOperation("MinimumWordLength", {"IsStrings", "IsInt"});
+    DeclareOperation("MaximumWordLength", {"IsStrings", "IsInt"});
+
+    DeclareOperation("Alphabet", {"IsStrings", "IsString"});
+    DeclareOperation("Alphabet", {"IsStrings"});
+
+    ////////////////////////////////////////////////////////////////////////
+    // Install methods for Strings
+    ////////////////////////////////////////////////////////////////////////
+
+    InstallMethod("Strings", "for no arguments", {}, init<Strings>());
+    InstallMethod("Strings",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  init<Strings, Strings const&>());
+    InstallMethod("Init",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  [](Strings& w) { w.init(); });
+
+    InstallMethod(
+        "Count", "for an IsStrings object", {"IsStrings"}, &Strings::count);
+
+    InstallMethod("FirstWord",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  overload_cast<>(&Strings::first));
+
+    InstallMethod(
+        "FirstWord",
+        "for an IsStrings object and word",
+        {"IsStrings", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by strings.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, std::string const& w) { strings.first(w); });
+
+    InstallMethod("LastWord",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  overload_cast<>(&Strings::last));
+
+    InstallMethod(
+        "LastWord",
+        "for an IsStrings object and a string",
+        {"IsStrings", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by strings.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, std::string const& w) { strings.last(w); });
+
+    InstallMethod(
+        "Get", "for an IsStrings object", {"IsStrings"}, &Strings::get);
+
+    InstallMethod(
+        "Next", "for an IsStrings object", {"IsStrings"}, &Strings::next);
+
+    InstallMethod(
+        "AtEnd", "for an IsStrings object", {"IsStrings"}, &Strings::at_end);
+
+    InstallMethod("ReductionOrdering",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  overload_cast<>(&Strings::order));
+
+    InstallMethod(
+        "ReductionOrdering",
+        "for an IsStrings object and a string",
+        {"IsStrings", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by strings.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, libsemigroups::Order val) { strings.order(val); });
+
+    InstallMethod(
+        "ReductionOrdering",
+        "for an IsStrings object and a string",
+        {"IsStrings", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by strings.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, libsemigroups::Order val) { strings.order(val); });
+
+    InstallMethod("UpperBound",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  overload_cast<>(&Strings::upper_bound));
+
+    InstallMethod(
+        "UpperBound",
+        "for an IsStrings object and an int",
+        {"IsStrings", "IsInt"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by strings.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, size_t val) { strings.upper_bound(val); });
+
+    InstallMethod("MinimumWordLength",
+                  "for an IsStrings object and an int",
+                  {"IsStrings", "IsInt"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by strings.first(w) properly so we wrap it in a lambda
+                  [](Strings& strings, size_t val) { strings.min(val); });
+
+    InstallMethod("MaximumWordLength",
+                  "for an IsStrings object and an int",
+                  {"IsStrings", "IsInt"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by strings.first(w) properly so we wrap it in a lambda
+                  [](Strings& strings, size_t val) { strings.max(val); });
+
+    InstallMethod(
+        "Alphabet",
+        "for an IsStrings object and a string",
+        {"IsStrings", "IsString"},
+        // gapbind14 currently doesn't handle the reference returned
+        // by thing.first(w) properly so we wrap it in a lambda
+        [](Strings& strings, std::string const& s) { strings.alphabet(s); });
+
+    InstallMethod("Alphabet",
+                  "for an IsStrings object",
+                  {"IsStrings"},
+                  // gapbind14 currently doesn't handle the reference returned
+                  // by thing.first(w) properly so we wrap it in a lambda
+                  overload_cast<>(&Strings::alphabet));
+
+    ////////////////////////////////////////////////////////////////////////
+    // ToWord declarations
+    ////////////////////////////////////////////////////////////////////////
+
     class_<ToWord>("ToWord");
+
     DeclareCategory("IsToWord", "IsObject");
 
     DeclareOperation("ToWord", {});
@@ -190,8 +354,12 @@ namespace gapbind14 {
     DeclareOperation("Init", {"IsToWord"});
     DeclareOperation("Init", {"IsToWord", "IsString"});
     DeclareOperation("[]", {"IsToWord", "IsList"});
-    // TODO DeclareProperty!
-    // DeclareOperation("IsEmpty", {"IsToWord"});
+
+    DeclareProperty("IsEmpty", "IsToWord");
+
+    ////////////////////////////////////////////////////////////////////////
+    // ToWord implementations
+    ////////////////////////////////////////////////////////////////////////
 
     InstallMethod("ToWord", "for no arguments", {}, init<ToWord>());
     InstallMethod("ToWord",
@@ -216,7 +384,7 @@ namespace gapbind14 {
                   {"IsToWord", "IsString"},
                   overload_cast<std::string const&>(&ToWord::operator()));
 
-    // InstallMethod(
-    //     "IsEmpty", "for a ToWord object", {"IsToWord"}, &ToWord::empty);
+    InstallMethod(
+        "IsEmpty", "for a ToWord object", {"IsToWord"}, &ToWord::empty);
   }
 }  // namespace gapbind14

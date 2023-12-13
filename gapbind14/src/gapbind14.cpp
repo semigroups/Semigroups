@@ -31,15 +31,21 @@
 #define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
-namespace gapbind14 {
+typedef Obj (*GVarFunc)(/*arguments*/);
 
+namespace gapbind14 {
+  ////////////////////////////////////////////////////////////////////////
   // Helpers for interacting with GAP
+  ////////////////////////////////////////////////////////////////////////
 
   Obj LibraryGVar_::operator()(std::string_view name) {
     auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
     if (inserted) {
       if (_imported) {
-        throw std::runtime_error("something wrong");
+        std::string msg = "LibraryGVar: trying to access \"";
+        msg += name;
+        msg += "\" after GVars imported";
+        throw std::runtime_error(msg);
       }
       _GAP_LibraryGVars.emplace_back();
       return _GAP_LibraryGVars.back();
@@ -72,13 +78,15 @@ namespace gapbind14 {
 
   UInt T_GAPBIND14_OBJ = 0;
 
-  namespace detail {
+  namespace {
 
     std::unordered_map<std::string, void (*)()> &init_funcs() {
       static std::unordered_map<std::string, void (*)()> inits;
       return inits;
     }
+  }  // namespace
 
+  namespace detail {
     int emplace_init_func(char const *module_name, void (*func)()) {
       bool inserted = init_funcs().emplace(module_name, func).second;
       if (!inserted) {
@@ -210,6 +218,12 @@ namespace gapbind14 {
     module().add_operation_to_declare(name, filt_list);
   }
 
+  void DeclareProperty(std::string_view name, std::string_view filt) {
+    LibraryGVar(name);
+    LibraryGVar(filt);
+    module().add_property_to_declare(name, filt);
+  }
+
   namespace {
 
     Obj TheTypeTGapBind14Obj;
@@ -318,6 +332,7 @@ namespace gapbind14 {
     // Things we want from the GAP library
     LibraryGVar("DeclareCategory");
     LibraryGVar("DeclareOperation");
+    LibraryGVar("DeclareProperty");
     LibraryGVar("InstallMethod");
     LibraryGVar("InstallEarlyMethod");
     LibraryGVar("IsObject");
@@ -343,8 +358,8 @@ namespace gapbind14 {
       InitCopyGVar("TheTypeTGapBind14Obj", &TheTypeTGapBind14Obj);
     }
 
-    auto it = detail::init_funcs().find(std::string(name));
-    if (it == detail::init_funcs().end()) {
+    auto it = init_funcs().find(std::string(name));
+    if (it == init_funcs().end()) {
       throw std::runtime_error(std::string("No init function for module ")
                                + name + " found");
     }
@@ -413,7 +428,14 @@ namespace gapbind14 {
       CALL_2ARGS(LibraryGVar("DeclareOperation"),
                  to_gap<std::string>()(otd.name),
                  to_gap<std::vector<Obj>>()(filter_list(otd.filt_list)));
-      std::cout << "Declared operation for " << otd.name << std::endl;
+      std::cout << "Declared operation " << otd.name << std::endl;
+    }
+
+    for (auto const &atd : module().properties_to_declare()) {
+      CALL_2ARGS(LibraryGVar("DeclareProperty"),
+                 to_gap<std::string>()(atd.name),
+                 LibraryGVar(atd.filt));
+      std::cout << "Declared property " << atd.name << std::endl;
     }
 
     size_t index = 0;
@@ -428,8 +450,6 @@ namespace gapbind14 {
       Obj func = NewFunction(name, mti.func.nargs, args, mti.func.handler);
       SetupFuncInfo(func, mti.func.cookie);
       assert(mt.func.nargs == filt_list.size());
-
-      std::cout << "Trying to Install method for " << mti.name << std::endl;
 
       CALL_4ARGS(LibraryGVar("InstallMethod"),
                  GAP_op,
