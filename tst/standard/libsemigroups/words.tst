@@ -46,10 +46,46 @@ gap> AsList(w);
   [ 1, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 1, 0 ], 
   [ 1, 1, 1, 1 ] ]
 gap> ReductionOrdering(w, "lex");
+gap> ReductionOrdering(w);
+"lex"
 gap> Count(w);
 3
 gap> AsList(w);
 [ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ] ]
+gap> UpperBound(w);
+0
+gap> MinimumWordLength(w, 2);
+gap> FirstWord(w);
+[ 0, 0 ]
+gap> MaximumWordLength(w, 8);
+gap> LastWord(w);
+[ 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> LastWord(w, [1, 1]);
+gap> UpperBound(w, 5);
+gap> Count(w);
+22
+gap> ww := Words(w);;
+gap> IsIdenticalObj(w, ww);
+false
+gap> AsList(w);
+[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ], 
+  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ], 
+  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ], 
+  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ], 
+  [ 1, 0, 1, 0 ], [ 1, 0, 1, 1 ] ]
+gap> AtEnd(w);
+true
+gap> AtEnd(ww);
+false
+gap> AsList(ww);
+[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ], 
+  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ], 
+  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ], 
+  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ], 
+  [ 1, 0, 1, 0 ], [ 1, 0, 1, 1 ] ]
+gap> Init(ww);
+gap> AsList(ww);
+[  ]
 
 # End 
 gap> SEMIGROUPS.StopTest();

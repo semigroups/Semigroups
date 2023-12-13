@@ -41,18 +41,18 @@
 #include "semigroups-debug.hpp"  // for SEMIGROUPS_ASSERT
 
 // gapbind14 headers
-#include "gapbind14/gapbind14.hpp"  // for gapbind14
+#include "gapbind14/to_gap.hpp"  // for gapbind14
 
 // libsemigroups headers
-#include "libsemigroups/adapters.hpp"   // for Degree
-#include "libsemigroups/bipart.hpp"     // for Bipartition, IsBipartition
-#include "libsemigroups/bmat8.hpp"      // for BMat8
-#include "libsemigroups/config.hpp"     // for LIBSEMIGROUPS_HPCOMBI_ENABLED
-#include "libsemigroups/constants.hpp"  // for NEGATIVE_INFINITY etc
-#include "libsemigroups/word-graph.hpp"    // for WordGraph
-#include "libsemigroups/matrix.hpp"     // for matrix_threshold etc
-#include "libsemigroups/pbr.hpp"        // for PBR
-#include "libsemigroups/transf.hpp"     // for IsPPerm, IsTransf
+#include "libsemigroups/adapters.hpp"    // for Degree
+#include "libsemigroups/bipart.hpp"      // for Bipartition, IsBipartition
+#include "libsemigroups/bmat8.hpp"       // for BMat8
+#include "libsemigroups/config.hpp"      // for LIBSEMIGROUPS_HPCOMBI_ENABLED
+#include "libsemigroups/constants.hpp"   // for NEGATIVE_INFINITY etc
+#include "libsemigroups/matrix.hpp"      // for matrix_threshold etc
+#include "libsemigroups/pbr.hpp"         // for PBR
+#include "libsemigroups/transf.hpp"      // for IsPPerm, IsTransf
+#include "libsemigroups/word-graph.hpp"  // for WordGraph
 
 using libsemigroups::IsBMat;
 using libsemigroups::IsIntMat;
@@ -541,6 +541,24 @@ namespace gapbind14 {
         CHANGED_BAG(result);
       }
       return result;
+    }
+  };
+
+  // TODO could use magic_enum and make this generic
+  template <>
+  struct to_gap<libsemigroups::Order> {
+    Obj operator()(libsemigroups::Order const& val) const noexcept {
+      using order = libsemigroups::Order;
+      switch (val) {
+        case order::shortlex:
+          return to_gap<std::string>()("shortlex");
+        case order::lex:
+          return to_gap<std::string>()("lex");
+        case order::none:
+          return to_gap<std::string>()("none");
+        case order::recursive:
+          return to_gap<std::string>()("recursive");
+      }
     }
   };
 
