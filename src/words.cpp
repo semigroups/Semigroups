@@ -32,8 +32,10 @@
 namespace gapbind14 {
   using Words     = libsemigroups::Words;
   using word_type = libsemigroups::word_type;
+  using ToWord    = libsemigroups::ToWord;
 
   GAPBIND14_TYPE("Words", Words);
+  GAPBIND14_TYPE("ToWord", ToWord);
 
   void init_words(Module& m) {
     InstallGlobalFunction("NumberOfWords", &libsemigroups::number_of_words);
@@ -55,6 +57,7 @@ namespace gapbind14 {
 
     DeclareCategory("IsWords", "IsRangeObj");
 
+    // TODO maybe DeclareOperationKernel in some places?
     DeclareOperation("Words", {});
     DeclareOperation("Words", {"IsWords"});
     DeclareOperation("Init", {"IsWords"});
@@ -177,5 +180,43 @@ namespace gapbind14 {
     //                          {"IsWords"},
     //                          [](Obj o) { Pr("bananas", 0L, 0L);
     //                          });
+
+    class_<ToWord>("ToWord");
+    DeclareCategory("IsToWord", "IsObject");
+
+    DeclareOperation("ToWord", {});
+    DeclareOperation("ToWord", {"IsToWord"});
+    DeclareOperation("ToWord", {"IsString"});
+    DeclareOperation("Init", {"IsToWord"});
+    DeclareOperation("Init", {"IsToWord", "IsString"});
+    DeclareOperation("[]", {"IsToWord", "IsList"});
+    // TODO DeclareProperty!
+    // DeclareOperation("IsEmpty", {"IsToWord"});
+
+    InstallMethod("ToWord", "for no arguments", {}, init<ToWord>());
+    InstallMethod("ToWord",
+                  "for a ToWord object",
+                  {"IsToWord"},
+                  init<ToWord, ToWord const&>());
+    InstallMethod("ToWord",
+                  "for a string",
+                  {"IsString"},
+                  init<ToWord, std::string const&>());
+
+    InstallMethod("Init", "for a ToWord object", {"IsToWord"}, [](ToWord& tw) {
+      tw.init();
+    });
+    InstallMethod("Init",
+                  "for a ToWord object and string",
+                  {"IsToWord", "IsString"},
+                  [](ToWord& tw, std::string const& s) { tw.init(s); });
+
+    InstallMethod("[]",
+                  "for a ToWord object and string",
+                  {"IsToWord", "IsString"},
+                  overload_cast<std::string const&>(&ToWord::operator()));
+
+    InstallMethod(
+        "IsEmpty", "for a ToWord object", {"IsToWord"}, &ToWord::empty);
   }
 }  // namespace gapbind14

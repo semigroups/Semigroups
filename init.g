@@ -34,6 +34,8 @@ if not IsBoundGlobal("IsTGapBind14Obj") then
   
   BindGlobal("TheWordsType",
              NewType(NewFamily("WordsFamily"), IsWords and IsInternalRep));
+  BindGlobal("TheToWordType",
+             NewType(NewFamily("ToWordFamily"), IsToWord and IsInternalRep));
 fi;
 
 BindGlobal("SEMIGROUPS", rec());

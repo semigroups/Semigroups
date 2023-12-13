@@ -42,6 +42,8 @@ namespace gapbind14 {
   // Overloading
   ////////////////////////////////////////////////////////////////////////
 
+  static constexpr auto const_ = std::true_type{};
+
   template <typename... TArgs>
   struct overload_cast_impl {
     constexpr overload_cast_impl() {}
