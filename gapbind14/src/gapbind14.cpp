@@ -18,6 +18,7 @@
 
 #include "gapbind14/gapbind14.hpp"
 
+#include <initializer_list>
 #include <stdio.h>   // for fprintf, stderr
 #include <string.h>  // for memcpy, strchr, strrchr
 
@@ -31,6 +32,40 @@
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 namespace gapbind14 {
+
+  // Helpers for interacting with GAP
+
+  Obj LibraryGVar_::operator()(std::string_view name) {
+    auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
+    if (inserted) {
+      if (_imported) {
+        throw std::runtime_error("something wrong");
+      }
+      _GAP_LibraryGVars.emplace_back();
+      return _GAP_LibraryGVars.back();
+    } else {
+      return _GAP_LibraryGVars[it->second];
+    }
+  }
+
+  void LibraryGVar_::import_all() {
+    for (auto const &var : _map) {
+      std::cout << "Importing GAP GVar " << var.first << " from library"
+                << std::endl;
+      ImportGVarFromLibrary(var.first.c_str(), &_GAP_LibraryGVars[var.second]);
+    }
+    _imported = true;
+  }
+
+  UInt &TNums_::operator()(std::string_view name) {
+    auto [it, inserted] = _map.emplace(name, _GAP_TNums.size());
+    if (inserted) {
+      _GAP_TNums.emplace_back();
+      return _GAP_TNums.back();
+    } else {
+      return _GAP_TNums[it->second];
+    }
+  }
 
   LibraryGVar_ LibraryGVar;
   TNums_       TNums;
@@ -154,6 +189,25 @@ namespace gapbind14 {
     }
     _funcs.push_back(StructGVarFunc({0, 0, 0, 0, 0}));
     _filts.push_back(StructGVarFilt({0, 0, 0, 0, 0}));
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // Declare user facing
+  ////////////////////////////////////////////////////////////////////////
+
+  void DeclareCategory(std::string_view name,
+                       std::string_view parent_category) {
+    module().add_category_to_declare(name, parent_category);
+    LibraryGVar(name);
+    LibraryGVar(parent_category);
+  }
+
+  void DeclareOperation(
+      std::string_view                               name,
+      std::initializer_list<std::string_view> const &filt_list) {
+    LibraryGVar(name);
+    LibraryGVar(filt_list);
+    module().add_operation_to_declare(name, filt_list);
   }
 
   namespace {

@@ -87,6 +87,10 @@ typedef Obj (*GVarFilt)(/*arguments*/);
 
 namespace gapbind14 {
 
+  ////////////////////////////////////////////////////////////////////////
+  // Helpers for interacting with GAP
+  ////////////////////////////////////////////////////////////////////////
+
   // Provides a mechanism for defining and accessing GAP library variables in
   // the kernel module.
   class LibraryGVar_ {
@@ -97,29 +101,15 @@ namespace gapbind14 {
    public:
     LibraryGVar_() : _GAP_LibraryGVars(), _map(), _imported(false) {}
 
-    // TODO to cpp file
-    Obj operator()(std::string_view name) {
-      auto [it, inserted] = _map.emplace(name, _GAP_LibraryGVars.size());
-      if (inserted) {
-        if (_imported) {
-          throw std::runtime_error("something wrong");
-        }
-        _GAP_LibraryGVars.emplace_back();
-        return _GAP_LibraryGVars.back();
-      } else {
-        return _GAP_LibraryGVars[it->second];
+    Obj operator()(std::string_view name);
+
+    void operator()(std::initializer_list<std::string_view> names) {
+      for (auto const& name : names) {
+        operator()(name);
       }
     }
 
-    void import_all() {
-      for (auto const& var : _map) {
-        std::cout << "Importing GAP GVar " << var.first << " from library"
-                  << std::endl;
-        ImportGVarFromLibrary(var.first.c_str(),
-                              &_GAP_LibraryGVars[var.second]);
-      }
-      _imported = true;
-    }
+    void import_all();
   };
 
   class TNums_ {
@@ -129,15 +119,7 @@ namespace gapbind14 {
    public:
     TNums_() : _GAP_TNums(), _map() {}
 
-    UInt& operator()(std::string_view name) {
-      auto [it, inserted] = _map.emplace(name, _GAP_TNums.size());
-      if (inserted) {
-        _GAP_TNums.emplace_back();
-        return _GAP_TNums.back();
-      } else {
-        return _GAP_TNums[it->second];
-      }
-    }
+    UInt& operator()(std::string_view name);
   };
 
   extern LibraryGVar_ LibraryGVar;
@@ -527,7 +509,7 @@ namespace gapbind14 {
   };
 
   ////////////////////////////////////////////////////////////////////////
-  // Free functions
+  // DeclareOperation etc
   ////////////////////////////////////////////////////////////////////////
 
   template <typename... Args>
@@ -551,22 +533,11 @@ namespace gapbind14 {
         detail::get_tame<decltype(&detail::tame<0, Wild>), Wild>(n));
   }
 
-  static inline void DeclareCategory(std::string_view name,
-                                     std::string_view parent_category) {
-    module().add_category_to_declare(name, parent_category);
-    LibraryGVar(name);
-    LibraryGVar(parent_category);
-  }
+  void DeclareCategory(std::string_view name, std::string_view parent_category);
 
-  static inline void
+  void
   DeclareOperation(std::string_view                               name,
-                   std::initializer_list<std::string_view> const& filt_list) {
-    LibraryGVar(name);
-    for (auto const& filt : filt_list) {
-      LibraryGVar(filt);
-    }
-    module().add_operation_to_declare(name, filt_list);
-  }
+                   std::initializer_list<std::string_view> const& filt_list);
 
   template <typename Wild, typename... Args>
   static inline auto
@@ -576,9 +547,7 @@ namespace gapbind14 {
                 Wild                                           f)
       -> std::enable_if_t<std::is_member_function_pointer<Wild>::value> {
     LibraryGVar(name);
-    for (auto const& filt : filt_list) {
-      LibraryGVar(filt);
-    }
+    LibraryGVar(filt_list);
     size_t const n = detail::all_wild_mem_fns<Wild>().size();
     detail::all_wild_mem_fns<Wild>().push_back(f);
     module().add_method_to_install(
@@ -598,9 +567,8 @@ namespace gapbind14 {
                 Wild                                           f)
       -> std::enable_if_t<!std::is_member_function_pointer<Wild>::value> {
     LibraryGVar(name);
-    for (auto const& filt : filt_list) {
-      LibraryGVar(filt);
-    }
+    LibraryGVar(filt_list);
+
     size_t const n = detail::all_wilds<Wild>().size();
     detail::all_wilds<Wild>().push_back(f);
     module().add_method_to_install(

@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#@local i, w
+#@local i, w, ww
 gap> START_TEST("Semigroups package: standard/libsemigroups/words.tst");
 gap> LoadPackage("semigroups", false);;
 

@@ -216,7 +216,7 @@ namespace gapbind14 {
                   {"IsToWord", "IsString"},
                   overload_cast<std::string const&>(&ToWord::operator()));
 
-    InstallMethod(
-        "IsEmpty", "for a ToWord object", {"IsToWord"}, &ToWord::empty);
+    // InstallMethod(
+    //     "IsEmpty", "for a ToWord object", {"IsToWord"}, &ToWord::empty);
   }
 }  // namespace gapbind14
