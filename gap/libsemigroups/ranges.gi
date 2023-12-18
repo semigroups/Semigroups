@@ -36,6 +36,7 @@ end);
 
 InstallMethod(AsList, "for a RangeObj", [IsRangeObj],
 function(range)
+  local result, x;
   result := EmptyPlist(Count(range));
   for x in range do
     Add(result, x);
