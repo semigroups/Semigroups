@@ -8,7 +8,7 @@
 ###########################################################################
 ##
 
-InstallMethod(Iterator, "for an IsRangeObj", [IsRangeObj],
+InstallMethod(Iterator, "for a RangeObj", [IsRangeObj],
 function(range)
   local iter;
 

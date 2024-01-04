@@ -169,26 +169,18 @@ BindGlobal("WrappedTwoSidedCongruenceType",
                    IsWrappedTwoSidedCongruence and IsPositionalObjectRep));
 
 BindGlobal("WrappedLeftCongruence",
-function(x)
-  return Objectify(WrappedLeftCongruenceType, [x]);
-end);
+x -> Objectify(WrappedLeftCongruenceType, [x]);
 
 BindGlobal("WrappedRightCongruence",
-function(x)
-  return Objectify(WrappedRightCongruenceType, [x]);
-end);
+x -> Objectify(WrappedRightCongruenceType, [x]);
 
 InstallGlobalFunction(WrappedTwoSidedCongruence,
-function(x)
-  return Objectify(WrappedTwoSidedCongruenceType, [x]);
-end);
+x -> Objectify(WrappedTwoSidedCongruence, [x]);
 
 InstallMethod(\=, "for wrapped left, right, or 2-sided congruences",
 [IsWrappedLeftRightOrTwoSidedCongruence,
  IsWrappedLeftRightOrTwoSidedCongruence],
-function(x, y)
-  return x![1] = y![1];
-end);
+{x, y} -> x![1] = y![1]);
 
 InstallMethod(\<, "for wrapped left, right, or 2-sided congruences",
 [IsWrappedLeftRightOrTwoSidedCongruence,
@@ -592,38 +584,26 @@ end;
 InstallMethod(LatticeOfCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S, pairs));
-end);
+{S, pairs} -> SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S, pairs)));
 
 InstallMethod(LatticeOfCongruences, "for a semigroup", [IsSemigroup],
-function(S)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S));
-end);
+S -> SEMIGROUPS.MakeLattice(CayleyDigraphOfCongruences(S)));
 
 InstallMethod(LatticeOfRightCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S, pairs));
-end);
+{S, pairs} -> SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S, pairs)));
 
 InstallMethod(LatticeOfRightCongruences, "for a semigroup", [IsSemigroup],
-function(S)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S));
-end);
+S -> SEMIGROUPS.MakeLattice(CayleyDigraphOfRightCongruences(S)));
 
 InstallMethod(LatticeOfLeftCongruences,
 "for a semigroup and a list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S, pairs));
-end);
+{S, pairs} -> SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S, pairs)));
 
 InstallMethod(LatticeOfLeftCongruences, "for a semigroup", [IsSemigroup],
-function(S)
-  return SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S));
-end);
+S -> SEMIGROUPS.MakeLattice(CayleyDigraphOfLeftCongruences(S)));
 
 ########################################################################
 # Left/Right/CongruencesOfSemigroup
@@ -742,23 +722,17 @@ end);
 InstallMethod(MinimalCongruencesOfSemigroup,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return MinimalCongruences(PosetOfPrincipalCongruences(S, pairs));
-end);
+{S, pairs} -> MinimalCongruences(PosetOfPrincipalCongruences(S, pairs)));
 
 InstallMethod(MinimalRightCongruencesOfSemigroup,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return MinimalCongruences(PosetOfPrincipalRightCongruences(S, pairs));
-end);
+{S, pairs} -> MinimalCongruences(PosetOfPrincipalRightCongruences(S, pairs)));
 
 InstallMethod(MinimalLeftCongruencesOfSemigroup,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return MinimalCongruences(PosetOfPrincipalLeftCongruences(S, pairs));
-end);
+{S, pairs} -> MinimalCongruences(PosetOfPrincipalLeftCongruences(S, pairs)));
 
 ########################################################################
 # PosetOfPrincipalRight/LeftCongruences
@@ -793,23 +767,18 @@ end);
 InstallMethod(PosetOfPrincipalCongruences,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return PosetOfCongruences(PrincipalCongruencesOfSemigroup(S, pairs));
-end);
+{S, pairs} -> PosetOfCongruences(PrincipalCongruencesOfSemigroup(S, pairs)));
 
 InstallMethod(PosetOfPrincipalRightCongruences,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return PosetOfCongruences(PrincipalRightCongruencesOfSemigroup(S, pairs));
-end);
+{S, pairs} -> PosetOfCongruences(PrincipalRightCongruencesOfSemigroup(S,
+                                                                      pairs)));
 
 InstallMethod(PosetOfPrincipalLeftCongruences,
 "for a semigroup and list or collection",
 [IsSemigroup, IsListOrCollection],
-function(S, pairs)
-  return PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S, pairs));
-end);
+{S, pairs} -> PosetOfCongruences(PrincipalLeftCongruencesOfSemigroup(S, pairs)));
 
 ########################################################################
 # Printing, viewing, dot strings etc
@@ -915,4 +884,3 @@ function(poset, opts)
 
   return str;
 end);
-

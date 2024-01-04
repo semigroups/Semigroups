@@ -31,7 +31,7 @@ if not IsBoundGlobal("IsTGapBind14Obj") then
   DeclareCategory("IsTGapBind14Obj", IsObject);
   BindGlobal("TheTypeTGapBind14Obj",
              NewType(NewFamily("TGapBind14ObjFamily"), IsTGapBind14Obj));
-  
+
   BindGlobal("TheWordsType",
              NewType(NewFamily("WordsFamily"), IsWords and IsInternalRep));
   BindGlobal("TheStringsType",

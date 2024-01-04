@@ -25,7 +25,7 @@ gap> NumberOfLetters(w, 2);
 gap> Count(w);
 0
 gap> FirstWord(w, []);
-gap> LastWord(w, [1,1,1,1,1,1,1,1,1,1,1,1,1]);
+gap> LastWord(w, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 gap> Count(w);
 8191
 gap> for i in [1 .. 1023] do Next(w); od;
@@ -38,12 +38,12 @@ gap> Get(w);
 [ 0 ]
 gap> LastWord(w, [0, 0, 0, 0, 0]);
 gap> AsList(w);
-[ [ 0 ], [ 1 ], [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 0, 0, 0 ], 
-  [ 0, 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 1, 0, 0 ], [ 1, 0, 1 ], 
-  [ 1, 1, 0 ], [ 1, 1, 1 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ], 
-  [ 0, 0, 1, 1 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 1 ], [ 0, 1, 1, 0 ], 
-  [ 0, 1, 1, 1 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1, 0 ], 
-  [ 1, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 1, 0 ], 
+[ [ 0 ], [ 1 ], [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ], [ 0, 0, 0 ],
+  [ 0, 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 1, 0, 0 ], [ 1, 0, 1 ],
+  [ 1, 1, 0 ], [ 1, 1, 1 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ],
+  [ 0, 0, 1, 1 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 1 ], [ 0, 1, 1, 0 ],
+  [ 0, 1, 1, 1 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1, 0 ],
+  [ 1, 0, 1, 1 ], [ 1, 1, 0, 0 ], [ 1, 1, 0, 1 ], [ 1, 1, 1, 0 ],
   [ 1, 1, 1, 1 ] ]
 gap> ReductionOrdering(w, "lex");
 gap> ReductionOrdering(w);
@@ -68,20 +68,20 @@ gap> ww := Words(w);;
 gap> IsIdenticalObj(w, ww);
 false
 gap> AsList(w);
-[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ], 
-  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ], 
-  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ], 
-  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ], 
+[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ],
+  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ],
+  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ],
+  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ],
   [ 1, 0, 1, 0 ], [ 1, 0, 1, 1 ] ]
 gap> AtEnd(w);
 true
 gap> AtEnd(ww);
 false
 gap> AsList(ww);
-[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ], 
-  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ], 
-  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ], 
-  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ], 
+[ [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1 ],
+  [ 0, 0, 1, 0 ], [ 0, 0, 1, 1 ], [ 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 0, 0 ],
+  [ 0, 1, 0, 1 ], [ 0, 1, 1 ], [ 0, 1, 1, 0 ], [ 0, 1, 1, 1 ], [ 1 ],
+  [ 1, 0 ], [ 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 1, 0, 0, 1 ], [ 1, 0, 1 ],
   [ 1, 0, 1, 0 ], [ 1, 0, 1, 1 ] ]
 gap> Init(ww);
 gap> AsList(ww);
@@ -97,7 +97,7 @@ gap> ww := ToWord(w);;
 gap> IsIdenticalObj(w, ww);
 false
 gap> Init(w);
-gap> IsEmpty(w); 
+gap> IsEmpty(w);
 true
 gap> w["ababcbabcbaabcba"];
 Error, src/words.cpp:417:operator(): the 1st argument (input string) contains \
@@ -128,8 +128,8 @@ gap> Get(w);
 "a"
 gap> LastWord(w, "aaaaa");
 gap> AsList(w);
-[ "a", "b", "aa", "ab", "ba", "bb", "aaa", "aab", "aba", "abb", "baa", "bab", 
-  "bba", "bbb", "aaaa", "aaab", "aaba", "aabb", "abaa", "abab", "abba", 
+[ "a", "b", "aa", "ab", "ba", "bb", "aaa", "aab", "aba", "abb", "baa", "bab",
+  "bba", "bbb", "aaaa", "aaab", "aaba", "aabb", "abaa", "abab", "abba",
   "abbb", "baaa", "baab", "baba", "babb", "bbaa", "bbab", "bbba", "bbbb" ]
 gap> ReductionOrdering(w, "lex");
 gap> ReductionOrdering(w);
@@ -154,21 +154,21 @@ gap> ww := Strings(w);;
 gap> IsIdenticalObj(w, ww);
 false
 gap> AsList(w);
-[ "aa", "aaa", "aaaa", "aaab", "aab", "aaba", "aabb", "ab", "aba", "abaa", 
-  "abab", "abb", "abba", "abbb", "b", "ba", "baa", "baaa", "baab", "bab", 
+[ "aa", "aaa", "aaaa", "aaab", "aab", "aaba", "aabb", "ab", "aba", "abaa",
+  "abab", "abb", "abba", "abbb", "b", "ba", "baa", "baaa", "baab", "bab",
   "baba", "babb" ]
 gap> AtEnd(w);
 true
 gap> AtEnd(ww);
 false
 gap> AsList(ww);
-[ "aa", "aaa", "aaaa", "aaab", "aab", "aaba", "aabb", "ab", "aba", "abaa", 
-  "abab", "abb", "abba", "abbb", "b", "ba", "baa", "baaa", "baab", "bab", 
+[ "aa", "aaa", "aaaa", "aaab", "aab", "aaba", "aabb", "ab", "aba", "abaa",
+  "abab", "abb", "abba", "abbb", "b", "ba", "baa", "baaa", "baab", "bab",
   "baba", "babb" ]
 gap> Init(ww);
 gap> AsList(ww);
 [  ]
 
-# End 
+# End
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/libsemigroups/cong.tst");
