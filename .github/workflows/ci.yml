@@ -83,7 +83,7 @@ jobs:
        - name: "Build Semigroups"
          uses: gap-actions/build-pkg@cygwin-v1
          with:
-           CONFIGFLAGS: --disable-fmt # to try and speed up compilation
+           CONFIGFLAGS: --disable-fmt --disable-hpcombi # to try and speed up compilation FIXME don't disable hpcombi
        - uses: gap-actions/run-pkg-tests@cygwin-v2
          with:
            GAP_TESTFILE: "tst/teststandard.g"
