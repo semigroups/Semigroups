@@ -1,7 +1,12 @@
 # CHANGELOG – [Semigroups package][] for [GAP][]
-Copyright © 2011-2023 [James D. Mitchell][] et al.
+Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
+
+### Version 5.3.3 (released 05/01/2024)
+
+This is a minor release bumping the included+required versions of libsemigroups
+to the latest version 2.7.2. 
 
 ### Version 5.3.2 (released 07/10/2023)
 
