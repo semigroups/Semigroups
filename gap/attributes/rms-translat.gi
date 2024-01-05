@@ -745,7 +745,7 @@ function(T)
     if L then
       if IsNRMS then
         Add(gens, LeftTranslationNC(T,
-                                    List([1 .. n], i -> fa(i)),
+                                    List([1 .. n], fa),
                                     IdentityTransformation));
       else
         f := function(x)
@@ -759,7 +759,7 @@ function(T)
     else
       if IsNRMS then
         Add(gens, RightTranslationNC(T,
-                                     List([1 .. n], i -> fa(i)),
+                                     List([1 .. n], fa),
                                      IdentityTransformation));
       else
         f := function(x)

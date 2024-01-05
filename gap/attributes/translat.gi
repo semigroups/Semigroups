@@ -128,7 +128,7 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   # for each t in the left inverses of some a in max_R_intersects[i][j] by
   # reps[j], compute the right inverses of each s in S under t
   right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. id], x -> false);
+  seen := List([1 .. id], ReturnFalse);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -300,7 +300,7 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S)
   # for each t in the right inverses of some a in max_L_intersects[i][j] by
   # reps[j], compute the left inverses of each s in S under t
   left_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. id], x -> false);
+  seen := List([1 .. id], ReturnFalse);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then

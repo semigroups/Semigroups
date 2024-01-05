@@ -349,8 +349,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(RClassReps, "for an acting inverse semigroup rep",
-[IsInverseActingSemigroupRep],
-S -> List(LClassReps(S), Inverse));
+[IsInverseActingSemigroupRep], S -> List(LClassReps(S), Inverse));
 
 # same method for inverse ideals
 

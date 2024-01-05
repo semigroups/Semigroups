@@ -29,13 +29,13 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a list or collection",
 # IsGeneratorsOfActingSemigroup, then this is ignored. I think this is a bug.
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection",
-[IsTransformationCollection], x -> true);
+[IsTransformationCollection], x -> true);  # gaplint: disable=W038
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
-[IsPartialPermCollection], x -> true);
+[IsPartialPermCollection], x -> true);  # gaplint: disable=W038
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection",
-[IsBipartitionCollection], x -> true);
+[IsBipartitionCollection], x -> true);  # gaplint: disable=W038
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a Rees 0-matrix semigroup element collection",
@@ -129,7 +129,7 @@ end);
 
 InstallMethod(ActionDegree, "for a McAlister semigroup element collection",
 [IsMcAlisterTripleSemigroupElementCollection],
-coll -> MaximumList(List(coll, x -> ActionDegree(x))));
+coll -> MaximumList(List(coll, ActionDegree)));
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
@@ -469,10 +469,9 @@ function(S)
   return x -> act(x[1], x[2] ^ -1);
 end);
 
-InstallMethod(LambdaFunc, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup],
 # a function that returns the row space
-s -> mat -> RowSpaceBasis(mat));
+InstallMethod(LambdaFunc, "for a matrix semigroup",
+[IsMatrixOverFiniteFieldSemigroup], _ -> RowSpaceBasis);
 
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],

@@ -588,7 +588,7 @@ function(_, threshold, period, S)
                                                         n,
                                                         threshold,
                                                         period),
-                                          x -> AsTransformation(x));
+                                          AsTransformation);
 end);
 
 #############################################################################
