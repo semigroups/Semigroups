@@ -18,7 +18,7 @@ SEMIGROUPS.GetTikzInit := function(opts)
     extra := "";
   fi;
 
-  return StringFormatted("{1}\n{2}\n{3}\n{4}\n{5}\n",
+  return StringFormatted("1\n2\n3\n4\n5\n",
                          "%latex",
                          "\\documentclass{minimal}",
                          "\\usepackage{tikz}",
@@ -94,15 +94,11 @@ end);
 
 InstallMethod(TikzString, "for a pbr collection",
 [IsPBRCollection],
-function(coll)
-  return TikzString(coll, SEMIGROUPS.TikzPBROpts);
-end);
+coll -> TikzString(coll, SEMIGROUPS.TikzPBROpts));
 
 InstallMethod(TikzString, "for a pbr",
 [IsPBR],
-function(x)
-  return TikzString(x, SEMIGROUPS.TikzPBROpts);
-end);
+x -> TikzString(x, SEMIGROUPS.TikzPBROpts));
 
 InstallMethod(TikzString, "for a pbr and record",
 [IsPBR, IsRecord],
@@ -257,15 +253,11 @@ end);
 
 InstallMethod(TikzString, "for a bipartition collection",
 [IsBipartitionCollection],
-function(coll)
-  return TikzString(coll, SEMIGROUPS.TikzBipartitionOpts);
-end);
+{coll} -> TikzString(coll, SEMIGROUPS.TikzBipartitionOpts));
 
 InstallMethod(TikzString, "for a bipartition",
 [IsBipartition],
-function(x)
-  return TikzString(x, SEMIGROUPS.TikzBipartitionOpts);
-end);
+x -> TikzString(x, SEMIGROUPS.TikzBipartitionOpts));
 
 InstallMethod(TikzString, "for a bipartition and record",
 [IsBipartition, IsRecord],
@@ -411,9 +403,7 @@ end);
 #############################################################################
 
 InstallMethod(DotString, "for a semigroup", [IsSemigroup],
-function(S)
-  return DotString(S, rec());
-end);
+S -> DotString(S, rec()));
 
 InstallMethod(DotString, "for a semigroup and record",
 [IsSemigroup, IsRecord],
@@ -658,9 +648,7 @@ end);
 
 InstallMethod(TexString, "for a transformation",
 [IsTransformation],
-function(f)
-  return TexString(f, DegreeOfTransformation(f));
-end);
+f -> TexString(f, DegreeOfTransformation(f)));
 
 InstallMethod(TexString, "for a transformation collection",
 [IsTransformationCollection],
@@ -671,14 +659,10 @@ function(coll)
 end);
 
 InstallMethod(TikzLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
-function(S)
-  return TikzString(LeftCayleyDigraph(S));
-end);
+S -> TikzString(LeftCayleyDigraph(S)));
 
 InstallMethod(TikzRightCayleyDigraph, "for a semigroup", [IsSemigroup],
-function(S)
-  return TikzString(RightCayleyDigraph(S));
-end);
+S -> TikzString(RightCayleyDigraph(S)));
 
 InstallMethod(TikzString, "for a Cayley digraph", [IsCayleyDigraph],
 function(digraph)
@@ -759,11 +743,7 @@ function(digraph)
 end);
 
 InstallMethod(DotLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
-function(S)
-  return DotString(LeftCayleyDigraph(S));
-end);
+S -> DotString(LeftCayleyDigraph(S)));
 
 InstallMethod(DotRightCayleyDigraph, "for a semigroup", [IsSemigroup],
-function(S)
-  return DotString(RightCayleyDigraph(S));
-end);
+S -> DotString(RightCayleyDigraph(S)));

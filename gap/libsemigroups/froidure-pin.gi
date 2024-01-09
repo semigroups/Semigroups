@@ -363,7 +363,7 @@ InstallMethod(PositionOp,
 [IsSemigroup and CanUseLibsemigroupsFroidurePin,
  IsMultiplicativeElement,
  IsZeroCyc],
-function(S, x, n)
+function(S, x, _)
   local pos;
   if IsPartialPermSemigroup(S) then
     if DegreeOfPartialPermSemigroup(S) < DegreeOfPartialPerm(x)
@@ -592,9 +592,7 @@ end);
 InstallMethod(IsEnumerated,
 "for a semigroup with CanUseLibsemigroupsFroidurePin",
 [IsSemigroup and CanUseLibsemigroupsFroidurePin],
-function(S)
-  return FroidurePinMemFnRec(S).finished(LibsemigroupsFroidurePin(S));
-end);
+S -> FroidurePinMemFnRec(S).finished(LibsemigroupsFroidurePin(S)));
 
 ###########################################################################
 ## Cayley graphs etc
@@ -678,23 +676,15 @@ function(S)
 
   enum := rec();
 
-  enum.NumberElement := function(enum, x)
-    return PositionSortedOp(S, x);
-  end;
+  enum.NumberElement := {enum, x} -> PositionSortedOp(S, x);
 
-  enum.ElementNumber := function(enum, nr)
-    return sorted_at(T, nr - 1);
-  end;
+  enum.ElementNumber := {enum, nr} -> sorted_at(T, nr - 1);
 
   enum.Length := enum -> Size(S);
 
-  enum.Membership := function(x, enum)
-    return PositionCanonical(S, x) <> fail;
-  end;
+  enum.Membership := {x, enum} -> PositionCanonical(S, x) <> fail;
 
-  enum.IsBound\[\] := function(enum, nr)
-    return nr <= Size(S);
-  end;
+  enum.IsBound\[\] := {enum, nr} -> nr <= Size(S);
 
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
@@ -721,9 +711,7 @@ function(S)
 
   enum := rec();
 
-  enum.NumberElement := function(enum, x)
-    return PositionCanonical(S, x);
-  end;
+  enum.NumberElement := {enum, x} -> PositionCanonical(S, x);
 
   if IsFpSemigroup(S) or IsFpMonoid(S) or IsQuotientSemigroup(S) then
     factorisation := FroidurePinMemFnRec(S).minimal_factorisation;
@@ -745,7 +733,8 @@ function(S)
     end;
   fi;
 
-  enum.Length := function(enum)
+  # TODO shouldn't S be stored in enum?
+  enum.Length := function(_)
     if not IsFinite(S) then
       return infinity;
     else
@@ -753,13 +742,9 @@ function(S)
     fi;
   end;
 
-  enum.Membership := function(x, enum)
-    return PositionCanonical(S, x) <> fail;
-  end;
+  enum.Membership := {x, enum} -> PositionCanonical(S, x) <> fail;
 
-  enum.IsBound\[\] := function(enum, nr)
-    return nr <= Size(S);
-  end;
+  enum.IsBound\[\] := {enum, nr} -> nr <= Size(S);
 
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
@@ -879,9 +864,7 @@ function(Constructor, S, coll, opts)
   coll := Shuffle(coll);
   if IsGeneratorsOfActingSemigroup(coll) then
     n := ActionDegree(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, n) > ActionRank(y, n);
-               end);
+    Sort(coll, {x, y} -> ActionRank(x, n) > ActionRank(y, n));
   elif Length(coll) < 120 then
     Sort(coll, IsGreensDGreaterThanFunc(Semigroup(coll)));
   fi;

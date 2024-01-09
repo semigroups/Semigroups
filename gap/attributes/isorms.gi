@@ -50,9 +50,7 @@ SEMIGROUPS.StabOfRMSMatrix := function(G, R)
   OnMatrix := function(mat, x)
     local rows;
     mat := StructuralCopy(mat);
-    rows := Permutation(x, [1 .. n], function(i, p)
-                                       return (i + m) ^ p - m;
-                                     end);
+    rows := Permutation(x, [1 .. n], {i, p} -> (i + m) ^ p - m);
 
     return List(Permuted(mat, rows), y -> Permuted(y, x));
   end;
@@ -205,7 +203,7 @@ SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
       j := j + 1;
       Last := orb[j];
       involved := Filtered(edges, x -> x[1] = Last and not x in defined);
-      if not involved = [] then
+      if not IsEmpty(involved) then
 
         verts := List(involved, x -> x[2]);
         Append(orb, Filtered(verts, x -> not x in orb));
@@ -938,19 +936,13 @@ function(R1, R2, triple)
 end);
 
 InstallMethod(ELM_LIST, "for objects in `IsRMSIsoByTriple'",
-[IsRMSIsoByTriple, IsPosInt],
-function(x, i)
-  return x!.triple[i];
-end);
+[IsRMSIsoByTriple, IsPosInt], {x, i} -> x!.triple[i]);
 
 InstallMethod(ELM_LIST, "for objects in `IsRZMSIsoByTriple'",
-[IsRZMSIsoByTriple, IsPosInt],
-function(x, i)
-  return x!.triple[i];
-end);
+[IsRZMSIsoByTriple, IsPosInt], {x, i} -> x!.triple[i]);
 
-InstallMethod(\=, "for objects in `IsRMSIsoByTriple'",
-[IsRMSIsoByTriple, IsRMSIsoByTriple],
+InstallMethod(\=, "for isomorphisms of Rees (0-)matrix semigroups",
+[IsRMSOrRZMSIsoByTriple, IsRMSOrRZMSIsoByTriple],
 function(x, y)
 
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
@@ -961,20 +953,6 @@ function(x, y)
 
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
        = OnTuples(GeneratorsOfSemigroup(Source(x)), y);
-end);
-
-InstallMethod(\=, "for objects in `IsRZMSIsoByTriple'",
-[IsRZMSIsoByTriple, IsRZMSIsoByTriple],
-function(x, y)
-
-  if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return false;
-  elif x[1] = y[1] and x[2] = y[2] and x[3] = y[3] then
-    return true;
-  fi;
-
-  return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
-         = OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
 
 InstallMethod(\<, "for objects in `IsRMSIsoByTriple'",
@@ -1023,15 +1001,11 @@ end);
 
 InstallMethod(ImagesElm, "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
-function(triple, x)
-  return [ImagesRepresentative(triple, x)];
-end);
+{triple, x} -> [ImagesRepresentative(triple, x)]);
 
 InstallMethod(ImagesElm, "for an RZMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
-function(triple, x)
-  return [ImagesRepresentative(triple, x)];
-end);
+{triple, x} -> [ImagesRepresentative(triple, x)]);
 
 InstallMethod(ImagesRepresentative,
 "for an RMS element under a mapping by a triple",
@@ -1096,29 +1070,21 @@ end);
 
 InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
-function(map)
-  return IsOne(map[1]) and IsOne(map[2]) and ForAll(map[3], IsOne);
-end);
+{map} -> IsOne(map[1]) and IsOne(map[2]) and ForAll(map[3], IsOne));
 
 InstallMethod(IsOne, "for objects in `IsRZMSIsoByTriple'",
 [IsEndoGeneralMapping and IsRZMSIsoByTriple],
-function(map)
-  return IsOne(map[1]) and IsOne(map[2]) and ForAll(map[3], IsOne);
-end);
+{map} -> IsOne(map[1]) and IsOne(map[2]) and ForAll(map[3], IsOne));
 
 InstallMethod(PreImagesRepresentativeNC,
 "for an RMS element under a mapping by a triple",
 FamRangeEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
-function(map, x)
-  return ImagesRepresentative(InverseGeneralMapping(map), x);
-end);
+{map, x} -> ImagesRepresentative(InverseGeneralMapping(map), x));
 
 InstallMethod(PreImagesRepresentativeNC,
 "for an RZMS element under a mapping by a triple",
 FamRangeEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
-function(map, x)
-  return ImagesRepresentative(InverseGeneralMapping(map), x);
-end);
+{map, x} -> ImagesRepresentative(InverseGeneralMapping(map), x));
 
 InstallMethod(PrintObj, "for an object in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple],
@@ -1172,15 +1138,11 @@ end);
 
 # InstallMethod(ViewString, "for an object in `IsRMSIsoByTriple'",
 # [IsRMSIsoByTriple],
-# function(map)
-#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
-# end);
+# {map} -> StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
 #
 # InstallMethod(ViewString, "for object in `IsRZMSIsoByTriple'",
 # [IsRZMSIsoByTriple],
-# function(map)
-#   return StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
-# end);
+# {map} -> StringFormatted("({!v}, {!v}, {!v})", map[1], map[2], map[3]);
 
 InstallMethod(IsomorphismReesMatrixSemigroupOverPermGroup,
 "for a semigroup",

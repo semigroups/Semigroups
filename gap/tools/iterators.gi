@@ -183,7 +183,7 @@ end);
 # for: baseiter, convert[, record, isnew]
 
 InstallGlobalFunction(WrappedIterator,
-function(arg)
+function(arg...)
   local iter;
 
   iter   := rec();

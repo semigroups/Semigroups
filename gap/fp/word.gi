@@ -11,14 +11,14 @@
 InstallMethod(WordToString, "for a string and a homogeneous list",
 [IsString, IsHomogeneousList],
 function(alphabet, word)
-  if Length(word) = 0 then
+  if IsEmpty(word) then
     return "";
   elif not ForAll(word, IsPosInt) then
     ErrorNoReturn("expected list of positive integers as 2nd argument");
   elif Maximum(word) > Length(alphabet) then
     ErrorNoReturn("the 1st argument (a string) is too short, ",
                   "expected at least ", Maximum(word),
-                  "but found ", Length(alphabet));
+                  " but found ", Length(alphabet));
   fi;
   return List(word, i -> alphabet[i]);
 end);
@@ -42,7 +42,7 @@ InstallMethod(StandardiseWord, "for a homogeneous list",
 function(word)
   local distinct_chars, lookup, i;
 
-  if Length(word) = 0 then
+  if IsEmpty(word) then
     return word;
   elif not ForAll(word, IsPosInt) then
     ErrorNoReturn("expected a list of positive integers as 2nd argument");

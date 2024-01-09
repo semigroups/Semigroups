@@ -104,9 +104,7 @@ end);
 InstallMethod(RandomMatrixOp,
 "for a finite field, dimension, and pos int",
 [IsField and IsFinite, IsPosInt, IsPosInt],
-function(R, n, rank)
-  return RandomMatrixOp(R, n, [rank]);
-end);
+{R, n, rank} -> RandomMatrixOp(R, n, [rank]));
 
 #############################################################################
 # 2. Rows bases etc
@@ -115,7 +113,7 @@ end);
 InstallMethod(NewRowBasisOverFiniteField,
 "for IsPlistRowBasisOverFiniteFieldRep, a ring, and a list",
 [IsPlistRowBasisOverFiniteFieldRep, IsRing, IsList],
-function(filter, basedomain, l)
+function(_, basedomain, l)
   local b;
   b := Objectify(PlistRowBasisOverFiniteFieldType, rec(rows := l));
   SetBaseDomain(b, basedomain);
@@ -124,22 +122,15 @@ end);
 
 InstallMethod(Rank, "for a plist rowbasis",
 [IsPlistRowBasisOverFiniteFieldRep],
-function(v)
-  return Length(v!.rows);
-end);
+v -> Length(v!.rows));
 
 InstallMethod(\=, "for an rowbasis",
 [IsPlistRowBasisOverFiniteFieldRep, IsPlistRowBasisOverFiniteFieldRep],
-function(x, y)
-  return BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows;
-end);
+{x, y} -> BaseDomain(x) = BaseDomain(y) and x!.rows = y!.rows);
 
 InstallMethod(\<, "for an rowbasis",
 [IsPlistRowBasisOverFiniteFieldRep, IsPlistRowBasisOverFiniteFieldRep],
-function(x, y)
-  return Rank(x) < Rank(y)
-    or (Rank(x) = Rank(y) and (x!.rows < y!.rows));
-end);
+{x, y} -> Rank(x) < Rank(y) or (Rank(x) = Rank(y) and (x!.rows < y!.rows)));
 
 InstallMethod(ViewString, "for a plist rowbasis",
 [IsPlistRowBasisOverFiniteFieldRep],

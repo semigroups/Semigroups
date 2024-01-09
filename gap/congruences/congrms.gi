@@ -605,20 +605,8 @@ end);
 #############################################################################
 
 InstallMethod(ViewObj,
-"for Rees matrix semigroup congruence by linked triple",
-[IsRMSCongruenceByLinkedTriple],
-function(C)
-  Print("<semigroup congruence over ");
-  ViewObj(Range(C));
-  Print(" with linked triple (",
-        StructureDescription(C!.n:short), ",",
-        Size(C!.colBlocks), ",",
-        Size(C!.rowBlocks), ")>");
-end);
-
-InstallMethod(ViewObj,
-"for Rees zero-matrix semigroup congruence by linked triple",
-[IsRZMSCongruenceByLinkedTriple],
+"for Rees (0-)matrix semigroup congruence by linked triple",
+[IsRMSOrRZMSCongruenceByLinkedTriple],
 function(C)
   Print("<semigroup congruence over ");
   ViewObj(Range(C));
@@ -632,7 +620,9 @@ end);
 # 5. Congruences: mandatory methods for CanComputeEquivalenceRelationPartition
 #############################################################################
 
-BindGlobal("_EquivalenceRelationPartition",
+InstallMethod(EquivalenceRelationPartitionWithSingletons,
+"for a Rees (0-)matrix semigroup congruence by linked triple",
+[IsRMSOrRZMSCongruenceByLinkedTriple],
 function(C)
   local S, n, elms, table, next, part, class, i, x;
 
@@ -655,19 +645,6 @@ function(C)
   SetEquivalenceRelationCanonicalLookup(C, table);
   return part;
 end);
-
-InstallMethod(EquivalenceRelationPartitionWithSingletons,
-"for Rees matrix semigroup congruence by linked triple",
-[IsRMSCongruenceByLinkedTriple],
-_EquivalenceRelationPartition);
-
-InstallMethod(EquivalenceRelationPartitionWithSingletons,
-"for Rees 0-matrix semigroup congruence by linked triple",
-[IsRZMSCongruenceByLinkedTriple],
-_EquivalenceRelationPartition);
-
-MakeReadWriteGlobal("_EquivalenceRelationPartition");
-UnbindGlobal("_EquivalenceRelationPartition");
 
 InstallMethod(ImagesElm,
 "for Rees matrix semigroup congruence by linked triple and element",
@@ -769,8 +746,8 @@ function(C, lhop, rhop)
   v := rhop[3];
 
   # First, the columns and rows must be related
-  if not (C!.colLookup[i] = C!.colLookup[j] and
-          C!.rowLookup[u] = C!.rowLookup[v]) then
+  if C!.colLookup[i] <> C!.colLookup[j] or
+          C!.rowLookup[u] <> C!.rowLookup[v] then
     return false;
   fi;
 
@@ -804,8 +781,8 @@ function(C, lhop, rhop)
   v := rhop[3];
 
   # First, the columns and rows must be related
-  if not (C!.colLookup[i] = C!.colLookup[j] and
-          C!.rowLookup[u] = C!.rowLookup[v]) then
+  if C!.colLookup[i] <> C!.colLookup[j] or
+          C!.rowLookup[u] <> C!.rowLookup[v] then
     return false;
   fi;
 
@@ -830,18 +807,8 @@ end);
 # Comparison operators
 
 InstallMethod(\=,
-"for two Rees matrix semigroup congruences by linked triple",
-[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(lhop, rhop)
-  return(Range(lhop) = Range(rhop) and
-         lhop!.n = rhop!.n and
-         lhop!.colBlocks = rhop!.colBlocks and
-         lhop!.rowBlocks = rhop!.rowBlocks);
-end);
-
-InstallMethod(\=,
-"for two Rees 0-matrix semigroup congruences by linked triple",
-[IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
+"for Rees (0-)matrix semigroup congruences by linked triple",
+[IsRMSOrRZMSCongruenceByLinkedTriple, IsRMSOrRZMSCongruenceByLinkedTriple],
 function(lhop, rhop)
   return(Range(lhop) = Range(rhop) and
          lhop!.n = rhop!.n and
@@ -850,24 +817,8 @@ function(lhop, rhop)
 end);
 
 InstallMethod(IsSubrelation,
-"for two Rees matrix semigroup congruences by linked triple",
-[IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
-function(lhop, rhop)
-  # Tests whether rhop is a subcongruence of lhop
-  if Range(lhop) <> Range(rhop) then
-    Error("the 1st and 2nd arguments are congruences over different",
-          " semigroups");
-  fi;
-  return IsSubgroup(lhop!.n, rhop!.n)
-         and ForAll(rhop!.colBlocks,
-                    b2 -> ForAny(lhop!.colBlocks, b1 -> IsSubset(b1, b2)))
-         and ForAll(rhop!.rowBlocks,
-                    b2 -> ForAny(lhop!.rowBlocks, b1 -> IsSubset(b1, b2)));
-end);
-
-InstallMethod(IsSubrelation,
-"for two Rees 0-matrix semigroup congruences by linked triple",
-[IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
+"for Rees (0-)matrix semigroup congruences by linked triple",
+[IsRMSOrRZMSCongruenceByLinkedTriple, IsRMSOrRZMSCongruenceByLinkedTriple],
 function(lhop, rhop)
   # Tests whether rhop is a subcongruence of lhop
   if Range(lhop) <> Range(rhop) then
@@ -1001,8 +952,8 @@ function(lhop, rhop)
     od;
     rowBlocks := Compacted(rowBlocks);
   od;
-  colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
-  rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
+  colBlocks := SortedList(List(colBlocks, SortedList));
+  rowBlocks := SortedList(List(rowBlocks, SortedList));
   # Make the congruence and return it
   return RMSCongruenceByLinkedTripleNC(Range(lhop), n, colBlocks, rowBlocks);
 end);
@@ -1046,8 +997,8 @@ function(lhop, rhop)
     od;
     rowBlocks := Compacted(rowBlocks);
   od;
-  colBlocks := SortedList(List(colBlocks, block -> SortedList(block)));
-  rowBlocks := SortedList(List(rowBlocks, block -> SortedList(block)));
+  colBlocks := SortedList(List(colBlocks, SortedList));
+  rowBlocks := SortedList(List(rowBlocks, SortedList));
   # Make the congruence and return it
   return RZMSCongruenceByLinkedTriple(Range(lhop), n, colBlocks, rowBlocks);
 end);
@@ -1147,7 +1098,7 @@ InstallMethod(RMSCongruenceClassByLinkedTriple,
 function(C, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(C));
-  if not (ActingDomain(nCoset) = C!.n and IsSubset(g, nCoset)) then
+  if ActingDomain(nCoset) <> C!.n or not IsSubset(g, nCoset) then
     ErrorNoReturn("the 2nd argument (a right coset) is not a coset of the",
                   " normal subgroup of defining the 1st argument (a ",
                   "congruence)");
@@ -1165,7 +1116,7 @@ InstallMethod(RZMSCongruenceClassByLinkedTriple,
 function(C, nCoset, colClass, rowClass)
   local g;
   g := UnderlyingSemigroup(Range(C));
-  if not (ActingDomain(nCoset) = C!.n and IsSubset(g, nCoset)) then
+  if ActingDomain(nCoset) <> C!.n or not IsSubset(g, nCoset) then
     ErrorNoReturn("the 2nd argument (a right coset) is not a coset of the",
                   " normal subgroup of defining the 1st argument (a ",
                   "congruence)");
@@ -1400,6 +1351,19 @@ end);
 # 9. Congruence lattice
 ###############################################################################
 
+# Function to compute all subsets of a relation given by partitions
+SEMIGROUPS.Subpartitions := function(part)
+  local l;
+  # Replace each class with a list of all partitions of that class
+  l := List(part, PartitionsSet);
+  # Produce all the combinations of partitions of classes
+  l := Cartesian(l);
+  # Concatenate these lists to produce complete partitions of the set
+  l := List(l, Concatenation);
+  # Finally sort each of these into the canonical order of its new classes
+  return List(l, SSortedList);
+end;
+
 InstallMethod(CongruencesOfSemigroup,
 "for finite simple Rees matrix semigroup",
 [IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite],
@@ -1407,18 +1371,7 @@ function(S)
   local subpartitions, congs, mat, g, colBlocksList,
         rowBlocksList, n, colBlocks, rowBlocks;
 
-  # Function to compute all subsets of a relation given by partitions
-  subpartitions := function(part)
-    local l;
-    # Replace each class with a list of all partitions of that class
-    l := List(part, PartitionsSet);
-    # Produce all the combinations of partitions of classes
-    l := Cartesian(l);
-    # Concatenate these lists to produce complete partitions of the set
-    l := List(l, Concatenation);
-    # Finally sort each of these into the canonical order of its new classes
-    return List(l, SSortedList);
-  end;
+  subpartitions := SEMIGROUPS.Subpartitions;
 
   congs := [];
   mat := Matrix(S);
@@ -1453,19 +1406,7 @@ function(S)
         i, j, u, v, n, colBlocks, rowBlocks, colBlocksList, rowBlocksList,
         subpartitions;
 
-  # Function to compute all subsets of a relation given by partitions
-  subpartitions := function(part)
-    local l;
-    # Replace each class with a list of all partitions of that class
-    l := List(part, PartitionsSet);
-    # Produce all the combinations of partitions of classes
-    l := Cartesian(l);
-    # Concatenate these lists to produce complete partitions of the set
-    l := List(l, Concatenation);
-    # Finally sort each of these into the canonical order of its new classes
-    return List(l, SSortedList);
-  end;
-
+  subpartitions := SEMIGROUPS.Subpartitions;
   congs := [];
   mat := Matrix(S);
   g := UnderlyingSemigroup(S);

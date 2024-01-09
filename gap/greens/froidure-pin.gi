@@ -346,33 +346,25 @@ InstallMethod(EquivalenceClassOfElement,
 "for a semigroup with CanUseFroidurePin Green's R-relation + a mult. elt.",
 [IsGreensRRelation and IsGreensRelationOfSemigroupThatCanUseFroidurePinRep,
  IsMultiplicativeElement],
-function(rel, rep)
-  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, RClassType);
-end);
+{rel, rep} -> SEMIGROUPS.EquivalenceClassOfElement(rel, rep, RClassType));
 
 InstallMethod(EquivalenceClassOfElement,
 "for a semigroup with CanUseFroidurePin Green's L-relation + a mult. elt.",
 [IsGreensLRelation and IsGreensRelationOfSemigroupThatCanUseFroidurePinRep,
  IsMultiplicativeElement],
-function(rel, rep)
-  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, LClassType);
-end);
+{rel, rep} -> SEMIGROUPS.EquivalenceClassOfElement(rel, rep, LClassType));
 
 InstallMethod(EquivalenceClassOfElement,
 "for a semigroup with CanUseFroidurePin Green's H-relation + a mult. elt.",
 [IsGreensHRelation and IsGreensRelationOfSemigroupThatCanUseFroidurePinRep,
  IsMultiplicativeElement],
-function(rel, rep)
-  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, HClassType);
-end);
+{rel, rep} -> SEMIGROUPS.EquivalenceClassOfElement(rel, rep, HClassType));
 
 InstallMethod(EquivalenceClassOfElement,
 "for a semigroup with CanUseFroidurePin Green's D-relation + a mult. elt.",
 [IsGreensDRelation and IsGreensRelationOfSemigroupThatCanUseFroidurePinRep,
  IsMultiplicativeElement],
-function(rel, rep)
-  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType);
-end);
+{rel, rep} -> SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType));
 
 # No check Green's classes of an element of a semigroup . . .
 

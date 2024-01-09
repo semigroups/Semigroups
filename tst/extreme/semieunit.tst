@@ -39,7 +39,7 @@ gap> BruteForceIsoCheck := function(iso)
 >   od;
 >   return true;
 > end;;
-gap> Apply(triples, a -> BruteForceIsoCheck(a));;
+gap> Apply(triples, BruteForceIsoCheck);;
 gap> false in triples;
 false
 

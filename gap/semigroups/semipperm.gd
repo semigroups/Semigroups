@@ -21,5 +21,7 @@ DeclareAttribute("ComponentRepsOfPartialPermSemigroup",
 DeclareAttribute("ComponentsOfPartialPermSemigroup",
                  IsPartialPermSemigroup);
 
+DeclareAttribute("ComponentRepresentatives", IsSemigroup);
+
 DeclareAttribute("SmallerDegreePartialPermRepresentation",
                  IsInverseSemigroup and IsGeneratorsOfInverseSemigroup);

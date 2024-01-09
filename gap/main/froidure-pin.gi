@@ -53,9 +53,7 @@ end);
 
 InstallImmediateMethod(CanUseGapFroidurePin,
 IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup, 0,
-function(R)
-  return CanUseFroidurePin(ParentAttr(R));
-end);
+R -> CanUseFroidurePin(ParentAttr(R)));
 
 InstallImmediateMethod(CanUseGapFroidurePin,
 IsReesMatrixSubsemigroup and HasRowsOfReesMatrixSemigroup
@@ -67,9 +65,7 @@ end);
 
 InstallImmediateMethod(CanUseGapFroidurePin,
 IsReesMatrixSubsemigroup and HasGeneratorsOfSemigroup, 0,
-function(R)
-  return CanUseFroidurePin(ParentAttr(R));
-end);
+R -> CanUseFroidurePin(ParentAttr(R)));
 
 # The next method is supposed to catch proper subsemigroups of quotient
 # semigroups
@@ -168,9 +164,7 @@ end);
 # InstallMethod(IsFinite,
 # "for a semigroup with CanUseGapFroidurePin and known generators",
 # [CanUseGapFroidurePin and HasGeneratorsOfSemigroup],
-# function(S)
-#   return Size(S) < infinity;
-# end);
+# S -> Size(S) < infinity);
 
 InstallMethod(AsSet,
 "for a semigroup with CanUseGapFroidurePin and known generators",
@@ -241,11 +235,10 @@ function(S)
 
   enum := rec();
 
-  enum.NumberElement := function(enum, x)
-    return PositionCanonical(S, x);
-  end;
+  # TODO Shouldn't S be stored in enum
+  enum.NumberElement := {enum, x} -> PositionCanonical(S, x);
 
-  enum.ElementNumber := function(enum, nr)
+  enum.ElementNumber := function(_, nr)
     local fp;
     fp := GapFroidurePin(S);
     if not (IsBound(fp.elts) and nr < Length(fp.elts) and IsBound(fp.elts[nr]))
@@ -261,17 +254,11 @@ function(S)
 
   enum.Length := enum -> Size(S);
 
-  enum.AsList := function(enum)
-    return AsListCanonical(S);
-  end;
+  enum.AsList := enum -> AsListCanonical(S);
 
-  enum.Membership := function(x, enum)
-    return PositionCanonical(S, x) <> fail;
-  end;
+  enum.Membership := {x, enum} -> PositionCanonical(S, x) <> fail;
 
-  enum.IsBound\[\] := function(enum, nr)
-    return nr <= Length(enum);
-  end;
+  enum.IsBound\[\] := {enum, nr} -> nr <= Length(enum);
 
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
@@ -309,9 +296,7 @@ InstallMethod(\in,
 "for mult. elt. and a semigroup with CanUseGapFroidurePin + generators",
 [IsMultiplicativeElement,
  CanUseGapFroidurePin and HasGeneratorsOfSemigroup],
-function(x, S)
-  return PositionCanonical(S, x) <> fail;
-end);
+{x, S} -> PositionCanonical(S, x) <> fail);
 
 # different method for ideals
 
@@ -368,7 +353,7 @@ PositionOp);
 InstallMethod(PositionOp,
 "for a semigroup with CanUseGapFroidurePin, multi. element, zero cyc",
 [CanUseGapFroidurePin, IsMultiplicativeElement, IsZeroCyc],
-function(S, x, n)
+function(S, x, _)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
@@ -412,9 +397,7 @@ end);
 InstallMethod(Enumerate,
 "for a semigroup with CanUseGapFroidurePin and known generators",
 [CanUseGapFroidurePin and HasGeneratorsOfSemigroup],
-function(S)
-  return Enumerate(S, -1);
-end);
+S -> Enumerate(S, -1));
 
 # same method for ideals
 

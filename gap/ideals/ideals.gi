@@ -179,20 +179,16 @@ end);
 InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
 [IsSemigroup and HasGeneratorsOfSemigroup,
  IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
-function(S, I)
-  return I = S;
-end);
+{S, I} -> I = S);
 
 InstallMethod(Representative, "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  return Representative(GeneratorsOfMagmaIdeal(I));
-end);
+{I} -> Representative(GeneratorsOfMagmaIdeal(I)));
 
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
 InstallGlobalFunction(SemigroupIdeal,
-function(arg)
+function(arg...)
   local out, i;
 
   if Length(arg) <= 1 then
@@ -244,9 +240,7 @@ end);
 InstallMethod(SemigroupIdealByGenerators,
 "for a semigroup and list or collections",
 [IsSemigroup, IsListOrCollection],
-function(S, gens)
-  return SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S));
-end);
+{S, gens} -> SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S)));
 
 InstallMethod(SemigroupIdealByGenerators,
 "for semigroup, list or collection, and record",
@@ -365,9 +359,7 @@ end);
 InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup ideal and multiplicative element",
 [IsSemigroupIdeal, IsMultiplicativeElement],
-function(I, x)
-  return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
-end);
+{I, x} -> InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x));
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],

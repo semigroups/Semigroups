@@ -36,7 +36,7 @@ function(S)
 
   rels := List(RelationsOfFpSemigroup(S),
               x -> [LetterRepAssocWord(x[1]), LetterRepAssocWord(x[2])]);
-  gens := List(GeneratorsOfSemigroup(S), x -> ViewString(x));
+  gens := List(GeneratorsOfSemigroup(S), ViewString);
 
   out := rec(GeneratorsOfStzPresentation := gens,
              RelationsOfStzPresentation  := rels,
@@ -208,7 +208,7 @@ function(stz, list)
   local i;
   # This function displays the current relations in terms of the current
   # generators for a semigroup Tietze presentation.
-  if RelationsOfStzPresentation(stz) = [] then
+  if IsEmpty(RelationsOfStzPresentation(stz)) then
     Info(InfoFpSemigroup, 1, "There are no relations in the presentation <stz>");
   fi;
 
@@ -242,7 +242,7 @@ function(stz, list)
   # of each
 
   # warn if there are no generators in the list (not sure this could happen)
-  if GeneratorsOfStzPresentation(stz) = [] then
+  if IsEmpty(GeneratorsOfStzPresentation(stz)) then
     Info(InfoFpSemigroup, 1,
          "There are no generators in the presentation <stz>");
   fi;
@@ -567,7 +567,7 @@ function(stz, pair)
     if not IsList(word) then
       TryNextMethod();  # pass this on to the case where the list may be a pair
                         # of words in OG semigroup
-    elif Length(word) = 0 then
+    elif IsEmpty(word) then
       ErrorNoReturn("StzAddRelation: words in second argument <pair> should\n",
                     "be non-empty");
     else
@@ -649,7 +649,7 @@ function(stz, pair)
     if not IsList(word) then
       TryNextMethod();  # pass this on to the case where the list may be a pair
                         # of words in OG semigroup
-    elif Length(word) = 0 then
+    elif IsEmpty(word) then
       ErrorNoReturn("StzAddRelationNC: words in second argument <pair>\n",
                     "should be non-empty");
     else
@@ -770,7 +770,7 @@ InstallMethod(StzAddGenerator,
 function(stz, word)
   local n, letter;
   # argument checks
-  if Length(word) = 0 then
+  if IsEmpty(word) then
     ErrorNoReturn("StzAddGenerator: cannot add generator equal to the empty\n",
                   "word");
   fi;
@@ -817,7 +817,7 @@ InstallMethod(StzAddGenerator,
 function(stz, word, name)
   local n, letter;
   # argument check 0: new word is non-empty
-  if Length(word) = 0 then
+  if IsEmpty(word) then
     ErrorNoReturn("StzAddGenerator: cannot add generator equal to the empty\n",
                   "word");
   fi;
@@ -946,10 +946,10 @@ function(stz, gen, index)
   fi;
 
   # third argument check: a reasonable relation number has been supplied
-  if not ((RelationsOfStzPresentation(stz)[index][1] = [gen]
-      and not gen in RelationsOfStzPresentation(stz)[index][2]) or
-      (RelationsOfStzPresentation(stz)[index][2] = [gen]
-      and not gen in RelationsOfStzPresentation(stz)[index][1])) then
+  if (RelationsOfStzPresentation(stz)[index][1] <> [gen]
+      or gen in RelationsOfStzPresentation(stz)[index][2])
+      and (RelationsOfStzPresentation(stz)[index][2] <> [gen]
+      or gen in RelationsOfStzPresentation(stz)[index][1]) then
     ErrorNoReturn("StzRemoveGenerator: third argument <index> does not point\n",
                   "to a relation expressing second argument <gen> as a\n",
                   "combination of other generators in first argument <stz>");
@@ -1083,7 +1083,7 @@ SEMIGROUPS.NewGeneratorName := function(names_immut)
   Alph := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   # SPECIAL CASE 0: empty list
-  if Length(names) = 0 then
+  if IsEmpty(names) then
     return "a";
   fi;
 
@@ -1511,7 +1511,7 @@ InstallMethod(StzSimplifyOnce,
 function(stz)
   local rels, results, len, mins, result, func, args;
   rels := RelationsOfStzPresentation(stz);
-  if Length(rels) = 0 then
+  if IsEmpty(rels) then
     return false;
   else
     results := [[SEMIGROUPS.StzGensRedundantApply,

@@ -121,34 +121,26 @@ function(S)
   return libsemigroups.Congruence.make_from_froidurepin_bmat;
 end);
 
+# Why does this work for types other than boolean matrices?
 InstallMethod(LibsemigroupsCongruenceConstructor,
 "for a matrix semigroup with CanUseLibsemigroupsCongruences",
 [IsMatrixOverSemiringSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  # Why does this work for types other than boolean matrices?
-  return libsemigroups.Congruence.make_from_froidurepin_bmat;
-end);
+_ -> libsemigroups.Congruence.make_from_froidurepin_bmat);
 
 InstallMethod(LibsemigroupsCongruenceConstructor,
 "for a bipartition semigroup with CanUseLibsemigroupsCongruences",
 [IsBipartitionSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  return libsemigroups.Congruence.make_from_froidurepin_bipartition;
-end);
+_ -> libsemigroups.Congruence.make_from_froidurepin_bipartition);
 
 InstallMethod(LibsemigroupsCongruenceConstructor,
 "for a PBR semigroup and CanUseLibsemigroupsCongruences",
 [IsPBRSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  return libsemigroups.Congruence.make_from_froidurepin_pbr;
-end);
+_ -> libsemigroups.Congruence.make_from_froidurepin_pbr);
 
 InstallMethod(LibsemigroupsCongruenceConstructor,
 "for a quotient semigroup and CanUseLibsemigroupsCongruences",
 [IsQuotientSemigroup and CanUseLibsemigroupsCongruences],
-function(S)
-  return libsemigroups.Congruence.make_from_froidurepinbase;
-end);
+_ -> libsemigroups.Congruence.make_from_froidurepinbase);
 
 # Get the libsemigroups::Congruence object associated to a GAP object
 
@@ -220,9 +212,7 @@ end);
 InstallMethod(CongruenceWordToClassIndex,
 "for CanUseLibsemigroupsCongruence and hom. list",
 [CanUseLibsemigroupsCongruence, IsMultiplicativeElement],
-function(C, x)
-  return CongruenceWordToClassIndex(C, MinimalFactorization(Range(C), x));
-end);
+{C, x} -> CongruenceWordToClassIndex(C, MinimalFactorization(Range(C), x)));
 
 ########################################################################
 

@@ -54,17 +54,13 @@ function(I)
   en := EnumeratorCanonical(SupersemigroupOfIdeal(I));
 
   record := rec();
-  record.NumberElement := function(enum, elt)
-    return Position(PositionsInSupersemigroup(I), Position(en, elt));
-  end;
+  # TODO store en in enum
+  record.NumberElement :=
+  {enum, elt} -> Position(PositionsInSupersemigroup(I), Position(en, elt));
 
-  record.ElementNumber := function(enum, nr)
-    return en[PositionsInSupersemigroup(I)[nr]];
-  end;
+  record.ElementNumber := {enum, nr} -> en[PositionsInSupersemigroup(I)[nr]];
 
-  record.IsBound\[\] := function(enum, nr)
-    return IsBound(PositionsInSupersemigroup(I)[nr]);
-  end;
+  record.IsBound\[\] := {enum, nr} -> IsBound(PositionsInSupersemigroup(I)[nr]);
 
   record.Length := enum -> Length(PositionsInSupersemigroup(I));
 
@@ -73,18 +69,14 @@ end);
 
 InstallMethod(Size, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  return Length(Enumerator(I));
-end);
+I -> Length(Enumerator(I)));
 
 InstallMethod(\in,
 "for a multiplicative element and semigroup ideal with generators",
 [IsMultiplicativeElement,
  IsSemigroup and CanUseFroidurePin and IsSemigroupIdeal
  and HasGeneratorsOfSemigroupIdeal],
-function(x, I)
-  return Position(Enumerator(I), x) <> fail;
-end);
+{x, I} -> Position(Enumerator(I), x) <> fail);
 
 # The method for GeneratorsOfSemigroup for a semigroup ideal must
 # not rely in any way on the output of the Froidure-Pin algorithm when run on

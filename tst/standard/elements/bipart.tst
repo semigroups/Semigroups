@@ -50,7 +50,7 @@ gap> ForAll(triples, x -> ((x[1] * x[2]) * x[3]) = (x[1] * (x[2] * x[3])));
 true
 
 # BipartitionTest5: EMBEDDING into T_n
-gap> l := List([1, 2, 3, 4, 5, 15, 35, 1999], i -> RandomTransformation(i));;
+gap> l := List([1, 2, 3, 4, 5, 15, 35, 1999], RandomTransformation);;
 gap> ForAll(l, t -> t = AsTransformation(AsBipartition(t)));
 true
 
@@ -740,7 +740,7 @@ gap> CodomainOfBipartition(x);
 # Test error messages for when creating a bipartition with degree too large.
 # We create enum, as opposed to a range [1 .. 2 ^ 33] to allow this test to
 # work in the 32-bit version.
-gap> enum := EnumeratorByFunctions(Integers, 
+gap> enum := EnumeratorByFunctions(Integers,
 >                                  rec(ElementNumber := {enum, x} -> x,
 >                                  NumberElement := {enum, x} -> x,
 >                                  Length := x -> 2 ^ 33));;
@@ -778,6 +778,6 @@ Error, the items in the argument (a list) must be positive integers
 gap> BipartitionByIntRep(['a']);
 Error, the degree of a bipartition must be even, found 1
 
-# 
+#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/elements/bipart.tst");

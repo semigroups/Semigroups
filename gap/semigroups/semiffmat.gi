@@ -52,16 +52,14 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup and a finite field matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup, IsMatrixOverFiniteFieldSemigroup],
-function(filt, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filt, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup, ring, and matrix over ff semigroup",
 [IsMatrixOverFiniteFieldSemigroup,
  IsRing,
  IsMatrixOverFiniteFieldSemigroup],
-function(filt, R, S)
+function(_, R, S)
   local D, map, inv, T;
   D := BaseDomain(Representative(S));
   if D = R then
@@ -82,7 +80,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup and a semigroup of matrices over a ff",
 [IsMatrixOverFiniteFieldSemigroup,
  IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
-function(filt, S)
+function(_, S)
   local R, map, T;
   # The following line is required because of the weirdness in constructor
   # method selection, if the method for IsMatrixOverFiniteFieldSemigroup was
@@ -102,7 +100,7 @@ InstallMethod(IsomorphismSemigroup,
 [IsMatrixOverFiniteFieldSemigroup,
  IsRing,
  IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
-function(filt, R, S)
+function(_, R, S)
   local D, map, T;
   # The following line is required because of the weirdness in constructor
   # method selection, if the method for IsMatrixOverFiniteFieldSemigroup was
@@ -125,16 +123,14 @@ InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup and transformation semigroup with gens",
 [IsMatrixOverFiniteFieldSemigroup,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
- function(filt, S)
-  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(2), S);
-end);
+ {filt, S} -> IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(2), S));
 
 InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup, a ring, and a transformation semigroup",
 [IsMatrixOverFiniteFieldSemigroup,
  IsRing,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(filt, R, S)
+function(_, R, S)
   local n, basis, map, iso, inv, gens;
 
   if not (IsField(R) and IsFinite(R)) then
@@ -194,30 +190,22 @@ end);
 InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid and a monoid",
 [IsMatrixOverFiniteFieldMonoid, IsMonoid],
-function(filter, S)
-  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
-end);
+{filt, S} -> IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S));
 
 InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid, a ring, and a monoid",
 [IsMatrixOverFiniteFieldMonoid, IsRing, IsMonoid],
-function(filter, R, S)
-  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S);
-end);
+{filt, R, S} -> IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S));
 
 InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid and a matrix over finite field monoid",
 [IsMatrixOverFiniteFieldMonoid, IsMatrixOverFiniteFieldMonoid],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filt, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid, a ring, and a matrix over ff monoid",
 [IsMatrixOverFiniteFieldMonoid, IsRing, IsMatrixOverFiniteFieldMonoid],
-function(filter, R, S)
-  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S);
-end);
+{filt, R, S} -> IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S));
 
 #############################################################################
 # 3. Viewing and printing
@@ -281,7 +269,7 @@ end);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMatrixOverFiniteFieldSemigroup, IsList],
-function(filt, params)
+function(_, params)
 
   if Length(params) < 1 then  # nr gens
     params[1] := Random(1, 20);
@@ -314,15 +302,13 @@ end);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMatrixOverFiniteFieldMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsMatrixOverFiniteFieldSemigroup,
-                                          params);
-end);
+{filt, params} ->
+SEMIGROUPS_ProcessRandomArgsCons(IsMatrixOverFiniteFieldSemigroup, params));
 
 InstallMethod(RandomSemigroupCons,
 "for IsMatrixOverFiniteFieldSemigroup and list",
 [IsMatrixOverFiniteFieldSemigroup, IsList],
-function(filt, params)  # params = [nrgens, dim, field, ranks]
+function(_, params)  # params = [nrgens, dim, field, ranks]
   return Semigroup(List([1 .. params[1]], i -> RandomMatrix(params[3],
                                                             params[2],
                                                             params[4])));
@@ -331,7 +317,7 @@ end);
 InstallMethod(RandomMonoidCons,
 "for IsMatrixOverFiniteFieldMonoid and list",
 [IsMatrixOverFiniteFieldMonoid, IsList],
-function(filt, params)  # params = [nrgens, dim, field, ranks]
+function(_, params)  # params = [nrgens, dim, field, ranks]
   return Monoid(List([1 .. params[1]], i -> RandomMatrix(params[3],
                                                          params[2],
                                                          params[4])));
@@ -365,9 +351,7 @@ InstallMethod(BaseDomain, "for a matrix over finite field semigroup",
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for an ffe coll coll coll ",
 [IsFFECollCollColl],
-function(coll)
-  return IsGeneratorsOfSemigroup(coll) and ForAll(coll, x -> x ^ -1 <> fail);
-end);
+coll -> IsGeneratorsOfSemigroup(coll) and ForAll(coll, x -> x ^ -1 <> fail));
 
 #############################################################################
 # 5. Methods for acting semigroups setup

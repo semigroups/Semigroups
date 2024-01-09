@@ -1001,7 +1001,7 @@ false
 
 # TestInstall63: Issue 127:
 # Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
-# point of creation. 
+# point of creation.
 gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
 >                     [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
@@ -1023,7 +1023,7 @@ gap> I := SemigroupIdeal(T, Idempotents(T));;
 gap> Size(I);
 21
 
-# TestInstall64: Bug fixed by changeset 949553d 
+# TestInstall64: Bug fixed by changeset 949553d
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
@@ -1072,7 +1072,7 @@ gap> hom := HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map := IsomorphismTransformationSemigroup(Range(hom));;
 
 # Checking for correct non-removal of one from generating sets in
-# SemigroupByGenerators 
+# SemigroupByGenerators
 gap> S := Semigroup(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> GeneratorsOfSemigroup(S);
@@ -1091,7 +1091,7 @@ gap> GeneratorsOfMonoid(S);
 [ IdentityTransformation ]
 
 # Checking for correct non-removal of one from generating sets in
-# MonoidByGenerators 
+# MonoidByGenerators
 gap> S := Monoid(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> S := Monoid(PartialPerm([1]));
@@ -1573,8 +1573,8 @@ gap> x := 0;;
 gap> for x in [1 .. Length(gns) - 1] do
 >   Append(rel, List(gns, y -> [gns[x] * y, y * gns[x]]));
 >   Add(rel, [gns[x] ^ (x + 1), gns[x]]);
->   Add(rel, [gns[x] * gns[Length(gns)], gns[x]]);
->   Add(rel, [gns[Length(gns)] * gns[x], gns[x]]);
+>   Add(rel, [gns[x] * Last(gns), gns[x]]);
+>   Add(rel, [Last(gns) * gns[x], gns[x]]);
 > od;
 gap> s := f / rel;;
 gap> sgns := GeneratorsOfSemigroup(s);;
@@ -1635,7 +1635,7 @@ gap> NrEquivalenceClasses(cong);
 3
 
 # Issue 300: problem with InverseOfSemigroupElement for an acting monoid
-gap> S := Monoid(Transformation([1, 2, 4, 4]), 
+gap> S := Monoid(Transformation([1, 2, 4, 4]),
 >                Transformation([4, 2, 3, 4]),
 >                Transformation([1, 4, 3, 4]));;
 gap> IsEUnitaryInverseSemigroup(S);
@@ -1701,7 +1701,7 @@ true
 
 # Issue 389: NaturalPartialOrder
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
-gap> es := IdempotentGeneratedSubsemigroup(S);; 
+gap> es := IdempotentGeneratedSubsemigroup(S);;
 gap> NaturalPartialOrder(es);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1 ], [ 1, 3, 5 ], [ 1, 2, 5 ], 
   [ 1, 2, 3, 4, 5, 6, 7 ] ]
@@ -1771,7 +1771,7 @@ gap> NonTrivialEquivalenceClasses(cong);
 # Issue 680
 gap> F := FreeSemigroup(2);;
 gap> s1 := F.1;; s2 := F.2;;
-gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
+gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2],
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
 gap> cong := SemigroupCongruence(F, rels);
 <2-sided semigroup congruence over <free semigroup on the generators 

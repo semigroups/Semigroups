@@ -18,9 +18,7 @@ end);
 
 InstallMethod(OneImmutable, "for a quotient semigroup",
 [IsQuotientSemigroup],
-function(S)
-  return One(QuotientSemigroupPreimage(S)) ^ QuotientSemigroupHomomorphism(S);
-end);
+S -> One(QuotientSemigroupPreimage(S)) ^ QuotientSemigroupHomomorphism(S));
 
 InstallMethod(GeneratorsOfSemigroup, "for a quotient semigroup",
 [IsQuotientSemigroup],
@@ -51,9 +49,7 @@ end);
 
 InstallMethod(\/, "for a semigroup and an ideal",
 [IsSemigroup, IsSemigroupIdeal],
-function(S, I)
-  return S / ReesCongruenceOfSemigroupIdeal(I);
-end);
+{S, I} -> S / ReesCongruenceOfSemigroupIdeal(I));
 
 # The next function is copied (almost) verbatim from the GAP library (4.11) so
 # that the QuotientSemigroupHomomorphism is a homomorphism object.

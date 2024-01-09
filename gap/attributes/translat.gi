@@ -55,9 +55,8 @@ SEMIGROUPS.HasEasyBitranslationsGenerators := function(T)
 end;
 
 # Hash translations by their underlying transformations
-SEMIGROUPS.HashFunctionForTranslations := function(x, data)
-  return ORB_HashFunctionForPlainFlatList(x![1], data);
-end;
+SEMIGROUPS.HashFunctionForTranslations :=
+{x, data} -> ORB_HashFunctionForPlainFlatList(x![1], data);
 
 # Hash bitranslations as sum of underlying transformation hashes
 SEMIGROUPS.HashFunctionForBitranslations := function(x, data)
@@ -131,7 +130,7 @@ SEMIGROUPS.LeftTranslationsBacktrackData := function(S)
   # for each t in the left inverses of some a in max_R_intersects[i][j] by
   # reps[j], compute the right inverses of each s in S under t
   right_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. id], x -> false);
+  seen := List([1 .. id], ReturnFalse);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -303,7 +302,7 @@ SEMIGROUPS.RightTranslationsBacktrackData := function(S)
   # for each t in the right inverses of some a in max_L_intersects[i][j] by
   # reps[j], compute the left inverses of each s in S under t
   left_inverses := List([1 .. n], x -> ListWithIdenticalEntries(n + 1, fail));
-  seen := List([1 .. id], x -> false);
+  seen := List([1 .. id], ReturnFalse);
   for i in [1 .. m] do
     for j in [1 .. m] do
       if i = j then
@@ -853,11 +852,10 @@ function(L, map)
   S    := UnderlyingSemigroup(L);
   reps := UnderlyingRepresentatives(L);
 
-  if not (S = Source(map) and Source(map) = Range(map)) then
+  if S <> Source(map) or Source(map) <> Range(map) then
     ErrorNoReturn("the domain and range of the second argument must be ",
                   "the underlying semigroup of the first");
-  fi;
-  if ForAny(reps, s -> ForAny(S, t -> (s ^ map) * t <> (s * t) ^ map)) then
+  elif ForAny(reps, s -> ForAny(S, t -> (s ^ map) * t <> (s * t) ^ map)) then
     ErrorNoReturn("the mapping given must define a left translation");
   fi;
 
@@ -873,12 +871,11 @@ function(L, l)
   S    := UnderlyingSemigroup(L);
   reps := UnderlyingRepresentatives(L);
 
-  if not Length(l) = Length(reps) then
+  if Length(l) <> Length(reps) then
     ErrorNoReturn("the second argument must map indices of representatives ",
                   "to indices of elements of the semigroup of the first ",
                   "argument");
-  fi;
-  if not ForAll(l, y -> IsPosInt(y) and y <= Size(S)) then
+  elif not ForAll(l, y -> IsPosInt(y) and y <= Size(S)) then
     ErrorNoReturn("the second argument must map indices of representatives ",
                   "to indices of elements of the semigroup of the first ",
                   "argument");
@@ -941,11 +938,10 @@ function(R, map)
   S    := UnderlyingSemigroup(R);
   reps := UnderlyingRepresentatives(R);
 
-  if not (S = Source(map) and Source(map) = Range(map)) then
+  if S <> Source(map) or Source(map) <> Range(map) then
     ErrorNoReturn("the domain and range of the second argument must be ",
                   "the underlying semigroup of the first");
-  fi;
-  if ForAny(reps, s -> ForAny(S, t -> s * (t ^ map) <> (s * t) ^ map)) then
+  elif ForAny(reps, s -> ForAny(S, t -> s * (t ^ map) <> (s * t) ^ map)) then
     ErrorNoReturn("the mapping given must define a right translation");
   fi;
 
@@ -961,12 +957,11 @@ function(R, r)
   S    := UnderlyingSemigroup(R);
   reps := UnderlyingRepresentatives(R);
 
-  if not Length(r) = Length(reps) then
+  if Length(r) <> Length(reps) then
     ErrorNoReturn("the second argument must map indices of representatives ",
                   "to indices of elements of the semigroup of the first ",
                   "argument");
-  fi;
-  if not ForAll(r, y -> IsPosInt(y) and y <= Size(S)) then
+  elif not ForAll(r, y -> IsPosInt(y) and y <= Size(S)) then
     ErrorNoReturn("the second argument must map indices of representatives ",
                   "to indices of elements of the semigroup of the first ",
                   "argument");
@@ -1053,8 +1048,8 @@ function(H, l, r)
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(l));
   R := RightTranslationsSemigroupOfFamily(FamilyObj(r));
 
-  if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
-      ErrorNoReturn("each argument must have the same underlying semigroup");
+  if UnderlyingSemigroup(L) <> S or UnderlyingSemigroup(R) <> S then
+    ErrorNoReturn("each argument must have the same underlying semigroup");
   fi;
 
   l_reps := UnderlyingRepresentatives(L);
@@ -1069,9 +1064,7 @@ function(H, l, r)
 end);
 
 InstallGlobalFunction(BitranslationNC,
-function(H, l, r)
-  return Objectify(TypeBitranslations(H), [l, r]);
-end);
+{H, l, r} -> Objectify(TypeBitranslations(H), [l, r]));
 
 #############################################################################
 # 3. Methods for rectangular bands
@@ -1088,8 +1081,7 @@ function(T)
   S := UnderlyingSemigroup(T);
   if not IsRectangularBand(S) then
     TryNextMethod();
-  fi;
-  if IsLeftTranslationsSemigroup(T) then
+  elif IsLeftTranslationsSemigroup(T) then
     n := NrRClasses(S);
   else
     n := NrLClasses(S);
@@ -1363,9 +1355,7 @@ function(T)
   # Just use the AsList for semigroups if generators are known
   if SEMIGROUPS.HasEasyTranslationsGenerators(T) then
     TryNextMethod();
-  fi;
-
-  if IsLeftTranslationsSemigroup(T) then
+  elif IsLeftTranslationsSemigroup(T) then
     return SEMIGROUPS.LeftTranslationsBacktrack(T);
   else
     return SEMIGROUPS.RightTranslationsBacktrack(T);
@@ -1391,15 +1381,11 @@ end);
 
 InstallMethod(Size, "for a semigroups of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
-function(T)
-  return Size(AsList(T));
-end);
+T -> Size(AsList(T)));
 
 InstallMethod(Size, "for a translational hull",
 [IsBitranslationsSemigroup and IsWholeFamily],
-function(H)
-  return Size(AsList(H));
-end);
+H -> Size(AsList(H)));
 
 InstallMethod(NrLeftTranslations, "for a semigroup",
 [IsSemigroup and CanUseFroidurePin and IsFinite],
@@ -1563,18 +1549,12 @@ function(x, y)
 end);
 
 InstallMethod(\=, "for left translations of a semigroup",
-IsIdenticalObj,
-[IsLeftTranslation, IsLeftTranslation],
-function(x, y)
-  return x![1] = y![1];
-end);
+IsIdenticalObj, [IsLeftTranslation, IsLeftTranslation],
+{x, y} -> x![1] = y![1]);
 
 InstallMethod(\<, "for left translations of a semigroup",
-IsIdenticalObj,
-[IsLeftTranslation, IsLeftTranslation],
-function(x, y)
-  return x![1] < y![1];
-end);
+IsIdenticalObj, [IsLeftTranslation, IsLeftTranslation],
+{x, y} -> x![1] < y![1]);
 
 # Different order of multiplication
 InstallMethod(\*, "for right translations of a semigroup",
@@ -1592,18 +1572,12 @@ function(x, y)
 end);
 
 InstallMethod(\=, "for right translations of a semigroup",
-IsIdenticalObj,
-[IsRightTranslation, IsRightTranslation],
-function(x, y)
-  return x![1] = y![1];
-end);
+IsIdenticalObj, [IsRightTranslation, IsRightTranslation],
+{x, y} -> x![1] = y![1]);
 
 InstallMethod(\<, "for right translations of a semigroup",
-IsIdenticalObj,
-[IsRightTranslation, IsRightTranslation],
-function(x, y)
-  return x![1] < y![1];
-end);
+IsIdenticalObj, [IsRightTranslation, IsRightTranslation],
+{x, y} -> x![1] < y![1]);
 
 InstallMethod(\^, "for a semigroup element and a translation",
 [IsAssociativeElement, IsSemigroupTranslation],
@@ -1667,25 +1641,16 @@ function(x)
 end);
 
 InstallMethod(\*, "for bitranslations",
-IsIdenticalObj,
-[IsBitranslation, IsBitranslation],
-function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]);
-end);
+IsIdenticalObj, [IsBitranslation, IsBitranslation],
+{x, y} -> Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]));
 
 InstallMethod(\=, "for bitranslations",
-IsIdenticalObj,
-[IsBitranslation, IsBitranslation],
-function(x, y)
-  return x![1] = y![1] and x![2] = y![2];
-end);
+IsIdenticalObj, [IsBitranslation, IsBitranslation],
+{x, y} -> x![1] = y![1] and x![2] = y![2]);
 
-InstallMethod(\<, "for bitranslations",
-IsIdenticalObj,
+InstallMethod(\<, "for bitranslations", IsIdenticalObj,
 [IsBitranslation, IsBitranslation],
-function(x, y)
-  return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
-end);
+{x, y} -> x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]));
 
 InstallMethod(UnderlyingSemigroup,
 "for a semigroup of left or right translations",
@@ -1712,14 +1677,14 @@ end);
 
 InstallMethod(ChooseHashFunction, "for a left or right translation and int",
 [IsSemigroupTranslation, IsInt],
-function(x, hashlen)
+function(_, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForTranslations,
              data := hashlen);
 end);
 
 InstallMethod(ChooseHashFunction, "for a bitranslation and int",
 [IsBitranslation, IsInt],
-function(x, hashlen)
+function(_, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForBitranslations,
              data := hashlen);
 end);

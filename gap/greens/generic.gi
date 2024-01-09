@@ -188,51 +188,37 @@ InstallMethod(GreensJClassOfElementNC,
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",
 [IsGreensDClass, IsMultiplicativeElement],
-function(D, x)
-  return EquivalenceClassOfElement(GreensRRelation(Parent(D)), x);
-end);
+{D, x} -> EquivalenceClassOfElement(GreensRRelation(Parent(D)), x));
 
 InstallMethod(GreensLClassOfElement,
 "for a D-class and multiplicative element",
 [IsGreensDClass, IsMultiplicativeElement],
-function(D, x)
-  return EquivalenceClassOfElement(GreensLRelation(Parent(D)), x);
-end);
+{D, x} -> EquivalenceClassOfElement(GreensLRelation(Parent(D)), x));
 
 InstallMethod(GreensHClassOfElement,
 "for a Green's class and multiplicative element",
 [IsGreensClass, IsMultiplicativeElement],
-function(C, x)
-  return EquivalenceClassOfElement(GreensHRelation(Parent(C)), x);
-end);
+{C, x} -> EquivalenceClassOfElement(GreensHRelation(Parent(C)), x));
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensRRelation(S), x);
-end);
+{S, x} -> EquivalenceClassOfElementNC(GreensRRelation(S), x));
 
 InstallMethod(GreensLClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensLRelation(S), x);
-end);
+{S, x} -> EquivalenceClassOfElementNC(GreensLRelation(S), x));
 
 InstallMethod(GreensHClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensHRelation(S), x);
-end);
+{S, x} -> EquivalenceClassOfElementNC(GreensHRelation(S), x));
 
 InstallMethod(GreensDClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensDRelation(S), x);
-end);
+{S, x} -> EquivalenceClassOfElementNC(GreensDRelation(S), x));
 
 # Fallback methods
 
@@ -497,7 +483,7 @@ InstallMethod(Idempotents, "for a Green's class",
 #############################################################################
 
 InstallMethod(IsRegularGreensClass, "for a Green's class",
-[IsGreensClass], C -> First(Enumerator(C), x -> IsIdempotent(x)) <> fail);
+[IsGreensClass], C -> First(Enumerator(C), IsIdempotent) <> fail);
 
 #############################################################################
 ## 7. Properties of Green's classes . . .
@@ -517,16 +503,10 @@ InstallMethod(IsRTrivial, "for a Green's D-class",
 #############################################################################
 
 InstallMethod(IteratorOfDClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-function(S)
-  return IteratorList(GreensDClasses(S));
-end);
+[IsSemigroup and IsFinite], S -> IteratorList(GreensDClasses(S)));
 
 InstallMethod(IteratorOfRClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite],
-function(S)
-  return IteratorList(GreensRClasses(S));
-end);
+[IsSemigroup and IsFinite], S -> IteratorList(GreensRClasses(S)));
 
 #############################################################################
 ## 9. Viewing, printing, etc . . .

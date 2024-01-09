@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# Note that IsIntegerMatrixSemigroup does not imply
+# IsMatrixOverSemiringSemigroup and so we require this method too.
 InstallMethod(SemigroupViewStringSuffix,
 "for an integer matrix semigroup",
 [IsIntegerMatrixSemigroup],
@@ -22,7 +24,7 @@ InstallMethod(IsomorphismSemigroup,
 [IsIntegerMatrixSemigroup,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 1,  # to beat the default method
-function(filt, S)
+function(_, S)
   local n, map, T;
 
   n    := Maximum(DegreeOfTransformationSemigroup(S), 1);

@@ -175,9 +175,9 @@ function(x)
   return MatrixNC(x, id);
 end);
 
-InstallMethod(RandomMatrixCons, "for boolean matrices and a pos int",
+InstallMethod(RandomMatrixCons, "for IsBooleanMat and a pos int",
 [IsBooleanMat, IsPosInt],
-function(filter, n)
+function(_, n)
   local x, i, j;
 
   x := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -383,9 +383,7 @@ end);
 
 InstallMethod(AsDigraph, "for a boolean matrix",
 [IsBooleanMat],
-function(mat)
-  return DigraphByAdjacencyMatrix(AsList(mat));
-end);
+{mat} -> DigraphByAdjacencyMatrix(AsList(mat)));
 
 InstallMethod(AsBooleanMat, "for a digraph",
 [IsDigraph],
@@ -477,9 +475,7 @@ InstallMethod(AsBooleanMat, "for a perm",
 
 InstallMethod(AsBooleanMat, "for a perm",
 [IsPerm, IsPosInt],
-function(x, n)
-  return AsBooleanMat(AsTransformation(x), n);
-end);
+{x, n} -> AsBooleanMat(AsTransformation(x), n));
 
 InstallMethod(AsBooleanMat, "for a partial perm",
 [IsPartialPerm],
@@ -532,10 +528,7 @@ end);
 
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
-  function(x, hashlen)
-  return rec(func := SEMIGROUPS.HashFunctionBooleanMat,
-             data := hashlen);
-end);
+{_, hashlen} -> rec(func := SEMIGROUPS.HashFunctionBooleanMat, data := hashlen));
 
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],
@@ -716,10 +709,7 @@ function(x)
 end);
 
 InstallMethod(IsOntoBooleanMat, "for a boolean matrix",
-[IsBooleanMat],
-function(x)
-  return IsTotalBooleanMat(TransposedMat(x));
-end);
+[IsBooleanMat], x -> IsTotalBooleanMat(TransposedMat(x)));
 
 InstallMethod(IsTransformationBooleanMat, "for a boolean matrix",
 [IsBooleanMat],

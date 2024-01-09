@@ -10,7 +10,7 @@
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
 function(st)
-  if Length(st) = 0 then
+  if IsEmpty(st) then
     return st;
   else
     return Concatenation(" (", st, ")");

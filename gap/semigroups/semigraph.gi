@@ -80,9 +80,7 @@ end);
 
 InstallMethod(IsVertex, "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
-function(x)
-  return Length(x![1]) = 1 and AbsInt(x![1][1]) > Length(DigraphSource(x![2]));
-end);
+x -> Length(x![1]) = 1 and AbsInt(x![1][1]) > Length(DigraphSource(x![2])));
 
 InstallMethod(MultiplicativeZero, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
@@ -93,15 +91,11 @@ end);
 
 InstallMethod(ZeroOp, "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
-function(x)
-  return Objectify(FamilyObj(x)!.type, [[0], x![2]]);
-end);
+x -> Objectify(FamilyObj(x)!.type, [[0], x![2]]));
 
 InstallMethod(IsZero, "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
-function(x)
-  return x![1][1] = 0;
-end);
+x -> x![1][1] = 0);
 
 InstallMethod(Source, "for a graph inverse semigroup element",
 [IsGraphInverseSemigroupElement],
@@ -195,15 +189,11 @@ end);
 
 InstallMethod(\<, "for elements of a graph inverse semigroup",
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
-function(x, y)
-  return x![1] < y![1];
-end);
+{x, y} -> x![1] < y![1]);
 
 InstallMethod(\=, "for elements of a graph inverse semigroup",
 [IsGraphInverseSemigroupElement, IsGraphInverseSemigroupElement],
-function(x, y)
-  return x![1] = y![1];
-end);
+{x, y} -> x![1] = y![1]);
 
 # here
 
@@ -300,4 +290,3 @@ function(x)
   fi;
   return x![1][1] - DigraphNrEdges(x![2]);
 end);
-

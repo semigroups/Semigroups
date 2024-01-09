@@ -26,7 +26,7 @@ function(S, conj)
 
   Recurse := function(S, rep, conj)
     local pnt, max, val, lrep, gen, i;
-    if Length(S.generators) = 0  then
+    if IsEmpty(S.generators) then
       return rep ^ conj;
     fi;
     pnt := S.orbit[1];
@@ -80,14 +80,12 @@ function(S)
 
   UseIsomorphismRelation(S, G);
 
-  iso := function(x)
-    return EvaluateWord(gen1, Factorization(S, x));
-  end;
+  iso := x -> EvaluateWord(gen1, Factorization(S, x));
 
   inv := function(x)
     local w, i;
     w := ExtRepOfObj(Factorization(G, x));
-    if Length(w) = 0 then
+    if IsEmpty(w) then
       return MultiplicativeNeutralElement(S);
     fi;
     for i in [2, 4 .. Length(w)] do

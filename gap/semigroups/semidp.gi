@@ -52,7 +52,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
   fi;
 
   n := Length(S);
-  gens_old := List(S, i -> f(i));
+  gens_old := List(S, f);
   gens_new := List([1 .. n], i -> []);
   indecomp := List([1 .. n], i -> []);
   pre_mult := List([1 .. n], i -> []);
@@ -210,9 +210,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
                                  [convert(x, degrees[i], offsets[i])],
                                  idems{[i + 1 .. n]}));
   end;
-  projection := function(x, i)
-    return restrict(x, offsets[i], degrees[i]);
-  end;
+  projection := {x, i} -> restrict(x, offsets[i], degrees[i]);
   SetSemigroupDirectProductInfo(D, rec(factors     := S,
                                        nrfactors   := n,
                                        embedding   := embedding,
@@ -239,9 +237,8 @@ function(list, S)
   fi;
 
   combine := x -> Transformation(Concatenation(x));
-  convert := function(element, degree, offset)
-    return ImageListOfTransformation(element, degree) + offset;
-  end;
+  convert := {element, degree, offset} ->
+               ImageListOfTransformation(element, degree) + offset;
   restrict := function(element, offset, degree)
     local im;
     im := ImageListOfTransformation(element, offset + degree);
@@ -271,7 +268,7 @@ function(list, S)
                          CodegreeOfPartialPermSemigroup(S));
   combine := x -> PartialPerm(Concatenation(List(x, y -> y[1])),
                               Concatenation(List(x, y -> y[2])));
-  convert := function(element, degree, offset)
+  convert := function(element, _, offset)
     return [DomainOfPartialPerm(element) + offset,
             ImageListOfPartialPerm(element) + offset];
   end;
@@ -307,7 +304,7 @@ function(list, S)
   fi;
 
   combine := x -> Bipartition(Concatenation(x));
-  convert := function(element, degree, offset)
+  convert := function(element, _, offset)
     local x, i, j;
     x := List(ExtRepOfObj(element), ShallowCopy);
     for i in [1 .. Length(x)] do
@@ -339,8 +336,11 @@ function(list, S)
     od;
     return Bipartition(new_bipartition);
   end;
-  return SEMIGROUPS.DirectProductOp(list, DegreeOfBipartitionSemigroup, convert,
-                                    combine, restrict);
+  return SEMIGROUPS.DirectProductOp(list,
+                                    DegreeOfBipartitionSemigroup,
+                                    convert,
+                                    combine,
+                                    restrict);
 end);
 
 # PBR semigroups
