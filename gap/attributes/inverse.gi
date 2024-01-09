@@ -531,9 +531,7 @@ function(S, f)
     rank := ActionRank(S);
     SortBy(elts, rank);
   else
-    rank := function(x, y)
-      return IsGreensDGreaterThanFunc(S)(y, x);
-    end;
+    rank := {x, y} -> IsGreensDGreaterThanFunc(S)(y, x);
     Sort(elts, rank);
   fi;
 
@@ -707,6 +705,4 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an inverse semigroup and a multiplicative element",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElement], SUM_FLAGS,
-function(S, elm)
-  return [elm ^ -1];
-end);
+{_, elm} -> [elm ^ -1]);

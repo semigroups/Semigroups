@@ -30,27 +30,25 @@ InstallImmediateMethod(GeneratingPairsOfLeftRightOrTwoSidedCongruence,
                        0,
                        GeneratingPairsOfRightMagmaCongruence);
 
+BindGlobal("SEMIGROUPS_ImmediateNoGeneratingPairs",
+function(C)
+  if IsEmpty(GeneratingPairsOfMagmaCongruence(C)) then
+    return [];
+  fi;
+  TryNextMethod();
+end);
+
 InstallImmediateMethod(GeneratingPairsOfLeftMagmaCongruence,
                        IsMagmaCongruence and IsSemigroupCongruence
                          and HasGeneratingPairsOfMagmaCongruence,
                        0,
-                       function(C)
-                         if IsEmpty(GeneratingPairsOfMagmaCongruence(C)) then
-                           return [];
-                         fi;
-                         TryNextMethod();
-                       end);
+                       SEMIGROUPS_ImmediateNoGeneratingPairs);
 
 InstallImmediateMethod(GeneratingPairsOfRightMagmaCongruence,
                        IsMagmaCongruence and IsSemigroupCongruence
                          and HasGeneratingPairsOfMagmaCongruence,
                        0,
-                       function(C)
-                         if IsEmpty(GeneratingPairsOfMagmaCongruence(C)) then
-                           return [];
-                         fi;
-                         TryNextMethod();
-                       end);
+                       SEMIGROUPS_ImmediateNoGeneratingPairs);
 
 # Some types of congruences (such as CongruenceByKernelAndTrace) do not know
 # their generating pairs by default, and hence we require the following methods

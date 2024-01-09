@@ -17,23 +17,5 @@ function(S)
   local n, type;
   n    := DimensionOfMatrixOverSemiring(Representative(S));
   type := SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S));
-  return StringFormatted("{}x{} {} matrices ", n, n, type);
-end);
-
-InstallMethod(SemigroupViewStringSuffix,
-"for an integer matrix semigroup",
-[IsIntegerMatrixSemigroup],
-function(S)
-  return StringFormatted("{1}x{1} {2} matrices ",
-                         NrRows(Representative(S)),
-                         "integer");
-end);
-
-InstallMethod(SemigroupViewStringSuffix,
-"for an integer matrix monoid",
-[IsIntegerMatrixMonoid],
-function(S)
-  return StringFormatted("{1}x{1} {2} matrices ",
-                         NrRows(Representative(S)),
-                         "integer");
+  return StringFormatted("{1}x{1} {2} matrices ", n, type);
 end);

@@ -119,7 +119,7 @@ gap> classes[4] * classes[3];
 <2-sided congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6,
   9 ] )>
 gap> EquivalenceClassOfElement(v, Representative(classes[5] * classes[2])) =
-> EquivalenceClassOfElement(v, 
+> EquivalenceClassOfElement(v,
 >                          Representative(classes[5]) *
 >                          Representative(classes[2]));
 true
@@ -320,7 +320,7 @@ f the 2nd argument (a 2-sided semigroup congruence)
 # Classes
 gap> S := Semigroup([
 > Transformation([1, 5, 4, 2, 1]), Transformation([2, 1, 1, 1, 3])]);;
-gap> pair := [Transformation([2, 2, 2, 3, 2]), 
+gap> pair := [Transformation([2, 2, 2, 3, 2]),
 >             Transformation([2, 2, 1, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> class := EquivalenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
@@ -386,9 +386,9 @@ gap> NrEquivalenceClasses(cong1);
 46656
 
 # Test duplicate generators of semigroup
-gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
 gap> cong := LeftSemigroupCongruence(S, [S.1, S.2]);;
 gap> NrEquivalenceClasses(cong);
@@ -399,8 +399,8 @@ gap> NrEquivalenceClasses(cong);
 gap> cong := SemigroupCongruence(S, [S.1, S.2]);;
 gap> NrEquivalenceClasses(cong);
 1
-gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
 gap> cong := LeftSemigroupCongruence(S, [S.1, S.2]);;
 gap> NrEquivalenceClasses(cong);
@@ -413,9 +413,9 @@ gap> NrEquivalenceClasses(cong);
 1
 
 # Test duplicate generators of semigroup as generating pairs
-gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
 gap> cong := LeftSemigroupCongruence(S, [S.3, S.4]);;
 gap> NrEquivalenceClasses(cong);
@@ -523,7 +523,7 @@ gap> EquivalenceRelationPartition(cong);
       <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, 
       <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ] ]
 gap> cong := SemigroupCongruence(S, []);;
-gap> EquivalenceRelationPartition(cong) = [];
+gap> IsEmpty(EquivalenceRelationPartition(cong));
 true
 gap> cong := UniversalSemigroupCongruence(S);;
 gap> Length(EquivalenceRelationPartition(cong)) = 1;
@@ -631,8 +631,8 @@ gap> x := 0;;
 gap> for x in [1 .. Length(gens) - 1] do
 > Append(rels, List(gens, y -> [gens[x] * y, y * gens[x]]));
 > Add(rels, [gens[x] ^ (x + 1), gens[x]]);
-> Add(rels, [gens[x] * gens[Length(gens)], gens[x]]);
-> Add(rels, [gens[Length(gens)] * gens[x], gens[x]]);
+> Add(rels, [gens[x] * Last(gens), gens[x]]);
+> Add(rels, [Last(gens) * gens[x], gens[x]]);
 > od;
 gap> S := F / rels;;
 gap> sgens := GeneratorsOfSemigroup(S);;

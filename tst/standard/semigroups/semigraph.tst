@@ -32,7 +32,7 @@ gap> Elements(S);
   e_5e_3^-1e_1^-1, v_1, v_2, v_3, v_4, v_5 ]
 gap> IsVertex(last[1]);
 false
-gap> IsVertex(last2[Length(last2)]);
+gap> IsVertex(Last(last2));
 true
 gap> AssignGeneratorVariables(S);
 gap> Zero(e_1);

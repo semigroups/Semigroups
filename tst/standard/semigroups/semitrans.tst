@@ -23,9 +23,9 @@ gap> TestIterator := function(S, it)
 >   local valid, len, x;
 >   valid := true;;
 >   len := 0;
->   for x in it do 
+>   for x in it do
 >     len := len + 1;
->     if not x in S then 
+>     if not x in S then
 >       valid := false;
 >       break;
 >     fi;
@@ -578,7 +578,7 @@ true
 gap> BruteForceIsoCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsPBRSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > PBR([[-2], [-1], [-2], [-2]], [[2], [1, 3, 4], [], []]),
@@ -602,7 +602,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsFpSemigroup to IsTransformationSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 * s2, s2], [s2 ^ 2, s2], [s1 ^ 3, s1]];;
@@ -626,7 +626,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBipartitionSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Bipartition([[1, 3, 4, -2], [2, -1], [-3], [-4]]),
@@ -650,7 +650,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTransformationSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Transformation([2, 1, 2, 2]), Transformation([3, 3, 3, 3])]);
@@ -673,7 +673,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBooleanMatSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -705,7 +705,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsMaxPlusMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -737,7 +737,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsMinPlusMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -769,7 +769,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -801,7 +801,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsIntegerMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(Integers,
@@ -833,7 +833,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -865,7 +865,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -897,7 +897,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsNTPMatrixSemigroup to IsTransformationSemigroup
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -929,7 +929,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()], [()]]);
 <Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
@@ -951,7 +951,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationMonoid
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -973,7 +973,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsReesMatrixSemigroup to IsTransformationSemigroup
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[()], [()]]);
 <Rees matrix semigroup 1x2 over Group([ (1,2) ])>
@@ -995,7 +995,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsReesMatrixSemigroup to IsTransformationMonoid
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1017,7 +1017,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()], [0]]);
 <Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
@@ -1039,7 +1039,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsPBRMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > PBR([[-2], [-3], [-2]], [[], [1, 3], [2]]),
@@ -1063,7 +1063,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsFpMonoid to IsTransformationSemigroup
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
@@ -1087,7 +1087,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBipartitionMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Bipartition([[1, 3, -2], [2, -3], [-1]]),
@@ -1111,7 +1111,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTransformationMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Transformation([2, 3, 2]), Transformation([2, 2, 2])]);
@@ -1134,7 +1134,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBooleanMatMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -1164,7 +1164,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsMaxPlusMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -1194,7 +1194,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsMinPlusMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -1224,7 +1224,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1254,7 +1254,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsIntegerMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(Integers,
@@ -1284,7 +1284,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1314,7 +1314,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1344,7 +1344,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsNTPMatrixMonoid to IsTransformationSemigroup
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -1374,7 +1374,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsPBRMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > PBR([[-2], [-3], [-2]], [[], [1, 3], [2]]),
@@ -1398,7 +1398,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsFpMonoid to IsTransformationMonoid
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
 gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
@@ -1422,7 +1422,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsBipartitionMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Bipartition([[1, 3, -2], [2, -3], [-1]]),
@@ -1446,7 +1446,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTransformationMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Transformation([2, 3, 2]), Transformation([2, 2, 2])]);
@@ -1469,7 +1469,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsBooleanMatMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsBooleanMat,
@@ -1499,7 +1499,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsMaxPlusMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsMaxPlusMatrix,
@@ -1529,7 +1529,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsMinPlusMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsMinPlusMatrix,
@@ -1559,7 +1559,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1589,7 +1589,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsIntegerMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(Integers,
@@ -1619,7 +1619,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -1649,7 +1649,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -1679,7 +1679,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsNTPMatrixMonoid to IsTransformationMonoid
 gap> S := Monoid([
 > Matrix(IsNTPMatrix,
@@ -1709,7 +1709,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsPBRSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > PBR([[-1], [-2], [-2], [-2], [-2]], [[1], [2, 3, 4, 5], [], [], []]),
@@ -1733,7 +1733,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsFpSemigroup to IsTransformationMonoid
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
 gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
@@ -1757,7 +1757,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsBipartitionSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Bipartition([[1, -1], [2, 3, 4, 5, -2], [-3], [-4], [-5]]),
@@ -1780,7 +1780,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTransformationSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Transformation([1, 2, 2, 2, 2]), Transformation([2, 1, 1, 1, 1])]);
@@ -1802,7 +1802,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsBooleanMatSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsBooleanMat,
@@ -1836,7 +1836,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsMaxPlusMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsMaxPlusMatrix,
@@ -1870,7 +1870,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsMinPlusMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsMinPlusMatrix,
@@ -1904,7 +1904,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix,
@@ -1938,7 +1938,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsIntegerMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(Integers,
@@ -1972,7 +1972,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsTropicalMaxPlusMatrix,
@@ -2006,7 +2006,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsTropicalMinPlusMatrix,
@@ -2040,7 +2040,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsMonoid: 
+# AsMonoid:
 #   convert from IsNTPMatrixSemigroup to IsTransformationMonoid
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix,
@@ -2074,7 +2074,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from free band to IsTransformationSemigroup
 gap> S := FreeBand(2);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -2095,7 +2095,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from perm group  to IsTransformationSemigroup
 gap> S := DihedralGroup(IsPermGroup, 6);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -2116,7 +2116,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from non-perm group  to IsTransformationSemigroup
 gap> S := DihedralGroup(6);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -2137,7 +2137,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBlockBijectionSemigroup to IsTransformationSemigroup
 gap> S := InverseSemigroup(Bipartition([[1, -1, -3],
 >         [2, 3, -2]]));;
@@ -2159,7 +2159,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBlockBijectionMonoid to IsTransformationMonoid
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
@@ -2181,7 +2181,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsBlockBijectionMonoid to IsTransformationSemigroup
 gap> S := InverseMonoid([
 > Bipartition([[1, -1, -3], [2, 3, -2]])]);;
@@ -2203,7 +2203,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsPartialPermSemigroup to IsTransformationSemigroup
 gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]),
 >                          PartialPerm([1, 2], [3, 1]));
@@ -2226,7 +2226,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsPartialPermMonoid to IsTransformationMonoid
 gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([1, 2], [3, 1]));
@@ -2249,7 +2249,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# AsSemigroup: 
+# AsSemigroup:
 #   convert from IsPartialPermMonoid to IsTransformationSemigroup
 gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([1, 2], [3, 1]));
@@ -2469,13 +2469,13 @@ gap> Set(Idempotents(S, 3));
 gap> Set(Idempotents(S, 4));
 [  ]
 
-# Test IteratorSorted 
+# Test IteratorSorted
 gap> S1 := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
 gap> S2 := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
 gap> iter1 := IteratorSorted(S1);;
 gap> iter2 := IteratorSorted(S2);;
 gap> for x in iter1 do
-> if not x = NextIterator(iter2) then
+> if x <> NextIterator(iter2) then
 > Print("Problem in IteratorSorted\n");
 > fi;
 > od;
@@ -2485,7 +2485,7 @@ gap> AsSet(S2);;
 gap> iter1 := IteratorSorted(S1);;
 gap> iter2 := IteratorSorted(S2);;
 gap> for x in iter1 do
-> if not x = NextIterator(iter2) then
+> if x <> NextIterator(iter2) then
 > Print("Problem in IteratorSorted\n");
 > fi;
 > od;
@@ -2635,7 +2635,7 @@ gap> Size(T);
 gap> Size(M);
 40
 
-# Test DigraphOfAction 
+# Test DigraphOfAction
 gap> D := DigraphOfAction(FullTransformationMonoid(1), [[1]], OnSets);
 <immutable digraph with 1 vertex, 1 edge>
 gap> D := DigraphOfAction(FullTransformationMonoid(1), [1], OnPoints);

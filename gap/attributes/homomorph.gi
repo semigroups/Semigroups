@@ -131,9 +131,8 @@ end);
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups and one list",
 [IsSemigroup, IsSemigroup, IsList],
-function(S, T, imgs)
-  return SemigroupHomomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs);
-end);
+{S, T, imgs}
+-> SemigroupHomomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs));
 
 InstallMethod(SemigroupHomomorphismByImages, "for two semigroups",
 [IsSemigroup, IsSemigroup],
@@ -146,9 +145,8 @@ end);
 
 InstallMethod(SemigroupHomomorphismByImages, "for a semigroup and two lists",
 [IsSemigroup, IsList, IsList],
-function(S, gens, imgs)
-  return SemigroupHomomorphismByImages(S, Semigroup(imgs), gens, imgs);
-end);
+{S, gens, imgs}
+-> SemigroupHomomorphismByImages(S, Semigroup(imgs), gens, imgs));
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroup and two lists",
 [IsSemigroup, IsSemigroup, IsList, IsList],
@@ -180,9 +178,8 @@ end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroups and one list",
 [IsSemigroup, IsSemigroup, IsList],
-function(S, T, imgs)
-  return SemigroupIsomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs);
-end);
+{S, T, imgs}
+-> SemigroupIsomorphismByImages(S, T, GeneratorsOfSemigroup(S), imgs));
 
 InstallMethod(SemigroupIsomorphismByImages, "for two semigroups",
 [IsSemigroup, IsSemigroup],
@@ -195,9 +192,7 @@ end);
 
 InstallMethod(SemigroupIsomorphismByImages, "for a semigroup and two lists",
 [IsSemigroup, IsList, IsList],
-function(S, gens, imgs)
-  return SemigroupIsomorphismByImages(S, Semigroup(imgs), gens, imgs);
-end);
+{S, gens, imgs} -> SemigroupIsomorphismByImages(S, Semigroup(imgs), gens, imgs));
 
 InstallMethod(SemigroupHomomorphismByImages_NC,
 "for two semigroups and two lists",
@@ -337,15 +332,11 @@ hom -> SemigroupIsomorphismByFunctionNC(Source(hom),
 # Methods for SHBI/SIBI/SHBF
 InstallMethod(IsSurjective, "for a semigroup homomorphism",
 [IsSemigroupHomomorphismByImagesOrFunction],
-function(hom)
-  return Size(ImagesSource(hom)) = Size(Range(hom));
-end);
+{hom} -> Size(ImagesSource(hom)) = Size(Range(hom)));
 
 InstallMethod(IsInjective, "for a semigroup homomorphism",
 [IsSemigroupHomomorphismByImagesOrFunction],
-function(hom)
-  return Size(Source(hom)) = Size(ImagesSource(hom));
-end);
+{hom} -> Size(Source(hom)) = Size(ImagesSource(hom)));
 
 InstallMethod(ImagesSet, "for a semigroup homom. and list of elements",
 [IsSemigroupHomomorphismByImagesOrFunction, IsList],

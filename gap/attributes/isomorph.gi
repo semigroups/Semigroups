@@ -59,9 +59,7 @@ function(S)
     return (lit[1] - 1) * n ^ 2 + (lit[2] - 1) * n + lit[3];
   end;
 
-  DiagonalToLits := function(diag, n)
-    return List([1 .. n], i -> NumLit([i, i, diag[i]], n));
-  end;
+  DiagonalToLits := {diag, n} -> List([1 .. n], i -> NumLit([i, i, diag[i]], n));
 
   TableToLits := function(table, n)
     local literals, val, i, j;
@@ -87,9 +85,7 @@ function(S)
     return table;
   end;
 
-  OnLiterals := n -> function(ln, pi)
-    return NumLit(OnTuples(LitNum(ln, n), pi), n);
-  end;
+  OnLiterals := n -> {ln, pi} -> NumLit(OnTuples(LitNum(ln, n), pi), n);
 
   # for not too big semigroups...
   n   := Size(S);
@@ -109,9 +105,7 @@ end);
 
 InstallMethod(IsIsomorphicSemigroup, "for semigroups",
 [IsSemigroup, IsSemigroup],
-function(S, T)
-  return IsomorphismSemigroups(S, T) <> fail;
-end);
+{S, T} -> IsomorphismSemigroups(S, T) <> fail);
 
 InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
 [IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],

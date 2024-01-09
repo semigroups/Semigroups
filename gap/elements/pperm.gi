@@ -11,6 +11,4 @@ InstallMethod(IndexPeriodOfSemigroupElement, "for a partial perm",
 [IsPartialPerm], IndexPeriodOfPartialPerm);
 
 InstallMethod(CyclesOfPartialPerm, "for a partial perm", [IsPartialPerm],
-function(f)
-  return DigraphAllSimpleCircuits(AsDigraph(f));
-end);
+f -> DigraphAllSimpleCircuits(AsDigraph(f)));

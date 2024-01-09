@@ -237,9 +237,7 @@ end);
 InstallMethod(NrEquivalenceClasses,
 "for a left, right, or 2-sided congruence that can compute partition",
 [CanComputeEquivalenceRelationPartition],
-function(C)
-  return Length(EquivalenceClasses(C));
-end);
+C -> Length(EquivalenceClasses(C)));
 
 BindGlobal("_GeneratingPairsOfLeftRight2SidedCongDefault",
 function(XCongruenceByGeneratingPairs, C)

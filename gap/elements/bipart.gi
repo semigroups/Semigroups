@@ -169,9 +169,7 @@ function(blocks)
 end);
 
 InstallMethod(IdentityBipartition, "for zero", [IsZeroCyc],
-function(n)
-  return Bipartition([]);
-end);
+_ -> Bipartition([]));
 
 InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
@@ -215,9 +213,7 @@ function(rs, n)
 end);
 
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
-function(n)
-  return RandomBipartition(GlobalMersenneTwister, n);
-end);
+n -> RandomBipartition(GlobalMersenneTwister, n));
 
 InstallMethod(RandomBlockBijection, "for a random source and pos int",
 [IsRandomSource, IsPosInt],
@@ -255,9 +251,7 @@ function(rs, n)
 end);
 
 InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
-function(n)
-  return RandomBlockBijection(GlobalMersenneTwister, n);
-end);
+n -> RandomBlockBijection(GlobalMersenneTwister, n));
 
 # Operators
 
@@ -318,10 +312,7 @@ InstallMethod(StarOp, "for a bipartition", [IsBipartition], BIPART_STAR);
 
 InstallMethod(ChooseHashFunction, "for a bipartition",
 [IsBipartition, IsInt],
-  function(x, hashlen)
-  return rec(func := BIPART_HASH,
-             data := hashlen);
-end);
+{_, hashlen} -> rec(func := BIPART_HASH, data := hashlen));
 
 #############################################################################
 # GAP level
@@ -358,9 +349,7 @@ end);
 
 InstallMethod(IsBlockBijection, "for a bipartition",
 [IsBipartition],
-function(x)
-  return NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x);
-end);
+x -> NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x));
 
 InstallMethod(IsPartialPermBipartition, "for a bipartition",
 [IsBipartition],
@@ -464,9 +453,7 @@ end);
 
 InstallMethod(\^, "for a bipartition and permutation",
 [IsBipartition, IsPerm],
-function(f, p)
-  return p ^ -1 * f * p;
-end);
+{f, p} -> p ^ -1 * f * p);
 
 # Other operators
 
@@ -485,9 +472,7 @@ end);
 
 InstallMethod(AsBipartition, "for a permutation and zero",
 [IsPerm, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
+{f, n} -> Bipartition([]));
 
 InstallMethod(AsBipartition, "for a permutation",
 [IsPerm], x -> AsBipartition(x, LargestMovedPoint(x)));
@@ -501,31 +486,23 @@ end);
 
 InstallMethod(AsBipartition, "for a partial perm and zero",
 [IsPartialPerm, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
+{f, n} -> Bipartition([]));
 
 InstallMethod(AsBipartition, "for a transformation",
 [IsTransformation], x -> AsBipartition(x, DegreeOfTransformation(x)));
 
 InstallMethod(AsBipartition, "for a transformation and zero",
 [IsTransformation, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
+{f, n} -> Bipartition([]));
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition, IsZeroCyc],
-function(f, n)
-  return Bipartition([]);
-end);
+{f, n} -> Bipartition([]));
 
 InstallMethod(AsBipartition, "for a pbr and pos int",
 [IsPBR, IsZeroCyc],
-function(x, deg)
-  return Bipartition([]);
-end);
+{x, deg} -> Bipartition([]));
 
 InstallMethod(AsBipartition, "for a pbr and pos int",
 [IsPBR, IsPosInt],
@@ -584,9 +561,7 @@ function(x)
 end);
 
 InstallMethod(String, "for a bipartition", [IsBipartition],
-function(x)
-  return Concatenation("Bipartition(", String(ExtRepOfObj(x)), ")");
-end);
+x -> Concatenation("Bipartition(", String(ExtRepOfObj(x)), ")"));
 
 InstallMethod(PrintString, "for a bipartition",
 [IsBipartition],
@@ -617,12 +592,12 @@ function(coll)
 
   str := "\>[ ";
   for i in [1 .. Length(coll)] do
-    if not i = 1 then
+    if i <> 1 then
       Append(str, " ");
     fi;
     Append(str, "\>");
     Append(str, PrintString(coll[i]));
-    if not i = Length(coll) then
+    if i <> Length(coll) then
       Append(str, ",\<\n");
     else
       Append(str, " ]\<\n");
@@ -638,9 +613,7 @@ InstallMethod(DegreeOfBipartitionCollection, "for a bipartition semigroup",
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection],
-function(coll)
-  return DegreeOfBipartition(coll[1]);
-end);
+{coll} -> DegreeOfBipartition(coll[1]));
 
 #############################################################################
 # All of the methods in this section could be done in C/C++
@@ -1019,6 +992,4 @@ end);
 
 InstallMethod(IndexPeriodOfSemigroupElement, "for a bipartition",
 [IsBipartition],
-function(x)
-  return SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition);
-end);
+x -> SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition));

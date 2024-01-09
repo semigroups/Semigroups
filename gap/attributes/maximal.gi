@@ -491,7 +491,7 @@ function(R, opts)
 
   # All other maximal subsemigroups contain 0, so remove it from <contain>.
   pos := Position(contain, zero);
-  if not pos = fail then
+  if pos <> fail then
     Remove(contain, pos);
   fi;
 
@@ -1384,7 +1384,7 @@ function(S, opts)
       for k in [1 .. m] do
         y := L[k] * x;
         y := First([1 .. m], z -> y in LL[z]);
-        if not y = fail then
+        if y <> fail then
           Add(gamma_L[k], y);
         fi;
       od;
@@ -1393,7 +1393,7 @@ function(S, opts)
       for k in [1 .. n] do
         y := x * R[k];
         y := First([1 .. n], z -> y in RR[z]);
-        if not y = fail then
+        if y <> fail then
           Add(gamma_R[k], y);
         fi;
       od;

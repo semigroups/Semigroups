@@ -82,7 +82,7 @@ gap> GeneratorsOfSemigroup(L);
      of size 8, degree 9 with 1 generator>>, 
   <left translation on <commutative non-regular transformation semigroup 
      of size 8, degree 9 with 1 generator>> ]
-gap> R := RightTranslations(S);;             
+gap> R := RightTranslations(S);;
 gap> GeneratorsOfSemigroup(R);
 [ <right translation on <commutative non-regular transformation semigroup 
      of size 8, degree 9 with 1 generator>>, 
@@ -160,7 +160,7 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <0-simple regular semigroup with 4 generators>> ]
 
 # Further test translations generation
-gap> S := Semigroup([Transformation([2, 4, 4, 1]), Transformation([2, 3, 2, 1]), 
+gap> S := Semigroup([Transformation([2, 4, 4, 1]), Transformation([2, 3, 2, 1]),
 > Transformation([3, 3, 3])]);;
 gap> L := LeftTranslations(S);
 <the semigroup of left translations of <transformation semigroup of degree 4 
@@ -181,8 +181,8 @@ gap> for i in [1 .. 4] do
 > Lr := LeftTranslations(R);;
 > Rl := RightTranslations(L);;
 > Rr := RightTranslations(R);;
-> if not (Size(Ll) = i ^ i and Size(Rr) = i ^ i
-> and Size(Lr) = 1 and Size(Rl) = 1) then
+> if Size(Ll) <> i ^ i or Size(Rr) <> i ^ i
+> or Size(Lr) <> 1 or Size(Rl) <> 1 then
 > Error();
 > fi;
 > od;
@@ -196,7 +196,7 @@ gap> Size(L) = Size(R) and Size(R) = Size(H) and Size(H) = Size(S);
 true
 gap> Size(Semigroup(GeneratorsOfSemigroup(L))) = Size(L);
 true
-gap> Size(Semigroup(GeneratorsOfSemigroup(R))) = Size(R);  
+gap> Size(Semigroup(GeneratorsOfSemigroup(R))) = Size(R);
 true
 gap> Size(Semigroup(GeneratorsOfSemigroup(H))) = Size(H);
 true
@@ -249,9 +249,9 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <full transformation monoid of degree 5>>, 
   <right translation on <full transformation monoid of degree 5>> ]
 
-# A tiny bit of brute force checking   
+# A tiny bit of brute force checking
 gap> SEMIGROUPS.bruteforcetranshull := function(S)
->   local a, d, L, R, H, linkedpairs, dclasses, rclasses, lclasses, reps, i, j, 
+>   local a, d, L, R, H, linkedpairs, dclasses, rclasses, lclasses, reps, i, j,
 >         l, r, flag;
 >   L := LeftTranslations(S);
 >   R := RightTranslations(S);
@@ -259,7 +259,6 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >   linkedpairs := [];
 >   dclasses := DClasses(S);
 >   reps := [];
->   
 >   for d in dclasses do
 >     lclasses := ShallowCopy(LClasses(d));
 >     rclasses := ShallowCopy(RClasses(d));
@@ -285,7 +284,6 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >       od;
 >     fi;
 >   od;
->   
 >   for l in L do
 >     for r in R do
 >       flag := true;
@@ -295,7 +293,7 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >             break;
 >           fi;
 >         od;
->       if flag then 
+>       if flag then
 >         Add(linkedpairs, Bitranslation(H, l, r));
 >       fi;
 >     od;
@@ -330,9 +328,9 @@ gap> I := InnerTranslationalHull(S);;
 gap> IsWholeFamily(I);
 false
 gap> for h in H do
->      if not h = Bitranslation(H,
->                               LeftPartOfBitranslation(h),
->                               RightPartOfBitranslation(h)) then
+>      if h <> Bitranslation(H,
+>                            LeftPartOfBitranslation(h),
+>                            RightPartOfBitranslation(h)) then
 >        Print("failure!");
 >      fi;
 >    od;
@@ -388,9 +386,8 @@ gap> Size(L) = Size(Semigroup(GeneratorsOfSemigroup(L)));
 true
 gap> Size(R) = Size(Semigroup(GeneratorsOfSemigroup(R)));
 true
-gap> 
 
-# Special methods for normalised RMS 
+# Special methods for normalised RMS
 gap> G := Range(RegularActionHomomorphism(SmallGroup(12, 1)));;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
@@ -484,7 +481,7 @@ gap> for h in TranslationalHull(T) do
 > od;
 > od;
 > od;
-gap> Bitranslation(TranslationalHull(T), (1, 4, 3, 2)(5, 7)(6, 8), 
+gap> Bitranslation(TranslationalHull(T), (1, 4, 3, 2)(5, 7)(6, 8),
 > Transformation([1, 1, 1]), Transformation([1, 1, 1]));
 <bitranslation on <simple semigroup of size 144, with 4 generators>>
 gap> G := Range(IsomorphismPermGroup(SmallGroup(6, 1)));;
@@ -584,7 +581,7 @@ gap> ImageSetOfTranslation(AsList(T)[4]);
 gap> S := Semigroup([Transformation([2, 4, 4, 1]), Transformation([2, 3, 2, 1]),
 > Transformation([3, 3, 3])]);;
 gap> H := TranslationalHull(S);;
-gap> T := Semigroup(Generators(H){[1 .. 5]}); 
+gap> T := Semigroup(Generators(H){[1 .. 5]});
 <semigroup of bitranslations over <transformation semigroup of size 49, 
  degree 4 with 3 generators>>
 gap> Size(T);
@@ -753,12 +750,12 @@ Error, each argument must have the same underlying semigroup
 gap> l := LeftTranslation(L, lgpfunc, IdentityTransformation);;
 gap> h := Bitranslation(H, l, r);
 Error, the translations given must satisfy the linking condition
-gap> Bitranslation(H, (1, 2, 3, 5)(4, 10, 7, 12)(6, 11, 9, 8),                 
+gap> Bitranslation(H, (1, 2, 3, 5)(4, 10, 7, 12)(6, 11, 9, 8),
 > Transformation([2, 2]), Transformation([2, 3, 2]));
 Error, the arguments given do not define a bitranslation
 
 # Hashing translations
-gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 
+gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);;
 gap> L := LeftTranslations(S);;
 gap> R := RightTranslations(S);;
 gap> l := Representative(L);;
@@ -773,7 +770,7 @@ gap> for r in R do
 > od;
 
 # Hashing translational hull elements
-gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 
+gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);;
 gap> H := TranslationalHull(S);;
 gap> ht := HTCreate(Representative(H));;
 gap> for h in H do
@@ -781,15 +778,15 @@ gap> for h in H do
 > od;
 
 # Translational Hull of RZMS which is not completely 0-simple
-gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
-gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
+gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;
+gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
 14977
 
 # Translational Hull of RZMS which is not completely 0-simple
-gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;   
-gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;             
+gap> G := Range(IsomorphismPermGroup(SmallGroup(16, 2)));;
+gap> mat := [[G.1, 0, 0], [G.1 * G.2, 0, G.2]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> NrBitranslations(S);
 14977

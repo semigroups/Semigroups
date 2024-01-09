@@ -8,10 +8,7 @@
 #############################################################################
 
 InstallMethod(CanonicalTransformation, "for a transformation",
-[IsTransformation],
-function(f)
-  return CanonicalTransformation(f, DegreeOfTransformation(f));
-end);
+[IsTransformation], f -> CanonicalTransformation(f, DegreeOfTransformation(f)));
 
 InstallMethod(CanonicalTransformation, "for a transformation",
 [IsTransformation, IsInt],

@@ -17,27 +17,19 @@
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPBRSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPBRMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons, "for IsPBRSemigroup and a list",
 [IsPBRSemigroup, IsList],
-function(filt, params)
-  return Semigroup(List([1 .. params[1]], i -> RandomPBR(params[2])));
-end);
+{filt, params} -> Semigroup(List([1 .. params[1]], i -> RandomPBR(params[2]))));
 
 InstallMethod(RandomMonoidCons, "for IsPBRMonoid and a list",
 [IsPBRMonoid, IsList],
-function(filt, params)
-  return Monoid(List([1 .. params[1]], i -> RandomPBR(params[2])));
-end);
+{filt, params} -> Monoid(List([1 .. params[1]], i -> RandomPBR(params[2]))));
 
 InstallMethod(RandomInverseSemigroupCons, "for IsPBRSemigroup and a list",
 [IsPBRSemigroup, IsList], SEMIGROUPS.DefaultRandomInverseSemigroup);
@@ -56,12 +48,8 @@ function(S)
                        "\<\< ");
 end);
 
-InstallMethod(DegreeOfPBRSemigroup,
-"for a PBR semigroup",
-[IsPBRSemigroup],
-function(S)
-  return DegreeOfPBR(Representative(S));
-end);
+InstallMethod(DegreeOfPBRSemigroup, "for a PBR semigroup", [IsPBRSemigroup],
+S -> DegreeOfPBR(Representative(S)));
 
 # fall back method via a transformation semigroup
 
@@ -71,7 +59,7 @@ InstallMethod(IsomorphismSemigroup, "for IsPBRSemigroup and a semigroup",
 InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a transformation semigroup",
 [IsPBRSemigroup, IsTransformationSemigroup],
-function(filt, S)
+function(_, S)
   local deg, T;
 
   deg := Maximum(1, DegreeOfTransformationSemigroup(S));
@@ -89,7 +77,7 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a bipartition semigroup",
 [IsPBRSemigroup, IsBipartitionSemigroup],
-function(filt, S)
+function(_, S)
   local T;
 
   T := Semigroup(List(GeneratorsOfSemigroup(S), AsPBR));
@@ -104,9 +92,7 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a pbr semigroup",
 [IsPBRSemigroup, IsPBRSemigroup],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{_, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(AsMonoid, "for a PBR semigroup",
 [IsPBRSemigroup],
@@ -125,7 +111,7 @@ InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a monoid",
 
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a transformation monoid",
 [IsPBRMonoid, IsTransformationMonoid],
-function(filt, S)
+function(_, S)
   local deg, T;
 
   deg := Maximum(1, DegreeOfTransformationSemigroup(S));
@@ -141,9 +127,7 @@ end);
 InstallMethod(IsomorphismMonoid,
 "for IsPBRMonoid and a pbr monoid",
 [IsPBRMonoid, IsPBRMonoid],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filter, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(\<, "for pbr semigroups",
 [IsPBRSemigroup, IsPBRSemigroup],

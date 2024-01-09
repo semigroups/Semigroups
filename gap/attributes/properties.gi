@@ -503,9 +503,7 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 2,  # to beat the method for acting semigroups
-function(S)
-  return IsAcyclicDigraph(DigraphRemoveLoops(DigraphOfActionOnPoints(S)));
-end);
+S -> IsAcyclicDigraph(DigraphRemoveLoops(DigraphOfActionOnPoints(S))));
 
 # different method for ideals
 
@@ -640,7 +638,7 @@ function(S)
         Append(new, Idempotents(S, i));
       od;
     fi;
-    if new = [] then
+    if IsEmpty(new) then
       return false;
     fi;
     T := Semigroup(new, rec(acting := true));
@@ -738,7 +736,7 @@ function(S)
   val := lambda(gens[1]);
 
   for x in gens do
-    if not lambda(x) = val then
+    if lambda(x) <> val then
       return false;
     fi;
   od;
@@ -1051,10 +1049,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return MultiplicativeNeutralElement(S) <> fail;
-end);
+[IsSemigroup], S -> MultiplicativeNeutralElement(S) <> fail);
 
 # same method for ideals
 
@@ -1252,9 +1247,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 
 InstallMethod(IsRegularSemigroupElement, "for semigroup", IsCollsElms,
 [IsSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return x in S and IsRegularGreensClass(RClass(S, x));
-end);
+{S, x} -> x in S and IsRegularGreensClass(RClass(S, x)));
 
 # same method for ideals
 
@@ -1396,9 +1389,7 @@ function(S)
 
     for f in gens do
       o := Orb(S, LambdaFunc(S)(f), LambdaAct(S), opts);
-      pos := LookForInOrb(o, function(o, x)
-                               return LambdaRank(S)(x) < rank;
-                             end, 1);
+      pos := LookForInOrb(o, {o, x} -> LambdaRank(S)(x) < rank, 1);
       if pos <> false then
         return false;
       fi;

@@ -72,8 +72,7 @@ for Pkg in PkgInfo.Dependencies.NeededOtherPackages do
 od;
 
 ARCHIVENAME := SplitString(PkgInfo.ArchiveURL, "/");
-ARCHIVENAME := Concatenation(ARCHIVENAME[Length(ARCHIVENAME)],
-               PkgInfo.ArchiveFormats);
+ARCHIVENAME := Concatenation(Last(ARCHIVENAME), PkgInfo.ArchiveFormats);
 XMLEntities.ARCHIVENAME := ARCHIVENAME;
 
 XMLEntities.SEMIGROUPS := PackageEntity("Semigroups");

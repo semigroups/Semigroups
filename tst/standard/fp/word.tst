@@ -27,8 +27,8 @@ gap> WordToString("", []);
 gap> WordToString("abc", [1]);
 "a"
 gap> WordToString("abc", [4]);
-Error, the 1st argument (a string) is too short, expected at least 4but found 
-3
+Error, the 1st argument (a string) is too short, expected at least 
+4 but found 3
 gap> WordToString("ab", [1, -1]);
 Error, expected list of positive integers as 2nd argument
 
@@ -37,7 +37,7 @@ gap> Length(RandomWord(4, 4)) = 4;
 true
 gap> Length(RandomWord(3, 10)) = 3;
 true
-gap> RandomWord(0, 100) = [];
+gap> IsEmpty(RandomWord(0, 100));
 true
 gap> Length(DuplicateFreeList(RandomWord(100, 20))) <= 20;
 true

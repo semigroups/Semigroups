@@ -17,27 +17,21 @@
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBipartitionSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBipartitionMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons, "for IsBipartitionSemigroup and list",
 [IsBipartitionSemigroup, IsList],
-function(filt, params)
-  return Semigroup(List([1 .. params[1]], i -> RandomBipartition(params[2])));
-end);
+{filt, params} -> Semigroup(List([1 .. params[1]],
+                                 i -> RandomBipartition(params[2]))));
 
 InstallMethod(RandomMonoidCons, "for IsBipartitionMonoid and list",
 [IsBipartitionMonoid, IsList],
-function(filt, params)
-  return Monoid(List([1 .. params[1]], i -> RandomBipartition(params[2])));
-end);
+{filt, params} -> Monoid(List([1 .. params[1]],
+                              i -> RandomBipartition(params[2]))));
 
 InstallMethod(RandomInverseSemigroupCons,
 "for IsBipartitionSemigroup and list", [IsBipartitionSemigroup, IsList],
@@ -53,47 +47,35 @@ SEMIGROUPS.DefaultRandomInverseMonoid);
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBlockBijectionSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBlockBijectionMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons,
 "for IsBlockBijectionSemigroup and a list",
 [IsBlockBijectionSemigroup, IsList],
-function(filt, params)
-  return Semigroup(List([1 .. params[1]],
-                        i -> RandomBlockBijection(params[2])));
-end);
+{filt, params} -> Semigroup(List([1 .. params[1]],
+                                 i -> RandomBlockBijection(params[2]))));
 
 InstallMethod(RandomMonoidCons,
 "for IsBlockBijectionMonoid and a list",
 [IsBlockBijectionMonoid, IsList],
-function(filt, params)
-  return Monoid(List([1 .. params[1]],
-                     i -> RandomBlockBijection(params[2])));
-end);
+{filt, params} -> Monoid(List([1 .. params[1]],
+                              i -> RandomBlockBijection(params[2]))));
 
 InstallMethod(RandomInverseSemigroupCons,
 "for IsBlockBijectionSemigroup and a list",
 [IsBlockBijectionSemigroup, IsList],
-function(filt, params)
-  return InverseSemigroup(List([1 .. params[1]],
-                               i -> RandomBlockBijection(params[2])));
-end);
+{filt, params} -> InverseSemigroup(List([1 .. params[1]],
+                                        i -> RandomBlockBijection(params[2]))));
 
 InstallMethod(RandomInverseMonoidCons,
 "for IsBlockBijectionMonoid and a list",
 [IsBlockBijectionMonoid, IsList],
-function(filt, params)
-  return InverseMonoid(List([1 .. params[1]],
-                            i -> RandomBlockBijection(params[2])));
-end);
+{filt, params} -> InverseMonoid(List([1 .. params[1]],
+                                     i -> RandomBlockBijection(params[2]))));
 
 #############################################################################
 ## Printing and viewing
@@ -163,21 +145,15 @@ end);
 
 InstallImmediateMethod(IsBlockBijectionSemigroup, IsBipartitionSemigroup and
 HasGeneratorsOfSemigroup, 0,
-function(S)
-  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
-end);
+S -> ForAll(GeneratorsOfSemigroup(S), IsBlockBijection));
 
 InstallImmediateMethod(IsPartialPermBipartitionSemigroup,
 IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,
-function(S)
-  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
-end);
+S -> ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition));
 
 InstallImmediateMethod(IsPermBipartitionGroup, IsBipartitionSemigroup and
 HasGeneratorsOfSemigroup, 0,
-function(S)
-  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
-end);
+S -> ForAll(GeneratorsOfSemigroup(S), IsPermBipartition));
 
 InstallMethod(IsBlockBijectionSemigroup, "for a bipartition semigroup ideal",
 [IsBipartitionSemigroup and IsSemigroupIdeal],
@@ -285,9 +261,7 @@ InstallMethod(IsomorphismMonoid, "for IsBipartitionMonoid and a semigroup",
 
 InstallMethod(IsomorphismMonoid, "for IsBipartitionMonoid and a monoid",
 [IsBipartitionMonoid, IsMonoid],
-function(filter, S)
-  return IsomorphismSemigroup(IsBipartitionSemigroup, S);
-end);
+{filt, S} -> IsomorphismSemigroup(IsBipartitionSemigroup, S));
 
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
@@ -300,7 +274,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a transformation semigroup with generators",
 [IsBipartitionSemigroup,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(filter, S)
+function(_, S)
   local n, T;
 
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
@@ -318,7 +292,7 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a partial perm semigroup with generators",
 [IsBipartitionSemigroup, IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(filter, S)
+function(_, S)
   local n, T;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
@@ -336,7 +310,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and partial perm inverse semigp with generators",
 [IsBipartitionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
  HasGeneratorsOfInverseSemigroup],
-function(filter, S)
+function(_, S)
   local n, T;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
@@ -354,7 +328,7 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a perm group with generators",
 [IsBipartitionSemigroup, IsPermGroup and HasGeneratorsOfGroup],
-function(filt, S)
+function(_, S)
   local n, T;
 
   n := LargestMovedPoint(S);
@@ -392,48 +366,51 @@ end);
 
 # this is one way, i.e. no converse method
 
+BindGlobal("SEMIGROUPS_BlockBijectionAsPPerm",
+function(x)
+  local blocks, n, bigblock, lookup, out, i;
+
+  if not IsBlockBijection(x) then
+    TryNextMethod();
+  fi;
+
+  blocks := IntRepOfBipartition(x);
+  n := DegreeOfBipartition(x);
+  bigblock := blocks[n];
+
+  # find the images of [1..n]
+  lookup := EmptyPlist(n - 1);
+  for i in [1 .. n - 1] do
+    lookup[blocks[i + n]] := i;
+  od;
+
+  # put it together
+  out := [1 .. n - 1] * 0;
+  for i in [1 .. n - 1] do
+    if blocks[i] <> bigblock then
+      out[i] := lookup[blocks[i]];
+    fi;
+  od;
+
+  return PartialPerm(out);
+end);
+
 InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a partial perm semigroup with generators",
 [IsBlockBijectionSemigroup,
  IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(filter, S)
-  local n, T, inv;
+function(_, S)
+  local n, T;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
                CodegreeOfPartialPermSemigroup(S)) + 1;
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBlockBijection(x, n)));
   UseIsomorphismRelation(S, T);
 
-  # AsPartialPerm for a block bijection created using AsBlockBijection with
-  # argument a partial perm
-  inv := function(x)
-    local blocks, n, bigblock, lookup, out, i;
-
-    blocks := IntRepOfBipartition(x);
-    n := DegreeOfBipartition(x);
-    bigblock := blocks[n];
-
-    # find the images of [1..n]
-    lookup := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      lookup[blocks[i + n]] := i;
-    od;
-
-    # put it together
-    out := [1 .. n - 1] * 0;
-    for i in [1 .. n - 1] do
-      if blocks[i] <> bigblock then
-        out[i] := lookup[blocks[i]];
-      fi;
-    od;
-
-    return PartialPerm(out);
-  end;
-
   return SemigroupIsomorphismByFunctionNC(S,
                                           T,
                                           x -> AsBlockBijection(x, n),
-                                          inv);
+                                          SEMIGROUPS_BlockBijectionAsPPerm);
 end);
 
 # this is one way, i.e. no converse method
@@ -442,50 +419,24 @@ InstallMethod(IsomorphismSemigroup,
 "for an inverse partial perm semigroup with generators",
 [IsBlockBijectionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
  HasGeneratorsOfInverseSemigroup],
-function(filter, S)
-  local n, T, inv;
+function(_, S)
+  local n, T;
 
   n := DegreeOfPartialPermSemigroup(S) + 1;
   T := InverseSemigroup(List(GeneratorsOfInverseSemigroup(S),
                              x -> AsBlockBijection(x, n)));
   UseIsomorphismRelation(S, T);
 
-  # AsPartialPerm for a block bijection created using AsBlockBijection with
-  # argument a partial perm
-  inv := function(x)
-    local blocks, n, bigblock, lookup, out, i;
-
-    blocks := IntRepOfBipartition(x);
-    n := DegreeOfBipartition(x);
-    bigblock := blocks[n];
-
-    # find the images of [1..n]
-    lookup := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      lookup[blocks[i + n]] := i;
-    od;
-
-    # put it together
-    out := [1 .. n - 1] * 0;
-    for i in [1 .. n - 1] do
-      if blocks[i] <> bigblock then
-        out[i] := lookup[blocks[i]];
-      fi;
-    od;
-
-    return PartialPerm(out);
-  end;
-
   return SemigroupIsomorphismByFunctionNC(S,
                                           T,
                                           x -> AsBlockBijection(x, n),
-                                          inv);
+                                          SEMIGROUPS_BlockBijectionAsPPerm);
 end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a semigroup ideal",
 [IsBipartitionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(filt, I)
+function(_, I)
   local iso, inv, J;
 
   iso := IsomorphismSemigroup(IsBipartitionSemigroup,
@@ -501,7 +452,7 @@ InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a semigroup ideal",
 [IsBlockBijectionSemigroup, IsSemigroupIdeal and
  HasGeneratorsOfSemigroupIdeal],
-function(filt, I)
+function(_, I)
   local iso, inv, J;
 
   iso := IsomorphismSemigroup(IsBlockBijectionSemigroup,
@@ -516,16 +467,12 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a block bijection semigroup",
 [IsBlockBijectionSemigroup, IsBlockBijectionSemigroup],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filt, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and a bipartition semigroup",
 [IsBipartitionSemigroup, IsBipartitionSemigroup],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filt, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 # TODO(later) could have a method for IsomorphismSemigroup for
 # IsPartialPermBipartitions and IsBlockBijectionSemigroup too... or just for

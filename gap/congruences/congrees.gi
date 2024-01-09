@@ -278,7 +278,7 @@ end);
 InstallMethod(\*, "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(lhop, rhop)
-  if not EquivalenceClassRelation(lhop) = EquivalenceClassRelation(rhop) then
+  if EquivalenceClassRelation(lhop) <> EquivalenceClassRelation(rhop) then
     ErrorNoReturn("the arguments (cong. classes) are not classes of the same ",
                   "congruence");
   elif Size(lhop) > 1 then

@@ -40,7 +40,7 @@ end);
 
 SEMIGROUPS.TestRec := rec();
 
-SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, time)
+SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, _)
   Print("######## > Diff in:\n");
   if IsStream(fnam)  then
     Print("test stream, line ", line, "\n");
@@ -209,7 +209,7 @@ end;
 #############################################################################
 
 InstallGlobalFunction(SemigroupsTestInstall,
-function(arg)
+function(arg...)
   local opts, name;
   opts := ShallowCopy(SEMIGROUPS.TestRec);
   if Length(arg) = 1 and IsRecord(arg[1]) then
@@ -229,15 +229,15 @@ function(arg)
 end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
-function(arg)
+function(arg...)
   return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
                                                       "tst/standard/")[1]![1],
                             arg);
 end);
 
 InstallGlobalFunction(SemigroupsTestExtreme,
-function(arg)
-  if Length(arg) = 0 then
+function(arg...)
+  if IsEmpty(arg) then
     arg := [rec(showProgress := "some")];
   elif IsRecord(arg[1]) and not IsBound(arg[1].showProgress) then
     arg[1].showProgress := "some";
@@ -248,7 +248,7 @@ function(arg)
 end);
 
 InstallGlobalFunction(SemigroupsTestAll,
-function(arg)
+function(arg...)
   SemigroupsMakeDoc();
   if not CallFuncList(SemigroupsTestInstall, arg) then
     Print("Abort: SemigroupsTestInstall failed . . . \n");
@@ -387,12 +387,12 @@ SEMIGROUPS.RunExamples := function(exlists, nums, excluded)
   return true;
 end;
 
-SEMIGROUPS.TestManualExamples := function(arg)
+SEMIGROUPS.TestManualExamples := function(arg...)
   local ex, nums, doc, tree, mansect, tester, actual, omit, acting, passed,
   str;
 
   ex := SEMIGROUPS.ManualExamples();
-  if Length(arg) = 0 then
+  if IsEmpty(arg) then
     nums := [1 .. Length(ex)];
   elif Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
@@ -525,7 +525,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   referrcount, warncount, type, matches, match, matches2, stats,
   elt, t, s;
 
-  if Length(verbose) = 0 then
+  if IsEmpty(verbose) then
     display_warnings := false;
   else
     display_warnings := verbose[1];
@@ -580,7 +580,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
     type := First(types, t -> IsBound(elt.attributes.(t)));
     if type <> fail then
       matches := Filtered(x, t -> t.attributes.Name = elt.attributes.(type));
-      if Length(matches) = 0 then
+      if IsEmpty(matches) then
         pos := OriginalPositionDocument(doc[2], elt.start);
         Print(pos[1], ":", pos[2], " : no match for ", type, " := ",
               elt.attributes.(type), "\n");
@@ -598,7 +598,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         match := matches[1];
       else
         matches2 := Filtered(matches, t -> not IsBound(t.attributes.Label));
-        if Length(matches2) = 0 then
+        if IsEmpty(matches2) then
           pos := OriginalPositionDocument(doc[2], elt.start);
           Print(pos[1], ":", pos[2],
                 " : no match (wrong type or missing label?) for ", type, " := ",
@@ -665,7 +665,7 @@ SEMIGROUPS.CheckDocCoverage := function(doc)
   for mansect in x do
     pos := OriginalPositionDocument(doc[2], mansect.start);
     y := XMLElements(mansect, ["Example"]);
-    if Length(y) = 0 then
+    if IsEmpty(y) then
       if IsBound(mansect.content[1].attributes) and
           IsBound(mansect.content[1].attributes.Name) then
         Print(pos[1], ":", pos[2], " : ", mansect.content[1].attributes.Name);

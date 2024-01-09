@@ -23,7 +23,7 @@ function(S)
   if IsDualSemigroupRep(S) then
     if HasGeneratorsOfSemigroup(S) then
       return Semigroup(List(GeneratorsOfSemigroup(S),
-                            x -> UnderlyingElementOfDualSemigroupElement(x)));
+                            UnderlyingElementOfDualSemigroupElement));
     fi;
     ErrorNoReturn("this dual semigroup cannot be constructed ",
                   "without knowing generators");
@@ -91,13 +91,8 @@ function(S)
   local dual, inv, iso;
 
   dual := DualSemigroup(S);
-  iso  := function(x)
-    return SEMIGROUPS.DualSemigroupElementNC(dual, x);
-  end;
-
-  inv := function(x)
-    return SEMIGROUPS.DualSemigroupElementNC(S, x);
-  end;
+  iso  := x -> SEMIGROUPS.DualSemigroupElementNC(dual, x);
+  inv  := x -> SEMIGROUPS.DualSemigroupElementNC(S, x);
   return MappingByFunction(S, dual, iso, inv);
 end);
 
@@ -147,37 +142,27 @@ end);
 InstallMethod(Size, "for a dual semigroup",
 [IsDualSemigroupRep],
 10,  # add rank to beat enumeration methods
-function(S)
-  return Size(DualSemigroup(S));
-end);
+S -> Size(DualSemigroup(S)));
 
 InstallMethod(AsList, "for a dual semigroup",
 [IsDualSemigroupRep],
 10,  # add rank to beat enumeration methods
-function(S)
-  return List(DualSemigroup(S), s -> SEMIGROUPS.DualSemigroupElementNC(S, s));
-end);
+S -> List(DualSemigroup(S), s -> SEMIGROUPS.DualSemigroupElementNC(S, s)));
 
 InstallMethod(\*, "for dual semigroup elements",
 IsIdenticalObj,
 [IsDualSemigroupElement, IsDualSemigroupElement],
-function(x, y)
-  return Objectify(FamilyObj(x)!.type, [y![1] * x![1]]);
-end);
+{x, y} -> Objectify(FamilyObj(x)!.type, [y![1] * x![1]]));
 
 InstallMethod(\=, "for dual semigroup elements",
 IsIdenticalObj,
 [IsDualSemigroupElement, IsDualSemigroupElement],
-function(x, y)
-  return x![1] = y![1];
-end);
+{x, y} -> x![1] = y![1]);
 
 InstallMethod(\<, "for dual semigroup elements",
 IsIdenticalObj,
 [IsDualSemigroupElement, IsDualSemigroupElement],
-function(x, y)
-  return x![1] < y![1];
-end);
+{x, y} -> x![1] < y![1]);
 
 InstallMethod(ViewObj, "for dual semigroup elements",
 [IsDualSemigroupElement], PrintObj);
@@ -204,18 +189,14 @@ end);
 #
 # InstallMethod(PrintString, "for dual semigroup elements",
 # [IsDualSemigroupElement],
-# function(x)
-#   return StringFormatted("<{!v} in the dual semigroup>", x![1]);
-# end);
+# x -> StringFormatted("<{!v} in the dual semigroup>", x![1]);
 #
 # InstallMethod(ViewString, "for a dual semigroup",
 # [IsDualSemigroupRep], PrintString);
 #
 # InstallMethod(PrintString, "for a dual semigroup",
 # [IsDualSemigroupRep],
-# function(S)
-#   return StringFormatted("<dual semigroup of {!v}>", DualSemigroup(S));
-# end);
+# S -> StringFormatted("<dual semigroup of {!v}>", DualSemigroup(S));
 
 InstallMethod(ChooseHashFunction, "for a dual semigroup element and int",
 [IsDualSemigroupElement, IsInt],
@@ -223,8 +204,6 @@ function(x, data)
   local H, hashfunc;
 
   H        := ChooseHashFunction(x![1], data);
-  hashfunc := function(a, b)
-    return H.func(a![1], b);
-  end;
+  hashfunc := {a, b} -> H.func(a![1], b);
   return rec(func := hashfunc, data := H.data);
 end);

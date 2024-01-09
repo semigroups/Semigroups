@@ -18,6 +18,4 @@ end);
 
 InstallMethod(IsStarSemigroup, "for a semigroup of elements with star",
 [IsSemigroup and IsAssociativeElementWithStarCollection],
-function(S)
-  return ForAll(GeneratorsOfSemigroup(S), x -> Star(x) in S);
-end);
+S -> ForAll(GeneratorsOfSemigroup(S), x -> Star(x) in S));

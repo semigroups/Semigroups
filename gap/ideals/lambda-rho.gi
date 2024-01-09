@@ -9,9 +9,7 @@
 ##
 
 InstallMethod(AsList, "for an ideal orb", [IsIdealOrb],
-function(o)
-  return Concatenation(List(o!.orbits, AsList));
-end);
+o -> Concatenation(List(o!.orbits, AsList)));
 
 InstallMethod(Enumerate, "for an ideal orb, and a number",
 [IsIdealOrb, IsCyclotomic],
@@ -22,11 +20,8 @@ function(o, limit)
     return o;
   fi;
 
-  newlookfunc := function(data, x)
-    return IsClosedOrbit(o) or Length(o) >= limit;
-  end;
+  newlookfunc := {data, x} -> IsClosedOrbit(o) or Length(o) >= limit;
   Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
-
   return o;
 end);
 
@@ -35,9 +30,7 @@ InstallMethod(Enumerate, "for an ideal orb, a number, and a function",
 function(o, limit, lookfunc)
   local newlookfunc;
 
-  newlookfunc := function(data, x)
-    return IsClosedOrbit(o) or Length(o) >= limit;
-  end;
+  newlookfunc := {data, x} -> IsClosedOrbit(o) or Length(o) >= limit;
   if IsLambdaOrb(o) then
     Enumerate(SemigroupData(o!.parent), infinity,
               rec(lookfunc := newlookfunc, lambdalookfunc := lookfunc));
@@ -51,15 +44,11 @@ end);
 
 InstallMethod(Length, "for a ideal orb",
 [IsIdealOrb],
-function(o)
-  return Sum(o!.lens);
-end);
+o -> Sum(o!.lens));
 
 InstallMethod(Length, "for an ideal inverse orb",
 [IsIdealOrb and IsInverseOrb],
-function(o)
-  return Length(o!.orbit);
-end);
+o -> Length(o!.orbit));
 
 InstallMethod(IsBound\[\], "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -76,9 +65,7 @@ end);
 
 InstallMethod(IsBound\[\], "for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
-function(o, i)
-  return IsBound(o!.orbit[i]);
-end);
+{o, i} -> IsBound(o!.orbit[i]));
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -94,34 +81,22 @@ function(o, i)
 end);
 
 InstallMethod(ELM_LIST, "for an inverse ideal orb and positive integer",
-[IsIdealOrb and IsInverseOrb, IsPosInt],
-function(o, i)
-  return o!.orbit[i];
-end);
+[IsIdealOrb and IsInverseOrb, IsPosInt], {o, i} -> o!.orbit[i]);
 
 # same method for inverse ideal orbs
 
 InstallMethod(\in, "for an object and ideal orb",
-[IsObject, IsIdealOrb],
-function(obj, o)
-  return HTValue(o!.ht, obj) <> fail;
-end);
+[IsObject, IsIdealOrb], {obj, o} -> HTValue(o!.ht, obj) <> fail);
 
 # same method for inverse ideal orbs
 
 InstallMethod(Position, "for an ideal orb, object, zero cyc",
-[IsIdealOrb, IsObject, IsZeroCyc],
-function(o, obj, n)
-  return HTValue(o!.ht, obj);
-end);
+[IsIdealOrb, IsObject, IsZeroCyc], {o, obj, n} -> HTValue(o!.ht, obj));
 
 # same method for inverse ideal orbs
 
 InstallMethod(OrbitGraph, "for an ideal orb",
-[IsIdealOrb],
-function(o)
-  return o!.orbitgraph;
-end);
+[IsIdealOrb], o -> o!.orbitgraph);
 
 InstallMethod(ViewObj, "for a ideal orb",
 [IsIdealOrb],
@@ -337,13 +312,8 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   len := Length(o);
 
   if len <> 0 then
-    record.gradingfunc := function(new, x)
-      return HTValue(o!.ht, x) <> fail;
-      # return x in o;
-    end;
-    record.onlygrades := function(x, data);
-      return not x;
-    end;
+    record.gradingfunc    := {new, x} -> HTValue(o!.ht, x) <> fail;
+    record.onlygrades     := {x, data} -> not x;
     record.onlygradesdata := fail;
   fi;
 
@@ -450,13 +420,8 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   len := Length(o);
 
   if len <> 0 then
-    record.gradingfunc := function(new, x)
-      return HTValue(o!.ht, x) <> fail;
-      # return x in o;
-    end;
-    record.onlygrades := function(x, data);
-      return not x;
-    end;
+    record.gradingfunc    := {new, x} -> HTValue(o!.ht, x) <> fail;
+    record.onlygrades     := {x, data} -> not x;
     record.onlygradesdata := fail;
   fi;
 
@@ -561,16 +526,12 @@ end);
 InstallMethod(EvaluateWord, "for a lambda orb and a word (Semigroups)",
 [IsLambdaOrb, IsList], 1,
 # to beat the methods for IsXCollection
-function(o, w)
-  return EvaluateWord(o!.gens, w);
-end);
+{o, w} -> EvaluateWord(o!.gens, w));
 
 InstallMethod(EvaluateWord, "for a rho orb and a word (Semigroups)",
 [IsRhoOrb, IsList], 1,
 # to beat the methods for IsXCollection
-function(o, w)
-  return EvaluateWord(o!.gens, w);
-end);
+{o, w} -> EvaluateWord(o!.gens, w));
 
 # returns a triple [leftword, nr, rightword] where <leftword>, <rightword> are
 # words in the generators of the supersemigroup of the ideal, and <nr> is the

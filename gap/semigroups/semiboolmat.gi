@@ -16,20 +16,16 @@
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBooleanMatSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsBooleanMatMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons,
 "for IsBooleanMatSemigroup and list",
 [IsBooleanMatSemigroup, IsList],
-function(filt, params)
+function(_, params)
   return Semigroup(List([1 .. params[1]], i -> RandomMatrix(IsBooleanMat,
                                                             params[2])));
 end);
@@ -37,7 +33,7 @@ end);
 InstallMethod(RandomMonoidCons,
 "for IsBooleanMatMonoid and list",
 [IsBooleanMatMonoid, IsList],
-function(filt, params)
+function(_, params)
   return Monoid(List([1 .. params[1]], i -> RandomMatrix(IsBooleanMat,
                                                          params[2])));
 end);
@@ -62,9 +58,7 @@ SEMIGROUPS.DefaultIsomorphismSemigroup);
 InstallMethod(IsomorphismSemigroup,
 "for IsBooleanMatSemigroup and a boolean mat semigroup",
 [IsBooleanMatSemigroup, IsBooleanMatSemigroup],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
+{filter, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));
 
 # It seems necessary that the method below occurs after the fallback method in
 # this file, in order that it be selected.
@@ -72,7 +66,7 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsBooleanMatSemigroup and a transformation semigroup",
 [IsBooleanMatSemigroup, IsTransformationSemigroup],
-function(filter, S)
+function(_, S)
   local n, T;
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
@@ -102,14 +96,9 @@ InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
 
 InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
 [IsBooleanMatMonoid, IsMonoid],
-function(filter, S)
-  return IsomorphismSemigroup(IsBooleanMatSemigroup, S);
-end);
+{filter, S} -> IsomorphismSemigroup(IsBooleanMatSemigroup, S));
 
 InstallMethod(IsomorphismMonoid,
 "for IsBooleanMatMonoid and a boolean mat monoid",
 [IsBooleanMatMonoid, IsBooleanMatMonoid],
-function(filter, S)
-  return SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc);
-end);
-
+{filter, S} -> SemigroupIsomorphismByFunctionNC(S, S, IdFunc, IdFunc));

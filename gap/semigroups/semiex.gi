@@ -325,9 +325,7 @@ function(d, q)
 end);
 
 InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
-function(S)
-  return InverseSemigroup(GeneratorsOfMunnSemigroup(S), rec(small := true));
-end);
+S -> InverseSemigroup(GeneratorsOfMunnSemigroup(S), rec(small := true)));
 
 InstallMethod(GeneratorsOfMunnSemigroup, "for a semilattice", [IsSemigroup],
 function(S)
@@ -356,7 +354,7 @@ function(S)
     Add(su[Length(x)], gr);
   od;
 
-  out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
+  out := [PartialPerm(Last(id)[1], Last(id)[1])];
 
   for i in [Length(id), Length(id) - 1 .. 3] do
     if not IsBound(id[i]) then
@@ -987,12 +985,8 @@ function(m, n)
   return S;
 end);
 
-InstallMethod(PlanarPartitionMonoid,
-"for a positive integer",
-[IsPosInt],
-function(n)
-  return PlanarModularPartitionMonoid(1, n);
-end);
+InstallMethod(PlanarPartitionMonoid, "for a positive integer",
+[IsPosInt], n -> PlanarModularPartitionMonoid(1, n));
 
 InstallMethod(ModularPartitionMonoid,
 "for a positive integer and positive integer",
