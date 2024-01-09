@@ -405,7 +405,7 @@ SEMIGROUPS.MTSSmallGen := function(S)
 
    if McAlisterTripleSemigroupUnderlyingAction(S) = OnPoints then
      RepAct := {a, b} -> RepresentativeAction(G, b, a);
-     _Stab  := {a} -> Stabilizer(G, a);
+     _Stab  := a -> Stabilizer(G, a);
    else
      # Can't use McAlisterTripleSemigroupAction because it is an anti-action
      # but not an action and produces unexpected results with some of these
@@ -413,7 +413,7 @@ SEMIGROUPS.MTSSmallGen := function(S)
      act    := McAlisterTripleSemigroupUnderlyingAction(S);
      RepAct := {a, b} -> RepresentativeAction(G, b, a, act);
      gens   := Generators(G);
-     _Stab  := {a} -> Stabilizer(G, a, act);
+     _Stab  := a -> Stabilizer(G, a, act);
    fi;
 
    # We use reflexive transitive reductions so we can only check neighbours

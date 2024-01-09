@@ -156,9 +156,7 @@ function(S)
 end);
 
 InstallMethod(NrIdempotents, "for a semigroup", [IsSemigroup],
-function(S)
-  return Length(Idempotents(S));
-end);
+S -> Length(Idempotents(S)));
 
 InstallMethod(GroupOfUnits, "for a semigroup", [IsSemigroup],
 function(S)
@@ -225,9 +223,7 @@ function(coll)
   elif IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
     Shuffle(coll);
-    Sort(coll, function(x, y)
-                 return ActionRank(x, deg) > ActionRank(y, deg);
-               end);
+    Sort(coll, {x, y} -> ActionRank(x, deg) > ActionRank(y, deg));
   fi;
 
   out := EmptyPlist(Length(coll));
@@ -1124,9 +1120,7 @@ end);
 InstallMethod(TransposedMultiplicationTableWithCanonicalPositions,
 "for a semigroup with CanUseFroidurePin",
 [IsSemigroup and CanUseFroidurePin],
-function(S)
-  return TransposedMat(MultiplicationTableWithCanonicalPositions(S));
-end);
+S -> TransposedMat(MultiplicationTableWithCanonicalPositions(S)));
 
 InstallMethod(MinimalFaithfulTransformationDegree, "for a right zero semigroup",
 [IsRightZeroSemigroup],

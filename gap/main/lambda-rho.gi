@@ -63,10 +63,6 @@ function(o, m)
   # it would be better to use the SchreierTree here not the ReverseSchreierTree
   # and shouldn't there be a second case of inverse orbits here??
   genpos := ReverseSchreierTreeOfSCC(o, m);
-  inv := function(lambda, x)
-           return LambdaInverse(o!.parent)(lambda, x);
-         end;
-
   trace := function(i)
     local x;
     if IsBound(mults[i]) then
@@ -79,6 +75,7 @@ function(o, m)
     mults[i] := [inv(o[i], x), x];
     return x;
   end;
+  inv := {lambda, x} -> LambdaInverse(o!.parent)(lambda, x);
 
   for i in scc do
     trace(i);
@@ -113,7 +110,7 @@ function(o, m, i)
     genpos := ReverseSchreierTreeOfSCC(o, m);
     inv := LambdaInverse(o!.parent);
 
-    trace := function(i)
+    trace := function(i)  # gaplint: disable=W000
       local x;
       if IsBound(mults[i]) then
         return mults[i][2];
@@ -369,7 +366,7 @@ function(o, m)
   genpos := SchreierTreeOfSCC(o, m);
   inv := x -> RhoInverse(o!.parent)(o[scc[1]], x);
 
-  trace := function(i)
+  trace := function(i)  # gaplint: disable=W000
     local x;
     if IsBound(mults[i]) then
       return mults[i][1];

@@ -55,10 +55,7 @@ function(S, lambda_orb)
 end);
 
 InstallMethod(SemigroupData, "for an acting semigroup",
-[IsActingSemigroup],
-function(S)
-  return SemigroupData(S, LambdaOrb(S));
-end);
+[IsActingSemigroup], S -> SemigroupData(S, LambdaOrb(S)));
 
 # different method for regular ideals, regular/inverse semigroups, same method
 # for non-regular ideals
@@ -141,9 +138,7 @@ function(x, S)
       return false;
     fi;
 
-    lookfunc := function(data, x)
-      return rhoo[rholookup[x[6]]] = rho;
-    end;
+    lookfunc := {_, x} -> rhoo[rholookup[x[6]]] = rho;
 
     data := Enumerate(data, infinity, lookfunc);
     l := PositionOfFound(data);
@@ -163,9 +158,8 @@ function(x, S)
       return false;
     fi;
 
-    lookfunc := function(data, x)
-      return IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
-    end;
+    lookfunc :=
+    {data, x} -> IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
 
     data := Enumerate(data, infinity, lookfunc);
 
@@ -217,9 +211,7 @@ function(x, S)
   elif repslens[m][ind] < max then
     # enumerate until we find f or finish
     n := repslens[m][ind];
-    lookfunc := function(data, x)
-      return repslens[m][ind] > n;
-    end;
+    lookfunc := {data, x} -> repslens[m][ind] > n;
     if schutz = false then
       repeat
         # look for more R-reps with same lambda-rho value
@@ -284,17 +276,13 @@ end);
 
 InstallMethod(\in, "for a multiplicative element and semigroup data",
 [IsMultiplicativeElement, IsSemigroupData],
-function(f, data)
-  return not Position(data, f) = fail;
-end);
+{f, data} -> not Position(data, f) = fail);
 
 # same method for ideals
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
 [IsSemigroupData, IsPosInt],
-function(o, nr)
-  return o!.orbit[nr];
-end);
+{o, nr} -> o!.orbit[nr]);
 
 # same method for ideals
 
@@ -310,9 +298,7 @@ data -> Enumerate(data, infinity, ReturnFalse));
 
 InstallMethod(Enumerate, "for semigroup data and limit",
 [IsSemigroupData, IsCyclotomic],
-function(data, limit)
-  return Enumerate(data, limit, ReturnFalse);
-end);
+{data, limit} -> Enumerate(data, limit, ReturnFalse));
 
 # different method for ideals...
 
@@ -779,16 +765,12 @@ InstallMethod(String, "for the universal fake one",
 InstallMethod(\*,
 "for the universal fake one and a multiplicative element",
 [SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement],
-function(x, y)
-  return y;
-end);
+{x, y} -> y);
 
 InstallMethod(\*,
 "for a multiplicative element and the universal fake one",
 [IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne],
-function(x, y)
-  return x;
-end);
+{x, y} -> x);
 
 InstallMethod(\<, "for the universal fake one and a multiplicative element",
 [SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement], ReturnTrue);

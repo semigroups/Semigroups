@@ -32,10 +32,7 @@ InstallMethod(ExtRepOfObj, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
 
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
-function(x, hashlen)
-  return rec(func := BLOCKS_HASH,
-             data := hashlen);
-end);
+{_, hashlen} -> rec(func := BLOCKS_HASH, data := hashlen));
 
 InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks], BLOCKS_DEGREE);
 InstallMethod(RankOfBlocks, "for blocks", [IsBlocks], BLOCKS_RANK);

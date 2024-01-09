@@ -17,28 +17,22 @@
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons, "for IsTransformationSemigroup and a list",
 [IsTransformationSemigroup, IsList],
-function(filt, params)
+function(_, params)
   return Semigroup(List([1 .. params[1]], i ->
                    RandomTransformation(params[2])));
 end);
 
 InstallMethod(RandomMonoidCons, "for IsTransformationMonoid and a list",
-[IsTransformationMonoid, IsList],
-function(filt, params)
-  return Monoid(List([1 .. params[1]], i -> RandomTransformation(params[2])));
-end);
+[IsTransformationMonoid, IsList], {filt, params} ->
+Monoid(List([1 .. params[1]], i -> RandomTransformation(params[2]))));
 
 InstallMethod(RandomInverseSemigroupCons,
 "for IsTransformationSemigroup and a list",
@@ -67,15 +61,11 @@ end);
 
 InstallMethod(\^, "for a transformation semigroup with generators and perm",
 [IsTransformationCollection, IsPerm],
-function(coll, p)
-  return List(coll, x -> x ^ p);
-end);
+{coll, p} -> List(coll, x -> x ^ p));
 
 InstallMethod(\^, "for a transformation semigroup with generators and perm",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPerm],
-function(S, p)
-  return Semigroup(GeneratorsOfSemigroup(S) ^ p);
-end);
+{S, p} -> Semigroup(GeneratorsOfSemigroup(S) ^ p));
 
 #############################################################################
 ## Isomorphisms
@@ -84,16 +74,12 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsTransformationSemigroup and a semigroup",
 [IsTransformationSemigroup, IsSemigroup],
-function(filt, S)
-  return IsomorphismTransformationSemigroup(S);
-end);
+{filt, S} -> IsomorphismTransformationSemigroup(S));
 
 InstallMethod(IsomorphismMonoid,
 "for IsTransformationMonoid and a semigroup",
 [IsTransformationMonoid, IsSemigroup],
-function(filt, S)
-  return IsomorphismTransformationMonoid(S);
-end);
+{filt, S} -> IsomorphismTransformationMonoid(S));
 
 # TODO(later) AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
@@ -355,9 +341,7 @@ InstallMethod(DegreeOfTransformationCollection,
 InstallMethod(DegreeOfTransformationSemigroup,
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],
-function(I)
-  return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
-end);
+{I} -> DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I)));
 
 #############################################################################
 ## Action on points and pairs
@@ -424,9 +408,7 @@ end);
 InstallMethod(DigraphOfAction,
 "for a transformation semigroup with generators, list, and action",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList, IsFunction],
-function(S, list, act)
-  return DigraphOfAction(GeneratorsOfSemigroup(S), list, act);
-end);
+{S, list, act} -> DigraphOfAction(GeneratorsOfSemigroup(S), list, act));
 
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation collection and int",
@@ -453,9 +435,7 @@ end);
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators and int",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsInt],
-function(S, n)
-  return DigraphOfActionOnPoints(GeneratorsOfSemigroup(S), n);
-end);
+{S, n} -> DigraphOfActionOnPoints(GeneratorsOfSemigroup(S), n));
 
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators",
@@ -482,16 +462,12 @@ end);
 InstallMethod(IsConnectedTransformationSemigroup,
 "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  return IsConnectedDigraph(DigraphOfActionOnPoints(S));
-end);
+{S} -> IsConnectedDigraph(DigraphOfActionOnPoints(S)));
 
 InstallMethod(IsTransitive,
 "for a transformation collection and a positive int",
 [IsTransformationCollection, IsPosInt],
-function(coll, n)
-  return IsStronglyConnectedDigraph(DigraphOfActionOnPoints(coll, n));
-end);
+{coll, n} -> IsStronglyConnectedDigraph(DigraphOfActionOnPoints(coll, n)));
 
 InstallMethod(IsTransitive,
 "for a transformation collection and homog. list",
@@ -513,23 +489,17 @@ end);
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators and a pos. int.",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
-function(S, n)
-  return IsTransitive(GeneratorsOfSemigroup(S), n);
-end);
+{S, n} -> IsTransitive(GeneratorsOfSemigroup(S), n));
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return IsTransitive(S, DegreeOfTransformationSemigroup(S));
-end);
+{S} -> IsTransitive(S, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators and a list",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsList],
-function(S, set)
-  return IsTransitive(GeneratorsOfSemigroup(S), set);
-end);
+{S, set} -> IsTransitive(GeneratorsOfSemigroup(S), set));
 
 InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
@@ -543,15 +513,11 @@ end);
 
 InstallMethod(ComponentsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
-function(S)
-  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
-end);
+{S} -> DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps);
 
 InstallMethod(CyclesOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
-function(S)
-  return DigraphStronglyConnectedComponents(DigraphOfActionOnPoints(S)).comps;
-end);
+{S} -> DigraphStronglyConnectedComponents(DigraphOfActionOnPoints(S)).comps);
 
 InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a transformation semigroup with known generators",
@@ -785,16 +751,12 @@ end);
 InstallMethod(WreathProduct,
 "for a transformation monoid and a permutation group",
 [IsTransformationMonoid, IsPermGroup],
-function(M, G)
-  return WreathProduct(M, AsMonoid(IsTransformationMonoid, G));
-end);
+{M, G} -> WreathProduct(M, AsMonoid(IsTransformationMonoid, G)));
 
 InstallMethod(WreathProduct,
 "for a permutation group and a transformation semigroup",
 [IsPermGroup, IsTransformationSemigroup],
-function(G, S)
-  return WreathProduct(AsMonoid(IsTransformationMonoid, G), S);
-end);
+{G, S} -> WreathProduct(AsMonoid(IsTransformationMonoid, G), S));
 
 InstallMethod(WreathProduct,
 "for a transformation monoid and a transformation semigroup",

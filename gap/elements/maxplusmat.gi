@@ -86,9 +86,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsMaxPlusMatrix",
 
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsMaxPlusMatrix", [IsMaxPlusMatrix],
-function(filter)
-  return x -> IsInt(x) or x = -infinity;
-end);
+{_} -> x -> IsInt(x) or x = -infinity);
 
 InstallMethod(\*, "for max-plus matrices", [IsMaxPlusMatrix, IsMaxPlusMatrix],
 function(x, y)
@@ -125,30 +123,23 @@ end);
 InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix and a tropical max-plus matrix",
 [IsMaxPlusMatrix, IsTropicalMaxPlusMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
+{filter, mat} -> MatrixNC(filter, AsList(mat)));
 
 InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix and a projective max-plus matrix",
 [IsMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
+{filter, mat} -> MatrixNC(filter, AsList(mat)));
 
 InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix, transformation",
 [IsMaxPlusMatrix, IsTransformation],
-function(filter, x)
-  return AsMatrix(filter, x, DegreeOfTransformation(x));
-end);
+{filter, x} -> AsMatrix(filter, x, DegreeOfTransformation(x)));
 
 InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix, transformation, pos int",
 [IsMaxPlusMatrix, IsTransformation, IsPosInt],
-function(filter, x, dim)
-  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
-end);
+{filter, x, dim}
+-> MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0)));
 
 ## Method based on theorem 2, page 19, of:
 ## K.G. Farlow, Max-plus Algebra, Thesis.
@@ -278,9 +269,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsMinPlusMatrix",
 
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsMinPlusMatrix", [IsMinPlusMatrix],
-function(filter)
-  return x -> IsInt(x) or x = infinity;
-end);
+{filter} -> x -> IsInt(x) or x = infinity);
 
 InstallMethod(\*, "for min-plus matrices", [IsMinPlusMatrix, IsMinPlusMatrix],
 function(x, y)
@@ -317,23 +306,18 @@ end);
 InstallMethod(AsMatrix,
 "for IsMinPlusMatrix and a tropical min-plus matrix",
 [IsMinPlusMatrix, IsTropicalMinPlusMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
+{filter, mat} -> MatrixNC(filter, AsList(mat)));
 
 InstallMethod(AsMatrix,
 "for IsMinPlusMatrix, transformation",
 [IsMinPlusMatrix, IsTransformation],
-function(filter, x)
-  return AsMatrix(filter, x, DegreeOfTransformation(x));
-end);
+{filter, x} -> AsMatrix(filter, x, DegreeOfTransformation(x)));
 
 InstallMethod(AsMatrix,
 "for IsMinPlusMatrix, transformation, pos int",
 [IsMinPlusMatrix, IsTransformation, IsPosInt],
-function(filter, x, dim)
-  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, infinity, 0));
-end);
+{filter, x, dim}
+-> MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, infinity, 0)));
 
 #############################################################################
 ## 3. Tropical matrices
@@ -361,9 +345,8 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsTropicalMaxPlusMatrix and pos int",
 [IsTropicalMaxPlusMatrix, IsPosInt],
-function(filter, threshold)
-  return x -> (IsInt(x) and x >= 0 and x <= threshold) or x = -infinity;
-end);
+{filter, threshold}
+-> x -> (IsInt(x) and x >= 0 and x <= threshold) or x = -infinity);
 
 InstallMethod(\*, "for tropical max-plus matrices",
 [IsTropicalMaxPlusMatrix, IsTropicalMaxPlusMatrix],
@@ -437,9 +420,8 @@ end);
 InstallMethod(AsMatrix,
 "for IsTropicalMaxPlusMatrix, transformation, IsPosInt",
 [IsTropicalMaxPlusMatrix, IsTransformation, IsPosInt],
-function(filter, x, threshold)
-  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold);
-end);
+{filter, x, threshold}
+-> AsMatrix(filter, x, DegreeOfTransformation(x), threshold));
 
 InstallMethod(AsMatrix,
 "for IsTropicalMaxPlusMatrix, transformation, pos int, pos int",
@@ -470,9 +452,8 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsTropicalMinPlusMatrix and pos int",
 [IsTropicalMinPlusMatrix, IsPosInt],
-function(filter, threshold)
-  return x -> (IsInt(x) and x >= 0 and x <= threshold) or x = infinity;
-end);
+{filter, threshold}
+-> x -> (IsInt(x) and x >= 0 and x <= threshold) or x = infinity);
 
 InstallMethod(\*, "for tropical min-plus matrices",
 [IsTropicalMinPlusMatrix, IsTropicalMinPlusMatrix],
@@ -539,9 +520,8 @@ end);
 InstallMethod(AsMatrix,
 "for IsTropicalMinPlusMatrix, transformation, IsPosInt",
 [IsTropicalMinPlusMatrix, IsTransformation, IsPosInt],
-function(filter, x, threshold)
-  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold);
-end);
+{filter, x, threshold}
+-> AsMatrix(filter, x, DegreeOfTransformation(x), threshold));
 
 InstallMethod(AsMatrix,
 "for IsTropicalMinPlusMatrix, transformation, pos int, pos int",
@@ -572,9 +552,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsProjectiveMaxPlusMatrix",
 [IsProjectiveMaxPlusMatrix],
-function(filter)
-  return x -> IsInt(x) or x = -infinity;
-end);
+{filter} -> x -> IsInt(x) or x = -infinity);
 
 InstallMethod(\*, "for projective max-plus matrices",
 [IsProjectiveMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
@@ -623,30 +601,23 @@ end);
 InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, max-plus matrix",
 [IsProjectiveMaxPlusMatrix, IsMaxPlusMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
+{filter, mat} -> MatrixNC(filter, AsList(mat)));
 
 InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, tropical max-plus matrix",
 [IsProjectiveMaxPlusMatrix, IsTropicalMaxPlusMatrix],
-function(filter, mat)
-  return MatrixNC(filter, AsList(mat));
-end);
+{filter, mat} -> MatrixNC(filter, AsList(mat)));
 
 InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, transformation",
 [IsProjectiveMaxPlusMatrix, IsTransformation],
-function(filter, x)
-  return AsMatrix(filter, x, DegreeOfTransformation(x));
-end);
+{filter, x} -> AsMatrix(filter, x, DegreeOfTransformation(x)));
 
 InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, transformation, pos int",
 [IsProjectiveMaxPlusMatrix, IsTransformation, IsPosInt],
-function(filter, x, dim)
-  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
-end);
+{filter, x, dim}
+-> MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0)));
 
 #############################################################################
 ## 7. NTP matrices
@@ -671,7 +642,7 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
 
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsInt, IsInt],
-function(filter, threshold, period)
+function(_, threshold, period)
   if threshold < 0  then
     ErrorNoReturn("the 2nd argument (a pos. int.) is not >= 0");
   elif period <= 0 then
@@ -747,9 +718,8 @@ end);
 InstallMethod(AsMatrix,
 "for IsNTPMatrix, transformation, pos int, pos int",
 [IsNTPMatrix, IsTransformation, IsPosInt, IsPosInt],
-function(filter, x, threshold, period)
-  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold, period);
-end);
+{filter, x, threshold, period}
+-> AsMatrix(filter, x, DegreeOfTransformation(x), threshold, period));
 
 InstallMethod(AsMatrix,
 "for IsNTPMatrix, transformation, pos int, pos int, pos int",
@@ -786,9 +756,7 @@ end);
 
 InstallMethod(RandomMatrixOp, "for Integers and pos int",
 [IsIntegers, IsPosInt],
-function(semiring, n)
-  return Matrix(semiring, SEMIGROUPS.RandomIntegerMatrix(n, false));
-end);
+{semiring, n} -> Matrix(semiring, SEMIGROUPS.RandomIntegerMatrix(n, false)));
 
 # TODO(MatrixObj-later) this method should be in the GAP library
 InstallMethod(Order, "for an integer matrix obj",
@@ -812,9 +780,7 @@ end);
 InstallMethod(Matrix,
 "for Integers and transformation",
 [IsIntegers, IsTransformation],
-function(semiring, x)
-  return Matrix(semiring, x, DegreeOfTransformation(x));
-end);
+{semiring, x} -> Matrix(semiring, x, DegreeOfTransformation(x)));
 
 InstallMethod(Matrix,
 "for Integers, transformation, pos int",

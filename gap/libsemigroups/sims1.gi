@@ -302,7 +302,7 @@ InstallMethod(IteratorOfLeftCongruences,
 {S, n} -> IteratorOfLeftCongruences(S, n, []));
 
 InstallMethod(IteratorOfRightCongruences, "for a semigroup",
-[IsSemigroup], {S} -> IteratorOfRightCongruences(S, Size(S), []));
+[IsSemigroup], S -> IteratorOfRightCongruences(S, Size(S), []));
 
 InstallMethod(IteratorOfLeftCongruences, "for a semigroup",
-[IsSemigroup], {S} -> IteratorOfLeftCongruences(S, Size(S), []));
+[IsSemigroup], S -> IteratorOfLeftCongruences(S, Size(S), []));

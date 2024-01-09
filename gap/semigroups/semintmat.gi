@@ -22,7 +22,7 @@ InstallMethod(IsomorphismSemigroup,
 [IsIntegerMatrixSemigroup,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 1,  # to beat the default method
-function(filt, S)
+function(_, S)
   local n, map, T;
 
   n    := Maximum(DegreeOfTransformationSemigroup(S), 1);

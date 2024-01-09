@@ -456,7 +456,7 @@ function(S)
   o := Enumerate(RhoOrb(S));
 
   # TODO(later): shouldn't o  be stored in iter!?
-  func := function(iter, i)
+  func := function(_, i)
     # <rep> has rho val corresponding to <i>
     # <rep> has lambda val in position 1 of GradedLambdaOrb(S, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
@@ -484,7 +484,7 @@ function(S)
   scc := OrbSCC(o);
 
   # TODO(later): shouldn't o and scc be stored in iter!?
-  func := function(iter, m)
+  func := function(_, m)
     # has rectified lambda val and rho val!
     return ConvertToExternalElement(S,
       EvaluateWord(o, TraceSchreierTreeForward(o, scc[m][1])));

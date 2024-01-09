@@ -261,22 +261,18 @@ end);
 InstallMethod(IsSubrelation,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
-function(cong1, cong2)
-  return IsSubset(Union(cong1!.H, cong1!.W), Union(cong2!.H, cong2!.W));
-end);
+{cong1, cong2}
+-> IsSubset(Union(cong1!.H, cong1!.W), Union(cong2!.H, cong2!.W)));
 
 InstallMethod(IsSuperrelation,
 "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
-function(cong1, cong2)
-  return IsSubset(Union(cong2!.H, cong2!.W), Union(cong1!.H, cong1!.W));
-end);
+{cong1, cong2}
+-> IsSubset(Union(cong2!.H, cong2!.W), Union(cong1!.H, cong1!.W)));
 
 InstallMethod(\=, "for two congruences by Wang pair",
 [IsCongruenceByWangPair, IsCongruenceByWangPair],
-function(cong1, cong2)
-  return cong1!.H = cong2!.H and cong1!.W = cong2!.W;
-end);
+{cong1, cong2} -> cong1!.H = cong2!.H and cong1!.W = cong2!.W);
 
 InstallMethod(CayleyDigraphOfCongruences,
 "for a graph inverse semigroup",
@@ -290,6 +286,4 @@ end);
 InstallMethod(TrivialCongruence,
 "for a graph inverse semigroup",
 [IsGraphInverseSemigroup],
-function(S)
-  return AsCongruenceByWangPair(SemigroupCongruence(S, []));
-end);
+S -> AsCongruenceByWangPair(SemigroupCongruence(S, [])));

@@ -19,9 +19,7 @@
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal rep",
 [IsInverseActingSemigroupRep and IsSemigroupIdeal],
-function(I)
-  return Length(OrbSCC(LambdaOrb(I))) - 1;
-end);
+{I} -> Length(OrbSCC(LambdaOrb(I))) - 1);
 
 InstallMethod(NrDClasses, "for a regular acting semigroup ideal rep",
 [IsRegularActingSemigroupRep and IsSemigroupIdeal],
@@ -353,9 +351,7 @@ end);
 
 InstallMethod(Enumerate, "for semigroup ideal data, limit, looking function",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
-function(data, limit, lookfunc)
-  return Enumerate(data, limit, rec(lookfunc := lookfunc));
-end);
+{data, limit, lookfunc} -> Enumerate(data, limit, rec(lookfunc := lookfunc)));
 
 # We concentrate on the case when nothing is known about the parent of the
 # ideal.
@@ -755,9 +751,7 @@ function(x, I)
     fi;
 
     # this function checks if <pt> has the same lambda-value as x
-    lookfunc := function(lambdao, pt)
-      return pt = xx;
-    end;
+    lookfunc := {lambdao, pt} -> pt = xx;
     Enumerate(data, infinity, rec(lambdalookfunc := lookfunc));
     l := PositionOfFound(o);
 
@@ -812,9 +806,7 @@ function(x, I)
       return false;
     fi;
 
-    lookfunc := function(data, x)
-      return IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
-    end;
+    lookfunc := {d, x} -> IsBound(lambdarhoht[l]) and IsBound(lambdarhoht[l][m]);
     data := Enumerate(data, infinity, lookfunc);
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;

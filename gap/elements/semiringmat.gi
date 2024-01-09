@@ -165,9 +165,7 @@ end);
 
 InstallMethod(MatrixNC, "for a filter and list",
 [IsOperation, IsList],
-function(filter, mat)
-  return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat);
-end);
+{filter, mat} -> MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat));
 
 InstallMethod(MatrixNC, "for a filter, list, function",
 [IsOperation, IsList, IsFunction],
@@ -372,9 +370,7 @@ function(mat)
     return false;
   end;
 
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0);
-  end;
+  iter.ShallowCopy := iter -> rec(pos := 0);
 
   return IteratorByFunctions(iter);
 end);
@@ -405,9 +401,7 @@ end);
 InstallMethod(IsBound\[\],
 "for a plist matrix over semiring positional rep and pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
-function(mat, pos)
-  return IsBound(mat![pos]) and pos <= Length(mat![1]);
-end);
+{mat, pos} -> IsBound(mat![pos]) and pos <= Length(mat![1]));
 
 InstallMethod(TransposedMatImmutable, "for a matrix over semiring",
 [IsPlistMatrixOverSemiringPositionalRep],
@@ -442,16 +436,10 @@ function(coll)
 end);
 
 InstallMethod(InverseMutable, "for a matrix over semiring",
-[IsMatrixOverSemiring],
-function(mat)
-  return fail;
-end);
+[IsMatrixOverSemiring], ReturnFail);
 
 InstallMethod(InverseImmutable, "for a matrix over semiring",
-[IsMatrixOverSemiring],
-function(mat)
-  return fail;
-end);
+[IsMatrixOverSemiring], ReturnFail);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
@@ -722,7 +710,7 @@ end);
 
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",
 [IsMatrixOverSemiring, IsInt],
-  function(x, hashlen)
+  function(_, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionMatrixOverSemiring,
              data := hashlen);
 end);

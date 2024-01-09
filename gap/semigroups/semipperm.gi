@@ -17,32 +17,24 @@
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPartialPermSemigroup, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPartialPermMonoid, IsList],
-function(filt, params)
-  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
-end);
+{filt, params} -> SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params));
 
 InstallMethod(RandomSemigroupCons, "for IsPartialPermSemigroup and a list",
-[IsPartialPermSemigroup, IsList],
-function(filt, params)
-  return Semigroup(List([1 .. params[1]], i -> RandomPartialPerm(params[2])));
-end);
+[IsPartialPermSemigroup, IsList], {filt, params} ->
+Semigroup(List([1 .. params[1]], i -> RandomPartialPerm(params[2]))));
 
 InstallMethod(RandomMonoidCons, "for IsPartialPermMonoid and a list",
-[IsPartialPermMonoid, IsList],
-function(filt, params)
-  return Monoid(List([1 .. params[1]], i -> RandomPartialPerm(params[2])));
-end);
+[IsPartialPermMonoid, IsList], {filt, params} ->
+Monoid(List([1 .. params[1]], i -> RandomPartialPerm(params[2]))));
 
 InstallMethod(RandomInverseSemigroupCons,
 "for IsPartialPermSemigroup and a list",
 [IsPartialPermSemigroup, IsList],
-function(filt, params)
+function(_, params)
   return InverseSemigroup(List([1 .. params[1]],
                                i -> RandomPartialPerm(params[2])));
 end);
@@ -50,7 +42,7 @@ end);
 InstallMethod(RandomInverseMonoidCons,
 "for IsPartialPermMonoid and a list",
 [IsPartialPermMonoid, IsList],
-function(filt, params)
+function(_, params)
   return InverseMonoid(List([1 .. params[1]],
                             i -> RandomPartialPerm(params[2])));
 end);
@@ -83,16 +75,12 @@ end);
 InstallMethod(IsomorphismSemigroup,
 "for IsPartialPermSemigroup and a semigroup",
 [IsPartialPermSemigroup, IsSemigroup],
-function(filt, S)
-  return IsomorphismPartialPermSemigroup(S);
-end);
+{filt, S} -> IsomorphismPartialPermSemigroup(S));
 
 InstallMethod(IsomorphismMonoid,
 "for IsPartialPermMonoid and a semigroup",
 [IsPartialPermMonoid, IsSemigroup],
-function(filt, S)
-  return IsomorphismPartialPermMonoid(S);
-end);
+{filt, S} -> IsomorphismPartialPermMonoid(S));
 
 InstallMethod(IsomorphismPartialPermSemigroup,
 "for a bipartition semigroup with generators",
@@ -392,9 +380,7 @@ end);
 
 InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
 [IsPartialPermSemigroup, IsInt],
-function(S, rank)
-  return Filtered(Idempotents(S), x -> RankOfPartialPerm(x) = rank);
-end);
+{S, rank} -> Filtered(Idempotents(S), x -> RankOfPartialPerm(x) = rank));
 
 # this should really be in the library
 
@@ -518,9 +504,7 @@ InstallMethod(RankOfPartialPermSemigroup,
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
-function(I)
-  return Length(DomainOfPartialPermCollection(I));
-end);
+I -> Length(DomainOfPartialPermCollection(I)));
 
 #############################################################################
 ## Domain, image
@@ -645,9 +629,7 @@ end);
 
 InstallMethod(ComponentsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
-function(S)
-  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
-end);
+S -> DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps);
 
 InstallMethod(CyclesOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],

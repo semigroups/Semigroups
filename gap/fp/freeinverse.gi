@@ -148,18 +148,20 @@ end);
 ## MinimalWord
 ##
 
+SEMIGROUPS.InvertGenerator := function(n)
+  if n mod 2 = 0 then
+    return n - 1;
+  fi;
+  return n + 1;
+end;
+
 InstallMethod(MinimalWord, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(x)
   local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words,
    pos, part, temp_word, out, names;
 
-  InvertGenerator := function(n)
-    if n mod 2 = 0 then
-      return n - 1;
-    fi;
-    return n + 1;
-  end;
+  InvertGenerator := SEMIGROUPS.InvertGenerator;
 
   is_a_child_of := x![4];
   gen := x![5];
@@ -216,9 +218,9 @@ function(x)
     fi;
   od;
 
-  out := Concatenation (out);
+  out := Concatenation(out);
   if out[Length(out)] = '*' then
-    Unbind(out[Length(out)]);
+    Remove(out);
   fi;
 
   return out;
@@ -236,12 +238,7 @@ function(tree)
   local InvertGenerator, children, fork, tail, maxleftreducedpath,
   maxleftreduced, groupelem, i, mlr, output, pivot;
 
-  InvertGenerator := function(n)
-    if n mod 2 = 0 then
-      return n - 1;
-    fi;
-    return n + 1;
-  end;
+  InvertGenerator := SEMIGROUPS.InvertGenerator;
 
   children := function(n)
     local list, i;
@@ -332,9 +329,7 @@ end);
 InstallMethod(\<, "for elements of a free inverse semigroup",
 IsIdenticalObj,
 [IsFreeInverseSemigroupElement, IsFreeInverseSemigroupElement],
-function(tree1, tree2)
-  return CanonicalForm(tree1) < CanonicalForm(tree2);
-end);
+{tree1, tree2} -> CanonicalForm(tree1) < CanonicalForm(tree2));
 
 InstallMethod(ChooseHashFunction, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement, IsInt],
@@ -357,12 +352,7 @@ IsIdenticalObj,
 function(tree1, tree2)
   local new_names, product, i, parent, InvertGenerator;
 
-  InvertGenerator := function(n)
-    if n mod 2 = 0 then
-      return n - 1;
-    fi;
-    return n + 1;
-  end;
+  InvertGenerator := SEMIGROUPS.InvertGenerator;
 
   new_names    := [];
   new_names[1] := tree1![3];

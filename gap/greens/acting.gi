@@ -124,25 +124,25 @@ end;
 
 # same method for regular/inverse
 
-SEMIGROUPS.CreateDClass := function(arg)
+SEMIGROUPS.CreateDClass := function(arg)  # gaplint: disable=W034
   return SEMIGROUPS.CreateXClass(arg, DClassType, GreensDRelation);
 end;
 
 # same method for regular/inverse
 
-SEMIGROUPS.CreateRClass := function(arg)
+SEMIGROUPS.CreateRClass := function(arg)  # gaplint: disable=W034
   return SEMIGROUPS.CreateXClass(arg, RClassType, GreensRRelation);
 end;
 
 # same method for regular/inverse
 
-SEMIGROUPS.CreateLClass := function(arg)
+SEMIGROUPS.CreateLClass := function(arg)  # gaplint: disable=W034
   return SEMIGROUPS.CreateXClass(arg, LClassType, GreensLRelation);
 end;
 
 # same method for regular/inverse
 
-SEMIGROUPS.CreateHClass := function(arg)
+SEMIGROUPS.CreateHClass := function(arg)  # gaplint: disable=W034
   return SEMIGROUPS.CreateXClass(arg, HClassType, GreensHRelation);
 end;
 
@@ -482,9 +482,7 @@ end);
 InstallMethod(SemigroupDataIndex,
 "for an acting semigroup Green's class",
 [IsActingSemigroupGreensClass],
-function(C)
-  return Position(SemigroupData(Parent(C)), Representative(C));
-end);
+C -> Position(SemigroupData(Parent(C)), Representative(C)));
 
 # different method for regular/inverse/ideals
 
@@ -770,9 +768,7 @@ end);
 
 InstallMethod(GreensDClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return GreensDClassOfElementNC(S, x, true);
-end);
+{S, x} -> GreensDClassOfElementNC(S, x, true));
 
 # same method for regular/ideals, different method for inverse
 
@@ -805,9 +801,7 @@ end);
 
 InstallMethod(GreensLClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return GreensLClassOfElementNC(S, x, true);
-end);
+{S, x} -> GreensLClassOfElementNC(S, x, true));
 
 # same method for regular/ideals, different method for inverse
 
@@ -839,9 +833,7 @@ end);
 
 InstallMethod(GreensLClassOfElementNC, "for D-class and multiplicative element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsMultiplicativeElement],
-function(D, x)
-  return GreensLClassOfElementNC(D, x, true);
-end);
+{D, x} -> GreensLClassOfElementNC(D, x, true));
 
 # same method for regular/ideals, different method for inverse
 
@@ -881,9 +873,7 @@ end);
 
 InstallMethod(GreensRClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return GreensRClassOfElementNC(S, x, true);
-end);
+{S, x} -> GreensRClassOfElementNC(S, x, true));
 
 # same method for regular/inverse/ideals
 
@@ -915,9 +905,7 @@ end);
 
 InstallMethod(GreensRClassOfElementNC, "for D-class and multiplicative element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsMultiplicativeElement],
-function(D, x)
-  return GreensRClassOfElementNC(D, x, true);
-end);
+{D, x} -> GreensRClassOfElementNC(D, x, true));
 
 # same method for regular/inverse/ideals
 
@@ -949,9 +937,7 @@ end);
 
 InstallMethod(GreensHClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return GreensHClassOfElementNC(S, x, true);
-end);
+{S, x} -> GreensHClassOfElementNC(S, x, true));
 
 # same method for regular/ideals, different for inverse
 
@@ -982,9 +968,7 @@ end);
 
 InstallMethod(GreensHClassOfElementNC, "for a D/H-class and element",
 [IsActingSemigroupGreensClass and IsGreensClass, IsMultiplicativeElement],
-function(C, x)
-  return GreensHClassOfElementNC(C, x, true);
-end);
+{C, x} -> GreensHClassOfElementNC(C, x, true));
 
 # same method for regular/ideals, different method for inverse
 
@@ -1622,9 +1606,7 @@ D -> Length(RhoCosets(D)) * Length(RhoOrbSCC(D)));
 # same method for regular/inverse/ideals
 
 InstallMethod(NrHClasses, "for an acting semigroup", [IsActingSemigroup],
-function(S)
-  return Sum(List(GreensDClasses(S), NrHClasses));
-end);
+S -> Sum(List(GreensDClasses(S), NrHClasses)));
 
 # same method for regular/ideals, different method for inverse
 
@@ -2163,9 +2145,7 @@ function(S)
     return D;
   end;
 
-  isnew := function(iter, x)
-    return x = fail or ForAll(iter!.classes, D -> not x in D);
-  end;
+  isnew := {iter, x} -> x = fail or ForAll(iter!.classes, D -> not x in D);
 
   return WrappedIterator(IteratorOfRClassReps(S),
                          convert,

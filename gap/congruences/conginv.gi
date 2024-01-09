@@ -412,12 +412,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     while K <> T do
       K := T;
       opts := rec();
-      opts.gradingfunc := function(o, x)
-        return x in K;
-      end;
-      opts.onlygrades := function(x, data)
-        return x = false;
-      end;
+      opts.gradingfunc    := {o, x} -> x in K;
+      opts.onlygrades     := {x, data} -> x = false;
       opts.onlygradesdata := fail;
       for x in K do
         list := Enumerate(Orb(GeneratorsOfSemigroup(S), x, OnPoints, opts));

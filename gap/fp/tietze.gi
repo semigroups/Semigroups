@@ -36,7 +36,7 @@ function(S)
 
   rels := List(RelationsOfFpSemigroup(S),
               x -> [LetterRepAssocWord(x[1]), LetterRepAssocWord(x[2])]);
-  gens := List(GeneratorsOfSemigroup(S), x -> ViewString(x));
+  gens := List(GeneratorsOfSemigroup(S), ViewString);
 
   out := rec(GeneratorsOfStzPresentation := gens,
              RelationsOfStzPresentation  := rels,

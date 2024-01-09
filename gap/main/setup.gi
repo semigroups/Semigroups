@@ -29,13 +29,13 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a list or collection",
 # IsGeneratorsOfActingSemigroup, then this is ignored. I think this is a bug.
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection",
-[IsTransformationCollection], x -> true);
+[IsTransformationCollection], x -> true);  # gaplint: disable=W036
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
-[IsPartialPermCollection], x -> true);
+[IsPartialPermCollection], x -> true);  # gaplint: disable=W036
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection",
-[IsBipartitionCollection], x -> true);
+[IsBipartitionCollection], x -> true);  # gaplint: disable=W036
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for a Rees 0-matrix semigroup element collection",
@@ -90,9 +90,7 @@ end);
 
 InstallMethod(ActionDegree, "for a McAlister semigroup element",
 [IsMcAlisterTripleSemigroupElement],
-function(x)
-  return 0;
-end);
+x -> 0);
 
 InstallMethod(ActionDegree, "for a matrix obj", [IsMatrixObj],
 function(m)
@@ -132,9 +130,7 @@ end);
 
 InstallMethod(ActionDegree, "for a McAlister semigroup element collection",
 [IsMcAlisterTripleSemigroupElementCollection],
-function(coll)
-  return MaximumList(List(coll, x -> ActionDegree(x)));
-end);
+coll -> MaximumList(List(coll, ActionDegree)));
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
@@ -162,15 +158,11 @@ end);
 
 InstallMethod(ActionDegree, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
-function(S)
-  return 0;
-end);
+S -> 0);
 
 InstallMethod(ActionDegree, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-function(S)
-    return ActionDegree(Representative(S));
-end);
+S -> ActionDegree(Representative(S)));
 
 # the number of points in the range of the action
 
@@ -179,46 +171,33 @@ InstallMethod(ActionRank, "for a transformation and integer",
 
 InstallMethod(ActionRank, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(s)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(s);
-  return function(f)
-    return RANK_TRANS_INT(f, deg);
-  end;
-end);
+S -> f -> RANK_TRANS_INT(f, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(ActionRank, "for a partial perm and integer",
 [IsPartialPerm, IsInt],
-function(f, n)
-  return RankOfPartialPerm(f);
-end);
+{f, n} -> RankOfPartialPerm(f));
 
 InstallMethod(ActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-function(s)
-  return RankOfPartialPerm;
-end);
+S -> RankOfPartialPerm);
 
 InstallMethod(ActionRank, "for a bipartition and integer",
 [IsBipartition, IsInt], BIPART_RANK);
 
 InstallMethod(ActionRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-function(S)
-  return RankOfBipartition;
-end);
+S -> RankOfBipartition);
 
 InstallMethod(ActionRank,
 "for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
-function(f, n)
+function(f, _)
   local parent;
   if f![1] = 0 then
     return 0;
-  else
-    parent := ReesMatrixSemigroupOfFamily(FamilyObj(f));
-    return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
+  parent := ReesMatrixSemigroupOfFamily(FamilyObj(f));
+  return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
 end);
 
 InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup",
@@ -237,15 +216,11 @@ end);
 
 InstallMethod(ActionRank, "for a McAlister triple semigroup element and int",
 [IsMcAlisterTripleSemigroupElement, IsInt],
-function(f, n)
-  return f[1];
-end);
+{f, n} -> f[1]);
 
 InstallMethod(ActionRank, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
-function(S)
-  return x -> ActionDegree(S);
-end);
+S -> x -> ActionDegree(S));
 
 InstallMethod(ActionRank, "for a matrix object and integer",
 [IsMatrixObj, IsInt],
@@ -258,9 +233,7 @@ end);
 
 InstallMethod(ActionRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  return x -> Rank(RowSpaceBasis(x));
-end);
+S -> x -> Rank(RowSpaceBasis(x)));
 
 # the minimum possible rank of an element
 
@@ -282,7 +255,7 @@ InstallMethod(MinActionRank, "for a McAlister triple subsemigroup",
 InstallMethod(MinActionRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], x -> 0);
 
-# options passed to LambdaOrb(s) when it is created
+# options passed to LambdaOrb(S) when it is created
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> rec(forflatplainlists := true));
@@ -300,7 +273,7 @@ InstallMethod(LambdaOrbOpts, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S -> rec());
 
 InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], s -> rec());
+[IsMatrixOverFiniteFieldSemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> rec(forflatplainlists := true));
@@ -318,19 +291,12 @@ InstallMethod(RhoOrbOpts, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], s -> rec());
+[IsMatrixOverFiniteFieldSemigroup], S -> rec());
 
 # the lambda and rho acts
 InstallMethod(LambdaAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  return
-    function(set, f)
-      return OnPosIntSetsTrans(set, f, deg);
-    end;
-end);
+S -> {set, f} -> OnPosIntSetsTrans(set, f, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(LambdaAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x -> OnPosIntSetsPartialPerm);
@@ -369,27 +335,16 @@ end);
 
 InstallMethod(LambdaAct, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-S -> function(vsp, mat)
-  return MatrixOverFiniteFieldRowSpaceRightAction(S, vsp, mat);
-end);
+S -> {vsp, mat} -> MatrixOverFiniteFieldRowSpaceRightAction(S, vsp, mat));
 
 InstallMethod(RhoAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  return
-    function(set, f)
-      return ON_KERNEL_ANTI_ACTION(set, f, deg);
-    end;
-end);
+S ->
+{set, f} -> ON_KERNEL_ANTI_ACTION(set, f, DegreeOfTransformationSemigroup(S)));
 
-# JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
-  function(set, f)
-    return OnPosIntSetsPartialPerm(set, f ^ -1);
-  end);
+{set, f} -> OnPosIntSetsPartialPerm(set, f ^ -1));
 
 InstallMethod(RhoAct, "for a partial perm semigroup",
 [IsBipartitionSemigroup], x -> BLOCKS_LEFT_ACT);
@@ -425,11 +380,7 @@ end);
 
 InstallMethod(RhoAct, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  return function(vsp, mat)
-    return LambdaAct(S)(vsp, TransposedMat(mat));
-  end;
-end);
+S -> {vsp, mat} -> LambdaAct(S)(vsp, TransposedMat(mat)));
 
 # the seed or dummy start point for LambdaOrb
 
@@ -441,9 +392,7 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-function(S)
-  return BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]);
-end);
+S -> BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]));
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
@@ -472,9 +421,7 @@ InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 
 InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-function(S)
-  return BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]);
-end);
+S -> BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]));
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
@@ -489,14 +436,7 @@ InstallMethod(RhoOrbSeed, "for a matrix semigroup",
 
 InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  return
-    function(f)
-      return IMAGE_SET_TRANS_INT(f, deg);
-    end;
-end);
+S -> f -> IMAGE_SET_TRANS_INT(f, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(LambdaFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x -> IMAGE_SET_PPERM);
@@ -520,23 +460,13 @@ function(S)
   return x -> act(x[1], x[2] ^ -1);
 end);
 
+# a function that returns the row space
 InstallMethod(LambdaFunc, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup],
-s -> function(mat)
-  # a function that returns the row space
-    return RowSpaceBasis(mat);
-end);
+[IsMatrixOverFiniteFieldSemigroup], S -> RowSpaceBasis);
 
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  local deg;
-  deg := DegreeOfTransformationSemigroup(S);
-  return
-    function(f)
-      return FLAT_KERNEL_TRANS_INT(f, deg);
-    end;
-end);
+S -> f -> FLAT_KERNEL_TRANS_INT(f, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(RhoFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x -> DOMAIN_PPERM);
@@ -545,23 +475,15 @@ InstallMethod(RhoFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x -> BIPART_LEFT_BLOCKS);
 
 InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R -> (x -> x![1]));
+[IsReesZeroMatrixSubsemigroup], R -> x -> x![1]);
 
 InstallMethod(RhoFunc, "for a McAlister triple subsemigroup",
-[IsMcAlisterTripleSubsemigroup],
-function(S)
-  return x -> x[1];
-end);
+[IsMcAlisterTripleSubsemigroup], S -> x -> x[1]);
 
+# a function that returns the column space
 InstallMethod(RhoFunc, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  # a function that returns the column space
-  return
-    function(mat)
-      return LambdaFunc(S)(TransposedMat(mat));
-    end;
-end);
+S -> mat -> LambdaFunc(S)(TransposedMat(mat)));
 
 # The function used to calculate the rank of lambda or rho value
 
@@ -623,15 +545,7 @@ InstallMethod(RhoRank, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], LambdaRank);
 
 InstallMethod(RhoRank, "for a McAlister subsemigroup",
-[IsMcAlisterTripleSubsemigroup], S ->
-function(x)
-  local T;
-  if x = 0 then
-    return 0;
-  fi;
-  T := MTSEParent(Representative(S));
-  return ActionRank(MTSE(T, x, One(McAlisterTripleSemigroupGroup(T))), 0);
-end);
+[IsMcAlisterTripleSubsemigroup], S -> LambdaRank);
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right
 # like the inverse of f on Y.
@@ -640,14 +554,10 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> INV_LIST_TRANS);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], S -> function(x, f)
-                                 return f ^ -1;
-                               end);
+[IsPartialPermSemigroup], S -> {x, f} -> f ^ -1);
 
 InstallMethod(LambdaInverse, "for a McAlister triple subsemigroup",
-[IsMcAlisterTripleSubsemigroup], S -> function(x, f)
-                                   return f ^ -1;
-                                 end);
+[IsMcAlisterTripleSubsemigroup], S -> {x, f} -> f ^ -1);
 
 InstallMethod(LambdaInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_INV_RIGHT);
@@ -671,24 +581,18 @@ end);
 # g ^ Y = X and g acts on the left like the inverse of f on Y.
 
 InstallMethod(LambdaInverse, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], s ->
-function(rsp, mat)
-  return MatrixOverFiniteFieldLocalRightInverse(s, rsp, mat);
-end);
+[IsMatrixOverFiniteFieldSemigroup], S ->
+{rsp, mat} -> MatrixOverFiniteFieldLocalRightInverse(S, rsp, mat));
 
 InstallMethod(RhoInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> INV_KER_TRANS);
 
 InstallMethod(RhoInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
-  function(dom, f)
-    return f ^ -1;
-  end);
+  {dom, f} -> f ^ -1);
 
 InstallMethod(RhoInverse, "for a McAlister triple subsemigroup",
-[IsMcAlisterTripleSubsemigroup], S -> function(x, f)
-                                        return f ^ -1;
-                                      end);
+[IsMcAlisterTripleSubsemigroup], S -> {x, f} -> f ^ -1);
 
 # JDM better method for this!!
 
@@ -711,58 +615,41 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_INV_LEFT);
 
 InstallMethod(RhoInverse, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], s ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(rsp, mat)
-  return TransposedMat(MatrixOverFiniteFieldLocalRightInverse(s,
+  return TransposedMat(MatrixOverFiniteFieldLocalRightInverse(S,
                           rsp, TransposedMat(mat)));
 end);
 
-InstallMethod(LambdaBound, "for a transformation semigroup",
-[IsTransformationSemigroup], s ->
+SEMIGROUPS.DefaultLambdaBound := _ ->
 function(r)
   if r < 100 then
     return Factorial(r);
   else
     return infinity;
   fi;
-end);
+end;
+
+InstallMethod(LambdaBound, "for a transformation semigroup",
+[IsTransformationSemigroup], SEMIGROUPS.DefaultLambdaBound);
 
 InstallMethod(RhoBound, "for a transformation semigroup",
 [IsTransformationSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s ->
-function(r)
-  if r < 100 then
-    return Factorial(r);
-  else
-    return infinity;
-  fi;
-end);
+[IsPartialPermSemigroup], SEMIGROUPS.DefaultLambdaBound);
+
 InstallMethod(RhoBound, "for a partial perm semigroup",
 [IsPartialPermSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s ->
-function(r)
-  if r < 100 then
-    return Factorial(r);
-  else
-    return infinity;
-  fi;
-end);
+[IsBipartitionSemigroup], SEMIGROUPS.DefaultLambdaBound);
+
 InstallMethod(RhoBound, "for a bipartition semigroup",
 [IsBipartitionSemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
-function(r)
-  if r < 100 then
-    return Factorial(r);
-  else
-    return infinity;
-  fi;
-end);
+[IsReesZeroMatrixSubsemigroup], SEMIGROUPS.DefaultLambdaBound);
 
 InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
@@ -793,7 +680,7 @@ end);
 InstallMethod(RhoBound, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], LambdaBound);
 
-# LamdaIdentity(s) returns a function that returns
+# LamdaIdentity(S) returns a function that returns
 # the identity element of the Schutzenberger group
 # elements produced by LambdaPerm
 
@@ -801,74 +688,52 @@ InstallMethod(RhoBound, "for a matrix semigroup",
 
 InstallMethod(LambdaIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(RhoIdentity, "for a transformation semigroup",
 [IsTransformationSemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(LambdaIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(RhoIdentity, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-  s -> function(r)
-    return ();
-  end);
+  S -> r -> ());
 
 InstallMethod(LambdaIdentity, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(RhoIdentity, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
-  s -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(LambdaIdentity, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
-  S -> function(r)
-    return ();
-  end);
+S -> r -> ());
 
 InstallMethod(RhoIdentity, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup], LambdaIdentity);
 
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
-function(r)
-  return IdentityMat(r, BaseDomain(Representative(S)));
-end);
+r -> IdentityMat(r, BaseDomain(Representative(S))));
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
-function(r)
-  return IdentityMat(r, BaseDomain(Representative(S)));
-end);
+r -> IdentityMat(r, BaseDomain(Representative(S))));
 
-# LambdaPerm(s) returns a permutation from two acting semigroup elements with
+# LambdaPerm(S) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
 
@@ -892,15 +757,11 @@ end);
 
 InstallMethod(LambdaPerm, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
-function(S)
-  return {x, y} -> x[2] ^ -1 * y[2];
-end);
+S -> {x, y} -> x[2] ^ -1 * y[2]);
 
 InstallMethod(LambdaPerm, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
-function(x, y)
-  return MatrixOverFiniteFieldSchutzGrpElement(S, x, y);
-end);
+{x, y} -> MatrixOverFiniteFieldSchutzGrpElement(S, x, y));
 
 # Returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
 # yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
@@ -910,18 +771,15 @@ InstallMethod(LambdaConjugator, "for a transformation semigroup",
 
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
-function(x, y)
-  return MappingPermListList(IMAGE_PPERM(x), IMAGE_PPERM(y));
-end);
+{x, y} -> MappingPermListList(IMAGE_PPERM(x), IMAGE_PPERM(y)));
 
 InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_LAMBDA_CONJ);
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
-function(x, y)
-  return ();  # FIXME(later) is this right???? This is not right!!
-end);
+# FIXME(later) is this right???? This is not right!!
+{x, y} -> ());
 
 InstallMethod(LambdaConjugator, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
@@ -938,9 +796,7 @@ end);
 
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
-function(x, y)
-    return MatrixOverFiniteFieldLambdaConjugator(S, x, y);
-end);
+{x, y} -> MatrixOverFiniteFieldLambdaConjugator(S, x, y));
 
 # the function used to test if there is an idempotent with the specified
 # lambda and rho values.
@@ -972,15 +828,11 @@ function(j, i)
 end);
 
 InstallMethod(IdempotentTester, "for a McAlister triple subsemigroup",
-[IsMcAlisterTripleSubsemigroup], S ->
-function(x, y)
-  return x = y;
-end);
+[IsMcAlisterTripleSubsemigroup], S -> {x, y} -> x = y);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
-    return MatrixOverFiniteFieldIdempotentTester(S, x, y);
-end);
+[IsMatrixOverFiniteFieldSemigroup],
+S -> {x, y} -> MatrixOverFiniteFieldIdempotentTester(S, x, y));
 
 # the function used to create an idempotent with the specified lambda and rho
 # values.
@@ -1008,16 +860,15 @@ end);
 
 InstallMethod(IdempotentCreator, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup], S ->
-function(x, y)
+function(x, _)
   local T;
   T := MTSEParent(Representative(S));
   return MTSE(T, x, One(McAlisterTripleSemigroupGroup(T)));
 end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
-    return MatrixOverFiniteFieldIdempotentCreator(S, x, y);
-end);
+[IsMatrixOverFiniteFieldSemigroup],
+S -> {x, y} -> MatrixOverFiniteFieldIdempotentCreator(S, x, y));
 
 # the action of elements of the stabiliser of a lambda-value on any element of
 # the semigroup with that lambda-value
@@ -1053,9 +904,7 @@ end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
-function(x, y)
-  return MatrixOverFiniteFieldStabilizerAction(S, x, y);
-end);
+{x, y} -> MatrixOverFiniteFieldStabilizerAction(S, x, y));
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
@@ -1086,49 +935,27 @@ InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 
 InstallMethod(SchutzGpMembership, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  return function(stab, x)
-    return SiftedPermutation(stab, x) = ();
-  end;
-end);
+S -> {stab, x} -> SiftedPermutation(stab, x) = ());
 
 InstallMethod(SchutzGpMembership, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
-function(S)
-  return function(stab, x)
-    return SiftedPermutation(stab, x) = ();
-  end;
-end);
+S -> {stab, x} -> SiftedPermutation(stab, x) = ());
 
 InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
-function(S)
-  return function(stab, x)
-    return SiftedPermutation(stab, x) = ();
-  end;
-end);
+S -> {stab, x} -> SiftedPermutation(stab, x) = ());
 
 InstallMethod(SchutzGpMembership, "for a McAlister triple subsemigroup",
 [IsMcAlisterTripleSubsemigroup],
-function(S)
-  return function(stab, x)
-    return SiftedPermutation(stab, x) = ();
-  end;
-end);
+S -> {stab, x} -> SiftedPermutation(stab, x) = ());
 
 InstallMethod(SchutzGpMembership, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
-function(S)
-  return function(stab, x)
-    return SiftedPermutation(stab, x) = ();
-  end;
-end);
+S -> {stab, x} -> SiftedPermutation(stab, x) = ());
 
 InstallMethod(SchutzGpMembership, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], S ->
-function(stab, x)
-  return x in stab;
-end);
+[IsMatrixOverFiniteFieldSemigroup],
+S -> {stab, x} -> x in stab);
 
 # One or a fake one for those types of object without one.
 
@@ -1204,12 +1031,10 @@ end);
 InstallMethod(ChooseHashFunction, "for an object and an int",
 [IsObject, IsInt],
 1,
-function(p, hashlen)
-  return rec(func := {v, data} -> 1, data := fail);
-end);
+{p, hashlen} -> rec(func := {v, data} -> 1, data := fail));
 
 # The next two methods are more general than might seem necessary but
-# apparently ReesZeroMatrixSemigroup's satisfying IsWholeFamily are not in
+# apparently ReesZeroMatrixSemigroup'S satisfying IsWholeFamily are not in
 # IsActingSemigroup but their ideals are, and we still require a method for
 # ConvertToInternalElement as a result.
 

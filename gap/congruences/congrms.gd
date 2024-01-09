@@ -13,19 +13,18 @@
 ## and MSc thesis "Computing with Semigroup Congruences" chapter 3.
 ##
 
+DeclareCategory("IsRMSOrRZMSCongruenceByLinkedTriple",
+                IsSemigroupCongruence
+                and IsMagmaCongruence
+                and CanComputeEquivalenceRelationPartition
+                and IsAttributeStoringRep
+                and IsFinite);
+
 # Congruences by linked triple
 DeclareCategory("IsRMSCongruenceByLinkedTriple",
-                IsSemigroupCongruence
-                and IsMagmaCongruence
-                and CanComputeEquivalenceRelationPartition
-                and IsAttributeStoringRep
-                and IsFinite);
+                IsRMSOrRZMSCongruenceByLinkedTriple);
 DeclareCategory("IsRZMSCongruenceByLinkedTriple",
-                IsSemigroupCongruence
-                and IsMagmaCongruence
-                and CanComputeEquivalenceRelationPartition
-                and IsAttributeStoringRep
-                and IsFinite);
+                IsRMSOrRZMSCongruenceByLinkedTriple);
 
 DeclareOperation("IsLinkedTriple",
                  [IsSemigroup, IsGroup, IsDenseList, IsDenseList]);

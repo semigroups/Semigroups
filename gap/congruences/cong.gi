@@ -40,9 +40,7 @@ InstallMethod(CongruenceHandednessString, "for a 2-sided congruence",
 # This is required for QuotientSemigroups and their subsemigroups.
 InstallImmediateMethod(CanEasilyCompareElements,
 IsCongruenceClass and HasEquivalenceClassRelation, 0,
-function(C)
-  return CanUseLibsemigroupsCongruence(EquivalenceClassRelation(C));
-end);
+C -> CanUseLibsemigroupsCongruence(EquivalenceClassRelation(C)));
 
 ########################################################################
 # Flexible functions for creating congruences
@@ -178,12 +176,14 @@ function(CongruenceConstructor, arg)
 end);
 
 InstallGlobalFunction(LeftSemigroupCongruence,
-function(arg)
+# Can't be a lambda because arg has a special meaning here
+function(arg)  # gaplint: disable=W034
   return _LeftOrRightCong(LeftSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
 InstallGlobalFunction(RightSemigroupCongruence,
-function(arg)
+# Can't be a lambda because arg has a special meaning here
+function(arg)  # gaplint: disable=W034
   return _LeftOrRightCong(RightSemigroupCongruenceByGeneratingPairs, arg);
 end);
 
@@ -192,10 +192,7 @@ end);
 ########################################################################
 
 InstallMethod(TrivialCongruence, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return SemigroupCongruence(S, []);
-end);
+[IsSemigroup], S -> SemigroupCongruence(S, []));
 
 ########################################################################
 # Congruence operators

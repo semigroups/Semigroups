@@ -17,9 +17,7 @@
 InstallMethod(IsMultiplicativeZero,
 "for an acting semigroup and element",
 [IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-  return MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S);
-end);
+{S, x} -> MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S));
 
 # same method for ideals
 

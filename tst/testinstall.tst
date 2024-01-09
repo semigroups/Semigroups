@@ -43,7 +43,6 @@ false
 
 # TestInstall5
 gap> S := SingularTransformationSemigroup(6);
-<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> Size(S);
 45936
 
@@ -219,14 +218,14 @@ gap> NrHClasses(L); NrHClasses(LL);
 4
 4
 gap> HClassReps(L);
-[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
+[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ),
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ),
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ),
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> HClassReps(LL);
-[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
+[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ),
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ),
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ),
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> Idempotents(L);
 [  ]
@@ -251,12 +250,12 @@ gap> S := Range(last);
 gap> IsGroupAsSemigroup(S);
 true
 gap> Generators(S);
-[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ),
   Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> T := Range(IsomorphismTransformationMonoid(G));
 <transformation group of degree 9 with 2 generators>
 gap> Generators(T);
-[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ),
   Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> H := Range(IsomorphismPermGroup(T));
 Group([ (), (5,9), (1,7) ])
@@ -266,40 +265,40 @@ gap> x := Transformation([2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11]);;
 gap> S := FullTransformationSemigroup(12);;
 gap> S := Semigroup(S, rec(acting := true, regular := true));;
 gap> InversesOfSemigroupElement(S, x);
-[ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 2, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 4, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 11, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 1, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 5, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 10, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 9, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 6, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 12, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 2, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 4, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 11, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 1, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 5, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 10, 3, 12, 2 ] ), 
-  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 9, 3, 12, 2 ] ), 
+[ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 6, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 2, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 4, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 11, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 1, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 5, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 10, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 9, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 6, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 12, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 2, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 4, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 11, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 1, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 5, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 10, 3, 12, 2 ] ),
+  Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 9, 3, 12, 2 ] ),
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 12, 2 ] ) ]
 
 # TestInstall16
 gap> file := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
 >                          "/data/tst/testinstall.pickle");;
 gap>  ReadGenerators(file, 1);
-[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
-  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
-  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 9 ]>, 
-  <identity partial perm on [ 1, 2, 3, 4, 5, 9 ]>, 
-  <identity partial perm on [ 1, 2, 3, 4, 9 ]>, 
-  <identity partial perm on [ 1, 2, 3, 9 ]>, 
-  <identity partial perm on [ 1, 2, 9 ]>, <identity partial perm on [ 1, 9 ]> 
+[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>,
+  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>,
+  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 9 ]>,
+  <identity partial perm on [ 1, 2, 3, 4, 5, 9 ]>,
+  <identity partial perm on [ 1, 2, 3, 4, 9 ]>,
+  <identity partial perm on [ 1, 2, 3, 9 ]>,
+  <identity partial perm on [ 1, 2, 9 ]>, <identity partial perm on [ 1, 9 ]>
  ]
 
 # TestInstall17
@@ -391,7 +390,7 @@ gap> S := InverseMonoid(PartialPerm([1, 3, 2]), PartialPerm([1]));;
 gap> [Size(S), Size(AsSet(S))];
 [ 3, 3 ]
 gap> Elements(S);
-[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2, 3 ]>, 
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2, 3 ]>,
   (1)(2,3) ]
 
 # TestInstall24
@@ -874,7 +873,7 @@ gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 gap> I := SemigroupIdeal(S, x);
 <inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
-[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], 
+[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ],
       [ 5, -5 ]>> ]
 gap> I;
 <inverse block bijection semigroup ideal of degree 6 with 1 generator>
@@ -892,11 +891,11 @@ gap> R := PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x6 over Group(())>
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, []);;
 gap> EquivalenceClasses(cong);
-[ <2-sided congruence class of (1,(),1)>, 
-  <2-sided congruence class of (1,(),2)>, 
-  <2-sided congruence class of (1,(),3)>, 
-  <2-sided congruence class of (1,(),4)>, 
-  <2-sided congruence class of (1,(),5)>, 
+[ <2-sided congruence class of (1,(),1)>,
+  <2-sided congruence class of (1,(),2)>,
+  <2-sided congruence class of (1,(),3)>,
+  <2-sided congruence class of (1,(),4)>,
+  <2-sided congruence class of (1,(),5)>,
   <2-sided congruence class of (1,(),6)> ]
 
 # TestInstall61: Issue 95:
@@ -910,47 +909,47 @@ gap> x := ReesZeroMatrixSemigroupElement(R, 1, (1, 3), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(R, 1, (), 1);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(R, [[x, y]]);;
 gap> c := Set(EquivalenceClasses(cong));
-[ <2-sided congruence class of (1,(),1)>, 
-  <2-sided congruence class of (1,(),2)>, 
-  <2-sided congruence class of (1,(),3)>, 
-  <2-sided congruence class of (1,(),4)>, 
-  <2-sided congruence class of (1,(),5)>, 
-  <2-sided congruence class of (1,(),6)>, 
-  <2-sided congruence class of (2,(),1)>, 
-  <2-sided congruence class of (3,(),1)>, 
-  <2-sided congruence class of (4,(),1)>, 
-  <2-sided congruence class of (5,(),1)>, 
-  <2-sided congruence class of (6,(),1)>, 
-  <2-sided congruence class of (7,(),1)>, <2-sided congruence class of 0>, 
-  <2-sided congruence class of (2,(),2)>, 
-  <2-sided congruence class of (2,(),3)>, 
-  <2-sided congruence class of (2,(),4)>, 
-  <2-sided congruence class of (2,(),5)>, 
-  <2-sided congruence class of (2,(),6)>, 
-  <2-sided congruence class of (3,(),2)>, 
-  <2-sided congruence class of (3,(),3)>, 
-  <2-sided congruence class of (3,(),4)>, 
-  <2-sided congruence class of (3,(),5)>, 
-  <2-sided congruence class of (3,(),6)>, 
-  <2-sided congruence class of (4,(),2)>, 
-  <2-sided congruence class of (4,(),3)>, 
-  <2-sided congruence class of (4,(),4)>, 
-  <2-sided congruence class of (4,(),5)>, 
-  <2-sided congruence class of (4,(),6)>, 
-  <2-sided congruence class of (5,(),2)>, 
-  <2-sided congruence class of (5,(),3)>, 
-  <2-sided congruence class of (5,(),4)>, 
-  <2-sided congruence class of (5,(),5)>, 
-  <2-sided congruence class of (5,(),6)>, 
-  <2-sided congruence class of (6,(),2)>, 
-  <2-sided congruence class of (6,(),3)>, 
-  <2-sided congruence class of (6,(),4)>, 
-  <2-sided congruence class of (6,(),5)>, 
-  <2-sided congruence class of (6,(),6)>, 
-  <2-sided congruence class of (7,(),2)>, 
-  <2-sided congruence class of (7,(),3)>, 
-  <2-sided congruence class of (7,(),4)>, 
-  <2-sided congruence class of (7,(),5)>, 
+[ <2-sided congruence class of (1,(),1)>,
+  <2-sided congruence class of (1,(),2)>,
+  <2-sided congruence class of (1,(),3)>,
+  <2-sided congruence class of (1,(),4)>,
+  <2-sided congruence class of (1,(),5)>,
+  <2-sided congruence class of (1,(),6)>,
+  <2-sided congruence class of (2,(),1)>,
+  <2-sided congruence class of (3,(),1)>,
+  <2-sided congruence class of (4,(),1)>,
+  <2-sided congruence class of (5,(),1)>,
+  <2-sided congruence class of (6,(),1)>,
+  <2-sided congruence class of (7,(),1)>, <2-sided congruence class of 0>,
+  <2-sided congruence class of (2,(),2)>,
+  <2-sided congruence class of (2,(),3)>,
+  <2-sided congruence class of (2,(),4)>,
+  <2-sided congruence class of (2,(),5)>,
+  <2-sided congruence class of (2,(),6)>,
+  <2-sided congruence class of (3,(),2)>,
+  <2-sided congruence class of (3,(),3)>,
+  <2-sided congruence class of (3,(),4)>,
+  <2-sided congruence class of (3,(),5)>,
+  <2-sided congruence class of (3,(),6)>,
+  <2-sided congruence class of (4,(),2)>,
+  <2-sided congruence class of (4,(),3)>,
+  <2-sided congruence class of (4,(),4)>,
+  <2-sided congruence class of (4,(),5)>,
+  <2-sided congruence class of (4,(),6)>,
+  <2-sided congruence class of (5,(),2)>,
+  <2-sided congruence class of (5,(),3)>,
+  <2-sided congruence class of (5,(),4)>,
+  <2-sided congruence class of (5,(),5)>,
+  <2-sided congruence class of (5,(),6)>,
+  <2-sided congruence class of (6,(),2)>,
+  <2-sided congruence class of (6,(),3)>,
+  <2-sided congruence class of (6,(),4)>,
+  <2-sided congruence class of (6,(),5)>,
+  <2-sided congruence class of (6,(),6)>,
+  <2-sided congruence class of (7,(),2)>,
+  <2-sided congruence class of (7,(),3)>,
+  <2-sided congruence class of (7,(),4)>,
+  <2-sided congruence class of (7,(),5)>,
   <2-sided congruence class of (7,(),6)> ]
 gap> ForAny(c, x -> MultiplicativeZero(R) in x);
 true
@@ -1001,7 +1000,7 @@ false
 
 # TestInstall63: Issue 127:
 # Bug in Enumerate for an acting semigroup ideal that knows it is regular at its
-# point of creation. 
+# point of creation.
 gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
 >                     [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
@@ -1023,13 +1022,13 @@ gap> I := SemigroupIdeal(T, Idempotents(T));;
 gap> Size(I);
 21
 
-# TestInstall64: Bug fixed by changeset 949553d 
+# TestInstall64: Bug fixed by changeset 949553d
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
 5
 gap> C := SemigroupCongruence(S, [S.1, S.1 * S.2]);
-<universal semigroup congruence over <0-simple inverse partial perm semigroup 
+<universal semigroup congruence over <0-simple inverse partial perm semigroup
  of size 5, rank 2 with 2 generators>>
 gap> IsUniversalSemigroupCongruence(C);
 true
@@ -1072,7 +1071,7 @@ gap> hom := HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map := IsomorphismTransformationSemigroup(Range(hom));;
 
 # Checking for correct non-removal of one from generating sets in
-# SemigroupByGenerators 
+# SemigroupByGenerators
 gap> S := Semigroup(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> GeneratorsOfSemigroup(S);
@@ -1091,7 +1090,7 @@ gap> GeneratorsOfMonoid(S);
 [ IdentityTransformation ]
 
 # Checking for correct non-removal of one from generating sets in
-# MonoidByGenerators 
+# MonoidByGenerators
 gap> S := Monoid(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> S := Monoid(PartialPerm([1]));
@@ -1534,10 +1533,10 @@ gap> T := Semigroup([
 >  Transformation([6, 2, 6, 4, 5, 6]),
 >  Transformation([6, 2, 3, 4, 6, 6])]);;
 gap> Set(PrimitiveIdempotents(T));
-[ Transformation( [ 1, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 6, 2, 6, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 3, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
+[ Transformation( [ 1, 6, 6, 6, 6, 6 ] ),
+  Transformation( [ 6, 2, 6, 6, 6, 6 ] ),
+  Transformation( [ 6, 6, 3, 6, 6, 6 ] ),
+  Transformation( [ 6, 6, 6, 4, 6, 6 ] ),
   Transformation( [ 6, 6, 6, 6, 5, 6 ] ) ]
 
 # Issue 253: IsIdempotentGenerated
@@ -1622,20 +1621,20 @@ gap> F := FreeSemigroup(1);;
 gap> x := GeneratorsOfSemigroup(F)[1];;
 gap> pair := [x ^ 2, x ^ 4];;
 gap> cong := SemigroupCongruence(F, pair);
-<2-sided semigroup congruence over <free semigroup on the generators 
+<2-sided semigroup congruence over <free semigroup on the generators
 [ s1 ]> with 1 generating pairs>
 gap> pair in cong;
 true
 gap> EquivalenceRelationLookup(cong);
 Error, the argument (a 2-sided congruence) must have finite range
 gap> EquivalenceClasses(cong);
-[ <2-sided congruence class of s1>, <2-sided congruence class of s1^2>, 
+[ <2-sided congruence class of s1>, <2-sided congruence class of s1^2>,
   <2-sided congruence class of s1^3> ]
 gap> NrEquivalenceClasses(cong);
 3
 
 # Issue 300: problem with InverseOfSemigroupElement for an acting monoid
-gap> S := Monoid(Transformation([1, 2, 4, 4]), 
+gap> S := Monoid(Transformation([1, 2, 4, 4]),
 >                Transformation([4, 2, 3, 4]),
 >                Transformation([1, 4, 3, 4]));;
 gap> IsEUnitaryInverseSemigroup(S);
@@ -1652,9 +1651,9 @@ gap> IsomorphismSemigroups(S, S);
 gap> IsomorphismSemigroups(W, W) = IdentityMapping(W);
 true
 gap> IsomorphismSemigroups(W, S);
-CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group( 
-[ () ] ), [  ], [  ] ), [ (), () ]), 
-<Rees matrix semigroup 1x1 over Group(())> -> 
+CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group(
+[ () ] ), [  ], [  ] ), [ (), () ]),
+<Rees matrix semigroup 1x1 over Group(())> ->
 <Rees matrix semigroup 1x1 over Group(())> )
 
 # Issue 363: MultiplicativeNeutralElement, for an ideal
@@ -1701,13 +1700,13 @@ true
 
 # Issue 389: NaturalPartialOrder
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
-gap> es := IdempotentGeneratedSubsemigroup(S);; 
+gap> es := IdempotentGeneratedSubsemigroup(S);;
 gap> NaturalPartialOrder(es);
-[ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1 ], [ 1, 3, 5 ], [ 1, 2, 5 ], 
+[ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1 ], [ 1, 3, 5 ], [ 1, 2, 5 ],
   [ 1, 2, 3, 4, 5, 6, 7 ] ]
 gap> es := AsSemigroup(IsBlockBijectionSemigroup, es);;
 gap> NaturalPartialOrder(es);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 4 ], 
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 4 ],
   [ 1, 2, 3, 4, 5, 6, 7 ] ]
 
 # Issue 251
@@ -1771,10 +1770,10 @@ gap> NonTrivialEquivalenceClasses(cong);
 # Issue 680
 gap> F := FreeSemigroup(2);;
 gap> s1 := F.1;; s2 := F.2;;
-gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2], 
+gap> rels := [[s2 * s1 * s2, s2 * s1], [s1, s1], [s2, s2],
 >             [s1 * s2, s1 * s2], [s2 * s1, s2 * s1]];;
 gap> cong := SemigroupCongruence(F, rels);
-<2-sided semigroup congruence over <free semigroup on the generators 
+<2-sided semigroup congruence over <free semigroup on the generators
 [ s1, s2 ]> with 1 generating pairs>
 gap> NrEquivalenceClasses(cong);
 infinity
