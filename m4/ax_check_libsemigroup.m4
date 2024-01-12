@@ -54,6 +54,8 @@ AC_DEFUN([AX_CHECK_LIBSEMIGROUPS], [
         AC_SUBST(LIBSEMIGROUPS_CFLAGS, ['-I./bin/include -I./bin/include/libsemigroups'])
         AC_SUBST(LIBSEMIGROUPS_LIBS, ['-L./bin/lib -lsemigroups'])
         AC_CONFIG_SUBDIRS([libsemigroups])
+
+    AC_SUBST([LIBSEMIGROUPS_RPATH],['-Wl,-rpath,$(abs_top_builddir)/bin/lib'])
   else 
         LIBSEMIGROUPS_VERSION="$(pkg-config --modversion libsemigroups)"
 	AC_MSG_NOTICE([using external libsemigroups $LIBSEMIGROUPS_VERSION])

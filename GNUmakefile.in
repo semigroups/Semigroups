@@ -4,7 +4,7 @@
 KEXT_NAME = semigroups
 
 KEXT_CXXFLAGS = @LIBSEMIGROUPS_CFLAGS@ -std=gnu++14 -O3
-KEXT_LDFLAGS =
+KEXT_LDFLAGS = @LIBSEMIGROUPS_RPATH@ @LIBSEMIGROUPS_LIBS@
 
 # configure settings
 GAPPATH = @GAPROOT@
@@ -12,7 +12,7 @@ HPCOMBI_CONSTEXPR_FUN_ARGS = @HPCOMBI_CONSTEXPR_FUN_ARGS@
 LIBSEMIGROUPS_HPCOMBI_ENABLED = @LIBSEMIGROUPS_HPCOMBI_ENABLED@
 WITH_INCLUDED_LIBSEMIGROUPS = @WITH_INCLUDED_LIBSEMIGROUPS@
 SYS_IS_CYGWIN = @SYS_IS_CYGWIN@
-LIBSEMIGROUPS_RPATH = @LIBSEMIGROUPS_RPATH@
+abs_top_builddir = @abs_top_builddir@
 
 # sources
 KEXT_SOURCES =  src/bipart.cpp
@@ -43,7 +43,6 @@ KEXT_CXXFLAGS += $(HPCOMBI_CXXFLAGS)
 endif
 
 ifdef WITH_INCLUDED_LIBSEMIGROUPS
-KEXT_LDFLAGS += -Wl,-rpath,$(PWD)/bin/lib
 # FIXME(later) all the include paths should point into bin/include/ and not to
 # the sources, or otherwise we should stop make installing into bin
 ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
@@ -62,8 +61,6 @@ KEXT_CPPFLAGS += -DNDEBUG
 endif
 
 KEXT_CXXFLAGS += $(KEXT_CPPFLAGS) # HACK: there is no KEXT_CPPFLAGS
-
-KEXT_LDFLAGS += @LIBSEMIGROUPS_LIBS@
 
 # HACK: On cygwin, add this flag to work around issues where fork() sometimes
 # fails on Cygwin when semigroups.so is loaded into GAP. This will hopefully
