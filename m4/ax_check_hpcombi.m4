@@ -28,8 +28,8 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
   AC_MSG_RESULT([$enable_hpcombi])
 
   AS_IF([test "x$enable_hpcombi" = xyes],
-        [AS_IF([test -f $srcdir/extern/HPCombi/VERSION], 
-                       [], 
+        [AS_IF([test -f $srcdir/libsemigroups/extern/HPCombi/VERSION],
+                       [],
                        [AC_MSG_WARN([HPCombi is not available])
                        [enable_hpcombi=no]])])
 
@@ -40,36 +40,36 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
 
   AS_IF([test "x$enable_hpcombi" = xyes],
         [AC_MSG_CHECKING([the version of HPCombi that's present])
-         FOUND_HPCOMBI="$(cat $srcdir/extern/HPCombi/VERSION)"
+         FOUND_HPCOMBI="$(cat $srcdir/libsemigroups/extern/HPCombi/VERSION)"
          AC_MSG_RESULT([$FOUND_HPCOMBI])])
 
   AS_IF([test "x$enable_hpcombi" = xyes],
-        [AX_COMPARE_VERSION($FOUND_HPCOMBI, 
-                            [ge], 
+        [AX_COMPARE_VERSION($FOUND_HPCOMBI,
+                            [ge],
                             $MIN_HPCOMBI_VERSION,
                             [],
-                            [AC_MSG_WARN([the incorrect version of HPCombi is present, HPCombi is disabled]) 
+                            [AC_MSG_WARN([the incorrect version of HPCombi is present, HPCombi is disabled])
                             enable_hpcombi=no])])
-  
-  dnl # Check if the flags required for HPCombi are supported 
-  AS_IF([test "x$enable_hpcombi" = xyes], 
-        [AX_CHECK_COMPILE_FLAG(-mavx, 
+
+  dnl # Check if the flags required for HPCombi are supported
+  AS_IF([test "x$enable_hpcombi" = xyes],
+        [AX_CHECK_COMPILE_FLAG(-mavx,
                                AX_APPEND_FLAG(-mavx, [ax_hpcombi_cxxflags_variable]),
                                [AC_MSG_WARN([flag -mavx not supported, HPCombi is disabled])
                               enable_hpcombi=no])])
 
-  AS_IF([test "x$enable_hpcombi" = xyes], 
-        [AX_CHECK_COMPILE_FLAG(-flax-vector-conversions, 
+  AS_IF([test "x$enable_hpcombi" = xyes],
+        [AX_CHECK_COMPILE_FLAG(-flax-vector-conversions,
                                AX_APPEND_FLAG(-flax-vector-conversions, [ax_hpcombi_cxxflags_variable]),
                                [AC_MSG_WARN([flag -flax-vector-conversions not supported, HPCombi is disabled])
                                enable_hpcombi=no])])
 
   dnl # Check if the x86intrin.h header is available
-  AS_IF([test "x$enable_hpcombi" = xyes], 
+  AS_IF([test "x$enable_hpcombi" = xyes],
         [AC_CHECK_HEADERS([x86intrin.h], [], [AC_MSG_WARN([header x86intrin.h is required for HPCombi, HPCombi is disabled])
                                enable_hpcombi=no])])
-  
-  AS_IF([test "x$enable_hpcombi" = xyes], 
+
+  AS_IF([test "x$enable_hpcombi" = xyes],
         [enable_hpcombi_before_builtin_check=yes])
 
   AS_IF([test "x$enable_hpcombi" = xyes], [CHECK_INTRINSIC([_mm_blendv_epi8],[__m128i{},__m128i{},__m128i{}])])
@@ -100,10 +100,10 @@ AC_DEFUN([AX_CHECK_HPCOMBI], [
         AC_SUBST(LIBSEMIGROUPS_HPCOMBI_ENABLED, yes))
 
   dnl # check for HPCombi's preprocessor macro
-  AS_IF([test "x$enable_hpcombi" = xyes], 
+  AS_IF([test "x$enable_hpcombi" = xyes],
   [AC_MSG_CHECKING([for HPCOMBI_CONSTEXPR_FUN_ARGS])
-   AC_COMPILE_IFELSE( 
-                    [AC_LANG_PROGRAM( 
+   AC_COMPILE_IFELSE(
+                    [AC_LANG_PROGRAM(
                         [[using T = int; constexpr int exec(T f()) { return f(); }
                         constexpr int foo() { return 1; }
                         static_assert(exec(foo) == 1, "Failed exec");]]
