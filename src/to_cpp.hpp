@@ -27,8 +27,6 @@
 #include <algorithm>      // for max, min, sort
 #include <cstddef>        // for size_t
 #include <cstdint>        // for uint32_t
-#include <exception>      // for exception
-#include <functional>     // for __unwrap_reference<>::type
 #include <memory>         // for make_unique, unique_ptr
 #include <string>         // for string
 #include <type_traits>    // for decay_t, is_same, conditional_t
@@ -444,12 +442,28 @@ namespace gapbind14 {
         x[i] = i;
       }
     }
+    template <typename TransfType>
+    TransfType new_transf(size_t N) {
+      return TransfType(N);
+    }
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+    template <>
+    inline HPCombi::Transf16 new_transf(size_t N) {
+      if (N > 16) {
+        ErrorQuit("expected transformation of degree at most 16, found %d",
+                  (Int) N,
+                  0L);
+      }
+      return HPCombi::Transf16();
+    }
+#endif
 
   }  // namespace detail
 
-  template <typename Scalar>
-  struct to_cpp<Transf<0, Scalar>> {
-    using cpp_type = Transf<0, Scalar>;
+  template <typename TransfType>
+  struct ToTransf {
+    using cpp_type = TransfType;
 
     cpp_type operator()(Obj t) const {
       if (!IS_PLIST(t)) {
@@ -477,7 +491,7 @@ namespace gapbind14 {
                   (Int) DEG_TRANS(x));
       }
 
-      cpp_type result(N);
+      cpp_type result = detail::new_transf<cpp_type>(N);
       if (TNUM_OBJ(x) == T_TRANS2) {
         detail::to_cpp_transf(
             result, ADDR_TRANS2(x), std::min(DEG_TRANS(x), N));
@@ -491,6 +505,20 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  template <typename Scalar>
+  struct to_cpp<Transf<0, Scalar>> : ToTransf<Transf<0, Scalar>> {};
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  template <>
+  struct to_cpp<HPCombi::Transf16> : public ToTransf<HPCombi::Transf16> {};
+
+  template <>
+  struct to_cpp<HPCombi::Transf16&> : ToTransf<HPCombi::Transf16> {};
+
+  template <>
+  struct to_cpp<HPCombi::Transf16 const&> : ToTransf<HPCombi::Transf16> {};
+#endif
 
   ////////////////////////////////////////////////////////////////////////
   // Partial perms
@@ -532,11 +560,29 @@ namespace gapbind14 {
         x[i] = undef;
       }
     }
+
+    template <typename PPermType>
+    PPermType new_pperm(size_t N) {
+      return PPermType(N);
+    }
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+    template <>
+    inline HPCombi::PPerm16 new_pperm(size_t N) {
+      if (N > 16) {
+        ErrorQuit("expected partial perm of degree at most 16, found %d",
+                  (Int) N,
+                  0L);
+      }
+      return HPCombi::PPerm16();
+    }
+#endif
+
   }  // namespace detail
 
-  template <typename Scalar>
-  struct to_cpp<PPerm<0, Scalar>> {
-    using cpp_type = PPerm<0, Scalar>;
+  template <typename PPermType>
+  struct ToPPerm {
+    using cpp_type = PPermType;
 
     cpp_type operator()(Obj t) const {
       if (!IS_PLIST(t)) {
@@ -573,7 +619,8 @@ namespace gapbind14 {
             (Int) M);
       }
 
-      cpp_type result(N);
+      cpp_type result = detail::new_pperm<cpp_type>(N);
+
       if (TNUM_OBJ(x) == T_PPERM2) {
         detail::to_cpp_pperm(result, ADDR_PPERM2(x), DEG_PPERM2(x));
       } else if (TNUM_OBJ(x) == T_PPERM4) {
@@ -597,6 +644,20 @@ namespace gapbind14 {
       return result;
     }
   };
+
+  template <typename Scalar>
+  struct to_cpp<PPerm<0, Scalar>> : ToPPerm<PPerm<0, Scalar>> {};
+
+#ifdef LIBSEMIGROUPS_HPCOMBI_ENABLED
+  template <>
+  struct to_cpp<HPCombi::PPerm16> : ToPPerm<HPCombi::PPerm16> {};
+
+  template <>
+  struct to_cpp<HPCombi::PPerm16&> : ToPPerm<HPCombi::PPerm16> {};
+
+  template <>
+  struct to_cpp<HPCombi::PPerm16 const&> : ToPPerm<HPCombi::PPerm16> {};
+#endif
 
   ////////////////////////////////////////////////////////////////////////
   // Bipartition

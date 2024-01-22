@@ -48,16 +48,33 @@ Q -> CanUseLibsemigroupsCongruence(QuotientSemigroupCongruence(Q)));
 ###########################################################################
 
 DeclareOperation("FroidurePinMemFnRec", [IsSemigroup]);
+DeclareOperation("FroidurePinMemFnRec",
+                 [IsSemigroup, IsListOrCollection]);
 
-InstallMethod(FroidurePinMemFnRec, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  if DegreeOfTransformationSemigroup(S) <= 16
+InstallMethod(FroidurePinMemFnRec, "for a semigroup",
+[IsSemigroup], S -> FroidurePinMemFnRec(S, []));
+
+InstallMethod(FroidurePinMemFnRec, "for a semigroup",
+[IsSemigroup, IsListOrCollection], {S, coll} -> FroidurePinMemFnRec(S));
+
+InstallMethod(FroidurePinMemFnRec,
+"for a transformation semigroup and list or coll.",
+[IsTransformationSemigroup, IsListOrCollection],
+function(S, coll)
+  local N;
+  N := DegreeOfTransformationSemigroup(S);
+  if IsTransformationCollection(coll) then
+    N := Maximum(N, DegreeOfTransformationCollection(coll));
+  elif not IsEmpty(coll) then
+    Error("Expected a transf. coll. or empty list, found ",
+          TNAM_OBJ(coll));
+  fi;
+  if N <= 16
       and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.FroidurePinTransf16;
-  elif DegreeOfTransformationSemigroup(S) <= 2 ^ 16 then
+  elif N <= 2 ^ 16 then
     return libsemigroups.FroidurePinTransfUInt2;
-  elif DegreeOfTransformationSemigroup(S) <= 2 ^ 32 then
+  elif N <= 2 ^ 32 then
     return libsemigroups.FroidurePinTransfUInt4;
   else
     # Cannot currently test the next line
@@ -65,12 +82,21 @@ function(S)
   fi;
 end);
 
-InstallMethod(FroidurePinMemFnRec, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(S)
+InstallMethod(FroidurePinMemFnRec,
+"for a partial perm. semigroup and list or coll.",
+[IsPartialPermSemigroup, IsListOrCollection],
+function(S, coll)
   local N;
   N := Maximum(DegreeOfPartialPermSemigroup(S),
                CodegreeOfPartialPermSemigroup(S));
+  if IsPartialPermCollection(coll) then
+    N := Maximum(N,
+                 DegreeOfPartialPermCollection(coll),
+                 CodegreeOfPartialPermCollection(coll));
+  elif not IsEmpty(coll) then
+    Error("Expected a partial perm. coll. or empty list, found ",
+          TNAM_OBJ(coll));
+  fi;
   if N <= 16 and IsBound(LIBSEMIGROUPS_HPCOMBI_ENABLED) then
     return libsemigroups.FroidurePinPPerm16;
   elif N <= 2 ^ 16 then
@@ -860,7 +886,7 @@ function(Constructor, S, coll, opts)
     Sort(coll, IsGreensDGreaterThanFunc(Semigroup(coll)));
   fi;
 
-  R := FroidurePinMemFnRec(S);
+  R := FroidurePinMemFnRec(S, coll);
 
   # Perform the closure
   if IsPartialPermSemigroup(S) or IsTransformationSemigroup(S) then
@@ -875,8 +901,6 @@ function(Constructor, S, coll, opts)
     fi;
     if M > N then
       # Can't use closure, TODO(later) use copy_closure
-      # FIXME(later) if M goes larger than the type of R can support this will
-      # end badly
       CppT  := R.make();
       add_generator := R.add_generator;
       for x in GeneratorsOfSemigroup(S) do
