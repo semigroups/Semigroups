@@ -35,6 +35,30 @@ jobs:
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
 
+  enable-hpcombi:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v3
+        # Don't use ccache, since sometimes this fails when using -mavx
+      - name: "Install GAP and clone/compile necessary packages"
+        uses: gap-actions/setup-gap@v2
+        with:
+          GAP_PKGS_TO_BUILD: "digraphs io orb datastructures profiling"
+          GAPBRANCH: stable-4.12
+          ABI: 64
+      - name: "Build Semigroups"
+        uses: gap-actions/build-pkg@v1
+        with:
+          ABI: 64
+      - name: "Run Semigroups package's tst/teststandard.g"
+        uses: gap-actions/run-pkg-tests@v2
+      - uses: gap-actions/process-coverage@v2
+      - uses: codecov/codecov-action@v2
+      - name: "Run GAP's tst/testinstall.g"
+        uses: gap-actions/run-pkg-tests@v2
+        with:
+          GAP_TESTFILE: "ci/run-gap-testinstall.g"
+
   with-external-libsemigroups:
     runs-on: "ubuntu-latest"
     env:
