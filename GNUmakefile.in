@@ -86,9 +86,10 @@ bin/include/libsemigroups/libsemigroups.hpp:
 	$(MAKE) -C libsemigroups install
 	# Cygwin only looks for DLLs in the same directory as the executable
 	# resides in. The following achieves that assuming that the GAP
-	# being used was self-compiled by the user. If the GAP build system
-	# changes to stop using GNU libtool, this will have to be adjusted.
-	if test -f bin/bin/cygsemigroups*.dll ; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs ; fi
+	# being used was self-compiled by the user. This supports
+	# both older GAPs with libtool (first) and GAP without libtool (second)
+	if test -f bin/bin/cygsemigroups*.dll ; then if test -d $(GAPPATH)/.libs; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/.libs/ ; fi ; fi
+	if test -f bin/bin/cygsemigroups*.dll ; then cp bin/bin/cygsemigroups*.dll $(GAPPATH)/ ; fi
 
 endif
 
