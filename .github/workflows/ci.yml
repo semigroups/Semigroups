@@ -30,7 +30,7 @@ jobs:
           - 64
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Install dependencies (macOS only!)"
         if: ${{ runner.os == 'macOS' }}
         run: brew install automake
@@ -73,7 +73,7 @@ jobs:
      env:
        CHERE_INVOKING: 1
      steps:
-       - uses: actions/checkout@v2
+       - uses: actions/checkout@v4
        - name: "Setup cygwin"
          uses: gap-actions/setup-cygwin@v1
        - name: "Setup GAP for cygwin"
