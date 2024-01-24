@@ -1,7 +1,7 @@
 ############################################################################
 ##
 ##  PackageInfo.g
-##  Copyright (C) 2011-2022                              James D. Mitchell
+##  Copyright (C) 2011-2024                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -34,8 +34,8 @@ _STANDREWSCS := Concatenation(["Jack Cole Building, North Haugh, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "A package for semigroups and monoids",
-Version := "5.3.3",
-Date := "05/01/2024",  # dd/mm/yyyy format
+Version := "5.3.4",
+Date := "24/01/2024",  # dd/mm/yyyy format
 License := "GPL-3.0-or-later",
 
 ArchiveFormats := ".tar.gz",
@@ -318,6 +318,13 @@ Persons := [
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
+
+   rec(
+     LastName      := "Wensley",
+     FirstNames    := "Chris",
+     IsAuthor      := true,
+     IsMaintainer  := false,
+     Email         := "cdwensley.maths@btinternet.com"),
 
    rec(
      LastName      := "Whyte",

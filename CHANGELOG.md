@@ -3,10 +3,46 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.3.4 (released 24/01/2024)
+
+This is a minor release that fixes some issue in the build system, applies some
+new linting rules, and perhaps most importantly re-enables the use of [HPCombi][]
+in [libsemigroups][]. A number of different things were wrong which meant that:
+
+* the correct configuration flags weren't set for building [Semigroups][] when
+  [HPCombi][] is enabled;
+* [HPCombi][] was not detected properly because of a mistake in the path;
+* the kernel module couldn't be built even when the last two items were
+  resolved, due to some missing functionality for [HPCombi][] types.
+
+These issues arose because the main author no longer has access to any machines
+running x86, and so the support for [HPCombi][] slowly eroded, unnoticed by me,
+over time.
+
+The other changes in this release are:
+
+* some changes of PreImages... to NC versions (for compatibility with
+  forthcoming changes to GAP) by @cdwensley in
+  https://github.com/semigroups/Semigroups/pull/965
+* buildsys: unify rpath handling by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/976
+* Support GAP on Cygwin with libtool removed (for compatibility with
+  forthcoming changes to GAP) by @ChrisJefferson in
+  https://github.com/semigroups/Semigroups/pull/979
+* Fix for [HPCombi][] by @james-d-mitchell (fixes the issues itemised above) in
+  https://github.com/semigroups/Semigroups/pull/978
+* Linting by @james-d-mitchell in https://github.com/semigroups/Semigroups/pull/980
+
+### New Contributors
+* @cdwensley made their first contribution in
+  https://github.com/semigroups/Semigroups/pull/965
+
+**Full Changelog**: https://github.com/semigroups/Semigroups/compare/v5.3.3...v5.3.4
+
 ### Version 5.3.3 (released 05/01/2024)
 
 This is a minor release bumping the included+required versions of libsemigroups
-to the latest version 2.7.2. 
+to the latest version 2.7.2.
 
 ### Version 5.3.2 (released 07/10/2023)
 
@@ -265,7 +301,7 @@ with a number of improvements by [Wilf A. Wilson][].
 ### Version 3.4.1 (released 28/01/2021)
 
 This is a minor release including some bugfixes and improvements. The required
-minimum version of `libsemigroups` is increased from v1.1.0 to v1.3.2. The
+minimum version of [libsemigroups][] is increased from v1.1.0 to v1.3.2. The
 required version of `Digraphs` is increased to v1.2.0. The `datastructures`
 package was implicitly required (via `Digraphs`), and now at least version
 v0.2.5 is required explicitly. The version of GAP required was implicitly at
@@ -282,7 +318,7 @@ This is a minor release with the following new features added to the package:
 The following bugs/issues were resolved:
 
 * [Issue #685](https://github.com/gap-packages/Semigroups/issues/685): after some somewhat recent changes in [libsemigroups][] some infinite finitely presented semigroups in GAP reported their size as being `-2`. Fixed by [James D. Mitchell][].
-* [Issue #680](https://github.com/gap-packages/Semigroups/issues/680): Semigroups did not compile with recent git versions of `libsemigroups`. Reported by [Wilf A. Wilson][] fixed by [James D. Mitchell][].
+* [Issue #680](https://github.com/gap-packages/Semigroups/issues/680): Semigroups did not compile with recent git versions of [libsemigroups][]. Reported by [Wilf A. Wilson][] fixed by [James D. Mitchell][].
 
 The required minimum version of [libsemigroups][] is now v1.1.0,
 
@@ -1574,4 +1610,5 @@ added the functions `CitrusDefaultMem`, `CitrusHiMem`,
 [orb]: https://gap-packages.github.io/orb
 [Bitbucket issue tracker]: https://bitbucket.org/james-d-mitchell/semigroups/issues
 [images package]: https://gap-packages.github.io/images
+[HPCombi]: libsemigroups.github.io/HPCombi/
 
