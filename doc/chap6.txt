@@ -330,7 +330,7 @@
   
   [33X[0;0YIf  you  want  to  change  the  default  values  of  the  options  stored in
   [2XSEMIGROUPS.DefaultOptionsRec[102X ([14X6.3-1[114X) for all [5XGAP[105X sessions, then you can edit
-  these values in the file [11Xsemigroups-5.3.3/gap/options.g[111X.[133X
+  these values in the file [11Xsemigroups-5.3.4/gap/options.g[111X.[133X
   
   [1X6.3-1 SEMIGROUPS.DefaultOptionsRec[101X
   

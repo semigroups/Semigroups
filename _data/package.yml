@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.3.3
-date: 2024-01-05
+version: 5.3.4
+date: 2024-01-24
 description: |
     A package for semigroups and monoids
 
@@ -58,6 +58,8 @@ authors:
       url: https://nicolas.thiery.name/
     - name: Maria Tsalakou
       url: https://mariatsalakou.github.io/
+    - name: Chris Wensley
+      url: mailto:cdwensley.maths@btinternet.com
     - name: Murray Whyte
       url: mailto:mw231@st-andrews.ac.uk
     - name: Wilf A. Wilson
@@ -105,7 +107,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.3/semigroups-5.3.3.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.4/semigroups-5.3.4.tar.gz
 
 abstract: |
     
