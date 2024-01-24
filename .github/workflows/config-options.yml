@@ -13,7 +13,7 @@ jobs:
       GAPBRANCH: "stable-4.12"
       ABI: 64
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Setup ccache"
         uses: Chocobo1/setup-ccache-action@v1
         with:
@@ -71,7 +71,7 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Install conda environment from environment.yml . . ."
         uses: mamba-org/setup-micromamba@v1
         with:

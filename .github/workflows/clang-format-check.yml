@@ -15,9 +15,9 @@ jobs:
     name: Formatting check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: "Run clang-format style checks on src/*.[hc]pp . . ."
-      uses: jidicula/clang-format-action@v4.10.1
+      uses: jidicula/clang-format-action@v4.11.0
       with:
         clang-format-version: '15'
         exclude-regex: 'src\/_pkgconfig.h*'
