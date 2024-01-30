@@ -1089,7 +1089,7 @@ InstallMethod(WeakInverse, "for a transformation",
 [IsTransformation], InverseOfTransformation);
 
 InstallMethod(WeakInverse, "for a partial perm",
-[IsPartialPerm], INV);
+[IsPartialPerm], InverseMutable);
 
 InstallMethod(WeakInverse, "for a bipartition",
 [IsBipartition], Star);
