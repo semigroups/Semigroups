@@ -679,14 +679,20 @@ function(x)
   Append(str, "\>\>");
   Append(str, PrintString(ext[2]));
   Append(str, "\<\<\<\<)");
-  return str;
+
+  # print empty lists with two spaces for consistency
+  # see https://github.com/gap-system/gap/pull/5418
+  return ReplacedString(str, "[ ]", "[  ]");
 end);
 
 InstallMethod(String, "for a pbr", [IsPBR],
 function(x)
-  local ext;
+  local ext, str;
   ext := ExtRepOfObj(x);
-  return Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
+  str := Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
+  # print empty lists with two spaces for consistency
+  # see https://github.com/gap-system/gap/pull/5418
+  return ReplacedString(str, "[ ]", "[  ]");
 end);
 
 InstallMethod(\=, "for pbrs", IsIdenticalObj,
