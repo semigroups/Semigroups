@@ -490,12 +490,12 @@ end);
 InstallMethod(String, "for a semigroup isom. by images",
 [IsSemigroupHomomorphismByImages and IsBijective],
 function(iso)
-  local mapi;
+  local mapi, str;
   if UserPreference("semigroups", "ViewObj") <> "semigroups-pkg" then
     TryNextMethod();
   fi;
   mapi := MappingGeneratorsImages(iso);
-  return Concatenation("SemigroupIsomorphismByImages( ",
+  str := Concatenation("SemigroupIsomorphismByImages( ",
                        String(Source(iso)),
                        ", ",
                        String(Range(iso)),
@@ -504,6 +504,9 @@ function(iso)
                        ", ",
                        String(mapi[2]),
                        " )");
+  # print empty lists with two spaces for consistency
+  # see https://github.com/gap-system/gap/pull/5418
+  return ReplacedString(str, "[ ]", "[  ]");
 end);
 
 InstallMethod(\=, "compare homom. by images", IsIdenticalObj,
