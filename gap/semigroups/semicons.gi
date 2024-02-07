@@ -406,6 +406,29 @@ for _IsXSemigroup in ["IsBooleanMatSemigroup",
 od;
 Unbind(_IsXSemigroup);
 
+# Free semilattice
+
+InstallMethod(FreeSemilattice, "for a positive integer",
+[IsPosInt],
+function(n)
+    local F, gen, l, i, j, commR, idemR;
+    F := FreeSemigroup(n);
+    gen := GeneratorsOfSemigroup(F);
+    l := Length(gen);
+
+    commR := [];
+    for i in [1 .. l - 1] do
+        for j in [i + 1 .. l] do
+            Add(commR, [gen[i] * gen[j], gen[j] * gen[i]]);
+        od;
+    od;
+
+    idemR := List( gen,
+        x -> [x * x, x]
+    );
+    return F / Concatenation(commR, idemR);
+end);
+
 # Zero semigroup: main method
 
 InstallGlobalFunction(ZeroSemigroup,
