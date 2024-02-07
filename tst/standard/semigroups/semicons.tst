@@ -497,6 +497,47 @@ gap> S := RectangularBand(IsReesMatrixSemigroup, 5, 5);
 gap> S := RectangularBand(IsReesMatrixSemigroup, 10, 11);
 <Rees matrix semigroup 10x11 over Group(())>
 
+# constructions: FreeSemilattice: errors
+gap> S := FreeSemilattice(0);
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
+gap> S := FreeSemilattice(IsPartialPermSemigroup, 0);
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
+gap> S := FreeSemilattice(IsPermGroup, 1, 1);
+Error, expected 2 arguments found 3
+gap> S := FreeSemilattice(IsPartialPermSemigroup, true);
+Error, the arguments must be a positive integer or a filter and a positive int\
+eger
+
+# constructions: FreeSemilattice: known properties and attributes, 17
+gap> S := FreeSemilattice(17);;
+gap> HasSize(S);
+true
+gap> Size(S) = 2 ^ 17 - 1;
+true
+
+# constructions: FreeSemilattice: default
+gap> S := FreeSemilattice(1);
+<trivial transformation group of degree 2 with 1 generator>
+gap> S := FreeSemilattice(2);
+<inverse transformation semigroup of size 3, degree 3 with 2 generators>
+gap> S := FreeSemilattice(5);
+<inverse transformation semigroup of size 31, degree 6 with 5 generators>
+gap> S := FreeSemilattice(21);
+<inverse transformation semigroup of size 2097151, degree 22 with 21 
+ generators>
+
+# constructions: FreeSemilattice: transformation semigroup
+gap> S := FreeSemilattice(IsTransformationSemigroup, 1);
+<trivial transformation group of degree 2 with 1 generator>
+gap> S := FreeSemilattice(IsTransformationSemigroup, 2);
+<inverse transformation semigroup of size 3, degree 3 with 2 generators>
+gap> S := FreeSemilattice(IsTransformationSemigroup, 5);
+<inverse transformation semigroup of size 31, degree 6 with 5 generators>
+gap> S := FreeSemilattice(IsTransformationSemigroup, 11);
+<inverse transformation semigroup of size 2047, degree 12 with 11 generators>
+
 # constructions: ZeroSemigroup: errors
 gap> S := ZeroSemigroup(0);
 Error, the arguments must be a positive integer or a filter and a positive int\

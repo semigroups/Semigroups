@@ -12,6 +12,8 @@ DeclareGlobalFunction("TrivialSemigroup");
 DeclareConstructor("TrivialSemigroupCons", [IsSemigroup, IsInt]);
 DeclareGlobalFunction("RectangularBand");
 DeclareConstructor("RectangularBandCons", [IsSemigroup, IsPosInt, IsPosInt]);
+DeclareGlobalFunction("FreeSemilattice");
+DeclareConstructor("FreeSemilatticeCons", [IsSemigroup, IsPosInt]);
 DeclareGlobalFunction("MonogenicSemigroup");
 DeclareConstructor("MonogenicSemigroupCons", [IsSemigroup, IsPosInt, IsPosInt]);
 DeclareGlobalFunction("ZeroSemigroup");
