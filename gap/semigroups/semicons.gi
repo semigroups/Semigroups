@@ -406,10 +406,47 @@ for _IsXSemigroup in ["IsBooleanMatSemigroup",
 od;
 Unbind(_IsXSemigroup);
 
-# Free semilattice
+# Free semilattice: main method
 
-InstallMethod(FreeSemilattice, "for a positive integer",
-[IsPosInt],
+InstallGlobalFunction(FreeSemilattice,
+function(arg...)
+  local filter, n, S;
+
+  if Length(arg) = 1  then
+    filter := IsTransformationSemigroup;
+    n := arg[1];
+  elif Length(arg) = 2 then
+    filter := arg[1];
+    n := arg[2];
+  fi;
+
+  if not IsPosInt(n) or not IsOperation(filter) then
+    ErrorNoReturn("the arguments must be a positive integer or a filter ",
+                  "and a positive integer");
+  fi;
+
+  S := FreeSemilatticeCons(filter, n);
+
+  SetSize(S, 2^n -1);
+  # SetIsRectangularBand(S, true);
+  # SetNrRClasses(S, m);
+  # SetNrLClasses(S, n);
+  # if m <> 1 or n <> 1 then
+  #   SetIsGroupAsSemigroup(S, false);
+  #   SetIsZeroSemigroup(S, false);
+  #   SetIsTrivial(S, false);
+  # fi;
+  # SetIsRightZeroSemigroup(S, m = 1);
+  # SetIsLeftZeroSemigroup(S, n = 1);
+
+  return S;
+end);
+
+# Free semilattice: constructors
+
+InstallMethod(FreeSemilatticeCons, 
+"for IsFpSemigroup and a pos int",
+[IsFpSemigroup, IsPosInt],
 function(n)
     local F, gen, l, i, j, commR, idemR;
     F := FreeSemigroup(n);
@@ -428,6 +465,58 @@ function(n)
     );
     return F / Concatenation(commR, idemR);
 end);
+
+InstallMethod(FreeSemilatticeCons, 
+"for IsTransformationSemigroup and a pos int",
+[IsTransformationSemigroup, IsPosInt],
+function(n)
+    local gen, i, L;
+    gen := [];
+    for i in [1 .. n] do
+        L := [1 .. n + 1];
+        L[i] := n + 1;
+        Add(gen, Transformation(L));
+    od;
+    return Semigroup(gen);
+end);
+
+InstallMethod(FreeSemilatticeCons, 
+"for IsPartialPermSemigroup and a pos int",
+[IsPartialPermSemigroup, IsPosInt],
+function(n)
+    local gen, i, L;
+    gen := [];
+    for i in [1 .. n] do
+        L := [1 .. n];
+        Remove(L, i);
+        Add(gen, PartialPerm(L, L));
+    od;
+    return Semigroup(gen);
+end);
+
+# Free semilattice: other constructors
+
+for _IsXSemigroup in ["IsReesMatrixSemigroup",
+                      "IsBipartitionSemigroup",
+                      "IsPBRSemigroup",
+                      "IsBooleanMatSemigroup",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup"] do
+  InstallMethod(FreeSemilatticeCons,
+  Concatenation("for ", _IsXSemigroup, ", and pos int"),
+  [ValueGlobal(_IsXSemigroup), IsPosInt],
+  function(filter, n)
+    return AsSemigroup(filter,
+                       RectangularBandCons(IsTransformationSemigroup, n));
+  end);
+od;
+Unbind(_IsXSemigroup);
+
 
 # Zero semigroup: main method
 
