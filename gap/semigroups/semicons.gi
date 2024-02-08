@@ -427,7 +427,7 @@ function(arg...)
 
   S := FreeSemilatticeCons(filter, n);
 
-  SetSize(S, 2^n -1);
+  SetSize(S, 2 ^ n - 1);
   # SetIsRectangularBand(S, true);
   # SetNrRClasses(S, m);
   # SetNrLClasses(S, n);
@@ -444,10 +444,10 @@ end);
 
 # Free semilattice: constructors
 
-InstallMethod(FreeSemilatticeCons, 
+InstallMethod(FreeSemilatticeCons,
 "for IsFpSemigroup and a pos int",
 [IsFpSemigroup, IsPosInt],
-function(n)
+function(_, n)
     local F, gen, l, i, j, commR, idemR;
     F := FreeSemigroup(n);
     gen := GeneratorsOfSemigroup(F);
@@ -460,16 +460,14 @@ function(n)
         od;
     od;
 
-    idemR := List( gen,
-        x -> [x * x, x]
-    );
+    idemR := List(gen, x -> [x * x, x]);
     return F / Concatenation(commR, idemR);
 end);
 
-InstallMethod(FreeSemilatticeCons, 
+InstallMethod(FreeSemilatticeCons,
 "for IsTransformationSemigroup and a pos int",
 [IsTransformationSemigroup, IsPosInt],
-function(n)
+function(_, n)
     local gen, i, L;
     gen := [];
     for i in [1 .. n] do
@@ -480,10 +478,10 @@ function(n)
     return Semigroup(gen);
 end);
 
-InstallMethod(FreeSemilatticeCons, 
+InstallMethod(FreeSemilatticeCons,
 "for IsPartialPermSemigroup and a pos int",
 [IsPartialPermSemigroup, IsPosInt],
-function(n)
+function(_, n)
     local gen, i, L;
     gen := [];
     for i in [1 .. n] do
@@ -516,7 +514,6 @@ for _IsXSemigroup in ["IsReesMatrixSemigroup",
   end);
 od;
 Unbind(_IsXSemigroup);
-
 
 # Zero semigroup: main method
 
