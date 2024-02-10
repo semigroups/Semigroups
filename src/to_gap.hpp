@@ -466,7 +466,7 @@ namespace gapbind14 {
       // empty
       SET_LEN_PLIST(result, 2 * x.degree() + 1);
       SET_ELM_PLIST(result, 1, INTOBJ_INT(x.degree()));
-      for (u_int32_t i = 0; i < 2 * x.degree(); i++) {
+      for (uint32_t i = 0; i < 2 * x.degree(); i++) {
         Obj next = SUM(to_gap<std::vector<uint32_t>>()(x[i]), INTOBJ_INT(1));
         SET_ELM_PLIST(result, i + 2, next);
         CHANGED_BAG(result);
