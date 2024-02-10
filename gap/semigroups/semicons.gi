@@ -494,8 +494,7 @@ end);
 
 # Free semilattice: other constructors
 
-for _IsXSemigroup in ["IsReesMatrixSemigroup",
-                      "IsBipartitionSemigroup",
+for _IsXSemigroup in ["IsBipartitionSemigroup",
                       "IsPBRSemigroup",
                       "IsBooleanMatSemigroup",
                       "IsNTPMatrixSemigroup",
@@ -510,7 +509,7 @@ for _IsXSemigroup in ["IsReesMatrixSemigroup",
   [ValueGlobal(_IsXSemigroup), IsPosInt],
   function(filter, n)
     return AsSemigroup(filter,
-                       RectangularBandCons(IsTransformationSemigroup, n));
+                       FreeSemilatticeCons(IsTransformationSemigroup, n));
   end);
 od;
 Unbind(_IsXSemigroup);

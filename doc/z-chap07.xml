@@ -155,6 +155,7 @@
     <#Include Label = "TrivialSemigroup">
     <#Include Label = "MonogenicSemigroup">
     <#Include Label = "RectangularBand">
+    <#Include Label = "FreeSemilattice">
     <#Include Label = "ZeroSemigroup">
     <#Include Label = "LeftZeroSemigroup">
     <#Include Label = "BrandtSemigroup">
