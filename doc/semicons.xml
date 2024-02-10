@@ -147,6 +147,47 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="FreeSemilattice">
+  <ManSection>
+    <Func Name="FreeSemilattice" Arg="[filt, ] n"/>
+    <Returns>
+      A free semilattice of <A>n</A> generators.
+    </Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then this function returns a free
+      semilattice with <A>n</A> generators in the representation given by the
+      filter <A>filt</A>.
+
+      The optional argument <A>filt</A> may be one of the following:
+      <List>
+        <Item><C>IsTransformationSemigroup</C>
+          (the default, if <A>filt</A> is not specified),</Item>
+        <Item><C>IsPartialPermSemigroup</C>,</Item>
+        <Item><C>IsFpSemigroup</C>,</Item>
+        <Item><C>IsBipartitionSemigroup</C>,</Item>
+        <Item><C>IsPBRSemigroup</C>,</Item>
+        <Item><C>IsBooleanMatSemigroup</C>,</Item>
+        <Item><C>IsNTPMatrixSemigroup</C>,</Item>
+        <Item><C>IsMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsMinPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsTropicalMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsTropicalMinPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsIntegerMatrixSemigroup.</C></Item>
+      </List>
+
+      <Example><![CDATA[
+gap> S := FreeSemilattice(IsTransformationSemigroup, 5);
+<transformation semigroup of size 31, degree 6 with 5 generators>
+gap> T := FreeSemilattice(IsPartialPermSemigroup, 3);
+<partial perm semigroup of size 7, rank 3 with 3 generators>
+gap> U := FreeSemilattice(IsBooleanMatSemigroup, 4);
+<semigroup of size 15, 5x5 boolean matrices with 4 generators>
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="ZeroSemigroup">
   <ManSection>
     <Func Name="ZeroSemigroup" Arg="[filt, ]n"/>
