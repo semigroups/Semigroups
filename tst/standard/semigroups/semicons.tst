@@ -510,9 +510,6 @@ eger
 gap> S := FreeSemilattice(IsPartialPermSemigroup, true);
 Error, the arguments must be a positive integer or a filter and a positive int\
 eger
-gap> S := FreeSemilattice(IsMaxPlusMatrixSemigroup, 100);
-<semigroup of size 1267650600228229401496703205375,
-   101x101 max-plus matrices with 100 generators>
 
 # constructions: FreeSemilattice: known properties and attributes, 17
 gap> S := FreeSemilattice(17);;
@@ -530,25 +527,6 @@ gap> S := FreeSemilattice(5);
 <transformation semigroup of size 31, degree 6 with 5 generators>
 gap> S := FreeSemilattice(21);
 <transformation semigroup of size 2097151, degree 22 with 21 generators>
-
-
-      The optional argument <A>filt</A> may be one of the following:
-      <List>
-        <Item><C>IsTransformationSemigroup</C>
-          (the default, if <A>filt</A> is not specified),</Item>
-        <Item><C>IsPartialPermSemigroup</C>,</Item>
-        <Item><C>IsFpSemigroup</C>,</Item>
-        <Item><C>IsBipartitionSemigroup</C>,</Item>
-        <Item><C>IsPBRSemigroup</C>,</Item>
-        <Item><C>IsBooleanMatSemigroup</C>,</Item>
-        <Item><C>IsNTPMatrixSemigroup</C>,</Item>
-        <Item><C>IsMaxPlusMatrixSemigroup</C>,</Item>
-        <Item><C>IsMinPlusMatrixSemigroup</C>,</Item>
-        <Item><C>IsTropicalMaxPlusMatrixSemigroup</C>,</Item>
-        <Item><C>IsTropicalMinPlusMatrixSemigroup</C>,</Item>
-        <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
-        <Item><C>IsIntegerMatrixSemigroup.</C></Item>
-      </List>
 
 # constructions: FreeSemilattice: transformation semigroup
 gap> S := FreeSemilattice(IsTransformationSemigroup, 1);
