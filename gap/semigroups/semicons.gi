@@ -418,6 +418,9 @@ function(arg...)
   elif Length(arg) = 2 then
     filter := arg[1];
     n := arg[2];
+  else
+    ErrorNoReturn("the arguments must be a positive integer or a filter ",
+                  "and a positive integer");
   fi;
 
   if not IsPosInt(n) or not IsOperation(filter) then
