@@ -243,7 +243,7 @@ function(coll)
     fi;
 
     if not x in redund and not x in out then
-      if x in Semigroup(Difference(gens, [x])) then
+      if Length(gens) > 1 and x in Semigroup(Difference(gens, [x])) then
         AddSet(redund, x);
         gens := Difference(gens, [x]);
       else
