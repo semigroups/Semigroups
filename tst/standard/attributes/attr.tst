@@ -458,8 +458,8 @@ gap> Size(IrredundantGeneratingSubset(gens));
 
 # attr: IrredundantGeneratingSubset: for a set containing elements
 # of a cyclic semigroup along with a generator, generators given directly
-gap> IrredundantGeneratingSubset([ Transformation( [ 1, 1, 3, 1 ] ),
-> Transformation( [ 3, 3, 1, 3 ] ) ]);;
+gap> IrredundantGeneratingSubset([Transformation([1, 1, 3, 1]),
+> Transformation([3, 3, 1, 3])]);;
 
 # attr: IrredundantGeneratingSubset: test info statements
 gap> S := MonogenicSemigroup(IsTransformationSemigroup, 4, 1);;
