@@ -3,6 +3,13 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+### Version 5.3.5 (released 14/02/2024)
+
+This is a minor release fixing an issue in the kernel extension (reported by
+Michael Orlitzky in Issue #996), with some further changes for compatibility
+with GAP (by Max Horn), and fixing a bug in `IrredundantGeneratingSubset` which
+gave an error for monogenic semigroups (by Reinis Cirpons).
+
 ### Version 5.3.4 (released 24/01/2024)
 
 This is a minor release that fixes some issue in the build system, applies some
