@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.3.4
+                                     5.3.5
   
   
-                                24 January 2024
+                                14 February 2024
   
   
                                  James Mitchell

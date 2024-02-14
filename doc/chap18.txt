@@ -74,7 +74,7 @@
   [33X[1;0Y[29X[2XIsSemigroupTranslation[102X( [3Xarg[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsLeftTranslation[102X( [3Xarg[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsRightTranslation[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
   [33X[0;0YAll,  and  only,  left  [right]  translations  belong  to  [10XIsLeftTranslation[110X
   [[10XIsRightTranslation[110X].      These      are      both     subcategories     of
@@ -99,7 +99,7 @@
   [1X18.1-2 IsBitranslation[101X
   
   [33X[1;0Y[29X[2XIsBitranslation[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
   [33X[0;0YAll,   and  only,  bitranslations  belong  to  [10XIsBitranslation[110X.  This  is  a
   subcategory of [2XIsAssociativeElement[102X ([14XReference: IsAssociativeElement[114X).[133X
@@ -129,7 +129,7 @@
   [33X[1;0Y[29X[2XIsLeftTranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsRightTranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsBitranslationCollection[102X( [3Xobj[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
   
   [33X[0;0YEvery  collection  of  left-,  right-,  or  bi-translations  belongs  to the
   respective category [2XIsXTranslationCollection[102X.[133X

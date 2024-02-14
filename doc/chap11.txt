@@ -2020,7 +2020,7 @@
   
   [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
   [3XS[103X  where  the  elements  of [3XS[103X have a unique semigroup inverse accessible via
-  [2XInverse[102X   ([14XReference:   Inverse[114X),   to  the  inverse  semigroup  of  partial
+  [2XInverse[102X   ([14XReference:   inverse[114X),   to  the  inverse  semigroup  of  partial
   permutations [3XT[103X of degree equal to the size of [3XS[103X, which is obtained using the
   Vagner-Preston Representation Theorem.[133X
   

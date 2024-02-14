@@ -57,7 +57,7 @@
     Visualising semigroups and elements
   </span></h3>
 
-<p>There are two operations <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) and opening the resulting pdf file.</p>
+<p>There are two operations <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap16.html#X7F0971F678B4FC66"><span class="RefLink">16.3-1</span></a>) and <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) and opening the resulting pdf file.</p>
 
 <p><a id="X82E16CAB874A1D84" name="X82E16CAB874A1D84"></a></p>
 
@@ -67,7 +67,7 @@
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
 
-<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
 <p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
 
@@ -78,7 +78,7 @@
 
 <p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the <em>D</em>-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each <em>D</em>-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
 
-<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
 
 <p>The <em>D</em>-classes are shown as eggbox diagrams with <em>L</em>-classes as rows and <em>R</em>-classes as columns; group <em>H</em>-classes are shaded gray and contain an asterisk. The <em>L</em>-classes and <em>R</em>-classes within a <em>D</em>-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap10.html#X86C6D777847AAEC7"><span class="RefLink">10.4-8</span></a>). The <em>D</em>-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one <em>D</em>-class to another indicates that the higher <em>D</em>-class is greater than the lower one in the <em>D</em>-order on <var class="Arg">S</var>.</p>
 
@@ -91,7 +91,7 @@
 
 </dd>
 <dt><strong class="Mark">maximal</strong></dt>
-<dd><p>if <code class="code"><var class="Arg">options</var>.maximal</code> is <code class="keyw">true</code>, then the structure description of the group <em>H</em>-classes is displayed; see <code class="func">StructureDescription</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>). Setting this attribute to <code class="keyw">true</code> can adversely affect the performance of <code class="code">DotString</code>. The default value for this option is <code class="keyw">false</code>.</p>
+<dd><p>if <code class="code"><var class="Arg">options</var>.maximal</code> is <code class="keyw">true</code>, then the structure description of the group <em>H</em>-classes is displayed; see <code class="func">StructureDescription</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap39.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>). Setting this attribute to <code class="keyw">true</code> can adversely affect the performance of <code class="code">DotString</code>. The default value for this option is <code class="keyw">false</code>.</p>
 
 </dd>
 <dt><strong class="Mark">normal</strong></dt>
@@ -131,9 +131,9 @@ TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">digraph</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
-<p>If <var class="Arg">digraph</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">DotString</code> returns a graphical representation of <var class="Arg">digraph</var>. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
+<p>If <var class="Arg">digraph</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">DotString</code> returns a graphical representation of <var class="Arg">digraph</var>. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
 
-<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
 
 <p>See also <code class="func">DotLeftCayleyDigraph</code> (<a href="chap16.html#X7E38369D7E8BEA4C"><span class="RefLink">16.1-4</span></a>) and <code class="func">TikzLeftCayleyDigraph</code> (<a href="chap16.html#X81EF7F777EEF69C1"><span class="RefLink">16.3-2</span></a>).</p>
 
@@ -144,7 +144,7 @@ TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
-<p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>). The idempotents are grouped by the <em>D</em>-class they belong to.</p>
+<p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap24.html#X7899335779A39A95"><span class="RefLink">Reference: inverse</span></a>). The idempotents are grouped by the <em>D</em>-class they belong to.</p>
 
 <p>The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="https://www.graphviz.org">https://www.graphviz.org</a></span>.</p>
 
@@ -199,7 +199,7 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A string.</p>
 
-<p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional parameter <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
+<p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional parameter <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap53.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
 
 
 <div class="example"><pre>
@@ -218,7 +218,7 @@ d{pmatrix}"</pre></div>
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
 
-<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9_mj.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="https://gap-packages.github.io/io/doc/chap9.html#X83B3318784E78415"><span class="RefLink">Digraphs: Splash</span></a>).</p>
 
 <p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
 
@@ -248,7 +248,7 @@ d{pmatrix}"</pre></div>
 
 </dd>
 <dt><strong class="Mark">Cayley graphs</strong></dt>
-<dd><p>If <var class="Arg">obj</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">TikzString</code> returns a picture of <var class="Arg">obj</var>. No attempt is made whatsoever to produce a sensible picture of the digraph <var class="Arg">obj</var>, in fact, the vertices are all given the same coordinates. Human intervention is required to produce a meaningful picture from the value returned by this method. It is intended to make the task of drawing such a Cayley graph more straightforward by providing everything except the final layout of the graph. Please use <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) if you want an automatically laid out diagram of the digraph <var class="Arg">obj</var>.</p>
+<dd><p>If <var class="Arg">obj</var> is a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) in the category <code class="func">IsCayleyDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3.html#X7E749324800B38A5"><span class="RefLink">Digraphs: IsCayleyDigraph</span></a>), then <code class="code">TikzString</code> returns a picture of <var class="Arg">obj</var>. No attempt is made whatsoever to produce a sensible picture of the digraph <var class="Arg">obj</var>, in fact, the vertices are all given the same coordinates. Human intervention is required to produce a meaningful picture from the value returned by this method. It is intended to make the task of drawing such a Cayley graph more straightforward by providing everything except the final layout of the graph. Please use <code class="func">DotString</code> (<a href="chap16.html#X7F51F3CD7E13D199"><span class="RefLink">16.1-1</span></a>) if you want an automatically laid out diagram of the digraph <var class="Arg">obj</var>.</p>
 
 </dd>
 </dl>

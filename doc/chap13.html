@@ -360,13 +360,13 @@ true</pre></div>
 
 
 <ul>
-<li><p><code class="func">EquivalenceClasses</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33_mj.html#X879439897EF4D728"><span class="RefLink">Reference: EquivalenceClasses attribute</span></a>)</p>
+<li><p><code class="func">EquivalenceClasses</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33.html#X879439897EF4D728"><span class="RefLink">Reference: EquivalenceClasses attribute</span></a>)</p>
 
 </li>
 <li><p><code class="code">NrEquivalenceClasses</code></p>
 
 </li>
-<li><p><code class="func">EquivalenceClassOfElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33_mj.html#X7BB985BA7FD7A82E"><span class="RefLink">Reference: EquivalenceClassOfElement</span></a>)</p>
+<li><p><code class="func">EquivalenceClassOfElement</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33.html#X7BB985BA7FD7A82E"><span class="RefLink">Reference: EquivalenceClassOfElement</span></a>)</p>
 
 </li>
 </ul>
@@ -471,7 +471,7 @@ true</pre></div>
 
 <p>Note that the order in which numbers appear in the list is non-deterministic, and two equivalence relations describing the same mathematical relation might therefore have different lookups. Note also that the maximum value of the list may not be the number of classes of <var class="Arg">equiv</var>, and that any integer might not be included. However, see <code class="func">EquivalenceRelationCanonicalLookup</code> (<a href="chap13.html#X8022B7898553F624"><span class="RefLink">13.3-6</span></a>).</p>
 
-<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -498,7 +498,7 @@ false</pre></div>
 
 <p>Two elements of the semigroup on which the equivalence relation is defined are related in the equivalence relation if and only if they have the same number at their respective positions in the lookup.</p>
 
-<p>See also <code class="func">EquivalenceRelationLookup</code> (<a href="chap13.html#X7DA4BABC7891A7F1"><span class="RefLink">13.3-5</span></a>) and <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+<p>See also <code class="func">EquivalenceRelationLookup</code> (<a href="chap13.html#X7DA4BABC7891A7F1"><span class="RefLink">13.3-5</span></a>) and <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -518,7 +518,7 @@ false</pre></div>
 
 <p>This attribute returns a list of lists of elements of the underlying set of the semigroup congruence <var class="Arg">cong</var>. These lists are precisely the nontrivial equivalence classes of <var class="Arg">cong</var>. The order in which the classes appear is deterministic, and the order of the elements inside each class is also deterministic. Hence, two congruence objects have the same <code class="code">EquivalenceRelationCanonicalPartition</code> if and only if they describe the same relation.</p>
 
-<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>), a similar attribute which does not have canonical ordering, but which is likely to be faster.</p>
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap33.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>), a similar attribute which does not have canonical ordering, but which is likely to be faster.</p>
 
 
 <div class="example"><pre>
@@ -723,7 +723,7 @@ false</pre></div>
 
 <p>This category contains all congruence posets. A <em>congruence poset</em> is a partially ordered set of congruences over a specific semigroup, where the ordering is defined by containment according to <code class="func">IsSubrelation</code> (<a href="chap13.html#X85075F1D878512F5"><span class="RefLink">13.5-1</span></a>): given two congruences <code class="code">cong1</code> and <code class="code">cong2</code>, we say that <code class="code">cong1</code> &lt; <code class="code">cong2</code> if and only if <code class="code">cong1</code> is a subrelation (a refinement) of <code class="code">cong2</code>. The congruences in a congruence poset can be left, right, or two-sided.</p>
 
-<p>A congruence poset is a digraph (see <code class="func">IsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)) with a vertex for each congruence, and an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>. To avoid using an unnecessarily large amount of memory in some cases, a congruence poset does not necessarily belong to <code class="func">IsPartialOrderDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>). In other words, although every congruence poset represents a partial order it is not necessarily the case that there is an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> if and only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>.</p>
+<p>A congruence poset is a digraph (see <code class="func">IsDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)) with a vertex for each congruence, and an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>. To avoid using an unnecessarily large amount of memory in some cases, a congruence poset does not necessarily belong to <code class="func">IsPartialOrderDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>). In other words, although every congruence poset represents a partial order it is not necessarily the case that there is an edge from vertex <code class="code">i</code> to vertex <code class="code">j</code> if and only if the congruence numbered <code class="code">i</code> is a subrelation of the congruence numbered <code class="code">j</code>.</p>
 
 <p>The list of congruences can be obtained using <code class="func">CongruencesOfPoset</code> (<a href="chap13.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>); and the underlying semigroup of the poset can be obtained using <code class="func">UnderlyingSemigroupOfCongruencePoset</code> (<a href="chap13.html#X830F42B582A2FAA0"><span class="RefLink">13.4-9</span></a>).</p>
 
@@ -989,7 +989,7 @@ true
 
 <p>If <var class="Arg">poset</var> is a congruence poset (i.e. it satisfies <code class="func">IsCongruencePoset</code> (<a href="chap13.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>)), then this function returns the congruence poset formed by these congruences partially ordered by containment, along with all their joins. This includes the empty join which equals the trivial congruence.</p>
 
-<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semillatice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
+<p>The digraph returned by this function represents the Cayley graph of the semilattice generated by <code class="func">CongruencesOfPoset</code> (<a href="chap13.html#X7B2E2CEE8626FBC3"><span class="RefLink">13.4-8</span></a>) with identity adjoined. The reflexive transitive closure of this digraph is a join semillatice in the sense of <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>).</p>
 
 <p>See also <code class="func">IsCongruencePoset</code> (<a href="chap13.html#X8195D6F47EE52806"><span class="RefLink">13.4-4</span></a>) and <code class="func">PosetOfCongruences</code> (<a href="chap13.html#X78A91138818A4FAE"><span class="RefLink">13.4-10</span></a>).</p>
 
@@ -1121,7 +1121,7 @@ ee 2&gt; with 0 generating pairs&gt; ]
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfLeftCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: An iterator.</p>
 
-<p><code class="code">IteratorOfRightCongruences</code> returns an iterator where calling <code class="func">NextIterator</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap30_mj.html#X879F62F77D1D1179"><span class="RefLink">Reference: NextIterator</span></a>) returns the next right congruence of the semigroup <var class="Arg">S</var> with at most <var class="Arg">n</var> classes that contain the pairs in <var class="Arg">extra</var>; <code class="code">IteratorOfLeftCongruences</code> is defined dually for left congruences rather than right congruences.</p>
+<p><code class="code">IteratorOfRightCongruences</code> returns an iterator where calling <code class="func">NextIterator</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap30.html#X879F62F77D1D1179"><span class="RefLink">Reference: NextIterator</span></a>) returns the next right congruence of the semigroup <var class="Arg">S</var> with at most <var class="Arg">n</var> classes that contain the pairs in <var class="Arg">extra</var>; <code class="code">IteratorOfLeftCongruences</code> is defined dually for left congruences rather than right congruences.</p>
 
 <p>If the optional third argument <var class="Arg">extra</var> is not present, then <code class="code">IteratorOfRightCongruences</code> uses an empty list by default.</p>
 
@@ -1258,7 +1258,7 @@ true</pre></div>
 
 <p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Young. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>.</p>
 
-<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">S</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
+<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">S</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="https://www.gap-system.org/Manuals/doc/ref/chap51.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
 
 <p class="pcenter">S \cong \mathcal{M} ^ 0[G; I, \Lambda; P], </p>
 
@@ -1309,7 +1309,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
+<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
 
 <p>An object of this type may be constructed with <code class="code">RMSCongruenceByLinkedTriple</code> or <code class="code">RZMSCongruenceByLinkedTriple</code>, or this representation may be selected automatically by <code class="func">SemigroupCongruence</code> (<a href="chap13.html#X85CE56AC84FA5D33"><span class="RefLink">13.2-1</span></a>).</p>
 
@@ -1792,7 +1792,7 @@ h 4 vertices, 4 edges&gt; with 3 generating pairs&gt;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupIdealOfReesCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup ideal.</p>
 
-<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
+<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
 
 
 <div class="example"><pre>
@@ -1814,7 +1814,7 @@ h 4 vertices, 4 edges&gt; with 3 generating pairs&gt;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This category describes a congruence class of a Rees congruence. A congruence class of a Rees congruence either contains all the elements of an ideal, or is a singleton (see <code class="func">IsReesCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)).</p>
+<p>This category describes a congruence class of a Rees congruence. A congruence class of a Rees congruence either contains all the elements of an ideal, or is a singleton (see <code class="func">IsReesCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)).</p>
 
 <p>An object of this type may be used in the same way as any other congruence class object.</p>
 
@@ -1846,7 +1846,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This property describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">S × S</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
+<p>This property describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">S × S</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap51.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
 
 <p>An object of this type may be constructed with <code class="code">UniversalSemigroupCongruence</code> or this representation may be selected automatically as an alternative to an <code class="code">IsRZMSCongruenceByLinkedTriple</code> object (since the universal congruence cannot be represented by a linked triple).</p>
 

@@ -896,7 +896,7 @@
   the  action  of  the symmetric group on its rows, and, independently, on its
   columns.  In  other  words,  [10XCanonicalBooleanMat[110X returns a canonical boolean
   matrix equivalent to [3Xmat[103X up to rearranging rows and columns. This version of
-  [10XCanonicalBooleanMat[110X  uses  [5XDigraphs[105X and its interface with the [5Xbliss[105X library
+  [10XCanonicalBooleanMat[110X  uses  [5Xdigraphs[105X and its interface with the [5Xbliss[105X library
   for computing automorphism groups and canonical forms of graphs [JK07]. As a
   consequence,  [10XCanonicalBooleanMat[110X  with  a  single argument is significantly
   faster than the versions with 2 or 3 arguments.[133X

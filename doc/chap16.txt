@@ -115,7 +115,7 @@
   
   [33X[0;0YThis  function produces a graphical representation of the semilattice of the
   idempotents  of an inverse semigroup [3XS[103X where the elements of [3XS[103X have a unique
-  semigroup   inverse   accessible   via  [2XInverse[102X  ([14XReference:  Inverse[114X).  The
+  semigroup   inverse   accessible   via  [2XInverse[102X  ([14XReference:  inverse[114X).  The
   idempotents are grouped by the [13XD[113X-class they belong to.[133X
   
   [33X[0;0YThe  output  is  in  [10Xdot[110X format (also known as [10XGraphViz[110X) format. For details
