@@ -6,10 +6,10 @@
                      [1X A package for semigroups and monoids [101X
   
   
-                                     5.3.5
+                                     5.3.6
   
   
-                                14 February 2024
+                                19 February 2024
   
   
                                  James Mitchell
@@ -73,6 +73,8 @@
                                  Wilf A. Wilson
   
                                  Michael Young
+  
+                                Fabian Zickgraf
   
   
   
@@ -219,6 +221,8 @@
                 Scotland[133X
   
   
+  Fabian Zickgraf
+      Email:    [7Xmailto:f.zickgraf@dashdos.com[107X
   
   -------------------------------------------------------
   [1XAbstract[101X

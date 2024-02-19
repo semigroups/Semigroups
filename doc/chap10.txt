@@ -518,7 +518,7 @@
   [10XGreensXClasses(S)[j][110X  is  immediately  less than [10XGreensXClasses(S)[i][110X in the
   partial  order  of  [10XX[110X-classes  of [3XS[103X. The reflexive transitive closure of the
   digraph  [10XD[110X  is  the  partial  order  of  [10XX[110X-classes of [3XS[103X (in the sense of the
-  [5Xdigraphs[105X package).[133X
+  [5XDigraphs[105X package).[133X
   
   [33X[0;0YThe partial order on the [10XX[110X-classes is defined as follows.[133X
   

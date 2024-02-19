@@ -60,34 +60,34 @@
 
 
 <ul>
-<li><p>ensure that the <strong class="pkg">datastructures</strong> package version 0.2.5 or higher is available. <strong class="pkg">datastructures</strong> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
+<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/datastructures">datastructures</a></span> package version 0.2.5 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/datastructures">datastructures</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
-<li><p>ensure that the <strong class="pkg">digraphs</strong> package version 1.6.2 or higher is available. <strong class="pkg">digraphs</strong> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
+<li><p>ensure that the <span class="URL"><a href="https://digraphs.github.io/Digraphs">Digraphs</a></span> package version 1.6.2 or higher is available. <span class="URL"><a href="https://digraphs.github.io/Digraphs">Digraphs</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
-<li><p>ensure that the <strong class="pkg">genss</strong> package version 1.6.5 or higher is available.</p>
+<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/genss">genss</a></span> package version 1.6.5 or higher is available.</p>
 
 </li>
 <li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/images/">images</a></span> package version 1.3.1 or higher is available.</p>
 
 </li>
-<li><p>ensure that the <strong class="pkg">IO</strong> package version 4.5.1 or higher is available. <strong class="pkg">IO</strong> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
+<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/io">IO</a></span> package version 4.5.1 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/io">IO</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
 <li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/orb">orb</a></span> package version 4.8.2 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/orb">orb</a></span> and <strong class="pkg">Semigroups</strong> both perform better if <span class="URL"><a href="https://gap-packages.github.io/orb">orb</a></span> is compiled.</p>
 
 </li>
-<li><p>download the package archive <code class="file">semigroups-5.3.5.tar.gz</code> from <span class="URL"><a href="https://semigroups.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
+<li><p>download the package archive <code class="file">semigroups-5.3.6.tar.gz</code> from <span class="URL"><a href="https://semigroups.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-5.3.5</code>.</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-5.3.6</code>.</p>
 
 </li>
-<li><p>locate your <strong class="pkg">GAP</strong> directory, the one containing the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-5.3.5.tar.gz</code> into the <code class="file">pkg</code> subdirectory of your <strong class="pkg">GAP</strong> directory.</p>
+<li><p>locate your <strong class="pkg">GAP</strong> directory, the one containing the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-5.3.6.tar.gz</code> into the <code class="file">pkg</code> subdirectory of your <strong class="pkg">GAP</strong> directory.</p>
 
 </li>
-<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/ ">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++14 standard. Inside the <code class="file">pkg/semigroups-5.3.5</code> directory, in your terminal type</p>
+<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. <strong class="pkg">Semigroups</strong> uses the <span class="URL"><a href=" https://libsemigroups.github.io/libsemigroups/ ">libsemigroups</a></span> C++ library, which requires a compiler implementing the C++14 standard. Inside the <code class="file">pkg/semigroups-5.3.6</code> directory, in your terminal type</p>
 
 
 <div class="example"><pre>
@@ -114,7 +114,7 @@
 
 <p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a kernel module written in C++ and this must be compiled. The kernel module contains the interface to the C++ library <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> . It is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
 
-<p>To compile the kernel component inside the <code class="file">pkg/semigroups-5.3.5.tar.gz</code> directory, type</p>
+<p>To compile the kernel component inside the <code class="file">pkg/semigroups-5.3.6.tar.gz</code> directory, type</p>
 
 
 <div class="example"><pre>
@@ -138,7 +138,7 @@
 gap makedoc.g
     </pre></div>
 
-<p>when you're inside the <code class="file">pkg/semigroups-5.3.5</code> directory.</p>
+<p>when you're inside the <code class="file">pkg/semigroups-5.3.6</code> directory.</p>
 
 <p><a id="X7862D3F37C5BBDEF" name="X7862D3F37C5BBDEF"></a></p>
 
@@ -199,7 +199,7 @@ gap makedoc.g
 <h5>2.5-1 InfoSemigroups</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoSemigroups</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
-<p><code class="code">InfoSemigroups</code> is the info class of the <strong class="pkg">Semigroups</strong> package. The info level is initially set to 0 and no info messages are displayed. To increase the amount of information displayed during a computation increase the info level to 2 or 3. To stop all info messages from being displayed, set the info level to 0. See also <a href="https://www.gap-system.org/Manuals/doc/ref/chap7.html#X7A9C902479CB6F7C"><span class="RefLink">Reference: Info Functions</span></a> and <code class="func">SetInfoLevel</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap7.html#X7B2ADC37783104B9"><span class="RefLink">Reference: InfoLevel</span></a>).</p>
+<p><code class="code">InfoSemigroups</code> is the info class of the <strong class="pkg">Semigroups</strong> package. The info level is initially set to 0 and no info messages are displayed. To increase the amount of information displayed during a computation increase the info level to 2 or 3. To stop all info messages from being displayed, set the info level to 0. See also <a href="https://www.gap-system.org/Manuals/doc/ref/chap7_mj.html#X7A9C902479CB6F7C"><span class="RefLink">Reference: Info Functions</span></a> and <code class="func">SetInfoLevel</code> (<a href="https://www.gap-system.org/Manuals/doc/ref/chap7_mj.html#X7B2ADC37783104B9"><span class="RefLink">Reference: InfoLevel</span></a>).</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>

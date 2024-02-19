@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.3.5
-date: 2024-02-14
+version: 5.3.6
+date: 2024-02-19
 description: |
     A package for semigroups and monoids
 
@@ -66,6 +66,8 @@ authors:
       url: https://wilf.me
     - name: Michael Young
       url: https://mtorpey.github.io/
+    - name: Fabian Zickgraf
+      url: mailto:f.zickgraf@dashdos.com
 
 maintainers:
     - name: James Mitchell
@@ -107,7 +109,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.5/semigroups-5.3.5.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.6/semigroups-5.3.6.tar.gz
 
 abstract: |
     
