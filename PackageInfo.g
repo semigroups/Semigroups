@@ -114,10 +114,10 @@ Persons := [
 
   rec(
     LastName      := "Edwards",
-    FirstNames    := "Joe",
+    FirstNames    := "Joseph",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "je53@st-andrews.ac.uk",
+    Email         := "jde1@st-andrews.ac.uk",
     PostalAddress := _STANDREWSMATHS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews",
