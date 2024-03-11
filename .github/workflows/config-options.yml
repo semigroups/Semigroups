@@ -53,7 +53,7 @@ jobs:
       - name: "Run Semigroups package's tst/teststandard.g"
         uses: gap-actions/run-pkg-tests@v2
       - uses: gap-actions/process-coverage@v2
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v3
       - name: "Run GAP's tst/testinstall.g"
         uses: gap-actions/run-pkg-tests@v2
         with:

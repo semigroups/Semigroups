@@ -3,6 +3,11 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.3.6 (released 19/02/2024)
+
+This is a minor release with some changes related to forthcoming changes in
+GAP. These changes were implemented by Fabian Zickgraf.
+
 ### Version 5.3.5 (released 14/02/2024)
 
 This is a minor release fixing an issue in the kernel extension (reported by

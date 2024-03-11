@@ -332,15 +332,6 @@ void TBlocksObjLoadFunc(Obj o) {
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(blocks);
 }
 
-void TBipartObjMarkSubBags(Obj o) {
-  if (ADDR_OBJ(o)[1] != NULL) {
-    MarkBag(ADDR_OBJ(o)[1]);
-  }
-  if (ADDR_OBJ(o)[2] != NULL) {
-    MarkBag(ADDR_OBJ(o)[2]);
-  }
-}
-
 // Filters for IS_BIPART, IS_BLOCKS
 
 Obj IsBipartFilt;
@@ -512,7 +503,7 @@ static Int InitKernel(StructInitInfo* module) {
   SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
   LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
 
-  InitMarkFuncBags(T_BIPART, &TBipartObjMarkSubBags);
+  InitMarkFuncBags(T_BIPART, &MarkAllButFirstSubBags);
   InitFreeFuncBag(T_BIPART, &TBipartObjFreeFunc);
 
   ProdFuncs[T_BIPART][T_BIPART] = BIPART_PROD;

@@ -158,8 +158,8 @@ gap> IsInjective(iso);
 true
 gap> Print(iso, "\n");
 SemigroupIsomorphismByImages( Monoid( [ IdentityTransformation ] ), Monoid( [ \
-PartialPerm( [ ], [ ] ) ] ), [ IdentityTransformation ], [ PartialPerm( [ ], [\
- ] ) ] )
+PartialPerm( [  ], [  ] ) ] ), [ IdentityTransformation ], [ PartialPerm( [  ]\
+, [  ] ) ] )
 gap> EvalString(String(hom)) = hom;
 true
 gap> S := TrivialSemigroup();
@@ -341,11 +341,11 @@ SemigroupHomomorphismByImages( Monoid( [ Transformation( [ 2, 3, 1 ] ), Transf\
 ormation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ] ), Monoid( [ PBR([ [ -2 \
 ], [ -3 ], [ -1 ] ], [ [ 3 ], [ 1 ], [ 2 ] ]), PBR([ [ -2 ], [ -1 ], [ -3 ] ],\
  [ [ 2 ], [ 1 ], [ 3 ] ]), PBR([ [ -1 ], [ -2 ], [ -1 ] ], [ [ 1, 3 ], [ 2 ], \
-[ ] ]) ] ), [ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), Transform\
-ation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ], [ PBR([ [ -1 ], [ -2 ], [ \
--3 ] ], [ [ 1 ], [ 2 ], [ 3 ] ]), PBR([ [ -2 ], [ -3 ], [ -1 ] ], [ [ 3 ], [ 1\
- ], [ 2 ] ]), PBR([ [ -2 ], [ -1 ], [ -3 ] ], [ [ 2 ], [ 1 ], [ 3 ] ]), PBR([ \
-[ -1 ], [ -2 ], [ -1 ] ], [ [ 1, 3 ], [ 2 ], [ ] ]) ] )
+[  ] ]) ] ), [ IdentityTransformation, Transformation( [ 2, 3, 1 ] ), Transfor\
+mation( [ 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ], [ PBR([ [ -1 ], [ -2 ], [\
+ -3 ] ], [ [ 1 ], [ 2 ], [ 3 ] ]), PBR([ [ -2 ], [ -3 ], [ -1 ] ], [ [ 3 ], [ \
+1 ], [ 2 ] ]), PBR([ [ -2 ], [ -1 ], [ -3 ] ], [ [ 2 ], [ 1 ], [ 3 ] ]), PBR([\
+ [ -1 ], [ -2 ], [ -1 ] ], [ [ 1, 3 ], [ 2 ], [  ] ]) ] )
 gap> EvalString(String(hom)) = hom;
 true
 
