@@ -151,7 +151,7 @@ true]]></Example>
   <ManSection>
     <Func Name="FreeSemilattice" Arg="[filt, ] n"/>
     <Returns>
-      A free semilattice of <A>n</A> generators.
+      A free semilattice with <A>n</A> generators.
     </Returns>
     <Description>
       If <A>n</A> is a positive integer, then this function returns a free

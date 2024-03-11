@@ -419,8 +419,7 @@ function(arg...)
     filter := arg[1];
     n := arg[2];
   else
-    ErrorNoReturn("the arguments must be a positive integer or a filter ",
-                  "and a positive integer");
+    ErrorNoReturn("expected 2 arguments found ", Length(arg));
   fi;
 
   if not IsPosInt(n) or not IsOperation(filter) then
@@ -431,16 +430,6 @@ function(arg...)
   S := FreeSemilatticeCons(filter, n);
 
   SetSize(S, 2 ^ n - 1);
-  # SetIsRectangularBand(S, true);
-  # SetNrRClasses(S, m);
-  # SetNrLClasses(S, n);
-  # if m <> 1 or n <> 1 then
-  #   SetIsGroupAsSemigroup(S, false);
-  #   SetIsZeroSemigroup(S, false);
-  #   SetIsTrivial(S, false);
-  # fi;
-  # SetIsRightZeroSemigroup(S, m = 1);
-  # SetIsLeftZeroSemigroup(S, n = 1);
 
   return S;
 end);
