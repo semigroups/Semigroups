@@ -1,6 +1,6 @@
 name: Semigroups
-version: 5.3.6
-date: 2024-02-19
+version: 5.3.7
+date: 2024-03-11
 description: |
     A package for semigroups and monoids
 
@@ -17,7 +17,7 @@ authors:
       url: https://reinisc.id.lv/
     - name: Tom Conti-Leslie
       url: https://tomcontileslie.com/
-    - name: Joe Edwards
+    - name: Joseph Edwards
       url: https://github.com/Joseph-Edwards
     - name: Attila Egri-Nagy
       url: http://www.egri-nagy.hu
@@ -109,7 +109,7 @@ packageinfo: https://semigroups.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.6/semigroups-5.3.6.tar.gz
+      url: https://github.com/semigroups/Semigroups/releases/download/v5.3.7/semigroups-5.3.7.tar.gz
 
 abstract: |
     
