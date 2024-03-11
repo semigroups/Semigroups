@@ -114,7 +114,7 @@ Persons := [
 
   rec(
     LastName      := "Edwards",
-    FirstNames    := "Joseph",
+    FirstNames    := "Joe",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "jde1@st-andrews.ac.uk",
