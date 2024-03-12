@@ -430,6 +430,7 @@ function(arg...)
   S := FreeSemilatticeCons(filter, n);
 
   SetSize(S, 2 ^ n - 1);
+  SetIsSemilattice(S, true);
 
   return S;
 end);
