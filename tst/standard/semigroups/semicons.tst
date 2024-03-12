@@ -505,8 +505,7 @@ gap> S := FreeSemilattice(IsPartialPermSemigroup, 0);
 Error, the arguments must be a positive integer or a filter and a positive int\
 eger
 gap> S := FreeSemilattice(IsPermGroup, 1, 1);
-Error, the arguments must be a positive integer or a filter and a positive int\
-eger
+Error, expected 2 arguments found 3
 gap> S := FreeSemilattice(IsPartialPermSemigroup, true);
 Error, the arguments must be a positive integer or a filter and a positive int\
 eger
