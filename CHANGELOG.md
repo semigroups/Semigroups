@@ -3,6 +3,17 @@ Copyright © 2011-2024 [James D. Mitchell][] et al.
 
 Licensing information can be found in the `LICENSE` file.
 
+## Version 5.3.7 (released 11/03/2024)
+
+This is a minor release with some changes for compatibility with GAP.
+
+* Update Joe's info by @Joseph-Edwards in
+  https://github.com/semigroups/Semigroups/pull/1002
+* Workaround for GAP 4.12 test failure due to new GAPDoc version by @fingolfin
+  in https://github.com/semigroups/Semigroups/pull/1004
+* Use MarkAllButFirstSubBags for T_BIPART by @fingolfin in
+  https://github.com/semigroups/Semigroups/pull/1003
+
 ## Version 5.3.6 (released 19/02/2024)
 
 This is a minor release with some changes related to forthcoming changes in
