@@ -191,11 +191,12 @@ true]]></Example>
 
       <Example><![CDATA[
 gap> S := FreeSemilattice(IsTransformationSemigroup, 5);
-<transformation semigroup of size 31, degree 6 with 5 generators>
+<inverse transformation semigroup of size 31, degree 6 with 5 
+ generators>
 gap> T := FreeSemilattice(IsPartialPermSemigroup, 3);
-<partial perm semigroup of size 7, rank 3 with 3 generators>
+<inverse partial perm semigroup of size 7, rank 3 with 3 generators>
 gap> U := FreeSemilattice(IsBooleanMatSemigroup, 4);
-<semigroup of size 15, 5x5 boolean matrices with 4 generators>
+<inverse semigroup of size 15, 5x5 boolean matrices with 4 generators>
 ]]></Example>
     </Description>
   </ManSection>

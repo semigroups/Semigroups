@@ -428,14 +428,14 @@ function(arg...)
   fi;
 
   S := FreeSemilatticeCons(filter, n);
-  
+
   if "IsMagmaWithOne" in NamesFilter(filter) then
     SetSize(S, 2 ^ n);
   else
     SetSize(S, 2 ^ n - 1);
   fi;
 
-  # SetIsSemilattice(S, true);
+  SetIsSemilattice(S, true);
 
   return S;
 end);

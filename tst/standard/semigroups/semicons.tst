@@ -525,7 +525,8 @@ gap> S := FreeSemilattice(2);
 gap> S := FreeSemilattice(5);
 <inverse transformation semigroup of size 31, degree 6 with 5 generators>
 gap> S := FreeSemilattice(21);
-<inverse transformation semigroup of size 2097151, degree 22 with 21 generators>
+<inverse transformation semigroup of size 2097151, degree 22 with 21 
+ generators>
 
 # constructions: FreeSemilattice: transformation semigroup
 gap> S := FreeSemilattice(IsTransformationSemigroup, 1);
