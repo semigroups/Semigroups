@@ -579,6 +579,7 @@ for _IsXMonoid in ["IsBipartitionMonoid",
 od;
 
 Unbind(_IsXSemigroup);
+Unbind(_IsXMonoid);
 
 # Zero semigroup: main method
 
