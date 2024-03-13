@@ -162,18 +162,31 @@ true]]></Example>
       <List>
         <Item><C>IsTransformationSemigroup</C>
           (the default, if <A>filt</A> is not specified),</Item>
+        <Item><C>IsTransformationMonoid</C>,</Item>
         <Item><C>IsPartialPermSemigroup</C>,</Item>
+        <Item><C>IsPartialPermMonoid</C>,</Item>
         <Item><C>IsFpSemigroup</C>,</Item>
+        <Item><C>IsFpMonoid</C>,</Item>
         <Item><C>IsBipartitionSemigroup</C>,</Item>
+        <Item><C>IsBipartitionMonoid</C>,</Item>
         <Item><C>IsPBRSemigroup</C>,</Item>
+        <Item><C>IsPBRMonoid</C>,</Item>
         <Item><C>IsBooleanMatSemigroup</C>,</Item>
+        <Item><C>IsBooleanMatMonoid</C>,</Item>
         <Item><C>IsNTPMatrixSemigroup</C>,</Item>
+        <Item><C>IsNTPMatrixMonoid</C>,</Item>
         <Item><C>IsMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsMaxPlusMatrixMonoid</C>,</Item>
         <Item><C>IsMinPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsMinPlusMatrixMonoid</C>,</Item>
         <Item><C>IsTropicalMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsTropicalMaxPlusMatrixMonoid</C>,</Item>
         <Item><C>IsTropicalMinPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsTropicalMinPlusMatrixMonoid</C>,</Item>
         <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
+        <Item><C>IsProjectiveMaxPlusMatrixMonoid</C>,</Item>
         <Item><C>IsIntegerMatrixSemigroup.</C></Item>
+        <Item><C>IsIntegerMatrixMonoid.</C></Item>
       </List>
 
       <Example><![CDATA[

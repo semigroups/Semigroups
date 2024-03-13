@@ -521,21 +521,21 @@ true
 gap> S := FreeSemilattice(1);
 <trivial transformation group of degree 2 with 1 generator>
 gap> S := FreeSemilattice(2);
-<transformation semigroup of size 3, degree 3 with 2 generators>
+<inverse transformation semigroup of size 3, degree 3 with 2 generators>
 gap> S := FreeSemilattice(5);
-<transformation semigroup of size 31, degree 6 with 5 generators>
+<inverse transformation semigroup of size 31, degree 6 with 5 generators>
 gap> S := FreeSemilattice(21);
-<transformation semigroup of size 2097151, degree 22 with 21 generators>
+<inverse transformation semigroup of size 2097151, degree 22 with 21 generators>
 
 # constructions: FreeSemilattice: transformation semigroup
 gap> S := FreeSemilattice(IsTransformationSemigroup, 1);
 <trivial transformation group of degree 2 with 1 generator>
 gap> S := FreeSemilattice(IsTransformationSemigroup, 2);
-<transformation semigroup of size 3, degree 3 with 2 generators>
+<inverse transformation semigroup of size 3, degree 3 with 2 generators>
 gap> S := FreeSemilattice(IsTransformationSemigroup, 5);
-<transformation semigroup of size 31, degree 6 with 5 generators>
+<inverse transformation semigroup of size 31, degree 6 with 5 generators>
 gap> S := FreeSemilattice(IsTransformationSemigroup, 11);
-<transformation semigroup of size 2047, degree 12 with 11 generators>
+<inverse transformation semigroup of size 2047, degree 12 with 11 generators>
 
 # constructions: ZeroSemigroup: errors
 gap> S := ZeroSemigroup(0);
