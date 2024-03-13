@@ -428,9 +428,14 @@ function(arg...)
   fi;
 
   S := FreeSemilatticeCons(filter, n);
+  
+  if "IsMagmaWithOne" in NamesFilter(filter) then
+    SetSize(S, 2 ^ n);
+  else
+    SetSize(S, 2 ^ n - 1);
+  fi;
 
-  SetSize(S, 2 ^ n - 1);
-  SetIsSemilattice(S, true);
+  # SetIsSemilattice(S, true);
 
   return S;
 end);
@@ -443,6 +448,26 @@ InstallMethod(FreeSemilatticeCons,
 function(_, n)
     local F, gen, l, i, j, commR, idemR;
     F := FreeSemigroup(n);
+    gen := GeneratorsOfSemigroup(F);
+    l := Length(gen);
+
+    commR := [];
+    for i in [1 .. l - 1] do
+        for j in [i + 1 .. l] do
+            Add(commR, [gen[i] * gen[j], gen[j] * gen[i]]);
+        od;
+    od;
+
+    idemR := List(gen, x -> [x * x, x]);
+    return F / Concatenation(commR, idemR);
+end);
+
+InstallMethod(FreeSemilatticeCons,
+"for IsFpSemigroup and a pos int",
+[IsFpMonoid, IsPosInt],
+function(_, n)
+    local F, gen, l, i, j, commR, idemR;
+    F := FreeMonoid(n);
     gen := GeneratorsOfSemigroup(F);
     l := Length(gen);
 
@@ -472,6 +497,20 @@ function(_, n)
 end);
 
 InstallMethod(FreeSemilatticeCons,
+"for IsTransformationSemigroup and a pos int",
+[IsTransformationMonoid, IsPosInt],
+function(_, n)
+    local gen, i, L;
+    gen := [];
+    for i in [1 .. n] do
+        L := [1 .. n + 1];
+        L[i] := n + 1;
+        Add(gen, Transformation(L));
+    od;
+    return Monoid(gen);
+end);
+
+InstallMethod(FreeSemilatticeCons,
 "for IsPartialPermSemigroup and a pos int",
 [IsPartialPermSemigroup, IsPosInt],
 function(_, n)
@@ -483,6 +522,20 @@ function(_, n)
         Add(gen, PartialPerm(L, L));
     od;
     return Semigroup(gen);
+end);
+
+InstallMethod(FreeSemilatticeCons,
+"for IsPartialPermSemigroup and a pos int",
+[IsPartialPermMonoid, IsPosInt],
+function(_, n)
+    local gen, i, L;
+    gen := [];
+    for i in [1 .. n] do
+        L := [1 .. n];
+        Remove(L, i);
+        Add(gen, PartialPerm(L, L));
+    od;
+    return Monoid(gen);
 end);
 
 # Free semilattice: other constructors
@@ -505,6 +558,26 @@ for _IsXSemigroup in ["IsBipartitionSemigroup",
                        FreeSemilatticeCons(IsTransformationSemigroup, n));
   end);
 od;
+
+for _IsXMonoid in ["IsBipartitionMonoid",
+                    "IsPBRMonoid",
+                    "IsBooleanMatMonoid",
+                    "IsNTPMatrixMonoid",
+                    "IsMaxPlusMatrixMonoid",
+                    "IsMinPlusMatrixMonoid",
+                    "IsTropicalMaxPlusMatrixMonoid",
+                    "IsTropicalMinPlusMatrixMonoid",
+                    "IsProjectiveMaxPlusMatrixMonoid",
+                    "IsIntegerMatrixMonoid"] do
+  InstallMethod(FreeSemilatticeCons,
+  Concatenation("for ", _IsXMonoid, ", and pos int"),
+  [ValueGlobal(_IsXMonoid), IsPosInt],
+  function(filter, n)
+    return AsMonoid(filter,
+                    FreeSemilatticeCons(IsTransformationMonoid, n));
+  end);
+od;
+
 Unbind(_IsXSemigroup);
 
 # Zero semigroup: main method
