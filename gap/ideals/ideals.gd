@@ -8,16 +8,23 @@
 #############################################################################
 
 DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
+DeclareSynonymAttr("GeneratorsOfLeftSemigroupIdeal",
+    GeneratorsOfLeftMagmaIdeal);
+DeclareSynonymAttr("GeneratorsOfRightSemigroupIdeal",
+    GeneratorsOfRightMagmaIdeal);
+
 DeclareGlobalFunction("SemigroupIdeal");
+DeclareGlobalFunction("LeftSemigroupIdeal");
+DeclareGlobalFunction("RightSemigroupIdeal");
 
-DeclareOperation("SemigroupIdealByGenerators",
-                 [IsSemigroup, IsListOrCollection]);
+DeclareOperation("AnySemigroupIdealByGenerators",
+                 [IsSemigroup, IsOperation, IsListOrCollection]);
 
-DeclareOperation("SemigroupIdealByGenerators",
-                 [IsSemigroup, IsListOrCollection, IsRecord]);
+DeclareOperation("AnySemigroupIdealByGenerators",
+                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
 
-DeclareOperation("SemigroupIdealByGeneratorsNC",
-                 [IsSemigroup, IsListOrCollection, IsRecord]);
+DeclareOperation("AnySemigroupIdealByGeneratorsNC",
+                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
 
 DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 
@@ -40,6 +47,6 @@ DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 
 DeclareAttribute("SupersemigroupOfIdeal", IsSemigroupIdeal);
 
-InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
+InstallTrueMethod(IsSemigroup, IsSemigroupIdeal); # Duplicate with ideal.gi?
 
 DeclareAttribute("Ideals", IsSemigroup);

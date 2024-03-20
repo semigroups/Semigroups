@@ -14,6 +14,12 @@
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
+InstallImmediateMethod(IsLeftSemigroupIdeal, IsSemigroup, 0, IsLeftMagmaIdeal);
+InstallTrueMethod(IsLeftSemigroupIdeal, IsLeftMagmaIdeal and IsSemigroup);
+InstallTrueMethod(IsSemigroup, IsLeftSemigroupIdeal);
+InstallImmediateMethod(IsRightSemigroupIdeal, IsSemigroup, 0, IsRightMagmaIdeal);
+InstallTrueMethod(IsRightSemigroupIdeal, IsRightMagmaIdeal and IsSemigroup);
+InstallTrueMethod(IsSemigroup, IsRightSemigroupIdeal);
 
 BindGlobal("_ViewStringForSemigroupsIdeals",
 function(I)
@@ -187,6 +193,7 @@ InstallMethod(Representative, "for a semigroup ideal",
 
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
+# Factor out the common code from the following functions too?
 InstallGlobalFunction(SemigroupIdeal,
 function(arg...)
   local out, i;
@@ -197,11 +204,11 @@ function(arg...)
     ErrorNoReturn("the 1st argument is not a semigroup");
   elif Length(arg) = 2 and IsMatrix(arg[2]) then
     # special case for matrices, because they may look like lists
-    return SemigroupIdealByGenerators(arg[1], [arg[2]]);
+    return AnySemigroupIdealByGenerators(arg[1], IsMagmaIdeal, [arg[2]]);
 
   elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
     # list of generators
-    return SemigroupIdealByGenerators(arg[1], arg[2]);
+    return AnySemigroupIdealByGenerators(arg[1], IsMagmaIdeal, arg[2]);
   elif (IsMultiplicativeElement(arg[2])
         and IsGeneratorsOfSemigroup([arg[2]]))
       or (IsListOrCollection(arg[2])
@@ -212,7 +219,7 @@ function(arg...)
     for i in [2 .. Length(arg)] do
       # so that we can pass the options record
       if i = Length(arg) and IsRecord(arg[i]) then
-        return SemigroupIdealByGenerators(arg[1], out, arg[i]);
+        return AnySemigroupIdealByGenerators(arg[1], IsMagmaIdeal, out, arg[i]);
       elif IsMultiplicativeElement(arg[i]) and
           IsGeneratorsOfSemigroup([arg[i]]) then
         Add(out, arg[i]);
@@ -232,36 +239,138 @@ function(arg...)
                       "nor semigroups");
       fi;
     od;
-    return SemigroupIdealByGenerators(arg[1], out);
+    return AnySemigroupIdealByGenerators(arg[1], IsMagmaIdeal, out);
   fi;
   ErrorNoReturn("invalid arguments");
 end);
 
-InstallMethod(SemigroupIdealByGenerators,
-"for a semigroup and list or collections",
-[IsSemigroup, IsListOrCollection],
-{S, gens} -> SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S)));
+InstallGlobalFunction(LeftSemigroupIdeal,
+function(arg...)
+  local out, i;
 
-InstallMethod(SemigroupIdealByGenerators,
-"for semigroup, list or collection, and record",
-[IsSemigroup, IsListOrCollection, IsRecord],
-function(S, gens, opts)
+  if Length(arg) <= 1 then
+    ErrorNoReturn("there must be 2 or more arguments");
+  elif not IsSemigroup(arg[1]) then
+    ErrorNoReturn("the 1st argument is not a semigroup");
+  elif Length(arg) = 2 and IsMatrix(arg[2]) then
+    # special case for matrices, because they may look like lists
+    return AnySemigroupIdealByGenerators(arg[1], IsLeftMagmaIdeal, [arg[2]]);
+
+  elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+    # list of generators
+    return AnySemigroupIdealByGenerators(arg[1], IsLeftMagmaIdeal, arg[2]);
+  elif (IsMultiplicativeElement(arg[2])
+        and IsGeneratorsOfSemigroup([arg[2]]))
+      or (IsListOrCollection(arg[2])
+          and IsGeneratorsOfSemigroup(arg[2]))
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
+    # generators and collections of generators
+    out := [];
+    for i in [2 .. Length(arg)] do
+      # so that we can pass the options record
+      if i = Length(arg) and IsRecord(arg[i]) then
+        return AnySemigroupIdealByGenerators(arg[1], IsLeftMagmaIdeal, out, arg[i]);
+      elif IsMultiplicativeElement(arg[i]) and
+          IsGeneratorsOfSemigroup([arg[i]]) then
+        Add(out, arg[i]);
+      elif IsGeneratorsOfSemigroup(arg[i]) then
+        if HasGeneratorsOfSemigroupIdeal(arg[i]) then
+          Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
+        elif HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
+        elif IsList(arg[i]) then
+          Append(out, arg[i]);
+        else
+          Append(out, AsList(arg[i]));
+        fi;
+      else
+        ErrorNoReturn("the 2nd argument is not a combination ",
+                      "of generators, lists of generators, ",
+                      "nor semigroups");
+      fi;
+    od;
+    return AnySemigroupIdealByGenerators(arg[1], IsLeftMagmaIdeal, out);
+  fi;
+  ErrorNoReturn("invalid arguments");
+end);
+
+InstallGlobalFunction(RightSemigroupIdeal,
+function(arg...)
+  local out, i;
+
+  if Length(arg) <= 1 then
+    ErrorNoReturn("there must be 2 or more arguments");
+  elif not IsSemigroup(arg[1]) then
+    ErrorNoReturn("the 1st argument is not a semigroup");
+  elif Length(arg) = 2 and IsMatrix(arg[2]) then
+    # special case for matrices, because they may look like lists
+    return AnySemigroupIdealByGenerators(arg[1], IsRightMagmaIdeal, [arg[2]]);
+
+  elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+    # list of generators
+    return AnySemigroupIdealByGenerators(arg[1], IsRightMagmaIdeal, arg[2]);
+  elif (IsMultiplicativeElement(arg[2])
+        and IsGeneratorsOfSemigroup([arg[2]]))
+      or (IsListOrCollection(arg[2])
+          and IsGeneratorsOfSemigroup(arg[2]))
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
+    # generators and collections of generators
+    out := [];
+    for i in [2 .. Length(arg)] do
+      # so that we can pass the options record
+      if i = Length(arg) and IsRecord(arg[i]) then
+        return AnySemigroupIdealByGenerators(arg[1], IsRightMagmaIdeal, out, arg[i]);
+      elif IsMultiplicativeElement(arg[i]) and
+          IsGeneratorsOfSemigroup([arg[i]]) then
+        Add(out, arg[i]);
+      elif IsGeneratorsOfSemigroup(arg[i]) then
+        if HasGeneratorsOfSemigroupIdeal(arg[i]) then
+          Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
+        elif HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
+        elif IsList(arg[i]) then
+          Append(out, arg[i]);
+        else
+          Append(out, AsList(arg[i]));
+        fi;
+      else
+        ErrorNoReturn("the 2nd argument is not a combination ",
+                      "of generators, lists of generators, ",
+                      "nor semigroups");
+      fi;
+    od;
+    return AnySemigroupIdealByGenerators(arg[1], IsRightMagmaIdeal, out);
+  fi;
+  ErrorNoReturn("invalid arguments");
+end);
+
+InstallMethod(AnySemigroupIdealByGenerators,
+"for a semigroup, filter and (list or collections)",
+[IsSemigroup, IsOperation, IsListOrCollection],
+{S, filter, gens} ->
+  AnySemigroupIdealByGenerators(S, filter, gens, SEMIGROUPS.OptionsRec(S)));
+
+InstallMethod(AnySemigroupIdealByGenerators,
+"for semigroup, filter, (list or collection), and record",
+[IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
+function(S, filter, gens, opts)
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 2nd argument (a mult. elt. coll.) do not all ",
                   "belong to the semigroup");
   fi;
-  return SemigroupIdealByGeneratorsNC(S, gens, opts);
+  return AnySemigroupIdealByGeneratorsNC(S, filter, gens, opts);
 end);
 
-InstallMethod(SemigroupIdealByGeneratorsNC,
-"for a semigroup, list or collections, and record",
-[IsSemigroup, IsListOrCollection, IsRecord],
-function(S, gens, opts)
+# Note to self : The input filter is not sanitised, so remember to do it before.
+InstallMethod(AnySemigroupIdealByGeneratorsNC,
+"for a semigroup, filter, (list or collections) and record",
+[IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
+function(S, filter, gens, opts)
   local filts, I;
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
   gens := AsList(gens);
 
-  filts := IsMagmaIdeal and IsAttributeStoringRep;
+  filts := filter and IsAttributeStoringRep;
 
   if opts.acting
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
@@ -313,7 +422,16 @@ function(S, gens, opts)
   fi;
 
   SetParent(I, S);
-  SetGeneratorsOfMagmaIdeal(I, gens);
+  if "IsLeftActedOnBySuperset"  in NamesFilter(filter) and
+     "IsRightActedOnBySuperset" in NamesFilter(filter) then
+      SetGeneratorsOfMagmaIdeal(I, gens);
+  elif "IsLeftActedOnBySuperset" in NamesFilter(filter) then
+      SetGeneratorsOfLeftMagmaIdeal(I, gens);
+  elif "IsRightActedOnBySuperset" in NamesFilter(filter) then
+      SetGeneratorsOfRightMagmaIdeal(I, gens);
+  else
+      # PANIC
+  fi;
 
   if not IsActingSemigroup(I) then
     # to keep the craziness in the library happy!
