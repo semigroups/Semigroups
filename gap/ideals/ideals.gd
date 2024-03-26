@@ -32,7 +32,6 @@ DeclareOperation("SemigroupIdealByGenerators",
 DeclareOperation("SemigroupIdealByGeneratorsNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 
-
 DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 
 # the <Parent> of an ideal is the semigroup in which the ideal was created,
