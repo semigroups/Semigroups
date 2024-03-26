@@ -44,7 +44,7 @@ InstallMethod(PositionsInSupersemigroup,
 [IsLeftSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and
  CanUseFroidurePin],
 function(I)
-  local S, L, R, D, result, pos, x;
+  local S, L, result, pos, x;
   S := SupersemigroupOfIdeal(I);
   L := LeftCayleyDigraph(S);
 
@@ -65,7 +65,7 @@ InstallMethod(PositionsInSupersemigroup,
 [IsRightSemigroupIdeal and HasGeneratorsOfSemigroupIdeal and
  CanUseFroidurePin],
 function(I)
-  local S, L, R, D, result, pos, x;
+  local S, R, result, pos, x;
   S := SupersemigroupOfIdeal(I);
   R := RightCayleyDigraph(S);
 
