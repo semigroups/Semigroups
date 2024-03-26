@@ -53,6 +53,6 @@ DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 
 DeclareAttribute("SupersemigroupOfIdeal", IsSemigroupIdeal);
 
-InstallTrueMethod(IsSemigroup, IsSemigroupIdeal); # Duplicate with ideal.gi?
+InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);  # Duplicate with ideal.gi?
 
 DeclareAttribute("Ideals", IsSemigroup);

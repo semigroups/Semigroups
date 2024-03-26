@@ -14,12 +14,6 @@
 InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
-InstallImmediateMethod(IsLeftSemigroupIdeal, IsSemigroup, 0, IsLeftMagmaIdeal);
-InstallTrueMethod(IsLeftSemigroupIdeal, IsLeftMagmaIdeal and IsSemigroup);
-InstallTrueMethod(IsSemigroup, IsLeftSemigroupIdeal);
-InstallImmediateMethod(IsRightSemigroupIdeal, IsSemigroup, 0, IsRightMagmaIdeal);
-InstallTrueMethod(IsRightSemigroupIdeal, IsRightMagmaIdeal and IsSemigroup);
-InstallTrueMethod(IsSemigroup, IsRightSemigroupIdeal);
 
 BindGlobal("_ViewStringForSemigroupsIdeals",
 function(I)
@@ -269,7 +263,8 @@ function(arg...)
     for i in [2 .. Length(arg)] do
       # so that we can pass the options record
       if i = Length(arg) and IsRecord(arg[i]) then
-        return AnySemigroupIdealByGenerators(arg[1], IsLeftMagmaIdeal, out, arg[i]);
+        return AnySemigroupIdealByGenerators(arg[1],
+            IsLeftMagmaIdeal, out, arg[i]);
       elif IsMultiplicativeElement(arg[i]) and
           IsGeneratorsOfSemigroup([arg[i]]) then
         Add(out, arg[i]);
@@ -319,7 +314,8 @@ function(arg...)
     for i in [2 .. Length(arg)] do
       # so that we can pass the options record
       if i = Length(arg) and IsRecord(arg[i]) then
-        return AnySemigroupIdealByGenerators(arg[1], IsRightMagmaIdeal, out, arg[i]);
+        return AnySemigroupIdealByGenerators(arg[1],
+            IsRightMagmaIdeal, out, arg[i]);
       elif IsMultiplicativeElement(arg[i]) and
           IsGeneratorsOfSemigroup([arg[i]]) then
         Add(out, arg[i]);
@@ -344,27 +340,14 @@ function(arg...)
   ErrorNoReturn("invalid arguments");
 end);
 
-InstallMethod(SemigroupIdealByGenerators,
-"for a semigroup and (list or collections)",
-[IsSemigroup, IsListOrCollection],
-{S, gens} ->
-  AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, SEMIGROUPS.OptionsRec(S)));
-
 InstallMethod(AnySemigroupIdealByGenerators,
-"for a semigroup, filter and (list or collections)",
+"for a semigroup, filter and list or collections",
 [IsSemigroup, IsOperation, IsListOrCollection],
-{S, filter, gens} ->
-  AnySemigroupIdealByGenerators(S, filter, gens, SEMIGROUPS.OptionsRec(S)));
-
-InstallMethod(SemigroupIdealByGenerators,
-"for semigroup, (list or collection), and record",
-[IsSemigroup, IsListOrCollection, IsRecord],
-function(S, gens, opts)
-  return AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, opts);
-end);
+{S, filter, gens} -> AnySemigroupIdealByGenerators(S,
+    filter, gens, SEMIGROUPS.OptionsRec(S)));
 
 InstallMethod(AnySemigroupIdealByGenerators,
-"for semigroup, filter, (list or collection), and record",
+"for semigroup, filter, list or collection, and record",
 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
 function(S, filter, gens, opts)
   if not ForAll(gens, x -> x in S) then
@@ -374,14 +357,6 @@ function(S, filter, gens, opts)
   return AnySemigroupIdealByGeneratorsNC(S, filter, gens, opts);
 end);
 
-InstallMethod(SemigroupIdealByGeneratorsNC,
-"for a semigroup, (list or collections) and record",
-[IsSemigroup, IsListOrCollection, IsRecord],
-function(S, gens, opts)
-  return AnySemigroupIdealByGeneratorsNC(S, IsMagmaIdeal, gens, opts);
-end);
-
-# Note to self : The input filter is not sanitised, so remember to do it before.
 InstallMethod(AnySemigroupIdealByGeneratorsNC,
 "for a semigroup, filter, (list or collections) and record",
 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
@@ -443,7 +418,7 @@ function(S, filter, gens, opts)
 
   SetParent(I, S);
   if "IsLeftActedOnBySuperset"  in NamesFilter(filter) and
-     "IsRightActedOnBySuperset" in NamesFilter(filter) then
+      "IsRightActedOnBySuperset" in NamesFilter(filter) then
       SetGeneratorsOfMagmaIdeal(I, gens);
   elif "IsLeftActedOnBySuperset" in NamesFilter(filter) then
       SetGeneratorsOfLeftMagmaIdeal(I, gens);
@@ -464,6 +439,25 @@ function(S, filter, gens, opts)
   fi;
 
   return I;
+end);
+
+InstallMethod(SemigroupIdealByGenerators,
+"for a semigroup and list or collections",
+[IsSemigroup, IsListOrCollection],
+{S, gens} -> SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S)));
+
+InstallMethod(SemigroupIdealByGenerators,
+"for semigroup, list or collection, and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
+function(S, gens, opts)
+  return AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, opts);
+end);
+
+InstallMethod(SemigroupIdealByGeneratorsNC,
+"for a semigroup, list or collections, and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
+function(S, gens, opts)
+  return AnySemigroupIdealByGeneratorsNC(S, IsMagmaIdeal, gens, opts);
 end);
 
 InstallMethod(MinimalIdealGeneratingSet,
