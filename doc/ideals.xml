@@ -118,11 +118,7 @@ gap> I := SemigroupIdeal(S, I, Idempotents(S));
 gap> S := SymmetricInverseMonoid(10);
 <symmetric inverse monoid of degree 10>
 gap> I := LeftSemigroupIdeal(S, PartialPerm([1, 2]));
-<inverse partial perm semigroup ideal of rank 10 with 1 generator>
-gap> Size(I);
-4151
-gap> I := LeftSemigroupIdeal(S, I, Idempotents(S));
-<inverse partial perm semigroup ideal of rank 10 with 1025 generators>]]></Example>
+<LeftMagmaIdeal with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -147,11 +143,7 @@ gap> I := LeftSemigroupIdeal(S, I, Idempotents(S));
 gap> S := SymmetricInverseMonoid(10);
 <symmetric inverse monoid of degree 10>
 gap> I := RightSemigroupIdeal(S, PartialPerm([1, 2]));
-<inverse partial perm semigroup ideal of rank 10 with 1 generator>
-gap> Size(I);
-4151
-gap> I := RightSemigroupIdeal(S, I, Idempotents(S));
-<inverse partial perm semigroup ideal of rank 10 with 1025 generators>]]></Example>
+<RightMagmaIdeal with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
