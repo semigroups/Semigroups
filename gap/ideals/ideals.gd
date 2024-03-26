@@ -8,29 +8,30 @@
 #############################################################################
 
 DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
-DeclareSynonymAttr("GeneratorsOfLeftSemigroupIdeal",
-    GeneratorsOfLeftMagmaIdeal);
-DeclareSynonymAttr("GeneratorsOfRightSemigroupIdeal",
-    GeneratorsOfRightMagmaIdeal);
 
 DeclareGlobalFunction("SemigroupIdeal");
 DeclareGlobalFunction("LeftSemigroupIdeal");
 DeclareGlobalFunction("RightSemigroupIdeal");
+DeclareGlobalFunction("AnySemigroupIdealInputParsing");
 
 DeclareOperation("AnySemigroupIdealByGenerators",
                  [IsSemigroup, IsOperation, IsListOrCollection]);
-DeclareOperation("SemigroupIdealByGenerators",
-                 [IsSemigroup, IsOperation, IsListOrCollection]);
 
 DeclareOperation("AnySemigroupIdealByGenerators",
-                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
-DeclareOperation("SemigroupIdealByGenerators",
                  [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
 
 DeclareOperation("AnySemigroupIdealByGeneratorsNC",
                  [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
+
+DeclareOperation("SemigroupIdealByGenerators",
+                 [IsSemigroup, IsListOrCollection]);
+
+DeclareOperation("SemigroupIdealByGenerators",
+                 [IsSemigroup, IsListOrCollection, IsRecord]);
+
 DeclareOperation("SemigroupIdealByGeneratorsNC",
-                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
+                 [IsSemigroup, IsListOrCollection, IsRecord]);
+
 
 DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
 
