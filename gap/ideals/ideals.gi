@@ -344,11 +344,24 @@ function(arg...)
   ErrorNoReturn("invalid arguments");
 end);
 
+InstallMethod(SemigroupIdealByGenerators,
+"for a semigroup and (list or collections)",
+[IsSemigroup, IsListOrCollection],
+{S, gens} ->
+  AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, SEMIGROUPS.OptionsRec(S)));
+
 InstallMethod(AnySemigroupIdealByGenerators,
 "for a semigroup, filter and (list or collections)",
 [IsSemigroup, IsOperation, IsListOrCollection],
 {S, filter, gens} ->
   AnySemigroupIdealByGenerators(S, filter, gens, SEMIGROUPS.OptionsRec(S)));
+
+InstallMethod(SemigroupIdealByGenerators,
+"for semigroup, (list or collection), and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
+function(S, gens, opts)
+  return AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, opts);
+end);
 
 InstallMethod(AnySemigroupIdealByGenerators,
 "for semigroup, filter, (list or collection), and record",
@@ -359,6 +372,13 @@ function(S, filter, gens, opts)
                   "belong to the semigroup");
   fi;
   return AnySemigroupIdealByGeneratorsNC(S, filter, gens, opts);
+end);
+
+InstallMethod(SemigroupIdealByGeneratorsNC,
+"for a semigroup, (list or collections) and record",
+[IsSemigroup, IsListOrCollection, IsRecord],
+function(S, gens, opts)
+  return AnySemigroupIdealByGeneratorsNC(S, IsMagmaIdeal, gens, opts);
 end);
 
 # Note to self : The input filter is not sanitised, so remember to do it before.

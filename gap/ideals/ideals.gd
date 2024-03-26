@@ -19,11 +19,17 @@ DeclareGlobalFunction("RightSemigroupIdeal");
 
 DeclareOperation("AnySemigroupIdealByGenerators",
                  [IsSemigroup, IsOperation, IsListOrCollection]);
+DeclareOperation("SemigroupIdealByGenerators",
+                 [IsSemigroup, IsOperation, IsListOrCollection]);
 
 DeclareOperation("AnySemigroupIdealByGenerators",
                  [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
+DeclareOperation("SemigroupIdealByGenerators",
+                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
 
 DeclareOperation("AnySemigroupIdealByGeneratorsNC",
+                 [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
+DeclareOperation("SemigroupIdealByGeneratorsNC",
                  [IsSemigroup, IsOperation, IsListOrCollection, IsRecord]);
 
 DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);
