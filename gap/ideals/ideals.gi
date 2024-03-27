@@ -187,44 +187,44 @@ InstallMethod(Representative, "for a semigroup ideal",
 
 # a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
-InstallGlobalFunction(AnySemigroupIdealInputParsing,
-function(inputArgs)
+SEMIGROUPS.AnySemigroupIdealInputParsing := function(arg...)
   local out, i;
 
-  if Length(inputArgs) <= 1 then
+  if Length(arg) <= 1 then
     ErrorNoReturn("there must be 2 or more arguments");
-  elif not IsSemigroup(inputArgs[1]) then
+  elif not IsSemigroup(arg[1]) then
     ErrorNoReturn("the 1st argument is not a semigroup");
-  elif Length(inputArgs) = 2 and IsMatrix(inputArgs[2]) then
+  elif Length(arg) = 2 and IsMatrix(arg[2]) then
     # special case for matrices, because they may look like lists
-    return [inputArgs[1], [inputArgs[2]]];
+    return [arg[1], [arg[2]]];
 
-  elif Length(inputArgs) = 2 and IsList(inputArgs[2]) and 0 < Length(inputArgs[2]) then
+  elif Length(arg) = 2 and IsList(arg[2]) and
+    0 < Length(arg[2]) then
     # list of generators
-    return [inputArgs[1], inputArgs[2]];
-  elif (IsMultiplicativeElement(inputArgs[2])
-        and IsGeneratorsOfSemigroup([inputArgs[2]]))
-      or (IsListOrCollection(inputArgs[2])
-          and IsGeneratorsOfSemigroup(inputArgs[2]))
-      or (HasIsEmpty(inputArgs[2]) and IsEmpty(inputArgs[2])) then
+    return [arg[1], arg[2]];
+  elif (IsMultiplicativeElement(arg[2])
+        and IsGeneratorsOfSemigroup([arg[2]]))
+      or (IsListOrCollection(arg[2])
+          and IsGeneratorsOfSemigroup(arg[2]))
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
     # generators and collections of generators
     out := [];
-    for i in [2 .. Length(inputArgs)] do
+    for i in [2 .. Length(arg)] do
       # so that we can pass the options record
-      if i = Length(inputArgs) and IsRecord(inputArgs[i]) then
-        return [inputArgs[1], out, inputArgs[i]];
-      elif IsMultiplicativeElement(inputArgs[i]) and
-          IsGeneratorsOfSemigroup([inputArgs[i]]) then
-        Add(out, inputArgs[i]);
-      elif IsGeneratorsOfSemigroup(inputArgs[i]) then
-        if HasGeneratorsOfSemigroupIdeal(inputArgs[i]) then
-          Append(out, GeneratorsOfSemigroupIdeal(inputArgs[i]));
-        elif HasGeneratorsOfSemigroup(inputArgs[i]) then
-          Append(out, GeneratorsOfSemigroup(inputArgs[i]));
-        elif IsList(inputArgs[i]) then
-          Append(out, inputArgs[i]);
+      if i = Length(arg) and IsRecord(arg[i]) then
+        return [arg[1], out, arg[i]];
+      elif IsMultiplicativeElement(arg[i]) and
+          IsGeneratorsOfSemigroup([arg[i]]) then
+        Add(out, arg[i]);
+      elif IsGeneratorsOfSemigroup(arg[i]) then
+        if HasGeneratorsOfSemigroupIdeal(arg[i]) then
+          Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
+        elif HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
+        elif IsList(arg[i]) then
+          Append(out, arg[i]);
         else
-          Append(out, AsList(inputArgs[i]));
+          Append(out, AsList(arg[i]));
         fi;
       else
         ErrorNoReturn("the 2nd argument is not a combination ",
@@ -232,20 +232,20 @@ function(inputArgs)
                       "nor semigroups");
       fi;
     od;
-    return [inputArgs[1], out];
+    return [arg[1], out];
   fi;
   ErrorNoReturn("invalid arguments");
-end);
+end;
 
 InstallGlobalFunction(SemigroupIdeal,
 function(arg...)
   local parsed;
-  parsed := AnySemigroupIdealInputParsing(arg);
+  parsed := CallFuncList(SEMIGROUPS.AnySemigroupIdealInputParsing, arg);
   if Length(parsed) = 3 then
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators4(parsed[1],
       IsMagmaIdeal, parsed[2], parsed[3]);
   else
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators3(parsed[1],
       IsMagmaIdeal, parsed[2]);
   fi;
 end);
@@ -253,12 +253,12 @@ end);
 InstallGlobalFunction(LeftSemigroupIdeal,
 function(arg...)
   local parsed;
-  parsed := AnySemigroupIdealInputParsing(arg);
+  parsed := CallFuncList(SEMIGROUPS.AnySemigroupIdealInputParsing, arg);
   if Length(parsed) = 3 then
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators4(parsed[1],
       IsLeftMagmaIdeal, parsed[2], parsed[3]);
   else
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators3(parsed[1],
       IsLeftMagmaIdeal, parsed[2]);
   fi;
 end);
@@ -266,37 +266,29 @@ end);
 InstallGlobalFunction(RightSemigroupIdeal,
 function(arg...)
   local parsed;
-  parsed := AnySemigroupIdealInputParsing(arg);
+  parsed := CallFuncList(SEMIGROUPS.AnySemigroupIdealInputParsing, arg);
   if Length(parsed) = 3 then
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators4(parsed[1],
       IsRightMagmaIdeal, parsed[2], parsed[3]);
   else
-    return AnySemigroupIdealByGenerators(parsed[1],
+    return SEMIGROUPS.AnySemigroupIdealByGenerators3(parsed[1],
       IsRightMagmaIdeal, parsed[2]);
   fi;
 end);
 
-InstallMethod(AnySemigroupIdealByGenerators,
-"for a semigroup, filter and list or collections",
-[IsSemigroup, IsOperation, IsListOrCollection],
-{S, filter, gens} -> AnySemigroupIdealByGenerators(S,
-    filter, gens, SEMIGROUPS.OptionsRec(S)));
+SEMIGROUPS.AnySemigroupIdealByGenerators3 := {S, filter, gens} ->
+  SEMIGROUPS.AnySemigroupIdealByGenerators4(S,
+    filter, gens, SEMIGROUPS.OptionsRec(S));
 
-InstallMethod(AnySemigroupIdealByGenerators,
-"for semigroup, filter, list or collection, and record",
-[IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
-function(S, filter, gens, opts)
+SEMIGROUPS.AnySemigroupIdealByGenerators4 := function(S, filter, gens, opts)
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("the 2nd argument (a mult. elt. coll.) do not all ",
                   "belong to the semigroup");
   fi;
-  return AnySemigroupIdealByGeneratorsNC(S, filter, gens, opts);
-end);
+  return SEMIGROUPS.AnySemigroupIdealByGeneratorsNC(S, filter, gens, opts);
+end;
 
-InstallMethod(AnySemigroupIdealByGeneratorsNC,
-"for a semigroup, filter, (list or collections) and record",
-[IsSemigroup, IsOperation, IsListOrCollection, IsRecord],
-function(S, filter, gens, opts)
+SEMIGROUPS.AnySemigroupIdealByGeneratorsNC := function(S, filter, gens, opts)
   local filts, I;
   opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
   gens := AsList(gens);
@@ -375,7 +367,7 @@ function(S, filter, gens, opts)
   fi;
 
   return I;
-end);
+end;
 
 InstallMethod(SemigroupIdealByGenerators,
 "for a semigroup and list or collections",
@@ -386,14 +378,15 @@ InstallMethod(SemigroupIdealByGenerators,
 "for semigroup, list or collection, and record",
 [IsSemigroup, IsListOrCollection, IsRecord],
 function(S, gens, opts)
-  return AnySemigroupIdealByGenerators(S, IsMagmaIdeal, gens, opts);
+  return SEMIGROUPS.AnySemigroupIdealByGenerators4(S, IsMagmaIdeal, gens, opts);
 end);
 
 InstallMethod(SemigroupIdealByGeneratorsNC,
 "for a semigroup, list or collections, and record",
 [IsSemigroup, IsListOrCollection, IsRecord],
 function(S, gens, opts)
-  return AnySemigroupIdealByGeneratorsNC(S, IsMagmaIdeal, gens, opts);
+  return SEMIGROUPS.AnySemigroupIdealByGeneratorsNC(S,
+    IsMagmaIdeal, gens, opts);
 end);
 
 InstallMethod(MinimalIdealGeneratingSet,
