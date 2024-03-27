@@ -727,23 +727,220 @@ function(digraph)
 end);
 
 InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
-function(digraph)
-  local S, li, label, i;
-  S  := SemigroupOfCayleyDigraph(digraph);
-  if not CanUseFroidurePin(S) or Size(S) > 26 then
+function(D)
+  local S, edge_colors, N, msg, legend, node_labels, offset, en, label, next,
+  edge_func, node_func, result, i;
+
+  # TODO replace with an appropriate call to DotWordGraph
+
+  S := SemigroupOfCayleyDigraph(D);
+  edge_colors := ["\"#00ff00\"", "\"#ff00ff\"", "\"#007fff\"", "\"#ff7f00\"",
+                  "\"#7fbf7f\"", "\"#4604ac\"", "\"#de0328\"", "\"#19801d\"",
+                  "\"#d881f5\"", "\"#00ffff\"", "\"#ffff00\"", "\"#00ff7f\"",
+                  "\"#ad5867\"", "\"#85f610\"", "\"#84e9f5\"", "\"#f5c778\"",
+                  "\"#207090\"", "\"#764ef3\"", "\"#7b4c00\"", "\"#0000ff\"",
+                  "\"#b80c9a\"", "\"#601045\"", "\"#29b7c0\"", "\"#839f12"];
+  N := Length(GeneratorsOfSemigroup(S));
+  if not CanUseFroidurePin(S) then
     TryNextMethod();
   fi;
-  li := AsListCanonical(S);
+
+  if IsMonoidAsSemigroup(S) and One(GeneratorsOfSemigroup(S)) in S then
+    offset := -1;
+  else
+    offset := 1;
+  fi;
+
+  node_labels := [];
+  en := EnumeratorCanonical(S);
   for i in [1 .. Size(S)] do
-    label := SEMIGROUPS.WordToExtRepObj(MinimalFactorization(S, li[i]));
-    label := SEMIGROUPS.ExtRepObjToString(label);
-    SetDigraphVertexLabel(digraph, i, label);
+    if IsOne(en[i]) then
+      label := "&#949;";
+    else
+      # TODO maybe reuse some of this it seems to give better factorisations,
+      # than the DotRightCayleyDigraph method below
+      label := SEMIGROUPS.WordToExtRepObj(MinimalFactorization(S, i) + offset);
+      label := SEMIGROUPS.ExtRepObjToString(label);
+    fi;
+    node_labels[i] := label;
   od;
-  return DotVertexLabelledDigraph(digraph);
+
+  legend := "node [shape=plaintext]\nsubgraph cluster_01 {\nlabel=\"Legend\"\n";
+  Append(legend, "key2 [label=<<table border=\"0\" cellpadding=\"2\"");
+  Append(legend, " cellspacing=\"0\" cellborder=\"0\">\n");
+
+  for i in [1 .. N] do
+    Append(legend,
+           StringFormatted("  <tr><td port=\"i{}\">&nbsp;</td></tr>\n",
+                           i));
+  od;
+  Append(legend, "</table>>]\n");
+  Append(legend, "key [label=<<table border=\"0\" cellpadding=\"2\"");
+  Append(legend, " cellspacing=\"0\" cellborder=\"0\">\n");
+
+  for i in [1 .. N] do
+    label := node_labels[i];
+    next := "<tr><td align=\"right\" ";
+    Append(next, StringFormatted("port=\"i{}\">{}&nbsp;</td></tr>\n", i, label));
+    Append(legend, next);
+  od;
+
+  Append(legend, "</table>>]\n\n");
+
+  for i in [1 .. N] do
+    next := StringFormatted("key:i{1}:e -> key2:i{1}:w [color={2},",
+                            i,
+                            edge_colors[i]);
+    Append(next, "constraint=false]\n");
+    Append(legend, next);
+  od;
+  Append(legend, "}\n");
+
+  node_func := i -> StringFormatted(" [label=\"{}\"]", node_labels[i]);
+  edge_func := {i, j} -> StringFormatted("[color={}]", edge_colors[j]);
+
+  result := DIGRAPHS_DotDigraph(D, [node_func], [edge_func]);
+  result := SplitString(result, "\n");
+  result[3] := "subgraph 00 {";
+  Add(result, "node [shape=box]", 3);
+  Add(result, legend);
+  Add(result, "}");
+  return JoinStringsWithSeparator(result, "\n");
 end);
 
 InstallMethod(DotLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
-S -> DotString(LeftCayleyDigraph(S)));
+function(S)
+  local label;
+  label := x -> SEMIGROUPS.WordToString(MinimalFactorization(S, x));
+  return DotWordGraph(LeftCayleyDigraph(S),
+                      List(S, label),
+                      List(GeneratorsOfSemigroup(S), label));
+end);
 
 InstallMethod(DotRightCayleyDigraph, "for a semigroup", [IsSemigroup],
-S -> DotString(RightCayleyDigraph(S)));
+function(S)
+  local label;
+
+  # TODO handle monoids
+  # ToExtRepObj := SEMIGROUPS.WordToExtRepObj;
+  # ToString    := SEMIGROUPS.ExtRepObjToString;
+  # label := x -> ToString(ToExtRepObj(MinimalFactorization(S, x)));
+  # Current the above approach doesn't work becase labels aren't put into
+  # quotes " by default and so an error is given for this at present.
+  # TODO delete the next line when graphviz is fixed.
+  label := x -> SEMIGROUPS.WordToString(MinimalFactorization(S, x));
+  return DotWordGraph(RightCayleyDigraph(S),
+                      List(S, label),
+                      List(GeneratorsOfSemigroup(S), label));
+end);
+
+InstallMethod(DotWordGraph,
+"for a word graph, list of node labels, and list of edge labels",
+[IsDigraph, IsHomogeneousList, IsHomogeneousList],
+function(D, node_labels, edge_labels)
+  local M, N, msg, edge_colors, dot, mm, pos, targets, e, legend, subgraph,
+  key, key2, label, next, str, m, n, i;
+
+  # TODO have some options, like include the legend, maybe fancy labels
+
+  if not DigraphHasAVertex(D) then
+    # Word graphs must have at least one node . . .
+    ErrorNoReturn("The 1st argument (a digraph) must have at least one vertex");
+  elif not IsOutRegularDigraph(D) then
+    ErrorNoReturn("The 1st argument (a digraph) must be out-regular");
+  fi;
+
+  M := DigraphNrVertices(D);
+  N := Length(OutNeighboursOfVertex(D, 1));
+  if Length(node_labels) <> M then
+    msg := "Expected the 2nd argument (a list) to have length ";
+    Append(msg, "{}, but found {}");
+    ErrorNoReturn(StringFormatted(msg, M, Length(node_labels)));
+  elif not IsString(node_labels[1]) then
+    ErrorNoReturn("TODO");
+  elif Length(edge_labels) <> N then
+    msg := "Expected the 3rd argument (a list) to have length ";
+    Append(msg, "{}, but found {}");
+    ErrorNoReturn(msg, M, Length(edge_labels));
+  elif not IsString(edge_labels[1]) then
+    ErrorNoReturn("TODO");
+  fi;
+
+  # TODO longer list here
+  edge_colors := ["\"#00ff00\"", "\"#ff00ff\"", "\"#007fff\"", "\"#ff7f00\"",
+                  "\"#7fbf7f\"", "\"#4604ac\"", "\"#de0328\"", "\"#19801d\"",
+                  "\"#d881f5\"", "\"#00ffff\"", "\"#ffff00\"", "\"#00ff7f\"",
+                  "\"#ad5867\"", "\"#85f610\"", "\"#84e9f5\"", "\"#f5c778\"",
+                  "\"#207090\"", "\"#764ef3\"", "\"#7b4c00\"", "\"#0000ff\"",
+                  "\"#b80c9a\"", "\"#601045\"", "\"#29b7c0\"", "\"#839f12"];
+
+  if N > Length(edge_colors) then
+    msg := Concatenation("the out-degree of every vertex in the 1st argument ",
+                         "(a digraph) must be at most {}, found {}");
+    ErrorNoReturn(StringFormatted(msg, Length(edge_colors), N));
+  fi;
+
+  dot := GraphvizDigraph("WordGraph");
+  GraphvizSetAttr(dot, "node [shape=\"box\"]");
+  for m in [1 .. M] do
+    mm := GraphvizAddNode(dot, m);
+    GraphvizSetAttr(mm, "label", node_labels[m]);
+    pos := Position(edge_labels, node_labels[m]);
+    if pos <> fail then
+      GraphvizSetAttr(mm, "color", edge_colors[pos]);
+      GraphvizSetAttr(mm, "style", "filled");
+    fi;
+  od;
+
+  for m in [1 .. M] do
+    targets := OutNeighboursOfVertex(D, m);
+    for n in [1 .. N] do
+      e := GraphvizAddEdge(dot, m, targets[n]);
+      GraphvizSetAttr(e, "color", edge_colors[n]);
+    od;
+  od;
+
+  legend := GraphvizAddContext(dot, "legend");
+  GraphvizSetAttr(legend, "node [shape=plaintext]");
+  subgraph := GraphvizAddSubgraph(legend, "legend");
+  key := GraphvizAddNode(subgraph, "key");
+  key2 := GraphvizAddNode(subgraph, "key2");
+
+  label := Concatenation("<<table border=\"0\" cellpadding=\"2\"",
+                         " cellspacing=\"0\"",
+                         " cellborder=\"0\">\n");
+  for i in [1 .. N] do
+    Append(label,
+           StringFormatted("  <tr><td port=\"i{}\">&nbsp;</td></tr>\n",
+                           i));
+  od;
+  Append(label, "</table>>\n");
+  GraphvizSetAttr(key2, "label", label);
+
+  # TODO remove code dupl
+  label := Concatenation("<<table border=\"0\" cellpadding=\"2\"",
+                         " cellspacing=\"0\"",
+                         " cellborder=\"0\">\n");
+  for i in [1 .. N] do
+    next := "    <tr><td align=\"right\" ";
+    Append(next, StringFormatted("port=\"i{}\">{}&nbsp;</td></tr>\n",
+                                 i,
+                                 edge_labels[i]));
+    Append(label, next);
+  od;
+  Append(label, "</table>>\n");
+
+  GraphvizSetAttr(key, "label", label);
+
+  for i in [1 .. N] do
+    e := GraphvizAddEdge(subgraph,
+                    StringFormatted("key:i{}:e", i),
+                    StringFormatted("key2:i{}:w", i));
+    GraphvizSetAttr(e, "color", edge_colors[i]);
+    GraphvizSetAttr(e, "constraint", false);
+  od;
+
+  str := AsString(dot);
+  # TODO remove the next line, these work around some issues in graphviz
+  return Concatenation("//dot\n", str);
+end);
