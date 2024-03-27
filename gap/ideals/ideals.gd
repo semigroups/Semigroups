@@ -14,7 +14,6 @@ DeclareSynonymAttr("GeneratorsOfLeftSemigroupIdeal",
 DeclareSynonymAttr("GeneratorsOfRightSemigroupIdeal",
   GeneratorsOfRightMagmaIdeal);
 
-
 DeclareGlobalFunction("SemigroupIdeal");
 DeclareGlobalFunction("LeftSemigroupIdeal");
 DeclareGlobalFunction("RightSemigroupIdeal");

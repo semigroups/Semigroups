@@ -152,9 +152,9 @@ gap> S := Semigroup([[Z(2)]]);
 gap> SemigroupIdeal(S, S.1);
 <commutative inverse semigroup ideal with 1 generator>
 gap> LeftSemigroupIdeal(S, S.1);
-<commutative inverse semigroup ideal with 1 generator>
+<LeftMagmaIdeal with 1 generator>
 gap> RightSemigroupIdeal(S, S.1);
-<commutative inverse semigroup ideal with 1 generator>
+<RightMagmaIdeal with 1 generator>
 gap> S := RegularBooleanMatMonoid(2);;
 gap> I := SemigroupIdeal(S, [S.1, S.2]);
 <semigroup ideal of 2x2 boolean matrices with 2 generators>

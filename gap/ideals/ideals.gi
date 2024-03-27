@@ -198,8 +198,7 @@ SEMIGROUPS.AnySemigroupIdealInputParsing := function(arg...)
     # special case for matrices, because they may look like lists
     return [arg[1], [arg[2]]];
 
-  elif Length(arg) = 2 and IsList(arg[2]) and
-    0 < Length(arg[2]) then
+  elif Length(arg) = 2 and IsList(arg[2]) and 0 < Length(arg[2]) then
     # list of generators
     return [arg[1], arg[2]];
   elif (IsMultiplicativeElement(arg[2])
